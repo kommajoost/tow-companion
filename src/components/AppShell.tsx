@@ -23,7 +23,7 @@ const TABS: { id: Tab; label: string; icon: string }[] = [
 // Wide (laptop/large tablet) → a slim global icon rail on the left instead of the bottom
 // tab bar, which on the Turns screen yields the design's three-column layout. Phone keeps
 // the bottom bar. 800px keeps the content pane ≥ ~720px (the companion's own wide breakpoint).
-function useWide(threshold = 700) {
+function useWide(threshold = 800) {
   const [wide, setWide] = useState(() => typeof window !== 'undefined' && window.innerWidth >= threshold);
   useEffect(() => {
     const on = () => setWide(window.innerWidth >= threshold);

@@ -23,7 +23,7 @@ const Mark = (c: string, filled: boolean) => (
     <path d="M6.5 4h11a1 1 0 0 1 1 1v15.4l-6.5-4.4L5.5 20.4V5a1 1 0 0 1 1-1z" stroke={c} strokeWidth="1.7" strokeLinejoin="round" strokeLinecap="round" />
   </svg>
 );
-const Gear = (c: string) => <I c={c} sw={1.6} d={<g><circle cx="12" cy="12" r="3.2" /><path d="M12 3v2.2M12 18.8V21M21 12h-2.2M5.2 12H3M18.4 5.6l-1.5 1.5M7.1 16.9l-1.5 1.5M18.4 18.4l-1.5-1.5M7.1 7.1 5.6 5.6" /></g>} />;
+const Gear = (c: string) => <I c={c} sw={1.5} d={<g><circle cx="12" cy="12" r="3" /><path d="M19.4 13a7.5 7.5 0 0 0 0-2l2-1.6-2-3.4-2.4 1a7.5 7.5 0 0 0-1.7-1l-.4-2.6h-4l-.4 2.6a7.5 7.5 0 0 0-1.7 1l-2.4-1-2 3.4 2 1.6a7.5 7.5 0 0 0 0 2l-2 1.6 2 3.4 2.4-1a7.5 7.5 0 0 0 1.7 1l.4 2.6h4l.4-2.6a7.5 7.5 0 0 0 1.7-1l2.4 1 2-3.4z" /></g>} />;
 
 const SECTIONS: { id: NavTab; label: string; icon: (active: boolean) => React.ReactNode }[] = [
   { id: 'play', label: 'Turns', icon: (a) => Swords(a ? TOW.goldDeep : mutedIcon) },
