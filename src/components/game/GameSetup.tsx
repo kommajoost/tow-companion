@@ -7,6 +7,10 @@ import type { Army, GameSummary } from '../../types';
 
 const eb = engraved as React.CSSProperties;
 
+// The join lobby (list of current games) is fully built and working, but hidden for now.
+// Flip this to `true` to show it again — no other change needed.
+const SHOW_LOBBY = false;
+
 // First screen of the Game tab: enter a name, paste your army list, then host a new game
 // (get a code to share) or join one with a code. Also a solo/local fallback (offline).
 export function GameSetup() {
@@ -27,9 +31,9 @@ export function GameSetup() {
     setLoadingGames(false);
   }, [listGames]);
 
-  // Load the lobby when the player switches to "Join a game".
+  // Load the lobby when the player switches to "Join a game" (only when it's shown).
   useEffect(() => {
-    if (mode === 'join') loadGames();
+    if (SHOW_LOBBY && mode === 'join') loadGames();
   }, [mode, loadGames]);
 
   const inputStyle: React.CSSProperties = { width: '100%', borderRadius: 10, border: `1px solid ${TOW.lineStrong}`, background: '#fffdf6', color: TOW.ink, padding: '10px 12px', fontFamily: towFont.serif, fontSize: 15, boxSizing: 'border-box' };
@@ -80,6 +84,8 @@ export function GameSetup() {
               {busy ? 'Joining…' : 'Join game'}
             </button>
 
+            {SHOW_LOBBY && (
+              <>
             {/* Lobby: recent games you can join directly */}
             <div style={{ display: 'flex', alignItems: 'center', margin: '22px 0 8px' }}>
               <span style={{ ...labelStyle, margin: 0 }}>Current games</span>
@@ -138,6 +144,8 @@ export function GameSetup() {
               <div style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 13.5, color: TOW.muted }}>
                 No open games right now. Enter a code above, or host one.
               </div>
+            )}
+              </>
             )}
           </div>
         )}
