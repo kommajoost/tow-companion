@@ -57,6 +57,34 @@ interface Persisted {
   code: string | null;
 }
 
+// Supabase/PostgREST errors are plain objects (not Error instances), so String(err) yields
+// the useless "[object Object]". Pull out a human-readable message instead.
+function supaErr(e: unknown): string {
+  if (!e) return 'Something went wrong. Please try again.';
+  if (typeof e === 'string') return e;
+  if (e instanceof Error) return e.message;
+  const o = e as Record<string, unknown>;
+  const pick = (k: string) => (typeof o[k] === 'string' && o[k] ? (o[k] as string) : '');
+  return (
+    pick('message') ||
+    pick('error_description') ||
+    pick('error') ||
+    pick('details') ||
+    pick('hint') ||
+    (pick('code') ? `Error ${pick('code')}` : '') ||
+    JSON.stringify(o)
+  );
+}
+
+// Guard a Supabase call against hanging forever (e.g. a request stuck "pending"): reject
+// with a clear message after `ms`.
+function withTimeout<T>(p: PromiseLike<T>, ms: number, msg: string): Promise<T> {
+  return Promise.race([
+    Promise.resolve(p),
+    new Promise<T>((_, reject) => setTimeout(() => reject(new Error(msg)), ms)),
+  ]);
+}
+
 export function GameProvider({ children }: { children: ReactNode }) {
   const [persisted, setPersisted] = usePersistentState<Persisted | null>('tow:game', null);
   const [game, setGame] = useState<GameRow | null>(null);
@@ -125,21 +153,25 @@ export function GameProvider({ children }: { children: ReactNode }) {
       try {
         for (let attempt = 0; attempt < 5; attempt++) {
           const c = makeCode();
-          const { data, error: err } = await supabase
-            .from(TOW_GAMES)
-            .insert({ code: c, host_name: name || 'Host', host_army: army ?? null })
-            .select()
-            .single();
+          const { data, error: err } = await withTimeout(
+            supabase
+              .from(TOW_GAMES)
+              .insert({ code: c, host_name: name || 'Host', host_army: army ?? null })
+              .select()
+              .single(),
+            15000,
+            'Creating the game took too long — check your connection and try again.',
+          );
           if (!err && data) {
             setGame(data as GameRow);
             setPersisted({ seat: 'host', code: c });
             return c;
           }
-          if (err && !/duplicate|unique/i.test(err.message)) throw err;
+          if (err && !/duplicate|unique/i.test(err.message || '')) throw err;
         }
         throw new Error('Could not allocate a game code, please try again.');
       } catch (e) {
-        setError(e instanceof Error ? e.message : String(e));
+        setError(supaErr(e));
         return null;
       } finally {
         setBusy(false);
@@ -154,25 +186,29 @@ export function GameProvider({ children }: { children: ReactNode }) {
       setError(null);
       const c = joinCode.trim().toUpperCase();
       try {
-        const { data, error: err } = await supabase
-          .from(TOW_GAMES)
-          .select('*')
-          .eq('code', c)
-          .maybeSingle();
+        const { data, error: err } = await withTimeout(
+          supabase.from(TOW_GAMES).select('*').eq('code', c).maybeSingle(),
+          15000,
+          'Joining took too long — check your connection and try again.',
+        );
         if (err) throw err;
         if (!data) throw new Error('No game found with that code.');
-        const { data: updated, error: uerr } = await supabase
-          .from(TOW_GAMES)
-          .update({ guest_name: name || 'Guest', guest_army: army ?? null })
-          .eq('code', c)
-          .select()
-          .single();
+        const { data: updated, error: uerr } = await withTimeout(
+          supabase
+            .from(TOW_GAMES)
+            .update({ guest_name: name || 'Guest', guest_army: army ?? null })
+            .eq('code', c)
+            .select()
+            .single(),
+          15000,
+          'Joining took too long — check your connection and try again.',
+        );
         if (uerr) throw uerr;
         setGame(updated as GameRow);
         setPersisted({ seat: 'guest', code: c });
         return true;
       } catch (e) {
-        setError(e instanceof Error ? e.message : String(e));
+        setError(supaErr(e));
         return false;
       } finally {
         setBusy(false);
@@ -214,7 +250,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
         .update({ [col]: army })
         .eq('code', code)
         .then(({ error: err }) => {
-          if (err) setError(err.message);
+          if (err) setError(supaErr(err));
         });
     },
     [seat, code],
@@ -236,7 +272,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
         .update({ [col]: army })
         .eq('code', code)
         .then(({ error: err }) => {
-          if (err) setError(err.message);
+          if (err) setError(supaErr(err));
         });
     },
     [seat, code],
