@@ -1,0 +1,207 @@
+@import 'tailwindcss';
+
+/* ---- Old World design tokens (ported from the Claude Design handoff) ---- */
+@theme {
+  /* Semantic names (kept from earlier components) mapped to Old World values.
+     `ink` = primary TEXT colour (light parchment); `deep` = darkest background. */
+  /* Light parchment theme (Claude Design v2). `ink` = primary dark TEXT on
+     parchment; surfaces are warm paper tones, deepest = chrome panel. */
+  --color-deep: #e3d5b8;
+  --color-bg: #efe6d3;
+  --color-surface: #e9ddc6;
+  --color-surface-2: #e3d5b8;
+  --color-surface-3: #d8c6a2;
+  --color-border: rgba(120, 86, 40, 0.2);
+  --color-border-strong: rgba(120, 86, 40, 0.38);
+  --color-border-soft: rgba(120, 86, 40, 0.12);
+  --color-ink: #3a2e22; /* primary text (dark ink on parchment) */
+  --color-ink-dim: #6a5842;
+  --color-ink-faint: #8a7350;
+  --color-faint: #c3ad84;
+  --color-gold: #b8862f;
+  --color-gold-bright: #d8a948;
+  --color-gold-deep: #7c5a22;
+  --color-blood: #7c2b22;
+
+  /* Back-compat aliases used by earlier components */
+  --color-accent: #9a6f25;
+  --color-accent-2: #7c5a22;
+
+  --font-display: 'Cinzel', 'Times New Roman', serif;
+  --font-serif: 'EB Garamond', Georgia, serif;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+
+@layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--color-bg);
+    background-image: radial-gradient(130% 55% at 50% -5%, #f6efdd 0%, var(--color-bg) 55%, var(--color-deep) 100%);
+    color: var(--color-ink);
+    font-family: var(--font-serif);
+    -webkit-font-smoothing: antialiased;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-text-size-adjust: 100%;
+    overscroll-behavior-y: none;
+  }
+
+  button {
+    font-family: inherit;
+    touch-action: manipulation;
+  }
+}
+
+/* iOS safe-area helpers */
+.pt-safe {
+  padding-top: env(safe-area-inset-top);
+}
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* ---- Rich-text rendering (verbatim rules) ---- */
+.richtext {
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--color-ink);
+}
+.richtext > *:first-child {
+  margin-top: 0;
+}
+.richtext p {
+  margin: 0.7em 0;
+}
+.richtext h2,
+.richtext h3,
+.richtext h4,
+.richtext h5,
+.richtext h6 {
+  font-family: var(--font-display);
+  color: var(--color-gold);
+  line-height: 1.25;
+  margin: 1.3em 0 0.45em;
+  letter-spacing: 0.02em;
+}
+.richtext h2 {
+  font-size: 1.25rem;
+}
+.richtext h3 {
+  font-size: 1.1rem;
+}
+.richtext h4 {
+  font-size: 1rem;
+  color: var(--color-gold-bright);
+}
+.richtext ul,
+.richtext ol {
+  margin: 0.7em 0;
+  padding-left: 1.4em;
+}
+.richtext ul {
+  list-style: disc;
+}
+.richtext ol {
+  list-style: decimal;
+}
+.richtext li {
+  margin: 0.3em 0;
+}
+.richtext li > p {
+  margin: 0.2em 0;
+}
+.richtext blockquote {
+  margin: 1em 0;
+  padding: 0.6em 1em;
+  border-left: 3px solid var(--color-gold-deep);
+  background: var(--color-surface-2);
+  border-radius: 0 0.4rem 0.4rem 0;
+  color: var(--color-ink-dim);
+  font-style: italic;
+}
+.richtext hr {
+  border: 0;
+  border-top: 1px solid var(--color-border);
+  margin: 1.3em 0;
+}
+.richtext b,
+.richtext strong {
+  color: var(--color-ink);
+  font-weight: 600;
+}
+.richtext em,
+.richtext i {
+  font-style: italic;
+}
+.richtext code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  background: var(--color-surface-3);
+  padding: 0.05em 0.35em;
+  border-radius: 0.3rem;
+  font-size: 0.9em;
+}
+
+/* Tables */
+.richtext .rt-table-wrap {
+  overflow-x: auto;
+  margin: 1em 0;
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem;
+  -webkit-overflow-scrolling: touch;
+}
+.richtext table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 0.92rem;
+}
+.richtext th,
+.richtext td {
+  border: 1px solid var(--color-border);
+  padding: 0.5em 0.7em;
+  text-align: left;
+  vertical-align: top;
+}
+.richtext th {
+  background: var(--color-surface-3);
+  color: var(--color-gold);
+  font-family: var(--font-display);
+  white-space: nowrap;
+}
+.richtext tr:nth-child(even) td {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+/* Inline rule link → tappable term that opens a pop-up */
+.rule-term {
+  color: var(--color-gold-bright);
+  border-bottom: 1px dotted var(--color-gold);
+  cursor: pointer;
+  font-weight: 600;
+  text-decoration: none;
+}
+.rule-term:active {
+  color: var(--color-gold);
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ---- Light parchment chrome helpers (Claude Design v3) ---- */
+.tow-field {
+  background:
+    radial-gradient(130% 60% at 50% -10%, #f3ead2 0%, #efe6d3 55%, #e3d5b8 100%);
+}
+.tow-leather {
+  background: linear-gradient(180deg, #e9ddc6, #e3d5b8);
+}

@@ -1,0 +1,94 @@
+{
+  "generatedAt": "2026-05-29",
+  "model": "hand-authored prototype (Strategy phase)",
+  "hidden": ["rallied-units", "insurmountable-losses", "fleeing-units-strategy"],
+  "steps": {
+    "the-strategy-phase-sequence": { "blocks": [] },
+
+    "start-of-turn": {
+      "stepCondition": "Mostly relevant if your army has units with 'Start of Turn' special rules, or the scenario calls for a test at the start of the turn. Otherwise this is just a moment to pause, tidy up and ask any questions.",
+      "blocks": [
+        { "type": "ability", "slug": "stupidity" },
+        { "type": "ability", "slug": "ambushers" },
+        { "type": "ability", "slug": "drunken" },
+        { "type": "ability", "slug": "hidden-skaven" },
+        { "type": "ability", "slug": "release-the-fanatics" },
+        { "type": "ability", "slug": "caged-fury" },
+        { "type": "ability", "slug": "the-elemental-winds" },
+        { "type": "ability", "slug": "the-grudgestone" },
+        { "type": "ability", "slug": "spirit-of-galrauch" },
+        { "type": "ability", "slug": "wilful-beast" },
+        { "type": "ability", "slug": "guardian-of-the-sacred-sites" },
+        { "type": "ability", "slug": "aura-of-the-fay" }
+      ]
+    },
+
+    "command": {
+      "stepCondition": "Only if you have models with special rules that are used during the Command sub-phase (most armies have at least a few).",
+      "blocks": [
+        { "type": "ability", "slug": "dig-in" },
+        { "type": "ability", "slug": "arise" },
+        { "type": "ability", "slug": "waaagh" },
+        { "type": "ability", "slug": "grand-strategist" },
+        { "type": "ability", "slug": "rallying-cry" },
+        { "type": "ability", "slug": "primeval-roar" },
+        { "type": "ability", "slug": "goad-beast" },
+        { "type": "ability", "slug": "gaze-of-the-gods" },
+        { "type": "ability", "slug": "maddening-aura" },
+        { "type": "ability", "slug": "invocation-of-nehek" },
+        { "type": "ability", "slug": "from-beneath-the-sands" },
+        { "type": "ability", "slug": "stone-shaper" },
+        { "type": "ability", "slug": "immortal-overseer" },
+        { "type": "ability", "slug": "eternal-taskmaster" },
+        { "type": "ability", "slug": "my-will-be-done" },
+        { "type": "ability", "slug": "horn-of-isha" },
+        { "type": "ability", "slug": "prayers-of-sigmar" },
+        { "type": "ability", "slug": "prayers-of-ulric" },
+        { "type": "ability", "slug": "prayer-of-the-damned" },
+        { "type": "ability", "slug": "bugmans-cart" },
+        { "type": "ability", "slug": "butchers-cauldron" },
+        { "type": "ability", "slug": "discipline-of-the-dragon" },
+        { "type": "ability", "slug": "transformation" },
+        { "type": "ability", "slug": "tolling-the-bell" },
+        { "type": "ability", "slug": "spawn-of-sotek" },
+        { "type": "ability", "slug": "slithering-serpents" },
+        { "type": "ability", "slug": "skaryn-the-eye-thief" },
+        { "type": "ability", "slug": "swallow-whole" },
+        { "type": "ability", "slug": "indiscriminate-hunger" },
+        { "type": "ability", "slug": "spectral-coach" }
+      ]
+    },
+
+    "conjuration": {
+      "stepCondition": "Only if you have one or more Wizards that are not fleeing and know Enchantment or Hex spells.",
+      "blocks": [
+        { "type": "explain", "slug": "casting-spells" },
+        { "type": "explain", "slug": "enchantment" },
+        { "type": "explain", "slug": "hex" },
+        { "type": "explain", "slug": "dispel" },
+        {
+          "type": "conditional",
+          "slug": "dispelling-remains-in-play-spells",
+          "label": "Is there an enemy 'Remains in Play' spell still active that you want to dispel?"
+        }
+      ]
+    },
+
+    "rally-fleeing-units": {
+      "stepCondition": "Do you have any units that are currently fleeing? If not, skip this step.",
+      "blocks": [
+        { "type": "explain", "slug": "leadership-tests" },
+        { "type": "explain", "slug": "rallied-units" },
+        {
+          "type": "conditional",
+          "slug": "insurmountable-losses",
+          "label": "Has the fleeing unit been reduced below half (or a quarter) of its starting number of models?"
+        },
+        { "type": "ability", "slug": "heavenly-beacon" },
+        { "type": "ability", "slug": "rallying-cry" },
+        { "type": "seealso", "slug": "flee" },
+        { "type": "seealso", "slug": "fleeing-units-movement" }
+      ]
+    }
+  }
+}

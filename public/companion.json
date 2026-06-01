@@ -1,0 +1,1985 @@
+{
+  "round": "Round III",
+  "phases": [
+    {
+      "id": "strategy",
+      "num": "I",
+      "name": "Strategy",
+      "glyph": "strategy",
+      "flavour": "Stir your host to action — command, conjure, and rally the wavering.",
+      "subs": [
+        {
+          "name": "Start of Turn",
+          "intro": "Resolve any start-of-turn special rules and tests before the turn begins in earnest.",
+          "tabs": [
+            {
+              "id": "quick",
+              "label": "Quick",
+              "blocks": [
+                {
+                  "type": "steps",
+                  "items": [
+                    "Resolve any 'start of turn' special rules on your units.",
+                    "Make any tests required at the start of the turn.",
+                    "Check scenario victory conditions before playing on, if required.",
+                    "Tidy up: remove stray casualties and reset loose dice.",
+                    "Ask your opponent any rules or magic item questions now."
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "rules",
+              "label": "Rules",
+              "blocks": [
+                {
+                  "type": "rule",
+                  "slug": "start-of-turn"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Command",
+          "intro": "Characters unleash powerful abilities, both magical and mundane.",
+          "tabs": [
+            {
+              "id": "quick",
+              "label": "Quick",
+              "blocks": [
+                {
+                  "type": "steps",
+                  "items": [
+                    "Choose a model (usually a character) that is not fleeing.",
+                    "State which Command special rule it will use, if any.",
+                    "Name affected unit(s), then make any required tests.",
+                    "Repeat for every eligible model with a Command special rule."
+                  ]
+                },
+                {
+                  "type": "callouts",
+                  "items": [
+                    {
+                      "kind": "warn",
+                      "h": "Once each",
+                      "t": "Unless stated otherwise, a model can use each special rule only once per Command sub-phase."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "rules",
+              "label": "Rules",
+              "blocks": [
+                {
+                  "type": "rule",
+                  "slug": "command"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Conjuration",
+          "intro": "Wizards cast Enchantment and Hex spells. See how casting and dispelling work.",
+          "tabs": [
+            {
+              "id": "quick",
+              "label": "Quick",
+              "blocks": [
+                {
+                  "type": "steps",
+                  "items": [
+                    "Choose one of your Wizards that is not fleeing.",
+                    "Attempt to cast any Enchantment or Hex spells it knows.",
+                    "If cast successfully, the inactive player may attempt to dispel.",
+                    "Repeat for every Wizard in your army."
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "rules",
+              "label": "Rules",
+              "blocks": [
+                {
+                  "type": "rule",
+                  "slug": "conjuration"
+                },
+                {
+                  "type": "rule",
+                  "slug": "enchantment"
+                },
+                {
+                  "type": "rule",
+                  "slug": "hex"
+                },
+                {
+                  "type": "rule",
+                  "slug": "casting-spells"
+                },
+                {
+                  "type": "rule",
+                  "slug": "casting-roll-casting-result-and-casting-value"
+                },
+                {
+                  "type": "rule",
+                  "slug": "miscasts-and-perfect-invocations"
+                },
+                {
+                  "type": "rule",
+                  "slug": "miscast"
+                },
+                {
+                  "type": "rule",
+                  "slug": "dispel"
+                },
+                {
+                  "type": "rule",
+                  "slug": "types-of-dispel"
+                },
+                {
+                  "type": "rule",
+                  "slug": "dispelling-remains-in-play-spells"
+                }
+              ]
+            },
+            {
+              "id": "charts",
+              "label": "Charts",
+              "blocks": [
+                {
+                  "type": "chart",
+                  "slug": "miscast-table-chart"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Rally Fleeing Troops",
+          "intro": "Attempt to rally any of your units that are fleeing.",
+          "tabs": [
+            {
+              "id": "quick",
+              "label": "Quick",
+              "blocks": [
+                {
+                  "type": "steps",
+                  "items": [
+                    "Identify each of your units that is currently fleeing.",
+                    "Make a Rally test for a chosen fleeing unit, testing against Leadership.",
+                    "If passed, the unit rallies and stops fleeing.",
+                    "If failed, the unit continues to flee.",
+                    "Repeat until every fleeing unit has tested to rally."
+                  ]
+                },
+                {
+                  "type": "callouts",
+                  "items": [
+                    {
+                      "kind": "faq",
+                      "h": "After rallying",
+                      "t": "A rallied unit may make a free reform, but cannot move further or shoot this turn unless stated."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "rules",
+              "label": "Rules",
+              "blocks": [
+                {
+                  "type": "rule",
+                  "slug": "rally-fleeing-units"
+                },
+                {
+                  "type": "rule",
+                  "slug": "rallied-units"
+                },
+                {
+                  "type": "rule",
+                  "slug": "insurmountable-losses"
+                },
+                {
+                  "type": "rule",
+                  "slug": "fleeing-units-strategy"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "movement",
+      "num": "II",
+      "name": "Movement",
+      "glyph": "movement",
+      "flavour": "Regiments wheel and march across the field of war.",
+      "subs": [
+        {
+          "name": "Declare Charges",
+          "intro": "Nominate which units will charge, then let your opponent declare a reaction for each target.",
+          "tabs": [
+            {
+              "id": "quick",
+              "label": "Quick",
+              "blocks": [
+                {
+                  "type": "steps",
+                  "items": [
+                    "Declare which units will charge, one at a time.",
+                    "Nominate an enemy unit as the target of each charge.",
+                    "Check the target is in the charging unit's forward arc.",
+                    "Confirm a charging model can see its target.",
+                    "Let the opponent declare a charge reaction for each charge."
+                  ]
+                },
+                {
+                  "type": "callouts",
+                  "items": [
+                    {
+                      "kind": "warn",
+                      "h": "Cannot charge",
+                      "t": "A unit that is fleeing, already engaged, or that rallied this turn cannot declare a charge."
+                    },
+                    {
+                      "kind": "faq",
+                      "h": "Charge reactions",
+                      "t": "The target may Hold, Flee, or Stand & Shoot in response to a declared charge."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "rules",
+              "label": "Rules",
+              "blocks": [
+                {
+                  "type": "rule",
+                  "slug": "the-1-rule"
+                },
+                {
+                  "type": "rule",
+                  "slug": "declare-charges-and-charge-reactions"
+                },
+                {
+                  "type": "rule",
+                  "slug": "who-can-charge"
+                },
+                {
+                  "type": "rule",
+                  "slug": "charging-more-than-one-unit"
+                },
+                {
+                  "type": "rule",
+                  "slug": "charge-reactions-and-multiple-charging-units"
+                }
+              ]
+            },
+            {
+              "id": "reactions",
+              "label": "Reactions",
+              "blocks": [
+                {
+                  "type": "note",
+                  "text": "For each declared charge, the defender picks one reaction before the charger moves."
+                },
+                {
+                  "type": "reactions",
+                  "items": [
+                    {
+                      "g": "hold",
+                      "name": "Hold",
+                      "desc": "Stand firm and receive the charge in good order."
+                    },
+                    {
+                      "g": "shoot",
+                      "name": "Stand & Shoot",
+                      "desc": "Loose a volley if the charger began beyond its Movement."
+                    },
+                    {
+                      "g": "flee",
+                      "name": "Flee",
+                      "desc": "Turn and flee 2D6\" away from the charger."
+                    }
+                  ]
+                },
+                {
+                  "type": "rule",
+                  "slug": "charge-reactions"
+                },
+                {
+                  "type": "rule",
+                  "slug": "hold"
+                },
+                {
+                  "type": "rule",
+                  "slug": "stand-and-shoot"
+                },
+                {
+                  "type": "rule",
+                  "slug": "flee-charge-reaction"
+                }
+              ]
+            },
+            {
+              "id": "detail",
+              "label": "In Detail",
+              "blocks": [
+                {
+                  "type": "detail",
+                  "slug": "redirecting-a-charge"
+                },
+                {
+                  "type": "detail",
+                  "slug": "charging-a-fleeing-enemy"
+                },
+                {
+                  "type": "detail",
+                  "slug": "multiple-charging-units"
+                },
+                {
+                  "type": "detail",
+                  "slug": "multiple-charge-targets"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Charge Moves",
+          "intro": "Move your successful chargers into base contact with their targets.",
+          "tabs": [
+            {
+              "id": "quick",
+              "label": "Quick",
+              "blocks": [
+                {
+                  "type": "steps",
+                  "items": [
+                    "Make a Charge roll: roll 2D6 and add the unit's Movement.",
+                    "Move the charging unit into base contact with its target.",
+                    "Make a single wheel as needed to maximise models in contact.",
+                    "Align the units so the fighting ranks meet.",
+                    "If the roll is too short, the charge fails."
+                  ]
+                },
+                {
+                  "type": "callouts",
+                  "items": [
+                    {
+                      "kind": "eg",
+                      "h": "Maximum range",
+                      "t": "Maximum possible charge range equals the unit’s Movement characteristic plus 12."
+                    },
+                    {
+                      "kind": "warn",
+                      "h": "Failed charge",
+                      "t": "A failed charger moves its full Charge roll distance straight ahead, then may not shoot this turn."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "rules",
+              "label": "Rules",
+              "blocks": [
+                {
+                  "type": "rule",
+                  "slug": "charge-moves"
+                },
+                {
+                  "type": "rule",
+                  "slug": "determine-charge-range"
+                },
+                {
+                  "type": "rule",
+                  "slug": "the-charge-move-intro"
+                },
+                {
+                  "type": "rule",
+                  "slug": "maximum-possible-charge-range"
+                },
+                {
+                  "type": "rule",
+                  "slug": "failed-charge"
+                }
+              ]
+            },
+            {
+              "id": "detail",
+              "label": "In Detail",
+              "blocks": [
+                {
+                  "type": "detail",
+                  "slug": "the-charge-move"
+                },
+                {
+                  "type": "detail",
+                  "slug": "manoeuvring-during-a-charge"
+                },
+                {
+                  "type": "detail",
+                  "slug": "aligning-to-the-enemy"
+                },
+                {
+                  "type": "detail",
+                  "slug": "flank-and-rear-charges"
+                },
+                {
+                  "type": "detail",
+                  "slug": "resolving-uncertainties"
+                },
+                {
+                  "type": "detail",
+                  "slug": "unusual-situations-charging"
+                },
+                {
+                  "type": "detail",
+                  "slug": "unable-to-align"
+                },
+                {
+                  "type": "detail",
+                  "slug": "disordered-charge"
+                },
+                {
+                  "type": "detail",
+                  "slug": "charging-through-terrain"
+                },
+                {
+                  "type": "detail",
+                  "slug": "running-down-the-foe"
+                },
+                {
+                  "type": "detail",
+                  "slug": "accidental-contact"
+                },
+                {
+                  "type": "detail",
+                  "slug": "accidental-contact-when-running-down-the-foe"
+                },
+                {
+                  "type": "detail",
+                  "slug": "accidental-contact-during-a-charge"
+                },
+                {
+                  "type": "detail",
+                  "slug": "halting-a-charge"
+                },
+                {
+                  "type": "detail",
+                  "slug": "continuing-ahead"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Compulsory Moves",
+          "intro": "Resolve the movement you don't control before your free moves.",
+          "tabs": [
+            {
+              "id": "quick",
+              "label": "Quick",
+              "blocks": [
+                {
+                  "type": "steps",
+                  "items": [
+                    "Resolve all compulsory moves before any remaining (free) moves.",
+                    "Move fleeing units first, then other compulsory movers.",
+                    "Move each unit as directed by its special rule.",
+                    "Resolve your compulsory moves in any order you choose."
+                  ]
+                },
+                {
+                  "type": "callouts",
+                  "items": [
+                    {
+                      "kind": "warn",
+                      "h": "Fleeing units",
+                      "t": "Units that failed to rally this turn continue to flee during this sub-phase."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "rules",
+              "label": "Rules",
+              "blocks": [
+                {
+                  "type": "rule",
+                  "slug": "compulsory-moves"
+                },
+                {
+                  "type": "rule",
+                  "slug": "fleeing-units-movement"
+                },
+                {
+                  "type": "rule",
+                  "slug": "other-types-of-compulsory-movement"
+                }
+              ]
+            },
+            {
+              "id": "detail",
+              "label": "In Detail",
+              "blocks": [
+                {
+                  "type": "detail",
+                  "slug": "flee"
+                },
+                {
+                  "type": "detail",
+                  "slug": "direction-of-flight"
+                },
+                {
+                  "type": "detail",
+                  "slug": "fleeing-from-an-enemy-unit"
+                },
+                {
+                  "type": "detail",
+                  "slug": "fleeing-as-a-compulsory-move"
+                },
+                {
+                  "type": "detail",
+                  "slug": "the-flee-move"
+                },
+                {
+                  "type": "detail",
+                  "slug": "destruction-of-a-fleeing-unit"
+                },
+                {
+                  "type": "detail",
+                  "slug": "fleeing-through-friendly-units"
+                },
+                {
+                  "type": "detail",
+                  "slug": "fleeing-through-enemy-units"
+                },
+                {
+                  "type": "detail",
+                  "slug": "fleeing-through-terrain"
+                },
+                {
+                  "type": "detail",
+                  "slug": "the-greater-the-danger"
+                },
+                {
+                  "type": "detail",
+                  "slug": "the-limits-of-endurance"
+                },
+                {
+                  "type": "detail",
+                  "slug": "give-ground-and-fall-back-in-good-order"
+                },
+                {
+                  "type": "detail",
+                  "slug": "give-ground"
+                },
+                {
+                  "type": "detail",
+                  "slug": "fall-back-in-good-order"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Remaining Moves",
+          "intro": "Move everything that is left on the field, then cast Conveyances.",
+          "tabs": [
+            {
+              "id": "quick",
+              "label": "Quick",
+              "blocks": [
+                {
+                  "type": "steps",
+                  "items": [
+                    "Move any units that have not yet moved this turn.",
+                    "Move each unit up to its Movement characteristic.",
+                    "March at up to double Movement if no enemy is nearby.",
+                    "Reform or change formation as permitted instead of moving.",
+                    "Cast Conveyance spells during this sub-phase."
+                  ]
+                },
+                {
+                  "type": "callouts",
+                  "items": [
+                    {
+                      "kind": "warn",
+                      "h": "No marching near enemy",
+                      "t": "A unit cannot march if there is an enemy unit within 8\" at the start of its move."
+                    },
+                    {
+                      "kind": "faq",
+                      "h": "Marching and shooting",
+                      "t": "A unit that marches cannot shoot later this turn."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "rules",
+              "label": "Rules",
+              "blocks": [
+                {
+                  "type": "rule",
+                  "slug": "remaining-moves"
+                }
+              ]
+            },
+            {
+              "id": "detail",
+              "label": "In Detail",
+              "blocks": [
+                {
+                  "type": "detail",
+                  "slug": "basic-movement"
+                },
+                {
+                  "type": "detail",
+                  "slug": "marching"
+                },
+                {
+                  "type": "detail",
+                  "slug": "enemy-sighted"
+                },
+                {
+                  "type": "detail",
+                  "slug": "manoeuvres"
+                },
+                {
+                  "type": "detail",
+                  "slug": "wheel"
+                },
+                {
+                  "type": "detail",
+                  "slug": "turn"
+                },
+                {
+                  "type": "detail",
+                  "slug": "move-backwards"
+                },
+                {
+                  "type": "detail",
+                  "slug": "move-sideways"
+                },
+                {
+                  "type": "detail",
+                  "slug": "redress-the-ranks"
+                },
+                {
+                  "type": "detail",
+                  "slug": "reform"
+                },
+                {
+                  "type": "detail",
+                  "slug": "pivoting"
+                },
+                {
+                  "type": "detail",
+                  "slug": "the-ends-of-the-world"
+                },
+                {
+                  "type": "detail",
+                  "slug": "lone-models"
+                },
+                {
+                  "type": "detail",
+                  "slug": "different-formations"
+                },
+                {
+                  "type": "detail",
+                  "slug": "moving-off-the-battlefield"
+                },
+                {
+                  "type": "detail",
+                  "slug": "reinforcements"
+                },
+                {
+                  "type": "detail",
+                  "slug": "conveyance-spells"
+                },
+                {
+                  "type": "detail",
+                  "slug": "oddball-stuff-movement"
+                },
+                {
+                  "type": "detail",
+                  "slug": "terrain-and-movement"
+                },
+                {
+                  "type": "detail",
+                  "slug": "open-ground-and-hills-movement"
+                },
+                {
+                  "type": "detail",
+                  "slug": "difficult-terrain-movement"
+                },
+                {
+                  "type": "detail",
+                  "slug": "low-linear-obstacles-movement"
+                },
+                {
+                  "type": "detail",
+                  "slug": "dangerous-terrain-movement"
+                },
+                {
+                  "type": "detail",
+                  "slug": "impassable-terrain-movement"
+                },
+                {
+                  "type": "detail",
+                  "slug": "high-linear-obstacles-movement"
+                },
+                {
+                  "type": "detail",
+                  "slug": "woods-movement"
+                },
+                {
+                  "type": "detail",
+                  "slug": "battlefield-decoration-movement"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "shooting",
+      "num": "III",
+      "name": "Shooting",
+      "glyph": "shooting",
+      "flavour": "Volleys of arrows and shot soar across the battle line.",
+      "subs": [
+        {
+          "name": "Choose Unit & Target",
+          "intro": "Pick a unit that can shoot; check line of sight and range, then declare the target.",
+          "tabs": [
+            {
+              "id": "quick",
+              "label": "Quick",
+              "blocks": [
+                {
+                  "type": "steps",
+                  "items": [
+                    "Choose one of your units that is able to shoot.",
+                    "Check the firing models' line of sight to the enemy.",
+                    "Check each weapon's range to the target.",
+                    "Declare which enemy unit is the target.",
+                    "Determine how many models can shoot."
+                  ]
+                },
+                {
+                  "type": "callouts",
+                  "items": [
+                    {
+                      "kind": "warn",
+                      "h": "We Can't All Shoot!",
+                      "t": "Only models with line of sight and the target in range may fire."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "rules",
+              "label": "Rules",
+              "blocks": [
+                {
+                  "type": "rule",
+                  "slug": "choose-unit-and-declare-target"
+                },
+                {
+                  "type": "rule",
+                  "slug": "who-can-shoot"
+                },
+                {
+                  "type": "rule",
+                  "slug": "check-line-of-sight"
+                },
+                {
+                  "type": "rule",
+                  "slug": "check-range"
+                },
+                {
+                  "type": "rule",
+                  "slug": "declare-target"
+                },
+                {
+                  "type": "rule",
+                  "slug": "how-many-shots"
+                },
+                {
+                  "type": "rule",
+                  "slug": "we-cant-all-shoot"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Roll To Hit",
+          "intro": "Roll to hit, applying range, movement and cover modifiers.",
+          "tabs": [
+            {
+              "id": "quick",
+              "label": "Quick",
+              "blocks": [
+                {
+                  "type": "steps",
+                  "items": [
+                    "Roll a D6 for each shot being fired.",
+                    "Compare each roll to the firing model's Ballistic Skill.",
+                    "Apply any To Hit modifiers to the rolls.",
+                    "Set aside each dice that scores a hit."
+                  ]
+                },
+                {
+                  "type": "callouts",
+                  "items": [
+                    {
+                      "kind": "warn",
+                      "h": "Move or long range",
+                      "t": "Apply -1 to hit for moving and shooting, and -1 for firing at long range."
+                    },
+                    {
+                      "kind": "warn",
+                      "h": "Cover",
+                      "t": "A target behind partial cover gives -1 to hit; full cover gives -2 to hit."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "rules",
+              "label": "Rules",
+              "blocks": [
+                {
+                  "type": "rule",
+                  "slug": "roll-to-hit-shooting"
+                },
+                {
+                  "type": "rule",
+                  "slug": "fast-dice-rolling-shooting"
+                },
+                {
+                  "type": "rule",
+                  "slug": "bs-of-6-or-higher"
+                },
+                {
+                  "type": "rule",
+                  "slug": "to-hit-modifiers"
+                },
+                {
+                  "type": "rule",
+                  "slug": "range-and-movement-modifiers"
+                },
+                {
+                  "type": "rule",
+                  "slug": "moving-and-shooting"
+                },
+                {
+                  "type": "rule",
+                  "slug": "firing-at-long-range"
+                },
+                {
+                  "type": "rule",
+                  "slug": "standing-and-shooting"
+                },
+                {
+                  "type": "rule",
+                  "slug": "cover-modifiers"
+                },
+                {
+                  "type": "rule",
+                  "slug": "target-behind-partial-cover"
+                },
+                {
+                  "type": "rule",
+                  "slug": "target-behind-full-cover"
+                },
+                {
+                  "type": "rule",
+                  "slug": "7-to-hit"
+                }
+              ]
+            },
+            {
+              "id": "charts",
+              "label": "Charts",
+              "blocks": [
+                {
+                  "type": "chart",
+                  "slug": "to-hit-chart"
+                },
+                {
+                  "type": "chart",
+                  "slug": "to-hit-modifiers-chart"
+                },
+                {
+                  "type": "chart",
+                  "slug": "bs-of-6-or-higher-chart"
+                },
+                {
+                  "type": "chart",
+                  "slug": "7-to-hit-chart"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Roll To Wound & Saves",
+          "intro": "Roll to wound; the target makes armour and ward saves.",
+          "tabs": [
+            {
+              "id": "quick",
+              "label": "Quick",
+              "blocks": [
+                {
+                  "type": "steps",
+                  "items": [
+                    "Roll to wound for each hit, comparing Strength to Toughness.",
+                    "Set aside each dice that scores a wound.",
+                    "Let the target roll armour saves against each wound.",
+                    "Apply the Armour Piercing modifier to the save.",
+                    "Let the target attempt any Ward saves that apply."
+                  ]
+                },
+                {
+                  "type": "callouts",
+                  "items": [
+                    {
+                      "kind": "warn",
+                      "h": "Too Tough to Wound",
+                      "t": "If the wound roll needed is higher than 6, the target cannot be wounded."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "rules",
+              "label": "Rules",
+              "blocks": [
+                {
+                  "type": "rule",
+                  "slug": "roll-to-wound-and-make-armour-saves-shooting"
+                },
+                {
+                  "type": "rule",
+                  "slug": "roll-to-wound-shooting"
+                },
+                {
+                  "type": "rule",
+                  "slug": "too-tough-to-wound"
+                },
+                {
+                  "type": "rule",
+                  "slug": "make-armour-saves-shooting"
+                },
+                {
+                  "type": "rule",
+                  "slug": "determining-armour-value"
+                },
+                {
+                  "type": "rule",
+                  "slug": "armour-piercing"
+                },
+                {
+                  "type": "rule",
+                  "slug": "ward-saves"
+                },
+                {
+                  "type": "rule",
+                  "slug": "more-than-one-save"
+                }
+              ]
+            },
+            {
+              "id": "charts",
+              "label": "Charts",
+              "blocks": [
+                {
+                  "type": "chart",
+                  "slug": "to-wound-chart"
+                },
+                {
+                  "type": "chart",
+                  "slug": "common-armour-types-chart"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Remove Casualties & Panic",
+          "intro": "Remove the slain and test for panic.",
+          "tabs": [
+            {
+              "id": "quick",
+              "label": "Quick",
+              "blocks": [
+                {
+                  "type": "steps",
+                  "items": [
+                    "Total the unsaved wounds inflicted on the target.",
+                    "Remove one model per unsaved wound as a casualty.",
+                    "Check whether the unit must take a Panic test.",
+                    "Take the Panic test against the unit's Leadership."
+                  ]
+                },
+                {
+                  "type": "callouts",
+                  "items": [
+                    {
+                      "kind": "warn",
+                      "h": "Panic trigger",
+                      "t": "A unit that loses 25% or more of its models tests for Panic."
+                    },
+                    {
+                      "kind": "faq",
+                      "h": "Fall Back or Flee",
+                      "t": "A unit that fails its Panic test will Fall Back in Good Order or Flee."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "rules",
+              "label": "Rules",
+              "blocks": [
+                {
+                  "type": "rule",
+                  "slug": "remove-casualties-and-make-panic-tests"
+                },
+                {
+                  "type": "rule",
+                  "slug": "remove-casualties-shooting"
+                },
+                {
+                  "type": "rule",
+                  "slug": "make-panic-tests"
+                },
+                {
+                  "type": "rule",
+                  "slug": "fall-back-or-flee"
+                },
+                {
+                  "type": "rule",
+                  "slug": "no-need-for-hysterics-shooting"
+                }
+              ]
+            },
+            {
+              "id": "detail",
+              "label": "In Detail",
+              "blocks": [
+                {
+                  "type": "detail",
+                  "slug": "panic-tests"
+                },
+                {
+                  "type": "detail",
+                  "slug": "no-need-for-hysterics-psychology"
+                },
+                {
+                  "type": "detail",
+                  "slug": "common-causes-of-panic"
+                },
+                {
+                  "type": "detail",
+                  "slug": "heavy-casualties"
+                },
+                {
+                  "type": "detail",
+                  "slug": "nearby-friend-destroyed"
+                },
+                {
+                  "type": "detail",
+                  "slug": "nearby-friend-flees-combat"
+                },
+                {
+                  "type": "detail",
+                  "slug": "fled-through"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Special Cases",
+          "intro": "Unusual shooting situations: spells, shooting into combat, automatic hits and more.",
+          "tabs": [
+            {
+              "id": "quick",
+              "label": "Quick",
+              "blocks": [
+                {
+                  "type": "steps",
+                  "items": [
+                    "Resolve Magic Missile and Magical Vortex spells as shooting attacks.",
+                    "Apply special rules for shooting into combat where allowed.",
+                    "Let extra ranks shoot when a rule permits it.",
+                    "Resolve automatic hits without rolling to hit.",
+                    "Apply hits that inflict multiple wounds.",
+                    "Remove models slain by instant kills.",
+                    "Resolve any other unusual attacks as described."
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "rules",
+              "label": "Rules",
+              "blocks": [
+                {
+                  "type": "rule",
+                  "slug": "oddball-stuff-shooting"
+                },
+                {
+                  "type": "rule",
+                  "slug": "magic-missile-and-magical-vortex-spells"
+                },
+                {
+                  "type": "rule",
+                  "slug": "shooting-into-combat"
+                },
+                {
+                  "type": "rule",
+                  "slug": "shooting-with-more-than-one-rank"
+                },
+                {
+                  "type": "rule",
+                  "slug": "automatic-hits"
+                },
+                {
+                  "type": "rule",
+                  "slug": "hits-that-inflict-multiple-wounds"
+                },
+                {
+                  "type": "rule",
+                  "slug": "instant-kills"
+                },
+                {
+                  "type": "rule",
+                  "slug": "resolving-unusual-attacks"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "combat",
+      "num": "IV",
+      "name": "Combat",
+      "glyph": "combat",
+      "flavour": "Steel meets steel as the lines crash together.",
+      "subs": [
+        {
+          "name": "Choose Combat & Who Fights",
+          "intro": "Pick a combat to resolve, then work out which models can fight.",
+          "tabs": [
+            {
+              "id": "quick",
+              "label": "Quick",
+              "blocks": [
+                {
+                  "type": "steps",
+                  "items": [
+                    "Choose one combat to resolve from those engaged.",
+                    "Identify which models are in base contact with the enemy.",
+                    "Include the fighting rank: models in base contact may fight.",
+                    "Add supporting attacks from the rank directly behind.",
+                    "Resolve each chosen combat fully before picking another."
+                  ]
+                },
+                {
+                  "type": "callouts",
+                  "items": [
+                    {
+                      "kind": "faq",
+                      "h": "Supporting attacks",
+                      "t": "Models in the rank behind a fighting rank may make a single supporting attack."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "rules",
+              "label": "Rules",
+              "blocks": [
+                {
+                  "type": "rule",
+                  "slug": "choose-and-fight-combat"
+                },
+                {
+                  "type": "rule",
+                  "slug": "choose-combat-and-determine-who-can-fight"
+                },
+                {
+                  "type": "rule",
+                  "slug": "who-can-fight"
+                },
+                {
+                  "type": "rule",
+                  "slug": "base-contact"
+                },
+                {
+                  "type": "rule",
+                  "slug": "the-fighting-rank"
+                },
+                {
+                  "type": "rule",
+                  "slug": "supporting-attacks"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Order of Attacks",
+          "intro": "Count attacks and fight in Initiative order; charging units strike first.",
+          "tabs": [
+            {
+              "id": "quick",
+              "label": "Quick",
+              "blocks": [
+                {
+                  "type": "steps",
+                  "items": [
+                    "Count each model’s Attacks characteristic to find attacks made.",
+                    "Work out the order of attacks by Initiative, highest first.",
+                    "Resolve attacks in descending Initiative order.",
+                    "Roll simultaneously for models with the same Initiative."
+                  ]
+                },
+                {
+                  "type": "callouts",
+                  "items": [
+                    {
+                      "kind": "warn",
+                      "h": "Charging bonus",
+                      "t": "Models that charged this turn fight with a +1 Initiative bonus in the first round."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "rules",
+              "label": "Rules",
+              "blocks": [
+                {
+                  "type": "rule",
+                  "slug": "how-many-attacks"
+                },
+                {
+                  "type": "rule",
+                  "slug": "who-strikes-first"
+                },
+                {
+                  "type": "rule",
+                  "slug": "charging-units"
+                },
+                {
+                  "type": "rule",
+                  "slug": "disordered-charges"
+                },
+                {
+                  "type": "rule",
+                  "slug": "simultaneous-combat"
+                },
+                {
+                  "type": "rule",
+                  "slug": "we-cant-all-fight"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Multiple Units",
+          "intro": "How to handle combats involving more than two units.",
+          "tabs": [
+            {
+              "id": "quick",
+              "label": "Quick",
+              "blocks": [
+                {
+                  "type": "steps",
+                  "items": [
+                    "Determine which enemy units each model is in base contact with.",
+                    "Allocate each model’s attacks against units it touches.",
+                    "Divide attacks between multiple enemy units if in contact with several.",
+                    "Declare how attacks are split before rolling to hit."
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "rules",
+              "label": "Rules",
+              "blocks": [
+                {
+                  "type": "rule",
+                  "slug": "multiple-units-in-combat"
+                },
+                {
+                  "type": "rule",
+                  "slug": "dividing-attacks"
+                },
+                {
+                  "type": "rule",
+                  "slug": "fighting-on-multiple-fronts"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Roll To Hit",
+          "intro": "Roll to hit using the Weapon Skill of attacker against defender.",
+          "tabs": [
+            {
+              "id": "quick",
+              "label": "Quick",
+              "blocks": [
+                {
+                  "type": "steps",
+                  "items": [
+                    "Roll a D6 for each attack made.",
+                    "Compare the roll to the attacker's and defender's Weapon Skill.",
+                    "Apply any To Hit modifiers.",
+                    "Set aside each dice that scores a hit."
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "rules",
+              "label": "Rules",
+              "blocks": [
+                {
+                  "type": "rule",
+                  "slug": "roll-to-hit-combat"
+                },
+                {
+                  "type": "rule",
+                  "slug": "fast-dice-rolling-combat"
+                }
+              ]
+            },
+            {
+              "id": "charts",
+              "label": "Charts",
+              "blocks": [
+                {
+                  "type": "chart",
+                  "slug": "to-hit-chart"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Roll To Wound & Saves",
+          "intro": "Roll to wound; the foe makes armour saves.",
+          "tabs": [
+            {
+              "id": "quick",
+              "label": "Quick",
+              "blocks": [
+                {
+                  "type": "steps",
+                  "items": [
+                    "Roll to wound for each hit, comparing Strength to Toughness.",
+                    "Set aside each dice that scores a wound.",
+                    "Let the defender make armour saves against each wound.",
+                    "Apply the Armour Piercing modifier to the save.",
+                    "Let the defender attempt any Ward saves that apply."
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "rules",
+              "label": "Rules",
+              "blocks": [
+                {
+                  "type": "rule",
+                  "slug": "roll-to-wound-and-make-armour-saves-combat"
+                },
+                {
+                  "type": "rule",
+                  "slug": "roll-to-wound-combat"
+                },
+                {
+                  "type": "rule",
+                  "slug": "make-armour-saves-combat"
+                },
+                {
+                  "type": "rule",
+                  "slug": "determining-armour-saves-combat"
+                }
+              ]
+            },
+            {
+              "id": "charts",
+              "label": "Charts",
+              "blocks": [
+                {
+                  "type": "chart",
+                  "slug": "to-wound-chart"
+                },
+                {
+                  "type": "chart",
+                  "slug": "common-armour-types-chart"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Remove Casualties",
+          "intro": "Remove the slain, step forward and close in; weak combats may continue.",
+          "tabs": [
+            {
+              "id": "quick",
+              "label": "Quick",
+              "blocks": [
+                {
+                  "type": "steps",
+                  "items": [
+                    "Total the unsaved wounds inflicted on each unit.",
+                    "Remove one model per unsaved wound as a casualty.",
+                    "Remove casualties from the rear rank of the unit.",
+                    "Keep a count of wounds caused for the combat result."
+                  ]
+                },
+                {
+                  "type": "callouts",
+                  "items": [
+                    {
+                      "kind": "faq",
+                      "h": "Step forward",
+                      "t": "As front-rank models are slain, rear-rank models step forward to fill gaps."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "rules",
+              "label": "Rules",
+              "blocks": [
+                {
+                  "type": "rule",
+                  "slug": "remove-casualties-combat"
+                },
+                {
+                  "type": "rule",
+                  "slug": "stepping-forward-and-closing-in"
+                },
+                {
+                  "type": "rule",
+                  "slug": "set-casualties-aside"
+                },
+                {
+                  "type": "rule",
+                  "slug": "excess-casualties"
+                },
+                {
+                  "type": "rule",
+                  "slug": "fight-on"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Combat Result",
+          "intro": "Total each side's combat result score to find the winner.",
+          "tabs": [
+            {
+              "id": "quick",
+              "label": "Quick",
+              "blocks": [
+                {
+                  "type": "steps",
+                  "items": [
+                    "Total each side's combat result score.",
+                    "Add 1 point per unsaved wound inflicted.",
+                    "Add the Rank Bonus: +1 per extra rank up to the maximum.",
+                    "Add bonuses for a standard, flank or rear attack, and high ground.",
+                    "Compare totals; the higher score wins the combat."
+                  ]
+                },
+                {
+                  "type": "callouts",
+                  "items": [
+                    {
+                      "kind": "faq",
+                      "h": "Rank Bonus",
+                      "t": "Claim +1 per extra rank behind the first, up to a maximum set by troop type."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "rules",
+              "label": "Rules",
+              "blocks": [
+                {
+                  "type": "rule",
+                  "slug": "calculate-combat-result"
+                },
+                {
+                  "type": "rule",
+                  "slug": "combat-result-score"
+                },
+                {
+                  "type": "rule",
+                  "slug": "combat-result-table"
+                },
+                {
+                  "type": "rule",
+                  "slug": "unsaved-wounds-inflicted"
+                },
+                {
+                  "type": "rule",
+                  "slug": "rank-bonus"
+                },
+                {
+                  "type": "rule",
+                  "slug": "standards"
+                },
+                {
+                  "type": "rule",
+                  "slug": "flank-and-rear-attacks"
+                },
+                {
+                  "type": "rule",
+                  "slug": "the-high-ground"
+                },
+                {
+                  "type": "rule",
+                  "slug": "overkill-combat"
+                },
+                {
+                  "type": "rule",
+                  "slug": "other-bonuses"
+                },
+                {
+                  "type": "rule",
+                  "slug": "who-is-the-winner"
+                },
+                {
+                  "type": "rule",
+                  "slug": "drawn-combat"
+                }
+              ]
+            },
+            {
+              "id": "charts",
+              "label": "Charts",
+              "blocks": [
+                {
+                  "type": "chart",
+                  "slug": "combat-result-table-chart"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Result — Multiple Combats",
+          "intro": "Bonuses when several units are locked in the same combat.",
+          "tabs": [
+            {
+              "id": "quick",
+              "label": "Quick",
+              "blocks": [
+                {
+                  "type": "steps",
+                  "items": [
+                    "Total the combat result across all units on each side.",
+                    "Combine the wounds inflicted by every unit involved.",
+                    "Count each bonus once for the side, as described.",
+                    "Compare the combined scores to find the winning side."
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "rules",
+              "label": "Rules",
+              "blocks": [
+                {
+                  "type": "rule",
+                  "slug": "combat-results-and-multiple-units-in-combat"
+                },
+                {
+                  "type": "rule",
+                  "slug": "rank-bonus-in-multiple-combats"
+                },
+                {
+                  "type": "rule",
+                  "slug": "standards-multiple-combats"
+                },
+                {
+                  "type": "rule",
+                  "slug": "flank-and-rear-attacks-multiple-combats"
+                },
+                {
+                  "type": "rule",
+                  "slug": "the-high-ground-multiple-combats"
+                },
+                {
+                  "type": "rule",
+                  "slug": "other-bonuses-multiple-combats"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Break Test",
+          "intro": "The loser tests to hold; failure means breaking and fleeing.",
+          "tabs": [
+            {
+              "id": "quick",
+              "label": "Quick",
+              "blocks": [
+                {
+                  "type": "steps",
+                  "items": [
+                    "The side that lost the combat must take a Break test.",
+                    "Roll a Leadership test with a modifier equal to the result difference.",
+                    "If passed, the unit holds its nerve.",
+                    "If failed, the unit Breaks and Flees."
+                  ]
+                },
+                {
+                  "type": "callouts",
+                  "items": [
+                    {
+                      "kind": "warn",
+                      "h": "Modifier",
+                      "t": "Apply a penalty equal to the difference in the combat result scores."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "rules",
+              "label": "Rules",
+              "blocks": [
+                {
+                  "type": "rule",
+                  "slug": "break-test"
+                },
+                {
+                  "type": "rule",
+                  "slug": "loser-breaks-and-flees"
+                },
+                {
+                  "type": "rule",
+                  "slug": "loser-falls-back-in-good-order"
+                },
+                {
+                  "type": "rule",
+                  "slug": "1-apart-combat"
+                },
+                {
+                  "type": "rule",
+                  "slug": "loser-gives-ground"
+                },
+                {
+                  "type": "rule",
+                  "slug": "surrounded"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Follow Up & Pursuit",
+          "intro": "The winner may follow up, pursue, or overrun fleeing foes.",
+          "tabs": [
+            {
+              "id": "quick",
+              "label": "Quick",
+              "blocks": [
+                {
+                  "type": "steps",
+                  "items": [
+                    "Resolve follow up moves when a beaten enemy gives ground.",
+                    "Pursue an enemy that Breaks and Flees from combat.",
+                    "Roll for pursuit distance as described in the rules.",
+                    "Move pursuers into contact, or overrun if no enemy remains."
+                  ]
+                },
+                {
+                  "type": "callouts",
+                  "items": [
+                    {
+                      "kind": "faq",
+                      "h": "Restrain or reform",
+                      "t": "A unit may attempt to restrain pursuit, and may reform instead of pursuing."
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "rules",
+              "label": "Rules",
+              "blocks": [
+                {
+                  "type": "rule",
+                  "slug": "follow-up-and-pursuit"
+                },
+                {
+                  "type": "rule",
+                  "slug": "restrain-and-reform"
+                },
+                {
+                  "type": "rule",
+                  "slug": "follow-up"
+                },
+                {
+                  "type": "rule",
+                  "slug": "change-facing"
+                },
+                {
+                  "type": "rule",
+                  "slug": "pursuit"
+                },
+                {
+                  "type": "rule",
+                  "slug": "the-pursuit-move"
+                },
+                {
+                  "type": "rule",
+                  "slug": "overrun"
+                },
+                {
+                  "type": "rule",
+                  "slug": "unable-to-follow-up-or-pursue"
+                },
+                {
+                  "type": "rule",
+                  "slug": "still-engaged"
+                },
+                {
+                  "type": "rule",
+                  "slug": "unable-to-move"
+                },
+                {
+                  "type": "rule",
+                  "slug": "catching-the-curs"
+                },
+                {
+                  "type": "rule",
+                  "slug": "pursuit-into-an-obstacle"
+                },
+                {
+                  "type": "rule",
+                  "slug": "pursuit-off-the-battlefield"
+                },
+                {
+                  "type": "rule",
+                  "slug": "pursuit-into-a-fresh-enemy"
+                },
+                {
+                  "type": "rule",
+                  "slug": "pursuit-into-a-fleeing-enemy"
+                },
+                {
+                  "type": "rule",
+                  "slug": "pursuit-into-a-new-combat"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Special Cases",
+          "intro": "Spells in combat and other unusual combat situations.",
+          "tabs": [
+            {
+              "id": "quick",
+              "label": "Quick",
+              "blocks": [
+                {
+                  "type": "steps",
+                  "items": [
+                    "Resolve Assailment spells cast during the Combat phase.",
+                    "Handle shrinking units that lose models mid-combat.",
+                    "Apply rules when no more foes remain in base contact.",
+                    "Resolve combats involving incomplete ranks or split profiles.",
+                    "Handle models fighting with different weapons."
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "rules",
+              "label": "Rules",
+              "blocks": [
+                {
+                  "type": "rule",
+                  "slug": "oddball-stuff-combat"
+                },
+                {
+                  "type": "rule",
+                  "slug": "assailment-spells"
+                },
+                {
+                  "type": "rule",
+                  "slug": "shrinking-units"
+                },
+                {
+                  "type": "rule",
+                  "slug": "no-more-foes"
+                },
+                {
+                  "type": "rule",
+                  "slug": "incomplete-ranks"
+                },
+                {
+                  "type": "rule",
+                  "slug": "split-profiles-combat"
+                },
+                {
+                  "type": "rule",
+                  "slug": "different-weapons"
+                },
+                {
+                  "type": "rule",
+                  "slug": "characteristics-of-zero-combat"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Terrain & Combat",
+          "intro": "How terrain and obstacles affect a fight.",
+          "tabs": [
+            {
+              "id": "quick",
+              "label": "Quick",
+              "blocks": [
+                {
+                  "type": "steps",
+                  "items": [
+                    "Note how terrain affects the units in this combat.",
+                    "Apply effects of open ground, hills and difficult terrain.",
+                    "Resolve combats fought across linear obstacles.",
+                    "Apply rules for dangerous or impassable terrain and woods."
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "rules",
+              "label": "Rules",
+              "blocks": [
+                {
+                  "type": "rule",
+                  "slug": "terrain-and-combat"
+                },
+                {
+                  "type": "rule",
+                  "slug": "open-ground-and-hills-combat"
+                },
+                {
+                  "type": "rule",
+                  "slug": "difficult-terrain-combat"
+                },
+                {
+                  "type": "rule",
+                  "slug": "dangerous-terrain-and-woods"
+                },
+                {
+                  "type": "rule",
+                  "slug": "impassable-terrain-combat"
+                },
+                {
+                  "type": "rule",
+                  "slug": "linear-obstacles"
+                },
+                {
+                  "type": "rule",
+                  "slug": "low-linear-obstacles-combat"
+                },
+                {
+                  "type": "rule",
+                  "slug": "defended-low-linear-obstacles-combat"
+                },
+                {
+                  "type": "rule",
+                  "slug": "high-linear-obstacles-combat"
+                },
+                {
+                  "type": "rule",
+                  "slug": "battlefield-decoration-combat"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "End of Turn",
+          "intro": "Once every combat is resolved, the turn ends and play passes to your opponent.",
+          "tabs": [
+            {
+              "id": "quick",
+              "label": "Quick",
+              "blocks": [
+                {
+                  "type": "steps",
+                  "items": [
+                    "Confirm all combats have been resolved.",
+                    "Resolve any 'end of turn' special rules or effects.",
+                    "End your turn and pass play to your opponent."
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "rules",
+              "label": "Rules",
+              "blocks": [
+                {
+                  "type": "rule",
+                  "slug": "end-of-turn"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
