@@ -180,6 +180,7 @@ export function CompanionView({ onHome }: { onHome?: () => void } = {}) {
           <button
             key={p.id}
             onClick={() => goPhase(i)}
+            onPointerDown={() => goPhase(i)}
             onMouseEnter={labeled ? undefined : (e) => showTip(i, e.currentTarget)}
             onMouseLeave={labeled ? undefined : () => hideTip(i)}
             onFocus={labeled ? undefined : (e) => showTip(i, e.currentTarget)}
@@ -363,7 +364,7 @@ export function CompanionView({ onHome }: { onHome?: () => void } = {}) {
                       </div>
                     )}
                     <button
-                      onClick={() => goSub(i)} onMouseEnter={() => setHoverSub(i)} onMouseLeave={() => setHoverSub((h) => (h === i ? null : h))}
+                      onClick={() => goSub(i)} onPointerDown={() => goSub(i)} onMouseEnter={() => setHoverSub(i)} onMouseLeave={() => setHoverSub((h) => (h === i ? null : h))}
                       aria-label={`Sub-phase ${i + 1}: ${s.name}`}
                       style={{
                         width: 28, height: 28, borderRadius: 99, flexShrink: 0, cursor: 'pointer', padding: 0,
