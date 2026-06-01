@@ -276,7 +276,7 @@ export function CompanionView({ onHome }: { onHome?: () => void } = {}) {
           </button>
           <div style={{ padding: '16px 22px 6px' }}>
             <div style={{ ...eb, fontSize: 9.5, color: TOW.muted, marginBottom: 8 }}>{companion?.round ?? 'Round III'} · Your&nbsp;Turn</div>
-            <PhaseStrip style={{ marginBottom: 12 }} />
+            {PhaseStrip({ style: { marginBottom: 12 } })}
             <div style={{ display: 'flex', alignItems: 'center', gap: 9 }}>
               <PhaseGlyph id={phase.glyph} size={22} color={TOW.goldDeep} sw={1.4} />
               <div style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 21, color: TOW.ink, letterSpacing: '0.02em' }}>{phase.name}</div>
@@ -310,7 +310,7 @@ export function CompanionView({ onHome }: { onHome?: () => void } = {}) {
             })}
           </div>
           <div style={{ padding: '14px 18px 20px', borderTop: `1px solid ${TOW.line}`, display: 'flex', gap: 9 }}>
-            <BackBtn /><AdvanceBtn />
+            {BackBtn()}{AdvanceBtn()}
           </div>
         </div>
 
@@ -319,11 +319,11 @@ export function CompanionView({ onHome }: { onHome?: () => void } = {}) {
             <div style={{ ...eb, fontSize: 9.5, color: TOW.goldDeep, marginBottom: 5 }}>Sub-phase {sIdx + 1} of {subCount}</div>
             <div style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 30, color: TOW.ink, letterSpacing: '0.02em', lineHeight: 1.05 }}>{S.name}</div>
             <div style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 15.5, color: TOW.parchDim, lineHeight: 1.45, margin: '10px 0 18px', maxWidth: 560 }}>{S.intro}</div>
-            <TabStrip style={{ maxWidth: 440, marginBottom: 22 }} />
-            <Content />
+            {TabStrip({ style: { maxWidth: 440, marginBottom: 22 } })}
+            {Content()}
           </div>
         </div>
-        <PhaseTip />
+        {PhaseTip()}
       </div>
     );
   }
@@ -346,7 +346,7 @@ export function CompanionView({ onHome }: { onHome?: () => void } = {}) {
 
       {/* phase chips + label-free sub-phase stepper */}
       <div style={{ flexShrink: 0, padding: '9px 12px 10px', background: TOW.panel, borderBottom: `1px solid ${TOW.line}` }}>
-        <PhaseStrip labeled style={{ justifyContent: 'center', marginBottom: 9 }} />
+        {PhaseStrip({ labeled: true, style: { justifyContent: 'center', marginBottom: 9 } })}
         <div ref={stepRef} className="no-scrollbar" style={{ overflowX: 'auto' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: subCount <= 6 ? 'center' : 'flex-start', width: subCount <= 6 ? 'auto' : 'max-content', minWidth: '100%' }}>
             {phase.subs.map((s, i) => {
@@ -387,16 +387,16 @@ export function CompanionView({ onHome }: { onHome?: () => void } = {}) {
         <div style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 21, color: TOW.ink, letterSpacing: '0.02em', lineHeight: 1.1, marginTop: 3 }}>{S.name}</div>
       </div>
 
-      <TabStrip style={{ margin: '0 16px 10px', flexShrink: 0 }} />
+      {TabStrip({ style: { margin: '0 16px 10px', flexShrink: 0 } })}
 
       <div ref={scrollRef} style={{ flex: 1, minHeight: 0, overflowY: 'auto', padding: '4px 16px 12px' }}>
-        <Content />
+        {Content()}
       </div>
 
       <div style={{ flexShrink: 0, padding: '10px 16px', paddingBottom: 'max(12px, env(safe-area-inset-bottom))', display: 'flex', gap: 10, borderTop: `1px solid ${TOW.line}`, background: TOW.panel }}>
-        <BackBtn /><AdvanceBtn />
+        {BackBtn()}{AdvanceBtn()}
       </div>
-      <PhaseTip />
+      {PhaseTip()}
     </div>
   );
 }
