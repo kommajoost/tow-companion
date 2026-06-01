@@ -160,7 +160,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
               .select()
               .single(),
             15000,
-            'Creating the game took too long — check your connection and try again.',
+            'Creating the game timed out. Please reload the app and try again.',
           );
           if (!err && data) {
             setGame(data as GameRow);
@@ -189,7 +189,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
         const { data, error: err } = await withTimeout(
           supabase.from(TOW_GAMES).select('*').eq('code', c).maybeSingle(),
           15000,
-          'Joining took too long — check your connection and try again.',
+          'Joining timed out. Please reload the app and try again.',
         );
         if (err) throw err;
         if (!data) throw new Error('No game found with that code.');
@@ -201,7 +201,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
             .select()
             .single(),
           15000,
-          'Joining took too long — check your connection and try again.',
+          'Joining timed out. Please reload the app and try again.',
         );
         if (uerr) throw uerr;
         setGame(updated as GameRow);

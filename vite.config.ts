@@ -39,7 +39,15 @@ export default defineConfig({
         clientsClaim: true,
         skipWaiting: true,
         navigateFallback: 'index.html',
+        // Never let the SW handle navigations to API/auth paths (defensive).
+        navigateFallbackDenylist: [/^\/rest\//, /^\/auth\//, /^\/realtime\//],
         runtimeCaching: [
+          {
+            // Supabase game data + realtime REST: always go straight to the network, never
+            // cache or buffer. A stale/half-updated SW must not break create/join/sync.
+            urlPattern: ({ url }) => url.hostname.endsWith('.supabase.co'),
+            handler: 'NetworkOnly',
+          },
           {
             urlPattern: ({ url }) => /\.(?:json)$/.test(url.pathname),
             handler: 'StaleWhileRevalidate',
