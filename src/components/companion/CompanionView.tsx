@@ -58,7 +58,7 @@ export function CompanionView({ onHome }: { onHome?: () => void } = {}) {
   const tabs = S.tabs;
   const activeTab = tabs.find((t) => t.id === tab) || tabs[0];
 
-  const wide = w >= 900;
+  const wide = w >= 720;
 
   const resetScroll = () => {
     if (scrollRef.current) scrollRef.current.scrollTop = 0;
@@ -186,15 +186,15 @@ export function CompanionView({ onHome }: { onHome?: () => void } = {}) {
             onBlur={labeled ? undefined : () => hideTip(i)}
             aria-label={`${p.name} phase`}
             style={{
-              flexShrink: 0, display: 'flex', alignItems: 'center', gap: labeled ? 5 : 6, padding: labeled ? '5px 8px' : '6px 10px', borderRadius: 9, cursor: 'pointer',
+              flexShrink: 0, display: 'flex', alignItems: 'center', gap: 6, padding: labeled ? '6px 11px' : '6px 10px', borderRadius: 9, cursor: 'pointer',
               background: on ? '#fff7e9' : 'transparent',
               border: `1px solid ${on ? TOW.lineStrong : TOW.line}`,
               color: on ? TOW.goldDeep : TOW.muted,
             }}
           >
-            <PhaseGlyph id={p.glyph} size={labeled ? 13 : 15} color={on ? TOW.goldDeep : TOW.muted} sw={1.5} />
+            {!labeled && <PhaseGlyph id={p.glyph} size={15} color={on ? TOW.goldDeep : TOW.muted} sw={1.5} />}
             {labeled ? (
-              <span style={{ fontFamily: towFont.display, fontWeight: on ? 700 : 600, fontSize: 10.5, letterSpacing: '0.01em', color: on ? TOW.goldDeep : TOW.parchDim }}>{p.name}</span>
+              <span style={{ fontFamily: towFont.display, fontWeight: on ? 700 : 600, fontSize: 11, letterSpacing: '0.01em', color: on ? TOW.goldDeep : TOW.parchDim }}>{p.name}</span>
             ) : (
               <span style={{ ...eb, fontSize: 9.5 }}>{p.num}</span>
             )}
@@ -346,7 +346,7 @@ export function CompanionView({ onHome }: { onHome?: () => void } = {}) {
 
       {/* phase chips + label-free sub-phase stepper */}
       <div style={{ flexShrink: 0, padding: '9px 12px 10px', background: TOW.panel, borderBottom: `1px solid ${TOW.line}` }}>
-        <PhaseStrip labeled style={{ justifyContent: 'flex-start', marginBottom: 9 }} />
+        <PhaseStrip labeled style={{ justifyContent: 'center', marginBottom: 9 }} />
         <div ref={stepRef} className="no-scrollbar" style={{ overflowX: 'auto' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: subCount <= 6 ? 'center' : 'flex-start', width: subCount <= 6 ? 'auto' : 'max-content', minWidth: '100%' }}>
             {phase.subs.map((s, i) => {
