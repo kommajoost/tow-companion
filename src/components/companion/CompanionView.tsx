@@ -58,7 +58,7 @@ export function CompanionView({ onHome }: { onHome?: () => void } = {}) {
   const tabs = S.tabs;
   const activeTab = tabs.find((t) => t.id === tab) || tabs[0];
 
-  const wide = w >= 720;
+  const wide = w >= 900;
 
   const resetScroll = () => {
     if (scrollRef.current) scrollRef.current.scrollTop = 0;
@@ -169,7 +169,10 @@ export function CompanionView({ onHome }: { onHome?: () => void } = {}) {
   };
   const hideTip = (i: number) => setPhaseTip((t) => (t && t.i === i ? null : t));
 
-  const PhaseStrip = ({ style }: { style?: React.CSSProperties }) => (
+  // Tap any phase to jump straight to it. `labeled` spells out the phase name on each chip
+  // (used on phone, where the hover popup can't fire on touch); otherwise it's glyph + numeral
+  // with an instant hover popup (desktop sidebar).
+  const PhaseStrip = ({ style, labeled }: { style?: React.CSSProperties; labeled?: boolean }) => (
     <div className="no-scrollbar" style={{ display: 'flex', gap: 6, overflowX: 'auto', ...style }}>
       {phases.map((p, i) => {
         const on = i === pIdx;
@@ -177,20 +180,24 @@ export function CompanionView({ onHome }: { onHome?: () => void } = {}) {
           <button
             key={p.id}
             onClick={() => goPhase(i)}
-            onMouseEnter={(e) => showTip(i, e.currentTarget)}
-            onMouseLeave={() => hideTip(i)}
-            onFocus={(e) => showTip(i, e.currentTarget)}
-            onBlur={() => hideTip(i)}
+            onMouseEnter={labeled ? undefined : (e) => showTip(i, e.currentTarget)}
+            onMouseLeave={labeled ? undefined : () => hideTip(i)}
+            onFocus={labeled ? undefined : (e) => showTip(i, e.currentTarget)}
+            onBlur={labeled ? undefined : () => hideTip(i)}
             aria-label={`${p.name} phase`}
             style={{
-              flexShrink: 0, display: 'flex', alignItems: 'center', gap: 6, padding: '6px 10px', borderRadius: 9, cursor: 'pointer',
+              flexShrink: 0, display: 'flex', alignItems: 'center', gap: labeled ? 5 : 6, padding: labeled ? '5px 8px' : '6px 10px', borderRadius: 9, cursor: 'pointer',
               background: on ? '#fff7e9' : 'transparent',
-              border: `1px solid ${on ? TOW.lineStrong : 'transparent'}`,
+              border: `1px solid ${on ? TOW.lineStrong : TOW.line}`,
               color: on ? TOW.goldDeep : TOW.muted,
             }}
           >
-            <PhaseGlyph id={p.glyph} size={15} color={on ? TOW.goldDeep : TOW.muted} sw={1.5} />
-            <span style={{ ...eb, fontSize: 9.5 }}>{p.num}</span>
+            <PhaseGlyph id={p.glyph} size={labeled ? 13 : 15} color={on ? TOW.goldDeep : TOW.muted} sw={1.5} />
+            {labeled ? (
+              <span style={{ fontFamily: towFont.display, fontWeight: on ? 700 : 600, fontSize: 10.5, letterSpacing: '0.01em', color: on ? TOW.goldDeep : TOW.parchDim }}>{p.name}</span>
+            ) : (
+              <span style={{ ...eb, fontSize: 9.5 }}>{p.num}</span>
+            )}
           </button>
         );
       })}
@@ -339,7 +346,7 @@ export function CompanionView({ onHome }: { onHome?: () => void } = {}) {
 
       {/* phase chips + label-free sub-phase stepper */}
       <div style={{ flexShrink: 0, padding: '9px 12px 10px', background: TOW.panel, borderBottom: `1px solid ${TOW.line}` }}>
-        <PhaseStrip style={{ justifyContent: 'center', marginBottom: 9 }} />
+        <PhaseStrip labeled style={{ justifyContent: 'flex-start', marginBottom: 9 }} />
         <div ref={stepRef} className="no-scrollbar" style={{ overflowX: 'auto' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: subCount <= 6 ? 'center' : 'flex-start', width: subCount <= 6 ? 'auto' : 'max-content', minWidth: '100%' }}>
             {phase.subs.map((s, i) => {
