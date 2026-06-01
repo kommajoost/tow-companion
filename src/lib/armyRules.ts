@@ -118,11 +118,33 @@ export function unitSize(unit: ArmyUnit): number {
   return unit.count && unit.count > 0 ? unit.count : 1;
 }
 
-/** Wounds per model — the `W` stat from the unit's first profile (default 1). */
+// Parse a `W` stat value. A value like "+2" or "(+1)" is a wounds MODIFIER (a ridden
+// mount/steed adding wounds to the rider); a plain number is an absolute value.
+function parseW(v: string | undefined): { mod: number | null; abs: number | null } {
+  const s = String(v ?? '').trim();
+  const m = s.match(/^\(?\s*\+\s*(\d+)\s*\)?$/);
+  if (m) return { mod: parseInt(m[1], 10), abs: null };
+  const n = parseInt(s.replace(/[^\d]/g, ''), 10);
+  return { mod: null, abs: Number.isFinite(n) ? n : null };
+}
+
+/**
+ * Wounds for one model. Base = the `W` of the unit's first (main) profile, PLUS any mount/
+ * steed wound modifiers on later profiles — e.g. a character on a Dark Pegasus whose profile
+ * shows `W(+1)` gets +1 wound. Additional profiles with an absolute `W` (rank-and-file mounts
+ * like a Cold One) don't add. Defaults to 1.
+ */
 export function woundsPerModel(unit: ArmyUnit): number {
-  const w = unit.profiles?.[0]?.stats.find((s) => s.k.toUpperCase() === 'W')?.v ?? '';
-  const n = parseInt(String(w).replace(/[^\d]/g, ''), 10);
-  return Number.isFinite(n) && n > 0 ? n : 1;
+  const profiles = unit.profiles ?? [];
+  let base = 0;
+  let bonus = 0;
+  profiles.forEach((p, idx) => {
+    const { mod, abs } = parseW(p.stats.find((s) => s.k.toUpperCase() === 'W')?.v);
+    if (mod != null) bonus += mod;
+    else if (idx === 0 && abs != null && abs > 0) base = abs;
+  });
+  const total = base + bonus;
+  return total > 0 ? total : 1;
 }
 
 /** Total strength of a unit = models × wounds per model. */
