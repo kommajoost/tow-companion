@@ -20,6 +20,7 @@ export function BattleBar({
   myName,
   opponentName,
   editable = true,
+  vertical = false,
 }: {
   round: number;
   onRound: (dir: number) => void;
@@ -29,6 +30,8 @@ export function BattleBar({
   myName: string;
   opponentName: string;
   editable?: boolean;
+  /** Stack Round above VP (for a narrow sidebar) instead of side by side. */
+  vertical?: boolean;
 }) {
   const card: React.CSSProperties = {
     padding: '10px 12px',
@@ -51,7 +54,7 @@ export function BattleBar({
   });
 
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1.25fr', gap: 8 }}>
+    <div style={vertical ? { display: 'flex', flexDirection: 'column', gap: 8 } : { display: 'grid', gridTemplateColumns: '1fr 1.25fr', gap: 8 }}>
       {/* Battle Round */}
       <div style={{ ...card, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8 }}>
         <div>

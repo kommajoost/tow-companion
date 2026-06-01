@@ -68,10 +68,13 @@ export function AppShell() {
         <GameMode />
       ) : tab === 'settings' ? (
         <SettingsMode />
+      ) : tab === 'browse' ? (
+        <div className="h-full pt-safe">
+          <BrowseMode />
+        </div>
       ) : (
         <div className="mx-auto h-full max-w-2xl pt-safe">
-          {tab === 'browse' && <BrowseMode />}
-          {tab === 'favorites' && <FavoritesMode />}
+          <FavoritesMode />
         </div>
       )}
     </main>
