@@ -10,7 +10,7 @@ import {
 } from 'react';
 import { supabase, TOW_GAMES } from './lib/supabase';
 import { usePersistentState } from './store';
-import type { Army, GameRow, GameSummary } from './types';
+import type { Army, GameRow, GameSummary, GameTracker } from './types';
 
 type Seat = 'host' | 'guest' | 'solo';
 
@@ -31,6 +31,9 @@ interface GameContextValue {
   startSolo: () => void;
   setMyArmy: (army: Army) => void;
   setOpponentArmy: (army: Army) => void;
+  /** Shared battle state (round, VP, per-unit casualties). */
+  tracker: GameTracker;
+  setTracker: (t: GameTracker) => void;
   leaveGame: () => void;
 }
 
@@ -85,11 +88,23 @@ function withTimeout<T>(p: PromiseLike<T>, ms: number, msg: string): Promise<T> 
   ]);
 }
 
+const EMPTY_TRACKER: GameTracker = { round: 1, vp: {}, units: {} };
+// The DB default is `{}`, so fill in any missing fields before use.
+function normTracker(t: GameTracker | null | undefined): GameTracker {
+  if (!t || typeof t !== 'object') return { round: 1, vp: {}, units: {} };
+  return {
+    round: typeof t.round === 'number' ? t.round : 1,
+    vp: t.vp && typeof t.vp === 'object' ? t.vp : {},
+    units: t.units && typeof t.units === 'object' ? t.units : {},
+  };
+}
+
 export function GameProvider({ children }: { children: ReactNode }) {
   const [persisted, setPersisted] = usePersistentState<Persisted | null>('tow:game', null);
   const [game, setGame] = useState<GameRow | null>(null);
   const [soloOpponent, setSoloOpponent] = useState<Army | null>(null);
   const [soloMine, setSoloMine] = useState<Army | null>(null);
+  const [soloTracker, setSoloTracker] = useState<GameTracker>(EMPTY_TRACKER);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const channelRef = useRef<ReturnType<typeof supabase.channel> | null>(null);
@@ -115,6 +130,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
           guest_army: row.guest_army ?? prev.guest_army,
           host_name: row.host_name ?? prev.host_name,
           guest_name: row.guest_name ?? prev.guest_name,
+          tracker: row.tracker ?? prev.tracker,
         };
       });
     };
@@ -278,6 +294,27 @@ export function GameProvider({ children }: { children: ReactNode }) {
     [seat, code],
   );
 
+  // Update the shared battle tracker (round, VP, casualties). Solo: local state.
+  // Online: write the `tracker` column so both players see the same battle state.
+  const setTracker = useCallback(
+    (t: GameTracker) => {
+      if (seat === 'solo') {
+        setSoloTracker(t);
+        return;
+      }
+      if (!code || !seat) return;
+      setGame((g) => (g ? { ...g, tracker: t } : g)); // optimistic
+      supabase
+        .from(TOW_GAMES)
+        .update({ tracker: t })
+        .eq('code', code)
+        .then(({ error: err }) => {
+          if (err) setError(supaErr(err));
+        });
+    },
+    [seat, code],
+  );
+
   const leaveGame = useCallback(() => {
     if (channelRef.current) {
       supabase.removeChannel(channelRef.current);
@@ -286,6 +323,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
     setGame(null);
     setSoloMine(null);
     setSoloOpponent(null);
+    setSoloTracker(EMPTY_TRACKER);
     setPersisted(null);
   }, [setPersisted]);
 
@@ -328,6 +366,8 @@ export function GameProvider({ children }: { children: ReactNode }) {
       startSolo,
       setMyArmy,
       setOpponentArmy,
+      tracker: seat === 'solo' ? soloTracker : normTracker(game?.tracker),
+      setTracker,
       leaveGame,
     };
   }, [
@@ -336,6 +376,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
     game,
     soloMine,
     soloOpponent,
+    soloTracker,
     busy,
     error,
     createGame,
@@ -344,6 +385,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
     startSolo,
     setMyArmy,
     setOpponentArmy,
+    setTracker,
     leaveGame,
   ]);
 

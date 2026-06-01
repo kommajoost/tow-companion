@@ -2,7 +2,9 @@ import { useState } from 'react';
 import { TOW, towFont, engraved } from '../../design/tow';
 import { useGame } from '../../game';
 import { parseArmyList } from '../../lib/armyParser';
+import { unitTotalStrength } from '../../lib/armyRules';
 import { UnitCard } from './UnitCard';
+import { BattleBar } from './BattleBar';
 import { OwbInstructions } from './OwbInstructions';
 import type { Army, ArmyUnit } from '../../types';
 
@@ -11,20 +13,53 @@ const eb = engraved as React.CSSProperties;
 // Active game: a code badge, a You / Opponent toggle, and the selected army's units.
 // In solo mode you can paste the opponent army here too.
 export function GameView() {
-  const { code, seat, myArmy, myName, opponentArmy, opponentName, setMyArmy, setOpponentArmy, leaveGame } = useGame();
+  const { code, seat, myArmy, myName, opponentArmy, opponentName, setMyArmy, setOpponentArmy, tracker, setTracker, leaveGame } = useGame();
   const [side, setSide] = useState<'me' | 'opp'>('me');
 
   const army: Army | null = side === 'me' ? myArmy : opponentArmy;
   const label = side === 'me' ? myName || 'You' : opponentName || 'Opponent';
 
-  // Both armies are editable (you can track spells for yourself and your opponent). Edits to
-  // a column sync to the other player in an online game.
+  // Both armies are editable (you track spells and casualties for both sides). Edits to a
+  // column sync to the other player in an online game.
   const editable = true;
   const applyArmy = side === 'me' ? setMyArmy : setOpponentArmy;
   const onUnitChange = (unitId: string, patch: Partial<ArmyUnit>) => {
     if (!army) return;
     applyArmy({ ...army, units: army.units.map((u) => (u.id === unitId ? { ...u, ...patch } : u)) });
   };
+
+  // ── shared battle tracker ──
+  // Map a viewer-relative side to an absolute seat key so both players key state identically.
+  const absSeat = (s: 'me' | 'opp'): string =>
+    seat === 'solo' ? s : s === 'me' ? seat ?? 'host' : seat === 'host' ? 'guest' : 'host';
+  const unitKey = (s: 'me' | 'opp', unitId: string) => `${absSeat(s)}:${unitId}`;
+  const meKey = absSeat('me');
+  const oppKey = absSeat('opp');
+
+  const adjCasualty = (unitId: string, dir: number) => {
+    const u = army?.units.find((x) => x.id === unitId);
+    if (!u) return;
+    const total = unitTotalStrength(u);
+    const key = unitKey(side, unitId);
+    const prev = tracker.units[key] ?? { lost: 0, fleeing: false };
+    const lost = Math.min(total, Math.max(0, prev.lost + (dir < 0 ? 1 : -1)));
+    setTracker({ ...tracker, units: { ...tracker.units, [key]: { ...prev, lost } } });
+  };
+  const toggleFlee = (unitId: string) => {
+    const key = unitKey(side, unitId);
+    const prev = tracker.units[key] ?? { lost: 0, fleeing: false };
+    setTracker({ ...tracker, units: { ...tracker.units, [key]: { ...prev, fleeing: !prev.fleeing } } });
+  };
+  const adjRound = (dir: number) =>
+    setTracker({ ...tracker, round: Math.min(6, Math.max(1, tracker.round + dir)) });
+  const adjVp = (which: 'me' | 'opp', dir: number) => {
+    const key = which === 'me' ? meKey : oppKey;
+    setTracker({ ...tracker, vp: { ...tracker.vp, [key]: Math.max(0, (tracker.vp[key] ?? 0) + dir) } });
+  };
+
+  const afield = army
+    ? army.units.filter((u) => unitTotalStrength(u) - (tracker.units[unitKey(side, u.id)]?.lost ?? 0) > 0).length
+    : 0;
 
   const groups: { category: string; units: ArmyUnit[] }[] = [];
   if (army) {
@@ -62,18 +97,45 @@ export function GameView() {
         })}
       </div>
 
+      {army && (
+        <div style={{ flexShrink: 0, padding: '0 10px 8px', maxWidth: 620, width: '100%', margin: '0 auto', boxSizing: 'border-box' }}>
+          <BattleBar
+            round={tracker.round}
+            onRound={adjRound}
+            vpMe={tracker.vp[meKey] ?? 0}
+            vpOpp={tracker.vp[oppKey] ?? 0}
+            onVp={adjVp}
+            myName={myName || 'You'}
+            opponentName={opponentName || 'Opponent'}
+            editable={editable}
+          />
+        </div>
+      )}
+
       <div style={{ flex: 1, minHeight: 0, overflowY: 'auto', padding: '4px 12px 28px', maxWidth: 620, width: '100%', margin: '0 auto' }}>
         {army ? (
           <>
             <div style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 14, color: TOW.parchDim, margin: '4px 2px 12px' }}>
-              {label} — {army.faction || army.name}{army.points != null ? ` · ${army.points} pts` : ''}
+              {label} — {army.faction || army.name}{army.points != null ? ` · ${army.points} pts` : ''} · {afield}/{army.units.length} afield
             </div>
             {groups.map((g) => (
               <div key={g.category} style={{ marginBottom: 8 }}>
                 <div style={{ ...eb, fontSize: 9, color: TOW.goldDeep, margin: '10px 2px 8px' }}>{g.category}</div>
-                {g.units.map((u) => (
-                  <UnitCard key={u.id} unit={u} editable={editable} onChange={(patch) => onUnitChange(u.id, patch)} />
-                ))}
+                {g.units.map((u) => {
+                  const t = tracker.units[unitKey(side, u.id)];
+                  return (
+                    <UnitCard
+                      key={u.id}
+                      unit={u}
+                      editable={editable}
+                      onChange={(patch) => onUnitChange(u.id, patch)}
+                      lost={t?.lost ?? 0}
+                      fleeing={t?.fleeing ?? false}
+                      onCasualty={(dir) => adjCasualty(u.id, dir)}
+                      onFlee={() => toggleFlee(u.id)}
+                    />
+                  );
+                })}
               </div>
             ))}
           </>

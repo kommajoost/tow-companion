@@ -188,6 +188,21 @@ export interface Army {
   raw: string; // original pasted text
 }
 
+/** Per-unit battle state, keyed `<seat>:<unitId>` (seat = host/guest, or me/opp solo). */
+export interface UnitTrack {
+  lost: number; // wounds/casualties taken
+  fleeing: boolean;
+}
+
+/** Shared battle-tracking state for a game (round, VP per side, per-unit casualties). */
+export interface GameTracker {
+  round: number; // 1–6
+  /** Victory points keyed by seat (host/guest, or me/opp in solo). */
+  vp: Record<string, number>;
+  /** Per-unit state keyed `<seat>:<unitId>`. */
+  units: Record<string, UnitTrack>;
+}
+
 /** A shared game row (mirrors the tow_games table). */
 export interface GameRow {
   code: string;
@@ -195,6 +210,7 @@ export interface GameRow {
   host_army: Army | null;
   guest_name: string | null;
   guest_army: Army | null;
+  tracker: GameTracker | null;
 }
 
 /** Lightweight game summary for the join lobby (no army payloads). */

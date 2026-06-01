@@ -2,33 +2,43 @@ import { useMemo } from 'react';
 import { useData } from '../../data';
 import { useUI } from '../../state';
 import { TOW, towFont, engraved } from '../../design/tow';
-import { buildRuleIndex, resolveRuleSlug, resolveOptionSlug, wizardInfo } from '../../lib/armyRules';
+import { buildRuleIndex, resolveRuleSlug, resolveOptionSlug, wizardInfo, unitTotalStrength } from '../../lib/armyRules';
 import { WizardSpells } from './WizardSpells';
+import { WoundTracker } from './WoundTracker';
 import type { ArmyUnit } from '../../types';
 
 const eb = engraved as React.CSSProperties;
 
-// One army unit: title + points, options, stat-profile table(s), and tappable
-// special-rule chips (chips that resolve to a wiki rule open the pop-up sheet).
-// Wizard units also get a spell picker (editable for your own army).
+// One army unit: title + points, options, stat-profile table(s), tappable special-rule
+// chips (open the pop-up sheet), a wizard spell picker, and a strength/casualty tracker.
+// When the unit is wiped out it shows "Destroyed" and dims.
 export function UnitCard({
   unit,
   editable = false,
   onChange,
+  lost,
+  fleeing,
+  onCasualty,
+  onFlee,
 }: {
   unit: ArmyUnit;
   editable?: boolean;
   onChange?: (patch: Partial<ArmyUnit>) => void;
+  lost?: number;
+  fleeing?: boolean;
+  onCasualty?: (dir: number) => void;
+  onFlee?: () => void;
 }) {
   const { rules } = useData();
   const { openRule } = useUI();
   const idx = useMemo(() => buildRuleIndex(rules), [rules]);
   const isWizard = wizardInfo(unit).isWizard;
+  const dead = (lost ?? 0) >= unitTotalStrength(unit) && onCasualty != null;
 
   return (
-    <section style={{ border: `1px solid ${TOW.line}`, borderRadius: 12, background: TOW.panel2, padding: 14, marginBottom: 10 }}>
+    <section style={{ border: `1px solid ${TOW.line}`, borderRadius: 12, background: dead ? 'rgba(74,55,22,0.03)' : TOW.panel2, padding: 14, marginBottom: 10, opacity: dead ? 0.7 : 1 }}>
       <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, marginBottom: 8 }}>
-        <h3 style={{ margin: 0, flex: 1, minWidth: 0, fontFamily: towFont.display, fontWeight: 700, fontSize: 16, color: TOW.ink }}>
+        <h3 style={{ margin: 0, flex: 1, minWidth: 0, fontFamily: towFont.display, fontWeight: 700, fontSize: 16, color: TOW.ink, textDecoration: dead ? 'line-through' : 'none' }}>
           {unit.count ? <span style={{ color: TOW.goldDeep }}>{unit.count}× </span> : null}
           {unit.name}
         </h3>
@@ -103,6 +113,17 @@ export function UnitCard({
 
       {isWizard && (
         <WizardSpells unit={unit} editable={editable} onChange={onChange ?? (() => {})} />
+      )}
+
+      {onCasualty && onFlee && (
+        <WoundTracker
+          unit={unit}
+          lost={lost ?? 0}
+          onCasualty={onCasualty}
+          fleeing={!!fleeing}
+          onFlee={onFlee}
+          editable={editable}
+        />
       )}
     </section>
   );

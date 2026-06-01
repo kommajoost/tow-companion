@@ -111,6 +111,25 @@ export function resolveOptionSlug(label: string, idx: Map<string, string>): stri
   return null;
 }
 
+// ─────────────────────────── Battle tracking helpers ───────────────────────────
+
+/** Number of models in a unit (the leading multiplier; single models = 1). */
+export function unitSize(unit: ArmyUnit): number {
+  return unit.count && unit.count > 0 ? unit.count : 1;
+}
+
+/** Wounds per model — the `W` stat from the unit's first profile (default 1). */
+export function woundsPerModel(unit: ArmyUnit): number {
+  const w = unit.profiles?.[0]?.stats.find((s) => s.k.toUpperCase() === 'W')?.v ?? '';
+  const n = parseInt(String(w).replace(/[^\d]/g, ''), 10);
+  return Number.isFinite(n) && n > 0 ? n : 1;
+}
+
+/** Total strength of a unit = models × wounds per model. */
+export function unitTotalStrength(unit: ArmyUnit): number {
+  return unitSize(unit) * woundsPerModel(unit);
+}
+
 // ───────────────────────────── Wizards & lores ─────────────────────────────
 
 export interface WizardInfo {

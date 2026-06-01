@@ -9,9 +9,11 @@ const eb = engraved as React.CSSProperties;
 // actions — Begin a Battle (→ turn tracker) and Open the Rulebook (→ reference).
 export function HomeCover({
   onBegin,
+  onArmy,
   onRulebook,
 }: {
   onBegin: () => void;
+  onArmy: () => void;
   onRulebook: () => void;
 }) {
   const goldGrad = `linear-gradient(180deg, ${TOW.goldBright} 0%, ${TOW.gold} 55%, ${TOW.goldDeep} 100%)`;
@@ -101,6 +103,32 @@ export function HomeCover({
           </svg>
           <span style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 17, letterSpacing: '0.02em' }}>
             Begin a Battle
+          </span>
+        </button>
+
+        <button
+          onClick={onArmy}
+          style={{
+            width: '100%',
+            marginTop: 12,
+            borderRadius: 13,
+            cursor: 'pointer',
+            padding: '16px 20px',
+            background: TOW.panel2,
+            border: `1px solid ${TOW.lineStrong}`,
+            color: TOW.ink,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: 12,
+          }}
+        >
+          {/* shield */}
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+            <path d="M12 3.5l7 2.4v5.2c0 4.2-2.9 7.3-7 8.9-4.1-1.6-7-4.7-7-8.9V5.9z" stroke={TOW.goldDeep} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+          <span style={{ fontFamily: towFont.display, fontWeight: 600, fontSize: 17, letterSpacing: '0.02em' }}>
+            Muster Your Army
           </span>
         </button>
 

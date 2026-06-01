@@ -30,6 +30,10 @@ export function AppShell() {
           setTab('play');
           setScreen('app');
         }}
+        onArmy={() => {
+          setTab('game');
+          setScreen('app');
+        }}
         onRulebook={() => {
           setTab('browse');
           setScreen('app');
