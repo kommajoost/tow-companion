@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { usePersistentState } from '../store';
 import { TOW } from '../design/tow';
 import { HomeCover } from './HomeCover';
@@ -6,6 +7,7 @@ import { BrowseMode } from './BrowseMode';
 import { FavoritesMode } from './FavoritesMode';
 import { GameMode } from './game/GameMode';
 import { SettingsMode } from './SettingsMode';
+import { NavRail } from './NavRail';
 
 type Tab = 'play' | 'browse' | 'game' | 'favorites' | 'settings';
 type Screen = 'home' | 'app';
@@ -18,11 +20,26 @@ const TABS: { id: Tab; label: string; icon: string }[] = [
   { id: 'settings', label: 'Settings', icon: '⚙' },
 ];
 
+// Wide (laptop/large tablet) → a slim global icon rail on the left instead of the bottom
+// tab bar, which on the Turns screen yields the design's three-column layout. Phone keeps
+// the bottom bar. 800px keeps the content pane ≥ ~720px (the companion's own wide breakpoint).
+function useWide(threshold = 800) {
+  const [wide, setWide] = useState(() => typeof window !== 'undefined' && window.innerWidth >= threshold);
+  useEffect(() => {
+    const on = () => setWide(window.innerWidth >= threshold);
+    window.addEventListener('resize', on);
+    on();
+    return () => window.removeEventListener('resize', on);
+  }, [threshold]);
+  return wide;
+}
+
 export function AppShell() {
   const [screen, setScreen] = usePersistentState<Screen>('tow:screen', 'home');
   const [tab, setTab] = usePersistentState<Tab>('tow:tab', 'play');
+  const wide = useWide();
 
-  // The ceremonial cover is the entry point; it has no bottom navigation.
+  // The ceremonial cover is the entry point; it has no navigation.
   if (screen === 'home') {
     return (
       <HomeCover
@@ -42,24 +59,38 @@ export function AppShell() {
     );
   }
 
+  const content = (
+    <main className="relative min-h-0 flex-1 overflow-hidden">
+      {/* Play is the full-width responsive companion; other tabs are centred + readable. */}
+      {tab === 'play' ? (
+        <CompanionView onHome={() => setScreen('home')} />
+      ) : tab === 'game' ? (
+        <GameMode />
+      ) : tab === 'settings' ? (
+        <SettingsMode />
+      ) : (
+        <div className="mx-auto h-full max-w-2xl pt-safe">
+          {tab === 'browse' && <BrowseMode />}
+          {tab === 'favorites' && <FavoritesMode />}
+        </div>
+      )}
+    </main>
+  );
+
+  // ── Wide: global icon rail + content pane (no bottom bar) ──
+  if (wide) {
+    return (
+      <div className="flex h-full" style={{ flexDirection: 'row' }}>
+        <NavRail tab={tab} onTab={setTab} onHome={() => setScreen('home')} />
+        {content}
+      </div>
+    );
+  }
+
+  // ── Phone: content + bottom tab bar ──
   return (
     <div className="flex h-full flex-col">
-      <main className="relative min-h-0 flex-1 overflow-hidden">
-        {/* Play is the full-width responsive companion; other tabs are centred + readable. */}
-        {tab === 'play' ? (
-          <CompanionView onHome={() => setScreen('home')} />
-        ) : tab === 'game' ? (
-          <GameMode />
-        ) : tab === 'settings' ? (
-          <SettingsMode />
-        ) : (
-          <div className="mx-auto h-full max-w-2xl pt-safe">
-            {tab === 'browse' && <BrowseMode />}
-            {tab === 'favorites' && <FavoritesMode />}
-          </div>
-        )}
-      </main>
-
+      {content}
       <nav
         className="tow-leather flex items-stretch pb-safe"
         style={{ borderTop: `1px solid ${TOW.lineStrong}` }}
