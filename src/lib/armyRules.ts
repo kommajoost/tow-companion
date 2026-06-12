@@ -13,12 +13,35 @@ const normalize = (s: string) =>
     .replace(/\s+/g, ' ')
     .trim();
 
-// Build a name→slug index once from the rules map.
+const stripParens = (s: string) => s.replace(/\([^)]*\)/g, ' ').replace(/\s+/g, ' ').trim();
+
+// Build a name→slug index from the rules map. Exact rule names win; then paren-stripped
+// aliases fill the gaps so army-list labels resolve to rules whose wiki name carries a value
+// placeholder — e.g. "Impact Hits (D6+1)", "Hatred (High Elves)", "Fly (9)", "Magic
+// Resistance (-1)", "Multiple Shots (2)" → "Impact Hits (X)", "Hatred (X)", "Fly (X)",
+// "Magic Resistance (-X)", "Multiple Shots (X)". On alias collisions the shortest (most
+// canonical) rule name wins, so e.g. "Magic Resistance (-X)" beats "...(Magic)".
 export function buildRuleIndex(rules: Record<string, Rule>): Map<string, string> {
   const idx = new Map<string, string>();
+  const exact = new Set<string>();
   for (const r of Object.values(rules)) {
     const k = normalize(r.name);
-    if (k && !idx.has(k)) idx.set(k, r.slug);
+    if (k && !idx.has(k)) {
+      idx.set(k, r.slug);
+      exact.add(k);
+    }
+  }
+  const aliasLen = new Map<string, number>();
+  for (const r of Object.values(rules)) {
+    const stripped = stripParens(r.name);
+    if (!stripped || stripped === r.name.trim()) continue;
+    const k = normalize(stripped);
+    if (!k || exact.has(k)) continue; // never override an exact rule name
+    const prev = aliasLen.get(k);
+    if (prev == null || r.name.length < prev) {
+      idx.set(k, r.slug);
+      aliasLen.set(k, r.name.length);
+    }
   }
   return idx;
 }
@@ -34,7 +57,14 @@ export function resolveRuleSlug(label: string, idx: Map<string, string>): string
   ];
   for (const c of candidates) {
     const k = normalize(c);
-    if (k && idx.has(k)) return idx.get(k)!;
+    if (!k) continue;
+    if (idx.has(k)) return idx.get(k)!;
+    // final-word singular/plural (e.g. "Ward Save" → "Ward Saves")
+    const words = k.split(' ');
+    const last = words[words.length - 1];
+    const swapped = /s$/.test(last) ? last.replace(/s$/, '') : last + 's';
+    const k2 = [...words.slice(0, -1), swapped].join(' ');
+    if (k2 !== k && idx.has(k2)) return idx.get(k2)!;
   }
   return null;
 }
