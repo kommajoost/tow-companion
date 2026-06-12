@@ -8,6 +8,7 @@ import { FavoritesMode } from './FavoritesMode';
 import { GameMode } from './game/GameMode';
 import { SettingsMode } from './SettingsMode';
 import { NavRail } from './NavRail';
+import { CombatCalc } from './CombatCalc';
 
 type Tab = 'play' | 'browse' | 'game' | 'favorites' | 'settings';
 type Screen = 'home' | 'app';
@@ -86,6 +87,7 @@ export function AppShell() {
       <div className="flex h-full" style={{ flexDirection: 'row' }}>
         <NavRail tab={tab} onTab={setTab} onHome={() => setScreen('home')} />
         {content}
+        <CombatCalc bottom={20} />
       </div>
     );
   }
@@ -94,6 +96,7 @@ export function AppShell() {
   return (
     <div className="flex h-full flex-col">
       {content}
+      <CombatCalc bottom={88} />
       <nav
         className="tow-leather flex items-stretch pb-safe"
         style={{ borderTop: `1px solid ${TOW.lineStrong}` }}
