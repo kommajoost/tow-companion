@@ -122,6 +122,14 @@ export function resolveOptionSlug(label: string, idx: Map<string, string>): stri
   const direct = resolveRuleSlug(noBracket, idx);
   if (direct) return direct;
 
+  // 2b. a parenthetical command role, e.g. "Dread Knight (champion)" → champions,
+  // "Bannerman (standard bearer)" → standard-bearers.
+  const role = label.match(/\(([^)]+)\)/);
+  if (role) {
+    const roleAlias = OPTION_ALIASES[normalize(role[1])];
+    if (roleAlias && knownSlugs(idx).has(roleAlias)) return roleAlias;
+  }
+
   // 3. final-word singular / plural variants (Shields↔Shield, Standard bearer↔bearers)
   const words = noBracket.split(/\s+/).filter(Boolean);
   if (words.length) {
