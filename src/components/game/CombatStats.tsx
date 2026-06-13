@@ -26,8 +26,11 @@ export function CombatStats({ unit }: { unit: ArmyUnit }) {
   const idx = useMemo(() => getRuleIndex(rules), [rules]);
   const { melee, ranged } = useMemo(() => unitWeapons(unit, rules), [unit, rules]);
 
-  const [on, setOn] = useState(false);
-  const [meleeSel, setMeleeSel] = useState(0);
+  // Default the melee pick to the unit's actual upgrade weapon (cavalry spear, great weapon,
+  // two hand weapons, …) rather than the baseline hand weapon, if it has one.
+  const defaultMelee = Math.max(0, melee.findIndex((w) => !/^hand weapon$/i.test(w.name)));
+  const [on, setOn] = useState(true); // loadout view on by default
+  const [meleeSel, setMeleeSel] = useState(defaultMelee);
   const [charge, setCharge] = useState(false);
   const [rangedSel, setRangedSel] = useState(0);
   const [mods, setMods] = useState<Record<string, boolean>>({});
@@ -114,7 +117,8 @@ export function CombatStats({ unit }: { unit: ArmyUnit }) {
       <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 6, marginBottom: 8 }}>
         <button
           onClick={() => setOn((o) => !o)}
-          style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 11, letterSpacing: '0.04em', textTransform: 'uppercase', padding: '4px 12px', borderRadius: 999, cursor: 'pointer', border: `1px solid ${on ? TOW.goldDeep : TOW.line}`, background: on ? goldGrad : 'transparent', color: on ? '#2a1a0a' : TOW.muted }}
+          title={on ? 'Showing loadout stats — tap for base profile' : 'Show effective loadout stats'}
+          style={{ fontFamily: towFont.display, fontWeight: 600, fontSize: 9.5, letterSpacing: '0.06em', textTransform: 'uppercase', padding: '3px 9px', borderRadius: 7, cursor: 'pointer', border: `1px solid ${on ? 'rgba(184,134,47,0.5)' : TOW.line}`, background: on ? 'rgba(184,134,47,0.12)' : 'transparent', color: on ? TOW.goldDeep : TOW.muted }}
         >
           Loadout
         </button>
