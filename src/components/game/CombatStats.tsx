@@ -37,9 +37,13 @@ export function CombatStats({ unit }: { unit: ArmyUnit }) {
   const mw = melee[meleeSel];
   const rw = ranged[rangedSel];
   const showCharge = melee.some((w) => w.chargeBonus);
-  const baseS = statValue(unit.profiles[0]?.stats ?? [], 'S') ?? 0;
   const bs = Math.max(0, ...unit.profiles.map((p) => statValue(p.stats, 'BS') ?? 0));
-  const eff = on && mw ? effectiveMelee(baseS, mw, charge) : null;
+  // A profile is a weapon-WIELDER (gets the loadout's effective stats) if it has a Leadership and
+  // Strength value — i.e. the unit's models including its champion (Reaver/Dread Knight/Herald),
+  // but NOT mounts/steeds or a chariot frame (those carry "-" for Ld). Each wielder uses its OWN
+  // base S/A, so a champion's +1 Attack stacks with an extra hand weapon's +1.
+  const isWielder = (stats: { k: string; v: string }[]) =>
+    statValue(stats, 'Ld') != null && statValue(stats, 'S') != null;
 
   const activeMods = SHOOTING_MODS.filter((m) => mods[m.key]);
   const penalty = activeMods.reduce((n, m) => n + m.penalty, 0) - custom;
@@ -69,22 +73,25 @@ export function CombatStats({ unit }: { unit: ArmyUnit }) {
   const th: React.CSSProperties = { ...eb, fontSize: 8.5, color: TOW.goldDeep, border: `1px solid ${TOW.line}`, padding: '3px 2px', textAlign: 'center', background: 'rgba(184,134,47,0.08)' };
   const td = (hl: boolean): React.CSSProperties => ({ textAlign: 'center', color: hl ? TOW.goldDeep : TOW.ink, fontWeight: hl ? 700 : 400, border: `1px solid ${TOW.line}`, padding: '3px 2px', background: hl ? 'rgba(184,134,47,0.10)' : 'transparent' });
 
-  // One profile row. In loadout mode an AP column is inserted after S and the main model (pi 0)
-  // shows the chosen weapon's effective S/AP (and Attacks); otherwise the verbatim base profile.
-  const profileTable = (stats: { k: string; v: string }[], main: boolean) => {
+  // One profile row. In loadout mode an AP column is inserted after S; every wielder profile (each
+  // model, incl. the champion) shows the chosen weapon's effective S/AP (from its OWN base S) and
+  // Attacks; mounts/steeds keep their base S (natural attacks, no AP). Off = verbatim base profile.
+  const profileTable = (stats: { k: string; v: string }[]) => {
+    const sBase = statValue(stats, 'S');
+    const e = on && mw && isWielder(stats) ? effectiveMelee(sBase ?? 0, mw, charge) : null;
     const cols: { k: string; v: string; hl: boolean }[] = [];
     for (const st of stats) {
       const isS = st.k.toUpperCase() === 'S';
       const isA = st.k.toUpperCase() === 'A';
-      if (on && isS && main && eff) {
-        cols.push({ k: 'S', v: String(eff.s), hl: eff.s !== baseS });
-        cols.push({ k: 'AP', v: fmtAP(eff.ap), hl: eff.ap !== 0 });
+      if (on && isS && e) {
+        cols.push({ k: 'S', v: String(e.s), hl: e.s !== sBase });
+        cols.push({ k: 'AP', v: fmtAP(e.ap), hl: e.ap !== 0 });
       } else if (on && isS) {
         cols.push({ k: 'S', v: st.v, hl: false });
         cols.push({ k: 'AP', v: '–', hl: false });
-      } else if (on && isA && main && eff && eff.aMod) {
+      } else if (on && isA && e && e.aMod) {
         const baseA = parseInt(st.v.match(/\d+/)?.[0] ?? '', 10);
-        cols.push({ k: 'A', v: Number.isFinite(baseA) ? String(baseA + eff.aMod) : st.v, hl: true });
+        cols.push({ k: 'A', v: Number.isFinite(baseA) ? String(baseA + e.aMod) : st.v, hl: true });
       } else {
         cols.push({ k: st.k, v: st.v, hl: false });
       }
@@ -118,7 +125,7 @@ export function CombatStats({ unit }: { unit: ArmyUnit }) {
       {unit.profiles.map((p, pi) => (
         <div key={pi} className="no-scrollbar" style={{ overflowX: 'auto', marginBottom: 8 }}>
           <div style={{ fontFamily: towFont.serif, fontSize: 12.5, color: TOW.parchDim, marginBottom: 3 }}>{p.label}</div>
-          {profileTable(p.stats, pi === 0)}
+          {profileTable(p.stats)}
         </div>
       ))}
       {on && mw && ruleChips(mw.specialRules)}
