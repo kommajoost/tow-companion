@@ -45,6 +45,11 @@ async function main() {
   await writeFile(join(OUT, 'rules-index.json'), JSON.stringify(rulesIndex));
   console.log(`rules-index.json  (${Object.keys(rulesIndex).length} entries)`);
 
+  // Game metadata: per-army composition options, allies and mercenaries rules.
+  const meta = await getJson('src/assets/the-old-world.json');
+  await writeFile(join(OUT, 'the-old-world.json'), JSON.stringify(meta));
+  console.log(`the-old-world.json  (${meta.armies.length} armies)`);
+
   // Each army's composition catalogue.
   const index = [];
   for (const slug of ARMIES) {
