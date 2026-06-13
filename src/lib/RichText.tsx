@@ -2,6 +2,7 @@ import { type ReactNode } from 'react';
 import type { RichNode } from '../types';
 import { useUI } from '../state';
 import { useData } from '../data';
+import { getRuleIndex, resolveRuleSlug } from './armyRules';
 
 // Renders a Contentful rich-text document verbatim. Inline links to other rules
 // (`entry-hyperlink`) become tappable terms that open the rule in a pop-up sheet.
@@ -66,6 +67,27 @@ function RuleTerm({ slug, children }: { slug: string; children: ReactNode }) {
       {children}
     </span>
   );
+}
+
+// Flatten the visible text of inline nodes — used to recover a link whose target lost its slug.
+function plainText(nodes: RichNode[] | undefined): string {
+  if (!nodes) return '';
+  return nodes
+    .map((n) => (n.nodeType === 'text' ? n.value ?? '' : plainText(n.content)))
+    .join('');
+}
+
+// An inline entry link. Many entries inside profile/chart tables (e.g. weapon special rules
+// like "Armour Bane (1)" or "Killing Blow") arrive from the wiki without their target slug —
+// only the sys id and the visible text. When the slug is missing we resolve the rule by that
+// text (the same name→slug matching used for army lists) so the term still opens the pop-up.
+function InlineEntry({ slug, name, text, label }: { slug?: string; name?: string; text: string; label: ReactNode }) {
+  const { rules } = useData();
+  const hasLabel = Array.isArray(label) ? label.length > 0 : !!label;
+  const lookup = text || name || '';
+  const target = slug ?? (lookup ? resolveRuleSlug(lookup, getRuleIndex(rules)) : null);
+  if (target) return <RuleTerm slug={target}>{hasLabel ? label : name ?? text ?? target}</RuleTerm>;
+  return <>{hasLabel ? label : name}</>;
 }
 
 // A chart (e.g. the Miscast Table) embedded inline as a table.
@@ -170,10 +192,14 @@ function Node({ node }: { node: RichNode }): ReactNode {
     case 'embedded-entry-inline': {
       const slug = node.data?.target?.fields?.slug;
       const name = node.data?.target?.fields?.name;
-      const label = renderChildren(node.content);
-      const hasLabel = Array.isArray(label) && label.length > 0;
-      if (slug) return <RuleTerm slug={slug}>{hasLabel ? label : name ?? slug}</RuleTerm>;
-      return <>{hasLabel ? label : name}</>;
+      return (
+        <InlineEntry
+          slug={slug}
+          name={name}
+          text={plainText(node.content)}
+          label={renderChildren(node.content)}
+        />
+      );
     }
 
     case 'embedded-entry-block': {

@@ -3,6 +3,7 @@ import { useData } from '../data';
 import { useUI } from '../state';
 import { TOW } from '../design/tow';
 import type { NavSection } from '../types';
+import { QuickRollButton, QuickRollSheet } from './CombatCalc';
 
 const MAX_RESULTS = 60;
 
@@ -15,6 +16,9 @@ export function BrowseMode() {
   const [section, setSection] = useState<NavSection | null>(null);
   const [query, setQuery] = useState('');
   const [filter, setFilter] = useState('');
+  const [quickOpen, setQuickOpen] = useState(false);
+
+  const quickBtn = <QuickRollButton onClick={() => setQuickOpen(true)} />;
 
   const rootRef = useRef<HTMLDivElement>(null);
   const [w, setW] = useState(420);
@@ -138,12 +142,16 @@ export function BrowseMode() {
   );
 
   // ════════════════ WIDE — TOC/search sidebar + reading pane ════════════════
+  let body: React.ReactNode;
   if (wide) {
-    return (
+    body = (
       <div ref={rootRef} className="flex h-full">
         <div style={{ width: 280, flexShrink: 0, borderRight: `1px solid ${TOW.lineStrong}`, background: TOW.panel }} className="flex flex-col">
           <div className="px-4 pt-5">
-            <h1 className="mb-3 font-display text-2xl text-gold">Rulebook</h1>
+            <div className="mb-3 flex items-center justify-between gap-2">
+              <h1 className="font-display text-2xl text-gold">Rulebook</h1>
+              {quickBtn}
+            </div>
             {SearchBox}
           </div>
           <div className="min-h-0 flex-1 overflow-y-auto px-3 py-3">
@@ -191,23 +199,27 @@ export function BrowseMode() {
 
   // ════════════════ PHONE — single column ════════════════
   // Search results replace the section list while typing.
-  if (!section && q.length >= 2) {
-    return (
+  else if (!section && q.length >= 2) {
+    body = (
       <div ref={rootRef} className="flex h-full flex-col">
         <div className="border-b border-border-soft px-3 py-2.5">
-          <h1 className="mb-2 font-display text-2xl text-gold">Rulebook</h1>
+          <div className="mb-2 flex items-center justify-between gap-2">
+            <h1 className="font-display text-2xl text-gold">Rulebook</h1>
+            {quickBtn}
+          </div>
           {SearchBox}
         </div>
         <div className="flex-1 overflow-y-auto px-3 pb-28 pt-3">{resultsList}</div>
       </div>
     );
-  }
-
-  if (!section) {
-    return (
+  } else if (!section) {
+    body = (
       <div ref={rootRef} className="flex h-full flex-col">
         <div className="border-b border-border-soft px-3 py-2.5">
-          <h1 className="mb-2 font-display text-2xl text-gold">Rulebook</h1>
+          <div className="mb-2 flex items-center justify-between gap-2">
+            <h1 className="font-display text-2xl text-gold">Rulebook</h1>
+            {quickBtn}
+          </div>
           {SearchBox}
         </div>
         <div className="flex-1 overflow-y-auto px-3 pb-28 pt-3">
@@ -226,15 +238,23 @@ export function BrowseMode() {
         </div>
       </div>
     );
+  } else {
+    body = (
+      <div ref={rootRef} className="flex h-full flex-col">
+        <div className="flex items-center gap-2 border-b border-border-soft px-3 py-2">
+          <button onClick={() => { setSection(null); setFilter(''); }} className="rounded-lg px-2 py-1.5 text-sm text-ink-dim active:bg-surface-2">‹ All</button>
+          <span className="min-w-0 flex-1 truncate font-display text-lg text-gold">{section.name}</span>
+          {quickBtn}
+        </div>
+        <div className="flex-1 overflow-y-auto px-3 pb-28 pt-3">{sectionContent}</div>
+      </div>
+    );
   }
 
   return (
-    <div ref={rootRef} className="flex h-full flex-col">
-      <div className="flex items-center gap-2 border-b border-border-soft px-3 py-2">
-        <button onClick={() => { setSection(null); setFilter(''); }} className="rounded-lg px-2 py-1.5 text-sm text-ink-dim active:bg-surface-2">‹ All</button>
-        <span className="truncate font-display text-lg text-gold">{section.name}</span>
-      </div>
-      <div className="flex-1 overflow-y-auto px-3 pb-28 pt-3">{sectionContent}</div>
-    </div>
+    <>
+      {body}
+      <QuickRollSheet open={quickOpen} onClose={() => setQuickOpen(false)} />
+    </>
   );
 }

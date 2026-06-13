@@ -96,6 +96,17 @@ const OPTION_ALIASES: Record<string, string> = {
   spear: 'spears',
 };
 
+// Memoise the rule index per rules object so repeated callers (RichText, UnitCard) share it.
+const ruleIndexCache = new WeakMap<Record<string, Rule>, Map<string, string>>();
+export function getRuleIndex(rules: Record<string, Rule>): Map<string, string> {
+  let i = ruleIndexCache.get(rules);
+  if (!i) {
+    i = buildRuleIndex(rules);
+    ruleIndexCache.set(rules, i);
+  }
+  return i;
+}
+
 // Cache the set of existing slugs derived from the name→slug index (memoised per index).
 const slugSetCache = new WeakMap<Map<string, string>, Set<string>>();
 function knownSlugs(idx: Map<string, string>): Set<string> {
@@ -188,6 +199,97 @@ export function woundsPerModel(unit: ArmyUnit): number {
 /** Total strength of a unit = models × wounds per model. */
 export function unitTotalStrength(unit: ArmyUnit): number {
   return unitSize(unit) * woundsPerModel(unit);
+}
+
+export interface ArmourSave {
+  /** Required save roll (e.g. 3 means 3+). */
+  save: number;
+  /** Human-readable breakdown, e.g. ["Heavy armour (5+)", "Shield (+1)"]. */
+  parts: string[];
+  /** True when the 2+ maximum clipped a better computed value. */
+  capped?: boolean;
+  /** Caveats the player should know (two-handed weapon, magic armour we can't value, …). */
+  notes?: string[];
+}
+
+// Tokens that contain the word "shield" but are NOT a physical (+1) shield: formations,
+// spells and ward-granting magic items. Used so scanning special rules doesn't double-count.
+const NON_PHYSICAL_SHIELD = /shieldwall|arcane shield|shield of (the lady|saphery)|oaken shield|ancestral shield/i;
+// Clearly two-handed melee weapons: a model wielding one cannot also use a shield in close
+// combat (the shield still counts against shooting). Used only to surface a caveat.
+const TWO_HANDED_WEAPON = /great weapon|greatsword|great axe|great hammer|two[\s-]?hand|requires two hands/i;
+
+// Work out a unit's Armour Save from its wargear and special rules. Base from worn armour
+// (Light 6+, Heavy 5+, Full plate 4+ — "Determining Armour Value"), improved by a shield (+1),
+// tower shield (+3, front arc), barding (+1) and Armoured Hide (X) (+X), capped at 2+
+// ("Maximum Armour Value"). A model with no armour counts as 7+ for the purpose of improvements,
+// so a shield alone gives 6+. Magic/named armours (Gromril, Dragon, Chaos, … — which in The Old
+// World grant ward saves or re-rolls, not armour value) aren't given a numeric value; an
+// unrecognised "… armour" item is surfaced as a note instead of guessed.
+export function unitArmourSave(unit: ArmyUnit): ArmourSave | null {
+  let base: number | null = null;
+  let baseName = '';
+  let bonus = 0;
+  const bonuses: string[] = [];
+  const notes: string[] = [];
+  let hasShield = false;
+  const setBase = (v: number, name: string) => {
+    if (base == null || v < base) {
+      base = v;
+      baseName = name;
+    }
+  };
+
+  // Worn armour + physical shield / tower shield / barding come from wargear (the "- …" lines).
+  for (const raw of unit.options) {
+    const o = ` ${raw.toLowerCase()} `;
+    let isArmourType = false;
+    if (/plate armou?r|full plate/.test(o)) { setBase(4, 'Full plate armour (4+)'); isArmourType = true; }
+    else if (/heavy armou?r/.test(o)) { setBase(5, 'Heavy armour (5+)'); isArmourType = true; }
+    else if (/light armou?r/.test(o)) { setBase(6, 'Light armour (6+)'); isArmourType = true; }
+
+    if (/tower shield/.test(o)) {
+      bonus += 3;
+      hasShield = true;
+      bonuses.push('Tower shield (+3, front arc)');
+    } else if (/\bshields?\b/.test(o) && !NON_PHYSICAL_SHIELD.test(raw)) {
+      bonus += 1;
+      hasShield = true;
+      bonuses.push('Shield (+1)');
+    }
+    if (/barding|caparison/.test(o)) {
+      bonus += 1;
+      bonuses.push('Barding (+1)');
+    }
+    // A worn "… armour" we don't recognise (Dragon, Gromril, Chaos, …): surface, don't guess.
+    if (!isArmourType && /armou?r/.test(o) && !/armoured hide/.test(o)) {
+      notes.push(`${raw.trim()} not auto-valued — check its rule`);
+    }
+  }
+
+  // Armoured Hide (X) improves the model's (and its rider's) armour value by X — a special rule.
+  for (const raw of unit.specialRules) {
+    const m = raw.match(/armoured hide\s*\(\s*(\d+)\s*\)/i);
+    if (m) {
+      const x = parseInt(m[1], 10);
+      if (x > 0) {
+        bonus += x;
+        bonuses.push(`Armoured Hide (+${x})`);
+      }
+    }
+  }
+
+  if (base == null && bonus === 0 && notes.length === 0) return null;
+
+  // Heads-up: a shield can't be used alongside a two-handed weapon in close combat.
+  if (hasShield && [...unit.options].some((o) => TWO_HANDED_WEAPON.test(o))) {
+    notes.push('Shield can’t be used with a two-handed weapon in close combat (still counts vs shooting)');
+  }
+
+  const rawSave = (base ?? 7) - bonus;
+  const save = Math.max(2, rawSave);
+  const parts = [baseName || 'No armour (7+)', ...bonuses];
+  return { save, parts, capped: rawSave < 2, notes: notes.length ? notes : undefined };
 }
 
 // ───────────────────────────── Wizards & lores ─────────────────────────────

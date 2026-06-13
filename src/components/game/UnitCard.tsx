@@ -2,7 +2,7 @@ import { useMemo } from 'react';
 import { useData } from '../../data';
 import { useUI } from '../../state';
 import { TOW, towFont, engraved } from '../../design/tow';
-import { buildRuleIndex, resolveRuleSlug, resolveOptionSlug, wizardInfo, unitTotalStrength } from '../../lib/armyRules';
+import { buildRuleIndex, resolveRuleSlug, resolveOptionSlug, wizardInfo, unitTotalStrength, unitArmourSave } from '../../lib/armyRules';
 import { WizardSpells } from './WizardSpells';
 import { WoundTracker } from './WoundTracker';
 import type { ArmyUnit } from '../../types';
@@ -33,6 +33,7 @@ export function UnitCard({
   const { openRule } = useUI();
   const idx = useMemo(() => buildRuleIndex(rules), [rules]);
   const isWizard = wizardInfo(unit).isWizard;
+  const armour = useMemo(() => unitArmourSave(unit), [unit]);
   const dead = (lost ?? 0) >= unitTotalStrength(unit) && onCasualty != null;
 
   return (
@@ -70,6 +71,27 @@ export function UnitCard({
           </table>
         </div>
       ))}
+
+      {armour && (
+        <div style={{ margin: '4px 0 10px' }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '4px 8px' }}>
+            <button
+              onClick={() => openRule('determining-armour-value')}
+              title="How armour value is determined"
+              style={{ display: 'inline-flex', alignItems: 'center', gap: 7, padding: '3px 10px', borderRadius: 999, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.10)', cursor: 'pointer' }}
+            >
+              <span style={{ ...eb, fontSize: 8, color: TOW.muted }}>Armour Save</span>
+              <span style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 15, color: TOW.goldDeep, lineHeight: 1 }}>{armour.save}+</span>
+            </button>
+            <span style={{ fontFamily: towFont.serif, fontSize: 12, color: TOW.parchDim }}>
+              {armour.parts.join(' · ')}{armour.capped ? ' · max 2+' : ''}
+            </span>
+          </div>
+          {armour.notes?.map((n, i) => (
+            <div key={i} style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 11.5, color: TOW.muted, marginTop: 4 }}>{n}</div>
+          ))}
+        </div>
+      )}
 
       {unit.options.length > 0 && (
         <div style={{ fontFamily: towFont.serif, fontSize: 13, color: TOW.parchDim, lineHeight: 1.9, margin: '4px 0 8px', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '0 4px' }}>

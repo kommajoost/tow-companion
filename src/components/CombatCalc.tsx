@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { TOW, towFont, engraved } from '../design/tow';
 
 const eb = engraved as React.CSSProperties;
@@ -67,10 +67,9 @@ function Dial({ label, value, onChange }: { label: string; value: number; onChan
   );
 }
 
-// A small floating tool to look up the To Hit / To Wound roll without leaving the screen.
-// `bottom` lifts it above the phone bottom-nav (no rail) vs sitting low on wide screens.
-export function CombatCalc({ bottom = 84 }: { bottom?: number }) {
-  const [open, setOpen] = useState(false);
+// The calculator itself: To Hit / To Wound toggle, two −/+ dials, instant required roll.
+// Pure UI — owns only its own dial state, no positioning.
+function QuickRollPanel() {
   const [mode, setMode] = useState<'hit' | 'wound'>('hit');
   const [a, setA] = useState(4);
   const [b, setB] = useState(4);
@@ -81,88 +80,114 @@ export function CombatCalc({ bottom = 84 }: { bottom?: number }) {
 
   return (
     <>
-      {open && <div onClick={() => setOpen(false)} style={{ position: 'fixed', inset: 0, zIndex: 54, background: 'transparent' }} />}
+      {/* To Hit / To Wound toggle */}
+      <div style={{ display: 'flex', gap: 4, padding: 4, borderRadius: 11, background: 'rgba(74,55,22,0.07)', border: `1px solid ${TOW.line}`, marginBottom: 12 }}>
+        {(['hit', 'wound'] as const).map((m) => {
+          const on = m === mode;
+          return (
+            <button key={m} onClick={() => setMode(m)} style={{ flex: 1, padding: '8px 0', borderRadius: 8, cursor: 'pointer', border: 'none', fontFamily: towFont.display, fontWeight: 600, fontSize: 12, letterSpacing: '0.05em', textTransform: 'uppercase', background: on ? goldGrad : 'transparent', color: on ? '#241803' : TOW.muted }}>
+              {m === 'hit' ? 'To Hit' : 'To Wound'}
+            </button>
+          );
+        })}
+      </div>
 
-      {open && (
-        <div
-          style={{
-            position: 'fixed',
-            right: 14,
-            bottom: bottom + 64,
-            zIndex: 56,
-            width: 300,
-            maxWidth: 'calc(100vw - 28px)',
-            background: TOW.panel2,
-            border: `1px solid ${TOW.lineStrong}`,
-            borderRadius: 16,
-            boxShadow: '0 12px 40px rgba(40,24,8,0.28)',
-            padding: 14,
-            color: TOW.ink,
-          }}
-        >
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 10 }}>
-            <span style={{ ...eb, fontSize: 9, color: TOW.goldDeep }}>Quick roll</span>
-            <button onClick={() => setOpen(false)} aria-label="Close" style={{ marginLeft: 'auto', border: 'none', background: 'none', cursor: 'pointer', fontSize: 22, lineHeight: 1, color: TOW.muted, padding: '0 2px' }}>×</button>
-          </div>
+      <div style={{ display: 'flex', alignItems: 'flex-end', gap: 12, marginBottom: 12 }}>
+        <Dial label={labels[0]} value={a} onChange={setA} />
+        <span style={{ fontFamily: towFont.serif, fontSize: 13, color: TOW.faint, paddingBottom: 6 }}>vs</span>
+        <Dial label={labels[1]} value={b} onChange={setB} />
+      </div>
 
-          {/* To Hit / To Wound toggle */}
-          <div style={{ display: 'flex', gap: 4, padding: 4, borderRadius: 11, background: 'rgba(74,55,22,0.07)', border: `1px solid ${TOW.line}`, marginBottom: 12 }}>
-            {(['hit', 'wound'] as const).map((m) => {
-              const on = m === mode;
-              return (
-                <button key={m} onClick={() => setMode(m)} style={{ flex: 1, padding: '8px 0', borderRadius: 8, cursor: 'pointer', border: 'none', fontFamily: towFont.display, fontWeight: 600, fontSize: 12, letterSpacing: '0.05em', textTransform: 'uppercase', background: on ? goldGrad : 'transparent', color: on ? '#241803' : TOW.muted }}>
-                  {m === 'hit' ? 'To Hit' : 'To Wound'}
-                </button>
-              );
-            })}
-          </div>
-
-          <div style={{ display: 'flex', alignItems: 'flex-end', gap: 12, marginBottom: 12 }}>
-            <Dial label={labels[0]} value={a} onChange={setA} />
-            <span style={{ fontFamily: towFont.serif, fontSize: 13, color: TOW.faint, paddingBottom: 6 }}>vs</span>
-            <Dial label={labels[1]} value={b} onChange={setB} />
-          </div>
-
-          {/* Result */}
-          <div style={{ borderRadius: 12, border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt, padding: '12px 14px', display: 'flex', alignItems: 'center', gap: 10 }}>
-            <div style={{ ...eb, fontSize: 8.5, color: TOW.muted, lineHeight: 1.3 }}>
-              {mode === 'hit' ? 'Roll to hit' : 'Roll to wound'}
-            </div>
-            <div style={{ marginLeft: 'auto', fontFamily: towFont.display, fontWeight: 700, fontSize: 30, color: cantWound ? TOW.blood : TOW.goldDeep, lineHeight: 1 }}>
-              {cantWound ? '—' : `${val}+`}
-            </div>
-          </div>
-          {cantWound && (
-            <div style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 12, color: TOW.blood, marginTop: 6, textAlign: 'right' }}>
-              Strength too low to wound.
-            </div>
-          )}
+      {/* Result */}
+      <div style={{ borderRadius: 12, border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt, padding: '12px 14px', display: 'flex', alignItems: 'center', gap: 10 }}>
+        <div style={{ ...eb, fontSize: 8.5, color: TOW.muted, lineHeight: 1.3 }}>
+          {mode === 'hit' ? 'Roll to hit' : 'Roll to wound'}
+        </div>
+        <div style={{ marginLeft: 'auto', fontFamily: towFont.display, fontWeight: 700, fontSize: 30, color: cantWound ? TOW.blood : TOW.goldDeep, lineHeight: 1 }}>
+          {cantWound ? '—' : `${val}+`}
+        </div>
+      </div>
+      {cantWound && (
+        <div style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 12, color: TOW.blood, marginTop: 6, textAlign: 'right' }}>
+          Strength too low to wound.
         </div>
       )}
+    </>
+  );
+}
 
-      {/* Floating button */}
-      <button
-        onClick={() => setOpen((o) => !o)}
-        aria-label="Quick roll calculator"
+// A compact launcher pill (die glyph + "Quick roll") that lives in the Rulebook header.
+export function QuickRollButton({ onClick }: { onClick: () => void }) {
+  return (
+    <button
+      onClick={onClick}
+      aria-label="Quick roll calculator"
+      style={{
+        display: 'inline-flex',
+        alignItems: 'center',
+        gap: 7,
+        flexShrink: 0,
+        padding: '7px 12px 7px 10px',
+        borderRadius: 11,
+        cursor: 'pointer',
+        border: `1px solid ${TOW.lineStrong}`,
+        background: TOW.cardLt,
+        color: TOW.goldDeep,
+        fontFamily: towFont.display,
+        fontWeight: 600,
+        fontSize: 12.5,
+        letterSpacing: '0.02em',
+        lineHeight: 1,
+      }}
+    >
+      <Die c={TOW.goldDeep} size={18} />
+      Quick roll
+    </button>
+  );
+}
+
+// The quick-roll calculator as a dismissible bottom sheet (mirrors RuleSheet), opened from
+// the Rulebook header. Anchored to the bottom with a tap-away backdrop — never overlays
+// content while you read.
+export function QuickRollSheet({ open, onClose }: { open: boolean; onClose: () => void }) {
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, [open, onClose]);
+
+  if (!open) return null;
+
+  return (
+    <div style={{ position: 'fixed', inset: 0, zIndex: 60, display: 'flex', flexDirection: 'column', justifyContent: 'flex-end' }}>
+      <div onClick={onClose} style={{ position: 'absolute', inset: 0, background: 'rgba(0,0,0,0.45)', backdropFilter: 'blur(1px)' }} />
+      <div
         style={{
-          position: 'fixed',
-          right: 14,
-          bottom,
-          zIndex: 56,
-          width: 52,
-          height: 52,
-          borderRadius: 16,
-          cursor: 'pointer',
-          border: 'none',
-          background: goldGrad,
-          boxShadow: '0 6px 18px rgba(122,93,36,0.4)',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
+          position: 'relative',
+          margin: '0 auto',
+          width: '100%',
+          maxWidth: 420,
+          background: TOW.panel2,
+          borderTop: `1px solid ${TOW.lineStrong}`,
+          borderTopLeftRadius: 20,
+          borderTopRightRadius: 20,
+          boxShadow: '0 -12px 40px rgba(40,24,8,0.28)',
+          padding: '14px 16px max(20px, env(safe-area-inset-bottom))',
+          color: TOW.ink,
+          animation: 'sheet-up 0.22s ease-out',
         }}
       >
-        {open ? <span style={{ fontSize: 26, color: '#2a1a0a', lineHeight: 1 }}>×</span> : <Die c="#2a1a0a" size={24} />}
-      </button>
-    </>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
+          <span style={{ ...eb, fontSize: 9.5, color: TOW.goldDeep }}>Quick roll</span>
+          <div style={{ margin: '0 auto', height: 4, width: 40, borderRadius: 99, background: TOW.line }} />
+          <button onClick={onClose} aria-label="Close" style={{ border: 'none', background: 'none', cursor: 'pointer', fontSize: 22, lineHeight: 1, color: TOW.muted, padding: '0 2px' }}>×</button>
+        </div>
+        <QuickRollPanel />
+      </div>
+      <style>{`@keyframes sheet-up { from { transform: translateY(100%); } to { transform: translateY(0); } }`}</style>
+    </div>
   );
 }
