@@ -1,0 +1,96 @@
+{
+  "source": "https://raw.githubusercontent.com/nthiebes/old-world-builder/main",
+  "syncedFrom": "nthiebes/old-world-builder",
+  "armies": [
+    {
+      "slug": "beastmen-brayherds",
+      "name": "Beastmen Brayherds",
+      "units": 44
+    },
+    {
+      "slug": "chaos-dwarfs",
+      "name": "Chaos Dwarfs",
+      "units": 24
+    },
+    {
+      "slug": "daemons-of-chaos",
+      "name": "Daemons of Chaos",
+      "units": 51
+    },
+    {
+      "slug": "dark-elves",
+      "name": "Dark Elves",
+      "units": 29
+    },
+    {
+      "slug": "dwarfen-mountain-holds",
+      "name": "Dwarfen Mountain Holds",
+      "units": 43
+    },
+    {
+      "slug": "empire-of-man",
+      "name": "Empire of Man",
+      "units": 61
+    },
+    {
+      "slug": "grand-cathay",
+      "name": "Grand Cathay",
+      "units": 22
+    },
+    {
+      "slug": "high-elf-realms",
+      "name": "High Elf Realms",
+      "units": 38
+    },
+    {
+      "slug": "kingdom-of-bretonnia",
+      "name": "Kingdom of Bretonnia",
+      "units": 26
+    },
+    {
+      "slug": "lizardmen",
+      "name": "Lizardmen",
+      "units": 21
+    },
+    {
+      "slug": "ogre-kingdoms",
+      "name": "Ogre Kingdoms",
+      "units": 21
+    },
+    {
+      "slug": "orc-and-goblin-tribes",
+      "name": "Orc and Goblin Tribes",
+      "units": 49
+    },
+    {
+      "slug": "renegade-crowns",
+      "name": "Renegade Crowns",
+      "units": 14
+    },
+    {
+      "slug": "skaven",
+      "name": "Skaven",
+      "units": 24
+    },
+    {
+      "slug": "tomb-kings-of-khemri",
+      "name": "Tomb Kings of Khemri",
+      "units": 42
+    },
+    {
+      "slug": "vampire-counts",
+      "name": "Vampire Counts",
+      "units": 30
+    },
+    {
+      "slug": "warriors-of-chaos",
+      "name": "Warriors of Chaos",
+      "units": 34
+    },
+    {
+      "slug": "wood-elf-realms",
+      "name": "Wood Elf Realms",
+      "units": 33
+    }
+  ]
+}
