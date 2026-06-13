@@ -5,7 +5,7 @@
 export type Category = 'characters' | 'core' | 'special' | 'rare' | 'mercenaries' | 'allies';
 export const CATEGORIES: Category[] = ['characters', 'core', 'special', 'rare', 'mercenaries', 'allies'];
 
-export interface OwbOption { name_en: string; points?: number; perModel?: boolean }
+export interface OwbOption { name_en: string; points?: number; perModel?: boolean; active?: boolean }
 export interface OwbUnit {
   id: string; name_en: string; points?: number; minimum?: number; maximum?: number;
   command?: OwbOption[]; equipment?: OwbOption[]; armor?: OwbOption[]; options?: OwbOption[];
@@ -14,13 +14,40 @@ export interface OwbUnit {
 export type OwbArmy = Record<Category, OwbUnit[]>;
 
 // The option groups a unit can spend points on (lores are free spell picks → omitted here).
-export const OPTION_GROUPS: { key: keyof OwbUnit; label: string }[] = [
+// `radio` groups are single-choice (you wear one armour, ride one mount); the rest are toggles.
+// OWB marks the default of a single-choice group with `active:true` (free, e.g. Light armour / On foot).
+export const OPTION_GROUPS: { key: keyof OwbUnit; label: string; radio?: boolean }[] = [
   { key: 'command', label: 'Command' },
   { key: 'equipment', label: 'Equipment' },
-  { key: 'armor', label: 'Armour' },
+  { key: 'armor', label: 'Armour', radio: true },
   { key: 'options', label: 'Options' },
-  { key: 'mounts', label: 'Mounts' },
+  { key: 'mounts', label: 'Mounts', radio: true },
 ];
+
+// An option block ready for the editor: the group's items with their index + whether it's radio.
+export interface OptionBlock { key: keyof OwbUnit; label: string; radio: boolean; items: { i: number; opt: OwbOption }[] }
+export function unitBlocks(unit: OwbUnit): OptionBlock[] {
+  return OPTION_GROUPS.map(({ key, label, radio }) => {
+    const list = (Array.isArray(unit[key]) ? (unit[key] as OwbOption[]) : []).filter((o) => o && o.name_en);
+    return { key, label, radio: !!radio, items: list.map((opt, i) => ({ i, opt })) };
+  }).filter((b) => b.items.length > 0);
+}
+
+// The currently-selected option key in a radio group (the stored choice, else the `active` default).
+export function radioSelected(unit: OwbUnit, entry: ListEntry, key: keyof OwbUnit): string {
+  const items = (Array.isArray(unit[key]) ? (unit[key] as OwbOption[]) : []);
+  const stored = entry.opts.find((k) => k.startsWith(`${key}/`));
+  if (stored) return stored;
+  const def = items.findIndex((o) => o.active);
+  return `${key}/${def >= 0 ? def : 0}`;
+}
+
+// Short labels of the chosen non-default upgrades, for a roster row's one-line summary.
+export function summaryLabels(unit: OwbUnit, entry: ListEntry): string[] {
+  return selectedOptions(unit, entry)
+    .filter(({ opt }) => !opt.active)
+    .map(({ opt }) => opt.name_en);
+}
 
 // One chosen entry in the list. `opts` holds selected option keys "group/index".
 export interface ListEntry { uid: string; cat: Category; unitId: string; count: number; opts: string[] }
