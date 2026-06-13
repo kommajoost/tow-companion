@@ -137,6 +137,7 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
   const [tab, setTab] = useState<Category>('characters');
   const [q, setQ] = useState('');
   const [settings, setSettings] = useState(false);
+  const [info, setInfo] = useState<{ title: string; rows: StatRow[] } | null>(null); // mount/unit profile popup
 
   // ── entry operations ──
   const add = (cat: Category, u: OwbUnit) => {
@@ -192,6 +193,7 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
             const on = b.radio ? radioKey === key : entry.opts.includes(key);
             const cost = opt.points ? `+${opt.points}${opt.perModel ? '/model' : ''}` : 'free';
             const hasRule = !!resolveOptionSlug(cleanLabel(opt.name_en), ruleIdx);
+            const profileRows = hasRule ? [] : statsFor(opt.name_en); // mounts/units → show their profile
             return (
               <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
                 <button onClick={() => (b.radio ? setRadio(entry.uid, String(b.key), i) : toggleOpt(entry.uid, key))}
@@ -202,7 +204,7 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
                   <span style={{ flex: 1, fontFamily: towFont.serif, fontSize: 13.5, color: TOW.ink }}>{opt.name_en}</span>
                   <span style={{ fontFamily: towFont.display, fontWeight: 600, fontSize: 11, color: opt.points ? TOW.gold : TOW.faint }}>{cost}</span>
                 </button>
-                {hasRule && <Eye onClick={() => openOptionRule(opt.name_en)} />}
+                {(hasRule || profileRows.length > 0) && <Eye onClick={() => (hasRule ? openOptionRule(opt.name_en) : setInfo({ title: cleanLabel(opt.name_en), rows: profileRows }))} />}
               </div>
             );
           })}
@@ -362,6 +364,7 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
             )}
           </div>
         </div>
+        {info && <InfoPopup info={info} onClose={() => setInfo(null)} />}
       </div>
     );
   }
@@ -436,6 +439,24 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
           {optionEditor(editEntry, editUnit)}
         </Sheet>
       )}
+      {info && <InfoPopup info={info} onClose={() => setInfo(null)} />}
+    </div>
+  );
+}
+
+// A small centred popup showing a mount/unit stat profile (for options without a rule page).
+function InfoPopup({ info, onClose }: { info: { title: string; rows: StatRow[] }; onClose: () => void }) {
+  return (
+    <div onClick={onClose} style={{ position: 'absolute', inset: 0, zIndex: 60, background: 'rgba(30,20,8,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 }}>
+      <div onClick={(e) => e.stopPropagation()} style={{ width: '100%', maxWidth: 460, background: TOW.panel, borderRadius: 16, border: `1px solid ${TOW.lineStrong}`, boxShadow: '0 16px 50px rgba(40,24,8,0.34)', padding: 16, animation: 'sheet-pop .18s ease-out' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
+          <span style={{ ...eb, fontSize: 8, color: TOW.muted }}>Profile</span>
+          <button onClick={onClose} aria-label="Close" style={{ marginLeft: 'auto', width: 30, height: 30, borderRadius: 8, border: `1px solid ${TOW.line}`, background: TOW.cardLt, cursor: 'pointer', color: TOW.muted, fontSize: 18, lineHeight: 1 }}>×</button>
+        </div>
+        <div style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 18, color: TOW.ink, marginBottom: 10 }}>{info.title}</div>
+        <MiniProfile rows={info.rows} />
+      </div>
+      <style>{`@keyframes sheet-pop { from { opacity: 0; transform: translateY(8px) scale(0.98); } to { opacity: 1; transform: none; } }`}</style>
     </div>
   );
 }
