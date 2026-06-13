@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useData } from '../../data';
 import { useUI } from '../../state';
 import { TOW, towFont, engraved } from '../../design/tow';
-import { getRuleIndex, resolveRuleSlug } from '../../lib/armyRules';
+import { getRuleIndex, resolveRuleSlug, resolveOptionSlug } from '../../lib/armyRules';
 
 // Proof of concept (Stap 1): browse every army's unit catalogue, sourced from the Old World
 // Builder project (public/owb/, synced via `npm run sync-owb`, CC BY 4.0). Read-only — shows
@@ -37,6 +37,11 @@ const CATEGORIES: { key: Category; label: string }[] = [
 // stripped, kept diacritics & spaces). We add a final-word singular fallback for plurals.
 const normRule = (s: string) =>
   (s || '').toLowerCase().replace(/ *\([^)]*\) */g, '').replace(/[{}[\]*]/g, '').replace(/^[0-9]x /g, '').replace(/[“”]/g, '"').trim();
+
+// OWB labels carry footnote/source markers — "{dark elves}", "{renegade}", a trailing "*" — that
+// must be stripped before resolving the label to one of our rules (e.g. "Cold One {dark elves}" →
+// "Cold One", "Hatred (High Elves)*" → "Hatred (High Elves)").
+const cleanLabel = (s: string) => (s || '').replace(/\{[^}]*\}/g, ' ').replace(/\*/g, '').replace(/\s+/g, ' ').trim();
 
 // module-level caches so switching armies doesn't refetch
 let statIndexCache: Record<string, RuleEntry> | null = null;
@@ -153,11 +158,23 @@ export function ArmyBrowser() {
                       const list = (opts || []).filter((o) => o.name_en);
                       if (!list.length) return null;
                       return (
-                        <div style={{ fontFamily: towFont.serif, fontSize: 12.5, color: TOW.parchDim, margin: '2px 0' }}>
+                        <div style={{ fontFamily: towFont.serif, fontSize: 12.5, color: TOW.parchDim, margin: '2px 0', lineHeight: 1.8 }}>
                           <span style={{ ...eb, fontSize: 8, color: TOW.muted, marginRight: 6 }}>{lbl}</span>
-                          {list.map((o, i) => (
-                            <span key={i}>{i > 0 && <span style={{ color: TOW.faint }}> · </span>}{o.name_en}{o.points ? <span style={{ color: TOW.muted }}> ({o.points})</span> : null}</span>
-                          ))}
+                          {list.map((o, i) => {
+                            const optSlug = resolveOptionSlug(cleanLabel(o.name_en), ruleSlugIdx);
+                            const pts = o.points ? <span style={{ color: TOW.muted }}> ({o.points})</span> : null;
+                            return (
+                              <span key={i}>
+                                {i > 0 && <span style={{ color: TOW.faint }}> · </span>}
+                                {optSlug ? (
+                                  <button onClick={() => openRule(optSlug)} style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', fontFamily: towFont.serif, fontSize: 12.5, color: TOW.goldDeep, borderBottom: `1px dotted ${TOW.goldDeep}` }}>{o.name_en}</button>
+                                ) : (
+                                  <span>{o.name_en}</span>
+                                )}
+                                {pts}
+                              </span>
+                            );
+                          })}
                         </div>
                       );
                     };
@@ -205,7 +222,7 @@ export function ArmyBrowser() {
                                 <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginBottom: 5 }}>Special rules</div>
                                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
                                   {sr.map((label, i) => {
-                                    const ruleSlug = resolveRuleSlug(label, ruleSlugIdx);
+                                    const ruleSlug = resolveRuleSlug(cleanLabel(label), ruleSlugIdx);
                                     const common: React.CSSProperties = { fontFamily: towFont.serif, fontSize: 12, padding: '3px 9px', borderRadius: 999, border: `1px solid ${ruleSlug ? TOW.goldDeep : TOW.line}` };
                                     return ruleSlug ? (
                                       <button key={i} onClick={() => openRule(ruleSlug)} style={{ ...common, cursor: 'pointer', background: 'rgba(184,134,47,0.10)', color: TOW.goldDeep }}>{label}</button>
