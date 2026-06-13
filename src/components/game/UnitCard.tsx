@@ -1,11 +1,15 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useData } from '../../data';
 import { useUI } from '../../state';
 import { TOW, towFont, engraved } from '../../design/tow';
 import { buildRuleIndex, resolveRuleSlug, resolveOptionSlug, wizardInfo, unitTotalStrength, unitArmourSave } from '../../lib/armyRules';
+import { unitWeapons } from '../../lib/weaponStats';
+import { CombatStats } from './CombatStats';
 import { WizardSpells } from './WizardSpells';
 import { WoundTracker } from './WoundTracker';
 import type { ArmyUnit } from '../../types';
+
+const goldGrad = `linear-gradient(180deg, ${TOW.goldBright} 0%, ${TOW.gold} 55%, ${TOW.goldDeep} 100%)`;
 
 const eb = engraved as React.CSSProperties;
 
@@ -34,6 +38,9 @@ export function UnitCard({
   const idx = useMemo(() => buildRuleIndex(rules), [rules]);
   const isWizard = wizardInfo(unit).isWizard;
   const armour = useMemo(() => unitArmourSave(unit), [unit]);
+  const weapons = useMemo(() => unitWeapons(unit, rules), [unit, rules]);
+  const hasWeapons = weapons.melee.length > 0 || weapons.ranged.length > 0;
+  const [view, setView] = useState<'base' | 'loadout'>('base');
   const dead = (lost ?? 0) >= unitTotalStrength(unit) && onCasualty != null;
 
   return (
@@ -48,29 +55,51 @@ export function UnitCard({
         )}
       </div>
 
+      {/* Base profile vs the effective stats for a chosen weapon/loadout. */}
+      {hasWeapons && (
+        <div style={{ display: 'inline-flex', gap: 3, padding: 3, borderRadius: 9, background: 'rgba(74,55,22,0.07)', border: `1px solid ${TOW.line}`, marginBottom: 8 }}>
+          {(['base', 'loadout'] as const).map((v) => {
+            const on = v === view;
+            return (
+              <button
+                key={v}
+                onClick={() => setView(v)}
+                style={{ padding: '4px 12px', borderRadius: 7, cursor: 'pointer', border: 'none', fontFamily: towFont.display, fontWeight: 600, fontSize: 11, letterSpacing: '0.04em', textTransform: 'uppercase', background: on ? goldGrad : 'transparent', color: on ? '#2a1a0a' : TOW.muted }}
+              >
+                {v === 'base' ? 'Base' : 'Loadout'}
+              </button>
+            );
+          })}
+        </div>
+      )}
+
       {/* All profiles in a unit share the same column set (M WS BS S T W I A Ld), so we
           use a fixed table layout with equal-width columns for clean, aligned reading. */}
-      {unit.profiles.map((p, pi) => (
-        <div key={pi} className="no-scrollbar" style={{ overflowX: 'auto', marginBottom: 8 }}>
-          <div style={{ fontFamily: towFont.serif, fontSize: 12.5, color: TOW.parchDim, marginBottom: 3 }}>{p.label}</div>
-          <table style={{ borderCollapse: 'collapse', tableLayout: 'fixed', width: '100%', minWidth: 280, fontSize: 12.5, fontFamily: towFont.serif }}>
-            <thead>
-              <tr>
-                {p.stats.map((s, i) => (
-                  <th key={i} style={{ ...eb, fontSize: 8.5, color: TOW.goldDeep, border: `1px solid ${TOW.line}`, padding: '3px 2px', textAlign: 'center', background: 'rgba(184,134,47,0.08)' }}>{s.k}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                {p.stats.map((s, i) => (
-                  <td key={i} style={{ textAlign: 'center', color: TOW.ink, border: `1px solid ${TOW.line}`, padding: '3px 2px' }}>{s.v}</td>
-                ))}
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      ))}
+      {hasWeapons && view === 'loadout' ? (
+        <CombatStats unit={unit} />
+      ) : (
+        unit.profiles.map((p, pi) => (
+          <div key={pi} className="no-scrollbar" style={{ overflowX: 'auto', marginBottom: 8 }}>
+            <div style={{ fontFamily: towFont.serif, fontSize: 12.5, color: TOW.parchDim, marginBottom: 3 }}>{p.label}</div>
+            <table style={{ borderCollapse: 'collapse', tableLayout: 'fixed', width: '100%', minWidth: 280, fontSize: 12.5, fontFamily: towFont.serif }}>
+              <thead>
+                <tr>
+                  {p.stats.map((s, i) => (
+                    <th key={i} style={{ ...eb, fontSize: 8.5, color: TOW.goldDeep, border: `1px solid ${TOW.line}`, padding: '3px 2px', textAlign: 'center', background: 'rgba(184,134,47,0.08)' }}>{s.k}</th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  {p.stats.map((s, i) => (
+                    <td key={i} style={{ textAlign: 'center', color: TOW.ink, border: `1px solid ${TOW.line}`, padding: '3px 2px' }}>{s.v}</td>
+                  ))}
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        ))
+      )}
 
       {armour && (
         <div style={{ margin: '4px 0 10px' }}>
