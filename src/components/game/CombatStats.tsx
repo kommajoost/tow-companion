@@ -33,6 +33,7 @@ export function CombatStats({ unit }: { unit: ArmyUnit }) {
   const [mods, setMods] = useState<Record<string, boolean>>({});
   const [custom, setCustom] = useState(0); // extra "to hit" modifier (+ = easier, − = harder)
   const [modsOpen, setModsOpen] = useState(false);
+  const [multiOn, setMultiOn] = useState(true); // fire the multiple-shots mode (−1 To Hit)
 
   const mw = melee[meleeSel];
   const rw = ranged[rangedSel];
@@ -46,9 +47,12 @@ export function CombatStats({ unit }: { unit: ArmyUnit }) {
     statValue(stats, 'Ld') != null && statValue(stats, 'S') != null;
 
   const activeMods = SHOOTING_MODS.filter((m) => mods[m.key]);
-  const penalty = activeMods.reduce((n, m) => n + m.penalty, 0) - custom;
+  // Firing the multiple-shots mode adds an extra −1 To Hit (the "Multiple Shots" rule).
+  const multiActive = !!(rw && rw.multiShots && multiOn);
+  const penalty = activeMods.reduce((n, m) => n + m.penalty, 0) - custom + (multiActive ? 1 : 0);
   const modCount = activeMods.length + (custom !== 0 ? 1 : 0);
   const hit = bs > 0 ? rangedToHit(bs, penalty) : null;
+  const shotsShown = rw ? (rw.multiShots && multiOn ? rw.multiShots : String(rw.shots)) : '';
 
   // ── small shared chip styles ──
   const chip: React.CSSProperties = { fontFamily: towFont.serif, fontSize: 11.5, padding: '3px 9px', borderRadius: 999, cursor: 'pointer', lineHeight: 1.35, whiteSpace: 'nowrap' };
@@ -146,13 +150,28 @@ export function CombatStats({ unit }: { unit: ArmyUnit }) {
                   <thead><tr>{['Range', 'Shots', 'S', 'AP', 'To Hit'].map((h) => <th key={h} style={th}>{h}</th>)}</tr></thead>
                   <tbody><tr>
                     <td style={td(false)}>{rw.range}</td>
-                    <td style={td(rw.shots > 1)}>{rw.shots}</td>
+                    <td style={td(multiActive)}>{shotsShown}</td>
                     <td style={td(false)}>{rw.sAbs ?? '—'}</td>
                     <td style={td(rw.ap !== 0)}>{fmtAP(rw.ap)}</td>
                     <td style={{ ...td(true), fontFamily: towFont.display }}>{!hit ? '—' : hit.impossible ? '—' : `${hit.value}+`}</td>
                   </tr></tbody>
                 </table>
               </div>
+
+              {/* Firing mode — Multiple Shots / Rapid Fire let the weapon fire 1 OR X shots,
+                  the multiple-shot mode costing −1 To Hit. */}
+              {rw.multiShots && (
+                <div style={{ display: 'inline-flex', gap: 3, padding: 3, borderRadius: 9, background: 'rgba(74,55,22,0.07)', border: `1px solid ${TOW.line}`, marginTop: 8, marginRight: 8 }}>
+                  {([['single', `Single shot`], ['multi', `Multiple (${rw.multiShots}) −1`]] as const).map(([k, label]) => {
+                    const sel = (k === 'multi') === multiOn;
+                    return (
+                      <button key={k} onClick={() => setMultiOn(k === 'multi')} style={{ padding: '4px 10px', borderRadius: 7, cursor: 'pointer', border: 'none', fontFamily: towFont.serif, fontSize: 11.5, background: sel ? goldGrad : 'transparent', color: sel ? '#2a1a0a' : TOW.muted, fontWeight: sel ? 600 : 400, whiteSpace: 'nowrap' }}>
+                        {label}
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
 
               {/* Compact modifiers dropdown (check on/off) — keeps the card tidy. */}
               <div style={{ position: 'relative', display: 'inline-block', marginTop: 8 }}>

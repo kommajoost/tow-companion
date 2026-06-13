@@ -16,8 +16,12 @@ export interface WeaponProfile {
   sAbs: number | null;
   /** Armour Piercing as a number (0 = none, -1, -2 …). */
   ap: number;
-  /** Number of shots (ranged) — from "Multiple Shots (N)", default 1. */
+  /** Single-shot count (the "fire normally" mode) — almost always 1. */
   shots: number;
+  /** The multiple-shots count when the weapon can fire more — the "X" of "Multiple Shots (X)"
+   * (e.g. "2", "D3+3"), or "D3+3" for a Rapid Fire bolt thrower; null if it can't. Firing the
+   * multiple-shots mode costs an extra −1 To Hit (the "Multiple Shots" rule). */
+  multiShots: string | null;
   /** Attacks modifier (e.g. +1 from an additional hand weapon / "Extra Attacks (+1)"). */
   aMod: number;
   specialRules: string[];
@@ -89,7 +93,10 @@ export function parseWeaponProfile(rule: Rule, baseRule?: Rule): WeaponProfile |
 
   const apNum = ap.match(/-?\d+/);
   const specialRules = splitRules(sr);
-  const shotsM = specialRules.find((x) => /multiple shots/i.test(x))?.match(/\((\d+)\)/);
+  // Multiple Shots (X) → the player may fire X shots instead of 1 (at −1 To Hit). A Rapid Fire
+  // bolt thrower is the same idea (its rule fires Multiple Shots (D3+3)).
+  const msExpr = specialRules.find((x) => /multiple shots/i.test(x))?.match(/\(([^)]+)\)/)?.[1]?.trim();
+  const rapidFire = specialRules.some((x) => /rapid fire/i.test(x));
   const extraM = specialRules.find((x) => /extra attacks/i.test(x))?.match(/\(\s*\+?(\d+)\s*\)/);
 
   const chargeBonus = !!baseRule && /a turn in which the wielder charged/i.test(baseRule.bodyIndex || '');
@@ -102,7 +109,8 @@ export function parseWeaponProfile(rule: Rule, baseRule?: Rule): WeaponProfile |
     sMod,
     sAbs,
     ap: apNum ? parseInt(apNum[0], 10) : 0,
-    shots: shotsM ? parseInt(shotsM[1], 10) : 1,
+    shots: 1,
+    multiShots: msExpr ?? (rapidFire ? 'D3+3' : null),
     aMod: extraM ? parseInt(extraM[1], 10) : 0,
     specialRules,
     chargeBonus,
@@ -154,6 +162,7 @@ export function unitWeapons(unit: ArmyUnit, rules: Record<string, Rule>): {
         sAbs: null,
         ap: 0,
         shots: 1,
+        multiShots: null,
         aMod: 1,
         specialRules: ['Extra Attacks (+1)', 'Requires Two Hands'],
         chargeBonus: false,
