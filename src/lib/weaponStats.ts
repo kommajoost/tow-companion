@@ -179,13 +179,15 @@ export function effectiveMelee(baseS: number, w: WeaponProfile, charge: boolean)
   return { s: baseS + (apply ? w.sMod ?? 0 : 0), ap: apply ? w.ap : 0, aMod: w.aMod };
 }
 
-// Standard shooting To Hit modifiers (To Hit Modifiers chart). Each is a penalty to the roll.
+// Standard shooting To Hit modifiers (To Hit Modifiers chart + Enemy Fire (Skirmishers)). Each
+// is a penalty to the roll.
 export const SHOOTING_MODS: { key: string; label: string; penalty: number }[] = [
   { key: 'long', label: 'Long range', penalty: 1 },
   { key: 'moved', label: 'Moved & shot', penalty: 1 },
   { key: 'stand', label: 'Stand & shoot', penalty: 1 },
   { key: 'soft', label: 'Partial cover', penalty: 1 },
   { key: 'full', label: 'Full cover', penalty: 2 },
+  { key: 'skirmish', label: 'Target skirmishers', penalty: 1 },
 ];
 
 // Shooting To Hit from Ballistic Skill (Roll to Hit chart: BS1 6+ … BS5 2+) plus penalties.

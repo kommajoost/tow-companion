@@ -30,6 +30,7 @@ export function CombatStats({ unit }: { unit: ArmyUnit }) {
   const [charge, setCharge] = useState(false);
   const [rangedSel, setRangedSel] = useState(0);
   const [mods, setMods] = useState<Record<string, boolean>>({});
+  const [custom, setCustom] = useState(0); // extra "to hit" modifier (+ = easier, − = harder)
 
   const mw = melee[meleeSel];
   const rw = ranged[rangedSel];
@@ -146,7 +147,7 @@ export function CombatStats({ unit }: { unit: ArmyUnit }) {
                     <td style={td(false)}>{rw.sAbs ?? '—'}</td>
                     <td style={td(rw.ap !== 0)}>{fmtAP(rw.ap)}</td>
                     {(() => {
-                      const penalty = SHOOTING_MODS.reduce((n, m) => (mods[m.key] ? n + m.penalty : n), 0);
+                      const penalty = SHOOTING_MODS.reduce((n, m) => (mods[m.key] ? n + m.penalty : n), 0) - custom;
                       const hit = bs > 0 ? rangedToHit(bs, penalty) : null;
                       return (
                         <td style={{ ...td(true), fontFamily: towFont.display }}>
@@ -173,6 +174,17 @@ export function CombatStats({ unit }: { unit: ArmyUnit }) {
                     </button>
                   );
                 })}
+                {/* Custom modifier for anything not listed (a magic item, an army rule, …). */}
+                <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '2px 6px 2px 11px', borderRadius: 999, border: `1px solid ${custom !== 0 ? TOW.goldDeep : TOW.line}`, background: custom !== 0 ? 'rgba(184,134,47,0.14)' : 'transparent' }}>
+                  <span style={{ fontFamily: towFont.serif, fontSize: 12, color: custom !== 0 ? TOW.goldDeep : TOW.muted }}>
+                    Custom {custom === 0 ? '' : custom > 0 ? `+${custom}` : custom}
+                  </span>
+                  <button onClick={() => setCustom((c) => c - 1)} aria-label="harder to hit" style={{ width: 22, height: 22, borderRadius: 7, cursor: 'pointer', border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt, color: TOW.parchDim, fontFamily: towFont.display, fontWeight: 700, fontSize: 14, lineHeight: 1 }}>–</button>
+                  <button onClick={() => setCustom((c) => c + 1)} aria-label="easier to hit" style={{ width: 22, height: 22, borderRadius: 7, cursor: 'pointer', border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt, color: TOW.parchDim, fontFamily: towFont.display, fontWeight: 700, fontSize: 14, lineHeight: 1 }}>+</button>
+                </div>
+              </div>
+              <div style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 11, color: TOW.faint, marginTop: 5 }}>
+                Custom: + makes it easier to hit, − harder (e.g. a magic item or army rule).
               </div>
               {ruleChips(rw.specialRules)}
             </>
