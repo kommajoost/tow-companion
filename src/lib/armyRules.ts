@@ -202,37 +202,44 @@ export function unitTotalStrength(unit: ArmyUnit): number {
 }
 
 export interface ArmourSave {
-  /** Required save roll (e.g. 3 means 3+). */
+  /** Required save roll for the general case (close combat, front arc), e.g. 3 means 3+. */
   save: number;
-  /** Human-readable breakdown, e.g. ["Heavy armour (5+)", "Shield (+1)"]. */
+  /** Human-readable breakdown of the general save, e.g. ["Heavy armour (5+)", "Shield (+1)"]. */
   parts: string[];
   /** True when the 2+ maximum clipped a better computed value. */
   capped?: boolean;
-  /** Caveats the player should know (two-handed weapon, magic armour we can't value, …). */
+  /** Situational saves that differ from the general one, e.g. {save:4, when:"vs non-magical shooting"}. */
+  conditional?: { save: number; when: string }[];
+  /** Caveats the player should know (Parry, magic armour we can't value, …). */
   notes?: string[];
 }
 
 // Tokens that contain the word "shield" but are NOT a physical (+1) shield: formations,
-// spells and ward-granting magic items. Used so scanning special rules doesn't double-count.
+// spells and ward-granting magic items. Used so we don't mis-count them as a shield.
 const NON_PHYSICAL_SHIELD = /shieldwall|arcane shield|shield of (the lady|saphery)|oaken shield|ancestral shield/i;
 // Clearly two-handed melee weapons: a model wielding one cannot also use a shield in close
-// combat (the shield still counts against shooting). Used only to surface a caveat.
-const TWO_HANDED_WEAPON = /great weapon|greatsword|great axe|great hammer|two[\s-]?hand|requires two hands/i;
+// combat (the shield still counts against shooting → handled as a conditional save).
+const TWO_HANDED_WEAPON = /great weapon|greatsword|great axe|great hammer|halberd|two[\s-]?hand|requires two hands/i;
 
-// Work out a unit's Armour Save from its wargear and special rules. Base from worn armour
-// (Light 6+, Heavy 5+, Full plate 4+ — "Determining Armour Value"), improved by a shield (+1),
-// tower shield (+3, front arc), barding (+1) and Armoured Hide (X) (+X), capped at 2+
-// ("Maximum Armour Value"). A model with no armour counts as 7+ for the purpose of improvements,
-// so a shield alone gives 6+. Magic/named armours (Gromril, Dragon, Chaos, … — which in The Old
-// World grant ward saves or re-rolls, not armour value) aren't given a numeric value; an
-// unrecognised "… armour" item is surfaced as a note instead of guessed.
+const clampSave = (n: number) => Math.max(2, Math.min(7, n));
+
+// Work out a unit's Armour Save from its wargear and special rules, grounded in the verbatim TOW
+// rules ("Determining Armour Value" / "Maximum Armour Value"). The base value is a value GIVEN in
+// the profile (monsters/chariots export a bare "4+"/"5+" wargear line — these win), else worn
+// armour (Light 6+, Heavy 5+, Full plate 4+), else 7+ (no armour). It is improved by a shield (+1),
+// barding (+1), Armoured Hide (X) (+X) and an ironfist/buckler (+1); capped at 2+.
+//
+// Some improvements are CONDITIONAL and are returned as separate saves with their condition:
+//   • Sea Dragon / Lion Cloak — +1 only against non-magical shooting.
+//   • Tower shield — +3 only within the front arc; no cover to flank/rear.
+//   • A shield used with a two-handed weapon — counts vs shooting but not in close combat.
+// Magic/named armours (Gromril, Dragon, Chaos, … — ward saves / re-rolls in TOW, NOT armour value)
+// are never given a number; an unrecognised worn "… armour" item is surfaced as a note. Parry is
+// noted (its +1 has its own 3+ cap that depends on the chosen weapon).
 export function unitArmourSave(unit: ArmyUnit): ArmourSave | null {
   let base: number | null = null;
   let baseName = '';
-  let bonus = 0;
-  const bonuses: string[] = [];
   const notes: string[] = [];
-  let hasShield = false;
   const setBase = (v: number, name: string) => {
     if (base == null || v < base) {
       base = v;
@@ -240,56 +247,91 @@ export function unitArmourSave(unit: ArmyUnit): ArmourSave | null {
     }
   };
 
-  // Worn armour + physical shield / tower shield / barding come from wargear (the "- …" lines).
+  let shield = false;        // physical (+1) shield
+  let towerShield = false;   // +3 front arc only
+  let barding = false;
+  let ironfist = false;      // ironfist / buckler — a flat +1
+  let has2H = false;         // two-handed weapon in the wargear
+  let armouredHide = 0;      // Armoured Hide (X) → +X
+  let seaCloak = false;      // Sea Dragon / Lion Cloak — +1 vs non-magical shooting
+  let parry = false;
+  let unvalued: string | null = null; // a worn "… armour" we can't put a number to
+
+  const isStdArmour = (o: string) => /plate armou?r|full plate|heavy armou?r|light armou?r/.test(o);
+
   for (const raw of unit.options) {
     const o = ` ${raw.toLowerCase()} `;
-    let isArmourType = false;
-    if (/plate armou?r|full plate/.test(o)) { setBase(4, 'Full plate armour (4+)'); isArmourType = true; }
-    else if (/heavy armou?r/.test(o)) { setBase(5, 'Heavy armour (5+)'); isArmourType = true; }
-    else if (/light armou?r/.test(o)) { setBase(6, 'Light armour (6+)'); isArmourType = true; }
+    const fixed = raw.trim().match(/^(\d)\+$/); // a given profile armour value, e.g. "4+"
+    if (fixed) { setBase(parseInt(fixed[1], 10), `Armour value ${fixed[1]}+ (profile)`); continue; }
+    if (/plate armou?r|full plate/.test(o)) setBase(4, 'Full plate armour (4+)');
+    else if (/heavy armou?r/.test(o)) setBase(5, 'Heavy armour (5+)');
+    else if (/light armou?r/.test(o)) setBase(6, 'Light armour (6+)');
 
-    if (/tower shield/.test(o)) {
-      bonus += 3;
-      hasShield = true;
-      bonuses.push('Tower shield (+3, front arc)');
-    } else if (/\bshields?\b/.test(o) && !NON_PHYSICAL_SHIELD.test(raw)) {
-      bonus += 1;
-      hasShield = true;
-      bonuses.push('Shield (+1)');
-    }
-    if (/barding|caparison/.test(o)) {
-      bonus += 1;
-      bonuses.push('Barding (+1)');
-    }
+    if (/tower shield/.test(o)) towerShield = true;
+    else if (/\bshields?\b/.test(o) && !NON_PHYSICAL_SHIELD.test(raw)) shield = true;
+    if (/barding|caparison/.test(o)) barding = true;
+    if (/ironfist|buckler/.test(o)) ironfist = true;
+    if (TWO_HANDED_WEAPON.test(o)) has2H = true;
     // A worn "… armour" we don't recognise (Dragon, Gromril, Chaos, …): surface, don't guess.
-    if (!isArmourType && /armou?r/.test(o) && !/armoured hide/.test(o)) {
-      notes.push(`${raw.trim()} not auto-valued — check its rule`);
+    if (!isStdArmour(o) && /armou?r/.test(o) && !/armoured hide/.test(o) && !/ironfist/.test(o)) {
+      unvalued = raw.trim();
     }
   }
 
-  // Armoured Hide (X) improves the model's (and its rider's) armour value by X — a special rule.
   for (const raw of unit.specialRules) {
     const m = raw.match(/armoured hide\s*\(\s*(\d+)\s*\)/i);
-    if (m) {
-      const x = parseInt(m[1], 10);
-      if (x > 0) {
-        bonus += x;
-        bonuses.push(`Armoured Hide (+${x})`);
-      }
-    }
+    if (m) armouredHide += parseInt(m[1], 10);
+    if (/sea dragon cloak|lion cloak/i.test(raw)) seaCloak = true;
+    if (/\bparry\b/i.test(raw)) parry = true;
   }
 
-  if (base == null && bonus === 0 && notes.length === 0) return null;
+  const hasAnything = base != null || shield || towerShield || barding || ironfist || armouredHide > 0 || seaCloak;
+  if (!hasAnything && !unvalued) return null;
 
-  // Heads-up: a shield can't be used alongside a two-handed weapon in close combat.
-  if (hasShield && [...unit.options].some((o) => TWO_HANDED_WEAPON.test(o))) {
-    notes.push('Shield can’t be used with a two-handed weapon in close combat (still counts vs shooting)');
+  const baseVal = base ?? 7;
+  if (base == null) baseName = 'No armour (7+)';
+
+  // Improvements that apply in every situation.
+  let always = 0;
+  const parts: string[] = [baseName];
+  if (barding) { always += 1; parts.push('Barding (+1)'); }
+  if (armouredHide > 0) { always += armouredHide; parts.push(`Armoured Hide (+${armouredHide})`); }
+  if (ironfist) { always += 1; parts.push('Ironfist/buckler (+1)'); }
+
+  const shieldInCombat = shield && !has2H ? 1 : 0; // a regular shield is dropped if using a 2H weapon
+  const towerFront = towerShield ? 3 : 0;
+
+  // General save: close combat, front arc, no special condition.
+  const rawGeneral = baseVal - (always + shieldInCombat + towerFront);
+  const save = clampSave(rawGeneral);
+  if (shield && !towerShield) parts.push(has2H ? 'Shield (+1, shooting only — 2H weapon)' : 'Shield (+1)');
+  if (towerShield) parts.push('Tower shield (+3, front arc)');
+
+  const conditional: { save: number; when: string }[] = [];
+  const addCond = (val: number, when: string) => {
+    if (val !== save && !conditional.some((c) => c.when === when)) conditional.push({ save: val, when });
+  };
+
+  // Against shooting: a shield always counts (even with a 2H weapon) and the cloak adds +1.
+  if (seaCloak || (shield && has2H)) {
+    const shootDelta = always + (shield ? 1 : 0) + towerFront + (seaCloak ? 1 : 0);
+    addCond(clampSave(baseVal - shootDelta), seaCloak ? 'vs non-magical shooting' : 'vs shooting');
+  }
+  // A tower shield gives no protection to the flank or rear.
+  if (towerShield) {
+    addCond(clampSave(baseVal - (always + shieldInCombat)), 'to the flank or rear (no tower-shield cover)');
   }
 
-  const rawSave = (base ?? 7) - bonus;
-  const save = Math.max(2, rawSave);
-  const parts = [baseName || 'No armour (7+)', ...bonuses];
-  return { save, parts, capped: rawSave < 2, notes: notes.length ? notes : undefined };
+  if (parry) notes.push('Parry: +1 armour in close combat with a hand weapon & shield (max 3+)');
+  if (unvalued) notes.push(`${unvalued} not auto-valued — check its rule`);
+
+  return {
+    save,
+    parts,
+    capped: rawGeneral < 2,
+    conditional: conditional.length ? conditional : undefined,
+    notes: notes.length ? notes : undefined,
+  };
 }
 
 // ───────────────────────────── Wizards & lores ─────────────────────────────

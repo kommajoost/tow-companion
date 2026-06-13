@@ -87,6 +87,12 @@ export function UnitCard({
               {armour.parts.join(' · ')}{armour.capped ? ' · max 2+' : ''}
             </span>
           </div>
+          {armour.conditional?.map((c, i) => (
+            <div key={i} style={{ display: 'flex', alignItems: 'baseline', gap: 7, marginTop: 4 }}>
+              <span style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 13.5, color: TOW.goldDeep, lineHeight: 1 }}>{c.save}+</span>
+              <span style={{ fontFamily: towFont.serif, fontSize: 12, color: TOW.parchDim }}>{c.when}</span>
+            </div>
+          ))}
           {armour.notes?.map((n, i) => (
             <div key={i} style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 11.5, color: TOW.muted, marginTop: 4 }}>{n}</div>
           ))}
