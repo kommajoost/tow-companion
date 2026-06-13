@@ -18,6 +18,8 @@ export interface WeaponProfile {
   ap: number;
   /** Number of shots (ranged) — from "Multiple Shots (N)", default 1. */
   shots: number;
+  /** Attacks modifier (e.g. +1 from an additional hand weapon / "Extra Attacks (+1)"). */
+  aMod: number;
   specialRules: string[];
   /** True when the Strength/AP bonus applies only on the charge (cavalry spear, lance). */
   chargeBonus: boolean;
@@ -88,6 +90,7 @@ export function parseWeaponProfile(rule: Rule, baseRule?: Rule): WeaponProfile |
   const apNum = ap.match(/-?\d+/);
   const specialRules = splitRules(sr);
   const shotsM = specialRules.find((x) => /multiple shots/i.test(x))?.match(/\((\d+)\)/);
+  const extraM = specialRules.find((x) => /extra attacks/i.test(x))?.match(/\(\s*\+?(\d+)\s*\)/);
 
   const chargeBonus = !!baseRule && /a turn in which the wielder charged/i.test(baseRule.bodyIndex || '');
 
@@ -100,6 +103,7 @@ export function parseWeaponProfile(rule: Rule, baseRule?: Rule): WeaponProfile |
     sAbs,
     ap: apNum ? parseInt(apNum[0], 10) : 0,
     shots: shotsM ? parseInt(shotsM[1], 10) : 1,
+    aMod: extraM ? parseInt(extraM[1], 10) : 0,
     specialRules,
     chargeBonus,
   };
@@ -137,6 +141,25 @@ export function unitWeapons(unit: ArmyUnit, rules: Record<string, Rule>): {
   const ranged: WeaponProfile[] = [];
   const seen = new Set<string>();
   for (const opt of unit.options) {
+    // An additional / second hand weapon has no weapon-profile table — it grants Extra Attacks
+    // (+1). Synthesise it so it shows in the loadout and bumps the model's Attacks.
+    if (/additional hand weapon|two hand weapons/i.test(opt) && !seen.has('two-hand-weapons')) {
+      seen.add('two-hand-weapons');
+      melee.push({
+        slug: 'two-hand-weapons-additional-hand-weapon',
+        name: 'Two hand weapons',
+        kind: 'melee',
+        range: 'Combat',
+        sMod: 0,
+        sAbs: null,
+        ap: 0,
+        shots: 1,
+        aMod: 1,
+        specialRules: ['Extra Attacks (+1)', 'Requires Two Hands'],
+        chargeBonus: false,
+      });
+      continue;
+    }
     const slug = weaponProfileSlug(opt, rules);
     if (!slug || seen.has(slug)) continue;
     const w = parseWeaponProfile(rules[slug], rules[slug.replace(/-profile$/, '')]);
@@ -147,12 +170,13 @@ export function unitWeapons(unit: ArmyUnit, rules: Record<string, Rule>): {
   return { melee, ranged };
 }
 
-// Effective melee Strength + AP for a model wielding `w`. Charge-only bonuses (cavalry spear,
-// lance) apply their Strength/AP only when `charge` is true.
-export function effectiveMelee(baseS: number, w: WeaponProfile, charge: boolean): { s: number; ap: number } {
-  if (w.sAbs != null) return { s: w.sAbs, ap: w.ap };
+// Effective melee Strength, AP and Attacks modifier for a model wielding `w`. Charge-only bonuses
+// (cavalry spear, lance) apply their Strength/AP only when `charge` is true; the Attacks modifier
+// (an additional hand weapon's +1) always applies.
+export function effectiveMelee(baseS: number, w: WeaponProfile, charge: boolean): { s: number; ap: number; aMod: number } {
+  if (w.sAbs != null) return { s: w.sAbs, ap: w.ap, aMod: w.aMod };
   const apply = !w.chargeBonus || charge;
-  return { s: baseS + (apply ? w.sMod ?? 0 : 0), ap: apply ? w.ap : 0 };
+  return { s: baseS + (apply ? w.sMod ?? 0 : 0), ap: apply ? w.ap : 0, aMod: w.aMod };
 }
 
 // Standard shooting To Hit modifiers (To Hit Modifiers chart). Each is a penalty to the roll.

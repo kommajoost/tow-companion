@@ -76,17 +76,22 @@ export function CombatStats({ unit }: { unit: ArmyUnit }) {
   const td = (hl: boolean): React.CSSProperties => ({ textAlign: 'center', color: hl ? TOW.goldDeep : TOW.ink, fontWeight: hl ? 700 : 400, border: `1px solid ${TOW.line}`, padding: '3px 2px', background: hl ? 'rgba(184,134,47,0.10)' : 'transparent' });
 
   // One profile row, with an AP column inserted after S. The main model (pi 0) shows the chosen
-  // melee weapon's effective S + AP; mounts/crew keep their base S (natural attacks, no AP).
+  // melee weapon's effective S + AP (and Attacks, e.g. +1 for an additional hand weapon); mounts/
+  // crew keep their base S (natural attacks, no AP).
   const profileTable = (stats: { k: string; v: string }[], main: boolean) => {
     const cols: { k: string; v: string; hl: boolean }[] = [];
     for (const st of stats) {
       const isS = st.k.toUpperCase() === 'S';
+      const isA = st.k.toUpperCase() === 'A';
       if (isS && main && eff) {
         cols.push({ k: 'S', v: String(eff.s), hl: eff.s !== baseS });
         cols.push({ k: 'AP', v: fmtAP(eff.ap), hl: eff.ap !== 0 });
       } else if (isS) {
         cols.push({ k: 'S', v: st.v, hl: false });
         cols.push({ k: 'AP', v: '–', hl: false });
+      } else if (isA && main && eff && eff.aMod) {
+        const baseA = parseInt(st.v.match(/\d+/)?.[0] ?? '', 10);
+        cols.push({ k: 'A', v: Number.isFinite(baseA) ? String(baseA + eff.aMod) : st.v, hl: true });
       } else {
         cols.push({ k: st.k, v: st.v, hl: false });
       }
