@@ -6,13 +6,14 @@
 // option lines are silently dropped (the user can fix them in the editor).
 
 import { parseArmyList } from './armyParser';
-import { CATEGORIES, COMPOSITION_RULES, type Category, type OwbArmy, type OwbUnit, type OwbOption, type ListEntry } from './owbBuilder';
+import { CATEGORIES, COMPOSITION_RULES, OPTION_GROUPS, type Category, type OwbArmy, type OwbUnit, type OwbOption, type ListEntry } from './owbBuilder';
 
 // Strip OWB footnote markers ("{dark elves}", trailing "*") and collapse to a comparable key.
 const clean = (s: string) => (s || '').replace(/\{[^}]*\}/g, ' ').replace(/\*/g, '').replace(/\s+/g, ' ').trim();
 const norm = (s: string) => clean(s).toLowerCase().replace(/\([^)]*\)/g, ' ').replace(/\[[^\]]*\]/g, ' ').replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim();
 
 const OPTION_GROUP_KEYS: (keyof OwbUnit)[] = ['command', 'equipment', 'armor', 'options', 'mounts'];
+const RADIO_GROUPS = new Set(OPTION_GROUPS.filter((g) => g.radio).map((g) => String(g.key)));
 const groupItems = (unit: OwbUnit, key: keyof OwbUnit): OwbOption[] =>
   (Array.isArray(unit[key]) ? (unit[key] as OwbOption[]) : []).filter((o) => o && o.name_en);
 
@@ -58,20 +59,30 @@ export function importOwbText(text: string, army: OwbArmy): ImportResult {
     const max = (unit.maximum ?? 0) === 0 ? 9999 : unit.maximum!;
     const count = Math.max(min, Math.min(max, pu.count ?? min));
 
-    const opts: string[] = [];
     const matchOpt = (on: string): string | null => {
       for (const gk of OPTION_GROUP_KEYS) { const i = groupItems(unit, gk).findIndex((o) => norm(o.name_en) === on); if (i >= 0) return `${String(gk)}/${i}`; }
       for (const gk of OPTION_GROUP_KEYS) { const i = groupItems(unit, gk).findIndex((o) => { const k = norm(o.name_en); return !!k && (k.includes(on) || on.includes(k)); }); if (i >= 0) return `${String(gk)}/${i}`; }
       return null;
     };
+    // Single-choice groups keep at most one explicit (non-default) pick — the free default
+    // stays implicit; toggle groups keep every match.
+    const radioChoice = new Map<string, string>();
+    const toggles: string[] = [];
     for (const optText of pu.options) {
       const on = norm(optText);
       if (!on) continue;
       const k = matchOpt(on);
-      if (k && !opts.includes(k)) opts.push(k);
+      if (!k) continue;
+      const [gk, iStr] = k.split('/');
+      if (RADIO_GROUPS.has(gk)) {
+        const opt = groupItems(unit, gk as keyof OwbUnit)[Number(iStr)];
+        if (opt && !opt.active) radioChoice.set(gk, k);
+      } else if (!toggles.includes(k)) {
+        toggles.push(k);
+      }
     }
 
-    entries.push({ uid: newUid(), cat, unitId: unit.id, count, opts });
+    entries.push({ uid: newUid(), cat, unitId: unit.id, count, opts: [...radioChoice.values(), ...toggles] });
   }
 
   const header: ImportResult['header'] = {};

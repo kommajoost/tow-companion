@@ -14,11 +14,13 @@ export interface OwbUnit {
 export type OwbArmy = Record<Category, OwbUnit[]>;
 
 // The option groups a unit can spend points on (lores are free spell picks → omitted here).
-// `radio` groups are single-choice (you wear one armour, ride one mount); the rest are toggles.
-// OWB marks the default of a single-choice group with `active:true` (free, e.g. Light armour / On foot).
+// `radio` groups are single-choice (you carry one weapon loadout, wear one armour, ride one mount);
+// the rest are toggles you can mix (musician + standard, Shield + Sea Dragon Cloak, …). OWB marks
+// the free default of a single-choice group with `active:true` (e.g. Hand weapon / Light armour /
+// On foot) and lists each alternative — including bundled combinations — as its own entry.
 export const OPTION_GROUPS: { key: keyof OwbUnit; label: string; radio?: boolean }[] = [
   { key: 'command', label: 'Command' },
-  { key: 'equipment', label: 'Equipment' },
+  { key: 'equipment', label: 'Equipment', radio: true },
   { key: 'armor', label: 'Armour', radio: true },
   { key: 'options', label: 'Options' },
   { key: 'mounts', label: 'Mounts', radio: true },
