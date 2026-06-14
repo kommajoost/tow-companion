@@ -1,10 +1,24 @@
+import { execSync } from 'node:child_process';
+import { readFileSync } from 'node:fs';
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import { VitePWA } from 'vite-plugin-pwa';
 
+// Build stamp shown in Settings → so you can tell which deploy is live without diffing the JS hash.
+const pkgVersion = JSON.parse(readFileSync(new URL('./package.json', import.meta.url), 'utf8')).version;
+let buildSha = (process.env.VERCEL_GIT_COMMIT_SHA || '').trim();
+try { if (!buildSha) buildSha = execSync('git rev-parse --short HEAD').toString().trim(); } catch { /* no git */ }
+buildSha = buildSha ? buildSha.slice(0, 7) : 'dev';
+const buildDate = new Date().toISOString().slice(0, 10);
+
 // https://vite.dev/config/
 export default defineConfig({
+  define: {
+    __APP_VERSION__: JSON.stringify(pkgVersion),
+    __BUILD_SHA__: JSON.stringify(buildSha),
+    __BUILD_DATE__: JSON.stringify(buildDate),
+  },
   server: { port: 5174, strictPort: true, host: true },
   plugins: [
     react(),

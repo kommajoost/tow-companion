@@ -5,7 +5,11 @@ import { supabase, TOW_FEEDBACK } from '../lib/supabase';
 import { LogoMark } from './LogoMark';
 
 const eb = engraved as React.CSSProperties;
-const APP_VERSION = '0.1.0';
+const APP_VERSION = __APP_VERSION__;
+const BUILD_SHA = __BUILD_SHA__;
+const BUILD_DATE = __BUILD_DATE__;
+// e.g. "0.1.0 · 0dea538 · 2026-06-14"
+const BUILD_LABEL = `${APP_VERSION} · ${BUILD_SHA} · ${BUILD_DATE}`;
 
 // Settings screen — currently the home of "install app" and "updates", with room to grow.
 export function SettingsMode() {
@@ -134,6 +138,15 @@ export function SettingsMode() {
             . Unofficial personal-use aid. Warhammer: The Old World © Games Workshop.
           </div>
         </div>
+
+        {/* Version */}
+        <div style={card}>
+          <div style={title}>Version</div>
+          <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 12 }}>
+            <span style={{ ...body, color: TOW.ink, fontWeight: 600 }}>v{APP_VERSION}</span>
+            <span style={{ fontFamily: towFont.serif, fontSize: 12.5, color: TOW.muted }}>build {BUILD_SHA} · {BUILD_DATE}</span>
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -193,7 +206,7 @@ function FeedbackSection({
     setError(null);
     const { error: err } = await supabase
       .from(TOW_FEEDBACK)
-      .insert({ message: message.trim(), contact: contact.trim() || null, app_version: APP_VERSION });
+      .insert({ message: message.trim(), contact: contact.trim() || null, app_version: BUILD_LABEL });
     setSending(false);
     if (err) setError(err.message);
     else {
