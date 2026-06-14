@@ -125,27 +125,34 @@ export function parseWeaponProfile(rule: Rule, baseRule?: Rule): WeaponProfile |
 
 // Find the "<name>-profile" rule for a wargear/loadout label (handles plurals and bracketed
 // suffixes), or null if it isn't a weapon with a profile (armour, shields, command, …).
-function weaponProfileSlug(label: string, rules: Record<string, Rule>): string | null {
-  // Strip both [bracket] and (paren) suffixes — the latter is flavour on natural weapons
-  // (e.g. "Hand weapons (Claws)") that must still resolve to the base "hand-weapon-profile".
-  const noBracket = label.replace(/\[.*?\]/g, ' ').replace(/\(.*?\)/g, ' ').trim();
+function weaponProfileSlugs(label: string, rules: Record<string, Rule>): string[] {
+  // Strip [bracket], (paren) and {brace} tokens — wizard-level brackets, flavour parens on natural
+  // weapons ("Hand weapons (Claws)") and faction/brace tags ("Organ gun {weapon}") that aren't part
+  // of the profile slug and would otherwise stop the match.
+  const noBracket = label.replace(/\[.*?\]/g, ' ').replace(/\(.*?\)/g, ' ').replace(/\{.*?\}/g, ' ').trim();
   const n = norm(noBracket);
-  if (!n) return null;
+  if (!n) return [];
   const tries = new Set([n]);
   const words = n.split(' ');
   const last = words[words.length - 1];
   if (/s$/.test(last)) tries.add([...words.slice(0, -1), last.replace(/s$/, '')].join(' '));
+  // Most weapons have a single "<name>-profile"; some (a brace of pistols, a fireglaive) carry TWO —
+  // a ranged shot AND a combat profile — stored as "<name>-ranged-profile" + "<name>-combat-profile".
   for (const t of tries) {
-    const slug = `${t.replace(/ /g, '-')}-profile`;
-    if (rules[slug]) return slug;
+    const base = t.replace(/ /g, '-');
+    const found: string[] = [];
+    if (rules[`${base}-profile`]) found.push(`${base}-profile`);
+    if (rules[`${base}-ranged-profile`]) found.push(`${base}-ranged-profile`);
+    if (rules[`${base}-combat-profile`]) found.push(`${base}-combat-profile`);
+    if (found.length) return found;
   }
   for (const t of tries) {
     const r = Object.values(rules).find(
       (x) => x.slug.endsWith('-profile') && norm(x.name.replace(/\(profile\)/i, '')) === t,
     );
-    if (r) return r.slug;
+    if (r) return [r.slug];
   }
-  return null;
+  return [];
 }
 
 // Resolve a unit's loadout into melee and ranged weapon profiles (in loadout order, de-duplicated).
@@ -178,20 +185,23 @@ export function unitWeapons(unit: ArmyUnit, rules: Record<string, Rule>): {
       });
       continue;
     }
-    const slug = weaponProfileSlug(opt, rules);
-    if (!slug || seen.has(slug)) continue;
-    const w = parseWeaponProfile(rules[slug], rules[slug.replace(/-profile$/, '')]);
-    if (!w) continue;
-    seen.add(slug);
-    // Rapid Fire weapons (the repeater bolt thrower) don't reuse this profile at −1 To Hit — they
-    // fire "smaller bolts" with their OWN, weaker profile (the shared `rapid-fire-profile`: lower
-    // Strength/AP, Armour Bane, Multiple Shots (D3+3)). Attach it so the multiple-shots mode shows
-    // the correct stats, not the single-shot profile with a hit penalty.
-    if (w.specialRules.some((r) => /rapid fire/i.test(r)) && rules['rapid-fire-profile']) {
-      const rf = parseWeaponProfile(rules['rapid-fire-profile']);
-      if (rf) { w.multiProfile = rf; w.multiShots = rf.multiShots ?? w.multiShots; }
+    // A weapon may resolve to more than one profile (e.g. a brace of pistols = a ranged shot AND a
+    // combat profile); add each in turn.
+    for (const slug of weaponProfileSlugs(opt, rules)) {
+      if (seen.has(slug)) continue;
+      const w = parseWeaponProfile(rules[slug], rules[slug.replace(/(-ranged|-combat)?-profile$/, '')]);
+      if (!w) continue;
+      seen.add(slug);
+      // Rapid Fire weapons (the repeater bolt thrower) don't reuse this profile at −1 To Hit — they
+      // fire "smaller bolts" with their OWN, weaker profile (the shared `rapid-fire-profile`: lower
+      // Strength/AP, Armour Bane, Multiple Shots (D3+3)). Attach it so the multiple-shots mode shows
+      // the correct stats, not the single-shot profile with a hit penalty.
+      if (w.specialRules.some((r) => /rapid fire/i.test(r)) && rules['rapid-fire-profile']) {
+        const rf = parseWeaponProfile(rules['rapid-fire-profile']);
+        if (rf) { w.multiProfile = rf; w.multiShots = rf.multiShots ?? w.multiShots; }
+      }
+      (w.kind === 'ranged' ? ranged : melee).push(w);
     }
-    (w.kind === 'ranged' ? ranged : melee).push(w);
   }
   return { melee, ranged };
 }

@@ -50,10 +50,16 @@ export function buildRuleIndex(rules: Record<string, Rule>): Map<string, string>
 // rule slug, or null if there's no matching rule page.
 export function resolveRuleSlug(label: string, idx: Map<string, string>): string | null {
   const withoutParen = label.replace(/\(.*?\)/g, ' ');
+  const withoutBraces = label.replace(/\{.*?\}/g, ' ');
   const candidates = [
     label,
     withoutParen,
     withoutParen.replace(/\s*\d.*$/, ''), // drop trailing number/qualifier
+    // {faction} tags are part of some rule slugs ("…{renegade}" → "-renegade"), so the brace-kept
+    // forms above are tried first; this drops the tag as a fallback ("Doomseeker {dwarfs}" → rule
+    // "doomseeker") for rules whose slug does NOT carry the tag.
+    withoutBraces,
+    withoutBraces.replace(/\(.*?\)/g, ' '),
   ];
   for (const c of candidates) {
     const k = normalize(c);
