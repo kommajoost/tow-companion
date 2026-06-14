@@ -3,6 +3,7 @@ import { usePersistentState } from '../../store';
 import { TOW, towFont, engraved } from '../../design/tow';
 import { validate, type Category, type OwbArmy, type OwbUnit, type BuilderList } from '../../lib/owbBuilder';
 import { BuilderWorkspace } from './BuilderWorkspace';
+import { NewListSetup, type NewListValues } from './NewListSetup';
 
 const BASE = import.meta.env.BASE_URL;
 const eb = engraved as React.CSSProperties;
@@ -28,6 +29,7 @@ export function ListBuilder() {
   const [statIdx, setStatIdx] = useState<Record<string, { stats?: StatRow[] }> | null>(statIndexCache);
   const [lists, setLists] = usePersistentState<SavedList[]>('tow:lists', []);
   const [activeId, setActiveId] = usePersistentState<string | null>('tow:builder-active', null);
+  const [setupOpen, setSetupOpen] = useState(false);
 
   useEffect(() => {
     fetch(`${BASE}owb/${ARMY_SLUG}.json`).then((r) => r.json()).then(setArmy).catch(() => setArmy(null));
@@ -66,9 +68,10 @@ export function ListBuilder() {
     setLists((ls) => ls.map((l) => (l.id === activeId ? { ...l, ...(typeof p === 'function' ? p(l) : p), updatedAt: Date.now() } : l)));
   const setName = (name: string) => setLists((ls) => ls.map((l) => (l.id === activeId ? { ...l, name, updatedAt: Date.now() } : l)));
 
-  const createList = () => {
+  const createListWith = (v: NewListValues) => {
     const id = newId('l');
-    setLists((ls) => [{ id, name: `New list ${ls.length + 1}`, army: ARMY_SLUG, composition: comps[0] || 'dark-elves', rule: 'open-war', points: 2000, entries: [], createdAt: Date.now(), updatedAt: Date.now() }, ...ls]);
+    setLists((ls) => [{ id, name: v.name, army: ARMY_SLUG, composition: v.composition, rule: v.rule, points: v.points, entries: v.entries, createdAt: Date.now(), updatedAt: Date.now() }, ...ls]);
+    setSetupOpen(false);
     setActiveId(id);
   };
   const duplicateList = (l: SavedList) => { const id = newId('l'); setLists((ls) => [{ ...l, id, name: `${l.name} (copy)`, createdAt: Date.now(), updatedAt: Date.now() }, ...ls]); };
@@ -101,7 +104,7 @@ export function ListBuilder() {
       <div style={{ maxWidth: 680, margin: '0 auto', padding: '14px 14px 48px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
           <h1 style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 22, color: TOW.ink, margin: 0 }}>My lists</h1>
-          <button onClick={createList} style={{ marginLeft: 'auto', fontFamily: towFont.display, fontWeight: 700, fontSize: 13, padding: '7px 14px', borderRadius: 9, cursor: 'pointer', border: 'none', background: goldGrad, color: '#2a1a0a' }}>＋ New list</button>
+          <button onClick={() => setSetupOpen(true)} style={{ marginLeft: 'auto', fontFamily: towFont.display, fontWeight: 700, fontSize: 13, padding: '7px 14px', borderRadius: 9, cursor: 'pointer', border: 'none', background: goldGrad, color: '#2a1a0a' }}>＋ New list</button>
         </div>
         {sorted.length === 0 ? (
           <p style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 14, color: TOW.muted }}>No saved lists yet — tap “New list” to start building.</p>
@@ -126,6 +129,17 @@ export function ListBuilder() {
           Lists are saved on this device. Catalogue from <a href="https://github.com/nthiebes/old-world-builder" target="_blank" rel="noreferrer" className="underline">Old World Builder</a> (CC BY 4.0).
         </p>
       </div>
+      {setupOpen && (
+        <NewListSetup
+          comps={comps}
+          compNames={COMP_NAMES}
+          armyName="Dark Elves"
+          defaultName={`New list ${lists.length + 1}`}
+          catalogue={army}
+          onCancel={() => setSetupOpen(false)}
+          onCreate={createListWith}
+        />
+      )}
     </div>
   );
 }

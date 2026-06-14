@@ -266,7 +266,8 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
     </div>
   );
 
-  const headerMeta = `${COMP_NAMES[list.composition] ?? list.composition} · Dark Elves`;
+  const ruleName = COMPOSITION_RULES.find((r) => r.id === list.rule)?.name ?? list.rule;
+  const headerMeta = `${COMP_NAMES[list.composition] ?? list.composition} · ${ruleName} · Dark Elves`;
 
   // ════════════════════ WIDE — three columns ════════════════════
   if (wide) {
@@ -297,6 +298,7 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
               <div style={{ display: 'flex', gap: 5 }}>
                 {POINT_PRESETS.map((t) => { const on = list.points === t; return <button key={t} onClick={() => onUpdate(() => ({ points: t }))} style={{ flex: 1, padding: '9px 2px', borderRadius: 8, border: `1px solid ${on ? TOW.goldDeep : TOW.line}`, cursor: 'pointer', fontFamily: towFont.display, fontWeight: 600, fontSize: 12.5, background: on ? 'rgba(138,108,48,0.14)' : TOW.cardLt, color: on ? TOW.gold : TOW.muted }}>{t}</button>; })}
               </div>
+              <input type="number" inputMode="numeric" min={0} step={50} value={list.points} onChange={(e) => onUpdate(() => ({ points: Math.max(0, Math.floor(Number(e.target.value) || 0)) }))} aria-label="Custom points" style={{ width: '100%', boxSizing: 'border-box', marginTop: 7, padding: '9px 11px', borderRadius: 9, border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt, fontFamily: towFont.display, fontWeight: 600, fontSize: 14, color: TOW.ink, outline: 'none' }} />
               <div style={{ ...eb, fontSize: 8.5, color: TOW.muted, margin: '16px 0 7px' }}>Composition</div>
               <select value={list.composition} onChange={(e) => onUpdate(() => ({ composition: e.target.value }))} style={{ width: '100%', boxSizing: 'border-box', padding: '9px 11px', borderRadius: 9, border: `1px solid ${TOW.line}`, background: TOW.cardLt, fontFamily: towFont.serif, fontSize: 14, color: TOW.ink }}>
                 {comps.map((c) => <option key={c} value={c}>{COMP_NAMES[c] ?? c}</option>)}
@@ -379,6 +381,7 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <button onClick={onBack} aria-label="Back" style={{ width: 30, height: 30, flexShrink: 0, borderRadius: 8, border: `1px solid ${TOW.line}`, background: TOW.cardLt, cursor: 'pointer', fontSize: 17, color: TOW.inkDim }}>‹</button>
           <input value={name} onChange={(e) => onSetName(e.target.value)} aria-label="List name" style={{ flex: 1, minWidth: 0, fontFamily: towFont.display, fontWeight: 700, fontSize: 17, color: TOW.ink, background: 'transparent', border: 'none', borderBottom: `1px dashed ${TOW.line}`, padding: '2px 0' }} />
+          <button onClick={() => setSettings(true)} aria-label="List settings" style={{ width: 30, height: 30, flexShrink: 0, borderRadius: 8, border: `1px solid ${TOW.line}`, background: TOW.cardLt, cursor: 'pointer', fontSize: 14, color: TOW.inkDim }}>⚙</button>
         </div>
         <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginTop: 8 }}>{headerMeta}</div>
         <div style={{ display: 'flex', alignItems: 'flex-end', gap: 10, marginTop: 3 }}>
@@ -437,6 +440,26 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
           )}
           {(() => { const rs = (editUnit.specialRules?.name_en || '').split(',').map((s) => s.trim()).filter(Boolean); return rs.length ? <div style={{ marginBottom: 16 }}><div style={{ ...eb, fontSize: 8.5, color: TOW.muted, marginBottom: 7 }}>Special rules</div>{rules_(rs)}</div> : null; })()}
           {optionEditor(editEntry, editUnit)}
+        </Sheet>
+      )}
+      {/* settings sheet (mobile) */}
+      {settings && (
+        <Sheet title="List settings" sub="Edit this list" onClose={() => setSettings(false)}>
+          <div style={{ ...eb, fontSize: 8.5, color: TOW.muted, marginBottom: 6 }}>List name</div>
+          <input value={name} onChange={(e) => onSetName(e.target.value)} style={{ width: '100%', boxSizing: 'border-box', padding: '10px 12px', borderRadius: 9, border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt, fontFamily: towFont.display, fontWeight: 600, fontSize: 15, color: TOW.ink, outline: 'none' }} />
+          <div style={{ ...eb, fontSize: 8.5, color: TOW.muted, margin: '16px 0 7px' }}>Points limit</div>
+          <div style={{ display: 'flex', gap: 5 }}>
+            {POINT_PRESETS.map((t) => { const on = list.points === t; return <button key={t} onClick={() => onUpdate(() => ({ points: t }))} style={{ flex: 1, padding: '10px 2px', borderRadius: 8, border: `1px solid ${on ? TOW.goldDeep : TOW.line}`, cursor: 'pointer', fontFamily: towFont.display, fontWeight: 600, fontSize: 13, background: on ? 'rgba(138,108,48,0.14)' : TOW.cardLt, color: on ? TOW.gold : TOW.muted }}>{t}</button>; })}
+          </div>
+          <input type="number" inputMode="numeric" min={0} step={50} value={list.points} onChange={(e) => onUpdate(() => ({ points: Math.max(0, Math.floor(Number(e.target.value) || 0)) }))} aria-label="Custom points" style={{ width: '100%', boxSizing: 'border-box', marginTop: 7, padding: '10px 12px', borderRadius: 9, border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt, fontFamily: towFont.display, fontWeight: 600, fontSize: 14, color: TOW.ink, outline: 'none' }} />
+          <div style={{ ...eb, fontSize: 8.5, color: TOW.muted, margin: '16px 0 7px' }}>Composition</div>
+          <select value={list.composition} onChange={(e) => onUpdate(() => ({ composition: e.target.value }))} style={{ width: '100%', boxSizing: 'border-box', padding: '10px 12px', borderRadius: 9, border: `1px solid ${TOW.line}`, background: TOW.cardLt, fontFamily: towFont.serif, fontSize: 14, color: TOW.ink }}>
+            {comps.map((c) => <option key={c} value={c}>{COMP_NAMES[c] ?? c}</option>)}
+          </select>
+          <div style={{ ...eb, fontSize: 8.5, color: TOW.muted, margin: '14px 0 7px' }}>Composition rule</div>
+          <select value={list.rule} onChange={(e) => onUpdate(() => ({ rule: e.target.value }))} style={{ width: '100%', boxSizing: 'border-box', padding: '10px 12px', borderRadius: 9, border: `1px solid ${TOW.line}`, background: TOW.cardLt, fontFamily: towFont.serif, fontSize: 14, color: TOW.ink }}>
+            {COMPOSITION_RULES.map((r) => <option key={r.id} value={r.id}>{r.name}</option>)}
+          </select>
         </Sheet>
       )}
       {info && <InfoPopup info={info} onClose={() => setInfo(null)} />}
