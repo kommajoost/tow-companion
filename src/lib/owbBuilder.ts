@@ -7,8 +7,15 @@ export const CATEGORIES: Category[] = ['characters', 'core', 'special', 'rare', 
 
 export interface OwbOption {
   name_en: string; points?: number; perModel?: boolean; active?: boolean;
-  // A mount option can carry nested sub-options (e.g. Manticore → "Venomous tail"); these become
-  // per-mount toggles that only apply while that mount is the selected radio choice (Feature 1).
+  // `alwaysActive` — the option is always on and cannot be toggled off (a free base, e.g. the
+  // "Wizard" header on a Sorceress). `exclusive` — the option is one-of among its SIBLINGS in the
+  // same nested list (a radio choice, e.g. "Level 3 Wizard" vs "Level 4 Wizard").
+  alwaysActive?: boolean; exclusive?: boolean; minimum?: number; maximum?: number;
+  // Any option (in any group) may carry NESTED sub-options. These apply only while the parent is
+  // active: for a radio group when the parent is the selected choice; for a toggle group when the
+  // parent is toggled on (or `alwaysActive`). Exclusive children form a single radio set; the rest
+  // are independent toggles. e.g. a Manticore mount → "Venomous tail" toggle; a Sorceress' "Wizard"
+  // → the Level radio. Generalised by `subOptionGroups`/`toggleSubOption`/`setExclusiveSubOption`.
   options?: OwbOption[];
 }
 // A unit's magic-item "section" (from the catalogue's per-unit `items[]`). Each section permits a
@@ -59,15 +66,105 @@ export function radioSelected(unit: OwbUnit, entry: ListEntry, key: keyof OwbUni
   return `${key}/${def >= 0 ? def : 0}`;
 }
 
-// ---- Mount sub-options (Feature 1) -----------------------------------------------------------
-// When the selected mount (radio in the `mounts` group) carries a nested `options` array, each
-// becomes a per-unit toggle that only applies while that mount is chosen. Stored in entry.opts as
-//   mountopt/<mountIndex>/<optIndex>
-// Stale keys for a non-selected mount are simply ignored by points/summary (we filter by the
-// currently-selected mount index — no need to delete them when the mount radio changes).
-const MOUNTOPT_PREFIX = 'mountopt';
-const mountOptKey = (mountIndex: number, optIndex: number) => `${MOUNTOPT_PREFIX}/${mountIndex}/${optIndex}`;
+// ---- Nested sub-options (one level under ANY group item) --------------------------------------
+// An option in any group (command/equipment/armor/options/mounts) may carry a nested `options`
+// array. Those nested options apply only while the PARENT is active:
+//   • radio group (equipment/armor/mounts) — the parent is the currently-selected radio index;
+//   • toggle group (command/options)       — the parent is toggled on OR is `alwaysActive`.
+// Within an active parent, the nested set is split into:
+//   • a single-choice RADIO set  — all children with `exclusive:true` (exactly one selected; the
+//     default is the child with `active`, else the first; the free `active` default is implicit);
+//   • independent TOGGLES        — the remaining children (each on/off on its own).
+// Stored in entry.opts as  subopt/<group>/<parentIndex>/<childIndex>  (new writes). For backwards
+// compatibility we ALSO read the legacy mount keys  mountopt/<mountIndex>/<childIndex>  (treated as
+// subopt/mounts/...). Stale keys for a no-longer-active parent are simply ignored by points/summary
+// (we only consider parents that are currently active) — no need to delete them on radio change.
+const SUBOPT_PREFIX = 'subopt';
+const MOUNTOPT_PREFIX = 'mountopt'; // legacy (mounts-only) prefix — read, never written
+const subOptKey = (group: keyof OwbUnit, parentIndex: number, childIndex: number) =>
+  `${SUBOPT_PREFIX}/${String(group)}/${parentIndex}/${childIndex}`;
+const legacyMountKey = (parentIndex: number, childIndex: number) =>
+  `${MOUNTOPT_PREFIX}/${parentIndex}/${childIndex}`;
 
+// True when a sub-option key (new OR legacy) is currently stored on the entry for this slot.
+const hasSubOpt = (entry: ListEntry, group: keyof OwbUnit, parentIndex: number, childIndex: number): boolean => {
+  if (entry.opts.includes(subOptKey(group, parentIndex, childIndex))) return true;
+  if (group === 'mounts' && entry.opts.includes(legacyMountKey(parentIndex, childIndex))) return true;
+  return false;
+};
+
+// Is the parent option at `parentIndex` in `group` currently active (so its nested options apply)?
+function parentActive(unit: OwbUnit, entry: ListEntry, group: keyof OwbUnit, parent: OwbOption, parentIndex: number): boolean {
+  const isRadio = OPTION_GROUPS.find((g) => g.key === group)?.radio;
+  if (isRadio) return radioSelected(unit, entry, group) === `${String(group)}/${parentIndex}`;
+  return parent.alwaysActive === true || entry.opts.includes(`${String(group)}/${parentIndex}`);
+}
+
+// A nested sub-option ready for the editor: its child index, the option, its stored key, selected state.
+export interface SubOptionItem { i: number; opt: OwbOption; key: string; selected: boolean }
+// A group of nested sub-options under one active parent (radio when `exclusive`, else toggles).
+export interface SubOptionGroup {
+  group: keyof OwbUnit; parentIndex: number; parentLabel: string;
+  parentActive: boolean; alwaysActive: boolean; exclusive: boolean;
+  items: SubOptionItem[];
+}
+
+// All ACTIVE nested sub-option groups across every option group, split per parent into its exclusive
+// (radio) set and its non-exclusive (toggle) set — so one parent can yield up to two groups.
+export function subOptionGroups(unit: OwbUnit, entry: ListEntry): SubOptionGroup[] {
+  const out: SubOptionGroup[] = [];
+  for (const { key: group } of OPTION_GROUPS) {
+    const parents = groupItems(unit, group);
+    parents.forEach((parent, parentIndex) => {
+      const children = (Array.isArray(parent.options) ? parent.options : []).filter((o) => o && o.name_en);
+      if (children.length === 0) return;
+      if (!parentActive(unit, entry, group, parent, parentIndex)) return;
+      const active = true;
+      // Find which (if any) exclusive child is the default-active one, for the implicit selection.
+      const exclChildren = children.filter((c) => c.exclusive);
+      const defExclIdx = exclChildren.length
+        ? (() => { const a = children.findIndex((c) => c.exclusive && c.active); return a >= 0 ? a : children.findIndex((c) => c.exclusive); })()
+        : -1;
+      const storedExcl = children.findIndex((c, i) => c.exclusive && hasSubOpt(entry, group, parentIndex, i));
+      const selectedExcl = storedExcl >= 0 ? storedExcl : defExclIdx; // nothing stored → the default
+      // Emit the exclusive (radio) sub-group, if any.
+      const excl = children
+        .map((opt, i) => ({ opt, i }))
+        .filter(({ opt }) => opt.exclusive)
+        .map(({ opt, i }) => ({ i, opt, key: subOptKey(group, parentIndex, i), selected: i === selectedExcl }));
+      if (excl.length) out.push({ group, parentIndex, parentLabel: parent.name_en, parentActive: active, alwaysActive: !!parent.alwaysActive, exclusive: true, items: excl });
+      // Emit the non-exclusive (toggle) sub-group, if any.
+      const toggles = children
+        .map((opt, i) => ({ opt, i }))
+        .filter(({ opt }) => !opt.exclusive)
+        .map(({ opt, i }) => ({ i, opt, key: subOptKey(group, parentIndex, i), selected: hasSubOpt(entry, group, parentIndex, i) }));
+      if (toggles.length) out.push({ group, parentIndex, parentLabel: parent.name_en, parentActive: active, alwaysActive: !!parent.alwaysActive, exclusive: false, items: toggles });
+    });
+  }
+  return out;
+}
+
+// Pure toggle for a non-exclusive nested sub-option: returns the new opts with it flipped on/off.
+// Clears any legacy mount key for the same slot so the new key is authoritative.
+export function toggleSubOption(entry: ListEntry, group: keyof OwbUnit, parentIndex: number, childIndex: number): string[] {
+  const key = subOptKey(group, parentIndex, childIndex);
+  const on = hasSubOpt(entry, group, parentIndex, childIndex);
+  const cleared = entry.opts.filter((k) => k !== key && k !== legacyMountKey(parentIndex, childIndex));
+  return on ? cleared : [...cleared, key];
+}
+
+// Pure radio set for an exclusive nested sub-option: returns the new opts with this child selected,
+// dropping any sibling exclusive pick under the same parent (new + legacy keys).
+export function setExclusiveSubOption(unit: OwbUnit, entry: ListEntry, group: keyof OwbUnit, parentIndex: number, childIndex: number): string[] {
+  const parent = groupItems(unit, group)[parentIndex];
+  const children = (Array.isArray(parent?.options) ? parent!.options! : []);
+  const siblingKeys = new Set<string>();
+  children.forEach((c, i) => { if (c.exclusive) { siblingKeys.add(subOptKey(group, parentIndex, i)); siblingKeys.add(legacyMountKey(parentIndex, i)); } });
+  const rest = entry.opts.filter((k) => !siblingKeys.has(k));
+  return [...rest, subOptKey(group, parentIndex, childIndex)];
+}
+
+// ---- Mount sub-options (legacy shim over the general engine) ----------------------------------
 // The mount index currently selected in the `mounts` radio group (resolves the `active` default).
 export function selectedMountIndex(unit: OwbUnit, entry: ListEntry): number {
   const sel = radioSelected(unit, entry, 'mounts'); // "mounts/<i>"
@@ -79,24 +176,19 @@ export function selectedMountIndex(unit: OwbUnit, entry: ListEntry): number {
 export interface MountSubOption { i: number; opt: OwbOption; key: string; selected: boolean }
 
 // The nested sub-options of the CURRENTLY-selected mount, each with its index + selected state.
-// Empty when the selected mount has no nested options (the common case).
+// Empty when the selected mount has no nested options (the common case). Reimplemented on top of
+// the general engine; kept for back-compat with existing callers.
 export function mountSubOptions(unit: OwbUnit, entry: ListEntry): MountSubOption[] {
   const mIndex = selectedMountIndex(unit, entry);
-  const mount = groupItems(unit, 'mounts')[mIndex];
-  const subs = Array.isArray(mount?.options) ? mount!.options! : [];
-  return subs
-    .filter((o) => o && o.name_en)
-    .map((opt, i) => {
-      const key = mountOptKey(mIndex, i);
-      return { i, opt, key, selected: entry.opts.includes(key) };
-    });
+  return subOptionGroups(unit, entry)
+    .filter((g) => g.group === 'mounts' && g.parentIndex === mIndex && !g.exclusive)
+    .flatMap((g) => g.items.map(({ i, opt, key, selected }) => ({ i, opt, key, selected })));
 }
 
 // Pure toggle: returns the new opts array with the given mount sub-option flipped on/off.
-// The UI calls onUpdate with this result (mirrors the radio/toggle helper style — no mutation).
+// Writes the new `subopt/mounts/...` key (and clears the legacy key) via the general helper.
 export function toggleMountSubOption(entry: ListEntry, mountIndex: number, optIndex: number): string[] {
-  const key = mountOptKey(mountIndex, optIndex);
-  return entry.opts.includes(key) ? entry.opts.filter((k) => k !== key) : [...entry.opts, key];
+  return toggleSubOption(entry, 'mounts', mountIndex, optIndex);
 }
 
 // Short labels of the chosen non-default upgrades, for a roster row's one-line summary.
@@ -105,7 +197,15 @@ export function summaryLabels(unit: OwbUnit, entry: ListEntry, itemsData?: Magic
   const labels = selectedOptions(unit, entry)
     .filter(({ opt }) => !opt.active)
     .map(({ opt }) => opt.name_en);
-  for (const { selected, opt } of mountSubOptions(unit, entry)) if (selected) labels.push(opt.name_en);
+  // Nested sub-options of active parents: toggles when on; exclusive picks unless they are the
+  // free `active` default (e.g. show "Level 4 Wizard" / "Venomous tail", not "Level 3 Wizard").
+  for (const g of subOptionGroups(unit, entry)) {
+    for (const it of g.items) {
+      if (!it.selected) continue;
+      if (g.exclusive && it.opt.active) continue; // the implicit default — don't list it
+      labels.push(it.opt.name_en);
+    }
+  }
   if (itemsData) for (const it of selectedMagicItems(unit, entry, itemsData)) labels.push(it.item.name_en);
   return labels;
 }
@@ -169,9 +269,14 @@ export function entryPoints(unit: OwbUnit, entry: ListEntry, itemsData?: MagicIt
   for (const { opt } of selectedOptions(unit, entry)) {
     pts += (opt.points ?? 0) * (opt.perModel ? entry.count : 1);
   }
-  // Mount sub-options of the currently-selected mount (per-unit unless the data marks perModel).
-  for (const { selected, opt } of mountSubOptions(unit, entry)) {
-    if (selected) pts += (opt.points ?? 0) * (opt.perModel ? entry.count : 1);
+  // Nested sub-options of active parents (mount toggles, wizard levels, …). The free `active`
+  // exclusive default is implicit/free; only a non-default exclusive pick (or any on toggle) costs.
+  for (const g of subOptionGroups(unit, entry)) {
+    for (const it of g.items) {
+      if (!it.selected) continue;
+      if (g.exclusive && it.opt.active) continue; // free default — don't charge it
+      pts += (it.opt.points ?? 0) * (it.opt.perModel ? entry.count : 1);
+    }
   }
   // Magic items (only characters can carry them; per-unit, never per-model).
   if (itemsData) pts += magicItemsPoints(unit, entry, itemsData);

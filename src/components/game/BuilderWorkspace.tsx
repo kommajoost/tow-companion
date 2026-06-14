@@ -5,7 +5,7 @@ import { TOW, towFont, engraved } from '../../design/tow';
 import { getRuleIndex, resolveRuleSlug, resolveOptionSlug } from '../../lib/armyRules';
 import {
   CATEGORIES, COMPOSITION_RULES, validate, entryPoints, unitBlocks, radioSelected, summaryLabels,
-  mountSubOptions, toggleMountSubOption, selectedMountIndex,
+  subOptionGroups, toggleSubOption, setExclusiveSubOption,
   magicCategories, selectedMagicItem, toggleMagicItem, magicSpent, magicWouldExceed, magicItemId,
   isCharacter, DEFAULT_MAGIC_BUDGET,
   type Category, type OwbArmy, type OwbUnit, type BuilderList, type ListEntry, type Validation,
@@ -154,7 +154,8 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
   const [tab, setTab] = useState<Category>('characters');
   const [q, setQ] = useState('');
   const [settings, setSettings] = useState(false);
-  const [info, setInfo] = useState<{ title: string; rows: StatRow[] } | null>(null); // mount/unit profile popup
+  const [info, setInfo] = useState<{ title: string; rows: StatRow[]; note?: string } | null>(null); // mount/unit profile popup
+  const [openMagicCats, setOpenMagicCats] = useState<Set<string>>(new Set()); // expanded magic-item categories
 
   // ── entry operations ──
   const add = (cat: Category, u: OwbUnit) => {
@@ -218,14 +219,30 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
     );
   };
 
+  // An indented nested sub-option group under an active parent (mount sub-options, wizard levels, …).
+  // Radio rows when `exclusive`, toggle rows otherwise — reusing optionRow (Eye + profile/rule).
+  const subGroupBlock = (u: OwbUnit, entry: ListEntry, g: ReturnType<typeof subOptionGroups>[number]) => (
+    <div key={`${String(g.group)}/${g.parentIndex}/${g.exclusive ? 'x' : 't'}`} style={{ marginLeft: 14, paddingLeft: 12, borderLeft: `2px solid ${TOW.line}` }}>
+      {g.items.map(({ i, opt, key, selected }) =>
+        optionRow(key, opt, selected, g.exclusive, () =>
+          onUpdate((l) => ({ entries: l.entries.map((e) => (e.uid !== entry.uid ? e : {
+            ...e, opts: g.exclusive ? setExclusiveSubOption(u, e, g.group, g.parentIndex, i) : toggleSubOption(e, g.group, g.parentIndex, i),
+          })) }))))}
+    </div>
+  );
+
   const optionEditor = (entry: ListEntry, u: OwbUnit) => {
     const blocks = unitBlocks(u);
-    const subs = mountSubOptions(u, entry);
+    const subGroups = subOptionGroups(u, entry);
     const cats = isCharacter(entry.cat) && itemsData ? magicCategories(u, armyItemLists ?? [], itemsData) : [];
     const magicCats = cats.filter((c) => c.items.length > 0);
-    if (!blocks.length && subs.length === 0 && magicCats.length === 0) return <div style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 13, color: TOW.muted }}>No upgrades for this unit.</div>;
-    const mountIndex = selectedMountIndex(u, entry);
-    const mountName = (() => { const m = (Array.isArray(u.mounts) ? u.mounts : [])[mountIndex]; return m?.name_en || 'Mount'; })();
+    if (!blocks.length && subGroups.length === 0 && magicCats.length === 0) return <div style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 13, color: TOW.muted }}>No upgrades for this unit.</div>;
+    // Nested groups keyed by their parent slot, so each renders INDENTED directly under its parent.
+    const subsByParent = new Map<string, typeof subGroups>();
+    for (const g of subGroups) {
+      const k = `${String(g.group)}/${g.parentIndex}`;
+      subsByParent.set(k, [...(subsByParent.get(k) ?? []), g]);
+    }
     return (
       <>
         {blocks.map((b) => {
@@ -236,58 +253,79 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
               {b.items.map(({ i, opt }) => {
                 const key = `${String(b.key)}/${i}`;
                 const on = b.radio ? radioKey === key : entry.opts.includes(key);
-                return optionRow(key, opt, on, !!b.radio, () => (b.radio ? setRadio(entry.uid, String(b.key), i) : toggleOpt(entry.uid, key)));
+                const nested = subsByParent.get(`${String(b.key)}/${i}`) ?? [];
+                // An `alwaysActive` parent is a free base that can't be toggled off → render it as a
+                // small engraved sub-group HEADER, then its nested options (e.g. "Wizard" + the Level
+                // radio). Otherwise render the normal toggle/radio row, with any nested group beneath.
+                if (opt.alwaysActive) {
+                  return (
+                    <div key={key}>
+                      <div style={{ ...eb, fontSize: 8, color: TOW.muted, margin: '2px 0 6px' }}>{cleanLabel(opt.name_en)}</div>
+                      {nested.map((g) => subGroupBlock(u, entry, g))}
+                    </div>
+                  );
+                }
+                return (
+                  <div key={key}>
+                    {optionRow(key, opt, on, !!b.radio, () => (b.radio ? setRadio(entry.uid, String(b.key), i) : toggleOpt(entry.uid, key)))}
+                    {nested.map((g) => subGroupBlock(u, entry, g))}
+                  </div>
+                );
               })}
             </div>
           );
         })}
 
-        {/* Feature 1 — sub-options of the currently-selected mount (indented sub-block, toggles) */}
-        {subs.length > 0 && (
-          <div style={{ marginBottom: 12, marginLeft: 14, paddingLeft: 12, borderLeft: `2px solid ${TOW.line}` }}>
-            <div style={{ ...eb, fontSize: 8.5, color: TOW.muted, marginBottom: 7 }}>{mountName} options</div>
-            {subs.map(({ i, opt, key, selected }) =>
-              optionRow(key, opt, selected, false, () =>
-                onUpdate((l) => ({ entries: l.entries.map((e) => (e.uid === entry.uid ? { ...e, opts: toggleMountSubOption(e, mountIndex, i) } : e)) }))))}
-          </div>
-        )}
-
-        {/* Feature 2 — magic items (characters only): one radio group + budget meter per category */}
+        {/* Feature 2 — magic items (characters only): one COLLAPSIBLE dropdown per category. The
+            header carries the label + spent/budget meter + a chevron; the item list toggles open.
+            Default collapsed, but auto-open when this category already holds a selected item. */}
         {magicCats.map((cat) => {
           const spent = magicSpent(u, entry, cat.id, itemsData!, armyItemLists);
           const budget = cat.maxPoints ?? DEFAULT_MAGIC_BUDGET;
           const over = spent > budget;
           const pct = Math.min(100, (spent / Math.max(budget, 1)) * 100);
           const sel = selectedMagicItem(entry, cat.id);
+          const catKey = `${entry.uid}/${cat.id}`;
+          const open = openMagicCats.has(catKey) || !!sel; // open if user expanded it, or it has a pick
           return (
-            <div key={`magic/${cat.id}`} style={{ marginBottom: 12 }}>
-              <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 6 }}>
-                <span style={{ ...eb, fontSize: 8.5, color: TOW.muted }}>{cat.label}</span>
+            <div key={`magic/${cat.id}`} style={{ marginBottom: 12, border: `1px solid ${TOW.line}`, borderRadius: 10, background: TOW.cardLt, overflow: 'hidden' }}>
+              <button onClick={() => setOpenMagicCats((s) => { const n = new Set(s); n.has(catKey) ? n.delete(catKey) : n.add(catKey); return n; })}
+                aria-expanded={open} style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 9, padding: '9px 11px', border: 'none', background: 'transparent', cursor: 'pointer', textAlign: 'left' }}>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={TOW.muted} strokeWidth="2.4" style={{ flexShrink: 0, transform: open ? 'rotate(90deg)' : 'none', transition: 'transform .18s ease' }} aria-hidden="true"><path d="M9 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" /></svg>
+                <span style={{ ...eb, fontSize: 8.5, color: TOW.muted, flex: 1 }}>{cat.label}</span>
                 <span style={{ fontFamily: towFont.display, fontWeight: 600, fontSize: 10.5, color: over ? TOW.blood : TOW.muted }}>{fmt(spent)} <span style={{ color: TOW.faint }}>/ {fmt(budget)}</span></span>
-              </div>
-              <div style={{ height: 6, borderRadius: 99, background: 'rgba(74,55,22,0.12)', overflow: 'hidden', marginBottom: 8 }}>
+              </button>
+              <div style={{ height: 5, borderRadius: 99, background: 'rgba(74,55,22,0.12)', overflow: 'hidden', margin: '0 11px 9px' }}>
                 <div style={{ width: pct + '%', height: '100%', borderRadius: 99, background: over ? TOW.blood : goldGrad, transition: 'width .25s ease' }} />
               </div>
-              {cat.items.map((item) => {
-                const key = `magic/${cat.id}/${magicItemId(item)}`;
-                const on = sel === key;
-                const disabled = !on && magicWouldExceed(u, entry, cat.id, item, itemsData!, { armyItemLists });
-                const hasRule = !!resolveRuleSlug(cleanLabel(item.name_en), ruleIdx);
-                const cost = item.points ? `+${item.points}` : 'free';
-                return (
-                  <div key={key} style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6, opacity: disabled ? 0.5 : 1 }}>
-                    <button disabled={disabled} onClick={() => onUpdate((l) => ({ entries: l.entries.map((e) => (e.uid === entry.uid ? { ...e, opts: toggleMagicItem(e, cat.id, item) } : e)) }))}
-                      style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 10, padding: '8px 11px', borderRadius: 9, cursor: disabled ? 'default' : 'pointer', textAlign: 'left', border: `1px solid ${on ? TOW.goldDeep : TOW.line}`, background: on ? 'rgba(138,108,48,0.10)' : TOW.cardLt }}>
-                      <span style={{ width: 18, height: 18, flexShrink: 0, borderRadius: 99, border: `1.5px solid ${on ? TOW.goldDeep : TOW.lineStrong}`, background: on ? TOW.goldDeep : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        {on && <svg width="11" height="11" viewBox="0 0 12 12"><path d="M2.5 6.4l2.2 2.2 4.8-5" stroke="#f4eedb" strokeWidth="1.8" fill="none" strokeLinecap="round" strokeLinejoin="round" /></svg>}
-                      </span>
-                      <span style={{ flex: 1, fontFamily: towFont.serif, fontSize: 13.5, color: TOW.ink }}>{item.name_en}</span>
-                      <span style={{ fontFamily: towFont.display, fontWeight: 600, fontSize: 11, color: item.points ? TOW.gold : TOW.faint }}>{cost}</span>
-                    </button>
-                    {hasRule && <Eye onClick={() => openRuleByName(item.name_en)} />}
-                  </div>
-                );
-              })}
+              {open && (
+                <div style={{ padding: '0 11px 5px' }}>
+                  {cat.items.map((item) => {
+                    const key = `magic/${cat.id}/${magicItemId(item)}`;
+                    const on = sel === key;
+                    const disabled = !on && magicWouldExceed(u, entry, cat.id, item, itemsData!, { armyItemLists });
+                    const cost = item.points ? `+${item.points}` : 'free';
+                    return (
+                      <div key={key} style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6, opacity: disabled ? 0.5 : 1 }}>
+                        <button disabled={disabled} onClick={() => onUpdate((l) => ({ entries: l.entries.map((e) => (e.uid === entry.uid ? { ...e, opts: toggleMagicItem(e, cat.id, item) } : e)) }))}
+                          style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 10, padding: '8px 11px', borderRadius: 9, cursor: disabled ? 'default' : 'pointer', textAlign: 'left', border: `1px solid ${on ? TOW.goldDeep : TOW.line}`, background: on ? 'rgba(138,108,48,0.10)' : TOW.panel }}>
+                          <span style={{ width: 18, height: 18, flexShrink: 0, borderRadius: 99, border: `1.5px solid ${on ? TOW.goldDeep : TOW.lineStrong}`, background: on ? TOW.goldDeep : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                            {on && <svg width="11" height="11" viewBox="0 0 12 12"><path d="M2.5 6.4l2.2 2.2 4.8-5" stroke="#f4eedb" strokeWidth="1.8" fill="none" strokeLinecap="round" strokeLinejoin="round" /></svg>}
+                          </span>
+                          <span style={{ flex: 1, fontFamily: towFont.serif, fontSize: 13.5, color: TOW.ink }}>{item.name_en}</span>
+                          <span style={{ fontFamily: towFont.display, fontWeight: 600, fontSize: 11, color: item.points ? TOW.gold : TOW.faint }}>{cost}</span>
+                        </button>
+                        {/* Eye on EVERY magic item: rule page if one resolves, else a name + meta popup. */}
+                        <Eye onClick={() => {
+                          const slug = resolveRuleSlug(cleanLabel(item.name_en), ruleIdx);
+                          if (slug) { openRuleByName(item.name_en); return; }
+                          setInfo({ title: cleanLabel(item.name_en), rows: [], note: `Magic item · ${cat.label} · ${item.points ?? 0} pts` });
+                        }} />
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
             </div>
           );
         })}
@@ -325,10 +363,10 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
           </div>
         )}
         {!needle && (
-          <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap' }}>
+          <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap' }}>
             {CATEGORIES.filter((c) => (army[c] ?? []).length).map((c) => {
               const on = tab === c;
-              return <button key={c} onClick={() => setTab(c)} style={{ flex: 1, minWidth: 60, padding: '7px 2px', borderRadius: 8, border: 'none', cursor: 'pointer', ...eb, fontSize: 7.5, background: on ? 'rgba(138,108,48,0.16)' : 'rgba(74,55,22,0.05)', color: on ? TOW.gold : TOW.muted }}>{CAT_LABEL[c]}</button>;
+              return <button key={c} onClick={() => setTab(c)} style={{ flex: 1, minWidth: 72, padding: '8px 10px', borderRadius: 9, cursor: 'pointer', fontFamily: towFont.display, fontWeight: on ? 700 : 600, fontSize: 11, letterSpacing: '0.02em', whiteSpace: 'nowrap', border: on ? '1px solid transparent' : `1px solid ${TOW.line}`, background: on ? goldGrad : TOW.cardLt, color: on ? TOW.onGrad : TOW.muted }}>{CAT_LABEL[c]}</button>;
             })}
           </div>
         )}
@@ -562,17 +600,22 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
   );
 }
 
-// A small centred popup showing a mount/unit stat profile (for options without a rule page).
-function InfoPopup({ info, onClose }: { info: { title: string; rows: StatRow[] }; onClose: () => void }) {
+// A small centred popup. Shows a mount/unit stat profile (rows) for options without a rule page, or
+// — when `rows` is empty and a `note` is given — a single muted italic meta line (e.g. magic items,
+// which have no verbatim rule text in our data: name + "Magic item · <category> · <pts> pts").
+function InfoPopup({ info, onClose }: { info: { title: string; rows: StatRow[]; note?: string }; onClose: () => void }) {
+  const showNote = info.rows.length === 0 && !!info.note;
   return (
     <div onClick={onClose} style={{ position: 'absolute', inset: 0, zIndex: 60, background: 'rgba(30,20,8,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 }}>
       <div onClick={(e) => e.stopPropagation()} style={{ width: '100%', maxWidth: 460, background: TOW.panel, borderRadius: 16, border: `1px solid ${TOW.lineStrong}`, boxShadow: '0 16px 50px rgba(40,24,8,0.34)', padding: 16, animation: 'sheet-pop .18s ease-out' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
-          <span style={{ ...eb, fontSize: 8, color: TOW.muted }}>Profile</span>
+          <span style={{ ...eb, fontSize: 8, color: TOW.muted }}>{showNote ? 'Item' : 'Profile'}</span>
           <button onClick={onClose} aria-label="Close" style={{ marginLeft: 'auto', width: 30, height: 30, borderRadius: 8, border: `1px solid ${TOW.line}`, background: TOW.cardLt, cursor: 'pointer', color: TOW.muted, fontSize: 18, lineHeight: 1 }}>×</button>
         </div>
         <div style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 18, color: TOW.ink, marginBottom: 10 }}>{info.title}</div>
-        <MiniProfile rows={info.rows} />
+        {showNote
+          ? <div style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 13, color: TOW.muted, lineHeight: 1.5 }}>{info.note}</div>
+          : <MiniProfile rows={info.rows} />}
       </div>
       <style>{`@keyframes sheet-pop { from { opacity: 0; transform: translateY(8px) scale(0.98); } to { opacity: 1; transform: none; } }`}</style>
     </div>
