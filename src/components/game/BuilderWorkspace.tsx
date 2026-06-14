@@ -346,7 +346,7 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
               </div>
               <div style={{ fontFamily: towFont.serif, fontSize: 11.5, color: TOW.muted, marginTop: 1 }}>{(u.maximum ?? 1) !== 1 ? `${u.points} pts/model` : `${u.points} pts`}</div>
             </div>
-            <span style={{ flexShrink: 0, padding: '6px 12px', borderRadius: 8, background: goldGrad, color: '#241803', fontFamily: towFont.display, fontWeight: 700, fontSize: 11, letterSpacing: '0.06em' }}>ADD</span>
+            <span style={{ flexShrink: 0, padding: '6px 12px', borderRadius: 8, background: goldGrad, color: TOW.onGrad, fontFamily: towFont.display, fontWeight: 700, fontSize: 11, letterSpacing: '0.06em' }}>ADD</span>
           </button>
         );
       })}
@@ -512,7 +512,7 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
 
       {/* add bar */}
       <div style={{ flexShrink: 0, padding: '10px 14px', borderTop: `1px solid ${TOW.lineStrong}`, background: TOW.panel2 }}>
-        <button onClick={() => setSheet('pick')} style={{ width: '100%', padding: 14, borderRadius: 12, border: 'none', cursor: 'pointer', background: goldGrad, color: '#241803', fontFamily: towFont.display, fontWeight: 700, fontSize: 14, letterSpacing: '0.04em' }}>＋ Add unit</button>
+        <button onClick={() => setSheet('pick')} style={{ width: '100%', padding: 14, borderRadius: 12, border: 'none', cursor: 'pointer', background: goldGrad, color: TOW.onGrad, fontFamily: towFont.display, fontWeight: 700, fontSize: 14, letterSpacing: '0.04em' }}>＋ Add unit</button>
       </div>
 
       {/* picker sheet */}

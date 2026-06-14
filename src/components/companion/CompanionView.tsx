@@ -121,7 +121,7 @@ export function CompanionView({ onHome }: { onHome?: () => void } = {}) {
                 flex: 1, padding: '8px 0', borderRadius: 8, cursor: 'pointer', border: 'none',
                 fontFamily: towFont.display, fontWeight: 600, fontSize: 12, letterSpacing: '0.06em', textTransform: 'uppercase',
                 background: on ? `linear-gradient(180deg, ${TOW.goldBright}, ${TOW.gold} 60%, ${TOW.goldDeep})` : 'transparent',
-                color: on ? '#241803' : TOW.muted, boxShadow: on ? '0 3px 10px rgba(140,100,30,0.25)' : 'none',
+                color: on ? TOW.onGrad : TOW.muted, boxShadow: on ? '0 3px 10px rgba(140,100,30,0.25)' : 'none',
               }}
             >
               {t.label}
@@ -144,9 +144,9 @@ export function CompanionView({ onHome }: { onHome?: () => void } = {}) {
     >
       <div style={{ textAlign: 'left', minWidth: 0 }}>
         <div style={{ ...eb, fontSize: 8, color: 'rgba(43,28,8,0.6)' }}>{advanceKicker}</div>
-        <div style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 15, color: '#241803', letterSpacing: '0.02em', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{advanceLabel}</div>
+        <div style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 15, color: TOW.onGrad, letterSpacing: '0.02em', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{advanceLabel}</div>
       </div>
-      <svg width="20" height="16" viewBox="0 0 20 16" style={{ flexShrink: 0 }}><path d="M2 8h15M12 2l6 6-6 6" fill="none" stroke="#241803" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" /></svg>
+      <svg width="20" height="16" viewBox="0 0 20 16" style={{ flexShrink: 0 }}><path d="M2 8h15M12 2l6 6-6 6" fill="none" stroke={TOW.onGrad} strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" /></svg>
     </button>
   );
 
@@ -303,7 +303,7 @@ export function CompanionView({ onHome }: { onHome?: () => void } = {}) {
                     width: 22, height: 22, borderRadius: 99, flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center',
                     fontFamily: towFont.display, fontWeight: 700, fontSize: 11,
                     background: done ? TOW.goldDeep : active ? TOW.gold : 'transparent',
-                    border: done || active ? 'none' : `1.2px solid ${TOW.faint}`, color: done || active ? '#241803' : TOW.muted,
+                    border: done || active ? 'none' : `1.2px solid ${TOW.faint}`, color: done || active ? TOW.onGrad : TOW.muted,
                   }}>{done ? '✓' : i + 1}</div>
                   <span style={{ flex: 1, minWidth: 0, fontFamily: towFont.serif, fontSize: 14.5, fontWeight: active ? 600 : 500, color: active ? TOW.ink : TOW.parchDim }}>{s.name}</span>
                 </button>
@@ -371,7 +371,7 @@ export function CompanionView({ onHome }: { onHome?: () => void } = {}) {
                         fontFamily: towFont.display, fontWeight: 700, fontSize: 12.5,
                         background: active ? `linear-gradient(180deg, ${TOW.goldBright}, ${TOW.gold} 60%, ${TOW.goldDeep})` : done ? 'rgba(184,134,47,0.18)' : 'transparent',
                         border: `1px solid ${active ? TOW.gold : done ? TOW.lineStrong : TOW.faint}`,
-                        color: active ? '#241803' : done ? TOW.goldDeep : TOW.muted,
+                        color: active ? TOW.onGrad : done ? TOW.goldDeep : TOW.muted,
                       }}
                     >{done ? '✓' : i + 1}</button>
                   </div>

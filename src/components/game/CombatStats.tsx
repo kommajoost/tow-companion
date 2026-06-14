@@ -169,7 +169,7 @@ export function CombatStats({ unit }: { unit: ArmyUnit }) {
                   {([['single', `Single shot`], ['multi', `Multiple (${rw.multiShots}) −1`]] as const).map(([k, label]) => {
                     const sel = (k === 'multi') === multiOn;
                     return (
-                      <button key={k} onClick={() => setMultiOn(k === 'multi')} style={{ padding: '4px 10px', borderRadius: 7, cursor: 'pointer', border: 'none', fontFamily: towFont.serif, fontSize: 11.5, background: sel ? goldGrad : 'transparent', color: sel ? '#2a1a0a' : TOW.muted, fontWeight: sel ? 600 : 400, whiteSpace: 'nowrap' }}>
+                      <button key={k} onClick={() => setMultiOn(k === 'multi')} style={{ padding: '4px 10px', borderRadius: 7, cursor: 'pointer', border: 'none', fontFamily: towFont.serif, fontSize: 11.5, background: sel ? goldGrad : 'transparent', color: sel ? TOW.onGrad : TOW.muted, fontWeight: sel ? 600 : 400, whiteSpace: 'nowrap' }}>
                         {label}
                       </button>
                     );

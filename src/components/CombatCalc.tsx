@@ -85,7 +85,7 @@ function QuickRollPanel() {
         {(['hit', 'wound'] as const).map((m) => {
           const on = m === mode;
           return (
-            <button key={m} onClick={() => setMode(m)} style={{ flex: 1, padding: '8px 0', borderRadius: 8, cursor: 'pointer', border: 'none', fontFamily: towFont.display, fontWeight: 600, fontSize: 12, letterSpacing: '0.05em', textTransform: 'uppercase', background: on ? goldGrad : 'transparent', color: on ? '#241803' : TOW.muted }}>
+            <button key={m} onClick={() => setMode(m)} style={{ flex: 1, padding: '8px 0', borderRadius: 8, cursor: 'pointer', border: 'none', fontFamily: towFont.display, fontWeight: 600, fontSize: 12, letterSpacing: '0.05em', textTransform: 'uppercase', background: on ? goldGrad : 'transparent', color: on ? TOW.onGrad : TOW.muted }}>
               {m === 'hit' ? 'To Hit' : 'To Wound'}
             </button>
           );

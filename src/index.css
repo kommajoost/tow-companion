@@ -9,75 +9,80 @@
    hard-coded TOW object. `src/design/tow.ts` now reads each token via var(...),
    so flipping `:root[data-theme="dark"]` re-skins every component instantly. */
 :root {
-  /* Ivory (light) — primary tokens */
-  --tow-ink: #2c2114;
-  --tow-bg: #ece1c7;
-  --tow-panel: #e2d5b6;
-  --tow-panel2: #f4eedb;
-  --tow-line: rgba(74, 55, 22, 0.2);
-  --tow-line-strong: rgba(74, 55, 22, 0.42);
-  --tow-gold: #c9a24b;
-  --tow-gold-bright: #e8c977;
-  --tow-gold-deep: #8a6c30;
-  --tow-parch: #2c2114;
-  --tow-parch-dim: #564833;
-  --tow-muted: #867453;
-  --tow-faint: #c3ad84;
-  --tow-blood: #7c2b22;
+  /* Ivory Standard (light) — app v2: ivory surfaces + heraldic crimson accent */
+  --tow-ink: #1a1714;
+  --tow-bg: #f7f4ee;
+  --tow-panel: #ffffff;
+  --tow-panel2: #fbf8f2;
+  --tow-line: rgba(26, 23, 20, 0.1);
+  --tow-line-strong: rgba(26, 23, 20, 0.26);
+  --tow-gold: #9c2b2b;
+  --tow-gold-bright: #bb463e;
+  --tow-gold-deep: #7e2020;
+  --tow-parch: #1a1714;
+  --tow-parch-dim: #403c36;
+  --tow-muted: #6f6a62;
+  --tow-faint: #a8a194;
+  --tow-blood: #9c2b2b;
 
-  /* Ivory (light) — design-kit parchment aliases */
-  --tow-paper: #ece1c7;
-  --tow-paper2: #e2d5b6;
-  --tow-card-lt: #f4eedb;
-  --tow-ink-t: #2c2114;
-  --tow-ink-dim: #564833;
-  --tow-ink-muted: #867453;
-  --tow-gold-on: #8a6c30;
-  --tow-line-on: rgba(74, 55, 22, 0.2);
-  --tow-line-on-str: rgba(74, 55, 22, 0.42);
+  /* Ivory (light) — surface aliases */
+  --tow-paper: #f7f4ee;
+  --tow-paper2: #efe9dd;
+  --tow-card-lt: #fbf8f2;
+  --tow-ink-t: #1a1714;
+  --tow-ink-dim: #403c36;
+  --tow-ink-muted: #6f6a62;
+  --tow-gold-on: #9c2b2b;
+  --tow-line-on: rgba(26, 23, 20, 0.1);
+  --tow-line-on-str: rgba(26, 23, 20, 0.26);
 
   /* Ivory (light) — chrome aliases */
-  --tow-leather: #e2d5b6;
-  --tow-leather-dark: #dccca8;
-  --tow-leather-deep: rgba(74, 55, 22, 0.42);
-  --tow-parch-edge: rgba(74, 55, 22, 0.42);
+  --tow-leather: #efe9dd;
+  --tow-leather-dark: #e7dfd0;
+  --tow-leather-deep: rgba(26, 23, 20, 0.26);
+  --tow-parch-edge: rgba(26, 23, 20, 0.26);
+
+  /* text/icon that sits ON the accent gradient (primary buttons) */
+  --tow-on-grad: #fbf3ee;
 
   /* Fonts */
   --tow-font-display: 'Cinzel', 'Times New Roman', serif;
   --tow-font-serif: 'EB Garamond', Georgia, serif;
 }
 
-/* Slate Night (dark) — semantic flip: text tokens go light, surfaces go dark. */
+/* Slate Night (dark) — app v2: cool slate surfaces + warm brass accent. */
 :root[data-theme='dark'] {
-  --tow-ink: #ece0c6;
-  --tow-bg: #13100b;
-  --tow-panel: #1b1610;
-  --tow-panel2: #241d14;
-  --tow-line: rgba(201, 162, 75, 0.14);
-  --tow-line-strong: rgba(201, 162, 75, 0.32);
-  --tow-gold: #c9a24b;
-  --tow-gold-bright: #e8c977;
-  --tow-gold-deep: #b8923f;
-  --tow-parch: #ece0c6;
-  --tow-parch-dim: #b8a988;
-  --tow-muted: #968360;
-  --tow-faint: #4c4232;
-  --tow-blood: #b5483c;
+  --tow-ink: #eef2f4;
+  --tow-bg: #1e242b;
+  --tow-panel: #28303a;
+  --tow-panel2: #2f3843;
+  --tow-line: rgba(255, 255, 255, 0.08);
+  --tow-line-strong: rgba(255, 255, 255, 0.2);
+  --tow-gold: #cda64f;
+  --tow-gold-bright: #e6c878;
+  --tow-gold-deep: #b08a37;
+  --tow-parch: #eef2f4;
+  --tow-parch-dim: #c4cfd6;
+  --tow-muted: #94a1aa;
+  --tow-faint: #677580;
+  --tow-blood: #d77b6e;
 
-  --tow-paper: #1b1610;
-  --tow-paper2: #241d14;
-  --tow-card-lt: #2a2218;
-  --tow-ink-t: #ece0c6;
-  --tow-ink-dim: #b8a988;
-  --tow-ink-muted: #968360;
-  --tow-gold-on: #d8b25a;
-  --tow-line-on: rgba(201, 162, 75, 0.14);
-  --tow-line-on-str: rgba(201, 162, 75, 0.32);
+  --tow-paper: #1e242b;
+  --tow-paper2: #161a1f;
+  --tow-card-lt: #2f3843;
+  --tow-ink-t: #eef2f4;
+  --tow-ink-dim: #c4cfd6;
+  --tow-ink-muted: #94a1aa;
+  --tow-gold-on: #cda64f;
+  --tow-line-on: rgba(255, 255, 255, 0.08);
+  --tow-line-on-str: rgba(255, 255, 255, 0.2);
 
-  --tow-leather: #1b1610;
-  --tow-leather-dark: #161109;
-  --tow-leather-deep: rgba(201, 162, 75, 0.32);
-  --tow-parch-edge: rgba(201, 162, 75, 0.32);
+  --tow-leather: #161a1f;
+  --tow-leather-dark: #12161b;
+  --tow-leather-deep: rgba(255, 255, 255, 0.2);
+  --tow-parch-edge: rgba(255, 255, 255, 0.2);
+
+  --tow-on-grad: #241a08;
 
   --tow-font-display: 'Archivo', 'Helvetica Neue', sans-serif;
   --tow-font-serif: 'Spectral', Georgia, serif;
@@ -91,26 +96,26 @@
      parchment; surfaces are warm paper tones, deepest = chrome panel. */
   /* Aligned 1:1 to the TOW tokens above so the Tailwind-utility screens (Rulebook,
      rule pop-ups, flow) share the exact same gold / ink / parchment as the rest. */
-  --color-deep: #e2d5b6;
-  --color-bg: #ece1c7;
-  --color-surface: #f4eedb;
-  --color-surface-2: #f4eedb;
-  --color-surface-3: #e2d5b6;
-  --color-border: rgba(74, 55, 22, 0.2);
-  --color-border-strong: rgba(74, 55, 22, 0.42);
-  --color-border-soft: rgba(74, 55, 22, 0.12);
-  --color-ink: #2c2114; /* primary text (dark ink on parchment) */
-  --color-ink-dim: #564833;
-  --color-ink-faint: #867453;
-  --color-faint: #c3ad84;
-  --color-gold: #c9a24b;
-  --color-gold-bright: #e8c977;
-  --color-gold-deep: #8a6c30;
-  --color-blood: #7c2b22;
+  --color-deep: #efe9dd;
+  --color-bg: #f7f4ee;
+  --color-surface: #ffffff;
+  --color-surface-2: #fbf8f2;
+  --color-surface-3: #efe9dd;
+  --color-border: rgba(26, 23, 20, 0.1);
+  --color-border-strong: rgba(26, 23, 20, 0.26);
+  --color-border-soft: rgba(26, 23, 20, 0.07);
+  --color-ink: #1a1714; /* primary text (dark ink on ivory) */
+  --color-ink-dim: #403c36;
+  --color-ink-faint: #6f6a62;
+  --color-faint: #a8a194;
+  --color-gold: #9c2b2b;
+  --color-gold-bright: #bb463e;
+  --color-gold-deep: #7e2020;
+  --color-blood: #9c2b2b;
 
   /* Back-compat aliases used by earlier components */
-  --color-accent: #8a6c30;
-  --color-accent-2: #7a5d24;
+  --color-accent: #9c2b2b;
+  --color-accent-2: #7e2020;
 
   --font-display: 'Cinzel', 'Times New Roman', serif;
   --font-serif: 'EB Garamond', Georgia, serif;
@@ -121,24 +126,24 @@
    background, fonts, and the Tailwind-utility colour scale. The LIGHT defaults
    above are untouched, so the default look is byte-for-byte unchanged. */
 :root[data-theme='dark'] {
-  --color-deep: #0e0c08;
-  --color-bg: #13100b;
-  --color-surface: #1b1610;
-  --color-surface-2: #241d14;
-  --color-surface-3: #2a2218;
-  --color-border: rgba(201, 162, 75, 0.18);
-  --color-border-strong: rgba(201, 162, 75, 0.32);
-  --color-border-soft: rgba(201, 162, 75, 0.1);
-  --color-ink: #ece0c6;
-  --color-ink-dim: #b8a988;
-  --color-ink-faint: #968360;
-  --color-faint: #4c4232;
-  --color-gold: #c9a24b;
-  --color-gold-bright: #e8c977;
-  --color-gold-deep: #b8923f;
-  --color-blood: #b5483c;
-  --color-accent: #c9a24b;
-  --color-accent-2: #b8923f;
+  --color-deep: #12161b;
+  --color-bg: #1e242b;
+  --color-surface: #28303a;
+  --color-surface-2: #2f3843;
+  --color-surface-3: #2f3843;
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-strong: rgba(255, 255, 255, 0.2);
+  --color-border-soft: rgba(255, 255, 255, 0.06);
+  --color-ink: #eef2f4;
+  --color-ink-dim: #c4cfd6;
+  --color-ink-faint: #94a1aa;
+  --color-faint: #677580;
+  --color-gold: #cda64f;
+  --color-gold-bright: #e6c878;
+  --color-gold-deep: #b08a37;
+  --color-blood: #d77b6e;
+  --color-accent: #cda64f;
+  --color-accent-2: #b08a37;
 
   --font-display: 'Archivo', 'Helvetica Neue', sans-serif;
   --font-serif: 'Spectral', Georgia, serif;
@@ -154,7 +159,7 @@
   body {
     margin: 0;
     background-color: var(--color-bg);
-    background-image: radial-gradient(130% 55% at 50% -5%, #f6efdd 0%, var(--color-bg) 55%, var(--color-deep) 100%);
+    background-image: radial-gradient(130% 60% at 50% -10%, #fbf9f4 0%, var(--color-bg) 55%, var(--color-deep) 100%);
     color: var(--color-ink);
     font-family: var(--font-serif);
     -webkit-font-smoothing: antialiased;
@@ -312,20 +317,20 @@
 /* ---- Light parchment chrome helpers (Claude Design v3) ---- */
 .tow-field {
   background:
-    radial-gradient(130% 60% at 50% -10%, #f3ead2 0%, #efe6d3 55%, #e3d5b8 100%);
+    radial-gradient(130% 60% at 50% -10%, #fbf9f4 0%, #f7f4ee 55%, #efe9dd 100%);
 }
 .tow-leather {
-  background: linear-gradient(180deg, #e9ddc6, #e3d5b8);
+  background: linear-gradient(180deg, #efe9dd, #e7dfd0);
 }
 
 /* Slate Night equivalents for the chrome helpers + page backdrop. */
 :root[data-theme='dark'] body {
-  background-image: radial-gradient(130% 55% at 50% -5%, #1f1810 0%, var(--color-bg) 55%, var(--color-deep) 100%);
+  background-image: radial-gradient(130% 60% at 50% -10%, #232a32 0%, var(--color-bg) 55%, var(--color-deep) 100%);
 }
 :root[data-theme='dark'] .tow-field {
   background:
-    radial-gradient(130% 60% at 50% -10%, #221b12 0%, #15110b 55%, #0e0c08 100%);
+    radial-gradient(130% 60% at 50% -10%, #232a32 0%, #1e242b 55%, #171c22 100%);
 }
 :root[data-theme='dark'] .tow-leather {
-  background: linear-gradient(180deg, #1b1610, #13100b);
+  background: linear-gradient(180deg, #161a1f, #12161b);
 }

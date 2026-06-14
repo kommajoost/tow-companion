@@ -84,7 +84,7 @@ export function HomeCover({
             cursor: 'pointer',
             padding: '16px 20px',
             background: goldGrad,
-            color: '#2a1a0a',
+            color: TOW.onGrad,
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -94,7 +94,7 @@ export function HomeCover({
         >
           {/* crossed swords */}
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-            <g stroke="#2a1a0a" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+            <g stroke={TOW.onGrad} strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
               <path d="M14.5 4H20v5.5L9.5 20 4 14.5z" />
               <path d="M14.5 9.5 20 4" />
               <path d="M4 4h5.5L20 14.5 14.5 20 4 9.5z" />

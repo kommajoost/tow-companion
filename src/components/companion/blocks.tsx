@@ -218,7 +218,7 @@ export function Block({ b }: { b: CompanionBlock }) {
             style={{ position: 'relative', paddingLeft: 28, marginBottom: i === a.length - 1 ? 0 : 13, fontFamily: towFont.serif, fontSize: 16, lineHeight: 1.45, color: TOW.parch }}
           >
             <span
-              style={{ position: 'absolute', left: 0, top: 2, width: 18, height: 18, borderRadius: 99, background: TOW.gold, color: '#241803', fontFamily: towFont.display, fontWeight: 700, fontSize: 10.5, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+              style={{ position: 'absolute', left: 0, top: 2, width: 18, height: 18, borderRadius: 99, background: TOW.gold, color: TOW.onGrad, fontFamily: towFont.display, fontWeight: 700, fontSize: 10.5, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
             >
               {i + 1}
             </span>

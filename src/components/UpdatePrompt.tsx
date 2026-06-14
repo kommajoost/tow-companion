@@ -67,7 +67,7 @@ export function UpdatePrompt() {
               cursor: 'pointer',
               padding: '10px 16px',
               background: `linear-gradient(180deg, ${TOW.goldBright}, ${TOW.gold} 55%, ${TOW.goldDeep})`,
-              color: '#2a1a0a',
+              color: TOW.onGrad,
               fontFamily: towFont.display,
               fontWeight: 700,
               fontSize: 14,

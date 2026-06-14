@@ -47,7 +47,7 @@ export function BattleBar({
     cursor: editable ? 'pointer' : 'default',
     border: gold ? 'none' : `1px solid ${TOW.lineStrong}`,
     background: gold ? goldGrad : 'transparent',
-    color: gold ? '#241803' : TOW.parchDim,
+    color: gold ? TOW.onGrad : TOW.parchDim,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',

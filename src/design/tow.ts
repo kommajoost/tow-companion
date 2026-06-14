@@ -21,6 +21,10 @@ export const TOW = {
   faint: 'var(--tow-faint)',
   blood: 'var(--tow-blood)',
 
+  // text/icon colour that sits ON the accent (gold/crimson) gradient buttons —
+  // pale on the light crimson, dark on the dark brass, so labels stay readable.
+  onGrad: 'var(--tow-on-grad)',
+
   // explicit aliases mirroring the design kit's parchment names
   paper: 'var(--tow-paper)',
   paper2: 'var(--tow-paper2)',

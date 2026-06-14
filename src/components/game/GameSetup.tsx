@@ -38,7 +38,7 @@ export function GameSetup() {
 
   const inputStyle: React.CSSProperties = { width: '100%', borderRadius: 10, border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt, color: TOW.ink, padding: '10px 12px', fontFamily: towFont.serif, fontSize: 15, boxSizing: 'border-box' };
   const labelStyle: React.CSSProperties = { ...eb, fontSize: 9, color: TOW.muted, marginBottom: 5, display: 'block' };
-  const goldBtn: React.CSSProperties = { border: 'none', borderRadius: 11, cursor: 'pointer', padding: '13px 18px', background: `linear-gradient(180deg, ${TOW.goldBright}, ${TOW.gold} 55%, ${TOW.goldDeep})`, color: '#2a1a0a', fontFamily: towFont.display, fontWeight: 700, fontSize: 15, width: '100%' };
+  const goldBtn: React.CSSProperties = { border: 'none', borderRadius: 11, cursor: 'pointer', padding: '13px 18px', background: `linear-gradient(180deg, ${TOW.goldBright}, ${TOW.gold} 55%, ${TOW.goldDeep})`, color: TOW.onGrad, fontFamily: towFont.display, fontWeight: 700, fontSize: 15, width: '100%' };
 
   return (
     <div className="tow-field" style={{ height: '100%', overflowY: 'auto', color: TOW.ink }}>
@@ -65,7 +65,7 @@ export function GameSetup() {
           {(['host', 'join'] as const).map((m) => {
             const on = m === mode;
             return (
-              <button key={m} onClick={() => setMode(m)} style={{ flex: 1, padding: '8px 0', borderRadius: 8, cursor: 'pointer', border: 'none', fontFamily: towFont.display, fontWeight: 600, fontSize: 12, letterSpacing: '0.06em', textTransform: 'uppercase', background: on ? `linear-gradient(180deg, ${TOW.goldBright}, ${TOW.gold} 60%, ${TOW.goldDeep})` : 'transparent', color: on ? '#2a1a0a' : TOW.muted }}>
+              <button key={m} onClick={() => setMode(m)} style={{ flex: 1, padding: '8px 0', borderRadius: 8, cursor: 'pointer', border: 'none', fontFamily: towFont.display, fontWeight: 600, fontSize: 12, letterSpacing: '0.06em', textTransform: 'uppercase', background: on ? `linear-gradient(180deg, ${TOW.goldBright}, ${TOW.gold} 60%, ${TOW.goldDeep})` : 'transparent', color: on ? TOW.onGrad : TOW.muted }}>
                 {m === 'host' ? 'Host a game' : 'Join a game'}
               </button>
             );

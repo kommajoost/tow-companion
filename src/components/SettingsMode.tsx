@@ -32,7 +32,7 @@ export function SettingsMode() {
     cursor: 'pointer',
     padding: '12px 18px',
     background: `linear-gradient(180deg, ${TOW.goldBright}, ${TOW.gold} 55%, ${TOW.goldDeep})`,
-    color: '#2a1a0a',
+    color: TOW.onGrad,
     fontFamily: towFont.display,
     fontWeight: 700,
     fontSize: 15,

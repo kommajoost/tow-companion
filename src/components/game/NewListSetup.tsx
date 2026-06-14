@@ -100,7 +100,7 @@ export function NewListSetup({ comps, compNames, armyName, defaultName, catalogu
 
         <div style={{ display: 'flex', gap: 8, marginTop: 20 }}>
           <button onClick={onCancel} style={{ flex: 1, padding: 12, borderRadius: 10, cursor: 'pointer', border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt, color: TOW.inkDim, fontFamily: towFont.display, fontWeight: 600, fontSize: 13, letterSpacing: '0.03em' }}>Cancel</button>
-          <button onClick={() => onCreate({ name: name.trim() || defaultName, composition, points, rule, entries: mode === 'import' ? (preview?.entries ?? []) : [] })} style={{ flex: 1.4, padding: 12, borderRadius: 10, cursor: 'pointer', border: 'none', background: goldGrad, color: '#2a1a0a', fontFamily: towFont.display, fontWeight: 700, fontSize: 13.5, letterSpacing: '0.03em' }}>{mode === 'import' ? 'Import list' : 'Create list'}</button>
+          <button onClick={() => onCreate({ name: name.trim() || defaultName, composition, points, rule, entries: mode === 'import' ? (preview?.entries ?? []) : [] })} style={{ flex: 1.4, padding: 12, borderRadius: 10, cursor: 'pointer', border: 'none', background: goldGrad, color: TOW.onGrad, fontFamily: towFont.display, fontWeight: 700, fontSize: 13.5, letterSpacing: '0.03em' }}>{mode === 'import' ? 'Import list' : 'Create list'}</button>
         </div>
       </div>
       <style>{`@keyframes sheet-pop { from { opacity: 0; transform: translateY(8px) scale(0.98); } to { opacity: 1; transform: none; } }`}</style>

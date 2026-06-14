@@ -239,7 +239,7 @@ function SpellPicker({
         </div>
 
         <div style={{ flexShrink: 0, padding: '12px 16px', borderTop: `1px solid ${TOW.line}` }}>
-          <button onClick={onClose} style={{ width: '100%', border: 'none', borderRadius: 11, cursor: 'pointer', padding: '12px 18px', background: `linear-gradient(180deg, ${TOW.goldBright}, ${TOW.gold} 55%, ${TOW.goldDeep})`, color: '#2a1a0a', fontFamily: towFont.display, fontWeight: 700, fontSize: 15 }}>Done</button>
+          <button onClick={onClose} style={{ width: '100%', border: 'none', borderRadius: 11, cursor: 'pointer', padding: '12px 18px', background: `linear-gradient(180deg, ${TOW.goldBright}, ${TOW.gold} 55%, ${TOW.goldDeep})`, color: TOW.onGrad, fontFamily: towFont.display, fontWeight: 700, fontSize: 15 }}>Done</button>
         </div>
       </div>
     </div>

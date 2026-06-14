@@ -18,7 +18,7 @@ export function ArmyMode() {
             const on = k === mode;
             return (
               <button key={k} onClick={() => setMode(k)}
-                style={{ padding: '5px 13px', borderRadius: 7, cursor: 'pointer', border: 'none', fontFamily: towFont.display, fontWeight: 600, fontSize: 12, letterSpacing: '0.03em', background: on ? goldGrad : 'transparent', color: on ? '#2a1a0a' : TOW.muted }}>
+                style={{ padding: '5px 13px', borderRadius: 7, cursor: 'pointer', border: 'none', fontFamily: towFont.display, fontWeight: 600, fontSize: 12, letterSpacing: '0.03em', background: on ? goldGrad : 'transparent', color: on ? TOW.onGrad : TOW.muted }}>
                 {label}
               </button>
             );
