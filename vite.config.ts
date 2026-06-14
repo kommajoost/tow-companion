@@ -6,16 +6,13 @@ import tailwindcss from '@tailwindcss/vite';
 import { VitePWA } from 'vite-plugin-pwa';
 
 // Build stamp shown in Settings → so you can tell which deploy is live without diffing the JS hash.
-// The patch number auto-increments per deploy: it's the git commit count, so every pushed commit
-// (= every Vercel deploy) bumps the version (0.1.<count>). major.minor come from package.json.
-const pkgVersion = JSON.parse(readFileSync(new URL('./package.json', import.meta.url), 'utf8')).version;
+// The version (0.1.<commit count>) is baked into package.json by `npm run stamp-version`, run
+// before each deploy — Vercel shallow-clones, so a build-time `git rev-list --count` is unreliable
+// there; we read the locally-stamped package.json instead. The sha/date are still build-time.
+const appVersion = JSON.parse(readFileSync(new URL('./package.json', import.meta.url), 'utf8')).version;
 let buildSha = (process.env.VERCEL_GIT_COMMIT_SHA || '').trim();
 try { if (!buildSha) buildSha = execSync('git rev-parse --short HEAD').toString().trim(); } catch { /* no git */ }
 buildSha = buildSha ? buildSha.slice(0, 7) : 'dev';
-let commitCount = '';
-try { commitCount = execSync('git rev-list --count HEAD').toString().trim(); } catch { /* no git */ }
-const [maj = '0', min = '1'] = pkgVersion.split('.');
-const appVersion = commitCount && commitCount !== '0' ? `${maj}.${min}.${commitCount}` : pkgVersion;
 const buildDate = new Date().toISOString().slice(0, 10);
 
 // https://vite.dev/config/
