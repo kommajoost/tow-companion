@@ -7,7 +7,7 @@ import {
   CATEGORIES, COMPOSITION_RULES, validate, entryPoints, unitBlocks, radioSelected, summaryLabels,
   subOptionGroups, toggleSubOption, setExclusiveSubOption,
   magicCategories, selectedMagicKeys, toggleMagicItem, magicGroupSpent, magicWouldExceed, magicItemId,
-  loadoutLabels, DEFAULT_MAGIC_BUDGET,
+  loadoutLabels, magicTypeLabel, DEFAULT_MAGIC_BUDGET,
   type Category, type OwbArmy, type OwbUnit, type BuilderList, type ListEntry, type Validation,
   type MagicItemsData, type MagicCategory, type MagicItem,
 } from '../../lib/owbBuilder';
@@ -170,7 +170,7 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
   const [tab, setTab] = useState<Category>('characters');
   const [q, setQ] = useState('');
   const [settings, setSettings] = useState(false);
-  const [info, setInfo] = useState<{ title: string; rows: StatRow[]; note?: string } | null>(null); // mount/unit profile popup
+  const [info, setInfo] = useState<{ title: string; rows: StatRow[]; note?: string; ruleSlug?: string } | null>(null); // mount/unit profile popup
   const [openMagicCats, setOpenMagicCats] = useState<Set<string>>(new Set()); // expanded magic-item categories
   const [showIssues, setShowIssues] = useState(false); // expand the list of composition problems
 
@@ -280,11 +280,15 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
             <span style={{ fontFamily: towFont.display, fontWeight: 600, fontSize: 11, color: item.points ? TOW.gold : TOW.faint }}>{cost}</span>
           </button>
           <Eye onClick={() => {
+            // Prefer the item's OWN rule page (named magic items have one).
             const slug = resolveRuleSlug(cleanLabel(item.name_en), ruleIdx);
             if (slug) { openRuleByName(item.name_en); return; }
+            // Otherwise show THIS item's details (name · kind · cost · restriction). Individual runes
+            // have no own rule text in the data, so we offer a link to the rune-type's full rules
+            // rather than silently opening that general page in place of the item.
             const typeSlug = RUNE_TYPE_RULE[item.type];
-            if (typeSlug && rules[typeSlug]) { openRule(typeSlug); return; }
-            setInfo({ title: cleanLabel(item.name_en), rows: [], note: `Magic item · ${cat.label} · ${item.points ?? 0} pts` });
+            const note = `${magicTypeLabel(item.type)} · ${item.points ?? 0} pts${item.onePerArmy ? ' · one per army' : ''}`;
+            setInfo({ title: cleanLabel(item.name_en), rows: [], note, ruleSlug: typeSlug && rules[typeSlug] ? typeSlug : undefined });
           }} />
         </div>
       );
@@ -422,9 +426,14 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
           </span>
           <span style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 13, color: TOW.parchDim }}>{fmt(entryPoints(u, e, itemsData))}</span>
         </div>
-        {sum.length > 0
-          ? <div style={{ fontFamily: towFont.serif, fontSize: 12.5, color: TOW.muted, marginTop: 3, lineHeight: 1.4 }}>{sum.join(' · ')}</div>
-          : <div style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 12, color: TOW.faint, marginTop: 3 }}>Tap to equip</div>}
+        {(() => {
+          // Chosen upgrades if any; otherwise the unit's base weapons/armour, so even an un-upgraded
+          // unit shows what it carries rather than a bare "Tap to equip".
+          const line = sum.length > 0 ? sum : loadoutLabels(u, e, itemsData);
+          return line.length > 0
+            ? <div style={{ fontFamily: towFont.serif, fontSize: 12.5, color: sum.length ? TOW.muted : TOW.faint, marginTop: 3, lineHeight: 1.4 }}>{line.join(' · ')}</div>
+            : <div style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 12, color: TOW.faint, marginTop: 3 }}>Tap to equip</div>;
+        })()}
       </div>
     );
   };
@@ -601,7 +610,7 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
           </div>
         </div>
         </div>
-        {info && <InfoPopup info={info} onClose={() => setInfo(null)} />}
+        {info && <InfoPopup info={info} onClose={() => setInfo(null)} onOpenRule={(s) => { setInfo(null); openRule(s); }} />}
       </div>
     );
   }
@@ -702,7 +711,7 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
           </select>
         </Sheet>
       )}
-      {info && <InfoPopup info={info} onClose={() => setInfo(null)} />}
+      {info && <InfoPopup info={info} onClose={() => setInfo(null)} onOpenRule={(s) => { setInfo(null); openRule(s); }} />}
     </div>
   );
 }
@@ -710,7 +719,7 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
 // A small centred popup. Shows a mount/unit stat profile (rows) for options without a rule page, or
 // — when `rows` is empty and a `note` is given — a single muted italic meta line (e.g. magic items,
 // which have no verbatim rule text in our data: name + "Magic item · <category> · <pts> pts").
-function InfoPopup({ info, onClose }: { info: { title: string; rows: StatRow[]; note?: string }; onClose: () => void }) {
+function InfoPopup({ info, onClose, onOpenRule }: { info: { title: string; rows: StatRow[]; note?: string; ruleSlug?: string }; onClose: () => void; onOpenRule?: (slug: string) => void }) {
   const showNote = info.rows.length === 0 && !!info.note;
   return (
     <div onClick={onClose} style={{ position: 'absolute', inset: 0, zIndex: 60, background: 'rgba(30,20,8,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 }}>
@@ -723,6 +732,11 @@ function InfoPopup({ info, onClose }: { info: { title: string; rows: StatRow[]; 
         {showNote
           ? <div style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 13, color: TOW.muted, lineHeight: 1.5 }}>{info.note}</div>
           : <MiniProfile rows={info.rows} />}
+        {info.ruleSlug && onOpenRule && (
+          <button onClick={() => onOpenRule(info.ruleSlug!)} style={{ marginTop: 14, display: 'inline-flex', alignItems: 'center', gap: 7, padding: '8px 13px', borderRadius: 9, cursor: 'pointer', border: `1px solid ${TOW.goldDeep}`, background: 'rgba(138,108,48,0.10)', color: TOW.goldDeep, fontFamily: towFont.display, fontWeight: 600, fontSize: 12.5 }}>
+            Full rune rules →
+          </button>
+        )}
       </div>
       <style>{`@keyframes sheet-pop { from { opacity: 0; transform: translateY(8px) scale(0.98); } to { opacity: 1; transform: none; } }`}</style>
     </div>
