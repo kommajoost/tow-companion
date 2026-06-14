@@ -1,37 +1,57 @@
 import { useEffect, useMemo, useState } from 'react';
 import { TOW, towFont, engraved } from '../../design/tow';
 import { COMPOSITION_RULES, type OwbArmy, type ListEntry } from '../../lib/owbBuilder';
+import { compName as compNameFor } from '../../lib/armies';
 import { importOwbText } from '../../lib/owbImport';
 import { OwbInstructions } from './OwbInstructions';
 
-// OWB-style "new list" setup, shown before the builder opens: pick a name, army composition,
-// points target and composition rule. The army (faction) is fixed to Dark Elves for now; the
-// values chosen here are stored on the list and stay editable later from the workspace's ⚙ panel.
-// "Start from" can also import an Old World Builder text export → a ready-built, editable list.
+// OWB-style "new list" setup, shown before the builder opens: pick the army (faction), a name,
+// army composition, points target and composition rule. Choosing the army swaps which compositions
+// are offered AND which catalogue the "Paste an OWB list" import matches against (fetched here, so
+// the dialog doesn't depend on the parent's single catalogue). The values chosen are stored on the
+// list and stay editable later from the workspace's ⚙ panel.
 
 const eb = engraved as React.CSSProperties;
+const BASE = import.meta.env.BASE_URL;
 const goldGrad = `linear-gradient(180deg, ${TOW.goldBright} 0%, ${TOW.gold} 55%, ${TOW.goldDeep} 100%)`;
 const POINT_PRESETS = [1000, 1500, 2000, 2500];
 
-export interface NewListValues { name: string; composition: string; points: number; rule: string; entries: ListEntry[] }
+export interface NewListValues { name: string; army: string; composition: string; points: number; rule: string; entries: ListEntry[] }
 
-export function NewListSetup({ comps, compNames, armyName, defaultName, catalogue, onCancel, onCreate }: {
-  comps: string[];
-  compNames: Record<string, string>;
-  armyName: string;
+export function NewListSetup({ armies, compsByArmy, defaultArmy, defaultName, onCancel, onCreate }: {
+  armies: { slug: string; name: string }[];
+  compsByArmy: Record<string, string[]>;
+  defaultArmy: string;
   defaultName: string;
-  catalogue: OwbArmy;
   onCancel: () => void;
   onCreate: (v: NewListValues) => void;
 }) {
   const [name, setName] = useState(defaultName);
-  const [composition, setComposition] = useState(comps[0] ?? 'dark-elves');
+  const [army, setArmy] = useState(defaultArmy);
+  const comps = compsByArmy[army] ?? [army];
+  const [composition, setComposition] = useState(comps[0] ?? army);
   const [points, setPoints] = useState(2000);
   const [rule, setRule] = useState('open-war');
   const [mode, setMode] = useState<'empty' | 'import'>('empty');
   const [paste, setPaste] = useState('');
+  // The selected army's catalogue, fetched here so the import matches against THIS army's units.
+  const [catalogue, setCatalogue] = useState<OwbArmy | null>(null);
 
-  const preview = useMemo(() => (mode === 'import' && paste.trim() ? importOwbText(paste, catalogue) : null), [mode, paste, catalogue]);
+  const armyName = armies.find((a) => a.slug === army)?.name ?? army;
+
+  // When the army changes, reset the composition to its first comp and (re)load its catalogue.
+  useEffect(() => {
+    const list = compsByArmy[army] ?? [army];
+    setComposition(list[0] ?? army);
+  }, [army, compsByArmy]);
+  useEffect(() => {
+    let cancelled = false;
+    setCatalogue(null);
+    fetch(`${BASE}owb/${army}.json`).then((r) => r.json()).then((c) => { if (!cancelled) setCatalogue(c); }).catch(() => { if (!cancelled) setCatalogue(null); });
+    return () => { cancelled = true; };
+  }, [army]);
+
+  const preview = useMemo(() => (mode === 'import' && paste.trim() && catalogue ? importOwbText(paste, catalogue) : null), [mode, paste, catalogue]);
   // Adopt the export's name/points/rule into the editable fields above.
   useEffect(() => {
     if (!preview) return;
@@ -54,8 +74,10 @@ export function NewListSetup({ comps, compNames, armyName, defaultName, catalogu
         <div style={{ ...label, marginBottom: 6 }}>List name</div>
         <input value={name} onChange={(e) => setName(e.target.value)} autoFocus style={{ ...field, fontFamily: towFont.display, fontWeight: 600, fontSize: 15 }} />
 
-        <div style={{ ...label, margin: '16px 0 6px' }}>Army</div>
-        <div style={{ padding: '9px 11px', borderRadius: 9, border: `1px solid ${TOW.line}`, background: 'rgba(74,55,22,0.05)', fontFamily: towFont.serif, fontSize: 14, color: TOW.parchDim }}>{armyName}</div>
+        <div style={{ ...label, margin: '16px 0 6px' }}>Army (faction)</div>
+        <select value={army} onChange={(e) => setArmy(e.target.value)} style={field}>
+          {armies.map((a) => <option key={a.slug} value={a.slug}>{a.name}</option>)}
+        </select>
 
         <div style={{ ...label, margin: '16px 0 6px' }}>Start from</div>
         <select value={mode} onChange={(e) => setMode(e.target.value as 'empty' | 'import')} style={field}>
@@ -74,7 +96,7 @@ export function NewListSetup({ comps, compNames, armyName, defaultName, catalogu
                 </div>
                 {preview.unmatched.length > 0 && (
                   <div style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 11.5, color: TOW.muted, marginTop: 4, lineHeight: 1.5 }}>
-                    Not in the Dark Elves catalogue (skipped): {preview.unmatched.join(', ')}
+                    Not in the {armyName} catalogue (skipped): {preview.unmatched.join(', ')}
                   </div>
                 )}
               </div>
@@ -84,7 +106,7 @@ export function NewListSetup({ comps, compNames, armyName, defaultName, catalogu
 
         <div style={{ ...label, margin: '16px 0 6px' }}>Army composition</div>
         <select value={composition} onChange={(e) => setComposition(e.target.value)} style={field}>
-          {comps.map((c) => <option key={c} value={c}>{compNames[c] ?? c}</option>)}
+          {comps.map((c) => <option key={c} value={c}>{compNameFor(c, army)}</option>)}
         </select>
 
         <div style={{ ...label, margin: '16px 0 7px' }}>Points limit</div>
@@ -100,7 +122,7 @@ export function NewListSetup({ comps, compNames, armyName, defaultName, catalogu
 
         <div style={{ display: 'flex', gap: 8, marginTop: 20 }}>
           <button onClick={onCancel} style={{ flex: 1, padding: 12, borderRadius: 10, cursor: 'pointer', border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt, color: TOW.inkDim, fontFamily: towFont.display, fontWeight: 600, fontSize: 13, letterSpacing: '0.03em' }}>Cancel</button>
-          <button onClick={() => onCreate({ name: name.trim() || defaultName, composition, points, rule, entries: mode === 'import' ? (preview?.entries ?? []) : [] })} style={{ flex: 1.4, padding: 12, borderRadius: 10, cursor: 'pointer', border: 'none', background: goldGrad, color: TOW.onGrad, fontFamily: towFont.display, fontWeight: 700, fontSize: 13.5, letterSpacing: '0.03em' }}>{mode === 'import' ? 'Import list' : 'Create list'}</button>
+          <button onClick={() => onCreate({ name: name.trim() || defaultName, army, composition, points, rule, entries: mode === 'import' ? (preview?.entries ?? []) : [] })} style={{ flex: 1.4, padding: 12, borderRadius: 10, cursor: 'pointer', border: 'none', background: goldGrad, color: TOW.onGrad, fontFamily: towFont.display, fontWeight: 700, fontSize: 13.5, letterSpacing: '0.03em' }}>{mode === 'import' ? 'Import list' : 'Create list'}</button>
         </div>
       </div>
       <style>{`@keyframes sheet-pop { from { opacity: 0; transform: translateY(8px) scale(0.98); } to { opacity: 1; transform: none; } }`}</style>

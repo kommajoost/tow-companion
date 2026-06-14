@@ -23,7 +23,6 @@ const fmt = (n: number) => n.toLocaleString('en-US');
 const cleanLabel = (s: string) => (s || '').replace(/\{[^}]*\}/g, ' ').replace(/\*/g, '').replace(/\s+/g, ' ').trim();
 
 const CAT_LABEL: Record<Category, string> = { characters: 'Characters', core: 'Core', special: 'Special', rare: 'Rare', mercenaries: 'Mercenaries', allies: 'Allies' };
-const COMP_NAMES: Record<string, string> = { 'dark-elves': 'Grand Army', 'de-renegade': 'Renegade Crowns' };
 const POINT_PRESETS = [1000, 1500, 2000, 2500];
 const STAT_COLS = ['M', 'WS', 'BS', 'S', 'T', 'W', 'I', 'A', 'Ld'] as const;
 type StatRow = { Name: string } & Record<(typeof STAT_COLS)[number], string>;
@@ -117,7 +116,7 @@ function complianceRows(v: Validation): ComplianceRow[] {
   return out;
 }
 
-export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army, statsFor, comps, itemsData, armyItemLists }: {
+export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army, statsFor, comps, armyName, compName, itemsData, armyItemLists }: {
   list: BuilderList; name: string;
   onUpdate: (fn: (l: BuilderList) => Partial<BuilderList>) => void;
   onSetName: (n: string) => void;
@@ -125,6 +124,8 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
   army: OwbArmy;
   statsFor: (name: string) => StatRow[];
   comps: string[];
+  armyName: string;
+  compName: (comp: string) => string;
   itemsData?: MagicItemsData;
   armyItemLists?: string[];
 }) {
@@ -392,7 +393,7 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
   );
 
   const ruleName = COMPOSITION_RULES.find((r) => r.id === list.rule)?.name ?? list.rule;
-  const headerMeta = `${COMP_NAMES[list.composition] ?? list.composition} · ${ruleName} · Dark Elves`;
+  const headerMeta = `${compName(list.composition)} · ${ruleName} · ${armyName}`;
 
   // ════════════════════ WIDE — three columns ════════════════════
   if (wide) {
@@ -426,7 +427,7 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
               <input type="number" inputMode="numeric" min={0} step={50} value={list.points} onChange={(e) => onUpdate(() => ({ points: Math.max(0, Math.floor(Number(e.target.value) || 0)) }))} aria-label="Custom points" style={{ width: '100%', boxSizing: 'border-box', marginTop: 7, padding: '9px 11px', borderRadius: 9, border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt, fontFamily: towFont.display, fontWeight: 600, fontSize: 14, color: TOW.ink, outline: 'none' }} />
               <div style={{ ...eb, fontSize: 8.5, color: TOW.muted, margin: '16px 0 7px' }}>Composition</div>
               <select value={list.composition} onChange={(e) => onUpdate(() => ({ composition: e.target.value }))} style={{ width: '100%', boxSizing: 'border-box', padding: '9px 11px', borderRadius: 9, border: `1px solid ${TOW.line}`, background: TOW.cardLt, fontFamily: towFont.serif, fontSize: 14, color: TOW.ink }}>
-                {comps.map((c) => <option key={c} value={c}>{COMP_NAMES[c] ?? c}</option>)}
+                {comps.map((c) => <option key={c} value={c}>{compName(c)}</option>)}
               </select>
               <div style={{ ...eb, fontSize: 8.5, color: TOW.muted, margin: '14px 0 7px' }}>Composition rule</div>
               <select value={list.rule} onChange={(e) => onUpdate(() => ({ rule: e.target.value }))} style={{ width: '100%', boxSizing: 'border-box', padding: '9px 11px', borderRadius: 9, border: `1px solid ${TOW.line}`, background: TOW.cardLt, fontFamily: towFont.serif, fontSize: 14, color: TOW.ink }}>
@@ -587,7 +588,7 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
           <input type="number" inputMode="numeric" min={0} step={50} value={list.points} onChange={(e) => onUpdate(() => ({ points: Math.max(0, Math.floor(Number(e.target.value) || 0)) }))} aria-label="Custom points" style={{ width: '100%', boxSizing: 'border-box', marginTop: 7, padding: '10px 12px', borderRadius: 9, border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt, fontFamily: towFont.display, fontWeight: 600, fontSize: 14, color: TOW.ink, outline: 'none' }} />
           <div style={{ ...eb, fontSize: 8.5, color: TOW.muted, margin: '16px 0 7px' }}>Composition</div>
           <select value={list.composition} onChange={(e) => onUpdate(() => ({ composition: e.target.value }))} style={{ width: '100%', boxSizing: 'border-box', padding: '10px 12px', borderRadius: 9, border: `1px solid ${TOW.line}`, background: TOW.cardLt, fontFamily: towFont.serif, fontSize: 14, color: TOW.ink }}>
-            {comps.map((c) => <option key={c} value={c}>{COMP_NAMES[c] ?? c}</option>)}
+            {comps.map((c) => <option key={c} value={c}>{compName(c)}</option>)}
           </select>
           <div style={{ ...eb, fontSize: 8.5, color: TOW.muted, margin: '14px 0 7px' }}>Composition rule</div>
           <select value={list.rule} onChange={(e) => onUpdate(() => ({ rule: e.target.value }))} style={{ width: '100%', boxSizing: 'border-box', padding: '10px 12px', borderRadius: 9, border: `1px solid ${TOW.line}`, background: TOW.cardLt, fontFamily: towFont.serif, fontSize: 14, color: TOW.ink }}>

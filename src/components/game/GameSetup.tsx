@@ -4,14 +4,13 @@ import { usePersistentState } from '../../store';
 import { useGame } from '../../game';
 import { parseArmyList } from '../../lib/armyParser';
 import { builderListToArmy, listTotal } from '../../lib/builderToArmy';
+import { compName } from '../../lib/armies';
 import type { BuilderList, OwbArmy, MagicItemsData } from '../../lib/owbBuilder';
 import { OwbInstructions } from './OwbInstructions';
 import type { Army, GameSummary } from '../../types';
 
 const eb = engraved as React.CSSProperties;
 const BASE = import.meta.env.BASE_URL;
-const ARMY_SLUG = 'dark-elves';
-const COMP_NAMES: Record<string, string> = { 'dark-elves': 'Grand Army', 'de-renegade': 'Renegade Crowns' };
 const normRule = (s: string) => (s || '').toLowerCase().replace(/ *\([^)]*\) */g, '').replace(/[{}[\]*]/g, '').replace(/^[0-9]x /g, '').replace(/[“”]/g, '"').trim();
 interface SavedList extends BuilderList { id: string; name: string; army: string; createdAt: number; updatedAt: number }
 interface StatRow { Name: string; M: string; WS: string; BS: string; S: string; T: string; W: string; I: string; A: string; Ld: string }
@@ -32,19 +31,38 @@ export function GameSetup() {
   const [loadingGames, setLoadingGames] = useState(false);
 
   // Your saved builder lists (tow:lists) + the catalogue data needed to convert one into an Army.
+  // Lists can span DIFFERENT armies, so we keep a per-army catalogue cache + army metadata (names,
+  // each army's magic-item lists) and convert each list with ITS OWN catalogue/faction/comp.
   const [lists] = usePersistentState<SavedList[]>('tow:lists', []);
   const [pickedId, setPickedId] = useState<string | null>(null);
-  const [catalogue, setCatalogue] = useState<OwbArmy | null>(null);
+  const [catalogues, setCatalogues] = useState<Record<string, OwbArmy>>({}); // slug → catalogue
+  const [armyNames, setArmyNames] = useState<Record<string, string>>({}); // slug → display name
+  const [itemsByArmy, setItemsByArmy] = useState<Record<string, string[]>>({}); // slug → magic-item lists
   const [statIdx, setStatIdx] = useState<Record<string, { stats?: StatRow[] }> | null>(null);
   const [itemsData, setItemsData] = useState<MagicItemsData | null>(null);
-  const [armyItemLists, setArmyItemLists] = useState<string[]>([]);
 
   useEffect(() => {
-    fetch(`${BASE}owb/${ARMY_SLUG}.json`).then((r) => r.json()).then(setCatalogue).catch(() => {});
     fetch(`${BASE}owb/rules-index.json`).then((r) => r.json()).then(setStatIdx).catch(() => {});
     fetch(`${BASE}owb/magic-items.json`).then((r) => r.json()).then(setItemsData).catch(() => {});
-    fetch(`${BASE}owb/the-old-world.json`).then((r) => r.json()).then((m) => { const a = m.armies?.find((x: { id: string }) => x.id === ARMY_SLUG); if (Array.isArray(a?.items)) setArmyItemLists(a.items); }).catch(() => {});
+    fetch(`${BASE}owb/index.json`).then((r) => r.json()).then((idx) => {
+      if (Array.isArray(idx?.armies)) setArmyNames(Object.fromEntries(idx.armies.map((a: { slug: string; name: string }) => [a.slug, a.name])));
+    }).catch(() => {});
+    fetch(`${BASE}owb/the-old-world.json`).then((r) => r.json()).then((m) => {
+      const map: Record<string, string[]> = {};
+      for (const a of (m.armies ?? [])) map[a.id] = Array.isArray(a.items) ? a.items : [];
+      setItemsByArmy(map);
+    }).catch(() => {});
   }, []);
+
+  // Load a catalogue for every distinct army among the saved lists (cache by slug).
+  useEffect(() => {
+    const need = Array.from(new Set(lists.map((l) => l.army))).filter((s) => s && !catalogues[s]);
+    if (need.length === 0) return;
+    let cancelled = false;
+    Promise.all(need.map((s) => fetch(`${BASE}owb/${s}.json`).then((r) => r.json()).then((c) => [s, c] as const).catch(() => null)))
+      .then((pairs) => { if (cancelled) return; const add: Record<string, OwbArmy> = {}; for (const p of pairs) if (p) add[p[0]] = p[1]; if (Object.keys(add).length) setCatalogues((m) => ({ ...m, ...add })); });
+    return () => { cancelled = true; };
+  }, [lists, catalogues]);
 
   const statsFor = useMemo(() => (unitName: string): StatRow[] => {
     if (!statIdx) return [];
@@ -54,10 +72,13 @@ export function GameSetup() {
     return e?.stats ?? [];
   }, [statIdx]);
 
+  const armyNameFor = (slug: string) => armyNames[slug] ?? slug;
+
   const pickedList = pickedId ? lists.find((l) => l.id === pickedId) || null : null;
+  const pickedCatalogue = pickedList ? catalogues[pickedList.army] ?? null : null;
   const army: Army | null =
-    pickedList && catalogue
-      ? builderListToArmy(pickedList, catalogue, statsFor, { composition: COMP_NAMES[pickedList.composition] ?? pickedList.composition, itemsData: itemsData ?? undefined, armyItemLists })
+    pickedList && pickedCatalogue
+      ? builderListToArmy(pickedList, pickedCatalogue, statsFor, { faction: armyNameFor(pickedList.army), composition: compName(pickedList.composition, pickedList.army), itemsData: itemsData ?? undefined, armyItemLists: itemsByArmy[pickedList.army] ?? [] })
       : paste.trim() ? parseArmyList(paste) : null;
 
   const loadGames = useCallback(async () => {
@@ -93,7 +114,8 @@ export function GameSetup() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 8 }}>
               {lists.map((l) => {
                 const on = pickedId === l.id;
-                const total = catalogue ? listTotal(l, catalogue, itemsData ?? undefined) : null;
+                const cat = catalogues[l.army] ?? null;
+                const total = cat ? listTotal(l, cat, itemsData ?? undefined) : null;
                 return (
                   <button key={l.id} onClick={() => setPickedId(on ? null : l.id)}
                     style={{ display: 'flex', alignItems: 'center', gap: 8, textAlign: 'left', padding: '11px 13px', borderRadius: 11, cursor: 'pointer', border: `1px solid ${on ? TOW.goldDeep : TOW.line}`, background: on ? TOW.cardLt : TOW.panel2 }}>
