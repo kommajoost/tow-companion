@@ -89,26 +89,28 @@
      `ink` = primary TEXT colour (light parchment); `deep` = darkest background. */
   /* Light parchment theme (Claude Design v2). `ink` = primary dark TEXT on
      parchment; surfaces are warm paper tones, deepest = chrome panel. */
-  --color-deep: #e3d5b8;
-  --color-bg: #efe6d3;
-  --color-surface: #e9ddc6;
-  --color-surface-2: #e3d5b8;
-  --color-surface-3: #d8c6a2;
-  --color-border: rgba(120, 86, 40, 0.2);
-  --color-border-strong: rgba(120, 86, 40, 0.38);
-  --color-border-soft: rgba(120, 86, 40, 0.12);
-  --color-ink: #3a2e22; /* primary text (dark ink on parchment) */
-  --color-ink-dim: #6a5842;
-  --color-ink-faint: #8a7350;
+  /* Aligned 1:1 to the TOW tokens above so the Tailwind-utility screens (Rulebook,
+     rule pop-ups, flow) share the exact same gold / ink / parchment as the rest. */
+  --color-deep: #e2d5b6;
+  --color-bg: #ece1c7;
+  --color-surface: #f4eedb;
+  --color-surface-2: #f4eedb;
+  --color-surface-3: #e2d5b6;
+  --color-border: rgba(74, 55, 22, 0.2);
+  --color-border-strong: rgba(74, 55, 22, 0.42);
+  --color-border-soft: rgba(74, 55, 22, 0.12);
+  --color-ink: #2c2114; /* primary text (dark ink on parchment) */
+  --color-ink-dim: #564833;
+  --color-ink-faint: #867453;
   --color-faint: #c3ad84;
-  --color-gold: #b8862f;
-  --color-gold-bright: #d8a948;
-  --color-gold-deep: #7c5a22;
+  --color-gold: #c9a24b;
+  --color-gold-bright: #e8c977;
+  --color-gold-deep: #8a6c30;
   --color-blood: #7c2b22;
 
   /* Back-compat aliases used by earlier components */
-  --color-accent: #9a6f25;
-  --color-accent-2: #7c5a22;
+  --color-accent: #8a6c30;
+  --color-accent-2: #7a5d24;
 
   --font-display: 'Cinzel', 'Times New Roman', serif;
   --font-serif: 'EB Garamond', Georgia, serif;
