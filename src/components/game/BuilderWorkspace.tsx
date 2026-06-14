@@ -23,7 +23,7 @@ const fmt = (n: number) => n.toLocaleString('en-US');
 const cleanLabel = (s: string) => (s || '').replace(/\{[^}]*\}/g, ' ').replace(/\*/g, '').replace(/\s+/g, ' ').trim();
 
 const CAT_LABEL: Record<Category, string> = { characters: 'Characters', core: 'Core', special: 'Special', rare: 'Rare', mercenaries: 'Mercenaries', allies: 'Allies' };
-const POINT_PRESETS = [1000, 1500, 2000, 2500];
+const POINT_PRESETS = [500, 750, 1000, 1500, 2000, 2500];
 const STAT_COLS = ['M', 'WS', 'BS', 'S', 'T', 'W', 'I', 'A', 'Ld'] as const;
 type StatRow = { Name: string } & Record<(typeof STAT_COLS)[number], string>;
 
@@ -160,6 +160,7 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
   const [settings, setSettings] = useState(false);
   const [info, setInfo] = useState<{ title: string; rows: StatRow[]; note?: string } | null>(null); // mount/unit profile popup
   const [openMagicCats, setOpenMagicCats] = useState<Set<string>>(new Set()); // expanded magic-item categories
+  const [showIssues, setShowIssues] = useState(false); // expand the list of composition problems
 
   // ── entry operations ──
   const add = (cat: Category, u: OwbUnit) => {
@@ -398,6 +399,20 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
   const ruleName = COMPOSITION_RULES.find((r) => r.id === list.rule)?.name ?? list.rule;
   const headerMeta = `${compName(list.composition)} · ${ruleName} · ${armyName}`;
 
+  // The actual list of composition problems (category caps/minimums, illegal unit sizes, over budget),
+  // shown when the player taps the "N to fix" badge — so it points at WHERE the list breaks the rules,
+  // not just how many issues there are. The matching compliance bar(s) also turn red.
+  const issuesList = (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 7 }}>
+      {v.warnings.map((wn, i) => (
+        <div key={i} style={{ display: 'flex', gap: 8, alignItems: 'flex-start', fontFamily: towFont.serif, fontSize: 12.5, color: TOW.ink, lineHeight: 1.35 }}>
+          <span style={{ color: TOW.blood, flexShrink: 0, fontSize: 11, marginTop: 1 }} aria-hidden>▲</span>
+          <span>{wn}</span>
+        </div>
+      ))}
+    </div>
+  );
+
   // ════════════════════ WIDE — three columns ════════════════════
   if (wide) {
     const selEntry = list.entries.find((e) => e.uid === selUid) || null;
@@ -412,7 +427,7 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
           </div>
           <div style={{ textAlign: 'right' }}>
             <div style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 24, color: overBudget ? TOW.blood : TOW.ink, lineHeight: 1 }}>{fmt(v.total)}<span style={{ fontSize: 14, color: TOW.muted, fontWeight: 600 }}> / {fmt(list.points)}</span></div>
-            <div style={{ ...eb, fontSize: 8, color: v.warnings.length ? TOW.blood : '#4f6b3a', marginTop: 4 }}>{v.warnings.length ? `${v.warnings.length} to fix` : '✓ Legal list'}</div>
+            <button onClick={() => { if (v.warnings.length) { setSettings(false); setShowIssues((s) => !s); } }} style={{ ...eb, display: 'inline-block', fontSize: 8, color: v.warnings.length ? TOW.blood : '#4f6b3a', marginTop: 4, background: 'none', border: 'none', padding: 0, cursor: v.warnings.length ? 'pointer' : 'default' }}>{v.warnings.length ? `${v.warnings.length} to fix ${showIssues ? '▴' : '▾'}` : '✓ Legal list'}</button>
           </div>
           <button onClick={() => setSettings((s) => !s)} aria-label="List settings" style={{ width: 36, height: 36, flexShrink: 0, borderRadius: 9, cursor: 'pointer', border: `1px solid ${settings ? TOW.goldDeep : TOW.lineStrong}`, background: settings ? 'rgba(138,108,48,0.12)' : TOW.cardLt, color: TOW.inkDim, fontSize: 16 }}>⚙</button>
         </div>
@@ -424,8 +439,8 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
               <div style={{ ...eb, fontSize: 8.5, color: TOW.muted, marginBottom: 6 }}>List name</div>
               <input value={name} onChange={(e) => onSetName(e.target.value)} style={{ width: '100%', boxSizing: 'border-box', padding: '9px 11px', borderRadius: 9, border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt, fontFamily: towFont.display, fontWeight: 600, fontSize: 15, color: TOW.ink, outline: 'none' }} />
               <div style={{ ...eb, fontSize: 8.5, color: TOW.muted, margin: '16px 0 7px' }}>Points limit</div>
-              <div style={{ display: 'flex', gap: 5 }}>
-                {POINT_PRESETS.map((t) => { const on = list.points === t; return <button key={t} onClick={() => onUpdate(() => ({ points: t }))} style={{ flex: 1, padding: '9px 2px', borderRadius: 8, border: `1px solid ${on ? TOW.goldDeep : TOW.line}`, cursor: 'pointer', fontFamily: towFont.display, fontWeight: 600, fontSize: 12.5, background: on ? 'rgba(138,108,48,0.14)' : TOW.cardLt, color: on ? TOW.gold : TOW.muted }}>{t}</button>; })}
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
+                {POINT_PRESETS.map((t) => { const on = list.points === t; return <button key={t} onClick={() => onUpdate(() => ({ points: t }))} style={{ flex: '1 1 28%', minWidth: 44, padding: '9px 2px', borderRadius: 8, border: `1px solid ${on ? TOW.goldDeep : TOW.line}`, cursor: 'pointer', fontFamily: towFont.display, fontWeight: 600, fontSize: 12.5, background: on ? 'rgba(138,108,48,0.14)' : TOW.cardLt, color: on ? TOW.gold : TOW.muted }}>{t}</button>; })}
               </div>
               <input type="number" inputMode="numeric" min={0} step={50} value={list.points} onChange={(e) => onUpdate(() => ({ points: Math.max(0, Math.floor(Number(e.target.value) || 0)) }))} aria-label="Custom points" style={{ width: '100%', boxSizing: 'border-box', marginTop: 7, padding: '9px 11px', borderRadius: 9, border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt, fontFamily: towFont.display, fontWeight: 600, fontSize: 14, color: TOW.ink, outline: 'none' }} />
               <div style={{ ...eb, fontSize: 8.5, color: TOW.muted, margin: '16px 0 7px' }}>Composition</div>
@@ -436,6 +451,16 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
               <select value={list.rule} onChange={(e) => onUpdate(() => ({ rule: e.target.value }))} style={{ width: '100%', boxSizing: 'border-box', padding: '9px 11px', borderRadius: 9, border: `1px solid ${TOW.line}`, background: TOW.cardLt, fontFamily: towFont.serif, fontSize: 14, color: TOW.ink }}>
                 {COMPOSITION_RULES.map((r) => <option key={r.id} value={r.id}>{r.name}</option>)}
               </select>
+            </div>
+          </>
+        )}
+
+        {showIssues && v.warnings.length > 0 && (
+          <>
+            <div onClick={() => setShowIssues(false)} style={{ position: 'absolute', inset: 0, zIndex: 40 }} />
+            <div style={{ position: 'absolute', top: 60, right: 60, zIndex: 41, width: 330, maxHeight: 380, overflowY: 'auto', background: TOW.panel, borderRadius: 14, border: `1px solid rgba(124,43,34,0.45)`, boxShadow: '0 14px 40px rgba(40,24,8,0.26)', padding: 16 }}>
+              <div style={{ ...eb, fontSize: 8.5, color: TOW.blood, marginBottom: 11 }}>{v.warnings.length} thing{v.warnings.length === 1 ? '' : 's'} to fix</div>
+              {issuesList}
             </div>
           </>
         )}
@@ -523,7 +548,7 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
         <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginTop: 8 }}>{headerMeta}</div>
         <div style={{ display: 'flex', alignItems: 'flex-end', gap: 10, marginTop: 3 }}>
           <div style={{ flex: 1, fontFamily: towFont.display, fontWeight: 700, fontSize: 26, color: overBudget ? TOW.blood : TOW.ink, lineHeight: 1 }}>{fmt(v.total)}<span style={{ fontSize: 13, color: TOW.muted, fontWeight: 600 }}> / {fmt(list.points)}</span></div>
-          <span style={{ ...eb, fontSize: 8, color: v.warnings.length ? TOW.blood : '#4f6b3a', padding: '4px 9px', borderRadius: 99, border: `1px solid ${v.warnings.length ? 'rgba(124,43,34,0.4)' : 'rgba(79,107,58,0.4)'}` }}>{v.warnings.length ? `${v.warnings.length} to fix` : '✓ Legal'}</span>
+          <button onClick={() => { if (v.warnings.length) setShowIssues((s) => !s); }} style={{ ...eb, fontSize: 8, color: v.warnings.length ? TOW.blood : '#4f6b3a', padding: '4px 9px', borderRadius: 99, cursor: v.warnings.length ? 'pointer' : 'default', background: 'none', border: `1px solid ${v.warnings.length ? 'rgba(124,43,34,0.4)' : 'rgba(79,107,58,0.4)'}` }}>{v.warnings.length ? `${v.warnings.length} to fix ${showIssues ? '▴' : '▾'}` : '✓ Legal'}</button>
         </div>
         <div style={{ display: 'flex', gap: 6, marginTop: 11 }}>
           {comp.map((c) => {
@@ -536,6 +561,11 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
             );
           })}
         </div>
+        {showIssues && v.warnings.length > 0 && (
+          <div style={{ marginTop: 11, padding: '11px 13px', borderRadius: 11, border: `1px solid rgba(124,43,34,0.35)`, background: 'rgba(124,43,34,0.06)' }}>
+            {issuesList}
+          </div>
+        )}
       </div>
 
       {/* roster */}
@@ -585,8 +615,8 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
           <div style={{ ...eb, fontSize: 8.5, color: TOW.muted, marginBottom: 6 }}>List name</div>
           <input value={name} onChange={(e) => onSetName(e.target.value)} style={{ width: '100%', boxSizing: 'border-box', padding: '10px 12px', borderRadius: 9, border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt, fontFamily: towFont.display, fontWeight: 600, fontSize: 15, color: TOW.ink, outline: 'none' }} />
           <div style={{ ...eb, fontSize: 8.5, color: TOW.muted, margin: '16px 0 7px' }}>Points limit</div>
-          <div style={{ display: 'flex', gap: 5 }}>
-            {POINT_PRESETS.map((t) => { const on = list.points === t; return <button key={t} onClick={() => onUpdate(() => ({ points: t }))} style={{ flex: 1, padding: '10px 2px', borderRadius: 8, border: `1px solid ${on ? TOW.goldDeep : TOW.line}`, cursor: 'pointer', fontFamily: towFont.display, fontWeight: 600, fontSize: 13, background: on ? 'rgba(138,108,48,0.14)' : TOW.cardLt, color: on ? TOW.gold : TOW.muted }}>{t}</button>; })}
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
+            {POINT_PRESETS.map((t) => { const on = list.points === t; return <button key={t} onClick={() => onUpdate(() => ({ points: t }))} style={{ flex: '1 1 28%', minWidth: 46, padding: '10px 2px', borderRadius: 8, border: `1px solid ${on ? TOW.goldDeep : TOW.line}`, cursor: 'pointer', fontFamily: towFont.display, fontWeight: 600, fontSize: 13, background: on ? 'rgba(138,108,48,0.14)' : TOW.cardLt, color: on ? TOW.gold : TOW.muted }}>{t}</button>; })}
           </div>
           <input type="number" inputMode="numeric" min={0} step={50} value={list.points} onChange={(e) => onUpdate(() => ({ points: Math.max(0, Math.floor(Number(e.target.value) || 0)) }))} aria-label="Custom points" style={{ width: '100%', boxSizing: 'border-box', marginTop: 7, padding: '10px 12px', borderRadius: 9, border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt, fontFamily: towFont.display, fontWeight: 600, fontSize: 14, color: TOW.ink, outline: 'none' }} />
           <div style={{ ...eb, fontSize: 8.5, color: TOW.muted, margin: '16px 0 7px' }}>Composition</div>

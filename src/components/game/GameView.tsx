@@ -7,6 +7,7 @@ import { unitTotalStrength } from '../../lib/armyRules';
 import { UnitCard } from './UnitCard';
 import { BattleBar } from './BattleBar';
 import { OwbInstructions } from './OwbInstructions';
+import { ArmyListPicker } from './ArmyListPicker';
 import type { Army, ArmyUnit } from '../../types';
 
 const eb = engraved as React.CSSProperties;
@@ -212,6 +213,7 @@ function ArmyPaste({ title, cta, onSet }: { title: string; cta: string; onSet: (
   return (
     <div style={{ padding: '12px 2px' }}>
       <div style={{ ...eb, fontSize: 9, color: TOW.muted, marginBottom: 6 }}>{title}</div>
+      <ArmyListPicker onPick={onSet} />
       <textarea value={paste} onChange={(e) => setPaste(e.target.value)} placeholder="Paste the Old World Builder export…" rows={7} style={{ width: '100%', borderRadius: 10, border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt, color: TOW.ink, padding: '10px 12px', fontFamily: serif, fontSize: 13, lineHeight: 1.4, boxSizing: 'border-box', resize: 'vertical' }} />
       <OwbInstructions defaultOpen={!paste.trim()} />
       <button onClick={() => army && onSet(army)} disabled={!army} style={{ marginTop: 10, border: 'none', borderRadius: 11, cursor: 'pointer', padding: '11px 18px', width: '100%', background: `linear-gradient(180deg, ${TOW.goldBright}, ${TOW.gold} 55%, ${TOW.goldDeep})`, color: TOW.onGrad, fontFamily: display, fontWeight: 700, fontSize: 14, opacity: army ? 1 : 0.5 }}>{cta}</button>

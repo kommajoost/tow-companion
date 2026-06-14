@@ -14,7 +14,7 @@ import { OwbInstructions } from './OwbInstructions';
 const eb = engraved as React.CSSProperties;
 const BASE = import.meta.env.BASE_URL;
 const goldGrad = `linear-gradient(180deg, ${TOW.goldBright} 0%, ${TOW.gold} 55%, ${TOW.goldDeep} 100%)`;
-const POINT_PRESETS = [1000, 1500, 2000, 2500];
+const POINT_PRESETS = [500, 750, 1000, 1500, 2000, 2500];
 
 export interface NewListValues { name: string; army: string; composition: string; points: number; rule: string; entries: ListEntry[] }
 
@@ -110,8 +110,8 @@ export function NewListSetup({ armies, compsByArmy, defaultArmy, defaultName, on
         </select>
 
         <div style={{ ...label, margin: '16px 0 7px' }}>Points limit</div>
-        <div style={{ display: 'flex', gap: 5, marginBottom: 7 }}>
-          {POINT_PRESETS.map((t) => { const on = points === t; return <button key={t} onClick={() => setPoints(t)} style={{ flex: 1, padding: '9px 2px', borderRadius: 8, border: `1px solid ${on ? TOW.goldDeep : TOW.line}`, cursor: 'pointer', fontFamily: towFont.display, fontWeight: 600, fontSize: 12.5, background: on ? 'rgba(138,108,48,0.14)' : TOW.cardLt, color: on ? TOW.gold : TOW.muted }}>{t}</button>; })}
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5, marginBottom: 7 }}>
+          {POINT_PRESETS.map((t) => { const on = points === t; return <button key={t} onClick={() => setPoints(t)} style={{ flex: '1 1 28%', minWidth: 44, padding: '9px 2px', borderRadius: 8, border: `1px solid ${on ? TOW.goldDeep : TOW.line}`, cursor: 'pointer', fontFamily: towFont.display, fontWeight: 600, fontSize: 12.5, background: on ? 'rgba(138,108,48,0.14)' : TOW.cardLt, color: on ? TOW.gold : TOW.muted }}>{t}</button>; })}
         </div>
         <input type="number" inputMode="numeric" min={0} step={50} value={points} onChange={(e) => setPoints(Math.max(0, Math.floor(Number(e.target.value) || 0)))} aria-label="Custom points" style={{ ...field, fontFamily: towFont.display, fontWeight: 600 }} />
 
