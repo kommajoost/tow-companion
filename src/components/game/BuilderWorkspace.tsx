@@ -2,7 +2,6 @@ import { useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useData } from '../../data';
 import { useUI } from '../../state';
 import { TOW, towFont, engraved } from '../../design/tow';
-import { ThemeToggle } from '../../theme';
 import { getRuleIndex, resolveRuleSlug, resolveOptionSlug } from '../../lib/armyRules';
 import {
   CATEGORIES, COMPOSITION_RULES, validate, entryPoints, unitBlocks, radioSelected, summaryLabels,
@@ -373,7 +372,6 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
             <div style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 24, color: overBudget ? TOW.blood : TOW.ink, lineHeight: 1 }}>{fmt(v.total)}<span style={{ fontSize: 14, color: TOW.muted, fontWeight: 600 }}> / {fmt(list.points)}</span></div>
             <div style={{ ...eb, fontSize: 8, color: v.warnings.length ? TOW.blood : '#4f6b3a', marginTop: 4 }}>{v.warnings.length ? `${v.warnings.length} to fix` : '✓ Legal list'}</div>
           </div>
-          <ThemeToggle />
           <button onClick={() => setSettings((s) => !s)} aria-label="List settings" style={{ width: 36, height: 36, flexShrink: 0, borderRadius: 9, cursor: 'pointer', border: `1px solid ${settings ? TOW.goldDeep : TOW.lineStrong}`, background: settings ? 'rgba(138,108,48,0.12)' : TOW.cardLt, color: TOW.inkDim, fontSize: 16 }}>⚙</button>
         </div>
 
@@ -478,7 +476,6 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <button onClick={onBack} aria-label="Back" style={{ width: 30, height: 30, flexShrink: 0, borderRadius: 8, border: `1px solid ${TOW.line}`, background: TOW.cardLt, cursor: 'pointer', fontSize: 17, color: TOW.inkDim }}>‹</button>
           <input value={name} onChange={(e) => onSetName(e.target.value)} aria-label="List name" style={{ flex: 1, minWidth: 0, fontFamily: towFont.display, fontWeight: 700, fontSize: 17, color: TOW.ink, background: 'transparent', border: 'none', borderBottom: `1px dashed ${TOW.line}`, padding: '2px 0' }} />
-          <ThemeToggle size={30} />
           <button onClick={() => setSettings(true)} aria-label="List settings" style={{ width: 30, height: 30, flexShrink: 0, borderRadius: 8, border: `1px solid ${TOW.line}`, background: TOW.cardLt, cursor: 'pointer', fontSize: 14, color: TOW.inkDim }}>⚙</button>
         </div>
         <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginTop: 8 }}>{headerMeta}</div>

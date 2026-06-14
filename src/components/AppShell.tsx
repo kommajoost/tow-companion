@@ -6,16 +6,18 @@ import { CompanionView } from './companion/CompanionView';
 import { BrowseMode } from './BrowseMode';
 import { FavoritesMode } from './FavoritesMode';
 import { GameMode } from './game/GameMode';
+import { ArmyMode } from './game/ArmyMode';
 import { SettingsMode } from './SettingsMode';
 import { NavRail } from './NavRail';
 
-type Tab = 'play' | 'browse' | 'game' | 'favorites' | 'settings';
+type Tab = 'play' | 'browse' | 'game' | 'army' | 'favorites' | 'settings';
 type Screen = 'home' | 'app';
 
 const TABS: { id: Tab; label: string; icon: string }[] = [
   { id: 'play', label: 'Turns', icon: '⚔' },
   { id: 'browse', label: 'Rulebook', icon: '📖' },
-  { id: 'game', label: 'Armies', icon: '🛡' },
+  { id: 'game', label: 'Game', icon: '🎲' },
+  { id: 'army', label: 'Army', icon: '🛡' },
   { id: 'favorites', label: 'Pinned', icon: '★' },
   { id: 'settings', label: 'Settings', icon: '⚙' },
 ];
@@ -48,7 +50,7 @@ export function AppShell() {
           setScreen('app');
         }}
         onArmy={() => {
-          setTab('game');
+          setTab('army');
           setScreen('app');
         }}
         onRulebook={() => {
@@ -66,6 +68,8 @@ export function AppShell() {
         <CompanionView onHome={() => setScreen('home')} />
       ) : tab === 'game' ? (
         <GameMode />
+      ) : tab === 'army' ? (
+        <ArmyMode />
       ) : tab === 'settings' ? (
         <SettingsMode />
       ) : tab === 'browse' ? (

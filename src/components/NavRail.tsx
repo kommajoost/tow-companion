@@ -5,7 +5,7 @@ import { LogoMark } from './LogoMark';
 // A slim deeper-parchment column: emblem → Home at the top, the four main sections, and
 // Settings pinned at the bottom. The contextual sidebar (per screen) sits to its right.
 
-export type NavTab = 'play' | 'browse' | 'game' | 'favorites' | 'settings';
+export type NavTab = 'play' | 'browse' | 'game' | 'army' | 'favorites' | 'settings';
 
 const RAIL_BG = '#d9caa3'; // a touch deeper than the content parchment
 const mutedIcon = 'rgba(134,116,83,0.85)';
@@ -18,6 +18,7 @@ const I = ({ d, size = 21, c, sw = 1.6 }: { d: React.ReactNode; size?: number; c
 const Swords = (c: string) => <I c={c} sw={1.7} d={<g><path d="M14.5 4H20v5.5L9.5 20 4 14.5z" /><path d="M14.5 9.5 20 4" /><path d="M4 4h5.5L20 14.5 14.5 20 4 9.5z" /><path d="M9.5 14.5 4 20" /></g>} />;
 const Book = (c: string) => <I c={c} sw={1.7} d={<g><path d="M12 6.5C10.5 5 8 4.5 4 4.7v12.6c4-.2 6.5.3 8 1.7" /><path d="M12 6.5C13.5 5 16 4.5 20 4.7v12.6c-4-.2-6.5.3-8 1.7" /><path d="M12 6.5V19" /></g>} />;
 const Shield = (c: string) => <I c={c} sw={1.6} d={<path d="M12 3.5l7 2.4v5.2c0 4.2-2.9 7.3-7 8.9-4.1-1.6-7-4.7-7-8.9V5.9z" />} />;
+const Dice = (c: string) => <I c={c} sw={1.6} d={<g><rect x="4" y="4" width="16" height="16" rx="3.5" /><circle cx="9" cy="9" r="1.1" fill={c} stroke="none" /><circle cx="15" cy="9" r="1.1" fill={c} stroke="none" /><circle cx="12" cy="12" r="1.1" fill={c} stroke="none" /><circle cx="9" cy="15" r="1.1" fill={c} stroke="none" /><circle cx="15" cy="15" r="1.1" fill={c} stroke="none" /></g>} />;
 const Mark = (c: string, filled: boolean) => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill={filled ? c : 'none'} style={{ display: 'block' }}>
     <path d="M6.5 4h11a1 1 0 0 1 1 1v15.4l-6.5-4.4L5.5 20.4V5a1 1 0 0 1 1-1z" stroke={c} strokeWidth="1.7" strokeLinejoin="round" strokeLinecap="round" />
@@ -28,7 +29,8 @@ const Gear = (c: string) => <I c={c} sw={1.5} d={<g><circle cx="12" cy="12" r="3
 const SECTIONS: { id: NavTab; label: string; icon: (active: boolean) => React.ReactNode }[] = [
   { id: 'play', label: 'Turns', icon: (a) => Swords(a ? TOW.goldDeep : mutedIcon) },
   { id: 'browse', label: 'Rulebook', icon: (a) => Book(a ? TOW.goldDeep : mutedIcon) },
-  { id: 'game', label: 'Armies', icon: (a) => Shield(a ? TOW.goldDeep : mutedIcon) },
+  { id: 'game', label: 'Game', icon: (a) => Dice(a ? TOW.goldDeep : mutedIcon) },
+  { id: 'army', label: 'Army', icon: (a) => Shield(a ? TOW.goldDeep : mutedIcon) },
   { id: 'favorites', label: 'Pinned', icon: (a) => Mark(a ? TOW.goldDeep : mutedIcon, a) },
 ];
 

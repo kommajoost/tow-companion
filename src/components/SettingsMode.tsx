@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { TOW, towFont, engraved } from '../design/tow';
+import { useTheme } from '../theme';
 import { usePwa } from '../pwa';
 import { supabase, TOW_FEEDBACK } from '../lib/supabase';
 import { LogoMark } from './LogoMark';
@@ -14,6 +15,7 @@ const BUILD_LABEL = `${APP_VERSION} · ${BUILD_SHA} · ${BUILD_DATE}`;
 // Settings screen — currently the home of "install app" and "updates", with room to grow.
 export function SettingsMode() {
   const { canInstall, installed, promptInstall, needRefresh, updateApp, checkForUpdate } = usePwa();
+  const { mode, set: setTheme } = useTheme();
   const [checking, setChecking] = useState(false);
   const [checkedNote, setCheckedNote] = useState<string | null>(null);
 
@@ -97,6 +99,23 @@ export function SettingsMode() {
               </ul>
             </>
           )}
+        </div>
+
+        {/* Appearance */}
+        <div style={card}>
+          <div style={title}>Appearance</div>
+          <div style={{ ...body, marginBottom: 12 }}>Choose a light or dark theme for the app.</div>
+          <div style={{ display: 'flex', gap: 8 }}>
+            {(['light', 'dark'] as const).map((m) => {
+              const on = mode === m;
+              return (
+                <button key={m} onClick={() => setTheme(m)} aria-pressed={on}
+                  style={{ flex: 1, padding: '11px 14px', borderRadius: 11, cursor: 'pointer', border: `1px solid ${on ? TOW.goldDeep : TOW.lineStrong}`, background: on ? 'rgba(138,108,48,0.14)' : 'transparent', color: on ? TOW.goldDeep : TOW.parchDim, fontFamily: towFont.display, fontWeight: 600, fontSize: 14.5 }}>
+                  {m === 'light' ? 'Light' : 'Dark'}
+                </button>
+              );
+            })}
+          </div>
         </div>
 
         {/* Updates */}
