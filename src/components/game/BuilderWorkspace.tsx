@@ -148,7 +148,10 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
     ro.observe(el); setW(el.getBoundingClientRect().width);
     return () => ro.disconnect();
   }, []);
-  const wide = w >= 860;
+  // The 3-column desktop layout needs room for the fixed 296px catalogue + 452px detail columns
+  // plus a usable middle (~290px) ≈ 1040px. Below that, fall back to the single-column flow so
+  // nothing overflows or clips on tablets / narrow windows.
+  const wide = w >= 1040;
 
   const [selUid, setSelUid] = useState<string | null>(null);
   const [sheet, setSheet] = useState<'pick' | { edit: string } | null>(null);
@@ -449,7 +452,7 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
           <div style={{ display: 'flex', flexDirection: 'column', minHeight: 0, background: 'rgba(255,255,255,0.18)' }}>
             <div style={{ flexShrink: 0, padding: '13px 22px 12px', borderBottom: `1px solid ${TOW.line}`, background: TOW.panel }}>
               <div style={{ ...eb, fontSize: 9, color: TOW.gold, marginBottom: 9 }}>Composition · {list.entries.length} unit{list.entries.length === 1 ? '' : 's'}</div>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 24px' }}>{comp.map((c) => <CompBar key={c.cat} c={c} compact />)}</div>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '0 24px' }}>{comp.map((c) => <CompBar key={c.cat} c={c} compact />)}</div>
             </div>
             <div style={{ flex: 1, minHeight: 0, overflowY: 'auto', padding: '16px 22px 30px' }}>
               {list.entries.length === 0 && <div style={{ textAlign: 'center', padding: '70px 20px', fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 15, color: TOW.muted }}><div style={{ marginBottom: 14 }}><Ornament /></div>Add units from the left to begin your muster.</div>}
