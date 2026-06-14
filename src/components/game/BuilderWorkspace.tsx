@@ -6,7 +6,7 @@ import { getRuleIndex, resolveRuleSlug, resolveOptionSlug } from '../../lib/army
 import {
   CATEGORIES, COMPOSITION_RULES, validate, entryPoints, unitBlocks, radioSelected, summaryLabels,
   subOptionGroups, toggleSubOption, setExclusiveSubOption,
-  magicCategories, selectedMagicItem, toggleMagicItem, magicSpent, magicWouldExceed, magicItemId,
+  magicCategories, selectedMagicKeys, toggleMagicItem, magicSpent, magicWouldExceed, magicItemId,
   isCharacter, DEFAULT_MAGIC_BUDGET,
   type Category, type OwbArmy, type OwbUnit, type BuilderList, type ListEntry, type Validation,
   type MagicItemsData,
@@ -21,6 +21,18 @@ const eb = engraved as React.CSSProperties;
 const goldGrad = `linear-gradient(180deg, ${TOW.goldBright} 0%, ${TOW.gold} 55%, ${TOW.goldDeep} 100%)`;
 const fmt = (n: number) => n.toLocaleString('en-US');
 const cleanLabel = (s: string) => (s || '').replace(/\{[^}]*\}/g, ' ').replace(/\*/g, '').replace(/\s+/g, ' ').trim();
+
+// Dwarf runes have no per-rune rule page; their text lives on a per-TYPE page. Map a rune's `type`
+// to the matching slug in rules.json (note British "armour"/"standard" spellings on the rule pages).
+const RUNE_TYPE_RULE: Record<string, string> = {
+  'weapon-runes': 'weapon-runes',
+  'armor-runes': 'armour-runes',
+  'talismanic-runes': 'talismanic-runes',
+  'banner-runes': 'standard-runes',
+  'engineering-runes': 'engineering-runes',
+  'runic-tattoos': 'runic-tattoos',
+  'ranged-weapon-runes': 'weapon-runes',
+};
 
 const CAT_LABEL: Record<Category, string> = { characters: 'Characters', core: 'Core', special: 'Special', rare: 'Rare', mercenaries: 'Mercenaries', allies: 'Allies' };
 const POINT_PRESETS = [500, 750, 1000, 1500, 2000, 2500];
@@ -289,16 +301,20 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
           const budget = cat.maxPoints ?? DEFAULT_MAGIC_BUDGET;
           const over = spent > budget;
           const pct = Math.min(100, (spent / Math.max(budget, 1)) * 100);
-          const sel = selectedMagicItem(entry, cat.id);
+          const selKeys = selectedMagicKeys(entry, cat.id);
+          const multi = cat.maxItems > 1; // Dwarf Runes etc. → multi-select (checkboxes + count)
           const catKey = `${entry.uid}/${cat.id}`;
-          const open = openMagicCats.has(catKey) || !!sel; // open if user expanded it, or it has a pick
+          const open = openMagicCats.has(catKey) || selKeys.length > 0; // open if expanded, or has a pick
           return (
             <div key={`magic/${cat.id}`} style={{ marginBottom: 12, border: `1px solid ${TOW.line}`, borderRadius: 10, background: TOW.cardLt, overflow: 'hidden' }}>
               <button onClick={() => setOpenMagicCats((s) => { const n = new Set(s); n.has(catKey) ? n.delete(catKey) : n.add(catKey); return n; })}
                 aria-expanded={open} style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 9, padding: '9px 11px', border: 'none', background: 'transparent', cursor: 'pointer', textAlign: 'left' }}>
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={TOW.muted} strokeWidth="2.4" style={{ flexShrink: 0, transform: open ? 'rotate(90deg)' : 'none', transition: 'transform .18s ease' }} aria-hidden="true"><path d="M9 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" /></svg>
                 <span style={{ ...eb, fontSize: 8.5, color: TOW.muted, flex: 1 }}>{cat.label}</span>
-                <span style={{ fontFamily: towFont.display, fontWeight: 600, fontSize: 10.5, color: over ? TOW.blood : TOW.muted }}>{fmt(spent)} <span style={{ color: TOW.faint }}>/ {fmt(budget)}</span></span>
+                <span style={{ display: 'flex', alignItems: 'baseline', gap: 7 }}>
+                  {multi && <span style={{ ...eb, fontSize: 8, color: TOW.muted }}>{selKeys.length}/{cat.maxItems}</span>}
+                  <span style={{ fontFamily: towFont.display, fontWeight: 600, fontSize: 10.5, color: over ? TOW.blood : TOW.muted }}>{fmt(spent)} <span style={{ color: TOW.faint }}>/ {fmt(budget)}</span></span>
+                </span>
               </button>
               <div style={{ height: 5, borderRadius: 99, background: 'rgba(74,55,22,0.12)', overflow: 'hidden', margin: '0 11px 9px' }}>
                 <div style={{ width: pct + '%', height: '100%', borderRadius: 99, background: over ? TOW.blood : goldGrad, transition: 'width .25s ease' }} />
@@ -307,23 +323,26 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
                 <div style={{ padding: '0 11px 5px' }}>
                   {cat.items.map((item) => {
                     const key = `magic/${cat.id}/${magicItemId(item)}`;
-                    const on = sel === key;
+                    const on = selKeys.includes(key);
                     const disabled = !on && magicWouldExceed(u, entry, cat.id, item, itemsData!, { armyItemLists });
                     const cost = item.points ? `+${item.points}` : 'free';
                     return (
                       <div key={key} style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6, opacity: disabled ? 0.5 : 1 }}>
-                        <button disabled={disabled} onClick={() => onUpdate((l) => ({ entries: l.entries.map((e) => (e.uid === entry.uid ? { ...e, opts: toggleMagicItem(e, cat.id, item) } : e)) }))}
+                        <button disabled={disabled} onClick={() => onUpdate((l) => ({ entries: l.entries.map((e) => (e.uid === entry.uid ? { ...e, opts: toggleMagicItem(e, cat.id, item, cat.maxItems) } : e)) }))}
                           style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 10, padding: '8px 11px', borderRadius: 9, cursor: disabled ? 'default' : 'pointer', textAlign: 'left', border: `1px solid ${on ? TOW.goldDeep : TOW.line}`, background: on ? 'rgba(138,108,48,0.10)' : TOW.panel }}>
-                          <span style={{ width: 18, height: 18, flexShrink: 0, borderRadius: 99, border: `1.5px solid ${on ? TOW.goldDeep : TOW.lineStrong}`, background: on ? TOW.goldDeep : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                          <span style={{ width: 18, height: 18, flexShrink: 0, borderRadius: multi ? 5 : 99, border: `1.5px solid ${on ? TOW.goldDeep : TOW.lineStrong}`, background: on ? TOW.goldDeep : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                             {on && <svg width="11" height="11" viewBox="0 0 12 12"><path d="M2.5 6.4l2.2 2.2 4.8-5" stroke="#f4eedb" strokeWidth="1.8" fill="none" strokeLinecap="round" strokeLinejoin="round" /></svg>}
                           </span>
                           <span style={{ flex: 1, fontFamily: towFont.serif, fontSize: 13.5, color: TOW.ink }}>{item.name_en}</span>
                           <span style={{ fontFamily: towFont.display, fontWeight: 600, fontSize: 11, color: item.points ? TOW.gold : TOW.faint }}>{cost}</span>
                         </button>
-                        {/* Eye on EVERY magic item: rule page if one resolves, else a name + meta popup. */}
+                        {/* Eye on EVERY magic item: own rule page if one resolves, else the per-TYPE rune
+                            rule page (Dwarf runes), else a name + meta popup. */}
                         <Eye onClick={() => {
                           const slug = resolveRuleSlug(cleanLabel(item.name_en), ruleIdx);
                           if (slug) { openRuleByName(item.name_en); return; }
+                          const typeSlug = RUNE_TYPE_RULE[item.type];
+                          if (typeSlug && rules[typeSlug]) { openRule(typeSlug); return; }
                           setInfo({ title: cleanLabel(item.name_en), rows: [], note: `Magic item · ${cat.label} · ${item.points ?? 0} pts` });
                         }} />
                       </div>

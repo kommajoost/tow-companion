@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { TOW, towFont, engraved } from '../../design/tow';
-import { COMPOSITION_RULES, type OwbArmy, type ListEntry } from '../../lib/owbBuilder';
+import { COMPOSITION_RULES, type OwbArmy, type ListEntry, type MagicItemsData } from '../../lib/owbBuilder';
 import { compName as compNameFor } from '../../lib/armies';
 import { importOwbText } from '../../lib/owbImport';
 import { OwbInstructions } from './OwbInstructions';
@@ -18,13 +18,15 @@ const POINT_PRESETS = [500, 750, 1000, 1500, 2000, 2500];
 
 export interface NewListValues { name: string; army: string; composition: string; points: number; rule: string; entries: ListEntry[] }
 
-export function NewListSetup({ armies, compsByArmy, defaultArmy, defaultName, onCancel, onCreate }: {
+export function NewListSetup({ armies, compsByArmy, defaultArmy, defaultName, onCancel, onCreate, itemsData, itemListsByArmy }: {
   armies: { slug: string; name: string }[];
   compsByArmy: Record<string, string[]>;
   defaultArmy: string;
   defaultName: string;
   onCancel: () => void;
   onCreate: (v: NewListValues) => void;
+  itemsData?: MagicItemsData;
+  itemListsByArmy?: Record<string, string[]>; // army slug → its magic-item list ids
 }) {
   const [name, setName] = useState(defaultName);
   const [army, setArmy] = useState(defaultArmy);
@@ -51,7 +53,7 @@ export function NewListSetup({ armies, compsByArmy, defaultArmy, defaultName, on
     return () => { cancelled = true; };
   }, [army]);
 
-  const preview = useMemo(() => (mode === 'import' && paste.trim() && catalogue ? importOwbText(paste, catalogue) : null), [mode, paste, catalogue]);
+  const preview = useMemo(() => (mode === 'import' && paste.trim() && catalogue ? importOwbText(paste, catalogue, itemsData, itemListsByArmy?.[army] ?? []) : null), [mode, paste, catalogue, itemsData, itemListsByArmy, army]);
   // Adopt the export's name/points/rule into the editable fields above.
   useEffect(() => {
     if (!preview) return;

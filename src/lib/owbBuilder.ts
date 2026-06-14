@@ -25,7 +25,7 @@ export interface OwbOption {
 // a "Gifts of Khaine" section (types gift-of-khaine, maxPoints 20).
 export interface OwbItemSection {
   name_en: string; name_cn?: string; name_de?: string; name_es?: string; name_fr?: string;
-  types: string[]; maxPoints?: number; selected?: unknown[];
+  types: string[]; maxPoints?: number; maxItemsPerCategory?: number; selected?: unknown[];
 }
 export interface OwbUnit {
   id: string; name_en: string; points?: number; minimum?: number; maximum?: number;
@@ -372,6 +372,7 @@ export interface MagicCategory {
   label: string;         // section name, e.g. "Magic Items" / "Gifts of Khaine"
   types: string[];       // item `type`s this section accepts
   maxPoints: number | null; // data-driven section budget (null = none in data → use param budget)
+  maxItems: number;      // how many items this category may hold (1 = single-select; Dwarf Runes = 3)
   items: MagicItem[];    // the items selectable in this category
 }
 
@@ -398,6 +399,7 @@ export function magicCategories(unit: OwbUnit, armyItemLists: string[], itemsDat
       label: sec.name_en,
       types,
       maxPoints: typeof sec.maxPoints === 'number' ? sec.maxPoints : null,
+      maxItems: typeof sec.maxItemsPerCategory === 'number' && sec.maxItemsPerCategory > 0 ? sec.maxItemsPerCategory : 1,
       items,
     };
   });
@@ -444,26 +446,37 @@ export function magicSpent(unit: OwbUnit, entry: ListEntry, categoryId: string, 
     .reduce((n, { item }) => n + (item.points ?? 0), 0);
 }
 
-/** The currently-selected item key in a category, or undefined (max 1 per category). */
+/** The currently-selected item key in a category, or undefined (the FIRST pick in the category). */
 export function selectedMagicItem(entry: ListEntry, categoryId: string): string | undefined {
   return parsedMagicKeys(entry).find((p) => p.categoryId === categoryId)?.key;
 }
 
-/** Pure toggle for a magic item (max 1 per category): picking an item in a category replaces any
- *  previous pick in that same category; picking the already-selected item clears it. Returns the
- *  new opts array — the UI calls onUpdate with it (no mutation, mirroring the radio/toggle helpers). */
-export function toggleMagicItem(entry: ListEntry, categoryId: string, item: MagicItem): string[] {
+/** Every magic-item key stored on the entry in this category (multi-select aware, e.g. Dwarf Runes). */
+export function selectedMagicKeys(entry: ListEntry, categoryId: string): string[] {
+  return entry.opts.filter((k) => k.startsWith(`${MAGIC_PREFIX}/${categoryId}/`));
+}
+
+/** Pure toggle for a magic item. With `maxItems <= 1` (the default) the category is single-select:
+ *  picking an item replaces any previous pick in that same category; picking the already-selected
+ *  item clears it. With `maxItems > 1` (e.g. Dwarf Runes, up to 3) it is an additive toggle of THIS
+ *  specific key only — present → removed, absent → appended — leaving the category's other picks
+ *  untouched. Returns the new opts array (no mutation, mirroring the radio/toggle helpers). */
+export function toggleMagicItem(entry: ListEntry, categoryId: string, item: MagicItem, maxItems = 1): string[] {
   const key = magicKey(categoryId, magicItemId(item));
+  if (maxItems > 1) {
+    return entry.opts.includes(key) ? entry.opts.filter((k) => k !== key) : [...entry.opts, key];
+  }
   const already = selectedMagicItem(entry, categoryId);
-  // Drop any existing pick in this category, then add the new one unless it was the one selected.
+  // Single-select: drop any existing pick in this category, then add the new one unless it was selected.
   const rest = entry.opts.filter((k) => !k.startsWith(`${MAGIC_PREFIX}/${categoryId}/`));
   return already === key ? rest : [...rest, key];
 }
 
-/** Would picking `item` in `categoryId` exceed the budget? (For disabling options in the UI.)
- *  Budget order of precedence: explicit `budget` arg → the category's data `maxPoints` →
- *  DEFAULT_MAGIC_BUDGET. The check is per-category (each section has its own allowance). Re-picking
- *  the currently-selected item is never "over" (it's a no-op / deselect). */
+/** Would picking `item` in `categoryId` exceed the category's allowance? (For disabling options in
+ *  the UI.) Returns true when adding the item would blow EITHER the points budget OR the per-category
+ *  item-count cap (`maxItems`). Budget precedence: explicit `budget` arg → the category's data
+ *  `maxPoints` → DEFAULT_MAGIC_BUDGET. Re-picking an already-selected item is never "over" (it's a
+ *  no-op / deselect). For single-item categories `maxItems` is 1, matching the prior single-select. */
 export function magicWouldExceed(
   unit: OwbUnit, entry: ListEntry, categoryId: string, item: MagicItem, itemsData: MagicItemsData,
   opts?: { budget?: number; armyItemLists?: string[] },
@@ -472,8 +485,15 @@ export function magicWouldExceed(
   const cats = magicCategories(unit, armyItemLists ?? Object.keys(itemsData), itemsData);
   const category = cats.find((c) => c.id === categoryId);
   const budget = opts?.budget ?? category?.maxPoints ?? DEFAULT_MAGIC_BUDGET;
+  const maxItems = category?.maxItems ?? 1;
   const key = magicKey(categoryId, magicItemId(item));
-  if (selectedMagicItem(entry, categoryId) === key) return false; // re-pick = deselect
-  // Selecting replaces any current pick in the category, so the resulting spend is just this item.
-  return (item.points ?? 0) > budget;
+  const selected = selectedMagicKeys(entry, categoryId);
+  if (selected.includes(key)) return false; // re-pick = deselect (always allowed)
+  // Item-count cap: a fresh pick can't fit when the category is already full.
+  if (selected.length >= maxItems) return true;
+  // Points budget: the spend after adding this item (the category's current spend + this item).
+  const spent = selectedMagicItems(unit, entry, itemsData, armyItemLists)
+    .filter(({ category: c }) => c.id === categoryId)
+    .reduce((n, { item: it }) => n + (it.points ?? 0), 0);
+  return spent + (item.points ?? 0) > budget;
 }

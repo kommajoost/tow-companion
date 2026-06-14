@@ -89,6 +89,8 @@ export function ListBuilder() {
   const activeCatalogue = activeArmySlug ? catalogues[activeArmySlug] ?? null : null;
   const getUnitFor = (cat: OwbArmy | null) => (c: Category, id: string): OwbUnit | undefined => cat?.[c]?.find((u) => u.id === id);
   const compsByArmy = useMemo(() => Object.fromEntries(Object.entries(metaByArmy).map(([k, v]) => [k, v.comps])), [metaByArmy]);
+  // Army slug → its magic-item list ids (the same `items` array BuilderWorkspace gets as armyItemLists).
+  const itemListsByArmy = useMemo(() => Object.fromEntries(Object.entries(metaByArmy).map(([slug, m]) => [slug, m.items ?? []])), [metaByArmy]);
   const armyName = (slug: string) => armies.find((a) => a.slug === slug)?.name ?? slug;
   const statsFor = useMemo(() => (unitName: string): StatRow[] => {
     if (!statIdx) return [];
@@ -176,6 +178,8 @@ export function ListBuilder() {
           defaultName={`New list ${lists.length + 1}`}
           onCancel={() => setSetupOpen(false)}
           onCreate={createListWith}
+          itemsData={itemsData ?? undefined}
+          itemListsByArmy={itemListsByArmy}
         />
       )}
     </div>

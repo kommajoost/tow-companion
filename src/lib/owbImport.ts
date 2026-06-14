@@ -6,7 +6,7 @@
 // option lines are silently dropped (the user can fix them in the editor).
 
 import { parseArmyList } from './armyParser';
-import { CATEGORIES, COMPOSITION_RULES, OPTION_GROUPS, type Category, type OwbArmy, type OwbUnit, type OwbOption, type ListEntry } from './owbBuilder';
+import { CATEGORIES, COMPOSITION_RULES, OPTION_GROUPS, isCharacter, magicCategories, magicItemId, type Category, type OwbArmy, type OwbUnit, type OwbOption, type ListEntry, type MagicItemsData } from './owbBuilder';
 
 // Strip OWB footnote markers ("{dark elves}", trailing "*") and collapse to a comparable key.
 const clean = (s: string) => (s || '').replace(/\{[^}]*\}/g, ' ').replace(/\*/g, '').replace(/\s+/g, ' ').trim();
@@ -27,7 +27,7 @@ export interface ImportResult {
   header: { name?: string; points?: number; rule?: string };
 }
 
-export function importOwbText(text: string, army: OwbArmy): ImportResult {
+export function importOwbText(text: string, army: OwbArmy, itemsData?: MagicItemsData, armyItemLists?: string[]): ImportResult {
   const parsed = parseArmyList(text);
 
   // Catalogue lookup by normalised unit name (first category wins on a tie).
@@ -65,14 +65,17 @@ export function importOwbText(text: string, army: OwbArmy): ImportResult {
       return null;
     };
     // Single-choice groups keep at most one explicit (non-default) pick — the free default
-    // stays implicit; toggle groups keep every match.
+    // stays implicit; toggle groups keep every match. Lines that matched a normal option group are
+    // tracked so they aren't ALSO consumed as magic items below (only true leftovers feed magic).
     const radioChoice = new Map<string, string>();
     const toggles: string[] = [];
-    for (const optText of pu.options) {
+    const consumed = new Set<number>(); // indices into pu.options matched by a normal option group
+    pu.options.forEach((optText, idx) => {
       const on = norm(optText);
-      if (!on) continue;
+      if (!on) return;
       const k = matchOpt(on);
-      if (!k) continue;
+      if (!k) return;
+      consumed.add(idx);
       const [gk, iStr] = k.split('/');
       if (RADIO_GROUPS.has(gk)) {
         const opt = groupItems(unit, gk as keyof OwbUnit)[Number(iStr)];
@@ -80,7 +83,7 @@ export function importOwbText(text: string, army: OwbArmy): ImportResult {
       } else if (!toggles.includes(k)) {
         toggles.push(k);
       }
-    }
+    });
 
     // Mount sub-options: if the chosen mount carries nested `options`, match any pasted option
     // names against them and store `mountopt/<mountIdx>/<subIdx>` (Feature 1). Best-effort only.
@@ -98,7 +101,34 @@ export function importOwbText(text: string, army: OwbArmy): ImportResult {
       }
     }
 
-    entries.push({ uid: newUid(), cat, unitId: unit.id, count, opts: [...radioChoice.values(), ...toggles, ...mountOpts] });
+    // Magic items (characters only): the unit's `items[]` sections become magic categories; match
+    // any LEFTOVER pasted option line (one not already consumed by a normal group) against an item's
+    // name, respecting each category's `maxItems` cap and never adding a duplicate key. Best-effort —
+    // a line that matches neither a normal group nor a magic item is still silently dropped (as today).
+    const magicOpts: string[] = [];
+    if (itemsData && armyItemLists && isCharacter(cat)) {
+      const mcats = magicCategories(unit, armyItemLists, itemsData);
+      const countByCat = new Map<string, number>();
+      pu.options.forEach((optText, idx) => {
+        if (consumed.has(idx)) return;
+        const on = norm(optText);
+        if (!on) return;
+        for (const mc of mcats) {
+          if ((countByCat.get(mc.id) ?? 0) >= mc.maxItems) continue;
+          let item = mc.items.find((it) => norm(it.name_en) === on);
+          if (!item) item = mc.items.find((it) => { const k = norm(it.name_en); return !!k && (k.includes(on) || on.includes(k)); });
+          if (!item) continue;
+          const key = `magic/${mc.id}/${magicItemId(item)}`;
+          if (magicOpts.includes(key)) continue;
+          magicOpts.push(key);
+          countByCat.set(mc.id, (countByCat.get(mc.id) ?? 0) + 1);
+          consumed.add(idx); // this line is now spoken for — don't match it in a later category
+          break;
+        }
+      });
+    }
+
+    entries.push({ uid: newUid(), cat, unitId: unit.id, count, opts: [...radioChoice.values(), ...toggles, ...mountOpts, ...magicOpts] });
   }
 
   const header: ImportResult['header'] = {};
