@@ -1,0 +1,54 @@
+name: Sync OWB data
+
+# Keeps public/owb/ (the army catalogues, stat index + magic items) in step with the upstream
+# Old World Builder project. Runs weekly (and on demand); if the data changed it bumps the version
+# and pushes to main, which Vercel auto-deploys. The data stays a committed snapshot — so the app
+# remains fast + offline/PWA-capable — but is refreshed automatically.
+
+on:
+  schedule:
+    - cron: '17 6 * * 1' # every Monday 06:17 UTC
+  workflow_dispatch: {} # manual run from the Actions tab
+
+permissions:
+  contents: write # the default GITHUB_TOKEN needs write to push the refreshed data
+
+concurrency:
+  group: sync-owb
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # full history so the version stamp's commit count is correct
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Sync catalogue from Old World Builder
+        run: node scripts/sync-owb.mjs # uses Node's global fetch — no npm install needed
+
+      - name: Detect data changes
+        id: diff
+        run: |
+          if git diff --quiet -- public/owb; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "OWB data already up to date — nothing to commit."
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            git --no-pager diff --stat -- public/owb
+          fi
+
+      - name: Bump version, commit & push
+        if: steps.diff.outputs.changed == 'true'
+        run: |
+          node scripts/stamp-version.mjs
+          git config user.name "owb-sync[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/owb package.json package-lock.json
+          git commit -m "chore(data): weekly OWB catalogue sync"
+          git push
