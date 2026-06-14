@@ -126,7 +126,9 @@ export function parseWeaponProfile(rule: Rule, baseRule?: Rule): WeaponProfile |
 // Find the "<name>-profile" rule for a wargear/loadout label (handles plurals and bracketed
 // suffixes), or null if it isn't a weapon with a profile (armour, shields, command, …).
 function weaponProfileSlug(label: string, rules: Record<string, Rule>): string | null {
-  const noBracket = label.replace(/\[.*?\]/g, ' ').trim();
+  // Strip both [bracket] and (paren) suffixes — the latter is flavour on natural weapons
+  // (e.g. "Hand weapons (Claws)") that must still resolve to the base "hand-weapon-profile".
+  const noBracket = label.replace(/\[.*?\]/g, ' ').replace(/\(.*?\)/g, ' ').trim();
   const n = norm(noBracket);
   if (!n) return null;
   const tries = new Set([n]);

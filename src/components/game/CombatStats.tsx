@@ -48,6 +48,9 @@ export function CombatStats({ unit }: { unit: ArmyUnit }) {
   // base S/A, so a champion's +1 Attack stacks with an extra hand weapon's +1.
   const isWielder = (stats: { k: string; v: string }[]) =>
     statValue(stats, 'Ld') != null && statValue(stats, 'S') != null;
+  // The firing model's Strength — used for ranged weapons whose profile S is relative ("S" = use the
+  // wielder's Strength, e.g. thrown weapons), so the shooting table shows a number, not an em-dash.
+  const shooterS = Math.max(0, ...unit.profiles.filter((p) => isWielder(p.stats)).map((p) => statValue(p.stats, 'S') ?? 0));
 
   const activeMods = SHOOTING_MODS.filter((m) => mods[m.key]);
   // Firing the multiple-shots mode adds an extra −1 To Hit (the "Multiple Shots" rule).
@@ -59,6 +62,9 @@ export function CombatStats({ unit }: { unit: ArmyUnit }) {
   // In rapid-fire mode the weapon switches to its OWN (weaker) profile; ordinary Multiple Shots
   // weapons keep this same profile (only the To Hit penalty applies). `eff` is the profile to show.
   const eff = rw && multiActive && rw.multiProfile ? rw.multiProfile : rw;
+  // Effective ranged Strength to display: an absolute value as-is, else the wielder's S (+ any
+  // relative modifier); null when the weapon's S is truly variable ("*", e.g. a Hydra's breath).
+  const rangedS = !eff ? null : eff.sAbs != null ? eff.sAbs : eff.sMod != null && shooterS > 0 ? shooterS + eff.sMod : null;
 
   // ── small shared chip styles ──
   const chip: React.CSSProperties = { fontFamily: towFont.serif, fontSize: 11.5, padding: '3px 9px', borderRadius: 999, cursor: 'pointer', lineHeight: 1.35, whiteSpace: 'nowrap' };
@@ -158,7 +164,7 @@ export function CombatStats({ unit }: { unit: ArmyUnit }) {
                   <tbody><tr>
                     <td style={td(false)}>{eff?.range}</td>
                     <td style={td(multiActive)}>{shotsShown}</td>
-                    <td style={td(false)}>{eff?.sAbs ?? '—'}</td>
+                    <td style={td(false)}>{rangedS ?? '—'}</td>
                     <td style={td((eff?.ap ?? 0) !== 0)}>{fmtAP(eff?.ap ?? 0)}</td>
                     <td style={{ ...td(true), fontFamily: towFont.display }}>{!hit ? '—' : hit.impossible ? '—' : `${hit.value}+`}</td>
                   </tr></tbody>
