@@ -9,7 +9,7 @@ import type { ArmyUnit } from '../../types';
 import {
   CATEGORIES, COMPOSITION_RULES, validate, entryPoints, unitBlocks, radioSelected, summaryLabels,
   subOptionGroups, toggleSubOption, setExclusiveSubOption,
-  magicCategories, selectedMagicKeys, toggleMagicItem, magicGroupSpent, magicWouldExceed, magicItemId,
+  magicCategories, selectedMagicKeys, selectedMagicItems, toggleMagicItem, magicGroupSpent, magicWouldExceed, magicItemId,
   loadoutLabels, magicTypeLabel, DEFAULT_MAGIC_BUDGET,
   type Category, type OwbArmy, type OwbUnit, type BuilderList, type ListEntry, type Validation,
   type MagicItemsData, type MagicCategory, type MagicItem,
@@ -31,6 +31,10 @@ const BASE = import.meta.env.BASE_URL;
 // Magic-item flavour + rules text (slug → {description, body}), snapshotted from the rules site by
 // scripts/sync-magic-text.mjs — the OWB catalogue itself carries no item descriptions.
 type MagicText = Record<string, { description?: string; body?: string }>;
+// Mount special rules (normalised mount name → rule names), from scripts/sync-mount-text.mjs — so a
+// mount's eye shows its full info (profile + special rules), not just the stat line.
+type MountText = Record<string, { specialRules?: string[] }>;
+const normMount = (s: string) => (s || '').toLowerCase().replace(/ *\([^)]*\) */g, '').replace(/[{}[\]*]/g, '').replace(/^[0-9]x /g, '').replace(/[“”]/g, '"').trim();
 const RUNE_TYPE_RULE: Record<string, string> = {
   'weapon-runes': 'weapon-runes',
   'armor-runes': 'armour-runes',
@@ -177,9 +181,29 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
   const [tab, setTab] = useState<Category>('characters');
   const [q, setQ] = useState('');
   const [settings, setSettings] = useState(false);
-  const [info, setInfo] = useState<{ title: string; rows: StatRow[]; note?: string; ruleSlug?: string; flavour?: string; body?: string } | null>(null); // mount/unit profile / magic-item popup
+  const [info, setInfo] = useState<{ title: string; rows: StatRow[]; note?: string; ruleSlug?: string; flavour?: string; body?: string; ruleChips?: { name: string; slug: string | null }[] } | null>(null); // mount/unit profile / magic-item popup
   const [magicText, setMagicText] = useState<MagicText>({});
+  const [mountText, setMountText] = useState<MountText>({});
   useEffect(() => { fetch(`${BASE}owb/magic-item-text.json`).then((r) => r.json()).then(setMagicText).catch(() => {}); }, []);
+  useEffect(() => { fetch(`${BASE}owb/mount-text.json`).then((r) => r.json()).then(setMountText).catch(() => {}); }, []);
+  // One-time migration: older imports/lists stored every magic pick under the section's FIRST type
+  // (e.g. a talisman as `magic/weapon/…`). The per-type UI now keys by the item's real type, so such
+  // picks showed unchecked while still costing points. Resolve each pick id-based and rewrite its key
+  // to the canonical `magic/<type>/<id>`. Runs once when the catalogue + item data are ready.
+  useEffect(() => {
+    if (!itemsData) return;
+    let changed = false;
+    const entries = list.entries.map((e) => {
+      const u = getUnit(e.cat, e.unitId);
+      if (!u) return e;
+      const remap = new Map(selectedMagicItems(u, e, itemsData, armyItemLists).map((r) => [r.key, `magic/${r.category.id}/${magicItemId(r.item)}`]));
+      if (remap.size === 0) return e;
+      const newOpts = e.opts.map((k) => remap.get(k) ?? k);
+      if (newOpts.some((k, i) => k !== e.opts[i])) { changed = true; return { ...e, opts: newOpts }; }
+      return e;
+    });
+    if (changed) onUpdate(() => ({ entries }));
+  }, [itemsData]); // eslint-disable-line react-hooks/exhaustive-deps
   const [openMagicCats, setOpenMagicCats] = useState<Set<string>>(new Set()); // expanded magic-item categories
   const [showIssues, setShowIssues] = useState(false); // expand the list of composition problems
 
@@ -246,7 +270,14 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
           <span style={{ flex: 1, fontFamily: towFont.serif, fontSize: 13.5, color: TOW.ink }}>{opt.name_en}</span>
           <span style={{ fontFamily: towFont.display, fontWeight: 600, fontSize: 11, color: opt.points ? TOW.gold : TOW.faint }}>{cost}</span>
         </button>
-        {(hasRule || profileRows.length > 0) && <Eye onClick={() => (hasRule ? openOptionRule(opt.name_en) : setInfo({ title: cleanLabel(opt.name_en), rows: profileRows }))} />}
+        {(hasRule || profileRows.length > 0) && <Eye onClick={() => {
+          if (hasRule) { openOptionRule(opt.name_en); return; }
+          // A mount (or any profile-bearing option): show its stat profile PLUS its special rules as
+          // tappable chips (each opens the rule), not just the bare profile.
+          const sr = mountText[normMount(opt.name_en)]?.specialRules ?? [];
+          const ruleChips = sr.map((name) => ({ name, slug: resolveRuleSlug(cleanLabel(name), ruleIdx) }));
+          setInfo({ title: cleanLabel(opt.name_en), rows: profileRows, ruleChips });
+        }} />}
       </div>
     );
   };
@@ -775,7 +806,7 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
 // A small centred popup. Shows a mount/unit stat profile (rows) for options without a rule page, or
 // — when `rows` is empty and a `note` is given — a single muted italic meta line (e.g. magic items,
 // which have no verbatim rule text in our data: name + "Magic item · <category> · <pts> pts").
-function InfoPopup({ info, onClose, onOpenRule }: { info: { title: string; rows: StatRow[]; note?: string; ruleSlug?: string; flavour?: string; body?: string }; onClose: () => void; onOpenRule?: (slug: string) => void }) {
+function InfoPopup({ info, onClose, onOpenRule }: { info: { title: string; rows: StatRow[]; note?: string; ruleSlug?: string; flavour?: string; body?: string; ruleChips?: { name: string; slug: string | null }[] }; onClose: () => void; onOpenRule?: (slug: string) => void }) {
   const showNote = info.rows.length === 0 && !!info.note;
   return (
     <div onClick={onClose} style={{ position: 'absolute', inset: 0, zIndex: 60, background: 'rgba(30,20,8,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 }}>
@@ -790,6 +821,16 @@ function InfoPopup({ info, onClose, onOpenRule }: { info: { title: string; rows:
           : <MiniProfile rows={info.rows} />}
         {info.flavour && <div style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 13, color: TOW.muted, lineHeight: 1.5, marginBottom: info.body ? 9 : 0 }}>{info.flavour}</div>}
         {info.body && <div style={{ fontFamily: towFont.serif, fontSize: 13.5, color: TOW.ink, lineHeight: 1.55, whiteSpace: 'pre-wrap' }}>{info.body}</div>}
+        {info.ruleChips && info.ruleChips.length > 0 && (
+          <>
+            <div style={{ ...eb, fontSize: 8.5, color: TOW.muted, margin: (info.rows.length ? 12 : 0) + 'px 0 7px' }}>Special rules</div>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+              {info.ruleChips.map((c, i) => (c.slug && onOpenRule
+                ? <button key={i} onClick={() => onOpenRule(c.slug!)} style={{ fontFamily: towFont.serif, fontSize: 12, padding: '3px 10px', borderRadius: 99, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(138,108,48,0.10)', color: TOW.goldDeep, cursor: 'pointer' }}>{c.name}</button>
+                : <span key={i} style={{ fontFamily: towFont.serif, fontSize: 12, padding: '3px 10px', borderRadius: 99, border: `1px solid ${TOW.line}`, background: 'transparent', color: TOW.muted }}>{c.name}</span>))}
+            </div>
+          </>
+        )}
         {info.ruleSlug && onOpenRule && (
           <button onClick={() => onOpenRule(info.ruleSlug!)} style={{ marginTop: 14, display: 'inline-flex', alignItems: 'center', gap: 7, padding: '8px 13px', borderRadius: 9, cursor: 'pointer', border: `1px solid ${TOW.goldDeep}`, background: 'rgba(138,108,48,0.10)', color: TOW.goldDeep, fontFamily: towFont.display, fontWeight: 600, fontSize: 12.5 }}>
             Full rune rules →

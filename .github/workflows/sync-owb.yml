@@ -35,6 +35,9 @@ jobs:
       - name: Refresh magic-item rules text
         run: node scripts/sync-magic-text.mjs # per-item flavour + rules text → public/owb/magic-item-text.json
 
+      - name: Refresh mount special rules
+        run: node scripts/sync-mount-text.mjs # per-mount special rules → public/owb/mount-text.json
+
       - name: Detect data changes
         id: diff
         run: |
