@@ -476,7 +476,11 @@ export function magicCategories(unit: OwbUnit, armyItemLists: string[], itemsDat
         const types = opt.magic.types;
         const items = pool.filter((it) => types.includes(it.type));
         if (!items.length) return;
-        out.push({ id: types[0], label: magicTypeLabel(types[0]), groupLabel: magicTypeLabel(types[0]), budgetGroup: `opt:${String(g)}:${idx}`, types, maxPoints: typeof opt.magic.maxPoints === 'number' ? opt.magic.maxPoints : null, maxItems: 1, items });
+        // OWB encodes "no points limit" as maxPoints 0 (e.g. a Battle Standard Bearer may take a
+        // magic standard of ANY value) — treat that as unlimited (Infinity), not a 0 budget that
+        // would disable every option.
+        const mp = opt.magic.maxPoints;
+        out.push({ id: types[0], label: magicTypeLabel(types[0]), groupLabel: magicTypeLabel(types[0]), budgetGroup: `opt:${String(g)}:${idx}`, types, maxPoints: typeof mp === 'number' && mp > 0 ? mp : Infinity, maxItems: 1, items });
       });
     }
   }

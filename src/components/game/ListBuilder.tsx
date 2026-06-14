@@ -40,6 +40,8 @@ export function ListBuilder() {
   const [setupOpen, setSetupOpen] = useState(false);
   const [dragOver, setDragOver] = useState<string | null>(null); // section id being hovered (group id, or '__ungrouped__')
   const [moveMenuFor, setMoveMenuFor] = useState<string | null>(null); // list id whose "move to folder" popover is open
+  const [collapsed, setCollapsed] = usePersistentState<string[]>('tow:list-groups-collapsed', []); // collapsed section ids
+  const toggleCollapse = (id: string) => setCollapsed((c) => (c.includes(id) ? c.filter((x) => x !== id) : [...c, id]));
 
   // In-app Back: each navigable layer owns one history entry (deepest registers last → handled first).
   useBackClose(!!activeId, () => setActiveId(null)); // open builder → back to My lists
@@ -220,31 +222,49 @@ export function ListBuilder() {
     onDrop: (e: React.DragEvent) => { e.preventDefault(); const id = e.dataTransfer.getData('text/plain'); if (id) moveListToGroup(id, targetId); setDragOver(null); },
   });
 
-  const renderSection = (header: React.ReactNode, targetId: string | null, sectionLists: SavedList[]) => {
-    const hovered = dragOver === sectionId(targetId);
+  // A collapsible section header: a chevron + title (+ count), with optional right-aligned actions.
+  // No decorative folder icon — just the chevron, which also drives the collapse.
+  const sectionHeader = (key: string, title: string, count: number | null, actions?: React.ReactNode) => {
+    const isCol = collapsed.includes(key);
     return (
-      <div
-        key={sectionId(targetId)}
-        {...dropProps(targetId)}
-        style={{ border: `1px ${hovered ? 'dashed' : 'solid'} ${hovered ? TOW.goldDeep : 'transparent'}`, borderRadius: 12, background: hovered ? 'rgba(176,141,87,0.10)' : 'transparent', padding: hovered ? 6 : 7, transition: 'background 120ms' }}
-      >
-        {header}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-          {sectionLists.length === 0
-            ? <div style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 12.5, color: TOW.faint, padding: '8px 4px' }}>Drop lists here</div>
-            : sectionLists.map((l) => renderCard(l, sectionId(targetId)))}
-        </div>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 8 }}>
+        <button onClick={() => toggleCollapse(key)} aria-expanded={!isCol} style={{ flex: 1, minWidth: 0, display: 'flex', alignItems: 'center', gap: 7, border: 'none', background: 'transparent', cursor: 'pointer', padding: 0, textAlign: 'left' }}>
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke={TOW.muted} strokeWidth="2.6" style={{ flexShrink: 0, transform: isCol ? 'none' : 'rotate(90deg)', transition: 'transform .15s ease' }} aria-hidden="true"><path d="M9 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" /></svg>
+          <span style={{ ...eb, fontSize: 9, color: TOW.muted }}>{title}</span>
+          {count != null && <span style={{ fontFamily: towFont.serif, fontSize: 11, color: TOW.faint }}>({count})</span>}
+        </button>
+        {actions}
       </div>
     );
   };
 
-  const groupHeader = (g: { id: string; name: string }, count: number) => (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 8 }}>
-      <span style={{ ...eb, fontSize: 9, color: TOW.muted }}>📁 {g.name}</span>
-      <span style={{ fontFamily: towFont.serif, fontSize: 11, color: TOW.faint }}>({count})</span>
-      <button onClick={() => renameGroup(g.id, g.name)} aria-label="Rename folder" title="Rename folder" style={{ marginLeft: 'auto', border: `1px solid ${TOW.line}`, background: 'transparent', borderRadius: 7, cursor: 'pointer', color: TOW.muted, fontSize: 12, padding: '3px 7px' }}>✎</button>
-      <button onClick={() => deleteGroup(g.id, g.name)} aria-label="Delete folder" title="Delete folder" style={{ border: `1px solid ${TOW.line}`, background: 'transparent', borderRadius: 7, cursor: 'pointer', color: TOW.muted, fontSize: 14, lineHeight: 1, padding: '2px 8px' }}>×</button>
-    </div>
+  const renderSection = (targetId: string | null, title: string, sectionLists: SavedList[], actions?: React.ReactNode) => {
+    const key = sectionId(targetId);
+    const hovered = dragOver === key;
+    const isCol = collapsed.includes(key);
+    return (
+      <div
+        key={key}
+        {...dropProps(targetId)}
+        style={{ border: `1px ${hovered ? 'dashed' : 'solid'} ${hovered ? TOW.goldDeep : 'transparent'}`, borderRadius: 12, background: hovered ? 'rgba(176,141,87,0.10)' : 'transparent', padding: hovered ? 6 : 7, transition: 'background 120ms' }}
+      >
+        {sectionHeader(key, title, targetId === null ? null : sectionLists.length, actions)}
+        {!isCol && (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            {sectionLists.length === 0
+              ? <div style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 12.5, color: TOW.faint, padding: '8px 4px' }}>Drop lists here</div>
+              : sectionLists.map((l) => renderCard(l, key))}
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  const groupActions = (g: { id: string; name: string }) => (
+    <>
+      <button onClick={() => renameGroup(g.id, g.name)} aria-label="Rename folder" title="Rename folder" style={{ border: `1px solid ${TOW.line}`, background: 'transparent', borderRadius: 7, cursor: 'pointer', color: TOW.muted, fontSize: 12, padding: '3px 7px' }}>Rename</button>
+      <button onClick={() => deleteGroup(g.id, g.name)} aria-label="Delete folder" title="Delete folder" style={{ border: `1px solid ${TOW.line}`, background: 'transparent', borderRadius: 7, cursor: 'pointer', color: TOW.muted, fontSize: 12, padding: '3px 8px' }}>Delete</button>
+    </>
   );
 
   return (
@@ -264,12 +284,8 @@ export function ListBuilder() {
           </div>
         ) : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-            {groups.map((g) => { const gl = listsInGroup(g.id); return renderSection(groupHeader(g, gl.length), g.id, gl); })}
-            {renderSection(
-              <div style={{ ...eb, fontSize: 9, color: TOW.muted, marginBottom: 8 }}>Ungrouped</div>,
-              null,
-              ungrouped,
-            )}
+            {groups.map((g) => renderSection(g.id, g.name, listsInGroup(g.id), groupActions(g)))}
+            {renderSection(null, 'Ungrouped', ungrouped)}
           </div>
         )}
         <p style={{ fontFamily: towFont.serif, fontSize: 11, color: TOW.faint, marginTop: 18, textAlign: 'center', lineHeight: 1.6 }}>

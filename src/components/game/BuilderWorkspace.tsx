@@ -352,9 +352,10 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
       const selKeys = selectedMagicKeys(entry, cat.id);
       const chosen = cat.items.filter((it) => selKeys.includes(`magic/${cat.id}/${magicItemId(it)}`)).map((it) => it.name_en);
       const budget = cat.maxPoints ?? DEFAULT_MAGIC_BUDGET;
+      const unlimited = !isFinite(budget); // e.g. a Battle Standard Bearer's magic standard (any value)
       const spent = meter ? magicGroupSpent(u, entry, cat.budgetGroup, itemsData!, armyItemLists) : 0;
-      const over = spent > budget;
-      const pct = Math.min(100, (spent / Math.max(budget, 1)) * 100);
+      const over = !unlimited && spent > budget;
+      const pct = unlimited ? (spent > 0 ? 100 : 0) : Math.min(100, (spent / Math.max(budget, 1)) * 100);
       return (
         <div key={`magic/${cat.id}`} style={{ marginBottom: meter ? 12 : 7, border: `1px solid ${TOW.line}`, borderRadius: 10, background: TOW.cardLt, overflow: 'hidden' }}>
           <button onClick={() => setOpenMagicCats((s) => { const n = new Set(s); n.has(catKey) ? n.delete(catKey) : n.add(catKey); return n; })}
@@ -366,10 +367,10 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
               : <span style={{ flex: 1 }} />}
             <span style={{ display: 'flex', alignItems: 'baseline', gap: 7, flexShrink: 0 }}>
               {cat.maxItems > 1 && <span style={{ ...eb, fontSize: 8, color: TOW.muted }}>{selKeys.length}/{cat.maxItems}</span>}
-              {meter && <span style={{ fontFamily: towFont.display, fontWeight: 600, fontSize: 10.5, color: over ? TOW.blood : TOW.muted }}>{fmt(spent)} <span style={{ color: TOW.faint }}>/ {fmt(budget)}</span></span>}
+              {meter && <span style={{ fontFamily: towFont.display, fontWeight: 600, fontSize: 10.5, color: over ? TOW.blood : TOW.muted }}>{fmt(spent)} <span style={{ color: TOW.faint }}>{unlimited ? 'pts · no limit' : `/ ${fmt(budget)}`}</span></span>}
             </span>
           </button>
-          {meter && (
+          {meter && !unlimited && (
             <div style={{ height: 5, borderRadius: 99, background: 'rgba(74,55,22,0.12)', overflow: 'hidden', margin: '0 11px 9px' }}>
               <div style={{ width: pct + '%', height: '100%', borderRadius: 99, background: over ? TOW.blood : goldGrad, transition: 'width .25s ease' }} />
             </div>
