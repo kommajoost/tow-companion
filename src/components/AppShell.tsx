@@ -4,13 +4,12 @@ import { TOW } from '../design/tow';
 import { HomeCover } from './HomeCover';
 import { CompanionView } from './companion/CompanionView';
 import { BrowseMode } from './BrowseMode';
-import { FavoritesMode } from './FavoritesMode';
 import { GameMode } from './game/GameMode';
 import { ArmyMode } from './game/ArmyMode';
 import { SettingsMode } from './SettingsMode';
 import { NavRail } from './NavRail';
 
-type Tab = 'play' | 'browse' | 'game' | 'army' | 'favorites' | 'settings';
+type Tab = 'play' | 'browse' | 'game' | 'army' | 'settings';
 type Screen = 'home' | 'app';
 
 const TABS: { id: Tab; label: string; icon: string }[] = [
@@ -18,7 +17,6 @@ const TABS: { id: Tab; label: string; icon: string }[] = [
   { id: 'browse', label: 'Rulebook', icon: '📖' },
   { id: 'game', label: 'Game', icon: '🎲' },
   { id: 'army', label: 'Army', icon: '🛡' },
-  { id: 'favorites', label: 'Pinned', icon: '★' },
   { id: 'settings', label: 'Settings', icon: '⚙' },
 ];
 
@@ -72,13 +70,9 @@ export function AppShell() {
         <ArmyMode />
       ) : tab === 'settings' ? (
         <SettingsMode />
-      ) : tab === 'browse' ? (
+      ) : (
         <div className="h-full pt-safe">
           <BrowseMode />
-        </div>
-      ) : (
-        <div className="mx-auto h-full max-w-2xl pt-safe">
-          <FavoritesMode />
         </div>
       )}
     </main>
