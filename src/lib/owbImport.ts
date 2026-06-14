@@ -82,7 +82,23 @@ export function importOwbText(text: string, army: OwbArmy): ImportResult {
       }
     }
 
-    entries.push({ uid: newUid(), cat, unitId: unit.id, count, opts: [...radioChoice.values(), ...toggles] });
+    // Mount sub-options: if the chosen mount carries nested `options`, match any pasted option
+    // names against them and store `mountopt/<mountIdx>/<subIdx>` (Feature 1). Best-effort only.
+    const mountOpts: string[] = [];
+    const mounts = groupItems(unit, 'mounts');
+    const mountKey = radioChoice.get('mounts');
+    const mountIdx = mountKey ? Number(mountKey.split('/')[1]) : mounts.findIndex((m) => m.active);
+    const mountSubs = mountIdx >= 0 && Array.isArray(mounts[mountIdx]?.options) ? mounts[mountIdx].options! : [];
+    if (mountSubs.length) {
+      for (const optText of pu.options) {
+        const on = norm(optText);
+        if (!on) continue;
+        const si = mountSubs.findIndex((s) => { const k = norm(s.name_en); return !!k && (k === on || k.includes(on) || on.includes(k)); });
+        if (si >= 0) { const key = `mountopt/${mountIdx}/${si}`; if (!mountOpts.includes(key)) mountOpts.push(key); }
+      }
+    }
+
+    entries.push({ uid: newUid(), cat, unitId: unit.id, count, opts: [...radioChoice.values(), ...toggles, ...mountOpts] });
   }
 
   const header: ImportResult['header'] = {};

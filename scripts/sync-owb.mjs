@@ -50,6 +50,18 @@ async function main() {
   await writeFile(join(OUT, 'the-old-world.json'), JSON.stringify(meta));
   console.log(`the-old-world.json  (${meta.armies.length} armies)`);
 
+  // Magic-items catalogue: one object keyed by item-list id ("general", "dark-elves",
+  // "gifts-of-khaine", "forbidden-poisons", …), each value an array of items
+  // {name_en, points, type, onePerArmy, …}. The army metadata's `items` array indexes into
+  // these keys; a unit's `items[]` sections carry their own `types` filter + `maxPoints` budget.
+  // OWB keeps every army's gifts/poisons in this single file (no per-army item files exist —
+  // probing public/games/the-old-world/magic-items/<id>.json etc. all 404), so this one fetch
+  // covers the general items AND the dark-elves "gifts-of-khaine"/"forbidden-poisons" lists.
+  const magicItems = await getJson('public/games/the-old-world/magic-items.json');
+  await writeFile(join(OUT, 'magic-items.json'), JSON.stringify(magicItems));
+  const itemCount = Object.values(magicItems).reduce((n, v) => n + (Array.isArray(v) ? v.length : 0), 0);
+  console.log(`magic-items.json  (${Object.keys(magicItems).length} lists, ${itemCount} items)`);
+
   // Each army's composition catalogue.
   const index = [];
   for (const slug of ARMIES) {

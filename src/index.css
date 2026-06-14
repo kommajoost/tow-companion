@@ -1,5 +1,88 @@
 @import 'tailwindcss';
 
+/* Theme fonts (Cinzel + EB Garamond for Ivory; Archivo + Spectral for Slate
+   Night) are loaded once via the <link> tag in index.html so all four are ready
+   before the runtime toggle is used. */
+
+/* ---- TOW design tokens as runtime-themeable CSS variables ----
+   The LIGHT "Ivory" values below are byte-for-byte identical to the original
+   hard-coded TOW object. `src/design/tow.ts` now reads each token via var(...),
+   so flipping `:root[data-theme="dark"]` re-skins every component instantly. */
+:root {
+  /* Ivory (light) — primary tokens */
+  --tow-ink: #2c2114;
+  --tow-bg: #ece1c7;
+  --tow-panel: #e2d5b6;
+  --tow-panel2: #f4eedb;
+  --tow-line: rgba(74, 55, 22, 0.2);
+  --tow-line-strong: rgba(74, 55, 22, 0.42);
+  --tow-gold: #c9a24b;
+  --tow-gold-bright: #e8c977;
+  --tow-gold-deep: #8a6c30;
+  --tow-parch: #2c2114;
+  --tow-parch-dim: #564833;
+  --tow-muted: #867453;
+  --tow-faint: #c3ad84;
+  --tow-blood: #7c2b22;
+
+  /* Ivory (light) — design-kit parchment aliases */
+  --tow-paper: #ece1c7;
+  --tow-paper2: #e2d5b6;
+  --tow-card-lt: #f4eedb;
+  --tow-ink-t: #2c2114;
+  --tow-ink-dim: #564833;
+  --tow-ink-muted: #867453;
+  --tow-gold-on: #8a6c30;
+  --tow-line-on: rgba(74, 55, 22, 0.2);
+  --tow-line-on-str: rgba(74, 55, 22, 0.42);
+
+  /* Ivory (light) — chrome aliases */
+  --tow-leather: #e2d5b6;
+  --tow-leather-dark: #dccca8;
+  --tow-leather-deep: rgba(74, 55, 22, 0.42);
+  --tow-parch-edge: rgba(74, 55, 22, 0.42);
+
+  /* Fonts */
+  --tow-font-display: 'Cinzel', 'Times New Roman', serif;
+  --tow-font-serif: 'EB Garamond', Georgia, serif;
+}
+
+/* Slate Night (dark) — semantic flip: text tokens go light, surfaces go dark. */
+:root[data-theme='dark'] {
+  --tow-ink: #ece0c6;
+  --tow-bg: #13100b;
+  --tow-panel: #1b1610;
+  --tow-panel2: #241d14;
+  --tow-line: rgba(201, 162, 75, 0.14);
+  --tow-line-strong: rgba(201, 162, 75, 0.32);
+  --tow-gold: #c9a24b;
+  --tow-gold-bright: #e8c977;
+  --tow-gold-deep: #b8923f;
+  --tow-parch: #ece0c6;
+  --tow-parch-dim: #b8a988;
+  --tow-muted: #968360;
+  --tow-faint: #4c4232;
+  --tow-blood: #b5483c;
+
+  --tow-paper: #1b1610;
+  --tow-paper2: #241d14;
+  --tow-card-lt: #2a2218;
+  --tow-ink-t: #ece0c6;
+  --tow-ink-dim: #b8a988;
+  --tow-ink-muted: #968360;
+  --tow-gold-on: #d8b25a;
+  --tow-line-on: rgba(201, 162, 75, 0.14);
+  --tow-line-on-str: rgba(201, 162, 75, 0.32);
+
+  --tow-leather: #1b1610;
+  --tow-leather-dark: #161109;
+  --tow-leather-deep: rgba(201, 162, 75, 0.32);
+  --tow-parch-edge: rgba(201, 162, 75, 0.32);
+
+  --tow-font-display: 'Archivo', 'Helvetica Neue', sans-serif;
+  --tow-font-serif: 'Spectral', Georgia, serif;
+}
+
 /* ---- Old World design tokens (ported from the Claude Design handoff) ---- */
 @theme {
   /* Semantic names (kept from earlier components) mapped to Old World values.
@@ -30,6 +113,33 @@
   --font-display: 'Cinzel', 'Times New Roman', serif;
   --font-serif: 'EB Garamond', Georgia, serif;
   --font-sans: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* Slate Night override for the page-chrome tokens that drive the body
+   background, fonts, and the Tailwind-utility colour scale. The LIGHT defaults
+   above are untouched, so the default look is byte-for-byte unchanged. */
+:root[data-theme='dark'] {
+  --color-deep: #0e0c08;
+  --color-bg: #13100b;
+  --color-surface: #1b1610;
+  --color-surface-2: #241d14;
+  --color-surface-3: #2a2218;
+  --color-border: rgba(201, 162, 75, 0.18);
+  --color-border-strong: rgba(201, 162, 75, 0.32);
+  --color-border-soft: rgba(201, 162, 75, 0.1);
+  --color-ink: #ece0c6;
+  --color-ink-dim: #b8a988;
+  --color-ink-faint: #968360;
+  --color-faint: #4c4232;
+  --color-gold: #c9a24b;
+  --color-gold-bright: #e8c977;
+  --color-gold-deep: #b8923f;
+  --color-blood: #b5483c;
+  --color-accent: #c9a24b;
+  --color-accent-2: #b8923f;
+
+  --font-display: 'Archivo', 'Helvetica Neue', sans-serif;
+  --font-serif: 'Spectral', Georgia, serif;
 }
 
 @layer base {
@@ -204,4 +314,16 @@
 }
 .tow-leather {
   background: linear-gradient(180deg, #e9ddc6, #e3d5b8);
+}
+
+/* Slate Night equivalents for the chrome helpers + page backdrop. */
+:root[data-theme='dark'] body {
+  background-image: radial-gradient(130% 55% at 50% -5%, #1f1810 0%, var(--color-bg) 55%, var(--color-deep) 100%);
+}
+:root[data-theme='dark'] .tow-field {
+  background:
+    radial-gradient(130% 60% at 50% -10%, #221b12 0%, #15110b 55%, #0e0c08 100%);
+}
+:root[data-theme='dark'] .tow-leather {
+  background: linear-gradient(180deg, #1b1610, #13100b);
 }

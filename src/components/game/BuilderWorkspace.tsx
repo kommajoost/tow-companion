@@ -2,10 +2,15 @@ import { useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useData } from '../../data';
 import { useUI } from '../../state';
 import { TOW, towFont, engraved } from '../../design/tow';
+import { ThemeToggle } from '../../theme';
 import { getRuleIndex, resolveRuleSlug, resolveOptionSlug } from '../../lib/armyRules';
 import {
   CATEGORIES, COMPOSITION_RULES, validate, entryPoints, unitBlocks, radioSelected, summaryLabels,
+  mountSubOptions, toggleMountSubOption, selectedMountIndex,
+  magicCategories, selectedMagicItem, toggleMagicItem, magicSpent, magicWouldExceed, magicItemId,
+  isCharacter, DEFAULT_MAGIC_BUDGET,
   type Category, type OwbArmy, type OwbUnit, type BuilderList, type ListEntry, type Validation,
+  type MagicItemsData,
 } from '../../lib/owbBuilder';
 
 // Responsive Army Builder workspace (Claude Design "Army Builder" PC + mobile, ported onto our
@@ -88,6 +93,17 @@ const Eye = ({ onClick }: { onClick: () => void }) => (
   </button>
 );
 
+// A thin decorative rule with a centred diamond + two flanking dots — used above empty states.
+const Ornament = ({ width = 110 }: { width?: number }) => (
+  <svg width={width} height="12" viewBox="0 0 110 12" fill="none" stroke={TOW.goldDeep} strokeWidth="1" style={{ opacity: 0.5 }} aria-hidden="true">
+    <line x1="4" y1="6" x2="40" y2="6" strokeLinecap="round" />
+    <line x1="70" y1="6" x2="106" y2="6" strokeLinecap="round" />
+    <circle cx="48" cy="6" r="1.4" fill={TOW.goldDeep} stroke="none" />
+    <circle cx="62" cy="6" r="1.4" fill={TOW.goldDeep} stroke="none" />
+    <path d="M55 2.5 L58.5 6 L55 9.5 L51.5 6 Z" fill="none" />
+  </svg>
+);
+
 interface ComplianceRow { cat: Category; label: string; kind: 'min' | 'max'; value: number; limit: number; ok: boolean }
 function complianceRows(v: Validation): ComplianceRow[] {
   const out: ComplianceRow[] = [];
@@ -102,7 +118,7 @@ function complianceRows(v: Validation): ComplianceRow[] {
   return out;
 }
 
-export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army, statsFor, comps }: {
+export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army, statsFor, comps, itemsData, armyItemLists }: {
   list: BuilderList; name: string;
   onUpdate: (fn: (l: BuilderList) => Partial<BuilderList>) => void;
   onSetName: (n: string) => void;
@@ -110,13 +126,15 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
   army: OwbArmy;
   statsFor: (name: string) => StatRow[];
   comps: string[];
+  itemsData?: MagicItemsData;
+  armyItemLists?: string[];
 }) {
   const { rules } = useData();
   const { openRule } = useUI();
   const ruleIdx = useMemo(() => getRuleIndex(rules), [rules]);
   const getUnit = (cat: Category, id: string): OwbUnit | undefined => army[cat]?.find((u) => u.id === id);
 
-  const v = useMemo(() => validate(list, getUnit), [list, army]); // eslint-disable-line react-hooks/exhaustive-deps
+  const v = useMemo(() => validate(list, getUnit, itemsData), [list, army, itemsData]); // eslint-disable-line react-hooks/exhaustive-deps
   const comp = useMemo(() => complianceRows(v), [v]);
   const compByCat: Partial<Record<Category, ComplianceRow>> = {};
   comp.forEach((c) => { compByCat[c.cat] = c; });
@@ -180,41 +198,106 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
     </div>
   );
 
+  // A single option/toggle/radio row in the unit's standard option groups (shared shape, reused
+  // by the mount sub-option block below — `circle` chooses radio vs. checkbox indicator).
+  const optionRow = (key: string, opt: { name_en: string; points?: number; perModel?: boolean }, on: boolean, circle: boolean, onToggle: () => void, disabled = false) => {
+    const cost = opt.points ? `+${opt.points}${opt.perModel ? '/model' : ''}` : 'free';
+    const hasRule = !!resolveOptionSlug(cleanLabel(opt.name_en), ruleIdx);
+    const profileRows = hasRule ? [] : statsFor(opt.name_en); // mounts/units → show their profile
+    return (
+      <div key={key} style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6, opacity: disabled ? 0.5 : 1 }}>
+        <button disabled={disabled} onClick={onToggle}
+          style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 10, padding: '8px 11px', borderRadius: 9, cursor: disabled ? 'default' : 'pointer', textAlign: 'left', border: `1px solid ${on ? TOW.goldDeep : TOW.line}`, background: on ? 'rgba(138,108,48,0.10)' : TOW.cardLt }}>
+          <span style={{ width: 18, height: 18, flexShrink: 0, borderRadius: circle ? 99 : 5, border: `1.5px solid ${on ? TOW.goldDeep : TOW.lineStrong}`, background: on ? TOW.goldDeep : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            {on && <svg width="11" height="11" viewBox="0 0 12 12"><path d="M2.5 6.4l2.2 2.2 4.8-5" stroke="#f4eedb" strokeWidth="1.8" fill="none" strokeLinecap="round" strokeLinejoin="round" /></svg>}
+          </span>
+          <span style={{ flex: 1, fontFamily: towFont.serif, fontSize: 13.5, color: TOW.ink }}>{opt.name_en}</span>
+          <span style={{ fontFamily: towFont.display, fontWeight: 600, fontSize: 11, color: opt.points ? TOW.gold : TOW.faint }}>{cost}</span>
+        </button>
+        {(hasRule || profileRows.length > 0) && <Eye onClick={() => (hasRule ? openOptionRule(opt.name_en) : setInfo({ title: cleanLabel(opt.name_en), rows: profileRows }))} />}
+      </div>
+    );
+  };
+
   const optionEditor = (entry: ListEntry, u: OwbUnit) => {
     const blocks = unitBlocks(u);
-    if (!blocks.length) return <div style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 13, color: TOW.muted }}>No upgrades for this unit.</div>;
-    return blocks.map((b) => {
-      const radioKey = b.radio ? radioSelected(u, entry, b.key) : '';
-      return (
-        <div key={String(b.key)} style={{ marginBottom: 12 }}>
-          <div style={{ ...eb, fontSize: 8.5, color: TOW.muted, marginBottom: 7 }}>{b.label}</div>
-          {b.items.map(({ i, opt }) => {
-            const key = `${String(b.key)}/${i}`;
-            const on = b.radio ? radioKey === key : entry.opts.includes(key);
-            const cost = opt.points ? `+${opt.points}${opt.perModel ? '/model' : ''}` : 'free';
-            const hasRule = !!resolveOptionSlug(cleanLabel(opt.name_en), ruleIdx);
-            const profileRows = hasRule ? [] : statsFor(opt.name_en); // mounts/units → show their profile
-            return (
-              <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
-                <button onClick={() => (b.radio ? setRadio(entry.uid, String(b.key), i) : toggleOpt(entry.uid, key))}
-                  style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 10, padding: '8px 11px', borderRadius: 9, cursor: 'pointer', textAlign: 'left', border: `1px solid ${on ? TOW.goldDeep : TOW.line}`, background: on ? 'rgba(138,108,48,0.10)' : TOW.cardLt }}>
-                  <span style={{ width: 18, height: 18, flexShrink: 0, borderRadius: b.radio ? 99 : 5, border: `1.5px solid ${on ? TOW.goldDeep : TOW.lineStrong}`, background: on ? TOW.goldDeep : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    {on && <svg width="11" height="11" viewBox="0 0 12 12"><path d="M2.5 6.4l2.2 2.2 4.8-5" stroke="#f4eedb" strokeWidth="1.8" fill="none" strokeLinecap="round" strokeLinejoin="round" /></svg>}
-                  </span>
-                  <span style={{ flex: 1, fontFamily: towFont.serif, fontSize: 13.5, color: TOW.ink }}>{opt.name_en}</span>
-                  <span style={{ fontFamily: towFont.display, fontWeight: 600, fontSize: 11, color: opt.points ? TOW.gold : TOW.faint }}>{cost}</span>
-                </button>
-                {(hasRule || profileRows.length > 0) && <Eye onClick={() => (hasRule ? openOptionRule(opt.name_en) : setInfo({ title: cleanLabel(opt.name_en), rows: profileRows }))} />}
+    const subs = mountSubOptions(u, entry);
+    const cats = isCharacter(entry.cat) && itemsData ? magicCategories(u, armyItemLists ?? [], itemsData) : [];
+    const magicCats = cats.filter((c) => c.items.length > 0);
+    if (!blocks.length && subs.length === 0 && magicCats.length === 0) return <div style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 13, color: TOW.muted }}>No upgrades for this unit.</div>;
+    const mountIndex = selectedMountIndex(u, entry);
+    const mountName = (() => { const m = (Array.isArray(u.mounts) ? u.mounts : [])[mountIndex]; return m?.name_en || 'Mount'; })();
+    return (
+      <>
+        {blocks.map((b) => {
+          const radioKey = b.radio ? radioSelected(u, entry, b.key) : '';
+          return (
+            <div key={String(b.key)} style={{ marginBottom: 12 }}>
+              <div style={{ ...eb, fontSize: 8.5, color: TOW.muted, marginBottom: 7 }}>{b.label}</div>
+              {b.items.map(({ i, opt }) => {
+                const key = `${String(b.key)}/${i}`;
+                const on = b.radio ? radioKey === key : entry.opts.includes(key);
+                return optionRow(key, opt, on, !!b.radio, () => (b.radio ? setRadio(entry.uid, String(b.key), i) : toggleOpt(entry.uid, key)));
+              })}
+            </div>
+          );
+        })}
+
+        {/* Feature 1 — sub-options of the currently-selected mount (indented sub-block, toggles) */}
+        {subs.length > 0 && (
+          <div style={{ marginBottom: 12, marginLeft: 14, paddingLeft: 12, borderLeft: `2px solid ${TOW.line}` }}>
+            <div style={{ ...eb, fontSize: 8.5, color: TOW.muted, marginBottom: 7 }}>{mountName} options</div>
+            {subs.map(({ i, opt, key, selected }) =>
+              optionRow(key, opt, selected, false, () =>
+                onUpdate((l) => ({ entries: l.entries.map((e) => (e.uid === entry.uid ? { ...e, opts: toggleMountSubOption(e, mountIndex, i) } : e)) }))))}
+          </div>
+        )}
+
+        {/* Feature 2 — magic items (characters only): one radio group + budget meter per category */}
+        {magicCats.map((cat) => {
+          const spent = magicSpent(u, entry, cat.id, itemsData!, armyItemLists);
+          const budget = cat.maxPoints ?? DEFAULT_MAGIC_BUDGET;
+          const over = spent > budget;
+          const pct = Math.min(100, (spent / Math.max(budget, 1)) * 100);
+          const sel = selectedMagicItem(entry, cat.id);
+          return (
+            <div key={`magic/${cat.id}`} style={{ marginBottom: 12 }}>
+              <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 6 }}>
+                <span style={{ ...eb, fontSize: 8.5, color: TOW.muted }}>{cat.label}</span>
+                <span style={{ fontFamily: towFont.display, fontWeight: 600, fontSize: 10.5, color: over ? TOW.blood : TOW.muted }}>{fmt(spent)} <span style={{ color: TOW.faint }}>/ {fmt(budget)}</span></span>
               </div>
-            );
-          })}
-        </div>
-      );
-    });
+              <div style={{ height: 6, borderRadius: 99, background: 'rgba(74,55,22,0.12)', overflow: 'hidden', marginBottom: 8 }}>
+                <div style={{ width: pct + '%', height: '100%', borderRadius: 99, background: over ? TOW.blood : goldGrad, transition: 'width .25s ease' }} />
+              </div>
+              {cat.items.map((item) => {
+                const key = `magic/${cat.id}/${magicItemId(item)}`;
+                const on = sel === key;
+                const disabled = !on && magicWouldExceed(u, entry, cat.id, item, itemsData!, { armyItemLists });
+                const hasRule = !!resolveRuleSlug(cleanLabel(item.name_en), ruleIdx);
+                const cost = item.points ? `+${item.points}` : 'free';
+                return (
+                  <div key={key} style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6, opacity: disabled ? 0.5 : 1 }}>
+                    <button disabled={disabled} onClick={() => onUpdate((l) => ({ entries: l.entries.map((e) => (e.uid === entry.uid ? { ...e, opts: toggleMagicItem(e, cat.id, item) } : e)) }))}
+                      style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 10, padding: '8px 11px', borderRadius: 9, cursor: disabled ? 'default' : 'pointer', textAlign: 'left', border: `1px solid ${on ? TOW.goldDeep : TOW.line}`, background: on ? 'rgba(138,108,48,0.10)' : TOW.cardLt }}>
+                      <span style={{ width: 18, height: 18, flexShrink: 0, borderRadius: 99, border: `1.5px solid ${on ? TOW.goldDeep : TOW.lineStrong}`, background: on ? TOW.goldDeep : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        {on && <svg width="11" height="11" viewBox="0 0 12 12"><path d="M2.5 6.4l2.2 2.2 4.8-5" stroke="#f4eedb" strokeWidth="1.8" fill="none" strokeLinecap="round" strokeLinejoin="round" /></svg>}
+                      </span>
+                      <span style={{ flex: 1, fontFamily: towFont.serif, fontSize: 13.5, color: TOW.ink }}>{item.name_en}</span>
+                      <span style={{ fontFamily: towFont.display, fontWeight: 600, fontSize: 11, color: item.points ? TOW.gold : TOW.faint }}>{cost}</span>
+                    </button>
+                    {hasRule && <Eye onClick={() => openRuleByName(item.name_en)} />}
+                  </div>
+                );
+              })}
+            </div>
+          );
+        })}
+      </>
+    );
   };
 
   const rosterRow = (e: ListEntry, u: OwbUnit, selected: boolean, onClick: () => void) => {
-    const sum = summaryLabels(u, e);
+    const sum = summaryLabels(u, e, itemsData);
     const multi = (u.maximum ?? 1) !== 1 || (u.minimum ?? 1) > 1;
     return (
       <div key={e.uid} onClick={onClick} style={{ cursor: 'pointer', padding: '11px 13px', borderRadius: 11, marginBottom: 7, border: `1px solid ${selected ? TOW.goldDeep : TOW.line}`, background: selected ? TOW.cardLt : TOW.cardLt, boxShadow: selected ? '0 2px 12px rgba(122,93,36,0.14)' : 'none' }}>
@@ -222,7 +305,7 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
           <span style={{ flex: 1, fontFamily: towFont.display, fontWeight: 600, fontSize: 15, color: TOW.ink }}>
             {multi ? <span style={{ color: TOW.gold }}>{e.count}× </span> : null}{u.name_en}
           </span>
-          <span style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 13, color: TOW.parchDim }}>{fmt(entryPoints(u, e))}</span>
+          <span style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 13, color: TOW.parchDim }}>{fmt(entryPoints(u, e, itemsData))}</span>
         </div>
         {sum.length > 0
           ? <div style={{ fontFamily: towFont.serif, fontSize: 12.5, color: TOW.muted, marginTop: 3, lineHeight: 1.4 }}>{sum.join(' · ')}</div>
@@ -235,7 +318,12 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
     <div>
       <div style={{ position: 'sticky', top: 0, background: TOW.panel, paddingBottom: 10, zIndex: 1 }}>
         {withSearch && (
-          <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search units…" style={{ width: '100%', boxSizing: 'border-box', padding: '10px 12px', borderRadius: 10, border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt, fontFamily: towFont.serif, fontSize: 14, color: TOW.ink, outline: 'none', marginBottom: 10 }} />
+          <div style={{ position: 'relative', marginBottom: 10 }}>
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke={TOW.muted} strokeWidth="1.8" style={{ position: 'absolute', left: 11, top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none' }} aria-hidden="true">
+              <circle cx="11" cy="11" r="7" /><line x1="16.5" y1="16.5" x2="21" y2="21" strokeLinecap="round" />
+            </svg>
+            <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search units…" style={{ width: '100%', boxSizing: 'border-box', padding: '10px 12px 10px 32px', borderRadius: 10, border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt, fontFamily: towFont.serif, fontSize: 14, color: TOW.ink, outline: 'none' }} />
+          </div>
         )}
         {!needle && (
           <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap' }}>
@@ -285,6 +373,7 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
             <div style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 24, color: overBudget ? TOW.blood : TOW.ink, lineHeight: 1 }}>{fmt(v.total)}<span style={{ fontSize: 14, color: TOW.muted, fontWeight: 600 }}> / {fmt(list.points)}</span></div>
             <div style={{ ...eb, fontSize: 8, color: v.warnings.length ? TOW.blood : '#4f6b3a', marginTop: 4 }}>{v.warnings.length ? `${v.warnings.length} to fix` : '✓ Legal list'}</div>
           </div>
+          <ThemeToggle />
           <button onClick={() => setSettings((s) => !s)} aria-label="List settings" style={{ width: 36, height: 36, flexShrink: 0, borderRadius: 9, cursor: 'pointer', border: `1px solid ${settings ? TOW.goldDeep : TOW.lineStrong}`, background: settings ? 'rgba(138,108,48,0.12)' : TOW.cardLt, color: TOW.inkDim, fontSize: 16 }}>⚙</button>
         </div>
 
@@ -311,7 +400,8 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
           </>
         )}
 
-        <div style={{ flex: 1, minHeight: 0, display: 'grid', gridTemplateColumns: '300px 1fr 340px' }}>
+        <div style={{ flex: 1, minHeight: 0, display: 'flex', justifyContent: 'center', overflow: 'hidden' }}>
+        <div style={{ flex: 1, maxWidth: 1320, minHeight: 0, display: 'grid', gridTemplateColumns: '296px minmax(0,1fr) 452px' }}>
           {/* catalogue */}
           <div style={{ borderRight: `1px solid ${TOW.line}`, display: 'flex', flexDirection: 'column', minHeight: 0, background: TOW.panel }}>
             <div style={{ flex: 1, minHeight: 0, overflowY: 'auto', padding: '12px 12px 16px' }}>
@@ -325,7 +415,7 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0 24px' }}>{comp.map((c) => <CompBar key={c.cat} c={c} compact />)}</div>
             </div>
             <div style={{ flex: 1, minHeight: 0, overflowY: 'auto', padding: '16px 22px 30px' }}>
-              {list.entries.length === 0 && <div style={{ textAlign: 'center', padding: '70px 20px', fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 15, color: TOW.muted }}>Add units from the left to begin your muster.</div>}
+              {list.entries.length === 0 && <div style={{ textAlign: 'center', padding: '70px 20px', fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 15, color: TOW.muted }}><div style={{ marginBottom: 14 }}><Ornament /></div>Add units from the left to begin your muster.</div>}
               {grouped.map((g) => (
                 <div key={g.c} style={{ marginBottom: 16 }}>
                   <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', margin: '0 2px 8px' }}>
@@ -340,12 +430,12 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
           {/* detail */}
           <div style={{ borderLeft: `1px solid ${TOW.line}`, display: 'flex', flexDirection: 'column', minHeight: 0, background: TOW.panel2 }}>
             {!selUnit || !selEntry ? (
-              <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 30, textAlign: 'center', fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 14, color: TOW.muted }}>Select a unit to equip it.</div>
+              <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: 30, textAlign: 'center', fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 14, color: TOW.muted }}><div style={{ marginBottom: 14 }}><Ornament /></div>Select a unit to equip it.</div>
             ) : (
               <>
                 <div style={{ flexShrink: 0, padding: '14px 16px 12px', borderBottom: `1px solid ${TOW.line}` }}>
                   <div style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 17, color: TOW.ink, lineHeight: 1.1 }}>{selUnit.name_en}</div>
-                  <div style={{ ...eb, fontSize: 8, color: TOW.muted, margin: '3px 0 11px' }}>{fmt(entryPoints(selUnit, selEntry))} pts · {CAT_LABEL[selEntry.cat]}</div>
+                  <div style={{ ...eb, fontSize: 8, color: TOW.muted, margin: '3px 0 11px' }}>{fmt(entryPoints(selUnit, selEntry, itemsData))} pts · {CAT_LABEL[selEntry.cat]}</div>
                   <MiniProfile rows={statsFor(selUnit.name_en)} />
                   {((selUnit.maximum ?? 1) !== 1 || (selUnit.minimum ?? 1) > 1) && (
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 12, padding: '8px 11px', borderRadius: 9, background: TOW.cardLt, border: `1px solid ${TOW.line}` }}>
@@ -359,12 +449,19 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
                   {optionEditor(selEntry, selUnit)}
                 </div>
                 <div style={{ flexShrink: 0, display: 'flex', gap: 8, padding: '11px 16px', borderTop: `1px solid ${TOW.line}`, background: TOW.panel }}>
-                  <button onClick={() => { const id = dup(selEntry.uid); setSelUid(id); }} style={{ flex: 1, padding: '10px', borderRadius: 9, cursor: 'pointer', border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt, color: TOW.inkDim, fontFamily: towFont.display, fontWeight: 600, fontSize: 12, letterSpacing: '0.04em' }}>Duplicate</button>
-                  <button onClick={() => removeE(selEntry.uid)} style={{ flex: 1, padding: '10px', borderRadius: 9, cursor: 'pointer', border: `1px solid rgba(124,43,34,0.4)`, background: 'transparent', color: TOW.blood, fontFamily: towFont.display, fontWeight: 600, fontSize: 12, letterSpacing: '0.04em' }}>Remove</button>
+                  <button onClick={() => { const id = dup(selEntry.uid); setSelUid(id); }} style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 7, padding: '10px', borderRadius: 9, cursor: 'pointer', border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt, color: TOW.inkDim, fontFamily: towFont.display, fontWeight: 600, fontSize: 12, letterSpacing: '0.04em' }}>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2" /><path d="M5 15V5a2 2 0 0 1 2-2h10" /></svg>
+                    Duplicate
+                  </button>
+                  <button onClick={() => removeE(selEntry.uid)} style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 7, padding: '10px', borderRadius: 9, cursor: 'pointer', border: `1px solid rgba(124,43,34,0.4)`, background: 'transparent', color: TOW.blood, fontFamily: towFont.display, fontWeight: 600, fontSize: 12, letterSpacing: '0.04em' }}>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true"><path d="M4 7h16" strokeLinecap="round" /><path d="M9 7V4h6v3" /><path d="M6 7l1 13h10l1-13" /></svg>
+                    Remove
+                  </button>
                 </div>
               </>
             )}
           </div>
+        </div>
         </div>
         {info && <InfoPopup info={info} onClose={() => setInfo(null)} />}
       </div>
@@ -381,6 +478,7 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <button onClick={onBack} aria-label="Back" style={{ width: 30, height: 30, flexShrink: 0, borderRadius: 8, border: `1px solid ${TOW.line}`, background: TOW.cardLt, cursor: 'pointer', fontSize: 17, color: TOW.inkDim }}>‹</button>
           <input value={name} onChange={(e) => onSetName(e.target.value)} aria-label="List name" style={{ flex: 1, minWidth: 0, fontFamily: towFont.display, fontWeight: 700, fontSize: 17, color: TOW.ink, background: 'transparent', border: 'none', borderBottom: `1px dashed ${TOW.line}`, padding: '2px 0' }} />
+          <ThemeToggle size={30} />
           <button onClick={() => setSettings(true)} aria-label="List settings" style={{ width: 30, height: 30, flexShrink: 0, borderRadius: 8, border: `1px solid ${TOW.line}`, background: TOW.cardLt, cursor: 'pointer', fontSize: 14, color: TOW.inkDim }}>⚙</button>
         </div>
         <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginTop: 8 }}>{headerMeta}</div>
@@ -403,7 +501,7 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
 
       {/* roster */}
       <div style={{ flex: 1, minHeight: 0, overflowY: 'auto', padding: '12px 14px 14px' }}>
-        {list.entries.length === 0 && <div style={{ textAlign: 'center', padding: '54px 16px', fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 14.5, color: TOW.muted }}>Tap “Add unit” to begin.</div>}
+        {list.entries.length === 0 && <div style={{ textAlign: 'center', padding: '54px 16px', fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 14.5, color: TOW.muted }}><div style={{ marginBottom: 14 }}><Ornament /></div>Tap “Add unit” to begin.</div>}
         {grouped.map((g) => (
           <div key={g.c} style={{ marginBottom: 14 }}>
             <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', margin: '0 2px 7px' }}>
@@ -429,7 +527,7 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
 
       {/* editor sheet */}
       {editEntry && editUnit && (
-        <Sheet title={editUnit.name_en} sub={`${fmt(entryPoints(editUnit, editEntry))} pts · ${CAT_LABEL[editEntry.cat]}`} onClose={() => setSheet(null)}
+        <Sheet title={editUnit.name_en} sub={`${fmt(entryPoints(editUnit, editEntry, itemsData))} pts · ${CAT_LABEL[editEntry.cat]}`} onClose={() => setSheet(null)}
           foot={<button onClick={() => { removeE(editEntry.uid); setSheet(null); }} style={{ width: '100%', padding: 12, borderRadius: 10, border: `1px solid rgba(124,43,34,0.4)`, background: 'transparent', color: TOW.blood, cursor: 'pointer', fontFamily: towFont.display, fontWeight: 600, fontSize: 13, letterSpacing: '0.04em' }}>Remove from list</button>}>
           <div style={{ marginBottom: 14 }}><MiniProfile rows={statsFor(editUnit.name_en)} /></div>
           {((editUnit.maximum ?? 1) !== 1 || (editUnit.minimum ?? 1) > 1) && (

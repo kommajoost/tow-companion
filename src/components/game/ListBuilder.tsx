@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { usePersistentState } from '../../store';
 import { TOW, towFont, engraved } from '../../design/tow';
-import { validate, type Category, type OwbArmy, type OwbUnit, type BuilderList } from '../../lib/owbBuilder';
+import { validate, type Category, type OwbArmy, type OwbUnit, type BuilderList, type MagicItemsData } from '../../lib/owbBuilder';
 import { BuilderWorkspace } from './BuilderWorkspace';
 import { NewListSetup, type NewListValues } from './NewListSetup';
 
@@ -26,6 +26,8 @@ let statIndexCache: Record<string, { stats?: StatRow[] }> | null = null;
 export function ListBuilder() {
   const [army, setArmy] = useState<OwbArmy | null>(null);
   const [comps, setComps] = useState<string[]>(['dark-elves']);
+  const [itemsData, setItemsData] = useState<MagicItemsData | null>(null);
+  const [armyItemLists, setArmyItemLists] = useState<string[]>([]);
   const [statIdx, setStatIdx] = useState<Record<string, { stats?: StatRow[] }> | null>(statIndexCache);
   const [lists, setLists] = usePersistentState<SavedList[]>('tow:lists', []);
   const [activeId, setActiveId] = usePersistentState<string | null>('tow:builder-active', null);
@@ -36,7 +38,9 @@ export function ListBuilder() {
     fetch(`${BASE}owb/the-old-world.json`).then((r) => r.json()).then((m) => {
       const a = m.armies?.find((x: { id: string }) => x.id === ARMY_SLUG);
       if (a?.armyComposition?.length) setComps(a.armyComposition);
+      if (Array.isArray(a?.items)) setArmyItemLists(a.items);
     }).catch(() => {});
+    fetch(`${BASE}owb/magic-items.json`).then((r) => r.json()).then(setItemsData).catch(() => setItemsData(null));
     if (statIndexCache) setStatIdx(statIndexCache);
     else fetch(`${BASE}owb/rules-index.json`).then((r) => r.json()).then((idx) => { statIndexCache = idx; setStatIdx(idx); }).catch(() => {});
   }, []);
@@ -93,6 +97,8 @@ export function ListBuilder() {
         army={army}
         statsFor={statsFor}
         comps={comps}
+        itemsData={itemsData ?? undefined}
+        armyItemLists={armyItemLists}
       />
     );
   }
@@ -111,7 +117,7 @@ export function ListBuilder() {
         ) : (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
             {sorted.map((l) => {
-              const total = validate(l, getUnit).total;
+              const total = validate(l, getUnit, itemsData ?? undefined).total;
               return (
                 <div key={l.id} style={{ ...card, display: 'flex', alignItems: 'center', gap: 8, padding: '11px 13px' }}>
                   <button onClick={() => setActiveId(l.id)} style={{ flex: 1, minWidth: 0, textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
