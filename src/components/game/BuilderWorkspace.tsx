@@ -6,10 +6,10 @@ import { getRuleIndex, resolveRuleSlug, resolveOptionSlug } from '../../lib/army
 import {
   CATEGORIES, COMPOSITION_RULES, validate, entryPoints, unitBlocks, radioSelected, summaryLabels,
   subOptionGroups, toggleSubOption, setExclusiveSubOption,
-  magicCategories, selectedMagicKeys, toggleMagicItem, magicSpent, magicWouldExceed, magicItemId,
-  isCharacter, DEFAULT_MAGIC_BUDGET,
+  magicCategories, selectedMagicKeys, toggleMagicItem, magicGroupSpent, magicWouldExceed, magicItemId,
+  loadoutLabels, DEFAULT_MAGIC_BUDGET,
   type Category, type OwbArmy, type OwbUnit, type BuilderList, type ListEntry, type Validation,
-  type MagicItemsData,
+  type MagicItemsData, type MagicCategory, type MagicItem,
 } from '../../lib/owbBuilder';
 
 // Responsive Army Builder workspace (Claude Design "Army Builder" PC + mobile, ported onto our
@@ -251,17 +251,109 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
   const optionEditor = (entry: ListEntry, u: OwbUnit) => {
     const blocks = unitBlocks(u);
     const subGroups = subOptionGroups(u, entry);
-    const cats = isCharacter(entry.cat) && itemsData ? magicCategories(u, armyItemLists ?? [], itemsData) : [];
+    const cats = itemsData ? magicCategories(u, armyItemLists ?? [], itemsData, entry) : [];
     const magicCats = cats.filter((c) => c.items.length > 0);
-    if (!blocks.length && subGroups.length === 0 && magicCats.length === 0) return <div style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 13, color: TOW.muted }}>No upgrades for this unit.</div>;
+    const loadout = loadoutLabels(u, entry, itemsData); // base weapons/armour + chosen kit
+    const noUpgrades = !blocks.length && subGroups.length === 0 && magicCats.length === 0;
     // Nested groups keyed by their parent slot, so each renders INDENTED directly under its parent.
     const subsByParent = new Map<string, typeof subGroups>();
     for (const g of subGroups) {
       const k = `${String(g.group)}/${g.parentIndex}`;
       subsByParent.set(k, [...(subsByParent.get(k) ?? []), g]);
     }
+
+    // One magic-item row: a select button (radio dot for single-pick categories, checkbox for the
+    // multi-pick Rune section) + an eye opening the item's (or its rune-type's) rule page.
+    const magicItemRow = (cat: MagicCategory, item: MagicItem) => {
+      const key = `magic/${cat.id}/${magicItemId(item)}`;
+      const on = entry.opts.includes(key);
+      const disabled = !on && magicWouldExceed(u, entry, cat.id, item, itemsData!, { armyItemLists });
+      const cost = item.points ? `+${item.points}` : 'free';
+      return (
+        <div key={key} style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6, opacity: disabled ? 0.5 : 1 }}>
+          <button disabled={disabled} onClick={() => onUpdate((l) => ({ entries: l.entries.map((e) => (e.uid === entry.uid ? { ...e, opts: toggleMagicItem(e, cat.id, item, cat.maxItems) } : e)) }))}
+            style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 10, padding: '8px 11px', borderRadius: 9, cursor: disabled ? 'default' : 'pointer', textAlign: 'left', border: `1px solid ${on ? TOW.goldDeep : TOW.line}`, background: on ? 'rgba(138,108,48,0.10)' : TOW.panel }}>
+            <span style={{ width: 18, height: 18, flexShrink: 0, borderRadius: cat.maxItems > 1 ? 5 : 99, border: `1.5px solid ${on ? TOW.goldDeep : TOW.lineStrong}`, background: on ? TOW.goldDeep : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              {on && <svg width="11" height="11" viewBox="0 0 12 12"><path d="M2.5 6.4l2.2 2.2 4.8-5" stroke="#f4eedb" strokeWidth="1.8" fill="none" strokeLinecap="round" strokeLinejoin="round" /></svg>}
+            </span>
+            <span style={{ flex: 1, fontFamily: towFont.serif, fontSize: 13.5, color: TOW.ink }}>{item.name_en}</span>
+            <span style={{ fontFamily: towFont.display, fontWeight: 600, fontSize: 11, color: item.points ? TOW.gold : TOW.faint }}>{cost}</span>
+          </button>
+          <Eye onClick={() => {
+            const slug = resolveRuleSlug(cleanLabel(item.name_en), ruleIdx);
+            if (slug) { openRuleByName(item.name_en); return; }
+            const typeSlug = RUNE_TYPE_RULE[item.type];
+            if (typeSlug && rules[typeSlug]) { openRule(typeSlug); return; }
+            setInfo({ title: cleanLabel(item.name_en), rows: [], note: `Magic item · ${cat.label} · ${item.points ?? 0} pts` });
+          }} />
+        </div>
+      );
+    };
+
+    // One collapsible magic category (Magic Weapons / Talismans / Runes / …). Default COLLAPSED; the
+    // header shows the chosen item(s) so picks stay visible after collapsing. `meter` draws the shared
+    // budget bar (used when the category is its own budget group; multi-type groups carry it once above).
+    const magicCategoryBlock = (cat: MagicCategory, meter: boolean) => {
+      const catKey = `${entry.uid}/${cat.id}`;
+      const open = openMagicCats.has(catKey);
+      const selKeys = selectedMagicKeys(entry, cat.id);
+      const chosen = cat.items.filter((it) => selKeys.includes(`magic/${cat.id}/${magicItemId(it)}`)).map((it) => it.name_en);
+      const budget = cat.maxPoints ?? DEFAULT_MAGIC_BUDGET;
+      const spent = meter ? magicGroupSpent(u, entry, cat.budgetGroup, itemsData!, armyItemLists) : 0;
+      const over = spent > budget;
+      const pct = Math.min(100, (spent / Math.max(budget, 1)) * 100);
+      return (
+        <div key={`magic/${cat.id}`} style={{ marginBottom: meter ? 12 : 7, border: `1px solid ${TOW.line}`, borderRadius: 10, background: TOW.cardLt, overflow: 'hidden' }}>
+          <button onClick={() => setOpenMagicCats((s) => { const n = new Set(s); n.has(catKey) ? n.delete(catKey) : n.add(catKey); return n; })}
+            aria-expanded={open} style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 9, padding: '9px 11px', border: 'none', background: 'transparent', cursor: 'pointer', textAlign: 'left' }}>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={TOW.muted} strokeWidth="2.4" style={{ flexShrink: 0, transform: open ? 'rotate(90deg)' : 'none', transition: 'transform .18s ease' }} aria-hidden="true"><path d="M9 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" /></svg>
+            <span style={{ ...eb, fontSize: 8.5, color: TOW.muted, flexShrink: 0 }}>{cat.label}</span>
+            {!open && chosen.length > 0
+              ? <span style={{ flex: 1, fontFamily: towFont.serif, fontSize: 12, color: TOW.gold, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{chosen.join(', ')}</span>
+              : <span style={{ flex: 1 }} />}
+            <span style={{ display: 'flex', alignItems: 'baseline', gap: 7, flexShrink: 0 }}>
+              {cat.maxItems > 1 && <span style={{ ...eb, fontSize: 8, color: TOW.muted }}>{selKeys.length}/{cat.maxItems}</span>}
+              {meter && <span style={{ fontFamily: towFont.display, fontWeight: 600, fontSize: 10.5, color: over ? TOW.blood : TOW.muted }}>{fmt(spent)} <span style={{ color: TOW.faint }}>/ {fmt(budget)}</span></span>}
+            </span>
+          </button>
+          {meter && (
+            <div style={{ height: 5, borderRadius: 99, background: 'rgba(74,55,22,0.12)', overflow: 'hidden', margin: '0 11px 9px' }}>
+              <div style={{ width: pct + '%', height: '100%', borderRadius: 99, background: over ? TOW.blood : goldGrad, transition: 'width .25s ease' }} />
+            </div>
+          )}
+          {open && <div style={{ padding: meter ? '0 11px 5px' : '4px 11px 5px' }}>{cat.items.map((item) => magicItemRow(cat, item))}</div>}
+        </div>
+      );
+    };
+
+    // Group the per-type categories by their shared budget (one section = one budget group).
+    const magicGroups: { budgetGroup: string; groupLabel: string; cats: MagicCategory[] }[] = [];
+    for (const c of magicCats) {
+      let grp = magicGroups.find((x) => x.budgetGroup === c.budgetGroup);
+      if (!grp) { grp = { budgetGroup: c.budgetGroup, groupLabel: c.groupLabel, cats: [] }; magicGroups.push(grp); }
+      grp.cats.push(c);
+    }
+
     return (
       <>
+        {/* Loadout — base weapons & armour (and any chosen kit), always shown so even units with no
+            upgrades still display what they carry. Each chip opens its wargear rule when one exists. */}
+        {loadout.length > 0 && (
+          <div style={{ marginBottom: 14 }}>
+            <div style={{ ...eb, fontSize: 8.5, color: TOW.muted, marginBottom: 7 }}>Loadout</div>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
+              {loadout.map((w, i) => {
+                const slug = resolveOptionSlug(cleanLabel(w), ruleIdx);
+                return slug
+                  ? <button key={i} onClick={() => openOptionRule(w)} style={{ fontFamily: towFont.serif, fontSize: 11.5, padding: '3px 9px', borderRadius: 99, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(138,108,48,0.10)', color: TOW.goldDeep, cursor: 'pointer' }}>{w}</button>
+                  : <span key={i} style={{ fontFamily: towFont.serif, fontSize: 11.5, padding: '3px 9px', borderRadius: 99, border: `1px solid ${TOW.line}`, background: 'rgba(138,108,48,0.05)', color: TOW.muted }}>{w}</span>;
+              })}
+            </div>
+          </div>
+        )}
+
+        {noUpgrades && <div style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 13, color: TOW.muted }}>No further upgrades — this unit's wargear is fixed.</div>}
+
         {blocks.map((b) => {
           const radioKey = b.radio ? radioSelected(u, entry, b.key) : '';
           return (
@@ -293,63 +385,25 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
           );
         })}
 
-        {/* Feature 2 — magic items (characters only): one COLLAPSIBLE dropdown per category. The
-            header carries the label + spent/budget meter + a chevron; the item list toggles open.
-            Default collapsed, but auto-open when this category already holds a selected item. */}
-        {magicCats.map((cat) => {
-          const spent = magicSpent(u, entry, cat.id, itemsData!, armyItemLists);
-          const budget = cat.maxPoints ?? DEFAULT_MAGIC_BUDGET;
+        {/* Magic items — one collapsible category per kind (Magic Weapons / Armour / Talismans / …),
+            sharing each section's points budget; a chosen Standard bearer adds a Magic Standards
+            category. Collapsible after choosing, with the picks shown in each collapsed header. */}
+        {magicGroups.map((group) => {
+          if (group.cats.length === 1) return magicCategoryBlock(group.cats[0], true);
+          const budget = group.cats[0].maxPoints ?? DEFAULT_MAGIC_BUDGET;
+          const spent = magicGroupSpent(u, entry, group.budgetGroup, itemsData!, armyItemLists);
           const over = spent > budget;
           const pct = Math.min(100, (spent / Math.max(budget, 1)) * 100);
-          const selKeys = selectedMagicKeys(entry, cat.id);
-          const multi = cat.maxItems > 1; // Dwarf Runes etc. → multi-select (checkboxes + count)
-          const catKey = `${entry.uid}/${cat.id}`;
-          const open = openMagicCats.has(catKey) || selKeys.length > 0; // open if expanded, or has a pick
           return (
-            <div key={`magic/${cat.id}`} style={{ marginBottom: 12, border: `1px solid ${TOW.line}`, borderRadius: 10, background: TOW.cardLt, overflow: 'hidden' }}>
-              <button onClick={() => setOpenMagicCats((s) => { const n = new Set(s); n.has(catKey) ? n.delete(catKey) : n.add(catKey); return n; })}
-                aria-expanded={open} style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 9, padding: '9px 11px', border: 'none', background: 'transparent', cursor: 'pointer', textAlign: 'left' }}>
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={TOW.muted} strokeWidth="2.4" style={{ flexShrink: 0, transform: open ? 'rotate(90deg)' : 'none', transition: 'transform .18s ease' }} aria-hidden="true"><path d="M9 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" /></svg>
-                <span style={{ ...eb, fontSize: 8.5, color: TOW.muted, flex: 1 }}>{cat.label}</span>
-                <span style={{ display: 'flex', alignItems: 'baseline', gap: 7 }}>
-                  {multi && <span style={{ ...eb, fontSize: 8, color: TOW.muted }}>{selKeys.length}/{cat.maxItems}</span>}
-                  <span style={{ fontFamily: towFont.display, fontWeight: 600, fontSize: 10.5, color: over ? TOW.blood : TOW.muted }}>{fmt(spent)} <span style={{ color: TOW.faint }}>/ {fmt(budget)}</span></span>
-                </span>
-              </button>
-              <div style={{ height: 5, borderRadius: 99, background: 'rgba(74,55,22,0.12)', overflow: 'hidden', margin: '0 11px 9px' }}>
+            <div key={group.budgetGroup} style={{ marginBottom: 12, border: `1px solid ${TOW.line}`, borderRadius: 10, background: 'rgba(74,55,22,0.04)', padding: '9px 9px 5px' }}>
+              <div style={{ display: 'flex', alignItems: 'baseline', gap: 7, padding: '0 2px 7px' }}>
+                <span style={{ ...eb, fontSize: 8.5, color: TOW.gold, flex: 1 }}>{group.groupLabel}</span>
+                <span style={{ fontFamily: towFont.display, fontWeight: 600, fontSize: 10.5, color: over ? TOW.blood : TOW.muted }}>{fmt(spent)} <span style={{ color: TOW.faint }}>/ {fmt(budget)}</span></span>
+              </div>
+              <div style={{ height: 5, borderRadius: 99, background: 'rgba(74,55,22,0.12)', overflow: 'hidden', margin: '0 2px 9px' }}>
                 <div style={{ width: pct + '%', height: '100%', borderRadius: 99, background: over ? TOW.blood : goldGrad, transition: 'width .25s ease' }} />
               </div>
-              {open && (
-                <div style={{ padding: '0 11px 5px' }}>
-                  {cat.items.map((item) => {
-                    const key = `magic/${cat.id}/${magicItemId(item)}`;
-                    const on = selKeys.includes(key);
-                    const disabled = !on && magicWouldExceed(u, entry, cat.id, item, itemsData!, { armyItemLists });
-                    const cost = item.points ? `+${item.points}` : 'free';
-                    return (
-                      <div key={key} style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6, opacity: disabled ? 0.5 : 1 }}>
-                        <button disabled={disabled} onClick={() => onUpdate((l) => ({ entries: l.entries.map((e) => (e.uid === entry.uid ? { ...e, opts: toggleMagicItem(e, cat.id, item, cat.maxItems) } : e)) }))}
-                          style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 10, padding: '8px 11px', borderRadius: 9, cursor: disabled ? 'default' : 'pointer', textAlign: 'left', border: `1px solid ${on ? TOW.goldDeep : TOW.line}`, background: on ? 'rgba(138,108,48,0.10)' : TOW.panel }}>
-                          <span style={{ width: 18, height: 18, flexShrink: 0, borderRadius: multi ? 5 : 99, border: `1.5px solid ${on ? TOW.goldDeep : TOW.lineStrong}`, background: on ? TOW.goldDeep : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                            {on && <svg width="11" height="11" viewBox="0 0 12 12"><path d="M2.5 6.4l2.2 2.2 4.8-5" stroke="#f4eedb" strokeWidth="1.8" fill="none" strokeLinecap="round" strokeLinejoin="round" /></svg>}
-                          </span>
-                          <span style={{ flex: 1, fontFamily: towFont.serif, fontSize: 13.5, color: TOW.ink }}>{item.name_en}</span>
-                          <span style={{ fontFamily: towFont.display, fontWeight: 600, fontSize: 11, color: item.points ? TOW.gold : TOW.faint }}>{cost}</span>
-                        </button>
-                        {/* Eye on EVERY magic item: own rule page if one resolves, else the per-TYPE rune
-                            rule page (Dwarf runes), else a name + meta popup. */}
-                        <Eye onClick={() => {
-                          const slug = resolveRuleSlug(cleanLabel(item.name_en), ruleIdx);
-                          if (slug) { openRuleByName(item.name_en); return; }
-                          const typeSlug = RUNE_TYPE_RULE[item.type];
-                          if (typeSlug && rules[typeSlug]) { openRule(typeSlug); return; }
-                          setInfo({ title: cleanLabel(item.name_en), rows: [], note: `Magic item · ${cat.label} · ${item.points ?? 0} pts` });
-                        }} />
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
+              {group.cats.map((cat) => magicCategoryBlock(cat, false))}
             </div>
           );
         })}

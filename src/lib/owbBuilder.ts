@@ -17,6 +17,10 @@ export interface OwbOption {
   // are independent toggles. e.g. a Manticore mount → "Venomous tail" toggle; a Sorceress' "Wizard"
   // → the Level radio. Generalised by `subOptionGroups`/`toggleSubOption`/`setExclusiveSubOption`.
   options?: OwbOption[];
+  // Some options unlock a magic-item allowance when taken — e.g. a "Standard bearer" command option
+  // lets the unit buy a magic standard (`{ types: ["banner"], maxPoints: 50 }`). Surfaced as an extra
+  // magic category (gated on the option being active) by `magicCategories`.
+  magic?: { types: string[]; maxPoints?: number };
 }
 // A unit's magic-item "section" (from the catalogue's per-unit `items[]`). Each section permits a
 // set of item `types` (mapping to the `type` field in magic-items.json) and carries its own
@@ -396,13 +400,30 @@ const magicKey = (categoryId: string, itemId: string) => `${MAGIC_PREFIX}/${cate
 /** Only characters carry magic items (keep it simple, per the spec). */
 export function isCharacter(cat: Category): boolean { return cat === 'characters'; }
 
-// A magic-item category for a unit: one section of the unit's `items[]`, resolved to the actual
-// items it may take (gathered from the army's item-lists, filtered by the section's `types`).
+// Friendly labels per magic-item `type`, so the list mirrors the rulebook's categories
+// (Magic Weapons / Magic Armour / Talismans / …). Unknown types fall back to a title-cased slug.
+const MAGIC_TYPE_LABEL: Record<string, string> = {
+  weapon: 'Magic Weapons', armor: 'Magic Armour', 'armor-mages': 'Magic Armour',
+  talisman: 'Talismans', 'enchanted-item': 'Enchanted Items', 'arcane-item': 'Arcane Items',
+  banner: 'Magic Standards', 'gift-of-khaine': 'Gifts of Khaine', 'forbidden-poison': 'Forbidden Poisons',
+  'weapon-runes': 'Weapon Runes', 'armor-runes': 'Armour Runes', 'talismanic-runes': 'Talismanic Runes',
+  'banner-runes': 'Standard Runes', 'engineering-runes': 'Engineering Runes',
+  'ranged-weapon-runes': 'Ranged Weapon Runes', 'runic-tattoos': 'Runic Tattoos',
+};
+export const magicTypeLabel = (type: string): string =>
+  MAGIC_TYPE_LABEL[type] ?? type.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+
+// A magic-item category the UI renders as one collapsible group. A unit's "Magic Items" section is
+// split into one category PER item type (Magic Weapons, Magic Armour, …) so the player may take one
+// of each within the SHARED section budget (`budgetGroup`); a Rune section stays a single multi-pick
+// category; and a Standard-bearer's magic-standard allowance becomes its own option-gated category.
 export interface MagicCategory {
-  id: string;            // stable category id, e.g. "weapon" or "gift-of-khaine" (first allowed type)
-  label: string;         // section name, e.g. "Magic Items" / "Gifts of Khaine"
-  types: string[];       // item `type`s this section accepts
-  maxPoints: number | null; // data-driven section budget (null = none in data → use param budget)
+  id: string;            // stable id used in the `magic/<id>/<itemId>` key (the item type, usually)
+  label: string;         // this group's heading, e.g. "Magic Weapons" / "Runes"
+  groupLabel: string;    // the parent section's name (e.g. "Magic Items") — groups share one budget
+  budgetGroup: string;   // categories sharing this id pool into one points budget
+  types: string[];       // item `type`s this category accepts
+  maxPoints: number | null; // the shared budget for this category's `budgetGroup`
   maxItems: number;      // how many items this category may hold (1 = single-select; Dwarf Runes = 3)
   items: MagicItem[];    // the items selectable in this category
 }
@@ -415,25 +436,49 @@ function itemPool(armyItemLists: string[], itemsData: MagicItemsData): MagicItem
   return pool;
 }
 
-/** Shape the magic-item categories available to a unit: one per section in unit.items[], each
- *  resolved against the army's item pool. The UI calls this to render the groups + budget meters.
- *  Returns [] for non-characters or units without an `items` section. */
-export function magicCategories(unit: OwbUnit, armyItemLists: string[], itemsData: MagicItemsData): MagicCategory[] {
-  const sections = Array.isArray(unit.items) ? unit.items : [];
-  if (sections.length === 0) return [];
+/** The magic-item categories available to a unit, ready to render as collapsible groups.
+ *  - Each `unit.items[]` section that allows several types is split into one category per type
+ *    (Magic Weapons / Armour / Talismans / …), all sharing the section's points budget so the player
+ *    may take one of each up to the total. A section with a per-section item cap (Dwarf Runes) stays
+ *    a single multi-pick category.
+ *  - Plus any option-unlocked allowance (e.g. a chosen Standard bearer's magic standard) — included
+ *    only when `entry` is given AND that option is currently active. */
+export function magicCategories(unit: OwbUnit, armyItemLists: string[], itemsData: MagicItemsData, entry?: ListEntry): MagicCategory[] {
   const pool = itemPool(armyItemLists, itemsData);
-  return sections.map((sec) => {
+  const out: MagicCategory[] = [];
+  const sections = Array.isArray(unit.items) ? unit.items : [];
+  sections.forEach((sec, si) => {
     const types = Array.isArray(sec.types) ? sec.types : [];
-    const items = pool.filter((it) => types.includes(it.type));
-    return {
-      id: types[0] ?? slug(sec.name_en),       // first type doubles as the category id
-      label: sec.name_en,
-      types,
-      maxPoints: typeof sec.maxPoints === 'number' ? sec.maxPoints : null,
-      maxItems: typeof sec.maxItemsPerCategory === 'number' && sec.maxItemsPerCategory > 0 ? sec.maxItemsPerCategory : 1,
-      items,
-    };
+    const maxPoints = typeof sec.maxPoints === 'number' ? sec.maxPoints : null;
+    const group = `sec:${si}`;
+    const capped = typeof sec.maxItemsPerCategory === 'number' && sec.maxItemsPerCategory > 0;
+    if (capped) {
+      // Runes etc. — one category, multi-pick up to the section cap, items across all its types.
+      const items = pool.filter((it) => types.includes(it.type));
+      if (items.length) out.push({ id: types[0] ?? slug(sec.name_en), label: sec.name_en, groupLabel: sec.name_en, budgetGroup: group, types, maxPoints, maxItems: sec.maxItemsPerCategory!, items });
+      return;
+    }
+    // Normal magic items — one category per type (one of each), sharing the section budget.
+    for (const type of types) {
+      const items = pool.filter((it) => it.type === type);
+      if (!items.length) continue;
+      out.push({ id: type, label: magicTypeLabel(type), groupLabel: sec.name_en, budgetGroup: group, types: [type], maxPoints, maxItems: 1, items });
+    }
   });
+  // Option-unlocked allowances (magic standards from a Standard bearer, …) — active options only.
+  if (entry) {
+    for (const { key: g } of OPTION_GROUPS) {
+      groupItems(unit, g).forEach((opt, idx) => {
+        if (!opt.magic || !Array.isArray(opt.magic.types) || !opt.magic.types.length) return;
+        if (!parentActive(unit, entry, g, opt, idx)) return;
+        const types = opt.magic.types;
+        const items = pool.filter((it) => types.includes(it.type));
+        if (!items.length) return;
+        out.push({ id: types[0], label: magicTypeLabel(types[0]), groupLabel: magicTypeLabel(types[0]), budgetGroup: `opt:${String(g)}:${idx}`, types, maxPoints: typeof opt.magic.maxPoints === 'number' ? opt.magic.maxPoints : null, maxItems: 1, items });
+      });
+    }
+  }
+  return out;
 }
 
 // Internal: every magic-item key stored on the entry, parsed into {categoryId, itemId}.
@@ -453,16 +498,28 @@ export function selectedMagicItems(unit: OwbUnit, entry: ListEntry, itemsData: M
   { category: MagicCategory; item: MagicItem; key: string }[] {
   // We can resolve items from the raw pool even without armyItemLists by scanning all lists, but
   // prefer the army-scoped categories when provided for correct labels/budgets.
-  const cats = magicCategories(unit, armyItemLists ?? Object.keys(itemsData), itemsData);
+  const cats = magicCategories(unit, armyItemLists ?? Object.keys(itemsData), itemsData, entry);
   if (cats.length === 0) return [];
   const out: { category: MagicCategory; item: MagicItem; key: string }[] = [];
   for (const { categoryId, itemId, key } of parsedMagicKeys(entry)) {
-    const category = cats.find((c) => c.id === categoryId);
+    // Prefer the category named in the key; else ANY category holding the item — so keys written
+    // before the per-type split (stored under a section's first type) still resolve by item id.
+    const category =
+      cats.find((c) => c.id === categoryId && c.items.some((it) => magicItemId(it) === itemId)) ??
+      cats.find((c) => c.items.some((it) => magicItemId(it) === itemId));
     if (!category) continue;
-    const item = category.items.find((it) => magicItemId(it) === itemId);
-    if (item) out.push({ category, item, key });
+    const item = category.items.find((it) => magicItemId(it) === itemId)!;
+    out.push({ category, item, key });
   }
   return out;
+}
+
+/** Points spent within a category's shared budget group — all per-type categories of one section
+ *  (Magic Weapons + Armour + Talismans …) pool into a single allowance. */
+export function magicGroupSpent(unit: OwbUnit, entry: ListEntry, budgetGroup: string, itemsData: MagicItemsData, armyItemLists?: string[]): number {
+  return selectedMagicItems(unit, entry, itemsData, armyItemLists)
+    .filter(({ category }) => category.budgetGroup === budgetGroup)
+    .reduce((n, { item }) => n + (item.points ?? 0), 0);
 }
 
 /** Total points spent on magic items by this entry (per-unit, never per-model). */
@@ -513,7 +570,7 @@ export function magicWouldExceed(
   opts?: { budget?: number; armyItemLists?: string[] },
 ): boolean {
   const armyItemLists = opts?.armyItemLists;
-  const cats = magicCategories(unit, armyItemLists ?? Object.keys(itemsData), itemsData);
+  const cats = magicCategories(unit, armyItemLists ?? Object.keys(itemsData), itemsData, entry);
   const category = cats.find((c) => c.id === categoryId);
   const budget = opts?.budget ?? category?.maxPoints ?? DEFAULT_MAGIC_BUDGET;
   const maxItems = category?.maxItems ?? 1;
@@ -522,9 +579,7 @@ export function magicWouldExceed(
   if (selected.includes(key)) return false; // re-pick = deselect (always allowed)
   // Item-count cap: a fresh pick can't fit when the category is already full.
   if (selected.length >= maxItems) return true;
-  // Points budget: the spend after adding this item (the category's current spend + this item).
-  const spent = selectedMagicItems(unit, entry, itemsData, armyItemLists)
-    .filter(({ category: c }) => c.id === categoryId)
-    .reduce((n, { item: it }) => n + (it.points ?? 0), 0);
+  // Points budget is SHARED across the category's budget group (all per-type categories of a section).
+  const spent = category ? magicGroupSpent(unit, entry, category.budgetGroup, itemsData, armyItemLists) : 0;
   return spent + (item.points ?? 0) > budget;
 }
