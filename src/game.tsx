@@ -28,7 +28,7 @@ interface GameContextValue {
   joinGame: (code: string, name: string, army: Army | null) => Promise<boolean>;
   /** Recent games (newest first) for the join lobby. */
   listGames: () => Promise<GameSummary[]>;
-  startSolo: () => void;
+  startSolo: (army?: Army | null) => void;
   setMyArmy: (army: Army) => void;
   setOpponentArmy: (army: Army) => void;
   /** Shared battle state (round, VP, per-unit casualties). */
@@ -233,8 +233,9 @@ export function GameProvider({ children }: { children: ReactNode }) {
     [setPersisted],
   );
 
-  const startSolo = useCallback(() => {
+  const startSolo = useCallback((army?: Army | null) => {
     setError(null);
+    if (army) setSoloMine(army); // seed "my army" when a saved/pasted list was chosen at setup
     setPersisted({ seat: 'solo', code: null });
   }, [setPersisted]);
 
