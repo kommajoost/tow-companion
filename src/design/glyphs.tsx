@@ -26,7 +26,7 @@ export function Comet({
   );
 }
 
-export type PhaseId = 'strategy' | 'movement' | 'shooting' | 'combat' | 'magic';
+export type PhaseId = 'strategy' | 'movement' | 'shooting' | 'combat' | 'magic' | 'deploy';
 
 // Phase glyphs (line icons, inherit color).
 export function PhaseGlyph({
@@ -90,6 +90,14 @@ export function PhaseGlyph({
       return wrap(
         <g {...p}>
           <path d="M12 3v18M3 12h18M5.5 5.5l13 13M18.5 5.5l-13 13" />
+        </g>,
+      );
+    case 'deploy': // standard planted on the deployment line
+      return wrap(
+        <g {...p}>
+          <path d="M6 3v18" />
+          <path d="M6 4.2h10l-2.4 3.1L16 10.4H6" />
+          <path d="M3.5 21h17" />
         </g>,
       );
     default:

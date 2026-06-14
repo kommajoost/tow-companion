@@ -2,6 +2,167 @@
   "round": "Round III",
   "phases": [
     {
+      "id": "pre-battle",
+      "num": "0",
+      "name": "Pre-Battle",
+      "glyph": "deploy",
+      "flavour": "Before the first turn — muster, generate spells, set the field and deploy.",
+      "subs": [
+        {
+          "name": "Muster & Spells",
+          "intro": "Agree the game, muster both armies to the points limit, then each Wizard generates the spells they know.",
+          "tabs": [
+            {
+              "id": "quick",
+              "label": "Quick",
+              "blocks": [
+                {
+                  "type": "steps",
+                  "items": [
+                    "Agree the points limit, scenario and any house rules.",
+                    "Each player musters their army to the limit (build it in the Army tab).",
+                    "Reveal your army lists to one another.",
+                    "Each Wizard generates the spells they know from their chosen Lore of Magic.",
+                    "Note any abilities used ‘before the battle’ or at the ‘start of the first turn’."
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "rules",
+              "label": "Rules",
+              "blocks": [
+                {
+                  "type": "rule",
+                  "slug": "muster-your-forces"
+                },
+                {
+                  "type": "detail",
+                  "slug": "spells-and-spell-generation"
+                },
+                {
+                  "type": "detail",
+                  "slug": "spells-and-spell-generation-magic"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Set up the Battlefield",
+          "intro": "Set up the table together: place terrain, then work out table sides and deployment zones.",
+          "tabs": [
+            {
+              "id": "quick",
+              "label": "Quick",
+              "blocks": [
+                {
+                  "type": "steps",
+                  "items": [
+                    "Use a 6′×4′ table, or as the scenario states.",
+                    "Place terrain together following the scenario / ‘how much terrain’ guidance.",
+                    "Determine table sides and each player’s deployment zone."
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "rules",
+              "label": "Rules",
+              "blocks": [
+                {
+                  "type": "rule",
+                  "slug": "set-up-the-battlefield"
+                },
+                {
+                  "type": "detail",
+                  "slug": "how-much-terrain"
+                },
+                {
+                  "type": "detail",
+                  "slug": "placing-terrain-battlefield-terrain"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Deploy Armies",
+          "intro": "Alternate setting up units within your deployment zone, then resolve Scouts, Vanguard and any reserve moves.",
+          "tabs": [
+            {
+              "id": "quick",
+              "label": "Quick",
+              "blocks": [
+                {
+                  "type": "steps",
+                  "items": [
+                    "Roll off; the winner chooses who sets up the first unit.",
+                    "Alternate deploying one unit (with its characters) at a time, inside your zone.",
+                    "War machines, weapon teams and the like each deploy as a single choice.",
+                    "Once both armies are down, set up any Scouts.",
+                    "Make Vanguard moves — the player who finished deploying first moves (and gets +1 for first turn)."
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "rules",
+              "label": "Rules",
+              "blocks": [
+                {
+                  "type": "rule",
+                  "slug": "deploy-armies"
+                },
+                {
+                  "type": "detail",
+                  "slug": "scouts"
+                },
+                {
+                  "type": "detail",
+                  "slug": "vanguard"
+                },
+                {
+                  "type": "detail",
+                  "slug": "reserve-move"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "Determine First Turn",
+          "intro": "Decide who takes the first turn, resolve any pre-game abilities, then begin Round 1.",
+          "tabs": [
+            {
+              "id": "quick",
+              "label": "Quick",
+              "blocks": [
+                {
+                  "type": "steps",
+                  "items": [
+                    "The player who finished deploying first may take the first turn, or both roll off (+1 to that player).",
+                    "Resolve any ‘start of the first turn’ or ‘before the battle’ abilities.",
+                    "Begin Round 1 → advance to the Strategy phase."
+                  ]
+                }
+              ]
+            },
+            {
+              "id": "rules",
+              "label": "Rules",
+              "blocks": [
+                {
+                  "type": "rule",
+                  "slug": "first-turn-turn-sequence"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
       "id": "strategy",
       "num": "I",
       "name": "Strategy",
