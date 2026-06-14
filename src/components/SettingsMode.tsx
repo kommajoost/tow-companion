@@ -211,7 +211,7 @@ function FeedbackSection({
     width: '100%',
     borderRadius: 10,
     border: `1px solid ${TOW.lineStrong}`,
-    background: '#fffdf6',
+    background: TOW.cardLt,
     color: TOW.ink,
     padding: '10px 12px',
     fontFamily: towFont.serif,
@@ -326,7 +326,7 @@ function FeedbackSection({
             ) : (
               <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
                 {items!.map((f) => (
-                  <div key={f.id} style={{ border: `1px solid ${TOW.line}`, borderRadius: 10, background: '#fffdf6', padding: '10px 12px' }}>
+                  <div key={f.id} style={{ border: `1px solid ${TOW.line}`, borderRadius: 10, background: TOW.cardLt, padding: '10px 12px' }}>
                     <div style={{ fontFamily: towFont.serif, fontSize: 13.5, color: TOW.ink, whiteSpace: 'pre-wrap', lineHeight: 1.4 }}>{f.message}</div>
                     <div style={{ fontFamily: towFont.serif, fontSize: 11.5, color: TOW.muted, marginTop: 6 }}>
                       {new Date(f.created_at).toLocaleString()}

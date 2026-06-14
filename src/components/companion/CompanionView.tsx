@@ -188,7 +188,7 @@ export function CompanionView({ onHome }: { onHome?: () => void } = {}) {
             aria-label={`${p.name} phase`}
             style={{
               flexShrink: 0, display: 'flex', alignItems: 'center', gap: 6, padding: labeled ? '6px 11px' : '6px 10px', borderRadius: 9, cursor: 'pointer',
-              background: on ? '#fff7e9' : 'transparent',
+              background: on ? TOW.cardLt : 'transparent',
               border: `1px solid ${on ? TOW.lineStrong : TOW.line}`,
               color: on ? TOW.goldDeep : TOW.muted,
             }}
@@ -231,7 +231,7 @@ export function CompanionView({ onHome }: { onHome?: () => void } = {}) {
             transform: 'translateX(-50%) translateY(4px) rotate(45deg)',
             width: 8,
             height: 8,
-            background: '#fff7e9',
+            background: TOW.cardLt,
             borderLeft: `1px solid ${TOW.lineStrong}`,
             borderTop: `1px solid ${TOW.lineStrong}`,
           }}
@@ -248,7 +248,7 @@ export function CompanionView({ onHome }: { onHome?: () => void } = {}) {
             color: TOW.ink,
             padding: '5px 10px',
             borderRadius: 7,
-            background: '#fff7e9',
+            background: TOW.cardLt,
             border: `1px solid ${TOW.lineStrong}`,
             boxShadow: '0 6px 18px rgba(80,55,20,0.25)',
           }}
@@ -294,7 +294,7 @@ export function CompanionView({ onHome }: { onHome?: () => void } = {}) {
                   style={{
                     display: 'flex', alignItems: 'center', gap: 11, width: '100%', textAlign: 'left', cursor: 'pointer',
                     padding: '10px 12px', marginBottom: 3, borderRadius: 10,
-                    background: active ? '#fff7e9' : 'transparent',
+                    background: active ? TOW.cardLt : 'transparent',
                     border: `1px solid ${active ? TOW.lineStrong : 'transparent'}`,
                     borderLeft: active ? `3px solid ${TOW.gold}` : '3px solid transparent',
                   }}
@@ -358,7 +358,7 @@ export function CompanionView({ onHome }: { onHome?: () => void } = {}) {
                   <div data-active={active ? '1' : '0'} style={{ position: 'relative', flexShrink: 0 }}>
                     {hovered && (
                       <div style={{ position: 'absolute', bottom: '100%', left: '50%', transform: 'translateX(-50%) translateY(-4px)', zIndex: 40, pointerEvents: 'none', whiteSpace: 'nowrap' }}>
-                        <div style={{ fontFamily: towFont.display, fontWeight: 600, fontSize: 11, letterSpacing: '0.03em', color: TOW.ink, padding: '4px 9px', borderRadius: 7, background: '#fff7e9', border: `1px solid ${TOW.lineStrong}`, boxShadow: '0 6px 16px rgba(80,55,20,0.25)' }}>
+                        <div style={{ fontFamily: towFont.display, fontWeight: 600, fontSize: 11, letterSpacing: '0.03em', color: TOW.ink, padding: '4px 9px', borderRadius: 7, background: TOW.cardLt, border: `1px solid ${TOW.lineStrong}`, boxShadow: '0 6px 16px rgba(80,55,20,0.25)' }}>
                           <span style={{ color: TOW.goldDeep, marginRight: 6 }}>{i + 1}</span>{s.name}
                         </div>
                       </div>

@@ -7,8 +7,8 @@ import { LogoMark } from './LogoMark';
 
 export type NavTab = 'play' | 'browse' | 'game' | 'army' | 'settings';
 
-const RAIL_BG = '#d9caa3'; // a touch deeper than the content parchment
-const mutedIcon = 'rgba(134,116,83,0.85)';
+const RAIL_BG = TOW.leatherDark; // a touch deeper than the content parchment (theme-aware)
+const mutedIcon = TOW.muted; // inactive icon colour — flips with the theme
 
 const I = ({ d, size = 21, c, sw = 1.6 }: { d: React.ReactNode; size?: number; c: string; sw?: number }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" style={{ display: 'block' }}>

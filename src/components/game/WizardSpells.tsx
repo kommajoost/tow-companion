@@ -221,7 +221,7 @@ function SpellPicker({
             <select
               value=""
               onChange={(e) => { onAddLore(e.target.value); e.currentTarget.value = ''; }}
-              style={{ marginTop: 4, width: '100%', borderRadius: 10, border: `1px solid ${TOW.lineStrong}`, background: '#fffdf6', color: TOW.ink, padding: '10px 12px', fontFamily: towFont.serif, fontSize: 14 }}
+              style={{ marginTop: 4, width: '100%', borderRadius: 10, border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt, color: TOW.ink, padding: '10px 12px', fontFamily: towFont.serif, fontSize: 14 }}
             >
               <option value="">+ Add a lore…</option>
               {fullLores.length > 0 && (

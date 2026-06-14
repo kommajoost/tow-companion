@@ -36,7 +36,7 @@ export function GameSetup() {
     if (SHOW_LOBBY && mode === 'join') loadGames();
   }, [mode, loadGames]);
 
-  const inputStyle: React.CSSProperties = { width: '100%', borderRadius: 10, border: `1px solid ${TOW.lineStrong}`, background: '#fffdf6', color: TOW.ink, padding: '10px 12px', fontFamily: towFont.serif, fontSize: 15, boxSizing: 'border-box' };
+  const inputStyle: React.CSSProperties = { width: '100%', borderRadius: 10, border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt, color: TOW.ink, padding: '10px 12px', fontFamily: towFont.serif, fontSize: 15, boxSizing: 'border-box' };
   const labelStyle: React.CSSProperties = { ...eb, fontSize: 9, color: TOW.muted, marginBottom: 5, display: 'block' };
   const goldBtn: React.CSSProperties = { border: 'none', borderRadius: 11, cursor: 'pointer', padding: '13px 18px', background: `linear-gradient(180deg, ${TOW.goldBright}, ${TOW.gold} 55%, ${TOW.goldDeep})`, color: '#2a1a0a', fontFamily: towFont.display, fontWeight: 700, fontSize: 15, width: '100%' };
 
