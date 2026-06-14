@@ -1,8 +1,10 @@
-import { useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useData } from '../../data';
 import { useUI } from '../../state';
 import { TOW, towFont, engraved } from '../../design/tow';
-import { getRuleIndex, resolveRuleSlug, resolveOptionSlug } from '../../lib/armyRules';
+import { getRuleIndex, resolveRuleSlug, resolveOptionSlug, wizardInfo } from '../../lib/armyRules';
+import { WizardSpells } from './WizardSpells';
+import type { ArmyUnit } from '../../types';
 import {
   CATEGORIES, COMPOSITION_RULES, validate, entryPoints, unitBlocks, radioSelected, summaryLabels,
   subOptionGroups, toggleSubOption, setExclusiveSubOption,
@@ -24,6 +26,10 @@ const cleanLabel = (s: string) => (s || '').replace(/\{[^}]*\}/g, ' ').replace(/
 
 // Dwarf runes have no per-rune rule page; their text lives on a per-TYPE page. Map a rune's `type`
 // to the matching slug in rules.json (note British "armour"/"standard" spellings on the rule pages).
+const BASE = import.meta.env.BASE_URL;
+// Magic-item flavour + rules text (slug → {description, body}), snapshotted from the rules site by
+// scripts/sync-magic-text.mjs — the OWB catalogue itself carries no item descriptions.
+type MagicText = Record<string, { description?: string; body?: string }>;
 const RUNE_TYPE_RULE: Record<string, string> = {
   'weapon-runes': 'weapon-runes',
   'armor-runes': 'armour-runes',
@@ -170,7 +176,9 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
   const [tab, setTab] = useState<Category>('characters');
   const [q, setQ] = useState('');
   const [settings, setSettings] = useState(false);
-  const [info, setInfo] = useState<{ title: string; rows: StatRow[]; note?: string; ruleSlug?: string } | null>(null); // mount/unit profile popup
+  const [info, setInfo] = useState<{ title: string; rows: StatRow[]; note?: string; ruleSlug?: string; flavour?: string; body?: string } | null>(null); // mount/unit profile / magic-item popup
+  const [magicText, setMagicText] = useState<MagicText>({});
+  useEffect(() => { fetch(`${BASE}owb/magic-item-text.json`).then((r) => r.json()).then(setMagicText).catch(() => {}); }, []);
   const [openMagicCats, setOpenMagicCats] = useState<Set<string>>(new Set()); // expanded magic-item categories
   const [showIssues, setShowIssues] = useState(false); // expand the list of composition problems
 
@@ -280,14 +288,17 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
             <span style={{ fontFamily: towFont.display, fontWeight: 600, fontSize: 11, color: item.points ? TOW.gold : TOW.faint }}>{cost}</span>
           </button>
           <Eye onClick={() => {
-            // Prefer the item's OWN rule page (named magic items have one).
-            const slug = resolveRuleSlug(cleanLabel(item.name_en), ruleIdx);
-            if (slug) { openRuleByName(item.name_en); return; }
-            // Otherwise show THIS item's details (name · kind · cost · restriction). Individual runes
-            // have no own rule text in the data, so we offer a link to the rune-type's full rules
-            // rather than silently opening that general page in place of the item.
+            // Show THIS item's own flavour + rules text (snapshotted per item) — what the rune/item
+            // actually does. Falls back to the item's rule page, then a rune-type link, then meta.
+            const tx = magicText[magicItemId(item)];
             const typeSlug = RUNE_TYPE_RULE[item.type];
             const note = `${magicTypeLabel(item.type)} · ${item.points ?? 0} pts${item.onePerArmy ? ' · one per army' : ''}`;
+            if (tx && (tx.body || tx.description)) {
+              setInfo({ title: cleanLabel(item.name_en), rows: [], note, flavour: tx.description, body: tx.body, ruleSlug: typeSlug && rules[typeSlug] ? typeSlug : undefined });
+              return;
+            }
+            const slug = resolveRuleSlug(cleanLabel(item.name_en), ruleIdx);
+            if (slug) { openRuleByName(item.name_en); return; }
             setInfo({ title: cleanLabel(item.name_en), rows: [], note, ruleSlug: typeSlug && rules[typeSlug] ? typeSlug : undefined });
           }} />
         </div>
@@ -411,6 +422,44 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
             </div>
           );
         })}
+
+        {/* Wizards — choose Lore(s) of Magic + spells right here, so the pick travels into the game
+            Army (builderToArmy carries entry.lores/entry.spells onto the ArmyUnit). Reuses the same
+            in-game picker; the synthesized ArmyUnit feeds wizardInfo/WizardSpells the loadout labels
+            (incl. the chosen "Wizard"/"Level N Wizard" sub-option) so the level is detected. */}
+        {(() => {
+          const wizUnit: ArmyUnit = {
+            id: entry.uid,
+            name: u.name_en,
+            count: null,
+            points: null,
+            category: '',
+            options: loadoutLabels(u, entry, itemsData),
+            specialRules: (u.specialRules?.name_en || '').split(',').map((s) => s.trim()).filter(Boolean),
+            profiles: [],
+            lores: entry.lores,
+            spells: entry.spells,
+          };
+          return wizardInfo(wizUnit).isWizard ? (
+            <WizardSpells
+              unit={wizUnit}
+              editable
+              onChange={(patch) =>
+                onUpdate((l) => ({
+                  entries: l.entries.map((e) =>
+                    e.uid === entry.uid
+                      ? {
+                          ...e,
+                          ...(patch.lores !== undefined ? { lores: patch.lores } : {}),
+                          ...(patch.spells !== undefined ? { spells: patch.spells } : {}),
+                        }
+                      : e,
+                  ),
+                }))
+              }
+            />
+          ) : null;
+        })()}
       </>
     );
   };
@@ -719,7 +768,7 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
 // A small centred popup. Shows a mount/unit stat profile (rows) for options without a rule page, or
 // — when `rows` is empty and a `note` is given — a single muted italic meta line (e.g. magic items,
 // which have no verbatim rule text in our data: name + "Magic item · <category> · <pts> pts").
-function InfoPopup({ info, onClose, onOpenRule }: { info: { title: string; rows: StatRow[]; note?: string; ruleSlug?: string }; onClose: () => void; onOpenRule?: (slug: string) => void }) {
+function InfoPopup({ info, onClose, onOpenRule }: { info: { title: string; rows: StatRow[]; note?: string; ruleSlug?: string; flavour?: string; body?: string }; onClose: () => void; onOpenRule?: (slug: string) => void }) {
   const showNote = info.rows.length === 0 && !!info.note;
   return (
     <div onClick={onClose} style={{ position: 'absolute', inset: 0, zIndex: 60, background: 'rgba(30,20,8,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 }}>
@@ -730,8 +779,10 @@ function InfoPopup({ info, onClose, onOpenRule }: { info: { title: string; rows:
         </div>
         <div style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 18, color: TOW.ink, marginBottom: 10 }}>{info.title}</div>
         {showNote
-          ? <div style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 13, color: TOW.muted, lineHeight: 1.5 }}>{info.note}</div>
+          ? <div style={{ ...eb, fontSize: 8.5, color: TOW.muted, marginBottom: info.flavour || info.body ? 10 : 0 }}>{info.note}</div>
           : <MiniProfile rows={info.rows} />}
+        {info.flavour && <div style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 13, color: TOW.muted, lineHeight: 1.5, marginBottom: info.body ? 9 : 0 }}>{info.flavour}</div>}
+        {info.body && <div style={{ fontFamily: towFont.serif, fontSize: 13.5, color: TOW.ink, lineHeight: 1.55, whiteSpace: 'pre-wrap' }}>{info.body}</div>}
         {info.ruleSlug && onOpenRule && (
           <button onClick={() => onOpenRule(info.ruleSlug!)} style={{ marginTop: 14, display: 'inline-flex', alignItems: 'center', gap: 7, padding: '8px 13px', borderRadius: 9, cursor: 'pointer', border: `1px solid ${TOW.goldDeep}`, background: 'rgba(138,108,48,0.10)', color: TOW.goldDeep, fontFamily: towFont.display, fontWeight: 600, fontSize: 12.5 }}>
             Full rune rules →

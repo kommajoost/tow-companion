@@ -50,6 +50,9 @@ export function builderListToArmy(
       options: loadoutLabels(u, e, opts.itemsData),
       specialRules,
       profiles,
+      // Lore/spell choices made in the builder (Wizards) → carried into the game Army.
+      lores: e.lores,
+      spells: e.spells,
     });
   }
   // Keep roster order grouped by category, mirroring the builder.

@@ -246,7 +246,9 @@ export function loadoutLabels(unit: OwbUnit, entry: ListEntry, itemsData?: Magic
 }
 
 // One chosen entry in the list. `opts` holds selected option keys "group/index".
-export interface ListEntry { uid: string; cat: Category; unitId: string; count: number; opts: string[] }
+// `lores`/`spells` (Wizards only) are the lore + spell choices made in the builder, carried into a
+// game Army by builderListToArmy (so the in-game spell card is pre-filled).
+export interface ListEntry { uid: string; cat: Category; unitId: string; count: number; opts: string[]; lores?: string[]; spells?: string[] }
 export interface BuilderList { composition: string; rule: string; points: number; entries: ListEntry[] }
 
 // Composition category percentage limits — ported from OWB src/utils/rules.js "grand-army".
