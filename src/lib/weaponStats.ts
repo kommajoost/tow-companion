@@ -22,6 +22,11 @@ export interface WeaponProfile {
    * (e.g. "2", "D3+3"), or "D3+3" for a Rapid Fire bolt thrower; null if it can't. Firing the
    * multiple-shots mode costs an extra −1 To Hit (the "Multiple Shots" rule). */
   multiShots: string | null;
+  /** A DISTINCT profile used in the multiple-shots mode, when the weapon switches to a different
+   * (usually weaker) profile rather than just reusing this one — i.e. a Rapid Fire bolt thrower
+   * fires "smaller bolts" (lower Strength/AP, Armour Bane). null = the multiple-shots mode reuses
+   * this same profile at −1 To Hit (ordinary "Multiple Shots (X)" weapons, e.g. a repeater crossbow). */
+  multiProfile: WeaponProfile | null;
   /** Attacks modifier (e.g. +1 from an additional hand weapon / "Extra Attacks (+1)"). */
   aMod: number;
   specialRules: string[];
@@ -111,6 +116,7 @@ export function parseWeaponProfile(rule: Rule, baseRule?: Rule): WeaponProfile |
     ap: apNum ? parseInt(apNum[0], 10) : 0,
     shots: 1,
     multiShots: msExpr ?? (rapidFire ? 'D3+3' : null),
+    multiProfile: null, // resolved in unitWeapons (Rapid Fire → the separate rapid-fire-profile)
     aMod: extraM ? parseInt(extraM[1], 10) : 0,
     specialRules,
     chargeBonus,
@@ -163,6 +169,7 @@ export function unitWeapons(unit: ArmyUnit, rules: Record<string, Rule>): {
         ap: 0,
         shots: 1,
         multiShots: null,
+        multiProfile: null,
         aMod: 1,
         specialRules: ['Extra Attacks (+1)', 'Requires Two Hands'],
         chargeBonus: false,
@@ -174,6 +181,14 @@ export function unitWeapons(unit: ArmyUnit, rules: Record<string, Rule>): {
     const w = parseWeaponProfile(rules[slug], rules[slug.replace(/-profile$/, '')]);
     if (!w) continue;
     seen.add(slug);
+    // Rapid Fire weapons (the repeater bolt thrower) don't reuse this profile at −1 To Hit — they
+    // fire "smaller bolts" with their OWN, weaker profile (the shared `rapid-fire-profile`: lower
+    // Strength/AP, Armour Bane, Multiple Shots (D3+3)). Attach it so the multiple-shots mode shows
+    // the correct stats, not the single-shot profile with a hit penalty.
+    if (w.specialRules.some((r) => /rapid fire/i.test(r)) && rules['rapid-fire-profile']) {
+      const rf = parseWeaponProfile(rules['rapid-fire-profile']);
+      if (rf) { w.multiProfile = rf; w.multiShots = rf.multiShots ?? w.multiShots; }
+    }
     (w.kind === 'ranged' ? ranged : melee).push(w);
   }
   return { melee, ranged };

@@ -210,6 +210,37 @@ export function summaryLabels(unit: OwbUnit, entry: ListEntry, itemsData?: Magic
   return labels;
 }
 
+// The FULL effective loadout of an entry — active base equipment + chosen upgrades + active sub-
+// options + magic items — with comma-bundled catalogue labels split into individual wargear names.
+// Unlike `summaryLabels` (which lists only non-default upgrades for a roster row), this mirrors what
+// an OWB export lists, so the game can resolve each weapon's profile — including a unit's FREE base
+// weapon (e.g. a Reaper Bolt Thrower's "Repeater bolt thrower", which is the `active` default and so
+// is omitted by summaryLabels, leaving the game with no shooting profile).
+export function loadoutLabels(unit: OwbUnit, entry: ListEntry, itemsData?: MagicItemsData): string[] {
+  const labels: string[] = [];
+  const add = (name?: string) => {
+    if (!name) return;
+    for (const part of name.split(',').map((s) => s.trim()).filter(Boolean)) if (!labels.includes(part)) labels.push(part);
+  };
+  for (const b of unitBlocks(unit)) {
+    if (b.radio) {
+      // single-choice group: the stored pick, else the free `active` default.
+      const i = Number(radioSelected(unit, entry, b.key).split('/')[1]);
+      add(b.items.find((it) => it.i === i)?.opt.name_en);
+    } else {
+      // toggles: every `active` base option plus any the player switched on.
+      for (const { i, opt } of b.items) if (opt.active || entry.opts.includes(`${String(b.key)}/${i}`)) add(opt.name_en);
+    }
+  }
+  for (const g of subOptionGroups(unit, entry)) for (const it of g.items) {
+    if (!it.selected) continue;
+    if (g.exclusive && it.opt.active) continue; // the implicit default — already covered by its parent
+    add(it.opt.name_en);
+  }
+  if (itemsData) for (const it of selectedMagicItems(unit, entry, itemsData)) add(it.item.name_en);
+  return labels;
+}
+
 // One chosen entry in the list. `opts` holds selected option keys "group/index".
 export interface ListEntry { uid: string; cat: Category; unitId: string; count: number; opts: string[] }
 export interface BuilderList { composition: string; rule: string; points: number; entries: ListEntry[] }

@@ -4,7 +4,7 @@
 // profiles) directly from the builder entries + the OWB catalogue.
 
 import type { Army, ArmyUnit, UnitProfile } from '../types';
-import { CATEGORIES, entryPoints, summaryLabels, validate, type BuilderList, type Category, type OwbArmy, type OwbUnit, type MagicItemsData } from './owbBuilder';
+import { CATEGORIES, entryPoints, loadoutLabels, validate, type BuilderList, type Category, type OwbArmy, type OwbUnit, type MagicItemsData } from './owbBuilder';
 
 const CAT_LABEL: Record<Category, string> = {
   characters: 'Characters', core: 'Core', special: 'Special', rare: 'Rare', mercenaries: 'Mercenaries', allies: 'Allies',
@@ -45,7 +45,9 @@ export function builderListToArmy(
       count: multi ? e.count : null,
       points: entryPoints(u, e, opts.itemsData),
       category: CAT_LABEL[e.cat],
-      options: summaryLabels(u, e, opts.itemsData),
+      // Full effective loadout (base weapons + upgrades + magic), so the game resolves shooting/melee
+      // profiles the same way it does for a pasted OWB list — not just the non-default upgrades.
+      options: loadoutLabels(u, e, opts.itemsData),
       specialRules,
       profiles,
     });

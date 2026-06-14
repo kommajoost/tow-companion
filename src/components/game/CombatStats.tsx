@@ -56,6 +56,9 @@ export function CombatStats({ unit }: { unit: ArmyUnit }) {
   const modCount = activeMods.length + (custom !== 0 ? 1 : 0);
   const hit = bs > 0 ? rangedToHit(bs, penalty) : null;
   const shotsShown = rw ? (rw.multiShots && multiOn ? rw.multiShots : String(rw.shots)) : '';
+  // In rapid-fire mode the weapon switches to its OWN (weaker) profile; ordinary Multiple Shots
+  // weapons keep this same profile (only the To Hit penalty applies). `eff` is the profile to show.
+  const eff = rw && multiActive && rw.multiProfile ? rw.multiProfile : rw;
 
   // ── small shared chip styles ──
   const chip: React.CSSProperties = { fontFamily: towFont.serif, fontSize: 11.5, padding: '3px 9px', borderRadius: 999, cursor: 'pointer', lineHeight: 1.35, whiteSpace: 'nowrap' };
@@ -153,10 +156,10 @@ export function CombatStats({ unit }: { unit: ArmyUnit }) {
                 <table style={{ borderCollapse: 'collapse', tableLayout: 'fixed', width: '100%', minWidth: 300, fontSize: 12.5, fontFamily: towFont.serif }}>
                   <thead><tr>{['Range', 'Shots', 'S', 'AP', 'To Hit'].map((h) => <th key={h} style={th}>{h}</th>)}</tr></thead>
                   <tbody><tr>
-                    <td style={td(false)}>{rw.range}</td>
+                    <td style={td(false)}>{eff?.range}</td>
                     <td style={td(multiActive)}>{shotsShown}</td>
-                    <td style={td(false)}>{rw.sAbs ?? '—'}</td>
-                    <td style={td(rw.ap !== 0)}>{fmtAP(rw.ap)}</td>
+                    <td style={td(false)}>{eff?.sAbs ?? '—'}</td>
+                    <td style={td((eff?.ap ?? 0) !== 0)}>{fmtAP(eff?.ap ?? 0)}</td>
                     <td style={{ ...td(true), fontFamily: towFont.display }}>{!hit ? '—' : hit.impossible ? '—' : `${hit.value}+`}</td>
                   </tr></tbody>
                 </table>
@@ -166,7 +169,7 @@ export function CombatStats({ unit }: { unit: ArmyUnit }) {
                   the multiple-shot mode costing −1 To Hit. */}
               {rw.multiShots && (
                 <div style={{ display: 'inline-flex', gap: 3, padding: 3, borderRadius: 9, background: 'rgba(74,55,22,0.07)', border: `1px solid ${TOW.line}`, marginTop: 8, marginRight: 8 }}>
-                  {([['single', `Single shot`], ['multi', `Multiple (${rw.multiShots}) −1`]] as const).map(([k, label]) => {
+                  {([['single', `Single shot`], ['multi', `${rw.multiProfile ? 'Rapid fire' : 'Multiple'} (${rw.multiShots}) −1`]] as const).map(([k, label]) => {
                     const sel = (k === 'multi') === multiOn;
                     return (
                       <button key={k} onClick={() => setMultiOn(k === 'multi')} style={{ padding: '4px 10px', borderRadius: 7, cursor: 'pointer', border: 'none', fontFamily: towFont.serif, fontSize: 11.5, background: sel ? goldGrad : 'transparent', color: sel ? TOW.onGrad : TOW.muted, fontWeight: sel ? 600 : 400, whiteSpace: 'nowrap' }}>
@@ -220,7 +223,7 @@ export function CombatStats({ unit }: { unit: ArmyUnit }) {
                 )}
               </div>
               <span style={{ fontFamily: towFont.serif, fontSize: 11.5, color: TOW.muted, marginLeft: 8 }}>BS {bs > 0 ? bs : '—'}</span>
-              {ruleChips(rw.specialRules)}
+              {ruleChips(eff?.specialRules ?? [])}
             </>
           )}
         </div>
