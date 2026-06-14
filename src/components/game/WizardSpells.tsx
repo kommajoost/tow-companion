@@ -3,6 +3,7 @@ import { useData } from '../../data';
 import { useUI } from '../../state';
 import { TOW, towFont, engraved } from '../../design/tow';
 import { suggestedLores, wizardInfo } from '../../lib/armyRules';
+import { useBackClose } from '../../lib/backStack';
 import type { ArmyUnit, Lore } from '../../types';
 
 const eb = engraved as React.CSSProperties;
@@ -22,6 +23,9 @@ export function WizardSpells({
   const { lores, loreList } = useData();
   const { openRule } = useUI();
   const [open, setOpen] = useState(false);
+
+  // In-app Back closes the spell picker instead of leaving the app.
+  useBackClose(open, () => setOpen(false));
 
   const haveLoreData = loreList.length > 0;
   const { level } = wizardInfo(unit);

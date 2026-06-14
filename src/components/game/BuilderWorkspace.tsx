@@ -4,6 +4,7 @@ import { useUI } from '../../state';
 import { TOW, towFont, engraved } from '../../design/tow';
 import { getRuleIndex, resolveRuleSlug, resolveOptionSlug, wizardInfo } from '../../lib/armyRules';
 import { WizardSpells } from './WizardSpells';
+import { useBackClose } from '../../lib/backStack';
 import type { ArmyUnit } from '../../types';
 import {
   CATEGORIES, COMPOSITION_RULES, validate, entryPoints, unitBlocks, radioSelected, summaryLabels,
@@ -181,6 +182,12 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
   useEffect(() => { fetch(`${BASE}owb/magic-item-text.json`).then((r) => r.json()).then(setMagicText).catch(() => {}); }, []);
   const [openMagicCats, setOpenMagicCats] = useState<Set<string>>(new Set()); // expanded magic-item categories
   const [showIssues, setShowIssues] = useState(false); // expand the list of composition problems
+
+  // In-app Back: close the open overlay instead of leaving the app (deepest layers register last).
+  useBackClose(settings, () => setSettings(false)); // list settings panel/sheet
+  useBackClose(showIssues, () => setShowIssues(false)); // "issues to fix" dropdown
+  useBackClose(sheet !== null, () => setSheet(null)); // mobile pick/edit bottom sheet
+  useBackClose(info !== null, () => setInfo(null)); // profile / magic-item info popup
 
   // ── entry operations ──
   const add = (cat: Category, u: OwbUnit) => {

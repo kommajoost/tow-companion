@@ -5,6 +5,7 @@ import { validate, type Category, type OwbArmy, type OwbUnit, type BuilderList, 
 import { compName } from '../../lib/armies';
 import { BuilderWorkspace } from './BuilderWorkspace';
 import { NewListSetup, type NewListValues } from './NewListSetup';
+import { useBackClose } from '../../lib/backStack';
 
 const BASE = import.meta.env.BASE_URL;
 const eb = engraved as React.CSSProperties;
@@ -39,6 +40,11 @@ export function ListBuilder() {
   const [setupOpen, setSetupOpen] = useState(false);
   const [dragOver, setDragOver] = useState<string | null>(null); // section id being hovered (group id, or '__ungrouped__')
   const [moveMenuFor, setMoveMenuFor] = useState<string | null>(null); // list id whose "move to folder" popover is open
+
+  // In-app Back: each navigable layer owns one history entry (deepest registers last → handled first).
+  useBackClose(!!activeId, () => setActiveId(null)); // open builder → back to My lists
+  useBackClose(setupOpen, () => setSetupOpen(false)); // new-list dialog
+  useBackClose(moveMenuFor !== null, () => setMoveMenuFor(null)); // per-card "move to folder" menu
 
   // Army registry + per-army comps/items + the army-agnostic stat index + magic-items data.
   useEffect(() => {

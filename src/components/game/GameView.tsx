@@ -2,6 +2,7 @@ import { useLayoutEffect, useRef, useState } from 'react';
 import { TOW, towFont, engraved } from '../../design/tow';
 import { Ornament } from '../../design/glyphs';
 import { useGame } from '../../game';
+import { useBackClose } from '../../lib/backStack';
 import { parseArmyList } from '../../lib/armyParser';
 import { unitTotalStrength } from '../../lib/armyRules';
 import { UnitCard } from './UnitCard';
@@ -22,6 +23,8 @@ const Shield = ({ c, size = 22 }: { c: string; size?: number }) => (
 // Wide: a "This game" sidebar (code, You/Opponent, round, VP) beside a roster reading pane.
 export function GameView() {
   const { code, seat, myArmy, myName, opponentArmy, opponentName, setMyArmy, setOpponentArmy, tracker, setTracker, leaveGame } = useGame();
+  // GameView only mounts while a game is active, so a hardware Back here leaves the game.
+  useBackClose(true, leaveGame);
   const [side, setSide] = useState<'me' | 'opp'>('me');
   const rootRef = useRef<HTMLDivElement>(null);
   const [w, setW] = useState(420);

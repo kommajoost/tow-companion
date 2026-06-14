@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { usePersistentState } from '../store';
 import { TOW } from '../design/tow';
 import { HomeCover } from './HomeCover';
@@ -8,9 +8,19 @@ import { GameMode } from './game/GameMode';
 import { ArmyMode } from './game/ArmyMode';
 import { SettingsMode } from './SettingsMode';
 import { NavRail } from './NavRail';
+import { useBackClose } from '../lib/backStack';
 
 type Tab = 'play' | 'browse' | 'game' | 'army' | 'settings';
 type Screen = 'home' | 'app';
+
+// One back-stack registrant per visited tab in the in-memory tab history, so a hardware Back
+// returns to the previously-viewed tab (one level at a time) instead of leaving the app. Uses the
+// SAME central LIFO stack as the overlay layers, so any open modal/sheet/builder (registered later)
+// always handles Back first; only once those are closed do these tab entries take a press.
+function TabBackLayer({ onBack }: { onBack: () => void }) {
+  useBackClose(true, onBack);
+  return null;
+}
 
 const TABS: { id: Tab; label: string; icon: string }[] = [
   { id: 'play', label: 'Turns', icon: '⚔' },
@@ -39,25 +49,48 @@ export function AppShell() {
   const [tab, setTab] = usePersistentState<Tab>('tow:tab', 'play');
   const wide = useWide();
 
-  // The ceremonial cover is the entry point; it has no navigation.
+  // In-memory history of tabs visited this session (oldest → newest-but-one). Switching to a new
+  // tab pushes the one we're leaving; a hardware Back pops it and restores it. Not persisted — on a
+  // fresh load there's nowhere "back" to go, so Back from the entry tab exits the app (correct).
+  const [tabHistory, setTabHistory] = useState<Tab[]>([]);
+
+  // Switch tabs while remembering where we came from (so Back can return there). No-op for the
+  // current tab so re-tapping the active tab doesn't grow history.
+  const navTab = useCallback((t: Tab) => {
+    setTab((cur) => {
+      if (t === cur) return cur;
+      setTabHistory((h) => [...h, cur]);
+      return t;
+    });
+  }, [setTab]);
+
+  // Back: drop the most recent history entry and return to it. Each TabBackLayer below maps to one
+  // entry, so one Back press restores exactly one level.
+  const goBackTab = useCallback(() => {
+    setTabHistory((h) => {
+      if (h.length === 0) return h;
+      const prev = h[h.length - 1];
+      setTab(prev);
+      return h.slice(0, -1);
+    });
+  }, [setTab]);
+
+  // The ceremonial cover is the entry point; it has no navigation. Leaving to / returning from the
+  // cover resets tab history — the shell unmounts its content, so there's no "back" across it.
+  const enterApp = (t: Tab) => { setTabHistory([]); setTab(t); setScreen('app'); };
   if (screen === 'home') {
     return (
       <HomeCover
-        onBegin={() => {
-          setTab('play');
-          setScreen('app');
-        }}
-        onArmy={() => {
-          setTab('army');
-          setScreen('app');
-        }}
-        onRulebook={() => {
-          setTab('browse');
-          setScreen('app');
-        }}
+        onBegin={() => enterApp('play')}
+        onArmy={() => enterApp('army')}
+        onRulebook={() => enterApp('browse')}
       />
     );
   }
+
+  // One Back-trap per remembered tab, so Back walks back through visited tabs one at a time before
+  // it's allowed to leave the app. Rendered alongside the content in both layouts.
+  const tabBackLayers = tabHistory.map((_, i) => <TabBackLayer key={i} onBack={goBackTab} />);
 
   const content = (
     <main className="relative min-h-0 flex-1 overflow-hidden">
@@ -82,7 +115,8 @@ export function AppShell() {
   if (wide) {
     return (
       <div className="flex h-full" style={{ flexDirection: 'row' }}>
-        <NavRail tab={tab} onTab={setTab} onHome={() => setScreen('home')} />
+        {tabBackLayers}
+        <NavRail tab={tab} onTab={navTab} onHome={() => setScreen('home')} />
         {content}
       </div>
     );
@@ -91,6 +125,7 @@ export function AppShell() {
   // ── Phone: content + bottom tab bar ──
   return (
     <div className="flex h-full flex-col">
+      {tabBackLayers}
       {content}
       <nav
         className="tow-leather flex items-stretch pb-safe"
@@ -101,7 +136,7 @@ export function AppShell() {
           return (
             <button
               key={t.id}
-              onClick={() => setTab(t.id)}
+              onClick={() => navTab(t.id)}
               className="flex flex-1 flex-col items-center gap-0.5 py-2.5 text-[11px]"
               style={{ color: active ? TOW.goldDeep : TOW.muted, fontFamily: 'var(--font-display)' }}
             >

@@ -1,6 +1,16 @@
 import { useEffect, useState } from 'react';
 import { useUI } from '../state';
+import { useBackClose } from '../lib/backStack';
 import { RuleContent } from './RuleContent';
+
+// One back-stack registrant per stacked rule level, so a hardware Back closes ONE rule at a time
+// (matching the in-sheet "‹ Back" / Escape). Rendering one per level keeps the central LIFO stack
+// in step with the rule stack; collapsing the whole stack (backdrop / ✕) unmounts each level and
+// the hook's cleanup consumes its history entry, so Back stays balanced.
+function RuleBackLayer({ onClose }: { onClose: () => void }) {
+  useBackClose(true, onClose);
+  return null;
+}
 
 // Shows a rule looked up from an inline term. Tapping further terms pushes onto a stack, so you
 // can drill down and step back without losing place. On phones it's a bottom sheet; on wide
@@ -36,6 +46,10 @@ export function RuleSheet() {
 
   return (
     <div className={`fixed inset-0 z-50 flex ${wide ? 'items-center justify-center p-4' : 'flex-col justify-end'}`}>
+      {/* One Back-trap per stacked rule: a hardware Back closes the top rule (one level). */}
+      {sheetStack.map((slug, i) => (
+        <RuleBackLayer key={`${slug}-${i}`} onClose={closeTopRule} />
+      ))}
       <div
         className="absolute inset-0 bg-black/60 backdrop-blur-[1px]"
         onClick={closeAllRules}
