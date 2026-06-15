@@ -20,7 +20,7 @@ export interface OwbOption {
   // Some options unlock a magic-item allowance when taken — e.g. a "Standard bearer" command option
   // lets the unit buy a magic standard (`{ types: ["banner"], maxPoints: 50 }`). Surfaced as an extra
   // magic category (gated on the option being active) by `magicCategories`.
-  magic?: { types: string[]; maxPoints?: number };
+  magic?: { types: string[]; maxPoints?: number; maxItemsPerCategory?: number };
 }
 // A unit's magic-item "section" (from the catalogue's per-unit `items[]`). Each section permits a
 // set of item `types` (mapping to the `type` field in magic-items.json) and carries its own
@@ -469,18 +469,28 @@ export function magicCategories(unit: OwbUnit, armyItemLists: string[], itemsDat
   });
   // Option-unlocked allowances (magic standards from a Standard bearer, …) — active options only.
   if (entry) {
+    // The army's "magic standard" item type(s) — usually "banner", but Dwarfs inscribe runes on the
+    // standard ("banner-runes"/Standard Runes). Used to fill in a Battle Standard Bearer's allowance
+    // for army books whose BSB option is missing the explicit `magic` field in the data.
+    const bannerTypes = [...new Set(pool.map((it) => it.type).filter((t) => /banner/i.test(t)))];
     for (const { key: g } of OPTION_GROUPS) {
       groupItems(unit, g).forEach((opt, idx) => {
-        if (!opt.magic || !Array.isArray(opt.magic.types) || !opt.magic.types.length) return;
+        // Use the option's declared magic allowance; otherwise, a Battle Standard Bearer (a CHARACTER
+        // upgrade — the only model that may carry a magic standard) always gets one, even when the
+        // catalogue omits the field. Plain unit "Standard bearer"s without a field are NOT granted one.
+        let magic = opt.magic;
+        if ((!magic || !magic.types?.length) && /battle standard bearer/i.test(opt.name_en || '') && bannerTypes.length) {
+          magic = { types: bannerTypes, maxPoints: 0 }; // 0 = no points limit
+        }
+        if (!magic || !Array.isArray(magic.types) || !magic.types.length) return;
         if (!parentActive(unit, entry, g, opt, idx)) return;
-        const types = opt.magic.types;
-        const items = pool.filter((it) => types.includes(it.type));
+        const items = pool.filter((it) => magic!.types.includes(it.type));
         if (!items.length) return;
-        // OWB encodes "no points limit" as maxPoints 0 (e.g. a Battle Standard Bearer may take a
-        // magic standard of ANY value) — treat that as unlimited (Infinity), not a 0 budget that
-        // would disable every option.
-        const mp = opt.magic.maxPoints;
-        out.push({ id: types[0], label: magicTypeLabel(types[0]), groupLabel: magicTypeLabel(types[0]), budgetGroup: `opt:${String(g)}:${idx}`, types, maxPoints: typeof mp === 'number' && mp > 0 ? mp : Infinity, maxItems: 1, items });
+        // OWB encodes "no points limit" as maxPoints 0 (a BSB may take a magic standard of ANY value)
+        // — treat that as unlimited (Infinity), not a 0 budget that would disable every option.
+        const mp = magic.maxPoints;
+        const cap = magic.maxItemsPerCategory; // e.g. a Dwarf BSB standard may bear up to 3 runes
+        out.push({ id: magic.types[0], label: magicTypeLabel(magic.types[0]), groupLabel: magicTypeLabel(magic.types[0]), budgetGroup: `opt:${String(g)}:${idx}`, types: magic.types, maxPoints: typeof mp === 'number' && mp > 0 ? mp : Infinity, maxItems: typeof cap === 'number' && cap > 0 ? cap : 1, items });
       });
     }
   }
