@@ -56,11 +56,21 @@ async function fetchOne(slug, buildId) {
   return null;
 }
 
+const deAccent = (x) => (x || '').normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/æ/gi, 'ae');
 async function fetchEntry(canonicalSlug, name, buildId) {
-  // The upstream URL slug strips apostrophes ("Duellist's Blades" → "duellists-blades") while our
-  // canonical id hyphenates them ("duellist-s-blades"). Try both URL forms; key stays canonical.
-  const alt = slugify((name || '').replace(/['’]/g, ''));
-  for (const s of [...new Set([canonicalSlug, alt])]) {
+  // The upstream URL slug strips apostrophes/accents and spells out "&" ("Duellist's Blades" →
+  // "duellists-blades", "Banner of Châlons" → "banner-of-chalons", "Crook & Flail" → "crook-and-flail")
+  // while our canonical id just hyphenates. Try the variants; the snapshot KEY stays canonical.
+  const n = name || '';
+  const cands = [
+    canonicalSlug,
+    slugify(n.replace(/['’]/g, '')),
+    slugify(deAccent(n)),
+    slugify(deAccent(n).replace(/['’]/g, '')),
+    slugify(deAccent(n).replace(/&/g, ' and ')),
+    slugify(deAccent(n).replace(/&/g, '')),
+  ];
+  for (const s of [...new Set(cands)].filter(Boolean)) {
     const e = await fetchOne(s, buildId);
     if (e?.fields) return e;
   }
@@ -96,7 +106,11 @@ await mapLimit(slugs, 10, async (slug, idx) => {
   const f = entry?.fields;
   if (!f) { if (idx % 50 === 0) process.stdout.write(`. ${idx}\n`); return; }
   const description = f.description ? clean(flatten(f.description)) : '';
-  const body = f.body ? clean(flatten(f.body)) : '';
+  // The body is often just embedded rule entries (no text) — e.g. a magic weapon's effect is
+  // "Armour Bane (1), Magical Attacks, …". Flattened body is then empty, so fall back to bodyIndex
+  // (Contentful's flattened index), which carries those rule names.
+  let body = f.body ? clean(flatten(f.body)) : '';
+  if (!body && f.bodyIndex) body = clean(String(f.bodyIndex));
   if (description || body) { result[slug] = { description, body }; ok++; }
   if (idx % 50 === 0) process.stdout.write(`. ${idx}\n`);
 });
