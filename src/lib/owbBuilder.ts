@@ -34,7 +34,7 @@ export interface OwbItemSection {
 export interface OwbUnit {
   id: string; name_en: string; points?: number; minimum?: number; maximum?: number;
   command?: OwbOption[]; equipment?: OwbOption[]; armor?: OwbOption[]; options?: OwbOption[];
-  mounts?: OwbOption[]; lores?: OwbOption[]; specialRules?: { name_en?: string };
+  mounts?: OwbOption[]; lores?: string[]; specialRules?: { name_en?: string };
   items?: OwbItemSection[];
 }
 export type OwbArmy = Record<Category, OwbUnit[]>;

@@ -2,10 +2,8 @@ import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useData } from '../../data';
 import { useUI } from '../../state';
 import { TOW, towFont, engraved } from '../../design/tow';
-import { getRuleIndex, resolveRuleSlug, resolveOptionSlug, wizardInfo } from '../../lib/armyRules';
-import { WizardSpells } from './WizardSpells';
+import { getRuleIndex, resolveRuleSlug, resolveOptionSlug } from '../../lib/armyRules';
 import { useBackClose } from '../../lib/backStack';
-import type { ArmyUnit } from '../../types';
 import {
   CATEGORIES, COMPOSITION_RULES, validate, entryPoints, unitBlocks, radioSelected, summaryLabels,
   subOptionGroups, toggleSubOption, setExclusiveSubOption,
@@ -152,7 +150,7 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
   itemsData?: MagicItemsData;
   armyItemLists?: string[];
 }) {
-  const { rules } = useData();
+  const { rules, lores } = useData();
   const { openRule } = useUI();
   const ruleIdx = useMemo(() => getRuleIndex(rules), [rules]);
   const getUnit = (cat: Category, id: string): OwbUnit | undefined => army[cat]?.find((u) => u.id === id);
@@ -181,28 +179,22 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
   const [tab, setTab] = useState<Category>('characters');
   const [q, setQ] = useState('');
   const [settings, setSettings] = useState(false);
-  const [info, setInfo] = useState<{ title: string; rows: StatRow[]; note?: string; ruleSlug?: string; flavour?: string; body?: string; ruleChips?: { name: string; slug: string | null }[] } | null>(null); // mount/unit profile / magic-item popup
+  const [info, setInfo] = useState<{ title: string; rows: StatRow[]; note?: string; ruleSlug?: string; flavour?: string; body?: string; ruleChips?: { name: string; slug: string | null }[]; chipsLabel?: string } | null>(null); // mount/unit profile / magic-item / lore popup
   const [magicText, setMagicText] = useState<MagicText>({});
   const [mountText, setMountText] = useState<MountText>({});
   useEffect(() => { fetch(`${BASE}owb/magic-item-text.json`).then((r) => r.json()).then(setMagicText).catch(() => {}); }, []);
   useEffect(() => { fetch(`${BASE}owb/mount-text.json`).then((r) => r.json()).then(setMountText).catch(() => {}); }, []);
-  // One-time migration: older imports/lists stored every magic pick under the section's FIRST type
-  // (e.g. a talisman as `magic/weapon/…`). The per-type UI now keys by the item's real type, so such
-  // picks showed unchecked while still costing points. Resolve each pick id-based and rewrite its key
-  // to the canonical `magic/<type>/<id>`. Runs once when the catalogue + item data are ready.
+  // One-time migration of older lists: magic picks once stored under the section's FIRST type (e.g. a
+  // talisman as `magic/weapon/…`) show unchecked under the per-type UI while still costing points.
+  // Canonicalise stale keys to `magic/<type>/<id>`. We DETECT via the closure (read-only) and only
+  // then APPLY through a FUNCTIONAL onUpdate that rewrites the CURRENT entries — never a captured
+  // snapshot — so it can't clobber a concurrent edit, and it doesn't touch lists that are already fine.
   useEffect(() => {
     if (!itemsData) return;
-    let changed = false;
-    const entries = list.entries.map((e) => {
-      const u = getUnit(e.cat, e.unitId);
-      if (!u) return e;
-      const remap = new Map(selectedMagicItems(u, e, itemsData, armyItemLists).map((r) => [r.key, `magic/${r.category.id}/${magicItemId(r.item)}`]));
-      if (remap.size === 0) return e;
-      const newOpts = e.opts.map((k) => remap.get(k) ?? k);
-      if (newOpts.some((k, i) => k !== e.opts[i])) { changed = true; return { ...e, opts: newOpts }; }
-      return e;
-    });
-    if (changed) onUpdate(() => ({ entries }));
+    const canon = (e: ListEntry, u: OwbUnit) => new Map(selectedMagicItems(u, e, itemsData, armyItemLists).map((r) => [r.key, `magic/${r.category.id}/${magicItemId(r.item)}`] as const));
+    const hasStale = list.entries.some((e) => { const u = getUnit(e.cat, e.unitId); return !!u && [...canon(e, u)].some(([k, c]) => k !== c); });
+    if (!hasStale) return;
+    onUpdate((l) => ({ entries: l.entries.map((e) => { const u = getUnit(e.cat, e.unitId); if (!u) return e; const m = canon(e, u); return { ...e, opts: e.opts.map((k) => m.get(k) ?? k) }; }) }));
   }, [itemsData]); // eslint-disable-line react-hooks/exhaustive-deps
   const [openMagicCats, setOpenMagicCats] = useState<Set<string>>(new Set()); // expanded magic-item categories
   const [showIssues, setShowIssues] = useState(false); // expand the list of composition problems
@@ -462,42 +454,36 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
           );
         })}
 
-        {/* Wizards — choose Lore(s) of Magic + spells right here, so the pick travels into the game
-            Army (builderToArmy carries entry.lores/entry.spells onto the ArmyUnit). Reuses the same
-            in-game picker; the synthesized ArmyUnit feeds wizardInfo/WizardSpells the loadout labels
-            (incl. the chosen "Wizard"/"Level N Wizard" sub-option) so the level is detected. */}
+        {/* Wizards — CHOOSE A LORE OF MAGIC (not spells). The allowed lores per wizard come straight
+            from the catalogue (`u.lores`, rules-driven & army-specific); a wizard knows one lore. The
+            pick is stored on entry.lores and carried into the game by builderToArmy (where spells are
+            then rolled/ticked). Each lore has an eye that previews its spells. */}
         {(() => {
-          const wizUnit: ArmyUnit = {
-            id: entry.uid,
-            name: u.name_en,
-            count: null,
-            points: null,
-            category: '',
-            options: loadoutLabels(u, entry, itemsData),
-            specialRules: (u.specialRules?.name_en || '').split(',').map((s) => s.trim()).filter(Boolean),
-            profiles: [],
-            lores: entry.lores,
-            spells: entry.spells,
-          };
-          return wizardInfo(wizUnit).isWizard ? (
-            <WizardSpells
-              unit={wizUnit}
-              editable
-              onChange={(patch) =>
-                onUpdate((l) => ({
-                  entries: l.entries.map((e) =>
-                    e.uid === entry.uid
-                      ? {
-                          ...e,
-                          ...(patch.lores !== undefined ? { lores: patch.lores } : {}),
-                          ...(patch.spells !== undefined ? { spells: patch.spells } : {}),
-                        }
-                      : e,
-                  ),
-                }))
-              }
-            />
-          ) : null;
+          const allowed = (u.lores ?? []).filter((s) => lores[s]);
+          if (allowed.length === 0) return null;
+          const chosen = entry.lores ?? [];
+          const setLore = (slug: string, on: boolean) =>
+            onUpdate((l) => ({ entries: l.entries.map((e) => (e.uid === entry.uid ? { ...e, lores: on ? [] : [slug], spells: [] } : e)) }));
+          return (
+            <div style={{ marginBottom: 12 }}>
+              <div style={{ ...eb, fontSize: 8.5, color: TOW.muted, marginBottom: 7 }}>Lore of Magic</div>
+              {allowed.map((slug) => {
+                const lore = lores[slug];
+                const on = chosen.includes(slug);
+                return (
+                  <div key={slug} style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
+                    <button onClick={() => setLore(slug, on)} style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 10, padding: '8px 11px', borderRadius: 9, cursor: 'pointer', textAlign: 'left', border: `1px solid ${on ? TOW.goldDeep : TOW.line}`, background: on ? 'rgba(138,108,48,0.10)' : TOW.cardLt }}>
+                      <span style={{ width: 18, height: 18, flexShrink: 0, borderRadius: 99, border: `1.5px solid ${on ? TOW.goldDeep : TOW.lineStrong}`, background: on ? TOW.goldDeep : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        {on && <svg width="11" height="11" viewBox="0 0 12 12"><path d="M2.5 6.4l2.2 2.2 4.8-5" stroke="#f4eedb" strokeWidth="1.8" fill="none" strokeLinecap="round" strokeLinejoin="round" /></svg>}
+                      </span>
+                      <span style={{ flex: 1, fontFamily: towFont.serif, fontSize: 13.5, color: TOW.ink }}>{lore.name}</span>
+                    </button>
+                    <Eye onClick={() => setInfo({ title: lore.name, rows: [], note: `${(lore.spells ?? []).length} spell${(lore.spells ?? []).length === 1 ? '' : 's'}`, chipsLabel: 'Spells', ruleChips: (lore.spells ?? []).map((sp: { slug: string; name: string; signature?: boolean }) => ({ name: sp.signature ? `✦ ${sp.name}` : sp.name, slug: sp.slug })) })} />
+                  </div>
+                );
+              })}
+            </div>
+          );
         })()}
       </>
     );
@@ -807,7 +793,7 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
 // A small centred popup. Shows a mount/unit stat profile (rows) for options without a rule page, or
 // — when `rows` is empty and a `note` is given — a single muted italic meta line (e.g. magic items,
 // which have no verbatim rule text in our data: name + "Magic item · <category> · <pts> pts").
-function InfoPopup({ info, onClose, onOpenRule }: { info: { title: string; rows: StatRow[]; note?: string; ruleSlug?: string; flavour?: string; body?: string; ruleChips?: { name: string; slug: string | null }[] }; onClose: () => void; onOpenRule?: (slug: string) => void }) {
+function InfoPopup({ info, onClose, onOpenRule }: { info: { title: string; rows: StatRow[]; note?: string; ruleSlug?: string; flavour?: string; body?: string; ruleChips?: { name: string; slug: string | null }[]; chipsLabel?: string }; onClose: () => void; onOpenRule?: (slug: string) => void }) {
   const showNote = info.rows.length === 0 && !!info.note;
   return (
     <div onClick={onClose} style={{ position: 'absolute', inset: 0, zIndex: 60, background: 'rgba(30,20,8,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 }}>
@@ -824,7 +810,7 @@ function InfoPopup({ info, onClose, onOpenRule }: { info: { title: string; rows:
         {info.body && <div style={{ fontFamily: towFont.serif, fontSize: 13.5, color: TOW.ink, lineHeight: 1.55, whiteSpace: 'pre-wrap' }}>{info.body}</div>}
         {info.ruleChips && info.ruleChips.length > 0 && (
           <>
-            <div style={{ ...eb, fontSize: 8.5, color: TOW.muted, margin: (info.rows.length ? 12 : 0) + 'px 0 7px' }}>Special rules</div>
+            <div style={{ ...eb, fontSize: 8.5, color: TOW.muted, margin: (info.rows.length || info.note ? 12 : 0) + 'px 0 7px' }}>{info.chipsLabel ?? 'Special rules'}</div>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
               {info.ruleChips.map((c, i) => (c.slug && onOpenRule
                 ? <button key={i} onClick={() => onOpenRule(c.slug!)} style={{ fontFamily: towFont.serif, fontSize: 12, padding: '3px 10px', borderRadius: 99, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(138,108,48,0.10)', color: TOW.goldDeep, cursor: 'pointer' }}>{c.name}</button>
