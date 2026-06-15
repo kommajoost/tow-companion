@@ -176,6 +176,10 @@ export interface ArmyUnit {
   lores?: string[];
   /** Wizard only: selected spell rule-keys (`spell-<x>`) rolled at game start. */
   spells?: string[];
+  /** Magic weapons chosen in the builder. They carry special rules rather than a profile table, so
+   *  they aren't found by resolving `options` to weapon profiles — they're surfaced here so the
+   *  loadout weapon picker can offer them (using the wielder's base profile + these special rules). */
+  magicWeapons?: { name: string; kind: 'melee' | 'ranged'; specialRules: string[] }[];
 }
 
 export interface Army {

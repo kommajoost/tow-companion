@@ -4,7 +4,21 @@
 // profiles) directly from the builder entries + the OWB catalogue.
 
 import type { Army, ArmyUnit, UnitProfile } from '../types';
-import { CATEGORIES, entryPoints, loadoutLabels, validate, type BuilderList, type Category, type OwbArmy, type OwbUnit, type MagicItemsData } from './owbBuilder';
+import { CATEGORIES, entryPoints, loadoutLabels, magicItemId, selectedMagicItems, validate, type BuilderList, type Category, type OwbArmy, type OwbUnit, type MagicItemsData } from './owbBuilder';
+
+/** Per-item flavour + rules text snapshot (public/owb/magic-item-text.json), keyed by item slug. */
+export type MagicText = Record<string, { description?: string; body?: string }>;
+
+// A magic weapon mostly fires/strikes as the wielder's mundane weapon but adds special rules; the
+// snapshot body is usually a clean "Rule, Rule, Rule" list (e.g. "Armour Bane (1), Magical Attacks").
+// Prose ("Notes: …" or full sentences) is kept as a single line rather than chopped into fake chips.
+const RANGED_WEAPON = /\bbow\b|crossbow|handbow|pistol|\bsling\b|throwing|thrown|shooting|\brange\b/i;
+function magicWeaponRules(body?: string): string[] {
+  const t = (body || '').replace(/\s+/g, ' ').trim();
+  if (!t) return [];
+  if (/^notes\b/i.test(t) || /\.\s/.test(t)) return [t];
+  return t.split(',').map((s) => s.trim()).filter(Boolean);
+}
 
 const CAT_LABEL: Record<Category, string> = {
   characters: 'Characters', core: 'Core', special: 'Special', rare: 'Rare', mercenaries: 'Mercenaries', allies: 'Allies',
@@ -27,7 +41,7 @@ export function builderListToArmy(
   list: NamedBuilderList,
   catalogue: OwbArmy,
   statsFor: (name: string) => StatRow[],
-  opts: { faction?: string; composition?: string; itemsData?: MagicItemsData; armyItemLists?: string[] } = {},
+  opts: { faction?: string; composition?: string; itemsData?: MagicItemsData; armyItemLists?: string[]; magicText?: MagicText } = {},
 ): Army {
   const getUnit = getUnitFrom(catalogue);
   const units: ArmyUnit[] = [];
@@ -39,6 +53,16 @@ export function builderListToArmy(
       label: r.Name, stats: STAT_COLS.map((k) => ({ k, v: r[k] ?? '-' })),
     }));
     const specialRules = (u.specialRules?.name_en || '').split(',').map((s) => s.trim()).filter(Boolean);
+    // Selected magic weapons (item type "weapon") → surfaced as pickable loadout weapons in the game.
+    const magicWeapons = opts.itemsData
+      ? selectedMagicItems(u, e, opts.itemsData, opts.armyItemLists)
+          .filter(({ item }) => /weapon/i.test(item.type || ''))
+          .map(({ item }) => {
+            const rules = magicWeaponRules(opts.magicText?.[magicItemId(item)]?.body);
+            const kind: 'melee' | 'ranged' = RANGED_WEAPON.test(`${item.name_en} ${rules.join(' ')}`) ? 'ranged' : 'melee';
+            return { name: item.name_en, kind, specialRules: rules };
+          })
+      : [];
     units.push({
       id: e.uid,
       name: u.name_en,
@@ -53,6 +77,7 @@ export function builderListToArmy(
       // Lore/spell choices made in the builder (Wizards) → carried into the game Army.
       lores: e.lores,
       spells: e.spells,
+      magicWeapons: magicWeapons.length ? magicWeapons : undefined,
     });
   }
   // Keep roster order grouped by category, mirroring the builder.

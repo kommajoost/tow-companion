@@ -203,6 +203,28 @@ export function unitWeapons(unit: ArmyUnit, rules: Record<string, Rule>): {
       (w.kind === 'ranged' ? ranged : melee).push(w);
     }
   }
+  // Magic weapons carry special rules, not a profile table, so they don't resolve above. Surface each
+  // as a pickable weapon using the wielder's base profile (melee: sMod 0; ranged: S unknown) + its rules.
+  for (const mw of unit.magicWeapons ?? []) {
+    const slug = `magic-weapon:${mw.name}`;
+    if (seen.has(slug)) continue;
+    seen.add(slug);
+    (mw.kind === 'ranged' ? ranged : melee).push({
+      slug,
+      name: mw.name,
+      kind: mw.kind,
+      range: mw.kind === 'ranged' ? '' : 'Combat',
+      sMod: mw.kind === 'ranged' ? null : 0,
+      sAbs: null,
+      ap: 0,
+      shots: 1,
+      multiShots: null,
+      multiProfile: null,
+      aMod: 0,
+      specialRules: mw.specialRules,
+      chargeBonus: false,
+    });
+  }
   return { melee, ranged };
 }
 

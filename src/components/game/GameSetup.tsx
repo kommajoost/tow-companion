@@ -3,7 +3,7 @@ import { TOW, towFont, engraved } from '../../design/tow';
 import { usePersistentState } from '../../store';
 import { useGame } from '../../game';
 import { parseArmyList } from '../../lib/armyParser';
-import { builderListToArmy, listTotal } from '../../lib/builderToArmy';
+import { builderListToArmy, listTotal, type MagicText } from '../../lib/builderToArmy';
 import { compName } from '../../lib/armies';
 import type { BuilderList, OwbArmy, MagicItemsData } from '../../lib/owbBuilder';
 import { OwbInstructions } from './OwbInstructions';
@@ -40,10 +40,12 @@ export function GameSetup() {
   const [itemsByArmy, setItemsByArmy] = useState<Record<string, string[]>>({}); // slug → magic-item lists
   const [statIdx, setStatIdx] = useState<Record<string, { stats?: StatRow[] }> | null>(null);
   const [itemsData, setItemsData] = useState<MagicItemsData | null>(null);
+  const [magicText, setMagicText] = useState<MagicText>({});
 
   useEffect(() => {
     fetch(`${BASE}owb/rules-index.json`).then((r) => r.json()).then(setStatIdx).catch(() => {});
     fetch(`${BASE}owb/magic-items.json`).then((r) => r.json()).then(setItemsData).catch(() => {});
+    fetch(`${BASE}owb/magic-item-text.json`).then((r) => r.json()).then(setMagicText).catch(() => {});
     fetch(`${BASE}owb/index.json`).then((r) => r.json()).then((idx) => {
       if (Array.isArray(idx?.armies)) setArmyNames(Object.fromEntries(idx.armies.map((a: { slug: string; name: string }) => [a.slug, a.name])));
     }).catch(() => {});
@@ -78,7 +80,7 @@ export function GameSetup() {
   const pickedCatalogue = pickedList ? catalogues[pickedList.army] ?? null : null;
   const army: Army | null =
     pickedList && pickedCatalogue
-      ? builderListToArmy(pickedList, pickedCatalogue, statsFor, { faction: armyNameFor(pickedList.army), composition: compName(pickedList.composition, pickedList.army), itemsData: itemsData ?? undefined, armyItemLists: itemsByArmy[pickedList.army] ?? [] })
+      ? builderListToArmy(pickedList, pickedCatalogue, statsFor, { faction: armyNameFor(pickedList.army), composition: compName(pickedList.composition, pickedList.army), itemsData: itemsData ?? undefined, armyItemLists: itemsByArmy[pickedList.army] ?? [], magicText })
       : paste.trim() ? parseArmyList(paste) : null;
 
   const loadGames = useCallback(async () => {
