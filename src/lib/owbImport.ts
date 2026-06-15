@@ -107,7 +107,12 @@ export function importOwbText(text: string, army: OwbArmy, itemsData?: MagicItem
     // a line that matches neither a normal group nor a magic item is still silently dropped (as today).
     const magicOpts: string[] = [];
     if (itemsData && armyItemLists && isCharacter(cat)) {
-      const mcats = magicCategories(unit, armyItemLists, itemsData);
+      // Pass an in-progress entry carrying the options matched so far, so OPTION-ATTACHED magic
+      // categories — a Battle Standard Bearer's (or Standard Bearer's) magic banner, which is only
+      // unlocked when that command option is active — are generated. Without the entry those
+      // categories don't exist and the pasted banner line silently fails to import.
+      const inProgress: ListEntry = { uid: '', cat, unitId: unit.id, count, opts: [...radioChoice.values(), ...toggles, ...mountOpts] };
+      const mcats = magicCategories(unit, armyItemLists, itemsData, inProgress);
       const countByCat = new Map<string, number>();
       pu.options.forEach((optText, idx) => {
         if (consumed.has(idx)) return;

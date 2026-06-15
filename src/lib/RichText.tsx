@@ -108,9 +108,16 @@ function ChartBlock({ slug, name }: { slug: string; name?: string }) {
   );
 }
 
-// A non-chart entry embedded as a block → a tappable card that opens the pop-up.
+// A non-chart entry embedded as a block → a tappable card that opens the pop-up. Some entries are
+// embedded as a block but aren't standalone rule pages in our offline data (magic-item-type
+// groupings, lore spell-lists, …). For those we render the label as plain text rather than a
+// tappable card that would dead-end on a "not available offline" sheet.
 function BlockEntry({ slug, name }: { slug: string; name: string }) {
+  const { getRule } = useData();
   const { openRule } = useUI();
+  if (!getRule(slug)) {
+    return <p className="my-2 font-display text-xs uppercase tracking-wide text-ink-faint">{name}</p>;
+  }
   return (
     <button
       onClick={() => openRule(slug)}
@@ -119,6 +126,32 @@ function BlockEntry({ slug, name }: { slug: string; name: string }) {
       <span className="min-w-0 truncate">{name}</span>
       <span className="shrink-0 text-ink-faint">›</span>
     </button>
+  );
+}
+
+// A magic lore's spell-list sub-entry (`<lore>-lore`, Contentful kind "magicLore") is embedded in
+// the lore's rule body but is NOT a standalone rule page — its spells live in our lores data. Show
+// them inline (signature ✦ / number + name, each opening the spell) so the lore pop-up is complete,
+// instead of dead-ending on a "not available offline" link (e.g. Grand Cathay's Lore of Yang/Yin,
+// which are reached as rule pages rather than via the in-game spell picker).
+function LoreSpellList({ slug, name }: { slug: string; name: string }) {
+  const { lores } = useData();
+  const { openRule } = useUI();
+  const lore = lores[slug.replace(/-lore$/, '')];
+  if (!lore?.spells?.length) return <BlockEntry slug={slug} name={name} />;
+  return (
+    <div className="my-2 flex flex-col gap-0.5">
+      {lore.spells.map((sp) => (
+        <button
+          key={sp.slug}
+          onClick={() => openRule(sp.slug)}
+          className="flex w-full items-baseline gap-2.5 rounded-lg px-2 py-1.5 text-left text-accent active:bg-surface-3"
+        >
+          <span className="w-4 shrink-0 text-center text-sm text-ink-faint">{sp.signature ? '✦' : sp.number}</span>
+          <span className="min-w-0">{sp.name}</span>
+        </button>
+      ))}
+    </div>
   );
 }
 
@@ -207,6 +240,10 @@ function Node({ node }: { node: RichNode }): ReactNode {
       const slug = target?.fields?.slug;
       const name = target?.fields?.name;
       if (!slug) return null;
+      // A magic lore's spell list (embedded sub-entry) → show the spells inline.
+      if (target?.kind === 'magicLore' || slug.endsWith('-lore')) {
+        return <LoreSpellList slug={slug} name={name ?? slug} />;
+      }
       // Charts and weapon profiles are shown inline as a table, not as a tappable link.
       if (
         target?.kind === 'chart' ||
