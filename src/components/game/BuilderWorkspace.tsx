@@ -198,6 +198,7 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
   }, [itemsData]); // eslint-disable-line react-hooks/exhaustive-deps
   const [openMagicCats, setOpenMagicCats] = useState<Set<string>>(new Set()); // expanded magic-item categories
   const [showIssues, setShowIssues] = useState(false); // expand the list of composition problems
+  const [dragOverEntry, setDragOverEntry] = useState<{ uid: string; before: boolean } | null>(null); // roster row hovered during a reorder drag (+ which edge)
 
   // In-app Back: close the open overlay instead of leaving the app (deepest layers register last).
   useBackClose(settings, () => setSettings(false)); // list settings panel/sheet
@@ -225,6 +226,19 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
     onUpdate((l) => { const src = l.entries.find((e) => e.uid === uid); if (!src) return {}; const i = l.entries.findIndex((e) => e.uid === uid); const copy: ListEntry = { ...src, uid: id, opts: [...src.opts] }; return { entries: [...l.entries.slice(0, i + 1), copy, ...l.entries.slice(i + 1)] }; });
     return id;
   };
+  // Drag-reorder a roster entry. Reorders WITHIN a category only — ignore drops across categories.
+  const reorderEntry = (draggedUid: string, targetUid: string, before: boolean) =>
+    onUpdate((l) => {
+      const arr = [...l.entries];
+      const di = arr.findIndex((x) => x.uid === draggedUid);
+      const tEntry = arr.find((x) => x.uid === targetUid);
+      const dEntry = arr[di];
+      if (di < 0 || !tEntry || !dEntry || tEntry.cat !== dEntry.cat) return {};
+      arr.splice(di, 1);
+      const ti = arr.findIndex((x) => x.uid === targetUid);
+      arr.splice(before ? ti : ti + 1, 0, dEntry);
+      return { entries: arr };
+    });
 
   const openOptionRule = (label: string) => { const s = resolveOptionSlug(cleanLabel(label), ruleIdx); if (s) openRule(s); };
   const openRuleByName = (label: string) => { const s = resolveRuleSlug(cleanLabel(label), ruleIdx); if (s) openRule(s); };
@@ -511,8 +525,19 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
   const rosterRow = (e: ListEntry, u: OwbUnit, selected: boolean, onClick: () => void) => {
     const sum = summaryLabels(u, e, itemsData);
     const multi = (u.maximum ?? 1) !== 1 || (u.minimum ?? 1) > 1;
+    const dropLine = dragOverEntry?.uid === e.uid ? dragOverEntry.before : null; // true=top, false=bottom, null=none
     return (
-      <div key={e.uid} onClick={onClick} style={{ cursor: 'pointer', padding: '11px 13px', borderRadius: 11, marginBottom: 7, border: `1px solid ${selected ? TOW.goldDeep : TOW.line}`, background: selected ? TOW.cardLt : TOW.cardLt, boxShadow: selected ? '0 2px 12px rgba(122,93,36,0.14)' : 'none' }}>
+      <div
+        key={e.uid}
+        onClick={onClick}
+        draggable
+        onDragStart={(ev) => { ev.dataTransfer.setData('text/plain', e.uid); ev.dataTransfer.effectAllowed = 'move'; }}
+        onDragOver={(ev) => { ev.preventDefault(); const r = ev.currentTarget.getBoundingClientRect(); setDragOverEntry({ uid: e.uid, before: ev.clientY < r.top + r.height / 2 }); }}
+        onDragLeave={() => setDragOverEntry((d) => (d?.uid === e.uid ? null : d))}
+        onDrop={(ev) => { ev.preventDefault(); const dragged = ev.dataTransfer.getData('text/plain'); const r = ev.currentTarget.getBoundingClientRect(); const before = ev.clientY < r.top + r.height / 2; if (dragged && dragged !== e.uid) reorderEntry(dragged, e.uid, before); setDragOverEntry(null); }}
+        style={{ position: 'relative', cursor: 'pointer', padding: '11px 13px', borderRadius: 11, marginBottom: 7, border: `1px solid ${selected ? TOW.goldDeep : TOW.line}`, background: selected ? TOW.cardLt : TOW.cardLt, boxShadow: selected ? '0 2px 12px rgba(122,93,36,0.14)' : 'none' }}
+      >
+        {dropLine != null && <div style={{ position: 'absolute', left: 0, right: 0, [dropLine ? 'top' : 'bottom']: -1, height: 2, background: TOW.goldDeep, borderRadius: 2, pointerEvents: 'none' }} />}
         <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
           <span style={{ flex: 1, fontFamily: towFont.display, fontWeight: 600, fontSize: 15, color: TOW.ink }}>
             {multi ? <span style={{ color: TOW.gold }}>{e.count}× </span> : null}{u.name_en}

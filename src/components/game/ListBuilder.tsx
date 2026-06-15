@@ -39,14 +39,13 @@ export function ListBuilder() {
   const [activeId, setActiveId] = usePersistentState<string | null>('tow:builder-active', null);
   const [setupOpen, setSetupOpen] = useState(false);
   const [dragOver, setDragOver] = useState<string | null>(null); // section id being hovered (group id, or '__ungrouped__')
-  const [moveMenuFor, setMoveMenuFor] = useState<string | null>(null); // list id whose "move to folder" popover is open
+  const [dragOverCard, setDragOverCard] = useState<{ id: string; before: boolean } | null>(null); // card hovered during a reorder drag (+ which edge)
   const [collapsed, setCollapsed] = usePersistentState<string[]>('tow:list-groups-collapsed', []); // collapsed section ids
   const toggleCollapse = (id: string) => setCollapsed((c) => (c.includes(id) ? c.filter((x) => x !== id) : [...c, id]));
 
   // In-app Back: each navigable layer owns one history entry (deepest registers last → handled first).
   useBackClose(!!activeId, () => setActiveId(null)); // open builder → back to My lists
   useBackClose(setupOpen, () => setSetupOpen(false)); // new-list dialog
-  useBackClose(moveMenuFor !== null, () => setMoveMenuFor(null)); // per-card "move to folder" menu
 
   // Army registry + per-army comps/items + the army-agnostic stat index + magic-items data.
   useEffect(() => {
@@ -132,9 +131,23 @@ export function ListBuilder() {
     setGroups((g) => g.filter((x) => x.id !== id));
     setLists((ls) => ls.map((l) => (l.groupId === id ? { ...l, groupId: null } : l)));
   };
-  // Move a list into a group (or null = Ungrouped); used by both drag-drop and the touch popover.
-  const moveListToGroup = (listId: string, groupId: string | null) =>
-    setLists((ls) => ls.map((x) => (x.id === listId ? { ...x, groupId, updatedAt: Date.now() } : x)));
+  // Reorder a list within the manual `lists` order (drag-drop). `targetId` null = append to the end of
+  // `groupId`'s section; otherwise insert before/after the target card. Also adopts the target's group.
+  const reorderList = (draggedId: string, targetId: string | null, before: boolean, groupId: string | null) =>
+    setLists((ls) => {
+      const arr = [...ls];
+      const di = arr.findIndex((x) => x.id === draggedId);
+      if (di < 0) return ls;
+      const [moved] = arr.splice(di, 1);
+      const next = { ...moved, groupId: groupId ?? null, updatedAt: Date.now() };
+      if (targetId == null) { arr.push(next); }
+      else {
+        const ti = arr.findIndex((x) => x.id === targetId);
+        if (ti < 0) { arr.push(next); }
+        else { arr.splice(before ? ti : ti + 1, 0, next); }
+      }
+      return arr;
+    });
 
   const card: React.CSSProperties = { border: `1px solid ${TOW.line}`, borderRadius: 12, background: TOW.panel2 };
 
@@ -163,53 +176,49 @@ export function ListBuilder() {
   // ── My lists ──
   const UNGROUPED = '__ungrouped__'; // synthetic section id for the Ungrouped drop target
   const groupIds = new Set(groups.map((g) => g.id));
-  const sortByUpdated = (a: SavedList, b: SavedList) => b.updatedAt - a.updatedAt;
-  const listsInGroup = (gid: string) => lists.filter((l) => l.groupId === gid).sort(sortByUpdated);
+  // MANUAL order = the `lists` array order (drag to reorder; new lists prepend via createListWith).
+  const listsInGroup = (gid: string) => lists.filter((l) => l.groupId === gid);
   // Ungrouped = no/null groupId OR a groupId that no longer maps to an existing group.
-  const ungrouped = lists.filter((l) => !l.groupId || !groupIds.has(l.groupId)).sort(sortByUpdated);
-  const moveOptions: { id: string | null; name: string }[] = [...groups.map((g) => ({ id: g.id as string | null, name: g.name })), { id: null, name: 'Ungrouped' }];
+  const ungrouped = lists.filter((l) => !l.groupId || !groupIds.has(l.groupId));
 
-  // One saved-list card. `sectionId` is the section it currently sits in (so its move-menu can dim the current option).
+  // One saved-list card. `sectionId` is the section it currently sits in (so a drop adopts that group).
   const renderCard = (l: SavedList, sectionId: string) => {
     const cat = catalogues[l.army] ?? null;
     const total = cat ? validate(l, getUnitFor(cat), itemsData ?? undefined).total : null;
-    const menuOpen = moveMenuFor === l.id;
+    // Group this card currently lives in (null = Ungrouped) — a drop adopts this section's group.
+    const cardGroup = sectionId === UNGROUPED ? null : sectionId;
+    const dropLine = dragOverCard?.id === l.id ? dragOverCard.before : null; // true=top, false=bottom, null=none
     return (
       <div
         key={l.id}
         draggable
         onDragStart={(e) => { e.dataTransfer.setData('text/plain', l.id); e.dataTransfer.effectAllowed = 'move'; }}
+        onDragOver={(e) => {
+          e.preventDefault();
+          e.dataTransfer.dropEffect = 'move';
+          const r = e.currentTarget.getBoundingClientRect();
+          const before = e.clientY < r.top + r.height / 2;
+          setDragOverCard({ id: l.id, before });
+        }}
+        onDragLeave={() => setDragOverCard((d) => (d?.id === l.id ? null : d))}
+        onDrop={(e) => {
+          e.preventDefault();
+          e.stopPropagation(); // don't also fire the section's append-to-end drop
+          const dragged = e.dataTransfer.getData('text/plain');
+          const r = e.currentTarget.getBoundingClientRect();
+          const before = e.clientY < r.top + r.height / 2;
+          if (dragged && dragged !== l.id) reorderList(dragged, l.id, before, cardGroup);
+          setDragOverCard(null);
+        }}
         style={{ ...card, position: 'relative', display: 'flex', alignItems: 'center', gap: 8, padding: '11px 13px', cursor: 'grab' }}
       >
+        {dropLine != null && <div style={{ position: 'absolute', left: 0, right: 0, [dropLine ? 'top' : 'bottom']: -1, height: 2, background: TOW.goldDeep, borderRadius: 2, pointerEvents: 'none' }} />}
         <button onClick={() => setActiveId(l.id)} style={{ flex: 1, minWidth: 0, textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
           <div style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 15.5, color: TOW.ink, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{l.name}</div>
           <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginTop: 3 }}>{armyName(l.army)} · {compName(l.composition, l.army)} · {total ?? '…'}/{l.points} pts</div>
         </button>
-        <button onClick={() => setMoveMenuFor((m) => (m === l.id ? null : l.id))} onMouseDown={(e) => e.stopPropagation()} aria-label="Move to folder" title="Move to folder" style={{ border: `1px solid ${menuOpen ? TOW.goldDeep : TOW.line}`, background: 'transparent', borderRadius: 8, cursor: 'pointer', color: TOW.muted, fontSize: 13, padding: '5px 8px' }}>🗂</button>
         <button onClick={() => duplicateList(l)} onMouseDown={(e) => e.stopPropagation()} aria-label="Duplicate" title="Duplicate" style={{ border: `1px solid ${TOW.line}`, background: 'transparent', borderRadius: 8, cursor: 'pointer', color: TOW.muted, fontSize: 13, padding: '5px 8px' }}>⧉</button>
         <button onClick={() => { if (confirm(`Delete “${l.name}”?`)) deleteList(l.id); }} onMouseDown={(e) => e.stopPropagation()} aria-label="Delete" title="Delete" style={{ border: `1px solid ${TOW.line}`, background: 'transparent', borderRadius: 8, cursor: 'pointer', color: TOW.muted, fontSize: 16, lineHeight: 1, padding: '4px 9px' }}>×</button>
-        {menuOpen && (
-          <>
-            {/* click-outside backdrop */}
-            <div onClick={() => setMoveMenuFor(null)} style={{ position: 'fixed', inset: 0, zIndex: 10 }} />
-            <div style={{ position: 'absolute', top: '100%', right: 8, marginTop: 4, zIndex: 11, minWidth: 160, border: `1px solid ${TOW.lineStrong}`, borderRadius: 10, background: TOW.panel, boxShadow: '0 8px 24px rgba(0,0,0,0.28)', overflow: 'hidden' }}>
-              <div style={{ ...eb, fontSize: 8, color: TOW.faint, padding: '8px 12px 4px' }}>Move to</div>
-              {moveOptions.map((opt) => {
-                const isCurrent = (opt.id ?? UNGROUPED) === sectionId;
-                return (
-                  <button
-                    key={opt.id ?? UNGROUPED}
-                    disabled={isCurrent}
-                    onClick={() => { moveListToGroup(l.id, opt.id); setMoveMenuFor(null); }}
-                    style={{ display: 'block', width: '100%', textAlign: 'left', fontFamily: towFont.display, fontWeight: 700, fontSize: 13, padding: '9px 12px', border: 'none', borderTop: `1px solid ${TOW.line}`, background: isCurrent ? TOW.panel2 : 'transparent', color: isCurrent ? TOW.faint : TOW.ink, cursor: isCurrent ? 'default' : 'pointer' }}
-                  >
-                    {opt.name}{isCurrent ? ' ✓' : ''}
-                  </button>
-                );
-              })}
-            </div>
-          </>
-        )}
       </div>
     );
   };
@@ -219,7 +228,8 @@ export function ListBuilder() {
   const dropProps = (targetId: string | null) => ({
     onDragOver: (e: React.DragEvent) => { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; setDragOver(sectionId(targetId)); },
     onDragLeave: () => setDragOver((d) => (d === sectionId(targetId) ? null : d)),
-    onDrop: (e: React.DragEvent) => { e.preventDefault(); const id = e.dataTransfer.getData('text/plain'); if (id) moveListToGroup(id, targetId); setDragOver(null); },
+    // Dropping on a section's empty area → move the dragged list to the END of that section.
+    onDrop: (e: React.DragEvent) => { e.preventDefault(); const id = e.dataTransfer.getData('text/plain'); if (id) reorderList(id, null, false, targetId); setDragOver(null); setDragOverCard(null); },
   });
 
   // A collapsible section header: a chevron + title (+ count), with optional right-aligned actions.
