@@ -340,9 +340,13 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
     // budget bar (used when the category is its own budget group; multi-type groups carry it once above).
     const magicCategoryBlock = (cat: MagicCategory, meter: boolean) => {
       const catKey = `${entry.uid}/${cat.id}`;
-      const open = openMagicCats.has(catKey);
       const selKeys = selectedMagicKeys(entry, cat.id);
       const chosen = cat.items.filter((it) => selKeys.includes(`magic/${cat.id}/${magicItemId(it)}`)).map((it) => it.name_en);
+      // Option-unlocked categories (a Battle Standard Bearer's magic standard) just appeared from the
+      // player's action, so show their choices straight away while empty; once something is picked they
+      // collapse (pick shown in the header). Section categories stay collapsed by default. Chevron flips either.
+      const toggled = openMagicCats.has(catKey);
+      const open = cat.budgetGroup.startsWith('opt:') && selKeys.length === 0 ? !toggled : toggled;
       const budget = cat.maxPoints ?? DEFAULT_MAGIC_BUDGET;
       const unlimited = !isFinite(budget); // e.g. a Battle Standard Bearer's magic standard (any value)
       const spent = meter ? magicGroupSpent(u, entry, cat.budgetGroup, itemsData!, armyItemLists) : 0;
