@@ -1,48 +1,49 @@
-# Battle Companion — Brand Kit
+# Old World Companion — Brand Kit
 
-The visual identity for **Battle Companion**, a Warhammer: The Old World turn companion PWA.
-
-## What's in this folder
-
-| File | Purpose |
-| --- | --- |
-| `logo-mark.svg` | Primary emblem — the comet on a dark ground in a rounded square. Source for the app / PWA icons. |
-| `logo-maskable.svg` | Full-bleed variant sized for the Android maskable safe-zone (artwork stays clear of the edges that platforms crop). |
-| `logo-glyph.svg` | The comet only, on a transparent ground. For mono / small use where the ring and ground would muddy. |
-| `wordmark.svg` | Horizontal lockup — the comet beside the words "Battle Companion". |
+The visual identity for the Warhammer: The Old World turn companion PWA.
 
 ## The emblem
 
-A gold **twin-tailed comet** — the emblem of the Old World / Sigmar — set within a heraldic ring. It reads as a single device at any size and anchors every other asset.
+A gold **sun rising over an open book, pierced by a vertical spire** — knowledge and radiance, with
+a blade down the centre. It reads as a single device at any size and anchors every app icon.
+
+The artwork is a textured (foil) raster, so it is **not** reduced to flat SVG. The canonical source is:
+
+| File | Purpose |
+| --- | --- |
+| `logo-master.png` | The emblem on a transparent ground, 892×892. **Source for all app / PWA icons.** Replace this file to change the logo, then regenerate (below). |
+
+The `logo-*.svg`, `wordmark.svg` and `variants/` files are the **superseded** earlier (twin-tailed
+comet) identity, kept only for reference; nothing builds from them anymore.
 
 ## Palette
 
 | Role | Colour |
 | --- | --- |
-| Heraldic crimson (light "Ivory" accent) | `#9c2b2b` |
-| Antique gold (dark "Slate Night" accent) | `#cda64f` → `#b08a37` |
-| Ground | `#1a1714` |
-| Ground (deeper) | `#100d0b` |
-| Parchment | `#f7f4ee` |
+| Antique gold (emblem) | `#a9803a` (textured) |
+| Ground | `#000000` |
+| Parchment (light theme) | `#f7f4ee` |
 
 **Fonts:** Cinzel (display) · EB Garamond / Spectral (body).
 
 ## UI icon set
 
-The in-app icons live in [`src/design/icons.tsx`](../src/design/icons.tsx) — a cohesive family on a 24px grid with a 1.7 stroke, shared by both the wide nav rail and the phone bottom bar so the artwork is identical everywhere.
+The in-app icons live in [`src/design/icons.tsx`](../src/design/icons.tsx) — a cohesive family on a
+24px grid with a 1.7 stroke, shared by both the wide nav rail and the phone bottom bar.
 
 ## Regenerating the PNG assets
 
-After editing any `brand/*.svg`, regenerate the raster assets in `public/`:
+After replacing `logo-master.png`, regenerate the raster assets in `public/`:
 
 ```bash
 npm run render-brand
 ```
 
-This runs `scripts/render-brand.mjs` (uses [`sharp`](https://github.com/lovell/sharp)) and writes:
+This runs `scripts/render-brand.mjs` (uses [`sharp`](https://github.com/lovell/sharp)): it trims the
+master, then composites the emblem centred on a black ground at each size and writes:
 
-- `logo.png`
+- `logo.png` (header / home / nav, shown as a rounded square)
 - `pwa-192.png` / `pwa-512.png`
 - `apple-touch-icon.png`
 - `favicon.png`
-- `maskable-512.png`
+- `maskable-512.png` (extra safe-zone padding for the Android maskable crop)
