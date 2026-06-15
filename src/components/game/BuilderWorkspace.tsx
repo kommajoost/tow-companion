@@ -470,15 +470,30 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
               {allowed.map((slug) => {
                 const lore = lores[slug];
                 const on = chosen.includes(slug);
+                const spells = (lore.spells ?? []) as { slug: string; name: string; number?: number | null; signature?: boolean }[];
                 return (
-                  <div key={slug} style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
-                    <button onClick={() => setLore(slug, on)} style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 10, padding: '8px 11px', borderRadius: 9, cursor: 'pointer', textAlign: 'left', border: `1px solid ${on ? TOW.goldDeep : TOW.line}`, background: on ? 'rgba(138,108,48,0.10)' : TOW.cardLt }}>
-                      <span style={{ width: 18, height: 18, flexShrink: 0, borderRadius: 99, border: `1.5px solid ${on ? TOW.goldDeep : TOW.lineStrong}`, background: on ? TOW.goldDeep : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        {on && <svg width="11" height="11" viewBox="0 0 12 12"><path d="M2.5 6.4l2.2 2.2 4.8-5" stroke="#f4eedb" strokeWidth="1.8" fill="none" strokeLinecap="round" strokeLinejoin="round" /></svg>}
-                      </span>
-                      <span style={{ flex: 1, fontFamily: towFont.serif, fontSize: 13.5, color: TOW.ink }}>{lore.name}</span>
-                    </button>
-                    <Eye onClick={() => setInfo({ title: lore.name, rows: [], note: `${(lore.spells ?? []).length} spell${(lore.spells ?? []).length === 1 ? '' : 's'}`, chipsLabel: 'Spells', ruleChips: (lore.spells ?? []).map((sp: { slug: string; name: string; signature?: boolean }) => ({ name: sp.signature ? `✦ ${sp.name}` : sp.name, slug: sp.slug })) })} />
+                  <div key={slug} style={{ marginBottom: 6 }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                      <button onClick={() => setLore(slug, on)} style={{ flex: 1, display: 'flex', alignItems: 'center', gap: 10, padding: '8px 11px', borderRadius: 9, cursor: 'pointer', textAlign: 'left', border: `1px solid ${on ? TOW.goldDeep : TOW.line}`, background: on ? 'rgba(138,108,48,0.10)' : TOW.cardLt }}>
+                        <span style={{ width: 18, height: 18, flexShrink: 0, borderRadius: 99, border: `1.5px solid ${on ? TOW.goldDeep : TOW.lineStrong}`, background: on ? TOW.goldDeep : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                          {on && <svg width="11" height="11" viewBox="0 0 12 12"><path d="M2.5 6.4l2.2 2.2 4.8-5" stroke="#f4eedb" strokeWidth="1.8" fill="none" strokeLinecap="round" strokeLinejoin="round" /></svg>}
+                        </span>
+                        <span style={{ flex: 1, fontFamily: towFont.serif, fontSize: 13.5, color: TOW.ink }}>{lore.name}</span>
+                      </button>
+                      <Eye onClick={() => setInfo({ title: lore.name, rows: [], note: `${spells.length} spell${spells.length === 1 ? '' : 's'}`, chipsLabel: 'Spells', ruleChips: spells.map((sp) => ({ name: sp.signature ? `✦ ${sp.name}` : sp.name, slug: sp.slug })) })} />
+                    </div>
+                    {/* Selected lore → its spells listed beneath, by number (✦ = the signature spell);
+                        each opens its rule. */}
+                    {on && spells.length > 0 && (
+                      <div style={{ marginLeft: 27, marginTop: 5, paddingLeft: 11, borderLeft: `2px solid ${TOW.line}`, display: 'flex', flexDirection: 'column', gap: 2 }}>
+                        {spells.map((sp) => (
+                          <button key={sp.slug} onClick={() => openRule(sp.slug)} style={{ display: 'flex', alignItems: 'baseline', gap: 9, padding: '3px 6px', border: 'none', background: 'transparent', cursor: 'pointer', textAlign: 'left', borderRadius: 6 }}>
+                            <span style={{ ...eb, fontSize: 9, color: TOW.gold, minWidth: 12, flexShrink: 0, textAlign: 'center' }}>{sp.signature ? '✦' : sp.number}</span>
+                            <span style={{ fontFamily: towFont.serif, fontSize: 12.5, color: TOW.goldDeep }}>{sp.name}</span>
+                          </button>
+                        ))}
+                      </div>
+                    )}
                   </div>
                 );
               })}
