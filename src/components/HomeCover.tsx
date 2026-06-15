@@ -1,6 +1,7 @@
 import { TOW, towFont, engraved } from '../design/tow';
 import { Ornament } from '../design/glyphs';
 import { LogoMark } from './LogoMark';
+import { TurnsIcon, ArmyIcon, RulebookIcon } from '../design/icons';
 
 const eb = engraved as React.CSSProperties;
 
@@ -92,15 +93,7 @@ export function HomeCover({
             boxShadow: '0 6px 18px rgba(122,93,36,0.3)',
           }}
         >
-          {/* crossed swords */}
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-            <g stroke={TOW.onGrad} strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M14.5 4H20v5.5L9.5 20 4 14.5z" />
-              <path d="M14.5 9.5 20 4" />
-              <path d="M4 4h5.5L20 14.5 14.5 20 4 9.5z" />
-              <path d="M9.5 14.5 4 20" />
-            </g>
-          </svg>
+          <TurnsIcon size={22} color={TOW.onGrad} />
           <span style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 17, letterSpacing: '0.02em' }}>
             Begin a Battle
           </span>
@@ -123,10 +116,7 @@ export function HomeCover({
             gap: 12,
           }}
         >
-          {/* shield */}
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-            <path d="M12 3.5l7 2.4v5.2c0 4.2-2.9 7.3-7 8.9-4.1-1.6-7-4.7-7-8.9V5.9z" stroke={TOW.goldDeep} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
+          <ArmyIcon size={22} color={TOW.goldDeep} />
           <span style={{ fontFamily: towFont.display, fontWeight: 600, fontSize: 17, letterSpacing: '0.02em' }}>
             Muster Your Army
           </span>
@@ -149,14 +139,7 @@ export function HomeCover({
             gap: 12,
           }}
         >
-          {/* open book */}
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-            <g stroke={TOW.goldDeep} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M12 6.5C10.5 5 8 4.5 4 4.7v12.6c4-.2 6.5.3 8 1.7" />
-              <path d="M12 6.5C13.5 5 16 4.5 20 4.7v12.6c-4-.2-6.5.3-8 1.7" />
-              <path d="M12 6.5V19" />
-            </g>
-          </svg>
+          <RulebookIcon size={22} color={TOW.goldDeep} />
           <span style={{ fontFamily: towFont.display, fontWeight: 600, fontSize: 17, letterSpacing: '0.02em' }}>
             Open the Rulebook
           </span>

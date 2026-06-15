@@ -8,6 +8,7 @@ import { GameMode } from './game/GameMode';
 import { ArmyMode } from './game/ArmyMode';
 import { SettingsMode } from './SettingsMode';
 import { NavRail } from './NavRail';
+import { TowIcon, type IconId } from '../design/icons';
 import { useBackClose } from '../lib/backStack';
 
 type Tab = 'play' | 'browse' | 'game' | 'army' | 'settings';
@@ -22,12 +23,12 @@ function TabBackLayer({ onBack }: { onBack: () => void }) {
   return null;
 }
 
-const TABS: { id: Tab; label: string; icon: string }[] = [
-  { id: 'play', label: 'Turns', icon: '⚔' },
-  { id: 'browse', label: 'Rulebook', icon: '📖' },
-  { id: 'game', label: 'Game', icon: '🎲' },
-  { id: 'army', label: 'Army', icon: '🛡' },
-  { id: 'settings', label: 'Settings', icon: '⚙' },
+const TABS: { id: Tab; label: string; icon: IconId }[] = [
+  { id: 'play', label: 'Turns', icon: 'turns' },
+  { id: 'browse', label: 'Rulebook', icon: 'rulebook' },
+  { id: 'game', label: 'Game', icon: 'game' },
+  { id: 'army', label: 'Army', icon: 'army' },
+  { id: 'settings', label: 'Settings', icon: 'settings' },
 ];
 
 // Wide (laptop/large tablet) → a slim global icon rail on the left instead of the bottom
@@ -140,9 +141,7 @@ export function AppShell() {
               className="flex flex-1 flex-col items-center gap-0.5 py-2.5 text-[11px]"
               style={{ color: active ? TOW.goldDeep : TOW.muted, fontFamily: 'var(--font-display)' }}
             >
-              <span className="text-lg" style={{ opacity: active ? 1 : 0.7 }}>
-                {t.icon}
-              </span>
+              <TowIcon id={t.icon} size={22} color={active ? TOW.goldDeep : TOW.muted} />
               {t.label}
             </button>
           );

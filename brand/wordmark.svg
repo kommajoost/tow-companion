@@ -1,0 +1,24 @@
+<svg width="600" height="150" viewBox="0 0 600 150" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Battle Companion — Warhammer The Old World">
+  <title>Battle Companion — wordmark</title>
+  <defs>
+    <linearGradient id="gold" x1="0" y1="0" x2="0.25" y2="1">
+      <stop offset="0" stop-color="#e9cd83"/>
+      <stop offset="0.5" stop-color="#cda64f"/>
+      <stop offset="1" stop-color="#a47d31"/>
+    </linearGradient>
+  </defs>
+
+  <!-- comet glyph -->
+  <g stroke="url(#gold)" stroke-linecap="round" fill="none">
+    <path d="M80 66 40 110" stroke-width="8"/>
+    <path d="M88 74 54 116" stroke-width="5" opacity="0.85"/>
+  </g>
+  <path d="M88 38 92.74 53.26 108 58 92.74 62.74 88 78 83.26 62.74 68 58 83.26 53.26Z" fill="url(#gold)"/>
+
+  <!-- divider -->
+  <line x1="142" y1="34" x2="142" y2="116" stroke="#9c2b2b" stroke-opacity="0.45" stroke-width="1.5"/>
+
+  <!-- text lockup (uses Cinzel where available, serif fallback) -->
+  <text x="166" y="58" font-family="Cinzel, Georgia, 'Times New Roman', serif" font-size="16" font-weight="600" letter-spacing="4.2" fill="#9c2b2b">WARHAMMER · THE OLD WORLD</text>
+  <text x="164" y="108" font-family="Cinzel, Georgia, 'Times New Roman', serif" font-size="44" font-weight="700" letter-spacing="0.5" fill="#1a1714">Battle Companion</text>
+</svg>

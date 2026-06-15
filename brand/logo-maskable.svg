@@ -1,0 +1,36 @@
+<svg width="256" height="256" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Old World Companion">
+  <title>Old World Companion — maskable emblem</title>
+  <defs>
+    <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#241e18"/>
+      <stop offset="1" stop-color="#100d0b"/>
+    </linearGradient>
+    <radialGradient id="halo" cx="0.56" cy="0.42" r="0.55">
+      <stop offset="0" stop-color="#cda64f" stop-opacity="0.20"/>
+      <stop offset="0.6" stop-color="#9c2b2b" stop-opacity="0.07"/>
+      <stop offset="1" stop-color="#000000" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="0.25" y2="1">
+      <stop offset="0" stop-color="#e9cd83"/>
+      <stop offset="0.5" stop-color="#cda64f"/>
+      <stop offset="1" stop-color="#a47d31"/>
+    </linearGradient>
+  </defs>
+
+  <!-- full-bleed ground (mask trims the corners) -->
+  <rect x="0" y="0" width="256" height="256" fill="url(#ground)"/>
+  <rect x="0" y="0" width="256" height="256" fill="url(#halo)"/>
+
+  <!-- content scaled into the maskable safe zone (~80%) -->
+  <g transform="translate(128 128) scale(0.84) translate(-128 -128)">
+    <circle cx="128" cy="128" r="93" fill="none" stroke="url(#gold)" stroke-width="3.4"/>
+    <circle cx="128" cy="128" r="84" fill="none" stroke="#cda64f" stroke-opacity="0.4" stroke-width="1.1"/>
+    <path d="M95 70 96.5 75 101.5 76.5 96.5 78 95 83 93.5 78 88.5 76.5 93.5 75Z" fill="url(#gold)" opacity="0.7"/>
+    <path d="M178 152 179 155.4 182.4 156.5 179 157.6 178 161 177 157.6 173.6 156.5 177 155.4Z" fill="url(#gold)" opacity="0.6"/>
+    <g stroke="url(#gold)" stroke-linecap="round" fill="none">
+      <path d="M139 110 80 178" stroke-width="13"/>
+      <path d="M147 121 99 187" stroke-width="8" opacity="0.85"/>
+    </g>
+    <path d="M150 70 157.07 92.93 180 100 157.07 107.07 150 130 142.93 107.07 120 100 142.93 92.93Z" fill="url(#gold)"/>
+  </g>
+</svg>

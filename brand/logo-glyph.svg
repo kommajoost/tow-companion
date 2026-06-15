@@ -1,0 +1,15 @@
+<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Old World Companion comet">
+  <title>Old World Companion — comet glyph</title>
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="0.25" y2="1">
+      <stop offset="0" stop-color="#e9cd83"/>
+      <stop offset="0.5" stop-color="#cda64f"/>
+      <stop offset="1" stop-color="#a47d31"/>
+    </linearGradient>
+  </defs>
+  <g stroke="url(#g)" stroke-linecap="round" fill="none">
+    <path d="M35 30 12 53" stroke-width="6"/>
+    <path d="M40 35 21 55" stroke-width="3.8" opacity="0.85"/>
+  </g>
+  <path d="M40 11 44.24 24.76 58 29 44.24 33.24 40 47 35.76 33.24 22 29 35.76 24.76Z" fill="url(#g)"/>
+</svg>
