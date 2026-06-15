@@ -1,7 +1,7 @@
 {
   "name": "tow-companion",
   "private": true,
-  "version": "0.1.74",
+  "version": "0.1.76",
   "type": "module",
   "description": "Warhammer: The Old World turn companion - mobile PWA",
   "scripts": {
