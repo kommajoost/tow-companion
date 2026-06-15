@@ -376,7 +376,8 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
               ? <span style={{ flex: 1, fontFamily: towFont.serif, fontSize: 12, color: TOW.gold, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{chosen.join(', ')}</span>
               : <span style={{ flex: 1 }} />}
             <span style={{ display: 'flex', alignItems: 'baseline', gap: 7, flexShrink: 0 }}>
-              {cat.maxItems > 1 && <span style={{ ...eb, fontSize: 8, color: TOW.muted }}>{selKeys.length}/{cat.maxItems}</span>}
+              {isFinite(cat.maxItems) && cat.maxItems > 1 && <span style={{ ...eb, fontSize: 8, color: TOW.muted }}>{selKeys.length}/{cat.maxItems}</span>}
+              {!isFinite(cat.maxItems) && selKeys.length > 0 && <span style={{ ...eb, fontSize: 8, color: TOW.muted }}>{selKeys.length}</span>}
               {meter && <span style={{ fontFamily: towFont.display, fontWeight: 600, fontSize: 10.5, color: over ? TOW.blood : TOW.muted }}>{fmt(spent)} <span style={{ color: TOW.faint }}>{unlimited ? 'pts · no limit' : `/ ${fmt(budget)}`}</span></span>}
             </span>
           </button>

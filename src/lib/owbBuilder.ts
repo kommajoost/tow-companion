@@ -426,7 +426,7 @@ export interface MagicCategory {
   budgetGroup: string;   // categories sharing this id pool into one points budget
   types: string[];       // item `type`s this category accepts
   maxPoints: number | null; // the shared budget for this category's `budgetGroup`
-  maxItems: number;      // how many items this category may hold (1 = single-select; Dwarf Runes = 3)
+  maxItems: number;      // how many items this category may hold (Infinity = points-limited multi-pick; Dwarf Runes = 3; a BSB banner = 1)
   items: MagicItem[];    // the items selectable in this category
 }
 
@@ -460,11 +460,14 @@ export function magicCategories(unit: OwbUnit, armyItemLists: string[], itemsDat
       if (items.length) out.push({ id: types[0] ?? slug(sec.name_en), label: sec.name_en, groupLabel: sec.name_en, budgetGroup: group, types, maxPoints, maxItems: sec.maxItemsPerCategory!, items });
       return;
     }
-    // Normal magic items — one category per type (one of each), sharing the section budget.
+    // Normal magic items — one category per type, sharing the section's points budget. Each category
+    // is a multi-pick (maxItems Infinity): you may take more than one item of the SAME type, limited
+    // only by the shared points allowance — the OWB data only caps a section by points, not "one of
+    // each type", so we don't either.
     for (const type of types) {
       const items = pool.filter((it) => it.type === type);
       if (!items.length) continue;
-      out.push({ id: type, label: magicTypeLabel(type), groupLabel: sec.name_en, budgetGroup: group, types: [type], maxPoints, maxItems: 1, items });
+      out.push({ id: type, label: magicTypeLabel(type), groupLabel: sec.name_en, budgetGroup: group, types: [type], maxPoints, maxItems: Infinity, items });
     }
   });
   // Option-unlocked allowances (magic standards from a Standard bearer, …) — active options only.
