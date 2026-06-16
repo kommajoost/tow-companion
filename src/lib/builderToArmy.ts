@@ -4,10 +4,16 @@
 // profiles) directly from the builder entries + the OWB catalogue.
 
 import type { Army, ArmyUnit, UnitProfile } from '../types';
-import { CATEGORIES, entryPoints, loadoutLabels, magicItemId, selectedMagicItems, validate, type BuilderList, type Category, type OwbArmy, type OwbUnit, type MagicItemsData } from './owbBuilder';
+import { CATEGORIES, entryPoints, loadoutLabels, magicItemId, selectedMagicItems, selectedMountIndex, validate, type BuilderList, type Category, type OwbArmy, type OwbUnit, type MagicItemsData } from './owbBuilder';
 
 /** Per-item flavour + rules text snapshot (public/owb/magic-item-text.json), keyed by item slug. */
 export type MagicText = Record<string, { description?: string; body?: string }>;
+
+/** Per-mount special-rules snapshot (public/owb/mount-text.json), keyed by normalised mount name. */
+export type MountText = Record<string, { specialRules?: string[] }>;
+
+// Normalise a mount/option name to the mount-text key (strip "(…)", "{…}", "*", a leading "2x ").
+const normMount = (s: string) => (s || '').toLowerCase().replace(/ *\([^)]*\) */g, '').replace(/[{}[\]*]/g, '').replace(/^[0-9]+x /g, '').trim();
 
 // A magic weapon mostly fires/strikes as the wielder's mundane weapon but adds special rules; the
 // snapshot body is usually a clean "Rule, Rule, Rule" list (e.g. "Armour Bane (1), Magical Attacks").
@@ -41,7 +47,7 @@ export function builderListToArmy(
   list: NamedBuilderList,
   catalogue: OwbArmy,
   statsFor: (name: string) => StatRow[],
-  opts: { faction?: string; composition?: string; itemsData?: MagicItemsData; armyItemLists?: string[]; magicText?: MagicText } = {},
+  opts: { faction?: string; composition?: string; itemsData?: MagicItemsData; armyItemLists?: string[]; magicText?: MagicText; mountText?: MountText } = {},
 ): Army {
   const getUnit = getUnitFrom(catalogue);
   const units: ArmyUnit[] = [];
@@ -64,6 +70,17 @@ export function builderListToArmy(
             return { name: item.name_en, kind, specialRules: rules, flavour: tx?.description || undefined };
           })
       : [];
+    // Chosen mount → its own stat profile (statsFor) + special rules (mount-text), surfaced in-game.
+    const mounts: ArmyUnit['mounts'] = [];
+    const mIdx = selectedMountIndex(u, e);
+    const mOpt = mIdx >= 0 && Array.isArray(u.mounts) ? u.mounts[mIdx] : undefined;
+    if (mOpt?.name_en && !/^on foot$/i.test(mOpt.name_en)) {
+      const nm = normMount(mOpt.name_en);
+      const rows = statsFor(mOpt.name_en).length ? statsFor(mOpt.name_en) : statsFor(nm);
+      const mProfiles: UnitProfile[] = rows.map((r) => ({ label: r.Name, stats: STAT_COLS.map((k) => ({ k, v: r[k] ?? '-' })) }));
+      const mRules = opts.mountText?.[nm]?.specialRules ?? [];
+      if (mProfiles.length || mRules.length) mounts.push({ name: mOpt.name_en, profiles: mProfiles, specialRules: mRules });
+    }
     units.push({
       id: e.uid,
       name: u.name_en,
@@ -79,6 +96,7 @@ export function builderListToArmy(
       lores: e.lores,
       spells: e.spells,
       magicWeapons: magicWeapons.length ? magicWeapons : undefined,
+      mounts: mounts.length ? mounts : undefined,
     });
   }
   // Keep roster order grouped by category, mirroring the builder.

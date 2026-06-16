@@ -12,7 +12,7 @@ import {
   type WeaponProfile,
 } from '../../lib/weaponStats';
 import { useBackClose } from '../../lib/backStack';
-import type { ArmyUnit } from '../../types';
+import type { ArmyUnit, UnitProfile } from '../../types';
 
 const eb = engraved as React.CSSProperties;
 const goldGrad = `linear-gradient(180deg, ${TOW.goldBright} 0%, ${TOW.gold} 55%, ${TOW.goldDeep} 100%)`;
@@ -39,12 +39,14 @@ export function CombatStats({ unit }: { unit: ArmyUnit }) {
   const [custom, setCustom] = useState(0); // extra "to hit" modifier (+ = easier, − = harder)
   const [modsOpen, setModsOpen] = useState(false);
   const [multiOn, setMultiOn] = useState(true); // fire the multiple-shots mode (−1 To Hit)
-  const [infoWeapon, setInfoWeapon] = useState<WeaponProfile | null>(null); // magic-weapon info pop-up
+  // A small info pop-up for things with no rule page of their own: a magic weapon (flavour + rules)
+  // or a mount (its profile + special rules). Both surface here so the player can tap to see them.
+  const [info, setInfo] = useState<{ title: string; flavour?: string; profiles?: UnitProfile[]; rules: string[] } | null>(null);
 
-  // In-app Back closes the magic-weapon info pop-up instead of leaving the app.
-  useBackClose(infoWeapon !== null, () => setInfoWeapon(null));
+  // In-app Back closes the info pop-up instead of leaving the app.
+  useBackClose(info !== null, () => setInfo(null));
   // Magic weapons (Ogre Blade, …) have no rule page, so their picker chip can't open the rule sheet;
-  // they carry an eye that opens a small info pop-up (flavour + their special rules) instead.
+  // they carry an eye that opens the info pop-up (flavour + their special rules) instead.
   const isMagic = (w: WeaponProfile) => w.slug.startsWith('magic-weapon:');
   const magicFlavour = (name: string) => unit.magicWeapons?.find((m) => m.name === name)?.flavour;
 
@@ -83,7 +85,7 @@ export function CombatStats({ unit }: { unit: ArmyUnit }) {
 
   // A small eye next to a magic-weapon chip → opens its info pop-up (flavour + special rules).
   const infoEye = (w: WeaponProfile) => (
-    <button onClick={() => setInfoWeapon(w)} aria-label={`${w.name} info`} style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 23, height: 23, flexShrink: 0, borderRadius: 999, cursor: 'pointer', border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.10)', color: TOW.goldDeep, padding: 0 }}>
+    <button onClick={() => setInfo({ title: w.name, flavour: magicFlavour(w.name), rules: w.specialRules })} aria-label={`${w.name} info`} style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 23, height: 23, flexShrink: 0, borderRadius: 999, cursor: 'pointer', border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.10)', color: TOW.goldDeep, padding: 0 }}>
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" strokeLinecap="round" strokeLinejoin="round" /><circle cx="12" cy="12" r="3" /></svg>
     </button>
   );
@@ -163,6 +165,20 @@ export function CombatStats({ unit }: { unit: ArmyUnit }) {
           <button onClick={() => setCharge((c) => !c)} style={selChip(charge)}>{charge ? '✓ ' : ''}On charge</button>
         )}
       </div>
+
+      {/* Mount(s): tap to see the mount's own profile + special rules (it has no rule page). */}
+      {unit.mounts && unit.mounts.length > 0 && (
+        <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 6, marginBottom: 8 }}>
+          <span style={{ ...eb, fontSize: 8.5, color: TOW.muted, marginRight: 2 }}>Mount</span>
+          {unit.mounts.map((m) => (
+            <button key={m.name} onClick={() => setInfo({ title: m.name, profiles: m.profiles, rules: m.specialRules })}
+              style={{ ...chip, display: 'inline-flex', alignItems: 'center', gap: 6, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.10)', color: TOW.goldDeep }}>
+              {m.name}
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" strokeLinecap="round" strokeLinejoin="round" /><circle cx="12" cy="12" r="3" /></svg>
+            </button>
+          ))}
+        </div>
+      )}
 
       {unit.profiles.map((p, pi) => (
         <div key={pi} className="no-scrollbar" style={{ overflowX: 'auto', marginBottom: 8 }}>
@@ -258,21 +274,31 @@ export function CombatStats({ unit }: { unit: ArmyUnit }) {
         </div>
       )}
 
-      {/* Magic-weapon info — flavour + special rules (each opens its rule). Magic weapons have no
-          rule page of their own, so the picker eye opens this instead of the rule sheet. */}
-      {infoWeapon && (
-        <div onClick={() => setInfoWeapon(null)} style={{ position: 'fixed', inset: 0, zIndex: 80, background: 'rgba(30,20,8,0.45)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 }}>
+      {/* Info pop-up for a magic weapon (flavour + rules) or a mount (profile + rules). These have no
+          rule page of their own, so this shows their info instead of opening the rule sheet. */}
+      {info && (
+        <div onClick={() => setInfo(null)} style={{ position: 'fixed', inset: 0, zIndex: 80, background: 'rgba(30,20,8,0.45)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 }}>
           <div onClick={(e) => e.stopPropagation()} style={{ width: '100%', maxWidth: 420, maxHeight: '80vh', overflowY: 'auto', background: TOW.panel2, border: `1px solid ${TOW.lineStrong}`, borderRadius: 16, padding: 16, boxShadow: '0 12px 40px rgba(40,24,8,0.3)' }}>
             <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, marginBottom: 6 }}>
-              <h3 style={{ margin: 0, flex: 1, minWidth: 0, fontFamily: towFont.display, fontWeight: 700, fontSize: 16, color: TOW.ink }}>{infoWeapon.name}</h3>
-              <button onClick={() => setInfoWeapon(null)} aria-label="Close" style={{ border: 'none', background: 'none', cursor: 'pointer', fontSize: 22, lineHeight: 1, color: TOW.muted, padding: '0 4px' }}>×</button>
+              <h3 style={{ margin: 0, flex: 1, minWidth: 0, fontFamily: towFont.display, fontWeight: 700, fontSize: 16, color: TOW.ink }}>{info.title}</h3>
+              <button onClick={() => setInfo(null)} aria-label="Close" style={{ border: 'none', background: 'none', cursor: 'pointer', fontSize: 22, lineHeight: 1, color: TOW.muted, padding: '0 4px' }}>×</button>
             </div>
-            {magicFlavour(infoWeapon.name) && (
-              <p style={{ margin: '0 0 4px', fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 13, color: TOW.parchDim, lineHeight: 1.5 }}>{magicFlavour(infoWeapon.name)}</p>
+            {info.flavour && (
+              <p style={{ margin: '0 0 6px', fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 13, color: TOW.parchDim, lineHeight: 1.5 }}>{info.flavour}</p>
             )}
-            {infoWeapon.specialRules.length > 0
-              ? ruleChips(infoWeapon.specialRules)
-              : <p style={{ fontFamily: towFont.serif, fontSize: 12.5, color: TOW.muted }}>No special rules listed.</p>}
+            {info.profiles?.map((p, pi) => (
+              <div key={pi} className="no-scrollbar" style={{ overflowX: 'auto', marginBottom: 8 }}>
+                <div style={{ fontFamily: towFont.serif, fontSize: 12, color: TOW.parchDim, marginBottom: 3 }}>{p.label}</div>
+                <table style={{ borderCollapse: 'collapse', tableLayout: 'fixed', width: '100%', minWidth: 280, fontSize: 12.5, fontFamily: towFont.serif }}>
+                  <thead><tr>{p.stats.map((s, j) => <th key={j} style={th}>{s.k}</th>)}</tr></thead>
+                  <tbody><tr>{p.stats.map((s, j) => <td key={j} style={td(false)}>{s.v}</td>)}</tr></tbody>
+                </table>
+              </div>
+            ))}
+            {info.rules.length > 0 && ruleChips(info.rules)}
+            {info.rules.length === 0 && !info.profiles?.length && (
+              <p style={{ fontFamily: towFont.serif, fontSize: 12.5, color: TOW.muted }}>No special rules listed.</p>
+            )}
           </div>
         </div>
       )}

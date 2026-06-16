@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { TOW, towFont, engraved } from '../../design/tow';
 import { usePersistentState } from '../../store';
-import { builderListToArmy, listTotal, type MagicText } from '../../lib/builderToArmy';
+import { builderListToArmy, listTotal, type MagicText, type MountText } from '../../lib/builderToArmy';
 import { compName } from '../../lib/armies';
 import type { BuilderList, OwbArmy, MagicItemsData } from '../../lib/owbBuilder';
 import type { Army } from '../../types';
@@ -27,11 +27,13 @@ export function ArmyListPicker({ onPick, label = 'Choose one of your saved army 
   const [statIdx, setStatIdx] = useState<Record<string, { stats?: StatRow[] }> | null>(null);
   const [itemsData, setItemsData] = useState<MagicItemsData | null>(null);
   const [magicText, setMagicText] = useState<MagicText>({});
+  const [mountText, setMountText] = useState<MountText>({});
 
   useEffect(() => {
     fetch(`${BASE}owb/rules-index.json`).then((r) => r.json()).then(setStatIdx).catch(() => {});
     fetch(`${BASE}owb/magic-items.json`).then((r) => r.json()).then(setItemsData).catch(() => {});
     fetch(`${BASE}owb/magic-item-text.json`).then((r) => r.json()).then(setMagicText).catch(() => {});
+    fetch(`${BASE}owb/mount-text.json`).then((r) => r.json()).then(setMountText).catch(() => {});
     fetch(`${BASE}owb/index.json`).then((r) => r.json()).then((idx) => {
       if (Array.isArray(idx?.armies)) setArmyNames(Object.fromEntries(idx.armies.map((a: { slug: string; name: string }) => [a.slug, a.name])));
     }).catch(() => {});
@@ -65,7 +67,7 @@ export function ArmyListPicker({ onPick, label = 'Choose one of your saved army 
   const toArmy = (l: SavedList): Army | null => {
     const cat = catalogues[l.army];
     if (!cat) return null;
-    return builderListToArmy(l, cat, statsFor, { faction: armyNameFor(l.army), composition: compName(l.composition, l.army), itemsData: itemsData ?? undefined, armyItemLists: itemsByArmy[l.army] ?? [], magicText });
+    return builderListToArmy(l, cat, statsFor, { faction: armyNameFor(l.army), composition: compName(l.composition, l.army), itemsData: itemsData ?? undefined, armyItemLists: itemsByArmy[l.army] ?? [], magicText, mountText });
   };
 
   return (
