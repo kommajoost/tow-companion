@@ -15,11 +15,11 @@ export type MountText = Record<string, { specialRules?: string[] }>;
 // Normalise a mount/option name to the mount-text key (strip "(…)", "{…}", "*", a leading "2x ").
 const normMount = (s: string) => (s || '').toLowerCase().replace(/ *\([^)]*\) */g, '').replace(/[{}[\]*]/g, '').replace(/^[0-9]+x /g, '').trim();
 
-// A magic weapon mostly fires/strikes as the wielder's mundane weapon but adds special rules; the
-// snapshot body is usually a clean "Rule, Rule, Rule" list (e.g. "Armour Bane (1), Magical Attacks").
-// Prose ("Notes: …" or full sentences) is kept as a single line rather than chopped into fake chips.
+// A magic item's snapshot body is usually a clean "Rule, Rule, Rule" list (e.g. a weapon's
+// "Armour Bane (1), Magical Attacks", a rune's effects). Prose ("Notes: …" or full sentences) is kept
+// as a single line rather than chopped into fake rule chips.
 const RANGED_WEAPON = /\bbow\b|crossbow|handbow|pistol|\bsling\b|throwing|thrown|shooting|\brange\b/i;
-function magicWeaponRules(body?: string): string[] {
+function magicItemRules(body?: string): string[] {
   const t = (body || '').replace(/\s+/g, ' ').trim();
   if (!t) return [];
   if (/^notes\b/i.test(t) || /\.\s/.test(t)) return [t];
@@ -59,17 +59,22 @@ export function builderListToArmy(
       label: r.Name, stats: STAT_COLS.map((k) => ({ k, v: r[k] ?? '-' })),
     }));
     const specialRules = (u.specialRules?.name_en || '').split(',').map((s) => s.trim()).filter(Boolean);
-    // Selected magic weapons (item type "weapon") → surfaced as pickable loadout weapons in the game.
-    const magicWeapons = opts.itemsData
-      ? selectedMagicItems(u, e, opts.itemsData, opts.armyItemLists)
-          .filter(({ item }) => /weapon/i.test(item.type || ''))
-          .map(({ item }) => {
-            const tx = opts.magicText?.[magicItemId(item)];
-            const rules = magicWeaponRules(tx?.body);
-            const kind: 'melee' | 'ranged' = RANGED_WEAPON.test(`${item.name_en} ${rules.join(' ')}`) ? 'ranged' : 'melee';
-            return { name: item.name_en, kind, specialRules: rules, flavour: tx?.description || undefined };
-          })
-      : [];
+    // Selected magic items (one pass). `magicItems` = ALL of them (weapons, armour, talismans,
+    // enchanted/arcane items, runes, banners) → tappable terms on the unit card. `magicWeapons` =
+    // just the weapons, also surfaced as pickable loadout weapons in CombatStats.
+    const selMagic = opts.itemsData ? selectedMagicItems(u, e, opts.itemsData, opts.armyItemLists) : [];
+    const magicItems = selMagic.map(({ item }) => {
+      const tx = opts.magicText?.[magicItemId(item)];
+      return { name: item.name_en, specialRules: magicItemRules(tx?.body), flavour: tx?.description || undefined };
+    });
+    const magicWeapons = selMagic
+      .filter(({ item }) => /weapon/i.test(item.type || ''))
+      .map(({ item }) => {
+        const tx = opts.magicText?.[magicItemId(item)];
+        const rules = magicItemRules(tx?.body);
+        const kind: 'melee' | 'ranged' = RANGED_WEAPON.test(`${item.name_en} ${rules.join(' ')}`) ? 'ranged' : 'melee';
+        return { name: item.name_en, kind, specialRules: rules, flavour: tx?.description || undefined };
+      });
     // Chosen mount → its own stat profile (statsFor) + special rules (mount-text), surfaced in-game.
     const mounts: ArmyUnit['mounts'] = [];
     const mIdx = selectedMountIndex(u, e);
@@ -96,6 +101,7 @@ export function builderListToArmy(
       lores: e.lores,
       spells: e.spells,
       magicWeapons: magicWeapons.length ? magicWeapons : undefined,
+      magicItems: magicItems.length ? magicItems : undefined,
       mounts: mounts.length ? mounts : undefined,
     });
   }

@@ -180,6 +180,10 @@ export interface ArmyUnit {
    *  they aren't found by resolving `options` to weapon profiles — they're surfaced here so the
    *  loadout weapon picker can offer them (using the wielder's base profile + these special rules). */
   magicWeapons?: { name: string; kind: 'melee' | 'ranged'; specialRules: string[]; flavour?: string }[];
+  /** Every chosen magic item (weapons, armour, talismans, enchanted/arcane items, runes, banners),
+   *  with its flavour + special rules — so the unit card can show each as a tappable term (like the
+   *  unit's special rules) that opens the item's info, since magic items have no rule page. */
+  magicItems?: { name: string; specialRules: string[]; flavour?: string }[];
   /** A chosen mount (Dark Pegasus, Black Dragon, …) with its own stat profile + special rules — the
    *  game surfaces it as a tappable chip so the player can see the mount's full info. */
   mounts?: { name: string; profiles: UnitProfile[]; specialRules: string[] }[];

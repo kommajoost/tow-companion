@@ -1,10 +1,11 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useData } from '../../data';
 import { useUI } from '../../state';
 import { TOW, towFont, engraved } from '../../design/tow';
 import { buildRuleIndex, resolveRuleSlug, resolveOptionSlug, wizardInfo, unitTotalStrength, unitArmourSave } from '../../lib/armyRules';
 import { unitWeapons } from '../../lib/weaponStats';
 import { CombatStats } from './CombatStats';
+import { InfoSheet, type InfoSheetData } from './InfoSheet';
 import { WizardSpells } from './WizardSpells';
 import { WoundTracker } from './WoundTracker';
 import type { ArmyUnit } from '../../types';
@@ -39,6 +40,14 @@ export function UnitCard({
   const weapons = useMemo(() => unitWeapons(unit, rules), [unit, rules]);
   const hasWeapons = weapons.melee.length > 0 || weapons.ranged.length > 0;
   const dead = (lost ?? 0) >= unitTotalStrength(unit) && onCasualty != null;
+  // Chosen magic items (weapons, armour, talismans, runes, banners, …) have no rule page; tapping one
+  // in the loadout line opens its info sheet (flavour + special rules) instead of the rule sheet.
+  const [info, setInfo] = useState<InfoSheetData | null>(null);
+  const magicByName = useMemo(() => {
+    const m = new Map<string, { specialRules: string[]; flavour?: string }>();
+    for (const mi of unit.magicItems ?? []) m.set(mi.name.toLowerCase(), mi);
+    return m;
+  }, [unit.magicItems]);
 
   return (
     <section style={{ border: `1px solid ${TOW.line}`, borderRadius: 12, background: dead ? 'rgba(74,55,22,0.03)' : TOW.panel2, padding: 14, marginBottom: 10, opacity: dead ? 0.7 : 1 }}>
@@ -111,13 +120,18 @@ export function UnitCard({
       {unit.options.length > 0 && (
         <div style={{ fontFamily: towFont.serif, fontSize: 13, color: TOW.parchDim, lineHeight: 1.9, margin: '4px 0 8px', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '0 4px' }}>
           {unit.options.map((opt, i) => {
-            const slug = resolveOptionSlug(opt, idx);
+            // A magic item → open its info sheet; otherwise a wargear rule → open the rule sheet.
+            const mi = magicByName.get(opt.toLowerCase());
+            const slug = mi ? null : resolveOptionSlug(opt, idx);
+            const onClick = mi
+              ? () => setInfo({ title: opt, flavour: mi.flavour, rules: mi.specialRules })
+              : slug ? () => openRule(slug) : null;
             return (
               <span key={i} style={{ display: 'inline-flex', alignItems: 'center' }}>
                 {i > 0 && <span style={{ color: TOW.faint, marginRight: 4 }}>·</span>}
-                {slug ? (
+                {onClick ? (
                   <button
-                    onClick={() => openRule(slug)}
+                    onClick={onClick}
                     style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', fontFamily: towFont.serif, fontSize: 13, color: TOW.goldDeep, borderBottom: `1px dotted ${TOW.goldDeep}` }}
                   >
                     {opt}
@@ -162,6 +176,8 @@ export function UnitCard({
           editable={editable}
         />
       )}
+
+      <InfoSheet info={info} onClose={() => setInfo(null)} />
     </section>
   );
 }
