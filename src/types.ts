@@ -179,7 +179,7 @@ export interface ArmyUnit {
   /** Magic weapons chosen in the builder. They carry special rules rather than a profile table, so
    *  they aren't found by resolving `options` to weapon profiles — they're surfaced here so the
    *  loadout weapon picker can offer them (using the wielder's base profile + these special rules). */
-  magicWeapons?: { name: string; kind: 'melee' | 'ranged'; specialRules: string[] }[];
+  magicWeapons?: { name: string; kind: 'melee' | 'ranged'; specialRules: string[]; flavour?: string }[];
 }
 
 export interface Army {

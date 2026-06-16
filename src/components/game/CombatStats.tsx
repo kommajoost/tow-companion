@@ -9,7 +9,9 @@ import {
   rangedToHit,
   statValue,
   SHOOTING_MODS,
+  type WeaponProfile,
 } from '../../lib/weaponStats';
+import { useBackClose } from '../../lib/backStack';
 import type { ArmyUnit } from '../../types';
 
 const eb = engraved as React.CSSProperties;
@@ -37,6 +39,14 @@ export function CombatStats({ unit }: { unit: ArmyUnit }) {
   const [custom, setCustom] = useState(0); // extra "to hit" modifier (+ = easier, − = harder)
   const [modsOpen, setModsOpen] = useState(false);
   const [multiOn, setMultiOn] = useState(true); // fire the multiple-shots mode (−1 To Hit)
+  const [infoWeapon, setInfoWeapon] = useState<WeaponProfile | null>(null); // magic-weapon info pop-up
+
+  // In-app Back closes the magic-weapon info pop-up instead of leaving the app.
+  useBackClose(infoWeapon !== null, () => setInfoWeapon(null));
+  // Magic weapons (Ogre Blade, …) have no rule page, so their picker chip can't open the rule sheet;
+  // they carry an eye that opens a small info pop-up (flavour + their special rules) instead.
+  const isMagic = (w: WeaponProfile) => w.slug.startsWith('magic-weapon:');
+  const magicFlavour = (name: string) => unit.magicWeapons?.find((m) => m.name === name)?.flavour;
 
   const mw = melee[meleeSel];
   const rw = ranged[rangedSel];
@@ -70,6 +80,23 @@ export function CombatStats({ unit }: { unit: ArmyUnit }) {
   const chip: React.CSSProperties = { fontFamily: towFont.serif, fontSize: 11.5, padding: '3px 9px', borderRadius: 999, cursor: 'pointer', lineHeight: 1.35, whiteSpace: 'nowrap' };
   const selChip = (sel: boolean): React.CSSProperties => ({ ...chip, border: `1px solid ${sel ? TOW.goldDeep : TOW.line}`, background: sel ? 'rgba(184,134,47,0.14)' : 'transparent', color: sel ? TOW.goldDeep : TOW.parchDim, fontWeight: sel ? 600 : 400 });
   const stepBtn: React.CSSProperties = { width: 24, height: 24, borderRadius: 7, cursor: 'pointer', border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt, color: TOW.parchDim, fontFamily: towFont.display, fontWeight: 700, fontSize: 15, lineHeight: 1 };
+
+  // A small eye next to a magic-weapon chip → opens its info pop-up (flavour + special rules).
+  const infoEye = (w: WeaponProfile) => (
+    <button onClick={() => setInfoWeapon(w)} aria-label={`${w.name} info`} style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 23, height: 23, flexShrink: 0, borderRadius: 999, cursor: 'pointer', border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.10)', color: TOW.goldDeep, padding: 0 }}>
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" strokeLinecap="round" strokeLinejoin="round" /><circle cx="12" cy="12" r="3" /></svg>
+    </button>
+  );
+  // A weapon chip: the name selects it; magic weapons also carry the info eye.
+  const weaponChip = (w: WeaponProfile, selected: boolean, onSelect: () => void) =>
+    isMagic(w) ? (
+      <span key={w.slug} style={{ display: 'inline-flex', alignItems: 'center', gap: 3 }}>
+        <button onClick={onSelect} style={selChip(selected)}>{w.name}</button>
+        {infoEye(w)}
+      </span>
+    ) : (
+      <button key={w.slug} onClick={onSelect} style={selChip(selected)}>{w.name}</button>
+    );
 
   // A weapon's special rule → a tappable chip that opens the rule pop-up (plain if unmatched).
   const ruleChips = (list: string[]) =>
@@ -131,9 +158,7 @@ export function CombatStats({ unit }: { unit: ArmyUnit }) {
         >
           Loadout
         </button>
-        {on && melee.map((w, i) => (
-          <button key={w.slug} onClick={() => setMeleeSel(i)} style={selChip(i === meleeSel)}>{w.name}</button>
-        ))}
+        {on && melee.map((w, i) => weaponChip(w, i === meleeSel, () => setMeleeSel(i)))}
         {on && showCharge && (
           <button onClick={() => setCharge((c) => !c)} style={selChip(charge)}>{charge ? '✓ ' : ''}On charge</button>
         )}
@@ -152,9 +177,7 @@ export function CombatStats({ unit }: { unit: ArmyUnit }) {
         <div style={{ marginTop: 14, borderTop: `1px solid ${TOW.line}`, paddingTop: 12 }}>
           <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 6, marginBottom: 8 }}>
             <span style={{ ...eb, fontSize: 8.5, color: TOW.muted, marginRight: 2 }}>Ranged</span>
-            {ranged.map((w, i) => (
-              <button key={w.slug} onClick={() => setRangedSel(i)} style={selChip(i === rangedSel)}>{w.name}</button>
-            ))}
+            {ranged.map((w, i) => weaponChip(w, i === rangedSel, () => setRangedSel(i)))}
           </div>
           {rw && (
             <>
@@ -232,6 +255,25 @@ export function CombatStats({ unit }: { unit: ArmyUnit }) {
               {ruleChips(eff?.specialRules ?? [])}
             </>
           )}
+        </div>
+      )}
+
+      {/* Magic-weapon info — flavour + special rules (each opens its rule). Magic weapons have no
+          rule page of their own, so the picker eye opens this instead of the rule sheet. */}
+      {infoWeapon && (
+        <div onClick={() => setInfoWeapon(null)} style={{ position: 'fixed', inset: 0, zIndex: 80, background: 'rgba(30,20,8,0.45)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 }}>
+          <div onClick={(e) => e.stopPropagation()} style={{ width: '100%', maxWidth: 420, maxHeight: '80vh', overflowY: 'auto', background: TOW.panel2, border: `1px solid ${TOW.lineStrong}`, borderRadius: 16, padding: 16, boxShadow: '0 12px 40px rgba(40,24,8,0.3)' }}>
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, marginBottom: 6 }}>
+              <h3 style={{ margin: 0, flex: 1, minWidth: 0, fontFamily: towFont.display, fontWeight: 700, fontSize: 16, color: TOW.ink }}>{infoWeapon.name}</h3>
+              <button onClick={() => setInfoWeapon(null)} aria-label="Close" style={{ border: 'none', background: 'none', cursor: 'pointer', fontSize: 22, lineHeight: 1, color: TOW.muted, padding: '0 4px' }}>×</button>
+            </div>
+            {magicFlavour(infoWeapon.name) && (
+              <p style={{ margin: '0 0 4px', fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 13, color: TOW.parchDim, lineHeight: 1.5 }}>{magicFlavour(infoWeapon.name)}</p>
+            )}
+            {infoWeapon.specialRules.length > 0
+              ? ruleChips(infoWeapon.specialRules)
+              : <p style={{ fontFamily: towFont.serif, fontSize: 12.5, color: TOW.muted }}>No special rules listed.</p>}
+          </div>
         </div>
       )}
     </div>

@@ -58,9 +58,10 @@ export function builderListToArmy(
       ? selectedMagicItems(u, e, opts.itemsData, opts.armyItemLists)
           .filter(({ item }) => /weapon/i.test(item.type || ''))
           .map(({ item }) => {
-            const rules = magicWeaponRules(opts.magicText?.[magicItemId(item)]?.body);
+            const tx = opts.magicText?.[magicItemId(item)];
+            const rules = magicWeaponRules(tx?.body);
             const kind: 'melee' | 'ranged' = RANGED_WEAPON.test(`${item.name_en} ${rules.join(' ')}`) ? 'ranged' : 'melee';
-            return { name: item.name_en, kind, specialRules: rules };
+            return { name: item.name_en, kind, specialRules: rules, flavour: tx?.description || undefined };
           })
       : [];
     units.push({
