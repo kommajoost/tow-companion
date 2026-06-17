@@ -270,11 +270,23 @@ export const COMPOSITION_RULES: { id: string; name: string }[] = [
   { id: 'open-war', name: 'Open War' },
   { id: 'combined-arms', name: 'Combined Arms' },
   { id: 'grand-melee', name: 'Grand Melee' },
+  { id: 'combined-arms-grand-melee', name: 'Combined Arms + Grand Melee' },
   { id: 'battle-march', name: 'Battle March' },
 ];
 
+// The slugs whose rulebook text explains each composition (the info eye opens these). The combined
+// option shows BOTH rule pages, since its restrictions are the union of the two.
+export const COMPOSITION_RULE_SLUGS: Record<string, string[]> = {
+  'open-war': ['open-war'],
+  'combined-arms': ['combined-arms'],
+  'grand-melee': ['grand-melee'],
+  'combined-arms-grand-melee': ['combined-arms', 'grand-melee'],
+  'battle-march': ['battle-march'],
+};
+
 export function limitsFor(rule: string): Record<Category, CatLimit> {
-  if (rule === 'grand-melee') {
+  // Grand Melee (and the Combined Arms + Grand Melee combination) cap every category at 25%.
+  if (rule === 'grand-melee' || rule === 'combined-arms-grand-melee') {
     const out = {} as Record<Category, CatLimit>;
     for (const c of CATEGORIES) out[c] = { ...GRAND_ARMY[c], maxPercent: Math.min(25, GRAND_ARMY[c].maxPercent ?? 25) };
     return out;

@@ -12,6 +12,7 @@ import {
   type Category, type OwbArmy, type OwbUnit, type BuilderList, type ListEntry, type Validation,
   type MagicItemsData, type MagicCategory, type MagicItem,
 } from '../../lib/owbBuilder';
+import { CompositionInfo } from './CompositionInfo';
 
 // Responsive Army Builder workspace (Claude Design "Army Builder" PC + mobile, ported onto our
 // real OWB data). Wide screens get a three-column builder (catalogue · muster · unit detail);
@@ -180,6 +181,7 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
   const [q, setQ] = useState('');
   const [settings, setSettings] = useState(false);
   const [info, setInfo] = useState<{ title: string; rows: StatRow[]; note?: string; ruleSlug?: string; flavour?: string; body?: string; ruleChips?: { name: string; slug: string | null }[]; chipsLabel?: string } | null>(null); // mount/unit profile / magic-item / lore popup
+  const [compInfo, setCompInfo] = useState<string | null>(null); // composition-rule explanation popup
   const [magicText, setMagicText] = useState<MagicText>({});
   const [mountText, setMountText] = useState<MountText>({});
   useEffect(() => { fetch(`${BASE}owb/magic-item-text.json`).then((r) => r.json()).then(setMagicText).catch(() => {}); }, []);
@@ -648,7 +650,7 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
               <select value={list.composition} onChange={(e) => onUpdate(() => ({ composition: e.target.value }))} style={{ width: '100%', boxSizing: 'border-box', padding: '9px 11px', borderRadius: 9, border: `1px solid ${TOW.line}`, background: TOW.cardLt, fontFamily: towFont.serif, fontSize: 14, color: TOW.ink }}>
                 {comps.map((c) => <option key={c} value={c}>{compName(c)}</option>)}
               </select>
-              <div style={{ ...eb, fontSize: 8.5, color: TOW.muted, margin: '14px 0 7px' }}>Composition rule</div>
+              <div style={{ ...eb, fontSize: 8.5, color: TOW.muted, margin: '14px 0 7px', display: 'flex', alignItems: 'center', gap: 6 }}><span>Composition rule</span><button onClick={() => setCompInfo(list.rule)} aria-label="Explain composition rule" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 18, height: 18, flexShrink: 0, borderRadius: 999, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.12)', color: TOW.goldDeep, cursor: 'pointer', padding: 0 }}><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" strokeLinecap="round" strokeLinejoin="round" /><circle cx="12" cy="12" r="3" /></svg></button></div>
               <select value={list.rule} onChange={(e) => onUpdate(() => ({ rule: e.target.value }))} style={{ width: '100%', boxSizing: 'border-box', padding: '9px 11px', borderRadius: 9, border: `1px solid ${TOW.line}`, background: TOW.cardLt, fontFamily: towFont.serif, fontSize: 14, color: TOW.ink }}>
                 {COMPOSITION_RULES.map((r) => <option key={r.id} value={r.id}>{r.name}</option>)}
               </select>
@@ -730,6 +732,7 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
         </div>
         </div>
         {info && <InfoPopup info={info} onClose={() => setInfo(null)} onOpenRule={(s) => { setInfo(null); openRule(s); }} />}
+        <CompositionInfo ruleId={compInfo} onClose={() => setCompInfo(null)} />
       </div>
     );
   }
