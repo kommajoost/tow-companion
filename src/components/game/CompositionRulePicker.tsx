@@ -14,14 +14,25 @@ export function CompositionRulePicker({ value, onChange, onInfo, fieldStyle }: {
 }) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLButtonElement>(null);
-  const [rect, setRect] = useState<{ left: number; top: number; width: number } | null>(null);
+  const [rect, setRect] = useState<{ left: number; width: number; top: number; bottom: number } | null>(null);
   const current = COMPOSITION_RULES.find((r) => r.id === value);
 
   const toggle = () => {
     const el = ref.current;
-    if (!open && el) { const r = el.getBoundingClientRect(); setRect({ left: r.left, top: r.bottom + 4, width: r.width }); }
+    if (!open && el) { const r = el.getBoundingClientRect(); setRect({ left: r.left, width: r.width, top: r.top, bottom: r.bottom }); }
     setOpen((o) => !o);
   };
+
+  // Place the menu below the trigger, but flip above when there's more room there (the picker often
+  // sits low in a modal). Cap the height to the available space so it always fits + scrolls on-screen.
+  const placement = rect ? (() => {
+    const vh = typeof window !== 'undefined' ? window.innerHeight : 812;
+    const below = vh - rect.bottom - 8;
+    const above = rect.top - 8;
+    const up = below < 240 && above > below;
+    const maxHeight = Math.max(150, Math.min(vh * 0.6, up ? above : below));
+    return { up, maxHeight, pos: up ? { bottom: vh - rect.top + 4 } : { top: rect.bottom + 4 } };
+  })() : null;
 
   const eyeSvg = (
     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" strokeLinecap="round" strokeLinejoin="round" /><circle cx="12" cy="12" r="3" /></svg>
@@ -33,10 +44,10 @@ export function CompositionRulePicker({ value, onChange, onInfo, fieldStyle }: {
         <span style={{ flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{current?.name ?? value}</span>
         <span style={{ color: TOW.muted, fontSize: 10, flexShrink: 0 }}>{open ? '▲' : '▼'}</span>
       </button>
-      {open && rect && createPortal(
+      {open && rect && placement && createPortal(
         <>
           <div onClick={() => setOpen(false)} style={{ position: 'fixed', inset: 0, zIndex: 84 }} />
-          <div role="listbox" style={{ position: 'fixed', left: rect.left, top: rect.top, width: rect.width, maxHeight: '55vh', overflowY: 'auto', zIndex: 85, background: TOW.panel2, border: `1px solid ${TOW.lineStrong}`, borderRadius: 10, boxShadow: '0 12px 34px rgba(40,24,8,0.3)', padding: 4 }}>
+          <div role="listbox" style={{ position: 'fixed', left: rect.left, width: rect.width, ...placement.pos, maxHeight: placement.maxHeight, overflowY: 'auto', zIndex: 85, background: TOW.panel2, border: `1px solid ${TOW.lineStrong}`, borderRadius: 10, boxShadow: '0 12px 34px rgba(40,24,8,0.3)', padding: 4, WebkitOverflowScrolling: 'touch' }}>
             {COMPOSITION_RULES.map((r) => {
               const sel = r.id === value;
               return (
