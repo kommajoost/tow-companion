@@ -1,10 +1,11 @@
 import { useEffect, useMemo, useState } from 'react';
 import { TOW, towFont, engraved } from '../../design/tow';
-import { COMPOSITION_RULES, type OwbArmy, type ListEntry, type MagicItemsData } from '../../lib/owbBuilder';
+import { type OwbArmy, type ListEntry, type MagicItemsData } from '../../lib/owbBuilder';
 import { compName as compNameFor } from '../../lib/armies';
 import { importOwbText } from '../../lib/owbImport';
 import { OwbInstructions } from './OwbInstructions';
 import { CompositionInfo } from './CompositionInfo';
+import { CompositionRulePicker } from './CompositionRulePicker';
 
 // OWB-style "new list" setup, shown before the builder opens: pick the army (faction), a name,
 // army composition, points target and composition rule. Choosing the army swaps which compositions
@@ -119,15 +120,8 @@ export function NewListSetup({ armies, compsByArmy, defaultArmy, defaultName, on
         </div>
         <input type="number" inputMode="numeric" min={0} step={50} value={points} onChange={(e) => setPoints(Math.max(0, Math.floor(Number(e.target.value) || 0)))} aria-label="Custom points" style={{ ...field, fontFamily: towFont.display, fontWeight: 600 }} />
 
-        <div style={{ ...label, margin: '16px 0 6px', display: 'flex', alignItems: 'center', gap: 6 }}>
-          <span>Composition rule</span>
-          <button onClick={() => setCompInfo(rule)} aria-label="Explain composition rule" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 20, height: 20, flexShrink: 0, borderRadius: 999, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.12)', color: TOW.goldDeep, cursor: 'pointer', padding: 0 }}>
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" strokeLinecap="round" strokeLinejoin="round" /><circle cx="12" cy="12" r="3" /></svg>
-          </button>
-        </div>
-        <select value={rule} onChange={(e) => setRule(e.target.value)} style={field}>
-          {COMPOSITION_RULES.map((r) => <option key={r.id} value={r.id}>{r.name}</option>)}
-        </select>
+        <div style={{ ...label, margin: '16px 0 6px' }}>Composition rule</div>
+        <CompositionRulePicker value={rule} onChange={setRule} onInfo={setCompInfo} fieldStyle={field} />
         <CompositionInfo ruleId={compInfo} onClose={() => setCompInfo(null)} />
 
         <div style={{ display: 'flex', gap: 8, marginTop: 20 }}>
