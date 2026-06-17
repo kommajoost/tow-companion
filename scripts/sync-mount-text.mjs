@@ -22,14 +22,30 @@ function lookup(name) {
   return e;
 }
 
-// A mount's special rules are Contentful EMBEDDED ENTRIES inside the rich-text (not plain text),
-// each linking a rule whose `fields.name` is the canonical name (e.g. "Fly (X)", "Terror"). Collect
-// those names and strip the "(X)"/"(-X)" placeholder so they read cleanly and resolve to a rule page.
-function ruleNames(node, out = []) {
+// A mount's special rules are Contentful EMBEDDED ENTRIES (the GENERIC rule, e.g. "Fly (X)") each
+// IMMEDIATELY FOLLOWED by a text node carrying the PER-UNIT value (e.g. "Fly (10)", "Armour Bane (1,
+// Dark Pegasus only)"). We pair each entry with that text so the snapshot keeps the real value; the
+// "(X)" placeholder is the fallback when no value text follows. The app's resolveRuleSlug still strips
+// the "(…)" so the chip stays tappable, while the label shows the number.
+function tokenize(node, out = []) {
   if (!node) return out;
+  if (node.nodeType === 'text' && node.value && node.value.trim()) out.push({ t: 'text', v: node.value.replace(/\s+/g, ' ').trim() });
   const f = node.data?.target?.fields;
-  if (f && f.name) out.push(String(f.name).replace(/\s*\(-?X\)\s*$/, '').trim());
-  for (const c of node.content ?? []) ruleNames(c, out);
+  if (f && f.name) out.push({ t: 'entry', v: String(f.name) });
+  for (const c of node.content ?? []) tokenize(c, out);
+  return out;
+}
+// Tidy "(1, Dark Pegasus only)" → "(1)" but keep plain values like "(10)" / "(D3)".
+const tidy = (s) => s.replace(/\(([^),]+),[^)]*\bonly\)/i, '($1)').replace(/\s+/g, ' ').trim();
+function ruleNames(special) {
+  const seq = tokenize(special);
+  const out = [];
+  for (let i = 0; i < seq.length; i++) {
+    if (seq[i].t !== 'entry') continue;
+    const generic = seq[i].v.replace(/\s*\(-?X\)\s*$/, '').trim();
+    const next = seq[i + 1];
+    out.push(next && next.t === 'text' && next.v.toLowerCase().startsWith(generic.toLowerCase()) ? tidy(next.v) : generic);
+  }
   return out;
 }
 const dedupe = (a) => [...new Set(a.map((s) => s.trim()).filter((s) => s && s.length < 60))];
