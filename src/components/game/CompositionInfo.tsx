@@ -3,10 +3,14 @@ import { createPortal } from 'react-dom';
 import { useData } from '../../data';
 import { useBackClose } from '../../lib/backStack';
 import { RichText } from '../../lib/RichText';
-import { COMPOSITION_RULE_SLUGS } from '../../lib/owbBuilder';
+import { COMPOSITION_RULE_SLUGS, GRAND_ARMY, CATEGORIES, type Category } from '../../lib/owbBuilder';
 import { TOW, towFont, engraved } from '../../design/tow';
 
 const eb = engraved as React.CSSProperties;
+
+const CAT_LABEL: Record<Category, string> = {
+  characters: 'Characters', core: 'Core', special: 'Special', rare: 'Rare', mercenaries: 'Mercenaries', allies: 'Allied contingents',
+};
 
 // Explains a composition rule (Open War / Combined Arms / Grand Melee / …) with its verbatim rulebook
 // text. Rendered ABOVE the new-list and settings modals (z 95), styled like the rule sheet: a bottom
@@ -40,6 +44,25 @@ export function CompositionInfo({ ruleId, onClose }: { ruleId: string | null; on
           <span style={{ ...eb, fontSize: 8.5, color: TOW.muted }}>Composition rule</span>
           <button onClick={onClose} aria-label="Close" style={{ marginLeft: 'auto', border: 'none', background: 'none', cursor: 'pointer', fontSize: 22, lineHeight: 1, color: TOW.muted, padding: '0 4px' }}>×</button>
         </div>
+
+        {/* The base army-list limits (Grand Army percentages) that matched-play compositions build on.
+            Battle March has its own mustering rules, so the percentages don't apply there. */}
+        {ruleId !== 'battle-march' && (
+          <div style={{ marginBottom: 10 }}>
+            <h3 style={{ margin: '0 0 4px', fontFamily: towFont.display, fontWeight: 700, fontSize: 16, color: TOW.gold }}>Army list limits</h3>
+            <ul style={{ margin: 0, paddingLeft: 18, fontFamily: towFont.serif, fontSize: 13.5, color: TOW.ink, lineHeight: 1.6 }}>
+              {CATEGORIES.map((c) => {
+                const lim = GRAND_ARMY[c];
+                const parts: string[] = [];
+                if (lim?.minPercent != null) parts.push(`at least ${lim.minPercent}%`);
+                if (lim?.maxPercent != null) parts.push(`up to ${lim.maxPercent}%`);
+                return parts.length ? <li key={c}><strong>{CAT_LABEL[c]}</strong> — {parts.join(', ')} of total points</li> : null;
+              })}
+            </ul>
+            <p style={{ margin: '6px 0 0', fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 12, color: TOW.muted }}>Plus the restrictions of your chosen army composition list, and the rule below.</p>
+          </div>
+        )}
+
         {slugs.map((s, i) => {
           const rule = getRule(s);
           return (

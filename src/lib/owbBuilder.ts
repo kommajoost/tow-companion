@@ -281,7 +281,8 @@ export const COMPOSITION_RULE_SLUGS: Record<string, string[]> = {
   'combined-arms': ['combined-arms'],
   'grand-melee': ['grand-melee'],
   'combined-arms-grand-melee': ['combined-arms', 'grand-melee'],
-  'battle-march': ['battle-march'],
+  // The `battle-march` rule page is just a stub; the list-building requirements live in "Mustering".
+  'battle-march': ['mustering-a-battle-march'],
 };
 
 export function limitsFor(rule: string): Record<Category, CatLimit> {
