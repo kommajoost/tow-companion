@@ -26,6 +26,10 @@ export function GameView() {
   // GameView only mounts while a game is active, so a hardware Back here leaves the game.
   useBackClose(true, leaveGame);
   const [side, setSide] = useState<'me' | 'opp'>('me');
+  // Roster units are collapsed by default; tapping a unit's header expands just that one (keeps the
+  // list scannable). Tracked by unit id (ids are unique per army, so no clash between the two sides).
+  const [expanded, setExpanded] = useState<Set<string>>(new Set());
+  const toggleExpand = (id: string) => setExpanded((s) => { const n = new Set(s); n.has(id) ? n.delete(id) : n.add(id); return n; });
   const rootRef = useRef<HTMLDivElement>(null);
   const [w, setW] = useState(420);
   useLayoutEffect(() => {
@@ -63,11 +67,6 @@ export function GameView() {
     const prev = tracker.units[key] ?? { lost: 0, fleeing: false };
     const lost = Math.min(total, Math.max(0, prev.lost + (dir < 0 ? 1 : -1)));
     setTracker({ ...tracker, units: { ...tracker.units, [key]: { ...prev, lost } } });
-  };
-  const toggleFlee = (unitId: string) => {
-    const key = unitKey(side, unitId);
-    const prev = tracker.units[key] ?? { lost: 0, fleeing: false };
-    setTracker({ ...tracker, units: { ...tracker.units, [key]: { ...prev, fleeing: !prev.fleeing } } });
   };
   const adjRound = (dir: number) => setTracker({ ...tracker, round: Math.min(6, Math.max(1, tracker.round + dir)) });
   const adjVp = (which: 'me' | 'opp', dir: number) => {
@@ -112,7 +111,7 @@ export function GameView() {
         {g.units.map((u) => {
           const t = tracker.units[unitKey(side, u.id)];
           return (
-            <UnitCard key={u.id} unit={u} editable={editable} onChange={(patch) => onUnitChange(u.id, patch)} lost={t?.lost ?? 0} fleeing={t?.fleeing ?? false} onCasualty={(dir) => adjCasualty(u.id, dir)} onFlee={() => toggleFlee(u.id)} />
+            <UnitCard key={u.id} unit={u} editable={editable} onChange={(patch) => onUnitChange(u.id, patch)} lost={t?.lost ?? 0} onCasualty={(dir) => adjCasualty(u.id, dir)} collapsed={!expanded.has(u.id)} onToggleCollapse={() => toggleExpand(u.id)} />
           );
         })}
       </div>

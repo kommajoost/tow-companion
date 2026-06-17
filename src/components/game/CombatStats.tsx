@@ -10,7 +10,6 @@ import {
   statValue,
   SHOOTING_MODS,
 } from '../../lib/weaponStats';
-import { InfoSheet, type InfoSheetData } from './InfoSheet';
 import type { ArmyUnit } from '../../types';
 
 const eb = engraved as React.CSSProperties;
@@ -38,8 +37,6 @@ export function CombatStats({ unit }: { unit: ArmyUnit }) {
   const [custom, setCustom] = useState(0); // extra "to hit" modifier (+ = easier, − = harder)
   const [modsOpen, setModsOpen] = useState(false);
   const [multiOn, setMultiOn] = useState(true); // fire the multiple-shots mode (−1 To Hit)
-  // A mount has no rule page, so tapping its chip opens this info sheet (its profile + special rules).
-  const [info, setInfo] = useState<InfoSheetData | null>(null);
 
   const mw = melee[meleeSel];
   const rw = ranged[rangedSel];
@@ -142,20 +139,6 @@ export function CombatStats({ unit }: { unit: ArmyUnit }) {
         )}
       </div>
 
-      {/* Mount(s): tap to see the mount's own profile + special rules (it has no rule page). */}
-      {unit.mounts && unit.mounts.length > 0 && (
-        <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 6, marginBottom: 8 }}>
-          <span style={{ ...eb, fontSize: 8.5, color: TOW.muted, marginRight: 2 }}>Mount</span>
-          {unit.mounts.map((m) => (
-            <button key={m.name} onClick={() => setInfo({ title: m.name, profiles: m.profiles, rules: m.specialRules })}
-              style={{ ...chip, display: 'inline-flex', alignItems: 'center', gap: 6, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.10)', color: TOW.goldDeep }}>
-              {m.name}
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" strokeLinecap="round" strokeLinejoin="round" /><circle cx="12" cy="12" r="3" /></svg>
-            </button>
-          ))}
-        </div>
-      )}
-
       {unit.profiles.map((p, pi) => (
         <div key={pi} className="no-scrollbar" style={{ overflowX: 'auto', marginBottom: 8 }}>
           <div style={{ fontFamily: towFont.serif, fontSize: 12.5, color: TOW.parchDim, marginBottom: 3 }}>{p.label}</div>
@@ -252,7 +235,6 @@ export function CombatStats({ unit }: { unit: ArmyUnit }) {
         </div>
       )}
 
-      <InfoSheet info={info} onClose={() => setInfo(null)} />
     </div>
   );
 }

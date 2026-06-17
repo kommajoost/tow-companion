@@ -7,8 +7,7 @@ import { unitWeapons } from '../../lib/weaponStats';
 import { CombatStats } from './CombatStats';
 import { InfoSheet, type InfoSheetData } from './InfoSheet';
 import { WizardSpells } from './WizardSpells';
-import { WoundTracker } from './WoundTracker';
-import type { ArmyUnit } from '../../types';
+import type { ArmyUnit, UnitProfile } from '../../types';
 
 const eb = engraved as React.CSSProperties;
 
@@ -20,17 +19,18 @@ export function UnitCard({
   editable = false,
   onChange,
   lost,
-  fleeing,
   onCasualty,
-  onFlee,
+  collapsed = false,
+  onToggleCollapse,
 }: {
   unit: ArmyUnit;
   editable?: boolean;
   onChange?: (patch: Partial<ArmyUnit>) => void;
   lost?: number;
-  fleeing?: boolean;
   onCasualty?: (dir: number) => void;
-  onFlee?: () => void;
+  /** In the game roster, units are collapsed by default; the header toggles open to show the card. */
+  collapsed?: boolean;
+  onToggleCollapse?: () => void;
 }) {
   const { rules } = useData();
   const { openRule } = useUI();
@@ -48,11 +48,23 @@ export function UnitCard({
     for (const mi of unit.magicItems ?? []) m.set(mi.name.toLowerCase(), mi);
     return m;
   }, [unit.magicItems]);
+  // A chosen mount also appears in the loadout line; tapping it opens its profile + special rules.
+  const mountByName = useMemo(() => {
+    const m = new Map<string, { profiles: UnitProfile[]; specialRules: string[] }>();
+    for (const mt of unit.mounts ?? []) m.set(mt.name.toLowerCase(), mt);
+    return m;
+  }, [unit.mounts]);
 
   return (
-    <section style={{ border: `1px solid ${TOW.line}`, borderRadius: 12, background: dead ? 'rgba(74,55,22,0.03)' : TOW.panel2, padding: 14, marginBottom: 10, opacity: dead ? 0.7 : 1 }}>
-      <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, marginBottom: 8 }}>
-        <h3 style={{ margin: 0, flex: 1, minWidth: 0, fontFamily: towFont.display, fontWeight: 700, fontSize: 16, color: TOW.ink, textDecoration: dead ? 'line-through' : 'none' }}>
+    <section style={{ border: `1px solid ${TOW.line}`, borderRadius: 12, background: dead ? 'rgba(74,55,22,0.03)' : TOW.panel2, padding: collapsed ? '11px 14px' : 14, marginBottom: 8, opacity: dead ? 0.7 : 1 }}>
+      <div
+        onClick={onToggleCollapse}
+        style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: collapsed ? 0 : 8, cursor: onToggleCollapse ? 'pointer' : 'default' }}
+      >
+        {onToggleCollapse && (
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke={TOW.muted} strokeWidth="2.6" style={{ flexShrink: 0, transform: collapsed ? 'none' : 'rotate(90deg)', transition: 'transform .18s ease' }} aria-hidden="true"><path d="M9 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" /></svg>
+        )}
+        <h3 style={{ margin: 0, flex: 1, minWidth: 0, fontFamily: towFont.display, fontWeight: 700, fontSize: 16, color: TOW.ink, textDecoration: dead ? 'line-through' : 'none', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: collapsed ? 'nowrap' : 'normal' }}>
           {unit.count ? <span style={{ color: TOW.goldDeep }}>{unit.count}× </span> : null}
           {unit.name}
         </h3>
@@ -61,6 +73,7 @@ export function UnitCard({
         )}
       </div>
 
+      {!collapsed && (<>
       {/* All profiles share the column set (M WS BS S T W I A Ld). When the unit has weapons,
           CombatStats owns the profile display + a small "Loadout" toggle for effective stats;
           otherwise we just show the base profile table(s). */}
@@ -120,12 +133,15 @@ export function UnitCard({
       {unit.options.length > 0 && (
         <div style={{ fontFamily: towFont.serif, fontSize: 13, color: TOW.parchDim, lineHeight: 1.9, margin: '4px 0 8px', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '0 4px' }}>
           {unit.options.map((opt, i) => {
-            // A magic item → open its info sheet; otherwise a wargear rule → open the rule sheet.
+            // A magic item or a mount → open its info sheet; otherwise a wargear rule → the rule sheet.
             const mi = magicByName.get(opt.toLowerCase());
-            const slug = mi ? null : resolveOptionSlug(opt, idx);
+            const mt = !mi ? mountByName.get(opt.toLowerCase()) : undefined;
+            const slug = mi || mt ? null : resolveOptionSlug(opt, idx);
             const onClick = mi
               ? () => setInfo({ title: opt, flavour: mi.flavour, rules: mi.specialRules })
-              : slug ? () => openRule(slug) : null;
+              : mt
+                ? () => setInfo({ title: opt, profiles: mt.profiles, rules: mt.specialRules })
+                : slug ? () => openRule(slug) : null;
             return (
               <span key={i} style={{ display: 'inline-flex', alignItems: 'center' }}>
                 {i > 0 && <span style={{ color: TOW.faint, marginRight: 4 }}>·</span>}
@@ -165,17 +181,7 @@ export function UnitCard({
       {isWizard && (
         <WizardSpells unit={unit} editable={editable} onChange={onChange ?? (() => {})} />
       )}
-
-      {onCasualty && onFlee && (
-        <WoundTracker
-          unit={unit}
-          lost={lost ?? 0}
-          onCasualty={onCasualty}
-          fleeing={!!fleeing}
-          onFlee={onFlee}
-          editable={editable}
-        />
-      )}
+      </>)}
 
       <InfoSheet info={info} onClose={() => setInfo(null)} />
     </section>

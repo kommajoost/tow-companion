@@ -4,7 +4,7 @@
 // profiles) directly from the builder entries + the OWB catalogue.
 
 import type { Army, ArmyUnit, UnitProfile } from '../types';
-import { CATEGORIES, entryPoints, loadoutLabels, magicItemId, selectedMagicItems, selectedMountIndex, validate, type BuilderList, type Category, type OwbArmy, type OwbUnit, type MagicItemsData } from './owbBuilder';
+import { CATEGORIES, entryPoints, loadoutLabels, magicItemId, selectedMagicItems, selectedMountIndex, selectedOptions, validate, type BuilderList, type Category, type OwbArmy, type OwbUnit, type MagicItemsData } from './owbBuilder';
 
 /** Per-item flavour + rules text snapshot (public/owb/magic-item-text.json), keyed by item slug. */
 export type MagicText = Record<string, { description?: string; body?: string }>;
@@ -55,9 +55,15 @@ export function builderListToArmy(
     const u = getUnit(e.cat, e.unitId);
     if (!u) continue;
     const multi = (u.maximum ?? 1) !== 1 || (u.minimum ?? 1) > 1;
-    const profiles: UnitProfile[] = statsFor(u.name_en).map((r) => ({
-      label: r.Name, stats: STAT_COLS.map((k) => ({ k, v: r[k] ?? '-' })),
-    }));
+    // A unit's stat block includes its champion's row (e.g. Warriors → "Dark Elf Warrior" + "Lordling").
+    // If the champion command upgrade isn't taken, drop that row so the game shows only profiles in play.
+    const selectedOptNames = new Set(selectedOptions(u, e).map(({ opt }) => (opt.name_en || '').toLowerCase()));
+    const droppedChampions = (Array.isArray(u.command) ? u.command : [])
+      .filter((o) => /\(champion\)/i.test(o?.name_en || '') && !o.active && !selectedOptNames.has((o.name_en || '').toLowerCase()))
+      .map((o) => (o.name_en || '').replace(/\s*\(champion\)\s*/i, '').trim().toLowerCase());
+    const profiles: UnitProfile[] = statsFor(u.name_en)
+      .filter((r) => !droppedChampions.includes((r.Name || '').toLowerCase()))
+      .map((r) => ({ label: r.Name, stats: STAT_COLS.map((k) => ({ k, v: r[k] ?? '-' })) }));
     const specialRules = (u.specialRules?.name_en || '').split(',').map((s) => s.trim()).filter(Boolean);
     // Selected magic items (one pass). `magicItems` = ALL of them (weapons, armour, talismans,
     // enchanted/arcane items, runes, banners) → tappable terms on the unit card. `magicWeapons` =
