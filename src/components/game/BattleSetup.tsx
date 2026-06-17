@@ -9,6 +9,7 @@ import {
   type BattleSetupState, type TerrainPiece, type TerrainTrait,
 } from '../../lib/battle';
 import { BattleBoard } from './BattleBoard';
+import { TerrainIcon, TraitIcon } from './terrainIcons';
 
 const TRAITS: TerrainTrait[] = ['difficult', 'dangerous'];
 const traitColor = (t: TerrainTrait) => (t === 'dangerous' ? '#b23b3b' : '#5c4326');
@@ -132,10 +133,10 @@ export function BattleSetup({ onBack }: { onBack: () => void }) {
           return (
             <div key={t.id} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '5px 7px', borderRadius: 8, border: `1px solid ${n > 0 ? TOW.lineStrong : TOW.line}`, background: TOW.cardLt }}>
               <button onClick={() => toggleType(t.id)} role="checkbox" aria-checked={on} aria-label={`Include ${t.label} in the random mix`} title="Include in Randomise mix" style={{ width: 19, height: 19, flexShrink: 0, borderRadius: 5, cursor: 'pointer', border: `1px solid ${on ? TOW.goldDeep : TOW.lineStrong}`, background: on ? goldGrad : 'transparent', color: TOW.onGrad, fontSize: 12, fontWeight: 700, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', padding: 0 }}>{on ? '✓' : ''}</button>
-              <span style={{ width: 12, height: 12, borderRadius: 3, background: t.color, flexShrink: 0 }} />
-              <span style={{ flex: 1, minWidth: 0, fontFamily: towFont.serif, fontSize: 13, color: TOW.ink }}>
+              <span style={{ flexShrink: 0, color: TOW.inkDim, display: 'inline-flex' }}><TerrainIcon type={t.id} size={20} /></span>
+              <span style={{ flex: 1, minWidth: 0, display: 'inline-flex', alignItems: 'center', gap: 6, fontFamily: towFont.serif, fontSize: 13, color: TOW.ink }}>
                 {t.label}
-                {t.defaultTrait && <span style={{ marginLeft: 6, ...eb, fontSize: 8, color: traitColor(t.defaultTrait) }}>{t.defaultTrait}</span>}
+                {t.defaultTrait && <span title={TRAIT_RULE[t.defaultTrait].label} style={{ flexShrink: 0, color: TOW.faint, display: 'inline-flex' }}><TraitIcon trait={t.defaultTrait} size={13} /></span>}
               </span>
               <div style={{ display: 'inline-flex', alignItems: 'center', flexShrink: 0, border: `1px solid ${TOW.lineStrong}`, borderRadius: 7, overflow: 'hidden', background: TOW.panel2 }}>
                 <button onClick={removeOne} disabled={n === 0} aria-label={`One fewer ${t.label}`} style={{ width: 26, height: 28, border: 'none', borderRight: `1px solid ${TOW.line}`, background: 'transparent', color: n === 0 ? TOW.faint : TOW.ink, cursor: n === 0 ? 'default' : 'pointer', fontSize: 16, fontFamily: towFont.display }}>−</button>
@@ -171,21 +172,20 @@ export function BattleSetup({ onBack }: { onBack: () => void }) {
       {selectedPiece && (
         <div style={{ marginTop: 8, padding: '9px 11px', borderRadius: 10, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.08)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
-            <span style={{ width: 13, height: 13, borderRadius: 3, background: terrainType(selectedPiece.type).color, flexShrink: 0 }} />
+            <span style={{ flexShrink: 0, color: TOW.inkDim, display: 'inline-flex' }}><TerrainIcon type={selectedPiece.type} size={18} /></span>
             <span style={{ flex: 1, minWidth: 0, fontFamily: towFont.display, fontWeight: 700, fontSize: 13.5, color: TOW.ink }}>{terrainType(selectedPiece.type).label}</span>
-            <button onClick={() => removePiece(selectedPiece.id)} style={{ flexShrink: 0, padding: '5px 11px', borderRadius: 7, border: `1px solid ${TOW.blood}`, background: 'transparent', color: TOW.blood, cursor: 'pointer', fontFamily: towFont.display, fontWeight: 600, fontSize: 12 }}>Remove</button>
+            <button onClick={() => removePiece(selectedPiece.id)} style={{ flexShrink: 0, padding: '5px 11px', borderRadius: 7, border: `1px solid ${TOW.line}`, background: 'transparent', color: TOW.muted, cursor: 'pointer', fontFamily: towFont.display, fontWeight: 600, fontSize: 12 }}>Remove</button>
           </div>
           <div style={{ display: 'flex', gap: 7, flexWrap: 'wrap' }}>
             {TRAITS.map((tr) => {
               const active = !!selectedPiece[tr];
-              const c = traitColor(tr);
               return (
-                <div key={tr} style={{ display: 'inline-flex', alignItems: 'stretch', borderRadius: 8, overflow: 'hidden', border: `1px solid ${active ? c : TOW.line}` }}>
-                  <button onClick={() => setTrait(selectedPiece.id, tr, !active)} aria-pressed={active} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '6px 10px', border: 'none', cursor: 'pointer', background: active ? (tr === 'dangerous' ? 'rgba(178,59,59,0.13)' : 'rgba(92,67,38,0.13)') : 'transparent', color: active ? c : TOW.muted, fontFamily: towFont.display, fontWeight: 600, fontSize: 12.5 }}>
-                    <span style={{ width: 14, height: 14, borderRadius: 4, flexShrink: 0, border: `1px solid ${active ? c : TOW.lineStrong}`, background: active ? c : 'transparent', color: '#fff', fontSize: 10, display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>{active ? '✓' : ''}</span>
+                <div key={tr} style={{ display: 'inline-flex', alignItems: 'stretch', borderRadius: 8, overflow: 'hidden', border: `1px solid ${active ? TOW.goldDeep : TOW.line}`, background: active ? 'rgba(184,134,47,0.12)' : 'transparent' }}>
+                  <button onClick={() => setTrait(selectedPiece.id, tr, !active)} aria-pressed={active} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '6px 10px', border: 'none', cursor: 'pointer', background: 'transparent', color: active ? TOW.goldDeep : TOW.muted, fontFamily: towFont.display, fontWeight: 600, fontSize: 12.5 }}>
+                    <span style={{ display: 'inline-flex', color: active ? traitColor(tr) : TOW.faint }}><TraitIcon trait={tr} size={14} /></span>
                     {TRAIT_RULE[tr].label}
                   </button>
-                  <button onClick={() => openRule(TRAIT_RULE[tr].slug)} aria-label={`${TRAIT_RULE[tr].label} rules`} title={`${TRAIT_RULE[tr].label} rules`} style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', padding: '0 8px', border: 'none', borderLeft: `1px solid ${active ? c : TOW.line}`, background: 'transparent', color: active ? c : TOW.goldDeep, cursor: 'pointer' }}>{eyeSvg}</button>
+                  <button onClick={() => openRule(TRAIT_RULE[tr].slug)} aria-label={`${TRAIT_RULE[tr].label} rules`} title={`${TRAIT_RULE[tr].label} rules`} style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', padding: '0 8px', border: 'none', borderLeft: `1px solid ${active ? TOW.goldDeep : TOW.line}`, background: 'transparent', color: TOW.goldDeep, cursor: 'pointer' }}>{eyeSvg}</button>
                 </div>
               );
             })}
@@ -202,8 +202,8 @@ export function BattleSetup({ onBack }: { onBack: () => void }) {
 
       {/* Legend + hint */}
       <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', alignItems: 'center', marginTop: 7, fontFamily: towFont.serif, fontSize: 10.5, color: TOW.muted }}>
-        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5 }}><span style={{ width: 13, height: 9, borderRadius: 2, border: '1px dashed #5c4326', flexShrink: 0 }} /> Difficult</span>
-        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5 }}><span style={{ width: 13, height: 9, borderRadius: 2, border: '1px dashed #b23b3b', flexShrink: 0 }} /> ⚠ Dangerous</span>
+        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5 }}><span style={{ display: 'inline-flex', color: traitColor('difficult') }}><TraitIcon trait="difficult" size={13} /></span> Difficult (brown dashed)</span>
+        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5 }}><span style={{ display: 'inline-flex', color: traitColor('dangerous') }}><TraitIcon trait="dangerous" size={13} /></span> Dangerous (red dashed)</span>
       </div>
       <div style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 11.5, color: TOW.muted, marginTop: 5 }}>
         Tap a feature to select it (set Difficult / Dangerous below) · drag to move (snaps to 1″) · × to remove.

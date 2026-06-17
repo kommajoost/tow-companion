@@ -38,10 +38,17 @@ export interface DeploymentLayout {
   impassable?: { x: number; y: number; w: number; h: number }[]; // cliff strips (Mountain Pass)
 }
 
+// Units deploy in their own half but no closer than 12" to the centre line, so a deployment zone
+// reaches from a player's edge to 12" short of the middle (a 24" no-man's-land down the centre). The
+// depth therefore scales with the table — 12" on a 48"-deep table, deeper on bigger boards.
+const CENTRE_KEEPOUT = 12;
+const zoneDepth = (dim: number) => Math.max(4, Math.min(dim / 2 - CENTRE_KEEPOUT, dim / 2));
+
 /** Build the deployment-zone layout for a scenario on a given table, mirroring the rulebook maps. */
 export function deploymentFor(scenarioId: string, W: number, H: number): DeploymentLayout {
   const longHoriz = W >= H; // is the long table axis horizontal?
-  const d = 12;             // standard 12" deployment depth
+  // Standard deployment: a band along each LONG edge, reaching to 12" short of the centre line.
+  const d = longHoriz ? zoneDepth(H) : zoneDepth(W);
   const standard: DeployZone[] = longHoriz
     ? [{ x: 0, y: 0, w: W, h: d, label: 'A', kind: 'main' }, { x: 0, y: H - d, w: W, h: d, label: 'B', kind: 'main' }]
     : [{ x: 0, y: 0, w: d, h: H, label: 'A', kind: 'main' }, { x: W - d, y: 0, w: d, h: H, label: 'B', kind: 'main' }];
@@ -51,7 +58,7 @@ export function deploymentFor(scenarioId: string, W: number, H: number): Deploym
       return { zones: standard, objective: { x: W / 2, y: H / 2 } };
 
     case 'flank': {
-      const f = 18; // 18" flank zones at the short ends
+      const f = 18; // 18" flank zones at the short ends; main forces deploy in the central band
       if (longHoriz) {
         return { zones: [
           { x: f, y: 0, w: Math.max(0, W - 2 * f), h: d, label: 'A', kind: 'main' },
@@ -69,16 +76,17 @@ export function deploymentFor(scenarioId: string, W: number, H: number): Deploym
     }
 
     case 'mountain-pass': {
-      // The pass runs along the long axis: deploy at the short ends, long edges are impassable cliffs.
+      // The pass runs along the long axis: deploy at the SHORT ends, long edges are impassable cliffs.
       const t = 1.6; // cliff strip thickness
+      const dp = longHoriz ? zoneDepth(W) : zoneDepth(H);
       if (longHoriz) {
         return {
-          zones: [{ x: 0, y: 0, w: d, h: H, label: 'A', kind: 'main' }, { x: W - d, y: 0, w: d, h: H, label: 'B', kind: 'main' }],
+          zones: [{ x: 0, y: 0, w: dp, h: H, label: 'A', kind: 'main' }, { x: W - dp, y: 0, w: dp, h: H, label: 'B', kind: 'main' }],
           impassable: [{ x: 0, y: 0, w: W, h: t }, { x: 0, y: H - t, w: W, h: t }],
         };
       }
       return {
-        zones: [{ x: 0, y: 0, w: W, h: d, label: 'A', kind: 'main' }, { x: 0, y: H - d, w: W, h: d, label: 'B', kind: 'main' }],
+        zones: [{ x: 0, y: 0, w: W, h: dp, label: 'A', kind: 'main' }, { x: 0, y: H - dp, w: W, h: dp, label: 'B', kind: 'main' }],
         impassable: [{ x: 0, y: 0, w: t, h: H }, { x: W - t, y: 0, w: t, h: H }],
       };
     }
