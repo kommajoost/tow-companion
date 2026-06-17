@@ -4,11 +4,15 @@ import { useUI } from '../../state';
 import { useBackClose } from '../../lib/backStack';
 import { TOW, towFont, engraved } from '../../design/tow';
 import {
-  SCENARIOS, scenarioById, TERRAIN_TYPES, TABLE_PRESETS, DEFAULT_BATTLE,
-  recommendedTerrainCount, scatterTerrain, shufflePlacement, addTerrain,
-  type BattleSetupState, type TerrainPiece,
+  SCENARIOS, scenarioById, TERRAIN_TYPES, TABLE_PRESETS, DEFAULT_BATTLE, TRAIT_RULE,
+  recommendedTerrainCount, scatterTerrain, shufflePlacement, addTerrain, terrainType,
+  type BattleSetupState, type TerrainPiece, type TerrainTrait,
 } from '../../lib/battle';
 import { BattleBoard } from './BattleBoard';
+
+const TRAITS: TerrainTrait[] = ['difficult', 'dangerous'];
+const traitColor = (t: TerrainTrait) => (t === 'dangerous' ? '#b23b3b' : '#5c4326');
+const clampN = (n: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, n));
 
 const eb = engraved as React.CSSProperties;
 const goldGrad = `linear-gradient(180deg, ${TOW.goldBright} 0%, ${TOW.gold} 55%, ${TOW.goldDeep} 100%)`;
@@ -20,11 +24,14 @@ const goldGrad = `linear-gradient(180deg, ${TOW.goldBright} 0%, ${TOW.gold} 55%,
 export function BattleSetup({ onBack }: { onBack: () => void }) {
   const [setup, setSetup] = usePersistentState<BattleSetupState>('tow:battle', DEFAULT_BATTLE);
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [enabledTypes, setEnabledTypes] = useState<Set<string>>(() => new Set(TERRAIN_TYPES.map((t) => t.id)));
+  const [randomCount, setRandomCount] = useState<number | null>(null); // null → follow the recommendation
   const { openRule } = useUI();
   useBackClose(true, onBack);
 
   const scenario = scenarioById(setup.scenario);
   const recCount = recommendedTerrainCount(setup.tableW, setup.tableH);
+  const count = randomCount ?? recCount; // how many features the Random button lays out
   const isPreset = (w: number, h: number) => setup.tableW === w && setup.tableH === h;
 
   const setTable = (w: number, h: number) => setSetup((s) => ({
@@ -32,6 +39,10 @@ export function BattleSetup({ onBack }: { onBack: () => void }) {
     terrain: s.terrain.map((t) => ({ ...t, x: Math.min(t.x, Math.max(0, w - t.w)), y: Math.min(t.y, Math.max(0, h - t.h)) })),
   }));
   const setTerrain = (terrain: TerrainPiece[]) => setSetup((s) => ({ ...s, terrain }));
+  const toggleType = (id: string) => setEnabledTypes((prev) => { const n = new Set(prev); if (n.has(id)) n.delete(id); else n.add(id); return n; });
+  const selectedPiece = selectedId ? setup.terrain.find((t) => t.id === selectedId) ?? null : null;
+  const setTrait = (id: string, trait: TerrainTrait, val: boolean) => setTerrain(setup.terrain.map((t) => (t.id === id ? { ...t, [trait]: val } : t)));
+  const removePiece = (id: string) => { setTerrain(setup.terrain.filter((t) => t.id !== id)); setSelectedId(null); };
 
   const label: React.CSSProperties = { ...eb, fontSize: 8.5, color: TOW.muted, margin: '16px 0 7px' };
   const eyeSvg =<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" strokeLinecap="round" strokeLinejoin="round" /><circle cx="12" cy="12" r="3" /></svg>;
@@ -99,15 +110,36 @@ export function BattleSetup({ onBack }: { onBack: () => void }) {
           </div>
         );
       })()}
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5, marginBottom: 9 }}>
-        {TERRAIN_TYPES.map((t) => (
-          <button key={t.id} onClick={() => { const p = addTerrain(setup, t.id); setTerrain([...setup.terrain, p]); setSelectedId(p.id); }} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '7px 10px', borderRadius: 8, border: `1px solid ${TOW.line}`, background: TOW.cardLt, cursor: 'pointer', fontFamily: towFont.serif, fontSize: 12.5, color: TOW.ink }}>
-            <span style={{ width: 11, height: 11, borderRadius: 3, background: t.color, flexShrink: 0 }} />+ {t.label}
-          </button>
-        ))}
-        <button onClick={() => { setSetup((s) => ({ ...s, terrain: scatterTerrain(s.tableW, s.tableH) })); setSelectedId(null); }} title="A random number of features, scattered at random" style={{ padding: '7px 12px', borderRadius: 8, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.12)', color: TOW.goldDeep, cursor: 'pointer', fontFamily: towFont.display, fontWeight: 600, fontSize: 12.5 }}>🎲 Random layout</button>
-        {setup.terrain.length > 0 && <button onClick={() => { setTerrain(shufflePlacement(setup.terrain, setup.tableW, setup.tableH)); setSelectedId(null); }} title="Keep these pieces, re-place them at random" style={{ padding: '7px 12px', borderRadius: 8, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.12)', color: TOW.goldDeep, cursor: 'pointer', fontFamily: towFont.display, fontWeight: 600, fontSize: 12.5 }}>⤮ Shuffle</button>}
-        {setup.terrain.length > 0 && <button onClick={() => { setTerrain([]); setSelectedId(null); }} style={{ padding: '7px 12px', borderRadius: 8, border: `1px solid ${TOW.line}`, background: 'transparent', color: TOW.muted, cursor: 'pointer', fontFamily: towFont.display, fontWeight: 600, fontSize: 12.5 }}>Clear</button>}
+      {/* Terrain types — tick to include in Random, + to add one, eye for that type's rules */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 5, marginBottom: 9 }}>
+        {TERRAIN_TYPES.map((t) => {
+          const on = enabledTypes.has(t.id);
+          return (
+            <div key={t.id} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '5px 7px', borderRadius: 8, border: `1px solid ${TOW.line}`, background: TOW.cardLt }}>
+              <button onClick={() => toggleType(t.id)} role="checkbox" aria-checked={on} aria-label={`Include ${t.label} in random terrain`} title="Include in Random" style={{ width: 19, height: 19, flexShrink: 0, borderRadius: 5, cursor: 'pointer', border: `1px solid ${on ? TOW.goldDeep : TOW.lineStrong}`, background: on ? goldGrad : 'transparent', color: TOW.onGrad, fontSize: 12, fontWeight: 700, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', padding: 0 }}>{on ? '✓' : ''}</button>
+              <span style={{ width: 12, height: 12, borderRadius: 3, background: t.color, flexShrink: 0 }} />
+              <span style={{ flex: 1, minWidth: 0, fontFamily: towFont.serif, fontSize: 13, color: TOW.ink }}>
+                {t.label}
+                {t.defaultTrait && <span style={{ marginLeft: 6, ...eb, fontSize: 8, color: traitColor(t.defaultTrait) }}>{t.defaultTrait}</span>}
+              </span>
+              <button onClick={() => { const p = addTerrain(setup, t.id); setTerrain([...setup.terrain, p]); setSelectedId(p.id); }} title={`Add a ${t.label}`} style={{ flexShrink: 0, padding: '5px 10px', borderRadius: 7, border: `1px solid ${TOW.line}`, background: TOW.panel2, cursor: 'pointer', fontFamily: towFont.display, fontWeight: 600, fontSize: 12, color: TOW.ink }}>+ Add</button>
+              <button onClick={() => openRule(t.ruleSlug)} aria-label={`${t.label} rules`} title={`${t.label} rules`} style={{ flexShrink: 0, width: 28, height: 28, borderRadius: 7, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.10)', color: TOW.goldDeep, cursor: 'pointer', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', padding: 0 }}>{eyeSvg}</button>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Random count stepper + actions */}
+      <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 8, marginBottom: 9 }}>
+        <span style={{ ...eb, fontSize: 8, color: TOW.faint }}>Random pieces</span>
+        <div style={{ display: 'inline-flex', alignItems: 'center', border: `1px solid ${TOW.lineStrong}`, borderRadius: 8, overflow: 'hidden', background: TOW.cardLt }}>
+          <button onClick={() => setRandomCount(clampN(count - 1, 1, 40))} aria-label="Fewer pieces" style={{ width: 30, height: 32, border: 'none', borderRight: `1px solid ${TOW.line}`, background: 'transparent', color: TOW.ink, cursor: 'pointer', fontSize: 17, fontFamily: towFont.display }}>−</button>
+          <span style={{ minWidth: 30, textAlign: 'center', fontFamily: towFont.display, fontWeight: 700, fontSize: 14, color: TOW.ink }}>{count}</span>
+          <button onClick={() => setRandomCount(clampN(count + 1, 1, 40))} aria-label="More pieces" style={{ width: 30, height: 32, border: 'none', borderLeft: `1px solid ${TOW.line}`, background: 'transparent', color: TOW.ink, cursor: 'pointer', fontSize: 17, fontFamily: towFont.display }}>+</button>
+        </div>
+        <button onClick={() => { setSetup((s) => ({ ...s, terrain: scatterTerrain(s.tableW, s.tableH, count, [...enabledTypes]) })); setSelectedId(null); }} title="Lay out this many features, balanced across the table" style={{ padding: '8px 12px', borderRadius: 8, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.12)', color: TOW.goldDeep, cursor: 'pointer', fontFamily: towFont.display, fontWeight: 600, fontSize: 12.5 }}>🎲 Random</button>
+        {setup.terrain.length > 0 && <button onClick={() => { setTerrain(shufflePlacement(setup.terrain, setup.tableW, setup.tableH)); setSelectedId(null); }} title="Keep these pieces, re-place them at random" style={{ padding: '8px 12px', borderRadius: 8, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.12)', color: TOW.goldDeep, cursor: 'pointer', fontFamily: towFont.display, fontWeight: 600, fontSize: 12.5 }}>⤮ Shuffle</button>}
+        {setup.terrain.length > 0 && <button onClick={() => { setTerrain([]); setSelectedId(null); }} style={{ padding: '8px 12px', borderRadius: 8, border: `1px solid ${TOW.line}`, background: 'transparent', color: TOW.muted, cursor: 'pointer', fontFamily: towFont.display, fontWeight: 600, fontSize: 12.5 }}>Clear</button>}
       </div>
 
       <div style={{ display: 'flex', alignItems: 'baseline', gap: 7, margin: '4px 0 6px' }}>
@@ -115,14 +147,47 @@ export function BattleSetup({ onBack }: { onBack: () => void }) {
         <span style={{ fontFamily: towFont.serif, fontSize: 11.5, color: TOW.faint }}>{setup.tableW}″ × {setup.tableH}″</span>
       </div>
       <BattleBoard setup={setup} onChange={setTerrain} selectedId={selectedId} onSelect={setSelectedId} />
+
+      {/* Selected feature: set its difficult / dangerous traits (each with a rules eye) or remove it */}
+      {selectedPiece && (
+        <div style={{ marginTop: 8, padding: '9px 11px', borderRadius: 10, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.08)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
+            <span style={{ width: 13, height: 13, borderRadius: 3, background: terrainType(selectedPiece.type).color, flexShrink: 0 }} />
+            <span style={{ flex: 1, minWidth: 0, fontFamily: towFont.display, fontWeight: 700, fontSize: 13.5, color: TOW.ink }}>{terrainType(selectedPiece.type).label}</span>
+            <button onClick={() => removePiece(selectedPiece.id)} style={{ flexShrink: 0, padding: '5px 11px', borderRadius: 7, border: `1px solid ${TOW.blood}`, background: 'transparent', color: TOW.blood, cursor: 'pointer', fontFamily: towFont.display, fontWeight: 600, fontSize: 12 }}>Remove</button>
+          </div>
+          <div style={{ display: 'flex', gap: 7, flexWrap: 'wrap' }}>
+            {TRAITS.map((tr) => {
+              const active = !!selectedPiece[tr];
+              const c = traitColor(tr);
+              return (
+                <div key={tr} style={{ display: 'inline-flex', alignItems: 'stretch', borderRadius: 8, overflow: 'hidden', border: `1px solid ${active ? c : TOW.line}` }}>
+                  <button onClick={() => setTrait(selectedPiece.id, tr, !active)} aria-pressed={active} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '6px 10px', border: 'none', cursor: 'pointer', background: active ? (tr === 'dangerous' ? 'rgba(178,59,59,0.13)' : 'rgba(92,67,38,0.13)') : 'transparent', color: active ? c : TOW.muted, fontFamily: towFont.display, fontWeight: 600, fontSize: 12.5 }}>
+                    <span style={{ width: 14, height: 14, borderRadius: 4, flexShrink: 0, border: `1px solid ${active ? c : TOW.lineStrong}`, background: active ? c : 'transparent', color: '#fff', fontSize: 10, display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>{active ? '✓' : ''}</span>
+                    {TRAIT_RULE[tr].label}
+                  </button>
+                  <button onClick={() => openRule(TRAIT_RULE[tr].slug)} aria-label={`${TRAIT_RULE[tr].label} rules`} title={`${TRAIT_RULE[tr].label} rules`} style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', padding: '0 8px', border: 'none', borderLeft: `1px solid ${active ? c : TOW.line}`, background: 'transparent', color: active ? c : TOW.goldDeep, cursor: 'pointer' }}>{eyeSvg}</button>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
       {scenario && (
         <div style={{ display: 'flex', gap: 7, alignItems: 'flex-start', marginTop: 8, padding: '8px 10px', borderRadius: 9, background: 'rgba(138,108,48,0.07)', border: `1px solid ${TOW.line}` }}>
           <span style={{ flexShrink: 0, fontFamily: towFont.display, fontWeight: 700, fontSize: 11.5, color: TOW.goldDeep }}>Deployment</span>
           <span style={{ fontFamily: towFont.serif, fontSize: 11.5, color: TOW.ink, lineHeight: 1.35 }}>{scenario.deployNote}</span>
         </div>
       )}
-      <div style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 11.5, color: TOW.muted, marginTop: 7 }}>
-        Drag a feature to move it (snaps to 1″) · tap to select · × to remove.
+
+      {/* Legend + hint */}
+      <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', alignItems: 'center', marginTop: 7, fontFamily: towFont.serif, fontSize: 10.5, color: TOW.muted }}>
+        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5 }}><span style={{ width: 13, height: 9, borderRadius: 2, border: '1px dashed #5c4326', flexShrink: 0 }} /> Difficult</span>
+        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5 }}><span style={{ width: 13, height: 9, borderRadius: 2, border: '1px dashed #b23b3b', flexShrink: 0 }} /> ⚠ Dangerous</span>
+      </div>
+      <div style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 11.5, color: TOW.muted, marginTop: 5 }}>
+        Tap a feature to select it (set Difficult / Dangerous below) · drag to move (snaps to 1″) · × to remove.
       </div>
     </div>
   );

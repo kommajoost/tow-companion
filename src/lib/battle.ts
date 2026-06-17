@@ -88,21 +88,30 @@ export function deploymentFor(scenarioId: string, W: number, H: number): Deploym
   }
 }
 
-export interface TerrainType { id: string; label: string; color: string; }
-// Categories of terrain from the rulebook, with a distinct colour each.
+/** A terrain trait that can be combined with any feature (rulebook: "Combining Terrain Categories"). */
+export type TerrainTrait = 'difficult' | 'dangerous';
+export const TRAIT_RULE: Record<TerrainTrait, { slug: string; label: string }> = {
+  difficult: { slug: 'difficult-terrain', label: 'Difficult terrain' },
+  dangerous: { slug: 'dangerous-terrain', label: 'Dangerous terrain' },
+};
+
+export interface TerrainType { id: string; label: string; color: string; ruleSlug: string; defaultTrait?: TerrainTrait }
+// The rulebook's terrain feature types, each with a distinct colour and a link to its rules page.
+// `defaultTrait` reflects how the rulebook usually classifies it (most woods are difficult terrain,
+// marshes/water are dangerous, etc.) — used as the default when scattering random terrain.
 export const TERRAIN_TYPES: TerrainType[] = [
-  { id: 'hill', label: 'Hill', color: '#b08a4f' },
-  { id: 'wood', label: 'Wood', color: '#4e7a45' },
-  { id: 'building', label: 'Building', color: '#9a6a44' },
-  { id: 'ruins', label: 'Ruins', color: '#8a7f70' },
-  { id: 'marsh', label: 'Marsh / Water', color: '#4f7b8a' },
-  { id: 'obstacle', label: 'Obstacle', color: '#7a5a3a' },
-  { id: 'field', label: 'Field', color: '#9a8a3a' },
+  { id: 'hill', label: 'Hill', color: '#b08a4f', ruleSlug: 'hills' },
+  { id: 'wood', label: 'Wood', color: '#4e7a45', ruleSlug: 'woods', defaultTrait: 'difficult' },
+  { id: 'building', label: 'Building', color: '#9a6a44', ruleSlug: 'buildings' },
+  { id: 'ruins', label: 'Ruins', color: '#8a7f70', ruleSlug: 'buildings', defaultTrait: 'difficult' },
+  { id: 'marsh', label: 'Marsh / Water', color: '#4f7b8a', ruleSlug: 'dangerous-terrain', defaultTrait: 'dangerous' },
+  { id: 'obstacle', label: 'Obstacle', color: '#7a5a3a', ruleSlug: 'linear-obstacles' },
+  { id: 'field', label: 'Field', color: '#9a8a3a', ruleSlug: 'difficult-terrain', defaultTrait: 'difficult' },
 ];
 export const terrainType = (id: string): TerrainType => TERRAIN_TYPES.find((t) => t.id === id) ?? TERRAIN_TYPES[0];
 
-/** A placed terrain feature, in inches (x,y = top-left; w,h = size). */
-export interface TerrainPiece { id: string; type: string; x: number; y: number; w: number; h: number }
+/** A placed terrain feature, in inches (x,y = top-left; w,h = size). May carry difficult/dangerous traits. */
+export interface TerrainPiece { id: string; type: string; x: number; y: number; w: number; h: number; difficult?: boolean; dangerous?: boolean }
 
 export interface BattleSetupState {
   scenario: string;
@@ -130,61 +139,91 @@ const rnd = (lo: number, hi: number) => lo + Math.random() * (hi - lo);
 let counter = 0;
 export const newTerrainId = () => `t${(counter++).toString(36)}${Math.floor(Math.random() * 1e4).toString(36)}`;
 
-/** A random number of features, varying around the rulebook recommendation (rec−1 … rec+2, min 3). */
-export const randomTerrainCount = (w: number, h: number): number => {
-  const rec = recommendedTerrainCount(w, h);
-  return Math.max(3, rec - 1 + Math.floor(Math.random() * 4));
-};
+// Minimum centre-to-centre spacing between features (inches), so terrain isn't bunched up.
+const MIN_SPACING = 12;
 
-// Find a non-overlapping spot for a w×h piece inside the table (margin from the edges). Falls back to
-// a clamped random position if it can't find a clear one after a few tries.
-function randomSpot(w: number, h: number, tw: number, th: number, placed: TerrainPiece[]): { x: number; y: number } {
+// Which quadrant of the table a centre point falls in (0..3) — used to keep terrain balanced
+// across the table rather than clustered on one side.
+const quadrantOf = (cx: number, cy: number, w: number, h: number) => (cx >= w / 2 ? 1 : 0) + (cy >= h / 2 ? 2 : 0);
+
+/** A piece to be positioned: carries everything except x/y (and an optional id to preserve). */
+interface PlaceSpec { id?: string; type: string; w: number; h: number; difficult?: boolean; dangerous?: boolean }
+
+// Lay out the given specs across the table with two balance rules from the user's brief:
+//  1. features keep at least ~12" between their centres (relaxed only if the table is too crowded),
+//  2. they spread across the four quadrants rather than piling up on one side.
+// Constraints relax in stages so a requested count always gets placed.
+function placeSpecs(specs: PlaceSpec[], w: number, h: number): TerrainPiece[] {
   const margin = 3;
-  for (let i = 0; i < 60; i++) {
-    const x = Math.round(rnd(margin, Math.max(margin, w - tw - margin)));
-    const y = Math.round(rnd(margin, Math.max(margin, h - th - margin)));
-    const overlaps = placed.some((p) => x < p.x + p.w + 2 && x + tw + 2 > p.x && y < p.y + p.h + 2 && y + th + 2 > p.y);
-    if (!overlaps) return { x, y };
+  const placed: TerrainPiece[] = [];
+  const quadCount = [0, 0, 0, 0];
+  const quadCap = Math.ceil(specs.length / 4) + 1;
+  // strict → drop the quadrant balance → shrink the spacing, in that order
+  const stages = [
+    { spacing: MIN_SPACING, cap: quadCap },
+    { spacing: MIN_SPACING, cap: Infinity },
+    { spacing: 8, cap: Infinity },
+    { spacing: 4, cap: Infinity },
+    { spacing: 0, cap: Infinity },
+  ];
+  for (const spec of specs) {
+    const { w: tw, h: th } = spec;
+    let chosen: { x: number; y: number; q: number } | null = null;
+    for (const stage of stages) {
+      for (let i = 0; i < 80 && !chosen; i++) {
+        const x = Math.round(rnd(margin, Math.max(margin, w - tw - margin)));
+        const y = Math.round(rnd(margin, Math.max(margin, h - th - margin)));
+        const cx = x + tw / 2, cy = y + th / 2;
+        const q = quadrantOf(cx, cy, w, h);
+        if (quadCount[q] >= stage.cap) continue;
+        const farEnough = placed.every((p) => Math.hypot((p.x + p.w / 2) - cx, (p.y + p.h / 2) - cy) >= stage.spacing);
+        if (farEnough) chosen = { x, y, q };
+      }
+      if (chosen) break;
+    }
+    if (!chosen) {
+      const x = clamp(Math.round(rnd(margin, w - tw - margin)), 0, Math.max(0, w - tw));
+      const y = clamp(Math.round(rnd(margin, h - th - margin)), 0, Math.max(0, h - th));
+      chosen = { x, y, q: quadrantOf(x + tw / 2, y + th / 2, w, h) };
+    }
+    quadCount[chosen.q]++;
+    placed.push({ id: spec.id ?? newTerrainId(), type: spec.type, x: chosen.x, y: chosen.y, w: tw, h: th, difficult: spec.difficult, dangerous: spec.dangerous });
   }
-  return { x: clamp(Math.round(rnd(margin, Math.max(margin, w - tw - margin))), 0, w - tw), y: clamp(Math.round(rnd(margin, Math.max(margin, h - th - margin))), 0, h - th) };
+  return placed;
 }
 
-/** Generate a fresh random layout: a random number of features (random types & sizes 3–8"), scattered
- *  across the table with a light overlap check. Mirrors the rulebook's Random Terrain idea. */
-export function scatterTerrain(w: number, h: number, count = randomTerrainCount(w, h)): TerrainPiece[] {
-  const out: TerrainPiece[] = [];
-  let guard = 0;
-  while (out.length < count && guard < count * 60) {
-    guard++;
-    const tw = Math.round(rnd(3, 8));
-    const th = Math.round(rnd(3, 8));
-    const { x, y } = randomSpot(w, h, tw, th, out);
-    const type = TERRAIN_TYPES[Math.floor(Math.random() * TERRAIN_TYPES.length)].id;
-    out.push({ id: newTerrainId(), type, x, y, w: tw, h: th });
+/** Generate a fresh random layout: `count` features drawn from the enabled types (random sizes 3–8"),
+ *  balanced across the table (≥12" apart, spread over the quadrants). Each feature takes its type's
+ *  default trait (most woods difficult, marshes dangerous, …). */
+export function scatterTerrain(w: number, h: number, count = recommendedTerrainCount(w, h), enabledTypeIds?: string[]): TerrainPiece[] {
+  const pool = enabledTypeIds && enabledTypeIds.length ? TERRAIN_TYPES.filter((t) => enabledTypeIds.includes(t.id)) : TERRAIN_TYPES;
+  if (pool.length === 0) return [];
+  const specs: PlaceSpec[] = [];
+  for (let i = 0; i < Math.max(0, Math.floor(count)); i++) {
+    const tt = pool[Math.floor(Math.random() * pool.length)];
+    specs.push({ type: tt.id, w: Math.round(rnd(3, 8)), h: Math.round(rnd(3, 8)), difficult: tt.defaultTrait === 'difficult', dangerous: tt.defaultTrait === 'dangerous' });
   }
-  return out;
+  return placeSpecs(specs, w, h);
 }
 
-/** Randomly re-place the features that are already on the table — keeps each piece's type & size,
- *  just gives it a fresh random position (with a light overlap check). */
+/** Randomly re-place the features already on the table — keeps each piece's id, type, size and traits,
+ *  just gives them fresh, balanced positions (same ≥12"-apart / spread rules). */
 export function shufflePlacement(terrain: TerrainPiece[], w: number, h: number): TerrainPiece[] {
-  const out: TerrainPiece[] = [];
-  for (const piece of terrain) {
-    const { x, y } = randomSpot(w, h, piece.w, piece.h, out);
-    out.push({ ...piece, x, y });
-  }
-  return out;
+  return placeSpecs(terrain.map((t) => ({ id: t.id, type: t.type, w: t.w, h: t.h, difficult: t.difficult, dangerous: t.dangerous })), w, h);
 }
 
 /** Add a terrain piece of the given type, near the table centre. Successive adds cascade by a few
- *  inches so they don't stack invisibly on top of one another. */
+ *  inches so they don't stack invisibly on top of one another. Picks up the type's default trait. */
 export function addTerrain(state: BattleSetupState, type: string): TerrainPiece {
   const w = 6, h = 5;
   const step = (state.terrain.length % 6) * 3;
+  const trait = terrainType(type).defaultTrait;
   return {
     id: newTerrainId(), type,
     x: clamp(Math.round(state.tableW / 2 - w / 2 + step), 0, state.tableW - w),
     y: clamp(Math.round(state.tableH / 2 - h / 2 + step), 0, state.tableH - h),
     w, h,
+    difficult: trait === 'difficult',
+    dangerous: trait === 'dangerous',
   };
 }

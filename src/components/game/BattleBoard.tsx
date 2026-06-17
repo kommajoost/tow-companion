@@ -90,10 +90,13 @@ export function BattleBoard({ setup, onChange, selectedId, onSelect, editable = 
       {terrain.map((p) => {
         const tt = terrainType(p.type);
         const sel = p.id === selectedId;
+        // Trait styling: dangerous = red dashed, difficult = brown dashed; selection turns it gold.
+        const trait = p.dangerous ? { stroke: '#b23b3b', dash: '1.4 1', sw: 0.55 } : p.difficult ? { stroke: '#5c4326', dash: '1 1', sw: 0.5 } : { stroke: tt.color, dash: undefined as string | undefined, sw: 0.35 };
         return (
           <g key={p.id} onPointerDown={(e) => onPointerDown(e, p)} style={{ cursor: editable ? 'move' : 'default' }}>
-            <rect x={p.x} y={p.y} width={p.w} height={p.h} rx={1.2} fill={tt.color} fillOpacity={0.62} stroke={sel ? TOW.goldBright : tt.color} strokeWidth={sel ? 0.7 : 0.35} />
+            <rect x={p.x} y={p.y} width={p.w} height={p.h} rx={1.2} fill={tt.color} fillOpacity={0.62} stroke={sel ? TOW.goldBright : trait.stroke} strokeWidth={sel ? 0.8 : trait.sw} strokeDasharray={trait.dash} />
             <text x={p.x + p.w / 2} y={p.y + p.h / 2 + 1.2} fontSize={Math.min(3.2, p.w / Math.max(2, tt.label.length) * 1.4)} textAnchor="middle" fontFamily={towFont.serif} fill="#fff" style={{ pointerEvents: 'none' }}>{tt.label}</text>
+            {p.dangerous && <text x={p.x + 1.4} y={p.y + 2.6} fontSize={2.6} fill="#fff" stroke="#b23b3b" strokeWidth={0.15} style={{ pointerEvents: 'none' }}>⚠</text>}
             {sel && editable && (
               <g onPointerDown={(e) => { e.stopPropagation(); onChange(terrainRef.current.filter((t) => t.id !== p.id)); onSelect(null); }} style={{ cursor: 'pointer' }}>
                 <circle cx={p.x + p.w} cy={p.y} r={2.2} fill={TOW.blood} />
