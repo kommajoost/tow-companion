@@ -3,6 +3,7 @@ import { useData } from '../../data';
 import { useUI } from '../../state';
 import { getRuleIndex, resolveRuleSlug } from '../../lib/armyRules';
 import { useBackClose } from '../../lib/backStack';
+import { useSwipeToDismiss, DragHandle } from '../../lib/useSwipeToDismiss';
 import { TOW, towFont, engraved } from '../../design/tow';
 import type { UnitProfile } from '../../types';
 
@@ -34,6 +35,7 @@ export function InfoSheet({ info, onClose }: { info: InfoSheetData | null; onClo
 
   // In-app Back closes the sheet instead of leaving the app.
   useBackClose(info !== null, onClose);
+  const { handleProps, sheetStyle } = useSwipeToDismiss(onClose);
   if (!info) return null;
 
   const th: React.CSSProperties = { ...eb, fontSize: 8.5, color: TOW.goldDeep, border: `1px solid ${TOW.line}`, padding: '3px 2px', textAlign: 'center', background: 'rgba(184,134,47,0.08)' };
@@ -52,8 +54,9 @@ export function InfoSheet({ info, onClose }: { info: InfoSheetData | null; onClo
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        style={{ width: '100%', maxWidth: wide ? 440 : '100%', maxHeight: '85vh', overflowY: 'auto', background: TOW.panel2, border: `1px solid ${TOW.lineStrong}`, borderRadius: wide ? 16 : '18px 18px 0 0', padding: 16, paddingBottom: wide ? 16 : 'max(16px, env(safe-area-inset-bottom))', boxShadow: '0 -10px 40px rgba(0,0,0,0.25)' }}
+        style={{ width: '100%', maxWidth: wide ? 440 : '100%', maxHeight: '85vh', overflowY: 'auto', background: TOW.panel2, border: `1px solid ${TOW.lineStrong}`, borderRadius: wide ? 16 : '18px 18px 0 0', padding: 16, paddingTop: wide ? 16 : 4, paddingBottom: wide ? 16 : 'max(16px, env(safe-area-inset-bottom))', boxShadow: '0 -10px 40px rgba(0,0,0,0.25)', ...sheetStyle }}
       >
+        {!wide && <DragHandle {...handleProps} />}
         <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, marginBottom: 6 }}>
           <h3 style={{ margin: 0, flex: 1, minWidth: 0, fontFamily: towFont.display, fontWeight: 700, fontSize: 16, color: TOW.ink }}>{info.title}</h3>
           <button onClick={onClose} aria-label="Close" style={{ border: 'none', background: 'none', cursor: 'pointer', fontSize: 22, lineHeight: 1, color: TOW.muted, padding: '0 4px' }}>×</button>

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useUI } from '../state';
 import { useBackClose } from '../lib/backStack';
+import { useSwipeToDismiss } from '../lib/useSwipeToDismiss';
 import { RuleContent } from './RuleContent';
 
 // One back-stack registrant per stacked rule level, so a hardware Back closes ONE rule at a time
@@ -42,6 +43,9 @@ export function RuleSheet() {
     };
   }, [depth, closeTopRule]);
 
+  // Swiping the header down (on phones) closes the top rule, like Back / Esc.
+  const { handleProps, sheetStyle } = useSwipeToDismiss(closeTopRule);
+
   if (!depth) return null;
 
   return (
@@ -61,9 +65,9 @@ export function RuleSheet() {
             ? 'relative flex w-full max-w-[560px] max-h-[82vh] flex-col rounded-2xl border border-accent-2 bg-surface shadow-2xl'
             : 'relative flex max-h-[88vh] flex-col rounded-t-2xl border-t-2 border-accent-2 bg-surface shadow-2xl'
         }
-        style={{ animation: wide ? 'sheet-pop 0.18s ease-out' : 'sheet-up 0.22s ease-out' }}
+        style={{ animation: wide ? 'sheet-pop 0.18s ease-out' : 'sheet-up 0.22s ease-out', ...sheetStyle }}
       >
-        <div className="flex items-center gap-2 border-b border-border-soft px-2 py-2">
+        <div className="flex items-center gap-2 border-b border-border-soft px-2 py-2" {...(wide ? {} : handleProps)} style={wide ? undefined : { touchAction: 'none' }}>
           {depth > 1 ? (
             <button
               onClick={closeTopRule}

@@ -14,6 +14,7 @@ import {
 } from '../../lib/owbBuilder';
 import { CompositionInfo } from './CompositionInfo';
 import { CompositionRulePicker } from './CompositionRulePicker';
+import { useSwipeToDismiss } from '../../lib/useSwipeToDismiss';
 
 // Responsive Army Builder workspace (Claude Design "Army Builder" PC + mobile, ported onto our
 // real OWB data). Wide screens get a three-column builder (catalogue · muster · unit detail);
@@ -627,7 +628,7 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
     return (
       <div ref={rootRef} style={{ position: 'relative', width: '100%', height: '100%', display: 'flex', flexDirection: 'column', background: TOW.panel, color: TOW.ink, fontFamily: towFont.serif }}>
         <div style={{ flexShrink: 0, display: 'flex', alignItems: 'center', gap: 14, padding: '11px 18px', borderBottom: `1px solid ${TOW.lineStrong}`, background: TOW.panel2 }}>
-          <button onClick={onBack} aria-label="Back" style={{ width: 34, height: 34, flexShrink: 0, borderRadius: 9, cursor: 'pointer', border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt, fontSize: 18, color: TOW.inkDim }}>‹</button>
+          <button onClick={onBack} aria-label="Back to lists" style={{ height: 34, flexShrink: 0, borderRadius: 9, cursor: 'pointer', border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt, fontFamily: towFont.display, fontWeight: 600, fontSize: 12.5, color: TOW.inkDim, padding: '0 11px', display: 'inline-flex', alignItems: 'center', gap: 4 }}>‹ Lists</button>
           <div style={{ flex: 1, minWidth: 0 }}>
             <div style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 20, color: TOW.ink, lineHeight: 1.1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{name}</div>
             <div style={{ ...eb, fontSize: 8.5, color: TOW.muted, marginTop: 3 }}>{headerMeta} · {fmt(list.points)} pts</div>
@@ -747,7 +748,7 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
       {/* header */}
       <div style={{ flexShrink: 0, padding: '12px 16px 12px', borderBottom: `1px solid ${TOW.lineStrong}`, background: TOW.panel2 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <button onClick={onBack} aria-label="Back" style={{ width: 30, height: 30, flexShrink: 0, borderRadius: 8, border: `1px solid ${TOW.line}`, background: TOW.cardLt, cursor: 'pointer', fontSize: 17, color: TOW.inkDim }}>‹</button>
+          <button onClick={onBack} aria-label="Back to lists" style={{ height: 30, flexShrink: 0, borderRadius: 8, border: `1px solid ${TOW.line}`, background: TOW.cardLt, cursor: 'pointer', fontFamily: towFont.display, fontWeight: 600, fontSize: 12, color: TOW.inkDim, padding: '0 10px', display: 'inline-flex', alignItems: 'center', gap: 4 }}>‹ Lists</button>
           <input value={name} onChange={(e) => onSetName(e.target.value)} aria-label="List name" style={{ flex: 1, minWidth: 0, fontFamily: towFont.display, fontWeight: 700, fontSize: 17, color: TOW.ink, background: 'transparent', border: 'none', borderBottom: `1px dashed ${TOW.line}`, padding: '2px 0' }} />
           <button onClick={() => setSettings(true)} aria-label="List settings" style={{ width: 30, height: 30, flexShrink: 0, borderRadius: 8, border: `1px solid ${TOW.line}`, background: TOW.cardLt, cursor: 'pointer', fontSize: 14, color: TOW.inkDim }}>⚙</button>
         </div>
@@ -879,10 +880,11 @@ function InfoPopup({ info, onClose, onOpenRule }: { info: { title: string; rows:
 
 // bottom sheet (mobile)
 function Sheet({ title, sub, onClose, foot, children }: { title: string; sub?: string; onClose: () => void; foot?: React.ReactNode; children: React.ReactNode }) {
+  const { handleProps, sheetStyle } = useSwipeToDismiss(onClose);
   return (
     <div onClick={onClose} style={{ position: 'absolute', inset: 0, zIndex: 50, background: 'rgba(30,20,8,0.42)', display: 'flex', alignItems: 'flex-end', justifyContent: 'center' }}>
-      <div onClick={(e) => e.stopPropagation()} style={{ width: '100%', height: '92%', display: 'flex', flexDirection: 'column', background: TOW.panel, borderTopLeftRadius: 22, borderTopRightRadius: 22, border: `1px solid ${TOW.lineStrong}`, boxShadow: '0 -16px 50px rgba(40,24,8,0.34)', animation: 'sheet-up .26s cubic-bezier(.2,.8,.25,1) both' }}>
-        <div style={{ flexShrink: 0, padding: '10px 16px 12px', borderBottom: `1px solid ${TOW.line}` }}>
+      <div onClick={(e) => e.stopPropagation()} style={{ width: '100%', height: '92%', display: 'flex', flexDirection: 'column', background: TOW.panel, borderTopLeftRadius: 22, borderTopRightRadius: 22, border: `1px solid ${TOW.lineStrong}`, boxShadow: '0 -16px 50px rgba(40,24,8,0.34)', animation: 'sheet-up .26s cubic-bezier(.2,.8,.25,1) both', ...sheetStyle }}>
+        <div {...handleProps} style={{ flexShrink: 0, padding: '10px 16px 12px', borderBottom: `1px solid ${TOW.line}`, touchAction: 'none' }}>
           <div style={{ width: 40, height: 4, borderRadius: 99, background: TOW.lineStrong, margin: '0 auto 12px', opacity: 0.7 }} />
           <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
             <div style={{ flex: 1, minWidth: 0 }}>

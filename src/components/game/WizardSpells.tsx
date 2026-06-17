@@ -4,6 +4,7 @@ import { useUI } from '../../state';
 import { TOW, towFont, engraved } from '../../design/tow';
 import { suggestedLores, wizardInfo } from '../../lib/armyRules';
 import { useBackClose } from '../../lib/backStack';
+import { useSwipeToDismiss, DragHandle } from '../../lib/useSwipeToDismiss';
 import type { ArmyUnit, Lore } from '../../types';
 
 const eb = engraved as React.CSSProperties;
@@ -167,6 +168,7 @@ function SpellPicker({
   const addable = loreList.filter((s) => !activeLores.includes(s)).map((s) => lores[s]).filter(Boolean);
   const fullLores = addable.filter((l) => l.spells.length >= 6);
   const sigLores = addable.filter((l) => l.spells.length < 6);
+  const { handleProps, sheetStyle } = useSwipeToDismiss(onClose);
 
   return (
     <div
@@ -176,8 +178,9 @@ function SpellPicker({
       <div
         onClick={(e) => e.stopPropagation()}
         className="tow-field"
-        style={{ width: '100%', maxWidth: 480, maxHeight: '85vh', display: 'flex', flexDirection: 'column', background: TOW.panel2, borderTopLeftRadius: 18, borderTopRightRadius: 18, border: `1px solid ${TOW.lineStrong}`, boxShadow: '0 -10px 40px rgba(0,0,0,0.25)' }}
+        style={{ width: '100%', maxWidth: 480, maxHeight: '85vh', display: 'flex', flexDirection: 'column', background: TOW.panel2, borderTopLeftRadius: 18, borderTopRightRadius: 18, border: `1px solid ${TOW.lineStrong}`, boxShadow: '0 -10px 40px rgba(0,0,0,0.25)', ...sheetStyle }}
       >
+        <DragHandle {...handleProps} />
         <div style={{ flexShrink: 0, display: 'flex', alignItems: 'center', gap: 10, padding: '14px 16px', borderBottom: `1px solid ${TOW.line}` }}>
           <div style={{ flex: 1, minWidth: 0 }}>
             <div style={{ ...eb, fontSize: 8.5, color: TOW.muted }}>Choose spells{level != null ? ` · Level ${level}` : ''}</div>

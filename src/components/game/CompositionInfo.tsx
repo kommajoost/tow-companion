@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useData } from '../../data';
 import { useBackClose } from '../../lib/backStack';
+import { useSwipeToDismiss, DragHandle } from '../../lib/useSwipeToDismiss';
 import { RichText } from '../../lib/RichText';
 import { COMPOSITION_RULE_SLUGS, GRAND_ARMY, CATEGORIES, type Category } from '../../lib/owbBuilder';
 import { TOW, towFont, engraved } from '../../design/tow';
@@ -25,6 +26,7 @@ export function CompositionInfo({ ruleId, onClose }: { ruleId: string | null; on
     return () => window.removeEventListener('resize', on);
   }, []);
   useBackClose(ruleId !== null, onClose);
+  const { handleProps, sheetStyle } = useSwipeToDismiss(onClose);
   if (!ruleId) return null;
 
   const slugs = COMPOSITION_RULE_SLUGS[ruleId] ?? [ruleId];
@@ -38,8 +40,9 @@ export function CompositionInfo({ ruleId, onClose }: { ruleId: string | null; on
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        style={{ width: '100%', maxWidth: wide ? 520 : '100%', maxHeight: '85vh', overflowY: 'auto', background: TOW.panel, border: `1px solid ${TOW.lineStrong}`, borderRadius: wide ? 16 : '18px 18px 0 0', padding: 18, paddingBottom: wide ? 18 : 'max(18px, env(safe-area-inset-bottom))', boxShadow: '0 -10px 40px rgba(0,0,0,0.28)' }}
+        style={{ width: '100%', maxWidth: wide ? 520 : '100%', maxHeight: '85vh', overflowY: 'auto', background: TOW.panel, border: `1px solid ${TOW.lineStrong}`, borderRadius: wide ? 16 : '18px 18px 0 0', padding: 18, paddingTop: wide ? 18 : 4, paddingBottom: wide ? 18 : 'max(18px, env(safe-area-inset-bottom))', boxShadow: '0 -10px 40px rgba(0,0,0,0.28)', ...sheetStyle }}
       >
+        {!wide && <DragHandle {...handleProps} />}
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
           <span style={{ ...eb, fontSize: 8.5, color: TOW.muted }}>Composition rule</span>
           <button onClick={onClose} aria-label="Close" style={{ marginLeft: 'auto', border: 'none', background: 'none', cursor: 'pointer', fontSize: 22, lineHeight: 1, color: TOW.muted, padding: '0 4px' }}>×</button>
