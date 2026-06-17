@@ -331,7 +331,10 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
             <span style={{ width: 18, height: 18, flexShrink: 0, borderRadius: cat.maxItems > 1 ? 5 : 99, border: `1.5px solid ${on ? TOW.goldDeep : TOW.lineStrong}`, background: on ? TOW.goldDeep : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               {on && <svg width="11" height="11" viewBox="0 0 12 12"><path d="M2.5 6.4l2.2 2.2 4.8-5" stroke="#f4eedb" strokeWidth="1.8" fill="none" strokeLinecap="round" strokeLinejoin="round" /></svg>}
             </span>
-            <span style={{ flex: 1, fontFamily: towFont.serif, fontSize: 13.5, color: TOW.ink }}>{item.name_en}</span>
+            <span style={{ flex: 1, fontFamily: towFont.serif, fontSize: 13.5, color: TOW.ink }}>
+              {item.name_en}
+              {item.common && <span style={{ ...eb, fontSize: 7.5, color: TOW.muted, border: `1px solid ${TOW.line}`, borderRadius: 4, padding: '1px 4px', marginLeft: 6, verticalAlign: 'middle' }}>Common</span>}
+            </span>
             <span style={{ fontFamily: towFont.display, fontWeight: 600, fontSize: 11, color: item.points ? TOW.gold : TOW.faint }}>{cost}</span>
           </button>
           <Eye onClick={() => {

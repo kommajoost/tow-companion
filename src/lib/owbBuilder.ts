@@ -397,6 +397,9 @@ const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 export interface MagicItem {
   name_en: string; name?: string; points?: number; type: string;
   onePerArmy?: boolean; stackable?: boolean; maximum?: number;
+  /** From a Common Magic Items list (universal "general" or an army's "…-common"). Any number of
+   *  common items may be taken in a category, alongside the single army-specific item. Set by itemPool. */
+  common?: boolean;
 }
 /** Parsed magic-items.json: list-id → items. (Other locale name_* fields are ignored here.) */
 export type MagicItemsData = Record<string, MagicItem[]>;
@@ -445,9 +448,16 @@ export interface MagicCategory {
 
 // Flatten every item-list this army may use into a single pool (army.items → magic-items.json).
 // `armyItemLists` is the army metadata's `items` array (e.g. ["general","dark-elves",…]).
+// A "Common" magic item comes from the universal Common Magic Items list ("general") or an army's
+// own common sub-list (e.g. Daemons' "…-common"). Unlike army-specific items (one per category), any
+// number of common items may be taken — alongside the single army-specific item.
+const isCommonList = (id: string): boolean => id === 'general' || /(^|-)common($|-)/.test(id);
 function itemPool(armyItemLists: string[], itemsData: MagicItemsData): MagicItem[] {
   const pool: MagicItem[] = [];
-  for (const listId of armyItemLists) for (const it of (itemsData[listId] ?? [])) if (it && it.type) pool.push(it);
+  for (const listId of armyItemLists) {
+    const common = isCommonList(listId);
+    for (const it of (itemsData[listId] ?? [])) if (it && it.type) pool.push({ ...it, common });
+  }
   return pool;
 }
 
@@ -609,8 +619,20 @@ export function magicWouldExceed(
   const key = magicKey(categoryId, magicItemId(item));
   const selected = selectedMagicKeys(entry, categoryId);
   if (selected.includes(key)) return false; // re-pick = deselect (always allowed)
-  // Item-count cap: a fresh pick can't fit when the category is already full.
-  if (selected.length >= maxItems) return true;
+  // Per-category limit. Runes/banners use a plain count cap (finite maxItems). The normal magic-item
+  // categories (maxItems Infinity) allow only ONE army-specific item — but ANY number of Common items
+  // alongside it. So a fresh ARMY item is blocked once an army item is already chosen; Common items are
+  // limited only by the shared points budget below.
+  if (isFinite(maxItems)) {
+    if (selected.length >= maxItems) return true;
+  } else if (!item.common) {
+    const hasArmyItem = selected.some((k) => {
+      const id = k.split('/')[2];
+      const it = category?.items.find((x) => magicItemId(x) === id);
+      return !!it && !it.common;
+    });
+    if (hasArmyItem) return true;
+  }
   // Points budget is SHARED across the category's budget group (all per-type categories of a section).
   const spent = category ? magicGroupSpent(unit, entry, category.budgetGroup, itemsData, armyItemLists) : 0;
   return spent + (item.points ?? 0) > budget;
