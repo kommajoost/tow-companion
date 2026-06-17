@@ -5,7 +5,7 @@ import { useBackClose } from '../../lib/backStack';
 import { TOW, towFont, engraved } from '../../design/tow';
 import {
   SCENARIOS, scenarioById, TERRAIN_TYPES, TABLE_PRESETS, DEFAULT_BATTLE,
-  recommendedTerrainCount, scatterTerrain, addTerrain,
+  recommendedTerrainCount, scatterTerrain, shufflePlacement, addTerrain,
   type BattleSetupState, type TerrainPiece,
 } from '../../lib/battle';
 import { BattleBoard } from './BattleBoard';
@@ -79,17 +79,34 @@ export function BattleSetup({ onBack }: { onBack: () => void }) {
       </div>
 
       {/* Terrain */}
-      <div style={{ ...label, display: 'flex', alignItems: 'center', gap: 6 }}>
-        <span>Terrain · {setup.terrain.length}/{recCount} recommended</span>
-        <button onClick={() => openRule('how-much-terrain')} aria-label="Terrain rules" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 18, height: 18, borderRadius: 999, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.12)', color: TOW.goldDeep, cursor: 'pointer', padding: 0 }}><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" strokeLinecap="round" strokeLinejoin="round" /><circle cx="12" cy="12" r="3" /></svg></button>
-      </div>
+      <div style={label}>Terrain</div>
+      {(() => {
+        const n = setup.terrain.length;
+        const met = n >= recCount;
+        const over = n > recCount + 1;
+        const tone = n === 0 ? TOW.muted : over ? TOW.blood : met ? '#4e7a45' : TOW.goldDeep;
+        return (
+          <div style={{ display: 'flex', alignItems: 'center', gap: 9, padding: '9px 11px', borderRadius: 10, border: `1px solid ${TOW.line}`, background: TOW.cardLt, marginBottom: 8 }}>
+            <span style={{ display: 'inline-flex', alignItems: 'baseline', gap: 3, fontFamily: towFont.display, fontWeight: 700, color: tone }}>
+              <span style={{ fontSize: 22, lineHeight: 1 }}>{n}</span>
+              <span style={{ fontSize: 13, color: TOW.faint }}>/ {recCount}</span>
+            </span>
+            <span style={{ minWidth: 0, flex: 1, fontFamily: towFont.serif, fontSize: 11.5, color: TOW.muted, lineHeight: 1.3 }}>
+              pieces placed · <span style={{ color: tone, fontWeight: 600 }}>{recCount} recommended</span> for a {setup.tableW}″ table<br />
+              <span style={{ color: TOW.faint }}>Rulebook: ~1 feature per 12″ of the longest edge.</span>
+            </span>
+            <button onClick={() => openRule('how-much-terrain')} aria-label="Terrain rules" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 30, height: 30, flexShrink: 0, borderRadius: 8, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.12)', color: TOW.goldDeep, cursor: 'pointer', padding: 0 }}>{eyeSvg}</button>
+          </div>
+        );
+      })()}
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5, marginBottom: 9 }}>
         {TERRAIN_TYPES.map((t) => (
           <button key={t.id} onClick={() => { const p = addTerrain(setup, t.id); setTerrain([...setup.terrain, p]); setSelectedId(p.id); }} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '7px 10px', borderRadius: 8, border: `1px solid ${TOW.line}`, background: TOW.cardLt, cursor: 'pointer', fontFamily: towFont.serif, fontSize: 12.5, color: TOW.ink }}>
             <span style={{ width: 11, height: 11, borderRadius: 3, background: t.color, flexShrink: 0 }} />+ {t.label}
           </button>
         ))}
-        <button onClick={() => { setSetup((s) => ({ ...s, terrain: scatterTerrain(s.tableW, s.tableH) })); setSelectedId(null); }} style={{ padding: '7px 12px', borderRadius: 8, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.12)', color: TOW.goldDeep, cursor: 'pointer', fontFamily: towFont.display, fontWeight: 600, fontSize: 12.5 }}>🎲 Random</button>
+        <button onClick={() => { setSetup((s) => ({ ...s, terrain: scatterTerrain(s.tableW, s.tableH) })); setSelectedId(null); }} title="A random number of features, scattered at random" style={{ padding: '7px 12px', borderRadius: 8, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.12)', color: TOW.goldDeep, cursor: 'pointer', fontFamily: towFont.display, fontWeight: 600, fontSize: 12.5 }}>🎲 Random layout</button>
+        {setup.terrain.length > 0 && <button onClick={() => { setTerrain(shufflePlacement(setup.terrain, setup.tableW, setup.tableH)); setSelectedId(null); }} title="Keep these pieces, re-place them at random" style={{ padding: '7px 12px', borderRadius: 8, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.12)', color: TOW.goldDeep, cursor: 'pointer', fontFamily: towFont.display, fontWeight: 600, fontSize: 12.5 }}>⤮ Shuffle</button>}
         {setup.terrain.length > 0 && <button onClick={() => { setTerrain([]); setSelectedId(null); }} style={{ padding: '7px 12px', borderRadius: 8, border: `1px solid ${TOW.line}`, background: 'transparent', color: TOW.muted, cursor: 'pointer', fontFamily: towFont.display, fontWeight: 600, fontSize: 12.5 }}>Clear</button>}
       </div>
 
@@ -98,8 +115,14 @@ export function BattleSetup({ onBack }: { onBack: () => void }) {
         <span style={{ fontFamily: towFont.serif, fontSize: 11.5, color: TOW.faint }}>{setup.tableW}″ × {setup.tableH}″</span>
       </div>
       <BattleBoard setup={setup} onChange={setTerrain} selectedId={selectedId} onSelect={setSelectedId} />
+      {scenario && (
+        <div style={{ display: 'flex', gap: 7, alignItems: 'flex-start', marginTop: 8, padding: '8px 10px', borderRadius: 9, background: 'rgba(138,108,48,0.07)', border: `1px solid ${TOW.line}` }}>
+          <span style={{ flexShrink: 0, fontFamily: towFont.display, fontWeight: 700, fontSize: 11.5, color: TOW.goldDeep }}>Deployment</span>
+          <span style={{ fontFamily: towFont.serif, fontSize: 11.5, color: TOW.ink, lineHeight: 1.35 }}>{scenario.deployNote}</span>
+        </div>
+      )}
       <div style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 11.5, color: TOW.muted, marginTop: 7 }}>
-        Drag a feature to move it (snaps to 1″) · tap to select · × to remove. Zones A/B are the standard 12″ deployment areas — see the scenario for exact deployment.
+        Drag a feature to move it (snaps to 1″) · tap to select · × to remove.
       </div>
     </div>
   );

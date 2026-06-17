@@ -1,6 +1,6 @@
 import { useMemo, useRef } from 'react';
 import { TOW, towFont } from '../../design/tow';
-import { terrainType, type BattleSetupState, type TerrainPiece } from '../../lib/battle';
+import { terrainType, deploymentFor, type BattleSetupState, type TerrainPiece } from '../../lib/battle';
 
 const clamp = (n: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, n));
 
@@ -49,12 +49,9 @@ export function BattleBoard({ setup, onChange, selectedId, onSelect, editable = 
     return lines;
   }, [tableW, tableH]);
 
-  // Standard deployment zones: 12"-deep bands off the two LONG edges (top/bottom on a landscape table).
-  const landscape = tableW >= tableH;
-  const zoneDepth = 12;
-  const zones = landscape
-    ? [{ x: 0, y: 0, w: tableW, h: zoneDepth, label: 'A' }, { x: 0, y: tableH - zoneDepth, w: tableW, h: zoneDepth, label: 'B' }]
-    : [{ x: 0, y: 0, w: zoneDepth, h: tableH, label: 'A' }, { x: tableW - zoneDepth, y: 0, w: zoneDepth, h: tableH, label: 'B' }];
+  // Scenario-specific deployment: zones (main/flank), an optional central objective, and the
+  // impassable cliff strips for Mountain Pass. Drawn so the chosen pitched battle is visible.
+  const layout = deploymentFor(setup.scenario, tableW, tableH);
 
   return (
     <svg
@@ -65,14 +62,30 @@ export function BattleBoard({ setup, onChange, selectedId, onSelect, editable = 
       onClick={() => onSelect(null)}
       style={{ width: '100%', aspectRatio: `${tableW} / ${tableH}`, display: 'block', background: '#efe7d4', borderRadius: 10, border: `1px solid ${TOW.lineStrong}`, touchAction: 'none' }}
     >
-      {/* deployment zones */}
-      {zones.map((z) => (
-        <g key={z.label}>
-          <rect x={z.x} y={z.y} width={z.w} height={z.h} fill="rgba(138,108,48,0.10)" stroke="rgba(138,108,48,0.45)" strokeWidth={0.2} strokeDasharray="1.5 1.2" />
-          <text x={z.x + 2} y={z.y + (landscape ? z.h - 2 : 5)} fontSize={4} fontFamily={towFont.display} fontWeight={700} fill="rgba(138,108,48,0.6)">{z.label}</text>
-        </g>
+      {/* deployment zones — main (gold) and flank (blue) */}
+      {layout.zones.map((z, i) => {
+        const flank = z.kind === 'flank';
+        const fill = flank ? 'rgba(70,110,150,0.12)' : 'rgba(138,108,48,0.12)';
+        const line = flank ? 'rgba(70,110,150,0.55)' : 'rgba(138,108,48,0.5)';
+        return (
+          <g key={`${z.label}${i}`}>
+            <rect x={z.x} y={z.y} width={z.w} height={z.h} fill={fill} stroke={line} strokeWidth={0.25} strokeDasharray="1.5 1.2" />
+            <text x={z.x + Math.min(2.5, z.w / 2)} y={z.y + Math.min(5.5, z.h - 1.5)} fontSize={flank ? 3 : 4.5} fontFamily={towFont.display} fontWeight={700} fill={flank ? 'rgba(70,110,150,0.8)' : 'rgba(138,108,48,0.75)'}>{z.label}</text>
+          </g>
+        );
+      })}
+      {/* impassable cliff strips (Mountain Pass) */}
+      {layout.impassable?.map((c, i) => (
+        <rect key={`imp${i}`} x={c.x} y={c.y} width={c.w} height={c.h} fill="rgba(60,45,30,0.55)" />
       ))}
       {grid}
+      {/* central special feature / objective (Command & Control) */}
+      {layout.objective && (
+        <g>
+          <circle cx={layout.objective.x} cy={layout.objective.y} r={3.4} fill="rgba(138,108,48,0.18)" stroke={TOW.goldDeep} strokeWidth={0.3} />
+          <text x={layout.objective.x} y={layout.objective.y + 1.7} fontSize={4.4} textAnchor="middle" fill={TOW.goldDeep} style={{ pointerEvents: 'none' }}>★</text>
+        </g>
+      )}
       {/* terrain features */}
       {terrain.map((p) => {
         const tt = terrainType(p.type);
