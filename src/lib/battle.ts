@@ -212,6 +212,30 @@ export function shufflePlacement(terrain: TerrainPiece[], w: number, h: number):
   return placeSpecs(terrain.map((t) => ({ id: t.id, type: t.type, w: t.w, h: t.h, difficult: t.difficult, dangerous: t.dangerous })), w, h);
 }
 
+// Find a single spot for a tw×th piece that keeps ~12" from the existing features (relaxing if it
+// can't), without disturbing the others. Used when adding one piece via the per-type stepper.
+function findSpot(existing: TerrainPiece[], tw: number, th: number, w: number, h: number): { x: number; y: number } {
+  const margin = 3;
+  for (const spacing of [MIN_SPACING, 8, 4, 0]) {
+    for (let i = 0; i < 80; i++) {
+      const x = Math.round(rnd(margin, Math.max(margin, w - tw - margin)));
+      const y = Math.round(rnd(margin, Math.max(margin, h - th - margin)));
+      const cx = x + tw / 2, cy = y + th / 2;
+      if (existing.every((p) => Math.hypot((p.x + p.w / 2) - cx, (p.y + p.h / 2) - cy) >= spacing)) return { x, y };
+    }
+  }
+  return { x: clamp(Math.round(rnd(margin, w - tw - margin)), 0, Math.max(0, w - tw)), y: clamp(Math.round(rnd(margin, h - th - margin)), 0, Math.max(0, h - th)) };
+}
+
+/** Add one feature of the given type at a balanced spot (≥12" from the others where possible),
+ *  leaving the existing features where they are. Picks up the type's default trait. */
+export function addPieceBalanced(state: BattleSetupState, type: string): TerrainPiece {
+  const w = 6, h = 5;
+  const trait = terrainType(type).defaultTrait;
+  const { x, y } = findSpot(state.terrain, w, h, state.tableW, state.tableH);
+  return { id: newTerrainId(), type, x, y, w, h, difficult: trait === 'difficult', dangerous: trait === 'dangerous' };
+}
+
 /** Add a terrain piece of the given type, near the table centre. Successive adds cascade by a few
  *  inches so they don't stack invisibly on top of one another. Picks up the type's default trait. */
 export function addTerrain(state: BattleSetupState, type: string): TerrainPiece {

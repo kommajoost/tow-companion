@@ -5,7 +5,7 @@ import { useBackClose } from '../../lib/backStack';
 import { TOW, towFont, engraved } from '../../design/tow';
 import {
   SCENARIOS, scenarioById, TERRAIN_TYPES, TABLE_PRESETS, DEFAULT_BATTLE, TRAIT_RULE,
-  recommendedTerrainCount, scatterTerrain, shufflePlacement, addTerrain, terrainType,
+  recommendedTerrainCount, scatterTerrain, shufflePlacement, addPieceBalanced, terrainType,
   type BattleSetupState, type TerrainPiece, type TerrainTrait,
 } from '../../lib/battle';
 import { BattleBoard } from './BattleBoard';
@@ -90,7 +90,7 @@ export function BattleSetup({ onBack }: { onBack: () => void }) {
       </div>
 
       {/* Terrain */}
-      <div style={label}>Terrain</div>
+      <div style={label}>Terrain mix</div>
       {(() => {
         const n = setup.terrain.length;
         const met = n >= recCount;
@@ -103,42 +103,61 @@ export function BattleSetup({ onBack }: { onBack: () => void }) {
               <span style={{ fontSize: 13, color: TOW.faint }}>/ {recCount}</span>
             </span>
             <span style={{ minWidth: 0, flex: 1, fontFamily: towFont.serif, fontSize: 11.5, color: TOW.muted, lineHeight: 1.3 }}>
-              pieces placed · <span style={{ color: tone, fontWeight: 600 }}>{recCount} recommended</span> for a {setup.tableW}″ table<br />
+              features · <span style={{ color: tone, fontWeight: 600 }}>{recCount} recommended</span> for a {setup.tableW}″ table<br />
               <span style={{ color: TOW.faint }}>Rulebook: ~1 feature per 12″ of the longest edge.</span>
             </span>
             <button onClick={() => openRule('how-much-terrain')} aria-label="Terrain rules" style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 30, height: 30, flexShrink: 0, borderRadius: 8, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.12)', color: TOW.goldDeep, cursor: 'pointer', padding: 0 }}>{eyeSvg}</button>
           </div>
         );
       })()}
-      {/* Terrain types — tick to include in Random, + to add one, eye for that type's rules */}
+
+      {/* How-to */}
+      <div style={{ fontFamily: towFont.serif, fontSize: 11.5, color: TOW.muted, margin: '0 0 7px', lineHeight: 1.35 }}>
+        Tick the types you want, then <b style={{ color: TOW.goldDeep }}>Randomise mix</b> to spread the total across them — or set each count by hand with − / +. Happy with it? <b style={{ color: TOW.goldDeep }}>Randomise locations</b> scatters them on the map.
+      </div>
+
+      {/* Terrain types — tick = include in the random mix · − / + sets how many · eye = that type's rules */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: 5, marginBottom: 9 }}>
         {TERRAIN_TYPES.map((t) => {
           const on = enabledTypes.has(t.id);
+          const n = setup.terrain.filter((p) => p.type === t.id).length;
+          const removeOne = () => {
+            const arr = setup.terrain;
+            let idx = -1;
+            for (let i = arr.length - 1; i >= 0; i--) if (arr[i].type === t.id) { idx = i; break; }
+            if (idx < 0) return;
+            if (arr[idx].id === selectedId) setSelectedId(null);
+            setTerrain(arr.slice(0, idx).concat(arr.slice(idx + 1)));
+          };
           return (
-            <div key={t.id} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '5px 7px', borderRadius: 8, border: `1px solid ${TOW.line}`, background: TOW.cardLt }}>
-              <button onClick={() => toggleType(t.id)} role="checkbox" aria-checked={on} aria-label={`Include ${t.label} in random terrain`} title="Include in Random" style={{ width: 19, height: 19, flexShrink: 0, borderRadius: 5, cursor: 'pointer', border: `1px solid ${on ? TOW.goldDeep : TOW.lineStrong}`, background: on ? goldGrad : 'transparent', color: TOW.onGrad, fontSize: 12, fontWeight: 700, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', padding: 0 }}>{on ? '✓' : ''}</button>
+            <div key={t.id} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '5px 7px', borderRadius: 8, border: `1px solid ${n > 0 ? TOW.lineStrong : TOW.line}`, background: TOW.cardLt }}>
+              <button onClick={() => toggleType(t.id)} role="checkbox" aria-checked={on} aria-label={`Include ${t.label} in the random mix`} title="Include in Randomise mix" style={{ width: 19, height: 19, flexShrink: 0, borderRadius: 5, cursor: 'pointer', border: `1px solid ${on ? TOW.goldDeep : TOW.lineStrong}`, background: on ? goldGrad : 'transparent', color: TOW.onGrad, fontSize: 12, fontWeight: 700, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', padding: 0 }}>{on ? '✓' : ''}</button>
               <span style={{ width: 12, height: 12, borderRadius: 3, background: t.color, flexShrink: 0 }} />
               <span style={{ flex: 1, minWidth: 0, fontFamily: towFont.serif, fontSize: 13, color: TOW.ink }}>
                 {t.label}
                 {t.defaultTrait && <span style={{ marginLeft: 6, ...eb, fontSize: 8, color: traitColor(t.defaultTrait) }}>{t.defaultTrait}</span>}
               </span>
-              <button onClick={() => { const p = addTerrain(setup, t.id); setTerrain([...setup.terrain, p]); setSelectedId(p.id); }} title={`Add a ${t.label}`} style={{ flexShrink: 0, padding: '5px 10px', borderRadius: 7, border: `1px solid ${TOW.line}`, background: TOW.panel2, cursor: 'pointer', fontFamily: towFont.display, fontWeight: 600, fontSize: 12, color: TOW.ink }}>+ Add</button>
+              <div style={{ display: 'inline-flex', alignItems: 'center', flexShrink: 0, border: `1px solid ${TOW.lineStrong}`, borderRadius: 7, overflow: 'hidden', background: TOW.panel2 }}>
+                <button onClick={removeOne} disabled={n === 0} aria-label={`One fewer ${t.label}`} style={{ width: 26, height: 28, border: 'none', borderRight: `1px solid ${TOW.line}`, background: 'transparent', color: n === 0 ? TOW.faint : TOW.ink, cursor: n === 0 ? 'default' : 'pointer', fontSize: 16, fontFamily: towFont.display }}>−</button>
+                <span style={{ minWidth: 22, textAlign: 'center', fontFamily: towFont.display, fontWeight: 700, fontSize: 13.5, color: n > 0 ? TOW.ink : TOW.faint }}>{n}</span>
+                <button onClick={() => { const p = addPieceBalanced(setup, t.id); setTerrain([...setup.terrain, p]); }} aria-label={`One more ${t.label}`} style={{ width: 26, height: 28, border: 'none', borderLeft: `1px solid ${TOW.line}`, background: 'transparent', color: TOW.ink, cursor: 'pointer', fontSize: 16, fontFamily: towFont.display }}>+</button>
+              </div>
               <button onClick={() => openRule(t.ruleSlug)} aria-label={`${t.label} rules`} title={`${t.label} rules`} style={{ flexShrink: 0, width: 28, height: 28, borderRadius: 7, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.10)', color: TOW.goldDeep, cursor: 'pointer', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', padding: 0 }}>{eyeSvg}</button>
             </div>
           );
         })}
       </div>
 
-      {/* Random count stepper + actions */}
+      {/* Randomise mix (total across ticked types) + Randomise locations + Clear */}
       <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 8, marginBottom: 9 }}>
-        <span style={{ ...eb, fontSize: 8, color: TOW.faint }}>Random pieces</span>
+        <span style={{ ...eb, fontSize: 8, color: TOW.faint }}>Total</span>
         <div style={{ display: 'inline-flex', alignItems: 'center', border: `1px solid ${TOW.lineStrong}`, borderRadius: 8, overflow: 'hidden', background: TOW.cardLt }}>
-          <button onClick={() => setRandomCount(clampN(count - 1, 1, 40))} aria-label="Fewer pieces" style={{ width: 30, height: 32, border: 'none', borderRight: `1px solid ${TOW.line}`, background: 'transparent', color: TOW.ink, cursor: 'pointer', fontSize: 17, fontFamily: towFont.display }}>−</button>
+          <button onClick={() => setRandomCount(clampN(count - 1, 1, 40))} aria-label="Lower total" style={{ width: 30, height: 32, border: 'none', borderRight: `1px solid ${TOW.line}`, background: 'transparent', color: TOW.ink, cursor: 'pointer', fontSize: 17, fontFamily: towFont.display }}>−</button>
           <span style={{ minWidth: 30, textAlign: 'center', fontFamily: towFont.display, fontWeight: 700, fontSize: 14, color: TOW.ink }}>{count}</span>
-          <button onClick={() => setRandomCount(clampN(count + 1, 1, 40))} aria-label="More pieces" style={{ width: 30, height: 32, border: 'none', borderLeft: `1px solid ${TOW.line}`, background: 'transparent', color: TOW.ink, cursor: 'pointer', fontSize: 17, fontFamily: towFont.display }}>+</button>
+          <button onClick={() => setRandomCount(clampN(count + 1, 1, 40))} aria-label="Raise total" style={{ width: 30, height: 32, border: 'none', borderLeft: `1px solid ${TOW.line}`, background: 'transparent', color: TOW.ink, cursor: 'pointer', fontSize: 17, fontFamily: towFont.display }}>+</button>
         </div>
-        <button onClick={() => { setSetup((s) => ({ ...s, terrain: scatterTerrain(s.tableW, s.tableH, count, [...enabledTypes]) })); setSelectedId(null); }} title="Lay out this many features, balanced across the table" style={{ padding: '8px 12px', borderRadius: 8, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.12)', color: TOW.goldDeep, cursor: 'pointer', fontFamily: towFont.display, fontWeight: 600, fontSize: 12.5 }}>🎲 Random</button>
-        {setup.terrain.length > 0 && <button onClick={() => { setTerrain(shufflePlacement(setup.terrain, setup.tableW, setup.tableH)); setSelectedId(null); }} title="Keep these pieces, re-place them at random" style={{ padding: '8px 12px', borderRadius: 8, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.12)', color: TOW.goldDeep, cursor: 'pointer', fontFamily: towFont.display, fontWeight: 600, fontSize: 12.5 }}>⤮ Shuffle</button>}
+        <button onClick={() => { setSetup((s) => ({ ...s, terrain: scatterTerrain(s.tableW, s.tableH, count, [...enabledTypes]) })); setSelectedId(null); }} disabled={enabledTypes.size === 0} title="Spread the total across the ticked types" style={{ padding: '8px 12px', borderRadius: 8, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.12)', color: TOW.goldDeep, cursor: enabledTypes.size === 0 ? 'default' : 'pointer', opacity: enabledTypes.size === 0 ? 0.5 : 1, fontFamily: towFont.display, fontWeight: 600, fontSize: 12.5 }}>🎲 Randomise mix</button>
+        {setup.terrain.length > 0 && <button onClick={() => { setTerrain(shufflePlacement(setup.terrain, setup.tableW, setup.tableH)); setSelectedId(null); }} title="Re-place the current features at random" style={{ padding: '8px 12px', borderRadius: 8, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.12)', color: TOW.goldDeep, cursor: 'pointer', fontFamily: towFont.display, fontWeight: 600, fontSize: 12.5 }}>📍 Randomise locations</button>}
         {setup.terrain.length > 0 && <button onClick={() => { setTerrain([]); setSelectedId(null); }} style={{ padding: '8px 12px', borderRadius: 8, border: `1px solid ${TOW.line}`, background: 'transparent', color: TOW.muted, cursor: 'pointer', fontFamily: towFont.display, fontWeight: 600, fontSize: 12.5 }}>Clear</button>}
       </div>
 
