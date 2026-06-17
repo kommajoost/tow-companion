@@ -7,6 +7,7 @@ import { builderListToArmy, listTotal, type MagicText, type MountText } from '..
 import { compName } from '../../lib/armies';
 import type { BuilderList, OwbArmy, MagicItemsData } from '../../lib/owbBuilder';
 import { OwbInstructions } from './OwbInstructions';
+import { BattleSetup } from './BattleSetup';
 import type { Army, GameSummary } from '../../types';
 
 const eb = engraved as React.CSSProperties;
@@ -29,6 +30,7 @@ export function GameSetup() {
   const [mode, setMode] = useState<'host' | 'join'>('host');
   const [games, setGames] = useState<GameSummary[] | null>(null);
   const [loadingGames, setLoadingGames] = useState(false);
+  const [showBattle, setShowBattle] = useState(false);
 
   // Your saved builder lists (tow:lists) + the catalogue data needed to convert one into an Army.
   // Lists can span DIFFERENT armies, so we keep a per-army catalogue cache + army metadata (names,
@@ -101,6 +103,14 @@ export function GameSetup() {
   const labelStyle: React.CSSProperties = { ...eb, fontSize: 9, color: TOW.muted, marginBottom: 5, display: 'block' };
   const goldBtn: React.CSSProperties = { border: 'none', borderRadius: 11, cursor: 'pointer', padding: '13px 18px', background: `linear-gradient(180deg, ${TOW.goldBright}, ${TOW.gold} 55%, ${TOW.goldDeep})`, color: TOW.onGrad, fontFamily: towFont.display, fontWeight: 700, fontSize: 15, width: '100%' };
 
+  if (showBattle) {
+    return (
+      <div className="tow-field" style={{ height: '100%', overflowY: 'auto', color: TOW.ink }}>
+        <BattleSetup onBack={() => setShowBattle(false)} />
+      </div>
+    );
+  }
+
   return (
     <div className="tow-field" style={{ height: '100%', overflowY: 'auto', color: TOW.ink }}>
       <div style={{ maxWidth: 560, margin: '0 auto', padding: '20px 16px 40px' }}>
@@ -108,6 +118,15 @@ export function GameSetup() {
         <p style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 15, color: TOW.parchDim, margin: '0 0 18px' }}>
           Pick one of your saved army lists, or paste an Old World Builder export — to see each unit's profile and special rules, and share the match with your opponent.
         </p>
+
+        <button onClick={() => setShowBattle(true)} style={{ display: 'flex', alignItems: 'center', gap: 11, width: '100%', textAlign: 'left', padding: '13px 15px', borderRadius: 12, cursor: 'pointer', border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.10)', marginBottom: 18 }}>
+          <span aria-hidden style={{ fontSize: 22, lineHeight: 1 }}>🗺️</span>
+          <span style={{ flex: 1, minWidth: 0 }}>
+            <span style={{ display: 'block', fontFamily: towFont.display, fontWeight: 700, fontSize: 15, color: TOW.goldDeep }}>Battlefield setup</span>
+            <span style={{ display: 'block', fontFamily: towFont.serif, fontSize: 12.5, color: TOW.muted }}>Pick a scenario, set the table size and lay out terrain</span>
+          </span>
+          <span aria-hidden style={{ color: TOW.goldDeep, fontSize: 18, flexShrink: 0 }}>›</span>
+        </button>
 
         <label style={labelStyle}>Your name</label>
         <input value={name} onChange={(e) => setName(e.target.value)} placeholder="e.g. Joost" style={{ ...inputStyle, marginBottom: 14 }} />
