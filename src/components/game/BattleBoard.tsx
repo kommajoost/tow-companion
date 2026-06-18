@@ -42,11 +42,12 @@ export function BattleBoard({ setup, onChange, selectedId, onSelect, editable = 
   };
   const onPointerUp = () => { const d = drag.current; drag.current = null; if (d && !d.moved) onSelect(d.id === selectedId ? null : d.id); };
 
-  // 1" grid (light) + 12" lines (bold) — memoised so dragging terrain doesn't rebuild them.
+  // Uniform 1" grid (everything is measured in inches; no bold foot lines) — memoised so dragging
+  // terrain doesn't rebuild them.
   const grid = useMemo(() => {
     const lines: React.ReactNode[] = [];
-    for (let x = 0; x <= tableW; x++) lines.push(<line key={`v${x}`} x1={x} y1={0} x2={x} y2={tableH} stroke={x % 12 === 0 ? 'rgba(74,55,22,0.5)' : 'rgba(74,55,22,0.12)'} strokeWidth={x % 12 === 0 ? 0.25 : 0.08} />);
-    for (let y = 0; y <= tableH; y++) lines.push(<line key={`h${y}`} x1={0} y1={y} x2={tableW} y2={y} stroke={y % 12 === 0 ? 'rgba(74,55,22,0.5)' : 'rgba(74,55,22,0.12)'} strokeWidth={y % 12 === 0 ? 0.25 : 0.08} />);
+    for (let x = 0; x <= tableW; x++) lines.push(<line key={`v${x}`} x1={x} y1={0} x2={x} y2={tableH} stroke="rgba(74,55,22,0.13)" strokeWidth={0.08} />);
+    for (let y = 0; y <= tableH; y++) lines.push(<line key={`h${y}`} x1={0} y1={y} x2={tableW} y2={y} stroke="rgba(74,55,22,0.13)" strokeWidth={0.08} />);
     return lines;
   }, [tableW, tableH]);
 
