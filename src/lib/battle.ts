@@ -2,12 +2,14 @@
 // (recommended terrain count, defaults). The board UI (BattleBoard) + setup screen (BattleSetup) use
 // this. Scenario rules live verbatim in rules.json — we only carry the slug to open the rule sheet.
 
-// How each scenario's deployment map is drawn on the board (from the rulebook diagrams):
-//  standard         – two 12" zones off the long edges (the classic pitched battle)
+// How each scenario's deployment map is drawn on the board (traced from the rulebook diagrams):
+//  standard         – two zones off the long edges, 24" no-man's-land down the centre
 //  command-control  – standard zones + a special feature at the table centre (+200 VP)
-//  flank            – central 12" main zones + 18" flank zones at the short ends
-//  mountain-pass    – deploy at the short ends; the long edges are impassable cliffs
-export type DeploymentKind = 'standard' | 'command-control' | 'flank' | 'mountain-pass';
+//  flank            – central main zones + 18" flank zones at the short ends
+//  mountain-pass    – deploy at the short ends, 24" no-man's-land down the middle
+//  meeting          – diagonal: split corner-to-corner, 6" no-man's-land each side of the line
+//  break-point      – zones inset 9" from the side edges and 9" from the centre line
+export type DeploymentKind = 'standard' | 'command-control' | 'flank' | 'mountain-pass' | 'meeting' | 'break-point';
 
 export interface ScenarioDef {
   id: string;
@@ -21,17 +23,18 @@ export interface ScenarioDef {
 
 export const SCENARIOS: ScenarioDef[] = [
   { id: 'open-battle', name: 'Open Battle', ruleSlug: 'open-battle', d6: 1, blurb: 'A straight clash on open ground — even footing for both armies.', deployment: 'standard', deployNote: 'Standard deployment — each army sets up within 12″ of its long edge (zones A & B).' },
-  { id: 'break-point', name: 'Break Point', ruleSlug: 'break-point-matched-play', d6: 2, blurb: 'Hold the line at the breaking point; objectives decide it.', deployment: 'standard', deployNote: 'Standard 12″ deployment zones (A & B). Game ends when an army drops below ¼ of its starting Unit Strength.' },
+  { id: 'break-point', name: 'Break Point', ruleSlug: 'break-point-matched-play', d6: 2, blurb: 'Hold the line at the breaking point; objectives decide it.', deployment: 'break-point', deployNote: 'Deploy in a zone set 9″ in from the side edges and 9″ from the centre line. Game ends when an army drops below ¼ of its starting Unit Strength.' },
   { id: 'flank-attack', name: 'Flank Attack', ruleSlug: 'flank-attack', d6: 3, blurb: 'Both armies send units wide to outflank — they may arrive from a flank.', deployment: 'flank', deployNote: 'Main forces deploy in the central 12″ zones (A & B); a flanking force (≤33% pts) arrives in one 18″ flank zone (blue).' },
-  { id: 'meeting-engagement', name: 'Meeting Engagement', ruleSlug: 'meeting-engagement', d6: 4, blurb: 'A sudden clash of marching columns; some units arrive late.', deployment: 'standard', deployNote: 'Standard 12″ zones (A & B). Roll a D6 per unit — on a 1 it starts in reserve and marches on later.' },
-  { id: 'mountain-pass', name: 'Mountain Pass', ruleSlug: 'mountain-pass', d6: 5, blurb: 'A long, narrow battlefield — manoeuvring and outflanking are hard.', deployment: 'mountain-pass', deployNote: 'Deploy at the short ends (A & B). The long edges are impassable cliffs — nothing moves off them.' },
+  { id: 'meeting-engagement', name: 'Meeting Engagement', ruleSlug: 'meeting-engagement', d6: 4, blurb: 'A sudden clash of marching columns; some units arrive late.', deployment: 'meeting', deployNote: 'Diagonal deployment — split corner-to-corner with a 6″ no-man\'s-land each side of the line. Roll a D6 per unit; on a 1 it starts in reserve.' },
+  { id: 'mountain-pass', name: 'Mountain Pass', ruleSlug: 'mountain-pass', d6: 5, blurb: 'A long, narrow battlefield — manoeuvring and outflanking are hard.', deployment: 'mountain-pass', deployNote: 'Deploy at the short ends (A & B), 24″ no-man\'s-land down the middle. The long edges count as impassable cliffs.' },
   { id: 'command-control', name: 'Command & Control', ruleSlug: 'command-and-control', d6: 6, blurb: 'Fight for control of a central landmark.', deployment: 'command-control', deployNote: 'Standard 12″ zones (A & B). A special feature (★) sits at the centre — hold it for +200 VP.' },
 ];
 
 export const scenarioById = (id: string): ScenarioDef | undefined => SCENARIOS.find((s) => s.id === id);
 
-/** A deployment zone rectangle (inches). `kind` styles it: main = gold, flank = blue. */
-export interface DeployZone { x: number; y: number; w: number; h: number; label: string; kind: 'main' | 'flank' }
+/** A deployment zone (inches). Normally a rectangle (x,y,w,h); for diagonal maps it carries a
+ *  polygon `poly` of [x,y] points instead. `kind` styles it: main = gold, flank = blue. */
+export interface DeployZone { x: number; y: number; w: number; h: number; label: string; kind: 'main' | 'flank'; poly?: [number, number][] }
 export interface DeploymentLayout {
   zones: DeployZone[];
   objective?: { x: number; y: number }; // central special feature (Command & Control)
@@ -76,19 +79,41 @@ export function deploymentFor(scenarioId: string, W: number, H: number): Deploym
     }
 
     case 'mountain-pass': {
-      // The pass runs along the long axis: deploy at the SHORT ends, long edges are impassable cliffs.
-      const t = 1.6; // cliff strip thickness
+      // The pass runs along the long axis: deploy at the SHORT ends, 24" no-man's-land down the middle.
       const dp = longHoriz ? zoneDepth(W) : zoneDepth(H);
+      return longHoriz
+        ? { zones: [{ x: 0, y: 0, w: dp, h: H, label: 'A', kind: 'main' }, { x: W - dp, y: 0, w: dp, h: H, label: 'B', kind: 'main' }] }
+        : { zones: [{ x: 0, y: 0, w: W, h: dp, label: 'A', kind: 'main' }, { x: 0, y: H - dp, w: W, h: dp, label: 'B', kind: 'main' }] };
+    }
+
+    case 'break-point': {
+      // Zones inset 9" from the side (short) edges and reaching to 9" of the centre line.
+      const ins = 9, keep = 9;
       if (longHoriz) {
-        return {
-          zones: [{ x: 0, y: 0, w: dp, h: H, label: 'A', kind: 'main' }, { x: W - dp, y: 0, w: dp, h: H, label: 'B', kind: 'main' }],
-          impassable: [{ x: 0, y: 0, w: W, h: t }, { x: 0, y: H - t, w: W, h: t }],
-        };
+        const d = Math.max(4, H / 2 - keep);
+        return { zones: [
+          { x: ins, y: 0, w: Math.max(0, W - 2 * ins), h: d, label: 'A', kind: 'main' },
+          { x: ins, y: H - d, w: Math.max(0, W - 2 * ins), h: d, label: 'B', kind: 'main' },
+        ] };
       }
-      return {
-        zones: [{ x: 0, y: 0, w: W, h: dp, label: 'A', kind: 'main' }, { x: 0, y: H - dp, w: W, h: dp, label: 'B', kind: 'main' }],
-        impassable: [{ x: 0, y: 0, w: t, h: H }, { x: W - t, y: 0, w: t, h: H }],
-      };
+      const d = Math.max(4, W / 2 - keep);
+      return { zones: [
+        { x: 0, y: ins, w: d, h: Math.max(0, H - 2 * ins), label: 'A', kind: 'main' },
+        { x: W - d, y: ins, w: d, h: Math.max(0, H - 2 * ins), label: 'B', kind: 'main' },
+      ] };
+    }
+
+    case 'meeting': {
+      // Diagonal deployment: split along the anti-diagonal (bottom-left → top-right), with a 6"
+      // no-man's-land each side. Zone A is the top-left triangle, Zone B the bottom-right triangle.
+      const delta = 6 * Math.sqrt(1 / (W * W) + 1 / (H * H)); // 6" perpendicular, in x/W+y/H units
+      const cA = 1 - delta, cB = 1 + delta;
+      const polyA: [number, number][] = [[0, 0], [W * cA, 0], [0, H * cA]];
+      const polyB: [number, number][] = [[W, H * (cB - 1)], [W, H], [W * (cB - 1), H]];
+      return { zones: [
+        { x: 0, y: 0, w: W, h: H, label: 'A', kind: 'main', poly: polyA },
+        { x: 0, y: 0, w: W, h: H, label: 'B', kind: 'main', poly: polyB },
+      ] };
     }
 
     default:
