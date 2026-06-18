@@ -169,6 +169,8 @@ export interface ArmyUnit {
   count: number | null; // leading multiplier (e.g. 15 Warriors), null for single models
   points: number | null;
   category: string; // e.g. "Core Units"
+  /** Troop type, e.g. "Regular Infantry", "Monstrous Cavalry" (from rules-index troopType). */
+  troopType?: string;
   options: string[]; // the "- …" lines
   specialRules: string[]; // verbatim labels from "Special Rules: …"
   profiles: UnitProfile[];
@@ -184,9 +186,10 @@ export interface ArmyUnit {
    *  with its flavour + special rules — so the unit card can show each as a tappable term (like the
    *  unit's special rules) that opens the item's info, since magic items have no rule page. */
   magicItems?: { name: string; specialRules: string[]; flavour?: string }[];
-  /** A chosen mount (Dark Pegasus, Black Dragon, …) with its own stat profile + special rules — the
-   *  game surfaces it as a tappable chip so the player can see the mount's full info. */
-  mounts?: { name: string; profiles: UnitProfile[]; specialRules: string[] }[];
+  /** A chosen mount (Dark Pegasus, Black Dragon, …) with its own stat profile + special rules + its
+   *  own troop type — the game surfaces it as a tappable chip so the player can see the mount's full
+   *  info. */
+  mounts?: { name: string; profiles: UnitProfile[]; specialRules: string[]; troopType?: string }[];
 }
 
 export interface Army {

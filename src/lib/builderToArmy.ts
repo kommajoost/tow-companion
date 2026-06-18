@@ -47,7 +47,7 @@ export function builderListToArmy(
   list: NamedBuilderList,
   catalogue: OwbArmy,
   statsFor: (name: string) => StatRow[],
-  opts: { faction?: string; composition?: string; itemsData?: MagicItemsData; armyItemLists?: string[]; magicText?: MagicText; mountText?: MountText } = {},
+  opts: { faction?: string; composition?: string; itemsData?: MagicItemsData; armyItemLists?: string[]; magicText?: MagicText; mountText?: MountText; troopTypeFor?: (name: string) => string | undefined } = {},
 ): Army {
   const getUnit = getUnitFrom(catalogue);
   const units: ArmyUnit[] = [];
@@ -90,7 +90,8 @@ export function builderListToArmy(
       const rows = statsFor(mOpt.name_en).length ? statsFor(mOpt.name_en) : statsFor(nm);
       const mProfiles: UnitProfile[] = rows.map((r) => ({ label: r.Name, stats: STAT_COLS.map((k) => ({ k, v: r[k] ?? '-' })) }));
       const mRules = opts.mountText?.[nm]?.specialRules ?? [];
-      if (mProfiles.length || mRules.length) mounts.push({ name: mOpt.name_en, profiles: mProfiles, specialRules: mRules });
+      const mType = opts.troopTypeFor?.(mOpt.name_en) ?? opts.troopTypeFor?.(nm);
+      if (mProfiles.length || mRules.length) mounts.push({ name: mOpt.name_en, profiles: mProfiles, specialRules: mRules, troopType: mType });
     }
     units.push({
       id: e.uid,
@@ -98,6 +99,7 @@ export function builderListToArmy(
       count: multi ? e.count : null,
       points: entryPoints(u, e, opts.itemsData),
       category: CAT_LABEL[e.cat],
+      troopType: opts.troopTypeFor?.(u.name_en),
       // Full effective loadout (base weapons + upgrades + magic), so the game resolves shooting/melee
       // profiles the same way it does for a pasted OWB list — not just the non-default upgrades.
       options: loadoutLabels(u, e, opts.itemsData),

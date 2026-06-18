@@ -1,9 +1,10 @@
-import { useLayoutEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { TOW, towFont, engraved } from '../../design/tow';
 import { Ornament } from '../../design/glyphs';
 import { useGame } from '../../game';
 import { useBackClose } from '../../lib/backStack';
 import { parseArmyList } from '../../lib/armyParser';
+import { makeTroopTypeLookup, enrichArmyTroopTypes } from '../../lib/troopTypes';
 import { unitTotalStrength } from '../../lib/armyRules';
 import { UnitCard } from './UnitCard';
 import { BattleBar } from './BattleBar';
@@ -14,6 +15,8 @@ import type { Army, ArmyUnit } from '../../types';
 const eb = engraved as React.CSSProperties;
 const display = towFont.display;
 const serif = towFont.serif;
+const BASE = import.meta.env.BASE_URL;
+let riCache: Record<string, { troopType?: string }> | null = null; // rules-index, fetched once
 
 const Shield = ({ c, size = 22 }: { c: string; size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none"><path d="M12 3.5l7 2.4v5.2c0 4.2-2.9 7.3-7 8.9-4.1-1.6-7-4.7-7-8.9V5.9z" stroke={c} strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg>
@@ -211,7 +214,13 @@ function CodeBadge({ code, onLeave, waiting }: { code: string | null; onLeave: (
 
 function ArmyPaste({ title, cta, onSet }: { title: string; cta: string; onSet: (a: Army) => void }) {
   const [paste, setPaste] = useState('');
-  const army = paste.trim() ? parseArmyList(paste) : null;
+  const [ri, setRi] = useState(riCache);
+  useEffect(() => {
+    if (ri) return;
+    fetch(`${BASE}owb/rules-index.json`).then((r) => r.json()).then((d) => { riCache = d; setRi(d); }).catch(() => {});
+  }, [ri]);
+  const troopTypeFor = useMemo(() => makeTroopTypeLookup(ri), [ri]);
+  const army = paste.trim() ? enrichArmyTroopTypes(parseArmyList(paste), troopTypeFor) : null;
   return (
     <div style={{ padding: '12px 2px' }}>
       <div style={{ ...eb, fontSize: 9, color: TOW.muted, marginBottom: 6 }}>{title}</div>

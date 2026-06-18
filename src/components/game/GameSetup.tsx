@@ -4,6 +4,7 @@ import { usePersistentState } from '../../store';
 import { useGame } from '../../game';
 import { parseArmyList } from '../../lib/armyParser';
 import { builderListToArmy, listTotal, type MagicText, type MountText } from '../../lib/builderToArmy';
+import { makeTroopTypeLookup, enrichArmyTroopTypes } from '../../lib/troopTypes';
 import { compName } from '../../lib/armies';
 import type { BuilderList, OwbArmy, MagicItemsData } from '../../lib/owbBuilder';
 import { OwbInstructions } from './OwbInstructions';
@@ -40,7 +41,7 @@ export function GameSetup() {
   const [catalogues, setCatalogues] = useState<Record<string, OwbArmy>>({}); // slug → catalogue
   const [armyNames, setArmyNames] = useState<Record<string, string>>({}); // slug → display name
   const [itemsByArmy, setItemsByArmy] = useState<Record<string, string[]>>({}); // slug → magic-item lists
-  const [statIdx, setStatIdx] = useState<Record<string, { stats?: StatRow[] }> | null>(null);
+  const [statIdx, setStatIdx] = useState<Record<string, { stats?: StatRow[]; troopType?: string }> | null>(null);
   const [itemsData, setItemsData] = useState<MagicItemsData | null>(null);
   const [magicText, setMagicText] = useState<MagicText>({});
   const [mountText, setMountText] = useState<MountText>({});
@@ -79,13 +80,14 @@ export function GameSetup() {
   }, [statIdx]);
 
   const armyNameFor = (slug: string) => armyNames[slug] ?? slug;
+  const troopTypeFor = useMemo(() => makeTroopTypeLookup(statIdx), [statIdx]);
 
   const pickedList = pickedId ? lists.find((l) => l.id === pickedId) || null : null;
   const pickedCatalogue = pickedList ? catalogues[pickedList.army] ?? null : null;
   const army: Army | null =
     pickedList && pickedCatalogue
-      ? builderListToArmy(pickedList, pickedCatalogue, statsFor, { faction: armyNameFor(pickedList.army), composition: compName(pickedList.composition, pickedList.army), itemsData: itemsData ?? undefined, armyItemLists: itemsByArmy[pickedList.army] ?? [], magicText, mountText })
-      : paste.trim() ? parseArmyList(paste) : null;
+      ? builderListToArmy(pickedList, pickedCatalogue, statsFor, { faction: armyNameFor(pickedList.army), composition: compName(pickedList.composition, pickedList.army), itemsData: itemsData ?? undefined, armyItemLists: itemsByArmy[pickedList.army] ?? [], magicText, mountText, troopTypeFor })
+      : paste.trim() ? enrichArmyTroopTypes(parseArmyList(paste), troopTypeFor) : null;
 
   const loadGames = useCallback(async () => {
     setLoadingGames(true);

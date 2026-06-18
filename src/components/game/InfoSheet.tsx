@@ -14,6 +14,7 @@ const eb = engraved as React.CSSProperties;
 // while a magic item's prose effect text renders as a wrapped paragraph.
 export interface InfoSheetData {
   title: string;
+  troopType?: string;
   flavour?: string;
   profiles?: UnitProfile[];
   rules: string[];
@@ -61,6 +62,10 @@ export function InfoSheet({ info, onClose }: { info: InfoSheetData | null; onClo
           <h3 style={{ margin: 0, flex: 1, minWidth: 0, fontFamily: towFont.display, fontWeight: 700, fontSize: 16, color: TOW.ink }}>{info.title}</h3>
           <button onClick={onClose} aria-label="Close" style={{ border: 'none', background: 'none', cursor: 'pointer', fontSize: 22, lineHeight: 1, color: TOW.muted, padding: '0 4px' }}>×</button>
         </div>
+
+        {info.troopType && (
+          <div style={{ ...eb, fontSize: 8, color: TOW.muted, margin: '0 0 8px' }}>{info.troopType}</div>
+        )}
 
         {info.flavour && (
           <p style={{ margin: '0 0 6px', fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 13, color: TOW.parchDim, lineHeight: 1.5 }}>{info.flavour}</p>

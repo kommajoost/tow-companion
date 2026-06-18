@@ -50,7 +50,7 @@ export function UnitCard({
   }, [unit.magicItems]);
   // A chosen mount also appears in the loadout line; tapping it opens its profile + special rules.
   const mountByName = useMemo(() => {
-    const m = new Map<string, { profiles: UnitProfile[]; specialRules: string[] }>();
+    const m = new Map<string, { profiles: UnitProfile[]; specialRules: string[]; troopType?: string }>();
     for (const mt of unit.mounts ?? []) m.set(mt.name.toLowerCase(), mt);
     return m;
   }, [unit.mounts]);
@@ -64,10 +64,15 @@ export function UnitCard({
         {onToggleCollapse && (
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke={TOW.muted} strokeWidth="2.6" style={{ flexShrink: 0, transform: collapsed ? 'none' : 'rotate(90deg)', transition: 'transform .18s ease' }} aria-hidden="true"><path d="M9 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" /></svg>
         )}
-        <h3 style={{ margin: 0, flex: 1, minWidth: 0, fontFamily: towFont.display, fontWeight: 700, fontSize: 16, color: TOW.ink, textDecoration: dead ? 'line-through' : 'none', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: collapsed ? 'nowrap' : 'normal' }}>
-          {unit.count ? <span style={{ color: TOW.goldDeep }}>{unit.count}× </span> : null}
-          {unit.name}
-        </h3>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <h3 style={{ margin: 0, fontFamily: towFont.display, fontWeight: 700, fontSize: 16, color: TOW.ink, textDecoration: dead ? 'line-through' : 'none', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: collapsed ? 'nowrap' : 'normal' }}>
+            {unit.count ? <span style={{ color: TOW.goldDeep }}>{unit.count}× </span> : null}
+            {unit.name}
+          </h3>
+          {unit.troopType && (
+            <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginTop: 2 }}>{unit.troopType}</div>
+          )}
+        </div>
         {unit.points != null && (
           <span style={{ ...eb, fontSize: 9, color: TOW.muted, whiteSpace: 'nowrap' }}>{unit.points} pts</span>
         )}
@@ -140,7 +145,7 @@ export function UnitCard({
             const onClick = mi
               ? () => setInfo({ title: opt, flavour: mi.flavour, rules: mi.specialRules })
               : mt
-                ? () => setInfo({ title: opt, profiles: mt.profiles, rules: mt.specialRules })
+                ? () => setInfo({ title: opt, profiles: mt.profiles, rules: mt.specialRules, troopType: mt.troopType })
                 : slug ? () => openRule(slug) : null;
             return (
               <span key={i} style={{ display: 'inline-flex', alignItems: 'center' }}>

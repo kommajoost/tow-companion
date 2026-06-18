@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { TOW, towFont, engraved } from '../../design/tow';
 import { usePersistentState } from '../../store';
 import { builderListToArmy, listTotal, type MagicText, type MountText } from '../../lib/builderToArmy';
+import { makeTroopTypeLookup } from '../../lib/troopTypes';
 import { compName } from '../../lib/armies';
 import type { BuilderList, OwbArmy, MagicItemsData } from '../../lib/owbBuilder';
 import type { Army } from '../../types';
@@ -24,7 +25,7 @@ export function ArmyListPicker({ onPick, label = 'Choose one of your saved army 
   const [catalogues, setCatalogues] = useState<Record<string, OwbArmy>>({}); // slug → catalogue
   const [armyNames, setArmyNames] = useState<Record<string, string>>({}); // slug → display name
   const [itemsByArmy, setItemsByArmy] = useState<Record<string, string[]>>({}); // slug → magic-item lists
-  const [statIdx, setStatIdx] = useState<Record<string, { stats?: StatRow[] }> | null>(null);
+  const [statIdx, setStatIdx] = useState<Record<string, { stats?: StatRow[]; troopType?: string }> | null>(null);
   const [itemsData, setItemsData] = useState<MagicItemsData | null>(null);
   const [magicText, setMagicText] = useState<MagicText>({});
   const [mountText, setMountText] = useState<MountText>({});
@@ -61,13 +62,15 @@ export function ArmyListPicker({ onPick, label = 'Choose one of your saved army 
     return e?.stats ?? [];
   }, [statIdx]);
 
+  const troopTypeFor = makeTroopTypeLookup(statIdx);
+
   if (lists.length === 0) return null;
 
   const armyNameFor = (slug: string) => armyNames[slug] ?? slug;
   const toArmy = (l: SavedList): Army | null => {
     const cat = catalogues[l.army];
     if (!cat) return null;
-    return builderListToArmy(l, cat, statsFor, { faction: armyNameFor(l.army), composition: compName(l.composition, l.army), itemsData: itemsData ?? undefined, armyItemLists: itemsByArmy[l.army] ?? [], magicText, mountText });
+    return builderListToArmy(l, cat, statsFor, { faction: armyNameFor(l.army), composition: compName(l.composition, l.army), itemsData: itemsData ?? undefined, armyItemLists: itemsByArmy[l.army] ?? [], magicText, mountText, troopTypeFor });
   };
 
   return (
