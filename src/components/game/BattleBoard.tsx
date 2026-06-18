@@ -1,6 +1,6 @@
 import { useMemo, useRef } from 'react';
 import { TOW, towFont } from '../../design/tow';
-import { terrainType, deploymentFor, type BattleSetupState, type TerrainPiece } from '../../lib/battle';
+import { deploymentFor, type BattleSetupState, type TerrainPiece } from '../../lib/battle';
 import { terrainIconNode } from './terrainIcons';
 
 const clamp = (n: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, n));
@@ -101,17 +101,16 @@ export function BattleBoard({ setup, onChange, selectedId, onSelect, editable = 
       )}
       {/* terrain features */}
       {terrain.map((p) => {
-        const tt = terrainType(p.type);
         const sel = p.id === selectedId;
-        // Trait styling: dangerous = red dashed, difficult = brown dashed; selection turns it gold.
-        const trait = p.dangerous ? { stroke: '#b23b3b', dash: '1.4 1', sw: 0.55 } : p.difficult ? { stroke: '#5c4326', dash: '1 1', sw: 0.5 } : { stroke: tt.color, dash: undefined as string | undefined, sw: 0.35 };
-        // Clean type icon centred in the piece (nested SVG remaps its 0..24 space to inches).
-        const iconSize = Math.min(p.w, p.h) * 0.66;
+        // Just the symbol on the map — no box, no border. Trait shown by icon colour
+        // (dangerous = red, difficult = brown), selection turns it gold.
+        const iconColor = sel ? TOW.goldBright : p.dangerous ? '#b23b3b' : p.difficult ? '#5c4326' : '#46341a';
+        const iconSize = Math.min(p.w, p.h) * (sel ? 0.86 : 0.74);
         return (
           <g key={p.id} onPointerDown={(e) => onPointerDown(e, p)} style={{ cursor: editable ? 'move' : 'default' }}>
-            <rect x={p.x} y={p.y} width={p.w} height={p.h} rx={1.2} fill={tt.color} fillOpacity={0.26} stroke={sel ? TOW.goldBright : trait.stroke} strokeWidth={sel ? 0.8 : trait.sw} strokeDasharray={trait.dash} />
-            <svg x={p.x + (p.w - iconSize) / 2} y={p.y + (p.h - iconSize) / 2} width={iconSize} height={iconSize} viewBox="0 0 24 24" fill="none" stroke="#46341a" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round" style={{ pointerEvents: 'none' }}>{terrainIconNode(p.type)}</svg>
-            {p.dangerous && <text x={p.x + 1.4} y={p.y + 2.6} fontSize={2.6} fill="#fff" stroke="#b23b3b" strokeWidth={0.15} style={{ pointerEvents: 'none' }}>⚠</text>}
+            {/* invisible hit area so the symbol can still be dragged/tapped */}
+            <rect x={p.x} y={p.y} width={p.w} height={p.h} fill="transparent" />
+            <svg x={p.x + (p.w - iconSize) / 2} y={p.y + (p.h - iconSize) / 2} width={iconSize} height={iconSize} viewBox="0 0 24 24" fill="none" stroke={iconColor} strokeWidth={sel ? 2.2 : 1.8} strokeLinecap="round" strokeLinejoin="round" style={{ pointerEvents: 'none' }}>{terrainIconNode(p.type)}</svg>
             {sel && editable && (
               <g onPointerDown={(e) => { e.stopPropagation(); onChange(terrainRef.current.filter((t) => t.id !== p.id)); onSelect(null); }} style={{ cursor: 'pointer' }}>
                 <circle cx={p.x + p.w} cy={p.y} r={2.2} fill={TOW.blood} />

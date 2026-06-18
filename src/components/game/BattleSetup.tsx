@@ -55,25 +55,33 @@ export function BattleSetup({ onBack }: { onBack: () => void }) {
         <h2 style={{ margin: 0, fontFamily: towFont.display, fontWeight: 700, fontSize: 20, color: TOW.ink }}>Battlefield setup</h2>
       </div>
 
-      {/* Scenario */}
-      <div style={label}>Scenario · Pitched Battle</div>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-        {SCENARIOS.map((s) => {
-          const on = setup.scenario === s.id;
-          return (
-            <div key={s.id} style={{ display: 'flex', alignItems: 'stretch', gap: 6 }}>
-              <button onClick={() => setSetup((p) => ({ ...p, scenario: s.id }))} style={{ flex: 1, minWidth: 0, display: 'flex', alignItems: 'center', gap: 10, textAlign: 'left', padding: '9px 11px', borderRadius: 9, cursor: 'pointer', border: `1px solid ${on ? TOW.goldDeep : TOW.line}`, background: on ? 'rgba(138,108,48,0.10)' : TOW.cardLt }}>
-                <span style={{ width: 20, height: 20, flexShrink: 0, borderRadius: 5, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: towFont.display, fontWeight: 700, fontSize: 12, color: on ? TOW.onGrad : TOW.muted, background: on ? goldGrad : 'transparent', border: on ? 'none' : `1px solid ${TOW.line}` }}>{s.d6}</span>
-                <span style={{ minWidth: 0 }}>
-                  <div style={{ fontFamily: towFont.display, fontWeight: 600, fontSize: 14, color: on ? TOW.goldDeep : TOW.ink }}>{s.name}</div>
-                  <div style={{ fontFamily: towFont.serif, fontSize: 11.5, color: TOW.muted, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{s.blurb}</div>
-                </span>
-              </button>
-              <button onClick={() => openRule(s.ruleSlug)} aria-label={`${s.name} rules`} title={`${s.name} rules`} style={{ width: 38, flexShrink: 0, borderRadius: 9, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.10)', color: TOW.goldDeep, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{eyeSvg}</button>
+      {/* Scenario — grouped into Pitched Battle and Battle March */}
+      {(['pitched', 'battle-march'] as const).map((grp) => {
+        const items = SCENARIOS.filter((s) => (s.group ?? 'pitched') === grp);
+        if (!items.length) return null;
+        return (
+          <div key={grp}>
+            <div style={label}>Scenario · {grp === 'pitched' ? 'Pitched Battle' : 'Battle March (small games)'}</div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+              {items.map((s) => {
+                const on = setup.scenario === s.id;
+                return (
+                  <div key={s.id} style={{ display: 'flex', alignItems: 'stretch', gap: 6 }}>
+                    <button onClick={() => setSetup((p) => ({ ...p, scenario: s.id }))} style={{ flex: 1, minWidth: 0, display: 'flex', alignItems: 'center', gap: 10, textAlign: 'left', padding: '9px 11px', borderRadius: 9, cursor: 'pointer', border: `1px solid ${on ? TOW.goldDeep : TOW.line}`, background: on ? 'rgba(138,108,48,0.10)' : TOW.cardLt }}>
+                      <span style={{ minWidth: 20, height: 20, padding: '0 4px', flexShrink: 0, borderRadius: 5, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: towFont.display, fontWeight: 700, fontSize: s.d6Label ? 10 : 12, color: on ? TOW.onGrad : TOW.muted, background: on ? goldGrad : 'transparent', border: on ? 'none' : `1px solid ${TOW.line}` }}>{s.d6Label ?? s.d6}</span>
+                      <span style={{ minWidth: 0 }}>
+                        <div style={{ fontFamily: towFont.display, fontWeight: 600, fontSize: 14, color: on ? TOW.goldDeep : TOW.ink }}>{s.name}</div>
+                        <div style={{ fontFamily: towFont.serif, fontSize: 11.5, color: TOW.muted, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{s.blurb}</div>
+                      </span>
+                    </button>
+                    <button onClick={() => openRule(s.ruleSlug)} aria-label={`${s.name} rules`} title={`${s.name} rules`} style={{ width: 38, flexShrink: 0, borderRadius: 9, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.10)', color: TOW.goldDeep, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>{eyeSvg}</button>
+                  </div>
+                );
+              })}
             </div>
-          );
-        })}
-      </div>
+          </div>
+        );
+      })}
 
       {/* Table size */}
       <div style={label}>Table size</div>

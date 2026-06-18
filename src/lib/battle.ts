@@ -9,13 +9,18 @@
 //  mountain-pass    – deploy at the short ends, 24" no-man's-land down the middle
 //  meeting          – diagonal: split corner-to-corner, 6" no-man's-land each side of the line
 //  break-point      – zones inset 9" from the side edges and 9" from the centre line
-export type DeploymentKind = 'standard' | 'command-control' | 'flank' | 'mountain-pass' | 'meeting' | 'break-point';
+//  bm-pitched       – Battle March pitched battle: shallow bands, 15" no-man's-land
+//  bm-opposed-flanks– Battle March: slanted opposed-corner zones
+//  bm-close-encounter– Battle March: opposite quadrants + central objective
+export type DeploymentKind = 'standard' | 'command-control' | 'flank' | 'mountain-pass' | 'meeting' | 'break-point' | 'bm-pitched' | 'bm-opposed-flanks' | 'bm-close-encounter';
 
 export interface ScenarioDef {
   id: string;
   name: string;
   ruleSlug: string; // the rules.json page with the full scenario rules + deployment map
   d6: number;        // its number on the rulebook's D6 pitched-battle table
+  d6Label?: string;  // shown on the badge instead of d6 (e.g. Battle March's "1-2")
+  group?: 'pitched' | 'battle-march'; // which list it appears under (default 'pitched')
   blurb: string;
   deployment: DeploymentKind;
   deployNote: string; // short caption shown under the board explaining the deployment
@@ -28,6 +33,10 @@ export const SCENARIOS: ScenarioDef[] = [
   { id: 'meeting-engagement', name: 'Meeting Engagement', ruleSlug: 'meeting-engagement', d6: 4, blurb: 'A sudden clash of marching columns; some units arrive late.', deployment: 'meeting', deployNote: 'Diagonal deployment — split corner-to-corner with a 6″ no-man\'s-land each side of the line. Roll a D6 per unit; on a 1 it starts in reserve.' },
   { id: 'mountain-pass', name: 'Mountain Pass', ruleSlug: 'mountain-pass', d6: 5, blurb: 'A long, narrow battlefield — manoeuvring and outflanking are hard.', deployment: 'mountain-pass', deployNote: 'Deploy at the short ends (A & B), 24″ no-man\'s-land down the middle. The long edges count as impassable cliffs.' },
   { id: 'command-control', name: 'Command & Control', ruleSlug: 'command-and-control', d6: 6, blurb: 'Fight for control of a central landmark.', deployment: 'command-control', deployNote: 'Standard 12″ zones (A & B). A special feature (★) sits at the centre — hold it for +200 VP.' },
+  // Battle March (small games, ~44×30″) — its own three deployment maps, rolled 1-2 / 3-4 / 5-6.
+  { id: 'bm-pitched', name: 'Pitched Battle', ruleSlug: 'battle-march-deployment-maps', d6: 1, d6Label: '1-2', group: 'battle-march', blurb: 'Battle March — armies line up across a 15″ no-man\'s-land.', deployment: 'bm-pitched', deployNote: 'Battle March pitched battle: shallow deployment bands with a 15″ no-man\'s-land down the centre.' },
+  { id: 'bm-close-encounter', name: 'Close Encounter', ruleSlug: 'battle-march-deployment-maps', d6: 3, d6Label: '3-4', group: 'battle-march', blurb: 'Battle March — deploy in opposite corners around a central feature.', deployment: 'bm-close-encounter', deployNote: 'Battle March Close Encounter: deploy in opposite quarter-table corners (A top-left, B bottom-right) around a central feature.' },
+  { id: 'bm-opposed-flanks', name: 'Opposed Flanks', ruleSlug: 'battle-march-deployment-maps', d6: 5, d6Label: '5-6', group: 'battle-march', blurb: 'Battle March — slanted, opposed flank deployment.', deployment: 'bm-opposed-flanks', deployNote: 'Battle March Opposed Flanks: slanted opposed zones — A in the top-left flank, B in the bottom-right.' },
 ];
 
 export const scenarioById = (id: string): ScenarioDef | undefined => SCENARIOS.find((s) => s.id === id);
@@ -45,7 +54,7 @@ export interface DeploymentLayout {
 // reaches from a player's edge to 12" short of the middle (a 24" no-man's-land down the centre). The
 // depth therefore scales with the table — 12" on a 48"-deep table, deeper on bigger boards.
 const CENTRE_KEEPOUT = 12;
-const zoneDepth = (dim: number) => Math.max(4, Math.min(dim / 2 - CENTRE_KEEPOUT, dim / 2));
+const zoneDepth = (dim: number, keep = CENTRE_KEEPOUT) => Math.max(4, Math.min(dim / 2 - keep, dim / 2));
 
 /** Build the deployment-zone layout for a scenario on a given table, mirroring the rulebook maps. */
 export function deploymentFor(scenarioId: string, W: number, H: number): DeploymentLayout {
@@ -116,6 +125,31 @@ export function deploymentFor(scenarioId: string, W: number, H: number): Deploym
       ] };
     }
 
+    case 'bm-pitched': {
+      // Battle March pitched battle: shallow bands off the long edges, ~15" no-man's-land (7.5" each).
+      const dd = longHoriz ? zoneDepth(H, 7.5) : zoneDepth(W, 7.5);
+      return longHoriz
+        ? { zones: [{ x: 0, y: 0, w: W, h: dd, label: 'A', kind: 'main' }, { x: 0, y: H - dd, w: W, h: dd, label: 'B', kind: 'main' }] }
+        : { zones: [{ x: 0, y: 0, w: dd, h: H, label: 'A', kind: 'main' }, { x: W - dd, y: 0, w: dd, h: H, label: 'B', kind: 'main' }] };
+    }
+
+    case 'bm-close-encounter':
+      // Opposite quarter-table corners (A top-left, B bottom-right) around a central feature.
+      return {
+        zones: [
+          { x: 0, y: 0, w: W / 2, h: H / 2, label: 'A', kind: 'main' },
+          { x: W / 2, y: H / 2, w: W / 2, h: H / 2, label: 'B', kind: 'main' },
+        ],
+        objective: { x: W / 2, y: H / 2 },
+      };
+
+    case 'bm-opposed-flanks':
+      // Slanted opposed corners: A is the top-left flank triangle, B the bottom-right.
+      return { zones: [
+        { x: 0, y: 0, w: W, h: H, label: 'A', kind: 'main', poly: [[0, 0], [W, 0], [0, 0.4 * H]] },
+        { x: 0, y: 0, w: W, h: H, label: 'B', kind: 'main', poly: [[W, H], [0, H], [W, 0.6 * H]] },
+      ] };
+
     default:
       return { zones: standard };
   }
@@ -136,9 +170,7 @@ export const TERRAIN_TYPES: TerrainType[] = [
   { id: 'hill', label: 'Hill', color: '#b08a4f', ruleSlug: 'hills' },
   { id: 'wood', label: 'Wood', color: '#4e7a45', ruleSlug: 'woods', defaultTrait: 'difficult' },
   { id: 'building', label: 'Building', color: '#9a6a44', ruleSlug: 'buildings' },
-  { id: 'ruins', label: 'Ruins', color: '#8a7f70', ruleSlug: 'buildings', defaultTrait: 'difficult' },
   { id: 'marsh', label: 'Marsh / Water', color: '#4f7b8a', ruleSlug: 'dangerous-terrain', defaultTrait: 'dangerous' },
-  { id: 'obstacle', label: 'Obstacle', color: '#7a5a3a', ruleSlug: 'linear-obstacles' },
   { id: 'field', label: 'Field', color: '#9a8a3a', ruleSlug: 'difficult-terrain', defaultTrait: 'difficult' },
 ];
 export const terrainType = (id: string): TerrainType => TERRAIN_TYPES.find((t) => t.id === id) ?? TERRAIN_TYPES[0];
@@ -153,13 +185,15 @@ export interface BattleSetupState {
   terrain: TerrainPiece[];
 }
 
-// Common table sizes (inches). Mountain Pass is long & narrow per its rules.
+// Common table sizes (inches). Mountain Pass is long & narrow per its rules; 44×30 is the small
+// Battle March board.
 export const TABLE_PRESETS: { label: string; w: number; h: number }[] = [
   { label: "6×4′", w: 72, h: 48 },
   { label: "4×4′", w: 48, h: 48 },
   { label: "6×3′", w: 72, h: 36 },
   { label: "8×4′", w: 96, h: 48 },
   { label: "4×6′", w: 48, h: 72 },
+  { label: "44×30″", w: 44, h: 30 },
 ];
 
 // Rulebook guide: one terrain feature per 12" of the longest table edge (rounded up).
@@ -175,54 +209,54 @@ export const newTerrainId = () => `t${(counter++).toString(36)}${Math.floor(Math
 // Minimum centre-to-centre spacing between features (inches), so terrain isn't bunched up.
 const MIN_SPACING = 12;
 
-// Which quadrant of the table a centre point falls in (0..3) — used to keep terrain balanced
-// across the table rather than clustered on one side.
-const quadrantOf = (cx: number, cy: number, w: number, h: number) => (cx >= w / 2 ? 1 : 0) + (cy >= h / 2 ? 2 : 0);
-
 /** A piece to be positioned: carries everything except x/y (and an optional id to preserve). */
 interface PlaceSpec { id?: string; type: string; w: number; h: number; difficult?: boolean; dangerous?: boolean }
 
-// Lay out the given specs across the table with two balance rules from the user's brief:
-//  1. features keep at least ~12" between their centres (relaxed only if the table is too crowded),
-//  2. they spread across the four quadrants rather than piling up on one side.
-// Constraints relax in stages so a requested count always gets placed.
-function placeSpecs(specs: PlaceSpec[], w: number, h: number): TerrainPiece[] {
+// Lay out the given specs with 180°-rotational symmetry about the table centre, so both players face
+// a mirrored, balanced battlefield. Features are paired up (same type where counts allow): one of
+// each pair goes in the top half (spread out, ≥12" between centres where it fits), its partner at the
+// point-mirrored position. An odd leftover sits in the dead centre (self-symmetric).
+function placeSpecs(specs: PlaceSpec[], W: number, H: number): TerrainPiece[] {
   const margin = 3;
-  const placed: TerrainPiece[] = [];
-  const quadCount = [0, 0, 0, 0];
-  const quadCap = Math.ceil(specs.length / 4) + 1;
-  // strict → drop the quadrant balance → shrink the spacing, in that order
-  const stages = [
-    { spacing: MIN_SPACING, cap: quadCap },
-    { spacing: MIN_SPACING, cap: Infinity },
-    { spacing: 8, cap: Infinity },
-    { spacing: 4, cap: Infinity },
-    { spacing: 0, cap: Infinity },
-  ];
-  for (const spec of specs) {
-    const { w: tw, h: th } = spec;
-    let chosen: { x: number; y: number; q: number } | null = null;
-    for (const stage of stages) {
-      for (let i = 0; i < 80 && !chosen; i++) {
-        const x = Math.round(rnd(margin, Math.max(margin, w - tw - margin)));
-        const y = Math.round(rnd(margin, Math.max(margin, h - th - margin)));
-        const cx = x + tw / 2, cy = y + th / 2;
-        const q = quadrantOf(cx, cy, w, h);
-        if (quadCount[q] >= stage.cap) continue;
-        const farEnough = placed.every((p) => Math.hypot((p.x + p.w / 2) - cx, (p.y + p.h / 2) - cy) >= stage.spacing);
-        if (farEnough) chosen = { x, y, q };
+  const ordered = [...specs].sort((a, b) => a.type.localeCompare(b.type)); // group types → same-type pairs
+  const out: TerrainPiece[] = [];
+  const N = ordered.length;
+  const pairCount = Math.floor(N / 2);
+  const hasCentre = N % 2 === 1;
+
+  // Spread the primary centres across the TOP half (their mirrors fill the bottom half).
+  const primaryCentres: { cx: number; cy: number }[] = [];
+  const stages = [MIN_SPACING, 9, 6, 3, 0];
+  for (let i = 0; i < pairCount; i++) {
+    const { w: tw, h: th } = ordered[i * 2];
+    let c: { cx: number; cy: number } | null = null;
+    for (const spacing of stages) {
+      for (let t = 0; t < 80 && !c; t++) {
+        const cx = rnd(margin + tw / 2, W - margin - tw / 2);
+        const cy = rnd(margin + th / 2, Math.max(margin + th / 2, H / 2 - 2));
+        if (primaryCentres.every((p) => Math.hypot(p.cx - cx, p.cy - cy) >= spacing)) c = { cx, cy };
       }
-      if (chosen) break;
+      if (c) break;
     }
-    if (!chosen) {
-      const x = clamp(Math.round(rnd(margin, w - tw - margin)), 0, Math.max(0, w - tw));
-      const y = clamp(Math.round(rnd(margin, h - th - margin)), 0, Math.max(0, h - th));
-      chosen = { x, y, q: quadrantOf(x + tw / 2, y + th / 2, w, h) };
-    }
-    quadCount[chosen.q]++;
-    placed.push({ id: spec.id ?? newTerrainId(), type: spec.type, x: chosen.x, y: chosen.y, w: tw, h: th, difficult: spec.difficult, dangerous: spec.dangerous });
+    primaryCentres.push(c ?? { cx: W / 2, cy: Math.max(margin, H / 4) });
   }
-  return placed;
+
+  const place = (spec: PlaceSpec, cx: number, cy: number) => {
+    out.push({
+      id: spec.id ?? newTerrainId(), type: spec.type,
+      x: clamp(Math.round(cx - spec.w / 2), 0, Math.max(0, W - spec.w)),
+      y: clamp(Math.round(cy - spec.h / 2), 0, Math.max(0, H - spec.h)),
+      w: spec.w, h: spec.h, difficult: spec.difficult, dangerous: spec.dangerous,
+    });
+  };
+
+  for (let i = 0; i < pairCount; i++) {
+    const { cx, cy } = primaryCentres[i];
+    place(ordered[i * 2], cx, cy);                 // primary (top half)
+    place(ordered[i * 2 + 1], W - cx, H - cy);     // partner at the point-mirrored position
+  }
+  if (hasCentre) place(ordered[N - 1], W / 2, H / 2);
+  return out;
 }
 
 /** Generate a fresh random layout: `count` features drawn from the enabled types (random sizes 3–8"),
