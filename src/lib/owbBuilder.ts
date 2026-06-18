@@ -285,13 +285,10 @@ export const COMPOSITION_RULE_SLUGS: Record<string, string[]> = {
   'battle-march': ['mustering-a-battle-march'],
 };
 
-export function limitsFor(rule: string): Record<Category, CatLimit> {
-  // Grand Melee (and the Combined Arms + Grand Melee combination) cap every category at 25%.
-  if (rule === 'grand-melee' || rule === 'combined-arms-grand-melee') {
-    const out = {} as Record<Category, CatLimit>;
-    for (const c of CATEGORIES) out[c] = { ...GRAND_ARMY[c], maxPercent: Math.min(25, GRAND_ARMY[c].maxPercent ?? 25) };
-    return out;
-  }
+export function limitsFor(_rule: string): Record<Category, CatLimit> {
+  // The category percentage limits come from the Grand Army composition list and are the same under
+  // every composition rule. The rule-specific restrictions (Grand Melee's 25%-per-single-unit and
+  // wizard-level caps, Combined Arms' per-unit counts, Battle March's caps) are applied in validate().
   return GRAND_ARMY;
 }
 
@@ -333,6 +330,20 @@ export function entryPoints(unit: OwbUnit, entry: ListEntry, itemsData?: MagicIt
   return pts;
 }
 
+/** The Wizard level of an entry (0 = not a Wizard), read from its effective loadout — base options,
+ *  radio picks/defaults and nested level sub-options (e.g. the "Level 4 Wizard" upgrade). Used by the
+ *  Grand Melee wizard restrictions. */
+export function wizardLevelOf(unit: OwbUnit, entry: ListEntry): number {
+  let lvl = 0;
+  const scan = (name?: string) => { const m = name && name.match(/Level\s*(\d)\s*Wizard/i); if (m) lvl = Math.max(lvl, Number(m[1])); };
+  for (const b of unitBlocks(unit)) {
+    if (b.radio) { const i = Number(radioSelected(unit, entry, b.key).split('/')[1]); scan(b.items.find((it) => it.i === i)?.opt.name_en); }
+    else for (const { i, opt } of b.items) if (opt.active || entry.opts.includes(`${String(b.key)}/${i}`)) scan(opt.name_en);
+  }
+  for (const g of subOptionGroups(unit, entry)) for (const it of g.items) if (it.selected) scan(it.opt.name_en);
+  return lvl;
+}
+
 export interface CategoryTally { points: number; limit: CatLimit; cap: number | null; floor: number | null; over: boolean; under: boolean }
 export interface Validation {
   total: number;
@@ -351,12 +362,14 @@ export function validate(list: BuilderList, getUnit: (cat: Category, id: string)
 
   const warnings: string[] = [];
   let total = 0;
+  const rows: { e: ListEntry; unit: OwbUnit; p: number; level: number }[] = [];
   for (const e of list.entries) {
     const unit = getUnit(e.cat, e.unitId);
     if (!unit) continue;
     const p = entryPoints(unit, e, itemsData);
     total += p;
     byCategory[e.cat].points += p;
+    rows.push({ e, unit, p, level: wizardLevelOf(unit, e) });
     const min = unit.minimum ?? 1;
     const max = unit.maximum ?? 0; // 0 = no max
     if (e.count < min) warnings.push(`${unit.name_en}: below minimum size (${min})`);
@@ -372,6 +385,64 @@ export function validate(list: BuilderList, getUnit: (cat: Category, id: string)
     if (t.limit.minPercent != null) {
       t.floor = Math.ceil((t.limit.minPercent / 100) * target);
       if (t.points < t.floor) { t.under = true; warnings.push(`${cap(c)} below its ${t.limit.minPercent}% minimum (${t.points}/${t.floor} pts)`); }
+    }
+  }
+
+  // ---- Composition-rule-specific restrictions (beyond the category % limits above) --------------
+  const rule = list.rule;
+  const hasGrandMelee = rule === 'grand-melee' || rule === 'combined-arms-grand-melee';
+  const hasCombinedArms = rule === 'combined-arms' || rule === 'combined-arms-grand-melee';
+  const isBattleMarch = rule === 'battle-march';
+
+  // Grand Melee: a single character or unit may not exceed 25% of the army's points.
+  if (hasGrandMelee && target > 0) {
+    const cap25 = Math.floor(0.25 * target);
+    for (const r of rows) if (r.p > cap25) warnings.push(`${r.unit.name_en} over the 25% single-unit cap (${r.p}/${cap25} pts)`);
+  }
+
+  // Grand Melee: 0-1 Level 3 Wizard per 1,000 pts; 0-1 Level 4 Wizard per 2,000 pts (named characters
+  // are exempt, but the catalogue doesn't flag those, so this counts every Wizard of that level).
+  if (hasGrandMelee && target > 0) {
+    const l3 = rows.filter((r) => r.level === 3).reduce((n, r) => n + r.e.count, 0);
+    const l4 = rows.filter((r) => r.level === 4).reduce((n, r) => n + r.e.count, 0);
+    const maxL3 = Math.floor(target / 1000);
+    const maxL4 = Math.floor(target / 2000);
+    if (l3 > maxL3) warnings.push(`Level 3 Wizards: ${l3} taken, ${maxL3} allowed (0-1 per 1,000 pts)`);
+    if (l4 > maxL4) warnings.push(`Level 4 Wizards: ${l4} taken, ${maxL4} allowed (0-1 per 2,000 pts)`);
+  }
+
+  // Combined Arms: a cap on how many of each unit type you may field (per datasheet) — 0-3 Characters,
+  // 0-4 Core, 0-3 Special, 0-2 Rare/Mercenary, +1 per full 1,000 pts above 2,000. (Detachments and
+  // named characters are exempt in the rules; we don't track those, so this counts every entry.)
+  if (hasCombinedArms) {
+    const extra = target > 2000 ? Math.floor((target - 2000) / 1000) : 0;
+    const baseCap: Partial<Record<Category, number>> = { characters: 3, core: 4, special: 3, rare: 2, mercenaries: 2 };
+    const perUnit = new Map<string, { unit: OwbUnit; cat: Category; n: number }>();
+    for (const r of rows) {
+      const key = `${r.e.cat}/${r.e.unitId}`;
+      const cur = perUnit.get(key);
+      if (cur) cur.n += 1; else perUnit.set(key, { unit: r.unit, cat: r.e.cat, n: 1 });
+    }
+    for (const { unit, cat, n } of perUnit.values()) {
+      const base = baseCap[cat];
+      if (base == null) continue;
+      const capN = base + extra;
+      if (n > capN) warnings.push(`${unit.name_en}: ${n} taken, Combined Arms allows 0-${capN} of this unit`);
+    }
+  }
+
+  // Battle March (500-750 pts): at least two non-character units, and single-unit point caps.
+  if (isBattleMarch) {
+    const nonCharUnits = rows.filter((r) => r.e.cat !== 'characters').length;
+    if (nonCharUnits < 2) warnings.push(`Battle March needs at least 2 non-character units (have ${nonCharUnits})`);
+    if (target > 0) {
+      const capPct: Partial<Record<Category, number>> = { characters: 25, core: 35, special: 30, rare: 25, mercenaries: 25 };
+      for (const r of rows) {
+        const pct = capPct[r.e.cat];
+        if (pct == null) continue;
+        const capPts = Math.floor((pct / 100) * target);
+        if (r.p > capPts) warnings.push(`${r.unit.name_en} over the ${pct}% single-${r.e.cat === 'characters' ? 'character' : 'unit'} cap (${r.p}/${capPts} pts)`);
+      }
     }
   }
 
