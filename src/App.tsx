@@ -1,6 +1,7 @@
 import { DataProvider } from './data';
 import { UIStateProvider } from './state';
 import { GameProvider } from './game';
+import { ListSyncProvider } from './listSync';
 import { PwaProvider } from './pwa';
 import { AppShell } from './components/AppShell';
 import { RuleSheet } from './components/RuleSheet';
@@ -12,8 +13,10 @@ export default function App() {
       <DataProvider>
         <UIStateProvider>
           <GameProvider>
-            <AppShell />
-            <RuleSheet />
+            <ListSyncProvider>
+              <AppShell />
+              <RuleSheet />
+            </ListSyncProvider>
           </GameProvider>
         </UIStateProvider>
         {/* Shows an "Update available" banner; install/updates also live in Settings. */}

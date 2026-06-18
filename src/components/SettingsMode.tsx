@@ -3,6 +3,8 @@ import { TOW, towFont, engraved } from '../design/tow';
 import { useTheme } from '../theme';
 import { usePwa } from '../pwa';
 import { supabase, TOW_FEEDBACK } from '../lib/supabase';
+import { useListSync } from '../listSync';
+import type { CloudLists } from '../lib/listSync';
 import { LogoMark } from './LogoMark';
 
 const eb = engraved as React.CSSProperties;
@@ -143,6 +145,9 @@ export function SettingsMode() {
           )}
         </div>
 
+        {/* Sync army lists */}
+        <ListSyncSection card={card} title={title} body={body} goldBtn={goldBtn} ghostBtn={ghostBtn} />
+
         {/* Feedback */}
         <FeedbackSection card={card} title={title} body={body} goldBtn={goldBtn} ghostBtn={ghostBtn} />
 
@@ -167,6 +172,125 @@ export function SettingsMode() {
           </div>
         </div>
       </div>
+    </div>
+  );
+}
+
+// Sync your saved army lists across devices with a shared key (no login). See src/listSync.tsx.
+function ListSyncSection({
+  card, title, body, goldBtn, ghostBtn,
+}: {
+  card: React.CSSProperties; title: React.CSSProperties; body: React.CSSProperties;
+  goldBtn: React.CSSProperties; ghostBtn: React.CSSProperties;
+}) {
+  const sync = useListSync();
+  const [showConnect, setShowConnect] = useState(false);
+  const [input, setInput] = useState('');
+  const [busy, setBusy] = useState(false);
+  const [localErr, setLocalErr] = useState<string | null>(null);
+  const [copied, setCopied] = useState(false);
+  // When connecting to a key that already has lists while THIS device also has lists, ask which wins.
+  const [choice, setChoice] = useState<{ key: string; cloud: CloudLists } | null>(null);
+
+  const input2: React.CSSProperties = {
+    width: '100%', borderRadius: 10, border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt,
+    color: TOW.ink, padding: '10px 12px', fontFamily: towFont.display, fontSize: 15, letterSpacing: '0.12em',
+    boxSizing: 'border-box', textTransform: 'uppercase',
+  };
+
+  const copyKey = () => {
+    if (!sync.key) return;
+    navigator.clipboard?.writeText(sync.key).then(() => { setCopied(true); window.setTimeout(() => setCopied(false), 1500); }).catch(() => {});
+  };
+
+  const connect = async () => {
+    if (!input.trim()) return;
+    setBusy(true); setLocalErr(null);
+    try {
+      const cloud = await sync.peek(input);
+      const cloudHas = cloud && Array.isArray(cloud.lists) && cloud.lists.length > 0;
+      if (cloudHas && sync.listCount > 0) {
+        setChoice({ key: input, cloud: cloud! }); // both sides have lists — let the user pick
+      } else if (cloudHas) {
+        sync.adoptCloud(input, cloud!);            // this device empty → take the cloud's lists
+        setShowConnect(false); setInput('');
+      } else {
+        await sync.pushMine(input);                // key empty on the server → seed it from here
+        setShowConnect(false); setInput('');
+      }
+    } catch (e) {
+      setLocalErr(e instanceof Error ? e.message : 'Could not connect — check the key and your connection.');
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const statusText = sync.status === 'syncing' ? 'Syncing…'
+    : sync.status === 'error' ? 'Sync error'
+    : sync.lastSyncedAt ? `Synced · ${new Date(sync.lastSyncedAt).toLocaleString([], { dateStyle: 'short', timeStyle: 'short' })}`
+    : 'Connected';
+  const statusColor = sync.status === 'error' ? TOW.blood : sync.status === 'synced' ? '#4f6b3a' : TOW.muted;
+
+  return (
+    <div style={card}>
+      <div style={title}>Sync army lists</div>
+
+      {sync.key ? (
+        // ── Connected ──
+        <>
+          <div style={{ ...body, marginBottom: 10 }}>
+            Your saved lists sync across every device that uses this key. Enter the same key on your other device.
+          </div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
+            <code style={{ flex: 1, minWidth: 0, fontFamily: towFont.display, fontWeight: 700, fontSize: 16, letterSpacing: '0.12em', color: TOW.ink, background: TOW.cardLt, border: `1px solid ${TOW.lineStrong}`, borderRadius: 10, padding: '10px 12px', overflow: 'hidden', textOverflow: 'ellipsis' }}>{sync.key}</code>
+            <button style={{ ...ghostBtn, padding: '10px 12px' }} onClick={copyKey}>{copied ? 'Copied ✓' : 'Copy'}</button>
+          </div>
+          <div style={{ ...eb, fontSize: 8.5, color: statusColor, marginBottom: 12 }}>{statusText} · {sync.listCount} list{sync.listCount === 1 ? '' : 's'}</div>
+          {sync.error && <div style={{ ...body, color: TOW.blood, marginBottom: 10 }}>{sync.error}</div>}
+          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+            <button style={{ ...ghostBtn, opacity: sync.status === 'syncing' ? 0.6 : 1 }} disabled={sync.status === 'syncing'} onClick={() => sync.pushNow()}>Upload now</button>
+            <button style={{ ...ghostBtn, opacity: sync.status === 'syncing' ? 0.6 : 1 }} disabled={sync.status === 'syncing'} onClick={() => sync.pullNow()}>Fetch now</button>
+            <button style={{ ...ghostBtn, color: TOW.muted, borderColor: TOW.line }} onClick={() => sync.disconnect()}>Stop syncing</button>
+          </div>
+        </>
+      ) : choice ? (
+        // ── Conflict on connect: both this device and the key already have lists ──
+        <>
+          <div style={{ ...body, marginBottom: 12 }}>
+            That key already has <b>{choice.cloud.lists.length}</b> list{choice.cloud.lists.length === 1 ? '' : 's'}, and this device has <b>{sync.listCount}</b>. Which should win?
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            <button style={goldBtn} onClick={() => { sync.adoptCloud(choice.key, choice.cloud); setChoice(null); setShowConnect(false); setInput(''); }}>
+              Use the cloud’s lists (replace this device)
+            </button>
+            <button style={ghostBtn} onClick={async () => { setBusy(true); try { await sync.pushMine(choice.key); setChoice(null); setShowConnect(false); setInput(''); } catch (e) { setLocalErr(e instanceof Error ? e.message : 'Failed'); } finally { setBusy(false); } }}>
+              Keep this device’s lists (overwrite the cloud)
+            </button>
+            <button style={{ ...ghostBtn, color: TOW.muted, borderColor: TOW.line }} onClick={() => setChoice(null)}>Cancel</button>
+          </div>
+        </>
+      ) : (
+        // ── Not set up ──
+        <>
+          <div style={{ ...body, marginBottom: 12 }}>
+            Keep your saved army lists in sync between your phone and computer — no account needed. Create a key here, then enter it on your other device.
+          </div>
+          <button style={goldBtn} onClick={() => sync.createKey()}>Create a sync key</button>
+          <div style={{ ...eb, fontSize: 8, color: TOW.faint, textAlign: 'center', margin: '12px 0' }}>— or —</div>
+          {showConnect ? (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+              <input value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && connect()} placeholder="ABCD-EFGH-…" style={input2} />
+              <div style={{ display: 'flex', gap: 8 }}>
+                <button style={{ ...goldBtn, flex: 1, opacity: !input.trim() || busy ? 0.5 : 1 }} disabled={!input.trim() || busy} onClick={connect}>{busy ? 'Connecting…' : 'Connect'}</button>
+                <button style={ghostBtn} onClick={() => { setShowConnect(false); setInput(''); setLocalErr(null); }}>Cancel</button>
+              </div>
+              {localErr && <div style={{ ...body, color: TOW.blood }}>{localErr}</div>}
+            </div>
+          ) : (
+            <button style={{ ...ghostBtn, width: '100%' }} onClick={() => setShowConnect(true)}>I already have a key</button>
+          )}
+        </>
+      )}
     </div>
   );
 }
