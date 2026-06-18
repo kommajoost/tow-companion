@@ -31,7 +31,7 @@ export function useListSync(): ListSyncValue {
   return c;
 }
 
-const serial = (l: unknown[]) => JSON.stringify(l ?? []);
+const serial = (v: unknown) => JSON.stringify(v ?? []);
 function msg(e: unknown): string {
   if (e instanceof Error) return e.message;
   const o = e as Record<string, unknown> | null;
@@ -40,13 +40,17 @@ function msg(e: unknown): string {
 
 export function ListSyncProvider({ children }: { children: ReactNode }) {
   const [lists, setLists] = usePersistentState<unknown[]>('tow:lists', []);
+  const [groups, setGroups] = usePersistentState<unknown[]>('tow:list-groups', []);
   const [key, setKey] = usePersistentState<string | null>('tow:syncKey', null);
   const [syncAt, setSyncAt] = usePersistentState<string | null>('tow:syncAt', null);
   const [status, setStatus] = useState<Status>(key ? 'syncing' : 'off');
   const [error, setError] = useState<string | null>(null);
 
-  const lastPushed = useRef<string | null>(null); // serialized lists known to match the cloud
+  const lastPushed = useRef<string | null>(null); // combined lists+groups snapshot known to match the cloud
   const ready = useRef(false);                    // gate auto-push until the first pull settles
+  // A combined snapshot of everything we sync (lists + group folders), for change detection.
+  const snap = (l: unknown[], g: unknown[]) => serial({ l: l ?? [], g: g ?? [] });
+  const localSnap = snap(lists, groups);
 
   // On mount and whenever the key changes: reconcile with the cloud.
   useEffect(() => {
@@ -60,17 +64,20 @@ export function ListSyncProvider({ children }: { children: ReactNode }) {
         if (cancelled) return;
         if (!cloud) {
           // key is new to the server — seed it from this device
-          const ts = await pushLists(key, lists);
+          const ts = await pushLists(key, lists, groups);
           if (cancelled) return;
-          lastPushed.current = serial(lists);
+          lastPushed.current = snap(lists, groups);
           setSyncAt(ts);
-        } else if (cloud.updatedAt !== syncAt && serial(cloud.lists) !== serial(lists)) {
-          // another device changed the lists — adopt them
-          lastPushed.current = serial(cloud.lists);
+        } else if (cloud.updatedAt !== syncAt && snap(cloud.lists, cloud.groups) !== snap(lists, groups)) {
+          // another device changed the lists/groups — adopt them
+          lastPushed.current = snap(cloud.lists, cloud.groups);
           setLists(cloud.lists);
+          setGroups(cloud.groups);
           setSyncAt(cloud.updatedAt);
         } else {
-          lastPushed.current = serial(lists);
+          // Baseline = what's actually in the cloud, so any local divergence (offline edits, or
+          // groups the cloud doesn't have yet) gets pushed up by the auto-push effect.
+          lastPushed.current = snap(cloud.lists, cloud.groups);
           if (cloud.updatedAt !== syncAt) setSyncAt(cloud.updatedAt);
         }
         if (!cancelled) { setStatus('synced'); setError(null); }
@@ -86,19 +93,18 @@ export function ListSyncProvider({ children }: { children: ReactNode }) {
   // Push local changes (debounced) once the initial reconcile is done.
   useEffect(() => {
     if (!key || !ready.current) return;
-    const s = serial(lists);
-    if (s === lastPushed.current) return;
+    if (localSnap === lastPushed.current) return;
     const t = setTimeout(async () => {
       setStatus('syncing');
       try {
-        const ts = await pushLists(key, lists);
-        lastPushed.current = s;
+        const ts = await pushLists(key, lists, groups);
+        lastPushed.current = localSnap;
         setSyncAt(ts);
         setStatus('synced'); setError(null);
       } catch (e) { setStatus('error'); setError(msg(e)); }
     }, 1200);
     return () => clearTimeout(t);
-  }, [lists, key]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [localSnap, key]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const createKey = useCallback(() => {
     const k = makeSyncKey();
@@ -110,44 +116,45 @@ export function ListSyncProvider({ children }: { children: ReactNode }) {
   const peek = useCallback((k: string) => pullLists(k), []);
 
   const adoptCloud = useCallback((k: string, cloud: CloudLists) => {
-    lastPushed.current = serial(cloud.lists);
+    lastPushed.current = snap(cloud.lists, cloud.groups);
     setLists(cloud.lists);
+    setGroups(cloud.groups);
     setSyncAt(cloud.updatedAt);
     setKey(k);
     setStatus('synced'); setError(null);
-  }, [setLists, setSyncAt, setKey]);
+  }, [setLists, setGroups, setSyncAt, setKey]);
 
   const pushMine = useCallback(async (k: string) => {
     setStatus('syncing');
     try {
-      const ts = await pushLists(k, lists);
-      lastPushed.current = serial(lists);
+      const ts = await pushLists(k, lists, groups);
+      lastPushed.current = snap(lists, groups);
       setSyncAt(ts);
       setKey(k);
       setStatus('synced'); setError(null);
     } catch (e) { setStatus('error'); setError(msg(e)); throw e; }
-  }, [lists, setSyncAt, setKey]);
+  }, [lists, groups, setSyncAt, setKey]);
 
   const pullNow = useCallback(async () => {
     if (!key) return;
     setStatus('syncing');
     try {
       const cloud = await pullLists(key);
-      if (cloud) { lastPushed.current = serial(cloud.lists); setLists(cloud.lists); setSyncAt(cloud.updatedAt); }
+      if (cloud) { lastPushed.current = snap(cloud.lists, cloud.groups); setLists(cloud.lists); setGroups(cloud.groups); setSyncAt(cloud.updatedAt); }
       setStatus('synced'); setError(null);
     } catch (e) { setStatus('error'); setError(msg(e)); }
-  }, [key, setLists, setSyncAt]);
+  }, [key, setLists, setGroups, setSyncAt]);
 
   const pushNow = useCallback(async () => {
     if (!key) return;
     setStatus('syncing');
     try {
-      const ts = await pushLists(key, lists);
-      lastPushed.current = serial(lists);
+      const ts = await pushLists(key, lists, groups);
+      lastPushed.current = snap(lists, groups);
       setSyncAt(ts);
       setStatus('synced'); setError(null);
     } catch (e) { setStatus('error'); setError(msg(e)); }
-  }, [key, lists, setSyncAt]);
+  }, [key, lists, groups, setSyncAt]);
 
   const disconnect = useCallback(() => {
     setKey(null);
