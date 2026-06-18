@@ -64,27 +64,26 @@ export function BattleBoard({ setup, onChange, selectedId, onSelect, editable = 
       onClick={() => onSelect(null)}
       style={{ width: '100%', aspectRatio: `${tableW} / ${tableH}`, display: 'block', background: '#efe7d4', borderRadius: 10, border: `1px solid ${TOW.lineStrong}`, touchAction: 'none' }}
     >
-      {/* deployment zones — main (gold) and flank (blue); rectangles, or a polygon for diagonal maps */}
+      {/* deployment zones — just a darker shaded area (no border); main = gold, flank = blue */}
       {layout.zones.map((z, i) => {
         const flank = z.kind === 'flank';
-        const fill = flank ? 'rgba(70,110,150,0.12)' : 'rgba(138,108,48,0.12)';
-        const line = flank ? 'rgba(70,110,150,0.55)' : 'rgba(138,108,48,0.5)';
-        const txtFill = flank ? 'rgba(70,110,150,0.8)' : 'rgba(138,108,48,0.75)';
-        const fs = flank ? 3 : 4.5;
+        const fill = flank ? 'rgba(70,110,150,0.20)' : 'rgba(120,92,40,0.20)';
+        const txtFill = flank ? 'rgba(70,110,150,0.7)' : 'rgba(120,92,40,0.7)';
+        const fs = flank ? 2.2 : 3;
         if (z.poly) {
           const cx = z.poly.reduce((s, p) => s + p[0], 0) / z.poly.length;
           const cy = z.poly.reduce((s, p) => s + p[1], 0) / z.poly.length;
           return (
             <g key={`${z.label}${i}`}>
-              <polygon points={z.poly.map((p) => p.join(',')).join(' ')} fill={fill} stroke={line} strokeWidth={0.25} strokeDasharray="1.5 1.2" />
+              <polygon points={z.poly.map((p) => p.join(',')).join(' ')} fill={fill} />
               <text x={cx} y={cy + fs / 2} fontSize={fs} textAnchor="middle" fontFamily={towFont.display} fontWeight={700} fill={txtFill}>{z.label}</text>
             </g>
           );
         }
         return (
           <g key={`${z.label}${i}`}>
-            <rect x={z.x} y={z.y} width={z.w} height={z.h} fill={fill} stroke={line} strokeWidth={0.25} strokeDasharray="1.5 1.2" />
-            <text x={z.x + Math.min(2.5, z.w / 2)} y={z.y + Math.min(5.5, z.h - 1.5)} fontSize={fs} fontFamily={towFont.display} fontWeight={700} fill={txtFill}>{z.label}</text>
+            <rect x={z.x} y={z.y} width={z.w} height={z.h} fill={fill} />
+            <text x={z.x + Math.min(2, z.w / 2)} y={z.y + Math.min(4, z.h - 1)} fontSize={fs} fontFamily={towFont.display} fontWeight={700} fill={txtFill}>{z.label}</text>
           </g>
         );
       })}
