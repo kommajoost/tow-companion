@@ -4,7 +4,8 @@ import { useTheme } from '../theme';
 import { usePwa } from '../pwa';
 import { supabase, TOW_FEEDBACK } from '../lib/supabase';
 import { useListSync } from '../listSync';
-import type { CloudLists } from '../lib/listSync';
+import { deriveKey, type CloudLists } from '../lib/listSync';
+import { usePersistentState } from '../store';
 import { LogoMark } from './LogoMark';
 
 const eb = engraved as React.CSSProperties;
@@ -176,7 +177,8 @@ export function SettingsMode() {
   );
 }
 
-// Sync your saved army lists across devices with a shared key (no login). See src/listSync.tsx.
+// Sync your saved army lists + groups across devices with a self-chosen password (no login). The
+// password is hashed into the actual sync key (see deriveKey); same password → same syncs.
 function ListSyncSection({
   card, title, body, goldBtn, ghostBtn,
 }: {
@@ -184,46 +186,44 @@ function ListSyncSection({
   goldBtn: React.CSSProperties; ghostBtn: React.CSSProperties;
 }) {
   const sync = useListSync();
-  const [showConnect, setShowConnect] = useState(false);
+  const [pass, setPass] = usePersistentState<string | null>('tow:syncPass', null);
   const [input, setInput] = useState('');
   const [busy, setBusy] = useState(false);
   const [localErr, setLocalErr] = useState<string | null>(null);
-  const [copied, setCopied] = useState(false);
-  // When connecting to a key that already has lists while THIS device also has lists, ask which wins.
-  const [choice, setChoice] = useState<{ key: string; cloud: CloudLists } | null>(null);
+  const [reveal, setReveal] = useState(false);
+  // Both this device and the password already hold lists → ask which wins.
+  const [choice, setChoice] = useState<{ key: string; password: string; cloud: CloudLists } | null>(null);
 
-  const input2: React.CSSProperties = {
+  const inputStyle: React.CSSProperties = {
     width: '100%', borderRadius: 10, border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt,
-    color: TOW.ink, padding: '10px 12px', fontFamily: towFont.display, fontSize: 15, letterSpacing: '0.12em',
-    boxSizing: 'border-box', textTransform: 'uppercase',
+    color: TOW.ink, padding: '10px 12px', fontFamily: towFont.serif, fontSize: 15, boxSizing: 'border-box',
   };
 
-  const copyKey = () => {
-    if (!sync.key) return;
-    navigator.clipboard?.writeText(sync.key).then(() => { setCopied(true); window.setTimeout(() => setCopied(false), 1500); }).catch(() => {});
-  };
+  const finish = (password: string) => { setPass(password); setInput(''); setLocalErr(null); setChoice(null); setReveal(false); };
 
   const connect = async () => {
-    if (!input.trim()) return;
+    const password = input.trim();
+    if (password.length < 4) { setLocalErr('Use at least 4 characters.'); return; }
     setBusy(true); setLocalErr(null);
     try {
-      const cloud = await sync.peek(input);
-      const cloudHas = cloud && Array.isArray(cloud.lists) && cloud.lists.length > 0;
+      const key = await deriveKey(password);
+      const cloud = await sync.peek(key);
+      const cloudHas = !!cloud && Array.isArray(cloud.lists) && cloud.lists.length > 0;
       if (cloudHas && sync.listCount > 0) {
-        setChoice({ key: input, cloud: cloud! }); // both sides have lists — let the user pick
+        setChoice({ key, password, cloud: cloud! });   // both sides have lists — let the user pick
       } else if (cloudHas) {
-        sync.adoptCloud(input, cloud!);            // this device empty → take the cloud's lists
-        setShowConnect(false); setInput('');
+        sync.adoptCloud(key, cloud!); finish(password); // this device empty → take the saved lists
       } else {
-        await sync.pushMine(input);                // key empty on the server → seed it from here
-        setShowConnect(false); setInput('');
+        await sync.pushMine(key); finish(password);     // nothing saved yet → seed from here
       }
     } catch (e) {
-      setLocalErr(e instanceof Error ? e.message : 'Could not connect — check the key and your connection.');
+      setLocalErr(e instanceof Error ? e.message : 'Could not connect — check your password and connection.');
     } finally {
       setBusy(false);
     }
   };
+
+  const stop = () => { sync.disconnect(); setPass(null); setReveal(false); };
 
   const statusText = sync.status === 'syncing' ? 'Syncing…'
     : sync.status === 'error' ? 'Sync error'
@@ -239,32 +239,36 @@ function ListSyncSection({
         // ── Connected ──
         <>
           <div style={{ ...body, marginBottom: 10 }}>
-            Your saved lists sync across every device that uses this key. Enter the same key on your other device.
+            Your saved lists &amp; groups sync to every device that uses this password. Enter the same password on your other device.
           </div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
-            <code style={{ flex: 1, minWidth: 0, fontFamily: towFont.display, fontWeight: 700, fontSize: 16, letterSpacing: '0.12em', color: TOW.ink, background: TOW.cardLt, border: `1px solid ${TOW.lineStrong}`, borderRadius: 10, padding: '10px 12px', overflow: 'hidden', textOverflow: 'ellipsis' }}>{sync.key}</code>
-            <button style={{ ...ghostBtn, padding: '10px 12px' }} onClick={copyKey}>{copied ? 'Copied ✓' : 'Copy'}</button>
-          </div>
+          {pass ? (
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
+              <code style={{ flex: 1, minWidth: 0, fontFamily: towFont.display, fontWeight: 700, fontSize: 15, color: TOW.ink, background: TOW.cardLt, border: `1px solid ${TOW.lineStrong}`, borderRadius: 10, padding: '10px 12px', overflow: 'hidden', textOverflow: 'ellipsis' }}>{reveal ? pass : '•'.repeat(Math.min(12, Math.max(4, pass.length)))}</code>
+              <button style={{ ...ghostBtn, padding: '10px 12px' }} onClick={() => setReveal((r) => !r)}>{reveal ? 'Hide' : 'Show'}</button>
+            </div>
+          ) : (
+            <div style={{ ...body, fontStyle: 'italic', marginBottom: 6 }}>Connected with an older sync key. Stop and reconnect with a password to switch.</div>
+          )}
           <div style={{ ...eb, fontSize: 8.5, color: statusColor, marginBottom: 12 }}>{statusText} · {sync.listCount} list{sync.listCount === 1 ? '' : 's'}</div>
           {sync.error && <div style={{ ...body, color: TOW.blood, marginBottom: 10 }}>{sync.error}</div>}
           <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
             <button style={{ ...ghostBtn, opacity: sync.status === 'syncing' ? 0.6 : 1 }} disabled={sync.status === 'syncing'} onClick={() => sync.pushNow()}>Upload now</button>
             <button style={{ ...ghostBtn, opacity: sync.status === 'syncing' ? 0.6 : 1 }} disabled={sync.status === 'syncing'} onClick={() => sync.pullNow()}>Fetch now</button>
-            <button style={{ ...ghostBtn, color: TOW.muted, borderColor: TOW.line }} onClick={() => sync.disconnect()}>Stop syncing</button>
+            <button style={{ ...ghostBtn, color: TOW.muted, borderColor: TOW.line }} onClick={stop}>Stop syncing</button>
           </div>
         </>
       ) : choice ? (
-        // ── Conflict on connect: both this device and the key already have lists ──
+        // ── Conflict on connect: both this device and the password already have lists ──
         <>
           <div style={{ ...body, marginBottom: 12 }}>
-            That key already has <b>{choice.cloud.lists.length}</b> list{choice.cloud.lists.length === 1 ? '' : 's'}, and this device has <b>{sync.listCount}</b>. Which should win?
+            That password already has <b>{choice.cloud.lists.length}</b> list{choice.cloud.lists.length === 1 ? '' : 's'} saved, and this device has <b>{sync.listCount}</b>. Which should win?
           </div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-            <button style={goldBtn} onClick={() => { sync.adoptCloud(choice.key, choice.cloud); setChoice(null); setShowConnect(false); setInput(''); }}>
-              Use the cloud’s lists (replace this device)
+            <button style={goldBtn} onClick={() => { sync.adoptCloud(choice.key, choice.cloud); finish(choice.password); }}>
+              Use the saved lists (replace this device)
             </button>
-            <button style={ghostBtn} onClick={async () => { setBusy(true); try { await sync.pushMine(choice.key); setChoice(null); setShowConnect(false); setInput(''); } catch (e) { setLocalErr(e instanceof Error ? e.message : 'Failed'); } finally { setBusy(false); } }}>
-              Keep this device’s lists (overwrite the cloud)
+            <button style={ghostBtn} onClick={async () => { setBusy(true); try { await sync.pushMine(choice.key); finish(choice.password); } catch (e) { setLocalErr(e instanceof Error ? e.message : 'Failed'); } finally { setBusy(false); } }}>
+              Keep this device’s lists (overwrite the saved ones)
             </button>
             <button style={{ ...ghostBtn, color: TOW.muted, borderColor: TOW.line }} onClick={() => setChoice(null)}>Cancel</button>
           </div>
@@ -273,22 +277,14 @@ function ListSyncSection({
         // ── Not set up ──
         <>
           <div style={{ ...body, marginBottom: 12 }}>
-            Keep your saved army lists in sync between your phone and computer — no account needed. Create a key here, then enter it on your other device.
+            Keep your army lists &amp; groups in sync between your phone and computer — no account needed. Pick a password, then enter the same one on your other device.
           </div>
-          <button style={goldBtn} onClick={() => sync.createKey()}>Create a sync key</button>
-          <div style={{ ...eb, fontSize: 8, color: TOW.faint, textAlign: 'center', margin: '12px 0' }}>— or —</div>
-          {showConnect ? (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-              <input value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && connect()} placeholder="ABCD-EFGH-…" style={input2} />
-              <div style={{ display: 'flex', gap: 8 }}>
-                <button style={{ ...goldBtn, flex: 1, opacity: !input.trim() || busy ? 0.5 : 1 }} disabled={!input.trim() || busy} onClick={connect}>{busy ? 'Connecting…' : 'Connect'}</button>
-                <button style={ghostBtn} onClick={() => { setShowConnect(false); setInput(''); setLocalErr(null); }}>Cancel</button>
-              </div>
-              {localErr && <div style={{ ...body, color: TOW.blood }}>{localErr}</div>}
-            </div>
-          ) : (
-            <button style={{ ...ghostBtn, width: '100%' }} onClick={() => setShowConnect(true)}>I already have a key</button>
-          )}
+          <input type="password" value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && connect()} placeholder="Choose a sync password" style={{ ...inputStyle, marginBottom: 8 }} />
+          <button style={{ ...goldBtn, width: '100%', opacity: input.trim().length < 4 || busy ? 0.5 : 1 }} disabled={input.trim().length < 4 || busy} onClick={connect}>{busy ? 'Connecting…' : 'Sync with this password'}</button>
+          {localErr && <div style={{ ...body, color: TOW.blood, marginTop: 8 }}>{localErr}</div>}
+          <div style={{ fontFamily: towFont.serif, fontSize: 12, color: TOW.muted, marginTop: 10, lineHeight: 1.45 }}>
+            Anyone who knows this password can see and change your lists, so pick something only you would use. It’s the only secret — there’s no account to recover it.
+          </div>
         </>
       )}
     </div>

@@ -18,6 +18,15 @@ export function makeSyncKey(len = 16): string {
 /** Normalise a key for the wire: strip separators/whitespace, upper-case. */
 export const cleanKey = (k: string): string => (k || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
 
+/** Derive the actual sync key from a user-chosen password. Hashing (SHA-256) means the password
+ *  itself is never the literal database key, gives a valid fixed-length key, and is forgiving about
+ *  spacing/case so the same password always resolves to the same syncs. */
+export async function deriveKey(password: string): Promise<string> {
+  const norm = (password || '').trim().toLowerCase().replace(/\s+/g, ' ');
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(`tow:sync:v1:${norm}`));
+  return Array.from(new Uint8Array(buf)).map((b) => b.toString(16).padStart(2, '0')).join('');
+}
+
 export interface CloudLists { lists: unknown[]; groups: unknown[]; updatedAt: string }
 
 /** Fetch the lists + groups stored for a key (null if the key has never been pushed). */
