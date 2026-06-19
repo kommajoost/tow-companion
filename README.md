@@ -1,4 +1,4 @@
-# Old World Turn Companion
+# Old World Companion
 
 A mobile-first companion app for **Warhammer: The Old World**. Walk through a player
 turn phase by phase with the full rules for every sub-phase at hand, browse a searchable

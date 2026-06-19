@@ -30,7 +30,7 @@ export default defineConfig({
       registerType: 'prompt',
       includeAssets: ['favicon.png', 'apple-touch-icon.png', 'logo.png'],
       manifest: {
-        name: 'Old World Turn Companion',
+        name: 'Old World Companion',
         short_name: 'OW Companion',
         description:
           'Warhammer: The Old World — turn-by-turn rules companion. Walk through every phase and sub-phase with the full rules at hand.',
