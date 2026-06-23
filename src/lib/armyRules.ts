@@ -31,24 +31,48 @@ export function buildRuleIndex(rules: Record<string, Rule>): Map<string, string>
       exact.add(k);
     }
   }
-  const aliasLen = new Map<string, number>();
+  // Paren-stripped aliases fill the gaps. BUT when a stripped alias collides across multiple distinct
+  // FACTION-variant rules (e.g. "Fiery Breath (Dark Elves)" / "(Lizardmen)" / "(Renegade)" all strip
+  // to "fiery breath"), the bare alias is ambiguous — picking one army's version is wrong — so we
+  // leave it unresolved (callers disambiguate via the army faction). Value qualifiers like "(9)" or
+  // "(-X)" are not factions, so those aliases are still registered (shortest, most canonical wins).
+  const aliasCands = new Map<string, { slug: string; name: string }[]>();
   for (const r of Object.values(rules)) {
+    if (r.slug.endsWith('-profile')) continue; // profiles aren't link targets
     const stripped = stripParens(r.name);
     if (!stripped || stripped === r.name.trim()) continue;
     const k = normalize(stripped);
     if (!k || exact.has(k)) continue; // never override an exact rule name
-    const prev = aliasLen.get(k);
-    if (prev == null || r.name.length < prev) {
-      idx.set(k, r.slug);
-      aliasLen.set(k, r.name.length);
-    }
+    const list = aliasCands.get(k);
+    if (list) list.push({ slug: r.slug, name: r.name });
+    else aliasCands.set(k, [{ slug: r.slug, name: r.name }]);
+  }
+  for (const [k, cands] of aliasCands) {
+    const factionSlugs = new Set(cands.filter((c) => isFactionQualifier(c.name)).map((c) => c.slug));
+    if (factionSlugs.size >= 2) continue; // ambiguous faction family → no bare alias
+    const best = cands.reduce((a, b) => (b.name.length < a.name.length ? b : a));
+    idx.set(k, best.slug);
   }
   return idx;
 }
 
+// A rule whose only qualifier is a faction/army name (letters, no digits or "X" value placeholder),
+// e.g. "(Dark Elves)", "(Renegade)" — as opposed to a value qualifier like "(9)", "(-X)", "(D6+1)".
+function isFactionQualifier(name: string): boolean {
+  const q = name.match(/\(([^)]*)\)/)?.[1]?.trim() ?? '';
+  return q.length > 0 && /[a-z]/i.test(q) && !/[0-9x]/i.test(q);
+}
+
 // Resolve a special-rule label (e.g. "Hatred (High Elves)", "Impact Hits (D6+1)") to a
 // rule slug, or null if there's no matching rule page.
-export function resolveRuleSlug(label: string, idx: Map<string, string>): string | null {
+export function resolveRuleSlug(label: string, idx: Map<string, string>, faction?: string): string | null {
+  // A faction-variant rule ("Fiery Breath (Dark Elves)") keys as "fiery breath dark elves". For a
+  // bare label ("Fiery breath") we can recover the right army's version using the army's faction.
+  if (faction) {
+    const base = label.replace(/\([^)]*\)/g, ' ').replace(/\{[^}]*\}/g, ' ').replace(/\s*\d.*$/, '');
+    const fk = normalize(`${base} ${faction}`);
+    if (fk && idx.has(fk)) return idx.get(fk)!;
+  }
   const withoutParen = label.replace(/\(.*?\)/g, ' ');
   const withoutBraces = label.replace(/\{.*?\}/g, ' ');
   const candidates = [
@@ -127,7 +151,7 @@ function knownSlugs(idx: Map<string, string>): Set<string> {
 // Resolve a wargear/option label (e.g. "Wizard [Level 3 Wizard]", "Shields", "Lances",
 // "Standard bearer", "Repeater crossbows") to a rule slug. Tries, in order: an explicit
 // alias, resolveRuleSlug, then singular/plural variants of the final word.
-export function resolveOptionSlug(label: string, idx: Map<string, string>): string | null {
+export function resolveOptionSlug(label: string, idx: Map<string, string>, faction?: string): string | null {
   const noBracket = label.replace(/\[.*?\]/g, ' ').trim();
   const aliasKey = normalize(noBracket);
 
@@ -135,8 +159,8 @@ export function resolveOptionSlug(label: string, idx: Map<string, string>): stri
   const alias = OPTION_ALIASES[aliasKey];
   if (alias && knownSlugs(idx).has(alias)) return alias;
 
-  // 2. direct name match (handles parenthetical qualifiers via resolveRuleSlug)
-  const direct = resolveRuleSlug(noBracket, idx);
+  // 2. direct name match (handles parenthetical qualifiers + faction-variant rules via resolveRuleSlug)
+  const direct = resolveRuleSlug(noBracket, idx, faction);
   if (direct) return direct;
 
   // 2b. a parenthetical command role, e.g. "Dread Knight (champion)" → champions,

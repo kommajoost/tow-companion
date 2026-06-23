@@ -114,7 +114,7 @@ export function GameView() {
         {g.units.map((u) => {
           const t = tracker.units[unitKey(side, u.id)];
           return (
-            <UnitCard key={u.id} unit={u} editable={editable} onChange={(patch) => onUnitChange(u.id, patch)} lost={t?.lost ?? 0} onCasualty={(dir) => adjCasualty(u.id, dir)} collapsed={!expanded.has(u.id)} onToggleCollapse={() => toggleExpand(u.id)} />
+            <UnitCard key={u.id} unit={u} faction={army.faction} editable={editable} onChange={(patch) => onUnitChange(u.id, patch)} lost={t?.lost ?? 0} onCasualty={(dir) => adjCasualty(u.id, dir)} collapsed={!expanded.has(u.id)} onToggleCollapse={() => toggleExpand(u.id)} />
           );
         })}
       </div>

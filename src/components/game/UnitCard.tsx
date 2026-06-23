@@ -16,6 +16,7 @@ const eb = engraved as React.CSSProperties;
 // When the unit is wiped out it shows "Destroyed" and dims.
 export function UnitCard({
   unit,
+  faction,
   editable = false,
   onChange,
   lost,
@@ -24,6 +25,9 @@ export function UnitCard({
   onToggleCollapse,
 }: {
   unit: ArmyUnit;
+  /** The army's faction, used to pick the right faction-variant of an ambiguously-named rule
+   *  (e.g. the War Hydra's "Fiery breath" → Dark Elves variant, not Lizardmen/Renegade). */
+  faction?: string;
   editable?: boolean;
   onChange?: (patch: Partial<ArmyUnit>) => void;
   lost?: number;
@@ -141,11 +145,13 @@ export function UnitCard({
             // A magic item or a mount → open its info sheet; otherwise a wargear rule → the rule sheet.
             const mi = magicByName.get(opt.toLowerCase());
             const mt = !mi ? mountByName.get(opt.toLowerCase()) : undefined;
-            const slug = mi || mt ? null : resolveOptionSlug(opt, idx);
+            const slug = mi || mt ? null : resolveOptionSlug(opt, idx, faction);
+            // Drop a "{faction}" tag from the visible label (resolution uses the faction prop).
+            const shown = opt.replace(/\s*\{[^}]*\}/g, '').trim();
             const onClick = mi
-              ? () => setInfo({ title: opt, flavour: mi.flavour, rules: mi.specialRules })
+              ? () => setInfo({ title: shown, flavour: mi.flavour, rules: mi.specialRules })
               : mt
-                ? () => setInfo({ title: opt, profiles: mt.profiles, rules: mt.specialRules, troopType: mt.troopType })
+                ? () => setInfo({ title: shown, profiles: mt.profiles, rules: mt.specialRules, troopType: mt.troopType })
                 : slug ? () => openRule(slug) : null;
             return (
               <span key={i} style={{ display: 'inline-flex', alignItems: 'center' }}>
@@ -155,10 +161,10 @@ export function UnitCard({
                     onClick={onClick}
                     style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', fontFamily: towFont.serif, fontSize: 13, color: TOW.goldDeep, borderBottom: `1px dotted ${TOW.goldDeep}` }}
                   >
-                    {opt}
+                    {shown}
                   </button>
                 ) : (
-                  <span>{opt}</span>
+                  <span>{shown}</span>
                 )}
               </span>
             );
@@ -171,7 +177,7 @@ export function UnitCard({
           <div style={{ ...eb, fontSize: 8.5, color: TOW.muted, marginBottom: 5 }}>Special rules</div>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
             {unit.specialRules.map((label, i) => {
-              const slug = resolveRuleSlug(label, idx);
+              const slug = resolveRuleSlug(label, idx, faction);
               const common: React.CSSProperties = { fontFamily: towFont.serif, fontSize: 12.5, padding: '4px 10px', borderRadius: 999, border: `1px solid ${slug ? TOW.goldDeep : TOW.line}` };
               return slug ? (
                 <button key={i} onClick={() => openRule(slug)} style={{ ...common, cursor: 'pointer', background: 'rgba(184,134,47,0.10)', color: TOW.goldDeep }}>{label}</button>
