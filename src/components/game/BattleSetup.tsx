@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { usePersistentState } from '../../store';
 import { useUI } from '../../state';
 import { useBackClose } from '../../lib/backStack';
@@ -32,6 +32,12 @@ export function BattleSetup({ onBack }: { onBack: () => void }) {
   const [step, setStep] = useState(0); // wizard: 0 Map size · 1 Scenario · 2 Secondaries · 3 Terrain
   const { openRule } = useUI();
   useBackClose(true, onBack);
+
+  // Start every setup session with an empty map — clear any terrain left from a previous session.
+  useEffect(() => {
+    setSetup((s) => (s.terrain.length ? { ...s, terrain: [] } : s));
+    setSelectedId(null);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const scenario = scenarioById(setup.scenario);
   const recCount = recommendedTerrainCount(setup.tableW, setup.tableH);
