@@ -4,7 +4,7 @@ import { useUI } from '../../state';
 import { useBackClose } from '../../lib/backStack';
 import { TOW, towFont, engraved } from '../../design/tow';
 import {
-  SCENARIOS, scenarioById, TERRAIN_TYPES, TABLE_PRESETS, DEFAULT_BATTLE, TRAIT_RULE,
+  SCENARIOS, scenarioById, TERRAIN_TYPES, TABLE_PRESETS, DEFAULT_BATTLE, TRAIT_RULE, SECONDARY_OBJECTIVES,
   recommendedTerrainCount, scatterTerrain, shufflePlacement, addPieceBalanced, terrainType,
   type BattleSetupState, type TerrainPiece, type TerrainTrait,
 } from '../../lib/battle';
@@ -44,6 +44,17 @@ export function BattleSetup({ onBack }: { onBack: () => void }) {
   const selectedPiece = selectedId ? setup.terrain.find((t) => t.id === selectedId) ?? null : null;
   const setTrait = (id: string, trait: TerrainTrait, val: boolean) => setTerrain(setup.terrain.map((t) => (t.id === id ? { ...t, [trait]: val } : t)));
   const removePiece = (id: string) => { setTerrain(setup.terrain.filter((t) => t.id !== id)); setSelectedId(null); };
+  // Secondary objectives (Matched Play) — a set of ids; the Strategic Locations counts are exclusive.
+  const secondaries = setup.secondaries ?? [];
+  const hasSec = (id: string) => secondaries.includes(id);
+  const toggleSecondary = (id: string) => setSetup((s) => {
+    const cur = s.secondaries ?? [];
+    let next: string[];
+    if (cur.includes(id)) next = cur.filter((x) => x !== id);
+    else if (id.startsWith('strategic-')) next = [...cur.filter((x) => !x.startsWith('strategic-')), id];
+    else next = [...cur, id];
+    return { ...s, secondaries: next };
+  });
 
   const label: React.CSSProperties = { ...eb, fontSize: 8.5, color: TOW.muted, margin: '16px 0 7px' };
   const eyeSvg =<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" strokeLinecap="round" strokeLinejoin="round" /><circle cx="12" cy="12" r="3" /></svg>;
@@ -55,13 +66,14 @@ export function BattleSetup({ onBack }: { onBack: () => void }) {
         <h2 style={{ margin: 0, fontFamily: towFont.display, fontWeight: 700, fontSize: 20, color: TOW.ink }}>Battlefield setup</h2>
       </div>
 
-      {/* Scenario — grouped into Pitched Battle and Battle March */}
-      {(['pitched', 'battle-march'] as const).map((grp) => {
+      {/* Scenario — grouped into Pitched Battle, Battle March and Matched Play */}
+      {(['pitched', 'battle-march', 'matched-play'] as const).map((grp) => {
         const items = SCENARIOS.filter((s) => (s.group ?? 'pitched') === grp);
         if (!items.length) return null;
+        const groupLabel = grp === 'pitched' ? 'Pitched Battle' : grp === 'battle-march' ? 'Battle March (small games)' : 'Matched Play';
         return (
           <div key={grp}>
-            <div style={label}>Scenario · {grp === 'pitched' ? 'Pitched Battle' : 'Battle March (small games)'}</div>
+            <div style={label}>Scenario · {groupLabel}</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
               {items.map((s) => {
                 const on = setup.scenario === s.id;
@@ -82,6 +94,24 @@ export function BattleSetup({ onBack }: { onBack: () => void }) {
           </div>
         );
       })}
+
+      {/* Secondary objectives (Matched Play) — overlaid on the board */}
+      <div style={label}>Secondary objectives</div>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
+        {SECONDARY_OBJECTIVES.map((s) => {
+          const on = hasSec(s.id);
+          return (
+            <div key={s.id} style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '5px 7px', borderRadius: 8, border: `1px solid ${on ? TOW.goldDeep : TOW.line}`, background: on ? 'rgba(138,108,48,0.10)' : TOW.cardLt }}>
+              <button onClick={() => toggleSecondary(s.id)} role="checkbox" aria-checked={on} aria-label={`Toggle ${s.name}`} style={{ width: 19, height: 19, flexShrink: 0, borderRadius: 5, cursor: 'pointer', border: `1px solid ${on ? TOW.goldDeep : TOW.lineStrong}`, background: on ? goldGrad : 'transparent', color: TOW.onGrad, fontSize: 12, fontWeight: 700, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', padding: 0 }}>{on ? '✓' : ''}</button>
+              <button onClick={() => toggleSecondary(s.id)} style={{ flex: 1, minWidth: 0, textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
+                <div style={{ fontFamily: towFont.display, fontWeight: 600, fontSize: 13, color: on ? TOW.goldDeep : TOW.ink }}>{s.name}</div>
+                <div style={{ fontFamily: towFont.serif, fontSize: 11, color: TOW.muted, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{s.blurb}</div>
+              </button>
+              <button onClick={() => openRule(s.ruleSlug)} aria-label={`${s.name} rules`} title={`${s.name} rules`} style={{ flexShrink: 0, width: 28, height: 28, borderRadius: 7, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.10)', color: TOW.goldDeep, cursor: 'pointer', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', padding: 0 }}>{eyeSvg}</button>
+            </div>
+          );
+        })}
+      </div>
 
       {/* Table size */}
       <div style={label}>Table size</div>
@@ -202,9 +232,17 @@ export function BattleSetup({ onBack }: { onBack: () => void }) {
       )}
 
       {scenario && (
-        <div style={{ display: 'flex', gap: 7, alignItems: 'flex-start', marginTop: 8, padding: '8px 10px', borderRadius: 9, background: 'rgba(138,108,48,0.07)', border: `1px solid ${TOW.line}` }}>
-          <span style={{ flexShrink: 0, fontFamily: towFont.display, fontWeight: 700, fontSize: 11.5, color: TOW.goldDeep }}>Deployment</span>
-          <span style={{ fontFamily: towFont.serif, fontSize: 11.5, color: TOW.ink, lineHeight: 1.35 }}>{scenario.deployNote}</span>
+        <div style={{ marginTop: 8, padding: '8px 10px', borderRadius: 9, background: 'rgba(138,108,48,0.07)', border: `1px solid ${TOW.line}` }}>
+          <div style={{ display: 'flex', gap: 7, alignItems: 'flex-start' }}>
+            <span style={{ flexShrink: 0, fontFamily: towFont.display, fontWeight: 700, fontSize: 11.5, color: TOW.goldDeep }}>Deployment</span>
+            <span style={{ fontFamily: towFont.serif, fontSize: 11.5, color: TOW.ink, lineHeight: 1.35 }}>{scenario.deployNote}</span>
+          </div>
+          {scenario.gameEnd && (
+            <div style={{ display: 'flex', gap: 7, alignItems: 'flex-start', marginTop: 5 }}>
+              <span style={{ flexShrink: 0, fontFamily: towFont.display, fontWeight: 700, fontSize: 11.5, color: TOW.goldDeep }}>Game end</span>
+              <span style={{ fontFamily: towFont.serif, fontSize: 11.5, color: TOW.ink, lineHeight: 1.35 }}>{scenario.gameEnd}</span>
+            </div>
+          )}
         </div>
       )}
 

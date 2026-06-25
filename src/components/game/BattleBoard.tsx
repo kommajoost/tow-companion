@@ -1,6 +1,6 @@
 import { useMemo, useRef } from 'react';
 import { TOW, towFont } from '../../design/tow';
-import { deploymentFor, type BattleSetupState, type TerrainPiece } from '../../lib/battle';
+import { deploymentFor, secondaryLayout, type BattleSetupState, type TerrainPiece } from '../../lib/battle';
 import { terrainIconNode } from './terrainIcons';
 
 const clamp = (n: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, n));
@@ -56,6 +56,7 @@ export function BattleBoard({ setup, onChange, selectedId, onSelect, editable = 
   // Scenario-specific deployment: zones (main/flank), an optional central objective, and the
   // impassable cliff strips for Mountain Pass. Drawn so the chosen pitched battle is visible.
   const layout = deploymentFor(setup.scenario, tableW, tableH);
+  const sec = secondaryLayout(setup.secondaries, tableW, tableH);
 
   return (
     <svg
@@ -101,6 +102,39 @@ export function BattleBoard({ setup, onChange, selectedId, onSelect, editable = 
           <text x={layout.objective.x} y={layout.objective.y + 1.7} fontSize={4.4} textAnchor="middle" fill={TOW.goldDeep} style={{ pointerEvents: 'none' }}>★</text>
         </g>
       )}
+      {/* central hill (King of the Hill) */}
+      {layout.hill && (
+        <g>
+          <rect x={layout.hill.x} y={layout.hill.y} width={layout.hill.w} height={layout.hill.h} rx={2} fill="rgba(176,138,79,0.34)" stroke="rgba(120,92,40,0.6)" strokeWidth={0.25} />
+          <text x={layout.hill.x + layout.hill.w / 2} y={layout.hill.y + layout.hill.h / 2 + 1.3} fontSize={3.6} textAnchor="middle" fontFamily={towFont.display} fontWeight={700} fill="#5c4326" style={{ pointerEvents: 'none' }}>Hill</text>
+        </g>
+      )}
+      {/* central no-deploy circle (A Chance Encounter) */}
+      {layout.keepoutCircle && (
+        <circle cx={layout.keepoutCircle.x} cy={layout.keepoutCircle.y} r={layout.keepoutCircle.r} fill="none" stroke="rgba(60,45,30,0.45)" strokeWidth={0.3} strokeDasharray="1.5 1.2" />
+      )}
+      {/* secondary objectives overlay */}
+      {sec.quarters && (
+        <g stroke="rgba(120,92,40,0.5)" strokeWidth={0.22} strokeDasharray="2 1.4">
+          <line x1={tableW / 2} y1={0} x2={tableW / 2} y2={tableH} />
+          <line x1={0} y1={tableH / 2} x2={tableW} y2={tableH / 2} />
+        </g>
+      )}
+      {sec.specialFeature && (
+        <g>
+          <rect x={sec.specialFeature.x - 2.5} y={sec.specialFeature.y - 2.5} width={5} height={5} rx={0.8} fill="rgba(60,45,30,0.55)" />
+          <text x={sec.specialFeature.x} y={sec.specialFeature.y + 1.3} fontSize={3.4} textAnchor="middle" fill="#fff" style={{ pointerEvents: 'none' }}>★</text>
+        </g>
+      )}
+      {sec.objectives.map((o, i) => (
+        <g key={`obj${i}`}>
+          <circle cx={o.x} cy={o.y} r={2.4} fill="rgba(138,108,48,0.20)" stroke={TOW.goldDeep} strokeWidth={0.3} />
+          <text x={o.x} y={o.y + 1.1} fontSize={3} textAnchor="middle" fontFamily={towFont.display} fontWeight={700} fill={TOW.goldDeep} style={{ pointerEvents: 'none' }}>{o.n}</text>
+        </g>
+      ))}
+      {sec.baggage.map((b, i) => (
+        <rect key={`bag${i}`} x={b.x} y={b.y} width={b.w} height={b.h} rx={0.6} fill="rgba(120,92,40,0.5)" stroke="#5c4326" strokeWidth={0.2} />
+      ))}
       {/* terrain features */}
       {terrain.map((p) => {
         const sel = p.id === selectedId;

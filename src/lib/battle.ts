@@ -12,7 +12,13 @@
 //  bm-pitched       – Battle March pitched battle: shallow bands, 15" no-man's-land
 //  bm-opposed-flanks– Battle March: slanted opposed-corner zones
 //  bm-close-encounter– Battle March: opposite quadrants + central objective
-export type DeploymentKind = 'standard' | 'command-control' | 'flank' | 'mountain-pass' | 'meeting' | 'break-point' | 'bm-pitched' | 'bm-opposed-flanks' | 'bm-close-encounter';
+//  Matched Play guide scenarios:
+//  king-of-hill     – bands inset 8" from the side edges, 10" keepout, a large central hill
+//  drawn-battlelines– diagonal (A top-right / B bottom-left), 24" no-man's-land each side
+//  close-quarters   – bands inset 6" from the side edges, 12" keepout, short edges impassable
+//  chance-encounter – four corner quarters (A1/A2 vs B1/B2) + an 18" central no-deploy circle
+//  encirclement     – staggered offset bands (A top-left, B bottom-right)
+export type DeploymentKind = 'standard' | 'command-control' | 'flank' | 'mountain-pass' | 'meeting' | 'break-point' | 'bm-pitched' | 'bm-opposed-flanks' | 'bm-close-encounter' | 'king-of-hill' | 'drawn-battlelines' | 'close-quarters' | 'chance-encounter' | 'encirclement';
 
 export interface ScenarioDef {
   id: string;
@@ -20,10 +26,11 @@ export interface ScenarioDef {
   ruleSlug: string; // the rules.json page with the full scenario rules + deployment map
   d6: number;        // its number on the rulebook's D6 pitched-battle table
   d6Label?: string;  // shown on the badge instead of d6 (e.g. Battle March's "1-2")
-  group?: 'pitched' | 'battle-march'; // which list it appears under (default 'pitched')
+  group?: 'pitched' | 'battle-march' | 'matched-play'; // which list it appears under (default 'pitched')
   blurb: string;
   deployment: DeploymentKind;
   deployNote: string; // short caption shown under the board explaining the deployment
+  gameEnd?: string;   // recommended game-end conditions (matched play)
 }
 
 export const SCENARIOS: ScenarioDef[] = [
@@ -37,6 +44,13 @@ export const SCENARIOS: ScenarioDef[] = [
   { id: 'bm-pitched', name: 'Pitched Battle', ruleSlug: 'battle-march-deployment-maps', d6: 1, d6Label: '1-2', group: 'battle-march', blurb: 'Battle March — armies line up across a 15″ no-man\'s-land.', deployment: 'bm-pitched', deployNote: 'Battle March pitched battle: shallow deployment bands with a 15″ no-man\'s-land down the centre.' },
   { id: 'bm-close-encounter', name: 'Close Encounter', ruleSlug: 'battle-march-deployment-maps', d6: 3, d6Label: '3-4', group: 'battle-march', blurb: 'Battle March — deploy in opposite corners around a central feature.', deployment: 'bm-close-encounter', deployNote: 'Battle March Close Encounter: deploy in opposite quarter-table corners (A top-left, B bottom-right) around a central feature.' },
   { id: 'bm-opposed-flanks', name: 'Opposed Flanks', ruleSlug: 'battle-march-deployment-maps', d6: 5, d6Label: '5-6', group: 'battle-march', blurb: 'Battle March — slanted, opposed flank deployment.', deployment: 'bm-opposed-flanks', deployNote: 'Battle March Opposed Flanks: slanted opposed zones — A in the top-left flank, B in the bottom-right.' },
+  // Matched Play Guide — six tournament scenarios, rolled/chosen at the start of each round.
+  { id: 'mp-field-of-glory', name: 'Upon the Field of Glory', ruleSlug: 'scenario-1-upon-the-field-of-glory', d6: 1, group: 'matched-play', blurb: 'A straight, open clash — full strength on both sides.', deployment: 'standard', deployNote: 'Standard deployment — within 12″ of the centre line (zones A & B).', gameEnd: 'Fixed Turn Limit, Random Game Length, or Break Point.' },
+  { id: 'mp-king-of-the-hill', name: 'King of the Hill', ruleSlug: 'scenario-2-king-of-the-hill', d6: 2, group: 'matched-play', blurb: 'Seize and hold the great central hill.', deployment: 'king-of-hill', deployNote: 'Zones inset 8″ from the side edges, 10″ from the centre. A large hill sits dead centre — hold it for +100 VP each turn.', gameEnd: 'Random Game Length, or Break Point.' },
+  { id: 'mp-drawn-battlelines', name: 'Drawn Battlelines', ruleSlug: 'scenario-3-drawn-battlelines', d6: 3, group: 'matched-play', blurb: 'Diagonal lines; some troops arrive as reserves.', deployment: 'drawn-battlelines', deployNote: 'Diagonal deployment (A top-right, B bottom-left), 24″ no-man\'s-land each side. Roll a D6 — on a 1 each player holds an infantry/cavalry unit in reserve.', gameEnd: 'Fixed Turn Limit, or Random Game Length.' },
+  { id: 'mp-close-quarters', name: 'Close Quarters', ruleSlug: 'scenario-4-close-quarters', d6: 4, group: 'matched-play', blurb: 'A cramped pass — the side edges are sheer cliffs.', deployment: 'close-quarters', deployNote: 'Zones inset 6″ from the side edges, 12″ from the centre. Bottleneck: the short edges count as impassable cliffs.', gameEnd: 'Fixed Turn Limit, or Break Point.' },
+  { id: 'mp-chance-encounter', name: 'A Chance Encounter', ruleSlug: 'scenario-5-a-chance-encounter', d6: 5, group: 'matched-play', blurb: 'A fog-of-war clash from four corners.', deployment: 'chance-encounter', deployNote: 'Deploy in two opposite quarter-corners (you take both A, or both B). The 18″ circle in the centre is no-deploy.', gameEnd: 'Random Game Length, or Break Point.' },
+  { id: 'mp-encirclement', name: 'Encirclement', ruleSlug: 'scenario-6-encirclement', d6: 6, group: 'matched-play', blurb: 'Staggered lines invite a flanking encirclement.', deployment: 'encirclement', deployNote: 'Staggered zones — A runs along the top (stopping 12″ short of the right), B along the bottom (starting 12″ from the left), each 12″ from the centre.', gameEnd: 'Fixed Turn Limit, or Random Game Length.' },
 ];
 
 export const scenarioById = (id: string): ScenarioDef | undefined => SCENARIOS.find((s) => s.id === id);
@@ -47,7 +61,46 @@ export interface DeployZone { x: number; y: number; w: number; h: number; label:
 export interface DeploymentLayout {
   zones: DeployZone[];
   objective?: { x: number; y: number }; // central special feature (Command & Control)
-  impassable?: { x: number; y: number; w: number; h: number }[]; // cliff strips (Mountain Pass)
+  impassable?: { x: number; y: number; w: number; h: number }[]; // cliff strips (Mountain Pass / Close Quarters)
+  hill?: { x: number; y: number; w: number; h: number }; // a scenario's central hill (King of the Hill)
+  keepoutCircle?: { x: number; y: number; r: number }; // central no-deploy circle (A Chance Encounter)
+}
+
+// ---- Secondary objectives (Matched Play Guide) -------------------------------------------------
+// A board overlay chosen on top of a scenario. Stored as an id list in the battle state.
+export interface SecondaryDef { id: string; name: string; ruleSlug: string; blurb: string }
+export const SECONDARY_OBJECTIVES: SecondaryDef[] = [
+  { id: 'special-feature', name: 'Special Feature', ruleSlug: 'special-features-secondary-objectives', blurb: 'A central impassable landmark; hold it with a Core unit.' },
+  { id: 'domination', name: 'Domination', ruleSlug: 'domination', blurb: 'Control the four table quarters by Unit Strength.' },
+  { id: 'strategic-2', name: 'Strategic Locations (2)', ruleSlug: 'strategic-locations', blurb: 'Two objective markers near the long edges.' },
+  { id: 'strategic-3', name: 'Strategic Locations (3)', ruleSlug: 'strategic-locations', blurb: 'Three objective markers across the centre line.' },
+  { id: 'strategic-4', name: 'Strategic Locations (4)', ruleSlug: 'strategic-locations', blurb: 'Four objective markers, one toward each edge.' },
+  { id: 'baggage-trains', name: 'Baggage Trains', ruleSlug: 'baggage-trains', blurb: 'Each army has a supply base to defend (dangerous terrain).' },
+];
+export const secondaryById = (id: string): SecondaryDef | undefined => SECONDARY_OBJECTIVES.find((s) => s.id === id);
+
+/** Board overlay for the chosen secondary objectives: the four-quarter split (Domination), a central
+ *  special feature, objective markers (Strategic Locations) and baggage-train bases. */
+export interface SecondaryLayout {
+  quarters: boolean;
+  specialFeature?: { x: number; y: number };
+  objectives: { x: number; y: number; n: number }[];
+  baggage: { x: number; y: number; w: number; h: number }[];
+}
+
+export function secondaryLayout(ids: string[] | undefined, W: number, H: number): SecondaryLayout {
+  const set = new Set(ids || []);
+  const out: SecondaryLayout = { quarters: set.has('domination'), objectives: [], baggage: [] };
+  if (set.has('special-feature')) out.specialFeature = { x: W / 2, y: H / 2 };
+  // Strategic Locations marker placements (rulebook): halfway between centre and an edge midpoint.
+  if (set.has('strategic-2')) out.objectives = [{ x: W / 2, y: H / 4, n: 1 }, { x: W / 2, y: (3 * H) / 4, n: 2 }];
+  else if (set.has('strategic-3')) out.objectives = [{ x: W / 2, y: H / 2, n: 1 }, { x: W / 4, y: H / 2, n: 2 }, { x: (3 * W) / 4, y: H / 2, n: 3 }];
+  else if (set.has('strategic-4')) out.objectives = [{ x: W / 2, y: H / 4, n: 1 }, { x: (3 * W) / 4, y: H / 2, n: 2 }, { x: W / 2, y: (3 * H) / 4, n: 3 }, { x: W / 4, y: H / 2, n: 4 }];
+  if (set.has('baggage-trains')) {
+    const bw = 4, bh = 2.4; // ~100×60mm
+    out.baggage = [{ x: W / 2 - bw / 2, y: 5, w: bw, h: bh }, { x: W / 2 - bw / 2, y: H - 5 - bh, w: bw, h: bh }];
+  }
+  return out;
 }
 
 // Units deploy in their own half but no closer than 12" to the centre line, so a deployment zone
@@ -150,6 +203,69 @@ export function deploymentFor(scenarioId: string, W: number, H: number): Deploym
         { x: 0, y: 0, w: W, h: H, label: 'B', kind: 'main', poly: [[W, H], [0, H], [W, 0.6 * H]] },
       ] };
 
+    case 'king-of-hill': {
+      // Bands inset 8" from the side edges, reaching to 10" of the centre, plus a large central hill.
+      const ins = 8, dh = longHoriz ? zoneDepth(H, 10) : zoneDepth(W, 10);
+      const zones: DeployZone[] = longHoriz
+        ? [{ x: ins, y: 0, w: Math.max(0, W - 2 * ins), h: dh, label: 'A', kind: 'main' }, { x: ins, y: H - dh, w: Math.max(0, W - 2 * ins), h: dh, label: 'B', kind: 'main' }]
+        : [{ x: 0, y: ins, w: dh, h: Math.max(0, H - 2 * ins), label: 'A', kind: 'main' }, { x: W - dh, y: ins, w: dh, h: Math.max(0, H - 2 * ins), label: 'B', kind: 'main' }];
+      const hw = longHoriz ? 18 : 12, hh = longHoriz ? 12 : 18; // 12×18 hill, long side along the long axis
+      return { zones, hill: { x: W / 2 - hw / 2, y: H / 2 - hh / 2, w: hw, h: hh } };
+    }
+
+    case 'close-quarters': {
+      // Bands inset 6" from the side edges, 12" keepout; the short edges count as impassable cliffs.
+      const ins = 6, t = 1.6;
+      if (longHoriz) {
+        return {
+          zones: [{ x: ins, y: 0, w: Math.max(0, W - 2 * ins), h: d, label: 'A', kind: 'main' }, { x: ins, y: H - d, w: Math.max(0, W - 2 * ins), h: d, label: 'B', kind: 'main' }],
+          impassable: [{ x: 0, y: 0, w: t, h: H }, { x: W - t, y: 0, w: t, h: H }],
+        };
+      }
+      return {
+        zones: [{ x: 0, y: ins, w: d, h: Math.max(0, H - 2 * ins), label: 'A', kind: 'main' }, { x: W - d, y: ins, w: d, h: Math.max(0, H - 2 * ins), label: 'B', kind: 'main' }],
+        impassable: [{ x: 0, y: 0, w: W, h: t }, { x: 0, y: H - t, w: W, h: t }],
+      };
+    }
+
+    case 'chance-encounter':
+      // Four corner quarters: A takes both A-corners (diagonal), B both B-corners; 18" central circle no-deploy.
+      return {
+        zones: [
+          { x: 0, y: 0, w: W / 2, h: H / 2, label: 'B1', kind: 'flank' },
+          { x: W / 2, y: 0, w: W / 2, h: H / 2, label: 'A2', kind: 'main' },
+          { x: 0, y: H / 2, w: W / 2, h: H / 2, label: 'A1', kind: 'main' },
+          { x: W / 2, y: H / 2, w: W / 2, h: H / 2, label: 'B2', kind: 'flank' },
+        ],
+        keepoutCircle: { x: W / 2, y: H / 2, r: 9 },
+      };
+
+    case 'encirclement': {
+      // Staggered offset bands: A along the top (stopping 12" short of the far end), B along the
+      // bottom (starting 12" in), each 12" from the centre.
+      const off = 12;
+      if (longHoriz) {
+        return { zones: [
+          { x: 0, y: 0, w: Math.max(0, W - off), h: d, label: 'A', kind: 'main' },
+          { x: off, y: H - d, w: Math.max(0, W - off), h: d, label: 'B', kind: 'main' },
+        ] };
+      }
+      return { zones: [
+        { x: 0, y: 0, w: d, h: Math.max(0, H - off), label: 'A', kind: 'main' },
+        { x: W - d, y: off, w: d, h: Math.max(0, H - off), label: 'B', kind: 'main' },
+      ] };
+    }
+
+    case 'drawn-battlelines': {
+      // Diagonal along the MAIN diagonal: A is the top-right triangle, B the bottom-left, with a 24"
+      // no-man's-land each side.
+      const a = Math.min(0.95, 24 * Math.sqrt(1 / (W * W) + 1 / (H * H)));
+      return { zones: [
+        { x: 0, y: 0, w: W, h: H, label: 'A', kind: 'main', poly: [[W * a, 0], [W, 0], [W, H * (1 - a)]] },
+        { x: 0, y: 0, w: W, h: H, label: 'B', kind: 'main', poly: [[0, H * a], [0, H], [W * (1 - a), H]] },
+      ] };
+    }
+
     default:
       return { zones: standard };
   }
@@ -183,6 +299,7 @@ export interface BattleSetupState {
   tableW: number; // inches
   tableH: number; // inches
   terrain: TerrainPiece[];
+  secondaries?: string[]; // chosen secondary-objective ids (Matched Play)
 }
 
 // Common table sizes (inches). Mountain Pass is long & narrow per its rules; 44×30 is the small
@@ -265,10 +382,13 @@ function placeSpecs(specs: PlaceSpec[], W: number, H: number): TerrainPiece[] {
 export function scatterTerrain(w: number, h: number, count = recommendedTerrainCount(w, h), enabledTypeIds?: string[]): TerrainPiece[] {
   const pool = enabledTypeIds && enabledTypeIds.length ? TERRAIN_TYPES.filter((t) => enabledTypeIds.includes(t.id)) : TERRAIN_TYPES;
   if (pool.length === 0) return [];
+  // Guide: a terrain feature is 2"–12" across. Cap to ~⅓ of the short edge so a 12" feature doesn't
+  // swamp a small table.
+  const maxSize = Math.max(3, Math.min(12, Math.floor(Math.min(w, h) / 3)));
   const specs: PlaceSpec[] = [];
   for (let i = 0; i < Math.max(0, Math.floor(count)); i++) {
     const tt = pool[Math.floor(Math.random() * pool.length)];
-    specs.push({ type: tt.id, w: Math.round(rnd(3, 8)), h: Math.round(rnd(3, 8)), difficult: tt.defaultTrait === 'difficult', dangerous: tt.defaultTrait === 'dangerous' });
+    specs.push({ type: tt.id, w: Math.round(rnd(2, maxSize)), h: Math.round(rnd(2, maxSize)), difficult: tt.defaultTrait === 'difficult', dangerous: tt.defaultTrait === 'dangerous' });
   }
   return placeSpecs(specs, w, h);
 }
