@@ -70,7 +70,7 @@ export function ArmyListPicker({ onPick, label = 'Choose one of your saved army 
   const toArmy = (l: SavedList): Army | null => {
     const cat = catalogues[l.army];
     if (!cat) return null;
-    return builderListToArmy(l, cat, statsFor, { faction: armyNameFor(l.army), composition: compName(l.composition, l.army), itemsData: itemsData ?? undefined, armyItemLists: itemsByArmy[l.army] ?? [], magicText, mountText, troopTypeFor });
+    return builderListToArmy(l, cat, statsFor, { faction: armyNameFor(l.army), composition: compName(l.composition, l.army), itemsData: itemsData ?? undefined, armyItemLists: itemsByArmy[l.army] ?? [], magicText, mountText, troopTypeFor, factionNames: Object.values(armyNames) });
   };
 
   return (

@@ -42,12 +42,14 @@ export function BattleBoard({ setup, onChange, selectedId, onSelect, editable = 
   };
   const onPointerUp = () => { const d = drag.current; drag.current = null; if (d && !d.moved) onSelect(d.id === selectedId ? null : d.id); };
 
-  // Uniform 1" grid (everything is measured in inches; no bold foot lines) — memoised so dragging
-  // terrain doesn't rebuild them.
+  // 1" grid (very light) with the 12" / foot lines drawn a touch stronger (but still light) so the
+  // board reads in feet without shouting. Memoised so dragging terrain doesn't rebuild them.
   const grid = useMemo(() => {
     const lines: React.ReactNode[] = [];
-    for (let x = 0; x <= tableW; x++) lines.push(<line key={`v${x}`} x1={x} y1={0} x2={x} y2={tableH} stroke="rgba(74,55,22,0.13)" strokeWidth={0.08} />);
-    for (let y = 0; y <= tableH; y++) lines.push(<line key={`h${y}`} x1={0} y1={y} x2={tableW} y2={y} stroke="rgba(74,55,22,0.13)" strokeWidth={0.08} />);
+    const stroke = (i: number) => (i % 12 === 0 ? 'rgba(74,55,22,0.28)' : 'rgba(74,55,22,0.11)');
+    const width = (i: number) => (i % 12 === 0 ? 0.16 : 0.08);
+    for (let x = 0; x <= tableW; x++) lines.push(<line key={`v${x}`} x1={x} y1={0} x2={x} y2={tableH} stroke={stroke(x)} strokeWidth={width(x)} />);
+    for (let y = 0; y <= tableH; y++) lines.push(<line key={`h${y}`} x1={0} y1={y} x2={tableW} y2={y} stroke={stroke(y)} strokeWidth={width(y)} />);
     return lines;
   }, [tableW, tableH]);
 

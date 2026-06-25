@@ -47,8 +47,22 @@ export function builderListToArmy(
   list: NamedBuilderList,
   catalogue: OwbArmy,
   statsFor: (name: string) => StatRow[],
-  opts: { faction?: string; composition?: string; itemsData?: MagicItemsData; armyItemLists?: string[]; magicText?: MagicText; mountText?: MountText; troopTypeFor?: (name: string) => string | undefined } = {},
+  opts: { faction?: string; composition?: string; itemsData?: MagicItemsData; armyItemLists?: string[]; magicText?: MagicText; mountText?: MountText; troopTypeFor?: (name: string) => string | undefined; factionNames?: string[] } = {},
 ): Army {
+  // A shared datasheet (e.g. the War Hydra) bundles weapons for several armies, tagged like
+  // "Serrated maws {renegade}" / "Fiery breath {dark elves}". Keep only the ones for THIS army:
+  // drop a loadout label whose brace tag names a different faction (an army name, or "renegade").
+  // Non-faction tags ({mount}, {weapon}, a unit name) are left alone.
+  const normF = (s: string) => (s || '').toLowerCase().replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim();
+  const myFaction = normF(opts.faction || '');
+  const factionSet = new Set([...(opts.factionNames || []).map(normF), 'renegade']);
+  const keepLoadout = (label: string): boolean => {
+    const m = label.match(/\{([^}]+)\}/);
+    if (!m) return true;
+    const tag = normF(m[1]);
+    if (!tag || tag === myFaction || !factionSet.has(tag)) return true; // mine, or not a faction tag
+    return false; // a different army's variant of a shared weapon → drop
+  };
   const getUnit = getUnitFrom(catalogue);
   const units: ArmyUnit[] = [];
   for (const e of list.entries) {
@@ -102,7 +116,7 @@ export function builderListToArmy(
       troopType: opts.troopTypeFor?.(u.name_en),
       // Full effective loadout (base weapons + upgrades + magic), so the game resolves shooting/melee
       // profiles the same way it does for a pasted OWB list — not just the non-default upgrades.
-      options: loadoutLabels(u, e, opts.itemsData),
+      options: loadoutLabels(u, e, opts.itemsData).filter(keepLoadout),
       specialRules,
       profiles,
       // Lore/spell choices made in the builder (Wizards) → carried into the game Army.

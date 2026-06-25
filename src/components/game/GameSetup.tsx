@@ -86,7 +86,7 @@ export function GameSetup() {
   const pickedCatalogue = pickedList ? catalogues[pickedList.army] ?? null : null;
   const army: Army | null =
     pickedList && pickedCatalogue
-      ? builderListToArmy(pickedList, pickedCatalogue, statsFor, { faction: armyNameFor(pickedList.army), composition: compName(pickedList.composition, pickedList.army), itemsData: itemsData ?? undefined, armyItemLists: itemsByArmy[pickedList.army] ?? [], magicText, mountText, troopTypeFor })
+      ? builderListToArmy(pickedList, pickedCatalogue, statsFor, { faction: armyNameFor(pickedList.army), composition: compName(pickedList.composition, pickedList.army), itemsData: itemsData ?? undefined, armyItemLists: itemsByArmy[pickedList.army] ?? [], magicText, mountText, troopTypeFor, factionNames: Object.values(armyNames) })
       : paste.trim() ? enrichArmyTroopTypes(parseArmyList(paste), troopTypeFor) : null;
 
   const loadGames = useCallback(async () => {
