@@ -14,6 +14,8 @@ import { TerrainIcon, TraitIcon } from './terrainIcons';
 const TRAITS: TerrainTrait[] = ['difficult', 'dangerous'];
 const traitColor = (t: TerrainTrait) => (t === 'dangerous' ? '#b23b3b' : '#5c4326');
 const clampN = (n: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, n));
+// The setup wizard, in order — each step adds another layer to the map.
+const STEPS = ['Map size', 'Scenario', 'Secondaries', 'Terrain'] as const;
 
 const eb = engraved as React.CSSProperties;
 const goldGrad = `linear-gradient(180deg, ${TOW.goldBright} 0%, ${TOW.gold} 55%, ${TOW.goldDeep} 100%)`;
@@ -27,7 +29,7 @@ export function BattleSetup({ onBack }: { onBack: () => void }) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [enabledTypes, setEnabledTypes] = useState<Set<string>>(() => new Set(TERRAIN_TYPES.map((t) => t.id)));
   const [randomCount, setRandomCount] = useState<number | null>(null); // null → follow the recommendation
-  const [tab, setTab] = useState<'scenario' | 'secondaries' | 'table' | 'terrain'>('scenario');
+  const [step, setStep] = useState(0); // wizard: 0 Map size · 1 Scenario · 2 Secondaries · 3 Terrain
   const { openRule } = useUI();
   useBackClose(true, onBack);
 
@@ -63,11 +65,11 @@ export function BattleSetup({ onBack }: { onBack: () => void }) {
   return (
     <div style={{ maxWidth: 760, margin: '0 auto', padding: '12px 14px 32px' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 6 }}>
-        <button onClick={onBack} aria-label="Back" style={{ height: 32, flexShrink: 0, borderRadius: 8, cursor: 'pointer', border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt, fontFamily: towFont.display, fontWeight: 600, fontSize: 12.5, color: TOW.inkDim, padding: '0 11px', display: 'inline-flex', alignItems: 'center', gap: 4 }}>‹ Back</button>
+        <button onClick={() => (step > 0 ? setStep(step - 1) : onBack())} aria-label="Back" style={{ height: 32, flexShrink: 0, borderRadius: 8, cursor: 'pointer', border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt, fontFamily: towFont.display, fontWeight: 600, fontSize: 12.5, color: TOW.inkDim, padding: '0 11px', display: 'inline-flex', alignItems: 'center', gap: 4 }}>‹ Back</button>
         <h2 style={{ margin: 0, fontFamily: towFont.display, fontWeight: 700, fontSize: 20, color: TOW.ink }}>Battlefield setup</h2>
       </div>
 
-      {/* Board + notes — always visible above the tabs, so you see the map at the top */}
+      {/* The map — always visible at the top, kept clean (the layers build up as you go) */}
       <div style={{ display: 'flex', alignItems: 'baseline', gap: 7, margin: '6px 0 6px' }}>
         <span style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 13.5, color: TOW.ink }}>{scenario?.name ?? 'Battlefield'}</span>
         <span style={{ fontFamily: towFont.serif, fontSize: 11.5, color: TOW.faint }}>{setup.tableW}″ × {setup.tableH}″</span>
@@ -99,41 +101,17 @@ export function BattleSetup({ onBack }: { onBack: () => void }) {
         </div>
       )}
 
-      {scenario && (
-        <div style={{ marginTop: 8, padding: '8px 10px', borderRadius: 9, background: 'rgba(138,108,48,0.07)', border: `1px solid ${TOW.line}` }}>
-          <div style={{ display: 'flex', gap: 7, alignItems: 'flex-start' }}>
-            <span style={{ flexShrink: 0, fontFamily: towFont.display, fontWeight: 700, fontSize: 11.5, color: TOW.goldDeep }}>Deployment</span>
-            <span style={{ fontFamily: towFont.serif, fontSize: 11.5, color: TOW.ink, lineHeight: 1.35 }}>{scenario.deployNote}</span>
-          </div>
-          {scenario.gameEnd && (
-            <div style={{ display: 'flex', gap: 7, alignItems: 'flex-start', marginTop: 5 }}>
-              <span style={{ flexShrink: 0, fontFamily: towFont.display, fontWeight: 700, fontSize: 11.5, color: TOW.goldDeep }}>Game end</span>
-              <span style={{ fontFamily: towFont.serif, fontSize: 11.5, color: TOW.ink, lineHeight: 1.35 }}>{scenario.gameEnd}</span>
-            </div>
-          )}
+      {/* Wizard progress */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 10, margin: '14px 0 12px' }}>
+        <div style={{ display: 'flex', gap: 5, flex: 1 }}>
+          {STEPS.map((name, i) => (
+            <div key={name} style={{ flex: 1, height: 4, borderRadius: 99, background: i <= step ? goldGrad : 'rgba(74,55,22,0.12)' }} />
+          ))}
         </div>
-      )}
-
-      {/* Legend + hint */}
-      <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', alignItems: 'center', marginTop: 7, fontFamily: towFont.serif, fontSize: 10.5, color: TOW.muted }}>
-        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5 }}><span style={{ display: 'inline-flex', color: traitColor('difficult') }}><TraitIcon trait="difficult" size={13} /></span> Difficult (brown dashed)</span>
-        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5 }}><span style={{ display: 'inline-flex', color: traitColor('dangerous') }}><TraitIcon trait="dangerous" size={13} /></span> Dangerous (red dashed)</span>
-      </div>
-      <div style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 11.5, color: TOW.muted, margin: '5px 0 4px' }}>
-        Tap a feature to select it (set Difficult / Dangerous below) · drag to move (snaps to 1″) · × to remove.
+        <span style={{ ...eb, fontSize: 8, color: TOW.muted, whiteSpace: 'nowrap' }}>Step {step + 1}/{STEPS.length} · {STEPS[step]}</span>
       </div>
 
-      {/* Tabs to keep the many options organised */}
-      <div style={{ display: 'flex', gap: 4, padding: 4, borderRadius: 11, background: 'rgba(74,55,22,0.06)', border: `1px solid ${TOW.line}`, margin: '10px 0 12px' }}>
-        {([['scenario', 'Scenarios'], ['secondaries', 'Secondaries'], ['table', 'Map size'], ['terrain', 'Terrain']] as const).map(([id, lbl]) => {
-          const on = tab === id;
-          return (
-            <button key={id} onClick={() => setTab(id)} style={{ flex: 1, padding: '8px 2px', borderRadius: 8, cursor: 'pointer', border: 'none', fontFamily: towFont.display, fontWeight: 600, fontSize: 10.5, letterSpacing: '0.02em', textTransform: 'uppercase', background: on ? goldGrad : 'transparent', color: on ? TOW.onGrad : TOW.muted }}>{lbl}</button>
-          );
-        })}
-      </div>
-
-      {tab === 'scenario' && (<>
+      {step === 1 && (<>
       {/* Scenario — grouped into Pitched Battle, Battle March and Matched Play */}
       {(['pitched', 'battle-march', 'matched-play'] as const).map((grp) => {
         const items = SCENARIOS.filter((s) => (s.group ?? 'pitched') === grp);
@@ -162,9 +140,23 @@ export function BattleSetup({ onBack }: { onBack: () => void }) {
           </div>
         );
       })}
+      {scenario && (
+        <div style={{ marginTop: 10, padding: '8px 10px', borderRadius: 9, background: 'rgba(138,108,48,0.07)', border: `1px solid ${TOW.line}` }}>
+          <div style={{ display: 'flex', gap: 7, alignItems: 'flex-start' }}>
+            <span style={{ flexShrink: 0, fontFamily: towFont.display, fontWeight: 700, fontSize: 11.5, color: TOW.goldDeep }}>Deployment</span>
+            <span style={{ fontFamily: towFont.serif, fontSize: 11.5, color: TOW.ink, lineHeight: 1.35 }}>{scenario.deployNote}</span>
+          </div>
+          {scenario.gameEnd && (
+            <div style={{ display: 'flex', gap: 7, alignItems: 'flex-start', marginTop: 5 }}>
+              <span style={{ flexShrink: 0, fontFamily: towFont.display, fontWeight: 700, fontSize: 11.5, color: TOW.goldDeep }}>Game end</span>
+              <span style={{ fontFamily: towFont.serif, fontSize: 11.5, color: TOW.ink, lineHeight: 1.35 }}>{scenario.gameEnd}</span>
+            </div>
+          )}
+        </div>
+      )}
       </>)}
 
-      {tab === 'secondaries' && (<>
+      {step === 2 && (<>
       {/* Secondary objectives (Matched Play) — overlaid on the board */}
       <div style={label}>Secondary objectives</div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 5 }}>
@@ -185,9 +177,9 @@ export function BattleSetup({ onBack }: { onBack: () => void }) {
 
       </>)}
 
-      {tab === 'table' && (<>
+      {step === 0 && (<>
       {/* Table size */}
-      <div style={label}>Table size</div>
+      <div style={label}>Map size</div>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5, marginBottom: 8 }}>
         {TABLE_PRESETS.map((t) => { const on = isPreset(t.w, t.h); return (
           <button key={t.label} onClick={() => setTable(t.w, t.h)} style={{ padding: '8px 12px', borderRadius: 8, border: `1px solid ${on ? TOW.goldDeep : TOW.line}`, cursor: 'pointer', fontFamily: towFont.display, fontWeight: 600, fontSize: 12.5, background: on ? 'rgba(138,108,48,0.14)' : TOW.cardLt, color: on ? TOW.gold : TOW.muted }}>{t.label}</button>
@@ -203,7 +195,7 @@ export function BattleSetup({ onBack }: { onBack: () => void }) {
 
       </>)}
 
-      {tab === 'terrain' && (<>
+      {step === 3 && (<>
       {/* Terrain */}
       <div style={label}>Terrain mix</div>
       {(() => {
@@ -275,8 +267,18 @@ export function BattleSetup({ onBack }: { onBack: () => void }) {
         {setup.terrain.length > 0 && <button onClick={() => { setTerrain(shufflePlacement(setup.terrain, setup.tableW, setup.tableH)); setSelectedId(null); }} title="Re-place the current features at random" style={{ padding: '8px 12px', borderRadius: 8, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.12)', color: TOW.goldDeep, cursor: 'pointer', fontFamily: towFont.display, fontWeight: 600, fontSize: 12.5 }}>📍 Randomise locations</button>}
         {setup.terrain.length > 0 && <button onClick={() => { setTerrain([]); setSelectedId(null); }} style={{ padding: '8px 12px', borderRadius: 8, border: `1px solid ${TOW.line}`, background: 'transparent', color: TOW.muted, cursor: 'pointer', fontFamily: towFont.display, fontWeight: 600, fontSize: 12.5 }}>Clear</button>}
       </div>
-
+      <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', alignItems: 'center', marginTop: 4, fontFamily: towFont.serif, fontSize: 10.5, color: TOW.muted }}>
+        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5 }}><span style={{ display: 'inline-flex', color: traitColor('difficult') }}><TraitIcon trait="difficult" size={13} /></span> Difficult</span>
+        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 5 }}><span style={{ display: 'inline-flex', color: traitColor('dangerous') }}><TraitIcon trait="dangerous" size={13} /></span> Dangerous</span>
+        <span style={{ color: TOW.faint }}>· tap a feature on the map to edit it</span>
+      </div>
       </>)}
+
+      {/* Wizard navigation */}
+      <div style={{ display: 'flex', gap: 8, marginTop: 18 }}>
+        <button onClick={() => (step > 0 ? setStep(step - 1) : onBack())} style={{ flex: '0 0 auto', padding: '11px 16px', borderRadius: 11, cursor: 'pointer', border: `1px solid ${TOW.lineStrong}`, background: 'transparent', color: TOW.inkDim, fontFamily: towFont.display, fontWeight: 600, fontSize: 14 }}>{step > 0 ? '‹ Back' : 'Cancel'}</button>
+        <button onClick={() => (step < STEPS.length - 1 ? setStep(step + 1) : onBack())} style={{ flex: 1, padding: '11px 16px', borderRadius: 11, cursor: 'pointer', border: 'none', background: goldGrad, color: TOW.onGrad, fontFamily: towFont.display, fontWeight: 700, fontSize: 15 }}>{step < STEPS.length - 1 ? `Next · ${STEPS[step + 1]} ›` : '✓ Done'}</button>
+      </div>
 
     </div>
   );
