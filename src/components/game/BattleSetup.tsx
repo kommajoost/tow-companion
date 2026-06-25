@@ -27,6 +27,7 @@ export function BattleSetup({ onBack }: { onBack: () => void }) {
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [enabledTypes, setEnabledTypes] = useState<Set<string>>(() => new Set(TERRAIN_TYPES.map((t) => t.id)));
   const [randomCount, setRandomCount] = useState<number | null>(null); // null → follow the recommendation
+  const [tab, setTab] = useState<'scenario' | 'table' | 'terrain'>('scenario');
   const { openRule } = useUI();
   useBackClose(true, onBack);
 
@@ -66,6 +67,17 @@ export function BattleSetup({ onBack }: { onBack: () => void }) {
         <h2 style={{ margin: 0, fontFamily: towFont.display, fontWeight: 700, fontSize: 20, color: TOW.ink }}>Battlefield setup</h2>
       </div>
 
+      {/* Tabs to keep the many options organised */}
+      <div style={{ display: 'flex', gap: 4, padding: 4, borderRadius: 11, background: 'rgba(74,55,22,0.06)', border: `1px solid ${TOW.line}`, margin: '10px 0 12px' }}>
+        {([['scenario', 'Scenario'], ['table', 'Table'], ['terrain', 'Terrain']] as const).map(([id, lbl]) => {
+          const on = tab === id;
+          return (
+            <button key={id} onClick={() => setTab(id)} style={{ flex: 1, padding: '8px 0', borderRadius: 8, cursor: 'pointer', border: 'none', fontFamily: towFont.display, fontWeight: 600, fontSize: 12, letterSpacing: '0.05em', textTransform: 'uppercase', background: on ? goldGrad : 'transparent', color: on ? TOW.onGrad : TOW.muted }}>{lbl}</button>
+          );
+        })}
+      </div>
+
+      {tab === 'scenario' && (<>
       {/* Scenario — grouped into Pitched Battle, Battle March and Matched Play */}
       {(['pitched', 'battle-march', 'matched-play'] as const).map((grp) => {
         const items = SCENARIOS.filter((s) => (s.group ?? 'pitched') === grp);
@@ -113,6 +125,9 @@ export function BattleSetup({ onBack }: { onBack: () => void }) {
         })}
       </div>
 
+      </>)}
+
+      {tab === 'table' && (<>
       {/* Table size */}
       <div style={label}>Table size</div>
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5, marginBottom: 8 }}>
@@ -128,6 +143,9 @@ export function BattleSetup({ onBack }: { onBack: () => void }) {
         <span style={{ fontFamily: towFont.serif, fontSize: 12, color: TOW.muted }}>{setup.tableW}″ × {setup.tableH}″</span>
       </div>
 
+      </>)}
+
+      {tab === 'terrain' && (<>
       {/* Terrain */}
       <div style={label}>Terrain mix</div>
       {(() => {
@@ -200,7 +218,10 @@ export function BattleSetup({ onBack }: { onBack: () => void }) {
         {setup.terrain.length > 0 && <button onClick={() => { setTerrain([]); setSelectedId(null); }} style={{ padding: '8px 12px', borderRadius: 8, border: `1px solid ${TOW.line}`, background: 'transparent', color: TOW.muted, cursor: 'pointer', fontFamily: towFont.display, fontWeight: 600, fontSize: 12.5 }}>Clear</button>}
       </div>
 
-      <div style={{ display: 'flex', alignItems: 'baseline', gap: 7, margin: '4px 0 6px' }}>
+      </>)}
+
+      {/* Board + notes — always visible regardless of the active tab */}
+      <div style={{ display: 'flex', alignItems: 'baseline', gap: 7, margin: '14px 0 6px' }}>
         <span style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 13.5, color: TOW.ink }}>{scenario?.name ?? 'Battlefield'}</span>
         <span style={{ fontFamily: towFont.serif, fontSize: 11.5, color: TOW.faint }}>{setup.tableW}″ × {setup.tableH}″</span>
       </div>
