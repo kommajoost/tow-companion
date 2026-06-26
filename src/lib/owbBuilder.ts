@@ -468,8 +468,10 @@ const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 export interface MagicItem {
   name_en: string; name?: string; points?: number; type: string;
   onePerArmy?: boolean; stackable?: boolean; maximum?: number;
-  /** From a Common Magic Items list (universal "general" or an army's "…-common"). Any number of
-   *  common items may be taken in a category, alongside the single army-specific item. Set by itemPool. */
+  /** "Common" = a MULTI-TAKEABLE item: one that more than one model may carry (OWB prints these with
+   *  a '*'; in the data they carry `stackable: true`). Any number of common items may be taken in a
+   *  category, alongside one unique (one-per-army) item. NOT "from the general list" — most general
+   *  items (e.g. Lore Familiar, Ogre Blade) are unique, not common. Set by itemPool. */
   common?: boolean;
 }
 /** Parsed magic-items.json: list-id → items. (Other locale name_* fields are ignored here.) */
@@ -519,15 +521,14 @@ export interface MagicCategory {
 
 // Flatten every item-list this army may use into a single pool (army.items → magic-items.json).
 // `armyItemLists` is the army metadata's `items` array (e.g. ["general","dark-elves",…]).
-// A "Common" magic item comes from the universal Common Magic Items list ("general") or an army's
-// own common sub-list (e.g. Daemons' "…-common"). Unlike army-specific items (one per category), any
-// number of common items may be taken — alongside the single army-specific item.
-const isCommonList = (id: string): boolean => id === 'general' || /(^|-)common($|-)/.test(id);
+// "Common" is decided PER ITEM, not per list: an item is common when it is multi-takeable — i.e. more
+// than one model may carry it (OWB marks these with a '*'; the data flags them `stackable: true`).
+// Unique items (one per army / one per category) are NOT common, even when they sit in the universal
+// "general" list (e.g. Lore Familiar, Ogre Blade, Wand of Jet are all one-per-army, not common).
 function itemPool(armyItemLists: string[], itemsData: MagicItemsData): MagicItem[] {
   const pool: MagicItem[] = [];
   for (const listId of armyItemLists) {
-    const common = isCommonList(listId);
-    for (const it of (itemsData[listId] ?? [])) if (it && it.type) pool.push({ ...it, common });
+    for (const it of (itemsData[listId] ?? [])) if (it && it.type) pool.push({ ...it, common: !!it.stackable });
   }
   return pool;
 }
@@ -691,9 +692,9 @@ export function magicWouldExceed(
   const selected = selectedMagicKeys(entry, categoryId);
   if (selected.includes(key)) return false; // re-pick = deselect (always allowed)
   // Per-category limit. Runes/banners use a plain count cap (finite maxItems). The normal magic-item
-  // categories (maxItems Infinity) allow only ONE army-specific item — but ANY number of Common items
-  // alongside it. So a fresh ARMY item is blocked once an army item is already chosen; Common items are
-  // limited only by the shared points budget below.
+  // categories (maxItems Infinity) allow only ONE unique (one-per-army) item — but ANY number of
+  // common (multi-takeable) items alongside it. So a fresh unique item is blocked once a unique item
+  // is already chosen; common items are limited only by the shared points budget below.
   if (isFinite(maxItems)) {
     if (selected.length >= maxItems) return true;
   } else if (!item.common) {
