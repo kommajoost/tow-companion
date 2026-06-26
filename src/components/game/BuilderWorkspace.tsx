@@ -109,8 +109,8 @@ function CompBar({ c, compact }: { c: ComplianceRow; compact?: boolean }) {
   );
 }
 
-const Eye = ({ onClick }: { onClick: () => void }) => (
-  <button onClick={(e) => { e.stopPropagation(); onClick(); }} aria-label="Rule" title="Show rule" style={{ flexShrink: 0, width: 24, height: 24, borderRadius: 7, border: `1px solid ${TOW.line}`, background: 'transparent', cursor: 'pointer', color: TOW.muted, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 0 }}>
+const Eye = ({ onClick, title = 'Show rule' }: { onClick: () => void; title?: string }) => (
+  <button onClick={(e) => { e.stopPropagation(); onClick(); }} aria-label={title} title={title} style={{ flexShrink: 0, width: 24, height: 24, borderRadius: 7, border: `1px solid ${TOW.line}`, background: 'transparent', cursor: 'pointer', color: TOW.muted, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 0 }}>
     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" /><circle cx="12" cy="12" r="2.6" /></svg>
   </button>
 );
@@ -140,12 +140,13 @@ function complianceRows(v: Validation): ComplianceRow[] {
   return out;
 }
 
-export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army, statsFor, comps, armyName, compName, itemsData, armyItemLists }: {
+export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army, armySlug, statsFor, comps, armyName, compName, itemsData, armyItemLists }: {
   list: BuilderList; name: string;
   onUpdate: (fn: (l: BuilderList) => Partial<BuilderList>) => void;
   onSetName: (n: string) => void;
   onBack: () => void;
   army: OwbArmy;
+  armySlug: string;
   statsFor: (name: string) => StatRow[];
   comps: string[];
   armyName: string;
@@ -246,6 +247,9 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
 
   const openOptionRule = (label: string) => { const s = resolveOptionSlug(cleanLabel(label), ruleIdx); if (s) openRule(s); };
   const openRuleByName = (label: string) => { const s = resolveRuleSlug(cleanLabel(label), ruleIdx); if (s) openRule(s); };
+  // Army-composition (army-of-infamy) rules aren't in our dataset, so open the army's page on the
+  // reference site, where the composition lists and their rules live.
+  const openCompositionRules = () => window.open(`https://tow.whfb.app/army/${armySlug}`, '_blank', 'noopener,noreferrer');
 
   const needle = q.trim().toLowerCase();
   const catalogUnits = needle ? CATEGORIES.flatMap((c) => (army[c] ?? [])).filter((u) => u.name_en.toLowerCase().includes(needle)) : (army[tab] ?? []);
@@ -652,9 +656,12 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
               </div>
               <input type="number" inputMode="numeric" min={0} step={50} value={list.points} onChange={(e) => onUpdate(() => ({ points: Math.max(0, Math.floor(Number(e.target.value) || 0)) }))} aria-label="Custom points" style={{ width: '100%', boxSizing: 'border-box', marginTop: 7, padding: '9px 11px', borderRadius: 9, border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt, fontFamily: towFont.display, fontWeight: 600, fontSize: 14, color: TOW.ink, outline: 'none' }} />
               <div style={{ ...eb, fontSize: 8.5, color: TOW.muted, margin: '16px 0 7px' }}>Composition</div>
-              <select value={list.composition} onChange={(e) => onUpdate(() => ({ composition: e.target.value }))} style={{ width: '100%', boxSizing: 'border-box', padding: '9px 11px', borderRadius: 9, border: `1px solid ${TOW.line}`, background: TOW.cardLt, fontFamily: towFont.serif, fontSize: 14, color: TOW.ink }}>
-                {comps.map((c) => <option key={c} value={c}>{compName(c)}</option>)}
-              </select>
+              <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+                <select value={list.composition} onChange={(e) => onUpdate(() => ({ composition: e.target.value }))} style={{ flex: 1, minWidth: 0, boxSizing: 'border-box', padding: '9px 11px', borderRadius: 9, border: `1px solid ${TOW.line}`, background: TOW.cardLt, fontFamily: towFont.serif, fontSize: 14, color: TOW.ink }}>
+                  {comps.map((c) => <option key={c} value={c}>{compName(c)}</option>)}
+                </select>
+                <Eye title="Composition rules (tow.whfb.app)" onClick={openCompositionRules} />
+              </div>
               <div style={{ ...eb, fontSize: 8.5, color: TOW.muted, margin: '14px 0 7px' }}>Composition rule</div>
               <CompositionRulePicker value={list.rule} onChange={(id) => onUpdate(() => ({ rule: id }))} onInfo={setCompInfo} fieldStyle={{ width: '100%', boxSizing: 'border-box', padding: '9px 11px', borderRadius: 9, border: `1px solid ${TOW.line}`, background: TOW.cardLt, fontFamily: towFont.serif, fontSize: 14, color: TOW.ink }} />
             </div>
@@ -827,9 +834,12 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
           </div>
           <input type="number" inputMode="numeric" min={0} step={50} value={list.points} onChange={(e) => onUpdate(() => ({ points: Math.max(0, Math.floor(Number(e.target.value) || 0)) }))} aria-label="Custom points" style={{ width: '100%', boxSizing: 'border-box', marginTop: 7, padding: '10px 12px', borderRadius: 9, border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt, fontFamily: towFont.display, fontWeight: 600, fontSize: 14, color: TOW.ink, outline: 'none' }} />
           <div style={{ ...eb, fontSize: 8.5, color: TOW.muted, margin: '16px 0 7px' }}>Composition</div>
-          <select value={list.composition} onChange={(e) => onUpdate(() => ({ composition: e.target.value }))} style={{ width: '100%', boxSizing: 'border-box', padding: '10px 12px', borderRadius: 9, border: `1px solid ${TOW.line}`, background: TOW.cardLt, fontFamily: towFont.serif, fontSize: 14, color: TOW.ink }}>
-            {comps.map((c) => <option key={c} value={c}>{compName(c)}</option>)}
-          </select>
+          <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+            <select value={list.composition} onChange={(e) => onUpdate(() => ({ composition: e.target.value }))} style={{ flex: 1, minWidth: 0, boxSizing: 'border-box', padding: '10px 12px', borderRadius: 9, border: `1px solid ${TOW.line}`, background: TOW.cardLt, fontFamily: towFont.serif, fontSize: 14, color: TOW.ink }}>
+              {comps.map((c) => <option key={c} value={c}>{compName(c)}</option>)}
+            </select>
+            <Eye title="Composition rules (tow.whfb.app)" onClick={openCompositionRules} />
+          </div>
           <div style={{ ...eb, fontSize: 8.5, color: TOW.muted, margin: '14px 0 7px' }}>Composition rule</div>
           <CompositionRulePicker value={list.rule} onChange={(id) => onUpdate(() => ({ rule: id }))} onInfo={setCompInfo} fieldStyle={{ width: '100%', boxSizing: 'border-box', padding: '10px 12px', borderRadius: 9, border: `1px solid ${TOW.line}`, background: TOW.cardLt, fontFamily: towFont.serif, fontSize: 14, color: TOW.ink }} />
         </Sheet>

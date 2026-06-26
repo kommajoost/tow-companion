@@ -163,6 +163,7 @@ export function ListBuilder() {
         onSetName={setName}
         onBack={() => setActiveId(null)}
         army={activeCatalogue}
+        armySlug={active.army}
         statsFor={statsFor}
         comps={meta?.comps ?? compsByArmy[active.army] ?? [active.army]}
         armyName={armyName(active.army)}
