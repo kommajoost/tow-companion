@@ -271,6 +271,31 @@ export function deploymentFor(scenarioId: string, W: number, H: number): Deploym
   }
 }
 
+/** Dimension hints for the board: the depth of each deployment zone and the no-man's-land between
+ *  them, derived from the two main rectangular zones when they form a band pair. `axis` is the
+ *  direction the depths/gap are measured along ('v' = stacked top/bottom, 'h' = side by side);
+ *  `lo`/`hi` give the zones' shared extent on the OTHER axis so the ruler can be placed clear. */
+export interface BandMeasure { axis: 'v' | 'h'; depthA: number; depthB: number; gap: number; gapStart: number; gapEnd: number; lo: number; hi: number }
+export function bandMeasure(layout: DeploymentLayout): BandMeasure | null {
+  const mains = layout.zones.filter((z) => z.kind === 'main' && !z.poly);
+  if (mains.length !== 2) return null;
+  const [p, q] = mains;
+  const xOverlap = Math.min(p.x + p.w, q.x + q.w) - Math.max(p.x, q.x);
+  const yOverlap = Math.min(p.y + p.h, q.y + q.h) - Math.max(p.y, q.y);
+  const minW = Math.min(p.w, q.w), minH = Math.min(p.h, q.h);
+  // Vertical bands: one above the other, horizontally aligned (so they're a band pair, not quadrants).
+  if (yOverlap <= 1 && xOverlap > 0.5 * minW) {
+    const [top, bot] = p.y <= q.y ? [p, q] : [q, p];
+    return { axis: 'v', depthA: top.h, depthB: bot.h, gapStart: top.y + top.h, gapEnd: bot.y, gap: Math.max(0, bot.y - (top.y + top.h)), lo: Math.max(top.x, bot.x), hi: Math.min(top.x + top.w, bot.x + bot.w) };
+  }
+  // Horizontal bands: side by side, vertically aligned.
+  if (xOverlap <= 1 && yOverlap > 0.5 * minH) {
+    const [left, right] = p.x <= q.x ? [p, q] : [q, p];
+    return { axis: 'h', depthA: left.w, depthB: right.w, gapStart: left.x + left.w, gapEnd: right.x, gap: Math.max(0, right.x - (left.x + left.w)), lo: Math.max(left.y, right.y), hi: Math.min(left.y + left.h, right.y + right.h) };
+  }
+  return null;
+}
+
 /** A terrain trait that can be combined with any feature (rulebook: "Combining Terrain Categories"). */
 export type TerrainTrait = 'difficult' | 'dangerous';
 export const TRAIT_RULE: Record<TerrainTrait, { slug: string; label: string }> = {

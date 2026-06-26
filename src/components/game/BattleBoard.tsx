@@ -1,6 +1,6 @@
 import { useMemo, useRef } from 'react';
 import { TOW, towFont } from '../../design/tow';
-import { deploymentFor, secondaryLayout, type BattleSetupState, type TerrainPiece } from '../../lib/battle';
+import { bandMeasure, deploymentFor, secondaryLayout, type BattleSetupState, type TerrainPiece } from '../../lib/battle';
 import { terrainIconNode } from './terrainIcons';
 
 const clamp = (n: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, n));
@@ -57,6 +57,8 @@ export function BattleBoard({ setup, onChange, selectedId, onSelect, editable = 
   // impassable cliff strips for Mountain Pass. Drawn so the chosen pitched battle is visible.
   const layout = deploymentFor(setup.scenario, tableW, tableH);
   const sec = secondaryLayout(setup.secondaries, tableW, tableH);
+  // Inch measurements: each zone's depth + the no-man's-land between the two deployment zones.
+  const dims = bandMeasure(layout);
 
   return (
     <svg
@@ -135,6 +137,47 @@ export function BattleBoard({ setup, onChange, selectedId, onSelect, editable = 
       {sec.baggage.map((b, i) => (
         <rect key={`bag${i}`} x={b.x} y={b.y} width={b.w} height={b.h} rx={0.6} fill="rgba(120,92,40,0.5)" stroke="#5c4326" strokeWidth={0.2} />
       ))}
+      {/* inch dimension lines — zone depth (top/bottom) + the gap between the two deployment zones */}
+      {dims && (() => {
+        const m = dims;
+        const fmt = (n: number) => (Math.round(n * 10) / 10).toString();
+        const L = 'rgba(60,45,30,0.65)', ink = '#46341a', lw = 0.18, cap = 1.6, fs = 2.7;
+        const halo: React.CSSProperties = { paintOrder: 'stroke', stroke: '#efe7d4', strokeWidth: 0.9, strokeLinejoin: 'round' };
+        if (m.axis === 'v') {
+          const xr = Math.min(tableW - 3, m.hi - 3);
+          const seg = (y1: number, y2: number, label: string, key: string) => (
+            <g key={key}>
+              <line x1={xr} y1={y1} x2={xr} y2={y2} stroke={L} strokeWidth={lw} />
+              <line x1={xr - cap / 2} y1={y1} x2={xr + cap / 2} y2={y1} stroke={L} strokeWidth={lw} />
+              <line x1={xr - cap / 2} y1={y2} x2={xr + cap / 2} y2={y2} stroke={L} strokeWidth={lw} />
+              <text x={xr - cap / 2 - 0.7} y={(y1 + y2) / 2 + fs * 0.35} fontSize={fs} textAnchor="end" fontFamily={towFont.display} fontWeight={700} fill={ink} style={halo}>{label}</text>
+            </g>
+          );
+          return (
+            <g style={{ pointerEvents: 'none' }}>
+              {seg(0, m.depthA, `${fmt(m.depthA)}″`, 'dA')}
+              {m.gap > 0 && seg(m.gapStart, m.gapEnd, `${fmt(m.gap)}″`, 'gap')}
+              {seg(tableH - m.depthB, tableH, `${fmt(m.depthB)}″`, 'dB')}
+            </g>
+          );
+        }
+        const yr = Math.min(tableH - 3, m.hi - 3);
+        const seg = (x1: number, x2: number, label: string, key: string) => (
+          <g key={key}>
+            <line x1={x1} y1={yr} x2={x2} y2={yr} stroke={L} strokeWidth={lw} />
+            <line x1={x1} y1={yr - cap / 2} x2={x1} y2={yr + cap / 2} stroke={L} strokeWidth={lw} />
+            <line x1={x2} y1={yr - cap / 2} x2={x2} y2={yr + cap / 2} stroke={L} strokeWidth={lw} />
+            <text x={(x1 + x2) / 2} y={yr - cap / 2 - 0.8} fontSize={fs} textAnchor="middle" fontFamily={towFont.display} fontWeight={700} fill={ink} style={halo}>{label}</text>
+          </g>
+        );
+        return (
+          <g style={{ pointerEvents: 'none' }}>
+            {seg(0, m.depthA, `${fmt(m.depthA)}″`, 'dA')}
+            {m.gap > 0 && seg(m.gapStart, m.gapEnd, `${fmt(m.gap)}″`, 'gap')}
+            {seg(tableW - m.depthB, tableW, `${fmt(m.depthB)}″`, 'dB')}
+          </g>
+        );
+      })()}
       {/* terrain features */}
       {terrain.map((p) => {
         const sel = p.id === selectedId;
