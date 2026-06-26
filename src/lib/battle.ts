@@ -388,13 +388,15 @@ export function scatterTerrain(w: number, h: number, count = recommendedTerrainC
   const pool = enabledTypeIds && enabledTypeIds.length ? TERRAIN_TYPES.filter((t) => enabledTypeIds.includes(t.id)) : TERRAIN_TYPES;
   if (pool.length === 0) return [];
   // Guide: a terrain feature is 4"–12" across (never a thin sliver). Cap to ~⅓ of the short edge so
-  // a 12" feature doesn't swamp a small table.
+  // a 12" feature doesn't swamp a small table. Hills read poorly when small, so give them a higher
+  // floor (≥8") than other features.
   const minSize = 4;
   const maxSize = Math.max(minSize, Math.min(12, Math.floor(Math.min(w, h) / 3)));
   const specs: PlaceSpec[] = [];
   for (let i = 0; i < Math.max(0, Math.floor(count)); i++) {
     const tt = pool[Math.floor(Math.random() * pool.length)];
-    specs.push({ type: tt.id, w: Math.round(rnd(minSize, maxSize)), h: Math.round(rnd(minSize, maxSize)), difficult: tt.defaultTrait === 'difficult', dangerous: tt.defaultTrait === 'dangerous' });
+    const lo = tt.id === 'hill' ? Math.min(maxSize, 8) : minSize;
+    specs.push({ type: tt.id, w: Math.round(rnd(lo, maxSize)), h: Math.round(rnd(lo, maxSize)), difficult: tt.defaultTrait === 'difficult', dangerous: tt.defaultTrait === 'dangerous' });
   }
   return placeSpecs(specs, w, h);
 }
@@ -420,10 +422,14 @@ function findSpot(existing: TerrainPiece[], tw: number, th: number, w: number, h
   return { x: clamp(Math.round(rnd(margin, w - tw - margin)), 0, Math.max(0, w - tw)), y: clamp(Math.round(rnd(margin, h - th - margin)), 0, Math.max(0, h - th)) };
 }
 
+// Default footprint when adding a single feature by hand. Hills get a larger base so they don't
+// look puny next to woods/buildings.
+const baseSize = (type: string): { w: number; h: number } => (type === 'hill' ? { w: 9, h: 7 } : { w: 6, h: 5 });
+
 /** Add one feature of the given type at a balanced spot (≥12" from the others where possible),
  *  leaving the existing features where they are. Picks up the type's default trait. */
 export function addPieceBalanced(state: BattleSetupState, type: string): TerrainPiece {
-  const w = 6, h = 5;
+  const { w, h } = baseSize(type);
   const trait = terrainType(type).defaultTrait;
   const { x, y } = findSpot(state.terrain, w, h, state.tableW, state.tableH);
   return { id: newTerrainId(), type, x, y, w, h, difficult: trait === 'difficult', dangerous: trait === 'dangerous' };
@@ -432,7 +438,7 @@ export function addPieceBalanced(state: BattleSetupState, type: string): Terrain
 /** Add a terrain piece of the given type, near the table centre. Successive adds cascade by a few
  *  inches so they don't stack invisibly on top of one another. Picks up the type's default trait. */
 export function addTerrain(state: BattleSetupState, type: string): TerrainPiece {
-  const w = 6, h = 5;
+  const { w, h } = baseSize(type);
   const step = (state.terrain.length % 6) * 3;
   const trait = terrainType(type).defaultTrait;
   return {
