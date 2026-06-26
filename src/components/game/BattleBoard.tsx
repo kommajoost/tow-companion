@@ -210,8 +210,6 @@ export function BattleBoard({ setup, onChange, selectedId, onSelect, editable = 
         // carries the trait colour (dangerous = red, difficult = brown), the icon sits on top.
         const tc = terrainType(p.type).color;
         const rectShape = p.type === 'field' || p.type === 'building';
-        const shapeStroke = sel ? TOW.goldBright : p.dangerous ? '#b23b3b' : p.difficult ? '#5c4326' : tc;
-        const dash = p.dangerous || p.difficult ? '1.4 1' : undefined;
         const iconColor = sel ? TOW.goldBright : p.dangerous ? '#b23b3b' : p.difficult ? '#5c4326' : '#46341a';
         const iconSize = Math.min(p.w, p.h) * (sel ? 0.66 : 0.58);
         return (
@@ -219,9 +217,9 @@ export function BattleBoard({ setup, onChange, selectedId, onSelect, editable = 
             {/* invisible hit area so the symbol can still be dragged/tapped */}
             <rect x={p.x} y={p.y} width={p.w} height={p.h} fill="transparent" />
             {rectShape ? (
-              <rect x={p.x} y={p.y} width={p.w} height={p.h} rx={p.type === 'field' ? 0.8 : 0} fill={tc} fillOpacity={sel ? 0.3 : 0.2} stroke={shapeStroke} strokeWidth={sel ? 0.4 : 0.28} strokeDasharray={dash} style={{ pointerEvents: 'none' }} />
+              <rect x={p.x} y={p.y} width={p.w} height={p.h} rx={p.type === 'field' ? 0.8 : 0} fill={tc} fillOpacity={sel ? 0.34 : 0.22} style={{ pointerEvents: 'none' }} />
             ) : (
-              <path d={blobPath(p.x + p.w / 2, p.y + p.h / 2, p.w / 2, p.h / 2, hashStr(p.id))} fill={tc} fillOpacity={sel ? 0.3 : 0.2} stroke={shapeStroke} strokeWidth={sel ? 0.4 : 0.28} strokeDasharray={dash} style={{ pointerEvents: 'none' }} />
+              <path d={blobPath(p.x + p.w / 2, p.y + p.h / 2, p.w / 2, p.h / 2, hashStr(p.id))} fill={tc} fillOpacity={sel ? 0.34 : 0.22} style={{ pointerEvents: 'none' }} />
             )}
             <svg x={p.x + (p.w - iconSize) / 2} y={p.y + (p.h - iconSize) / 2} width={iconSize} height={iconSize} viewBox="0 0 24 24" fill="none" stroke={iconColor} strokeWidth={sel ? 2.2 : 1.8} strokeLinecap="round" strokeLinejoin="round" style={{ pointerEvents: 'none' }}>{terrainIconNode(p.type)}</svg>
             {sel && editable && (

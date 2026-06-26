@@ -387,13 +387,14 @@ function placeSpecs(specs: PlaceSpec[], W: number, H: number): TerrainPiece[] {
 export function scatterTerrain(w: number, h: number, count = recommendedTerrainCount(w, h), enabledTypeIds?: string[]): TerrainPiece[] {
   const pool = enabledTypeIds && enabledTypeIds.length ? TERRAIN_TYPES.filter((t) => enabledTypeIds.includes(t.id)) : TERRAIN_TYPES;
   if (pool.length === 0) return [];
-  // Guide: a terrain feature is 2"–12" across. Cap to ~⅓ of the short edge so a 12" feature doesn't
-  // swamp a small table.
-  const maxSize = Math.max(3, Math.min(12, Math.floor(Math.min(w, h) / 3)));
+  // Guide: a terrain feature is 4"–12" across (never a thin sliver). Cap to ~⅓ of the short edge so
+  // a 12" feature doesn't swamp a small table.
+  const minSize = 4;
+  const maxSize = Math.max(minSize, Math.min(12, Math.floor(Math.min(w, h) / 3)));
   const specs: PlaceSpec[] = [];
   for (let i = 0; i < Math.max(0, Math.floor(count)); i++) {
     const tt = pool[Math.floor(Math.random() * pool.length)];
-    specs.push({ type: tt.id, w: Math.round(rnd(2, maxSize)), h: Math.round(rnd(2, maxSize)), difficult: tt.defaultTrait === 'difficult', dangerous: tt.defaultTrait === 'dangerous' });
+    specs.push({ type: tt.id, w: Math.round(rnd(minSize, maxSize)), h: Math.round(rnd(minSize, maxSize)), difficult: tt.defaultTrait === 'difficult', dangerous: tt.defaultTrait === 'dangerous' });
   }
   return placeSpecs(specs, w, h);
 }
