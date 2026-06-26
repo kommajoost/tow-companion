@@ -1,9 +1,33 @@
 import { useMemo, useRef } from 'react';
 import { TOW, towFont } from '../../design/tow';
-import { bandMeasure, deploymentFor, secondaryLayout, type BattleSetupState, type TerrainPiece } from '../../lib/battle';
+import { bandMeasure, deploymentFor, secondaryLayout, terrainType, type BattleSetupState, type TerrainPiece } from '../../lib/battle';
 import { terrainIconNode } from './terrainIcons';
 
 const clamp = (n: number, lo: number, hi: number) => Math.max(lo, Math.min(hi, n));
+
+// Deterministic organic outline for natural terrain (hills, woods, water): an ellipse inside the
+// piece's footprint with its radii perturbed by a per-piece seed, smoothed into a closed curve.
+// Seeded from the piece id so the blob is stable across re-renders and while dragging.
+const hashStr = (s: string) => { let h = 2166136261; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; };
+const mulberry32 = (a: number) => () => { a |= 0; a = (a + 0x6d2b79f5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
+function blobPath(cx: number, cy: number, rx: number, ry: number, seed: number): string {
+  const rnd = mulberry32(seed);
+  const n = 9;
+  const pts: [number, number][] = [];
+  for (let i = 0; i < n; i++) {
+    const a = (i / n) * Math.PI * 2;
+    const f = 0.7 + rnd() * 0.3; // 0.70 – 1.00 of the radius, so the blob stays within the footprint
+    pts.push([cx + Math.cos(a) * rx * f, cy + Math.sin(a) * ry * f]);
+  }
+  let d = `M${pts[0][0].toFixed(2)} ${pts[0][1].toFixed(2)}`;
+  for (let i = 0; i < n; i++) {
+    const p0 = pts[(i - 1 + n) % n], p1 = pts[i], p2 = pts[(i + 1) % n], p3 = pts[(i + 2) % n];
+    const c1x = p1[0] + (p2[0] - p0[0]) / 6, c1y = p1[1] + (p2[1] - p0[1]) / 6;
+    const c2x = p2[0] - (p3[0] - p1[0]) / 6, c2y = p2[1] - (p3[1] - p1[1]) / 6;
+    d += `C${c1x.toFixed(2)} ${c1y.toFixed(2)} ${c2x.toFixed(2)} ${c2y.toFixed(2)} ${p2[0].toFixed(2)} ${p2[1].toFixed(2)}`;
+  }
+  return d + 'Z';
+}
 
 // Interactive battlefield: an SVG grid measured in inches (viewBox = the table size, so 1 unit = 1").
 // Shows a light 1" grid + bold 12" lines, the two standard deployment zones, and the placed terrain
@@ -181,14 +205,24 @@ export function BattleBoard({ setup, onChange, selectedId, onSelect, editable = 
       {/* terrain features */}
       {terrain.map((p) => {
         const sel = p.id === selectedId;
-        // Just the symbol on the map — no box, no border. Trait shown by icon colour
-        // (dangerous = red, difficult = brown), selection turns it gold.
+        // A small filled footprint shows the feature's size + shape: fields and buildings are
+        // rectangular; everything else (hills, woods, water…) gets an organic blob. The outline
+        // carries the trait colour (dangerous = red, difficult = brown), the icon sits on top.
+        const tc = terrainType(p.type).color;
+        const rectShape = p.type === 'field' || p.type === 'building';
+        const shapeStroke = sel ? TOW.goldBright : p.dangerous ? '#b23b3b' : p.difficult ? '#5c4326' : tc;
+        const dash = p.dangerous || p.difficult ? '1.4 1' : undefined;
         const iconColor = sel ? TOW.goldBright : p.dangerous ? '#b23b3b' : p.difficult ? '#5c4326' : '#46341a';
-        const iconSize = Math.min(p.w, p.h) * (sel ? 0.86 : 0.74);
+        const iconSize = Math.min(p.w, p.h) * (sel ? 0.66 : 0.58);
         return (
           <g key={p.id} onPointerDown={(e) => onPointerDown(e, p)} style={{ cursor: editable ? 'move' : 'default' }}>
             {/* invisible hit area so the symbol can still be dragged/tapped */}
             <rect x={p.x} y={p.y} width={p.w} height={p.h} fill="transparent" />
+            {rectShape ? (
+              <rect x={p.x} y={p.y} width={p.w} height={p.h} rx={p.type === 'field' ? 0.8 : 0} fill={tc} fillOpacity={sel ? 0.3 : 0.2} stroke={shapeStroke} strokeWidth={sel ? 0.4 : 0.28} strokeDasharray={dash} style={{ pointerEvents: 'none' }} />
+            ) : (
+              <path d={blobPath(p.x + p.w / 2, p.y + p.h / 2, p.w / 2, p.h / 2, hashStr(p.id))} fill={tc} fillOpacity={sel ? 0.3 : 0.2} stroke={shapeStroke} strokeWidth={sel ? 0.4 : 0.28} strokeDasharray={dash} style={{ pointerEvents: 'none' }} />
+            )}
             <svg x={p.x + (p.w - iconSize) / 2} y={p.y + (p.h - iconSize) / 2} width={iconSize} height={iconSize} viewBox="0 0 24 24" fill="none" stroke={iconColor} strokeWidth={sel ? 2.2 : 1.8} strokeLinecap="round" strokeLinejoin="round" style={{ pointerEvents: 'none' }}>{terrainIconNode(p.type)}</svg>
             {sel && editable && (
               <g onPointerDown={(e) => { e.stopPropagation(); onChange(terrainRef.current.filter((t) => t.id !== p.id)); onSelect(null); }} style={{ cursor: 'pointer' }}>
