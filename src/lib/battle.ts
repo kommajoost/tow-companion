@@ -111,57 +111,47 @@ const zoneDepth = (dim: number, keep = CENTRE_KEEPOUT) => Math.max(4, Math.min(d
 
 /** Build the deployment-zone layout for a scenario on a given table, mirroring the rulebook maps. */
 export function deploymentFor(scenarioId: string, W: number, H: number): DeploymentLayout {
-  const longHoriz = W >= H; // is the long table axis horizontal?
-  // Standard deployment: a band along each LONG edge, reaching to 12" short of the centre line.
-  const d = longHoriz ? zoneDepth(H) : zoneDepth(W);
-  const standard: DeployZone[] = longHoriz
-    ? [{ x: 0, y: 0, w: W, h: d, label: 'A', kind: 'main' }, { x: 0, y: H - d, w: W, h: d, label: 'B', kind: 'main' }]
-    : [{ x: 0, y: 0, w: d, h: H, label: 'A', kind: 'main' }, { x: W - d, y: 0, w: d, h: H, label: 'B', kind: 'main' }];
+  // Players always deploy on the TOP and BOTTOM edges, facing each other across the depth (H) axis.
+  // So a taller-than-wide table (e.g. 4×6) is a narrow, DEEP battlefield — not just a rotated 6×4 —
+  // and your deployment side never flips when you change the map size.
+  // Standard deployment: a band along each player's edge, reaching to 12" short of the centre line.
+  const d = zoneDepth(H);
+  const standard: DeployZone[] = [
+    { x: 0, y: 0, w: W, h: d, label: 'A', kind: 'main' },
+    { x: 0, y: H - d, w: W, h: d, label: 'B', kind: 'main' },
+  ];
 
   switch (scenarioById(scenarioId)?.deployment) {
     case 'command-control':
       return { zones: standard, objective: { x: W / 2, y: H / 2 } };
 
     case 'flank': {
-      const f = 18; // 18" flank zones at the short ends; main forces deploy in the central band
-      if (longHoriz) {
-        return { zones: [
-          { x: f, y: 0, w: Math.max(0, W - 2 * f), h: d, label: 'A', kind: 'main' },
-          { x: f, y: H - d, w: Math.max(0, W - 2 * f), h: d, label: 'B', kind: 'main' },
-          { x: 0, y: 0, w: f, h: H, label: 'Flank', kind: 'flank' },
-          { x: W - f, y: 0, w: f, h: H, label: 'Flank', kind: 'flank' },
-        ] };
-      }
+      const f = 18; // 18" flank zones at the side edges; main forces deploy in the central band
       return { zones: [
-        { x: 0, y: f, w: d, h: Math.max(0, H - 2 * f), label: 'A', kind: 'main' },
-        { x: W - d, y: f, w: d, h: Math.max(0, H - 2 * f), label: 'B', kind: 'main' },
-        { x: 0, y: 0, w: W, h: f, label: 'Flank', kind: 'flank' },
-        { x: 0, y: H - f, w: W, h: f, label: 'Flank', kind: 'flank' },
+        { x: f, y: 0, w: Math.max(0, W - 2 * f), h: d, label: 'A', kind: 'main' },
+        { x: f, y: H - d, w: Math.max(0, W - 2 * f), h: d, label: 'B', kind: 'main' },
+        { x: 0, y: 0, w: f, h: H, label: 'Flank', kind: 'flank' },
+        { x: W - f, y: 0, w: f, h: H, label: 'Flank', kind: 'flank' },
       ] };
     }
 
     case 'mountain-pass': {
-      // The pass runs along the long axis: deploy at the SHORT ends, 24" no-man's-land down the middle.
-      const dp = longHoriz ? zoneDepth(W) : zoneDepth(H);
-      return longHoriz
-        ? { zones: [{ x: 0, y: 0, w: dp, h: H, label: 'A', kind: 'main' }, { x: W - dp, y: 0, w: dp, h: H, label: 'B', kind: 'main' }] }
-        : { zones: [{ x: 0, y: 0, w: W, h: dp, label: 'A', kind: 'main' }, { x: 0, y: H - dp, w: W, h: dp, label: 'B', kind: 'main' }] };
+      // The pass runs down the middle along the depth axis: deploy at the two ends (top & bottom),
+      // 24" no-man's-land between.
+      const dp = zoneDepth(H);
+      return { zones: [
+        { x: 0, y: 0, w: W, h: dp, label: 'A', kind: 'main' },
+        { x: 0, y: H - dp, w: W, h: dp, label: 'B', kind: 'main' },
+      ] };
     }
 
     case 'break-point': {
-      // Zones inset 9" from the side (short) edges and reaching to 9" of the centre line.
+      // Zones inset 9" from the side edges and reaching to 9" of the centre line.
       const ins = 9, keep = 9;
-      if (longHoriz) {
-        const d = Math.max(4, H / 2 - keep);
-        return { zones: [
-          { x: ins, y: 0, w: Math.max(0, W - 2 * ins), h: d, label: 'A', kind: 'main' },
-          { x: ins, y: H - d, w: Math.max(0, W - 2 * ins), h: d, label: 'B', kind: 'main' },
-        ] };
-      }
-      const d = Math.max(4, W / 2 - keep);
+      const dd = Math.max(4, H / 2 - keep);
       return { zones: [
-        { x: 0, y: ins, w: d, h: Math.max(0, H - 2 * ins), label: 'A', kind: 'main' },
-        { x: W - d, y: ins, w: d, h: Math.max(0, H - 2 * ins), label: 'B', kind: 'main' },
+        { x: ins, y: 0, w: Math.max(0, W - 2 * ins), h: dd, label: 'A', kind: 'main' },
+        { x: ins, y: H - dd, w: Math.max(0, W - 2 * ins), h: dd, label: 'B', kind: 'main' },
       ] };
     }
 
@@ -179,11 +169,12 @@ export function deploymentFor(scenarioId: string, W: number, H: number): Deploym
     }
 
     case 'bm-pitched': {
-      // Battle March pitched battle: shallow bands off the long edges, ~15" no-man's-land (7.5" each).
-      const dd = longHoriz ? zoneDepth(H, 7.5) : zoneDepth(W, 7.5);
-      return longHoriz
-        ? { zones: [{ x: 0, y: 0, w: W, h: dd, label: 'A', kind: 'main' }, { x: 0, y: H - dd, w: W, h: dd, label: 'B', kind: 'main' }] }
-        : { zones: [{ x: 0, y: 0, w: dd, h: H, label: 'A', kind: 'main' }, { x: W - dd, y: 0, w: dd, h: H, label: 'B', kind: 'main' }] };
+      // Battle March pitched battle: shallow bands off each player edge, ~15" no-man's-land (7.5" each).
+      const dd = zoneDepth(H, 7.5);
+      return { zones: [
+        { x: 0, y: 0, w: W, h: dd, label: 'A', kind: 'main' },
+        { x: 0, y: H - dd, w: W, h: dd, label: 'B', kind: 'main' },
+      ] };
     }
 
     case 'bm-close-encounter':
@@ -205,26 +196,21 @@ export function deploymentFor(scenarioId: string, W: number, H: number): Deploym
 
     case 'king-of-hill': {
       // Bands inset 8" from the side edges, reaching to 10" of the centre, plus a large central hill.
-      const ins = 8, dh = longHoriz ? zoneDepth(H, 10) : zoneDepth(W, 10);
-      const zones: DeployZone[] = longHoriz
-        ? [{ x: ins, y: 0, w: Math.max(0, W - 2 * ins), h: dh, label: 'A', kind: 'main' }, { x: ins, y: H - dh, w: Math.max(0, W - 2 * ins), h: dh, label: 'B', kind: 'main' }]
-        : [{ x: 0, y: ins, w: dh, h: Math.max(0, H - 2 * ins), label: 'A', kind: 'main' }, { x: W - dh, y: ins, w: dh, h: Math.max(0, H - 2 * ins), label: 'B', kind: 'main' }];
-      const hw = longHoriz ? 18 : 12, hh = longHoriz ? 12 : 18; // 12×18 hill, long side along the long axis
+      const ins = 8, dh = zoneDepth(H, 10);
+      const zones: DeployZone[] = [
+        { x: ins, y: 0, w: Math.max(0, W - 2 * ins), h: dh, label: 'A', kind: 'main' },
+        { x: ins, y: H - dh, w: Math.max(0, W - 2 * ins), h: dh, label: 'B', kind: 'main' },
+      ];
+      const hw = 18, hh = 12; // 12×18 hill, long side along the frontage
       return { zones, hill: { x: W / 2 - hw / 2, y: H / 2 - hh / 2, w: hw, h: hh } };
     }
 
     case 'close-quarters': {
-      // Bands inset 6" from the side edges, 12" keepout; the short edges count as impassable cliffs.
+      // Bands inset 6" from the side edges, 12" keepout; the side edges count as impassable cliffs.
       const ins = 6, t = 1.6;
-      if (longHoriz) {
-        return {
-          zones: [{ x: ins, y: 0, w: Math.max(0, W - 2 * ins), h: d, label: 'A', kind: 'main' }, { x: ins, y: H - d, w: Math.max(0, W - 2 * ins), h: d, label: 'B', kind: 'main' }],
-          impassable: [{ x: 0, y: 0, w: t, h: H }, { x: W - t, y: 0, w: t, h: H }],
-        };
-      }
       return {
-        zones: [{ x: 0, y: ins, w: d, h: Math.max(0, H - 2 * ins), label: 'A', kind: 'main' }, { x: W - d, y: ins, w: d, h: Math.max(0, H - 2 * ins), label: 'B', kind: 'main' }],
-        impassable: [{ x: 0, y: 0, w: W, h: t }, { x: 0, y: H - t, w: W, h: t }],
+        zones: [{ x: ins, y: 0, w: Math.max(0, W - 2 * ins), h: d, label: 'A', kind: 'main' }, { x: ins, y: H - d, w: Math.max(0, W - 2 * ins), h: d, label: 'B', kind: 'main' }],
+        impassable: [{ x: 0, y: 0, w: t, h: H }, { x: W - t, y: 0, w: t, h: H }],
       };
     }
 
@@ -244,15 +230,9 @@ export function deploymentFor(scenarioId: string, W: number, H: number): Deploym
       // Staggered offset bands: A along the top (stopping 12" short of the far end), B along the
       // bottom (starting 12" in), each 12" from the centre.
       const off = 12;
-      if (longHoriz) {
-        return { zones: [
-          { x: 0, y: 0, w: Math.max(0, W - off), h: d, label: 'A', kind: 'main' },
-          { x: off, y: H - d, w: Math.max(0, W - off), h: d, label: 'B', kind: 'main' },
-        ] };
-      }
       return { zones: [
-        { x: 0, y: 0, w: d, h: Math.max(0, H - off), label: 'A', kind: 'main' },
-        { x: W - d, y: off, w: d, h: Math.max(0, H - off), label: 'B', kind: 'main' },
+        { x: 0, y: 0, w: Math.max(0, W - off), h: d, label: 'A', kind: 'main' },
+        { x: off, y: H - d, w: Math.max(0, W - off), h: d, label: 'B', kind: 'main' },
       ] };
     }
 
