@@ -1,12 +1,12 @@
 import { TOW, towFont } from '../design/tow';
 import { LogoMark } from './LogoMark';
-import { TurnsIcon, RulebookIcon, GameIcon, ArmyIcon, SettingsIcon } from '../design/icons';
+import { TurnsIcon, RulebookIcon, GameIcon, ArmyIcon, SettingsIcon, CampaignIcon } from '../design/icons'; // CampaignIcon = CAMPAIGN INTEGRATION
 
 // Global icon rail shown on wide screens (replaces the bottom tab bar on laptop/tablet).
 // A slim deeper-parchment column: emblem → Home at the top, the four main sections, and
 // Settings pinned at the bottom. The contextual sidebar (per screen) sits to its right.
 
-export type NavTab = 'play' | 'browse' | 'game' | 'army' | 'settings';
+export type NavTab = 'play' | 'browse' | 'game' | 'campaign' | 'army' | 'settings'; // 'campaign' = CAMPAIGN INTEGRATION
 
 const RAIL_BG = TOW.leatherDark; // a touch deeper than the content parchment (theme-aware)
 const mutedIcon = TOW.muted; // inactive icon colour — flips with the theme
@@ -15,6 +15,7 @@ const SECTIONS: { id: NavTab; label: string; icon: (active: boolean) => React.Re
   { id: 'play', label: 'Turns', icon: (a) => <TurnsIcon size={21} color={a ? TOW.goldDeep : mutedIcon} /> },
   { id: 'browse', label: 'Rulebook', icon: (a) => <RulebookIcon size={21} color={a ? TOW.goldDeep : mutedIcon} /> },
   { id: 'game', label: 'Game', icon: (a) => <GameIcon size={21} color={a ? TOW.goldDeep : mutedIcon} /> },
+  { id: 'campaign', label: 'Campaign', icon: (a) => <CampaignIcon size={21} color={a ? TOW.goldDeep : mutedIcon} /> }, // CAMPAIGN INTEGRATION
   { id: 'army', label: 'Army', icon: (a) => <ArmyIcon size={21} color={a ? TOW.goldDeep : mutedIcon} /> },
 ];
 

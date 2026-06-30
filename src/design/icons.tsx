@@ -10,7 +10,7 @@ import type { CSSProperties } from 'react';
 //   • small solid accents (pips / comet head / pommels) for heraldic weight
 // ─────────────────────────────────────────────────────────────────────────────
 
-export type IconId = 'turns' | 'rulebook' | 'game' | 'army' | 'settings' | 'home';
+export type IconId = 'turns' | 'rulebook' | 'game' | 'army' | 'settings' | 'home' | 'campaign'; // 'campaign' = CAMPAIGN INTEGRATION
 
 export type IconProps = {
   size?: number;
@@ -162,6 +162,19 @@ export function CometIcon({ size, color = 'currentColor', sw = 1.7, style, title
   );
 }
 
+// CAMPAIGN INTEGRATION — a standard/banner on a pole, for the campaign tab.
+export function CampaignIcon({ size, color = 'currentColor', sw = 1.7, style, title }: IconProps) {
+  return (
+    <Svg size={size} style={style} title={title}>
+      <g stroke={color} strokeWidth={sw} strokeLinecap="round" strokeLinejoin="round">
+        <path d="M7 3.5 V20.5" />
+        <path d="M7 5 H18.5 L15.6 8 L18.5 11 H7" />
+      </g>
+      <circle cx="11.3" cy="8" r="1.15" fill={color} />
+    </Svg>
+  );
+}
+
 export const ICONS: Record<IconId, (p: IconProps) => React.ReactElement> = {
   turns: TurnsIcon,
   rulebook: RulebookIcon,
@@ -169,6 +182,7 @@ export const ICONS: Record<IconId, (p: IconProps) => React.ReactElement> = {
   army: ArmyIcon,
   settings: SettingsIcon,
   home: CometIcon,
+  campaign: CampaignIcon, // CAMPAIGN INTEGRATION
 };
 
 /** Convenience: render any set member by id. */
