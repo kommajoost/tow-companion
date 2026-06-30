@@ -7,12 +7,11 @@ import { BrowseMode } from './BrowseMode';
 import { GameMode } from './game/GameMode';
 import { ArmyMode } from './game/ArmyMode';
 import { SettingsMode } from './SettingsMode';
-import { CampaignMode } from './campaign/CampaignMode'; // CAMPAIGN INTEGRATION
 import { NavRail } from './NavRail';
 import { TowIcon, type IconId } from '../design/icons';
 import { useBackClose } from '../lib/backStack';
 
-type Tab = 'play' | 'browse' | 'game' | 'campaign' | 'army' | 'settings'; // 'campaign' = CAMPAIGN INTEGRATION
+type Tab = 'play' | 'browse' | 'game' | 'army' | 'settings';
 type Screen = 'home' | 'app';
 
 // One back-stack registrant per visited tab in the in-memory tab history, so a hardware Back
@@ -28,7 +27,6 @@ const TABS: { id: Tab; label: string; icon: IconId }[] = [
   { id: 'play', label: 'Turns', icon: 'turns' },
   { id: 'browse', label: 'Rulebook', icon: 'rulebook' },
   { id: 'game', label: 'Game', icon: 'game' },
-  { id: 'campaign', label: 'Campaign', icon: 'campaign' }, // CAMPAIGN INTEGRATION
   { id: 'army', label: 'Army', icon: 'army' },
   { id: 'settings', label: 'Settings', icon: 'settings' },
 ];
@@ -102,8 +100,6 @@ export function AppShell() {
         <CompanionView onHome={() => setScreen('home')} />
       ) : tab === 'game' ? (
         <GameMode />
-      ) : tab === 'campaign' ? (
-        <CampaignMode />
       ) : tab === 'army' ? (
         <ArmyMode />
       ) : tab === 'settings' ? (
