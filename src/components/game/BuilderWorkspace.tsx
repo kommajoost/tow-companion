@@ -6,6 +6,7 @@ import { getRuleIndex, resolveRuleSlug, resolveOptionSlug } from '../../lib/army
 import { useBackClose } from '../../lib/backStack';
 import {
   CATEGORIES, COMPOSITION_RULES, validate, entryPoints, unitBlocks, radioSelected, summaryLabels,
+  unitCategoryFor, unitAllowedIn, unitCompNote,
   subOptionGroups, toggleSubOption, setExclusiveSubOption,
   magicCategories, selectedMagicKeys, selectedMagicItems, toggleMagicItem, magicGroupSpent, magicWouldExceed, magicItemId,
   loadoutLabels, magicTypeLabel, DEFAULT_MAGIC_BUDGET,
@@ -247,14 +248,23 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
 
   const openOptionRule = (label: string) => { const s = resolveOptionSlug(cleanLabel(label), ruleIdx); if (s) openRule(s); };
   const openRuleByName = (label: string) => { const s = resolveRuleSlug(cleanLabel(label), ruleIdx); if (s) openRule(s); };
-  // Army-composition (army-of-infamy) rules aren't in our dataset, so open the army's page on the
-  // reference site, where the composition lists and their rules live.
+  // The army-of-infamy rule PROSE isn't in our dataset (the eye opens the army's reference page), but
+  // the structured part — which category a unit sits in, and whether it's available at all — IS, per
+  // unit in `armyComposition`. These read it for the chosen composition so the picker, grouping and
+  // labels reflect it (e.g. State Troops move from Core to Special for a knightly order).
   const openCompositionRules = () => window.open(`https://tow.whfb.app/army/${armySlug}`, '_blank', 'noopener,noreferrer');
+  const baseCatOf = (u: OwbUnit): Category => CATEGORIES.find((c) => (army[c] ?? []).includes(u)) ?? 'core';
+  const effCatOf = (u: OwbUnit): Category => unitCategoryFor(u, list.composition, baseCatOf(u));
+  const availableHere = (u: OwbUnit): boolean => unitAllowedIn(u, list.composition);
 
   const needle = q.trim().toLowerCase();
-  const catalogUnits = needle ? CATEGORIES.flatMap((c) => (army[c] ?? [])).filter((u) => u.name_en.toLowerCase().includes(needle)) : (army[tab] ?? []);
+  const allUnits = CATEGORIES.flatMap((c) => (army[c] ?? []));
+  const catalogUnits = (needle
+    ? allUnits.filter((u) => u.name_en.toLowerCase().includes(needle))
+    : allUnits.filter((u) => effCatOf(u) === tab)
+  ).filter(availableHere);
   const countInList = (id: string) => list.entries.filter((e) => e.unitId === id).length;
-  const grouped = CATEGORIES.map((c) => ({ c, items: list.entries.filter((e) => e.cat === c) })).filter((g) => g.items.length);
+  const grouped = CATEGORIES.map((c) => ({ c, items: list.entries.filter((e) => { const u = getUnit(e.cat, e.unitId); return u ? effCatOf(u) === c : e.cat === c; }) })).filter((g) => g.items.length);
 
   // ── shared sub-renders ──
   const rules_ = (rs: string[]) => rs.length === 0 ? null : (
@@ -581,7 +591,7 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
         )}
         {!needle && (
           <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap' }}>
-            {CATEGORIES.filter((c) => (army[c] ?? []).length).map((c) => {
+            {CATEGORIES.filter((c) => allUnits.some((u) => availableHere(u) && effCatOf(u) === c)).map((c) => {
               const on = tab === c;
               return <button key={c} onClick={() => setTab(c)} style={{ flex: 1, minWidth: 72, padding: '8px 10px', borderRadius: 9, cursor: 'pointer', fontFamily: towFont.display, fontWeight: on ? 700 : 600, fontSize: 11, letterSpacing: '0.02em', whiteSpace: 'nowrap', border: on ? '1px solid transparent' : `1px solid ${TOW.line}`, background: on ? goldGrad : TOW.cardLt, color: on ? TOW.onGrad : TOW.muted }}>{CAT_LABEL[c]}</button>;
             })}
@@ -590,8 +600,9 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
       </div>
       {needle && <div style={{ ...eb, fontSize: 8, color: TOW.muted, margin: '0 2px 8px' }}>{catalogUnits.length} result{catalogUnits.length === 1 ? '' : 's'}</div>}
       {catalogUnits.map((u) => {
-        const cat = (CATEGORIES.find((c) => (army[c] ?? []).includes(u)) ?? tab) as Category;
+        const cat = baseCatOf(u);
         const n = countInList(u.id);
+        const note = unitCompNote(u, list.composition);
         return (
           <button key={u.id} onClick={() => onPick(u, cat)} style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 10, padding: '12px', borderRadius: 11, marginBottom: 7, border: `1px solid ${TOW.line}`, background: TOW.cardLt, cursor: 'pointer', textAlign: 'left' }}>
             <div style={{ flex: 1, minWidth: 0 }}>
@@ -600,6 +611,7 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
                 {n > 0 && <span style={{ ...eb, fontSize: 7, color: TOW.gold, background: 'rgba(138,108,48,0.16)', borderRadius: 99, padding: '2px 6px' }}>{n}</span>}
               </div>
               <div style={{ fontFamily: towFont.serif, fontSize: 11.5, color: TOW.muted, marginTop: 1 }}>{(u.maximum ?? 1) !== 1 ? `${u.points} pts/model` : `${u.points} pts`}</div>
+              {note && <div style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 11, color: TOW.gold, marginTop: 2, whiteSpace: 'normal' }}>{note}</div>}
             </div>
             <span style={{ flexShrink: 0, padding: '6px 12px', borderRadius: 8, background: goldGrad, color: TOW.onGrad, fontFamily: towFont.display, fontWeight: 700, fontSize: 11, letterSpacing: '0.06em' }}>ADD</span>
           </button>
@@ -713,7 +725,7 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
               <>
                 <div style={{ flexShrink: 0, padding: '14px 16px 12px', borderBottom: `1px solid ${TOW.line}` }}>
                   <div style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 17, color: TOW.ink, lineHeight: 1.1 }}>{selUnit.name_en}</div>
-                  <div style={{ ...eb, fontSize: 8, color: TOW.muted, margin: '3px 0 11px' }}>{fmt(entryPoints(selUnit, selEntry, itemsData))} pts · {CAT_LABEL[selEntry.cat]}</div>
+                  <div style={{ ...eb, fontSize: 8, color: TOW.muted, margin: '3px 0 11px' }}>{fmt(entryPoints(selUnit, selEntry, itemsData))} pts · {CAT_LABEL[effCatOf(selUnit)]}</div>
                   <MiniProfile rows={statsFor(selUnit.name_en)} />
                   {((selUnit.maximum ?? 1) !== 1 || (selUnit.minimum ?? 1) > 1) && (
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 12, padding: '8px 11px', borderRadius: 9, background: TOW.cardLt, border: `1px solid ${TOW.line}` }}>
@@ -810,7 +822,7 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
 
       {/* editor sheet */}
       {editEntry && editUnit && (
-        <Sheet title={editUnit.name_en} sub={`${fmt(entryPoints(editUnit, editEntry, itemsData))} pts · ${CAT_LABEL[editEntry.cat]}`} onClose={() => setSheet(null)}
+        <Sheet title={editUnit.name_en} sub={`${fmt(entryPoints(editUnit, editEntry, itemsData))} pts · ${CAT_LABEL[effCatOf(editUnit)]}`} onClose={() => setSheet(null)}
           foot={<button onClick={() => { removeE(editEntry.uid); setSheet(null); }} style={{ width: '100%', padding: 12, borderRadius: 10, border: `1px solid rgba(124,43,34,0.4)`, background: 'transparent', color: TOW.blood, cursor: 'pointer', fontFamily: towFont.display, fontWeight: 600, fontSize: 13, letterSpacing: '0.04em' }}>Remove from list</button>}>
           <div style={{ marginBottom: 14 }}><MiniProfile rows={statsFor(editUnit.name_en)} /></div>
           {((editUnit.maximum ?? 1) !== 1 || (editUnit.minimum ?? 1) > 1) && (

@@ -36,8 +36,35 @@ export interface OwbUnit {
   command?: OwbOption[]; equipment?: OwbOption[]; armor?: OwbOption[]; options?: OwbOption[];
   mounts?: OwbOption[]; lores?: string[]; specialRules?: { name_en?: string };
   items?: OwbItemSection[];
+  /** Per army-composition placement (from OWB): { <compId>: { category, notes } }. A unit's list
+   *  category can differ per composition (e.g. State Troops are Core normally, Special for a knightly
+   *  order), and a unit is only available in the compositions it lists. */
+  armyComposition?: Record<string, { category?: Category; notes?: { name_en?: string } }>;
 }
 export type OwbArmy = Record<Category, OwbUnit[]>;
+
+// ---- Army-composition (army-of-infamy) helpers -------------------------------------------------
+// The chosen composition (list.composition) can move a unit to a different list category and can drop
+// units entirely. These read the unit's `armyComposition` map; a unit without that map is treated as
+// always available in its base category (defensive — keeps older/edge data working).
+const compMap = (unit: OwbUnit): Record<string, { category?: Category; notes?: { name_en?: string } }> | null => {
+  const ac = unit.armyComposition;
+  return ac && typeof ac === 'object' && !Array.isArray(ac) && Object.keys(ac).length ? ac : null;
+};
+/** The unit's list category under `composition` (falls back to `base` when the map doesn't say). */
+export function unitCategoryFor(unit: OwbUnit, composition: string, base: Category): Category {
+  const c = compMap(unit)?.[composition]?.category;
+  return c && (CATEGORIES as readonly string[]).includes(c) ? c : base;
+}
+/** Whether a unit may be fielded in `composition` (a mapped unit is only available where it's listed). */
+export function unitAllowedIn(unit: OwbUnit, composition: string): boolean {
+  const ac = compMap(unit);
+  return !ac || !!ac[composition];
+}
+/** The composition's restriction note for a unit (e.g. "0-1 General per 1000 points"), if any. */
+export function unitCompNote(unit: OwbUnit, composition: string): string | undefined {
+  return compMap(unit)?.[composition]?.notes?.name_en || undefined;
+}
 
 // The option groups a unit can spend points on (lores are free spell picks → omitted here).
 // `radio` groups are single-choice (you carry one weapon loadout, wear one armour, ride one mount);
@@ -362,18 +389,22 @@ export function validate(list: BuilderList, getUnit: (cat: Category, id: string)
 
   const warnings: string[] = [];
   let total = 0;
-  const rows: { e: ListEntry; unit: OwbUnit; p: number; level: number }[] = [];
+  // A unit's category for limits depends on the chosen army composition (army-of-infamy lists can
+  // move it), so tally by its EFFECTIVE category, not the catalogue array it was added from.
+  const rows: { e: ListEntry; unit: OwbUnit; p: number; level: number; cat: Category }[] = [];
   for (const e of list.entries) {
     const unit = getUnit(e.cat, e.unitId);
     if (!unit) continue;
     const p = entryPoints(unit, e, itemsData);
+    const effCat = unitCategoryFor(unit, list.composition, e.cat);
     total += p;
-    byCategory[e.cat].points += p;
-    rows.push({ e, unit, p, level: wizardLevelOf(unit, e) });
+    byCategory[effCat].points += p;
+    rows.push({ e, unit, p, level: wizardLevelOf(unit, e), cat: effCat });
     const min = unit.minimum ?? 1;
     const max = unit.maximum ?? 0; // 0 = no max
     if (e.count < min) warnings.push(`${unit.name_en}: below minimum size (${min})`);
     if (max > 0 && e.count > max) warnings.push(`${unit.name_en}: above maximum size (${max})`);
+    if (!unitAllowedIn(unit, list.composition)) warnings.push(`${unit.name_en}: not allowed in this army composition`);
   }
 
   for (const c of CATEGORIES) {
@@ -421,7 +452,7 @@ export function validate(list: BuilderList, getUnit: (cat: Category, id: string)
     for (const r of rows) {
       const key = `${r.e.cat}/${r.e.unitId}`;
       const cur = perUnit.get(key);
-      if (cur) cur.n += 1; else perUnit.set(key, { unit: r.unit, cat: r.e.cat, n: 1 });
+      if (cur) cur.n += 1; else perUnit.set(key, { unit: r.unit, cat: r.cat, n: 1 });
     }
     for (const { unit, cat, n } of perUnit.values()) {
       const base = baseCap[cat];
@@ -433,15 +464,15 @@ export function validate(list: BuilderList, getUnit: (cat: Category, id: string)
 
   // Battle March (500-750 pts): at least two non-character units, and single-unit point caps.
   if (isBattleMarch) {
-    const nonCharUnits = rows.filter((r) => r.e.cat !== 'characters').length;
+    const nonCharUnits = rows.filter((r) => r.cat !== 'characters').length;
     if (nonCharUnits < 2) warnings.push(`Battle March needs at least 2 non-character units (have ${nonCharUnits})`);
     if (target > 0) {
       const capPct: Partial<Record<Category, number>> = { characters: 25, core: 35, special: 30, rare: 25, mercenaries: 25 };
       for (const r of rows) {
-        const pct = capPct[r.e.cat];
+        const pct = capPct[r.cat];
         if (pct == null) continue;
         const capPts = Math.floor((pct / 100) * target);
-        if (r.p > capPts) warnings.push(`${r.unit.name_en} over the ${pct}% single-${r.e.cat === 'characters' ? 'character' : 'unit'} cap (${r.p}/${capPts} pts)`);
+        if (r.p > capPts) warnings.push(`${r.unit.name_en} over the ${pct}% single-${r.cat === 'characters' ? 'character' : 'unit'} cap (${r.p}/${capPts} pts)`);
       }
     }
   }
