@@ -10,7 +10,7 @@ import {
   eigenSyncKey, hernoemRegiment, regimentSlug,
   type CampaignContext,
 } from '../lib/campaign';
-import { usePersistentState } from '../store';
+import { usePersistentState, setPersisted } from '../store';
 import { LogoMark } from './LogoMark';
 
 const eb = engraved as React.CSSProperties;
@@ -315,7 +315,7 @@ function CampaignSection({
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [ctx, setCtx] = useState<CampaignContext | null>(() => getCachedCampaign()?.context ?? null);
-  const [, setListsRaw] = usePersistentState<unknown[]>('tow:lists', []);
+  const [listsRaw, setListsRaw] = usePersistentState<unknown[]>('tow:lists', []);
   // Hernoem-editor: welke register-unit staat open (naam-slug) + het concept.
   const [hernoemId, setHernoemId] = useState<string | null>(null);
   const [hernoemNaam, setHernoemNaam] = useState('');
@@ -442,6 +442,13 @@ function CampaignSection({
     color: TOW.ink, padding: '10px 12px', fontFamily: towFont.serif, fontSize: 15, boxSizing: 'border-box',
   };
 
+  // Je campagne-lijsten: de met de "Campaign list"-toggle gebouwde lijsten (tow:lists), gefilterd op
+  // DEZE campagne-speler. Ouder-zonder-speler laten we staan. Oplopend op fase.
+  type CampLijst = { id?: string; name?: string; points?: number; entries?: unknown[]; campaign?: boolean; campaignSpeler?: string; campaignFase?: number };
+  const campaignLists = (Array.isArray(listsRaw) ? (listsRaw as CampLijst[]) : [])
+    .filter((l) => l && l.campaign && l.id && (!ctx?.speler.id || !l.campaignSpeler || l.campaignSpeler === ctx.speler.id))
+    .sort((a, b) => (a.campaignFase ?? 0) - (b.campaignFase ?? 0));
+
   return (
     <div style={card}>
       <div style={title}>Campaign</div>
@@ -505,6 +512,32 @@ function CampaignSection({
                   </div>
                 </div>
               )}
+
+              {/* Your campaign lists — de met de "Campaign list"-toggle gebouwde lijsten; tik = openen in de Army-builder. */}
+              <div style={{ marginBottom: 12 }}>
+                <div style={{ ...eb, fontSize: 8.5, color: TOW.goldDeep, marginBottom: 6 }}>Your campaign lists</div>
+                {campaignLists.length > 0 ? (
+                  <>
+                    {campaignLists.map((l) => (
+                      <button key={l.id} onClick={() => { if (!l.id) return; setPersisted('tow:builder-active', l.id); setPersisted('tow:tab', 'army'); }}
+                        style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 8, textAlign: 'left', padding: '9px 11px', borderRadius: 9, cursor: 'pointer', border: `1px solid ${TOW.line}`, background: TOW.cardLt, marginBottom: 5 }}>
+                        <span style={{ flex: 1, minWidth: 0, fontFamily: towFont.display, fontWeight: 600, fontSize: 13.5, color: TOW.ink, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{l.name || 'Untitled list'}</span>
+                        <span style={{ ...eb, fontSize: 7.5, color: TOW.muted, flexShrink: 0 }}>
+                          {l.campaignFase ? `Ph ${l.campaignFase} · ` : ''}{l.points ?? 0} pts · {Array.isArray(l.entries) ? l.entries.length : 0}u
+                        </span>
+                        <span aria-hidden style={{ color: TOW.goldDeep, fontSize: 15, flexShrink: 0 }}>›</span>
+                      </button>
+                    ))}
+                    <div style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 11, color: TOW.faint, marginTop: 2 }}>
+                      Tap a list to open it in the Army builder.
+                    </div>
+                  </>
+                ) : (
+                  <div style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 11.5, color: TOW.muted }}>
+                    No campaign lists yet. In the Army tab, tap "New list" and turn on "Campaign list" — it locks the list to this phase's cap and composition.
+                  </div>
+                )}
+              </div>
             </>
           ) : (
             <div style={{ ...body, marginBottom: 12 }}>Linked. Refresh to load your campaign details.</div>
