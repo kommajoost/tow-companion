@@ -1,0 +1,6 @@
+# Losse bronbestanden in de repo-root — geen onderdeel van de app-build; zonder deze ignore
+# sleept `vercel --prod` ze mee en klapt de upload op de 100MB-limiet (de Matched Play-pdf is 178MB).
+TOW input/
+TOW - Matched Play Guide*.pdf
+*.xlsx
+brand/variants/

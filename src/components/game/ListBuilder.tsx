@@ -6,6 +6,10 @@ import { compName } from '../../lib/armies';
 import { BuilderWorkspace } from './BuilderWorkspace';
 import { NewListSetup, type NewListValues } from './NewListSetup';
 import { useBackClose } from '../../lib/backStack';
+import {
+  getCampaignCode, getCachedCampaign, versCampagneContext, cacheCampaignContext,
+  hernoemRegiment, verwijderRegiment, regimentSlug, type CampaignContext,
+} from '../../lib/campaign';
 
 const BASE = import.meta.env.BASE_URL;
 const eb = engraved as React.CSSProperties;
@@ -17,8 +21,150 @@ const goldGrad = `linear-gradient(180deg, ${TOW.goldBright} 0%, ${TOW.gold} 55%,
 // Design's PC-columns / mobile-sheets builder on our OWB data); each list carries its own army.
 const FALLBACK_ARMY = 'dark-elves';
 
-interface SavedList extends BuilderList { id: string; name: string; army: string; createdAt: number; updatedAt: number; groupId?: string | null }
+interface SavedList extends BuilderList {
+  id: string; name: string; army: string; createdAt: number; updatedAt: number; groupId?: string | null;
+  // Campagne-koppeling (De Grensvorsten) — optioneel, zodat bestaande opgeslagen lijsten geldig blijven
+  // en de list-sync (jsonb) deze velden vanzelf meeneemt.
+  campaign?: boolean; campaignSpeler?: string; campaignNaam?: string; campaignFase?: number;
+}
 const newId = (p: string) => `${p}${Date.now().toString(36)}${Math.floor(Math.random() * 1e6).toString(36)}`;
+
+// ── My regiments — het campagne-register onder "My lists" ────────────────────────────────────────
+// Overzicht van je named units (veteranen): hernoemen (XP reist mee) of definitief verwijderen
+// (extra bevestiging — XP/abilities gaan verloren). Beide acties werken server-side door in de
+// cloud-lijsten; lokale lijsten worden hier direct gelijkgetrokken zodat sync niets herschept.
+function RegimentenPaneel({ onClose, setLists }: {
+  onClose: () => void;
+  setLists: (fn: (ls: SavedList[]) => SavedList[]) => void;
+}) {
+  const code = getCampaignCode();
+  const [ctx, setCtx] = useState<CampaignContext | null>(() => getCachedCampaign()?.context ?? null);
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState<string | null>(null);
+  const [editId, setEditId] = useState<string | null>(null);   // slug van de unit in hernoem-modus
+  const [editNaam, setEditNaam] = useState('');
+  const [delId, setDelId] = useState<string | null>(null);     // slug van de unit in delete-bevestiging
+
+  useEffect(() => {
+    if (!code) return;
+    versCampagneContext(code).then((f) => { setCtx(f); cacheCampaignContext(f); }).catch(() => {});
+  }, [code]);
+
+  const vernieuw = async () => {
+    if (!code) return;
+    try { const f = await versCampagneContext(code); setCtx(f); cacheCampaignContext(f); } catch { /* cache blijft */ }
+  };
+  const meldFout = (e: unknown) => {
+    const m = e instanceof Error ? e.message : '';
+    setErr(m === 'NAAM_BESTAAT_AL' ? 'That name is already taken by another regiment.'
+      : m === 'NIET_GEVONDEN' ? 'Regiment not found — refresh and try again.'
+      : 'Could not update — check your connection.');
+  };
+  // Lokale lijsten gelijktrekken: nieuwe naam invullen, of (naam=null) de naam strippen.
+  const werkLijstenBij = (unitId: string, naam: string | null) => setLists((ls) => ls.map((l) => {
+    if (!l.campaign || !Array.isArray(l.entries)) return l;
+    return { ...l, entries: l.entries.map((e) => (regimentSlug(e.customName ?? '') === unitId ? { ...e, customName: naam ?? undefined } : e)) };
+  }));
+
+  const hernoem = async (unitId: string) => {
+    const naam = editNaam.trim();
+    if (!code || !naam || busy) return;
+    setBusy(true); setErr(null);
+    try {
+      const res = await hernoemRegiment(code, unitId, naam);
+      werkLijstenBij(unitId, res.naam);
+      setEditId(null);
+      await vernieuw();
+    } catch (e) { meldFout(e); } finally { setBusy(false); }
+  };
+  const verwijder = async (unitId: string) => {
+    if (!code || busy) return;
+    setBusy(true); setErr(null);
+    try {
+      await verwijderRegiment(code, unitId);
+      werkLijstenBij(unitId, null);
+      setDelId(null);
+      await vernieuw();
+    } catch (e) { meldFout(e); } finally { setBusy(false); }
+  };
+
+  const typeNaam = (id?: string | null) => (id ? id.split('-').map((w) => (w ? w[0].toUpperCase() + w.slice(1) : w)).join(' ') : null);
+  const units = ctx?.units ?? [];
+
+  return (
+    <div onClick={onClose} style={{ position: 'fixed', inset: 0, zIndex: 60, background: 'rgba(30,20,8,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 }}>
+      <div onClick={(e) => e.stopPropagation()} style={{ width: '100%', maxWidth: 480, maxHeight: '86%', display: 'flex', flexDirection: 'column', background: TOW.panel, borderRadius: 16, border: `1px solid ${TOW.lineStrong}`, boxShadow: '0 16px 50px rgba(40,24,8,0.34)', animation: 'sheet-pop .18s ease-out' }}>
+        <div style={{ flexShrink: 0, padding: '14px 16px 10px', borderBottom: `1px solid ${TOW.line}` }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div style={{ ...eb, fontSize: 8, color: TOW.muted }}>Campaign</div>
+              <div style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 19, color: TOW.ink }}>My regiments</div>
+            </div>
+            <button onClick={onClose} aria-label="Close" style={{ width: 32, height: 32, flexShrink: 0, borderRadius: 8, border: `1px solid ${TOW.line}`, background: TOW.cardLt, cursor: 'pointer', color: TOW.muted, fontSize: 20, lineHeight: 1 }}>×</button>
+          </div>
+          <div style={{ fontFamily: towFont.serif, fontSize: 11.5, color: TOW.muted, marginTop: 2 }}>Your named campaign units. Renaming keeps XP; deleting is forever.</div>
+        </div>
+        <div style={{ flex: 1, minHeight: 0, overflowY: 'auto', padding: '12px 16px 16px' }}>
+          {err && <div style={{ fontFamily: towFont.serif, fontSize: 12, color: TOW.blood, marginBottom: 8 }}>{err}</div>}
+          {units.length === 0 ? (
+            <p style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 13, color: TOW.muted }}>
+              No named units yet — open a campaign list, tap a unit and use the “Name” button.
+            </p>
+          ) : units.map((u) => {
+            const rowId = regimentSlug(u.naam);
+            const bewerkt = editId === rowId;
+            const teWissen = delId === rowId;
+            const meta = [typeNaam(u.catalogusId), `${u.xp} XP`];
+            if (u.abilities) meta.push(`${u.abilities} abilit${u.abilities === 1 ? 'y' : 'ies'}`);
+            if (u.littekens) meta.push(`${u.littekens} scar${u.littekens === 1 ? '' : 's'}`);
+            if (u.status !== 'actief') meta.push('reserve');
+            return (
+              <div key={u.naam} style={{ border: `1px solid ${teWissen ? 'rgba(124,43,34,0.5)' : TOW.line}`, borderRadius: 11, background: TOW.cardLt, padding: '10px 12px', marginBottom: 8, opacity: u.status === 'actief' ? 1 : 0.7 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <div style={{ flex: 1, minWidth: 0 }}>
+                    <div style={{ fontFamily: towFont.display, fontWeight: 600, fontSize: 14.5, color: TOW.ink }}>{u.naam}</div>
+                    <div style={{ fontFamily: towFont.serif, fontSize: 11.5, color: TOW.muted, marginTop: 1 }}>{meta.filter(Boolean).join(' · ')}</div>
+                  </div>
+                  {!bewerkt && !teWissen && (
+                    <>
+                      <button onClick={() => { setEditId(rowId); setEditNaam(u.naam); setDelId(null); }} style={{ flexShrink: 0, border: `1px solid ${TOW.line}`, background: 'transparent', borderRadius: 7, cursor: 'pointer', color: TOW.goldDeep, padding: '4px 9px', ...eb, fontSize: 7.5 }}>Rename</button>
+                      <button onClick={() => { setDelId(rowId); setEditId(null); }} style={{ flexShrink: 0, border: '1px solid rgba(124,43,34,0.4)', background: 'transparent', borderRadius: 7, cursor: 'pointer', color: TOW.blood, padding: '4px 9px', ...eb, fontSize: 7.5 }}>Delete</button>
+                    </>
+                  )}
+                </div>
+                {bewerkt && (
+                  <div style={{ display: 'flex', gap: 6, marginTop: 8 }}>
+                    <input
+                      value={editNaam}
+                      onChange={(e) => setEditNaam(e.target.value)}
+                      onKeyDown={(e) => { if (e.key === 'Enter') void hernoem(rowId); }}
+                      maxLength={40}
+                      autoFocus
+                      style={{ flex: 1, minWidth: 0, borderRadius: 8, border: `1px solid ${TOW.lineStrong}`, background: TOW.panel, color: TOW.ink, padding: '7px 10px', fontFamily: towFont.serif, fontSize: 13, boxSizing: 'border-box', outline: 'none' }}
+                    />
+                    <button disabled={busy || !editNaam.trim()} onClick={() => void hernoem(rowId)} style={{ flexShrink: 0, border: 'none', borderRadius: 8, cursor: 'pointer', padding: '7px 13px', background: goldGrad, color: TOW.onGrad, fontFamily: towFont.display, fontWeight: 700, fontSize: 12, opacity: busy || !editNaam.trim() ? 0.6 : 1 }}>Save</button>
+                    <button onClick={() => setEditId(null)} style={{ flexShrink: 0, border: `1px solid ${TOW.line}`, background: 'transparent', borderRadius: 8, cursor: 'pointer', color: TOW.muted, padding: '7px 10px', fontFamily: towFont.display, fontWeight: 600, fontSize: 12 }}>Cancel</button>
+                  </div>
+                )}
+                {teWissen && (
+                  <div style={{ marginTop: 8 }}>
+                    <p style={{ fontFamily: towFont.serif, fontSize: 12, color: TOW.blood, margin: '0 0 6px' }}>
+                      Delete this regiment forever? Its {u.xp} XP{u.abilities ? ` and ${u.abilities} abilit${u.abilities === 1 ? 'y' : 'ies'}` : ''} are lost, and its name is removed from your lists (the unit itself stays, unnamed).
+                    </p>
+                    <div style={{ display: 'flex', gap: 6 }}>
+                      <button disabled={busy} onClick={() => void verwijder(rowId)} style={{ flexShrink: 0, border: '1px solid rgba(124,43,34,0.6)', borderRadius: 8, cursor: 'pointer', padding: '7px 13px', background: 'rgba(124,43,34,0.16)', color: TOW.blood, fontFamily: towFont.display, fontWeight: 700, fontSize: 12, opacity: busy ? 0.6 : 1 }}>Delete forever</button>
+                      <button onClick={() => setDelId(null)} style={{ flexShrink: 0, border: `1px solid ${TOW.line}`, background: 'transparent', borderRadius: 8, cursor: 'pointer', color: TOW.muted, padding: '7px 10px', fontFamily: towFont.display, fontWeight: 600, fontSize: 12 }}>Cancel</button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 // OWB's normalizeRuleName (rules index is keyed by this) + a final-word singular fallback.
 const normRule = (s: string) => (s || '').toLowerCase().replace(/ *\([^)]*\) */g, '').replace(/[{}[\]*]/g, '').replace(/^[0-9]x /g, '').replace(/[“”]/g, '"').trim();
@@ -38,6 +184,7 @@ export function ListBuilder() {
   const [groups, setGroups] = usePersistentState<{ id: string; name: string }[]>('tow:list-groups', []);
   const [activeId, setActiveId] = usePersistentState<string | null>('tow:builder-active', null);
   const [setupOpen, setSetupOpen] = useState(false);
+  const [regimentenOpen, setRegimentenOpen] = useState(false); // "My regiments"-overzicht (campagne)
   const [dragOver, setDragOver] = useState<string | null>(null); // section id being hovered (group id, or '__ungrouped__')
   const [dragOverCard, setDragOverCard] = useState<{ id: string; before: boolean } | null>(null); // card hovered during a reorder drag (+ which edge)
   const [collapsed, setCollapsed] = usePersistentState<string[]>('tow:list-groups-collapsed', []); // collapsed section ids
@@ -46,6 +193,7 @@ export function ListBuilder() {
   // In-app Back: each navigable layer owns one history entry (deepest registers last → handled first).
   useBackClose(!!activeId, () => setActiveId(null)); // open builder → back to My lists
   useBackClose(setupOpen, () => setSetupOpen(false)); // new-list dialog
+  useBackClose(regimentenOpen, () => setRegimentenOpen(false)); // regiments overview
 
   // Army registry + per-army comps/items + the army-agnostic stat index + magic-items data.
   useEffect(() => {
@@ -116,7 +264,7 @@ export function ListBuilder() {
 
   const createListWith = (v: NewListValues) => {
     const id = newId('l');
-    setLists((ls) => [{ id, name: v.name, army: v.army, composition: v.composition, rule: v.rule, points: v.points, entries: v.entries, createdAt: Date.now(), updatedAt: Date.now() }, ...ls]);
+    setLists((ls) => [{ id, name: v.name, army: v.army, composition: v.composition, rule: v.rule, points: v.points, entries: v.entries, createdAt: Date.now(), updatedAt: Date.now(), campaign: v.campaign, campaignSpeler: v.campaignSpeler, campaignNaam: v.campaignNaam, campaignFase: v.campaignFase }, ...ls]);
     setSetupOpen(false);
     setActiveId(id);
   };
@@ -299,10 +447,20 @@ export function ListBuilder() {
             {renderSection(null, 'Ungrouped', ungrouped)}
           </div>
         )}
+        {/* Campagne: overzicht van je named units (regimenten-register) — hernoem of verwijder ze hier. */}
+        {getCampaignCode() && (
+          <button
+            onClick={() => setRegimentenOpen(true)}
+            style={{ width: '100%', marginTop: 16, padding: '11px 12px', borderRadius: 10, cursor: 'pointer', border: `1px solid ${TOW.goldDeep}`, background: 'rgba(138,108,48,0.10)', color: TOW.gold, fontFamily: towFont.display, fontWeight: 700, fontSize: 13, letterSpacing: '0.03em' }}
+          >
+            My regiments — named campaign units
+          </button>
+        )}
         <p style={{ fontFamily: towFont.serif, fontSize: 11, color: TOW.faint, marginTop: 18, textAlign: 'center', lineHeight: 1.6 }}>
           Lists are saved on this device. Catalogue from <a href="https://github.com/nthiebes/old-world-builder" target="_blank" rel="noreferrer" className="underline">Old World Builder</a> (CC BY 4.0).
         </p>
       </div>
+      {regimentenOpen && <RegimentenPaneel onClose={() => setRegimentenOpen(false)} setLists={setLists} />}
       {setupOpen && (
         <NewListSetup
           armies={armies}

@@ -275,7 +275,7 @@ export function loadoutLabels(unit: OwbUnit, entry: ListEntry, itemsData?: Magic
 // One chosen entry in the list. `opts` holds selected option keys "group/index".
 // `lores`/`spells` (Wizards only) are the lore + spell choices made in the builder, carried into a
 // game Army by builderListToArmy (so the in-game spell card is pre-filled).
-export interface ListEntry { uid: string; cat: Category; unitId: string; count: number; opts: string[]; lores?: string[]; spells?: string[] }
+export interface ListEntry { uid: string; cat: Category; unitId: string; count: number; opts: string[]; lores?: string[]; spells?: string[]; customName?: string }  // customName: campagne — named unit (veteranen-identiteit in De Grensvorsten)
 export interface BuilderList { composition: string; rule: string; points: number; entries: ListEntry[] }
 
 // Composition category percentage limits — ported from OWB src/utils/rules.js "grand-army".
@@ -381,9 +381,17 @@ export interface Validation {
 // Tally points per category and check them against the composition's limits (percent of the points
 // target) plus each unit's min/max model count. Pass `itemsData` (parsed magic-items.json) to fold
 // magic-item points into the total/category tallies; omit it and they count 0.
-export function validate(list: BuilderList, getUnit: (cat: Category, id: string) => OwbUnit | undefined, itemsData?: MagicItemsData): Validation {
+export function validate(
+  list: BuilderList,
+  getUnit: (cat: Category, id: string) => OwbUnit | undefined,
+  itemsData?: MagicItemsData,
+  // Campagne-modifiers (De Grensvorsten). Weglaten ⇒ identiek aan de niet-campagne-validatie.
+  // `pointsCap` vervangt de puntenbasis (fase-cap i.p.v. de vrij gekozen list.points). Dit is de
+  // ENIGE mechanisch afgedwongen modifier; alle campagne-perks zijn tafel-regels.
+  campaignMods?: { pointsCap?: number; namedUnits?: boolean },  // namedUnits: campagne — elke unit MOET een eigen naam hebben (veteranen-identiteit)
+): Validation {
   const limits = limitsFor(list.rule);
-  const target = list.points || 0;
+  const target = campaignMods?.pointsCap ?? (list.points || 0);
   const byCategory = {} as Record<Category, CategoryTally>;
   for (const c of CATEGORIES) byCategory[c] = { points: 0, limit: limits[c], cap: null, floor: null, over: false, under: false };
 
@@ -405,6 +413,7 @@ export function validate(list: BuilderList, getUnit: (cat: Category, id: string)
     if (e.count < min) warnings.push(`${unit.name_en}: below minimum size (${min})`);
     if (max > 0 && e.count > max) warnings.push(`${unit.name_en}: above maximum size (${max})`);
     if (!unitAllowedIn(unit, list.composition)) warnings.push(`${unit.name_en}: not allowed in this army composition`);
+    if (campaignMods?.namedUnits && !(e.customName ?? '').trim()) warnings.push(`${unit.name_en}: needs a unit name (campaign veterans follow the name)`);
   }
 
   for (const c of CATEGORIES) {

@@ -4,6 +4,7 @@ import { useUI } from '../../state';
 import { TOW, towFont, engraved } from '../../design/tow';
 import { getRuleIndex, resolveRuleSlug, resolveOptionSlug } from '../../lib/armyRules';
 import { useBackClose } from '../../lib/backStack';
+import { stelNamenVoor } from '../../lib/naamForge';
 import {
   CATEGORIES, COMPOSITION_RULES, validate, entryPoints, unitBlocks, radioSelected, summaryLabels,
   unitCategoryFor, unitAllowedIn, unitCompNote,
@@ -16,6 +17,7 @@ import {
 import { CompositionInfo } from './CompositionInfo';
 import { CompositionRulePicker } from './CompositionRulePicker';
 import { useSwipeToDismiss } from '../../lib/useSwipeToDismiss';
+import { getCampaignCode, getCachedCampaign, versCampagneContext, cacheCampaignContext, type CampaignContext, type CampaignUnit } from '../../lib/campaign';
 
 // Responsive Army Builder workspace (Claude Design "Army Builder" PC + mobile, ported onto our
 // real OWB data). Wide screens get a three-column builder (catalogue · muster · unit detail);
@@ -142,7 +144,8 @@ function complianceRows(v: Validation): ComplianceRow[] {
 }
 
 export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army, armySlug, statsFor, comps, armyName, compName, itemsData, armyItemLists }: {
-  list: BuilderList; name: string;
+  // `list` is een SavedList; we lezen hier alleen de campagne-velden extra (BuilderList blijft ongemoeid).
+  list: BuilderList & { points: number; campaign?: boolean; campaignSpeler?: string; campaignNaam?: string; campaignFase?: number }; name: string;
   onUpdate: (fn: (l: BuilderList) => Partial<BuilderList>) => void;
   onSetName: (n: string) => void;
   onBack: () => void;
@@ -160,7 +163,35 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
   const ruleIdx = useMemo(() => getRuleIndex(rules), [rules]);
   const getUnit = (cat: Category, id: string): OwbUnit | undefined => army[cat]?.find((u) => u.id === id);
 
-  const v = useMemo(() => validate(list, getUnit, itemsData), [list, army, itemsData]); // eslint-disable-line react-hooks/exhaustive-deps
+  // ── Campagne-context (De Grensvorsten), alleen voor een campagne-lijst ──────────────────────────
+  // Stale-while-revalidate: init uit de cache, daarna één verse fetch (als er een code is). Een niet-
+  // campagne-lijst (`list.campaign` falsy) doet GEEN fetch en houdt `campaignCtx` op null.
+  const [campaignCtx, setCampaignCtx] = useState<CampaignContext | null>(() => (list.campaign ? (getCachedCampaign()?.context ?? null) : null));
+  const [capBumped, setCapBumped] = useState(false); // fase schoof op ⇒ we hebben de cap net bijgewerkt
+  const [unlocksOpen, setUnlocksOpen] = useState(false); // "Campaign unlocks"-paneel open/dicht
+  useEffect(() => {
+    if (!list.campaign) { setCampaignCtx(null); return; }
+    const cached = getCachedCampaign()?.context ?? null;
+    if (cached) setCampaignCtx(cached);
+    const code = getCampaignCode();
+    if (!code) return;
+    let cancelled = false;
+    versCampagneContext(code).then((ctx) => { if (cancelled) return; cacheCampaignContext(ctx); setCampaignCtx(ctx); }).catch(() => {});
+    return () => { cancelled = true; };
+  }, [list.campaign]);
+
+  // Mechanisch afgedwongen campagne-modifier: alleen de fase-cap als puntenbasis. De roster-unlocks
+  // bestaan niet meer (perks = tafel-regels), dus verder niets af te dwingen in validate().
+  const campaignMods = campaignCtx ? { pointsCap: campaignCtx.puntenCap, namedUnits: true } : undefined;
+
+  // Cap-sync: als de fase is opgeschoven staat list.points nog op de oude cap → werk 'm bij (één keer
+  // per verschil; de gelijkheids-guard voorkomt een oneindige lus) en meld het in de campagne-balk.
+  useEffect(() => {
+    if (!campaignCtx) return;
+    if (campaignCtx.puntenCap !== list.points) { onUpdate(() => ({ points: campaignCtx.puntenCap })); setCapBumped(true); }
+  }, [campaignCtx, list.points]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const v = useMemo(() => validate(list, getUnit, itemsData, campaignMods), [list, army, itemsData, campaignCtx]); // eslint-disable-line react-hooks/exhaustive-deps
   const comp = useMemo(() => complianceRows(v), [v]);
   const compByCat: Partial<Record<Category, ComplianceRow>> = {};
   comp.forEach((c) => { compByCat[c.cat] = c; });
@@ -181,7 +212,9 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
 
   const [selUid, setSelUid] = useState<string | null>(null);
   const [sheet, setSheet] = useState<'pick' | { edit: string } | null>(null);
-  const [tab, setTab] = useState<Category>('characters');
+  // 'register' = het "My regiments"-tabblad: je gesavede/benoemde campagne-units (uit het register).
+  // Campagne-lijst mét register → daar openen, zodat veteranen vóór de catalogus staan.
+  const [tab, setTab] = useState<Category | 'register'>(() => (list.campaign && (campaignCtx?.units ?? []).some((u) => u.naam) ? 'register' : 'characters'));
   const [q, setQ] = useState('');
   const [settings, setSettings] = useState(false);
   const [info, setInfo] = useState<{ title: string; rows: StatRow[]; note?: string; ruleSlug?: string; flavour?: string; body?: string; ruleChips?: { name: string; slug: string | null }[]; chipsLabel?: string } | null>(null); // mount/unit profile / magic-item / lore popup
@@ -219,6 +252,16 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
     return uid;
   };
   const removeE = (uid: string) => { onUpdate((l) => ({ entries: l.entries.filter((e) => e.uid !== uid) })); if (selUid === uid) setSelUid(null); };
+  // Campagne — named unit: de eigen naam van deze unit ("The Blackspears"). Wordt in De Grensvorsten
+  // de veteranen-identiteit (XP/abilities/scars volgen deze naam over lijsten en battles heen).
+  const setCustomName = (uid: string, naam: string) => onUpdate((l) => ({ entries: l.entries.map((e) => (e.uid === uid ? { ...e, customName: naam || undefined } : e)) }));
+  // Naam-smid: factie/type-bewuste suggesties (naamForge). Per geselecteerde unit gegenereerd.
+  const [naamSuggesties, setNaamSuggesties] = useState<string[]>([]);
+  const rolNamen = (unitNaam: string, cat?: string) => setNaamSuggesties(stelNamenVoor(armySlug, unitNaam, 4, cat));
+  // Naam-dialoog: draft + expliciete Save (niet live) — geopend via de Name-knop in de unit-detail-kop.
+  const [naamUid, setNaamUid] = useState<string | null>(null);
+  const [naamConcept, setNaamConcept] = useState('');
+  const openNaamDialoog = (uid: string, unitNaam: string, huidig: string, cat?: string) => { setNaamConcept(huidig); rolNamen(unitNaam, cat); setNaamUid(uid); };
   const setCount = (uid: string, c: number) => onUpdate((l) => ({ entries: l.entries.map((e) => {
     if (e.uid !== uid) return e; const u = getUnit(e.cat, e.unitId); const min = u?.minimum ?? 1; const max = (u?.maximum ?? 0) === 0 ? 9999 : (u?.maximum ?? 1);
     return { ...e, count: Math.max(min, Math.min(max, c)) };
@@ -562,7 +605,10 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
         {dropLine != null && <div style={{ position: 'absolute', left: 0, right: 0, [dropLine ? 'top' : 'bottom']: -1, height: 2, background: TOW.goldDeep, borderRadius: 2, pointerEvents: 'none' }} />}
         <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
           <span style={{ flex: 1, fontFamily: towFont.display, fontWeight: 600, fontSize: 15, color: TOW.ink }}>
-            {multi ? <span style={{ color: TOW.gold }}>{e.count}× </span> : null}{u.name_en}
+            {multi ? <span style={{ color: TOW.gold }}>{e.count}× </span> : null}{e.customName || u.name_en}
+            {e.customName ? <span style={{ fontFamily: towFont.serif, fontWeight: 400, fontSize: 11.5, color: TOW.muted }}> · {u.name_en}</span> : null}
+            {/* Campagne: naam is verplicht (veteranen-identiteit) — rood merkteken zolang 'ie ontbreekt. */}
+            {list.campaign && !e.customName ? <span style={{ ...eb, fontSize: 7, color: '#fff', background: TOW.blood, borderRadius: 99, padding: '2px 6px', marginLeft: 6, verticalAlign: 'middle' }}>NAME</span> : null}
           </span>
           <span style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 13, color: TOW.parchDim }}>{fmt(entryPoints(u, e, itemsData))}</span>
         </div>
@@ -578,7 +624,18 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
     );
   };
 
-  const picker = (onPick: (u: OwbUnit, cat: Category) => void, withSearch: boolean) => (
+  // Register: je benoemde campagne-units (veteranen), opgelost naar hun catalogus-unit in dít leger.
+  // Voedt het "My regiments"-tabblad in de picker; kiezen = unit toevoegen mét de naam er al op.
+  const registerUnits = (list.campaign ? (campaignCtx?.units ?? []) : [])
+    .filter((r) => r.naam && r.catalogusId)
+    .map((r) => {
+      const u = (r.cat ? getUnit(r.cat as Category, r.catalogusId!) : undefined)
+        ?? CATEGORIES.map((c) => getUnit(c, r.catalogusId!)).find(Boolean);
+      return u ? { reg: r, unit: u } : null;
+    })
+    .filter((x): x is { reg: CampaignUnit; unit: OwbUnit } => x !== null);
+
+  const picker = (onPick: (u: OwbUnit, cat: Category, naam?: string) => void, withSearch: boolean) => (
     <div>
       <div style={{ position: 'sticky', top: 0, background: TOW.panel, paddingBottom: 10, zIndex: 1 }}>
         {withSearch && (
@@ -591,6 +648,10 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
         )}
         {!needle && (
           <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap' }}>
+            {registerUnits.length > 0 && (() => {
+              const on = tab === 'register';
+              return <button key="register" onClick={() => setTab('register')} style={{ flex: 1, minWidth: 72, padding: '8px 10px', borderRadius: 9, cursor: 'pointer', fontFamily: towFont.display, fontWeight: on ? 700 : 600, fontSize: 11, letterSpacing: '0.02em', whiteSpace: 'nowrap', border: on ? '1px solid transparent' : `1px solid ${TOW.goldDeep}`, background: on ? goldGrad : 'rgba(138,108,48,0.10)', color: on ? TOW.onGrad : TOW.gold }}>My regiments</button>;
+            })()}
             {CATEGORIES.filter((c) => allUnits.some((u) => availableHere(u) && effCatOf(u) === c)).map((c) => {
               const on = tab === c;
               return <button key={c} onClick={() => setTab(c)} style={{ flex: 1, minWidth: 72, padding: '8px 10px', borderRadius: 9, cursor: 'pointer', fontFamily: towFont.display, fontWeight: on ? 700 : 600, fontSize: 11, letterSpacing: '0.02em', whiteSpace: 'nowrap', border: on ? '1px solid transparent' : `1px solid ${TOW.line}`, background: on ? goldGrad : TOW.cardLt, color: on ? TOW.onGrad : TOW.muted }}>{CAT_LABEL[c]}</button>;
@@ -599,7 +660,33 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
         )}
       </div>
       {needle && <div style={{ ...eb, fontSize: 8, color: TOW.muted, margin: '0 2px 8px' }}>{catalogUnits.length} result{catalogUnits.length === 1 ? '' : 's'}</div>}
-      {catalogUnits.map((u) => {
+      {!needle && tab === 'register' && registerUnits.length > 0 && (
+        <div>
+          <div style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 11.5, color: TOW.faint, margin: '0 2px 8px' }}>
+            Your saved regiments — pick one to field the same veteran again (name included).
+          </div>
+          {registerUnits.map(({ reg, unit }) => {
+            const cat = baseCatOf(unit);
+            const inList = list.entries.some((e) => (e.customName ?? '').trim().toLowerCase() === reg.naam.toLowerCase());
+            const meta = [`${reg.xp} XP`];
+            if (reg.abilities) meta.push(`${reg.abilities} abilit${reg.abilities === 1 ? 'y' : 'ies'}`);
+            if (reg.littekens) meta.push(`${reg.littekens} scar${reg.littekens === 1 ? '' : 's'}`);
+            return (
+              <button key={reg.naam} disabled={inList} onClick={() => onPick(unit, cat, reg.naam)} style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 10, padding: '12px', borderRadius: 11, marginBottom: 7, border: `1px solid ${TOW.line}`, background: TOW.cardLt, cursor: inList ? 'default' : 'pointer', textAlign: 'left', opacity: inList ? 0.55 : reg.status === 'actief' ? 1 : 0.8 }}>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                    <span style={{ fontFamily: towFont.display, fontWeight: 600, fontSize: 14.5, color: TOW.ink }}>{reg.naam}</span>
+                    {reg.status !== 'actief' && <span style={{ ...eb, fontSize: 7, color: TOW.muted, border: `1px solid ${TOW.line}`, borderRadius: 99, padding: '2px 6px' }}>RESERVE</span>}
+                  </div>
+                  <div style={{ fontFamily: towFont.serif, fontSize: 11.5, color: TOW.muted, marginTop: 1 }}>{unit.name_en} · {meta.join(' · ')}</div>
+                </div>
+                <span style={{ flexShrink: 0, padding: '6px 12px', borderRadius: 8, background: inList ? TOW.cardLt : goldGrad, color: inList ? TOW.muted : TOW.onGrad, border: inList ? `1px solid ${TOW.line}` : 'none', fontFamily: towFont.display, fontWeight: 700, fontSize: 11, letterSpacing: '0.06em' }}>{inList ? 'IN LIST' : 'ADD'}</span>
+              </button>
+            );
+          })}
+        </div>
+      )}
+      {(needle || tab !== 'register') && catalogUnits.map((u) => {
         const cat = baseCatOf(u);
         const n = countInList(u.id);
         const note = unitCompNote(u, list.composition);
@@ -637,6 +724,151 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
     </div>
   );
 
+  // ── Campagne-balk + "Campaign unlocks"-paneel (De Grensvorsten) ─────────────────────────────────
+  // Compacte balk (kleur-dot + speler/fase/cap) met een chevron die een inklapbaar paneel opent: alle
+  // roster-opties + tafeltactiek + fase-events. Alleen de puntencap en de wizard-level-bonus worden
+  // mechanisch afgedwongen; al het overige draagt het label "table rules — apply at the table".
+  const prettyEvent = (id: string) => id.split('-').map((w) => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+  const tableRuleTag = <div style={{ ...eb, fontSize: 7.5, color: TOW.faint, marginTop: 3 }}>table rules — apply at the table</div>;
+  const unlockRow = (naam: string, level: number, effect: string) => (
+    <div style={{ marginBottom: 8 }}>
+      <div style={{ display: 'flex', alignItems: 'baseline', gap: 7 }}>
+        <span style={{ fontFamily: towFont.serif, fontSize: 12.5, color: TOW.ink, flex: 1 }}>{naam}</span>
+        <span style={{ ...eb, fontSize: 7.5, color: TOW.gold, background: 'rgba(138,108,48,0.14)', borderRadius: 99, padding: '2px 6px', flexShrink: 0 }}>Lvl {level}</span>
+      </div>
+      {effect && <div style={{ fontFamily: towFont.serif, fontSize: 11.5, color: TOW.muted, marginTop: 2, lineHeight: 1.4 }}>{effect}</div>}
+    </div>
+  );
+  // Compositie-pakket van deze fase (uit ctx.compositie → leesbare rule-namen), plus de check of de
+  // huidige lijst-rule daar nog binnen valt. Namen via COMPOSITION_RULES; onbekende ids vallen terug.
+  const ruleNameOf = (id: string) => COMPOSITION_RULES.find((r) => r.id === id)?.name ?? id;
+  const compRules = campaignCtx ? campaignCtx.compositie.filter((id) => COMPOSITION_RULES.some((r) => r.id === id)) : [];
+  const compLabel = compRules.map(ruleNameOf).join(' / '); // bv. "Battle March" of "Combined Arms / Grand Melee"
+  // Waarschuw alleen als er een compositie-set IS en de lijst-rule er niet in zit (niet auto-wisselen).
+  const compMismatch = compRules.length > 0 && !compRules.includes(list.rule);
+
+  const campaignBar = campaignCtx && (
+    <div style={{ flexShrink: 0, borderBottom: `1px solid ${TOW.line}`, background: TOW.panel2 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '7px 16px' }}>
+        <span style={{ width: 10, height: 10, borderRadius: 99, flexShrink: 0, background: campaignCtx.speler.kleur || TOW.gold, border: `1px solid ${TOW.line}` }} />
+        <span style={{ ...eb, fontSize: 8, color: TOW.muted, flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+          Campaign · {campaignCtx.speler.naam} · Phase {campaignCtx.fase} · {fmt(campaignCtx.puntenCap)} pts{compLabel ? ` · ${compLabel}` : ''}
+        </span>
+        {capBumped && <span style={{ ...eb, fontSize: 7.5, color: TOW.gold, flexShrink: 0 }}>Phase advanced — cap updated to {fmt(campaignCtx.puntenCap)} pts</span>}
+        <button onClick={() => setUnlocksOpen((o) => !o)} aria-expanded={unlocksOpen} aria-label="Campaign unlocks"
+          style={{ flexShrink: 0, display: 'inline-flex', alignItems: 'center', gap: 5, border: `1px solid ${TOW.line}`, background: 'transparent', borderRadius: 7, cursor: 'pointer', color: TOW.muted, padding: '3px 8px' }}>
+          <span style={{ ...eb, fontSize: 7.5 }}>Unlocks</span>
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" style={{ transform: unlocksOpen ? 'rotate(90deg)' : 'none', transition: 'transform .18s ease' }} aria-hidden="true"><path d="M9 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" /></svg>
+        </button>
+      </div>
+      {/* Fase-compositie is veranderd: de lijst-rule valt buiten de toegestane set. Geen auto-wissel —
+          alleen een duidelijke gouden hint om de lijst zelf om te zetten. */}
+      {compMismatch && (
+        <div style={{ display: 'flex', alignItems: 'center', gap: 7, padding: '6px 16px', borderTop: `1px solid ${TOW.line}`, background: 'rgba(138,108,48,0.10)' }}>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={TOW.gold} strokeWidth="2" style={{ flexShrink: 0 }} aria-hidden="true"><path d="M12 9v4M12 17h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z" strokeLinecap="round" strokeLinejoin="round" /></svg>
+          <span style={{ fontFamily: towFont.serif, fontSize: 11.5, color: TOW.goldDeep, fontWeight: 600 }}>Phase composition changed — switch this list to {compLabel}</span>
+        </div>
+      )}
+      {unlocksOpen && (
+        <div style={{ padding: '4px 16px 12px', borderTop: `1px solid ${TOW.line}` }}>
+          {/* Quartermaster/Armoury-perk: +20 pt magic-item allowance. Informatief — gevonden campagne-
+              items (≤30 pt) tellen binnen de normale allowance, niet erbovenop. */}
+          {campaignCtx.itemAllowanceBonus > 0 && (
+            <div style={{ marginTop: 10, padding: '8px 10px', borderRadius: 8, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(138,108,48,0.10)' }}>
+              <span style={{ fontFamily: towFont.serif, fontSize: 11.5, color: TOW.goldDeep, lineHeight: 1.4 }}>
+                <span style={{ fontWeight: 700 }}>Quartermaster:</span> +{campaignCtx.itemAllowanceBonus} pts magic item allowance — found campaign items (30 pts or less) count within your allowance.
+              </span>
+            </div>
+          )}
+          {campaignCtx.rosterOpties.length > 0 && (
+            <div style={{ marginTop: 10 }}>
+              <div style={{ ...eb, fontSize: 8.5, color: TOW.gold, marginBottom: 7 }}>Perks</div>
+              {/* index in de key: een speler kan meerdere exemplaren van hetzelfde gebouw hebben */}
+              {campaignCtx.rosterOpties.map((o, i) => <div key={`${o.id}-${i}`}>{unlockRow(o.naam, o.level, o.effect)}</div>)}
+              {tableRuleTag}
+            </div>
+          )}
+          {campaignCtx.tafelTactiek.length > 0 && (
+            <div style={{ marginTop: 12 }}>
+              <div style={{ ...eb, fontSize: 8.5, color: TOW.gold, marginBottom: 7 }}>Tactics</div>
+              {campaignCtx.tafelTactiek.map((o, i) => <div key={`${o.id}-${i}`}>{unlockRow(o.naam, o.level, o.effect)}</div>)}
+              {tableRuleTag}
+            </div>
+          )}
+          {campaignCtx.events.length > 0 && (
+            <div style={{ marginTop: 12 }}>
+              <div style={{ ...eb, fontSize: 8.5, color: TOW.gold, marginBottom: 7 }}>Phase events</div>
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5 }}>
+                {campaignCtx.events.map((ev) => <span key={ev.id} style={{ fontFamily: towFont.serif, fontSize: 11.5, padding: '2px 9px', borderRadius: 99, border: `1px solid ${TOW.line}`, background: 'rgba(138,108,48,0.06)', color: TOW.muted }}>{prettyEvent(ev.id)}</span>)}
+              </div>
+              {tableRuleTag}
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+
+  // ════════════════════ NAAM-DIALOOG (campagne) — gedeeld door wide + narrow ════════════════════
+  // Geopend via de "Name"-knop in de unit-detail-kop; draft + expliciete Save (pas dán toegepast).
+  const naamDialoog = (() => {
+    if (!naamUid || !list.campaign) return null;
+    const e = list.entries.find((x) => x.uid === naamUid);
+    const u = e ? getUnit(e.cat, e.unitId) : null;
+    if (!e || !u) return null;
+    const register = (campaignCtx?.units ?? []).filter((r) => r.naam && (!r.catalogusId || r.catalogusId === u.id));
+    const klaar = naamConcept.trim().length > 0;
+    const bewaar = () => { if (klaar) { setCustomName(e.uid, naamConcept.trim()); setNaamUid(null); } };
+    return (
+      <div onClick={() => setNaamUid(null)} style={{ position: 'absolute', inset: 0, zIndex: 70, background: 'rgba(30,20,8,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 }}>
+        <div onClick={(ev) => ev.stopPropagation()} style={{ width: '100%', maxWidth: 440, background: TOW.panel, borderRadius: 16, border: `1px solid ${TOW.lineStrong}`, boxShadow: '0 16px 50px rgba(40,24,8,0.34)', padding: 16, animation: 'sheet-pop .18s ease-out' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
+            <span style={{ ...eb, fontSize: 8, color: TOW.muted }}>Campaign · {u.name_en}</span>
+            <button onClick={() => setNaamUid(null)} aria-label="Close" style={{ marginLeft: 'auto', width: 30, height: 30, borderRadius: 8, border: `1px solid ${TOW.line}`, background: TOW.cardLt, cursor: 'pointer', color: TOW.muted, fontSize: 18, lineHeight: 1 }}>×</button>
+          </div>
+          <div style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 18, color: TOW.ink, marginBottom: 4 }}>Name this regiment</div>
+          <div style={{ fontFamily: towFont.serif, fontSize: 12, color: TOW.muted, marginBottom: 10 }}>Campaign veterans follow this name — XP, abilities and scars stay with it across lists.</div>
+          <input
+            value={naamConcept}
+            onChange={(ev) => setNaamConcept(ev.target.value)}
+            onKeyDown={(ev) => { if (ev.key === 'Enter') bewaar(); }}
+            placeholder={e.cat === 'characters' ? `e.g. "Aldric the Grim" (${u.name_en})` : `e.g. "The Blackspears" (${u.name_en})`}
+            maxLength={40}
+            autoFocus
+            style={{ width: '100%', boxSizing: 'border-box', padding: '10px 12px', borderRadius: 9, border: `1.5px solid ${klaar ? TOW.lineStrong : TOW.blood}`, background: TOW.cardLt, fontFamily: towFont.serif, fontSize: 14, color: TOW.ink, outline: 'none' }}
+          />
+          {register.length > 0 && (
+            <select
+              value=""
+              onChange={(ev) => { if (ev.target.value) setNaamConcept(ev.target.value); }}
+              style={{ width: '100%', boxSizing: 'border-box', marginTop: 7, padding: '9px 10px', borderRadius: 9, border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt, fontFamily: towFont.serif, fontSize: 13, color: TOW.ink }}
+            >
+              <option value="">Pick an existing regiment…</option>
+              {register.map((r) => (
+                <option key={r.naam} value={r.naam}>
+                  {r.naam} · {r.xp} XP{r.abilities ? ` · ${r.abilities} abilit${r.abilities === 1 ? 'y' : 'ies'}` : ''}{r.littekens ? ` · ${r.littekens} scar${r.littekens === 1 ? '' : 's'}` : ''}
+                </option>
+              ))}
+            </select>
+          )}
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5, marginTop: 8, alignItems: 'center' }}>
+            <button onClick={() => rolNamen(u.name_en, e.cat)} style={{ border: `1px solid ${TOW.line}`, background: 'transparent', borderRadius: 7, cursor: 'pointer', color: TOW.goldDeep, padding: '4px 9px', ...eb, fontSize: 7.5 }}>
+              {naamSuggesties.length ? 'Reroll names' : 'Suggest names'}
+            </button>
+            {naamSuggesties.map((n) => (
+              <button key={n} onClick={() => setNaamConcept(n)} style={{ border: `1px solid ${TOW.line}`, background: naamConcept === n ? 'rgba(138,108,48,0.2)' : 'rgba(138,108,48,0.08)', borderRadius: 99, cursor: 'pointer', color: TOW.ink, padding: '4px 10px', fontFamily: towFont.serif, fontSize: 11.5 }}>
+                {n}
+              </button>
+            ))}
+          </div>
+          <button onClick={bewaar} disabled={!klaar} style={{ width: '100%', marginTop: 14, padding: 12, borderRadius: 10, border: 'none', cursor: klaar ? 'pointer' : 'default', background: klaar ? goldGrad : TOW.cardLt, color: klaar ? TOW.onGrad : TOW.muted, fontFamily: towFont.display, fontWeight: 700, fontSize: 14, letterSpacing: '0.04em' }}>
+            Save name
+          </button>
+        </div>
+      </div>
+    );
+  })();
+
   // ════════════════════ WIDE — three columns ════════════════════
   if (wide) {
     const selEntry = list.entries.find((e) => e.uid === selUid) || null;
@@ -655,6 +887,8 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
           </div>
           <button onClick={() => setSettings((s) => !s)} aria-label="List settings" style={{ width: 36, height: 36, flexShrink: 0, borderRadius: 9, cursor: 'pointer', border: `1px solid ${settings ? TOW.goldDeep : TOW.lineStrong}`, background: settings ? 'rgba(138,108,48,0.12)' : TOW.cardLt, color: TOW.inkDim, fontSize: 16 }}>⚙</button>
         </div>
+
+        {campaignBar}
 
         {settings && (
           <>
@@ -695,7 +929,7 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
           {/* catalogue */}
           <div style={{ borderRight: `1px solid ${TOW.line}`, display: 'flex', flexDirection: 'column', minHeight: 0, background: TOW.panel }}>
             <div style={{ flex: 1, minHeight: 0, overflowY: 'auto', padding: '12px 12px 16px' }}>
-              {picker((u, cat) => { const id = add(cat, u); setSelUid(id); }, true)}
+              {picker((u, cat, naam) => { const id = add(cat, u); if (naam) setCustomName(id, naam); setSelUid(id); }, true)}
             </div>
           </div>
           {/* muster */}
@@ -724,8 +958,18 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
             ) : (
               <>
                 <div style={{ flexShrink: 0, padding: '14px 16px 12px', borderBottom: `1px solid ${TOW.line}` }}>
-                  <div style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 17, color: TOW.ink, lineHeight: 1.1 }}>{selUnit.name_en}</div>
-                  <div style={{ ...eb, fontSize: 8, color: TOW.muted, margin: '3px 0 11px' }}>{fmt(entryPoints(selUnit, selEntry, itemsData))} pts · {CAT_LABEL[effCatOf(selUnit)]}</div>
+                  <div style={{ display: 'flex', alignItems: 'flex-start', gap: 8, marginBottom: 11 }}>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <div style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 17, color: TOW.ink, lineHeight: 1.1 }}>{selEntry.customName || selUnit.name_en}</div>
+                      <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginTop: 3 }}>{selEntry.customName ? `${selUnit.name_en} · ` : ''}{fmt(entryPoints(selUnit, selEntry, itemsData))} pts · {CAT_LABEL[effCatOf(selUnit)]}</div>
+                    </div>
+                    {list.campaign && (
+                      <NaamKnop genoemd={!!(selEntry.customName ?? '').trim()} onClick={() => openNaamDialoog(selEntry.uid, selUnit.name_en, selEntry.customName ?? '', selEntry.cat)} />
+                    )}
+                  </div>
+                  {list.campaign && !(selEntry.customName ?? '').trim() && (
+                    <div style={{ ...eb, fontSize: 8, color: TOW.blood, margin: '-5px 0 10px' }}>Unit name required — campaign veterans follow this name</div>
+                  )}
                   <MiniProfile rows={statsFor(selUnit.name_en)} />
                   {((selUnit.maximum ?? 1) !== 1 || (selUnit.minimum ?? 1) > 1) && (
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 12, padding: '8px 11px', borderRadius: 9, background: TOW.cardLt, border: `1px solid ${TOW.line}` }}>
@@ -755,6 +999,7 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
         </div>
         {info && <InfoPopup info={info} onClose={() => setInfo(null)} onOpenRule={(s) => { setInfo(null); openRule(s); }} />}
         <CompositionInfo ruleId={compInfo} onClose={() => setCompInfo(null)} />
+        {naamDialoog}
       </div>
     );
   }
@@ -794,6 +1039,8 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
         )}
       </div>
 
+      {campaignBar}
+
       {/* roster */}
       <div style={{ flex: 1, minHeight: 0, overflowY: 'auto', padding: '12px 14px 14px' }}>
         {list.entries.length === 0 && <div style={{ textAlign: 'center', padding: '54px 16px', fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 14.5, color: TOW.muted }}><div style={{ marginBottom: 14 }}><Ornament /></div>Tap “Add unit” to begin.</div>}
@@ -816,13 +1063,14 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
       {/* picker sheet */}
       {sheet === 'pick' && (
         <Sheet title="Add a unit" sub="Search or browse" onClose={() => setSheet(null)}>
-          {picker((u, cat) => { const id = add(cat, u); setSheet({ edit: id }); }, true)}
+          {picker((u, cat, naam) => { const id = add(cat, u); if (naam) setCustomName(id, naam); setSheet({ edit: id }); }, true)}
         </Sheet>
       )}
 
       {/* editor sheet */}
       {editEntry && editUnit && (
-        <Sheet title={editUnit.name_en} sub={`${fmt(entryPoints(editUnit, editEntry, itemsData))} pts · ${CAT_LABEL[effCatOf(editUnit)]}`} onClose={() => setSheet(null)}
+        <Sheet title={editEntry.customName || editUnit.name_en} sub={`${editEntry.customName ? `${editUnit.name_en} · ` : ''}${fmt(entryPoints(editUnit, editEntry, itemsData))} pts · ${CAT_LABEL[effCatOf(editUnit)]}`} onClose={() => setSheet(null)}
+          headerExtra={list.campaign ? <NaamKnop genoemd={!!(editEntry.customName ?? '').trim()} onClick={() => openNaamDialoog(editEntry.uid, editUnit.name_en, editEntry.customName ?? '', editEntry.cat)} /> : undefined}
           foot={<button onClick={() => { removeE(editEntry.uid); setSheet(null); }} style={{ width: '100%', padding: 12, borderRadius: 10, border: `1px solid rgba(124,43,34,0.4)`, background: 'transparent', color: TOW.blood, cursor: 'pointer', fontFamily: towFont.display, fontWeight: 600, fontSize: 13, letterSpacing: '0.04em' }}>Remove from list</button>}>
           <div style={{ marginBottom: 14 }}><MiniProfile rows={statsFor(editUnit.name_en)} /></div>
           {((editUnit.maximum ?? 1) !== 1 || (editUnit.minimum ?? 1) > 1) && (
@@ -857,7 +1105,21 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
         </Sheet>
       )}
       {info && <InfoPopup info={info} onClose={() => setInfo(null)} onOpenRule={(s) => { setInfo(null); openRule(s); }} />}
+      {naamDialoog}
     </div>
+  );
+}
+
+// De "Name"-knop in de unit-detail-kop (naast het sluitkruisje) — alleen campagne-lijsten.
+// Rood zolang de unit naamloos is (naam is verplicht), goud zodra hij een naam heeft.
+function NaamKnop({ genoemd, onClick }: { genoemd: boolean; onClick: () => void }) {
+  return (
+    <button
+      onClick={onClick}
+      style={{ height: 32, flexShrink: 0, borderRadius: 8, cursor: 'pointer', padding: '0 11px', ...eb, fontSize: 8, letterSpacing: '0.08em', border: `1px solid ${genoemd ? TOW.goldDeep : 'rgba(124,43,34,0.55)'}`, background: genoemd ? 'rgba(138,108,48,0.14)' : 'rgba(124,43,34,0.14)', color: genoemd ? TOW.gold : TOW.blood }}
+    >
+      Name
+    </button>
   );
 }
 
@@ -901,7 +1163,7 @@ function InfoPopup({ info, onClose, onOpenRule }: { info: { title: string; rows:
 }
 
 // bottom sheet (mobile)
-function Sheet({ title, sub, onClose, foot, children }: { title: string; sub?: string; onClose: () => void; foot?: React.ReactNode; children: React.ReactNode }) {
+function Sheet({ title, sub, onClose, foot, headerExtra, children }: { title: string; sub?: string; onClose: () => void; foot?: React.ReactNode; headerExtra?: React.ReactNode; children: React.ReactNode }) {
   const { handleProps, sheetStyle } = useSwipeToDismiss(onClose);
   return (
     <div onClick={onClose} style={{ position: 'absolute', inset: 0, zIndex: 50, background: 'rgba(30,20,8,0.42)', display: 'flex', alignItems: 'flex-end', justifyContent: 'center' }}>
@@ -913,6 +1175,7 @@ function Sheet({ title, sub, onClose, foot, children }: { title: string; sub?: s
               {sub && <div style={{ ...eb, fontSize: 8, color: TOW.muted }}>{sub}</div>}
               <div style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 19, color: TOW.ink, lineHeight: 1.1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{title}</div>
             </div>
+            {headerExtra}
             <button onClick={onClose} aria-label="Close" style={{ width: 32, height: 32, flexShrink: 0, borderRadius: 8, border: `1px solid ${TOW.line}`, background: TOW.cardLt, cursor: 'pointer', color: TOW.muted, fontSize: 20, lineHeight: 1 }}>×</button>
           </div>
         </div>
