@@ -11,7 +11,8 @@ import { BattleBar } from './BattleBar';
 import { VpPanel } from './VpPanel';
 import { OwbInstructions } from './OwbInstructions';
 import { ArmyListPicker } from './ArmyListPicker';
-import { CampaignResultReporter } from './CampaignResultReporter';
+import { EndBattleOverview } from './EndBattleOverview';
+import { berekenVictory } from '../../lib/victoryPoints';
 import type { Army, ArmyUnit } from '../../types';
 
 const eb = engraved as React.CSSProperties;
@@ -31,6 +32,7 @@ export function GameView() {
   // GameView only mounts while a game is active, so a hardware Back here leaves the game.
   useBackClose(true, leaveGame);
   const [side, setSide] = useState<'me' | 'opp'>('me');
+  const [endOpen, setEndOpen] = useState(false); // einde-battle-overzicht open?
   // Roster units are collapsed by default; tapping a unit's header expands just that one (keeps the
   // list scannable). Tracked by unit id (ids are unique per army, so no clash between the two sides).
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
@@ -59,10 +61,9 @@ export function GameView() {
 
   // ── shared battle tracker (absolute seat keys so both players agree) ──
   const absSeat = (s: 'me' | 'opp'): string =>
-    seat === 'solo' ? s : s === 'me' ? seat ?? 'host' : seat === 'host' ? 'guest' : 'host';
+    seat === 'solo' ? (s === 'me' ? 'host' : 'guest') : s === 'me' ? seat ?? 'host' : seat === 'host' ? 'guest' : 'host';
   const unitKey = (s: 'me' | 'opp', unitId: string) => `${absSeat(s)}:${unitId}`;
   const meKey = absSeat('me');
-  const oppKey = absSeat('opp');
 
   // Absolute muteerhelpers voor de per-unit tracker (WoundTracker levert absolute waarden).
   // `prev` default = { lost: 0, fleeing: false }; oude trackers zonder `weg` blijven zo werken.
@@ -86,10 +87,20 @@ export function GameView() {
     setTracker({ ...tracker, units: { ...tracker.units, [key]: { ...prev, fleeing: !prev.fleeing } } });
   };
   const adjRound = (dir: number) => setTracker({ ...tracker, round: Math.min(6, Math.max(1, tracker.round + dir)) });
-  const adjVp = (which: 'me' | 'opp', dir: number) => {
-    const key = which === 'me' ? meKey : oppKey;
-    setTracker({ ...tracker, vp: { ...tracker.vp, [key]: Math.max(0, (tracker.vp[key] ?? 0) + dir) } });
-  };
+
+  // ── Centrale VP-uitslag (engine, absoluut host/guest) — één bron voor de bar, de banner én het
+  // einde-battle-overzicht. De handmatige VP-teller is vervangen door deze auto-stand. ──
+  const hostArmy: Army | null = meKey === 'host' ? myArmy : opponentArmy;
+  const guestArmy: Army | null = meKey === 'host' ? opponentArmy : myArmy;
+  const res = useMemo(
+    () => berekenVictory(hostArmy, guestArmy, tracker, tracker.bonus?.host, tracker.bonus?.guest),
+    [hostArmy, guestArmy, tracker],
+  );
+  const hostName = meKey === 'host' ? (myName || 'You') : (opponentName || 'Opponent');
+  const guestName = meKey === 'host' ? (opponentName || 'Opponent') : (myName || 'You');
+  const vpMe = meKey === 'host' ? res.hostVp : res.guestVp;
+  const vpOpp = meKey === 'host' ? res.guestVp : res.hostVp;
+  const leader: 'me' | 'opp' | null = res.winnaar == null ? null : res.winnaar === meKey ? 'me' : 'opp';
 
   const afield = army
     ? army.units.filter((u) => unitTotalStrength(u) - (tracker.units[unitKey(side, u.id)]?.lost ?? 0) > 0).length
@@ -118,7 +129,10 @@ export function GameView() {
   );
 
   const battleBar = army && (
-    <BattleBar round={tracker.round} onRound={adjRound} vpMe={tracker.vp[meKey] ?? 0} vpOpp={tracker.vp[oppKey] ?? 0} onVp={adjVp} myName={myName || 'You'} opponentName={opponentName || 'Opponent'} editable={editable} vertical={wide} />
+    <BattleBar round={tracker.round} onRound={adjRound} vpMe={vpMe} vpOpp={vpOpp} leader={leader} myName={myName || 'You'} opponentName={opponentName || 'Opponent'} editable={editable} vertical={wide} />
+  );
+  const endModal = endOpen && (
+    <EndBattleOverview res={res} hostName={hostName} guestName={guestName} hostArmy={hostArmy} guestArmy={guestArmy} onClose={() => setEndOpen(false)} />
   );
 
   const rosterBody = army ? (
@@ -158,8 +172,10 @@ export function GameView() {
             <CodeBadge code={code} onLeave={leaveGame} waiting={!!(code && seat === 'host' && !opponentArmy)} />
             {sideToggle}
             {battleBar}
-            {(myArmy || opponentArmy) && <VpPanel compact />}
-            <CampaignResultReporter />
+            {(myArmy || opponentArmy) && <VpPanel compact res={res} hostName={hostName} guestName={guestName} />}
+            {(myArmy || opponentArmy) && (
+              <button onClick={() => setEndOpen(true)} style={{ width: '100%', border: 'none', borderRadius: 11, cursor: 'pointer', padding: '12px 16px', background: `linear-gradient(180deg, ${TOW.goldBright}, ${TOW.gold} 55%, ${TOW.goldDeep})`, color: TOW.onGrad, fontFamily: display, fontWeight: 700, fontSize: 14 }}>End battle</button>
+            )}
           </div>
         </div>
 
@@ -176,6 +192,7 @@ export function GameView() {
             {rosterBody}
           </div>
         </div>
+        {endModal}
       </div>
     );
   }
@@ -205,7 +222,7 @@ export function GameView() {
       )}
 
       {(myArmy || opponentArmy) && (
-        <div style={{ flexShrink: 0, padding: '0 10px 8px', maxWidth: 620, width: '100%', margin: '0 auto', boxSizing: 'border-box' }}><VpPanel /></div>
+        <div style={{ flexShrink: 0, padding: '0 10px 8px', maxWidth: 620, width: '100%', margin: '0 auto', boxSizing: 'border-box' }}><VpPanel res={res} hostName={hostName} guestName={guestName} /></div>
       )}
 
       <div style={{ flex: 1, minHeight: 0, overflowY: 'auto', padding: '4px 12px 28px', maxWidth: 620, width: '100%', margin: '0 auto' }}>
@@ -215,8 +232,13 @@ export function GameView() {
           </div>
         )}
         {rosterBody}
-        <div style={{ marginTop: 16 }}><CampaignResultReporter /></div>
+        {(myArmy || opponentArmy) && (
+          <div style={{ marginTop: 16 }}>
+            <button onClick={() => setEndOpen(true)} style={{ width: '100%', border: 'none', borderRadius: 11, cursor: 'pointer', padding: '13px 16px', background: `linear-gradient(180deg, ${TOW.goldBright}, ${TOW.gold} 55%, ${TOW.goldDeep})`, color: TOW.onGrad, fontFamily: display, fontWeight: 700, fontSize: 15 }}>End battle</button>
+          </div>
+        )}
       </div>
+      {endModal}
     </div>
   );
 }

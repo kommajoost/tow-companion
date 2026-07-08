@@ -48,10 +48,11 @@ function collectKills(
   return out;
 }
 
-export function CampaignResultReporter() {
+// embedded = gerenderd binnen het einde-battle-overzicht (form direct open, geen eigen rand).
+export function CampaignResultReporter({ embedded = false }: { embedded?: boolean } = {}) {
   const { code, game, tracker } = useGame();
   const [battle, setBattle] = useState<CampaignBattle | null>(null);
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(embedded);
   const [winner, setWinner] = useState<'host' | 'guest' | 'draw'>('draw');
   // `touched` = de speler heeft zélf een winnaar-knop geklikt. Zolang dit false is, prefillen we
   // `winner` uit de engine (res.winnaar); zodra de speler kiest, laten we z'n keuze staan (overrulebaar).
@@ -135,11 +136,13 @@ export function CampaignResultReporter() {
   };
 
   const box: React.CSSProperties = { border: `1px solid ${TOW.goldDeep}`, borderRadius: 12, background: 'rgba(184,134,47,0.08)', padding: '13px 14px' };
+  // Ingebed levert het overzicht zelf de kaart; dan geen eigen rand/achtergrond/padding.
+  const formWrap: React.CSSProperties = embedded ? {} : box;
   const optBtn = (on: boolean): React.CSSProperties => ({ flex: 1, padding: '9px 6px', borderRadius: 9, cursor: 'pointer', border: `1px solid ${on ? TOW.goldDeep : TOW.line}`, background: on ? TOW.cardLt : 'transparent', color: on ? TOW.ink : TOW.muted, fontFamily: display, fontWeight: 600, fontSize: 13, overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' });
 
   if (done) {
     return (
-      <div style={box}>
+      <div style={formWrap}>
         <div style={{ ...eb, fontSize: 8.5, color: TOW.goldDeep, marginBottom: 4 }}>Result reported</div>
         <div style={{ fontFamily: serif, fontSize: 13.5, color: TOW.ink }}>Reported — the campaign grensmaster approves it.</div>
         <button onClick={() => { setDone(false); setOpen(true); }} style={{ marginTop: 8, background: 'none', border: 'none', cursor: 'pointer', fontFamily: serif, fontSize: 12.5, color: TOW.muted, textDecoration: 'underline' }}>Report again</button>
@@ -147,7 +150,7 @@ export function CampaignResultReporter() {
     );
   }
 
-  if (!open) {
+  if (!open && !embedded) {
     return (
       <button onClick={() => setOpen(true)} style={{ ...box, width: '100%', textAlign: 'left', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 10 }}>
         <span style={{ flex: 1, minWidth: 0 }}>
@@ -160,7 +163,7 @@ export function CampaignResultReporter() {
   }
 
   return (
-    <div style={box}>
+    <div style={formWrap}>
       <div style={{ ...eb, fontSize: 8.5, color: TOW.goldDeep, marginBottom: 8 }}>Report result · {code}</div>
 
       <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginBottom: 5 }}>Winner {!touched && <span style={{ color: TOW.goldDeep }}>· auto from VP</span>}</div>
@@ -188,7 +191,7 @@ export function CampaignResultReporter() {
         <button onClick={submit} disabled={busy} style={{ flex: 1, border: 'none', borderRadius: 10, cursor: 'pointer', padding: '11px 16px', background: `linear-gradient(180deg, ${TOW.goldBright}, ${TOW.gold} 55%, ${TOW.goldDeep})`, color: TOW.onGrad, fontFamily: display, fontWeight: 700, fontSize: 14, opacity: busy ? 0.5 : 1 }}>
           {busy ? 'Reporting…' : 'Report to campaign'}
         </button>
-        <button onClick={() => setOpen(false)} style={{ border: `1px solid ${TOW.lineStrong}`, borderRadius: 10, background: 'transparent', color: TOW.muted, cursor: 'pointer', padding: '11px 14px', fontFamily: display, fontSize: 13 }}>Cancel</button>
+        {!embedded && <button onClick={() => setOpen(false)} style={{ border: `1px solid ${TOW.lineStrong}`, borderRadius: 10, background: 'transparent', color: TOW.muted, cursor: 'pointer', padding: '11px 14px', fontFamily: display, fontSize: 13 }}>Cancel</button>}
       </div>
     </div>
   );

@@ -16,22 +16,23 @@ export function BattleBar({
   onRound,
   vpMe,
   vpOpp,
-  onVp,
   myName,
   opponentName,
   editable = true,
   vertical = false,
+  leader = null,
 }: {
   round: number;
   onRound: (dir: number) => void;
   vpMe: number;
   vpOpp: number;
-  onVp: (which: 'me' | 'opp', dir: number) => void;
   myName: string;
   opponentName: string;
   editable?: boolean;
   /** Stack Round above VP (for a narrow sidebar) instead of side by side. */
   vertical?: boolean;
+  /** Welke kant leidt (voor highlight); null bij gelijkspel. */
+  leader?: 'me' | 'opp' | null;
 }) {
   const card: React.CSSProperties = {
     padding: '10px 12px',
@@ -74,26 +75,27 @@ export function BattleBar({
         </div>
       </div>
 
-      {/* Victory Points */}
+      {/* Victory Points — read-only; waarde komt uit de engine (leader stuurt de highlight). */}
       <div style={card}>
-        <div style={{ ...eb, fontSize: 7.5, color: TOW.muted, marginBottom: 7 }}>Victory Points</div>
-        {(['me', 'opp'] as const).map((s, i) => (
-          <div key={s} style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: i ? 7 : 0 }}>
-            <span style={{ width: 7, height: 7, borderRadius: 99, background: i ? TOW.muted : TOW.goldDeep, flexShrink: 0 }} />
-            <span style={{ flex: 1, minWidth: 0, fontFamily: towFont.serif, fontSize: 12.5, color: i ? TOW.muted : TOW.ink, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-              {i ? opponentName : myName}
-            </span>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-              <button onClick={() => editable && onVp(s, -1)} disabled={!editable} aria-label="Less" style={{ width: 23, height: 23, borderRadius: 7, cursor: editable ? 'pointer' : 'default', border: `1px solid ${TOW.lineStrong}`, background: 'transparent', color: TOW.muted, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <Minus c="currentColor" />
-              </button>
-              <span style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 15, color: TOW.ink, minWidth: 15, textAlign: 'center' }}>{i ? vpOpp : vpMe}</span>
-              <button onClick={() => editable && onVp(s, 1)} disabled={!editable} aria-label="More" style={{ width: 23, height: 23, borderRadius: 7, cursor: editable ? 'pointer' : 'default', border: `1px solid ${TOW.lineStrong}`, background: 'transparent', color: TOW.muted, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <Plus c="currentColor" />
-              </button>
+        <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 7 }}>
+          <span style={{ ...eb, fontSize: 7.5, color: TOW.muted }}>Victory Points</span>
+          <span style={{ ...eb, fontSize: 7, color: TOW.faint }}>auto</span>
+        </div>
+        {(['me', 'opp'] as const).map((s, i) => {
+          const isMe = s === 'me';
+          const leads = leader === s;
+          return (
+            <div key={s} style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: i ? 7 : 0 }}>
+              <span style={{ width: 7, height: 7, borderRadius: 99, background: leads ? TOW.goldDeep : TOW.muted, flexShrink: 0 }} />
+              <span style={{ flex: 1, minWidth: 0, fontFamily: towFont.serif, fontSize: 12.5, color: leader && !leads ? TOW.muted : TOW.ink, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                {isMe ? myName : opponentName}
+              </span>
+              <span style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 15, color: leads ? TOW.goldDeep : leader ? TOW.muted : TOW.ink, minWidth: 15, textAlign: 'right' }}>
+                {isMe ? vpMe : vpOpp}
+              </span>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );

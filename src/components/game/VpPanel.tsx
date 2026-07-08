@@ -1,7 +1,7 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { TOW, towFont, engraved } from '../../design/tow';
 import { useGame } from '../../game';
-import { berekenVictory, type VpBonus } from '../../lib/victoryPoints';
+import { type VpBonus, type VpResultaat } from '../../lib/victoryPoints';
 import { battleByCode, type CampaignBattle } from '../../lib/campaignBattle';
 import { objectivesVoor, type ObjectiveDef } from '../../lib/objectiveVp';
 
@@ -23,14 +23,21 @@ const UITSLAG_LABEL: Record<'draw' | 'victory' | 'crushing', string> = {
   crushing: 'Crushing Victory',
 };
 
-// Het VP / Result-paneel. Leest ALTIJD absoluut (host/guest), onafhankelijk van welke seat kijkt,
-// zodat beide spelers exact dezelfde stand zien. Gebruikt zelf useGame() (net als
-// CampaignResultReporter), dus de plaatsing in GameView is enkel <VpPanel /> — geen prop-doorgifte.
+// Het VP / Result-paneel. Toont de uitslag die de parent (GameView) berekent en meegeeft via `res`
+// + de namen — zo zien beide spelers exact dezelfde absolute stand (host/guest), onafhankelijk van
+// welke seat kijkt. Dit paneel is een slanke banner: geen dubbele grote VP-cijfers meer (die staan
+// in de BattleBar en het End-battle-overzicht), alleen de uitslag-regel + inklapbare editors.
+// useGame() blijft nodig voor de bonus-mutatie (tracker/setTracker) en de campagne-objective-fetch (code).
 //
 // `compact` = variant voor de smalle wide-sidebar: kleinere headline + iets strakkere spacing.
 // De phone-variant laat 'm weg (ruimere weergave).
-export function VpPanel({ compact = false }: { compact?: boolean }) {
-  const { game, tracker, setTracker, code } = useGame();
+export function VpPanel({ compact = false, res, hostName, guestName }: {
+  compact?: boolean;
+  res: VpResultaat;
+  hostName: string;
+  guestName: string;
+}) {
+  const { tracker, setTracker, code } = useGame();
   const [rulesOpen, setRulesOpen] = useState(false);
   const [bonusOpen, setBonusOpen] = useState(false);
   const [battle, setBattle] = useState<CampaignBattle | null>(null);
@@ -47,14 +54,6 @@ export function VpPanel({ compact = false }: { compact?: boolean }) {
   const scenarioId = typeof sc?.scenario === 'string' ? sc.scenario : null;
   const secondaries = Array.isArray(sc?.secondaries) ? (sc.secondaries as unknown[]).filter((x): x is string => typeof x === 'string') : [];
   const objDefs = objectivesVoor(scenarioId, secondaries);
-
-  const hostName = game?.host_name || 'Host';
-  const guestName = game?.guest_name || 'Guest';
-
-  const res = useMemo(
-    () => berekenVictory(game?.host_army ?? null, game?.guest_army ?? null, tracker, tracker.bonus?.host, tracker.bonus?.guest),
-    [game?.host_army, game?.guest_army, tracker],
-  );
 
   // Muteer één bonus-kant en sync via setTracker (last-write-wins, net als de rest van de tracker).
   const setBonus = (side: 'host' | 'guest', patch: Partial<VpBonus>) => {
@@ -74,13 +73,7 @@ export function VpPanel({ compact = false }: { compact?: boolean }) {
     <div style={box}>
       <div style={{ ...eb, fontSize: 8.5, color: TOW.goldDeep, marginBottom: 9 }}>Victory Points</div>
 
-      {/* Live VP-stand per kant */}
-      <div style={{ display: 'flex', alignItems: 'stretch', gap: 8, marginBottom: 10 }}>
-        <ScoreCell name={hostName} vp={res.hostVp} leads={res.winnaar === 'host'} compact={compact} />
-        <ScoreCell name={guestName} vp={res.guestVp} leads={res.winnaar === 'guest'} compact={compact} />
-      </div>
-
-      {/* Uitslag-badge */}
+      {/* Uitslag-badge — nu de headline van de banner (grote VP-cijfers staan in BattleBar / End-battle) */}
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, padding: '8px 10px', borderRadius: 9, background: res.uitslag === 'draw' ? 'transparent' : 'rgba(184,134,47,0.12)', border: `1px solid ${res.uitslag === 'draw' ? TOW.line : TOW.goldDeep}`, marginBottom: 12 }}>
         <span style={{ fontFamily: display, fontWeight: 700, fontSize: compact ? 14 : 15, color: res.uitslag === 'draw' ? TOW.muted : TOW.goldDeep, textAlign: 'center' }}>
           {winnerName ? `${winnerName} — ${uitslagLabel}` : uitslagLabel}
@@ -116,18 +109,6 @@ export function VpPanel({ compact = false }: { compact?: boolean }) {
         <span style={{ ...eb, fontSize: 8.5, color: TOW.muted }}>Victory Points — how scoring works</span>
       </button>
       {rulesOpen && <RuleReference />}
-    </div>
-  );
-}
-
-function ScoreCell({ name, vp, leads, compact }: { name: string; vp: number; leads: boolean; compact: boolean }) {
-  return (
-    <div style={{ flex: 1, minWidth: 0, padding: compact ? '8px 10px' : '9px 12px', borderRadius: 9, background: TOW.cardLt, border: `1px solid ${leads ? TOW.goldDeep : TOW.line}` }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 5, marginBottom: 2 }}>
-        <span style={{ width: 6, height: 6, borderRadius: 99, background: leads ? TOW.goldDeep : TOW.muted, flexShrink: 0 }} />
-        <span style={{ flex: 1, minWidth: 0, fontFamily: serif, fontSize: 12, color: leads ? TOW.ink : TOW.muted, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{name}</span>
-      </div>
-      <div style={{ fontFamily: display, fontWeight: 700, fontSize: compact ? 22 : 26, color: leads ? TOW.goldDeep : TOW.ink, lineHeight: 1 }}>{vp}</div>
     </div>
   );
 }
