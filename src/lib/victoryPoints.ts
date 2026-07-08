@@ -21,7 +21,10 @@ export interface VpBonus {
   generalDown?: boolean; // vijandelijke General dood/gevlucht/vluchtend → +100
   bsbDown?: boolean;     // vijandelijke Battle Standard Bearer idem → +50
   standaards?: number;   // aantal buitgemaakte vijandelijke standaards → +50 elk
-  objectiveVp?: number;  // handmatig: scenario-/secondary-objective-VP (per scenario gedefinieerd)
+  objectiveVp?: number;  // handmatig vrij veld: overige/onbekende objective-VP
+  /** Gestructureerde objective-VP per scenario/secondary (optie B): sleutel → gescoorde VP.
+   *  Sleutels + bedragen komen uit OBJECTIVE_VP (objectiveVp.ts, letterlijk van tow.whfb.app). */
+  objectives?: Record<string, number>;
 }
 
 /** De per-unit toestand die de VP-engine nodig heeft (subset van UnitTrack). */
@@ -63,7 +66,11 @@ export function killVp(leger: Army | null, seat: string, tracker: GameTracker | 
 }
 
 const bonusVp = (b: VpBonus): number =>
-  (b.generalDown ? 100 : 0) + (b.bsbDown ? 50 : 0) + Math.max(0, b.standaards ?? 0) * 50 + Math.max(0, Math.round(b.objectiveVp ?? 0));
+  (b.generalDown ? 100 : 0) +
+  (b.bsbDown ? 50 : 0) +
+  Math.max(0, b.standaards ?? 0) * 50 +
+  Math.max(0, Math.round(b.objectiveVp ?? 0)) +
+  Object.values(b.objectives ?? {}).reduce((a, c) => a + Math.max(0, Math.round(c || 0)), 0);
 
 /** Volledige VP-stand + uitslag. host-VP = kill-VP tegen het guest-leger + host-bonussen (wat host
  *  scoort), en vice versa. */

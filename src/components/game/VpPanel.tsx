@@ -1,7 +1,9 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { TOW, towFont, engraved } from '../../design/tow';
 import { useGame } from '../../game';
 import { berekenVictory, type VpBonus } from '../../lib/victoryPoints';
+import { battleByCode, type CampaignBattle } from '../../lib/campaignBattle';
+import { objectivesVoor, type ObjectiveDef } from '../../lib/objectiveVp';
 
 const eb = engraved as React.CSSProperties;
 const display = towFont.display;
@@ -28,9 +30,23 @@ const UITSLAG_LABEL: Record<'draw' | 'victory' | 'crushing', string> = {
 // `compact` = variant voor de smalle wide-sidebar: kleinere headline + iets strakkere spacing.
 // De phone-variant laat 'm weg (ruimere weergave).
 export function VpPanel({ compact = false }: { compact?: boolean }) {
-  const { game, tracker, setTracker } = useGame();
+  const { game, tracker, setTracker, code } = useGame();
   const [rulesOpen, setRulesOpen] = useState(false);
   const [bonusOpen, setBonusOpen] = useState(false);
+  const [battle, setBattle] = useState<CampaignBattle | null>(null);
+
+  // Campagne-battle ophalen (via de game-code) → scenario + secondaries bepalen welke objective-VP-
+  // controls we tonen. Voor gewone (niet-campagne) potjes blijft dit leeg.
+  useEffect(() => {
+    if (!code) { setBattle(null); return; }
+    let alive = true;
+    battleByCode(code).then((b) => { if (alive) setBattle(b); }).catch(() => { if (alive) setBattle(null); });
+    return () => { alive = false; };
+  }, [code]);
+  const sc = battle?.scenario as Record<string, unknown> | null | undefined;
+  const scenarioId = typeof sc?.scenario === 'string' ? sc.scenario : null;
+  const secondaries = Array.isArray(sc?.secondaries) ? (sc.secondaries as unknown[]).filter((x): x is string => typeof x === 'string') : [];
+  const objDefs = objectivesVoor(scenarioId, secondaries);
 
   const hostName = game?.host_name || 'Host';
   const guestName = game?.guest_name || 'Guest';
@@ -85,9 +101,9 @@ export function VpPanel({ compact = false }: { compact?: boolean }) {
       </button>
       {bonusOpen && (
         <div style={{ marginTop: 8 }}>
-          <BonusEditor name={hostName} bonus={tracker.bonus?.host} onSet={(p) => setBonus('host', p)} compact={compact} />
+          <BonusEditor name={hostName} bonus={tracker.bonus?.host} onSet={(p) => setBonus('host', p)} compact={compact} objectives={objDefs} />
           <div style={{ height: 10 }} />
-          <BonusEditor name={guestName} bonus={tracker.bonus?.guest} onSet={(p) => setBonus('guest', p)} compact={compact} />
+          <BonusEditor name={guestName} bonus={tracker.bonus?.guest} onSet={(p) => setBonus('guest', p)} compact={compact} objectives={objDefs} />
         </div>
       )}
 
@@ -123,11 +139,13 @@ function BonusEditor({
   bonus,
   onSet,
   compact,
+  objectives,
 }: {
   name: string;
   bonus: VpBonus | undefined;
   onSet: (patch: Partial<VpBonus>) => void;
   compact: boolean;
+  objectives: ObjectiveDef[];
 }) {
   const generalDown = bonus?.generalDown ?? false;
   const bsbDown = bonus?.bsbDown ?? false;
@@ -163,9 +181,38 @@ function BonusEditor({
           <button onClick={() => onSet({ standaards: standaards + 1 })} aria-label="More standards" style={stepBtn}><Plus c="currentColor" /></button>
         </div>
 
-        {/* Scenario / objective VP (vrij veld) */}
+        {/* Scenario/secondary objectives (optie B) — exacte VP letterlijk van tow.whfb.app */}
+        {objectives.map((o) => {
+          const cur = Math.max(0, bonus?.objectives?.[o.key] ?? 0);
+          const setObj = (val: number) => onSet({ objectives: { ...(bonus?.objectives ?? {}), [o.key]: Math.max(0, Math.round(val)) } });
+          const ruleStyle: React.CSSProperties = { fontFamily: serif, fontStyle: 'italic', fontSize: 10.5, color: TOW.muted, lineHeight: 1.35, margin: '1px 0 3px 2px' };
+          if (o.kind === 'toggle') {
+            const on = cur >= o.vp;
+            return (
+              <div key={o.key}>
+                {toggle(on, `${o.label} (+${o.vp})`, () => setObj(on ? 0 : o.vp))}
+                <div style={ruleStyle}>{o.rule}</div>
+              </div>
+            );
+          }
+          const count = o.vp ? Math.round(cur / o.vp) : 0;
+          return (
+            <div key={o.key}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '2px 1px' }}>
+                <span style={{ flex: 1, minWidth: 0, fontFamily: serif, fontSize: 12.5, color: TOW.parchDim }}>{o.label}{o.countLabel ? ` (${o.countLabel} ×${o.vp})` : ` (×${o.vp})`}</span>
+                <button onClick={() => setObj((count - 1) * o.vp)} disabled={count <= 0} aria-label="Fewer" style={{ ...stepBtn, cursor: count <= 0 ? 'default' : 'pointer', opacity: count <= 0 ? 0.4 : 1 }}><Minus c="currentColor" /></button>
+                <span style={{ fontFamily: display, fontWeight: 700, fontSize: 15, color: TOW.ink, minWidth: 18, textAlign: 'center' }}>{count}</span>
+                <button onClick={() => setObj((count + 1) * o.vp)} aria-label="More" style={stepBtn}><Plus c="currentColor" /></button>
+                <span style={{ fontFamily: serif, fontSize: 11, color: TOW.muted, minWidth: 44, textAlign: 'right' }}>+{cur} VP</span>
+              </div>
+              <div style={ruleStyle}>{o.rule}</div>
+            </div>
+          );
+        })}
+
+        {/* Vrij veld voor overige/onbekende objective-VP (catch-all naast de bovenstaande) */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '2px 1px' }}>
-          <span style={{ flex: 1, minWidth: 0, fontFamily: serif, fontSize: 12.5, color: TOW.parchDim }}>Objective / scenario VP (+)</span>
+          <span style={{ flex: 1, minWidth: 0, fontFamily: serif, fontSize: 12.5, color: TOW.parchDim }}>Other objective VP (+)</span>
           <input
             type="number"
             inputMode="numeric"
