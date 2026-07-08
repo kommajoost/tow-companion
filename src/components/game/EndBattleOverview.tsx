@@ -3,6 +3,7 @@ import { useGame } from '../../game';
 import { useBackClose } from '../../lib/backStack';
 import { unitTotalStrength } from '../../lib/armyRules';
 import { CampaignResultReporter } from './CampaignResultReporter';
+import { VpPanel } from './VpPanel';
 import type { Army, GameTracker } from '../../types';
 import type { VpResultaat } from '../../lib/victoryPoints';
 
@@ -87,6 +88,11 @@ export function EndBattleOverview({
         <div style={{ display: 'flex', alignItems: 'stretch', gap: 8, marginTop: 16 }}>
           <ScoreCell name={hostName} vp={res.hostVp} leads={res.winnaar === 'host'} />
           <ScoreCell name={guestName} vp={res.guestVp} leads={res.winnaar === 'guest'} />
+        </div>
+
+        {/* 2b — Bonussen & objectives + regel-referentie (verhuisd uit de losse banner; telt mee in de VP hierboven) */}
+        <div style={{ marginTop: 14 }}>
+          <VpPanel res={res} hostName={hostName} guestName={guestName} hideOutcome />
         </div>
 
         {/* 3 — Casualty-samenvatting per kant (host, dan guest) */}

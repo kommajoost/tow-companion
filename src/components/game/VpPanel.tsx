@@ -31,11 +31,13 @@ const UITSLAG_LABEL: Record<'draw' | 'victory' | 'crushing', string> = {
 //
 // `compact` = variant voor de smalle wide-sidebar: kleinere headline + iets strakkere spacing.
 // De phone-variant laat 'm weg (ruimere weergave).
-export function VpPanel({ compact = false, res, hostName, guestName }: {
+export function VpPanel({ compact = false, res, hostName, guestName, hideOutcome = false }: {
   compact?: boolean;
   res: VpResultaat;
   hostName: string;
   guestName: string;
+  /** Verberg de uitslag-badge (bv. in het End-battle-overzicht, waar de headline de uitslag al toont). */
+  hideOutcome?: boolean;
 }) {
   const { tracker, setTracker, code } = useGame();
   const [rulesOpen, setRulesOpen] = useState(false);
@@ -73,15 +75,17 @@ export function VpPanel({ compact = false, res, hostName, guestName }: {
     <div style={box}>
       <div style={{ ...eb, fontSize: 8.5, color: TOW.goldDeep, marginBottom: 9 }}>Victory Points</div>
 
-      {/* Uitslag-badge — nu de headline van de banner (grote VP-cijfers staan in BattleBar / End-battle) */}
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, padding: '8px 10px', borderRadius: 9, background: res.uitslag === 'draw' ? 'transparent' : 'rgba(184,134,47,0.12)', border: `1px solid ${res.uitslag === 'draw' ? TOW.line : TOW.goldDeep}`, marginBottom: 12 }}>
-        <span style={{ fontFamily: display, fontWeight: 700, fontSize: compact ? 14 : 15, color: res.uitslag === 'draw' ? TOW.muted : TOW.goldDeep, textAlign: 'center' }}>
-          {winnerName ? `${winnerName} — ${uitslagLabel}` : uitslagLabel}
-        </span>
-        {res.verschil > 0 && (
-          <span style={{ fontFamily: serif, fontSize: 12.5, color: TOW.parchDim, whiteSpace: 'nowrap' }}>+{res.verschil} VP</span>
-        )}
-      </div>
+      {/* Uitslag-badge — headline van de banner. In het End-battle-overzicht verborgen (hideOutcome). */}
+      {!hideOutcome && (
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, padding: '8px 10px', borderRadius: 9, background: res.uitslag === 'draw' ? 'transparent' : 'rgba(184,134,47,0.12)', border: `1px solid ${res.uitslag === 'draw' ? TOW.line : TOW.goldDeep}`, marginBottom: 12 }}>
+          <span style={{ fontFamily: display, fontWeight: 700, fontSize: compact ? 14 : 15, color: res.uitslag === 'draw' ? TOW.muted : TOW.goldDeep, textAlign: 'center' }}>
+            {winnerName ? `${winnerName} — ${uitslagLabel}` : uitslagLabel}
+          </span>
+          {res.verschil > 0 && (
+            <span style={{ fontFamily: serif, fontSize: 12.5, color: TOW.parchDim, whiteSpace: 'nowrap' }}>+{res.verschil} VP</span>
+          )}
+        </div>
+      )}
 
       {/* Bonus-invoer per kant (wat DIE kant scoort tegen de vijand) — inklapbaar zodat het paneel
           compact blijft (belangrijk op mobiel, waar dit boven de roster staat). */}

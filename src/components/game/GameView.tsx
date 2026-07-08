@@ -8,7 +8,6 @@ import { makeTroopTypeLookup, enrichArmyTroopTypes } from '../../lib/troopTypes'
 import { unitTotalStrength } from '../../lib/armyRules';
 import { UnitCard } from './UnitCard';
 import { BattleBar } from './BattleBar';
-import { VpPanel } from './VpPanel';
 import { OwbInstructions } from './OwbInstructions';
 import { ArmyListPicker } from './ArmyListPicker';
 import { EndBattleOverview } from './EndBattleOverview';
@@ -172,7 +171,6 @@ export function GameView() {
             <CodeBadge code={code} onLeave={leaveGame} waiting={!!(code && seat === 'host' && !opponentArmy)} />
             {sideToggle}
             {battleBar}
-            {(myArmy || opponentArmy) && <VpPanel compact res={res} hostName={hostName} guestName={guestName} />}
             {(myArmy || opponentArmy) && (
               <button onClick={() => setEndOpen(true)} style={{ width: '100%', border: 'none', borderRadius: 11, cursor: 'pointer', padding: '12px 16px', background: `linear-gradient(180deg, ${TOW.goldBright}, ${TOW.gold} 55%, ${TOW.goldDeep})`, color: TOW.onGrad, fontFamily: display, fontWeight: 700, fontSize: 14 }}>End battle</button>
             )}
@@ -219,10 +217,6 @@ export function GameView() {
 
       {battleBar && (
         <div style={{ flexShrink: 0, padding: '0 10px 8px', maxWidth: 620, width: '100%', margin: '0 auto', boxSizing: 'border-box' }}>{battleBar}</div>
-      )}
-
-      {(myArmy || opponentArmy) && (
-        <div style={{ flexShrink: 0, padding: '0 10px 8px', maxWidth: 620, width: '100%', margin: '0 auto', boxSizing: 'border-box' }}><VpPanel res={res} hostName={hostName} guestName={guestName} /></div>
       )}
 
       <div style={{ flex: 1, minHeight: 0, overflowY: 'auto', padding: '4px 12px 28px', maxWidth: 620, width: '100%', margin: '0 auto' }}>
