@@ -149,18 +149,7 @@ export function WoundTracker({
 
   return (
     <div style={{ marginTop: 11, paddingTop: 11, borderTop: `1px solid ${TOW.line}` }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 9 }}>
-        <span style={{ ...eb, fontSize: 8.5, color: TOW.muted }}>Strength tracker</span>
-        {(dead || weg) ? (
-          <span style={{ marginLeft: 'auto', ...eb, fontSize: 8, color: TOW.blood, display: 'flex', alignItems: 'center', gap: 4 }}>
-            <Skull c={TOW.blood} />{weg ? 'Removed' : 'Destroyed'}
-          </span>
-        ) : (
-          clampedLost > 0 && <span style={{ marginLeft: 'auto', ...eb, fontSize: 8, color: TOW.muted }}>{clampedLost} lost</span>
-        )}
-      </div>
-
-      {/* Tellers */}
+      {/* Tellers — de enige numerieke bron (de bar hieronder is puur visueel) */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
         {showModels && (
           <CounterRow
@@ -197,15 +186,16 @@ export function WoundTracker({
         )}
       </div>
 
-      {/* Strength-bar + resterend totaal */}
-      <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', margin: '10px 0 5px' }}>
-        <div style={{ display: 'flex', alignItems: 'baseline', gap: 5 }}>
-          <span style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 15, color: dead ? TOW.blood : TOW.ink }}>{remaining}</span>
-          <span style={{ fontFamily: towFont.serif, fontSize: 11.5, color: TOW.muted }}>/ {total} {total === 1 ? 'wound' : 'wounds'} left</span>
+      {/* Strength-bar — puur visueel; status (Destroyed/Removed) rechts. Getallen staan in de teller. */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 10 }}>
+        <div style={{ flex: 1, height: 6, borderRadius: 99, background: 'rgba(74,55,22,0.12)', overflow: 'hidden' }}>
+          <div style={{ width: `${pct * 100}%`, height: '100%', borderRadius: 99, background: barColor, transition: 'width .25s ease' }} />
         </div>
-      </div>
-      <div style={{ height: 6, borderRadius: 99, background: 'rgba(74,55,22,0.12)', overflow: 'hidden' }}>
-        <div style={{ width: `${pct * 100}%`, height: '100%', borderRadius: 99, background: barColor, transition: 'width .25s ease' }} />
+        {(dead || weg) && (
+          <span style={{ ...eb, fontSize: 8, color: TOW.blood, display: 'flex', alignItems: 'center', gap: 4, flexShrink: 0 }}>
+            <Skull c={TOW.blood} />{weg ? 'Removed' : 'Destroyed'}
+          </span>
+        )}
       </div>
 
       {/* Toggles: Fleeing + Removed */}
