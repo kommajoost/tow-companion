@@ -26,6 +26,11 @@ interface GameContextValue {
   error: string | null;
   createGame: (name: string, army: Army | null) => Promise<string | null>;
   joinGame: (code: string, name: string, army: Army | null) => Promise<boolean>;
+  /** Open a campaign battle in this app's realtime game mode, keyed by the campaign's sync CODE
+   *  (not a freshly-generated one). Seats the user as host (attacker) or guest (defender): if no
+   *  tow_games row exists for that code yet it's created with the user in their seat, otherwise the
+   *  user joins their seat. Both players thus land in the same realtime game. Returns true on success. */
+  openCampaignBattle: (code: string, seat: 'host' | 'guest', name: string, army: Army | null) => Promise<boolean>;
   /** Recent games (newest first) for the join lobby. */
   listGames: () => Promise<GameSummary[]>;
   startSolo: (army?: Army | null) => void;
@@ -233,6 +238,72 @@ export function GameProvider({ children }: { children: ReactNode }) {
     [setPersisted],
   );
 
+  // Open (create-or-join) a game on a FIXED code — the campaign battle's sync code — with the user
+  // seated as host (attacker) or guest (defender). Unlike createGame this never allocates a random
+  // code; unlike joinGame it creates the row on first open. Both participants call this with their
+  // own seat, so they meet in the same realtime game. Writes only the user's own seat columns.
+  const openCampaignBattle = useCallback(
+    async (battleCode: string, mySeat: 'host' | 'guest', name: string, army: Army | null): Promise<boolean> => {
+      setBusy(true);
+      setError(null);
+      const c = battleCode.trim().toUpperCase();
+      const nameCol = mySeat === 'host' ? 'host_name' : 'guest_name';
+      const armyCol = mySeat === 'host' ? 'host_army' : 'guest_army';
+      const fallbackName = mySeat === 'host' ? 'Host' : 'Guest';
+      try {
+        const { data: existing, error: selErr } = await withTimeout(
+          supabase.from(TOW_GAMES).select('*').eq('code', c).maybeSingle(),
+          15000,
+          'Opening the battle timed out. Please reload the app and try again.',
+        );
+        if (selErr) throw selErr;
+
+        if (!existing) {
+          // First to open this battle → create the row seated on our side.
+          const { data: created, error: insErr } = await withTimeout(
+            supabase
+              .from(TOW_GAMES)
+              .insert({ code: c, [nameCol]: name || fallbackName, [armyCol]: army ?? null })
+              .select()
+              .single(),
+            15000,
+            'Opening the battle timed out. Please reload the app and try again.',
+          );
+          // A race (opponent created it a beat earlier) surfaces as a unique violation — fall through
+          // to the update path instead of failing.
+          if (insErr && !/duplicate|unique/i.test(insErr.message || '')) throw insErr;
+          if (created) {
+            setGame(created as GameRow);
+            setPersisted({ seat: mySeat, code: c });
+            return true;
+          }
+        }
+
+        // Row exists (or we just lost the create race) → write our own seat columns.
+        const { data: updated, error: updErr } = await withTimeout(
+          supabase
+            .from(TOW_GAMES)
+            .update({ [nameCol]: name || fallbackName, [armyCol]: army ?? null })
+            .eq('code', c)
+            .select()
+            .single(),
+          15000,
+          'Opening the battle timed out. Please reload the app and try again.',
+        );
+        if (updErr) throw updErr;
+        setGame(updated as GameRow);
+        setPersisted({ seat: mySeat, code: c });
+        return true;
+      } catch (e) {
+        setError(supaErr(e));
+        return false;
+      } finally {
+        setBusy(false);
+      }
+    },
+    [setPersisted],
+  );
+
   const startSolo = useCallback((army?: Army | null) => {
     setError(null);
     if (army) setSoloMine(army); // seed "my army" when a saved/pasted list was chosen at setup
@@ -363,6 +434,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
       error,
       createGame,
       joinGame,
+      openCampaignBattle,
       listGames,
       startSolo,
       setMyArmy,
@@ -382,6 +454,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
     error,
     createGame,
     joinGame,
+    openCampaignBattle,
     listGames,
     startSolo,
     setMyArmy,

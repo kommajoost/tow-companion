@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { usePersistentState } from '../store';
+import { usePersistentState, setPersisted } from '../store';
 import { TOW } from '../design/tow';
 import { HomeCover } from './HomeCover';
 import { CompanionView } from './companion/CompanionView';
@@ -49,6 +49,22 @@ export function AppShell() {
   const [screen, setScreen] = usePersistentState<Screen>('tow:screen', 'home');
   const [tab, setTab] = usePersistentState<Tab>('tow:tab', 'play');
   const wide = useWide();
+
+  // Deep-link: /?battle=<code> opens a campaign battle (mirrors the campaign app's ?campaign=<code>).
+  // Stash the code for the Game tab's campaign-battle flow, jump straight into the app on the Game
+  // tab, then strip the query so a reload doesn't re-trigger it. Runs once at mount; flows WITHOUT
+  // ?battle= are untouched (the effect no-ops), so existing behaviour is unchanged.
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const raw = new URLSearchParams(window.location.search).get('battle');
+    const code = (raw || '').trim().toUpperCase();
+    if (!code) return;
+    setPersisted('tow:campaign-battle', code);
+    setScreen('app');
+    setTab('game');
+    window.history.replaceState(null, '', window.location.pathname);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // In-memory history of tabs visited this session (oldest → newest-but-one). Switching to a new
   // tab pushes the one we're leaving; a hardware Back pops it and restores it. Not persisted — on a

@@ -10,6 +10,7 @@ import { UnitCard } from './UnitCard';
 import { BattleBar } from './BattleBar';
 import { OwbInstructions } from './OwbInstructions';
 import { ArmyListPicker } from './ArmyListPicker';
+import { CampaignResultReporter } from './CampaignResultReporter';
 import type { Army, ArmyUnit } from '../../types';
 
 const eb = engraved as React.CSSProperties;
@@ -144,6 +145,7 @@ export function GameView() {
             <CodeBadge code={code} onLeave={leaveGame} waiting={!!(code && seat === 'host' && !opponentArmy)} />
             {sideToggle}
             {battleBar}
+            <CampaignResultReporter />
           </div>
         </div>
 
@@ -195,6 +197,7 @@ export function GameView() {
           </div>
         )}
         {rosterBody}
+        <div style={{ marginTop: 16 }}><CampaignResultReporter /></div>
       </div>
     </div>
   );
