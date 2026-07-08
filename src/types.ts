@@ -1,5 +1,10 @@
 // Shape of the data produced by scripts/scrape.mjs (public/rules.json).
 
+// Type-only import: VpBonus komt uit de VP-engine, die op zijn beurt `import type`-only uit dit
+// bestand leest. Beide zijden zijn puur type-only, dus deze cyclus verdwijnt bij compile (geen
+// runtime-import) en is veilig.
+import type { VpBonus } from './lib/victoryPoints';
+
 /** A Contentful rich-text node (paragraph, heading, list, table, text, link, ...). */
 export interface RichNode {
   nodeType: string;
@@ -206,6 +211,9 @@ export interface Army {
 export interface UnitTrack {
   lost: number; // wounds/casualties taken
   fleeing: boolean;
+  /** Unit vernietigd of van tafel gevlucht (volledig verwijderd) → 100% VP voor de vijand.
+   *  Optioneel: oude trackers hebben dit veld niet; de VP-engine verdraagt het ontbreken. */
+  weg?: boolean;
 }
 
 /** Shared battle-tracking state for a game (round, VP per side, per-unit casualties). */
@@ -215,6 +223,9 @@ export interface GameTracker {
   vp: Record<string, number>;
   /** Per-unit state keyed `<seat>:<unitId>`. */
   units: Record<string, UnitTrack>;
+  /** Handmatige VP-bonussen per kant (General/BSB down, buitgemaakte standaards, scenario-VP).
+   *  Optioneel + back-compat: oude trackers hebben dit niet; berekenVictory valt terug op {}. */
+  bonus?: { host?: VpBonus; guest?: VpBonus };
 }
 
 /** A shared game row (mirrors the tow_games table). */

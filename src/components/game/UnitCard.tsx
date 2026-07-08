@@ -7,6 +7,7 @@ import { unitWeapons } from '../../lib/weaponStats';
 import { CombatStats } from './CombatStats';
 import { InfoSheet, type InfoSheetData } from './InfoSheet';
 import { WizardSpells } from './WizardSpells';
+import { WoundTracker } from './WoundTracker';
 import type { ArmyUnit, UnitProfile } from '../../types';
 
 const eb = engraved as React.CSSProperties;
@@ -20,7 +21,11 @@ export function UnitCard({
   editable = false,
   onChange,
   lost,
-  onCasualty,
+  weg,
+  fleeing,
+  onSetLost,
+  onRemoved,
+  onFlee,
   collapsed = false,
   onToggleCollapse,
 }: {
@@ -30,8 +35,17 @@ export function UnitCard({
   faction?: string;
   editable?: boolean;
   onChange?: (patch: Partial<ArmyUnit>) => void;
+  /** Casualty tracking (only wired in the game roster). When `onSetLost` is given the card renders
+   *  the WoundTracker and dims when the unit is wiped out or Removed. */
   lost?: number;
-  onCasualty?: (dir: number) => void;
+  weg?: boolean;
+  fleeing?: boolean;
+  /** Absolute setter for total lost wounds (WoundTracker's two counters reduce to this). */
+  onSetLost?: (lost: number) => void;
+  /** Toggle the unit's Removed (destroyed / off-table → 100% VP) state. */
+  onRemoved?: () => void;
+  /** Toggle the unit's Fleeing state. */
+  onFlee?: () => void;
   /** In the game roster, units are collapsed by default; the header toggles open to show the card. */
   collapsed?: boolean;
   onToggleCollapse?: () => void;
@@ -43,7 +57,8 @@ export function UnitCard({
   const armour = useMemo(() => unitArmourSave(unit), [unit]);
   const weapons = useMemo(() => unitWeapons(unit, rules), [unit, rules]);
   const hasWeapons = weapons.melee.length > 0 || weapons.ranged.length > 0;
-  const dead = (lost ?? 0) >= unitTotalStrength(unit) && onCasualty != null;
+  const tracked = onSetLost != null; // casualty-UI is alleen gewired in de game-roster
+  const dead = tracked && ((lost ?? 0) >= unitTotalStrength(unit) || (weg ?? false));
   // Chosen magic items (weapons, armour, talismans, runes, banners, …) have no rule page; tapping one
   // in the loadout line opens its info sheet (flavour + special rules) instead of the rule sheet.
   const [info, setInfo] = useState<InfoSheetData | null>(null);
@@ -191,6 +206,19 @@ export function UnitCard({
 
       {isWizard && (
         <WizardSpells unit={unit} editable={editable} onChange={onChange ?? (() => {})} />
+      )}
+
+      {tracked && (
+        <WoundTracker
+          unit={unit}
+          lost={lost ?? 0}
+          onSetLost={onSetLost!}
+          fleeing={fleeing ?? false}
+          onFlee={onFlee ?? (() => {})}
+          weg={weg ?? false}
+          onRemoved={onRemoved ?? (() => {})}
+          editable={editable}
+        />
       )}
       </>)}
 

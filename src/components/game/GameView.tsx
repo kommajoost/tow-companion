@@ -8,6 +8,7 @@ import { makeTroopTypeLookup, enrichArmyTroopTypes } from '../../lib/troopTypes'
 import { unitTotalStrength } from '../../lib/armyRules';
 import { UnitCard } from './UnitCard';
 import { BattleBar } from './BattleBar';
+import { VpPanel } from './VpPanel';
 import { OwbInstructions } from './OwbInstructions';
 import { ArmyListPicker } from './ArmyListPicker';
 import { CampaignResultReporter } from './CampaignResultReporter';
@@ -63,14 +64,26 @@ export function GameView() {
   const meKey = absSeat('me');
   const oppKey = absSeat('opp');
 
-  const adjCasualty = (unitId: string, dir: number) => {
+  // Absolute muteerhelpers voor de per-unit tracker (WoundTracker levert absolute waarden).
+  // `prev` default = { lost: 0, fleeing: false }; oude trackers zonder `weg` blijven zo werken.
+  const setCasualty = (unitId: string, lost: number) => {
     const u = army?.units.find((x) => x.id === unitId);
     if (!u) return;
     const total = unitTotalStrength(u);
     const key = unitKey(side, unitId);
     const prev = tracker.units[key] ?? { lost: 0, fleeing: false };
-    const lost = Math.min(total, Math.max(0, prev.lost + (dir < 0 ? 1 : -1)));
-    setTracker({ ...tracker, units: { ...tracker.units, [key]: { ...prev, lost } } });
+    const clamped = Math.min(total, Math.max(0, lost));
+    setTracker({ ...tracker, units: { ...tracker.units, [key]: { ...prev, lost: clamped } } });
+  };
+  const setRemoved = (unitId: string, weg: boolean) => {
+    const key = unitKey(side, unitId);
+    const prev = tracker.units[key] ?? { lost: 0, fleeing: false };
+    setTracker({ ...tracker, units: { ...tracker.units, [key]: { ...prev, weg } } });
+  };
+  const toggleFleeing = (unitId: string) => {
+    const key = unitKey(side, unitId);
+    const prev = tracker.units[key] ?? { lost: 0, fleeing: false };
+    setTracker({ ...tracker, units: { ...tracker.units, [key]: { ...prev, fleeing: !prev.fleeing } } });
   };
   const adjRound = (dir: number) => setTracker({ ...tracker, round: Math.min(6, Math.max(1, tracker.round + dir)) });
   const adjVp = (which: 'me' | 'opp', dir: number) => {
@@ -115,7 +128,7 @@ export function GameView() {
         {g.units.map((u) => {
           const t = tracker.units[unitKey(side, u.id)];
           return (
-            <UnitCard key={u.id} unit={u} faction={army.faction} editable={editable} onChange={(patch) => onUnitChange(u.id, patch)} lost={t?.lost ?? 0} onCasualty={(dir) => adjCasualty(u.id, dir)} collapsed={!expanded.has(u.id)} onToggleCollapse={() => toggleExpand(u.id)} />
+            <UnitCard key={u.id} unit={u} faction={army.faction} editable={editable} onChange={(patch) => onUnitChange(u.id, patch)} lost={t?.lost ?? 0} weg={t?.weg ?? false} fleeing={t?.fleeing ?? false} onSetLost={(lost) => setCasualty(u.id, lost)} onRemoved={() => setRemoved(u.id, !(t?.weg ?? false))} onFlee={() => toggleFleeing(u.id)} collapsed={!expanded.has(u.id)} onToggleCollapse={() => toggleExpand(u.id)} />
           );
         })}
       </div>
@@ -145,6 +158,7 @@ export function GameView() {
             <CodeBadge code={code} onLeave={leaveGame} waiting={!!(code && seat === 'host' && !opponentArmy)} />
             {sideToggle}
             {battleBar}
+            {(myArmy || opponentArmy) && <VpPanel compact />}
             <CampaignResultReporter />
           </div>
         </div>
@@ -188,6 +202,10 @@ export function GameView() {
 
       {battleBar && (
         <div style={{ flexShrink: 0, padding: '0 10px 8px', maxWidth: 620, width: '100%', margin: '0 auto', boxSizing: 'border-box' }}>{battleBar}</div>
+      )}
+
+      {(myArmy || opponentArmy) && (
+        <div style={{ flexShrink: 0, padding: '0 10px 8px', maxWidth: 620, width: '100%', margin: '0 auto', boxSizing: 'border-box' }}><VpPanel /></div>
       )}
 
       <div style={{ flex: 1, minHeight: 0, overflowY: 'auto', padding: '4px 12px 28px', maxWidth: 620, width: '100%', margin: '0 auto' }}>

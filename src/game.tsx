@@ -101,6 +101,8 @@ function normTracker(t: GameTracker | null | undefined): GameTracker {
     round: typeof t.round === 'number' ? t.round : 1,
     vp: t.vp && typeof t.vp === 'object' ? t.vp : {},
     units: t.units && typeof t.units === 'object' ? t.units : {},
+    // Neem `bonus` alleen over als het echt een object is (oude trackers hebben 'm niet → undefined).
+    ...(t.bonus && typeof t.bonus === 'object' ? { bonus: t.bonus } : {}),
   };
 }
 

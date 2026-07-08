@@ -2,11 +2,24 @@ import { useEffect, useMemo, useState } from 'react';
 import { TOW, towFont, engraved } from '../../design/tow';
 import { useGame } from '../../game';
 import { battleByCode, reportBattleResult, type CampaignBattle, type BattleResultaat } from '../../lib/campaignBattle';
+import { berekenVictory, type VpBonus, type Uitslag } from '../../lib/victoryPoints';
 import type { GameTracker } from '../../types';
 
 const eb = engraved as React.CSSProperties;
 const display = towFont.display;
 const serif = towFont.serif;
+
+// De VP-bonussen (general/BSB/standaards/objective) worden door een PARALLELLE taak op de tracker
+// gezet als `tracker.bonus.{host,guest}`. Op het moment van schrijven zit dat veld nog niet in het
+// GameTracker-type, dus lezen we het via een smalle lokale shape i.p.v. een `any`-cast die de build
+// zou breken. Zodra het type wél bestaat blijft dit gewoon compileren (structureel compatibel).
+type MetBonus = { bonus?: { host?: VpBonus; guest?: VpBonus } };
+function readBonus(tracker: GameTracker | null): { host?: VpBonus; guest?: VpBonus } {
+  return (tracker as (GameTracker & MetBonus) | null)?.bonus ?? {};
+}
+
+// Engine-uitslag → Engels UI-label.
+const uitslagLabel = (u: Uitslag): string => (u === 'crushing' ? 'Crushing Victory' : u === 'victory' ? 'Victory' : 'Draw');
 
 // F5 — report a campaign battle's result back to "De Grensvorsten". Only renders when the active
 // game's code actually maps to a campaign battle (we probe with towc_battle_by_code; a normal ad-hoc
@@ -40,6 +53,9 @@ export function CampaignResultReporter() {
   const [battle, setBattle] = useState<CampaignBattle | null>(null);
   const [open, setOpen] = useState(false);
   const [winner, setWinner] = useState<'host' | 'guest' | 'draw'>('draw');
+  // `touched` = de speler heeft zélf een winnaar-knop geklikt. Zolang dit false is, prefillen we
+  // `winner` uit de engine (res.winnaar); zodra de speler kiest, laten we z'n keuze staan (overrulebaar).
+  const [touched, setTouched] = useState(false);
   const [notes, setNotes] = useState('');
   const [busy, setBusy] = useState(false);
   const [done, setDone] = useState(false);
@@ -55,11 +71,24 @@ export function CampaignResultReporter() {
     return () => { alive = false; };
   }, [code]);
 
-  // VP from the shared tracker (keyed host/guest), and the campaign player ids for each seat.
-  const vpHost = tracker.vp.host ?? 0;
-  const vpGuest = tracker.vp.guest ?? 0;
+  // VP via de rules-kritieke engine (kill-VP uit Dead-or-Fled + handmatige bonussen), NIET meer ruw
+  // uit tracker.vp. Bonussen defensief gelezen (zie readBonus). Engine verdraagt afwezige velden.
+  const res = useMemo(() => {
+    const b = readBonus(tracker);
+    return berekenVictory(game?.host_army ?? null, game?.guest_army ?? null, tracker, b.host, b.guest);
+  }, [tracker, game?.host_army, game?.guest_army]);
+  const vpHost = res.hostVp;
+  const vpGuest = res.guestVp;
   const attackerId = battle?.aanvaller.id ?? null;
   const defenderId = battle?.verdediger.id ?? null;
+
+  // Prefill de winnaar-keuze uit de engine zolang de speler nog niet zelf heeft gekozen (touched).
+  // Re-render-veilig: draait alleen als de engine-uitkomst of `touched` verandert, en muteert `winner`
+  // niet zodra de speler heeft overruled. res.winnaar (null = draw) → onze 'host'|'guest'|'draw'.
+  useEffect(() => {
+    if (touched) return;
+    setWinner(res.winnaar ?? 'draw');
+  }, [res.winnaar, touched]);
 
   const kills = useMemo(
     () => (battle ? collectKills(tracker, game?.host_army?.units, game?.guest_army?.units) : []),
@@ -68,16 +97,31 @@ export function CampaignResultReporter() {
 
   if (!code || !battle) return null; // not a campaign battle → nothing to report
 
+  const hostName = game?.host_name || battle.aanvaller.naam || 'Attacker';
+  const guestName = game?.guest_name || battle.verdediger.naam || 'Defender';
+
+  // Marge-regel voor de campagne: er is geen apart marge-veld, dus we hangen één nette Engelse regel
+  // aan de notes zodat de grensmaster minor (Victory) vs major (Crushing Victory) ziet. Bij een draw
+  // vermelden we de VP-swing (verschil). We appenden aan de door de speler getypte notes en zorgen
+  // dat dit NIET dubbel gebeurt bij "Report again" (we bouwen 'm elke submit vers uit `notes`).
+  const marginLine = (): string => {
+    if (res.winnaar === null) return `Result: Draw (${res.verschil} VP swing)`;
+    const winName = res.winnaar === 'host' ? hostName : guestName;
+    return `Result: ${uitslagLabel(res.uitslag)} — ${winName} +${res.verschil} VP`;
+  };
+
   const submit = async () => {
     if (!attackerId || !defenderId) { setErr('This battle is missing its campaign players.'); return; }
     setBusy(true);
     setErr(null);
     const winnaar = winner === 'host' ? attackerId : winner === 'guest' ? defenderId : null;
+    // Notes = wat de speler typte + de marge-regel; null alleen als beide leeg zijn.
+    const notities = [notes.trim(), marginLine()].filter(Boolean).join('\n') || null;
     const resultaat: BattleResultaat = {
       winnaar,
       vp: { [attackerId]: vpHost, [defenderId]: vpGuest },
       kills,
-      notities: notes.trim() || null,
+      notities,
     };
     try {
       await reportBattleResult(code, resultaat);
@@ -89,9 +133,6 @@ export function CampaignResultReporter() {
       setBusy(false);
     }
   };
-
-  const hostName = game?.host_name || battle.aanvaller.naam || 'Attacker';
-  const guestName = game?.guest_name || battle.verdediger.naam || 'Defender';
 
   const box: React.CSSProperties = { border: `1px solid ${TOW.goldDeep}`, borderRadius: 12, background: 'rgba(184,134,47,0.08)', padding: '13px 14px' };
   const optBtn = (on: boolean): React.CSSProperties => ({ flex: 1, padding: '9px 6px', borderRadius: 9, cursor: 'pointer', border: `1px solid ${on ? TOW.goldDeep : TOW.line}`, background: on ? TOW.cardLt : 'transparent', color: on ? TOW.ink : TOW.muted, fontFamily: display, fontWeight: 600, fontSize: 13, overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' });
@@ -122,17 +163,20 @@ export function CampaignResultReporter() {
     <div style={box}>
       <div style={{ ...eb, fontSize: 8.5, color: TOW.goldDeep, marginBottom: 8 }}>Report result · {code}</div>
 
-      <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginBottom: 5 }}>Winner</div>
+      <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginBottom: 5 }}>Winner {!touched && <span style={{ color: TOW.goldDeep }}>· auto from VP</span>}</div>
       <div style={{ display: 'flex', gap: 4, marginBottom: 12 }}>
-        <button onClick={() => setWinner('host')} style={optBtn(winner === 'host')}>{hostName}</button>
-        <button onClick={() => setWinner('draw')} style={optBtn(winner === 'draw')}>Draw</button>
-        <button onClick={() => setWinner('guest')} style={optBtn(winner === 'guest')}>{guestName}</button>
+        <button onClick={() => { setTouched(true); setWinner('host'); }} style={optBtn(winner === 'host')}>{hostName}</button>
+        <button onClick={() => { setTouched(true); setWinner('draw'); }} style={optBtn(winner === 'draw')}>Draw</button>
+        <button onClick={() => { setTouched(true); setWinner('guest'); }} style={optBtn(winner === 'guest')}>{guestName}</button>
       </div>
 
-      <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginBottom: 5 }}>Victory points (from the tracker)</div>
-      <div style={{ fontFamily: serif, fontSize: 13.5, color: TOW.ink, marginBottom: 12 }}>
+      <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginBottom: 5 }}>Victory points (calculated)</div>
+      <div style={{ fontFamily: serif, fontSize: 13.5, color: TOW.ink, marginBottom: 4 }}>
         {hostName}: <strong>{vpHost}</strong> · {guestName}: <strong>{vpGuest}</strong>
         {kills.length > 0 && <span style={{ color: TOW.muted }}> · {kills.length} unit{kills.length === 1 ? '' : 's'} with losses</span>}
+      </div>
+      <div style={{ fontFamily: display, fontWeight: 700, fontSize: 13, color: res.uitslag === 'crushing' ? TOW.goldBright : res.winnaar ? TOW.goldDeep : TOW.muted, marginBottom: 12 }}>
+        {uitslagLabel(res.uitslag)} · +{res.verschil} VP
       </div>
 
       <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginBottom: 5 }}>Notes (optional)</div>
