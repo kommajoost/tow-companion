@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { TOW, towFont, engraved } from '../../design/tow';
-import { usePersistentState } from '../../store';
+import { usePersistentState, setPersisted } from '../../store';
 import { useGame } from '../../game';
 import { parseArmyList } from '../../lib/armyParser';
 import { builderListToArmy, listTotal, type MagicText, type MountText } from '../../lib/builderToArmy';
@@ -10,6 +10,8 @@ import type { BuilderList, OwbArmy, MagicItemsData } from '../../lib/owbBuilder'
 import { OwbInstructions } from './OwbInstructions';
 import { BattleSetup } from './BattleSetup';
 import type { Army, GameSummary } from '../../types';
+import { getCachedCampaign, getCampaignCode } from '../../lib/campaign';
+import { myCampaignBattles, type CampaignBattleSummary } from '../../lib/campaignBattle';
 
 const eb = engraved as React.CSSProperties;
 const BASE = import.meta.env.BASE_URL;
@@ -32,6 +34,16 @@ export function GameSetup() {
   const [games, setGames] = useState<GameSummary[] | null>(null);
   const [loadingGames, setLoadingGames] = useState(false);
   const [showBattle, setShowBattle] = useState(false);
+  const [campBattles, setCampBattles] = useState<CampaignBattleSummary[]>([]);
+  const myPlayerId = getCachedCampaign()?.context?.speler?.id ?? null;
+
+  // Speelklare campagne-battles ophalen als deze Companion aan een campagne-profiel gekoppeld is.
+  useEffect(() => {
+    if (!getCampaignCode() || !myPlayerId) return;
+    let alive = true;
+    myCampaignBattles(myPlayerId).then((bs) => { if (alive) setCampBattles(bs); }).catch(() => {});
+    return () => { alive = false; };
+  }, [myPlayerId]);
 
   // Your saved builder lists (tow:lists) + the catalogue data needed to convert one into an Army.
   // Lists can span DIFFERENT armies, so we keep a per-army catalogue cache + army metadata (names,
@@ -120,6 +132,31 @@ export function GameSetup() {
         <p style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 15, color: TOW.parchDim, margin: '0 0 18px' }}>
           Pick one of your saved army lists, or paste an Old World Builder export — to see each unit's profile and special rules, and share the match with your opponent.
         </p>
+
+        {campBattles.length > 0 && (
+          <div style={{ marginBottom: 18 }}>
+            <div style={{ ...eb, fontSize: 8.5, color: TOW.goldDeep, marginBottom: 8 }}>Campaign — ready to play</div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+              {campBattles.map((b) => {
+                const opp = myPlayerId && b.aanvaller.id === myPlayerId ? b.verdediger : b.aanvaller;
+                return (
+                  <button
+                    key={b.id}
+                    onClick={() => setPersisted('tow:campaign-battle', b.code)}
+                    style={{ display: 'flex', alignItems: 'center', gap: 11, width: '100%', textAlign: 'left', padding: '13px 15px', borderRadius: 12, cursor: 'pointer', border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.14)' }}
+                  >
+                    <span aria-hidden style={{ fontSize: 20, lineHeight: 1 }}>⚔️</span>
+                    <span style={{ flex: 1, minWidth: 0 }}>
+                      <span style={{ display: 'block', fontFamily: towFont.display, fontWeight: 700, fontSize: 15, color: TOW.goldDeep }}>Campaign battle vs {opp.naam || 'opponent'}</span>
+                      <span style={{ display: 'block', fontFamily: towFont.serif, fontSize: 12.5, color: TOW.muted }}>{b.scenarioNaam ? `${b.scenarioNaam} · ` : ''}both armies locked — open to play</span>
+                    </span>
+                    <span aria-hidden style={{ color: TOW.goldDeep, fontSize: 18, flexShrink: 0 }}>›</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
 
         <button onClick={() => setShowBattle(true)} style={{ display: 'flex', alignItems: 'center', gap: 11, width: '100%', textAlign: 'left', padding: '13px 15px', borderRadius: 12, cursor: 'pointer', border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.10)', marginBottom: 18 }}>
           <span aria-hidden style={{ fontSize: 22, lineHeight: 1 }}>🗺️</span>

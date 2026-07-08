@@ -129,3 +129,32 @@ export async function reportBattleResult(code: string, resultaat: BattleResultaa
   // De RPC hoeft geen {ok:true} terug te geven, maar als hij een fout-veld zet, respecteer dat.
   if (d.ok === false) throw new Error(str(d.fout, 'CAMPAGNE_BATTLE_FOUT'));
 }
+
+/** Samenvatting van één speelklare campagne-battle (beide legers gelockt → code aanwezig). Voor de
+ *  OWC-ingang: zo hoef je geen deep-link/code te plakken — je klaarstaande battles verschijnen vanzelf. */
+export interface CampaignBattleSummary {
+  id: number;
+  code: string;
+  status: string;
+  scenarioNaam: string | null;
+  aanvaller: BattleSide;
+  verdediger: BattleSide;
+}
+
+/** Haal de speelklare campagne-battles van een speler op (via z'n campagne-speler-id uit de koppeling).
+ *  Alleen battles waar beide legers gelockt zijn (er is een code) en die nog niet beslecht zijn. */
+export async function myCampaignBattles(speler: string): Promise<CampaignBattleSummary[]> {
+  const { data, error } = await supabase.rpc('towc_battles_voor_speler', { p_speler: speler });
+  if (error) throw error;
+  return arr(data).map((raw) => {
+    const d = (raw && typeof raw === 'object' ? raw : {}) as Record<string, unknown>;
+    return {
+      id: num(d.id),
+      code: str(d.code),
+      status: str(d.status),
+      scenarioNaam: typeof d.scenarioNaam === 'string' ? d.scenarioNaam : null,
+      aanvaller: parseSide(d.aanvaller),
+      verdediger: parseSide(d.verdediger),
+    };
+  });
+}
