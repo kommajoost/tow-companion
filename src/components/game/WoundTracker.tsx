@@ -70,11 +70,13 @@ export function WoundTracker({
   const wondenOpVoorste = clampedLost % wpm; // 0..wpm-1
   const modellenLevend = Math.max(0, start - modellenDood);
 
-  const showModels = start > 1; // single-model unit → geen models-rij
-  const showWounds = wpm > 1; // 1W-unit → geen aparte wonden-rij (elke wond = een model)
-  // Een single-model unit met W===1 heeft noch models- noch wounds-rij via bovenstaande; dan tonen
-  // we een simpele 0/1-wonden-rij zodat er altijd een control is.
-  const showSingleWound = !showModels && !showWounds;
+  const showModels = start > 1; // models-rij alleen bij multi-model units
+  // "Wonden op het voorste model" (0..W-1) alleen bij MULTI-model multi-wound: pas dan is er een
+  // "volgend model" waar de wonden op vallen. Bij een single model (character/monster) telt de
+  // hele-unit-wonden-rij hieronder (0..W). Dat was de bug: een W3-held toonde eerder cap W-1 = 2.
+  const showFrontWounds = start > 1 && wpm > 1;
+  // Single-model unit (óók multi-wound) → één wonden-rij van 0..total (= W).
+  const showSingleWound = start === 1;
 
   const pct = total ? remaining / total : 0;
   const barColor = dead ? TOW.blood : pct > 0.5 ? TOW.goldDeep : pct > 0.25 ? '#a8842f' : TOW.blood;
@@ -171,7 +173,7 @@ export function WoundTracker({
             incDisabled={modellenDood <= 0}
           />
         )}
-        {showWounds && (
+        {showFrontWounds && (
           <CounterRow
             label={showModels ? 'Wounds on front model' : 'Wounds'}
             value={wondenOpVoorste}
