@@ -170,6 +170,9 @@ export interface UnitProfile {
 
 export interface ArmyUnit {
   id: string; // stable within an army (index-based)
+  /** Campagne-koppeling (De Grensvorsten): matcht towc_spel_unit.unit_id = slug(customName) óf het type-id,
+   *  zelfde afleiding als de campagne-sync — zo landt de veteraan-XP op de juiste campagne-unit. */
+  campaignId?: string;
   name: string;
   count: number | null; // leading multiplier (e.g. 15 Warriors), null for single models
   points: number | null;

@@ -109,7 +109,10 @@ export function builderListToArmy(
     }
     units.push({
       id: e.uid,
-      name: u.name_en,
+      // Campagne-match-id: zelfde afleiding als towc_speler_units_sync (slug van customName, anders het
+      // type-id) zodat de veteraan-XP op de juiste campagne-unit landt. + custom-naam als display.
+      campaignId: e.customName?.trim() ? e.customName.trim().replace(/[^a-zA-Z0-9]+/g, '-').toLowerCase() : e.unitId,
+      name: e.customName?.trim() || u.name_en,
       count: multi ? e.count : null,
       points: entryPoints(u, e, opts.itemsData),
       category: CAT_LABEL[e.cat],

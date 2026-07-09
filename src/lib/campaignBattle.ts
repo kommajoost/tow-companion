@@ -120,8 +120,10 @@ export interface BattleResultaat {
    *  veteraan-XP + battle-scar-triggers van "De Grensvorsten". De campagne-RPC mag dit voorlopig
    *  negeren; het gaat mee in dezelfde jsonb-payload. Optioneel (oude clients sturen het niet). */
   veteraan?: {
-    /** Unit-id binnen het gemelde leger (ArmyUnit.id). */
+    /** Campagne-unit-id (matcht towc_spel_unit.unit_id — slug van de custom-naam óf het type-id). */
     unitId: string;
+    /** Unit-naam (custom-naam of type) — informatief voor de campagne/grensmaster. */
+    naam?: string;
     /** Unit overleefde met ≥50% start-Unit-Strength én is niet vluchtend/removed bij einde spel. */
     overleefd_50: boolean;
     /** Aantal kills + trofeeën door deze unit (0 als niet bijgehouden). */

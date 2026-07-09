@@ -22,6 +22,15 @@ function readBonus(tracker: GameTracker | null): { host?: VpBonus; guest?: VpBon
 // Engine-uitslag → Engels UI-label.
 const uitslagLabel = (u: Uitslag): string => (u === 'crushing' ? 'Crushing Victory' : u === 'victory' ? 'Victory' : 'Draw');
 
+// Supabase-fout (geen Error-instantie, dus e.message viel eerder weg) → leesbare reden. De report-RPC
+// raise't o.a. LEGERS_NIET_GELOCKT als niet beide kanten in de campagne-app hun leger gelockt hebben.
+function reportFoutTekst(msg: string): string {
+  if (/LEGERS_NIET_GELOCKT/.test(msg)) return 'Both armies must be locked in the campaign app first (battle Wizard → List → “Lock army” on both sides), then report again.';
+  if (/AL_VERWERKT/.test(msg)) return 'This battle already has a recorded result in the campaign.';
+  if (/ONBEKENDE_CODE/.test(msg)) return "This game's code isn't linked to a campaign battle.";
+  return msg || 'Could not report the result.';
+}
+
 // F5 — report a campaign battle's result back to "De Grensvorsten". Only renders when the active
 // game's code actually maps to a campaign battle (we probe with towc_battle_by_code; a normal ad-hoc
 // game returns ONBEKENDE_CODE and this renders nothing). The reporter maps host→attacker and
@@ -69,7 +78,7 @@ function collectVeteraan(tracker: GameTracker, ownArmy: Army | null, ownSeat: 'h
     const weg = t?.weg ?? false;
     const overleefd_50 = remaining >= ts * 0.5 && !fleeing && !weg;
     const scar_trigger = remaining < ts * 0.25 || weg || fleeing;
-    out.push({ unitId: u.id, overleefd_50, kills: Math.max(0, t?.kills ?? 0), scar_trigger });
+    out.push({ unitId: u.campaignId ?? u.id, naam: u.name, overleefd_50, kills: Math.max(0, t?.kills ?? 0), scar_trigger });
   }
   return out;
 }
@@ -164,7 +173,7 @@ export function CampaignResultReporter({ embedded = false }: { embedded?: boolea
       setDone(true);
       setOpen(false);
     } catch (e) {
-      setErr(e instanceof Error ? e.message : 'Could not report the result.');
+      setErr(reportFoutTekst((e as { message?: string })?.message || (e instanceof Error ? e.message : '') || ''));
     } finally {
       setBusy(false);
     }
@@ -216,6 +225,28 @@ export function CampaignResultReporter({ embedded = false }: { embedded?: boolea
       <div style={{ fontFamily: display, fontWeight: 700, fontSize: 13, color: res.uitslag === 'crushing' ? TOW.goldBright : res.winnaar ? TOW.goldDeep : TOW.muted, marginBottom: 12 }}>
         {uitslagLabel(res.uitslag)} · +{res.verschil} VP
       </div>
+
+      {veteraan.length > 0 && (
+        <>
+          <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginBottom: 5 }}>Your veterans · XP earned</div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 3, marginBottom: 4 }}>
+            {veteraan.map((v, i) => {
+              const xp = (v.overleefd_50 ? 1 : 0) + v.kills;
+              return (
+                <div key={i} style={{ display: 'flex', alignItems: 'baseline', gap: 8, fontFamily: serif, fontSize: 13, color: TOW.ink }}>
+                  <span style={{ flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{v.naam || v.unitId}</span>
+                  <span style={{ flexShrink: 0, fontFamily: display, fontWeight: 600, fontSize: 12, color: xp > 0 ? TOW.goldDeep : TOW.muted }}>
+                    {xp > 0 ? `+${xp} XP` : '—'}{v.scar_trigger ? ' · scar risk' : ''}
+                  </span>
+                </div>
+              );
+            })}
+          </div>
+          <div style={{ fontFamily: serif, fontStyle: 'italic', fontSize: 11.5, color: TOW.muted, marginBottom: 12 }}>
+            +1 XP for surviving above 50% strength, +1 per kill/trophy — applied to your campaign veterans once the grensmaster approves.
+          </div>
+        </>
+      )}
 
       <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginBottom: 5 }}>Notes (optional)</div>
       <textarea value={notes} onChange={(e) => setNotes(e.target.value)} rows={2} placeholder="Anything the campaign should know…" style={{ width: '100%', borderRadius: 10, border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt, color: TOW.ink, padding: '9px 11px', fontFamily: serif, fontSize: 13, boxSizing: 'border-box', resize: 'vertical', marginBottom: 12 }} />
