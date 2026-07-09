@@ -116,6 +116,19 @@ export interface BattleResultaat {
   kills: unknown[];
   /** Vrije notities of null. */
   notities: string | null;
+  /** Campagne-relevante per-unit feiten voor de MELDENDE speler z'n EIGEN leger — voedt de
+   *  veteraan-XP + battle-scar-triggers van "De Grensvorsten". De campagne-RPC mag dit voorlopig
+   *  negeren; het gaat mee in dezelfde jsonb-payload. Optioneel (oude clients sturen het niet). */
+  veteraan?: {
+    /** Unit-id binnen het gemelde leger (ArmyUnit.id). */
+    unitId: string;
+    /** Unit overleefde met ≥50% start-Unit-Strength én is niet vluchtend/removed bij einde spel. */
+    overleefd_50: boolean;
+    /** Aantal kills + trofeeën door deze unit (0 als niet bijgehouden). */
+    kills: number;
+    /** Battle-scar-trigger: unit onder 25% start-US, of removed, of vluchtend bij einde spel. */
+    scar_trigger: boolean;
+  }[];
 }
 
 /** Meld de uitslag van een campagne-battle terug (als voorstel). Gated op de sync-code. */

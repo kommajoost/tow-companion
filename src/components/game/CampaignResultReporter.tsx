@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useState } from 'react';
 import { TOW, towFont, engraved } from '../../design/tow';
 import { useGame } from '../../game';
+import { unitTotalStrength } from '../../lib/armyRules';
 import { battleByCode, reportBattleResult, type CampaignBattle, type BattleResultaat } from '../../lib/campaignBattle';
 import { berekenVictory, type VpBonus, type Uitslag } from '../../lib/victoryPoints';
-import type { GameTracker } from '../../types';
+import type { Army, GameTracker } from '../../types';
 
 const eb = engraved as React.CSSProperties;
 const display = towFont.display;
@@ -48,9 +49,34 @@ function collectKills(
   return out;
 }
 
+type Veteraan = NonNullable<BattleResultaat['veteraan']>[number];
+
+// Campagne-relevante per-unit feiten voor de MELDENDE speler z'n EIGEN leger. `ownSeat` is de
+// absolute seat-key ('host'/'guest') waarop de eigen units in de tracker staan — solo mapt naar
+// 'host' (zoals GameView's absSeat('me')). De drempels spiegelen de VP-engine (unitVp):
+//   remaining = unitTotalStrength − lost.
+//   overleefd_50 : remaining ≥ 50% start-US  én  niet fleeing  én  niet weg (removed).
+//   scar_trigger : remaining < 25% start-US   óf  weg          óf  fleeing.
+// (Grenzen bewust asymmetrisch: ≥50% vs <25%, exact conform de opdracht.)
+function collectVeteraan(tracker: GameTracker, ownArmy: Army | null, ownSeat: 'host' | 'guest'): Veteraan[] {
+  const out: Veteraan[] = [];
+  for (const u of ownArmy?.units ?? []) {
+    const t = tracker.units[`${ownSeat}:${u.id}`];
+    const ts = unitTotalStrength(u);
+    const lost = Math.max(0, t?.lost ?? 0);
+    const remaining = ts - lost;
+    const fleeing = t?.fleeing ?? false;
+    const weg = t?.weg ?? false;
+    const overleefd_50 = remaining >= ts * 0.5 && !fleeing && !weg;
+    const scar_trigger = remaining < ts * 0.25 || weg || fleeing;
+    out.push({ unitId: u.id, overleefd_50, kills: Math.max(0, t?.kills ?? 0), scar_trigger });
+  }
+  return out;
+}
+
 // embedded = gerenderd binnen het einde-battle-overzicht (form direct open, geen eigen rand).
 export function CampaignResultReporter({ embedded = false }: { embedded?: boolean } = {}) {
-  const { code, game, tracker } = useGame();
+  const { code, game, tracker, seat, myArmy } = useGame();
   const [battle, setBattle] = useState<CampaignBattle | null>(null);
   const [open, setOpen] = useState(embedded);
   const [winner, setWinner] = useState<'host' | 'guest' | 'draw'>('draw');
@@ -96,6 +122,14 @@ export function CampaignResultReporter({ embedded = false }: { embedded?: boolea
     [battle, tracker, game?.host_army, game?.guest_army],
   );
 
+  // Per-unit veteraan-feiten voor de MELDENDE speler z'n EIGEN leger (myArmy dekt host/guest/solo).
+  // Eigen seat-key: host/guest direct; solo → 'host' (zoals GameView's absSeat('me')).
+  const ownSeat: 'host' | 'guest' = seat === 'guest' ? 'guest' : 'host';
+  const veteraan = useMemo(
+    () => (battle ? collectVeteraan(tracker, myArmy, ownSeat) : []),
+    [battle, tracker, myArmy, ownSeat],
+  );
+
   if (!code || !battle) return null; // not a campaign battle → nothing to report
 
   const hostName = game?.host_name || battle.aanvaller.naam || 'Attacker';
@@ -123,6 +157,7 @@ export function CampaignResultReporter({ embedded = false }: { embedded?: boolea
       vp: { [attackerId]: vpHost, [defenderId]: vpGuest },
       kills,
       notities,
+      veteraan,
     };
     try {
       await reportBattleResult(code, resultaat);

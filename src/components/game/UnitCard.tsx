@@ -23,9 +23,11 @@ export function UnitCard({
   lost,
   weg,
   fleeing,
+  kills,
   onSetLost,
   onRemoved,
   onFlee,
+  onSetKills,
   collapsed = false,
   onToggleCollapse,
 }: {
@@ -40,12 +42,16 @@ export function UnitCard({
   lost?: number;
   weg?: boolean;
   fleeing?: boolean;
+  /** Enemy units destroyed + trophies captured by this unit (feeds campaign veteran XP). */
+  kills?: number;
   /** Absolute setter for total lost wounds (WoundTracker's two counters reduce to this). */
   onSetLost?: (lost: number) => void;
   /** Toggle the unit's Removed (destroyed / off-table → 100% VP) state. */
   onRemoved?: () => void;
   /** Toggle the unit's Fleeing state. */
   onFlee?: () => void;
+  /** Absolute setter for the unit's kill count (min 0). */
+  onSetKills?: (kills: number) => void;
   /** In the game roster, units are collapsed by default; the header toggles open to show the card. */
   collapsed?: boolean;
   onToggleCollapse?: () => void;
@@ -217,6 +223,8 @@ export function UnitCard({
           onFlee={onFlee ?? (() => {})}
           weg={weg ?? false}
           onRemoved={onRemoved ?? (() => {})}
+          kills={kills ?? 0}
+          onSetKills={onSetKills ?? (() => {})}
           editable={editable}
         />
       )}

@@ -80,6 +80,12 @@ export function GameView() {
     const prev = tracker.units[key] ?? { lost: 0, fleeing: false };
     setTracker({ ...tracker, units: { ...tracker.units, [key]: { ...prev, weg } } });
   };
+  // Absolute setter voor de per-unit kill-teller (enemy units destroyed + trofeeën); min 0.
+  const setKills = (unitId: string, kills: number) => {
+    const key = unitKey(side, unitId);
+    const prev = tracker.units[key] ?? { lost: 0, fleeing: false };
+    setTracker({ ...tracker, units: { ...tracker.units, [key]: { ...prev, kills: Math.max(0, Math.round(kills)) } } });
+  };
   const toggleFleeing = (unitId: string) => {
     const key = unitKey(side, unitId);
     const prev = tracker.units[key] ?? { lost: 0, fleeing: false };
@@ -141,7 +147,7 @@ export function GameView() {
         {g.units.map((u) => {
           const t = tracker.units[unitKey(side, u.id)];
           return (
-            <UnitCard key={u.id} unit={u} faction={army.faction} editable={editable} onChange={(patch) => onUnitChange(u.id, patch)} lost={t?.lost ?? 0} weg={t?.weg ?? false} fleeing={t?.fleeing ?? false} onSetLost={(lost) => setCasualty(u.id, lost)} onRemoved={() => setRemoved(u.id, !(t?.weg ?? false))} onFlee={() => toggleFleeing(u.id)} collapsed={!expanded.has(u.id)} onToggleCollapse={() => toggleExpand(u.id)} />
+            <UnitCard key={u.id} unit={u} faction={army.faction} editable={editable} onChange={(patch) => onUnitChange(u.id, patch)} lost={t?.lost ?? 0} weg={t?.weg ?? false} fleeing={t?.fleeing ?? false} kills={t?.kills ?? 0} onSetLost={(lost) => setCasualty(u.id, lost)} onRemoved={() => setRemoved(u.id, !(t?.weg ?? false))} onFlee={() => toggleFleeing(u.id)} onSetKills={(k) => setKills(u.id, k)} collapsed={!expanded.has(u.id)} onToggleCollapse={() => toggleExpand(u.id)} />
           );
         })}
       </div>

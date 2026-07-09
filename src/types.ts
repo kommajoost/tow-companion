@@ -214,6 +214,10 @@ export interface UnitTrack {
   /** Unit vernietigd of van tafel gevlucht (volledig verwijderd) → 100% VP voor de vijand.
    *  Optioneel: oude trackers hebben dit veld niet; de VP-engine verdraagt het ontbreken. */
   weg?: boolean;
+  /** Aantal vijandelijke units vernietigd + buitgemaakte trofeeën door deze unit. Voedt de
+   *  campagne-XP van "De Grensvorsten" (veteraan-berekening). Optioneel: oude trackers missen dit
+   *  veld → behandeld als 0. */
+  kills?: number;
 }
 
 /** Shared battle-tracking state for a game (round, VP per side, per-unit casualties). */

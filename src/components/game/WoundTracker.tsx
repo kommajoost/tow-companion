@@ -44,6 +44,8 @@ export function WoundTracker({
   onFlee,
   weg,
   onRemoved,
+  kills,
+  onSetKills,
   editable = true,
 }: {
   unit: ArmyUnit;
@@ -56,6 +58,10 @@ export function WoundTracker({
   /** Unit vernietigd of van tafel (Removed) → 100% VP voor de vijand. */
   weg: boolean;
   onRemoved: () => void;
+  /** Aantal vijandelijke units vernietigd + buitgemaakte trofeeën door deze unit (min 0). */
+  kills: number;
+  /** Absolute setter voor de kill-teller. */
+  onSetKills: (kills: number) => void;
   editable?: boolean;
 }) {
   const start = unitSize(unit); // aantal modellen bij aanvang (single = 1)
@@ -64,6 +70,9 @@ export function WoundTracker({
   const clampedLost = Math.min(total, Math.max(0, lost));
   const remaining = Math.max(0, total - clampedLost);
   const dead = remaining <= 0;
+  const clampedKills = Math.max(0, Math.round(kills)); // kills zijn onbegrensd; nooit negatief
+
+
 
   // Afleiding terug uit de canonieke `lost`.
   const modellenDood = Math.min(start, Math.max(0, Math.floor(clampedLost / wpm)));
@@ -202,6 +211,16 @@ export function WoundTracker({
       <div style={{ display: 'flex', gap: 6, marginTop: 10 }}>
         {toggle(fleeing, onFlee, 'Fleeing', 'Flee')}
         {toggle(weg, onRemoved, 'Removed', 'Remove', true)}
+      </div>
+
+      {/* Kills — enemy units destroyed + trophies captured by this unit (feeds campaign veteran XP). */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 11, paddingTop: 11, borderTop: `1px solid ${TOW.line}` }}>
+        <span style={{ flex: 1, minWidth: 0, ...eb, fontSize: 8, color: TOW.muted }}>Kills</span>
+        <StepBtn dir={-1} onClick={() => onSetKills(clampedKills - 1)} disabled={!editable || clampedKills <= 0} />
+        <div style={{ display: 'flex', alignItems: 'baseline', gap: 4, minWidth: 52, justifyContent: 'center' }}>
+          <span style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 17, color: TOW.ink }}>{clampedKills}</span>
+        </div>
+        <StepBtn dir={1} onClick={() => onSetKills(clampedKills + 1)} disabled={!editable} />
       </div>
     </div>
   );
