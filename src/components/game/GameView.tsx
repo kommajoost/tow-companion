@@ -152,10 +152,17 @@ export function GameView() {
         })}
       </div>
     ))
-  ) : side === 'opp' && seat === 'solo' ? (
-    <ArmyPaste title="Opponent army list" cta="Add opponent army" onSet={setOpponentArmy} />
   ) : side === 'opp' ? (
-    <div style={{ textAlign: 'center', padding: '50px 20px', fontFamily: serif, fontStyle: 'italic', color: TOW.muted }}>Waiting for your opponent to join and add their army…</div>
+    // Tegenstander-leger toevoegen kan in ELKE modus (solo én campagne/online) — zo kun je een battle
+    // testen door zelf één van je eigen lijsten voor de opponent te kiezen (ArmyPaste bevat de list-picker).
+    <>
+      {seat !== 'solo' && (
+        <div style={{ padding: '12px 2px 0', fontFamily: serif, fontStyle: 'italic', fontSize: 13.5, color: TOW.muted }}>
+          Waiting for your opponent to join and add their army — or add one from your own saved lists below to test the battle solo.
+        </div>
+      )}
+      <ArmyPaste title="Opponent army list" cta="Add opponent army" onSet={setOpponentArmy} />
+    </>
   ) : (
     <ArmyPaste title="Your army list" cta="Add your army" onSet={setMyArmy} />
   );
