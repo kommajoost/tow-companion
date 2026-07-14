@@ -10,6 +10,7 @@ import {
 } from 'react';
 import { supabase, TOW_GAMES } from './lib/supabase';
 import { usePersistentState } from './store';
+import type { BattleVeteranen, VetUnit } from './lib/campaignBattle';
 import type { Army, GameRow, GameSummary, GameTracker } from './types';
 
 type Seat = 'host' | 'guest' | 'solo';
@@ -30,7 +31,7 @@ interface GameContextValue {
    *  (not a freshly-generated one). Seats the user as host (attacker) or guest (defender): if no
    *  tow_games row exists for that code yet it's created with the user in their seat, otherwise the
    *  user joins their seat. Both players thus land in the same realtime game. Returns true on success. */
-  openCampaignBattle: (code: string, seat: 'host' | 'guest', name: string, army: Army | null) => Promise<boolean>;
+  openCampaignBattle: (code: string, seat: 'host' | 'guest', name: string, army: Army | null, veteranen?: BattleVeteranen) => Promise<boolean>;
   /** Recent games (newest first) for the join lobby. */
   listGames: () => Promise<GameSummary[]>;
   startSolo: (army?: Army | null) => void;
@@ -91,6 +92,22 @@ function withTimeout<T>(p: PromiseLike<T>, ms: number, msg: string): Promise<T> 
     Promise.resolve(p),
     new Promise<T>((_, reject) => setTimeout(() => reject(new Error(msg)), ms)),
   ]);
+}
+
+// Campagne-veteranen (De Grensvorsten) op het te openen leger stempelen: elke unit met een
+// `campaignId` die matcht op een `VetUnit.unitId` van MIJN kant krijgt z'n abilities + scars mee.
+// Zo reist de veteraan-info via `tow_games` (host_army/guest_army) mee naar beide spelers en toont
+// de UnitCard ze read-only. Puur additief + immutable (nieuwe army/units — de bron blijft ongemoeid).
+function annotateArmyWithVets(army: Army | null, vets: VetUnit[] | undefined): Army | null {
+  if (!army || !vets || vets.length === 0) return army;
+  const byId = new Map(vets.map((v) => [v.unitId, v]));
+  return {
+    ...army,
+    units: army.units.map((u) => {
+      const v = u.campaignId ? byId.get(u.campaignId) : undefined;
+      return v ? { ...u, veteraan: { abilities: v.abilities, littekens: v.littekens } } : u;
+    }),
+  };
 }
 
 const EMPTY_TRACKER: GameTracker = { round: 1, vp: {}, units: {} };
@@ -245,13 +262,17 @@ export function GameProvider({ children }: { children: ReactNode }) {
   // code; unlike joinGame it creates the row on first open. Both participants call this with their
   // own seat, so they meet in the same realtime game. Writes only the user's own seat columns.
   const openCampaignBattle = useCallback(
-    async (battleCode: string, mySeat: 'host' | 'guest', name: string, army: Army | null): Promise<boolean> => {
+    async (battleCode: string, mySeat: 'host' | 'guest', name: string, army: Army | null, veteranen?: BattleVeteranen): Promise<boolean> => {
       setBusy(true);
       setError(null);
       const c = battleCode.trim().toUpperCase();
       const nameCol = mySeat === 'host' ? 'host_name' : 'guest_name';
       const armyCol = mySeat === 'host' ? 'host_army' : 'guest_army';
       const fallbackName = mySeat === 'host' ? 'Host' : 'Guest';
+      // Host = aanvaller, guest = verdediger. Stempel MIJN kant z'n campagne-veteranen op het leger
+      // vóór we het naar `tow_games` schrijven, zodat de info met de army mee-synct naar beide spelers.
+      const mySide = mySeat === 'host' ? 'aanvaller' : 'verdediger';
+      const army2 = annotateArmyWithVets(army, veteranen?.[mySide]);
       try {
         const { data: existing, error: selErr } = await withTimeout(
           supabase.from(TOW_GAMES).select('*').eq('code', c).maybeSingle(),
@@ -265,7 +286,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
           const { data: created, error: insErr } = await withTimeout(
             supabase
               .from(TOW_GAMES)
-              .insert({ code: c, [nameCol]: name || fallbackName, [armyCol]: army ?? null })
+              .insert({ code: c, [nameCol]: name || fallbackName, [armyCol]: army2 ?? null })
               .select()
               .single(),
             15000,
@@ -285,7 +306,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
         const { data: updated, error: updErr } = await withTimeout(
           supabase
             .from(TOW_GAMES)
-            .update({ [nameCol]: name || fallbackName, [armyCol]: army ?? null })
+            .update({ [nameCol]: name || fallbackName, [armyCol]: army2 ?? null })
             .eq('code', c)
             .select()
             .single(),

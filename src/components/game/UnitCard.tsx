@@ -4,6 +4,7 @@ import { useUI } from '../../state';
 import { TOW, towFont, engraved } from '../../design/tow';
 import { buildRuleIndex, resolveRuleSlug, resolveOptionSlug, wizardInfo, unitTotalStrength, unitArmourSave } from '../../lib/armyRules';
 import { unitWeapons } from '../../lib/weaponStats';
+import { abilityLabel, abilityEffect, scarLabel } from '../../lib/campaignBattle';
 import { CombatStats } from './CombatStats';
 import { InfoSheet, type InfoSheetData } from './InfoSheet';
 import { WizardSpells } from './WizardSpells';
@@ -206,6 +207,37 @@ export function UnitCard({
                 <span key={i} style={{ ...common, background: 'transparent', color: TOW.muted }}>{label}</span>
               );
             })}
+          </div>
+        </div>
+      )}
+
+      {/* Campagne-veteraan (De Grensvorsten): gewonnen veteran-abilities + battle-scars, read-only.
+          Alleen getoond als de unit gematcht is en er iets te tonen valt (ability of scar). Effect
+          hangt als tooltip aan de chip; scars zijn een bloedkleurige badge. */}
+      {unit.veteraan && (unit.veteraan.abilities.length > 0 || unit.veteraan.littekens > 0) && (
+        <div style={{ marginTop: 10 }}>
+          <div style={{ ...eb, fontSize: 8.5, color: TOW.muted, marginBottom: 5 }}>Veteran abilities</div>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, alignItems: 'center' }}>
+            {unit.veteraan.abilities.map((a, i) => {
+              const eff = abilityEffect(a.t);
+              return (
+                <span
+                  key={i}
+                  title={eff || undefined}
+                  style={{ fontFamily: towFont.serif, fontSize: 12.5, padding: '4px 10px', borderRadius: 999, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.10)', color: TOW.goldDeep, cursor: eff ? 'help' : 'default' }}
+                >
+                  {abilityLabel(a.t)}{a.keuze ? ` · ${a.keuze.toUpperCase()}` : ''}
+                </span>
+              );
+            })}
+            {unit.veteraan.littekens > 0 && (
+              <span
+                title="Battle scars carried from the campaign"
+                style={{ fontFamily: towFont.serif, fontSize: 12.5, padding: '4px 10px', borderRadius: 999, border: `1px solid ${TOW.blood}`, background: 'transparent', color: TOW.blood, cursor: 'help' }}
+              >
+                {scarLabel(unit.veteraan.littekens)}
+              </span>
+            )}
           </div>
         </div>
       )}

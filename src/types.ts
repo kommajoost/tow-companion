@@ -173,6 +173,10 @@ export interface ArmyUnit {
   /** Campagne-koppeling (De Grensvorsten): matcht towc_spel_unit.unit_id = slug(customName) óf het type-id,
    *  zelfde afleiding als de campagne-sync — zo landt de veteraan-XP op de juiste campagne-unit. */
   campaignId?: string;
+  /** Campagne-veteraan-info (De Grensvorsten), aangebracht bij het openen van een campagne-battle: de
+   *  unit z'n gewonnen veteran-abilities + battle-scars. Rijdt via `tow_games` mee naar beide spelers,
+   *  zodat de UnitCard ze read-only toont. Optioneel: alleen aanwezig voor gematchte veteraan-units. */
+  veteraan?: { abilities: { t: string; keuze: string | null }[]; littekens: number };
   name: string;
   count: number | null; // leading multiplier (e.g. 15 Warriors), null for single models
   points: number | null;

@@ -6,7 +6,10 @@ const SUPABASE_URL = 'https://rbjzooxbnrfuwtnwczih.supabase.co';
 const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_JLRuSQwNPsdbwBPRJh6KSA_vMT7PJsI';
 
 export const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
-  auth: { persistSession: false },
+  // Keep the signed-in session in localStorage and refresh it in the background so a player stays
+  // logged in across reloads. detectSessionInUrl stays off: this is a PWA, not an OAuth redirect
+  // target, so there's never a session token to parse out of the URL.
+  auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: false },
 });
 
 export const TOW_GAMES = 'tow_games';

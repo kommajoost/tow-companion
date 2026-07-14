@@ -35,6 +35,58 @@ export interface BattleLijstSamenvatting {
   units: string[];
 }
 
+/** Eén veteraan-unit (campagne-progressie) voor een battle-kant. De server voegt dit toe aan
+ *  `towc_battle_by_code` zodra beide legers gelockt zijn, gekeyd op `unitId` (= slug van de
+ *  custom-naam óf het type-id — zelfde afleiding als `ArmyUnit.campaignId`). Zo kan OWC de
+ *  campagne-XP/abilities/scars op de juiste unit in het geladen leger tonen. */
+export interface VetUnit {
+  unitId: string;
+  naam: string;
+  cat: string | null;
+  xp: number;
+  /** Gewonnen veteran-abilities: `t` = engine-type (zie ABILITY_LABEL), `keuze` = evt. sub-keuze
+   *  (bv. 'ws'/'bs' bij Weapon Master), anders null. */
+  abilities: { t: string; keuze: string | null }[];
+  /** Aantal battle-scars (Battlefield Losses) op deze unit. */
+  littekens: number;
+}
+
+/** Eén actieve gebouw-perk (campagne-progressie) voor een battle-kant. `label`+`effect` zijn
+ *  server-side al leesbaar gemaakt; we tonen ze read-only. */
+export interface Perk {
+  perk: string;
+  label: string;
+  effect: string;
+}
+
+/** Veteraan-units per kant. Alleen gevuld als `beideGelockt`. */
+export interface BattleVeteranen {
+  aanvaller: VetUnit[];
+  verdediger: VetUnit[];
+}
+
+/** Actieve gebouw-perks per kant. Alleen gevuld als `beideGelockt`. */
+export interface BattlePerks {
+  aanvaller: Perk[];
+  verdediger: Perk[];
+}
+
+/** Eén gevonden magic item (campagne-progressie) dat de speler aan zijn leger hangt (max 1). De
+ *  server maakt naam/effect al leesbaar; we tonen ze read-only. `soort` === 'consumable' → single
+ *  use (één keer bruikbaar per battle). */
+export interface FoundItem {
+  naam: string;
+  punten: number;
+  effect: string;
+  soort: string;
+}
+
+/** Aangehangen magic item per kant (max 1, of null). Alleen gevuld als `beideGelockt`. */
+export interface BattleItems {
+  aanvaller: FoundItem | null;
+  verdediger: FoundItem | null;
+}
+
 /** Een campagne-battle zoals opgehaald via de sync-code. */
 export interface CampaignBattle {
   ok: true;
@@ -52,6 +104,14 @@ export interface CampaignBattle {
   /** Alleen gevuld als `beideGelockt`. */
   aanvLijst: BattleLijstSamenvatting | null;
   verdLijst: BattleLijstSamenvatting | null;
+  /** Veteraan-progressie per kant — alleen gevuld als `beideGelockt`. Optioneel: oude servers
+   *  sturen het niet mee → undefined (de UI toont dan niks). */
+  veteranen?: BattleVeteranen;
+  /** Actieve gebouw-perks per kant — alleen gevuld als `beideGelockt`. Optioneel (zie boven). */
+  perks?: BattlePerks;
+  /** Aangehangen found magic item per kant (max 1) — alleen gevuld als `beideGelockt`. Optioneel
+   *  (oude servers sturen het niet mee → undefined). */
+  items?: BattleItems;
 }
 
 function parseSide(raw: unknown): BattleSide {
@@ -70,6 +130,58 @@ function parseLijst(raw: unknown): BattleLijstSamenvatting | null {
   };
 }
 
+function parseAbility(raw: unknown): { t: string; keuze: string | null } {
+  const a = (raw && typeof raw === 'object' ? raw : {}) as Record<string, unknown>;
+  return { t: str(a.t), keuze: typeof a.keuze === 'string' ? a.keuze : null };
+}
+
+function parseVetUnit(raw: unknown): VetUnit {
+  const u = (raw && typeof raw === 'object' ? raw : {}) as Record<string, unknown>;
+  return {
+    unitId: str(u.unitId),
+    naam: str(u.naam),
+    cat: typeof u.cat === 'string' ? u.cat : null,
+    xp: num(u.xp),
+    abilities: arr(u.abilities).map(parseAbility).filter((a) => a.t),
+    littekens: num(u.littekens),
+  };
+}
+
+/** Undefined als het veld ontbreekt (oude server) — anders per kant een defensief geparste lijst. */
+function parseVeteranen(raw: unknown): BattleVeteranen | undefined {
+  if (!raw || typeof raw !== 'object') return undefined;
+  const v = raw as Record<string, unknown>;
+  return { aanvaller: arr(v.aanvaller).map(parseVetUnit), verdediger: arr(v.verdediger).map(parseVetUnit) };
+}
+
+function parsePerk(raw: unknown): Perk {
+  const p = (raw && typeof raw === 'object' ? raw : {}) as Record<string, unknown>;
+  return { perk: str(p.perk), label: str(p.label), effect: str(p.effect) };
+}
+
+/** Undefined als het veld ontbreekt (oude server) — anders per kant een defensief geparste lijst. */
+function parsePerks(raw: unknown): BattlePerks | undefined {
+  if (!raw || typeof raw !== 'object') return undefined;
+  const p = raw as Record<string, unknown>;
+  return { aanvaller: arr(p.aanvaller).map(parsePerk), verdediger: arr(p.verdediger).map(parsePerk) };
+}
+
+/** Null als er geen item hangt — anders een defensief geparst item. */
+function parseItem(raw: unknown): FoundItem | null {
+  if (!raw || typeof raw !== 'object') return null;
+  const i = raw as Record<string, unknown>;
+  const naam = str(i.naam);
+  if (!naam) return null;
+  return { naam, punten: num(i.punten), effect: str(i.effect), soort: str(i.soort) };
+}
+
+/** Undefined als het veld ontbreekt (oude server) — anders per kant een item of null. */
+function parseItems(raw: unknown): BattleItems | undefined {
+  if (!raw || typeof raw !== 'object') return undefined;
+  const i = raw as Record<string, unknown>;
+  return { aanvaller: parseItem(i.aanvaller), verdediger: parseItem(i.verdediger) };
+}
+
 function parseBattle(data: unknown): CampaignBattle {
   const d = (data && typeof data === 'object' ? data : {}) as Record<string, unknown>;
   if (d.ok !== true) throw new Error(str(d.fout, 'CAMPAGNE_BATTLE_FOUT'));
@@ -86,6 +198,9 @@ function parseBattle(data: unknown): CampaignBattle {
     verdediger: parseSide(d.verdediger),
     aanvLijst: parseLijst(d.aanvLijst),
     verdLijst: parseLijst(d.verdLijst),
+    veteranen: parseVeteranen(d.veteranen),
+    perks: parsePerks(d.perks),
+    items: parseItems(d.items),
   };
 }
 
@@ -173,3 +288,28 @@ export async function myCampaignBattles(speler: string): Promise<CampaignBattleS
     };
   });
 }
+
+// ---- Veteraan-ability labels (geport uit "De Grensvorsten") --------------------------------------
+// De campagne (site/src/pages/Spel.tsx, ~r46-60) mapt de engine-ability-`t` op de officiële TOW-naam
+// + effect-tekst. We porten diezelfde tekst hier zodat OWC's veteraan-chips exact tonen wat De
+// Grensvorsten toont. Onbekende types vallen terug op het ruwe `t` (label) / leeg (effect).
+export const ABILITY_LABEL: Record<string, string> = {
+  grizzled: 'Grizzled Veteran',
+  experienced: 'Experienced Warriors',
+  weapon_master: 'Weapon Master',
+  fighting_formation: 'Fighting Formation',
+  spoils: 'The Spoils of War',
+};
+export const ABILITY_EFFECT: Record<string, string> = {
+  grizzled: '+1 Leadership (to a max of 10).',
+  experienced: 'Once per game, re-roll To Hit rolls of a natural 1. Rolled again → a second re-roll.',
+  weapon_master: '+1 Weapon Skill or Ballistic Skill, your choice (max 10).',
+  fighting_formation: '+1 to the maximum rank bonus (max +4).',
+  spoils: '+1 Armour Piercing on one weapon (max −5).',
+};
+/** Leesbaar ability-label ('weapon_master' → 'Weapon Master'); valt terug op het ruwe type. */
+export const abilityLabel = (t: string): string => ABILITY_LABEL[t] ?? t;
+/** Effect-tekst van een ability-type (leeg bij onbekend) — geschikt als tooltip/title. */
+export const abilityEffect = (t: string): string => ABILITY_EFFECT[t] ?? '';
+/** Scar-badge-tekst: 1 → 'scar', N → 'N scars' (zelfde bewoording als De Grensvorsten). */
+export const scarLabel = (n: number): string => (n === 1 ? 'scar' : `${n} scars`);

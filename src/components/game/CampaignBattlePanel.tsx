@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { TOW, towFont, engraved } from '../../design/tow';
 import { useGame } from '../../game';
 import { getCachedCampaign, getCampaignCode } from '../../lib/campaign';
-import { battleByCode, type CampaignBattle, type BattleSide } from '../../lib/campaignBattle';
+import { battleByCode, type CampaignBattle, type BattleSide, type Perk, type FoundItem } from '../../lib/campaignBattle';
 import { ArmyListPicker } from './ArmyListPicker';
 import type { Army } from '../../types';
 
@@ -102,6 +102,48 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
   );
 
   const scenarioName = typeof battle.scenario?.scenarioNaam === 'string' ? (battle.scenario.scenarioNaam as string) : null;
+
+  // Active building perks (from the campaign) shown read-only. Label as a chip, effect as tooltip.
+  const renderPerks = (perks: Perk[], heading: string) =>
+    perks.length > 0 ? (
+      <div style={{ marginTop: 12 }}>
+        <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginBottom: 5 }}>{heading}</div>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+          {perks.map((p, i) => (
+            <span
+              key={i}
+              title={p.effect || undefined}
+              style={{ fontFamily: serif, fontSize: 12, padding: '3px 10px', borderRadius: 999, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.10)', color: TOW.goldDeep, cursor: p.effect ? 'help' : 'default' }}
+            >
+              {p.label}
+            </span>
+          ))}
+        </div>
+      </div>
+    ) : null;
+
+  // Attached found magic item (max 1 per side) shown read-only — same chip style as the perks. Name
+  // + points on the chip, effect as tooltip, and a "Single use" tag when it's a consumable.
+  const renderItem = (item: FoundItem | null, heading: string) =>
+    item ? (
+      <div style={{ marginTop: 12 }}>
+        <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginBottom: 5 }}>{heading}</div>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, alignItems: 'center' }}>
+          <span
+            title={item.effect || undefined}
+            style={{ fontFamily: serif, fontSize: 12, padding: '3px 10px', borderRadius: 999, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.10)', color: TOW.goldDeep, cursor: item.effect ? 'help' : 'default' }}
+          >
+            {item.naam}{item.punten ? ` · ${item.punten} pts` : ''}
+          </span>
+          {item.soort === 'consumable' && (
+            <span style={{ ...eb, fontSize: 8, padding: '3px 8px', borderRadius: 999, border: `1px solid ${TOW.line}`, background: TOW.panel2, color: TOW.muted }}>
+              Single use
+            </span>
+          )}
+        </div>
+      </div>
+    ) : null;
+
   const header = (
     <div style={{ border: `1px solid ${TOW.line}`, borderRadius: 12, background: TOW.panel2, padding: '14px 15px', marginBottom: 18 }}>
       <div style={{ ...eb, fontSize: 8.5, color: TOW.goldDeep, marginBottom: 8 }}>Campaign battle · {battle.code}{scenarioName ? ` · ${scenarioName}` : ''}</div>
@@ -115,6 +157,24 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
           Waiting for both players to lock their armies in the campaign app…
         </div>
       )}
+      {/* Active building perks — my own side when I'm a participant, otherwise both sides (spectator). */}
+      {battle.perks && (mySeat
+        ? renderPerks(mySeat === 'host' ? battle.perks.aanvaller : battle.perks.verdediger, 'Active building perks')
+        : (
+          <>
+            {renderPerks(battle.perks.aanvaller, `${battle.aanvaller.naam || 'Attacker'} · active perks`)}
+            {renderPerks(battle.perks.verdediger, `${battle.verdediger.naam || 'Defender'} · active perks`)}
+          </>
+        ))}
+      {/* Attached found magic item (max 1) — same seat logic as the perks above. */}
+      {battle.items && (mySeat
+        ? renderItem(mySeat === 'host' ? battle.items.aanvaller : battle.items.verdediger, 'Found magic item')
+        : (
+          <>
+            {renderItem(battle.items.aanvaller, `${battle.aanvaller.naam || 'Attacker'} · magic item`)}
+            {renderItem(battle.items.verdediger, `${battle.verdediger.naam || 'Defender'} · magic item`)}
+          </>
+        ))}
     </div>
   );
 
@@ -149,7 +209,9 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
   const myLijst = mySeat === 'host' ? battle.aanvLijst : battle.verdLijst; // locked summary (name only)
 
   const openWith = async (army: Army | null) => {
-    const ok = await openCampaignBattle(code, mySeat, name, army);
+    // Pass the battle's veteran data so openCampaignBattle can stamp my side's units with their
+    // campaign abilities + scars before the army is written to tow_games (rides along to both players).
+    const ok = await openCampaignBattle(code, mySeat, name, army, battle.veteranen);
     if (ok) onDismiss(); // GameProvider now has a seat → GameMode swaps to GameView
   };
 
