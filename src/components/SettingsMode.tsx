@@ -3,10 +3,11 @@ import { TOW, towFont, engraved } from '../design/tow';
 import { useTheme } from '../theme';
 import { usePwa } from '../pwa';
 import { supabase, TOW_FEEDBACK } from '../lib/supabase';
+import { useAuth, authSignIn, authSignUp, authSignOut } from '../lib/auth';
 import { useListSync } from '../listSync';
 import { deriveKey, type CloudLists } from '../lib/listSync';
 import {
-  koppelCampagne, koppelMetWachtwoord, versCampagneContext, cacheCampaignContext, getCachedCampaign, clearCampaignCache,
+  koppelCampagne, koppelMetWachtwoord, koppelViaAccount, versCampagneContext, cacheCampaignContext, getCachedCampaign, clearCampaignCache,
   eigenSyncKey, hernoemRegiment, regimentSlug,
   type CampaignContext,
 } from '../lib/campaign';
@@ -150,6 +151,9 @@ export function SettingsMode() {
             </>
           )}
         </div>
+
+        {/* Account */}
+        <AccountSection card={card} title={title} body={body} goldBtn={goldBtn} ghostBtn={ghostBtn} />
 
         {/* Campaign */}
         <CampaignSection card={card} title={title} body={body} goldBtn={goldBtn} ghostBtn={ghostBtn} />
@@ -299,6 +303,139 @@ function ListSyncSection({
   );
 }
 
+// Optional Supabase Auth (email + password) — sign in with the SAME account as the campaign, the
+// basis for the account-based coupling. Login is never required: the army builder is local, so this
+// section only ever unlocks the future campaign link, it doesn't gate anything here.
+function AccountSection({
+  card, title, body, goldBtn, ghostBtn,
+}: {
+  card: React.CSSProperties; title: React.CSSProperties; body: React.CSSProperties;
+  goldBtn: React.CSSProperties; ghostBtn: React.CSSProperties;
+}) {
+  const { user, loading } = useAuth();
+  const [mode, setMode] = useState<'signin' | 'signup'>('signin');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [notice, setNotice] = useState<string | null>(null);
+
+  const inputStyle: React.CSSProperties = {
+    width: '100%', borderRadius: 10, border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt,
+    color: TOW.ink, padding: '10px 12px', fontFamily: towFont.serif, fontSize: 15, boxSizing: 'border-box',
+  };
+
+  const canSubmit = !!email.trim() && password.length > 0 && !busy;
+
+  const submit = async () => {
+    if (!canSubmit) return;
+    const mail = email.trim();
+    if (mode === 'signup' && password.length < 6) { setError('Password too short — use at least 6 characters.'); return; }
+    setBusy(true); setError(null); setNotice(null);
+    try {
+      if (mode === 'signup') {
+        const { error: err, needsConfirmation } = await authSignUp(mail, password);
+        if (err) { setError(err); }
+        else if (needsConfirmation) {
+          setNotice('Account created. Check your email to confirm, then sign in.');
+          setPassword(''); setMode('signin');
+        }
+        // else: confirmation off → onAuthStateChange flips this section to the signed-in view.
+      } else {
+        const { error: err } = await authSignIn(mail, password);
+        if (err) setError(err);
+        // success → onAuthStateChange updates the view; clear the password either way.
+        else setPassword('');
+      }
+    } catch {
+      setError('Something went wrong — please try again.');
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const signOut = async () => {
+    setBusy(true); setError(null); setNotice(null);
+    try {
+      const { error: err } = await authSignOut();
+      if (err) setError(err);
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const switchMode = (m: 'signin' | 'signup') => { setMode(m); setError(null); setNotice(null); };
+
+  return (
+    <div style={card}>
+      <div style={title}>Account</div>
+
+      {user ? (
+        // ── Signed in ──
+        <>
+          <div style={{ ...eb, fontSize: 8.5, color: TOW.goldDeep, marginBottom: 6 }}>Signed in as</div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
+            <span style={{ width: 11, height: 11, borderRadius: 99, background: TOW.goldDeep, border: `1px solid ${TOW.line}`, flexShrink: 0 }} />
+            <span style={{ ...body, color: TOW.ink, fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis' }}>{user.email}</span>
+          </div>
+          <div style={{ ...body, marginBottom: 12 }}>
+            This is the account the companion links to your campaign profile. Signing out only affects the account — your saved army lists stay on this device.
+          </div>
+          <button style={{ ...ghostBtn, color: TOW.muted, borderColor: TOW.line, opacity: busy ? 0.6 : 1 }} disabled={busy} onClick={signOut}>
+            {busy ? 'Signing out…' : 'Sign out'}
+          </button>
+          {error && <div style={{ ...body, color: TOW.blood, marginTop: 10 }}>{error}</div>}
+        </>
+      ) : (
+        // ── Signed out ──
+        <>
+          <div style={{ ...body, marginBottom: 12 }}>
+            Sign in with the same account as your Grensvorsten campaign. Optional — the army builder works without an account; this just links the companion to your player profile.
+          </div>
+
+          {/* Sign in / Register toggle — mirrors the Appearance toggle. */}
+          <div style={{ display: 'flex', gap: 8, marginBottom: 10 }}>
+            {(['signin', 'signup'] as const).map((m) => {
+              const on = mode === m;
+              return (
+                <button key={m} onClick={() => switchMode(m)} aria-pressed={on}
+                  style={{ flex: 1, padding: '10px 14px', borderRadius: 11, cursor: 'pointer', border: `1px solid ${on ? TOW.goldDeep : TOW.lineStrong}`, background: on ? 'rgba(138,108,48,0.14)' : 'transparent', color: on ? TOW.goldDeep : TOW.parchDim, fontFamily: towFont.display, fontWeight: 600, fontSize: 14 }}>
+                  {m === 'signin' ? 'Sign in' : 'Register'}
+                </button>
+              );
+            })}
+          </div>
+
+          <input
+            type="email"
+            autoComplete="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && submit()}
+            placeholder="Email"
+            style={{ ...inputStyle, marginBottom: 8 }}
+          />
+          <input
+            type="password"
+            autoComplete={mode === 'signup' ? 'new-password' : 'current-password'}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && submit()}
+            placeholder="Password"
+            style={{ ...inputStyle, marginBottom: 8 }}
+          />
+          <button style={{ ...goldBtn, width: '100%', opacity: canSubmit ? 1 : 0.5 }} disabled={!canSubmit} onClick={submit}>
+            {busy ? (mode === 'signup' ? 'Creating…' : 'Signing in…') : loading ? 'Please wait…' : (mode === 'signup' ? 'Create account' : 'Sign in')}
+          </button>
+
+          {error && <div style={{ ...body, color: TOW.blood, marginTop: 10 }}>{error}</div>}
+          {notice && <div style={{ ...body, color: TOW.goldDeep, marginTop: 10 }}>{notice}</div>}
+        </>
+      )}
+    </div>
+  );
+}
+
 // Link this app to a "De Grensvorsten" campaign with a short code from the campaign app. Once linked
 // we cache the returned context (phase, points cap, the player's faction) and can refresh it. If the
 // user also syncs lists, we pass the derived sync key so the campaign can tie the two together.
@@ -308,6 +445,7 @@ function CampaignSection({
   card: React.CSSProperties; title: React.CSSProperties; body: React.CSSProperties;
   goldBtn: React.CSSProperties; ghostBtn: React.CSSProperties;
 }) {
+  const { user } = useAuth();
   const [code, setCode] = usePersistentState<string | null>('tow:campaignCode', null);
   const [input, setInput] = useState('');
   // Wachtwoord-koppeling: alternatief voor de 6-teken-code — koppelt op je campagne-profiel.
@@ -315,6 +453,11 @@ function CampaignSection({
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [ctx, setCtx] = useState<CampaignContext | null>(() => getCachedCampaign()?.context ?? null);
+  // Account-koppeling: automatisch koppelen zodra je bent ingelogd (geen code nodig). `viaAccount`
+  // = we koppelden via het account; `accountResolved` = de account-poging is afgerond (succes of
+  // niet) zodat de fallback-UI niet flikkert terwijl de koppeling nog laadt.
+  const [viaAccount, setViaAccount] = useState(false);
+  const [accountResolved, setAccountResolved] = useState(false);
   const [listsRaw, setListsRaw] = usePersistentState<unknown[]>('tow:lists', []);
   // Hernoem-editor: welke register-unit staat open (naam-slug) + het concept.
   const [hernoemId, setHernoemId] = useState<string | null>(null);
@@ -324,10 +467,11 @@ function CampaignSection({
   // koppelt op precies deze key, dus nooit zelf opnieuw uit het wachtwoord afleiden.
   const syncKeyFor = async (): Promise<string | null> => eigenSyncKey();
 
-  // Bij mount: is er een code maar geen context in het geheugen, probeer eerst de cache en anders
-  // stil verversen. Faalt de stille refresh, laat de gekoppelde staat gewoon zonder foutmelding.
+  // Bij mount (niet-ingelogd): is er een code maar geen context in het geheugen, probeer eerst de
+  // cache en anders stil verversen. Ingelogd? Dan drijft de account-effect hieronder de refresh, dus
+  // sla deze over. Faalt de stille refresh, laat de gekoppelde staat gewoon zonder foutmelding.
   useEffect(() => {
-    if (!code || ctx) return;
+    if (!code || ctx || user) return;
     const cached = getCachedCampaign();
     if (cached) { setCtx(cached.context); return; }
     let alive = true;
@@ -337,6 +481,41 @@ function CampaignSection({
     return () => { alive = false; };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [code]);
+
+  // Ingelogd? Koppel automatisch via het account (auth.uid() → geclaimd factie-slot). Draait bij het
+  // openen én bij in-/uitloggen (keyt op user.id). Faalt dit (bv. GEEN_SLOT), val dan stil terug op
+  // de handmatige code/wachtwoord-koppeling. Zet en passant cloud-sync aan met een account-afgeleide
+  // sleutel als die er nog niet is, zodat de campagne je lijsten via het account terugvindt.
+  useEffect(() => {
+    if (!user) { setViaAccount(false); setAccountResolved(false); return; }
+    let alive = true;
+    setAccountResolved(false);
+    (async () => {
+      try {
+        const fresh = await koppelViaAccount();
+        if (!alive) return;
+        cacheCampaignContext(fresh);
+        setCtx(fresh);
+        setViaAccount(true);
+        setError(null);
+        if (fresh.koppelcode) setCode(fresh.koppelcode);
+        // Nog geen list-sync? Leid een stabiele sleutel af van het account en zet 'm via de store —
+        // de ListSyncProvider pikt de nieuwe key op en pusht je lijsten (de server tagt ze op
+        // auth.uid()). Een BESTAANDE sync-key laten we ongewijzigd.
+        if (!eigenSyncKey()) {
+          try { setPersisted('tow:syncKey', await deriveKey(user.id)); }
+          catch { /* sync-key is optioneel: zonder blijft de lijstbouwer lokaal werken */ }
+        }
+      } catch {
+        // NIET_INGELOGD / GEEN_SLOT: geen melding — de fallback-koppeling verschijnt vanzelf.
+        if (alive) setViaAccount(false);
+      } finally {
+        if (alive) setAccountResolved(true);
+      }
+    })();
+    return () => { alive = false; };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user?.id]);
 
   const messageFor = (e: unknown): string => {
     if (e instanceof Error) {
@@ -390,12 +569,16 @@ function CampaignSection({
   };
 
   const refresh = async () => {
-    if (!code || busy) return;
+    if (busy) return;
     setBusy(true); setError(null);
     try {
-      const fresh = await versCampagneContext(code);
-      cacheCampaignContext(fresh);
-      setCtx(fresh);
+      // Ingelogd via account → ververs via het account; anders via de opgeslagen code.
+      const fresh = viaAccount ? await koppelViaAccount() : code ? await versCampagneContext(code) : null;
+      if (fresh) {
+        cacheCampaignContext(fresh);
+        setCtx(fresh);
+        if (viaAccount && fresh.koppelcode) setCode(fresh.koppelcode);
+      }
     } catch (e) {
       setError(messageFor(e));
     } finally {
@@ -453,8 +636,8 @@ function CampaignSection({
     <div style={card}>
       <div style={title}>Campaign</div>
 
-      {code ? (
-        // ── Linked ──
+      {(viaAccount || code) ? (
+        // ── Linked (via je account of via een code) ──
         <>
           {ctx ? (
             <>
@@ -462,6 +645,11 @@ function CampaignSection({
                 <span style={{ width: 11, height: 11, borderRadius: 99, background: ctx.speler.kleur, border: `1px solid ${TOW.line}`, flexShrink: 0 }} />
                 <span style={{ ...body, color: TOW.ink }}>{ctx.speler.naam} · {ctx.speler.factie}</span>
               </div>
+              {viaAccount && (
+                <div style={{ ...body, fontSize: 12.5, color: TOW.muted, marginBottom: 8 }}>
+                  Linked to {ctx.speler.naam} ({ctx.speler.factie}) via your account
+                </div>
+              )}
               <div style={{ ...eb, fontSize: 8.5, color: TOW.goldDeep, marginBottom: 12 }}>Phase {ctx.fase} · {ctx.puntenCap} pts</div>
               {/* Regiment-register: je opgeslagen (named) units in de campagne, mét hun staat van
                   dienst. Namen geef je in de army builder — tik een unit in een campagne-lijst aan. */}
@@ -545,12 +733,21 @@ function CampaignSection({
           {error && <div style={{ ...body, color: TOW.blood, marginBottom: 10 }}>{error}</div>}
           <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
             <button style={{ ...ghostBtn, opacity: busy ? 0.6 : 1 }} disabled={busy} onClick={refresh}>{busy ? 'Refreshing…' : 'Refresh'}</button>
-            <button style={{ ...ghostBtn, color: TOW.muted, borderColor: TOW.line }} onClick={unlink}>Unlink</button>
+            {/* Account-koppeling is automatisch — geen Unlink; alleen de handmatige code-koppeling ontkoppel je. */}
+            {!viaAccount && <button style={{ ...ghostBtn, color: TOW.muted, borderColor: TOW.line }} onClick={unlink}>Unlink</button>}
           </div>
         </>
+      ) : (user && !accountResolved) ? (
+        // ── Ingelogd: account-koppeling wordt opgehaald ──
+        <div style={{ ...body }}>Linking via your account…</div>
       ) : (
-        // ── Not linked ──
+        // ── Not linked (fallback: code of campagne-wachtwoord) ──
         <>
+          {user && (
+            <div style={{ ...body, marginBottom: 12, fontStyle: 'italic', color: TOW.muted }}>
+              No campaign profile is linked to this account yet. Claim your faction in the campaign app, or link manually below.
+            </div>
+          )}
           <div style={{ ...body, marginBottom: 12 }}>
             Link this app to a Grensvorsten campaign. Link with your campaign password, or ask the campaign app for your link code, under Army.
           </div>

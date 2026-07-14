@@ -112,6 +112,16 @@ export async function koppelMetWachtwoord(wachtwoord: string): Promise<CampaignC
   return parseContext(data);
 }
 
+/** Koppel via het INGELOGDE account — geen code nodig. De server vindt je speler op `auth.uid()`
+ *  (het geclaimde factie-slot) en geeft dezelfde context terug als de code-koppeling, incl.
+ *  `koppelcode`. Gooit bij een Supabase-fout of `ok:false` (fout-code als message: 'NIET_INGELOGD'
+ *  / 'GEEN_SLOT'). Hergebruikt dezelfde `parseContext` + foutafhandeling als de code-koppeling. */
+export async function koppelViaAccount(): Promise<CampaignContext> {
+  const { data, error } = await supabase.rpc('towc_account_context');
+  if (error) throw error;
+  return parseContext(data);
+}
+
 /** Koppel deze app aan een campagne: valideer de code en leg optioneel de sync-key vast.
  *  Gooit bij een Supabase-fout of `ok:false` (fout-code als message, bv. 'ONBEKENDE_CODE'). */
 export async function koppelCampagne(code: string, syncKey: string | null): Promise<CampaignContext> {
