@@ -586,7 +586,12 @@ export function magicCategories(unit: OwbUnit, armyItemLists: string[], itemsDat
   const sections = Array.isArray(unit.items) ? unit.items : [];
   sections.forEach((sec, si) => {
     const types = Array.isArray(sec.types) ? sec.types : [];
-    const maxPoints = typeof sec.maxPoints === 'number' ? sec.maxPoints : null;
+    // OWB encodes "no points limit" as maxPoints 0 — e.g. the Ogre "Big Name" section: a character
+    // may take a single Big Name of ANY value, with no shared points pool. Treat 0 as unlimited
+    // (Infinity), NOT a 0-point budget that shows "0/0" and disables every item. Mirrors the
+    // option-unlocked (magic-standard) branch below, which already does this.
+    const rawMaxPoints = typeof sec.maxPoints === 'number' ? sec.maxPoints : null;
+    const maxPoints = rawMaxPoints === 0 ? Infinity : rawMaxPoints;
     const group = `sec:${si}`;
     const capped = typeof sec.maxItemsPerCategory === 'number' && sec.maxItemsPerCategory > 0;
     if (capped) {
@@ -602,7 +607,11 @@ export function magicCategories(unit: OwbUnit, armyItemLists: string[], itemsDat
     for (const type of types) {
       const items = pool.filter((it) => it.type === type);
       if (!items.length) continue;
-      out.push({ id: type, label: magicTypeLabel(type), groupLabel: sec.name_en, budgetGroup: group, types: [type], maxPoints, maxItems: Infinity, items });
+      // A "Big Name" is a pick-ONE titled upgrade (a character may take a single Big Name), so render
+      // it single-select (radio). Normal magic-item types stay multi-pick (one unique + any commons),
+      // limited only by the shared points budget — see magicWouldExceed.
+      const maxItems = type === 'big-name' ? 1 : Infinity;
+      out.push({ id: type, label: magicTypeLabel(type), groupLabel: sec.name_en, budgetGroup: group, types: [type], maxPoints, maxItems, items });
     }
   });
   // Option-unlocked allowances (magic standards from a Standard bearer, …) — active options only.
