@@ -54,6 +54,20 @@ export function PwaProvider({ children }: { children: ReactNode }) {
   const [offlineReady, setOfflineReady] = useState(false);
   const updateSWRef = useRef<((reload?: boolean) => Promise<void>) | null>(null);
   const regRef = useRef<ServiceWorkerRegistration | undefined>(undefined);
+  // A waiting update is ready to activate — mirrored in a ref so the visibility/focus
+  // listeners (registered once) always see the current value.
+  const needRefreshRef = useRef(false);
+  // Guard so we apply-and-reload at most once (updateSW reloads the page; without this a
+  // rapid visible→hidden→visible could fire a second reload before the first lands).
+  const appliedRef = useRef(false);
+
+  // Activate the waiting service worker and reload into the new build. Safe to call more
+  // than once — only the first call does anything.
+  const applyUpdate = useCallback(() => {
+    if (appliedRef.current || !needRefreshRef.current) return;
+    appliedRef.current = true;
+    updateSWRef.current?.(true);
+  }, []);
 
   // Capture the install prompt + installed state.
   useEffect(() => {
@@ -83,6 +97,12 @@ export function PwaProvider({ children }: { children: ReactNode }) {
       immediate: true,
       onNeedRefresh() {
         setNeedRefresh(true);
+        needRefreshRef.current = true;
+        // If the app is in the background when the new build arrives, apply it right away
+        // so the user lands on the fresh version the moment they return. While the app is
+        // visible we DON'T yank the page mid-use — the return-to-foreground handler below
+        // (or the "Update available" banner) applies it at a safe moment instead.
+        if (document.visibilityState !== 'visible') applyUpdate();
       },
       onOfflineReady() {
         setOfflineReady(true);
@@ -93,7 +113,24 @@ export function PwaProvider({ children }: { children: ReactNode }) {
       },
     });
     updateSWRef.current = update;
-  }, []);
+  }, [applyUpdate]);
+
+  // Keep the app fresh "on use": every time it comes to the foreground, check the server
+  // for a newer deploy and — if one is already waiting — silently activate it and reload.
+  // Coming back to the app is a natural safe boundary, so this never interrupts active play.
+  useEffect(() => {
+    const onForeground = () => {
+      if (document.visibilityState !== 'visible') return;
+      regRef.current?.update().catch(() => {}); // pull in a just-shipped deploy
+      applyUpdate(); // apply one that's already waiting
+    };
+    document.addEventListener('visibilitychange', onForeground);
+    window.addEventListener('focus', onForeground);
+    return () => {
+      document.removeEventListener('visibilitychange', onForeground);
+      window.removeEventListener('focus', onForeground);
+    };
+  }, [applyUpdate]);
 
   const promptInstall = useCallback(async () => {
     if (!deferred) return false;
@@ -104,8 +141,8 @@ export function PwaProvider({ children }: { children: ReactNode }) {
   }, [deferred]);
 
   const updateApp = useCallback(() => {
-    updateSWRef.current?.(true);
-  }, []);
+    applyUpdate();
+  }, [applyUpdate]);
 
   const checkForUpdate = useCallback(() => {
     regRef.current?.update().catch(() => {});

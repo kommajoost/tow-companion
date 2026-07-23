@@ -54,7 +54,13 @@ export default defineConfig({
         // Take control of the page on the FIRST visit. Without this the SW only controls
         // the page after a reload, and Chrome won't offer "Install" until it does.
         clientsClaim: true,
-        skipWaiting: true,
+        // skipWaiting stays OFF on purpose. With registerType 'prompt' the NEW service
+        // worker must WAIT (not self-activate) so we can apply it at a safe moment —
+        // updateApp()/return-to-foreground posts SKIP_WAITING then reloads (see pwa.tsx).
+        // skipWaiting:true here would activate the new SW under the still-running old
+        // bundle, evict its hashed chunks, and break lazy-loads — the "update goes bad"
+        // bug. First install still activates immediately (no old worker to wait behind).
+        skipWaiting: false,
         navigateFallback: 'index.html',
         // Never let the SW handle navigations to API/auth paths (defensive).
         navigateFallbackDenylist: [/^\/rest\//, /^\/auth\//, /^\/realtime\//],
