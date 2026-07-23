@@ -226,8 +226,9 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
         You are the {mySeat === 'host' ? 'attacker' : 'defender'}{mySide.naam ? ` · ${mySide.naam}` : ''}
       </div>
       <p style={{ fontFamily: serif, fontSize: 14, color: TOW.parchDim, margin: '0 0 16px' }}>
-        Load your <strong>full Companion army list</strong> for this battle, then open the shared game. Your opponent opens the same code on their device and you play with the live tracker.
-        {myLijst?.naam ? <> Your locked campaign list is <strong>“{myLijst.naam}”</strong>{myLijst.punten ? ` (${myLijst.punten} pts)` : ''} — pick the matching list below.</> : null}
+        {myLijst?.naam
+          ? <>Your campaign list is locked as <strong>“{myLijst.naam}”</strong>{myLijst.punten ? ` (${myLijst.punten} pts)` : ''} — it loads below. Open the shared game and your opponent opens the same code on their device; you play with the live tracker.</>
+          : <>Load your <strong>full Companion army list</strong> for this battle, then open the shared game. Your opponent opens the same code on their device and you play with the live tracker.</>}
       </p>
 
       <label style={labelStyle}>Your name</label>
@@ -236,7 +237,7 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
       {/* The list picker converts a chosen builder list into a full Army (with stats) and opens the
           game with it. Renders nothing if the player has no saved lists — the fallback button below
           covers that (open the game, add your army inside). */}
-      <ArmyListPicker onPick={openWith} label="Choose your army list for this battle" />
+      <ArmyListPicker onPick={openWith} label="Choose your army list for this battle" lockedListName={myLijst?.naam ?? null} />
 
       <div style={{ display: 'flex', gap: 14, alignItems: 'center', marginTop: 8 }}>
         <button

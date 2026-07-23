@@ -18,10 +18,11 @@ const normRule = (s: string) => (s || '').toLowerCase().replace(/ *\([^)]*\) */g
 interface SavedList extends BuilderList { id: string; name: string; army: string; createdAt: number; updatedAt: number }
 interface StatRow { Name: string; M: string; WS: string; BS: string; S: string; T: string; W: string; I: string; A: string; Ld: string }
 
-export function ArmyListPicker({ onPick, label = 'Choose one of your saved army lists' }: { onPick: (a: Army) => void; label?: string }) {
+export function ArmyListPicker({ onPick, label = 'Choose one of your saved army lists', lockedListName = null }: { onPick: (a: Army) => void; label?: string; lockedListName?: string | null }) {
   // Lists can span different armies, so we keep a per-army catalogue cache + army metadata and
   // convert each list with ITS OWN catalogue/faction/composition.
   const [lists] = usePersistentState<SavedList[]>('tow:lists', []);
+  const [showAll, setShowAll] = useState(false); // campaign lock: override the auto-matched list
   const [catalogues, setCatalogues] = useState<Record<string, OwbArmy>>({}); // slug → catalogue
   const [armyNames, setArmyNames] = useState<Record<string, string>>({}); // slug → display name
   const [itemsByArmy, setItemsByArmy] = useState<Record<string, string[]>>({}); // slug → magic-item lists
@@ -73,24 +74,40 @@ export function ArmyListPicker({ onPick, label = 'Choose one of your saved army 
     return builderListToArmy(l, cat, statsFor, { faction: armyNameFor(l.army), composition: compName(l.composition, l.army), itemsData: itemsData ?? undefined, armyItemLists: itemsByArmy[l.army] ?? [], magicText, mountText, troopTypeFor, factionNames: Object.values(armyNames) });
   };
 
+  // Campaign battle: the list is already locked in the campaign, so match it by name and show ONLY
+  // that one — no picking among all saved lists. `showAll` lets the player override if the match is
+  // wrong; no match on this device falls back to the full picker with the original label.
+  const normName = (s: string) => (s || '').trim().toLowerCase();
+  const locked = lockedListName ? lists.find((l) => normName(l.name) === normName(lockedListName)) ?? null : null;
+  const solo = locked && !showAll;
+  const shown = solo ? [locked] : lists;
+  const heading = solo ? 'Your locked campaign list' : label;
+
   return (
     <div style={{ marginBottom: 14 }}>
-      <div style={{ ...eb, fontSize: 9, color: TOW.muted, marginBottom: 7 }}>{label}</div>
+      <div style={{ ...eb, fontSize: 9, color: TOW.muted, marginBottom: 7 }}>{heading}</div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-        {lists.map((l) => {
+        {shown.map((l) => {
           const cat = catalogues[l.army] ?? null;
           const total = cat ? listTotal(l, cat, itemsData ?? undefined) : null;
           const ready = !!cat;
+          const primary = solo; // the locked list gets a gold "open me" accent
           return (
             <button key={l.id} disabled={!ready} onClick={() => { const a = toArmy(l); if (a) onPick(a); }}
-              style={{ display: 'flex', alignItems: 'center', gap: 8, textAlign: 'left', padding: '11px 13px', borderRadius: 11, cursor: ready ? 'pointer' : 'default', border: `1px solid ${TOW.line}`, background: TOW.panel2, opacity: ready ? 1 : 0.55 }}>
-              <span style={{ flex: 1, minWidth: 0, fontFamily: towFont.display, fontWeight: 600, fontSize: 15, color: TOW.ink, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{l.name}</span>
-              <span style={{ ...eb, fontSize: 8, color: TOW.muted, flexShrink: 0 }}>{total ?? '…'}/{l.points} pts · {l.entries.length} unit{l.entries.length === 1 ? '' : 's'}</span>
+              style={{ display: 'flex', alignItems: 'center', gap: 8, textAlign: 'left', padding: '11px 13px', borderRadius: 11, cursor: ready ? 'pointer' : 'default', border: `1px solid ${primary ? TOW.goldDeep : TOW.line}`, background: primary ? 'rgba(184,134,47,0.12)' : TOW.panel2, opacity: ready ? 1 : 0.55 }}>
+              <span style={{ flex: 1, minWidth: 0, fontFamily: towFont.display, fontWeight: 600, fontSize: 15, color: primary ? TOW.goldDeep : TOW.ink, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{l.name}</span>
+              <span style={{ ...eb, fontSize: 8, color: TOW.muted, flexShrink: 0 }}>{ready ? `${total ?? '…'}/${l.points} pts · ${l.entries.length} unit${l.entries.length === 1 ? '' : 's'}` : 'loading…'}</span>
             </button>
           );
         })}
       </div>
-      <div style={{ ...eb, fontSize: 8, color: TOW.faint, textAlign: 'center', margin: '11px 0 2px' }}>— or paste an export below —</div>
+      {solo ? (
+        <button onClick={() => setShowAll(true)} style={{ display: 'block', margin: '9px auto 2px', background: 'none', border: 'none', cursor: 'pointer', fontFamily: towFont.serif, fontSize: 12.5, color: TOW.muted, textDecoration: 'underline' }}>
+          use a different list
+        </button>
+      ) : (
+        <div style={{ ...eb, fontSize: 8, color: TOW.faint, textAlign: 'center', margin: '11px 0 2px' }}>— or paste an export below —</div>
+      )}
     </div>
   );
 }
