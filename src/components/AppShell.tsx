@@ -5,7 +5,7 @@ import { HomeCover } from './HomeCover';
 import { CompanionView } from './companion/CompanionView';
 import { BrowseMode } from './BrowseMode';
 import { GameMode } from './game/GameMode';
-import { ArmyMode } from './game/ArmyMode';
+import { ListBuilder } from './game/ListBuilder';
 import { SettingsMode } from './SettingsMode';
 import { NavRail } from './NavRail';
 import { TowIcon, type IconId } from '../design/icons';
@@ -117,7 +117,7 @@ export function AppShell() {
       ) : tab === 'game' ? (
         <GameMode />
       ) : tab === 'army' ? (
-        <ArmyMode />
+        <ListBuilder />
       ) : tab === 'settings' ? (
         <SettingsMode />
       ) : (
