@@ -1,0 +1,64 @@
+{
+  "id": "ok-renegade-v2",
+  "label": "Renegade V2",
+  "baseArmy": "ogre-kingdoms",
+  "packVersion": "1.5.2.2",
+  "source": {
+    "name": "Renegade Legacy Pack",
+    "author": "Square Based",
+    "url": "https://squarebased.com/",
+    "official": false,
+    "terms": "Free to use in whole or in part (squarebased.com)"
+  },
+  "status": "draft",
+  "scope": "points-only",
+  "units": {
+    "slaughtermaster": {
+      "points": 180,
+      "_was": 230,
+      "_changed": [
+        "points"
+      ]
+    },
+    "butcher": {
+      "points": 95,
+      "_was": 105,
+      "_changed": [
+        "points"
+      ]
+    },
+    "leadbelchers": {
+      "points": 39,
+      "_was": 41,
+      "_changed": [
+        "points"
+      ]
+    },
+    "yhetees": {
+      "points": 43,
+      "_was": 46,
+      "_changed": [
+        "points"
+      ]
+    }
+  },
+  "magicItems": {
+    "big-names": [
+      {
+        "name_en": "Beastkiller",
+        "name": "beastkiller",
+        "points": 40,
+        "type": "big-name",
+        "onePerArmy": false,
+        "_was": 5
+      },
+      {
+        "name_en": "Wallcrusher",
+        "name": "wallcrusher",
+        "points": 30,
+        "type": "big-name",
+        "onePerArmy": false
+      }
+    ]
+  }
+}
