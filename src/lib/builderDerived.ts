@@ -82,6 +82,12 @@ export function deriveList(list: BuilderList, army: OwbArmy, itemsData?: MagicIt
   // result, not a second opinion about it.
   const ratedLimits = cap > 0;
 
+  // NOTE — the redesign spec prints "max 25%" for Characters (and an example reading "Characters at
+  // 23% of max 25%"). That is an ERROR IN THE SPEC, verified against the official Games Workshop
+  // Legacy army-list PDF, whose Grand Army composition reads: "Characters — Up to 50% of your army's
+  // points value may be spent on…", Core "At least 25%", Mercenaries "Up to 20%", Allies "Up to 25%".
+  // `GRAND_ARMY` in owbBuilder.ts matches that (characters 50). Special 50% and Rare 25% in the spec
+  // are correct. Do NOT "fix" this towards the spec: 25% would reject legal armies.
   const categoryTotals: CategoryTotal[] = SPEC_CATEGORIES.map((key) => {
     const t = v.byCategory[key];
     // A category is capped OR floored, never both, in the GRAND_ARMY limits — prefer the cap if that
@@ -98,9 +104,10 @@ export function deriveList(list: BuilderList, army: OwbArmy, itemsData?: MagicIt
   // ── violations, in descending severity: budget → composition → single unit ────────────────────
   const violations: Violation[] = [];
   if (totalPoints > cap) {
-    // Spec text verbatim, e.g. "34 points over the limit". Left unpluralised on purpose so the
-    // string matches the spec byte for byte (a 1-point overshoot reads "1 points over the limit").
-    violations.push({ kind: 'over-cap', message: `${totalPoints - cap} points over the limit`, delta: totalPoints - cap });
+    // Spec text, e.g. "34 points over the limit" — pluralised, because the spec's template would
+    // otherwise render "1 points over the limit" for a one-point overshoot.
+    const by = totalPoints - cap;
+    violations.push({ kind: 'over-cap', message: `${by} point${by === 1 ? '' : 's'} over the limit`, delta: by });
   }
   // Iterate ALL categories, not just the four with a segment, so a mercenaries/allies breach that
   // validate() flags is never silently swallowed here.
