@@ -443,7 +443,6 @@ export function BuilderFlow({
           ctx={ctx}
           uid={screen.uid}
           onBack={() => toRoster(screen.uid)}
-          onDone={() => toRoster(screen.uid)}
           onRemove={() => removeUnit(screen.uid)}
           onDuplicate={() => duplicateUnit(screen.uid)}
           onShowInfo={onShowInfo}

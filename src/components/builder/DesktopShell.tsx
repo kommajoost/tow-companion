@@ -820,8 +820,7 @@ export function DesktopShell(props: {
             <UnitOptions
               ctx={ctx}
               uid={selectedUid}
-              onBack={onEscape}
-              onDone={onEscape}
+              onBack={onEscape}
               onRemove={onRemove}
               onDuplicate={onDuplicate}
               onShowInfo={onShowInfo}

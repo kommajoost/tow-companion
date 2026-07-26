@@ -173,10 +173,14 @@ function Stepper({ value, min, max, onChange }: {
 }
 
 const ROW_LABEL: React.CSSProperties = {
-  fontFamily: towFont.serif, fontWeight: 400, fontSize: 14, lineHeight: 1.25, color: TOW.ink,
+  // 15.5, up from 14. The option name is the one thing on this screen you are reading to make a
+  // decision; it was set smaller than the unit title above it that you read once.
+  fontFamily: towFont.serif, fontWeight: 400, fontSize: 15.5, lineHeight: 1.3, color: TOW.ink,
 };
 const ROW_SUB: React.CSSProperties = {
-  fontFamily: towFont.serif, fontWeight: 400, fontSize: 10.5, lineHeight: 1.3, color: TOW.faint,
+  // 12 and one step less faint. At 10.5 in `faint` on the dark skin this was barely legible, which is
+  // the worst of both: it took the space of information without delivering any.
+  fontFamily: towFont.serif, fontWeight: 400, fontSize: 12, lineHeight: 1.3, color: TOW.muted,
 };
 const ROW_DELTA: React.CSSProperties = {
   fontFamily: towFont.serif, fontWeight: 400, fontSize: 12, whiteSpace: 'nowrap', flexShrink: 0,
@@ -212,11 +216,12 @@ function OptionRow({ kind, on, label, sub, delta, deltaMuted, blocked, reason, o
         onClick={onToggle}
         aria-pressed={on}
         style={{
-          // 38px, not the roster row's 44. This screen stacks up to eight groups of these, and at 44
-          // only about six rows cleared the fold on a real phone — the option list is what you came
-          // here to read. 38 is still a comfortable thumb target (the eye beside it keeps a full 34,
-          // and the two together span the row), and it buys back roughly a row per group.
-          ...BTN_RESET, flex: 1, minWidth: 0, minHeight: 38, padding: '5px 0',
+          // 46px, with room to breathe. An earlier pass took this DOWN to 38 to fit more rows, which
+          // was solving the wrong problem: the screen felt cramped because ~47% of it was chrome (a
+          // 255px pinned footer, a tall header), not because the rows were generous. Removing the
+          // footer freed far more than shaving rows ever could, so the rows get their space back —
+          // the option list is the thing you actually read here.
+          ...BTN_RESET, flex: 1, minWidth: 0, minHeight: 46, padding: '9px 0',
           display: 'flex', alignItems: 'center', gap: 10, cursor: blocked ? 'default' : 'pointer',
         }}
       >
@@ -266,14 +271,13 @@ export function UnitOptions(props: {
   ctx: BuilderCtx;
   uid: string;                      // de te bewerken entry
   onBack: () => void;               // "‹ Roster" — edits zijn live, dus dit verwerpt niets
-  onDone: () => void;
   onRemove: () => void;
   onDuplicate?: () => void;
   /** Opent het regel-/profielpaneel van de app. De container bezit de regeldata en de
    *  slug-resolutie; geef door wat je wilt tonen. */
   onShowInfo?: (what: { kind: 'rule'; name: string } | { kind: 'item'; itemId: string } | { kind: 'mount'; name: string }) => void;
 }): React.JSX.Element {
-  const { ctx, uid, onBack, onDone, onRemove, onDuplicate, onShowInfo } = props;
+  const { ctx, uid, onBack, onRemove, onDuplicate, onShowInfo } = props;
   const { itemsData } = ctx;
 
   // ── hooks: all unconditional, before any early return ──────────────────────────────────────────
@@ -414,27 +418,36 @@ export function UnitOptions(props: {
    *  case, the implicit free `active` default of a radio group (which has no key of its own) — and
    *  "free" while it is not, because "included" would otherwise claim a unit carries something it
    *  does not. */
-  const deltaOf = (opt: OwbOption, on: boolean): { text: string; muted: boolean } => {
+  const deltaOf = (opt: OwbOption): { text: string; muted: boolean } => {
     const p = opt.points ?? 0;
-    if (!p) return { text: on ? 'included' : 'free', muted: true };
-    return { text: `+${fmt(p)}${opt.perModel ? ' /model' : ''}`, muted: false };
-  };
-  /** The catalogue's own restriction note on an option ("0-1 per 1000 points may purchase a magic
-   *  standard") — the one machine-readable "rule effect" our data has. Not on `OwbOption`, so read
-   *  through a local widening rather than by changing the engine's type. */
-  const noteOf = (opt: OwbOption): string | undefined => {
-    const n = (opt as { notes?: { name_en?: string } }).notes?.name_en;
-    return n ? cleanLabel(n) : undefined;
+    // A free option prints NOTHING. It used to say "free" or "included" — two words for one meaning,
+    // on almost every row, so the column was full of text that carried no decision. Leaving it blank
+    // means the eye only stops where there is actually a price to weigh.
+    if (!p) return { text: '', muted: true };
+    // "+1/model", not "+1 /model": the stray space read as two separate values.
+    return { text: `+${fmt(p)}${opt.perModel ? '/model' : ''}`, muted: false };
   };
   const infoFor = (group: string, name: string) => onShowInfo
     ? () => onShowInfo(group === 'mounts' ? { kind: 'mount', name } : { kind: 'rule', name })
     : undefined;
 
   const optionRow = (group: string, i: number, opt: OwbOption, on: boolean, kind: 'radio' | 'toggle', onToggle: () => void) => {
-    const d = deltaOf(opt, on);
+    const d = deltaOf(opt);
     const label = cleanLabel(opt.name_en);
-    // Second line: the option's own restriction note, else a mount's troop type — both real data.
-    const sub = noteOf(opt) ?? (group === 'mounts' ? troopTypeFor(label) : undefined);
+    // Second line: ONLY a mount's troop type — short, specific to that option, and genuinely useful
+    // while choosing.
+    //
+    // The catalogue's restriction note used to go here too, and it was the single worst thing on the
+    // screen: a full rules sentence ("0-1 Dark Elf Warriors or Repeater Crossbowman per 1000 points
+    // may purchase a magic standard") under a two-word label, and OWB attaches the same sentence to
+    // every option it covers — so Standard bearer and Veteran both carried it verbatim. Long, repeated,
+    // and not what you are deciding at that moment.
+    //
+    // HONEST NOTE: this text is now shown NOWHERE. The eye resolves a rule by NAME and has no channel
+    // for a per-option note, so calling it "behind the eye" would be wrong. The restriction is still
+    // ENFORCED (validate() checks it) — only the prose is gone. If it should come back, it needs a real
+    // home: an info panel that can take arbitrary text, not a second line on a list row.
+    const sub = group === 'mounts' ? troopTypeFor(label) : undefined;
     return (
       <OptionRow
         key={`${group}/${i}`}
@@ -586,8 +599,6 @@ export function UnitOptions(props: {
   const setLore = (slug: string, on: boolean) =>
     patch((e) => ({ ...e, lores: on ? [] : [slug], spells: [] }));
 
-  const changeLabel = change === 0 ? null
-    : `This change: ${change > 0 ? '+' : '−'}${fmt(Math.abs(change))} point${Math.abs(change) === 1 ? '' : 's'}`;
 
   return (
     <div style={{
@@ -625,11 +636,22 @@ export function UnitOptions(props: {
           </div>
           <div style={{ flexShrink: 0, textAlign: 'right' }}>
             <div style={{
-              fontFamily: towFont.display, fontWeight: 700, fontSize: 15, color: TOW.ink,
+              display: 'flex', alignItems: 'baseline', gap: 5, justifyContent: 'flex-end',
               fontVariantNumeric: 'tabular-nums', lineHeight: 1.1,
-            }}>{fmt(unitPoints)}</div>
+            }}>
+              <span style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 15, color: TOW.ink }}>
+                {fmt(unitPoints)}
+              </span>
+              {/* The pending delta, moved up here from the pinned footer that used to hold it. Same
+                  information, no 255px band: it sits beside the number it changes. */}
+              {change !== 0 ? (
+                <span style={{ fontFamily: towFont.serif, fontSize: 12, color: TOW.gold }}>
+                  {change > 0 ? '+' : '−'}{fmt(Math.abs(change))}
+                </span>
+              ) : null}
+            </div>
             <div style={{ fontFamily: towFont.serif, fontSize: 10.5, color: TOW.faint, whiteSpace: 'nowrap' }}>
-              {perModel != null ? `${fmt(perModel)} /model` : 'points'}
+              {perModel != null ? `${fmt(perModel)}/model` : 'points'}
             </div>
           </div>
         </div>
@@ -802,41 +824,38 @@ export function UnitOptions(props: {
             No further upgrades — this unit's wargear is fixed.
           </div>
         ) : null}
+
+        {/* Unit actions, at the END OF THE SCROLL — deliberately not a fixed footer.
+            There used to be a pinned bar here with the unit's points, a "This change: +15 points" line
+            and Duplicate / Remove / Done. On a phone it claimed ~255px permanently, a quarter of the
+            usable height, to hold: a total that the header already shows, and a "Done" that does
+            nothing — edits are live and "‹ Roster" is the way back. So the bar is gone and the two
+            real actions scroll away with the content, reachable when you look for them. */}
+        <div style={{
+          display: 'flex', gap: 16, alignItems: 'center',
+          marginTop: 22, paddingTop: 12, borderTop: `1px solid ${TOW.line}`,
+        }}>
+          {onDuplicate ? (
+            <button type="button" onClick={onDuplicate} style={{ ...BTN_RESET, ...TEXT_ACTION }}>Duplicate unit</button>
+          ) : null}
+          <button type="button" onClick={onRemove} style={{ ...BTN_RESET, ...TEXT_ACTION, color: TOW.gold }}>
+            Remove from list
+          </button>
+        </div>
       </div>
 
-      {/* ── footer ─────────────────────────────────────────────────────────────────────────────── */}
-      <div style={{
-        flexShrink: 0, borderTop: `1px solid ${TOW.lineStrong}`, background: TOW.panel,
-        padding: `9px ${BUILDER.gutter}px 16px`,
-      }}>
-        <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
-          <span style={{
-            fontFamily: towFont.display, fontWeight: 700, fontSize: 17, color: TOW.ink,
-            fontVariantNumeric: 'tabular-nums',
-          }}>{fmt(unitPoints)}</span>
-          <span style={{ fontFamily: towFont.serif, fontSize: 11, color: TOW.faint }}>points</span>
-          {change !== 0 ? (
-            <span style={{
-              fontFamily: towFont.serif, fontSize: 12, color: TOW.gold, fontVariantNumeric: 'tabular-nums',
-            }}>{change > 0 ? '+' : '−'}{fmt(Math.abs(change))}</span>
-          ) : null}
-        </div>
-        {changeLabel ? (
-          <div style={{ fontFamily: towFont.serif, fontSize: 10.5, color: TOW.faint, marginTop: 1 }}>{changeLabel}</div>
-        ) : null}
-        <div style={{ display: 'flex', gap: 8, marginTop: 8 }}>
-          {onDuplicate ? (
-            <button type="button" onClick={onDuplicate} style={{ ...FOOT_BTN, flex: 1 }}>Duplicate</button>
-          ) : null}
-          <button type="button" onClick={onRemove} style={{ ...FOOT_BTN, flex: 1, color: TOW.gold }}>Remove</button>
-          <button type="button" onClick={onDone} style={{
-            ...FOOT_BTN, flex: 1.4, border: `1px solid ${TOW.goldDeep}`, background: TOW.gold, color: TOW.onGrad,
-          }}>Done</button>
-        </div>
-      </div>
     </div>
   );
 }
+
+/** A quiet text action. The two unit actions are not primary buttons: you come to this screen to
+ *  choose equipment, and framing "Remove from list" like a call to action gave it a weight it has not
+ *  earned — and put a destructive control under your thumb. */
+const TEXT_ACTION: React.CSSProperties = {
+  minHeight: 40, display: 'flex', alignItems: 'center', cursor: 'pointer',
+  fontFamily: towFont.serif, fontSize: 13.5, color: TOW.muted, textDecoration: 'underline',
+  textDecorationColor: TOW.line, textUnderlineOffset: 3,
+};
 
 // ─────────────────────────── footer / back chrome ───────────────────────────
 const FOOT_BTN: React.CSSProperties = {
