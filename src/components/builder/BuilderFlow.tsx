@@ -19,7 +19,7 @@
 //  3. `itemsData` arrives asynchronously. Every screen renders without it and NOTHING prunes `opts`
 //     during that window — a "tidy up unknown keys" pass there would delete every magic item.
 
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { TOW, towFont } from '../../design/tow';
 import {
   CATEGORIES, COMPOSITION_RULES, entryPoints, selectedMagicItems, unitAllowedIn, unitCategoryFor,
@@ -32,6 +32,9 @@ import { RosterScreen } from './RosterScreen';
 import { PickerScreen } from './PickerScreen';
 import { UnitOptions } from './UnitOptions';
 import { ResolveSheet } from './ResolveSheet';
+import { DesktopShell } from './DesktopShell';
+import { RosterTable, rosterTableOrder } from './RosterTable';
+import { CataloguePane } from './CataloguePane';
 import type { BuilderCtx, BuilderScreen, PickerEntry, RosterRow, SavedListLike } from './types';
 
 /** Same shape `ListBuilder` already passes to `BuilderWorkspace`, so this is a drop-in swap. */
@@ -56,6 +59,24 @@ export interface BuilderFlowProps {
   statIdx?: Record<string, { troopType?: string; stats?: unknown[] }> | null;
   /** Opens the app's rule/profile sheet. The container does not own rule resolution. */
   onShowInfo?: (what: { kind: 'rule'; name: string } | { kind: 'item'; itemId: string } | { kind: 'mount'; name: string }) => void;
+
+  // ── Desktop-only extras ──────────────────────────────────────────────────────────────────────
+  // The three-pane shell's left rail lists the OTHER saved lists, which only the screen that owns
+  // `tow:lists` knows about. All optional: without them the desktop rail simply shows this list
+  // alone, and the phone flow never needs any of it.
+  /** Every saved list, for the rail's "Armies" block. */
+  savedLists?: { id: string; name: string; points: number; army: string }[];
+  /** Open another saved list. */
+  onOpenList?: (id: string) => void;
+  /** Start the new-list dialog. */
+  onNewList?: () => void;
+  /** Edit one field of the army summary inline (opens the owner's list-settings UI). */
+  onEditArmyField?: (field: 'faction' | 'composition' | 'rule' | 'points' | 'items') => void;
+  /** Top-bar actions. Absent → the shell renders them disabled with an explanatory title, which is
+   *  honest: Export and Print do not exist in this app yet, and Import OWB only exists at creation. */
+  onImportOwb?: () => void;
+  onExport?: () => void;
+  onPrint?: () => void;
 }
 
 const newUid = () => `u${Date.now().toString(36)}${Math.floor(Math.random() * 1e6).toString(36)}`;
@@ -75,11 +96,35 @@ const ruleLabel = (slug: string): string =>
 export function BuilderFlow({
   list, name, onUpdate, onBack, army, armyName, compName, itemsData, armyItemLists,
   statIdx, onShowInfo,
+  savedLists, onOpenList, onNewList, onEditArmyField, onImportOwb, onExport, onPrint,
 }: BuilderFlowProps): React.JSX.Element {
   const [screen, setScreen] = useState<BuilderScreen>({ kind: 'roster' });
   const [resolveOpen, setResolveOpen] = useState(false);
   /** The row to flash after an edit returns to the roster — the spec's "briefly highlighted". */
   const [highlightUid, setHighlightUid] = useState<string | undefined>(undefined);
+
+  // ── Layout: which shell? ──────────────────────────────────────────────────────────────────────
+  // Measured on THIS component's own box, not on `window`: the app's nav rail sits beside us at wide
+  // widths, so the window is always wider than the space the builder actually gets. The initial value
+  // is 0 so the very first paint picks the phone flow and then corrects — the other way round would
+  // flash a three-pane layout onto a phone.
+  const rootRef = useRef<HTMLDivElement | null>(null);
+  const [boxW, setBoxW] = useState(0);
+  useEffect(() => {
+    const el = rootRef.current;
+    if (!el || typeof ResizeObserver === 'undefined') return;
+    const ro = new ResizeObserver(([e]) => setBoxW(e.contentRect.width));
+    ro.observe(el);
+    setBoxW(el.getBoundingClientRect().width);
+    return () => ro.disconnect();
+  }, []);
+  /** The desktop spec's own breakpoint: below this it says to use the phone layout outright. */
+  const desktop = boxW >= 1180;
+
+  // Desktop-only UI state. Deliberately NOT shared with the phone flow's `screen`: on desktop nothing
+  // navigates (the roster is permanent), so a "current screen" has no meaning there.
+  const [selectedUids, setSelectedUids] = useState<string[]>([]);
+  const [catalogueOpen, setCatalogueOpen] = useState(false);
 
   const getUnit = useCallback(
     (cat: Category, unitId: string): OwbUnit | undefined => army?.[cat]?.find((u) => u.id === unitId),
@@ -215,9 +260,145 @@ export function BuilderFlow({
     setScreen({ kind: 'options', uid: addUnit(unit, cat) });
   }, [addUnit]);
 
+  // ── Desktop-only behaviour ────────────────────────────────────────────────────────────────────
+  // The single "current" unit: the inspector edits one at a time even when several are selected, and
+  // every keyboard action targets it. Last-selected wins, which is what a shift/⌘ selection implies.
+  const currentUid = selectedUids.length > 0 ? selectedUids[selectedUids.length - 1] : null;
+
+  /** The rows in the order the table paints them — the order arrows and Shift-ranges must follow.
+   *  `rows` is in ENTRY order, which diverges the moment a composition remaps a unit to another
+   *  category, so navigating over `rows` would jump around the screen. */
+  const visualRows = useMemo(() => rosterTableOrder(rows), [rows]);
+
+  const selectRow = useCallback((uid: string, mode: 'single' | 'range' | 'toggle') => {
+    setSelectedUids((prev) => {
+      if (mode === 'toggle') {
+        return prev.includes(uid) ? prev.filter((u) => u !== uid) : [...prev, uid];
+      }
+      if (mode === 'range' && prev.length > 0) {
+        const order = visualRows.map((r) => r.uid);
+        const a = order.indexOf(prev[prev.length - 1]);
+        const b = order.indexOf(uid);
+        if (a >= 0 && b >= 0) {
+          const [lo, hi] = a <= b ? [a, b] : [b, a];
+          return order.slice(lo, hi + 1);
+        }
+      }
+      return [uid];
+    });
+  }, [visualRows]);
+
+  /** Arrow-key selection: step through the VISIBLE order, clamped at both ends (no wrap — wrapping
+   *  from the last row back to the first reads as a glitch, not navigation). */
+  const moveSelection = useCallback((delta: -1 | 1) => {
+    setSelectedUids((prev) => {
+      const order = visualRows.map((r) => r.uid);
+      if (order.length === 0) return prev;
+      const at = prev.length ? order.indexOf(prev[prev.length - 1]) : -1;
+      const next = at < 0 ? (delta > 0 ? 0 : order.length - 1) : Math.min(order.length - 1, Math.max(0, at + delta));
+      return [order[next]];
+    });
+  }, [visualRows]);
+
+  /** Move an entry to just before `beforeUid` (null = end of its category). Reorder is a pure
+   *  permutation of `entries`: nothing is created, so no uid changes. */
+  const reorderTo = useCallback((uid: string, beforeUid: string | null) => {
+    update((l) => {
+      const from = l.entries.findIndex((e) => e.uid === uid);
+      if (from < 0) return {};
+      const rest = l.entries.filter((e) => e.uid !== uid);
+      const moved = l.entries[from];
+      if (beforeUid === null) return { entries: [...rest, moved] };
+      const to = rest.findIndex((e) => e.uid === beforeUid);
+      if (to < 0) return {};
+      return { entries: [...rest.slice(0, to), moved, ...rest.slice(to)] };
+    });
+  }, [update]);
+
+  /** ⌥↑/⌥↓ — swap the current unit with its neighbour INSIDE its own category. Crossing a category
+   *  boundary would silently change the unit's stored category, so it stops at the edge instead. */
+  const reorderBy = useCallback((delta: -1 | 1) => {
+    if (!currentUid) return;
+    const mine = visualRows.filter((r) => r.category === visualRows.find((x) => x.uid === currentUid)?.category);
+    const at = mine.findIndex((r) => r.uid === currentUid);
+    if (at < 0) return;
+    const target = at + delta;
+    if (target < 0 || target >= mine.length) return;
+    reorderTo(currentUid, delta < 0 ? mine[target].uid : (mine[target + 1]?.uid ?? null));
+  }, [currentUid, visualRows, reorderTo]);
+
+  /** +/− — model count, clamped to the unit's own minimum and maximum exactly as the stepper is. */
+  const changeCount = useCallback((delta: -1 | 1) => {
+    if (!currentUid) return;
+    update((l) => ({
+      entries: l.entries.map((e) => {
+        if (e.uid !== currentUid) return e;
+        const unit = getUnit(e.cat, e.unitId);
+        if (!unit) return e;
+        const min = unit.minimum ?? 1;
+        const max = (unit.maximum ?? 0) > 0 ? unit.maximum! : 9999;
+        return { ...e, count: Math.min(max, Math.max(min, e.count + delta)) };
+      }),
+    }));
+  }, [currentUid, update, getUnit]);
+
   // ── Render ────────────────────────────────────────────────────────────────────────────────────
-  // Desktop (≥1180px) is a separate shell; it is wired in a follow-up step. Until then every width
-  // gets the phone flow, which is complete and self-contained.
+  const desktopShell = desktop ? (
+    <DesktopShell
+      ctx={ctx}
+      rows={rows}
+      catalogueOpen={catalogueOpen}
+      selectedUid={currentUid}
+      savedLists={savedLists ?? [{ id: list.id, name: list.name, points: list.points, army: list.army }]}
+      activeListId={list.id}
+      autosavedAt={(list as { updatedAt?: number }).updatedAt}
+      rosterTable={(
+        <RosterTable
+          ctx={ctx}
+          rows={rows}
+          selectedUids={selectedUids}
+          onSelect={selectRow}
+          onDuplicate={duplicateUnit}
+          onRemove={removeUnit}
+          onReorder={reorderTo}
+          highlightUid={highlightUid}
+        />
+      )}
+      cataloguePane={catalogueOpen ? (
+        <CataloguePane
+          ctx={ctx}
+          entries={pickerEntries}
+          onClose={() => setCatalogueOpen(false)}
+          onAdd={(unit, cat) => {
+            // The pane stays open (add several units in a row); select what was just added so the
+            // inspector follows along, which is the whole point of a permanent inspector.
+            const uid = addUnit(unit, cat);
+            setSelectedUids([uid]);
+            setHighlightUid(uid);
+          }}
+          autoFocusSearch
+        />
+      ) : undefined}
+      onOpenList={onOpenList ?? (() => {})}
+      onNewList={onNewList ?? (() => {})}
+      onEditArmyField={onEditArmyField ?? (() => {})}
+      onOpenCatalogue={() => setCatalogueOpen(true)}
+      // Esc: close the catalogue if it is open, otherwise clear the selection. One key, one step at a
+      // time — collapsing both into a single press would make Esc feel like it skipped something.
+      onEscape={() => { if (catalogueOpen) setCatalogueOpen(false); else setSelectedUids([]); }}
+      onMoveSelection={moveSelection}
+      onReorder={reorderBy}
+      onChangeCount={changeCount}
+      onDuplicate={() => { if (currentUid) duplicateUnit(currentUid); }}
+      onRemove={() => { if (currentUid) { removeUnit(currentUid); setSelectedUids([]); } }}
+      onResolve={() => setResolveOpen(true)}
+      onImportOwb={onImportOwb}
+      onExport={onExport}
+      onPrint={onPrint}
+      onShowInfo={onShowInfo}
+    />
+  ) : null;
+
   const shell = (() => {
     if (screen.kind === 'picker') {
       return (
@@ -264,8 +445,12 @@ export function BuilderFlow({
   })();
 
   return (
-    <div style={{ height: '100%', minHeight: 0 }} data-list-name={name}>
-      {shell}
+    <div ref={rootRef} style={{ height: '100%', minHeight: 0 }} data-list-name={name}>
+      {/* `DesktopShell` returns null below 1180px on its own, but it is also not RENDERED there, so
+          its document-level keyboard listener cannot exist while the phone flow is up. Belt and
+          braces on purpose: a shortcut listener surviving behind a phone layout would eat arrows and
+          Backspace with no visible cause. */}
+      {desktop ? desktopShell : shell}
       {resolveOpen && <ResolveSheet ctx={ctx} onClose={() => setResolveOpen(false)} />}
     </div>
   );

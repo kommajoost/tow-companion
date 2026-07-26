@@ -370,6 +370,19 @@ export function ListBuilder() {
           itemsData={itemsData ?? undefined}
           armyItemLists={meta?.items ?? []}
           statIdx={statIdx}
+          // Desktop rail: the other saved lists. Only this screen owns `tow:lists`, so it supplies
+          // them; the builder itself never reads the collection.
+          savedLists={lists.map((l) => ({ id: l.id, name: l.name, points: l.points, army: l.army }))}
+          onOpenList={(id) => setActiveId(id)}
+          onNewList={() => setSetupOpen(true)}
+          // The army-summary rows are click-to-edit. The list-settings UI still lives in
+          // BuilderWorkspace, so until it is ported this opens nothing rather than pretending: an
+          // inert row is honest, a row that opens a broken sheet is not.
+          onEditArmyField={undefined}
+          // Import OWB exists, but only as "create a list from a paste" — not as "import into THIS
+          // list", which is what the top-bar button implies. Export and Print do not exist at all.
+          // All three are left undefined so the shell disables them with an explanation.
+          onImportOwb={undefined}
           // Rule resolution stays OUT of the builder: this screen owns the rules data and the app's
           // rule sheet, so it maps a label to a slug here. An unresolvable label opens nothing rather
           // than an empty sheet.
