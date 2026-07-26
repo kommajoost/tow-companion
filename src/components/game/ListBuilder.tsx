@@ -185,13 +185,13 @@ let statIndexCache: Record<string, { stats?: StatRow[] }> | null = null;
 interface ArmyMeta { comps: string[]; items: string[] }
 
 export function ListBuilder() {
-  // ── Redesigned builder, behind a switch ────────────────────────────────────────────────────────
-  // The redesign (src/components/builder/) replaces this screen's workspace. It is a drop-in with the
-  // same props, but it is a rewrite of the app's core feature and has not yet been exercised by real
-  // taps, so BOTH are shipped and the old one stays the default. Flip it in Settings → Appearance, or
-  // set `tow:builder-v2` to `true` in localStorage. Once the new flow has been used in anger this
-  // switch and `BuilderWorkspace` can go.
-  const [useV2] = usePersistentState<boolean>('tow:builder-v2', false);
+  // ── The redesigned builder is now the DEFAULT ─────────────────────────────────────────────────
+  // `src/components/builder/` replaces this screen's workspace: compact roster on a phone, three-pane
+  // layout on a wide screen. The old `BuilderWorkspace` is still in the bundle and still reachable by
+  // setting `tow:builder-v2` to false, purely as a fallback if something turns out to be broken in
+  // the field — not as an opt-in. Once the new flow has proven itself, both the flag and
+  // BuilderWorkspace can go.
+  const [useV2] = usePersistentState<boolean>('tow:builder-v2', true);
   const { rules } = useData();
   const { openRule } = useUI();
   const ruleIdx = useMemo(() => getRuleIndex(rules ?? {}), [rules]);
