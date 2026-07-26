@@ -5,8 +5,12 @@ import { validate, type Category, type OwbArmy, type OwbUnit, type BuilderList, 
 import { listTotal } from '../../lib/builderToArmy';
 import { compName } from '../../lib/armies';
 import { BuilderWorkspace } from './BuilderWorkspace';
+import { BuilderFlow } from '../builder/BuilderFlow';
 import { NewListSetup, type NewListValues } from './NewListSetup';
 import { useBackClose } from '../../lib/backStack';
+import { useData } from '../../data';
+import { getRuleIndex, resolveOptionSlug, resolveRuleSlug } from '../../lib/armyRules';
+import { useUI } from '../../state';
 import {
   getCampaignCode, getCachedCampaign, versCampagneContext, cacheCampaignContext,
   hernoemRegiment, verwijderRegiment, regimentSlug, type CampaignContext,
@@ -181,6 +185,17 @@ let statIndexCache: Record<string, { stats?: StatRow[] }> | null = null;
 interface ArmyMeta { comps: string[]; items: string[] }
 
 export function ListBuilder() {
+  // ── Redesigned builder, behind a switch ────────────────────────────────────────────────────────
+  // The redesign (src/components/builder/) replaces this screen's workspace. It is a drop-in with the
+  // same props, but it is a rewrite of the app's core feature and has not yet been exercised by real
+  // taps, so BOTH are shipped and the old one stays the default. Flip it in Settings → Appearance, or
+  // set `tow:builder-v2` to `true` in localStorage. Once the new flow has been used in anger this
+  // switch and `BuilderWorkspace` can go.
+  const [useV2] = usePersistentState<boolean>('tow:builder-v2', false);
+  const { rules } = useData();
+  const { openRule } = useUI();
+  const ruleIdx = useMemo(() => getRuleIndex(rules ?? {}), [rules]);
+
   const [armies, setArmies] = useState<{ slug: string; name: string }[]>([]);
   const [metaByArmy, setMetaByArmy] = useState<Record<string, ArmyMeta>>({});
   const [catalogues, setCatalogues] = useState<Record<string, OwbArmy>>({}); // slug → catalogue (on demand)
@@ -338,6 +353,37 @@ export function ListBuilder() {
   if (active) {
     if (!activeCatalogue) return <div style={{ padding: 24, fontFamily: towFont.serif, color: TOW.muted }}>Loading the catalogue…</div>;
     const meta = metaByArmy[active.army];
+    if (useV2) {
+      return (
+        <BuilderFlow
+          list={active}
+          name={active.name}
+          onUpdate={updateActive}
+          onSetName={setName}
+          onBack={() => setActiveId(null)}
+          army={activeCatalogue}
+          armySlug={active.army}
+          statsFor={statsFor}
+          comps={meta?.comps ?? compsByArmy[active.army] ?? [active.army]}
+          armyName={armyName(active.army)}
+          compName={(c) => compName(c, active.army)}
+          itemsData={itemsData ?? undefined}
+          armyItemLists={meta?.items ?? []}
+          statIdx={statIdx}
+          // Rule resolution stays OUT of the builder: this screen owns the rules data and the app's
+          // rule sheet, so it maps a label to a slug here. An unresolvable label opens nothing rather
+          // than an empty sheet.
+          onShowInfo={(what) => {
+            if (what.kind === 'item') return; // item text lives in the builder's own popover
+            const label = what.name;
+            const slug = what.kind === 'mount'
+              ? (resolveOptionSlug(label, ruleIdx) ?? resolveRuleSlug(label, ruleIdx))
+              : (resolveRuleSlug(label, ruleIdx) ?? resolveOptionSlug(label, ruleIdx));
+            if (slug) openRule(slug);
+          }}
+        />
+      );
+    }
     return (
       <BuilderWorkspace
         list={active}

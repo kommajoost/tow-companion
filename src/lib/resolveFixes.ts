@@ -14,7 +14,7 @@
 // Points always come from `entryPoints()` — the same function the rest of the app totals with — by
 // pricing a hypothetical edited entry and diffing. Nothing here re-derives a points rule.
 
-import { entryPoints, type BuilderList, type Category, type ListEntry, type MagicItemsData, type OwbUnit } from './owbBuilder';
+import { entryPoints, unitCategoryFor, type BuilderList, type Category, type ListEntry, type MagicItemsData, type OwbUnit } from './owbBuilder';
 import type { DerivedList } from './builderDerived';
 import type { ResolveFix, SavedListLike } from '../components/builder/types';
 
@@ -45,14 +45,30 @@ export function resolveFixes(
   const getUnit = (cat: Category, id: string) => army?.[cat]?.find((u) => u.id === id);
   const fixes: ResolveFix[] = [];
 
-  // How much must be freed for the list to be legal on the points cap? Category maxima are handled
-  // by the same reduce-fixes (freeing points from a unit in that category also lowers its share), so
-  // they do not get their own fix kind — they simply make those units' fixes relevant.
+  // WHAT CAN A REDUCTION ACTUALLY FIX? Only two things: the points cap, and a category maximum. It
+  // cannot fix a Core MINIMUM — that floor is a share of the cap, not of the total, so deleting units
+  // leaves the floor untouched and only widens the shortfall. Offering "Delete Repeater Crossbowmen"
+  // to someone whose sole problem is too little Core is worse than offering nothing: it is confidently
+  // pointing the wrong way. So reduce-fixes are emitted ONLY where they can help, and a category
+  // maximum only admits fixes for units IN THAT CATEGORY.
   const overCap = derived.violations.find((v) => v.kind === 'over-cap')?.delta ?? 0;
+  const catOver = new Map<Category, number>();
+  for (const v of derived.violations) {
+    if (v.kind === 'category-max' && v.category) catOver.set(v.category, v.delta ?? 0);
+  }
+  const reducible = overCap > 0 || catOver.size > 0;
+  /** entry-uid → its effective category, so the ranking below can ask which overflow a fix addresses. */
+  const uidCategory = new Map<string, Category>();
 
   for (const entry of list?.entries ?? []) {
     const unit = getUnit(entry.cat, entry.unitId);
     if (!unit) continue; // stale entry — validate() ignores it too, so it cannot be part of a repair
+    if (!reducible) continue; // nothing a reduction can repair — see the note above
+    // The unit's EFFECTIVE category, because that is the one the limits are tallied against.
+    const effCat = unitCategoryFor(unit, list.composition, entry.cat);
+    // Over the cap → every unit is fair game. Otherwise only the offending categories are.
+    if (overCap <= 0 && !catOver.has(effCat)) continue;
+    uidCategory.set(entry.uid, effCat);
     const now = entryPoints(unit, entry, itemsData);
     const name = entryName(unit, entry);
 
@@ -129,11 +145,23 @@ export function resolveFixes(
   }
 
   // ── Ranking ──────────────────────────────────────────────────────────────────────────────────
-  // "Cheapest edit that clears the problem" — so fixes that are individually SUFFICIENT come first,
+  // "Cheapest edit that clears the problem": fixes that are individually SUFFICIENT come first,
   // smallest-sufficient first (the least damage that finishes the job); then the insufficient ones,
-  // largest first (the biggest step towards it). With no points overshoot there is nothing to be
-  // sufficient for, so it degrades to plain smallest-first.
-  const sufficient = (f: ResolveFix) => overCap > 0 && f.saving >= overCap;
+  // largest first (the biggest step towards it).
+  //
+  // "Sufficient" is measured against whatever this fix could actually clear — the cap overshoot when
+  // there is one, otherwise the overflow of the category the fix's unit sits in. Without the second
+  // case a pure category breach ranked purely largest-first, i.e. most-destructive-first, directly
+  // contradicting the sheet's own "cheapest edits first" heading.
+  const target = (f: ResolveFix) => {
+    if (overCap > 0) return overCap;
+    const cat = f.uid ? uidCategory.get(f.uid) : undefined;
+    return (cat && catOver.get(cat)) || 0;
+  };
+  const sufficient = (f: ResolveFix) => {
+    const t = target(f);
+    return t > 0 && f.saving >= t;
+  };
   fixes.sort((a, b) => {
     const sa = sufficient(a), sb = sufficient(b);
     if (sa !== sb) return sa ? -1 : 1;

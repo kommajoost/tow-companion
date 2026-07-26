@@ -23,8 +23,28 @@ export interface Violation {
   delta?: number;
   /** entry-uid bij unit-size */
   uid?: string;
+  /** Which category this is about, for `category-max` and `core-min`. The Resolve solver needs it:
+   *  freeing points only helps a category maximum if the points come OUT OF THAT CATEGORY. */
+  category?: Category;
 }
-export interface CategoryTotal { key: Category; points: number; pct: number; rule: string; ok: boolean }
+export interface CategoryTotal {
+  key: Category;
+  points: number;
+  pct: number;
+  /** The rule as text: "max 50%" / "min 25%", or "" for an unlimited category. */
+  rule: string;
+  ok: boolean;
+  /** The ABSOLUTE limit in points, forwarded straight from `validate()` — `cap` for a capped category
+   *  (`floor(pct × target)`), `floor` for a floored one (`ceil(pct × target)`), null when the category
+   *  has no limit of that kind or there is no points target.
+   *
+   *  Forwarded on purpose: the desktop table and the picker both print absolute thresholds
+   *  ("638 / min 500"), and each was re-deriving them by parsing the percentage back out of `rule` and
+   *  re-applying the rounding. Two copies of the engine's rounding is exactly how a printed threshold
+   *  drifts from the one actually enforced — so the numbers come from the engine, once. */
+  cap: number | null;
+  floor: number | null;
+}
 export interface DerivedList {
   totalPoints: number;
   categoryTotals: CategoryTotal[];   // vaste orde characters → core → special → rare
@@ -98,7 +118,16 @@ export function deriveList(list: BuilderList, army: OwbArmy, itemsData?: MagicIt
     // `ok` mirrors validate()'s verdict exactly, including its boundary behaviour: the cap is
     // `floor(pct × target)` and only `points > cap` is over, so a category landing EXACTLY on its
     // limit is still ok. Likewise `points === floor(min)` satisfies Core's minimum.
-    return { key, points: t.points, pct: pctOf(t.points), rule, ok: !ratedLimits || (!t.over && !t.under) };
+    return {
+      key, points: t.points, pct: pctOf(t.points), rule,
+      ok: !ratedLimits || (!t.over && !t.under),
+      // From validate(), but SANITISED. validate() derives these as `pct × list.points`, so a list with
+      // a NaN/null/undefined points target yields NaN — and before this field existed that NaN stayed
+      // inside the engine. Surfacing it raw leaked "NaN" into a rendered threshold, which a test caught.
+      // Non-finite collapses to null, i.e. "no such limit", which every consumer already handles.
+      cap: ratedLimits && Number.isFinite(t.cap) ? t.cap : null,
+      floor: ratedLimits && Number.isFinite(t.floor) ? t.floor : null,
+    };
   });
 
   // ── violations, in descending severity: budget → composition → single unit ────────────────────
@@ -120,6 +149,7 @@ export function deriveList(list: BuilderList, army: OwbArmy, itemsData?: MagicIt
         kind: 'category-max',
         message: `${CAT_LABEL[key]} at ${pct}% of max ${t.limit.maxPercent}%`,
         delta: t.points - (t.cap ?? 0),
+        category: key,
       });
     }
     if (t.under && t.limit.minPercent != null) {
@@ -129,6 +159,7 @@ export function deriveList(list: BuilderList, army: OwbArmy, itemsData?: MagicIt
         kind: 'core-min',
         message: `${CAT_LABEL[key]} at ${pct}% of min ${t.limit.minPercent}%`,
         delta: (t.floor ?? 0) - t.points,
+        category: key,
       });
     }
   }
