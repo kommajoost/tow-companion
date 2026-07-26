@@ -204,7 +204,8 @@ export function DesktopShell(props: {
   onChangeCount: (delta: -1 | 1) => void;
   onDuplicate: () => void;
   onRemove: () => void;
-  onResolve: () => void;
+  /** Absent -> the violation band shows the problem without offering a fix. */
+  onResolve?: () => void;
   onImportOwb?: () => void;
   onExport?: () => void;
   onPrint?: () => void;
@@ -875,18 +876,22 @@ export function DesktopShell(props: {
             >
               {bandMessages.join(' · ')}
             </span>
-            <button
-              type="button"
-              onClick={onResolve}
-              style={{
-                flexShrink: 0, background: 'none', border: 'none', padding: 0, margin: 0,
-                cursor: 'pointer', color: TOW.goldDeep, textDecoration: 'underline',
-                ...eb, fontSize: 8.5, letterSpacing: '0.16em',
-                WebkitTapHighlightColor: 'transparent',
-              }}
-            >
-              Resolve
-            </button>
+            {/* Only rendered when a handler is supplied — the container currently passes none, so the
+                band reports the violation without offering to fix it. A dead link is worse than none. */}
+            {onResolve ? (
+              <button
+                type="button"
+                onClick={onResolve}
+                style={{
+                  flexShrink: 0, background: 'none', border: 'none', padding: 0, margin: 0,
+                  cursor: 'pointer', color: TOW.goldDeep, textDecoration: 'underline',
+                  ...eb, fontSize: 8.5, letterSpacing: '0.16em',
+                  WebkitTapHighlightColor: 'transparent',
+                }}
+              >
+                Resolve
+              </button>
+            ) : null}
           </>
         ) : (
           <>

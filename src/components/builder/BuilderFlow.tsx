@@ -31,7 +31,6 @@ import { makeTroopTypeLookup } from '../../lib/troopTypes';
 import { RosterScreen } from './RosterScreen';
 import { PickerScreen } from './PickerScreen';
 import { UnitOptions } from './UnitOptions';
-import { ResolveSheet } from './ResolveSheet';
 import { DesktopShell } from './DesktopShell';
 import { RosterTable, rosterTableOrder } from './RosterTable';
 import { CataloguePane } from './CataloguePane';
@@ -99,7 +98,6 @@ export function BuilderFlow({
   savedLists, onOpenList, onNewList, onEditArmyField, onImportOwb, onExport, onPrint,
 }: BuilderFlowProps): React.JSX.Element {
   const [screen, setScreen] = useState<BuilderScreen>({ kind: 'roster' });
-  const [resolveOpen, setResolveOpen] = useState(false);
   /** The row to flash after an edit returns to the roster — the spec's "briefly highlighted". */
   const [highlightUid, setHighlightUid] = useState<string | undefined>(undefined);
 
@@ -412,7 +410,6 @@ export function BuilderFlow({
       onChangeCount={changeCount}
       onDuplicate={() => { if (currentUid) duplicateUnit(currentUid); }}
       onRemove={() => { if (currentUid) { removeUnit(currentUid); setSelectedUids([]); } }}
-      onResolve={() => setResolveOpen(true)}
       onImportOwb={onImportOwb}
       onExport={onExport}
       onPrint={onPrint}
@@ -458,7 +455,6 @@ export function BuilderFlow({
         onSelectUnit={(uid) => setScreen({ kind: 'options', uid })}
         onDuplicate={duplicateUnit}
         onRemove={removeUnit}
-        onResolve={() => setResolveOpen(true)}
         highlightUid={highlightUid}
       />
     );
@@ -471,7 +467,6 @@ export function BuilderFlow({
           braces on purpose: a shortcut listener surviving behind a phone layout would eat arrows and
           Backspace with no visible cause. */}
       {desktop ? desktopShell : shell}
-      {resolveOpen && <ResolveSheet ctx={ctx} onClose={() => setResolveOpen(false)} />}
     </div>
   );
 }
