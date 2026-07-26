@@ -1,0 +1,53 @@
+{
+  "id": "lm-renegade-v2",
+  "label": "Renegade V2",
+  "baseArmy": "lizardmen",
+  "packVersion": "1.5.2.1",
+  "source": {
+    "name": "Renegade Legacy Pack",
+    "author": "Square Based",
+    "url": "https://squarebased.com/",
+    "official": false,
+    "terms": "Free to use in whole or in part (squarebased.com)"
+  },
+  "status": "draft",
+  "scope": "points-only",
+  "units": {
+    "skink-skirmishers": {
+      "points": 6,
+      "_was": 5,
+      "_changed": [
+        "points"
+      ]
+    },
+    "saurus-warrior": {
+      "points": 12,
+      "_was": 14,
+      "_changed": [
+        "points"
+      ]
+    },
+    "temple-guard": {
+      "points": 15,
+      "_was": 16,
+      "_changed": [
+        "points"
+      ]
+    },
+    "salamander-packs": {
+      "points": 65,
+      "_was": 75,
+      "_changed": [
+        "points"
+      ]
+    },
+    "razordon-packs": {
+      "points": 75,
+      "_was": 60,
+      "_changed": [
+        "points"
+      ]
+    }
+  },
+  "magicItems": {}
+}

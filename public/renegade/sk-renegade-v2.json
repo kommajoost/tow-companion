@@ -1,0 +1,53 @@
+{
+  "id": "sk-renegade-v2",
+  "label": "Renegade V2",
+  "baseArmy": "skaven",
+  "packVersion": "1.5.2.2",
+  "source": {
+    "name": "Renegade Legacy Pack",
+    "author": "Square Based",
+    "url": "https://squarebased.com/",
+    "official": false,
+    "terms": "Free to use in whole or in part (squarebased.com)"
+  },
+  "status": "draft",
+  "scope": "points-only",
+  "units": {
+    "grey-seer": {
+      "points": 155,
+      "_was": 185,
+      "_changed": [
+        "points"
+      ]
+    },
+    "master-assassin": {
+      "points": 120,
+      "_was": 90,
+      "_changed": [
+        "points"
+      ]
+    },
+    "stormvermin": {
+      "points": 9,
+      "_was": 10,
+      "_changed": [
+        "points"
+      ]
+    },
+    "rat-ogres": {
+      "points": 40,
+      "_was": 48,
+      "_changed": [
+        "points"
+      ]
+    },
+    "plague-censer-bearers": {
+      "points": 16,
+      "_was": 13,
+      "_changed": [
+        "points"
+      ]
+    }
+  },
+  "magicItems": {}
+}

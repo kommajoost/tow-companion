@@ -52,6 +52,11 @@ export interface CompositionOverlay {
  *  entry here is simply an ordinary OWB composition; nothing breaks. */
 export const OVERLAY_FILES: Record<string, string> = {
   'ok-renegade-v2': 'ok-renegade-v2.json',
+  'de-renegade-v2': 'de-renegade-v2.json',
+  'sk-renegade-v2': 'sk-renegade-v2.json',
+  'cd-renegade-v2': 'cd-renegade-v2.json',
+  'doc-renegade-v2': 'doc-renegade-v2.json',
+  'lm-renegade-v2': 'lm-renegade-v2.json',
 };
 
 export const hasOverlay = (composition: string): boolean => composition in OVERLAY_FILES;
@@ -70,6 +75,11 @@ export function overlayCompsFor(armySlug: string, base: CompositionOverlay['base
 /** overlay id → the army it patches. Kept beside OVERLAY_FILES so adding a pack is one line in each. */
 export const OVERLAY_BASE_ARMY: Record<string, string> = {
   'ok-renegade-v2': 'ogre-kingdoms',
+  'de-renegade-v2': 'dark-elves',
+  'sk-renegade-v2': 'skaven',
+  'cd-renegade-v2': 'chaos-dwarfs',
+  'doc-renegade-v2': 'daemons-of-chaos',
+  'lm-renegade-v2': 'lizardmen',
 };
 
 /** Shallow structural check. An overlay arrives over the network and may be stale or half-written; a

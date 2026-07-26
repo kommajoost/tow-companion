@@ -1,0 +1,74 @@
+{
+  "id": "de-renegade-v2",
+  "label": "Renegade V2",
+  "baseArmy": "dark-elves",
+  "packVersion": "1.5.2.2",
+  "source": {
+    "name": "Renegade Legacy Pack",
+    "author": "Square Based",
+    "url": "https://squarebased.com/",
+    "official": false,
+    "terms": "Free to use in whole or in part (squarebased.com)"
+  },
+  "status": "draft",
+  "scope": "points-only",
+  "units": {
+    "supreme-sorceress": {
+      "points": 155,
+      "_was": 150,
+      "_changed": [
+        "points"
+      ]
+    },
+    "sorceress": {
+      "points": 80,
+      "_was": 75,
+      "_changed": [
+        "points"
+      ]
+    },
+    "repeater-crossbowmen": {
+      "points": 10,
+      "_was": 11,
+      "_changed": [
+        "points"
+      ]
+    },
+    "har-ganeth-executioners": {
+      "points": 14,
+      "_was": 15,
+      "_changed": [
+        "points"
+      ]
+    },
+    "sisters-of-slaughter": {
+      "points": 14,
+      "_was": 17,
+      "_changed": [
+        "points"
+      ]
+    },
+    "war-hydra": {
+      "points": 165,
+      "_was": 200,
+      "_changed": [
+        "points"
+      ]
+    },
+    "bloodwrack-medusas": {
+      "points": 70,
+      "_was": 85,
+      "_changed": [
+        "points"
+      ]
+    },
+    "kharibdyss": {
+      "points": 145,
+      "_was": 195,
+      "_changed": [
+        "points"
+      ]
+    }
+  },
+  "magicItems": {}
+}

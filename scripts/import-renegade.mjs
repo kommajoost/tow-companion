@@ -55,31 +55,79 @@ for (const [cat, arr] of Object.entries(army)) {
 }
 const byName = new Map(baseUnits.map((u) => [norm(u.name), u]));
 
-/** Pack profile name → base unit. A multi-model unit is headed by the SINGULAR model name and priced
- *  per model, while the catalogue is plural ("Irongut 39" ↔ "Ironguts", "Ogre 31" ↔ "Ogre Bulls",
- *  "Sabretusk 17" ↔ "Sabretusk Pack"). Exact, then simple plural, then a GUARDED prefix match: the base
- *  name must continue with a space or an "s", and an ambiguous prefix is refused rather than guessed —
- *  a wrong match would silently reprice the wrong unit. */
+/** Plural forms of a word, English-irregular-aware. The packs head a multi-model unit's statblock with
+ *  the SINGULAR model name while the catalogue names the unit in the plural, and the interesting cases
+ *  are not "+s": Crossbowman→Crossbowmen, Witch Elf→Witch Elves, Harpy→Harpies. */
+const plurals = (w) => {
+  const out = new Set([w, `${w}s`, `${w}es`]);
+  if (/man$/.test(w)) out.add(w.replace(/man$/, 'men'));
+  if (/fe$/.test(w)) out.add(w.replace(/fe$/, 'ves'));
+  else if (/f$/.test(w)) out.add(w.replace(/f$/, 'ves'));
+  if (/[^aeiou]y$/.test(w)) out.add(w.replace(/y$/, 'ies'));
+  return [...out];
+};
+
+/** Every plural variant of a profile name — the last word pluralised, and (for "Sister of Slaughter"
+ *  ↔ "Sisters of Slaughter") the first word too. */
+const nameVariants = (n) => {
+  const w = n.split(' ');
+  const out = new Set([n]);
+  for (const p of plurals(w[w.length - 1])) out.add([...w.slice(0, -1), p].join(' '));
+  if (w.length > 1) for (const p of plurals(w[0])) out.add([p, ...w.slice(1)].join(' '));
+  return [...out];
+};
+
+/** Are `words` present in `hay` in order, as whole words? Lets the catalogue carry extra words the pack
+ *  omits — the packs drop qualifiers the catalogue keeps ("Corsair" ↔ "Black Ark Corsairs",
+ *  "Bloodletter" ↔ "Bloodletters of Khorne", "Herald of Khorne" ↔ "Daemonic Herald of Khorne"). */
+const subsequence = (hay, words) => {
+  const h = hay.split(' ');
+  let i = 0;
+  for (const w of words) {
+    const at = h.indexOf(w, i);
+    if (at < 0) return false;
+    i = at + 1;
+  }
+  return true;
+};
+
+/**
+ * Pack profile name → base units (plural: a name can legitimately appear in more than one category).
+ *
+ * Exact/plural first, then a word-subsequence match against every plural variant. AMBIGUITY IS REFUSED:
+ * if the variants resolve to more than one distinct base NAME the profile is skipped, because a wrong
+ * match silently reprices the wrong unit — worse than leaving it at base points. "Skink 5" is the
+ * honest casualty of that rule: it could be Skink Priest, Skink Chief, Skink Skirmishers or Chameleon
+ * Skinks, so it stays unmatched rather than repricing one of them at random.
+ */
 const matchBase = (packName) => {
   const n = norm(packName);
-  const hit = byName.get(n) || byName.get(`${n}s`) || byName.get(`${n}es`);
-  if (hit) return hit;
-  const cands = baseUnits.filter((u) => {
-    const bn = norm(u.name);
-    return bn.startsWith(n) && /^[s ]/.test(bn.slice(n.length));
-  });
-  return cands.length === 1 ? cands[0] : null;
+  const variants = nameVariants(n);
+  for (const v of variants) {
+    const exact = baseUnits.filter((u) => norm(u.name) === v);
+    if (exact.length) return exact;
+  }
+  const words = n.split(' ');
+  const hits = baseUnits.filter((u) => variants.some((v) => subsequence(norm(u.name), v.split(' '))) || subsequence(norm(u.name), words));
+  const names = new Set(hits.map((u) => norm(u.name)));
+  return names.size === 1 ? hits : null;
 };
 
 const units = {};
 let repriced = 0, unchanged = 0;
 const unmatched = [];
 for (const p of profiles) {
-  const b = matchBase(p.name);
-  if (!b) { unmatched.push(p); continue; }
-  if (b.points === p.points) { unchanged++; continue; }
-  units[b.id] = { points: p.points, _was: b.points, _changed: ['points'] };
-  repriced++;
+  const hits = matchBase(p.name);
+  if (!hits || hits.length === 0) { unmatched.push(p); continue; }
+  // One name can appear in several categories (the packs' own variants sit beside the base entry), so
+  // patch every unit carrying that name — patching only the first would leave a stale price behind.
+  let touched = false;
+  for (const b of hits) {
+    if (b.points === p.points) continue;
+    units[b.id] = { points: p.points, _was: b.points, _changed: ['points'] };
+    touched = true;
+  }
+  if (touched) repriced++; else unchanged++;
 }
 
 // ── magic items ──────────────────────────────────────────────────────────────────────────────────

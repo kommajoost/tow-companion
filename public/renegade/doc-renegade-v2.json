@@ -1,0 +1,81 @@
+{
+  "id": "doc-renegade-v2",
+  "label": "Renegade V2",
+  "baseArmy": "daemons-of-chaos",
+  "packVersion": "1.5.2.1",
+  "source": {
+    "name": "Renegade Legacy Pack",
+    "author": "Square Based",
+    "url": "https://squarebased.com/",
+    "official": false,
+    "terms": "Free to use in whole or in part (squarebased.com)"
+  },
+  "status": "draft",
+  "scope": "points-only",
+  "units": {
+    "bloodletters-of-khorne": {
+      "points": 13,
+      "_was": 14,
+      "_changed": [
+        "points"
+      ]
+    },
+    "flesh-hounds-of-khorne-core": {
+      "points": 30,
+      "_was": 32,
+      "_changed": [
+        "points"
+      ]
+    },
+    "flesh-hounds-of-khorne": {
+      "points": 30,
+      "_was": 32,
+      "_changed": [
+        "points"
+      ]
+    },
+    "great-unclean-one": {
+      "points": 360,
+      "_was": 330,
+      "_changed": [
+        "points"
+      ]
+    },
+    "plaguebearers-of-nurgle": {
+      "points": 12,
+      "_was": 13,
+      "_changed": [
+        "points"
+      ]
+    },
+    "fiends-of-slaanesh": {
+      "points": 46,
+      "_was": 66,
+      "_changed": [
+        "points"
+      ]
+    },
+    "lord-of-change": {
+      "points": 340,
+      "_was": 310,
+      "_changed": [
+        "points"
+      ]
+    },
+    "chaos-furies": {
+      "points": 11,
+      "_was": 12,
+      "_changed": [
+        "points"
+      ]
+    },
+    "soul-grinder": {
+      "points": 240,
+      "_was": 255,
+      "_changed": [
+        "points"
+      ]
+    }
+  },
+  "magicItems": {}
+}

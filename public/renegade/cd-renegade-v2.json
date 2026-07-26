@@ -1,0 +1,67 @@
+{
+  "id": "cd-renegade-v2",
+  "label": "Renegade V2",
+  "baseArmy": "chaos-dwarfs",
+  "packVersion": "1.5.2.2",
+  "source": {
+    "name": "Renegade Legacy Pack",
+    "author": "Square Based",
+    "url": "https://squarebased.com/",
+    "official": false,
+    "terms": "Free to use in whole or in part (squarebased.com)"
+  },
+  "status": "draft",
+  "scope": "points-only",
+  "units": {
+    "sorcerer-prophet": {
+      "points": 175,
+      "_was": 195,
+      "_changed": [
+        "points"
+      ]
+    },
+    "infernal-seneschal": {
+      "points": 65,
+      "_was": 60,
+      "_changed": [
+        "points"
+      ]
+    },
+    "infernal-castellan": {
+      "points": 75,
+      "_was": 125,
+      "_changed": [
+        "points"
+      ]
+    },
+    "infernal-guard": {
+      "points": 10,
+      "_was": 11,
+      "_changed": [
+        "points"
+      ]
+    },
+    "infernal-ironsworn-core": {
+      "points": 16,
+      "_was": 19,
+      "_changed": [
+        "points"
+      ]
+    },
+    "infernal-ironsworn": {
+      "points": 16,
+      "_was": 19,
+      "_changed": [
+        "points"
+      ]
+    },
+    "k'daai-fireborn": {
+      "points": 38,
+      "_was": 41,
+      "_changed": [
+        "points"
+      ]
+    }
+  },
+  "magicItems": {}
+}
