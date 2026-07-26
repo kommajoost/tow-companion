@@ -112,11 +112,32 @@ export function BuilderFlow({
   const [boxW, setBoxW] = useState(0);
   useEffect(() => {
     const el = rootRef.current;
-    if (!el || typeof ResizeObserver === 'undefined') return;
-    const ro = new ResizeObserver(([e]) => setBoxW(e.contentRect.width));
-    ro.observe(el);
-    setBoxW(el.getBoundingClientRect().width);
-    return () => ro.disconnect();
+    if (!el) return;
+    const measure = () => setBoxW(el.getBoundingClientRect().width);
+
+    // THREE measurement paths on purpose, because the layout choice must not hang on any single one.
+    // A ResizeObserver alone looked sufficient until a real browser proved otherwise: in an offscreen
+    // Chrome window the observer never delivers a callback at all, so a first measurement taken before
+    // layout settled was never corrected and a 314px-wide box kept rendering the three-pane desktop
+    // shell. That is one point of failure too many for something as visible as the whole layout.
+    //  1. the observer — the precise path, catches pane drags and sibling changes;
+    //  2. window resize — cheap, and works even where the observer is inert;
+    //  3. two post-mount frames — covers a first measurement taken before styles/fonts settled.
+    const ro = typeof ResizeObserver !== 'undefined'
+      ? new ResizeObserver(([e]) => setBoxW(e.contentRect.width))
+      : null;
+    ro?.observe(el);
+    window.addEventListener('resize', measure);
+    measure();
+    const f1 = requestAnimationFrame(() => { measure(); });
+    const f2 = window.setTimeout(measure, 250);
+
+    return () => {
+      ro?.disconnect();
+      window.removeEventListener('resize', measure);
+      cancelAnimationFrame(f1);
+      window.clearTimeout(f2);
+    };
   }, []);
   /** The desktop spec's own breakpoint: below this it says to use the phone layout outright. */
   const desktop = boxW >= 1180;
