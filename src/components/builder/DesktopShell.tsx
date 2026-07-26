@@ -793,7 +793,17 @@ export function DesktopShell(props: {
             background: TOW.bg, boxShadow: ringOf('roster'), outline: 'none',
           }}
         >
-          <div style={{ width: rosterInnerW, maxWidth: '100%', flexShrink: 0, minWidth: 0 }}>
+          {/* THE GUTTER LIVES HERE. Both `primitives` and `RosterTable` state in their own headers
+              that they carry no horizontal padding and that "the screen owns the gutter" — and this
+              screen then did not supply it, so the table sat flush against the divider: "CHARACTERS"
+              and every "1×" started one pixel from the catalogue's edge. Two components each correctly
+              deferring to the other is how a contract gap looks from the inside.
+              `border-box` so the 14px comes OUT of `rosterInnerW` rather than widening the column past
+              the 900px cap. */}
+          <div style={{
+            width: rosterInnerW, maxWidth: '100%', flexShrink: 0, minWidth: 0, boxSizing: 'border-box',
+            padding: `10px ${BUILDER.gutter}px 0`,
+          }}>
             {rosterTable}
           </div>
         </div>
@@ -820,7 +830,7 @@ export function DesktopShell(props: {
             <UnitOptions
               ctx={ctx}
               uid={selectedUid}
-              onBack={onEscape}
+              onBack={onEscape}
               onRemove={onRemove}
               onDuplicate={onDuplicate}
               onShowInfo={onShowInfo}
