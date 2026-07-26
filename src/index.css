@@ -52,6 +52,8 @@
   --tow-zebra: rgba(26, 23, 20, 0.022);     /* alternating rows, dense table variant only */
   --tow-band-fill: rgba(156, 43, 43, 0.1);  /* validation band fill (accent at low alpha) */
   --tow-band-line: rgba(156, 43, 43, 0.28); /* validation band top border */
+  --tow-scroll-thumb: rgba(26, 23, 20, 0.22);       /* thin scrollbar thumb */
+  --tow-scroll-thumb-hover: rgba(26, 23, 20, 0.38);
 
   /* Fonts */
   --tow-font-display: 'Cinzel', 'Times New Roman', serif;
@@ -100,6 +102,8 @@
   --tow-zebra: rgba(255, 255, 255, 0.025);
   --tow-band-fill: rgba(215, 123, 110, 0.14);
   --tow-band-line: rgba(215, 123, 110, 0.34);
+  --tow-scroll-thumb: rgba(255, 255, 255, 0.20);
+  --tow-scroll-thumb-hover: rgba(255, 255, 255, 0.34);
 
   --tow-font-display: 'Archivo', 'Helvetica Neue', sans-serif;
   --tow-font-serif: 'Spectral', Georgia, serif;
@@ -330,6 +334,43 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* ---- Scrollbars ----
+   The platform default on Windows is a ~17px opaque grey trough that reads as OS furniture bolted
+   into a parchment UI, and in the builder's rail it sat straight over the points column so "1 500"
+   and "2 000" were half hidden. So: a thin themed bar with an invisible track.
+   `scrollbar-gutter: stable` reserves the space whether or not the bar is showing, which stops the
+   content shifting sideways the moment a list becomes long enough to scroll. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--tow-scroll-thumb) transparent;
+  /* Reserve the lane so content never sits under the thumb, and so a list does not jump sideways the
+     moment it grows long enough to scroll. Safe to set globally: per spec `scrollbar-gutter` only has
+     an effect on boxes that actually have a scrolling mechanism — on everything else it is inert. */
+  scrollbar-gutter: stable;
+}
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-track,
+*::-webkit-scrollbar-corner {
+  background: transparent;
+}
+*::-webkit-scrollbar-thumb {
+  /* The 3px transparent border + content-box clip is what makes the thumb read as a slim pill inside
+     a 10px lane, rather than a bar wedged edge to edge. */
+  background: var(--tow-scroll-thumb);
+  background-clip: content-box;
+  border: 3px solid transparent;
+  border-radius: 99px;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--tow-scroll-thumb-hover);
+  background-clip: content-box;
+}
+/* The rulebook and other long-form panes may want the bar fully out of the way; `.no-scrollbar`
+   above still does that. Nothing else needs a per-pane opt-in — the rules above are global. */
 
 /* ---- Light parchment chrome helpers (Claude Design v3) ---- */
 .tow-field {
