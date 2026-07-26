@@ -36,6 +36,14 @@ export const TOW = {
   lineOn: 'var(--tow-line-on)',
   lineOnStr: 'var(--tow-line-on-str)',
 
+  // Army-builder redesign surfaces. These exist as their own tokens because they are low-alpha
+  // tints, which a var() cannot derive from another token without color-mix — and because hardcoding
+  // them (as they were at first) meant they silently ignored the Slate Night switch.
+  hairline: 'var(--tow-hairline)', // between unit rows — lighter than `line`
+  zebra: 'var(--tow-zebra)', // alternating rows, dense table variant only
+  bandFill: 'var(--tow-band-fill)', // validation band fill
+  bandLine: 'var(--tow-band-line)', // validation band top border
+
   // back-compat chrome aliases
   leather: 'var(--tow-leather)',
   leatherDark: 'var(--tow-leather-dark)',

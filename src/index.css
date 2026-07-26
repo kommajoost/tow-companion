@@ -45,6 +45,14 @@
   /* text/icon that sits ON the accent gradient (primary buttons) */
   --tow-on-grad: #fbf3ee;
 
+  /* Army-builder redesign surfaces. Separate tokens because a CSS custom property cannot express
+     "this colour at 6% alpha" without color-mix (unused in this codebase), and these four were
+     hardcoded Ivory values that silently ignored the Slate Night switch. */
+  --tow-hairline: rgba(26, 23, 20, 0.06);   /* between unit rows — lighter than --tow-line */
+  --tow-zebra: rgba(26, 23, 20, 0.022);     /* alternating rows, dense table variant only */
+  --tow-band-fill: rgba(156, 43, 43, 0.1);  /* validation band fill (accent at low alpha) */
+  --tow-band-line: rgba(156, 43, 43, 0.28); /* validation band top border */
+
   /* Fonts */
   --tow-font-display: 'Cinzel', 'Times New Roman', serif;
   --tow-font-serif: 'EB Garamond', Georgia, serif;
@@ -83,6 +91,15 @@
   --tow-parch-edge: rgba(255, 255, 255, 0.2);
 
   --tow-on-grad: #241a08;
+
+  /* Army-builder redesign surfaces — the dark counterparts. On a dark ground a separator must be a
+     light tint, not a dark one (a black hairline on slate is invisible), so these are inverted rather
+     than reused. The band keeps a warm red so a validation warning still reads as a warning against
+     the brass accent this skin uses elsewhere. */
+  --tow-hairline: rgba(255, 255, 255, 0.07);
+  --tow-zebra: rgba(255, 255, 255, 0.025);
+  --tow-band-fill: rgba(215, 123, 110, 0.14);
+  --tow-band-line: rgba(215, 123, 110, 0.34);
 
   --tow-font-display: 'Archivo', 'Helvetica Neue', sans-serif;
   --tow-font-serif: 'Spectral', Georgia, serif;

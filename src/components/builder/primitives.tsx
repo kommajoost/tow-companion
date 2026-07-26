@@ -33,18 +33,31 @@ export const BUILDER = {
   control: { stepper: 30, back: 34, chip: 26, primary: 38 },
 } as const;
 
-// The spec's Hairline and Zebra values are DELIBERATELY local constants: they have no counterpart in
-// `src/design/tow.ts`, and that file is out of scope for this phase. Consequence to be aware of: they
-// are fixed Ivory-skin values and therefore do NOT follow the Slate-Night runtime theme switch the
-// TOW.* tokens do. When the tokens file is next touched they should move there as
-// --tow-hairline / --tow-zebra so the dark skin gets its own values.
+// These were hardcoded Ivory values at first, which meant they silently ignored the Slate-Night theme
+// switch (a near-black hairline is invisible on slate). They are now real tokens with their own dark
+// counterparts — see `--tow-hairline` / `--tow-zebra` in src/index.css. Kept as named exports here so
+// the ~20 call sites across the builder screens did not have to change.
 /** Spec **Hairline** — the row separator; lighter than TOW.line (the spec's Rule). */
-export const HAIRLINE = 'rgba(26,23,20,0.06)';
+export const HAIRLINE = TOW.hairline;
 /** Spec **Zebra** — alternating row tint for dense tables. */
-export const ZEBRA = 'rgba(26,23,20,0.022)';
+export const ZEBRA = TOW.zebra;
 
 const eb = engraved as React.CSSProperties; // Cinzel 600 · uppercase · letterSpacing .22em
-const fmt = (n: number) => n.toLocaleString('en-US');
+
+/** Thousands separator: a THIN SPACE (U+2009), not a comma.
+ *  The spec writes points as "1 998" and "of 2 000" throughout, so this is the app-wide separator for
+ *  every points figure in the builder. */
+const THIN_SPACE = ' ';
+
+/**
+ * THE canonical points formatter for the whole redesign — exported so every builder screen prints a
+ * number the same way. Three different formatters existed across the screens at one point (commas
+ * here, thin spaces in the roster chrome, bare digits in the picker), which reads as three different
+ * apps. Import this one; do not write another.
+ * Non-finite input degrades to 0 rather than rendering "NaN" into someone's army list.
+ */
+export const fmt = (n: number): string =>
+  (Number.isFinite(n) ? Math.round(n) : 0).toLocaleString('en-US').replace(/,/g, THIN_SPACE);
 
 // ─────────────────────────── shared row typography ───────────────────────────
 // UnitRow and CompactRow share one type scale so a compact list never drifts from a roster list.
