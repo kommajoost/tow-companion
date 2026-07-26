@@ -11,10 +11,6 @@ import { useBackClose } from '../../lib/backStack';
 import { useData } from '../../data';
 import { getRuleIndex, resolveOptionSlug, resolveRuleSlug } from '../../lib/armyRules';
 import { useUI } from '../../state';
-import {
-  getCampaignCode, getCachedCampaign, versCampagneContext, cacheCampaignContext,
-  hernoemRegiment, verwijderRegiment, regimentSlug, type CampaignContext,
-} from '../../lib/campaign';
 
 const BASE = import.meta.env.BASE_URL;
 const eb = engraved as React.CSSProperties;
@@ -38,143 +34,6 @@ interface SavedList extends BuilderList {
   computedPoints?: number;
 }
 const newId = (p: string) => `${p}${Date.now().toString(36)}${Math.floor(Math.random() * 1e6).toString(36)}`;
-
-// ── My regiments — het campagne-register onder "My lists" ────────────────────────────────────────
-// Overzicht van je named units (veteranen): hernoemen (XP reist mee) of definitief verwijderen
-// (extra bevestiging — XP/abilities gaan verloren). Beide acties werken server-side door in de
-// cloud-lijsten; lokale lijsten worden hier direct gelijkgetrokken zodat sync niets herschept.
-function RegimentenPaneel({ onClose, setLists }: {
-  onClose: () => void;
-  setLists: (fn: (ls: SavedList[]) => SavedList[]) => void;
-}) {
-  const code = getCampaignCode();
-  const [ctx, setCtx] = useState<CampaignContext | null>(() => getCachedCampaign()?.context ?? null);
-  const [busy, setBusy] = useState(false);
-  const [err, setErr] = useState<string | null>(null);
-  const [editId, setEditId] = useState<string | null>(null);   // slug van de unit in hernoem-modus
-  const [editNaam, setEditNaam] = useState('');
-  const [delId, setDelId] = useState<string | null>(null);     // slug van de unit in delete-bevestiging
-
-  useEffect(() => {
-    if (!code) return;
-    versCampagneContext(code).then((f) => { setCtx(f); cacheCampaignContext(f); }).catch(() => {});
-  }, [code]);
-
-  const vernieuw = async () => {
-    if (!code) return;
-    try { const f = await versCampagneContext(code); setCtx(f); cacheCampaignContext(f); } catch { /* cache blijft */ }
-  };
-  const meldFout = (e: unknown) => {
-    const m = e instanceof Error ? e.message : '';
-    setErr(m === 'NAAM_BESTAAT_AL' ? 'That name is already taken by another regiment.'
-      : m === 'NIET_GEVONDEN' ? 'Regiment not found — refresh and try again.'
-      : 'Could not update — check your connection.');
-  };
-  // Lokale lijsten gelijktrekken: nieuwe naam invullen, of (naam=null) de naam strippen.
-  const werkLijstenBij = (unitId: string, naam: string | null) => setLists((ls) => ls.map((l) => {
-    if (!l.campaign || !Array.isArray(l.entries)) return l;
-    return { ...l, entries: l.entries.map((e) => (regimentSlug(e.customName ?? '') === unitId ? { ...e, customName: naam ?? undefined } : e)) };
-  }));
-
-  const hernoem = async (unitId: string) => {
-    const naam = editNaam.trim();
-    if (!code || !naam || busy) return;
-    setBusy(true); setErr(null);
-    try {
-      const res = await hernoemRegiment(code, unitId, naam);
-      werkLijstenBij(unitId, res.naam);
-      setEditId(null);
-      await vernieuw();
-    } catch (e) { meldFout(e); } finally { setBusy(false); }
-  };
-  const verwijder = async (unitId: string) => {
-    if (!code || busy) return;
-    setBusy(true); setErr(null);
-    try {
-      await verwijderRegiment(code, unitId);
-      werkLijstenBij(unitId, null);
-      setDelId(null);
-      await vernieuw();
-    } catch (e) { meldFout(e); } finally { setBusy(false); }
-  };
-
-  const typeNaam = (id?: string | null) => (id ? id.split('-').map((w) => (w ? w[0].toUpperCase() + w.slice(1) : w)).join(' ') : null);
-  const units = ctx?.units ?? [];
-
-  return (
-    <div onClick={onClose} style={{ position: 'fixed', inset: 0, zIndex: 60, background: 'rgba(30,20,8,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 }}>
-      <div onClick={(e) => e.stopPropagation()} style={{ width: '100%', maxWidth: 480, maxHeight: '86%', display: 'flex', flexDirection: 'column', background: TOW.panel, borderRadius: 16, border: `1px solid ${TOW.lineStrong}`, boxShadow: '0 16px 50px rgba(40,24,8,0.34)', animation: 'sheet-pop .18s ease-out' }}>
-        <div style={{ flexShrink: 0, padding: '14px 16px 10px', borderBottom: `1px solid ${TOW.line}` }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-            <div style={{ flex: 1, minWidth: 0 }}>
-              <div style={{ ...eb, fontSize: 8, color: TOW.muted }}>Campaign</div>
-              <div style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 19, color: TOW.ink }}>My regiments</div>
-            </div>
-            <button onClick={onClose} aria-label="Close" style={{ width: 32, height: 32, flexShrink: 0, borderRadius: 8, border: `1px solid ${TOW.line}`, background: TOW.cardLt, cursor: 'pointer', color: TOW.muted, fontSize: 20, lineHeight: 1 }}>×</button>
-          </div>
-          <div style={{ fontFamily: towFont.serif, fontSize: 11.5, color: TOW.muted, marginTop: 2 }}>Your named campaign units. Renaming keeps XP; deleting is forever.</div>
-        </div>
-        <div style={{ flex: 1, minHeight: 0, overflowY: 'auto', padding: '12px 16px 16px' }}>
-          {err && <div style={{ fontFamily: towFont.serif, fontSize: 12, color: TOW.blood, marginBottom: 8 }}>{err}</div>}
-          {units.length === 0 ? (
-            <p style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 13, color: TOW.muted }}>
-              No named units yet — open a campaign list, tap a unit and use the “Name” button.
-            </p>
-          ) : units.map((u) => {
-            const rowId = regimentSlug(u.naam);
-            const bewerkt = editId === rowId;
-            const teWissen = delId === rowId;
-            const meta = [typeNaam(u.catalogusId), `${u.xp} XP`];
-            if (u.abilities) meta.push(`${u.abilities} abilit${u.abilities === 1 ? 'y' : 'ies'}`);
-            if (u.littekens) meta.push(`${u.littekens} scar${u.littekens === 1 ? '' : 's'}`);
-            if (u.status !== 'actief') meta.push('reserve');
-            return (
-              <div key={u.naam} style={{ border: `1px solid ${teWissen ? 'rgba(124,43,34,0.5)' : TOW.line}`, borderRadius: 11, background: TOW.cardLt, padding: '10px 12px', marginBottom: 8, opacity: u.status === 'actief' ? 1 : 0.7 }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontFamily: towFont.display, fontWeight: 600, fontSize: 14.5, color: TOW.ink }}>{u.naam}</div>
-                    <div style={{ fontFamily: towFont.serif, fontSize: 11.5, color: TOW.muted, marginTop: 1 }}>{meta.filter(Boolean).join(' · ')}</div>
-                  </div>
-                  {!bewerkt && !teWissen && (
-                    <>
-                      <button onClick={() => { setEditId(rowId); setEditNaam(u.naam); setDelId(null); }} style={{ flexShrink: 0, border: `1px solid ${TOW.line}`, background: 'transparent', borderRadius: 7, cursor: 'pointer', color: TOW.goldDeep, padding: '4px 9px', ...eb, fontSize: 7.5 }}>Rename</button>
-                      <button onClick={() => { setDelId(rowId); setEditId(null); }} style={{ flexShrink: 0, border: '1px solid rgba(124,43,34,0.4)', background: 'transparent', borderRadius: 7, cursor: 'pointer', color: TOW.blood, padding: '4px 9px', ...eb, fontSize: 7.5 }}>Delete</button>
-                    </>
-                  )}
-                </div>
-                {bewerkt && (
-                  <div style={{ display: 'flex', gap: 6, marginTop: 8 }}>
-                    <input
-                      value={editNaam}
-                      onChange={(e) => setEditNaam(e.target.value)}
-                      onKeyDown={(e) => { if (e.key === 'Enter') void hernoem(rowId); }}
-                      maxLength={40}
-                      autoFocus
-                      style={{ flex: 1, minWidth: 0, borderRadius: 8, border: `1px solid ${TOW.lineStrong}`, background: TOW.panel, color: TOW.ink, padding: '7px 10px', fontFamily: towFont.serif, fontSize: 13, boxSizing: 'border-box', outline: 'none' }}
-                    />
-                    <button disabled={busy || !editNaam.trim()} onClick={() => void hernoem(rowId)} style={{ flexShrink: 0, border: 'none', borderRadius: 8, cursor: 'pointer', padding: '7px 13px', background: goldGrad, color: TOW.onGrad, fontFamily: towFont.display, fontWeight: 700, fontSize: 12, opacity: busy || !editNaam.trim() ? 0.6 : 1 }}>Save</button>
-                    <button onClick={() => setEditId(null)} style={{ flexShrink: 0, border: `1px solid ${TOW.line}`, background: 'transparent', borderRadius: 8, cursor: 'pointer', color: TOW.muted, padding: '7px 10px', fontFamily: towFont.display, fontWeight: 600, fontSize: 12 }}>Cancel</button>
-                  </div>
-                )}
-                {teWissen && (
-                  <div style={{ marginTop: 8 }}>
-                    <p style={{ fontFamily: towFont.serif, fontSize: 12, color: TOW.blood, margin: '0 0 6px' }}>
-                      Delete this regiment forever? Its {u.xp} XP{u.abilities ? ` and ${u.abilities} abilit${u.abilities === 1 ? 'y' : 'ies'}` : ''} are lost, and its name is removed from your lists (the unit itself stays, unnamed).
-                    </p>
-                    <div style={{ display: 'flex', gap: 6 }}>
-                      <button disabled={busy} onClick={() => void verwijder(rowId)} style={{ flexShrink: 0, border: '1px solid rgba(124,43,34,0.6)', borderRadius: 8, cursor: 'pointer', padding: '7px 13px', background: 'rgba(124,43,34,0.16)', color: TOW.blood, fontFamily: towFont.display, fontWeight: 700, fontSize: 12, opacity: busy ? 0.6 : 1 }}>Delete forever</button>
-                      <button onClick={() => setDelId(null)} style={{ flexShrink: 0, border: `1px solid ${TOW.line}`, background: 'transparent', borderRadius: 8, cursor: 'pointer', color: TOW.muted, padding: '7px 10px', fontFamily: towFont.display, fontWeight: 600, fontSize: 12 }}>Cancel</button>
-                    </div>
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    </div>
-  );
-}
 
 // OWB's normalizeRuleName (rules index is keyed by this) + a final-word singular fallback.
 const normRule = (s: string) => (s || '').toLowerCase().replace(/ *\([^)]*\) */g, '').replace(/[{}[\]*]/g, '').replace(/^[0-9]x /g, '').replace(/[“”]/g, '"').trim();
@@ -205,7 +64,6 @@ export function ListBuilder() {
   const [groups, setGroups] = usePersistentState<{ id: string; name: string }[]>('tow:list-groups', []);
   const [activeId, setActiveId] = usePersistentState<string | null>('tow:builder-active', null);
   const [setupOpen, setSetupOpen] = useState(false);
-  const [regimentenOpen, setRegimentenOpen] = useState(false); // "My regiments"-overzicht (campagne)
   const [dragOver, setDragOver] = useState<string | null>(null); // section id being hovered (group id, or '__ungrouped__')
   const [dragOverCard, setDragOverCard] = useState<{ id: string; before: boolean } | null>(null); // card hovered during a reorder drag (+ which edge)
   const [collapsed, setCollapsed] = usePersistentState<string[]>('tow:list-groups-collapsed', []); // collapsed section ids
@@ -214,7 +72,6 @@ export function ListBuilder() {
   // In-app Back: each navigable layer owns one history entry (deepest registers last → handled first).
   useBackClose(!!activeId, () => setActiveId(null)); // open builder → back to My lists
   useBackClose(setupOpen, () => setSetupOpen(false)); // new-list dialog
-  useBackClose(regimentenOpen, () => setRegimentenOpen(false)); // regiments overview
 
   // Army registry + per-army comps/items + the army-agnostic stat index + magic-items data.
   useEffect(() => {
@@ -347,7 +204,20 @@ export function ListBuilder() {
       return arr;
     });
 
-  const card: React.CSSProperties = { border: `1px solid ${TOW.line}`, borderRadius: 12, background: TOW.panel2 };
+  // A list is a HAIRLINE ROW, not a bordered card — the same primitive the redesigned roster uses, so
+  // the overview and the builder read as one app. Cards put a frame around every entry and a gap
+  // between them, which is a lot of furniture for "here are your lists": eight of them became eight
+  // boxes. A shared separator does the same job with none of the weight.
+  const card: React.CSSProperties = {
+    borderBottom: `1px solid ${TOW.hairline}`, background: 'transparent',
+  };
+  /** A bare glyph action. Same reasoning as the option editor's eye: a column of outlined boxes down
+   *  the right edge competes with the names, which are the thing you are scanning. */
+  const glyphBtn: React.CSSProperties = {
+    width: 34, height: 34, flexShrink: 0, border: 'none', background: 'transparent',
+    borderRadius: 8, cursor: 'pointer', color: TOW.faint,
+    display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 0, lineHeight: 1,
+  };
 
   // ── open list → the responsive builder (wait for that army's catalogue to load) ──
   if (active) {
@@ -453,15 +323,22 @@ export function ListBuilder() {
           if (dragged && dragged !== l.id) reorderList(dragged, l.id, before, cardGroup);
           setDragOverCard(null);
         }}
-        style={{ ...card, position: 'relative', display: 'flex', alignItems: 'center', gap: 8, padding: '11px 13px', cursor: 'grab' }}
+        style={{ ...card, position: 'relative', display: 'flex', alignItems: 'center', gap: 10, padding: '8px 0', cursor: 'grab' }}
       >
         {dropLine != null && <div style={{ position: 'absolute', left: 0, right: 0, [dropLine ? 'top' : 'bottom']: -1, height: 2, background: TOW.goldDeep, borderRadius: 2, pointerEvents: 'none' }} />}
-        <button onClick={() => setActiveId(l.id)} style={{ flex: 1, minWidth: 0, textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
-          <div style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 15.5, color: TOW.ink, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{l.name}</div>
-          <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginTop: 3 }}>{armyName(l.army)} · {compName(l.composition, l.army)} · {total ?? '…'}/{l.points} pts</div>
+        {/* Same anatomy as the roster's UnitRow: name on one line, a faint whisper beneath, and the
+            number right-aligned in tabular figures so a column of lists lines up. */}
+        <button onClick={() => setActiveId(l.id)} style={{ flex: 1, minWidth: 0, textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', padding: 0, display: 'flex', flexDirection: 'column', gap: 1 }}>
+          <span style={{ fontFamily: towFont.serif, fontWeight: 400, fontSize: 15.5, lineHeight: 1.25, color: TOW.ink, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{l.name}</span>
+          <span style={{ fontFamily: towFont.serif, fontSize: 11, lineHeight: 1.3, color: TOW.faint, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+            {armyName(l.army)} · {compName(l.composition, l.army)}
+          </span>
         </button>
-        <button onClick={() => duplicateList(l)} onMouseDown={(e) => e.stopPropagation()} aria-label="Duplicate" title="Duplicate" style={{ border: `1px solid ${TOW.line}`, background: 'transparent', borderRadius: 8, cursor: 'pointer', color: TOW.muted, fontSize: 13, padding: '5px 8px' }}>⧉</button>
-        <button onClick={() => { if (confirm(`Delete “${l.name}”?`)) deleteList(l.id); }} onMouseDown={(e) => e.stopPropagation()} aria-label="Delete" title="Delete" style={{ border: `1px solid ${TOW.line}`, background: 'transparent', borderRadius: 8, cursor: 'pointer', color: TOW.muted, fontSize: 16, lineHeight: 1, padding: '4px 9px' }}>×</button>
+        <span style={{ fontFamily: towFont.serif, fontSize: 12.5, color: TOW.muted, fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap', flexShrink: 0 }}>
+          {total ?? '…'}/{l.points}
+        </span>
+        <button onClick={() => duplicateList(l)} onMouseDown={(e) => e.stopPropagation()} aria-label="Duplicate" title="Duplicate" style={{ ...glyphBtn, fontSize: 14 }}>⧉</button>
+        <button onClick={() => { if (confirm(`Delete “${l.name}”?`)) deleteList(l.id); }} onMouseDown={(e) => e.stopPropagation()} aria-label="Delete" title="Delete" style={{ ...glyphBtn, fontSize: 17 }}>×</button>
       </div>
     );
   };
@@ -480,12 +357,17 @@ export function ListBuilder() {
   const sectionHeader = (key: string, title: string, count: number | null, actions?: React.ReactNode) => {
     const isCol = collapsed.includes(key);
     return (
-      <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 8 }}>
-        <button onClick={() => toggleCollapse(key)} aria-expanded={!isCol} style={{ flex: 1, minWidth: 0, display: 'flex', alignItems: 'center', gap: 7, border: 'none', background: 'transparent', cursor: 'pointer', padding: 0, textAlign: 'left' }}>
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke={TOW.muted} strokeWidth="2.6" style={{ flexShrink: 0, transform: isCol ? 'none' : 'rotate(90deg)', transition: 'transform .15s ease' }} aria-hidden="true"><path d="M9 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" /></svg>
-          <span style={{ ...eb, fontSize: 9, color: TOW.muted }}>{title}</span>
-          {count != null && <span style={{ fontFamily: towFont.serif, fontSize: 11, color: TOW.faint }}>({count})</span>}
+      // Mirrors the builder's SectionHeader: engraved label in Blood dark, then a hairline rule that
+      // takes the slack, then the count on the right. The chevron stays — unlike the roster's sections
+      // these collapse — but the rest of the anatomy is the same, so a folder here and a category there
+      // read as the same kind of divider.
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '14px 0 5px' }}>
+        <button onClick={() => toggleCollapse(key)} aria-expanded={!isCol} style={{ flexShrink: 0, display: 'flex', alignItems: 'center', gap: 6, border: 'none', background: 'transparent', cursor: 'pointer', padding: 0, textAlign: 'left' }}>
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke={TOW.goldDeep} strokeWidth="2.8" style={{ flexShrink: 0, transform: isCol ? 'none' : 'rotate(90deg)', transition: 'transform .15s ease' }} aria-hidden="true"><path d="M9 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" /></svg>
+          <span style={{ ...eb, fontSize: 8.5, color: TOW.goldDeep, whiteSpace: 'nowrap' }}>{title}</span>
         </button>
+        <span style={{ flex: 1, height: 1, background: TOW.line }} />
+        {count != null && <span style={{ fontFamily: towFont.serif, fontSize: 10.5, color: TOW.faint, fontVariantNumeric: 'tabular-nums', flexShrink: 0 }}>{count}</span>}
         {actions}
       </div>
     );
@@ -499,11 +381,11 @@ export function ListBuilder() {
       <div
         key={key}
         {...dropProps(targetId)}
-        style={{ border: `1px ${hovered ? 'dashed' : 'solid'} ${hovered ? TOW.goldDeep : 'transparent'}`, borderRadius: 12, background: hovered ? 'rgba(176,141,87,0.10)' : 'transparent', padding: hovered ? 6 : 7, transition: 'background 120ms' }}
+        style={{ border: `1px ${hovered ? 'dashed' : 'solid'} ${hovered ? TOW.goldDeep : 'transparent'}`, borderRadius: 12, background: hovered ? 'rgba(176,141,87,0.10)' : 'transparent', padding: hovered ? '5px 5px' : '0 6px', transition: 'background 120ms' }}
       >
         {sectionHeader(key, title, targetId === null ? null : sectionLists.length, actions)}
         {!isCol && (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
             {sectionLists.length === 0
               ? <div style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 12.5, color: TOW.faint, padding: '8px 4px' }}>Drop lists here</div>
               : sectionLists.map((l) => renderCard(l, key))}
@@ -513,10 +395,15 @@ export function ListBuilder() {
     );
   };
 
+  // Folder actions as quiet glyphs, not outlined buttons. Two bordered "Rename"/"Delete" pills sat in
+  // every section header and out-shouted the folder name they belonged to — a divider should not be the
+  // loudest thing between two lists.
   const groupActions = (g: { id: string; name: string }) => (
     <>
-      <button onClick={() => renameGroup(g.id, g.name)} aria-label="Rename folder" title="Rename folder" style={{ border: `1px solid ${TOW.line}`, background: 'transparent', borderRadius: 7, cursor: 'pointer', color: TOW.muted, fontSize: 12, padding: '3px 7px' }}>Rename</button>
-      <button onClick={() => deleteGroup(g.id, g.name)} aria-label="Delete folder" title="Delete folder" style={{ border: `1px solid ${TOW.line}`, background: 'transparent', borderRadius: 7, cursor: 'pointer', color: TOW.muted, fontSize: 12, padding: '3px 8px' }}>Delete</button>
+      <button onClick={() => renameGroup(g.id, g.name)} aria-label={`Rename folder ${g.name}`} title="Rename folder"
+        style={{ ...glyphBtn, width: 28, height: 28, fontSize: 12 }}>✎</button>
+      <button onClick={() => deleteGroup(g.id, g.name)} aria-label={`Delete folder ${g.name}`} title="Delete folder"
+        style={{ ...glyphBtn, width: 28, height: 28, fontSize: 15 }}>×</button>
     </>
   );
 
@@ -532,29 +419,19 @@ export function ListBuilder() {
           <p style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 14, color: TOW.muted }}>No saved lists yet — tap “New list” to start building.</p>
         ) : groups.length === 0 ? (
           // No folders yet — keep the original flat look.
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
             {ungrouped.map((l) => renderCard(l, UNGROUPED))}
           </div>
         ) : (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
             {groups.map((g) => renderSection(g.id, g.name, listsInGroup(g.id), groupActions(g)))}
             {renderSection(null, 'Ungrouped', ungrouped)}
           </div>
-        )}
-        {/* Campagne: overzicht van je named units (regimenten-register) — hernoem of verwijder ze hier. */}
-        {getCampaignCode() && (
-          <button
-            onClick={() => setRegimentenOpen(true)}
-            style={{ width: '100%', marginTop: 16, padding: '11px 12px', borderRadius: 10, cursor: 'pointer', border: `1px solid ${TOW.goldDeep}`, background: 'rgba(138,108,48,0.10)', color: TOW.gold, fontFamily: towFont.display, fontWeight: 700, fontSize: 13, letterSpacing: '0.03em' }}
-          >
-            My regiments — named campaign units
-          </button>
         )}
         <p style={{ fontFamily: towFont.serif, fontSize: 11, color: TOW.faint, marginTop: 18, textAlign: 'center', lineHeight: 1.6 }}>
           Lists are saved on this device. Catalogue from <a href="https://github.com/nthiebes/old-world-builder" target="_blank" rel="noreferrer" className="underline">Old World Builder</a> (CC BY 4.0).
         </p>
       </div>
-      {regimentenOpen && <RegimentenPaneel onClose={() => setRegimentenOpen(false)} setLists={setLists} />}
       {setupOpen && (
         <NewListSetup
           armies={armies}
