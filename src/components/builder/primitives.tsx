@@ -194,11 +194,15 @@ export function BudgetBar({ segments, cap, total, height = 5 }: {
  * `violated` re-colours ONLY the meta (to the accent, prefixed with ▲); the label and the rule are
  * deliberately untouched so a breached section still reads as the same section.
  */
-export function SectionHeader({ label, meta, violated }: {
+export function SectionHeader({ label, meta, violated, dense }: {
   label: string; meta?: string; violated?: boolean;
+  /** Tighter vertical rhythm (9/3 instead of 14/5). For a screen that stacks MANY groups — the unit
+   *  option editor has up to eight, where the spec's roster spacing eats the screen and only about six
+   *  option rows survive above the fold. The roster keeps the airier default: it has four sections. */
+  dense?: boolean;
 }): React.JSX.Element {
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '14px 0 5px' }}>
+    <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: dense ? '9px 0 3px' : '14px 0 5px' }}>
       <span style={{ ...eb, fontSize: 8.5, color: TOW.goldDeep, whiteSpace: 'nowrap' }}>{label}</span>
       <span style={{ flex: 1, height: 1, background: TOW.line }} />
       {meta ? (

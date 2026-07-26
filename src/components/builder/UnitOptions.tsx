@@ -114,9 +114,13 @@ function Indicator({ kind, on }: { kind: 'radio' | 'toggle'; on: boolean }): Rea
   );
 }
 
+// The eye is a BARE GLYPH, not a bordered box. It used to be a 34×34 outlined button, which on a
+// phone stacked into a column of eight identical frames down the right edge — the loudest thing on a
+// screen whose actual content is the option labels. The tap target stays 34×34 (transparent), only
+// the frame is gone, so nothing became harder to hit.
 const ICON_BTN: React.CSSProperties = {
   width: 34, height: 34, flexShrink: 0, borderRadius: BUILDER.radius.button,
-  border: `1px solid ${TOW.line}`, background: 'transparent', cursor: 'pointer', color: TOW.muted,
+  border: 'none', background: 'transparent', cursor: 'pointer', color: TOW.faint,
   display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 0,
 };
 /** The "eye" that opens the rule/profile panel. The panel itself belongs to the container: this
@@ -208,14 +212,22 @@ function OptionRow({ kind, on, label, sub, delta, deltaMuted, blocked, reason, o
         onClick={onToggle}
         aria-pressed={on}
         style={{
-          ...BTN_RESET, flex: 1, minWidth: 0, minHeight: 44, padding: '7px 0',
+          // 38px, not the roster row's 44. This screen stacks up to eight groups of these, and at 44
+          // only about six rows cleared the fold on a real phone — the option list is what you came
+          // here to read. 38 is still a comfortable thumb target (the eye beside it keeps a full 34,
+          // and the two together span the row), and it buys back roughly a row per group.
+          ...BTN_RESET, flex: 1, minWidth: 0, minHeight: 38, padding: '5px 0',
           display: 'flex', alignItems: 'center', gap: 10, cursor: blocked ? 'default' : 'pointer',
         }}
       >
         <span style={dim}><Indicator kind={kind} on={on} /></span>
         <span style={{ ...dim, flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 1 }}>
           <span style={ROW_LABEL}>{label}</span>
-          {sub ? <span style={ROW_SUB}>{sub}</span> : null}
+          {/* One line, ellipsised. These sub-lines carry catalogue restriction text that can run to a
+              full sentence ("0-1 Dark Elf Warriors or Repeater Crossbowman per 1000 points may
+              purchase a magic standard"); left to wrap it doubled the row's height and made the group
+              impossible to scan. The full text stays one tap away behind the eye. */}
+          {sub ? <span style={{ ...ROW_SUB, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{sub}</span> : null}
         </span>
         <span style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 1 }}>
           <span style={{ ...ROW_DELTA, color: deltaMuted ? TOW.faint : TOW.inkDim }}>{delta}</span>
@@ -669,7 +681,7 @@ export function UnitOptions(props: {
           const radioKey = b.radio ? radioSelected(unit, entry, b.key) : '';
           return (
             <div key={String(b.key)}>
-              <SectionHeader label={b.label} meta={groupMeta(b)} />
+              <SectionHeader label={b.label} meta={groupMeta(b)} dense />
               {b.items.map(({ i, opt }) => {
                 const key = `${String(b.key)}/${i}`;
                 const on = b.radio ? radioKey === key : entry.opts.includes(key);
@@ -709,7 +721,7 @@ export function UnitOptions(props: {
             : `${fmt(spent)} / ${fmt(budget)} pt`;
           return (
             <div key={group.budgetGroup}>
-              <SectionHeader label={group.groupLabel} meta={meta} violated={over} />
+              <SectionHeader label={group.groupLabel} meta={meta} violated={over} dense />
               {unlimited ? null : <SpendMeter spent={spent} budget={budget} />}
               {group.cats.map((cat) => magicCategoryBlock(cat, budget, group.cats.length === 1))}
             </div>
@@ -719,7 +731,7 @@ export function UnitOptions(props: {
         {/* Lore of Magic — a wizard knows one lore; its spells are listed once chosen. */}
         {allowedLores.length > 0 ? (
           <div>
-            <SectionHeader label="Lore of Magic" meta="choose 1" />
+            <SectionHeader label="Lore of Magic" meta="choose 1" dense />
             {allowedLores.map((slug) => {
               const lore = lores[slug];
               const on = (entry.lores ?? []).includes(slug);
@@ -766,7 +778,7 @@ export function UnitOptions(props: {
         {/* Special rules — not editable; a wrapping chip row. Each chip still opens its rule. */}
         {specialRules.length > 0 ? (
           <div>
-            <SectionHeader label="Special rules" />
+            <SectionHeader label="Special rules" dense />
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5, paddingTop: 2 }}>
               {specialRules.map((r, i) => {
                 const label = cleanLabel(r);
