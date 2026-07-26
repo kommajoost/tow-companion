@@ -252,10 +252,29 @@ export function DesktopShell(props: {
     });
     ro.observe(el);
     if (parent) ro.observe(parent);
-    const r = el.getBoundingClientRect();
-    sizes.set(el, { w: r.width, h: r.height });
-    publish();
-    return () => ro.disconnect();
+    // Re-read straight from the DOM, bypassing the observer entirely. Needed because a
+    // ResizeObserver is not guaranteed to deliver: in an offscreen/headless window it never fires at
+    // all, and even in a normal one the first measurement can land before the surrounding chrome has
+    // taken its space. A stale `w` used to mean a mis-sized layout; the roster column now flexes so
+    // it can no longer overflow, but the TIER and the centred roster cap still read `w`, so it has to
+    // be right.
+    const remeasure = () => {
+      const src = el.isConnected ? el : parent;
+      if (!src) return;
+      const b = src.getBoundingClientRect();
+      sizes.set(src, { w: b.width, h: b.height });
+      publish();
+    };
+    remeasure();
+    window.addEventListener('resize', remeasure);
+    const f1 = requestAnimationFrame(remeasure);
+    const t1 = window.setTimeout(remeasure, 250);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener('resize', remeasure);
+      cancelAnimationFrame(f1);
+      window.clearTimeout(t1);
+    };
   }, []);
 
   const w = box?.w ?? REF_W;
@@ -759,7 +778,16 @@ export function DesktopShell(props: {
         <div
           {...zoneProps('roster', 'Roster')}
           style={{
-            width: rosterW, flexShrink: 0, boxSizing: 'border-box', minWidth: 0,
+            // The roster ABSORBS the row instead of taking a fixed width, so `rail + roster +
+            // inspector` can never exceed the box. It used to be `width: rosterW, flexShrink: 0`
+            // alongside two other unshrinkable columns, all sized from the measured `w` — and the
+            // moment the real box was narrower than that measurement (the app's 76px nav rail
+            // appearing after the first measure is enough) the row could not shrink, so the whole
+            // shell overflowed: the rail clipped on the left, "＋ Add unit" cut off on the right,
+            // and the page gained a horizontal scrollbar. Letting the document column flex makes
+            // that structurally impossible rather than dependent on measurement being perfect.
+            // `flexBasis: rosterW` keeps the intended proportions when the measurement IS right.
+            flex: `1 1 ${rosterW}px`, boxSizing: 'border-box', minWidth: 0,
             display: 'flex', justifyContent: 'center',
             overflowY: 'auto', overflowX: 'hidden',
             background: TOW.bg, boxShadow: ringOf('roster'), outline: 'none',
