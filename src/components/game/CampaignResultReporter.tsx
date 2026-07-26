@@ -67,6 +67,9 @@ type Veteraan = NonNullable<BattleResultaat['veteraan']>[number];
 //   overleefd_50 : remaining ≥ 50% start-US  én  niet fleeing  én  niet weg (removed).
 //   scar_trigger : remaining < 25% start-US   óf  weg          óf  fleeing.
 // (Grenzen bewust asymmetrisch: ≥50% vs <25%, exact conform de opdracht.)
+// De gemelde `unitId` is `u.campaignId` — de gedeelde campagne-sleutel (campaignUnitId in
+// owbBuilder.ts, gezet door builderListToArmy). Een geplakt OWB-leger heeft geen campaignId; dan
+// valt 'ie terug op de eigen unit-id, zodat de melding altijd een sleutel heeft.
 function collectVeteraan(tracker: GameTracker, ownArmy: Army | null, ownSeat: 'host' | 'guest'): Veteraan[] {
   const out: Veteraan[] = [];
   for (const u of ownArmy?.units ?? []) {

@@ -4,7 +4,7 @@
 // profiles) directly from the builder entries + the OWB catalogue.
 
 import type { Army, ArmyUnit, UnitProfile } from '../types';
-import { CATEGORIES, entryPoints, loadoutLabels, magicItemId, selectedMagicItems, selectedMountIndex, selectedOptions, validate, type BuilderList, type Category, type OwbArmy, type OwbUnit, type MagicItemsData } from './owbBuilder';
+import { CATEGORIES, campaignUnitId, entryPoints, loadoutLabels, magicItemId, selectedMagicItems, selectedMountIndex, selectedOptions, validate, type BuilderList, type Category, type OwbArmy, type OwbUnit, type MagicItemsData } from './owbBuilder';
 
 /** Per-item flavour + rules text snapshot (public/owb/magic-item-text.json), keyed by item slug. */
 export type MagicText = Record<string, { description?: string; body?: string }>;
@@ -109,9 +109,10 @@ export function builderListToArmy(
     }
     units.push({
       id: e.uid,
-      // Campagne-match-id: zelfde afleiding als towc_speler_units_sync (slug van customName, anders het
-      // type-id) zodat de veteraan-XP op de juiste campagne-unit landt. + custom-naam als display.
-      campaignId: e.customName?.trim() ? e.customName.trim().replace(/[^a-zA-Z0-9]+/g, '-').toLowerCase() : e.unitId,
+      // Campagne-match-id: de STABIELE sleutel uit campaignUnitId (= de builder-uid, met terugval op de
+      // oude naam-slug/het type-id) — exact dezelfde afleiding als de campagne-kant, zodat de
+      // veteraan-XP op de juiste campagne-unit landt. + custom-naam als display.
+      campaignId: campaignUnitId(e),
       name: e.customName?.trim() || u.name_en,
       count: multi ? e.count : null,
       points: entryPoints(u, e, opts.itemsData),

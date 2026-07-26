@@ -278,6 +278,22 @@ export function loadoutLabels(unit: OwbUnit, entry: ListEntry, itemsData?: Magic
 export interface ListEntry { uid: string; cat: Category; unitId: string; count: number; opts: string[]; lores?: string[]; spells?: string[]; customName?: string }  // customName: campagne — named unit (veteranen-identiteit in De Grensvorsten)
 export interface BuilderList { composition: string; rule: string; points: number; entries: ListEntry[] }
 
+/** Stabiele CAMPAGNE-sleutel van één lijst-entry ("De Grensvorsten" hangt hier de veteranen-XP,
+ *  abilities en battle scars aan op). OWC en de campagne MOETEN exact dezelfde afleiding gebruiken,
+ *  anders landt de XP nergens — daarom staat de afleiding hier, op één plek:
+ *    1. `uid` — de builder-uid van de entry: stabiel bij hernoemen én uniek per entry (twee naamloze
+ *       units van hetzelfde type vallen dus niet meer samen). Dit is de normale route.
+ *    2. anders de oude slug van `customName` (lijsten van vóór de uid-wissel, zonder uid).
+ *    3. anders het type-id (`unitId`), 4. anders 'unit'.
+ *  Zie ook `ArmyUnit.campaignId` (builderToArmy) en `VetUnit.unitId` (campaignBattle). */
+export function campaignUnitId(entry: { uid?: string; customName?: string; unitId?: string }): string {
+  const uid = (entry.uid ?? '').trim();
+  if (uid) return uid;
+  const naam = (entry.customName ?? '').trim();
+  if (naam) return naam.replace(/[^a-zA-Z0-9]+/g, '-').toLowerCase();
+  return (entry.unitId ?? '').trim() || 'unit';
+}
+
 // Composition category percentage limits — ported from OWB src/utils/rules.js "grand-army".
 // (The lords/heroes 25%/25% sub-split needs a lord/hero flag the catalogue doesn't carry, so we
 // validate the combined Characters ≤50% for now.)

@@ -36,8 +36,9 @@ export interface BattleLijstSamenvatting {
 }
 
 /** Eén veteraan-unit (campagne-progressie) voor een battle-kant. De server voegt dit toe aan
- *  `towc_battle_by_code` zodra beide legers gelockt zijn, gekeyd op `unitId` (= slug van de
- *  custom-naam óf het type-id — zelfde afleiding als `ArmyUnit.campaignId`). Zo kan OWC de
+ *  `towc_battle_by_code` zodra beide legers gelockt zijn, gekeyd op `unitId` (= de builder-uid van
+ *  de lijst-entry, met terugval op de oude naam-slug/het type-id — één gedeelde afleiding, zie
+ *  `campaignUnitId` in owbBuilder.ts, en `ArmyUnit.campaignId` in builderToArmy.ts). Zo kan OWC de
  *  campagne-XP/abilities/scars op de juiste unit in het geladen leger tonen. */
 export interface VetUnit {
   unitId: string;
@@ -235,7 +236,8 @@ export interface BattleResultaat {
    *  veteraan-XP + battle-scar-triggers van "De Grensvorsten". De campagne-RPC mag dit voorlopig
    *  negeren; het gaat mee in dezelfde jsonb-payload. Optioneel (oude clients sturen het niet). */
   veteraan?: {
-    /** Campagne-unit-id (matcht towc_spel_unit.unit_id — slug van de custom-naam óf het type-id). */
+    /** Campagne-unit-id (matcht towc_spel_unit.unit_id) — dezelfde sleutel als `VetUnit.unitId`,
+     *  afgeleid via `campaignUnitId` (owbBuilder.ts) en gedragen door `ArmyUnit.campaignId`. */
     unitId: string;
     /** Unit-naam (custom-naam of type) — informatief voor de campagne/grensmaster. */
     naam?: string;

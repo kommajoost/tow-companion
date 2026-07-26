@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { usePersistentState } from '../../store';
 import { TOW, towFont, engraved } from '../../design/tow';
 import { validate, type Category, type OwbArmy, type OwbUnit, type BuilderList, type MagicItemsData } from '../../lib/owbBuilder';
+import { listTotal } from '../../lib/builderToArmy';
 import { compName } from '../../lib/armies';
 import { BuilderWorkspace } from './BuilderWorkspace';
 import { NewListSetup, type NewListValues } from './NewListSetup';
@@ -26,6 +27,11 @@ interface SavedList extends BuilderList {
   // Campagne-koppeling (De Grensvorsten) — optioneel, zodat bestaande opgeslagen lijsten geldig blijven
   // en de list-sync (jsonb) deze velden vanzelf meeneemt.
   campaign?: boolean; campaignSpeler?: string; campaignNaam?: string; campaignFase?: number;
+  /** Campagne: de BEREKENDE puntensom van deze lijst (incl. magic items). `points` is alleen het
+   *  DOEL (de fase-cap waarop de lijst is aangemaakt); de campagne heeft de echte som nodig om te
+   *  toetsen of de lijst binnen 500 + 250×(Act−1) blijft. Alleen gezet voor campagne-lijsten, en
+   *  alleen als de som betrouwbaar te berekenen is (zie het effect in ListBuilder). */
+  computedPoints?: number;
 }
 const newId = (p: string) => `${p}${Date.now().toString(36)}${Math.floor(Math.random() * 1e6).toString(36)}`;
 
@@ -222,6 +228,35 @@ export function ListBuilder() {
       }
     } catch { /* ignore */ }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // ── Campagne: de ECHTE puntensom meeschrijven (`computedPoints`) ────────────────────────────────
+  // De campagne ("De Grensvorsten") moet kunnen toetsen of een campagne-lijst binnen de fase-cap
+  // valt, maar `points` is enkel het DOEL waarop de lijst is aangemaakt — niet de som. Dit scherm is
+  // de meest betrouwbare plek om die som weg te schrijven: het bezit `tow:lists`, laadt de catalogus
+  // van ELKE army die in de lijsten voorkomt (effect hierboven) én de magic-items-data, dus de som
+  // klopt inclusief items — ook voor lijsten die je niet openslaat (bv. van een ander device
+  // gesynct). En omdat ListBuilder de <BuilderWorkspace> zélf rendert, loopt elke wijziging in de
+  // builder via `setLists` hier langs, dus de waarde blijft actueel (niet alleen bij aanmaken).
+  // Ontbreekt de catalogus of de items-data, dan schrijven we NIETS: liever geen waarde dan een te
+  // lage som — de campagne behandelt een ontbrekende `computedPoints` als waarschuwing, geen fout.
+  // `updatedAt` bumpen we bewust niet (afgeleide waarde, geen gebruikers-bewerking); de list-sync
+  // pikt de wijziging op via de snapshot en duwt het veld mee naar `tow_lists`.
+  useEffect(() => {
+    if (!itemsData) return;
+    const sommen = new Map<string, number>();
+    for (const l of lists) {
+      if (!l.campaign) continue;
+      const cat = catalogues[l.army];
+      if (!cat) continue;
+      const total = listTotal(l, cat, itemsData);
+      if (l.computedPoints !== total) sommen.set(l.id, total);
+    }
+    if (sommen.size === 0) return;
+    setLists((ls) => ls.map((l) => {
+      const t = sommen.get(l.id);
+      return t === undefined ? l : { ...l, computedPoints: t };
+    }));
+  }, [lists, catalogues, itemsData, setLists]);
 
   const active = lists.find((l) => l.id === activeId) || null;
 

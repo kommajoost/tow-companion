@@ -170,8 +170,10 @@ export interface UnitProfile {
 
 export interface ArmyUnit {
   id: string; // stable within an army (index-based)
-  /** Campagne-koppeling (De Grensvorsten): matcht towc_spel_unit.unit_id = slug(customName) óf het type-id,
-   *  zelfde afleiding als de campagne-sync — zo landt de veteraan-XP op de juiste campagne-unit. */
+  /** Campagne-koppeling (De Grensvorsten): matcht towc_spel_unit.unit_id = de builder-uid van de
+   *  lijst-entry (terugval: oude naam-slug, dan het type-id) — afgeleid via de gedeelde helper
+   *  `campaignUnitId` (owbBuilder.ts), exact zoals de campagne-sync het doet, zodat de veteraan-XP
+   *  op de juiste campagne-unit landt en een hernoeming de koppeling niet breekt. */
   campaignId?: string;
   /** Campagne-veteraan-info (De Grensvorsten), aangebracht bij het openen van een campagne-battle: de
    *  unit z'n gewonnen veteran-abilities + battle-scars. Rijdt via `tow_games` mee naar beide spelers,
