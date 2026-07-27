@@ -11,7 +11,7 @@
     "terms": "Free to use in whole or in part (squarebased.com)"
   },
   "status": "draft",
-  "scope": "points-only",
+  "scope": "points-and-rules",
   "units": {
     "sorcerer-prophet": {
       "points": 175,
@@ -63,5 +63,22 @@
       ]
     }
   },
-  "magicItems": {}
+  "magicItems": {},
+  "rules": {
+    "blazing-body": {
+      "name_en": "Blazing Body",
+      "body": [
+        "Each combat phase, during Step 1.1 of the Choose Combat & Fight sub-phase, before issuing challenges, any model (friend or foe) that is in base contact with this model and that does not also have this special rule suffers a single Strength 4 hit with an AP of -1. This hit has the Flaming Attacks special rule.",
+        "Note that any Wounds lost due to these hits do not count towards the combat result."
+      ],
+      "overrides": "blazing-body"
+    },
+    "born-of-fire": {
+      "name_en": "Born of Fire",
+      "body": [
+        "A model with this rule has a 3+ Ward save against any wounds suffered that were caused by an attack that has the Flaming Attacks special rule."
+      ],
+      "overrides": "born-of-fire-renegade"
+    }
+  }
 }

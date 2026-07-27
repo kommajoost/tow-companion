@@ -8,11 +8,16 @@
 //
 // PURE: nothing here fetches, and nothing mutates its inputs. The caller owns loading and caching.
 //
-// SCOPE of the current overlays is POINTS ONLY (unit points + Big Name points) — see
-// `scripts/import-renegade.mjs`. Stat lines, option changes and rules text are deliberately not
-// patched: they cannot be extracted from the source document reliably, and a wrong statline is worse
-// than an absent one. So an overlay changes what a list COSTS, never what a unit can do.
+// SCOPE is POINTS (unit points + Big Name points) and SPECIAL RULES PROSE. Points come from the pack's
+// text export (`scripts/import-renegade.mjs`), rules prose from its PDF rendering
+// (`scripts/import-renegade-rules.mjs`) — the rules pages are set in two columns, which a text export
+// interleaves into nonsense and only the PDF preserves.
+//
+// Still deliberately NOT patched: stat lines, option prices, and the magic-item TABLES. Those do not
+// survive extraction intact — table entries come out attached to their neighbours' names — and a wrong
+// statline is worse than an absent one.
 
+import type { Rule } from '../types';
 import type { Category, MagicItem, MagicItemsData, OwbArmy, OwbUnit } from './owbBuilder';
 
 /** Where a pack came from, so the UI can credit it and link out. */
@@ -32,6 +37,16 @@ export interface OverlayUnitPatch {
   _changed?: string[];
 }
 
+/** One special rule as the pack words it. `body` is paragraphs, in order. */
+export interface OverlayRule {
+  name_en: string;
+  body: string[];
+  /** The `rules.json` slug this REPLACES while the pack is active, or null when the pack introduces a
+   *  rule the app has never had. Replacing in place is what stops the app showing two contradictory
+   *  versions of the same rule name. */
+  overrides: string | null;
+}
+
 export interface CompositionOverlay {
   /** The composition id this overlay belongs to, e.g. `ok-renegade-v2`. */
   id: string;
@@ -43,9 +58,11 @@ export interface CompositionOverlay {
   status: 'draft' | 'stable';
   /** What the overlay is allowed to touch. Present so a future overlay can widen it explicitly rather
    *  than by accident. */
-  scope: 'points-only';
+  scope: 'points-only' | 'points-and-rules';
   units: Record<string, OverlayUnitPatch>;
   magicItems: Record<string, MagicItem[]>;
+  /** Special-rule prose, keyed by the pack's own slug. Absent on a points-only overlay. */
+  rules?: Record<string, OverlayRule>;
 }
 
 /** The overlays that exist, as compositionId → file under `public/renegade/`. A composition without an
@@ -140,6 +157,57 @@ export function applyOverlayItems(items: MagicItemsData, overlay: CompositionOve
       else merged.push(clean);
     }
     out[listId] = merged;
+  }
+  return out;
+}
+
+/** Plain paragraphs as the Contentful-shaped rich text the rule sheet already renders. */
+const richText = (paras: string[]): Rule['body'] => ({
+  nodeType: 'document',
+  content: paras.map((p) => ({
+    nodeType: 'paragraph',
+    content: [{ nodeType: 'text', value: p, marks: [] }],
+  })),
+});
+
+/**
+ * Fold an overlay's special rules into the app's rules, returning a NEW record; the input is untouched.
+ *
+ * An OVERRIDING rule takes the base rule's slug AND its name. Keeping the base name matters more than it
+ * looks: `buildRuleIndex` maps a rule's NAME to its slug, and that index is how a unit's "Aquatic" label
+ * finds its rule. Renaming it "Aquatic (Renegade V2)" would leave nothing in the index answering to
+ * "Aquatic", so every unit carrying the label would silently stop resolving.
+ *
+ * A NEW rule gets its own `-renegade-v2` slug — no base entry is displaced — and resolves by name as
+ * usual, because no base rule answers to that name.
+ */
+export function applyOverlayRules(rules: Record<string, Rule>, overlay: CompositionOverlay): Record<string, Rule> {
+  const packed = overlay.rules;
+  if (!packed || Object.keys(packed).length === 0) return rules;
+  const out = { ...rules };
+  for (const [slug, r] of Object.entries(packed)) {
+    const base = r.overrides ? rules[r.overrides] : undefined;
+    const targetSlug = r.overrides ?? `${slug}-renegade-v2`;
+    // The reader has to be able to tell which wording they are looking at — the pack's version of a
+    // rule can be materially different from the one in the book.
+    const paras = [...r.body, `— ${overlay.label}, ${overlay.source.name} (${overlay.source.author}). ${base ? 'Replaces the standard rule' : 'New rule'} for this army composition.`];
+    out[targetSlug] = {
+      slug: targetSlug,
+      name: base?.name ?? r.name_en,
+      order: base?.order ?? null,
+      // NOT inherited from the base rule: this is the pack's wording, and citing the rulebook page it
+      // replaced would send the reader to a page that says something else.
+      pageReference: null,
+      parentSlug: base?.parentSlug ?? 'special-rules',
+      body: richText(paras),
+      bodyIndex: r.body.join(' '),
+      childSlugs: [],
+      prevSlug: null,
+      nextSlug: null,
+      crossRefSlugs: [],
+      // No inline links are reconstructed from plain prose, so nothing is claimed here.
+      refSlugs: [],
+    };
   }
   return out;
 }

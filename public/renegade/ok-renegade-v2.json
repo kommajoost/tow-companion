@@ -11,7 +11,7 @@
     "terms": "Free to use in whole or in part (squarebased.com)"
   },
   "status": "draft",
-  "scope": "points-only",
+  "scope": "points-and-rules",
   "units": {
     "slaughtermaster": {
       "points": 180,
@@ -60,5 +60,38 @@
         "onePerArmy": false
       }
     ]
+  },
+  "rules": {
+    "ogre-kingdoms-charge": {
+      "name_en": "Ogre Kingdoms Charge",
+      "body": [
+        "The Strength and Armour Piercing characteristics of any impact hits caused by an Infantry model with this special rule are improved by the current rank bonus of its unit, or in the case of characters, the current rank bonus of any unit they have joined.",
+        "In addition, if a unit with this special rule makes a Charge move of 6\" or more following a Charge or Pursuit roll that includes one or more natural 6s, all models in the unit gain Impact Hits (1) and treat low linear obstacles as open ground during the turn in which they charge.",
+        "Note: This means that models separated only by a low linear obstacle are considered to be in base contact with one another for the purposes of combat and the enemy unit receives no benefits for defending a low linear obstacle against this unit.."
+      ],
+      "overrides": null
+    },
+    "ravenous-hunger": {
+      "name_en": "Ravenous Hunger",
+      "body": [
+        "If the majority of the models in a unit have this special rule, it may re-roll its Charge roll."
+      ],
+      "overrides": "ravenous-hunger"
+    },
+    "numbing-chill": {
+      "name_en": "Numbing Chill",
+      "body": [
+        "Enemy units engaged in combat with one or more models with this rule have the Strikes Last special rule and a -1 modifier to their Weapon Skill characteristic, to a minimum of 1."
+      ],
+      "overrides": "numbing-chill"
+    },
+    "ogre-club": {
+      "name_en": "Ogre Club",
+      "body": [
+        "A hand weapon carried by a model with this special rule has an Armour Piercing characteristic of -1.",
+        "Note that this special rule only applies to a single, non-magical hand weapon, and does not apply to a model's mount (should it have one). If the model is using an Ogre Kingdoms Ironfist as a weapon (or any other sort of weapon), this special rule ceases to apply."
+      ],
+      "overrides": null
+    }
   }
 }

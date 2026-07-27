@@ -11,7 +11,7 @@
     "terms": "Free to use in whole or in part (squarebased.com)"
   },
   "status": "draft",
-  "scope": "points-only",
+  "scope": "points-and-rules",
   "units": {
     "grey-seer": {
       "points": 155,
@@ -49,5 +49,41 @@
       ]
     }
   },
-  "magicItems": {}
+  "magicItems": {},
+  "rules": {
+    "expendable": {
+      "name_en": "Expendable",
+      "body": [
+        "If all friendly Skaven models engaged in a combat have this rule, friendly Skaven units may target the engaged enemy units in that combat during the Shooting Phase. Resolve all rolls to hit as normal. Then, using all failed to hit rolls, roll to wound on a unit with the Expendable special rule engaged in the combat chosen by your opponent.",
+        "If firing with a model using a blast template, centre the template over a fighting rank so that it touches both friendly and enemy models as equally as possible with as many models as possible. Roll to scatter and resolve the attack as normal.",
+        "If using a Magic Missile to target an enemy unit engaged with a friendly unit with this rule, failed casting rolls (but not successfully dispelled rolls or miscasts) count as successfully cast on a friendly unit with the Expendable special rule engaged in the combat chosen by your opponent."
+      ],
+      "overrides": null
+    },
+    "verminous-valour": {
+      "name_en": "Verminous Valour",
+      "body": [
+        "A model with this special rule may voluntarily `retire' (\"Too Many Characters,\" Rulebook, p.209) during the Combat Phase. In order to do so the model must:",
+        "Be joined to a unit that has a Unit Strength of 10 or more.",
+        "Not be part of a Challenge. Not be subject to \"Nowhere to Run\" (Rulebook, p.211). Be able to be placed inside the unit outside of all fighting ranks. Do so before any attacks are allocated and resolved for the current initiative step of a combat that they are in. Should a model `retire' in this way the unit may still use this character's Leadership. All other restrictions for retiring apply.",
+        "In subsequent turns, if this model's unit remains engaged in combat with the same enemy unit, a model with this rule may move through the ranks and join any fighting rank before challenges are issued during step 1.1 of the \"Choose Combat & Fight Phase\" (\"Characters in Combat,\" Rulebook p.209.) If at any time there is nowhere to place a `retired' model outside of a fighting rank they must immediately move through the ranks and take a position in the front row of a fighting rank. They may not make any attacks in this round of combat but they may have attacks directed against them."
+      ],
+      "overrides": "verminous-valour"
+    },
+    "pushed-into-battle": {
+      "name_en": "Pushed Into Battle",
+      "body": [
+        "A model with this special rule may join a unit of Infantry with unit strength 10 or more despite being a Heavy Chariot. If it does so, it must always be placed in the centre of the front rank, and it no longer has the Lumbering rule (Rulebook p. 195). Only one model with this special rule may join each unit."
+      ],
+      "overrides": null
+    },
+    "scurrying-masses": {
+      "name_en": "Scurrying Masses",
+      "body": [
+        "Whilst within 3\" of a friendly Skaven unit, this unit may add a positive (+) modifier to its Leadership characteristic equal to that unit's current Rank Bonus, up to a maximum of Leadership 10.",
+        "Note that this may not be combined with any leadership bonus provided by Warband or the Inspiring Presence special rule."
+      ],
+      "overrides": "scurrying-masses"
+    }
+  }
 }

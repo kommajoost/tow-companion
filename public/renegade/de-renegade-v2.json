@@ -11,7 +11,7 @@
     "terms": "Free to use in whole or in part (squarebased.com)"
   },
   "status": "draft",
-  "scope": "points-only",
+  "scope": "points-and-rules",
   "units": {
     "supreme-sorceress": {
       "points": 155,
@@ -70,5 +70,14 @@
       ]
     }
   },
-  "magicItems": {}
+  "magicItems": {},
+  "rules": {
+    "will-of-the-gods": {
+      "name_en": "Will of the Gods",
+      "body": [
+        "A model with this special rule may join a unit of Infantry with unit strength 10 or more despite being a Heavy Chariot. If it does so, it must always be placed in the centre of the front rank, and it no longer has the Lumbering rule (Rulebook p. 195). Only one model with this special rule may join each unit."
+      ],
+      "overrides": null
+    }
+  }
 }

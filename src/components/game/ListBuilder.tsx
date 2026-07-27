@@ -52,7 +52,7 @@ export function ListBuilder() {
   // the field — not as an opt-in. Once the new flow has proven itself, both the flag and
   // BuilderWorkspace can go.
   const [useV2] = usePersistentState<boolean>('tow:builder-v2', true);
-  const { rules } = useData();
+  const { rules, setRuleOverlay } = useData();
   const { openRule } = useUI();
   const ruleIdx = useMemo(() => getRuleIndex(rules ?? {}), [rules]);
 
@@ -181,6 +181,14 @@ export function ListBuilder() {
     if (!itemsData || !activeOverlay || activeOverlay.baseArmy !== activeArmySlug) return itemsData;
     return applyOverlayItems(itemsData, activeOverlay);
   }, [itemsData, activeOverlay, activeArmySlug]);
+  // The pack's own wording for the rules it changes, installed globally while a pack list is open. It
+  // has to be global: the rule sheet renders outside this tree, so a local override would leave the
+  // sheet showing the standard rule for a list the pack has already repriced.
+  useEffect(() => {
+    const on = activeOverlay && activeOverlay.baseArmy === activeArmySlug;
+    setRuleOverlay(on ? activeOverlay : null);
+    return () => setRuleOverlay(null);
+  }, [activeOverlay, activeArmySlug, setRuleOverlay]);
   const getUnitFor = (cat: OwbArmy | null) => (c: Category, id: string): OwbUnit | undefined => cat?.[c]?.find((u) => u.id === id);
   // Per army: the compositions from the synced OWB metadata, PLUS our own overlay compositions. The
   // overlay ids are appended here rather than written into `the-old-world.json`, because that file is

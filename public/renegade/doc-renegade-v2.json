@@ -11,7 +11,7 @@
     "terms": "Free to use in whole or in part (squarebased.com)"
   },
   "status": "draft",
-  "scope": "points-only",
+  "scope": "points-and-rules",
   "units": {
     "bloodletters-of-khorne": {
       "points": 13,
@@ -77,5 +77,105 @@
       ]
     }
   },
-  "magicItems": {}
+  "magicItems": {},
+  "rules": {
+    "daemonic-psychology": {
+      "name_en": "Daemonic Psychology",
+      "body": [
+        "Daemons are manifestations of pure emotion and raw magic, their physical forms sustained by a tenuous tether to the Realm of Chaos. Their behavior in the mortal realm is driven by the instability of their magical anchors, rather than feeble mortal logic or emotion.",
+        "All Daemonic models automatically pass any Fear or Terror tests that they are required to make.",
+        "When a unit would normally be required to make a Panic test, a Break test, or elects to Flee as a charge reaction, it must instead test for Daemonic Instability before it Gives Ground, Falls Back in Good Order, or Flees.",
+        "If a Daemonic unit Flees for any reason it will always Fall Back in Good Order instead.",
+        "How Daemonic units react to disruptions to the Aethyr in the course of battle is further defined by their Daemonic Alignment (see below):"
+      ],
+      "overrides": null
+    },
+    "daemons-of-khorne": {
+      "name_en": "Daemons of Khorne",
+      "body": [
+        "The Blood God's relentless legions care only for the harvest of skulls, rendering Khorne's daemons utterly immune to retreat or distraction.",
+        "All Daemons of Khorne automatically pass any Panic tests that they are required to make and cannot choose to Flee as a charge reaction."
+      ],
+      "overrides": null
+    },
+    "daemons-of-nurgle": {
+      "name_en": "Daemons of Nurgle",
+      "body": [
+        "Eager to smother their foes in a diseased, loving embrace, the children of Nurgle are relentless in their march towards the foe. Yet, their tether to the mortal realm can be shaken by the rejection of Grandfather Nurgle's love through the sudden mass banishment of their kin.",
+        "All Daemons of Nurgle must test for Panic when required to do so, however they cannot choose to Flee as a charge reaction."
+      ],
+      "overrides": null
+    },
+    "daemons-of-slaanesh": {
+      "name_en": "Daemons of Slaanesh",
+      "body": [
+        "The lithe children of Slaanesh will gladly dance away from an uninspiring charge in pursuit of more stimulating prey, while the sudden, violent, banishment of their kin only anchors them deeper in ecstatic sensation.",
+        "All Daemons of Slaanesh automatically pass any Panic tests that they are required to make, however they may choose to Flee as a charge reaction."
+      ],
+      "overrides": null
+    },
+    "daemons-of-tzeentch": {
+      "name_en": "Daemons of Tzeentch",
+      "body": [
+        "Guided by the omniscient foresight of the Architect of Fate, the daemons of Tzeentch will readily dissolve into shifting mist to evade an oncoming charge or they may willingly sever their own tethers to safely vanish from the Material Realm precisely as planned.",
+        "Daemons of Tzeentch must test for Panic when required to do so, however, a Daemon of Tzeentch may always choose to fail a Panic test without rolling for Daemonic Instability (even if they would otherwise automatically pass it). Daemons of Tzeentch may choose to Flee as a charge reaction."
+      ],
+      "overrides": null
+    },
+    "daemonic-instability": {
+      "name_en": "Daemonic Instability",
+      "body": [
+        "When a Daemonic unit is required to make a Daemonic Instability test, the unit must take a Leadership test.",
+        "If the natural result of the dice is a 2 or 12 something unexpected immediately happens:",
+        "2 � Reality Blinks: Any wounds suffered by the unit during this phase (including any wounds suffered by characters that have joined it) are immediately recovered, and any models removed as casualties during this phase are returned to play, and placed in their previous positions within the unit.",
+        "12 � Banished!: Banished!: If the unit contains more than half (50%) of the models it contained at the start of the battle (or more than half its starting Wounds if it is a Character, Monster, or Chariot), it immediately loses half of its remaining models or Wounds, rounding fractions up. However, if the unit has already been reduced to half (50%) or fewer of its starting models or Wounds when this test is taken, it is immediately removed from play and counts as having been destroyed.",
+        "If the unit has just lost a round of combat, apply a +1 modifier to the result for every combat result point by which the combat was lost.",
+        "If the Daemonic Instability test is passed, the unit suffers no ill effects.",
+        "If the test is failed, the unit suffers a number of wounds equal to the amount by which the test was failed. If the unit contains any characters, these wounds are allocated to the unit first until each model has been allocated one wound. Any remaining wounds are then divided as equally as possible between the character(s) and the unit. No armour, ward, or regeneration saves are allowed against wounds suffered in this manner.",
+        "If the unit is in combat it must now Give Ground. However, if the unit was in combat and completely destroyed enemy units that were engaged in the combat may attempt to restrain and reform or `overrun.'"
+      ],
+      "overrides": "daemonic-instability-renegade"
+    },
+    "daemonic-locus": {
+      "name_en": "Daemonic Locus",
+      "body": [
+        "Friendly Daemonic units within the Battle Standard Bearer's Command range may re-roll any Demonic Instability tests, however they may never re-roll a Banished! result. friendly Daemonic units reduce the number of wounds suffered due to the Daemonic Instability special rule by 1 whilst within 12\" of this model."
+      ],
+      "overrides": "daemonic-locus"
+    },
+    "singular-essence": {
+      "name_en": "Singular Essence",
+      "body": [
+        "Violently bound to a solitary cosmic truth, these entities remain completely insulated from the aetheric shockwaves of the battlefield.",
+        "This character automatically passes any Panic test that they are required to make."
+      ],
+      "overrides": null
+    },
+    "reign-of-chaos": {
+      "name_en": "Reign of Chaos",
+      "body": [
+        "During each of their Start of Turn sub-phases, the Daemons of Chaos player rolls a D6 to determine the current ebb and flow of the Winds of Magic, testing whether the local Aethyr is potent enough to sustain the host's tenuous grip on reality.",
+        "Note that at the start of the game the Reign of Chaos is always in the `Eye of the Storm' result until the Daemons of Chaos player takes their first turn.",
+        "On a roll of 1, Chaotic Ebb: The Aethyr dissipates, starving the daemonic host of vital anchoring energy.",
+        "Until your next Start of Turn sub-phase, all friendly models with the Daemonic special rule have a 5+ Ward save against any wounds suffered that were caused by a non-magical enemy attack and will generate a \"Banished\" result on a natural roll of 11 or 12 when making a Leadership Test for Daemonic Instability.",
+        "On a roll of 2-5, Eye of the Storm: The aetheric currents swirl in a volatile equilibrium; the Daemonic host's tether to reality holds steady.",
+        "Until your next Start of Turn sub-phase, all friendly models with the Daemonic special rule have a 5+ Ward save against any wounds suffered and may make Regeneration saves against wounds caused by Magical attacks despite having the Warp-spawned special rule.",
+        "On a roll of 6, Chaotic Surge: A violent torrent of raw magical power surges across the battlefield, fiercely invigorating the host.",
+        "Until your next Start of Turn sub-phase, all friendly models with the Daemonic special rule have a 5+ Ward save against any wounds suffered, a 4+ Ward save against any wounds suffered that were caused by a non-magical enemy attack, and may make Regeneration saves against wounds caused by Magical attacks despite having the Warp-spawned special rule.",
+        "In addition, friendly Daemonic models gain the Immune to Psychology special rule, and generate a \"Reality Blinks\" result on a natural roll of 2 or 3 when making a Leadership Test for Daemonic Instability."
+      ],
+      "overrides": null
+    },
+    "rival-alignments": {
+      "name_en": "Rival Alignments",
+      "body": [
+        "To represent the particularly chaotic relationship between certain gods, certain combinations of Daemonic Alignment are also subject to the following rules:",
+        "Khorne and Slaanesh are Rival Alignments. Nurgle and Tzeentch are Rival Alignments.",
+        "Models with a Daemonic Alignment have Hatred (Daemons of (Rival Alignment), Mark of (Rival Alignment)). Rival Alignments are never considered friendly models for the purposes of casting spells, the Inspiring Presence special rule, or any Daemonic Locus special rules.",
+        "Daemon(s) Of Khorne Daemons of Khorne have the Furious Charge special rule and during a turn in which it made a charge move, a Daemon of Khorne (but not its mount) gains a +1 modifier to its Strength characteristic. result of any Charge, Pursuit, or Flee roll they make.",
+        "Daemon(s) Of Nurgle Any enemy model that directs its attacks against a Daemon of A Daemon of Tzeentch that is also a Wizard may apply a Nurgle during the Combat phase must re-roll any rolls To Hit +1 modifier to any Casting roll they make. of a natural 6. Note that this is a modifier to the result of a roll � it does not negate a roll of a natural double 1."
+      ],
+      "overrides": null
+    }
+  }
 }

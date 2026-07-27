@@ -7,6 +7,7 @@ import {
   type ReactNode,
 } from 'react';
 import type { CompanionData, FlowData, FlowStep, Lore, Rule, RulesData } from './types';
+import { applyOverlayRules, type CompositionOverlay } from './lib/overlays';
 
 interface DataContextValue extends RulesData {
   // Always provided by the provider (defaulted), so non-optional here.
@@ -20,6 +21,15 @@ interface DataContextValue extends RulesData {
   hiddenSteps: Set<string>;
   /** Curated turn structure for Play (null if not loaded). */
   companion: CompanionData | null;
+  /**
+   * Install rules from an active composition overlay (a community pack), or null to remove them.
+   *
+   * Lives here rather than in the builder because the rule SHEET is global — it renders outside the
+   * builder's tree, so an override held locally would never reach it and tapping a rule would show the
+   * standard wording while the list is priced by the pack. Set while a pack list is open, cleared when
+   * it closes.
+   */
+  setRuleOverlay: (overlay: CompositionOverlay | null) => void;
 }
 
 const DataContext = createContext<DataContextValue | null>(null);
@@ -37,6 +47,10 @@ export function DataProvider({ children }: { children: ReactNode }) {
   const [flow, setFlow] = useState<FlowData>({ steps: {} });
   const [companion, setCompanion] = useState<CompanionData | null>(null);
   const [error, setError] = useState<string | null>(null);
+  // The OVERLAY is held, not the resolved rules: the provider merges it against its own base copy. If
+  // callers passed resolved rules instead, they would have to read the merged `rules` to build them,
+  // and every merge would feed the next one — a render loop.
+  const [ruleOverlay, setRuleOverlay] = useState<CompositionOverlay | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -70,17 +84,23 @@ export function DataProvider({ children }: { children: ReactNode }) {
   const value = useMemo<DataContextValue | null>(() => {
     if (!data) return null;
     const hiddenSteps = new Set(flow.hidden ?? []);
+    // Overlay rules replace base ones by slug. Merged into `rules` itself, not just into `getRule`, so
+    // that everything derived from it agrees — above all the name→slug index, which is how a unit's
+    // special-rule label finds its text.
+    const rules = ruleOverlay ? applyOverlayRules(data.rules, ruleOverlay) : data.rules;
     return {
       ...data,
+      rules,
       lores: data.lores ?? {},
       loreList: data.loreList ?? [],
-      getRule: (slug) => (slug ? data.rules[slug] : undefined),
+      getRule: (slug) => (slug ? rules[slug] : undefined),
       getFlow: (slug) => (slug ? flow.steps[slug] : undefined),
       getLore: (slug) => (slug ? (data.lores ?? {})[slug] : undefined),
       hiddenSteps,
       companion,
+      setRuleOverlay,
     };
-  }, [data, flow, companion]);
+  }, [data, flow, companion, ruleOverlay]);
 
   if (error) {
     return (
