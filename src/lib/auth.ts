@@ -19,6 +19,9 @@ interface AuthState {
   session: Session | null;
   /** True until the first getSession() settles — lets the UI avoid a flash of "signed out". */
   loading: boolean;
+  /** Set when a hand-off from the campaign app was attempted and failed, so the UI can explain
+   *  itself instead of silently showing a sign-in form the player didn't expect. */
+  ssoError?: string | null;
 }
 
 let state: AuthState = { session: null, loading: true };
@@ -33,15 +36,68 @@ function setState(next: AuthState) {
   emit();
 }
 
-// Hydrate once (client only), then keep in sync with every auth change (sign in/out, token refresh).
-if (typeof window !== 'undefined') {
+// ---- Seamless hand-off from the campaign app (SSO) --------------------------------------------
+//
+// "Open Old World Companion" on Isle of Celedon asks its own server for a ONE-TIME token (a magic
+// link that is never mailed) and sends us here as `#sso=<token>`. We exchange it for a session of
+// our own — a separate refresh-token family from the campaign tab's, so neither app can log the
+// other out when its token rotates. Sharing the campaign's tokens outright would do exactly that.
+//
+// The token rides in the URL FRAGMENT: fragments are never sent to a server and never land in a
+// Referer header. It is single-use and short-lived, and we strip it from the address bar before the
+// exchange even resolves, so a reload can't replay a spent token.
+
+/** Pull an SSO token out of the URL and strip it, or null. Reads the fragment first (preferred),
+ *  then the query string, so a copied link with `?sso=` still works. */
+function takeSsoToken(): string | null {
+  try {
+    const url = new URL(window.location.href);
+    const hash = new URLSearchParams(url.hash.replace(/^#/, ''));
+    let token = hash.get('sso');
+    if (token) {
+      hash.delete('sso');
+      const rest = hash.toString();
+      window.history.replaceState(null, '', `${url.pathname}${url.search}${rest ? `#${rest}` : ''}`);
+      return token;
+    }
+    token = url.searchParams.get('sso');
+    if (token) {
+      url.searchParams.delete('sso');
+      window.history.replaceState(null, '', `${url.pathname}${url.search}${url.hash}`);
+      return token;
+    }
+  } catch { /* a malformed URL is simply "no token" */ }
+  return null;
+}
+
+/** Fall back to whatever session is already stored (so a failed hand-off never signs anyone out). */
+function hydrateFromStorage(ssoError: string | null = null) {
   supabase.auth
     .getSession()
-    .then(({ data }) => setState({ session: data.session ?? null, loading: false }))
-    .catch(() => setState({ session: null, loading: false }));
+    .then(({ data }) => setState({ session: data.session ?? null, loading: false, ssoError }))
+    .catch(() => setState({ session: null, loading: false, ssoError }));
+}
+
+// Hydrate once (client only), then keep in sync with every auth change (sign in/out, token refresh).
+if (typeof window !== 'undefined') {
+  const ssoToken = takeSsoToken();
+  if (ssoToken) {
+    supabase.auth
+      .verifyOtp({ token_hash: ssoToken, type: 'email' })
+      .then(({ data, error }) => {
+        if (error || !data.session) {
+          hydrateFromStorage('That sign-in link has expired — please sign in below.');
+        } else {
+          setState({ session: data.session, loading: false, ssoError: null });
+        }
+      })
+      .catch(() => hydrateFromStorage('Automatic sign-in failed — please sign in below.'));
+  } else {
+    hydrateFromStorage();
+  }
 
   supabase.auth.onAuthStateChange((_event, session) => {
-    setState({ session: session ?? null, loading: false });
+    setState({ session: session ?? null, loading: false, ssoError: session ? null : state.ssoError });
   });
 }
 
@@ -58,12 +114,14 @@ export interface UseAuthResult {
   session: Session | null;
   user: User | null;
   loading: boolean;
+  /** Non-null when a hand-off from the campaign app failed (see takeSsoToken above). */
+  ssoError: string | null;
 }
 
 /** React hook: the current session/user, kept live via onAuthStateChange. */
 export function useAuth(): UseAuthResult {
   const s = useSyncExternalStore(subscribe, getSnapshot, getSnapshot);
-  return { session: s.session, user: s.session?.user ?? null, loading: s.loading };
+  return { session: s.session, user: s.session?.user ?? null, loading: s.loading, ssoError: s.ssoError ?? null };
 }
 
 /** Non-React read of the current session (null when signed out). Handy for the later coupling. */

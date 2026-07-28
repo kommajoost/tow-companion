@@ -1,16 +1,25 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { usePersistentState } from './store';
-import { makeSyncKey, pullLists, pushLists, type CloudLists } from './lib/listSync';
+import { accountSyncKey, makeSyncKey, pullLists, pushLists, type CloudLists } from './lib/listSync';
+import { useAuth } from './lib/auth';
 
-// Keeps `tow:lists` in sync across a player's devices via a shared sync key (no login):
+// Keeps `tow:lists` in sync across a player's devices:
+//  • signed in → automatically, on a key derived from the account (nothing to set up);
+//  • signed out → optionally, on a self-chosen sync password (the original no-login flow);
 //  • on connect/open it pulls the cloud copy and adopts it if another device changed it,
 //  • on every local change it pushes (debounced),
 //  • last write wins (fine for a single player across their own devices).
+//
+// The automatic path matters for the campaign: Isle of Celedon reads a player's campaign list
+// straight out of `tow_lists`, so a list that never reaches the cloud is invisible to it. Before
+// 28-07-2026 that needed a sync password, which meant "signed in" was not enough to be coupled.
 
 type Status = 'off' | 'syncing' | 'synced' | 'error';
 
 interface ListSyncValue {
   key: string | null;
+  /** True when syncing runs off the signed-in account rather than a typed password. */
+  viaAccount: boolean;
   status: Status;
   lastSyncedAt: string | null;
   error: string | null;
@@ -42,9 +51,22 @@ export function ListSyncProvider({ children }: { children: ReactNode }) {
   const [lists, setLists] = usePersistentState<unknown[]>('tow:lists', []);
   const [groups, setGroups] = usePersistentState<unknown[]>('tow:list-groups', []);
   const [key, setKey] = usePersistentState<string | null>('tow:syncKey', null);
+  const [viaAccount, setViaAccount] = usePersistentState<boolean>('tow:syncViaAccount', false);
   const [syncAt, setSyncAt] = usePersistentState<string | null>('tow:syncAt', null);
   const [status, setStatus] = useState<Status>(key ? 'syncing' : 'off');
   const [error, setError] = useState<string | null>(null);
+  const { user } = useAuth();
+
+  // Signed in ⇒ sync, without asking anything. Only takes over when there is no key yet, so a player
+  // who already synced with a password keeps that key (and their existing cloud lists) untouched.
+  // If a DIFFERENT account signs in on a device that was syncing via an account, follow it — otherwise
+  // the new player would silently write into the previous one's row.
+  useEffect(() => {
+    if (!user) return;
+    const mine = accountSyncKey(user.id);
+    if (!key) { setViaAccount(true); setKey(mine); return; }
+    if (viaAccount && key !== mine) { setSyncAt(null); setKey(mine); }
+  }, [user, key, viaAccount, setKey, setViaAccount, setSyncAt]);
 
   const lastPushed = useRef<string | null>(null); // combined lists+groups snapshot known to match the cloud
   const ready = useRef(false);                    // gate auto-push until the first pull settles
@@ -109,9 +131,10 @@ export function ListSyncProvider({ children }: { children: ReactNode }) {
   const createKey = useCallback(() => {
     const k = makeSyncKey();
     lastPushed.current = null; // force the mount effect to seed the cloud
+    setViaAccount(false);      // an explicitly chosen key wins over the account default
     setKey(k);
     return k;
-  }, [setKey]);
+  }, [setKey, setViaAccount]);
 
   const peek = useCallback((k: string) => pullLists(k), []);
 
@@ -120,9 +143,10 @@ export function ListSyncProvider({ children }: { children: ReactNode }) {
     setLists(cloud.lists);
     setGroups(cloud.groups);
     setSyncAt(cloud.updatedAt);
+    setViaAccount(false);
     setKey(k);
     setStatus('synced'); setError(null);
-  }, [setLists, setGroups, setSyncAt, setKey]);
+  }, [setLists, setGroups, setSyncAt, setKey, setViaAccount]);
 
   const pushMine = useCallback(async (k: string) => {
     setStatus('syncing');
@@ -130,10 +154,11 @@ export function ListSyncProvider({ children }: { children: ReactNode }) {
       const ts = await pushLists(k, lists, groups);
       lastPushed.current = snap(lists, groups);
       setSyncAt(ts);
+      setViaAccount(false);
       setKey(k);
       setStatus('synced'); setError(null);
     } catch (e) { setStatus('error'); setError(msg(e)); throw e; }
-  }, [lists, groups, setSyncAt, setKey]);
+  }, [lists, groups, setSyncAt, setKey, setViaAccount]);
 
   const pullNow = useCallback(async () => {
     if (!key) return;
@@ -158,14 +183,16 @@ export function ListSyncProvider({ children }: { children: ReactNode }) {
 
   const disconnect = useCallback(() => {
     setKey(null);
+    setViaAccount(false);
     setSyncAt(null);
     setStatus('off'); setError(null);
-  }, [setKey, setSyncAt]);
+  }, [setKey, setViaAccount, setSyncAt]);
 
   const value = useMemo<ListSyncValue>(() => ({
-    key, status, lastSyncedAt: syncAt, error, listCount: Array.isArray(lists) ? lists.length : 0,
+    key, viaAccount: viaAccount && !!key, status, lastSyncedAt: syncAt, error,
+    listCount: Array.isArray(lists) ? lists.length : 0,
     createKey, peek, adoptCloud, pushMine, pullNow, pushNow, disconnect,
-  }), [key, status, syncAt, error, lists, createKey, peek, adoptCloud, pushMine, pullNow, pushNow, disconnect]);
+  }), [key, viaAccount, status, syncAt, error, lists, createKey, peek, adoptCloud, pushMine, pullNow, pushNow, disconnect]);
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
 }

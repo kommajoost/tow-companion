@@ -27,6 +27,12 @@ export async function deriveKey(password: string): Promise<string> {
   return Array.from(new Uint8Array(buf)).map((b) => b.toString(16).padStart(2, '0')).join('');
 }
 
+/** The sync key of a signed-in account, derived from its user id so every device that signs in
+ *  lands on the SAME cloud row without anyone having to type a password. The id is not a secret the
+ *  player has to protect (they only ever derive their own), and it is unguessable, which is all the
+ *  server's key check asks for. Same shape as any other key after cleanKey: A-Z0-9, 36 chars. */
+export const accountSyncKey = (userId: string): string => cleanKey(`ACCT${userId}`);
+
 export interface CloudLists { lists: unknown[]; groups: unknown[]; updatedAt: string }
 
 /** Fetch the lists + groups stored for a key (null if the key has never been pushed). */

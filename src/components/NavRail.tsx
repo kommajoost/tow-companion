@@ -18,10 +18,11 @@ const SECTIONS: { id: NavTab; label: string; icon: (active: boolean) => React.Re
   { id: 'army', label: 'Army', icon: (a) => <ArmyIcon size={21} color={a ? TOW.goldDeep : mutedIcon} /> },
 ];
 
-function RailItem({ active, label, icon, onClick }: { active: boolean; label: string; icon: React.ReactNode; onClick: () => void }) {
+function RailItem({ active, label, icon, onClick, tour }: { active: boolean; label: string; icon: React.ReactNode; onClick: () => void; tour?: string }) {
   return (
     <button
       onClick={onClick}
+      data-tour={tour}
       style={{
         position: 'relative',
         width: 60,
@@ -67,11 +68,11 @@ export function NavRail({ tab, onTab, onHome }: { tab: NavTab; onTab: (t: NavTab
       </button>
 
       {SECTIONS.map((s) => (
-        <RailItem key={s.id} active={tab === s.id} label={s.label} icon={s.icon(tab === s.id)} onClick={() => onTab(s.id)} />
+        <RailItem key={s.id} tour={`rail-${s.id}`} active={tab === s.id} label={s.label} icon={s.icon(tab === s.id)} onClick={() => onTab(s.id)} />
       ))}
 
       <div style={{ marginTop: 'auto', width: 40, height: 1, background: TOW.line, margin: 'auto auto 8px' }} />
-      <RailItem active={tab === 'settings'} label="Settings" icon={<SettingsIcon size={21} color={tab === 'settings' ? TOW.goldDeep : mutedIcon} />} onClick={() => onTab('settings')} />
+      <RailItem tour="rail-settings" active={tab === 'settings'} label="Settings" icon={<SettingsIcon size={21} color={tab === 'settings' ? TOW.goldDeep : mutedIcon} />} onClick={() => onTab('settings')} />
     </div>
   );
 }

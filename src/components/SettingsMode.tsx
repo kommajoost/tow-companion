@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { TOW, towFont, engraved } from '../design/tow';
 import { useTheme } from '../theme';
 import { usePwa } from '../pwa';
@@ -7,9 +7,7 @@ import { useAuth, authSignIn, authSignUp, authSignOut } from '../lib/auth';
 import { useListSync } from '../listSync';
 import { deriveKey, type CloudLists } from '../lib/listSync';
 import {
-  koppelCampagne, koppelMetWachtwoord, koppelViaAccount, versCampagneContext, cacheCampaignContext, getCachedCampaign, clearCampaignCache,
-  eigenSyncKey, hernoemRegiment, regimentSlug,
-  type CampaignContext,
+  useCampagnes, kiesCampagne, verversCampagnes, hernoemRegiment, regimentSlug,
 } from '../lib/campaign';
 import { usePersistentState, setPersisted } from '../store';
 import { LogoMark } from './LogoMark';
@@ -247,8 +245,25 @@ function ListSyncSection({
     <div style={card}>
       <div style={title}>Sync army lists</div>
 
-      {sync.key ? (
-        // ── Connected ──
+      {sync.viaAccount ? (
+        // ── Automatic, on the signed-in account ──
+        // No password to show or manage: the key is derived from the account, so every device you sign
+        // in on lands on the same lists. This is also what makes a campaign list visible to Isle of
+        // Celedon, which reads it from the cloud copy.
+        <>
+          <div style={{ ...body, marginBottom: 10 }}>
+            Your lists &amp; groups sync automatically to your account — sign in on another device and they’re
+            there. This is also how the campaign reads your army list.
+          </div>
+          <div style={{ ...eb, fontSize: 8.5, color: statusColor, marginBottom: 12 }}>{statusText} · {sync.listCount} list{sync.listCount === 1 ? '' : 's'}</div>
+          {sync.error && <div style={{ ...body, color: TOW.blood, marginBottom: 10 }}>{sync.error}</div>}
+          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+            <button style={{ ...ghostBtn, opacity: sync.status === 'syncing' ? 0.6 : 1 }} disabled={sync.status === 'syncing'} onClick={() => sync.pushNow()}>Upload now</button>
+            <button style={{ ...ghostBtn, opacity: sync.status === 'syncing' ? 0.6 : 1 }} disabled={sync.status === 'syncing'} onClick={() => sync.pullNow()}>Fetch now</button>
+          </div>
+        </>
+      ) : sync.key ? (
+        // ── Connected with a self-chosen password (the no-login route) ──
         <>
           <div style={{ ...body, marginBottom: 10 }}>
             Your saved lists &amp; groups sync to every device that uses this password. Enter the same password on your other device.
@@ -436,9 +451,11 @@ function AccountSection({
   );
 }
 
-// Link this app to a "De Grensvorsten" campaign with a short code from the campaign app. Once linked
-// we cache the returned context (phase, points cap, the player's faction) and can refresh it. If the
-// user also syncs lists, we pass the derived sync key so the campaign can tie the two together.
+// Your campaign(s) on Isle of Celedon. Nothing to link by hand any more: signing in with the same
+// account as the campaign site IS the coupling (see lib/campaign.ts). One account can hold more than
+// one campaign — your own preparation for the real campaign, plus a slot in the grensmaster's
+// playtest game — so this section can offer a choice. With one campaign there is nothing to choose
+// and no picker appears.
 function CampaignSection({
   card, title, body, goldBtn, ghostBtn,
 }: {
@@ -446,157 +463,32 @@ function CampaignSection({
   goldBtn: React.CSSProperties; ghostBtn: React.CSSProperties;
 }) {
   const { user } = useAuth();
-  const [code, setCode] = usePersistentState<string | null>('tow:campaignCode', null);
-  const [input, setInput] = useState('');
-  // Wachtwoord-koppeling: alternatief voor de 6-teken-code — koppelt op je campagne-profiel.
-  const [wachtwoord, setWachtwoord] = useState('');
+  const { campagnes, actief: ctx, laden, fout } = useCampagnes();
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [ctx, setCtx] = useState<CampaignContext | null>(() => getCachedCampaign()?.context ?? null);
-  // Account-koppeling: automatisch koppelen zodra je bent ingelogd (geen code nodig). `viaAccount`
-  // = we koppelden via het account; `accountResolved` = de account-poging is afgerond (succes of
-  // niet) zodat de fallback-UI niet flikkert terwijl de koppeling nog laadt.
-  const [viaAccount, setViaAccount] = useState(false);
-  const [accountResolved, setAccountResolved] = useState(false);
   const [listsRaw, setListsRaw] = usePersistentState<unknown[]>('tow:lists', []);
   // Hernoem-editor: welke register-unit staat open (naam-slug) + het concept.
   const [hernoemId, setHernoemId] = useState<string | null>(null);
   const [hernoemNaam, setHernoemNaam] = useState('');
 
-  // De ECHTE list-sync-key (tow:syncKey) — random gegenereerd of wachtwoord-afgeleid; de campagne
-  // koppelt op precies deze key, dus nooit zelf opnieuw uit het wachtwoord afleiden.
-  const syncKeyFor = async (): Promise<string | null> => eigenSyncKey();
-
-  // Bij mount (niet-ingelogd): is er een code maar geen context in het geheugen, probeer eerst de
-  // cache en anders stil verversen. Ingelogd? Dan drijft de account-effect hieronder de refresh, dus
-  // sla deze over. Faalt de stille refresh, laat de gekoppelde staat gewoon zonder foutmelding.
-  useEffect(() => {
-    if (!code || ctx || user) return;
-    const cached = getCachedCampaign();
-    if (cached) { setCtx(cached.context); return; }
-    let alive = true;
-    versCampagneContext(code)
-      .then((fresh) => { if (alive) { setCtx(fresh); cacheCampaignContext(fresh); } })
-      .catch(() => { /* stil: gekoppeld blijven, gebruiker kan handmatig verversen */ });
-    return () => { alive = false; };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [code]);
-
-  // Ingelogd? Koppel automatisch via het account (auth.uid() → geclaimd factie-slot). Draait bij het
-  // openen én bij in-/uitloggen (keyt op user.id). Faalt dit (bv. GEEN_SLOT), val dan stil terug op
-  // de handmatige code/wachtwoord-koppeling. Zet en passant cloud-sync aan met een account-afgeleide
-  // sleutel als die er nog niet is, zodat de campagne je lijsten via het account terugvindt.
-  useEffect(() => {
-    if (!user) { setViaAccount(false); setAccountResolved(false); return; }
-    let alive = true;
-    setAccountResolved(false);
-    (async () => {
-      try {
-        const fresh = await koppelViaAccount();
-        if (!alive) return;
-        cacheCampaignContext(fresh);
-        setCtx(fresh);
-        setViaAccount(true);
-        setError(null);
-        if (fresh.koppelcode) setCode(fresh.koppelcode);
-        // Nog geen list-sync? Leid een stabiele sleutel af van het account en zet 'm via de store —
-        // de ListSyncProvider pikt de nieuwe key op en pusht je lijsten (de server tagt ze op
-        // auth.uid()). Een BESTAANDE sync-key laten we ongewijzigd.
-        if (!eigenSyncKey()) {
-          try { setPersisted('tow:syncKey', await deriveKey(user.id)); }
-          catch { /* sync-key is optioneel: zonder blijft de lijstbouwer lokaal werken */ }
-        }
-      } catch {
-        // NIET_INGELOGD / GEEN_SLOT: geen melding — de fallback-koppeling verschijnt vanzelf.
-        if (alive) setViaAccount(false);
-      } finally {
-        if (alive) setAccountResolved(true);
-      }
-    })();
-    return () => { alive = false; };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user?.id]);
-
   const messageFor = (e: unknown): string => {
-    if (e instanceof Error) {
-      if (e.message === 'ONBEKENDE_CODE') return 'Unknown code — check the campaign app.';
-      if (e.message) return e.message;
-    }
-    return 'Could not link — check your connection.';
-  };
-
-  const link = async () => {
-    if (input.length !== 6 || busy) return;
-    setBusy(true); setError(null);
-    try {
-      const syncKey = await syncKeyFor();
-      const fresh = await koppelCampagne(input, syncKey);
-      cacheCampaignContext(fresh);
-      setCtx(fresh);
-      setCode(input);
-      setInput('');
-    } catch (e) {
-      setError(messageFor(e));
-    } finally {
-      setBusy(false);
-    }
-  };
-
-  // Koppel op je campagne-wachtwoord i.p.v. de code. De server vindt je speler en geeft de context
-  // incl. `koppelcode` terug — die bewaren we als code zodat latere (code-gebaseerde) refreshes werken.
-  const linkMetWachtwoord = async () => {
-    const wachtw = wachtwoord.trim();
-    if (wachtw.length < 4 || busy) return;
-    setBusy(true); setError(null);
-    try {
-      const fresh = await koppelMetWachtwoord(wachtw);
-      if (!fresh.koppelcode) { setError('Could not link — try the code instead.'); return; }
-      cacheCampaignContext(fresh);
-      setCtx(fresh);
-      setCode(fresh.koppelcode);
-      setWachtwoord('');
-    } catch (e) {
-      if (e instanceof Error && e.message === 'ONBEKEND_WACHTWOORD') {
-        setError('No player found with this password — create your profile in the campaign app first.');
-      } else if (e instanceof Error && e.message === 'WACHTWOORD_TE_KORT') {
-        setError('Password too short — use at least 4 characters.');
-      } else {
-        setError(messageFor(e));
-      }
-    } finally {
-      setBusy(false);
-    }
+    if (e instanceof Error && e.message) return e.message;
+    return 'Could not reach the campaign — check your connection.';
   };
 
   const refresh = async () => {
     if (busy) return;
     setBusy(true); setError(null);
-    try {
-      // Ingelogd via account → ververs via het account; anders via de opgeslagen code.
-      const fresh = viaAccount ? await koppelViaAccount() : code ? await versCampagneContext(code) : null;
-      if (fresh) {
-        cacheCampaignContext(fresh);
-        setCtx(fresh);
-        if (viaAccount && fresh.koppelcode) setCode(fresh.koppelcode);
-      }
-    } catch (e) {
-      setError(messageFor(e));
-    } finally {
-      setBusy(false);
-    }
-  };
-
-  const unlink = () => {
-    clearCampaignCache();
-    setCode(null);
-    setCtx(null);
-    setError(null);
+    await verversCampagnes();
+    setBusy(false);
   };
 
   // Hernoem een veteraan: de server hernoemt de register-rij én de cloud-lijsten (XP/abilities/
   // scars reizen mee); daarna trekken we de lokale lijsten gelijk en verversen we de context.
+  // Vereist de koppelcode van een game-slot — een voorbereiding heeft nog geen regimenten.
   const hernoem = async (unitId: string) => {
     const naam = hernoemNaam.trim();
+    const code = ctx?.koppelcode;
     if (!code || !naam || busy) return;
     setBusy(true); setError(null);
     try {
@@ -607,9 +499,7 @@ function CampaignSection({
         return { ...l, entries: l.entries.map((e) => (regimentSlug(e?.customName ?? '') === unitId ? { ...e, customName: res.naam } : e)) };
       }));
       setHernoemId(null); setHernoemNaam('');
-      const fresh = await versCampagneContext(code);
-      cacheCampaignContext(fresh);
-      setCtx(fresh);
+      await verversCampagnes();
     } catch (e) {
       setError(e instanceof Error && e.message === 'NAAM_BESTAAT_AL'
         ? 'That name is already taken by another regiment.'
@@ -619,14 +509,8 @@ function CampaignSection({
     }
   };
 
-  // Zelfde input-stijl als de list-sync-sectie.
-  const inputStyle: React.CSSProperties = {
-    width: '100%', borderRadius: 10, border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt,
-    color: TOW.ink, padding: '10px 12px', fontFamily: towFont.serif, fontSize: 15, boxSizing: 'border-box',
-  };
-
-  // Je campagne-lijsten: de met de "Campaign list"-toggle gebouwde lijsten (tow:lists), gefilterd op
-  // DEZE campagne-speler. Ouder-zonder-speler laten we staan. Oplopend op fase.
+  // Je campagne-lijsten uit tow:lists, gefilterd op DEZE campagne-speler (lijsten zonder speler-tag
+  // laten we staan — die komen uit een oudere versie). Oplopend op fase.
   type CampLijst = { id?: string; name?: string; points?: number; entries?: unknown[]; campaign?: boolean; campaignSpeler?: string; campaignFase?: number };
   const campaignLists = (Array.isArray(listsRaw) ? (listsRaw as CampLijst[]) : [])
     .filter((l) => l && l.campaign && l.id && (!ctx?.speler.id || !l.campaignSpeler || l.campaignSpeler === ctx.speler.id))
@@ -636,155 +520,144 @@ function CampaignSection({
     <div style={card}>
       <div style={title}>Campaign</div>
 
-      {(viaAccount || code) ? (
-        // ── Linked (via je account of via een code) ──
+      {!user ? (
+        <div style={body}>
+          Sign in above with your <b style={{ color: TOW.ink }}>Isle of Celedon</b> account and your campaign appears
+          here by itself — same email and password as the campaign site. There is no code to enter any more.
+        </div>
+      ) : laden && !ctx ? (
+        <div style={body}>Looking for your campaign…</div>
+      ) : !ctx ? (
         <>
-          {ctx ? (
+          <div style={{ ...body, marginBottom: 10 }}>
+            This account isn’t part of a campaign yet. Sign up on the campaign site and confirm your faction there —
+            after that it shows up here on its own.
+          </div>
+          {fout && <div style={{ ...body, color: TOW.blood, marginBottom: 10 }}>{fout}</div>}
+          <button style={{ ...ghostBtn, opacity: busy ? 0.6 : 1 }} disabled={busy} onClick={refresh}>
+            {busy ? 'Checking…' : 'Check again'}
+          </button>
+        </>
+      ) : (
+        <>
+          {/* Meer dan één campagne ⇒ kiezen. Anders is er niets te kiezen en tonen we geen kiezer. */}
+          {campagnes.length > 1 && (
             <>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
-                <span style={{ width: 11, height: 11, borderRadius: 99, background: ctx.speler.kleur, border: `1px solid ${TOW.line}`, flexShrink: 0 }} />
-                <span style={{ ...body, color: TOW.ink }}>{ctx.speler.naam} · {ctx.speler.factie}</span>
-              </div>
-              {viaAccount && (
-                <div style={{ ...body, fontSize: 12.5, color: TOW.muted, marginBottom: 8 }}>
-                  Linked to {ctx.speler.naam} ({ctx.speler.factie}) via your account
-                </div>
-              )}
-              <div style={{ ...eb, fontSize: 8.5, color: TOW.goldDeep, marginBottom: 12 }}>Phase {ctx.fase} · {ctx.puntenCap} pts</div>
-              {/* Regiment-register: je opgeslagen (named) units in de campagne, mét hun staat van
-                  dienst. Namen geef je in de army builder — tik een unit in een campagne-lijst aan. */}
-              {ctx.units.length > 0 && (
-                <div style={{ marginBottom: 12 }}>
-                  <div style={{ ...eb, fontSize: 8.5, color: TOW.goldDeep, marginBottom: 6 }}>Your regiments</div>
-                  {ctx.units.map((u) => {
-                    const rowId = regimentSlug(u.naam);
-                    const open = hernoemId === rowId;
-                    return (
-                      <div key={u.naam} style={{ marginBottom: open ? 8 : 4, opacity: u.status === 'actief' ? 1 : 0.55 }}>
-                        <div style={{ display: 'flex', alignItems: 'baseline', gap: 7 }}>
-                          <span style={{ flex: 1, minWidth: 0, fontFamily: towFont.serif, fontSize: 12.5, color: TOW.ink }}>{u.naam}</span>
-                          <span style={{ ...eb, fontSize: 7.5, color: TOW.muted, flexShrink: 0 }}>
-                            {u.xp} XP{u.abilities ? ` · ${u.abilities} abl` : ''}{u.littekens ? ` · ${u.littekens} scar${u.littekens === 1 ? '' : 's'}` : ''}{u.status !== 'actief' ? ' · reserve' : ''}
-                          </span>
-                          <button
-                            onClick={() => { setHernoemId(open ? null : rowId); setHernoemNaam(u.naam); }}
-                            style={{ flexShrink: 0, border: `1px solid ${TOW.line}`, background: 'transparent', borderRadius: 7, cursor: 'pointer', color: TOW.goldDeep, padding: '2px 8px', ...eb, fontSize: 7 }}
-                          >
-                            {open ? 'Cancel' : 'Rename'}
-                          </button>
-                        </div>
-                        {open && (
-                          <div style={{ display: 'flex', gap: 6, marginTop: 5 }}>
-                            <input
-                              value={hernoemNaam}
-                              onChange={(e) => setHernoemNaam(e.target.value)}
-                              onKeyDown={(e) => { if (e.key === 'Enter') void hernoem(rowId); }}
-                              maxLength={40}
-                              autoFocus
-                              style={{ flex: 1, minWidth: 0, borderRadius: 8, border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt, color: TOW.ink, padding: '7px 10px', fontFamily: towFont.serif, fontSize: 13, boxSizing: 'border-box', outline: 'none' }}
-                            />
-                            <button
-                              disabled={busy || !hernoemNaam.trim()}
-                              onClick={() => void hernoem(rowId)}
-                              style={{ ...goldBtn, flexShrink: 0, padding: '7px 14px', fontSize: 12, opacity: busy || !hernoemNaam.trim() ? 0.6 : 1 }}
-                            >
-                              Save
-                            </button>
-                          </div>
-                        )}
-                      </div>
-                    );
-                  })}
-                  <div style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 11, color: TOW.faint, marginTop: 6 }}>
-                    Name units in the army builder: open a campaign list, tap a unit, then tap “Name” next to the close button. Rename here keeps a regiment’s XP — the new name follows it everywhere, including your lists.
-                  </div>
-                </div>
-              )}
-
-              {/* Your campaign lists — de met de "Campaign list"-toggle gebouwde lijsten; tik = openen in de Army-builder. */}
-              <div style={{ marginBottom: 12 }}>
-                <div style={{ ...eb, fontSize: 8.5, color: TOW.goldDeep, marginBottom: 6 }}>Your campaign lists</div>
-                {campaignLists.length > 0 ? (
-                  <>
-                    {campaignLists.map((l) => (
-                      <button key={l.id} onClick={() => { if (!l.id) return; setPersisted('tow:builder-active', l.id); setPersisted('tow:tab', 'army'); }}
-                        style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 8, textAlign: 'left', padding: '9px 11px', borderRadius: 9, cursor: 'pointer', border: `1px solid ${TOW.line}`, background: TOW.cardLt, marginBottom: 5 }}>
-                        <span style={{ flex: 1, minWidth: 0, fontFamily: towFont.display, fontWeight: 600, fontSize: 13.5, color: TOW.ink, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{l.name || 'Untitled list'}</span>
-                        <span style={{ ...eb, fontSize: 7.5, color: TOW.muted, flexShrink: 0 }}>
-                          {l.campaignFase ? `Ph ${l.campaignFase} · ` : ''}{l.points ?? 0} pts · {Array.isArray(l.entries) ? l.entries.length : 0}u
-                        </span>
-                        <span aria-hidden style={{ color: TOW.goldDeep, fontSize: 15, flexShrink: 0 }}>›</span>
-                      </button>
-                    ))}
-                    <div style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 11, color: TOW.faint, marginTop: 2 }}>
-                      Tap a list to open it in the Army builder.
-                    </div>
-                  </>
-                ) : (
-                  <div style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 11.5, color: TOW.muted }}>
-                    No campaign lists yet. In the Army tab, tap "New list" and turn on "Campaign list" — it locks the list to this phase's cap and composition.
-                  </div>
-                )}
+              <div style={{ ...eb, fontSize: 8.5, color: TOW.goldDeep, marginBottom: 6 }}>Which campaign</div>
+              <div style={{ display: 'flex', gap: 8, marginBottom: 12 }}>
+                {campagnes.map((c) => {
+                  const on = c.key === ctx.key;
+                  return (
+                    <button key={c.key} onClick={() => kiesCampagne(c.key)} aria-pressed={on}
+                      style={{ flex: 1, padding: '10px 12px', borderRadius: 11, cursor: on ? 'default' : 'pointer', border: `1px solid ${on ? TOW.goldDeep : TOW.lineStrong}`, background: on ? 'rgba(138,108,48,0.14)' : 'transparent', color: on ? TOW.goldDeep : TOW.parchDim, fontFamily: towFont.display, fontWeight: 600, fontSize: 13.5 }}>
+                      {c.label}
+                    </button>
+                  );
+                })}
               </div>
             </>
-          ) : (
-            <div style={{ ...body, marginBottom: 12 }}>Linked. Refresh to load your campaign details.</div>
           )}
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
+            {ctx.speler.kleur && <span style={{ width: 11, height: 11, borderRadius: 99, background: ctx.speler.kleur, border: `1px solid ${TOW.line}`, flexShrink: 0 }} />}
+            <span style={{ ...body, color: TOW.ink }}>{ctx.speler.naam} · {ctx.speler.factie || 'no faction yet'}</span>
+          </div>
+          <div style={{ ...eb, fontSize: 8.5, color: TOW.goldDeep, marginBottom: 4 }}>
+            {ctx.label} · Act {ctx.fase} · {ctx.puntenCap} pts
+          </div>
+          <div style={{ ...body, fontSize: 12.5, color: TOW.muted, marginBottom: 12 }}>
+            {ctx.gelockt
+              ? `Your Act ${ctx.fase} list is locked — you can look at it, but not change it until Act ${ctx.fase + 1} opens.`
+              : 'Linked through your account. Your army lists reach the campaign on their own.'}
+          </div>
+
+          {/* Regiment-register: je opgeslagen (named) units in de campagne, mét hun staat van
+              dienst. Namen geef je in de army builder — tik een unit in een campagne-lijst aan. */}
+          {ctx.units.length > 0 && (
+            <div style={{ marginBottom: 12 }}>
+              <div style={{ ...eb, fontSize: 8.5, color: TOW.goldDeep, marginBottom: 6 }}>Your regiments</div>
+              {ctx.units.map((u) => {
+                const rowId = regimentSlug(u.naam);
+                const open = hernoemId === rowId;
+                return (
+                  <div key={u.naam} style={{ marginBottom: open ? 8 : 4, opacity: u.status === 'actief' ? 1 : 0.55 }}>
+                    <div style={{ display: 'flex', alignItems: 'baseline', gap: 7 }}>
+                      <span style={{ flex: 1, minWidth: 0, fontFamily: towFont.serif, fontSize: 12.5, color: TOW.ink }}>{u.naam}</span>
+                      <span style={{ ...eb, fontSize: 7.5, color: TOW.muted, flexShrink: 0 }}>
+                        {u.xp} XP{u.abilities ? ` · ${u.abilities} abl` : ''}{u.littekens ? ` · ${u.littekens} scar${u.littekens === 1 ? '' : 's'}` : ''}{u.status !== 'actief' ? ' · reserve' : ''}
+                      </span>
+                      {ctx.koppelcode && (
+                        <button
+                          onClick={() => { setHernoemId(open ? null : rowId); setHernoemNaam(u.naam); }}
+                          style={{ flexShrink: 0, border: `1px solid ${TOW.line}`, background: 'transparent', borderRadius: 7, cursor: 'pointer', color: TOW.goldDeep, padding: '2px 8px', ...eb, fontSize: 7 }}
+                        >
+                          {open ? 'Cancel' : 'Rename'}
+                        </button>
+                      )}
+                    </div>
+                    {open && (
+                      <div style={{ display: 'flex', gap: 6, marginTop: 5 }}>
+                        <input
+                          value={hernoemNaam}
+                          onChange={(e) => setHernoemNaam(e.target.value)}
+                          onKeyDown={(e) => { if (e.key === 'Enter') void hernoem(rowId); }}
+                          maxLength={40}
+                          autoFocus
+                          style={{ flex: 1, minWidth: 0, borderRadius: 8, border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt, color: TOW.ink, padding: '7px 10px', fontFamily: towFont.serif, fontSize: 13, boxSizing: 'border-box', outline: 'none' }}
+                        />
+                        <button
+                          disabled={busy || !hernoemNaam.trim()}
+                          onClick={() => void hernoem(rowId)}
+                          style={{ ...goldBtn, flexShrink: 0, padding: '7px 14px', fontSize: 12, opacity: busy || !hernoemNaam.trim() ? 0.6 : 1 }}
+                        >
+                          Save
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+              <div style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 11, color: TOW.faint, marginTop: 6 }}>
+                Name units in the army builder: open a campaign list, tap a unit, then tap “Name” next to the close button. Rename here keeps a regiment’s XP — the new name follows it everywhere, including your lists.
+              </div>
+            </div>
+          )}
+
+          {/* Your campaign lists — tik = openen in de Army-builder. */}
+          <div style={{ marginBottom: 12 }}>
+            <div style={{ ...eb, fontSize: 8.5, color: TOW.goldDeep, marginBottom: 6 }}>Your campaign lists</div>
+            {campaignLists.length > 0 ? (
+              <>
+                {campaignLists.map((l) => (
+                  <button key={l.id} onClick={() => { if (!l.id) return; setPersisted('tow:builder-active', l.id); setPersisted('tow:tab', 'army'); }}
+                    style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 8, textAlign: 'left', padding: '9px 11px', borderRadius: 9, cursor: 'pointer', border: `1px solid ${TOW.line}`, background: TOW.cardLt, marginBottom: 5 }}>
+                    <span style={{ flex: 1, minWidth: 0, fontFamily: towFont.display, fontWeight: 600, fontSize: 13.5, color: TOW.ink, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{l.name || 'Untitled list'}</span>
+                    <span style={{ ...eb, fontSize: 7.5, color: TOW.muted, flexShrink: 0 }}>
+                      {l.points ?? 0} pts · {Array.isArray(l.entries) ? l.entries.length : 0}u
+                    </span>
+                    <span aria-hidden style={{ color: TOW.goldDeep, fontSize: 15, flexShrink: 0 }}>›</span>
+                  </button>
+                ))}
+                <div style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 11, color: TOW.faint, marginTop: 2 }}>
+                  Tap a list to open it in the Army builder.
+                </div>
+              </>
+            ) : (
+              <div style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 11.5, color: TOW.muted }}>
+                No campaign list yet. Open the <b>Army</b> tab — the campaign panel at the top starts it for you, with
+                the right points cap and faction already set.
+              </div>
+            )}
+          </div>
+
           {error && <div style={{ ...body, color: TOW.blood, marginBottom: 10 }}>{error}</div>}
           <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
             <button style={{ ...ghostBtn, opacity: busy ? 0.6 : 1 }} disabled={busy} onClick={refresh}>{busy ? 'Refreshing…' : 'Refresh'}</button>
-            {/* Account-koppeling is automatisch — geen Unlink; alleen de handmatige code-koppeling ontkoppel je. */}
-            {!viaAccount && <button style={{ ...ghostBtn, color: TOW.muted, borderColor: TOW.line }} onClick={unlink}>Unlink</button>}
+            <button style={{ ...ghostBtn, color: TOW.muted, borderColor: TOW.line }}
+              onClick={() => { setPersisted('tow:celedon-tour', 'pending'); setPersisted('tow:tab', 'army'); }}>
+              Show me around
+            </button>
           </div>
-        </>
-      ) : (user && !accountResolved) ? (
-        // ── Ingelogd: account-koppeling wordt opgehaald ──
-        <div style={{ ...body }}>Linking via your account…</div>
-      ) : (
-        // ── Not linked (fallback: code of campagne-wachtwoord) ──
-        <>
-          {user && (
-            <div style={{ ...body, marginBottom: 12, fontStyle: 'italic', color: TOW.muted }}>
-              No campaign profile is linked to this account yet. Claim your faction in the campaign app, or link manually below.
-            </div>
-          )}
-          <div style={{ ...body, marginBottom: 12 }}>
-            Link this app to a Grensvorsten campaign. Link with your campaign password, or ask the campaign app for your link code, under Army.
-          </div>
-          <input
-            value={input}
-            onChange={(e) => setInput(e.target.value.toUpperCase().slice(0, 6))}
-            onKeyDown={(e) => e.key === 'Enter' && link()}
-            placeholder="ABC123"
-            style={{ ...inputStyle, marginBottom: 8 }}
-          />
-          <button style={{ ...goldBtn, width: '100%', opacity: input.length !== 6 || busy ? 0.5 : 1 }} disabled={input.length !== 6 || busy} onClick={link}>
-            {busy ? 'Linking…' : 'Link campaign'}
-          </button>
-
-          {/* Scheiding + alternatieve wachtwoord-flow (koppelt op je campagne-profiel). */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10, margin: '14px 0' }}>
-            <span style={{ flex: 1, height: 1, background: TOW.line }} />
-            <span style={{ ...eb, fontSize: 8, color: TOW.muted }}>or</span>
-            <span style={{ flex: 1, height: 1, background: TOW.line }} />
-          </div>
-          <div style={{ ...eb, fontSize: 8.5, color: TOW.goldDeep, marginBottom: 6 }}>Campaign password</div>
-          <input
-            type="password"
-            value={wachtwoord}
-            onChange={(e) => setWachtwoord(e.target.value)}
-            onKeyDown={(e) => e.key === 'Enter' && linkMetWachtwoord()}
-            placeholder="Your campaign password"
-            style={{ ...inputStyle, marginBottom: 8 }}
-          />
-          <button style={{ ...goldBtn, width: '100%', opacity: wachtwoord.trim().length < 4 || busy ? 0.5 : 1 }} disabled={wachtwoord.trim().length < 4 || busy} onClick={linkMetWachtwoord}>
-            {busy ? 'Linking…' : 'Link with password'}
-          </button>
-          <div style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 11, color: TOW.faint, marginTop: 8, lineHeight: 1.45 }}>
-            Tip: use the same password for Sync lists above — the campaign then reads your army lists automatically.
-          </div>
-
-          {error && <div style={{ ...body, color: TOW.blood, marginTop: 8 }}>{error}</div>}
         </>
       )}
     </div>

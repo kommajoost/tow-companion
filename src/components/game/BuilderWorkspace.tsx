@@ -17,7 +17,7 @@ import {
 import { CompositionInfo } from './CompositionInfo';
 import { CompositionRulePicker } from './CompositionRulePicker';
 import { useSwipeToDismiss } from '../../lib/useSwipeToDismiss';
-import { getCampaignCode, getCachedCampaign, versCampagneContext, cacheCampaignContext, type CampaignContext, type CampaignUnit } from '../../lib/campaign';
+import { useCampagnes, type CampaignContext, type CampaignUnit } from '../../lib/campaign';
 
 // Responsive Army Builder workspace (Claude Design "Army Builder" PC + mobile, ported onto our
 // real OWB data). Wide screens get a three-column builder (catalogue · muster · unit detail);
@@ -163,22 +163,13 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
   const ruleIdx = useMemo(() => getRuleIndex(rules), [rules]);
   const getUnit = (cat: Category, id: string): OwbUnit | undefined => army[cat]?.find((u) => u.id === id);
 
-  // ── Campagne-context (De Grensvorsten), alleen voor een campagne-lijst ──────────────────────────
-  // Stale-while-revalidate: init uit de cache, daarna één verse fetch (als er een code is). Een niet-
-  // campagne-lijst (`list.campaign` falsy) doet GEEN fetch en houdt `campaignCtx` op null.
-  const [campaignCtx, setCampaignCtx] = useState<CampaignContext | null>(() => (list.campaign ? (getCachedCampaign()?.context ?? null) : null));
+  // ── Campagne-context (Isle of Celedon), alleen voor een campagne-lijst ──────────────────────────
+  // Sinds de account-koppeling leeft de context in een module-store die zichzelf bij elke auth-
+  // wijziging verst; dit scherm leest hem alleen. Een niet-campagne-lijst houdt `campaignCtx` op null.
+  const { actief: campagneActief } = useCampagnes();
+  const campaignCtx: CampaignContext | null = list.campaign ? campagneActief : null;
   const [capBumped, setCapBumped] = useState(false); // fase schoof op ⇒ we hebben de cap net bijgewerkt
   const [unlocksOpen, setUnlocksOpen] = useState(false); // "Campaign unlocks"-paneel open/dicht
-  useEffect(() => {
-    if (!list.campaign) { setCampaignCtx(null); return; }
-    const cached = getCachedCampaign()?.context ?? null;
-    if (cached) setCampaignCtx(cached);
-    const code = getCampaignCode();
-    if (!code) return;
-    let cancelled = false;
-    versCampagneContext(code).then((ctx) => { if (cancelled) return; cacheCampaignContext(ctx); setCampaignCtx(ctx); }).catch(() => {});
-    return () => { cancelled = true; };
-  }, [list.campaign]);
 
   // Mechanisch afgedwongen campagne-modifier: alleen de fase-cap als puntenbasis. De roster-unlocks
   // bestaan niet meer (perks = tafel-regels), dus verder niets af te dwingen in validate().

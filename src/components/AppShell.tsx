@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { usePersistentState, setPersisted } from '../store';
+import { usePersistentState, setPersisted, getPersisted } from '../store';
 import { TOW } from '../design/tow';
 import { HomeCover } from './HomeCover';
 import { CompanionView } from './companion/CompanionView';
@@ -8,6 +8,7 @@ import { GameMode } from './game/GameMode';
 import { ListBuilder } from './game/ListBuilder';
 import { SettingsMode } from './SettingsMode';
 import { NavRail } from './NavRail';
+import { CeledonTour } from './CeledonTour';
 import { TowIcon, type IconId } from '../design/icons';
 import { useBackClose } from '../lib/backStack';
 
@@ -63,6 +64,24 @@ export function AppShell() {
     setScreen('app');
     setTab('game');
     window.history.replaceState(null, '', window.location.pathname);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Deep-link: /?celedon=1 — arriving from the campaign app's "Open Old World Companion" button.
+  // Land straight on Army (skipping the cover, which would be a dead end for someone who has never
+  // seen this app) and arm the guided tour. The sign-in itself already happened in lib/auth.ts.
+  // The tour only offers itself ONCE per device; Settings has a restart button.
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const url = new URL(window.location.href);
+    if (!url.searchParams.get('celedon')) return;
+    if (getPersisted<string | null>('tow:celedon-tour', null) === null) {
+      setPersisted('tow:celedon-tour', 'pending');
+    }
+    setScreen('app');
+    setTab('army');
+    url.searchParams.delete('celedon');
+    window.history.replaceState(null, '', `${url.pathname}${url.search}${url.hash}`);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -135,6 +154,7 @@ export function AppShell() {
         {tabBackLayers}
         <NavRail tab={tab} onTab={navTab} onHome={() => setScreen('home')} />
         {content}
+        <CeledonTour />
       </div>
     );
   }
@@ -154,6 +174,7 @@ export function AppShell() {
             <button
               key={t.id}
               onClick={() => navTab(t.id)}
+              data-tour={`tab-${t.id}`}
               className="flex flex-1 flex-col items-center gap-0.5 py-2.5 text-[11px]"
               style={{ color: active ? TOW.goldDeep : TOW.muted, fontFamily: 'var(--font-display)' }}
             >
@@ -163,6 +184,7 @@ export function AppShell() {
           );
         })}
       </nav>
+      <CeledonTour />
     </div>
   );
 }

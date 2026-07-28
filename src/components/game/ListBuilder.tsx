@@ -7,6 +7,10 @@ import { compName } from '../../lib/armies';
 import { BuilderWorkspace } from './BuilderWorkspace';
 import { BuilderFlow } from '../builder/BuilderFlow';
 import { NewListSetup, type NewListValues } from './NewListSetup';
+import { CeledonPanel } from './CeledonPanel';
+import { LockedListView } from './LockedListView';
+import { useCampagnes } from '../../lib/campaign';
+import { setPersisted } from '../../store';
 import { useBackClose } from '../../lib/backStack';
 import { useData } from '../../data';
 import { getRuleIndex, resolveOptionSlug, resolveRuleSlug } from '../../lib/armyRules';
@@ -65,6 +69,11 @@ export function ListBuilder() {
   const [groups, setGroups] = usePersistentState<{ id: string; name: string }[]>('tow:list-groups', []);
   const [activeId, setActiveId] = usePersistentState<string | null>('tow:builder-active', null);
   const [setupOpen, setSetupOpen] = useState(false);
+  // True when the new-list dialog was opened from the campaign panel: the campaign toggle is then on
+  // and not negotiable, because that button says "start my campaign list" and nothing else.
+  const [setupCampagne, setSetupCampagne] = useState(false);
+  // De campagne(s) van het ingelogde account — bepaalt de band bovenaan en of een lijst op slot staat.
+  const { actief: campagne } = useCampagnes();
   const [dragOver, setDragOver] = useState<string | null>(null); // section id being hovered (group id, or '__ungrouped__')
   const [dragOverCard, setDragOverCard] = useState<{ id: string; before: boolean } | null>(null); // card hovered during a reorder drag (+ which edge)
   const [collapsed, setCollapsed] = usePersistentState<string[]>('tow:list-groups-collapsed', []); // collapsed section ids
@@ -130,6 +139,21 @@ export function ListBuilder() {
       return t === undefined ? l : { ...l, computedPoints: t };
     }));
   }, [lists, catalogues, itemsData, setLists]);
+
+  // ── Campagne: de puntenlimiet van een campagne-lijst volgt de Act ───────────────────────────────
+  // `points` is het doel waartegen de builder valideert. Voor een campagne-lijst is dat NIET vrij: het
+  // is de fase-cap (500 + 250×(Act−1)). Schuift de Act op, dan moet het doel mee, anders staat een
+  // legale lijst van 750 punten in Act 2 "over budget". Dit hoort hier en niet in een builder-scherm:
+  // ListBuilder bezit `tow:lists`, dus het geldt in elke builder-versie en ook voor een lijst die je
+  // niet openslaat. Alleen de lijst van de ACTIEVE campagne — een lijst van een andere campagne heeft
+  // een andere cap en wordt hier dus met rust gelaten.
+  useEffect(() => {
+    if (!campagne) return;
+    const raak = lists.filter((l) => l.campaign && l.campaignSpeler === campagne.speler.id && l.points !== campagne.puntenCap);
+    if (raak.length === 0) return;
+    const ids = new Set(raak.map((l) => l.id));
+    setLists((ls) => ls.map((l) => (ids.has(l.id) ? { ...l, points: campagne.puntenCap } : l)));
+  }, [campagne, lists, setLists]);
 
   const active = lists.find((l) => l.id === activeId) || null;
 
@@ -218,9 +242,21 @@ export function ListBuilder() {
     const id = newId('l');
     setLists((ls) => [{ id, name: v.name, army: v.army, composition: v.composition, rule: v.rule, points: v.points, entries: v.entries, createdAt: Date.now(), updatedAt: Date.now(), campaign: v.campaign, campaignSpeler: v.campaignSpeler, campaignNaam: v.campaignNaam, campaignFase: v.campaignFase }, ...ls]);
     setSetupOpen(false);
+    setSetupCampagne(false);
     setActiveId(id);
   };
   const duplicateList = (l: SavedList) => { const id = newId('l'); setLists((ls) => [{ ...l, id, name: `${l.name} (copy)`, createdAt: Date.now(), updatedAt: Date.now() }, ...ls]); };
+  /** Copy a campaign list to a PLAIN one: same army and units, but no campaign tag, so the campaign
+   *  keeps reading the submitted list while the player is free to tinker with the copy. */
+  const duplicateAsPlain = (l: SavedList) => {
+    const id = newId('l');
+    setLists((ls) => [{
+      ...l, id, name: `${l.name} (copy)`, createdAt: Date.now(), updatedAt: Date.now(),
+      campaign: undefined, campaignSpeler: undefined, campaignNaam: undefined, campaignFase: undefined,
+      computedPoints: undefined,
+    }, ...ls]);
+    setActiveId(id);
+  };
   const deleteList = (id: string) => { setLists((ls) => ls.filter((l) => l.id !== id)); if (activeId === id) setActiveId(null); };
 
   // ── groups (folders) ──
@@ -264,10 +300,30 @@ export function ListBuilder() {
     display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 0, lineHeight: 1,
   };
 
+  // Is this the campaign list that has been SUBMITTED for the current Act? Then it may be read, not
+  // changed (the campaign already holds a snapshot of it, so this is about being clear rather than
+  // about guarding the data — see LockedListView).
+  const opSlot = !!active?.campaign && !!campagne && active.campaignSpeler === campagne.speler.id && campagne.gelockt;
+
   // ── open list → the responsive builder (wait for that army's catalogue to load) ──
   if (active) {
     if (!activeCatalogue) return <div style={{ padding: 24, fontFamily: towFont.serif, color: TOW.muted }}>Loading the catalogue…</div>;
     const meta = metaByArmy[active.army];
+    if (opSlot && campagne) {
+      return (
+        <LockedListView
+          list={active}
+          army={activeCatalogue}
+          armyName={armyName(active.army)}
+          compName={(c) => compName(c, active.army)}
+          itemsData={activeItemsData ?? undefined}
+          fase={campagne.fase}
+          cap={campagne.puntenCap}
+          onBack={() => setActiveId(null)}
+          onDuplicate={() => duplicateAsPlain(active)}
+        />
+      );
+    }
     if (useV2) {
       return (
         <BuilderFlow
@@ -455,6 +511,17 @@ export function ListBuilder() {
   return (
     <div className="tow-field" style={{ height: '100%', overflowY: 'auto', color: TOW.ink }}>
       <div style={{ maxWidth: 680, margin: '0 auto', padding: '14px 14px 48px' }}>
+        {/* Campagne bovenaan: dit is waar een speler die vanaf Isle of Celedon binnenkomt landt. */}
+        <CeledonPanel
+          lijsten={lists.map((l) => ({
+            id: l.id, name: l.name, points: l.points,
+            computed: l.computedPoints ?? (catalogues[l.army] ? validate(l, getUnitFor(catalogues[l.army]), itemsData ?? undefined).total : null),
+            campaign: l.campaign, campaignSpeler: l.campaignSpeler,
+          }))}
+          onOpen={(id) => setActiveId(id)}
+          onNieuw={() => { setSetupCampagne(true); setSetupOpen(true); }}
+          onTour={() => setPersisted('tow:celedon-tour', 'pending')}
+        />
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12, flexWrap: 'wrap' }}>
           <h1 style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 22, color: TOW.ink, margin: 0 }}>My lists</h1>
           <button onClick={addGroup} style={{ marginLeft: 'auto', fontFamily: towFont.display, fontWeight: 700, fontSize: 13, padding: '7px 13px', borderRadius: 9, cursor: 'pointer', border: `1px solid ${TOW.line}`, background: 'transparent', color: TOW.ink }}>＋ New group</button>
@@ -482,8 +549,9 @@ export function ListBuilder() {
           armies={armies}
           compsByArmy={compsByArmy}
           defaultArmy={armies.find((a) => a.slug === FALLBACK_ARMY)?.slug ?? armies[0]?.slug ?? FALLBACK_ARMY}
-          defaultName={`New list ${lists.length + 1}`}
-          onCancel={() => setSetupOpen(false)}
+          defaultName={setupCampagne && campagne ? `${campagne.label} army` : `New list ${lists.length + 1}`}
+          forceCampaign={setupCampagne}
+          onCancel={() => { setSetupOpen(false); setSetupCampagne(false); }}
           onCreate={createListWith}
           itemsData={itemsData ?? undefined}
           itemListsByArmy={itemListsByArmy}

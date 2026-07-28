@@ -6,7 +6,7 @@ import { importOwbText } from '../../lib/owbImport';
 import { OwbInstructions } from './OwbInstructions';
 import { CompositionInfo } from './CompositionInfo';
 import { CompositionRulePicker } from './CompositionRulePicker';
-import { getCampaignCode, getCachedCampaign, versCampagneContext, cacheCampaignContext, type CampaignContext } from '../../lib/campaign';
+import { useCampagnes } from '../../lib/campaign';
 
 // OWB-style "new list" setup, shown before the builder opens: pick the army (faction), a name,
 // army composition, points target and composition rule. Choosing the army swaps which compositions
@@ -34,7 +34,7 @@ export interface NewListValues {
   campaign?: boolean; campaignSpeler?: string; campaignNaam?: string; campaignFase?: number;
 }
 
-export function NewListSetup({ armies, compsByArmy, defaultArmy, defaultName, onCancel, onCreate, itemsData, itemListsByArmy }: {
+export function NewListSetup({ armies, compsByArmy, defaultArmy, defaultName, onCancel, onCreate, itemsData, itemListsByArmy, forceCampaign }: {
   armies: { slug: string; name: string }[];
   compsByArmy: Record<string, string[]>;
   defaultArmy: string;
@@ -43,6 +43,8 @@ export function NewListSetup({ armies, compsByArmy, defaultArmy, defaultName, on
   onCreate: (v: NewListValues) => void;
   itemsData?: MagicItemsData;
   itemListsByArmy?: Record<string, string[]>; // army slug → its magic-item list ids
+  /** Opened from the campaign panel: this IS the campaign list, so the toggle is on and gone. */
+  forceCampaign?: boolean;
 }) {
   const [name, setName] = useState(defaultName);
   const [army, setArmy] = useState(defaultArmy);
@@ -56,14 +58,12 @@ export function NewListSetup({ armies, compsByArmy, defaultArmy, defaultName, on
   // The selected army's catalogue, fetched here so the import matches against THIS army's units.
   const [catalogue, setCatalogue] = useState<OwbArmy | null>(null);
 
-  // ── Campagne (De Grensvorsten) ──────────────────────────────────────────────────────────────
-  // Een campagne is "beschikbaar" als deze app gekoppeld is (er een code is) ÉN er een gecachete
-  // context is. Alleen dan tonen we de "Campaign list"-toggle. De code is stabiel binnen de dialoog.
-  const campaignCode = getCampaignCode();
-  const [campaignCtx, setCampaignCtx] = useState<CampaignContext | null>(() => (getCampaignCode() ? (getCachedCampaign()?.context ?? null) : null));
-  const [campaign, setCampaign] = useState(false);
-  const [campaignBusy, setCampaignBusy] = useState(false); // context wordt (her)opgehaald
-  const [campaignError, setCampaignError] = useState<string | null>(null);
+  // ── Campagne (Isle of Celedon) ──────────────────────────────────────────────────────────────
+  // Sinds de account-koppeling (28-07-2026) is een campagne "beschikbaar" als het INGELOGDE account
+  // er een heeft — geen code meer, en de context staat al in de store. `forceCampaign` betekent dat
+  // de speler op "start mijn campagne-lijst" drukte: dan is dit de campagne-lijst, punt.
+  const { actief: campaignCtx } = useCampagnes();
+  const [campaign, setCampaign] = useState(!!forceCampaign);
 
   const armyName = armies.find((a) => a.slug === army)?.name ?? army;
 
@@ -96,33 +96,29 @@ export function NewListSetup({ armies, compsByArmy, defaultArmy, defaultName, on
     if (preview.header.rule) setRule(preview.header.rule);
   }, [preview]);
 
-  // Toggle "Campaign list": bij aanzetten verversen we de campagne-context, zetten de puntenlimiet op
-  // de fase-cap (en locken 'm) en preselecteren de campagne-factie (identity-slug) als die bestaat.
-  // Bij uitzetten laten we de huidige points-waarde staan (minder verrassend) en unlocken het veld.
-  const toggleCampaign = async () => {
-    if (campaign) { setCampaign(false); setCampaignError(null); return; } // uit → unlock, waarde laten staan
-    if (!campaignCode) return;
-    setCampaignBusy(true); setCampaignError(null);
-    try {
-      const ctx = await versCampagneContext(campaignCode);
-      cacheCampaignContext(ctx);
-      setCampaignCtx(ctx);
-      setCampaign(true);
-      setPoints(ctx.puntenCap);
-      // Lock de compositie-rule op de fase: als de huidige keuze niet in de toegestane set zit, zet 'm
-      // op de eerste toegestane (fase 1-2 ⇒ battle-march; fase 3+ ⇒ combined-arms als default).
-      const allowed = allowedCampaignRules(ctx.compositie);
-      if (allowed.length && !allowed.includes(rule)) setRule(allowed[0]);
-      // Preselecteer alleen bij een EXACTE slug-match tegen de beschikbare legers (identity-mapping;
-      // de enige bekende niet-match is `realms-of-men`, die niet in OWC bestaat → vrije keuze laten).
-      if (armies.some((a) => a.slug === ctx.speler.factie)) setArmy(ctx.speler.factie);
-    } catch {
-      setCampaign(false);
-      setCampaignError('Could not reach the campaign. Try again.');
-    } finally {
-      setCampaignBusy(false);
-    }
+  // Campagne-modus aanzetten: puntenlimiet op de fase-cap (en op slot), de compositie-rule binnen de
+  // toegestane set, en het leger op de campagne-factie. Bij uitzetten laten we de huidige waarden
+  // staan (minder verrassend) en gaat het slot eraf.
+  const zetCampagne = (aan: boolean) => {
+    setCampaign(aan);
+    if (!aan || !campaignCtx) return;
+    setPoints(campaignCtx.puntenCap);
+    // Fase 1-2 ⇒ battle-march; fase 3+ ⇒ combined-arms als default.
+    const allowed = allowedCampaignRules(campaignCtx.compositie);
+    if (allowed.length && !allowed.includes(rule)) setRule(allowed[0]);
+    // De factie komt als catalogus-slug mee (server-side afgeleid van de weergavenaam). Alleen bij een
+    // echte match kiezen — 'realms-of-men' bestaat niet in OWC, dan houdt de speler de vrije keuze.
+    const slug = campaignCtx.speler.factieSlug;
+    if (slug && armies.some((a) => a.slug === slug)) setArmy(slug);
   };
+
+  // Vanaf de campagne-band binnengekomen: meteen in campagne-modus, zodra de legers geladen zijn
+  // (de factie-preselectie heeft die lijst nodig).
+  useEffect(() => {
+    if (!forceCampaign || !campaignCtx || armies.length === 0) return;
+    zetCampagne(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [forceCampaign, campaignCtx, armies.length]);
 
   const label: React.CSSProperties = { ...eb, fontSize: 8.5, color: TOW.muted };
   const field: React.CSSProperties = { width: '100%', boxSizing: 'border-box', padding: '9px 11px', borderRadius: 9, border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt, fontFamily: towFont.serif, fontSize: 14, color: TOW.ink, outline: 'none' };
@@ -183,20 +179,28 @@ export function NewListSetup({ armies, compsByArmy, defaultArmy, defaultName, on
           {comps.map((c) => <option key={c} value={c}>{compNameFor(c, army)}</option>)}
         </select>
 
-        {/* Campaign list (De Grensvorsten) — only when this app is linked to a campaign. Turning it on
-            locks the points limit to the current phase cap and preselects the campaign faction. */}
-        {campaignCode && campaignCtx && (
+        {/* Campagne-lijst — alleen als het ingelogde account een campagne heeft. Aanzetten zet de
+            puntenlimiet op de fase-cap, kiest de campagne-factie en beperkt de compositie-regel.
+            Kwam de speler via "start mijn campagne-lijst", dan is er niets te kiezen: dan staat er
+            een vaste regel i.p.v. een schakelaar. */}
+        {campaignCtx && (
           <>
             <div style={{ ...label, margin: '16px 0 6px' }}>Campaign</div>
-            <button onClick={toggleCampaign} disabled={campaignBusy} aria-pressed={campaign}
-              style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 10, padding: '9px 11px', borderRadius: 9, cursor: campaignBusy ? 'default' : 'pointer', textAlign: 'left', border: `1px solid ${campaign ? TOW.goldDeep : TOW.line}`, background: campaign ? 'rgba(138,108,48,0.10)' : TOW.cardLt }}>
-              <span style={{ width: 18, height: 18, flexShrink: 0, borderRadius: 5, border: `1.5px solid ${campaign ? TOW.goldDeep : TOW.lineStrong}`, background: campaign ? TOW.goldDeep : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                {campaign && <svg width="11" height="11" viewBox="0 0 12 12"><path d="M2.5 6.4l2.2 2.2 4.8-5" stroke="#f4eedb" strokeWidth="1.8" fill="none" strokeLinecap="round" strokeLinejoin="round" /></svg>}
-              </span>
-              <span style={{ flex: 1, fontFamily: towFont.serif, fontSize: 13.5, color: TOW.ink }}>Campaign list</span>
-              <span style={{ ...eb, fontSize: 8, color: TOW.muted }}>{campaignBusy ? 'Checking the campaign…' : `${campaignCtx.speler.naam} · Phase ${campaignCtx.fase}`}</span>
-            </button>
-            {campaignError && <div style={{ fontFamily: towFont.serif, fontSize: 11.5, color: TOW.blood, marginTop: 6 }}>{campaignError}</div>}
+            {forceCampaign ? (
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '9px 11px', borderRadius: 9, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(138,108,48,0.10)' }}>
+                <span style={{ flex: 1, fontFamily: towFont.serif, fontSize: 13.5, color: TOW.ink }}>{campaignCtx.label}</span>
+                <span style={{ ...eb, fontSize: 8, color: TOW.muted }}>Act {campaignCtx.fase} · {campaignCtx.puntenCap} pts</span>
+              </div>
+            ) : (
+              <button onClick={() => zetCampagne(!campaign)} aria-pressed={campaign}
+                style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 10, padding: '9px 11px', borderRadius: 9, cursor: 'pointer', textAlign: 'left', border: `1px solid ${campaign ? TOW.goldDeep : TOW.line}`, background: campaign ? 'rgba(138,108,48,0.10)' : TOW.cardLt }}>
+                <span style={{ width: 18, height: 18, flexShrink: 0, borderRadius: 5, border: `1.5px solid ${campaign ? TOW.goldDeep : TOW.lineStrong}`, background: campaign ? TOW.goldDeep : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  {campaign && <svg width="11" height="11" viewBox="0 0 12 12"><path d="M2.5 6.4l2.2 2.2 4.8-5" stroke="#f4eedb" strokeWidth="1.8" fill="none" strokeLinecap="round" strokeLinejoin="round" /></svg>}
+                </span>
+                <span style={{ flex: 1, fontFamily: towFont.serif, fontSize: 13.5, color: TOW.ink }}>{campaignCtx.label} list</span>
+                <span style={{ ...eb, fontSize: 8, color: TOW.muted }}>Act {campaignCtx.fase} · {campaignCtx.puntenCap} pts</span>
+              </button>
+            )}
           </>
         )}
 
