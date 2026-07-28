@@ -728,7 +728,10 @@ export function UnitOptions(props: {
       </div>
 
       {/* ── body ───────────────────────────────────────────────────────────────────────────────── */}
-      <div style={{ flex: 1, minHeight: 0, overflowY: 'auto', padding: `0 ${BUILDER.gutter}px 20px` }}>
+      <div
+        data-tour="unit-opties"
+        style={{ flex: 1, minHeight: 0, overflowY: 'auto', padding: `0 ${BUILDER.gutter}px 20px` }}
+      >
         {blocks.map((b) => {
           const radioKey = b.radio ? radioSelected(unit, entry, b.key) : '';
           return (

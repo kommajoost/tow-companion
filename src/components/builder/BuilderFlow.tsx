@@ -21,9 +21,10 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { TOW, towFont } from '../../design/tow';
+import { getPersisted, setPersisted } from '../../store';
 import {
   CATEGORIES, COMPOSITION_RULES, entryPoints, selectedMagicItems, unitAllowedIn, unitCategoryFor,
-  unitCompNote,
+  unitBlocks, unitCompNote,
   type BuilderList, type Category, type ListEntry, type MagicItemsData, type OwbArmy, type OwbUnit,
 } from '../../lib/owbBuilder';
 import { deriveList, optionSummary } from '../../lib/builderDerived';
@@ -273,6 +274,61 @@ export function BuilderFlow({
   const onConfigure = useCallback((unit: OwbUnit, cat: Category) => {
     setScreen({ kind: 'options', uid: addUnit(unit, cat) });
   }, [addUnit]);
+
+  // The Celedon walk-through uses one real, legal catalogue entry so its options step is useful.
+  // Remembering the uid makes the action idempotent: Back → Next reopens the same example instead of
+  // quietly adding another unit. If the player deleted it, a fresh example is created.
+  useEffect(() => {
+    const onRoster = () => {
+      setCatalogueOpen(false);
+      setSelectedUids([]);
+      setScreen({ kind: 'roster' });
+    };
+
+    const onExample = () => {
+      const remembered = getPersisted<{ listId?: string; uid?: string } | null>('tow:celedon-tour-unit', null);
+      const existing = remembered?.listId === list.id
+        ? rows.find((row) => row.uid === remembered.uid)
+        : undefined;
+
+      if (existing) {
+        if (desktop) {
+          setSelectedUids([existing.uid]);
+          setCatalogueOpen(false);
+        } else {
+          setScreen({ kind: 'options', uid: existing.uid });
+        }
+        window.dispatchEvent(new CustomEvent('tow:celedon-example-ready', { detail: { name: existing.name } }));
+        return;
+      }
+
+      const candidates = pickerEntries.filter(({ unit, cat, displayCat, troopType }) =>
+        cat === 'core'
+        && displayCat === 'core'
+        && /infantry/i.test(troopType)
+        && unitBlocks(unit).length > 0,
+      );
+      if (candidates.length === 0) return;
+
+      const pick = candidates[Math.floor(Math.random() * candidates.length)];
+      const uid = addUnit(pick.unit, pick.cat);
+      setPersisted('tow:celedon-tour-unit', { listId: list.id, uid });
+      if (desktop) {
+        setSelectedUids([uid]);
+        setCatalogueOpen(false);
+      } else {
+        setScreen({ kind: 'options', uid });
+      }
+      window.dispatchEvent(new CustomEvent('tow:celedon-example-ready', { detail: { name: pick.unit.name_en } }));
+    };
+
+    window.addEventListener('tow:celedon-add-example', onExample);
+    window.addEventListener('tow:celedon-show-roster', onRoster);
+    return () => {
+      window.removeEventListener('tow:celedon-add-example', onExample);
+      window.removeEventListener('tow:celedon-show-roster', onRoster);
+    };
+  }, [addUnit, desktop, list.id, pickerEntries, rows]);
 
   // ── Desktop-only behaviour ────────────────────────────────────────────────────────────────────
   // The single "current" unit: the inspector edits one at a time even when several are selected, and

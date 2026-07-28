@@ -8,11 +8,10 @@ import { useCampagnes } from '../lib/campaign';
 // by "Show me around" in the campaign panel and in Settings. Finishing or skipping sets 'done', so it
 // offers itself once and then stays out of the way.
 //
-// The tour walks from the campaign band into the builder and back out again: a step that talks about
-// the points bar has to be standing next to the points bar, so it opens the player's campaign list
-// (via `tow:builder-active`, which ListBuilder owns) and closes it again afterwards. It never touches
-// the CONTENT of a list — no units are added on someone's behalf — and every step degrades to a
-// centred card if its target is missing, so a redesign of the builder cannot break the tour.
+// The tour walks from the campaign band into the builder and back out again. It adds one real Core
+// infantry example at minimum size, then opens that unit's options so the explanation is concrete.
+// BuilderFlow owns that mutation and makes it idempotent: revisiting the step reopens the same unit.
+// Every step degrades to a plain card if its target is missing, so a redesign cannot break the tour.
 
 const eb = engraved as React.CSSProperties;
 const goldGrad = `linear-gradient(180deg, ${TOW.goldBright} 0%, ${TOW.gold} 55%, ${TOW.goldDeep} 100%)`;
@@ -23,12 +22,11 @@ interface Stap {
   doel?: string;
   titel: string;
   tekst: string;
-  /** Uitgevoerd bij het BINNENKOMEN van deze stap: open de campagne-lijst, of ga terug naar het
-   *  overzicht. Zo staan de builder-stappen ook echt in de builder. */
-  actie?: 'open-lijst' | 'sluit-lijst';
+  /** Uitgevoerd bij het BINNENKOMEN van deze stap: navigeer of voeg de demo-unit toe. */
+  actie?: 'open-lijst' | 'sluit-lijst' | 'voeg-voorbeeld-toe' | 'toon-roster';
 }
 
-function stappen(label: string, cap: number, fase: number): Stap[] {
+function stappen(label: string, cap: number, fase: number, voorbeeldNaam?: string): Stap[] {
   return [
     {
       titel: 'Welcome to Old World Companion',
@@ -64,11 +62,21 @@ function stappen(label: string, cap: number, fase: number): Stap[] {
       doel: '[data-tour="lijst-toevoegen"]',
       titel: 'Adding units',
       tekst:
-        'Units are grouped as Characters, Core, Special and Rare. Pick one, then set its size, equipment and magic ' +
-        'items. There is no save button — everything you do is stored as you go.',
+        'Units are grouped as Characters, Core, Special and Rare. Normally you choose one here. For this tour, ' +
+        'we will add one Core infantry unit at its minimum size so you can see the next screen for real.',
+    },
+    {
+      doel: '[data-tour="unit-opties"]',
+      actie: 'voeg-voorbeeld-toe',
+      titel: voorbeeldNaam ? `Options for ${voorbeeldNaam}` : 'Setting up your new unit',
+      tekst:
+        `${voorbeeldNaam ? `${voorbeeldNaam} is` : 'A Core infantry unit is'} now in your army at its minimum size. ` +
+        'Here you can change the model count and choose equipment, command, upgrades and any available magic items. ' +
+        'There is no save button — every change is stored as you go.',
     },
     {
       doel: '[data-tour="lijst-naam"]',
+      actie: 'toon-roster',
       titel: 'Name and composition',
       tekst:
         'Tap any row in this Army block to rename the list or switch army composition (Grand Army, Renegade ' +
@@ -140,6 +148,7 @@ export function CeledonTour() {
   const { actief } = useCampagnes();
   const [i, setI] = useState(0);
   const [rect, setRect] = useState<DOMRect | null>(null);
+  const [voorbeeldNaam, setVoorbeeldNaam] = useState<string>();
 
   const loopt = stand === 'pending';
 
@@ -147,7 +156,12 @@ export function CeledonTour() {
   // vorige keer, dus "Show me around" opende meteen "That is all" — de tour leek niet te herstarten.
   useEffect(() => { if (loopt) setI(0); }, [loopt]);
 
-  const stapjes = stappen(actief?.label ?? 'Isle of Celedon', actief?.puntenCap ?? 500, actief?.fase ?? 1);
+  const stapjes = stappen(
+    actief?.label ?? 'Isle of Celedon',
+    actief?.puntenCap ?? 500,
+    actief?.fase ?? 1,
+    voorbeeldNaam,
+  );
   const stap = stapjes[Math.min(i, stapjes.length - 1)];
 
   // Navigeren hoort bij de stap: de builder-stappen wijzen naar dingen die alleen bestaan als de lijst
@@ -156,10 +170,27 @@ export function CeledonTour() {
   useEffect(() => {
     if (!loopt || !stap?.actie) return;
     if (stap.actie === 'sluit-lijst') { setPersisted('tow:builder-active', null); return; }
+    if (stap.actie === 'voeg-voorbeeld-toe') {
+      window.dispatchEvent(new CustomEvent('tow:celedon-add-example'));
+      return;
+    }
+    if (stap.actie === 'toon-roster') {
+      window.dispatchEvent(new CustomEvent('tow:celedon-show-roster'));
+      return;
+    }
     const id = campagneLijstId(actief?.speler.id);
     if (id) setPersisted('tow:builder-active', id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loopt, i, stap?.actie, actief?.speler.id]);
+
+  useEffect(() => {
+    const onReady = (event: Event) => {
+      const naam = (event as CustomEvent<{ name?: string }>).detail?.name;
+      if (naam) setVoorbeeldNaam(naam);
+    };
+    window.addEventListener('tow:celedon-example-ready', onReady);
+    return () => window.removeEventListener('tow:celedon-example-ready', onReady);
+  }, []);
 
   // De selector van de HUIDIGE stap in een ref, tijdens het renderen bijgewerkt. De meter leest hem
   // daaruit en is daardoor stabiel: een meting kan nooit nog naar de vorige stap wijzen. (Met de
@@ -208,6 +239,7 @@ export function CeledonTour() {
   if (!loopt || !stap) return null;
 
   const laatste = i >= stapjes.length - 1;
+  const eerste = i === 0;
   // Kaart onderaan, tenzij het doel daar zit — dan bovenaan. Geen popper-rekenwerk: dat zit er altijd
   // net naast op een telefoon, en dit leest op elk formaat goed.
   const doelLaag = rect ? rect.top + rect.height / 2 > window.innerHeight * 0.55 : false;
@@ -234,7 +266,9 @@ export function CeledonTour() {
 
       <div style={{
         position: 'fixed', left: 0, right: 0,
-        [doelLaag ? 'top' : 'bottom']: 0,
+        ...(eerste
+          ? { top: '50%', transform: 'translateY(-50%)' }
+          : { [doelLaag ? 'top' : 'bottom']: 0 }),
         padding: '14px 14px calc(14px + env(safe-area-inset-bottom, 0px))',
         display: 'flex', justifyContent: 'center',
       }}>

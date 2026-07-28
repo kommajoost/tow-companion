@@ -77,11 +77,14 @@ export function CeledonLoginDialog({
         position: 'fixed',
         inset: 0,
         zIndex: 260,
-        display: 'grid',
-        placeItems: 'center',
-        padding: 16,
-        background: 'rgba(20,14,8,0.72)',
-        backdropFilter: 'blur(4px)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        minHeight: '100dvh',
+        padding: 'max(16px, env(safe-area-inset-top, 0px)) 16px max(16px, env(safe-area-inset-bottom, 0px))',
+        background:
+          'radial-gradient(circle at 50% 50%, rgba(211,163,68,0.16) 0%, rgba(211,163,68,0.06) 27%, transparent 54%), rgba(20,14,8,0.76)',
+        backdropFilter: 'blur(5px)',
       }}
     >
       <section
@@ -90,32 +93,60 @@ export function CeledonLoginDialog({
         aria-labelledby="celedon-login-title"
         style={{
           width: '100%',
-          maxWidth: 430,
+          maxWidth: 450,
+          position: 'relative',
+          isolation: 'isolate',
           borderRadius: 16,
-          border: `1px solid ${TOW.lineStrong}`,
+          border: '1px solid rgba(183,137,49,0.74)',
           background: TOW.panel,
           color: TOW.ink,
-          padding: 20,
-          boxShadow: '0 24px 70px rgba(20,14,8,0.58)',
+          padding: 22,
+          boxShadow:
+            '0 0 0 1px rgba(255,225,150,0.11), 0 0 38px rgba(211,158,52,0.34), 0 0 96px rgba(155,101,17,0.22), 0 28px 72px rgba(20,14,8,0.64)',
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 16 }}>
           <LogoMark size={42} radius={10} />
           <div style={{ minWidth: 0 }}>
-            <div style={{ ...eb, color: TOW.goldDeep, fontSize: 8.5 }}>Isle of Celedon · campaign access</div>
+            <div style={{ ...eb, color: TOW.goldDeep, fontSize: 8.5 }}>Isle of Celedon · your campaign account</div>
             <h1
               id="celedon-login-title"
               style={{ margin: '3px 0 0', fontFamily: towFont.display, fontSize: 22, lineHeight: 1.15 }}
             >
-              Open your campaign army
+              Sign in to your campaign army
             </h1>
           </div>
         </div>
 
+        <div
+          aria-hidden="true"
+          style={{
+            height: 1,
+            margin: '-2px 0 15px',
+            background: `linear-gradient(90deg, transparent, ${TOW.goldBright}, ${TOW.goldDeep}, transparent)`,
+            boxShadow: '0 0 12px rgba(211,158,52,0.55)',
+          }}
+        />
+
         <p style={{ margin: '0 0 16px', fontFamily: towFont.serif, color: TOW.parchDim, fontSize: 14.5, lineHeight: 1.55 }}>
-          Sign in with the same email and password you use on Isle of Celedon. Once you are in, we will
-          take you straight through your campaign list.
+          Use the same email and password as Isle of Celedon. Your faction, points limit and campaign
+          list are already waiting here.
         </p>
+
+        <div
+          style={{
+            margin: '0 0 16px',
+            borderLeft: `2px solid ${TOW.goldDeep}`,
+            background: 'rgba(183,137,49,0.08)',
+            padding: '9px 11px',
+            color: TOW.parchDim,
+            fontFamily: towFont.serif,
+            fontSize: 13.5,
+            lineHeight: 1.45,
+          }}
+        >
+          After signing in, a short guided tour opens your Army list and shows you exactly where to begin.
+        </div>
 
         <form
           onSubmit={(event) => {
@@ -180,7 +211,7 @@ export function CeledonLoginDialog({
               fontSize: 14,
             }}
           >
-            {busy ? 'Signing in…' : 'Sign in & show me around'}
+            {busy ? 'Signing in…' : 'Sign in & start the Army tour'}
           </button>
         </form>
 
