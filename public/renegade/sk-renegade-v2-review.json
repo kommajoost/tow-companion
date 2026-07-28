@@ -1,0 +1,104 @@
+{
+  "id": "sk-renegade-v2-review",
+  "army": "skaven",
+  "generatedFrom": "sk-renegade-v2-reference.json",
+  "what": "Option price lines found in the pack, and what happened to each. `unmatched` = no option of that name on the unit, so it is either worded differently in the OWB catalogue or the pack adds a new option. `refused` = matched but deliberately not applied, with the reason.",
+  "stats": {
+    "applied": 1,
+    "refused": 1,
+    "unmatched": 8,
+    "todoBlocksSkipped": 10
+  },
+  "applied": [
+    {
+      "unitId": "weapon-team",
+      "unit": "Weapon Team",
+      "option": "Hand weapons, Warpfire Thrower",
+      "group": "equipment",
+      "points": 40,
+      "basePoints": 60,
+      "raw": "Warpfire Thrower +40 points per model"
+    }
+  ],
+  "refused": [
+    {
+      "unitId": "night-runners",
+      "unit": "Night Runners",
+      "label": "Throwing weapons",
+      "points": 1,
+      "basis": "model",
+      "raw": "Throwing weapons +1 point per model",
+      "reason": "ambiguous",
+      "candidates": [
+        "hand weapon throwing weapons",
+        "additional hand weapon throwing weapons"
+      ]
+    }
+  ],
+  "unmatched": [
+    {
+      "unitId": "clanrats",
+      "unit": "Clanrats",
+      "label": "Thrusting spears",
+      "points": 1,
+      "basis": "model",
+      "raw": "Thrusting spears +1 point per model"
+    },
+    {
+      "unitId": "clanrats",
+      "unit": "Clanrats",
+      "label": "Shields",
+      "points": 1,
+      "basis": "model",
+      "raw": "Shields +1 point per model"
+    },
+    {
+      "unitId": "clanrats",
+      "unit": "Clanrats",
+      "label": "Purchase a magic standard worth up to",
+      "points": 50,
+      "basis": null,
+      "raw": "Purchase a magic standard worth up to +50 Points"
+    },
+    {
+      "unitId": "rat-ogres",
+      "unit": "Rat Ogres",
+      "label": "Packmaster to a Master Moulder",
+      "points": 20,
+      "basis": null,
+      "raw": "Upgrade one Packmaster to a Master Moulder (champion) +20 points"
+    },
+    {
+      "unitId": "giant-rats",
+      "unit": "Giant Rats",
+      "label": "Packmaster to a Master Moulder",
+      "points": 20,
+      "basis": null,
+      "raw": "Upgrade one Packmaster to a Master Moulder (champion) +20 points"
+    },
+    {
+      "unitId": "night-runners",
+      "unit": "Night Runners",
+      "label": "Slings",
+      "points": 2,
+      "basis": "model",
+      "raw": "Slings +2 points per model"
+    },
+    {
+      "unitId": "gutter-runners",
+      "unit": "Gutter Runners",
+      "label": "Slings",
+      "points": 2,
+      "basis": "model",
+      "raw": "Slings +2 points per model"
+    },
+    {
+      "unitId": "gutter-runners",
+      "unit": "Gutter Runners",
+      "label": "Ambushers special rule",
+      "points": 1,
+      "basis": "model",
+      "raw": "Have the Ambushers special rule +1 point per model"
+    }
+  ]
+}

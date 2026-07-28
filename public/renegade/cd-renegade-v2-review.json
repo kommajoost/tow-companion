@@ -1,0 +1,187 @@
+{
+  "id": "cd-renegade-v2-review",
+  "army": "chaos-dwarfs",
+  "generatedFrom": "cd-renegade-v2-reference.json",
+  "what": "Option price lines found in the pack, and what happened to each. `unmatched` = no option of that name on the unit, so it is either worded differently in the OWB catalogue or the pack adds a new option. `refused` = matched but deliberately not applied, with the reason.",
+  "stats": {
+    "applied": 2,
+    "refused": 0,
+    "unmatched": 21,
+    "todoBlocksSkipped": 8
+  },
+  "applied": [
+    {
+      "unitId": "bull-centaur-taur'ruk",
+      "unit": "Bull Centaur Taur'ruk",
+      "option": "Darkforged weapon",
+      "group": "equipment",
+      "points": 15,
+      "basePoints": 10,
+      "raw": "Darkforged weapon (see page 22) +15 points"
+    },
+    {
+      "unitId": "dreadquake-mortar",
+      "unit": "Dreadquake Mortar",
+      "option": "Ogre Loader",
+      "group": "options",
+      "points": 35,
+      "basePoints": 20,
+      "raw": "May have an Ogre Loader +35 points"
+    }
+  ],
+  "refused": [],
+  "unmatched": [
+    {
+      "unitId": "hobgoblin-khan",
+      "unit": "Hobgoblin Khan",
+      "label": "May replace throwing weapons with shortbow",
+      "points": 2,
+      "basis": null,
+      "raw": "May replace throwing weapons with shortbow +2 points"
+    },
+    {
+      "unitId": "infernal-guard",
+      "unit": "Infernal Guard",
+      "label": "Fireglaives and Blackshard Armour",
+      "points": 2,
+      "basis": "model",
+      "raw": "Fireglaives and Blackshard Armour (see page 22) +2 points per model"
+    },
+    {
+      "unitId": "infernal-guard",
+      "unit": "Infernal Guard",
+      "label": "Hailshot blunderbusses",
+      "points": 5,
+      "basis": "model",
+      "raw": "Hailshot blunderbusses (see page 22) +5 points per model"
+    },
+    {
+      "unitId": "infernal-guard",
+      "unit": "Infernal Guard",
+      "label": "shields",
+      "points": 1,
+      "basis": "model",
+      "raw": "The entire unit may take shields +1 point per model"
+    },
+    {
+      "unitId": "infernal-guard",
+      "unit": "Infernal Guard",
+      "label": "Drilled special rule",
+      "points": 1,
+      "basis": "model",
+      "raw": "Have the Drilled special rule +1 point per model"
+    },
+    {
+      "unitId": "infernal-guard",
+      "unit": "Infernal Guard",
+      "label": "Veteran special rule",
+      "points": 1,
+      "basis": "model",
+      "raw": "Have the Veteran special rule +1 point per model"
+    },
+    {
+      "unitId": "infernal-guard",
+      "unit": "Infernal Guard",
+      "label": "Blackshard Armour special rule",
+      "points": 1,
+      "basis": "model",
+      "raw": "Have the Blackshard Armour special rule +1 point per model"
+    },
+    {
+      "unitId": "infernal-ironsworn-core",
+      "unit": "Infernal Ironsworn",
+      "label": "shields",
+      "points": 1,
+      "basis": "model",
+      "raw": "The entire unit may take shields +1 point per model"
+    },
+    {
+      "unitId": "infernal-ironsworn-core",
+      "unit": "Infernal Ironsworn",
+      "label": "Darkforged weapon",
+      "points": 15,
+      "basis": null,
+      "raw": "Darkforged weapon (see page 22) +15 points"
+    },
+    {
+      "unitId": "hobgoblin-wolf-raiders",
+      "unit": "Hobgoblin Wolf Riders",
+      "label": "Shortbows",
+      "points": 1,
+      "basis": "model",
+      "raw": "Shortbows +1 point per model"
+    },
+    {
+      "unitId": "hobgoblin-wolf-raiders",
+      "unit": "Hobgoblin Wolf Riders",
+      "label": "Feigned Flight special rule",
+      "points": 2,
+      "basis": "model",
+      "raw": "Have the Feigned Flight special rule +2 points per model"
+    },
+    {
+      "unitId": "hobgoblin-wolf-raiders",
+      "unit": "Hobgoblin Wolf Riders",
+      "label": "Reserve Move special rule",
+      "points": 1,
+      "basis": "model",
+      "raw": "Have the Reserve Move special rule +1 points per model"
+    },
+    {
+      "unitId": "bull-centaur-renders",
+      "unit": "Bull Centaur Renders",
+      "label": "Shields",
+      "points": 3,
+      "basis": "model",
+      "raw": "Shields +3 points per model"
+    },
+    {
+      "unitId": "bull-centaur-renders",
+      "unit": "Bull Centaur Renders",
+      "label": "Darkforged weapon",
+      "points": 15,
+      "basis": null,
+      "raw": "Take a Darkforged weapon (see page 22) +15 points"
+    },
+    {
+      "unitId": "iron-daemon",
+      "unit": "Iron Daemon",
+      "label": "Hellbound special rule",
+      "points": 35,
+      "basis": null,
+      "raw": "May have the Hellbound special rule +35 points"
+    },
+    {
+      "unitId": "iron-daemon",
+      "unit": "Iron Daemon",
+      "label": "May replace its Steam Cannonade with a Skullcracker",
+      "points": 10,
+      "basis": null,
+      "raw": "May replace its Steam Cannonade with a Skullcracker (see page 11) +10 points"
+    },
+    {
+      "unitId": "deathshrieker-rocket-launcher",
+      "unit": "Deathshrieker Rocket Launcher",
+      "label": "Hellbound special rule",
+      "points": 30,
+      "basis": null,
+      "raw": "May have the Hellbound special rule +30 points"
+    },
+    {
+      "unitId": "dreadquake-mortar",
+      "unit": "Dreadquake Mortar",
+      "label": "Hellbound special rule",
+      "points": 30,
+      "basis": null,
+      "raw": "May have the Hellbound special rule +30 points"
+    },
+    {
+      "unitId": "magma-cannon",
+      "unit": "Magma Cannon",
+      "label": "Hellbound special rule",
+      "points": 30,
+      "basis": null,
+      "raw": "May have the Hellbound special rule +30 points"
+    }
+  ]
+}

@@ -1,0 +1,148 @@
+{
+  "id": "lm-renegade-v2-review",
+  "army": "lizardmen",
+  "generatedFrom": "lm-renegade-v2-reference.json",
+  "what": "Option price lines found in the pack, and what happened to each. `unmatched` = no option of that name on the unit, so it is either worded differently in the OWB catalogue or the pack adds a new option. `refused` = matched but deliberately not applied, with the reason.",
+  "stats": {
+    "applied": 3,
+    "refused": 0,
+    "unmatched": 14,
+    "todoBlocksSkipped": 5
+  },
+  "applied": [
+    {
+      "unitId": "saurus-warrior",
+      "unit": "Saurus Warriors",
+      "option": "Spawn Leader (champion)",
+      "group": "command",
+      "points": 6,
+      "basePoints": 7,
+      "raw": "Upgrade one model to a Spawn Leader (champion) +6 points per unit"
+    },
+    {
+      "unitId": "saurus-warrior",
+      "unit": "Saurus Warriors",
+      "option": "Standard bearer",
+      "group": "command",
+      "points": 6,
+      "basePoints": 7,
+      "raw": "Upgrade one model to a standard bearer +6 points per unit"
+    },
+    {
+      "unitId": "saurus-warrior",
+      "unit": "Saurus Warriors",
+      "option": "Musician",
+      "group": "command",
+      "points": 6,
+      "basePoints": 7,
+      "raw": "Upgrade one model to a musician +6 points per unit"
+    }
+  ],
+  "refused": [],
+  "unmatched": [
+    {
+      "unitId": "skink-skirmishers",
+      "unit": "Skink Skirmishers",
+      "label": "Scouts special rule",
+      "points": 10,
+      "basis": "unit",
+      "raw": "The Scouts special rule +10 points per unit"
+    },
+    {
+      "unitId": "skink-skirmishers",
+      "unit": "Skink Skirmishers",
+      "label": "Vanguard special rule",
+      "points": 5,
+      "basis": "unit",
+      "raw": "The Vanguard special rule +5 points per unit"
+    },
+    {
+      "unitId": "saurus-warrior",
+      "unit": "Saurus Warriors",
+      "label": "Shieldwall special rule",
+      "points": 1,
+      "basis": "model",
+      "raw": "Have the Shieldwall special rule +1 point per model"
+    },
+    {
+      "unitId": "saurus-warrior",
+      "unit": "Saurus Warriors",
+      "label": "Drilled special rule",
+      "points": 1,
+      "basis": "model",
+      "raw": "Have the Drilled special rule +1 point per model"
+    },
+    {
+      "unitId": "temple-guard",
+      "unit": "Temple Guard {renegade}",
+      "label": "Drilled special rule",
+      "points": 1,
+      "basis": "model",
+      "raw": "Have the Drilled special rule +1 point per model"
+    },
+    {
+      "unitId": "cold-one-riders",
+      "unit": "Cold One Riders",
+      "label": "light armour",
+      "points": 4,
+      "basis": "model",
+      "raw": "Take light armour +4 points per model"
+    },
+    {
+      "unitId": "cold-one-riders",
+      "unit": "Cold One Riders",
+      "label": "Drilled special rule",
+      "points": 2,
+      "basis": "model",
+      "raw": "Have the Drilled special rule +2 points per model"
+    },
+    {
+      "unitId": "terradon-riders",
+      "unit": "Terradon Riders",
+      "label": "replace javelins with fireleech bolas",
+      "points": 2,
+      "basis": "model",
+      "raw": "The entire unit may replace javelins with fireleech bolas +2 point per model"
+    },
+    {
+      "unitId": "terradon-riders",
+      "unit": "Terradon Riders",
+      "label": "shields",
+      "points": 1,
+      "basis": "model",
+      "raw": "Take shields +1 point per model"
+    },
+    {
+      "unitId": "stegadon",
+      "unit": "Stegadon",
+      "label": "Engine of the Gods",
+      "points": 35,
+      "basis": null,
+      "raw": "Engine of the Gods +35 points"
+    },
+    {
+      "unitId": "bastiladon",
+      "unit": "Bastiladon",
+      "label": "Replace its Ark of Sotek with a Solar Engine",
+      "points": 35,
+      "basis": null,
+      "raw": "Replace its Ark of Sotek with a Solar Engine +35 points"
+    },
+    {
+      "unitId": "bastiladon",
+      "unit": "Bastiladon",
+      "label": "Add a fourth Skink crew member",
+      "points": 5,
+      "basis": null,
+      "raw": "Add a fourth Skink crew member +5 points"
+    },
+    {
+      "unitId": "troglodon",
+      "unit": "Troglodon",
+      "label": "Level 2 Wizard",
+      "points": 30,
+      "basis": null,
+      "raw": "Be a Level 2 Wizard +30 points"
+    }
+  ]
+}

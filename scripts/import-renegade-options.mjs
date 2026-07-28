@@ -68,6 +68,22 @@ const subseq = (hay, words) => {
 };
 
 const GROUPS = ['equipment', 'armor', 'options', 'command', 'mounts'];
+
+/** Drop repeats of the same source line for the same unit.
+ *
+ *  Keyed on the unit NAME, not its id: a unit that sits in two catalogue categories has a DIFFERENT id
+ *  per entry (`flesh-hounds-of-khorne` and `flesh-hounds-of-khorne-core`), so an id-based key does not
+ *  collapse them and every option line of such a unit appears twice. It is one line in the source and
+ *  belongs on screen once. */
+const dedupe = (rows) => {
+  const seen = new Set();
+  return rows.filter((r) => {
+    const k = `${r.unit}|${r.label ?? r.option}|${r.points}|${r.reason ?? ''}`;
+    if (seen.has(k)) return false;
+    seen.add(k);
+    return true;
+  });
+};
 /** "+6 points per unit" · "+1 point per model" · "+30 points" */
 const PRICE = /^(.*?)\s*\+\s*(\d{1,3})\s*points?(\s*(?:per|\/)\s*(model|unit))?\s*\.?$/i;
 /** The verbiage the packs put in front of the thing being bought. */
@@ -116,13 +132,20 @@ for (const [key, army] of Object.entries(PACKS)) {
   const patches = new Map();     // unitId → Map(optionName → patch)
   const refused = [];
   const unmatched = [];
+  // Machine-readable audit of everything NOT applied, written to a separate review file for
+  // /check/renegade.html. Deliberately not folded into the overlay: the app fetches that on every
+  // Renegade list and has no use for diagnostics.
+  const review = { applied: [], refused: [], unmatched: [] };
   let cur = null;
   let todo = 0;
 
   for (const b of ref.blocks) {
     if (b.tableType === 'statline' && Array.isArray(b.statlineRows)) {
-      const hit = resolveUnit((b.headingPath || []).slice(-1)[0] || '');
-      if (hit) cur = hit;
+      // A statline table means a new unit entry starts here. If its heading does NOT resolve against the
+      // catalogue, the anchor is CLEARED rather than left on the previous unit: carrying it over silently
+      // files the new unit's options under the old one. That is what put the Saurus Oldblood's
+      // "Additional hand weapon +3" on the Slann Mage-Priest, which has no such option at all.
+      cur = resolveUnit((b.headingPath || []).slice(-1)[0] || '');
       continue;
     }
     // Yellow is the pack flagging its own unfinished work.
@@ -134,9 +157,18 @@ for (const [key, army] of Object.entries(PACKS)) {
     } else if (b.type === 'paragraph') texts.push(b.text || '');
 
     for (const raw of texts) {
-      const m = PRICE.exec(raw.replace(/\s+/g, ' ').trim());
+      const line = raw.replace(/\s+/g, ' ').trim();
+      const m = PRICE.exec(line);
       if (!m || !cur) continue;
-      const label = m[1].replace(LEAD, '').replace(/^(a|an|the)\s+/i, '').replace(/\(.*?\)/g, '').trim();
+      // Strip the lead-in REPEATEDLY: the packs stack it ("Any unit may upgrade one model to a
+      // Pyroclaster"), and one pass leaves "upgrade one model to a Pyroclaster", which matches nothing.
+      let label = m[1];
+      for (let n = 0; n < 4; n++) {
+        const next = label.replace(LEAD, '').replace(/^(a|an|the)\s+/i, '');
+        if (next === label) break;
+        label = next;
+      }
+      label = label.replace(/\(.*?\)/g, '').trim();
       if (!label) continue;
       const points = Number(m[2]);
       // null = the line states no basis at all. That is NOT an assertion of "per unit": most character
@@ -151,24 +183,36 @@ for (const [key, army] of Object.entries(PACKS)) {
         if (!hit) {
           const loose = opts.filter((o) => norm(o.name) && subseq(norm(o.name), norm(label).split(' ')));
           const names = new Set(loose.map((o) => norm(o.name)));
-          if (names.size > 1) { refused.push(`${u.name_en} · "${label}" is ambiguous (${[...names].join(' / ')})`); G.refusedAmbiguous++; continue; }
+          if (names.size > 1) {
+            refused.push(`${u.name_en} · "${label}" is ambiguous (${[...names].join(' / ')})`);
+            review.refused.push({ unitId: u.id, unit: u.name_en, label, points, basis: packBasis, raw: line, reason: 'ambiguous', candidates: [...names] });
+            G.refusedAmbiguous++;
+            continue;
+          }
           if (loose.length === 1) [hit] = loose;
         }
-        if (!hit || typeof hit.points !== 'number') { unmatched.push(`${u.name_en} · ${label} +${points}`); continue; }
+        if (!hit || typeof hit.points !== 'number') {
+          unmatched.push(`${u.name_en} · ${label} +${points}`);
+          review.unmatched.push({ unitId: u.id, unit: u.name_en, label, points, basis: packBasis, raw: line });
+          continue;
+        }
         // Only an EXPLICIT, conflicting basis blocks the comparison.
         if (packBasis && (packBasis === 'model') !== hit.perModel) {
           refused.push(`${u.name_en} · ${hit.name}: pack ${points}/${packBasis} vs base ${hit.points}/${hit.perModel ? 'model' : 'unit'} — different basis`);
+          review.refused.push({ unitId: u.id, unit: u.name_en, label, option: hit.name, group: hit.group, points, basePoints: hit.points, basis: packBasis, baseBasis: hit.perModel ? 'model' : 'unit', raw: line, reason: 'basis' });
           G.refusedBasis++;
           continue;
         }
         if (hit.points === points) continue;                    // agrees with the catalogue
         if (hit.exclusive) {
           refused.push(`${u.name_en} · ${hit.name}: pack ${points} vs base ${hit.points} — exclusive tier, pack prices these incrementally`);
+          review.refused.push({ unitId: u.id, unit: u.name_en, label, option: hit.name, group: hit.group, points, basePoints: hit.points, raw: line, reason: 'exclusive-tier' });
           G.refusedExclusive++;
           continue;
         }
         if (!patches.has(u.id)) patches.set(u.id, new Map());
         patches.get(u.id).set(hit.name, { group: hit.group, name_en: hit.name, points, _was: hit.points });
+        review.applied.push({ unitId: u.id, unit: u.name_en, option: hit.name, group: hit.group, points, basePoints: hit.points, raw: line });
       }
     }
   }
@@ -189,6 +233,29 @@ for (const [key, army] of Object.entries(PACKS)) {
   overlay.units = units;
   overlay.scope = 'points-and-rules';
   writeFileSync(overlayPath, `${JSON.stringify(overlay, null, 2)}\n`);
+
+  // The review file. Its whole purpose is that the option lines the importer could NOT act on are
+  // readable next to the source instead of living only in this script's stderr — so they can be checked
+  // and the extraction improved. Written per pack, read only by /check/renegade.html.
+  writeFileSync(new URL(`${key}-renegade-v2-review.json`, REN), `${JSON.stringify({
+    id: `${key}-renegade-v2-review`,
+    army,
+    generatedFrom: `${key}-renegade-v2-reference.json`,
+    what: 'Option price lines found in the pack, and what happened to each. `unmatched` = no option of '
+      + 'that name on the unit, so it is either worded differently in the OWB catalogue or the pack adds '
+      + 'a new option. `refused` = matched but deliberately not applied, with the reason.',
+    stats: {
+      applied: review.applied.length,
+      refused: review.refused.length,
+      unmatched: review.unmatched.length,
+      todoBlocksSkipped: todo,
+    },
+    // Deduplicated: a unit that sits in two catalogue categories (War Hydra is Special AND Rare) is
+    // resolved to both, so the same source line would otherwise be listed twice.
+    applied: dedupe(review.applied),
+    refused: dedupe(review.refused),
+    unmatched: dedupe(review.unmatched),
+  }, null, 2)}\n`);
 
   G.changed += changed; G.unmatched += unmatched.length; G.todo += todo;
   console.error(`\n${key} — ${army}`);

@@ -178,10 +178,13 @@ async function main() {
   const comp = COMP[army];
   if (!comp) { el('who').textContent = `onbekende army "${army}"`; return; }
 
-  const [overlay, cat, reference] = await Promise.all([
+  const [overlay, cat, reference, review] = await Promise.all([
     fetch(`../renegade/${comp}.json`).then((r) => r.json()),
     fetch(`../owb/${army}.json`).then((r) => r.json()),
     fetch(`../renegade/${comp}-reference.json`).then((r) => r.json()),
+    // Written by scripts/import-renegade-options.mjs. Absent is not an error — it only exists once that
+    // importer has run for this pack.
+    fetch(`../renegade/${comp}-review.json`).then((r) => (r.ok ? r.json() : null)).catch(() => null),
   ]);
 
   // Flatten the catalogue by unit id, keeping EVERY occurrence. A unit can legitimately sit in more
@@ -334,6 +337,48 @@ async function main() {
                <div class="was" id="was-${esc(slug)}" hidden></div>`;
     }
     html += '</div>';
+  }
+
+  // ── option lines NOT applied ────────────────────────────────────────────────────────────────────
+  // Why these are worth a section of their own: an option price the importer could not act on is a price
+  // the app still takes from the BASE catalogue, and that is invisible everywhere else in the app. Each
+  // row carries the pack's own raw line so it can be read straight against the source document.
+  if (review) {
+    const REASON = {
+      'exclusive-tier': 'Tier-optie. Het pack rekent tiers op elkaar door (+30 bóvenop Level 1), de catalogue absoluut (30 en 60). Zelfde kosten, andere basis — overnemen maakt de unit te goedkoop.',
+      basis: 'Het pack noemt expliciet een andere basis (per model vs per unit) dan de catalogue. Niet vergelijkbaar.',
+      ambiguous: 'Het label past op meer dan één optie van deze unit.',
+    };
+    const groups = [
+      ['Geen optie met deze naam op de unit', review.unmatched || [],
+        'Ofwel de catalogue benoemt het anders, ofwel het pack voegt een nieuwe optie toe. Deze prijzen komen in de app dus nog uit de basisdata.'],
+      ['Bewust niet toegepast', review.refused || [],
+        'Wél gematcht, maar overnemen zou het lijsttotaal fout maken. De reden staat per regel.'],
+    ];
+    const total = groups.reduce((n, g) => n + g[1].length, 0);
+    html += `<h2>Optieregels die nog niet zijn doorgevoerd — ${total}</h2>`;
+    html += `<p class="note">Wel toegepast: <b>${(review.applied || []).length}</b>.`
+      + `${review.stats && review.stats.todoBlocksSkipped ? ` Daarnaast <b>${review.stats.todoBlocksSkipped}</b> blokken overgeslagen die het pack zelf als todo markeert.` : ''}`
+      + ` De machineleesbare lijst staat in <b>${esc(comp)}-review.json</b>.</p>`;
+    for (const [title, rows, why] of groups) {
+      if (!rows.length) continue;
+      const isRefused = rows === (review.refused || []);
+      html += `<h3 style="font:600 10px/1.3 ui-sans-serif,system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin:22px 0 4px">${esc(title)} — ${rows.length}</h3>`;
+      html += `<p class="note" style="margin:0 0 9px">${esc(why)}</p>`;
+      html += `<div class="scroll"><table><thead><tr><th>unit</th><th>label</th><th class="num">pack</th>`
+        + `<th>bronregel</th>${isRefused ? '<th>reden</th>' : ''}</tr></thead><tbody>`;
+      for (const r of rows) {
+        html += `<tr><td>${esc(r.unit)}</td><td>${esc(r.label || r.option || '')}</td>`
+          + `<td class="num"><b>${r.points}</b>${r.basis ? `<span class="sub">/${esc(r.basis)}</span>` : ''}`
+          + `${typeof r.basePoints === 'number' ? `<span class="sub"> vs ${r.basePoints}</span>` : ''}</td>`
+          + `<td style="max-width:46ch;color:var(--muted)">${esc(r.raw || '')}</td>`
+          + (isRefused
+            ? `<td style="max-width:40ch">${esc(REASON[r.reason] || r.reason || '')}${r.candidates ? ` <span class="sub">(${esc(r.candidates.join(' / '))})</span>` : ''}</td>`
+            : '')
+          + '</tr>';
+      }
+      html += '</tbody></table></div>';
+    }
   }
 
   // ── every highlighted source block ─────────────────────────────────────────────────────────────
