@@ -1,7 +1,7 @@
 {
   "name": "tow-companion",
   "private": true,
-  "version": "0.1.190",
+  "version": "0.1.192",
   "type": "module",
   "description": "Warhammer: The Old World turn companion - mobile PWA",
   "scripts": {
@@ -11,6 +11,7 @@
     "preview": "vite preview",
     "scrape": "node scripts/scrape.mjs",
     "import-renegade-reference": "node scripts/import-renegade-reference.mjs",
+    "validate-renegade-reference": "node scripts/validate-renegade-reference.mjs",
     "sync-owb": "node scripts/sync-owb.mjs",
     "stamp-version": "node scripts/stamp-version.mjs",
     "render-brand": "node scripts/render-brand.mjs"
