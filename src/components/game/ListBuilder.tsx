@@ -2,7 +2,6 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { usePersistentState } from '../../store';
 import { TOW, towFont, engraved } from '../../design/tow';
 import { validate, type Category, type OwbArmy, type OwbUnit, type BuilderList, type MagicItemsData } from '../../lib/owbBuilder';
-import { listTotal } from '../../lib/builderToArmy';
 import { compName } from '../../lib/armies';
 import { BuilderWorkspace } from './BuilderWorkspace';
 import { BuilderFlow } from '../builder/BuilderFlow';
@@ -114,34 +113,70 @@ export function ListBuilder() {
     } catch { /* ignore */ }
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // ── Campagne: de ECHTE puntensom meeschrijven (`computedPoints`) ────────────────────────────────
-  // De campagne ("De Grensvorsten") moet kunnen toetsen of een campagne-lijst binnen de fase-cap
-  // valt, maar `points` is enkel het DOEL waarop de lijst is aangemaakt — niet de som. Dit scherm is
-  // de meest betrouwbare plek om die som weg te schrijven: het bezit `tow:lists`, laadt de catalogus
-  // van ELKE army die in de lijsten voorkomt (effect hierboven) én de magic-items-data, dus de som
-  // klopt inclusief items — ook voor lijsten die je niet openslaat (bv. van een ander device
-  // gesynct). En omdat ListBuilder de <BuilderWorkspace> zélf rendert, loopt elke wijziging in de
-  // builder via `setLists` hier langs, dus de waarde blijft actueel (niet alleen bij aanmaken).
-  // Ontbreekt de catalogus of de items-data, dan schrijven we NIETS: liever geen waarde dan een te
-  // lage som — de campagne behandelt een ontbrekende `computedPoints` als waarschuwing, geen fout.
-  // `updatedAt` bumpen we bewust niet (afgeleide waarde, geen gebruikers-bewerking); de list-sync
-  // pikt de wijziging op via de snapshot en duwt het veld mee naar `tow_lists`.
+
+  // ── Composition overlays (Renegade Legacy Pack) ────────────────────────────────────────────────
+  // Een pack is een PRIJS-patch op de OWB-catalogus, per compositie-id. We laden ze voor de compositie
+  // van ELKE opgeslagen lijst, niet alleen de open lijst: de puntensom die de campagne beoordeelt moet
+  // exact het getal zijn dat de builder toont, en de builder toont de herprijsde versie. Deed hij dat
+  // niet, dan zag je "496/500 legal" in de builder en "501/500, over de cap" in de campagne-band.
+  // Een ontbrekend of kapot bestand degradeert naar "geen overlay", zodat een slechte deploy nooit
+  // iemand zijn lijst kan blokkeren.
+  const [overlays, setOverlays] = useState<Record<string, CompositionOverlay>>({});
   useEffect(() => {
-    if (!itemsData) return;
+    const nodig = Array.from(new Set(lists.map((l) => l.composition).filter((c) => c && hasOverlay(c) && !overlays[c])));
+    if (nodig.length === 0) return;
+    let cancelled = false;
+    Promise.all(nodig.map((comp) => fetch(`${BASE}renegade/${OVERLAY_FILES[comp]}`)
+      .then((r) => (r.ok ? r.json() : null))
+      .then((j) => (isOverlay(j) ? ([comp, j] as const) : null))
+      .catch(() => null)))
+      .then((paren) => {
+        if (cancelled) return;
+        const add: Record<string, CompositionOverlay> = {};
+        for (const pr of paren) if (pr) add[pr[0]] = pr[1];
+        if (Object.keys(add).length) setOverlays((m) => ({ ...m, ...add }));
+      });
+    return () => { cancelled = true; };
+  }, [lists, overlays]);
+
+  /** De puntensom van een lijst zoals de BUILDER hem berekent — inclusief de herprijzing van een
+   *  Renegade-compositie. `null` = nog niet te bepalen (catalogus of overlay nog niet binnen); dan
+   *  schrijven we liever niets dan een verkeerd getal. */
+  const puntenVan = (l: SavedList): number | null => {
+    const cat = catalogues[l.army];
+    if (!cat || !itemsData) return null;
+    let c: OwbArmy = cat;
+    let items: MagicItemsData = itemsData;
+    if (hasOverlay(l.composition)) {
+      const ov = overlays[l.composition];
+      if (!ov || ov.baseArmy !== l.army) return null; // overlay nodig maar (nog) niet bruikbaar
+      c = applyOverlay(cat, ov);
+      items = applyOverlayItems(itemsData, ov);
+    }
+    return validate(l, (k, id) => c[k]?.find((u) => u.id === id), items).total;
+  };
+
+  // ── Campagne: de ECHTE puntensom meeschrijven (`computedPoints`) ────────────────────────────────
+  // De campagne moet kunnen toetsen of een campagne-lijst binnen de fase-cap valt, maar `points` is
+  // enkel het DOEL waarop de lijst is aangemaakt — niet de som. Dit scherm is de betrouwbaarste plek:
+  // het bezit `tow:lists`, laadt de catalogus én de overlay van elke army/compositie die voorkomt, dus
+  // de som klopt inclusief items en herprijzing — ook voor lijsten die je niet openslaat (bv. van een
+  // ander device gesynct). `updatedAt` bumpen we bewust niet (afgeleide waarde, geen bewerking); de
+  // list-sync pikt de wijziging op via de snapshot en duwt het veld mee naar `tow_lists`.
+  useEffect(() => {
     const sommen = new Map<string, number>();
     for (const l of lists) {
       if (!l.campaign) continue;
-      const cat = catalogues[l.army];
-      if (!cat) continue;
-      const total = listTotal(l, cat, itemsData);
-      if (l.computedPoints !== total) sommen.set(l.id, total);
+      const t2 = puntenVan(l);
+      if (t2 != null && l.computedPoints !== t2) sommen.set(l.id, t2);
     }
     if (sommen.size === 0) return;
     setLists((ls) => ls.map((l) => {
-      const t = sommen.get(l.id);
-      return t === undefined ? l : { ...l, computedPoints: t };
+      const t2 = sommen.get(l.id);
+      return t2 === undefined ? l : { ...l, computedPoints: t2 };
     }));
-  }, [lists, catalogues, itemsData, setLists]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lists, catalogues, itemsData, overlays, setLists]);
 
   // ── Campagne: de lijst wordt AUTOMATISCH aangemaakt ─────────────────────────────────────────────
   // Er is niets te kiezen — factie, puntencap en compositie komen alle drie van de campagne — dus een
@@ -257,17 +292,7 @@ export function ListBuilder() {
   // A pack is a POINTS patch on top of the OWB catalogue, keyed by composition id. Fetched on demand
   // and cached by id; a missing or malformed file degrades to "no overlay" so a bad deploy can never
   // leave someone unable to open their list.
-  const [overlays, setOverlays] = useState<Record<string, CompositionOverlay>>({});
   const activeComp = active?.composition ?? null;
-  useEffect(() => {
-    if (!activeComp || !hasOverlay(activeComp) || overlays[activeComp]) return;
-    let cancelled = false;
-    fetch(`${BASE}renegade/${OVERLAY_FILES[activeComp]}`)
-      .then((r) => (r.ok ? r.json() : null))
-      .then((j) => { if (!cancelled && isOverlay(j)) setOverlays((m) => ({ ...m, [activeComp]: j })); })
-      .catch(() => { /* no overlay is a missing rebalance, never a broken list */ });
-    return () => { cancelled = true; };
-  }, [activeComp, overlays]);
 
   const activeOverlay = activeComp ? overlays[activeComp] ?? null : null;
   // Only patch when the overlay actually belongs to this army — a composition id is unique, but a
@@ -619,7 +644,7 @@ export function ListBuilder() {
         <CeledonPanel
           lijsten={lists.map((l) => ({
             id: l.id, name: l.name, army: l.army, units: l.entries?.length ?? 0, points: l.points,
-            computed: l.computedPoints ?? (catalogues[l.army] ? validate(l, getUnitFor(catalogues[l.army]), itemsData ?? undefined).total : null),
+            computed: puntenVan(l) ?? l.computedPoints ?? null,
             campaign: l.campaign, campaignSpeler: l.campaignSpeler,
           }))}
           onOpen={(id) => setActiveId(id)}
