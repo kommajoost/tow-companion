@@ -34,6 +34,13 @@ const plurals = (w) => {
   if (/fe$/.test(w)) o.add(w.replace(/fe$/, 'ves'));
   else if (/f$/.test(w)) o.add(w.replace(/f$/, 'ves'));
   if (/[^aeiou]y$/.test(w)) o.add(w.replace(/y$/, 'ies'));
+  // ...and BACK again. The number can go either way: the catalogue has "Sabretusk Pack" while the pack
+  // heading reads "Sabretusk Packs", so pluralising alone silently loses that unit.
+  if (/ies$/.test(w)) o.add(w.replace(/ies$/, 'y'));
+  if (/ves$/.test(w)) { o.add(w.replace(/ves$/, 'f')); o.add(w.replace(/ves$/, 'fe')); }
+  if (/men$/.test(w)) o.add(w.replace(/men$/, 'man'));
+  if (/es$/.test(w)) o.add(w.replace(/es$/, ''));
+  if (/[^s]s$/.test(w)) o.add(w.replace(/s$/, ''));
   return [...o];
 };
 const variants = (n) => {
