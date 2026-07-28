@@ -370,6 +370,7 @@ export function BuilderFlow({
       selectedUid={currentUid}
       savedLists={savedLists ?? [{ id: list.id, name: list.name, points: list.points, army: list.army }]}
       activeListId={list.id}
+      onBack={onBack}
       autosavedAt={(list as { updatedAt?: number }).updatedAt}
       rosterTable={(
         <RosterTable

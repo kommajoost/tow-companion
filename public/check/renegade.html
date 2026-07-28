@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Renegade V2 — controle</title>
+<!--
+  INTERNAL CHECK PAGE. Not linked from the app on purpose: it is a verification tool, not a feature.
+    /check/renegade.html            → Dark Elves
+    /check/renegade.html?army=skaven
+
+  Everything on this page is DERIVED AT LOAD TIME from the same files the app itself fetches — the
+  overlay, the OWB catalogue, and rules.json. Nothing is copied in or precomputed, so the page cannot
+  drift away from what the app actually does. If a number here is wrong, the app is wrong too.
+
+  It is deliberately an AUDIT, not a showcase: it re-checks the overlay's own `_was` values against the
+  live catalogue and flags mismatches, and it states what the overlay does not touch.
+-->
+<style>
+  :root {
+    --paper: #14120e; --paper2: #1c1913; --line: #2e281d; --line-strong: #3d3626;
+    --ink: #e8e0cd; --muted: #9a8f77; --faint: #6d6552;
+    --gold: #d9b779; --gold-deep: #b9914d; --up: #d98b6a; --down: #86a97a;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 28px 22px 80px; background: var(--paper); color: var(--ink);
+    font: 14px/1.55 ui-serif, Georgia, "Times New Roman", serif;
+  }
+  .wrap { max-width: 1180px; margin: 0 auto; }
+  h1 { font-size: 21px; margin: 0 0 2px; font-weight: 700; letter-spacing: .01em; }
+  h2 {
+    font-size: 9px; letter-spacing: .2em; text-transform: uppercase; color: var(--gold-deep);
+    margin: 34px 0 10px; padding-bottom: 6px; border-bottom: 1px solid var(--line);
+    font-family: ui-sans-serif, system-ui, sans-serif; font-weight: 600;
+  }
+  .sub { color: var(--muted); font-size: 11.5px; letter-spacing: .04em; }
+  a { color: var(--gold); }
+  .meta { display: flex; flex-wrap: wrap; gap: 6px 22px; margin-top: 12px; font-size: 12.5px; color: var(--muted); }
+  .meta b { color: var(--ink); font-weight: 400; }
+  .scroll { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; min-width: 620px; }
+  th {
+    text-align: left; font: 600 8.5px/1 ui-sans-serif, system-ui, sans-serif; letter-spacing: .18em;
+    text-transform: uppercase; color: var(--faint); padding: 0 10px 7px 0; white-space: nowrap;
+  }
+  td { padding: 7px 10px 7px 0; border-top: 1px solid var(--line); vertical-align: top; }
+  tbody tr:nth-child(even) { background: rgba(255,255,255,.014); }
+  .num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .cat { font: 600 8.5px/1 ui-sans-serif, system-ui, sans-serif; letter-spacing: .16em; text-transform: uppercase; color: var(--faint); }
+  .up { color: var(--up); } .down { color: var(--down); }
+  .rule { border-top: 1px solid var(--line); padding: 15px 0; }
+  .rule h3 { margin: 0 0 3px; font-size: 15.5px; font-weight: 700; }
+  .rule p { margin: 0 0 9px; max-width: 74ch; }
+  .badge {
+    display: inline-block; font: 600 8.5px/1 ui-sans-serif, system-ui, sans-serif; letter-spacing: .14em;
+    text-transform: uppercase; padding: 3px 6px; border: 1px solid var(--gold-deep);
+    color: var(--gold); border-radius: 2px; margin-left: 8px; vertical-align: 2px;
+  }
+  .flag { color: var(--up); font-size: 12px; }
+  .note { color: var(--muted); font-size: 12.5px; max-width: 82ch; }
+  button {
+    font: 600 9px/1 ui-sans-serif, system-ui, sans-serif; letter-spacing: .14em; text-transform: uppercase;
+    background: none; border: 1px solid var(--line-strong); color: var(--gold); padding: 7px 11px;
+    border-radius: 3px; cursor: pointer;
+  }
+  button:hover { border-color: var(--gold-deep); }
+  .was { margin-top: 10px; padding: 11px 13px; background: var(--paper2); border-left: 2px solid var(--line-strong); }
+  .was .lbl { font: 600 8.5px/1 ui-sans-serif, system-ui, sans-serif; letter-spacing: .16em; text-transform: uppercase; color: var(--faint); display: block; margin-bottom: 6px; }
+  select { background: var(--paper2); color: var(--ink); border: 1px solid var(--line-strong); padding: 5px 8px; font: inherit; font-size: 12.5px; border-radius: 3px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Renegade V2 — controle</h1>
+  <div class="sub" id="who">laden…</div>
+  <div class="meta" id="meta"></div>
+  <div id="out"></div>
+</div>
+
+<script>
+// army slug → the overlay's composition id. Same pairing as OVERLAY_BASE_ARMY in src/lib/overlays.ts;
+// duplicated here because this page is deliberately standalone and does not import from the app.
+const COMP = {
+  'dark-elves': 'de-renegade-v2',
+  'ogre-kingdoms': 'ok-renegade-v2',
+  'skaven': 'sk-renegade-v2',
+  'chaos-dwarfs': 'cd-renegade-v2',
+  'daemons-of-chaos': 'doc-renegade-v2',
+  'lizardmen': 'lm-renegade-v2',
+};
+const army = new URLSearchParams(location.search).get('army') || 'dark-elves';
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const el = (id) => document.getElementById(id);
+
+// A rule's text is stored as an array of paragraphs; render each as its own <p>.
+const paras = (body) => (Array.isArray(body) ? body : [String(body)]).map((p) => `<p>${esc(p)}</p>`).join('');
+
+async function main() {
+  const comp = COMP[army];
+  if (!comp) { el('who').textContent = `onbekende army "${army}"`; return; }
+
+  const [overlay, cat] = await Promise.all([
+    fetch(`../renegade/${comp}.json`).then((r) => r.json()),
+    fetch(`../owb/${army}.json`).then((r) => r.json()),
+  ]);
+
+  // Flatten the catalogue by unit id, keeping EVERY occurrence. A unit can legitimately sit in more
+  // than one category (War Hydra is both Special and Rare), and `applyOverlay` patches by id across all
+  // of them — so showing only the first would under-report what the overlay actually touches.
+  const units = {};
+  for (const [category, arr] of Object.entries(cat)) {
+    if (!Array.isArray(arr)) continue;
+    for (const u of arr) {
+      const e = units[u.id] || (units[u.id] = { name: u.name_en, at: [] });
+      e.at.push({ category, points: u.points });
+    }
+  }
+
+  const picker = Object.keys(COMP).map((a) =>
+    `<option value="${a}"${a === army ? ' selected' : ''}>${a}</option>`).join('');
+  el('who').innerHTML = `<select id="army">${picker}</select>`;
+  el('army').onchange = (e) => { location.search = `?army=${e.target.value}`; };
+
+  el('meta').innerHTML = [
+    ['pack', `${overlay.label} — ${overlay.source.name}`],
+    ['versie', overlay.packVersion ?? '—'],
+    ['status', overlay.status],
+    ['scope', overlay.scope],
+    ['bron', `<a href="${esc(overlay.source.url)}" target="_blank" rel="noopener">${esc(overlay.source.author)}</a>`],
+  ].map(([k, v]) => `${k} <b>${v}</b>`).join('');
+
+  let html = '';
+
+  // ── units ──────────────────────────────────────────────────────────────────────────────────────
+  // `_was` is what the base cost WHEN THE OVERLAY WAS GENERATED. Re-checking it against the live
+  // catalogue is the point of this table: `npm run sync-owb` can move a base price, and then the
+  // overlay is quietly claiming a change that is no longer the real change.
+  const rows = Object.entries(overlay.units);
+  const order = { characters: 0, core: 1, special: 2, rare: 3, mercenaries: 4, allies: 5 };
+  const firstCat = (u) => (u && u.at.length ? u.at[0].category : undefined);
+  rows.sort((a, b) => {
+    const ua = units[a[0]], ub = units[b[0]];
+    return (order[firstCat(ua)] ?? 9) - (order[firstCat(ub)] ?? 9)
+      || String(ua ? ua.name : a[0]).localeCompare(String(ub ? ub.name : b[0]));
+  });
+  let stale = 0;
+  html += `<h2>Unit-aanpassingen — ${rows.length}</h2><div class="scroll"><table><thead><tr>
+    <th>categorie</th><th>unit</th><th class="num">basis</th><th class="num">RV2</th>
+    <th class="num">verschil</th><th>controle</th></tr></thead><tbody>`;
+  for (const [id, patch] of rows) {
+    const u = units[id];
+    const d = patch.points - patch._was;
+    // The overlay stores points per MODEL for multi-model units, exactly as the catalogue does.
+    let check = '<span style="color:var(--faint)">✓</span>';
+    if (!u) {
+      check = '<span class="flag">⚠ unit-id bestaat niet in de catalogue</span>';
+      stale++;
+    } else {
+      // An occurrence already showing the patched price is fine — that is the app having applied the
+      // overlay. Anything else means `_was` no longer describes the base and the claimed delta is wrong.
+      const bad = u.at.filter((o) => o.points !== patch._was && o.points !== patch.points);
+      if (bad.length) {
+        check = `<span class="flag">⚠ basis is nu ${bad.map((o) => `${o.points} (${o.category})`).join(', ')}, overlay ging uit van ${patch._was}</span>`;
+        stale++;
+      }
+    }
+    const cats = u ? [...new Set(u.at.map((o) => o.category))] : [];
+    html += `<tr>
+      <td class="cat">${esc(cats.join(' + ')) || '—'}</td>
+      <td>${esc(u ? u.name : id)}${cats.length > 1 ? ` <span class="sub">— in ${cats.length} categorieën, beide gepatcht</span>` : ''}</td>
+      <td class="num" style="color:var(--muted)">${patch._was}</td>
+      <td class="num"><b>${patch.points}</b></td>
+      <td class="num ${d > 0 ? 'up' : 'down'}">${d > 0 ? '+' : ''}${d}</td>
+      <td>${check}</td></tr>`;
+  }
+  html += '</tbody></table></div>';
+  html += `<p class="note" style="margin-top:9px">Punten zijn per model voor units met meerdere modellen, net als in de catalogue.
+    ${stale ? `<span class="flag">${stale} regel(s) hierboven kloppen niet meer met de huidige basisdata.</span>`
+            : 'Alle <i>basis</i>-waarden kloppen nog met de huidige catalogue.'}</p>`;
+
+  // ── rules ──────────────────────────────────────────────────────────────────────────────────────
+  const ruleEntries = Object.entries(overlay.rules || {});
+  html += `<h2>Gewijzigde regels — ${ruleEntries.length}</h2>`;
+  if (!ruleEntries.length) {
+    html += '<p class="note">Dit pack wijzigt geen regeltekst die afwijkt van wat de app al heeft.</p>';
+  }
+  for (const [slug, r] of ruleEntries) {
+    const badge = r.overrides
+      ? `<span class="badge">vervangt ${esc(r.overrides)}</span>`
+      : '<span class="badge">nieuw</span>';
+    html += `<div class="rule"><h3>${esc(r.name_en)}${badge}</h3>${paras(r.body)}`;
+    if (r.overrides) {
+      html += `<button data-slug="${esc(r.overrides)}">toon de oorspronkelijke regel</button>
+               <div class="was" id="was-${esc(slug)}" hidden></div>`;
+    }
+    html += '</div>';
+  }
+
+  // ── what this page cannot tell you ─────────────────────────────────────────────────────────────
+  html += `<h2>Wat hier niet in staat</h2><p class="note">
+    De overlay patcht alleen punten en regeltekst. Statlines, optie-/uitrustingsprijzen, magic items en
+    de Lores of Magic komen <b>niet</b> uit het pack — daar toont de app nog de basiswaarden, ook onder
+    Renegade V2. Regels waarvan de packtekst gelijk is aan wat de app al had, zijn bij het importeren
+    weggelaten en staan dus niet in de lijst hierboven; die lijst is per definitie alleen het verschil.</p>`;
+
+  el('out').innerHTML = html;
+
+  // rules.json is ~15 MB, so it is fetched only when a comparison is actually asked for, and once.
+  let rulesPromise = null;
+  el('out').addEventListener('click', async (e) => {
+    const btn = e.target.closest('button[data-slug]');
+    if (!btn) return;
+    const box = btn.nextElementSibling;
+    btn.disabled = true;
+    btn.textContent = 'laden… (rules.json ≈ 15 MB)';
+    rulesPromise = rulesPromise || fetch('../rules.json').then((r) => r.json());
+    const data = await rulesPromise;
+    const base = data.rules[btn.dataset.slug];
+    box.hidden = false;
+    box.innerHTML = `<span class="lbl">oorspronkelijk — ${esc(btn.dataset.slug)}</span>`
+      + (base ? `<p>${esc(base.bodyIndex || '(geen tekst)')}</p>` : '<p class="flag">niet gevonden in rules.json</p>');
+    btn.remove();
+  });
+}
+
+main().catch((err) => { el('who').innerHTML = `<span style="color:var(--up)">laden mislukt: ${esc(err.message)}</span>`; });
+</script>
+</body>
+</html>

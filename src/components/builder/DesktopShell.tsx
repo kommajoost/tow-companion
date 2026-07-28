@@ -196,6 +196,10 @@ export function DesktopShell(props: {
   autosavedAt?: number;
   onOpenList: (id: string) => void;
   onNewList: () => void;
+  /** Leave the builder for the army-lists overview. The rail lets you SWITCH lists but never leave
+   *  them, so without this the desktop layout is a dead end — the phone flow has had a Back button
+   *  all along, and groups / duplicate / delete only exist on the overview. */
+  onBack?: () => void;
   onEditArmyField: (field: 'faction' | 'composition' | 'rule' | 'points' | 'items') => void;
   onOpenCatalogue: () => void;
   onEscape: () => void;
@@ -214,9 +218,9 @@ export function DesktopShell(props: {
 }): React.JSX.Element | null {
   const {
     ctx, rows, rosterTable, cataloguePane, catalogueOpen, selectedUid, savedLists, activeListId,
-    autosavedAt, onOpenList, onNewList, onEditArmyField, onOpenCatalogue, onEscape, onMoveSelection,
-    onReorder, onChangeCount, onDuplicate, onRemove, onResolve, onImportOwb, onExport, onPrint,
-    onShowInfo,
+    autosavedAt, onOpenList, onNewList, onBack, onEditArmyField, onOpenCatalogue, onEscape,
+    onMoveSelection, onReorder, onChangeCount, onDuplicate, onRemove, onResolve, onImportOwb,
+    onExport, onPrint, onShowInfo,
   } = props;
   const { derived, labels, list } = ctx;
 
@@ -641,9 +645,30 @@ export function DesktopShell(props: {
             overflow: 'hidden',
           }}
         >
-          <span style={{ flexShrink: 0, display: 'flex', color: TOW.goldDeep }}>
-            <ArmyIcon size={22} />
-          </span>
+          {/* The way OUT of the builder. It carries a visible "‹ Lists" label rather than relying on
+              the army icon alone: an icon that happens to be clickable is not a way out anyone finds,
+              and this screen had no exit at all. */}
+          {onBack ? (
+            <button
+              type="button"
+              onClick={onBack}
+              title="All army lists"
+              aria-label="Back to army lists"
+              style={{
+                flexShrink: 0, display: 'flex', alignItems: 'center', gap: 4,
+                background: 'none', border: 'none', padding: '4px 6px 4px 0', margin: 0,
+                cursor: 'pointer', color: TOW.goldDeep, font: 'inherit',
+              }}
+            >
+              <span style={{ fontSize: 15, lineHeight: 1 }}>‹</span>
+              <ArmyIcon size={22} />
+              <span style={{ ...eb, fontSize: 7.5, letterSpacing: '0.16em', lineHeight: 1 }}>LISTS</span>
+            </button>
+          ) : (
+            <span style={{ flexShrink: 0, display: 'flex', color: TOW.goldDeep }}>
+              <ArmyIcon size={22} />
+            </span>
+          )}
           <span style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column' }}>
             <span
               style={{
