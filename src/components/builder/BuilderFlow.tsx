@@ -60,15 +60,9 @@ export interface BuilderFlowProps {
   onShowInfo?: (what: { kind: 'rule'; name: string } | { kind: 'item'; itemId: string } | { kind: 'mount'; name: string }) => void;
 
   // ── Desktop-only extras ──────────────────────────────────────────────────────────────────────
-  // The three-pane shell's left rail lists the OTHER saved lists, which only the screen that owns
-  // `tow:lists` knows about. All optional: without them the desktop rail simply shows this list
-  // alone, and the phone flow never needs any of it.
-  /** Every saved list, for the rail's "Armies" block. */
-  savedLists?: { id: string; name: string; points: number; army: string }[];
-  /** Open another saved list. */
-  onOpenList?: (id: string) => void;
-  /** Start the new-list dialog. */
-  onNewList?: () => void;
+  // The rail used to carry a list-switcher here (savedLists / onOpenList / onNewList). It is gone:
+  // switching or creating a list belongs on the lists overview, not in the left column of a list you
+  // are in the middle of building, where it crowded out the catalogue.
   /** Edit one field of the army summary inline (opens the owner's list-settings UI). */
   onEditArmyField?: (field: 'faction' | 'composition' | 'rule' | 'points' | 'items') => void;
   /** Top-bar actions. Absent → the shell renders them disabled with an explanatory title, which is
@@ -95,7 +89,7 @@ const ruleLabel = (slug: string): string =>
 export function BuilderFlow({
   list, name, onUpdate, onBack, army, armyName, compName, itemsData, armyItemLists,
   statIdx, onShowInfo,
-  savedLists, onOpenList, onNewList, onEditArmyField, onImportOwb, onExport, onPrint,
+  onEditArmyField, onImportOwb, onExport, onPrint,
 }: BuilderFlowProps): React.JSX.Element {
   const [screen, setScreen] = useState<BuilderScreen>({ kind: 'roster' });
   /** The row to flash after an edit returns to the roster — the spec's "briefly highlighted". */
@@ -368,8 +362,6 @@ export function BuilderFlow({
       rows={rows}
       catalogueOpen={catalogueOpen}
       selectedUid={currentUid}
-      savedLists={savedLists ?? [{ id: list.id, name: list.name, points: list.points, army: list.army }]}
-      activeListId={list.id}
       onBack={onBack}
       autosavedAt={(list as { updatedAt?: number }).updatedAt}
       rosterTable={(
@@ -399,8 +391,6 @@ export function BuilderFlow({
           autoFocusSearch
         />
       ) : undefined}
-      onOpenList={onOpenList ?? (() => {})}
-      onNewList={onNewList ?? (() => {})}
       onEditArmyField={onEditArmyField ?? (() => {})}
       onOpenCatalogue={() => setCatalogueOpen(true)}
       // Esc: close the catalogue if it is open, otherwise clear the selection. One key, one step at a

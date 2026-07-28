@@ -341,11 +341,9 @@ export function ListBuilder() {
           itemsData={activeItemsData ?? undefined}
           armyItemLists={meta?.items ?? []}
           statIdx={statIdx}
-          // Desktop rail: the other saved lists. Only this screen owns `tow:lists`, so it supplies
-          // them; the builder itself never reads the collection.
-          savedLists={lists.map((l) => ({ id: l.id, name: l.name, points: l.points, army: l.army }))}
-          onOpenList={(id) => setActiveId(id)}
-          onNewList={() => setSetupOpen(true)}
+          // The desktop rail no longer carries a list-switcher: switching or creating a list belongs on
+          // the lists overview (reachable via "‹ LISTS" in the builder header), not in the left column
+          // of a list being built, where it crowded out the unit catalogue.
           // The army-summary rows are click-to-edit. The list-settings UI still lives in
           // BuilderWorkspace, so until it is ported this opens nothing rather than pretending: an
           // inert row is honest, a row that opens a broken sheet is not.

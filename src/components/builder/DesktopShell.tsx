@@ -31,7 +31,7 @@ import { usePersistentState } from '../../store';
 import { magicItemsPoints, type Category } from '../../lib/owbBuilder';
 import type { CategoryTotal } from '../../lib/builderDerived';
 import {
-  BudgetBar, BUILDER, CompactRow, fmt, HAIRLINE, SectionHeader, UnitRow, type BudgetSegment,
+  BudgetBar, BUILDER, CompactRow, fmt, HAIRLINE, SectionHeader, type BudgetSegment,
 } from './primitives';
 import { UnitOptions } from './UnitOptions';
 import type { BuilderCtx, RosterRow } from './types';
@@ -191,11 +191,7 @@ export function DesktopShell(props: {
   catalogueOpen: boolean;
   /** De geselecteerde entry-uid, of null → inspector toont de legersamenvatting. */
   selectedUid: string | null;
-  savedLists: { id: string; name: string; points: number; army: string }[];
-  activeListId: string;
   autosavedAt?: number;
-  onOpenList: (id: string) => void;
-  onNewList: () => void;
   /** Leave the builder for the army-lists overview. The rail lets you SWITCH lists but never leave
    *  them, so without this the desktop layout is a dead end — the phone flow has had a Back button
    *  all along, and groups / duplicate / delete only exist on the overview. */
@@ -217,8 +213,8 @@ export function DesktopShell(props: {
   onShowInfo?: (what: { kind: 'rule'; name: string } | { kind: 'item'; itemId: string } | { kind: 'mount'; name: string }) => void;
 }): React.JSX.Element | null {
   const {
-    ctx, rows, rosterTable, cataloguePane, catalogueOpen, selectedUid, savedLists, activeListId,
-    autosavedAt, onOpenList, onNewList, onBack, onEditArmyField, onOpenCatalogue, onEscape,
+    ctx, rows, rosterTable, cataloguePane, catalogueOpen, selectedUid,
+    autosavedAt, onBack, onEditArmyField, onOpenCatalogue, onEscape,
     onMoveSelection, onReorder, onChangeCount, onDuplicate, onRemove, onResolve, onImportOwb,
     onExport, onPrint, onShowInfo,
   } = props;
@@ -771,10 +767,7 @@ export function DesktopShell(props: {
               : (
                 <Rail
                   ctx={ctx}
-                  savedLists={savedLists}
-                  activeListId={activeListId}
-                  onOpenList={onOpenList}
-                  onNewList={onNewList}
+                  onOpenCatalogue={onOpenCatalogue}
                   onEditArmyField={onEditArmyField}
                   totalFor={totalFor}
                   segments={segments}
@@ -959,14 +952,11 @@ export function DesktopShell(props: {
 type TotalMap = Map<Category, CategoryTotal>;
 
 function Rail({
-  ctx, savedLists, activeListId, onOpenList, onNewList, onEditArmyField, totalFor, segments,
+  ctx, onOpenCatalogue, onEditArmyField, totalFor, segments,
   magicSpend, collapseComposition, bandActive,
 }: {
   ctx: BuilderCtx;
-  savedLists: { id: string; name: string; points: number; army: string }[];
-  activeListId: string;
-  onOpenList: (id: string) => void;
-  onNewList: () => void;
+  onOpenCatalogue: () => void;
   onEditArmyField: (field: 'faction' | 'composition' | 'rule' | 'points' | 'items') => void;
   totalFor: TotalMap;
   segments: BudgetSegment[];
@@ -975,61 +965,34 @@ function Rail({
   bandActive: boolean;
 }): React.JSX.Element {
   const { derived, labels, list } = ctx;
-  const lists = savedLists ?? [];
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', height: '100%', minHeight: 0 }}>
-      {/* ── 1 · Armies ────────────────────────────────────────────────────────────────────────────
-          The one inner scroller in the rail, and a deliberate deviation from "only the roster column
-          and the inspector body scroll". Saved lists are unbounded — a player with thirty armies
-          would find the rest of them simply clipped and unreachable. The other three blocks are
-          fixed-height, so this is the only place the rail can overflow. */}
+      {/* ── 1 · Add unit ──────────────────────────────────────────────────────────────────────────
+          The rail used to list the SAVED ARMIES here, which was wrong twice over while a list is open:
+          it filled the whole left column with a list-switcher nobody needs mid-build, and it left
+          "Add unit" existing only as a small button in the far top-right corner — so the one action the
+          screen is FOR had no presence on the side where the eye starts. Switching or creating a list
+          now lives where it belongs, on the lists overview behind "‹ LISTS" in the header. */}
       <div
         style={{
-          flex: '1 1 auto', minHeight: 64, display: 'flex', flexDirection: 'column',
-          padding: `0 ${BUILDER.gutter}px`, boxSizing: 'border-box', overflow: 'hidden',
+          flexShrink: 0, padding: `12px ${BUILDER.gutter}px 14px`, boxSizing: 'border-box',
         }}
       >
-        <SectionHeader label="Armies" meta={lists.length ? String(lists.length) : undefined} />
-        <div style={{ flex: 1, minHeight: 0, overflowY: 'auto', overflowX: 'hidden' }}>
-          {lists.length === 0 ? (
-            <div
-              style={{
-                padding: '10px 0 12px', fontFamily: towFont.serif, fontStyle: 'italic',
-                fontSize: 11, lineHeight: 1.45, color: TOW.faint,
-              }}
-            >
-              No saved armies yet.
-            </div>
-          ) : (
-            lists.map((l) => (
-              // `UnitRow` already IS the spec's card: white background plus a 3px inset TOW.gold
-              // left rail when `selected`. Reused rather than rebuilt, so an army card and a roster
-              // row share one rhythm.
-              <UnitRow
-                key={l.id}
-                name={l.name || 'Untitled list'}
-                whisper={`${fmt(l.points)} pts · ${l.id === activeListId ? (labels?.faction || prettySlug(l.army)) : prettySlug(l.army)}`}
-                points={l.points}
-                selected={l.id === activeListId}
-                onClick={() => onOpenList(l.id)}
-              />
-            ))
-          )}
-        </div>
         <button
           type="button"
-          onClick={onNewList}
+          onClick={onOpenCatalogue}
           style={{
-            alignSelf: 'flex-start', margin: '8px 0 12px', padding: 0, border: 'none',
-            background: 'none', cursor: 'pointer', color: TOW.gold,
-            fontFamily: towFont.display, fontWeight: 600, fontSize: 11.5, lineHeight: 1,
-            display: 'flex', alignItems: 'center', gap: 4,
+            width: '100%', boxSizing: 'border-box', padding: '9px 12px', cursor: 'pointer',
+            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
+            background: TOW.gold, border: `1px solid ${TOW.gold}`, borderRadius: BUILDER.radius.button,
+            color: TOW.leatherDark, fontFamily: towFont.display, fontWeight: 700,
+            fontSize: 12, lineHeight: 1, letterSpacing: '0.03em',
             WebkitTapHighlightColor: 'transparent',
           }}
         >
           <span aria-hidden style={{ fontSize: 14, lineHeight: 1 }}>+</span>
-          New army
+          Add unit
         </button>
       </div>
 
@@ -1078,6 +1041,10 @@ function Rail({
           </div>
         )}
       </div>
+
+      {/* Absorbs the leftover height. The Armies block used to be the rail's `flex: 1 1 auto` element;
+          with it gone something has to take the slack, or the blocks stretch and the footer floats. */}
+      <div style={{ flex: '1 1 auto', minHeight: 0 }} />
 
       {/* ── 4 · footer — the tallies, with a status dot ──────────────────────────────────────── */}
       <div
