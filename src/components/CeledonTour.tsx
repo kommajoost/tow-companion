@@ -87,9 +87,17 @@ function stappen(label: string, cap: number, fase: number): Stap[] {
       doel: '[data-tour="tab-play"],[data-tour="rail-play"]',
       titel: 'Turns and Rulebook',
       tekst:
-        'On game night: Turns walks you through a battle phase by phase — movement, magic, shooting, combat — with ' +
-        'the rule text one tap away. Rulebook next to it has everything, searchable, quoted straight from ' +
-        'tow.whfb.app.',
+        'Turns walks you through a battle phase by phase — movement, magic, shooting, combat — with the rule text ' +
+        'one tap away. Rulebook next to it has the lot, searchable, quoted straight from tow.whfb.app. Both are ' +
+        'there to look things up, at the table or at home.',
+    },
+    {
+      doel: '[data-tour="tab-game"],[data-tour="rail-game"]',
+      titel: 'Game — for later',
+      tekst:
+        'This is where a campaign battle is actually played and scored: casualties, victory points, and the result ' +
+        'that travels back to Isle of Celedon. We will take you through it before your first battle. For now you can ' +
+        'ignore it — the army list is the only thing that matters.',
     },
     {
       doel: '[data-tour="tab-settings"],[data-tour="rail-settings"]',
@@ -101,8 +109,9 @@ function stappen(label: string, cap: number, fase: number): Stap[] {
     {
       titel: 'That is all',
       tekst:
-        'Nothing to send or upload: the campaign reads your list by itself. When you are happy with it, go back to ' +
-        `Isle of Celedon and lock it in for Act ${fase}.`,
+        'One job for now: your army list. Nothing to send or upload — the campaign reads it by itself. When you are ' +
+        `happy with it, go back to Isle of Celedon and lock it in for Act ${fase}. Everything about playing a battle ` +
+        'comes later, well before your first one.',
     },
   ];
 }
