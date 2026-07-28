@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { usePersistentState } from '../../store';
 import { TOW, towFont, engraved } from '../../design/tow';
 import { validate, type Category, type OwbArmy, type OwbUnit, type BuilderList, type MagicItemsData } from '../../lib/owbBuilder';
@@ -9,8 +9,11 @@ import { BuilderFlow } from '../builder/BuilderFlow';
 import { NewListSetup, type NewListValues } from './NewListSetup';
 import { CeledonPanel } from './CeledonPanel';
 import { LockedListView } from './LockedListView';
+import { ListSettings } from './ListSettings';
 import { useCampagnes } from '../../lib/campaign';
+import { useListSync } from '../../listSync';
 import { setPersisted } from '../../store';
+import { COMPOSITION_RULES } from '../../lib/owbBuilder';
 import { useBackClose } from '../../lib/backStack';
 import { useData } from '../../data';
 import { getRuleIndex, resolveOptionSlug, resolveRuleSlug } from '../../lib/armyRules';
@@ -69,11 +72,11 @@ export function ListBuilder() {
   const [groups, setGroups] = usePersistentState<{ id: string; name: string }[]>('tow:list-groups', []);
   const [activeId, setActiveId] = usePersistentState<string | null>('tow:builder-active', null);
   const [setupOpen, setSetupOpen] = useState(false);
-  // True when the new-list dialog was opened from the campaign panel: the campaign toggle is then on
-  // and not negotiable, because that button says "start my campaign list" and nothing else.
-  const [setupCampagne, setSetupCampagne] = useState(false);
+  /** Open het instellingen-blad van de open lijst (naam + army composition). */
+  const [instellingenOpen, setInstellingenOpen] = useState(false);
   // De campagne(s) van het ingelogde account — bepaalt de band bovenaan en of een lijst op slot staat.
   const { actief: campagne } = useCampagnes();
+  const sync = useListSync();
   const [dragOver, setDragOver] = useState<string | null>(null); // section id being hovered (group id, or '__ungrouped__')
   const [dragOverCard, setDragOverCard] = useState<{ id: string; before: boolean } | null>(null); // card hovered during a reorder drag (+ which edge)
   const [collapsed, setCollapsed] = usePersistentState<string[]>('tow:list-groups-collapsed', []); // collapsed section ids
@@ -139,6 +142,49 @@ export function ListBuilder() {
       return t === undefined ? l : { ...l, computedPoints: t };
     }));
   }, [lists, catalogues, itemsData, setLists]);
+
+  // ── Campagne: de lijst wordt AUTOMATISCH aangemaakt ─────────────────────────────────────────────
+  // Er is niets te kiezen — factie, puntencap en compositie komen alle drie van de campagne — dus een
+  // knop "start mijn lijst" vroeg alleen een klik zonder inhoud. De naam is achteraf te wijzigen via
+  // het instellingen-blad. Voorwaarden voordat we schrijven:
+  //   * de factie staat VAST (anders zou een speler die zijn keuze nog wijzigt een lijst voor het
+  //     verkeerde leger krijgen) en bestaat in de catalogus;
+  //   * de catalogus-metadata is binnen (we hebben de composities van dat leger nodig);
+  //   * de list-sync is uitgereconcilieerd — anders maakt een tweede apparaat een dubbele lijst
+  //     voordat het de bestaande uit de cloud heeft gezien.
+  const autoGedaan = useRef(false);
+  useEffect(() => {
+    if (autoGedaan.current || !campagne) return;
+    if (sync.status === 'syncing') return;
+    if (armies.length === 0 || Object.keys(metaByArmy).length === 0) return;
+    const slug = campagne.speler.factieSlug;
+    if (!campagne.factieVast || !slug || !armies.some((a) => a.slug === slug)) return;
+    if (lists.some((l) => l.campaign && l.campaignSpeler === campagne.speler.id)) {
+      autoGedaan.current = true;
+      return;
+    }
+    autoGedaan.current = true;
+    // Bewust metaByArmy en niet compsByArmy: die laatste wordt hieronder pas berekend, en de
+    // overlay-composities (Renegade-pack) zijn hier toch niet wat je als campagne-default wilt.
+    const comps = metaByArmy[slug]?.comps ?? [slug];
+    const regels = campagne.compositie.filter((id) => COMPOSITION_RULES.some((r) => r.id === id));
+    const id = newId('l');
+    setLists((ls) => [{
+      id,
+      name: `${campagne.label} army`,
+      army: slug,
+      composition: comps[0] ?? slug,
+      rule: regels[0] ?? 'open-war',
+      points: campagne.puntenCap,
+      entries: [],
+      createdAt: Date.now(),
+      updatedAt: Date.now(),
+      campaign: true,
+      campaignSpeler: campagne.speler.id,
+      campaignNaam: campagne.speler.naam,
+      campaignFase: campagne.fase,
+    }, ...ls]);
+  }, [campagne, sync.status, armies, metaByArmy, lists, setLists]);
 
   // ── Campagne: de puntenlimiet van een campagne-lijst volgt de Act ───────────────────────────────
   // `points` is het doel waartegen de builder valideert. Voor een campagne-lijst is dat NIET vrij: het
@@ -242,7 +288,6 @@ export function ListBuilder() {
     const id = newId('l');
     setLists((ls) => [{ id, name: v.name, army: v.army, composition: v.composition, rule: v.rule, points: v.points, entries: v.entries, createdAt: Date.now(), updatedAt: Date.now(), campaign: v.campaign, campaignSpeler: v.campaignSpeler, campaignNaam: v.campaignNaam, campaignFase: v.campaignFase }, ...ls]);
     setSetupOpen(false);
-    setSetupCampagne(false);
     setActiveId(id);
   };
   const duplicateList = (l: SavedList) => { const id = newId('l'); setLists((ls) => [{ ...l, id, name: `${l.name} (copy)`, createdAt: Date.now(), updatedAt: Date.now() }, ...ls]); };
@@ -324,8 +369,35 @@ export function ListBuilder() {
         />
       );
     }
+    // Het instellingen-blad hoort bij de open lijst: naam + army composition (en buiten de campagne
+    // ook punten + game mode). Vóór 28-07 riepen de army-rijen in de builder een `onEditArmyField` aan
+    // die de container nooit implementeerde, en op een telefoon was er helemaal geen ingang — een naam
+    // die je bij het aanmaken typte, was definitief.
+    const instellingenBlad = instellingenOpen && (
+      <ListSettings
+        naam={active.name}
+        army={active.army}
+        armyName={armyName(active.army)}
+        composition={active.composition}
+        comps={compsByArmy[active.army] ?? metaByArmy[active.army]?.comps ?? [active.army]}
+        compName={(c) => compName(c, active.army)}
+        rule={active.rule}
+        points={active.points}
+        campagneLabel={active.campaign && campagne ? campagne.label : null}
+        campagneAct={active.campaign && campagne ? campagne.fase : null}
+        onClose={() => setInstellingenOpen(false)}
+        onOpslaan={(v) => {
+          setLists((ls) => ls.map((l) => (l.id === active.id
+            ? { ...l, name: v.naam, composition: v.composition, rule: v.rule, points: v.points, updatedAt: Date.now() }
+            : l)));
+          setInstellingenOpen(false);
+        }}
+      />
+    );
+
     if (useV2) {
       return (
+        <>
         <BuilderFlow
           list={active}
           name={active.name}
@@ -344,10 +416,10 @@ export function ListBuilder() {
           // The desktop rail no longer carries a list-switcher: switching or creating a list belongs on
           // the lists overview (reachable via "‹ LISTS" in the builder header), not in the left column
           // of a list being built, where it crowded out the unit catalogue.
-          // The army-summary rows are click-to-edit. The list-settings UI still lives in
-          // BuilderWorkspace, so until it is ported this opens nothing rather than pretending: an
-          // inert row is honest, a row that opens a broken sheet is not.
-          onEditArmyField={undefined}
+          // The army-summary rows (and the phone header's title) open the list settings. Every field
+          // routes to the same sheet: which one you tapped only tells us you want the settings, and a
+          // four-field sheet is less surprising than four different one-field editors.
+          onEditArmyField={() => setInstellingenOpen(true)}
           // Import OWB exists, but only as "create a list from a paste" — not as "import into THIS
           // list", which is what the top-bar button implies. Export and Print do not exist at all.
           // All three are left undefined so the shell disables them with an explanation.
@@ -364,9 +436,12 @@ export function ListBuilder() {
             if (slug) openRule(slug);
           }}
         />
+        {instellingenBlad}
+        </>
       );
     }
     return (
+      <>
       <BuilderWorkspace
         list={active}
         name={active.name}
@@ -382,6 +457,8 @@ export function ListBuilder() {
         itemsData={activeItemsData ?? undefined}
         armyItemLists={meta?.items ?? []}
       />
+      {instellingenBlad}
+      </>
     );
   }
 
@@ -517,7 +594,6 @@ export function ListBuilder() {
             campaign: l.campaign, campaignSpeler: l.campaignSpeler,
           }))}
           onOpen={(id) => setActiveId(id)}
-          onNieuw={() => { setSetupCampagne(true); setSetupOpen(true); }}
           onTour={() => setPersisted('tow:celedon-tour', 'pending')}
         />
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12, flexWrap: 'wrap' }}>
@@ -547,9 +623,8 @@ export function ListBuilder() {
           armies={armies}
           compsByArmy={compsByArmy}
           defaultArmy={armies.find((a) => a.slug === FALLBACK_ARMY)?.slug ?? armies[0]?.slug ?? FALLBACK_ARMY}
-          defaultName={setupCampagne && campagne ? `${campagne.label} army` : `New list ${lists.length + 1}`}
-          forceCampaign={setupCampagne}
-          onCancel={() => { setSetupOpen(false); setSetupCampagne(false); }}
+          defaultName={`New list ${lists.length + 1}`}
+          onCancel={() => setSetupOpen(false)}
           onCreate={createListWith}
           itemsData={itemsData ?? undefined}
           itemListsByArmy={itemListsByArmy}

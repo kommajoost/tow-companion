@@ -442,6 +442,7 @@ export function BuilderFlow({
         ctx={ctx}
         rows={rows}
         onBack={onBack}
+        onEditList={onEditArmyField ? () => onEditArmyField('composition') : undefined}
         onAddUnit={(category) => setScreen({ kind: 'picker', category })}
         onSelectUnit={(uid) => setScreen({ kind: 'options', uid })}
         onDuplicate={duplicateUnit}

@@ -96,8 +96,11 @@ export function RosterScreen(props: {
   onRemove: (uid: string) => void;
   onResolve?: () => void;
   highlightUid?: string;
+  /** Opens the container's list-settings sheet (rename, army composition). Without it the header
+   *  title is inert text, exactly as it was before. */
+  onEditList?: () => void;
 }): React.JSX.Element {
-  const { ctx, rows, onBack, onAddUnit, onSelectUnit, onDuplicate, onRemove, onResolve, highlightUid } = props;
+  const { ctx, rows, onBack, onAddUnit, onSelectUnit, onDuplicate, onRemove, onResolve, highlightUid, onEditList } = props;
   const { derived, labels, list } = ctx;
 
   // LONG-PRESS ACTIONS — chosen shape and why.
@@ -222,7 +225,19 @@ export function RosterScreen(props: {
             ‹
           </button>
 
-          <span style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column' }}>
+          {/* Title + eyebrow. With `onEditList` this is the way into the list settings on a phone
+              (rename, army composition) — the desktop rail has its own rows for that, but here there
+              was no way in at all. Rendered as a button only when it does something. */}
+          <span
+            {...(onEditList ? { role: 'button', tabIndex: 0, onClick: onEditList,
+                                onKeyDown: (e: React.KeyboardEvent) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onEditList(); } },
+                                'aria-label': 'List settings' } : {})}
+            data-tour="lijst-naam"
+            style={{
+              flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column',
+              cursor: onEditList ? 'pointer' : 'default', WebkitTapHighlightColor: 'transparent',
+            }}
+          >
             <span
               style={{
                 fontFamily: towFont.display, fontWeight: 700, fontSize: 15.5, lineHeight: 1,
@@ -230,6 +245,7 @@ export function RosterScreen(props: {
               }}
             >
               {list?.name || 'Untitled list'}
+              {onEditList && <span aria-hidden style={{ color: TOW.faint, fontWeight: 400 }}> ✎</span>}
             </span>
             <span
               style={{
@@ -242,6 +258,7 @@ export function RosterScreen(props: {
           </span>
 
           <span
+            data-tour="lijst-punten"
             style={{
               flexShrink: 0, display: 'flex', flexDirection: 'column', alignItems: 'flex-end',
             }}
@@ -446,6 +463,7 @@ export function RosterScreen(props: {
       >
         <button
           type="button"
+          data-tour="lijst-toevoegen"
           onClick={() => { closeActions(); onAddUnit(); }}
           style={{
             flexShrink: 0, height: BUILDER.control.primary, padding: '0 14px',

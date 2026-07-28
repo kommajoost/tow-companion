@@ -980,6 +980,7 @@ function Rail({
         }}
       >
         <button
+          data-tour="lijst-toevoegen"
           type="button"
           onClick={onOpenCatalogue}
           style={{
@@ -997,7 +998,7 @@ function Rail({
       </div>
 
       {/* ── 2 · Army — read-only summary; a row opens the container's editor for that field ────── */}
-      <div style={{ flexShrink: 0, padding: `0 ${BUILDER.gutter}px`, boxSizing: 'border-box' }}>
+      <div data-tour="lijst-naam" style={{ flexShrink: 0, padding: `0 ${BUILDER.gutter}px`, boxSizing: 'border-box' }}>
         <SectionHeader label="Army" />
         <CompactRow name="Faction" trailing={<RailValue text={labels?.faction || prettySlug(list?.army ?? '')} />} onClick={() => onEditArmyField('faction')} />
         <CompactRow name="Composition" trailing={<RailValue text={labels?.composition || '—'} />} onClick={() => onEditArmyField('composition')} />
@@ -1010,7 +1011,7 @@ function Rail({
       {/* ── 3 · Composition — REPLACES the phone's per-section meta ──────────────────────────────
              Under 800px tall it collapses to one stacked bar plus the four short totals, exactly so
              the rail keeps fitting without a second scroller. */}
-      <div style={{ flexShrink: 0, padding: `0 ${BUILDER.gutter}px`, boxSizing: 'border-box' }}>
+      <div data-tour="lijst-punten" style={{ flexShrink: 0, padding: `0 ${BUILDER.gutter}px`, boxSizing: 'border-box' }}>
         <SectionHeader label="Composition" />
         {collapseComposition ? (
           <div style={{ padding: '2px 0 10px' }}>

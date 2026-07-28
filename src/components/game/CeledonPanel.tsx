@@ -1,6 +1,6 @@
 import { TOW, towFont, engraved } from '../../design/tow';
 import { COMPOSITION_RULES } from '../../lib/owbBuilder';
-import { useCampagnes, kiesCampagne, type CampaignContext } from '../../lib/campaign';
+import { useCampagnes, kiesCampagne } from '../../lib/campaign';
 import { useAuth } from '../../lib/auth';
 
 // The campaign banner at the top of "My lists". Most players arrive here straight from Isle of
@@ -13,7 +13,6 @@ import { useAuth } from '../../lib/auth';
 // exactly as it was for them.
 
 const eb = engraved as React.CSSProperties;
-const goldGrad = `linear-gradient(180deg, ${TOW.goldBright} 0%, ${TOW.gold} 55%, ${TOW.goldDeep} 100%)`;
 const ruleName = (id: string): string => COMPOSITION_RULES.find((r) => r.id === id)?.name ?? id;
 
 /** One saved list as this panel needs it (kept minimal so ListBuilder stays the owner of the data). */
@@ -22,10 +21,9 @@ export interface PanelLijst {
   campaign?: boolean; campaignSpeler?: string;
 }
 
-export function CeledonPanel({ lijsten, onOpen, onNieuw, onTour }: {
+export function CeledonPanel({ lijsten, onOpen, onTour }: {
   lijsten: PanelLijst[];
   onOpen: (id: string) => void;
-  onNieuw: (ctx: CampaignContext) => void;
   onTour: () => void;
 }) {
   const { campagnes, actief, laden, fout } = useCampagnes();
@@ -99,19 +97,15 @@ export function CeledonPanel({ lijsten, onOpen, onNieuw, onTour }: {
       </div>
 
       {!lijst ? (
+        // Geen lijst betekent hier NIET "druk op de knop" — die is er niet meer, de lijst maakt
+        // zichzelf aan (ListBuilder). Het enige dat dit tegenhoudt is een factie die nog niet vastligt.
         <>
           <p style={{ ...tekst, marginTop: 10 }}>
-            This is the army builder for the campaign. Your list is capped at{' '}
-            <b style={{ color: TOW.ink }}>{actief.puntenCap} points</b> for Act {actief.fase}
-            {actief.speler.factie ? <> and fixed to <b style={{ color: TOW.ink }}>{actief.speler.factie}</b></> : null}
-            {regels ? <>, using the <b style={{ color: TOW.ink }}>{regels}</b> composition</> : null}. Build it here and
-            the campaign reads it by itself — there is nothing to send or upload.
+            {actief.factieVast
+              ? 'Setting up your campaign list…'
+              : 'Confirm your faction on Isle of Celedon first — then your list appears here by itself, with the right points limit and composition already set.'}
           </p>
           <div style={{ display: 'flex', gap: 8, marginTop: 12, flexWrap: 'wrap' }}>
-            <button onClick={() => onNieuw(actief)} data-tour="celedon-start"
-              style={{ ...knop, border: 'none', background: goldGrad, color: TOW.onGrad }}>
-              Start my {actief.label} list
-            </button>
             <button onClick={onTour} style={{ ...knop, border: `1px solid ${TOW.line}`, background: 'transparent', color: TOW.inkDim }}>
               Show me around
             </button>
