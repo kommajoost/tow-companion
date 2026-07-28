@@ -171,10 +171,13 @@ function EntryRow({ entry, fits, selected, hovered, onSelect, onHover, onAdd }: 
     ? [entry.troopType, size, cost, entry.note].filter(Boolean).join(' · ')
     : `${n(entry.addCost)} pt · exceeds remaining points`;
 
-  // Hover and selection share the white ground + accent ring; the pending selection adds the 3px
-  // inset rail the primitives use for a selected row. An inset shadow rather than a border, so a
-  // hovered row's box is identical to a resting one and the 44px rhythm never shifts.
-  const ring = `inset 0 0 0 1px ${TOW.gold}`;
+  // ONE vocabulary for these states, shared with RosterTable and PickerScreen: hover lifts the ground,
+  // selection adds a 3px inset rail. This pane used to also draw a full 1px accent RING — on hover and
+  // again under selection — and it was the only place in the builder that did. It read as a box drawn
+  // around the row, and because the row owns no horizontal padding (the pane insets it) the ring hugged
+  // the row box while the text sat inside it, so the box looked wider than the content it framed.
+  // An inset shadow, not a border, so the row's box is identical in every state and the 44px rhythm
+  // never shifts.
   const rail = `inset 3px 0 0 ${TOW.gold}`;
   const active = hovered || selected;
 
@@ -196,7 +199,7 @@ function EntryRow({ entry, fits, selected, hovered, onSelect, onHover, onAdd }: 
         height: BUILDER.rowH, boxSizing: 'border-box', padding: '7px 0', width: '100%',
         background: active ? TOW.panel : 'transparent',
         borderBottom: `1px solid ${HAIRLINE}`,
-        boxShadow: selected ? `${rail}, ${ring}` : hovered ? ring : 'none',
+        boxShadow: selected ? rail : 'none',
         // Over budget is REPORTED, never enforced: the row dims and states the reason, but it stays
         // fully interactive — no `disabled`, no `pointerEvents: none`. Only "Fits ✓" hides it.
         opacity: fits ? 1 : 0.42,
