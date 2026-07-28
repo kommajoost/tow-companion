@@ -139,8 +139,8 @@ function Eye({ onClick, title }: { onClick: () => void; title: string }): React.
  *  each button is a transparent 44 × 44 box wrapping the 34 × 30 face — no pseudo-elements needed,
  *  which inline styles cannot express anyway. Min/max are clamped twice: the button disables at the
  *  bound (so "min 10" reads as an explanation, not an error) and `setCount` clamps again on write. */
-function Stepper({ value, min, max, onChange }: {
-  value: number; min: number; max: number; onChange: (v: number) => void;
+function Stepper({ value, min, max, onChange, dense }: {
+  value: number; min: number; max: number; onChange: (v: number) => void; dense?: boolean;
 }): React.JSX.Element {
   const face = (off: boolean): React.CSSProperties => ({
     width: BUILDER.control.back, height: BUILDER.control.stepper, boxSizing: 'border-box',
@@ -150,7 +150,9 @@ function Stepper({ value, min, max, onChange }: {
     display: 'flex', alignItems: 'center', justifyContent: 'center',
   });
   const hit = (off: boolean): React.CSSProperties => ({
-    width: 44, height: 44, padding: 0, border: 'none', background: 'transparent',
+    // 44 × 44 is the TOUCH minimum, and that is what the phone gets. With a mouse the 34 × 30 face is
+    // already the whole target, so the dense column stops paying 10px of empty height for reach.
+    width: dense ? 34 : 44, height: dense ? 34 : 44, padding: 0, border: 'none', background: 'transparent',
     display: 'flex', alignItems: 'center', justifyContent: 'center',
     cursor: off ? 'default' : 'pointer', WebkitTapHighlightColor: 'transparent',
   });
@@ -172,16 +174,21 @@ function Stepper({ value, min, max, onChange }: {
   );
 }
 
-const ROW_LABEL: React.CSSProperties = {
-  // 15.5, up from 14. The option name is the one thing on this screen you are reading to make a
-  // decision; it was set smaller than the unit title above it that you read once.
-  fontFamily: towFont.serif, fontWeight: 400, fontSize: 15.5, lineHeight: 1.3, color: TOW.ink,
-};
-const ROW_SUB: React.CSSProperties = {
-  // 12 and one step less faint. At 10.5 in `faint` on the dark skin this was barely legible, which is
-  // the worst of both: it took the space of information without delivering any.
-  fontFamily: towFont.serif, fontWeight: 400, fontSize: 12, lineHeight: 1.3, color: TOW.muted,
-};
+// TWO DENSITIES, because this screen is shared. On a phone it IS the screen and every row is a tap
+// target, so it keeps 46px rows and a 15.5 label. In the desktop inspector it is a 392px side column
+// you scan while the roster stays visible, and at phone metrics it needed far too much scrolling for
+// the amount of data on show. `dense` is passed only by DesktopShell; shrinking both would put 32px
+// tap targets on a phone, which is below every platform's minimum.
+const ROW_LABEL = (dense?: boolean): React.CSSProperties => ({
+  // The option name is the one thing on this screen you read to make a decision, so it stays the
+  // largest thing in the row even when dense.
+  fontFamily: towFont.serif, fontWeight: 400, fontSize: dense ? 13 : 15.5, lineHeight: 1.25, color: TOW.ink,
+});
+const ROW_SUB = (dense?: boolean): React.CSSProperties => ({
+  // One step less faint than it once was. At 10.5 in `faint` on the dark skin this was barely legible,
+  // which is the worst of both: it took the space of information without delivering any.
+  fontFamily: towFont.serif, fontWeight: 400, fontSize: dense ? 10.5 : 12, lineHeight: 1.25, color: TOW.muted,
+});
 const ROW_DELTA: React.CSSProperties = {
   fontFamily: towFont.serif, fontWeight: 400, fontSize: 12, whiteSpace: 'nowrap', flexShrink: 0,
   fontVariantNumeric: 'tabular-nums',
@@ -198,15 +205,15 @@ const BTN_RESET: React.CSSProperties = {
  * PRICE keeps full contrast, because the whole point of showing a blocked item is that you can see
  * what it would cost. A chosen row that costs points gets the White row background.
  */
-function OptionRow({ kind, on, label, sub, delta, deltaMuted, blocked, reason, onToggle, onInfo, infoTitle }: {
+function OptionRow({ kind, on, label, sub, delta, deltaMuted, blocked, reason, onToggle, onInfo, infoTitle, dense }: {
   kind: 'radio' | 'toggle'; on: boolean; label: string; sub?: string;
   delta: string; deltaMuted?: boolean; blocked?: boolean; reason?: string;
-  onToggle: () => void; onInfo?: () => void; infoTitle?: string;
+  onToggle: () => void; onInfo?: () => void; infoTitle?: string; dense?: boolean;
 }): React.JSX.Element {
   const dim = blocked ? { opacity: 0.42 } : undefined;
   return (
     <div style={{
-      display: 'flex', alignItems: 'center', gap: 8, width: '100%',
+      display: 'flex', alignItems: 'center', gap: dense ? 4 : 8, width: '100%',
       borderBottom: `1px solid ${HAIRLINE}`,
       background: on && !deltaMuted ? TOW.panel : 'transparent',
     }}>
@@ -216,27 +223,26 @@ function OptionRow({ kind, on, label, sub, delta, deltaMuted, blocked, reason, o
         onClick={onToggle}
         aria-pressed={on}
         style={{
-          // 46px, with room to breathe. An earlier pass took this DOWN to 38 to fit more rows, which
-          // was solving the wrong problem: the screen felt cramped because ~47% of it was chrome (a
-          // 255px pinned footer, a tall header), not because the rows were generous. Removing the
-          // footer freed far more than shaving rows ever could, so the rows get their space back —
-          // the option list is the thing you actually read here.
-          ...BTN_RESET, flex: 1, minWidth: 0, minHeight: 46, padding: '9px 0',
-          display: 'flex', alignItems: 'center', gap: 10, cursor: blocked ? 'default' : 'pointer',
+          // 46px on a phone, where the row IS the tap target. 32 in the desktop inspector, where it is
+          // a 392px column read with a mouse beside a visible roster: at 46 that column showed very few
+          // rows for its height and everything worth comparing was a scroll away.
+          ...BTN_RESET, flex: 1, minWidth: 0,
+          minHeight: dense ? 32 : 46, padding: dense ? '4px 0' : '9px 0',
+          display: 'flex', alignItems: 'center', gap: dense ? 7 : 10, cursor: blocked ? 'default' : 'pointer',
         }}
       >
         <span style={dim}><Indicator kind={kind} on={on} /></span>
         <span style={{ ...dim, flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 1 }}>
-          <span style={ROW_LABEL}>{label}</span>
+          <span style={ROW_LABEL(dense)}>{label}</span>
           {/* One line, ellipsised. These sub-lines carry catalogue restriction text that can run to a
               full sentence ("0-1 Dark Elf Warriors or Repeater Crossbowman per 1000 points may
               purchase a magic standard"); left to wrap it doubled the row's height and made the group
               impossible to scan. The full text stays one tap away behind the eye. */}
-          {sub ? <span style={{ ...ROW_SUB, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{sub}</span> : null}
+          {sub ? <span style={{ ...ROW_SUB(dense), whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{sub}</span> : null}
         </span>
         <span style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: 1 }}>
           <span style={{ ...ROW_DELTA, color: deltaMuted ? TOW.faint : TOW.inkDim }}>{delta}</span>
-          {blocked && reason ? <span style={{ ...ROW_SUB, color: TOW.gold, textAlign: 'right' }}>{reason}</span> : null}
+          {blocked && reason ? <span style={{ ...ROW_SUB(dense), color: TOW.gold, textAlign: 'right' }}>{reason}</span> : null}
         </span>
       </button>
       {onInfo ? <Eye onClick={onInfo} title={infoTitle ?? 'Show rule'} /> : null}
@@ -276,8 +282,11 @@ export function UnitOptions(props: {
   /** Opent het regel-/profielpaneel van de app. De container bezit de regeldata en de
    *  slug-resolutie; geef door wat je wilt tonen. */
   onShowInfo?: (what: { kind: 'rule'; name: string } | { kind: 'item'; itemId: string } | { kind: 'mount'; name: string }) => void;
+  /** Tighter rows and smaller type, for the desktop inspector. The phone flow leaves it off: there this
+   *  screen IS the screen and every row is a tap target. */
+  dense?: boolean;
 }): React.JSX.Element {
-  const { ctx, uid, onBack, onRemove, onDuplicate, onShowInfo } = props;
+  const { ctx, uid, onBack, onRemove, onDuplicate, onShowInfo, dense } = props;
   const { itemsData } = ctx;
 
   // ── hooks: all unconditional, before any early return ──────────────────────────────────────────
@@ -450,6 +459,7 @@ export function UnitOptions(props: {
     const sub = group === 'mounts' ? troopTypeFor(label) : undefined;
     return (
       <OptionRow
+        dense={dense}
         key={`${group}/${i}`}
         kind={kind}
         on={on}
@@ -530,6 +540,7 @@ export function UnitOptions(props: {
     const kind: 'radio' | 'toggle' = cat.maxItems > 1 ? 'toggle' : 'radio';
     return (
       <OptionRow
+        dense={dense}
         key={key}
         kind={kind}
         on={on}
@@ -607,7 +618,12 @@ export function UnitOptions(props: {
     }}>
       {/* ── header ─────────────────────────────────────────────────────────────────────────────── */}
       <div style={{ flexShrink: 0, background: TOW.panel2, borderBottom: `1px solid ${TOW.lineStrong}` }}>
-        {/* Army strip — the whole reason it is here is that it keeps running while you spend points. */}
+        {/* Army strip — list name, running budget bar, total. It is here because on a phone this screen
+            covers the whole app and the budget would otherwise be out of sight while you spend points.
+            In the desktop inspector the top bar shows all three of those things a few hundred pixels
+            up, so here it is pure repetition and it is dropped: 21px of a 176px header, spent saying
+            what the screen already says. */}
+        {dense ? null : (
         <div style={{
           display: 'flex', alignItems: 'center', gap: 9, height: 8, boxSizing: 'content-box',
           padding: `6px ${BUILDER.gutter}px`, borderBottom: `1px solid ${TOW.line}`,
@@ -624,6 +640,7 @@ export function UnitOptions(props: {
             fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap', flexShrink: 0,
           }}>{fmt(listTotal)} / {fmt(cap)}</span>
         </div>
+        )}
 
         {/* Title row */}
         <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10, padding: `9px ${BUILDER.gutter}px 0` }}>
@@ -659,7 +676,7 @@ export function UnitOptions(props: {
         {/* Count row — only a multi-model unit has a count to change. */}
         {multiModel ? (
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: `0 ${BUILDER.gutter}px` }}>
-            <Stepper value={entry.count} min={min} max={max} onChange={setCount} />
+            <Stepper value={entry.count} min={min} max={max} onChange={setCount} dense={dense} />
             <span style={{ fontFamily: towFont.serif, fontSize: 11, color: TOW.faint }}>
               min {min}{rawMax > 0 ? ` · max ${rawMax}` : ''}
             </span>
@@ -761,6 +778,7 @@ export function UnitOptions(props: {
               return (
                 <div key={slug}>
                   <OptionRow
+                    dense={dense}
                     kind="radio"
                     on={on}
                     label={lore.name}

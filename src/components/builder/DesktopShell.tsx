@@ -2,8 +2,11 @@
 //
 // This file is CHROME AND GEOMETRY ONLY. It owns:
 //   • the three-band grid (56px top bar · body · 30px status bar) and the three body columns
-//     (rail 236 · roster fluid · inspector 392), including the draggable dividers and their
-//     per-device persistence;
+//     (rail 236 · roster fluid · inspector 392) at FIXED widths. The columns were once drag-resizable
+//     with per-device persistence; the handles are gone, because each was an invisible 9px strip at
+//     zIndex 3 sitting exactly on a column boundary, and the inspector's checkboxes are flush against
+//     that boundary — aiming at a checkbox grabbed the divider. The columns still respond to the
+//     available width through the breakpoint tiers and each column's floor;
 //   • the left rail's four blocks (Armies · Army · Composition · footer tallies);
 //   • the status bar in BOTH of its states (legal line ↔ violation band) at a FIXED 30px, so the
 //     layout can never jump when a list goes illegal;
@@ -27,7 +30,6 @@
 import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { TOW, towFont, engraved } from '../../design/tow';
 import { ArmyIcon } from '../../design/icons';
-import { usePersistentState } from '../../store';
 import { magicItemsPoints, type Category } from '../../lib/owbBuilder';
 import type { CategoryTotal } from '../../lib/builderDerived';
 import {
@@ -51,8 +53,6 @@ const ROSTER_MIN = 480;
 const INSPECTOR_MIN = 320;
 /** Upper bounds on the two draggable panes. Not in the spec; they exist so a stored width can never
  *  be dragged (or restored from a corrupted `tow:builder-panes`) into a state with no roster left. */
-const RAIL_MAX = 420;
-const INSPECTOR_MAX = 560;
 
 /** Below this the desktop shell renders NOTHING — see the `null` return. */
 const MIN_DESKTOP = 1180;
@@ -73,10 +73,7 @@ const CATALOGUE_EXTRA = 100;
 const ICON_RAIL = 56;
 
 const BUDGET_MAX_W = 620;    // top bar: bar + total together
-const HANDLE_HIT = 9;        // divider grab area (visually a 1px rule)
-const NUDGE = 16;            // keyboard resize step on a focused divider
 
-const PANES_KEY = 'tow:builder-panes';
 
 /** The four categories with a budget segment, in the spec's fixed order. Typed as the narrow
  *  `BudgetSegment['key']` union so `<BudgetBar>` takes them without a cast. */
@@ -100,17 +97,11 @@ const SHORT_LABEL: Record<BudgetSegment['key'], string> = {
 // unused); support is universal in every browser that can run this React 19 / Vite 8 PWA.
 const FOCUS_RING = `0 0 0 2px color-mix(in srgb, ${TOW.gold} 40%, transparent)`;
 
-interface Panes { rail: number; inspector: number }
-const DEFAULT_PANES: Panes = { rail: RAIL_DEFAULT, inspector: INSPECTOR_DEFAULT };
-
 type Zone = 'rail' | 'roster' | 'inspector';
 
 // ═══════════════════════════════════════════════════════════════════════════════════════════════
 // small helpers
 // ═══════════════════════════════════════════════════════════════════════════════════════════════
-const clamp = (n: number, lo: number, hi: number, fallback: number): number =>
-  (Number.isFinite(n) ? Math.min(hi, Math.max(lo, Math.round(n))) : fallback);
-
 /** 'dark-elves' → 'Dark Elves'. Only used for SAVED lists other than the open one: `ctx.labels`
  *  carries the authoritative faction name for the OPEN list, and the shell has no army-name index
  *  for the rest. A faction whose display name is not just its title-cased slug therefore reads
@@ -281,15 +272,15 @@ export function DesktopShell(props: {
   const w = box?.w ?? REF_W;
   const h = box?.h ?? REF_H;
 
-  // ── pane widths, persisted PER DEVICE ─────────────────────────────────────────────────────────
-  // `usePersistentState` mirrors to localStorage (device-local by definition) and shares one store
-  // per key, so two shells in one session stay in step. A brand-new key — `tow:builder-panes` — so
-  // nothing here can collide with the four published keys in REBUILD-CONSTRAINTS §3.
-  const [panes, setPanes] = usePersistentState<Panes>(PANES_KEY, DEFAULT_PANES);
-  // Sanitised on every read: a hand-edited or half-synced value must not be able to produce a
-  // negative column.
-  const railStored = clamp(panes?.rail ?? RAIL_DEFAULT, RAIL_MIN, RAIL_MAX, RAIL_DEFAULT);
-  const inspectorStored = clamp(panes?.inspector ?? INSPECTOR_DEFAULT, INSPECTOR_MIN, INSPECTOR_MAX, INSPECTOR_DEFAULT);
+  // ── pane widths — FIXED ───────────────────────────────────────────────────────────────────────
+  // The columns used to be drag-resizable, with the widths persisted per device. The handles are gone.
+  // Each one was an invisible 9px strip absolutely positioned ON the column boundary at zIndex 3, and
+  // the inspector's checkboxes sit flush against exactly that boundary — so aiming at a checkbox
+  // grabbed the divider instead. A resize nobody asked for is not worth a control you cannot click.
+  // The responsive behaviour below is unaffected: it never depended on the stored widths, only on the
+  // available width, the breakpoint tier and each column's floor.
+  const railStored = RAIL_DEFAULT;
+  const inspectorStored = INSPECTOR_DEFAULT;
 
   const tier: 'wide' | 'ref' | 'compact' = w >= WIDE_W ? 'wide' : w >= REF_W ? 'ref' : 'compact';
   const shortViewport = h > 0 && h < SHORT_H;
@@ -419,63 +410,6 @@ export function DesktopShell(props: {
     return () => document.removeEventListener('keydown', onKey);
   }, []);
 
-  // ── divider dragging ──────────────────────────────────────────────────────────────────────────
-  const drag = useRef<{ which: 'rail' | 'inspector'; x: number; rail: number; inspector: number } | null>(null);
-  const [dragging, setDragging] = useState(false);
-
-  const startDrag = (which: 'rail' | 'inspector') => (e: React.PointerEvent<HTMLDivElement>) => {
-    if (e.button !== 0) return;
-    drag.current = { which, x: e.clientX, rail: railStored, inspector: inspectorStored };
-    setDragging(true);
-    e.currentTarget.setPointerCapture?.(e.pointerId);
-    // `preventDefault` stops the text selection a horizontal drag would otherwise start — but it also
-    // cancels the default focus, which is the only route to the arrow-key nudge below (the handles are
-    // deliberately outside the Tab ring). So focus is taken explicitly.
-    e.currentTarget.focus?.({ preventScroll: true });
-    e.preventDefault();
-  };
-  const moveDrag = (e: React.PointerEvent<HTMLDivElement>) => {
-    const d = drag.current;
-    if (!d) return;
-    const dx = e.clientX - d.x;
-    // The roster's floor is enforced against the OTHER pane's current width, so a drag can never
-    // squeeze the table below ROSTER_MIN.
-    if (d.which === 'rail') {
-      const ceiling = Math.min(RAIL_MAX, w - inspectorW - ROSTER_MIN - (catalogue && !overlayCatalogue ? CATALOGUE_EXTRA : 0));
-      const next = clamp(d.rail + dx, RAIL_MIN, Math.max(RAIL_MIN, ceiling), RAIL_DEFAULT);
-      setPanes((p) => ({ rail: next, inspector: p?.inspector ?? inspectorStored }));
-    } else {
-      const ceiling = Math.min(INSPECTOR_MAX, w - railW - ROSTER_MIN);
-      const next = clamp(d.inspector - dx, INSPECTOR_MIN, Math.max(INSPECTOR_MIN, ceiling), INSPECTOR_DEFAULT);
-      setPanes((p) => ({ rail: p?.rail ?? railStored, inspector: next }));
-    }
-  };
-  const endDrag = (e: React.PointerEvent<HTMLDivElement>) => {
-    if (!drag.current) return;
-    drag.current = null;
-    setDragging(false);
-    // `releasePointerCapture` throws NotFoundError for a pointer it never captured (a pointerup that
-    // arrives after the capture was already lost), so it is asked first.
-    if (e.currentTarget.hasPointerCapture?.(e.pointerId)) e.currentTarget.releasePointerCapture(e.pointerId);
-  };
-  const nudge = (which: 'rail' | 'inspector') => (e: React.KeyboardEvent<HTMLDivElement>) => {
-    if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
-    const dx = (e.key === 'ArrowLeft' ? -1 : 1) * NUDGE;
-    e.preventDefault();
-    e.stopPropagation();
-    if (which === 'rail') {
-      setPanes((p) => ({
-        rail: clamp(railStored + dx, RAIL_MIN, Math.min(RAIL_MAX, w - inspectorW - ROSTER_MIN), RAIL_DEFAULT),
-        inspector: p?.inspector ?? inspectorStored,
-      }));
-    } else {
-      setPanes((p) => ({
-        rail: p?.rail ?? railStored,
-        inspector: clamp(inspectorStored - dx, INSPECTOR_MIN, Math.min(INSPECTOR_MAX, w - railW - ROSTER_MIN), INSPECTOR_DEFAULT),
-      }));
-    }
-  };
-
   // ── derived display values (all READ, nothing computed twice) ──────────────────────────────────
   const cap = list?.points ?? 0;
   const totalFor = useMemo(
@@ -587,30 +521,6 @@ export function DesktopShell(props: {
     );
   };
 
-  /** One divider. Deliberately OUT of the Tab ring (`tabIndex={-1}`) so Tab stays exactly
-   *  rail → roster → inspector as the spec pins it; click it and the arrow keys nudge it. */
-  const divider = (which: 'rail' | 'inspector', left: number): React.JSX.Element => (
-    <div
-      key={which}
-      role="separator"
-      aria-orientation="vertical"
-      aria-label={which === 'rail' ? 'Resize the army rail' : 'Resize the inspector'}
-      tabIndex={-1}
-      onPointerDown={startDrag(which)}
-      onPointerMove={moveDrag}
-      onPointerUp={endDrag}
-      onPointerCancel={endDrag}
-      onKeyDown={nudge(which)}
-      style={{
-        position: 'absolute', top: 0, bottom: 0, left: left - Math.floor(HANDLE_HIT / 2),
-        width: HANDLE_HIT, zIndex: 3, cursor: 'col-resize',
-        // The visible rule is the column's own 1px border; the handle itself only shows on grab.
-        background: dragging && drag.current?.which === which ? TOW.bandLine : 'transparent',
-        touchAction: 'none',
-      }}
-    />
-  );
-
   // ═════════════════════════════════════════════════════════════════════════════════════════════
   return (
     <div
@@ -619,9 +529,6 @@ export function DesktopShell(props: {
         width: '100%', height: '100%', minHeight: 0, minWidth: 0, boxSizing: 'border-box',
         display: 'flex', flexDirection: 'column', overflow: 'hidden',
         background: TOW.bg, color: TOW.parch,
-        // While a divider is being dragged, nothing in the shell may start a text selection.
-        userSelect: dragging ? 'none' : undefined,
-        cursor: dragging ? 'col-resize' : undefined,
       }}
     >
       {/* ═══════════════ top bar — exactly 56px ═══════════════ */}
@@ -853,6 +760,9 @@ export function DesktopShell(props: {
               onRemove={onRemove}
               onDuplicate={onDuplicate}
               onShowInfo={onShowInfo}
+              // Tighter rows here only. This is a 392px column read with a mouse while the roster stays
+              // visible; at the phone's 46px rows it showed very little for its height.
+              dense
             />
           ) : (
             <InspectorSummary
@@ -865,9 +775,6 @@ export function DesktopShell(props: {
           )}
         </div>
 
-        {/* ── dividers, drawn over the boundaries so they cost no layout width ─────────────────── */}
-        {overlayCatalogue ? null : divider('rail', railW)}
-        {divider('inspector', railW + rosterW)}
       </div>
 
       {/* ═══════════════ status bar — 30px in BOTH states ═══════════════
