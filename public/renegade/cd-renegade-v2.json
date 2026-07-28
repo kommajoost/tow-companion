@@ -75,6 +75,32 @@
       "_changed": [
         "points"
       ]
+    },
+    "bull-centaur-taur'ruk": {
+      "options": [
+        {
+          "group": "equipment",
+          "name_en": "Darkforged weapon",
+          "points": 15,
+          "_was": 10
+        }
+      ],
+      "_changed": [
+        "options"
+      ]
+    },
+    "dreadquake-mortar": {
+      "options": [
+        {
+          "group": "options",
+          "name_en": "Ogre Loader",
+          "points": 35,
+          "_was": 20
+        }
+      ],
+      "_changed": [
+        "options"
+      ]
     }
   },
   "magicItems": {},

@@ -47,6 +47,19 @@
       "_changed": [
         "points"
       ]
+    },
+    "hunter": {
+      "options": [
+        {
+          "group": "options",
+          "name_en": "Harpoon launcher",
+          "points": 15,
+          "_was": 10
+        }
+      ],
+      "_changed": [
+        "options"
+      ]
     }
   },
   "magicItems": {

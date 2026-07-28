@@ -17,7 +17,28 @@
       "points": 13,
       "_was": 14,
       "_changed": [
-        "points"
+        "points",
+        "options"
+      ],
+      "options": [
+        {
+          "group": "command",
+          "name_en": "Bloodreaper (champion)",
+          "points": 6,
+          "_was": 7
+        },
+        {
+          "group": "command",
+          "name_en": "Standard bearer",
+          "points": 6,
+          "_was": 7
+        },
+        {
+          "group": "command",
+          "name_en": "Musician",
+          "points": 6,
+          "_was": 7
+        }
       ]
     },
     "flesh-hounds-of-khorne-core": {
@@ -109,6 +130,32 @@
       "_was": 190,
       "_changed": [
         "points"
+      ]
+    },
+    "plague-drones-of-nurgle": {
+      "options": [
+        {
+          "group": "options",
+          "name_en": "Plague Proboscis (+1 Initiative)",
+          "points": 1,
+          "_was": 2
+        }
+      ],
+      "_changed": [
+        "options"
+      ]
+    },
+    "daemonic-herald-of-tzeentch": {
+      "options": [
+        {
+          "group": "mounts",
+          "name_en": "Disc of Tzeentch",
+          "points": 35,
+          "_was": 20
+        }
+      ],
+      "_changed": [
+        "options"
       ]
     }
   },

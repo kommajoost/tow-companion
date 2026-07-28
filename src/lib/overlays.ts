@@ -29,12 +29,27 @@ export interface OverlaySource {
   terms: string;
 }
 
+/** One repriced option on a unit.
+ *
+ *  Keyed by NAME, not by the `<group>/<index>` key the engine stores in `entry.opts`. Indices shift
+ *  whenever `npm run sync-owb` regenerates the catalogue, and a shifted index would silently reprice a
+ *  DIFFERENT option; a name that no longer exists simply fails to apply, which is the safe direction. */
+export interface OverlayOptionPatch {
+  /** The option group it lives in — `equipment` | `armor` | `options` | `command` | `mounts`. */
+  group: string;
+  name_en: string;
+  points: number;
+  _was?: number;
+}
+
 /** A single patched unit. Only the fields present are replaced; `_was`/`_changed` are provenance and
  *  are never merged into the unit itself. */
 export interface OverlayUnitPatch {
   points?: number;
   _was?: number;
   _changed?: string[];
+  /** Repriced options — command upgrades, weapons, armour, mounts, special-rule buys. */
+  options?: OverlayOptionPatch[];
 }
 
 /** One special rule as the pack words it. `body` is paragraphs, in order. */
@@ -126,10 +141,48 @@ export function applyOverlay(base: OwbArmy, overlay: CompositionOverlay): OwbArm
       // Only real fields are copied over; `_was`/`_changed` stay out of the unit.
       const next: OwbUnit = { ...u, armyComposition: comp };
       if (typeof patch.points === 'number') next.points = patch.points;
+      if (patch.options?.length) applyOptionPatches(next, patch.options);
       return next;
     });
   }
   return out as OwbArmy;
+}
+
+const normOpt = (s: string): string =>
+  String(s).toLowerCase().replace(/\{[^}]*\}/g, '').replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim();
+
+/**
+ * Reprice options on a unit, in place on the already-copied `unit`.
+ *
+ * Matches on the option's NAME within its group, one level of nesting included (a mount's sub-options,
+ * a Wizard's levels). Arrays are rebuilt rather than mutated, because the caller only shallow-copied the
+ * unit — writing into `unit.command[0]` would reach through into the base catalogue and reprice the
+ * option for every composition, including the ones this overlay does not apply to.
+ */
+function applyOptionPatches(unit: OwbUnit, patches: OverlayOptionPatch[]): void {
+  const byGroup = new Map<string, Map<string, number>>();
+  for (const p of patches) {
+    if (typeof p.points !== 'number' || !p.group || !p.name_en) continue;
+    if (!byGroup.has(p.group)) byGroup.set(p.group, new Map());
+    byGroup.get(p.group)!.set(normOpt(p.name_en), p.points);
+  }
+  const u = unit as OwbUnit & Record<string, unknown>;
+  for (const [group, wanted] of byGroup) {
+    const arr = u[group];
+    if (!Array.isArray(arr)) continue;
+    u[group] = (arr as { name_en?: string; points?: number; options?: unknown[] }[]).map((opt) => {
+      const next = { ...opt };
+      const hit = wanted.get(normOpt(next.name_en ?? ''));
+      if (typeof hit === 'number') next.points = hit;
+      if (Array.isArray(next.options)) {
+        next.options = (next.options as { name_en?: string; points?: number }[]).map((sub) => {
+          const s = wanted.get(normOpt(sub.name_en ?? ''));
+          return typeof s === 'number' ? { ...sub, points: s } : sub;
+        });
+      }
+      return next;
+    });
+  }
 }
 
 /**

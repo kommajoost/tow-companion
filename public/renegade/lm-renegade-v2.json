@@ -24,7 +24,28 @@
       "points": 12,
       "_was": 14,
       "_changed": [
-        "points"
+        "points",
+        "options"
+      ],
+      "options": [
+        {
+          "group": "command",
+          "name_en": "Spawn Leader (champion)",
+          "points": 6,
+          "_was": 7
+        },
+        {
+          "group": "command",
+          "name_en": "Standard bearer",
+          "points": 6,
+          "_was": 7
+        },
+        {
+          "group": "command",
+          "name_en": "Musician",
+          "points": 6,
+          "_was": 7
+        }
       ]
     },
     "temple-guard": {

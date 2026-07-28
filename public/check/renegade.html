@@ -80,6 +80,11 @@
   }
   .source-table { min-width: 760px; font-size: 12.5px; }
   .source-table td { padding: 5px 8px; border: 1px solid var(--line); }
+  .row-meta {
+    display: block; margin-top: 3px; color: var(--gold-deep);
+    font: 600 7.5px/1.25 ui-sans-serif, system-ui, sans-serif;
+    letter-spacing: .11em; text-transform: uppercase;
+  }
   .source-list { margin: 0; padding-left: 21px; max-width: 94ch; }
   .source-list li { margin: 0 0 5px; }
   .seg-changed { color: #8eb6f2; background: rgba(70, 118, 190, .12); }
@@ -141,7 +146,13 @@ const rich = (segments) => (segments || []).map((segment) => {
 }).join('');
 
 function sourceBlock(block) {
-  const label = `<div class="source-id">${esc(block.id)} · ${esc(block.type)} · ${block.changeKinds.map(esc).join(' + ')}</div>`;
+  const tableInfo = block.type === 'table'
+    ? ` · ${esc(block.tableType)}${block.pointsBasis ? ` · ${esc(block.pointsBasis)}` : ''}`
+    : '';
+  const label = `<div class="source-id">${esc(block.id)} · ${esc(block.type)}${tableInfo} · ${block.changeKinds.map(esc).join(' + ')}</div>`;
+  if (block.type === 'heading') {
+    return `<div class="source-block" id="source-${esc(block.id)}">${label}<h3>${rich(block.segments)}</h3></div>`;
+  }
   if (block.type === 'paragraph') {
     return `<div class="source-block" id="source-${esc(block.id)}">${label}<p>${rich(block.segments)}</p></div>`;
   }
@@ -150,8 +161,16 @@ function sourceBlock(block) {
     const tag = block.ordered ? 'ol' : 'ul';
     return `<div class="source-block" id="source-${esc(block.id)}">${label}<${tag} class="source-list">${items}</${tag}></div>`;
   }
-  const rows = block.rows.map((row) => `<tr>${row.map((cell) =>
-    `<td${cell.colspan > 1 ? ` colspan="${cell.colspan}"` : ''}${cell.rowspan > 1 ? ` rowspan="${cell.rowspan}"` : ''}>${rich(cell.segments)}</td>`).join('')}</tr>`).join('');
+  const rowMeta = new Map((block.statlineRows || []).map((entry) => [entry.rowIndex, entry]));
+  const rows = block.rows.map((row, rowIndex) => {
+    const meta = rowMeta.get(rowIndex);
+    return `<tr>${row.map((cell, cellIndex) => {
+      const annotation = meta && cellIndex === 0
+        ? `<span class="row-meta">${esc(meta.role)} · ${esc(meta.points.raw)} · ${esc(meta.points.basis)}</span>`
+        : '';
+      return `<td${cell.colspan > 1 ? ` colspan="${cell.colspan}"` : ''}${cell.rowspan > 1 ? ` rowspan="${cell.rowspan}"` : ''}>${rich(cell.segments)}${annotation}</td>`;
+    }).join('')}</tr>`;
+  }).join('');
   return `<div class="source-block" id="source-${esc(block.id)}">${label}<div class="scroll"><table class="source-table"><tbody>${rows}</tbody></table></div></div>`;
 }
 
@@ -173,7 +192,16 @@ async function main() {
     if (!Array.isArray(arr)) continue;
     for (const u of arr) {
       const e = units[u.id] || (units[u.id] = { name: u.name_en, at: [] });
-      e.at.push({ category, points: u.points });
+      // The unit's own priceable options, one level of nesting included — the option table below needs
+      // them to confirm that each patched name still exists on the unit.
+      const opts = [];
+      for (const g of ['equipment', 'armor', 'options', 'command', 'mounts']) {
+        (u[g] || []).forEach((o) => {
+          opts.push({ group: g, name: o.name_en, points: o.points });
+          (o.options || []).forEach((s) => opts.push({ group: g, name: s.name_en, points: s.points }));
+        });
+      }
+      e.at.push({ category, points: u.points, opts });
     }
   }
 
@@ -259,6 +287,37 @@ async function main() {
     ${stale ? `<span class="flag">${stale} regel(s) hierboven kloppen niet meer met de huidige basisdata.</span>`
             : 'Alle <i>basis</i>-waarden kloppen nog met de huidige catalogue.'}</p>`;
 
+  // ── option prices ──────────────────────────────────────────────────────────────────────────────
+  // Separate from the unit table because these are a different KIND of change: money spent on top of a
+  // unit. They are patched by option NAME (indices shift when sync-owb regenerates the catalogue), so
+  // this also re-checks that each name still exists on the unit — a name that has drifted applies
+  // nothing, silently, and that is exactly what wants surfacing.
+  const optRows = [];
+  for (const [id, patch] of Object.entries(overlay.units)) {
+    for (const o of patch.options || []) {
+      const u = units[id];
+      const live = u ? u.at.flatMap((x) => x.opts).find((c) => c.group === o.group && c.name === o.name_en) : null;
+      optRows.push({ id, unit: u ? u.name : id, ...o, live });
+    }
+  }
+  html += `<h2>Optieprijzen — ${optRows.length}</h2>`;
+  if (!optRows.length) {
+    html += '<p class="note">Dit pack wijzigt geen optieprijzen die de app kan toepassen.</p>';
+  } else {
+    html += `<div class="scroll"><table><thead><tr><th>unit</th><th>optie</th><th>groep</th>
+      <th class="num">basis</th><th class="num">RV2</th><th class="num">verschil</th><th>controle</th></tr></thead><tbody>`;
+    for (const r of optRows) {
+      const d = r.points - r._was;
+      const check = r.live
+        ? '<span style="color:var(--faint)">✓</span>'
+        : '<span class="flag">⚠ optienaam bestaat niet meer op deze unit — de patch doet niets</span>';
+      html += `<tr><td>${esc(r.unit)}</td><td>${esc(r.name_en)}</td><td class="cat">${esc(r.group)}</td>
+        <td class="num" style="color:var(--muted)">${r._was}</td><td class="num"><b>${r.points}</b></td>
+        <td class="num ${d > 0 ? 'up' : 'down'}">${d > 0 ? '+' : ''}${d}</td><td>${check}</td></tr>`;
+    }
+    html += '</tbody></table></div>';
+  }
+
   // ── rules ──────────────────────────────────────────────────────────────────────────────────────
   const ruleEntries = Object.entries(overlay.rules || {});
   html += `<h2>Gewijzigde regels — ${ruleEntries.length}</h2>`;
@@ -286,9 +345,7 @@ async function main() {
     De tabellen hierboven tonen uitsluitend wat de huidige overlay al daadwerkelijk toepast.</div>`;
   let previousContext = '';
   for (const block of sourceBlocks) {
-    const parts = [block.context.section, block.context.profile, block.context.heading]
-      .filter(Boolean).filter((value, index, values) => values.indexOf(value) === index);
-    const context = parts.join(' · ');
+    const context = (block.headingPath || []).join(' · ');
     if (context && context !== previousContext) {
       html += `<div class="source-group">${esc(context)}</div>`;
       previousContext = context;

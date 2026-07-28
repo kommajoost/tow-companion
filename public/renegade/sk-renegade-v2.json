@@ -54,6 +54,19 @@
       "_changed": [
         "points"
       ]
+    },
+    "weapon-team": {
+      "options": [
+        {
+          "group": "equipment",
+          "name_en": "Hand weapons, Warpfire Thrower",
+          "points": 40,
+          "_was": 60
+        }
+      ],
+      "_changed": [
+        "options"
+      ]
     }
   },
   "magicItems": {},
