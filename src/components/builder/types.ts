@@ -40,6 +40,8 @@ export interface BuilderCtx {
   /** The magic-item list ids this army may draw from (army metadata `items`). Needed by
    *  `magicCategories()`; pass through, do not invent. */
   armyItemLists: string[];
+  /** Composition-aware stat index. Renegade overlays replace complete profiles here. */
+  statIdx?: Record<string, { stats?: unknown[]; troopType?: string }> | null;
   /** Look up a catalogue unit. Returns undefined for a stale entry — never throw on that. */
   getUnit: (cat: Category, unitId: string) => OwbUnit | undefined;
   /** The ONLY mutation path. Receives the current list, returns a partial to merge. Must be a

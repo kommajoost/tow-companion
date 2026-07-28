@@ -12,19 +12,54 @@
   },
   "status": "draft",
   "scope": "points-and-rules",
+  "inheritsComposition": "ok-renegade",
   "units": {
     "slaughtermaster": {
       "points": 180,
       "_was": 230,
       "_changed": [
-        "points"
+        "points",
+        "options"
+      ],
+      "options": [
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "Be a Level 4 Wizard",
+          "points": 30,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Wizard",
+          "points": 30,
+          "perModel": false
+        }
       ]
     },
     "butcher": {
       "points": 95,
       "_was": 105,
       "_changed": [
-        "points"
+        "points",
+        "options"
+      ],
+      "options": [
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Wizard",
+          "points": 30,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "Be a Level 2 Wizard",
+          "points": 30,
+          "perModel": false
+        }
       ]
     },
     "leadbelchers": {
@@ -38,14 +73,67 @@
       "points": 43,
       "_was": 46,
       "_changed": [
-        "points"
+        "points",
+        "special-rules",
+        "options"
+      ],
+      "specialRules": "Armoured Hide (1), Fear, Flammable, Loner, Move through Cover, Numbing Chill, Open Order, Swiftstride, Ravenous Hunger",
+      "options": [
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "Ambushers",
+          "points": 3,
+          "perModel": true
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Scouts",
+          "points": 2,
+          "perModel": true
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Vanguard",
+          "points": 1,
+          "perModel": true
+        }
       ]
     },
     "stonehorn-riders": {
       "points": 220,
       "_was": 245,
       "_changed": [
-        "points"
+        "points",
+        "options"
+      ],
+      "options": [
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "Additional hand weapon",
+          "points": 3
+        },
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "Great weapon",
+          "points": 4
+        },
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "Ogre Kingdoms Ironfist",
+          "points": 4
+        },
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "Additional Ogre Crew with harpoon launcher",
+          "points": 25
+        }
       ]
     },
     "hunter": {
@@ -54,11 +142,175 @@
           "group": "options",
           "name_en": "Harpoon launcher",
           "points": 15,
-          "_was": 10
+          "_was": 10,
+          "action": "patch",
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "Great weapon",
+          "points": 5,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "Blood Vulture",
+          "points": 5,
+          "perModel": false
+        },
+        {
+          "group": "mounts",
+          "name_en": "Ambushers",
+          "points": 6,
+          "action": "patch",
+          "perModel": false
+        },
+        {
+          "group": "mounts",
+          "name_en": "Scouts",
+          "points": 4,
+          "action": "patch",
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Additional hand weapon",
+          "points": 4,
+          "perModel": false
         }
       ],
       "_changed": [
+        "options",
+        "special-rules"
+      ],
+      "specialRules": "Armour Bane (1)**, Fear, Impact Hits (1), Loner, Move Through Cover, Ogre Kingdoms Charge, Running with the Pack, Vanguard, Ogre Club"
+    },
+    "ogre-bulls": {
+      "specialRules": "Armour Bane (1), Close Order, Fear, Impact Hits (1), Ogre Kingdoms Charge, Ravenous Hunger, Ogre Club",
+      "_changed": [
+        "special-rules"
+      ]
+    },
+    "ironguts": {
+      "specialRules": "Close Order, Fear, Impact Hits (1), Ogre Kingdoms Charge, Ravenous Hunger",
+      "_changed": [
+        "special-rules"
+      ]
+    },
+    "gnoblar-trappers": {
+      "specialRules": "Largely Insignificant, Move through Cover, Scouts, Skirmishers, Traps & Snares, Entourage",
+      "_changed": [
+        "special-rules"
+      ]
+    },
+    "maneaters": {
+      "specialRules": "Close Order, Fear, Impact Hits (1), Motley Crew, Ogre Kingdoms Charge, Veteran, Ogre Club",
+      "_changed": [
+        "special-rules",
         "options"
+      ],
+      "options": [
+        {
+          "group": "options",
+          "name_en": "Brace of Ogre pistols",
+          "points": 6,
+          "perModel": true,
+          "_was": 12,
+          "action": "patch"
+        },
+        {
+          "group": "command",
+          "action": "upsert",
+          "name_en": "A standard bearer may have the Look-out Gnoblar special rule",
+          "points": 5,
+          "perModel": false
+        }
+      ]
+    },
+    "mournfang-cavalry": {
+      "specialRules": "Armoured Hide (1), Close Order, Fear, Impact Hits (D3), Mournfang Charge, Swiftstride, Ogre Club",
+      "_changed": [
+        "special-rules"
+      ]
+    },
+    "gorgers": {
+      "specialRules": "Ambushers, Armoured Hide (2), Close Order, Open Order, Fear, Frenzy, Ravenous Hunger, Regeneration (6+), Swiftstride, Unbreakable",
+      "_changed": [
+        "special-rules"
+      ]
+    },
+    "firebelly": {
+      "_changed": [
+        "mounts",
+        "options"
+      ],
+      "options": [
+        {
+          "group": "mounts",
+          "action": "upsert",
+          "name_en": "Stonehorn",
+          "points": 195
+        },
+        {
+          "group": "mounts",
+          "action": "upsert",
+          "name_en": "Thundertusk",
+          "points": 185
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Great weapon",
+          "points": 6,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "be a Level 2 Wizard",
+          "points": 30,
+          "perModel": false
+        }
+      ]
+    },
+    "thundertusk-riders": {
+      "_changed": [
+        "options"
+      ],
+      "options": [
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "Additional hand weapon",
+          "points": 3
+        },
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "Great weapon",
+          "points": 4
+        },
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "Ogre Kingdoms Ironfist",
+          "points": 4
+        }
+      ]
+    },
+    "tyrant": {
+      "specialRules": "Armour Bane (1)**, Bull Charge, Fear, Impact Hits (2), Ogre Kingdoms Charge, Ogre Club",
+      "_changed": [
+        "special-rules"
+      ]
+    },
+    "bruiser": {
+      "specialRules": "Armour Bane (1)**, Bull Charge, Fear, Impact Hits (2), Ogre Kingdoms Charge, Ogre Club",
+      "_changed": [
+        "special-rules"
       ]
     }
   },
@@ -70,14 +322,178 @@
         "points": 40,
         "type": "big-name",
         "onePerArmy": false,
-        "_was": 5
+        "_was": 5,
+        "name_de": "Bestienschlächter",
+        "name_cn": "屠兽者",
+        "name_fr": "Trucide-fauve",
+        "name_it": "Beastkiller"
       },
       {
         "name_en": "Wallcrusher",
         "name": "wallcrusher",
         "points": 30,
         "type": "big-name",
-        "onePerArmy": false
+        "onePerArmy": true
+      },
+      {
+        "name_de": "Schlundpilger",
+        "name_en": "Mawseeker",
+        "name_cn": "大胃朝圣者",
+        "name_fr": "Cherche-gueule",
+        "name_it": "Mawseeker",
+        "points": 30,
+        "type": "big-name",
+        "onePerArmy": false,
+        "name": "mawseeker"
+      },
+      {
+        "name_de": "Bergfresser",
+        "name_en": "Mountaineater",
+        "name_cn": "吞山者",
+        "name_fr": "Mange-montagne",
+        "name_it": "Mountaineater",
+        "points": 25,
+        "type": "big-name",
+        "onePerArmy": false,
+        "name": "mountaineater"
+      },
+      {
+        "name_de": "Riesenbrecher",
+        "name_en": "Giantbreaker",
+        "name_cn": "巨人击破者",
+        "name_fr": "Brise-géant",
+        "name_it": "Giantbreaker",
+        "points": 20,
+        "type": "big-name",
+        "onePerArmy": false,
+        "name": "giantbreaker"
+      },
+      {
+        "name_de": "Sippenfresser",
+        "name_en": "Kineater",
+        "name_cn": "噬亲者",
+        "name_fr": "Mâche-frère",
+        "name_it": "Kineater",
+        "points": 15,
+        "type": "big-name",
+        "onePerArmy": false,
+        "name": "kineater"
+      },
+      {
+        "name_de": "Sturmläufer",
+        "name_en": "Longstrider",
+        "name_cn": "远行者",
+        "name_fr": "Longues-jambes",
+        "name_it": "Longstrider",
+        "points": 10,
+        "type": "big-name",
+        "onePerArmy": false,
+        "name": "longstrider"
+      },
+      {
+        "name_de": "Todpreller",
+        "name_en": "Deathcheater",
+        "name_cn": "诈死者",
+        "name_fr": "Trompe-la-mort",
+        "name_it": "Deathcheater",
+        "points": 5,
+        "type": "big-name",
+        "onePerArmy": false,
+        "name": "deathcheater"
+      }
+    ],
+    "ogre-kingdoms": [
+      {
+        "name_de": "Donnerkeule",
+        "name_en": "Thundermace",
+        "name_cn": "雷霆权杖",
+        "name_fr": "Masse-tonnerre",
+        "name_it": "Thundermace",
+        "points": 90,
+        "type": "weapon",
+        "onePerArmy": true,
+        "name": "thundermace"
+      },
+      {
+        "name_de": "Bauchschlud",
+        "name_en": "Gut Maw",
+        "name_cn": "大胃护腹",
+        "name_fr": "Plaque Ventrale de La Gueule",
+        "name_it": "Gut Maw",
+        "points": 45,
+        "type": "armor",
+        "onePerArmy": true,
+        "name": "gut maw"
+      },
+      {
+        "name_de": "Glanzsplitter",
+        "name_en": "Spangleshard",
+        "name_cn": "闪光碎片",
+        "name_fr": "Éclat Scintillant",
+        "name_it": "Spangleshard",
+        "points": 30,
+        "type": "talisman",
+        "onePerArmy": true,
+        "name": "spangleshard"
+      },
+      {
+        "name_de": "Cathayanisches Schutzhalsband*",
+        "name_en": "Cathayan Jet Pendant",
+        "name_cn": "震旦墨玉吊坠*",
+        "name_fr": "Pendentif de Jais Cathayen*",
+        "name_it": "Cathayan Jet Pendant*",
+        "points": 10,
+        "type": "talisman",
+        "stackable": true,
+        "onePerArmy": false,
+        "name": "cathayan jet pendant"
+      },
+      {
+        "name_de": "Drachenhautbanner",
+        "name_en": "Dragonhide Banner",
+        "name_cn": "龙皮旗帜",
+        "name_fr": "Bannière en Peau de Dragon",
+        "name_it": "Dragonhide Banner",
+        "points": 75,
+        "type": "banner",
+        "onePerArmy": true,
+        "name": "dragonhide banner"
+      },
+      {
+        "name_en": "Tooth-Gnoblar",
+        "name": "tooth gnoblar",
+        "points": 10,
+        "type": "arcane-item",
+        "onePerArmy": false,
+        "stackable": true
+      },
+      {
+        "name_en": "Be a Level 4 Wizard +30 points • Purchase magic items up to a total of",
+        "name": "be a level 4 wizard 30 points purchase magic items up to a total of",
+        "points": 100,
+        "type": "enchanted-item",
+        "onePerArmy": true
+      },
+      {
+        "name_en": "Be a Level 2 Wizard +30 points • Purchase magic items up to a total of",
+        "name": "be a level 2 wizard 30 points purchase magic items up to a total of",
+        "points": 50,
+        "type": "enchanted-item",
+        "onePerArmy": true
+      },
+      {
+        "name_en": "May take a single Big Name See page 20 • May purchase magic items up to a total of",
+        "name": "may take a single big name see page 20 may purchase magic items up to a total of",
+        "points": 75,
+        "type": "enchanted-item",
+        "onePerArmy": true
+      },
+      {
+        "name_en": "May take a great weapon +6 points • May be a Level 2 Wizard +30 points • May purchase magic items up to a total of",
+        "name": "may take a great weapon 6 points may be a level 2 wizard 30 points may purchase magic items up to a total of",
+        "points": 50,
+        "type": "enchanted-item",
+        "onePerArmy": true
       }
     ]
   },
@@ -112,6 +528,594 @@
         "Note that this special rule only applies to a single, non-magical hand weapon, and does not apply to a model's mount (should it have one). If the model is using an Ogre Kingdoms Ironfist as a weapon (or any other sort of weapon), this special rule ceases to apply."
       ],
       "overrides": null
+    },
+    "harpoon-launcher": {
+      "name_en": "Harpoon launcher",
+      "body": [
+        "| R | S | AP | Special Rules Harpoon launcher | 36\" | 6 | -2 | Cumbersome, Multiple Wounds (2), Through & Through Ponderous",
+        "Notes: When firing at an enemy with troop type Monster, the user may apply a +1 modifier on their rolls to hit."
+      ],
+      "weaponProfile": {
+        "range": "36\"",
+        "strength": "6",
+        "ap": "-2",
+        "specialRules": "Cumbersome, Multiple Wounds (2), Through & Through Ponderous"
+      },
+      "overrides": "harpoon-launcher"
+    },
+    "stab": {
+      "name_en": "Stab",
+      "body": [],
+      "weaponProfile": {
+        "range": "Combat",
+        "strength": "S",
+        "ap": "-1",
+        "specialRules": "Requires Two Hands"
+      },
+      "overrides": null
+    },
+    "smash": {
+      "name_en": "Smash",
+      "body": [],
+      "weaponProfile": {
+        "range": "Combat",
+        "strength": "S",
+        "ap": "-",
+        "specialRules": "Extra Attacks (+1), Requires Two Hands"
+      },
+      "overrides": null
+    },
+    "bull-charge": {
+      "name_en": "Bull Charge",
+      "body": [
+        "Impact Hits caused by this model (but not its mount) have an Armour Piercing characteristic of -1."
+      ],
+      "overrides": "bull-charge"
+    },
+    "butcher-s-cauldron": {
+      "name_en": "Butcher’s Cauldron",
+      "body": [
+        "This character replaces the Impact Hits (2) special rule with the Impact Hits (D3+1) special rule. In addition, during the Command sub-phase of their turn, if they are not engaged in combat, a character with a Butcher’s Cauldron may attempt to make an offering to the Great Maw by making a Leadership test (using their own unmodified Leadership). If this test is passed, until your next Start of Turn sub-phase this character and any unit they have joined gains the Regeneration (5+) special rule. However, if this test is failed, a single friendly model within 3\" of the bearer immediately loses a single Wound."
+      ],
+      "overrides": "butchers-cauldron"
+    },
+    "running-with-the-pack": {
+      "name_en": "Running With The Pack",
+      "body": [
+        "A Hunter that joins a unit of Sabretusks gains the Swiftstride special rule for as long as they remain with the unit. For as long as the Hunter remains with the unit, the Sabretusks lose the Impetuous special rule. Note: When a Hunter joins a unit of Sabretusks the unit may adopt or stay in a Skirmish formation, despite the difference in their unit types. Additionally, while joined to a unit of Sabretusks, and one or more Sabretooth remains, The Hunter cannot be targeted by enemy shooting and he can make a \"Look Out, Sir!\" roll."
+      ],
+      "overrides": "running-with-the-pack"
+    },
+    "blessings-of-the-volcano-god": {
+      "name_en": "Blessings Of The Volcano God",
+      "body": [
+        "Instead of discarding one of their randomly generated spells for a Signature Spell, a model with this special rule may discard one of their spells to learn Fireball instead. This rule may not be used to learn Fireball a second time if it was already randomly generated by this model.. In addition, a model with this special rule has a 4+ Ward save against any wounds suffered that were caused by an attack that has the Flaming Attacks special rule."
+      ],
+      "overrides": "blessings-of-the-volcano-god"
+    },
+    "character-mounts": {
+      "name_en": "Character Mounts",
+      "body": [
+        "A character that can be mounted may choose a mount from the following list. Most mounts are covered in detail on the following pages. Those that are not have their own dedicated entries later in this army list.",
+        "A Tyrant, Bruiser or Hunter may be mounted on a:",
+        "Stonehorn +195 points • Thundertusk +185 points"
+      ],
+      "overrides": null
+    },
+    "traps-snares": {
+      "name_en": "Traps & Snares",
+      "body": [
+        "Any enemy model that ends its movement within 6 inches of one or more models with this special rule (that are not fleeing or engaged in combat with another unit) must make a Dangerous Terrain Test."
+      ],
+      "overrides": "traps-and-snares"
+    },
+    "entourage": {
+      "name_en": "Entourage",
+      "body": [
+        "A unit of Gnoblar Trappers within the Command Range of a Hunter who is not fleeing may use the Hunter’s Leadership characteristic instead of their own."
+      ],
+      "overrides": null
+    },
+    "mournfang-charge": {
+      "name_en": "Mournfang Charge",
+      "body": [
+        "Impact Hits caused by a model with this special rule have the Armour Bane (1) special rule and an Armour Piercing characteristic of -1. In addition, if a unit with this special rule makes a Charge move of 6\" or more following a Charge roll that includes one or more natural 6s, all models in the unit gain Impact Hits (1) and treat low linear obstacles as open ground during the turn in which they charge.",
+        "Note: This means that models separated only by a low linear obstacle are considered to be in base contact with one another for the purposes of combat and the enemy unit receives no benefits for defending a low linear obstacle against this unit.."
+      ],
+      "overrides": "mournfang-charge"
+    },
+    "d6-result": {
+      "name_en": "D6 Result",
+      "body": [
+        "1 Kaboom! Constantly mistreated by the Ogres, the cannon explodes spectacularly. The model is destroyed and immediately removed from play.",
+        "2 Krrack! With a tremendous crack, the cannon splits along its length, rendering it",
+        "useless. The model cannot shoot with this weapon for the remainder of the game.",
+        "3-4 Ack! Through its own ineptitude, the Gnoblar Scrapper has become stuck in the mechanism. The model does not shoot this turn and cannot shoot with this weapon during the next round.",
+        "5-6 Durr! The cannon may not shoot this turn."
+      ],
+      "overrides": null
+    },
+    "catapult-deluge-of-sharp-instruments": {
+      "name_en": "catapult Deluge of Sharp Instruments",
+      "body": [
+        "Notes: This weapon shoots like a stone thrower, using the ‘Bombardment’ special rule, a 5\" blast template and the Scraplauncher Misfire table."
+      ],
+      "overrides": null
+    },
+    "deluge-of-sharp-instruments": {
+      "name_en": "Deluge of Sharp Instruments",
+      "body": [
+        "If a natural 6 is rolled when making a roll To Wound with this weapon, Enemy models whose troop type is regular infantry, heavy infantry, light cavalry, heavy cavalry or war beasts are not permitted an armour or Regeneration save (Ward saves can be attempted as normal)."
+      ],
+      "overrides": null
+    },
+    "stone-skeleton": {
+      "name_en": "Stone Skeleton",
+      "body": [
+        "This model is less vulnerable to the Multiple Wounds (X) special rule. If it suffers an unsaved wound from an attack with this special rule, reduce the number of Wounds lost by 1, to a minimum of 1.",
+        "Character Mount: A Stonehorn may also be included in your army as a character’s mount. If so, its points are added to that of its rider. When doing so, the character replaces the Ogre Beast Rider, and the Stonehorn uses the following profile and points value with the same equipment, options and special rules as above:"
+      ],
+      "overrides": "stone-skeleton"
+    },
+    "r-s-ap-special-rules": {
+      "name_en": "R S AP Special Rules",
+      "body": [
+        "Sphere of 6-24” 3(6) -1(-2) Bombardment, Cumbersome, Multiple Frost-wreathed Ice Wounds (D3)",
+        "Notes: This weapon shoots like a stone thrower, using the ‘Bombardment’ special rule and a 3\" blast template. If a misfire result is rolled this model suffers a wound and this weapon cannot shoot this turn. The Multiple Wounds (D3) special rule applies only to a single model whose base lies underneath the central hole of the blast template."
+      ],
+      "overrides": null
+    },
+    "smooth-ride": {
+      "name_en": "Smooth Ride",
+      "body": [
+        "This model ignores the To Hit modifier for Moving and Shooting.",
+        "Character Mount: A Thundertusk may also be included in your army as a character’s mount. If so, its points are added to that of its rider. When doing so, the character replaces the Ogre Beast Rider, and the Thundertusk uses the following profile and points value with the same equipment and special rules as above:"
+      ],
+      "overrides": null
+    },
+    "spell-toothcracker": {
+      "name_en": "Toothcracker",
+      "body": [
+        "Type: Enchantment Casting Value: 7+/10+ Range: 12\"",
+        "Effect: If this spell is cast with a casting result of 7 or more, the target friendly unit gains a +1 modifier to its Toughness characteristic (to a maximum of 10). If this spell is cast with a casting result of 10 or more, the target friendly unit gains a",
+        "+2 modifier to its Toughness characteristic (to a maximum of 10). This spell lasts until your next Start of Turn sub-phase."
+      ],
+      "overrides": "spell-toothcracker"
+    },
+    "spell-trollguts": {
+      "name_en": "Trollguts",
+      "body": [
+        "Type: Enchantment Casting Value: 7+/10+",
+        "Range: 15\"",
+        "Effect: If this spell is cast with a casting result of 7 or more, the target friendly unit gains the Regeneration (6+) special rule. If this spell is cast with a casting result of 10 or more, the target friendly unit gains the Regeneration (5+) special rule. This spell lasts until your next Start of Turn sub-phase."
+      ],
+      "overrides": "spell-trollguts"
+    },
+    "ogre-kingdoms-ironfist": {
+      "name_en": "Ogre Kingdoms Ironfist",
+      "body": [
+        "Ogre Kingdoms Ironfist | R | S | AP | Special Rules Stab | Combat | S | -1 | Requires Two Hands Smash | Combat | S | - | Extra Attacks (+1), Requires Two Hands",
+        "Notes: The Ironfist has two profiles. You must choose which the wielder will use at the start of each round of combat. An Ironfist is a type of shield. A model that is equipped with an Ironfist can use either profile, while maintaining the benefits that a shield provides. Furthermore, whilst engaged in close combat, a model that is equipped with and chooses to use an Ironfist as a weapon improves its armor value (but not the value of its mount’s save, if any) by an additional 1, to a maximum of 3+"
+      ],
+      "overrides": null
+    },
+    "chaintrap": {
+      "name_en": "Chaintrap",
+      "body": [
+        "Notes: Ranged attacks made with this weapon apply Killing Blows in the same manner as melee attacks."
+      ],
+      "overrides": "chaintrap"
+    }
+  },
+  "profiles": {
+    "slaughtermaster": {
+      "stats": [
+        {
+          "Name": "Slaughtermaster",
+          "M": "6",
+          "WS": "4",
+          "BS": "3",
+          "S": "4",
+          "T": "5",
+          "W": "5",
+          "I": "3",
+          "A": "4",
+          "Ld": "8"
+        }
+      ]
+    },
+    "butcher": {
+      "stats": [
+        {
+          "Name": "Butcher",
+          "M": "6",
+          "WS": "3",
+          "BS": "2",
+          "S": "4",
+          "T": "5",
+          "W": "4",
+          "I": "2",
+          "A": "3",
+          "Ld": "7"
+        }
+      ]
+    },
+    "yhetees": {
+      "stats": [
+        {
+          "Name": "Yhetee",
+          "M": "7",
+          "WS": "3",
+          "BS": "0",
+          "S": "5",
+          "T": "4",
+          "W": "3",
+          "I": "4",
+          "A": "3",
+          "Ld": "7"
+        },
+        {
+          "Name": "Greyback",
+          "M": "7",
+          "WS": "3",
+          "BS": "0",
+          "S": "5",
+          "T": "4",
+          "W": "3",
+          "I": "4",
+          "A": "4",
+          "Ld": "7"
+        }
+      ],
+      "troopType": "Monstrous infantry",
+      "baseSize": "40 x 40 mm",
+      "equipment": [
+        "Grimfrost weapons"
+      ],
+      "specialRules": [
+        "Armoured Hide (1)",
+        "Fear",
+        "Flammable",
+        "Loner",
+        "Move through Cover",
+        "Numbing Chill",
+        "Open Order",
+        "Swiftstride",
+        "Ravenous Hunger"
+      ]
+    },
+    "gorger": {
+      "stats": [
+        {
+          "Name": "Gorger",
+          "M": "6",
+          "WS": "3",
+          "BS": "0",
+          "S": "5",
+          "T": "5",
+          "W": "5",
+          "I": "2",
+          "A": "4",
+          "Ld": "8"
+        }
+      ],
+      "notes": [
+        "Note: In combat, this model may make one of its attacks each turn with this weapon"
+      ]
+    },
+    "stonehorns": {
+      "stats": [
+        {
+          "Name": "Stonehorn",
+          "M": "7",
+          "WS": "3",
+          "BS": "-",
+          "S": "6",
+          "T": "6",
+          "W": "6",
+          "I": "2",
+          "A": "4",
+          "Ld": "-"
+        },
+        {
+          "Name": "Ogre Beast Rider (x1)",
+          "M": "-",
+          "WS": "3",
+          "BS": "3",
+          "S": "4",
+          "T": "-",
+          "W": "-",
+          "I": "2",
+          "A": "4",
+          "Ld": "7"
+        },
+        {
+          "Name": "Ogre Crew",
+          "M": "-",
+          "WS": "3",
+          "BS": "3",
+          "S": "4",
+          "T": "-",
+          "W": "-",
+          "I": "2",
+          "A": "3",
+          "Ld": "7"
+        }
+      ],
+      "notes": [
+        "The Ogre Beast Rider may replace their chaintrap with one of the following:",
+        "A blood vulture (see below) +5 points • A harpoon launcher +15 points",
+        "The Ogre Beast Rider may take:",
+        "Additional hand weapon +3 points • Great weapon +4 points • Ogre Kingdoms Ironfist +4 points",
+        "May add 1 Ogre Crew with Hand weapon and harpoon launcher +25 points",
+        "Character Mount: A Stonehorn may also be included in your army as a character’s mount. If so, its points are added to that of its rider. When doing so, the character replaces the Ogre Beast Rider, and the Stonehorn uses the following profile and points value with the same equipment, options and special rules as above:"
+      ],
+      "specialRules": [
+        "Armour Bane (2, Stonehorn only)",
+        "Close Order",
+        "First Charge",
+        "Howdah",
+        "Impact Hits (D6+1)",
+        "Large Target",
+        "Stomp Attacks (D3)",
+        "Stone Skeleton",
+        "Swiftstride",
+        "Terror",
+        "Thunderous Charge",
+        "Ogre Club"
+      ],
+      "troopType": "Behemoth",
+      "baseSize": "100 x 150 mm",
+      "armourValue": "4+",
+      "equipment": []
+    },
+    "thundertusks": {
+      "stats": [
+        {
+          "Name": "Thundertusk",
+          "M": "6",
+          "WS": "3",
+          "BS": "-",
+          "S": "6",
+          "T": "6",
+          "W": "6",
+          "I": "2",
+          "A": "4",
+          "Ld": "-"
+        },
+        {
+          "Name": "Ogre Beast Rider (x1)",
+          "M": "-",
+          "WS": "3",
+          "BS": "3",
+          "S": "4",
+          "T": "-",
+          "W": "-",
+          "I": "2",
+          "A": "4",
+          "Ld": "7"
+        },
+        {
+          "Name": "Ogre Crew (x1)",
+          "M": "-",
+          "WS": "3",
+          "BS": "3",
+          "S": "4",
+          "T": "-",
+          "W": "-",
+          "I": "2",
+          "A": "3",
+          "Ld": "7"
+        }
+      ],
+      "notes": [
+        "Thundertusk: Great tusks (see below) and chill breath Sphere of Frost-wreathed Ice • Ogre Beast Rider: Hand weapon and chaintrap • Ogre Crew: Hand weapon and harpoon launcher",
+        "The Ogre Beast Rider may replace their chaintrap with one of the following:",
+        "A blood vulture (see below) +5 points • A harpoon launcher +15 points",
+        "The Ogre Beast Rider may take:",
+        "Additional hand weapon +3 points • Great weapon +4 points • Ogre Kingdoms Ironfist +4 points",
+        "Character Mount: A Thundertusk may also be included in your army as a character’s mount. If so, its points are added to that of its rider. When doing so, the character replaces the Ogre Beast Rider, and the Thundertusk uses the following profile and points value with the same equipment and special rules as above:"
+      ],
+      "specialRules": [
+        "Close Order",
+        "First Charge",
+        "Howdah",
+        "Impact Hits (D3)",
+        "Large Target",
+        "Numbing Chill",
+        "Stomp Attacks (D3+1)",
+        "Smooth Ride",
+        "Strike Last",
+        "Swiftstride",
+        "Terror",
+        "Ogre Club"
+      ],
+      "troopType": "Behemoth",
+      "baseSize": "100 x 150 mm",
+      "armourValue": "5+",
+      "equipment": []
+    },
+    "stone skeleton": {
+      "stats": [
+        {
+          "Name": "Stonehorn Mount",
+          "M": "7",
+          "WS": "3",
+          "BS": "-",
+          "S": "6",
+          "T": "6",
+          "W": "5",
+          "I": "2",
+          "A": "4",
+          "Ld": "-"
+        },
+        {
+          "Name": "Ogre Crew",
+          "M": "-",
+          "WS": "3",
+          "BS": "3",
+          "S": "-",
+          "T": "-",
+          "W": "-",
+          "I": "2",
+          "A": "3",
+          "Ld": "7"
+        }
+      ],
+      "notes": [
+        "Note that, because it has the Howdah special rule a Stonehorn is considered to be a chariot mount, rather than a ridden monster."
+      ]
+    },
+    "smooth ride": {
+      "stats": [
+        {
+          "Name": "Thundertusk Mount",
+          "M": "6",
+          "WS": "3",
+          "BS": "-",
+          "S": "6",
+          "T": "6",
+          "W": "5",
+          "I": "2",
+          "A": "4",
+          "Ld": "-"
+        },
+        {
+          "Name": "Ogre Crew (x1)",
+          "M": "-",
+          "WS": "3",
+          "BS": "3",
+          "S": "4",
+          "T": "-",
+          "W": "-",
+          "I": "2",
+          "A": "3",
+          "Ld": "-"
+        }
+      ],
+      "notes": [
+        "Note that, because it has the Howdah special rule a Thundertusk is considered to be a chariot mount, rather than a ridden monster."
+      ]
+    },
+    "tyrant": {
+      "notes": [
+        "*Note that if this option is chosen, this model loses the Impact Hits (2), Bull Charge and Ogre Kingdoms Charge special rules."
+      ]
+    },
+    "bruiser": {
+      "notes": [
+        "*Note that if this option is chosen, this model loses the Impact Hits (2), Bull Charge and Ogre Kingdoms Charge special rules."
+      ]
+    },
+    "hunter": {
+      "notes": [
+        "May take one of the following:",
+        "May take a single Big Name See page 20 • May purchase magic items up to a total of 75 points",
+        "*Note that if this option is chosen, this model loses the Impact Hits (1), Ogre Kingdoms Charge, Move Through Cover, and Running with the Pack special rules."
+      ]
+    },
+    "leadbelchers": {
+      "notes": [
+        "Notes: A Leadbelcher gun has two profiles, representing its two modes of firing. If the roll To Hit is successful when firing scatter shot, a leadbelcher gun causes D3 hits to the target enemy unit, rather than the usual one. In addition, A Leadbelcher Gun ignores penalties for Moving and Shooting and Long Range."
+      ]
+    },
+    "maneaters": {
+      "equipment": [
+        "Hand weapons, Ogre pistol, and light armour"
+      ],
+      "notes": [
+        "Immune to Psychology Free • Poisoned Attacks Free • Stubborn Free • Vanguard Free • Scouts Free • Move Through Cover Free • Swiftstride Free"
+      ]
+    },
+    "ironblaster": {
+      "notes": [
+        "Notes: A Cannon of the Sky-Titans has two profiles, representing its two modes of firing. When firing solid shot, this weapon shoots like a cannon, using the ‘Cannon Fire’ special rule. This weapon uses the Ironblaster Misfire table. This weapon does not have a 360 line of sight, it can only shoot into the Ironblaster’s front arc.",
+        "Ironblaster Misfire Table"
+      ]
+    },
+    "gnoblar scraplauncher": {
+      "notes": [
+        "Scraplauncher Catapult Misfire Table"
+      ]
+    }
+  },
+  "magicItemText": {
+    "beastkiller": {
+      "body": "0-1 per army. Hunter only. Unless wielding a magic weapon, a model with this Big Name (but not its mount) gains the Monster Slayer special rule.\n\nNote: Monster Slayer does not apply to shooting attacks."
+    },
+    "mawseeker": {
+      "body": "Models whose troop type is ‘infantry’ only. 0-1 per army. This model (including their mount if it has one) has a +1 modifier to their Toughness characteristic. However, this model is also subject to the Stupidity special rule."
+    },
+    "wallcrusher": {
+      "body": "A model with this Big Name (but not their mount) gains Impact Hits (1). In addition, Wallcrushers and any unit they have joined treat low linear obstacles as open ground. Note: This means that models separated only by a low linear obstacle are considered to be in base contact with one another for the purposes of combat and the enemy unit receives no benefits for defending a low linear obstacle against this unit."
+    },
+    "mountaineater": {
+      "body": "Models whose troop type is ‘infantry’ only. 0-1 per army. This model cannot be wounded by a roll To Wound of 2, regardless of the Strength of the attack."
+    },
+    "giantbreaker": {
+      "body": "This model (but not their mount) has a +1 modifier to their Strength characteristic. However, this model cannot refuse a challenge and neither they, nor any unit they have joined, can Flee as a charge reaction."
+    },
+    "kineater": {
+      "body": "Characters only. Unless this character is fleeing, friendly models within this character’s Command range may re-roll any failed Panic or Rally test."
+    },
+    "longstrider": {
+      "body": "Models whose troop type is ‘infantry’ only. This model has a +1 modifier to their Movement characteristic."
+    },
+    "deathcheater": {
+      "body": "Once per game, you may make your opponent re-roll a single roll To Wound made against this model."
+    },
+    "thundermace": {
+      "body": "| R S | AP | Special Rules Thundermace | Combat S+2 | -2 | Armour Bane (1), Magical Attacks, | | | Requires Two Hands, Strike Last\n\nNotes: Rather than attacking normally, the wielder of the Thundermace may choose to make a special ‘Thunderstrike’ attack. If they do, make a single roll To Hit. If this is successful, place a small (3\") blast template so that its central hole is directly over the centre of the hit unit. Any enemy model whose base lies underneath the template risks being hit by this weapon."
+    },
+    "gut-maw": {
+      "body": "May be worn with other armour. The wearer of the Gut Maw improves their armour save by one. In addition, for each unsaved wound the wearer causes during a Challenge, they recover a single lost Wound."
+    },
+    "spangleshard": {
+      "body": "The Spangleshard gives its bearer a 4+ Ward save against any wounds suffered. However, if a natural 1 is rolled, the Spangleshard is destroyed and it cannot be used again."
+    },
+    "cathayan-jet-pendant": {
+      "body": "A Cathayan Jet Pendant gives its bearer (and any unit they have joined) a 6+ Ward save against any wounds suffered that were caused by a Magic Missile, a Magical Vortex, or an Assailment spell.\n\nMagic Standards"
+    },
+    "dragonhide-banner": {
+      "body": "A unit carrying the Dragonhide Banner may re-roll any rolls To Hit of a natural 1. In addition, a unit carrying the Dragonhide Banner has the Flaming Attacks Numbing Chill special rule."
+    },
+    "tooth-gnoblar": {
+      "body": "0-3 per model. Single use. After making a Casting roll for a spell from the Lore of the Great Maw, the bearer may choose to use a Tooth-Gnoblar. If they do so, apply a +1 modifier to the result. A model may only use one Tooth-Gnoblar per Casting roll."
+    }
+  },
+  "lores": {
+    "lore-of-the-great-maw": {
+      "name": "Lore of the Great Maw",
+      "spells": [
+        {
+          "slug": "spell-toothcracker",
+          "name": "Toothcracker",
+          "number": null,
+          "signature": true
+        },
+        {
+          "slug": "spell-trollguts",
+          "name": "Trollguts",
+          "number": null,
+          "signature": true
+        }
+      ]
+    }
+  },
+  "notes": [
+    "Some models drawn from the Ogre Kingdoms army list may be given a Big Name, chosen from those detailed on this page. Each Big Name gives the model certain benefits in the form of modified characteristics and additional special rules:"
+  ],
+  "composition": {
+    "sourceRules": {
+      "Core": [
+        "1+ Ogre Bulls, Ironguts, Gnoblar Fighters, Gnoblar Trappers and Sabretusk Packs"
+      ],
+      "Special": [
+        "Leadbelchers, Yhetees and Gnoblar Scraplaunchers • 0-1 unit of Maneaters per 1,000 points • 0-1 unit of Mournfang Cavalry per 1,000 points • 0-1 Ironblaster per 1,000 points"
+      ],
+      "Rare": [
+        "0-1 Thundertusk Riders per 1,000 points • 0-1 Stonehorn Riders per 1,000 points • 0-3 Gorgers and Giants"
+      ]
     }
   }
 }

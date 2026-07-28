@@ -1,9 +1,13 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { TOW, towFont, engraved } from '../../design/tow';
 import { usePersistentState } from '../../store';
 import { builderListToArmy, listTotal, type MagicText, type MountText } from '../../lib/builderToArmy';
 import { makeTroopTypeLookup } from '../../lib/troopTypes';
 import { compName } from '../../lib/armies';
+import {
+  applyOverlay, applyOverlayItems, applyOverlayMagicText, applyOverlayMountText, applyOverlayStatIndex, hasOverlay, isOverlay,
+  overlayStatsFor, OVERLAY_FILES, type CompositionOverlay,
+} from '../../lib/overlays';
 import type { BuilderList, OwbArmy, MagicItemsData } from '../../lib/owbBuilder';
 import type { Army } from '../../types';
 
@@ -14,7 +18,6 @@ import type { Army } from '../../types';
 
 const eb = engraved as React.CSSProperties;
 const BASE = import.meta.env.BASE_URL;
-const normRule = (s: string) => (s || '').toLowerCase().replace(/ *\([^)]*\) */g, '').replace(/[{}[\]*]/g, '').replace(/^[0-9]x /g, '').replace(/[“”]/g, '"').trim();
 interface SavedList extends BuilderList { id: string; name: string; army: string; createdAt: number; updatedAt: number }
 interface StatRow { Name: string; M: string; WS: string; BS: string; S: string; T: string; W: string; I: string; A: string; Ld: string }
 
@@ -30,6 +33,7 @@ export function ArmyListPicker({ onPick, label = 'Choose one of your saved army 
   const [itemsData, setItemsData] = useState<MagicItemsData | null>(null);
   const [magicText, setMagicText] = useState<MagicText>({});
   const [mountText, setMountText] = useState<MountText>({});
+  const [overlays, setOverlays] = useState<Record<string, CompositionOverlay>>({});
 
   useEffect(() => {
     fetch(`${BASE}owb/rules-index.json`).then((r) => r.json()).then(setStatIdx).catch(() => {});
@@ -55,23 +59,38 @@ export function ArmyListPicker({ onPick, label = 'Choose one of your saved army 
     return () => { cancelled = true; };
   }, [lists, catalogues]);
 
-  const statsFor = useMemo(() => (unitName: string): StatRow[] => {
-    if (!statIdx) return [];
-    const key = normRule(unitName);
-    let e = statIdx[key];
-    if (!e?.stats?.length) { const w = key.split(' '); const last = w[w.length - 1]; if (/s$/.test(last)) e = statIdx[[...w.slice(0, -1), last.replace(/s$/, '')].join(' ')]; }
-    return e?.stats ?? [];
-  }, [statIdx]);
-
-  const troopTypeFor = makeTroopTypeLookup(statIdx);
+  useEffect(() => {
+    const need = Array.from(new Set(lists.map((list) => list.composition)))
+      .filter((composition) => hasOverlay(composition) && !overlays[composition]);
+    if (!need.length) return;
+    let cancelled = false;
+    Promise.all(need.map((composition) => fetch(`${BASE}renegade/${OVERLAY_FILES[composition]}`)
+      .then((response) => response.ok ? response.json() : null)
+      .then((json) => isOverlay(json) ? [composition, json] as const : null)
+      .catch(() => null)))
+      .then((pairs) => {
+        if (cancelled) return;
+        const found: Record<string, CompositionOverlay> = {};
+        for (const pair of pairs) if (pair) found[pair[0]] = pair[1];
+        if (Object.keys(found).length) setOverlays((current) => ({ ...current, ...found }));
+      });
+    return () => { cancelled = true; };
+  }, [lists, overlays]);
 
   if (lists.length === 0) return null;
 
   const armyNameFor = (slug: string) => armyNames[slug] ?? slug;
   const toArmy = (l: SavedList): Army | null => {
-    const cat = catalogues[l.army];
-    if (!cat) return null;
-    return builderListToArmy(l, cat, statsFor, { faction: armyNameFor(l.army), composition: compName(l.composition, l.army), itemsData: itemsData ?? undefined, armyItemLists: itemsByArmy[l.army] ?? [], magicText, mountText, troopTypeFor, factionNames: Object.values(armyNames) });
+    const raw = catalogues[l.army];
+    if (!raw || !statIdx) return null;
+    const overlay = hasOverlay(l.composition) ? overlays[l.composition] : null;
+    if (hasOverlay(l.composition) && !overlay) return null;
+    const cat = overlay ? applyOverlay(raw, overlay) : raw;
+    const itemPool = itemsData && overlay ? applyOverlayItems(itemsData, overlay) : itemsData;
+    const resolvedIndex = overlay ? applyOverlayStatIndex(statIdx, overlay) : statIdx;
+    const statsFor = (name: string): StatRow[] => overlayStatsFor(statIdx, name, overlay);
+    const troopTypeFor = makeTroopTypeLookup(resolvedIndex);
+    return builderListToArmy(l, cat, statsFor, { faction: armyNameFor(l.army), composition: compName(l.composition, l.army), overlayId: overlay?.id, itemsData: itemPool ?? undefined, armyItemLists: itemsByArmy[l.army] ?? [], magicText: applyOverlayMagicText(magicText, overlay), mountText: applyOverlayMountText(mountText, overlay), troopTypeFor, factionNames: Object.values(armyNames) });
   };
 
   // Campaign battle: the list is already locked in the campaign, so match it by name and show ONLY
@@ -88,9 +107,12 @@ export function ArmyListPicker({ onPick, label = 'Choose one of your saved army 
       <div style={{ ...eb, fontSize: 9, color: TOW.muted, marginBottom: 7 }}>{heading}</div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
         {shown.map((l) => {
-          const cat = catalogues[l.army] ?? null;
-          const total = cat ? listTotal(l, cat, itemsData ?? undefined) : null;
-          const ready = !!cat;
+          const raw = catalogues[l.army] ?? null;
+          const overlay = hasOverlay(l.composition) ? overlays[l.composition] : null;
+          const cat = raw && overlay ? applyOverlay(raw, overlay) : raw;
+          const itemPool = itemsData && overlay ? applyOverlayItems(itemsData, overlay) : itemsData;
+          const total = cat ? listTotal(l, cat, itemPool ?? undefined) : null;
+          const ready = !!cat && (!hasOverlay(l.composition) || !!overlay);
           const primary = solo; // the locked list gets a gold "open me" accent
           return (
             <button key={l.id} disabled={!ready} onClick={() => { const a = toArmy(l); if (a) onPick(a); }}

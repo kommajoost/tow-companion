@@ -338,25 +338,27 @@ export function CompactRow({ count, name, points, trailing, muted, selected, onC
  * M WS BS S T W I A Ld + Sv, but that count is never assumed.
  */
 export function StatStrip({ stats, save }: {
-  stats: { label: string; value: string }[]; save?: string;
+  stats: { label: string; value: string; modified?: boolean; title?: string }[]; save?: string;
 }): React.JSX.Element {
   const cells = Array.isArray(stats) ? stats : [];
-  const cell = (label: string, value: string, key: string, isSave: boolean): React.JSX.Element => (
+  const cell = (label: string, value: string, key: string, isSave: boolean, modified = false, title?: string): React.JSX.Element => (
     <div
       key={key}
+      title={title}
       style={{
         flex: isSave ? 1.1 : 1, minWidth: 0, textAlign: 'center',
         // Only divide when something actually precedes the Save cell.
         borderLeft: isSave && cells.length > 0 ? `1px solid ${TOW.lineStrong}` : undefined,
+        background: modified ? 'rgba(184,134,47,0.10)' : 'transparent',
       }}
     >
       <div style={{ ...eb, fontSize: 7.5, color: TOW.goldDeep }}>{label}</div>
-      <div style={{ fontFamily: towFont.serif, fontSize: 12, color: TOW.ink }}>{value}</div>
+      <div style={{ fontFamily: towFont.serif, fontSize: 12, fontWeight: modified ? 700 : 400, color: modified ? TOW.goldDeep : TOW.ink }}>{value}</div>
     </div>
   );
   return (
     <div style={{ display: 'flex', width: '100%', alignItems: 'stretch' }}>
-      {cells.map((s, i) => cell(s.label, s.value, `${s.label}-${i}`, false))}
+      {cells.map((s, i) => cell(s.label, s.value, `${s.label}-${i}`, false, !!s.modified, s.title))}
       {save != null ? cell('Sv', save, 'save', true) : null}
     </div>
   );

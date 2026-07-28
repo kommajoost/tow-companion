@@ -1,0 +1,3240 @@
+{
+  "id": "lm-renegade-v2-coverage",
+  "army": "lizardmen",
+  "reference": "lm-renegade-v2-reference.json",
+  "generatedBy": "scripts/compile-renegade-v2.mjs",
+  "counts": {
+    "applied": 133,
+    "captured": 39,
+    "unresolved": 0,
+    "unsupported": 0,
+    "todo": 5
+  },
+  "blocks": [
+    {
+      "blockId": "b0033",
+      "unitContext": null,
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "composition.sourceRules.Characters"
+      ]
+    },
+    {
+      "blockId": "b0035",
+      "unitContext": null,
+      "entryKind": "list",
+      "changeKinds": [
+        "changed",
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "composition.sourceRules.Core"
+      ]
+    },
+    {
+      "blockId": "b0037",
+      "unitContext": null,
+      "entryKind": "list",
+      "changeKinds": [
+        "changed"
+      ],
+      "status": "captured",
+      "targets": [
+        "composition.sourceRules.Special"
+      ]
+    },
+    {
+      "blockId": "b0039",
+      "unitContext": null,
+      "entryKind": "list",
+      "changeKinds": [
+        "changed"
+      ],
+      "status": "captured",
+      "targets": [
+        "composition.sourceRules.Rare"
+      ]
+    },
+    {
+      "blockId": "h0009",
+      "unitContext": null,
+      "entryKind": "heading",
+      "changeKinds": [
+        "todo"
+      ],
+      "status": "todo",
+      "targets": []
+    },
+    {
+      "blockId": "b0041",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "todo"
+      ],
+      "status": "todo",
+      "targets": []
+    },
+    {
+      "blockId": "b0042",
+      "unitContext": null,
+      "entryKind": "list",
+      "changeKinds": [
+        "todo"
+      ],
+      "status": "todo",
+      "targets": []
+    },
+    {
+      "blockId": "h0012",
+      "unitContext": null,
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.arcane-vassal"
+      ]
+    },
+    {
+      "blockId": "b0045",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.arcane-vassal"
+      ]
+    },
+    {
+      "blockId": "b0046",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.arcane-vassal"
+      ]
+    },
+    {
+      "blockId": "b0047",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.arcane-vassal"
+      ]
+    },
+    {
+      "blockId": "h0013",
+      "unitContext": null,
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.aquatic"
+      ]
+    },
+    {
+      "blockId": "b0048",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.aquatic"
+      ]
+    },
+    {
+      "blockId": "h0014",
+      "unitContext": null,
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.beast-handlers"
+      ]
+    },
+    {
+      "blockId": "b0049",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.beast-handlers"
+      ]
+    },
+    {
+      "blockId": "b0050",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.beast-handlers"
+      ]
+    },
+    {
+      "blockId": "b0051",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.beast-handlers"
+      ]
+    },
+    {
+      "blockId": "b0052",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.beast-handlers"
+      ]
+    },
+    {
+      "blockId": "b0053",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.beast-handlers"
+      ]
+    },
+    {
+      "blockId": "h0015",
+      "unitContext": null,
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.predatory-fighter"
+      ]
+    },
+    {
+      "blockId": "b0054",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.predatory-fighter"
+      ]
+    },
+    {
+      "blockId": "b0057",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "changed"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.cold-blooded"
+      ]
+    },
+    {
+      "blockId": "h0018",
+      "unitContext": null,
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.drop-rocks"
+      ]
+    },
+    {
+      "blockId": "b0058",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.drop-rocks"
+      ]
+    },
+    {
+      "blockId": "b0061",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.skink-riders"
+      ]
+    },
+    {
+      "blockId": "b0062",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.skink-riders"
+      ]
+    },
+    {
+      "blockId": "b0063",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.skink-riders"
+      ]
+    },
+    {
+      "blockId": "h0022",
+      "unitContext": null,
+      "entryKind": "heading",
+      "changeKinds": [
+        "todo"
+      ],
+      "status": "todo",
+      "targets": []
+    },
+    {
+      "blockId": "b0071",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "magicItemText.shield-of-the-mirror-pool"
+      ]
+    },
+    {
+      "blockId": "h0036",
+      "unitContext": null,
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "magicItemText.sun-standard-of-chotec"
+      ]
+    },
+    {
+      "blockId": "b0075",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "magicItemText.sun-standard-of-chotec"
+      ]
+    },
+    {
+      "blockId": "h0039",
+      "unitContext": null,
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "magicItemText.jaguar-standard"
+      ]
+    },
+    {
+      "blockId": "b0078",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "magicItemText.jaguar-standard"
+      ]
+    },
+    {
+      "blockId": "b0080",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "magicItemText.venom-of-the-firefly-frog"
+      ]
+    },
+    {
+      "blockId": "h0046",
+      "unitContext": null,
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "magicItemText.itxi-grub"
+      ]
+    },
+    {
+      "blockId": "b0084",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "magicItemText.itxi-grub"
+      ]
+    },
+    {
+      "blockId": "h0047",
+      "unitContext": null,
+      "entryKind": "heading",
+      "changeKinds": [
+        "todo"
+      ],
+      "status": "todo",
+      "targets": []
+    },
+    {
+      "blockId": "b0086",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "notes"
+      ]
+    },
+    {
+      "blockId": "h0049",
+      "unitContext": null,
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "magicItemText.the-focused-rumination"
+      ]
+    },
+    {
+      "blockId": "h0050",
+      "unitContext": null,
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "magicItemText.the-focused-rumination"
+      ]
+    },
+    {
+      "blockId": "h0051",
+      "unitContext": null,
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "magicItemText.higher-state-of-mind-consciousness"
+      ]
+    },
+    {
+      "blockId": "h0052",
+      "unitContext": null,
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "magicItemText.focus-of-mystery"
+      ]
+    },
+    {
+      "blockId": "b0088",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "magicItemText.focus-of-mystery"
+      ]
+    },
+    {
+      "blockId": "b0089",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "magicItemText.focus-of-mystery"
+      ]
+    },
+    {
+      "blockId": "h0053",
+      "unitContext": null,
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "magicItemText.wandering-deliberations"
+      ]
+    },
+    {
+      "blockId": "b0090",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "magicItemText.wandering-deliberations"
+      ]
+    },
+    {
+      "blockId": "b0091",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "magicItemText.wandering-deliberations"
+      ]
+    },
+    {
+      "blockId": "h0054",
+      "unitContext": null,
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "magicItemText.becalming-cogitation"
+      ]
+    },
+    {
+      "blockId": "b0095",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "magicItemText.sorcerous-void"
+      ]
+    },
+    {
+      "blockId": "h0056",
+      "unitContext": null,
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "magicItemText.soul-of-stone"
+      ]
+    },
+    {
+      "blockId": "b0098",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "magicItemText.soul-of-stone"
+      ]
+    },
+    {
+      "blockId": "b0099",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "magicItemText.soul-of-stone"
+      ]
+    },
+    {
+      "blockId": "b0101",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "changed"
+      ],
+      "status": "applied",
+      "targets": [
+        "lores.lore-of-lustria.spell-apotheosis"
+      ]
+    },
+    {
+      "blockId": "b0102",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new",
+        "changed"
+      ],
+      "status": "applied",
+      "targets": [
+        "lores.lore-of-lustria.spell-apotheosis"
+      ]
+    },
+    {
+      "blockId": "b0105",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "lores.lore-of-lustria.spell-monsoon"
+      ]
+    },
+    {
+      "blockId": "b0106",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "lores.lore-of-lustria.spell-monsoon"
+      ]
+    },
+    {
+      "blockId": "b0107",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new",
+        "changed"
+      ],
+      "status": "applied",
+      "targets": [
+        "lores.lore-of-lustria.spell-monsoon"
+      ]
+    },
+    {
+      "blockId": "b0108",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "lores.lore-of-lustria.spell-monsoon"
+      ]
+    },
+    {
+      "blockId": "b0109",
+      "unitContext": {
+        "name": "Slann Mage-Priests",
+        "sourceBlockId": "b0109",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Slann Mage-Priest"
+        ]
+      },
+      "entryKind": "statline",
+      "changeKinds": [
+        "changed"
+      ],
+      "status": "applied",
+      "targets": [
+        "profiles.slann mage priest"
+      ]
+    },
+    {
+      "blockId": "b0110",
+      "unitContext": {
+        "name": "Slann Mage-Priests",
+        "sourceBlockId": "b0109",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Slann Mage-Priest"
+        ]
+      },
+      "entryKind": "troop-type",
+      "changeKinds": [
+        "changed"
+      ],
+      "status": "applied",
+      "targets": [
+        "profiles.slann mage priest.troopType"
+      ]
+    },
+    {
+      "blockId": "b0111",
+      "unitContext": {
+        "name": "Slann Mage-Priests",
+        "sourceBlockId": "b0109",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Slann Mage-Priest"
+        ]
+      },
+      "entryKind": "base-size",
+      "changeKinds": [
+        "changed"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.slann mage priest.baseSize"
+      ]
+    },
+    {
+      "blockId": "b0115",
+      "unitContext": {
+        "name": "Slann Mage-Priests",
+        "sourceBlockId": "b0109",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Slann Mage-Priest"
+        ]
+      },
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.slann mage priest.notes"
+      ]
+    },
+    {
+      "blockId": "b0116",
+      "unitContext": {
+        "name": "Slann Mage-Priests",
+        "sourceBlockId": "b0109",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Slann Mage-Priest"
+        ]
+      },
+      "entryKind": "special-rules",
+      "changeKinds": [
+        "changed"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.slann-mage-priest.specialRules"
+      ]
+    },
+    {
+      "blockId": "h0063",
+      "unitContext": {
+        "name": "Slann Mage-Priests",
+        "sourceBlockId": "b0109",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Slann Mage-Priest"
+        ]
+      },
+      "entryKind": "heading",
+      "changeKinds": [
+        "changed"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.wisdom-of-the-old-ones"
+      ]
+    },
+    {
+      "blockId": "b0118",
+      "unitContext": {
+        "name": "Slann Mage-Priests",
+        "sourceBlockId": "b0109",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Slann Mage-Priest"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "changed"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.wisdom-of-the-old-ones"
+      ]
+    },
+    {
+      "blockId": "h0064",
+      "unitContext": {
+        "name": "Slann Mage-Priests",
+        "sourceBlockId": "b0109",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Slann Mage-Priest"
+        ]
+      },
+      "entryKind": "heading",
+      "changeKinds": [
+        "changed"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.palanquin"
+      ]
+    },
+    {
+      "blockId": "b0119",
+      "unitContext": {
+        "name": "Slann Mage-Priests",
+        "sourceBlockId": "b0109",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Slann Mage-Priest"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "changed",
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.palanquin"
+      ]
+    },
+    {
+      "blockId": "b0120",
+      "unitContext": {
+        "name": "Slann Mage-Priests",
+        "sourceBlockId": "b0109",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Slann Mage-Priest"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "changed"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.palanquin"
+      ]
+    },
+    {
+      "blockId": "b0124",
+      "unitContext": {
+        "name": "Saurus Heroes",
+        "sourceBlockId": "b0121",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Saurus Oldblood",
+          "Saurus Scar-Veteran"
+        ]
+      },
+      "entryKind": "equipment",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.saurus oldblood.equipment",
+        "profiles.saurus scar veteran.equipment"
+      ]
+    },
+    {
+      "blockId": "b0127",
+      "unitContext": {
+        "name": "Saurus Heroes",
+        "sourceBlockId": "b0121",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Saurus Oldblood",
+          "Saurus Scar-Veteran"
+        ]
+      },
+      "entryKind": "option",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.saurus-oldblood.options",
+        "units.saurus-scar-veteran.options"
+      ]
+    },
+    {
+      "blockId": "b0129",
+      "unitContext": {
+        "name": "Saurus Heroes",
+        "sourceBlockId": "b0121",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Saurus Oldblood",
+          "Saurus Scar-Veteran"
+        ]
+      },
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.saurus oldblood.notes",
+        "profiles.saurus scar veteran.notes"
+      ]
+    },
+    {
+      "blockId": "b0130",
+      "unitContext": {
+        "name": "Saurus Heroes",
+        "sourceBlockId": "b0121",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Saurus Oldblood",
+          "Saurus Scar-Veteran"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.saurus oldblood.notes",
+        "profiles.saurus scar veteran.notes"
+      ]
+    },
+    {
+      "blockId": "b0134",
+      "unitContext": {
+        "name": "Skink Heroes",
+        "sourceBlockId": "b0131",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Skink Priest",
+          "Skink Chief"
+        ]
+      },
+      "entryKind": "equipment",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.skink priest.equipment",
+        "profiles.skink chief.equipment"
+      ]
+    },
+    {
+      "blockId": "b0140",
+      "unitContext": {
+        "name": "Skink Heroes",
+        "sourceBlockId": "b0131",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Skink Priest",
+          "Skink Chief"
+        ]
+      },
+      "entryKind": "option",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.skink-priest.options",
+        "units.skink-chief.options"
+      ]
+    },
+    {
+      "blockId": "b0143",
+      "unitContext": {
+        "name": "Skink Heroes",
+        "sourceBlockId": "b0131",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Skink Priest",
+          "Skink Chief"
+        ]
+      },
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.skink priest.notes",
+        "profiles.skink chief.notes"
+      ]
+    },
+    {
+      "blockId": "b0145",
+      "unitContext": {
+        "name": "Skink Heroes",
+        "sourceBlockId": "b0131",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Skink Priest",
+          "Skink Chief"
+        ]
+      },
+      "entryKind": "weapon-profile",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.blowpipe.weaponProfile"
+      ]
+    },
+    {
+      "blockId": "b0150",
+      "unitContext": {
+        "name": "Cold One",
+        "sourceBlockId": "b0150",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Cold One",
+          "Terradon"
+        ]
+      },
+      "entryKind": "statline",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "profiles.cold one"
+      ]
+    },
+    {
+      "blockId": "b0156",
+      "unitContext": {
+        "name": "Ripperdactyl",
+        "sourceBlockId": "b0156",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Ripperdactyl"
+        ]
+      },
+      "entryKind": "statline",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "profiles.ripperdactyl"
+      ]
+    },
+    {
+      "blockId": "b0160",
+      "unitContext": {
+        "name": "Ripperdactyl",
+        "sourceBlockId": "b0156",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Ripperdactyl"
+        ]
+      },
+      "entryKind": "equipment",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.ripperdactyl.equipment"
+      ]
+    },
+    {
+      "blockId": "b0161",
+      "unitContext": {
+        "name": "Ripperdactyl",
+        "sourceBlockId": "b0156",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Ripperdactyl"
+        ]
+      },
+      "entryKind": "special-rules",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "profiles.ripperdactyl.specialRules"
+      ]
+    },
+    {
+      "blockId": "b0163",
+      "unitContext": {
+        "name": "Skink Cohorts",
+        "sourceBlockId": "b0163",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Skink",
+          "Skink Brave"
+        ]
+      },
+      "entryKind": "statline",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "profiles.skink cohorts"
+      ]
+    },
+    {
+      "blockId": "b0164",
+      "unitContext": {
+        "name": "Skink Cohorts",
+        "sourceBlockId": "b0163",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Skink",
+          "Skink Brave"
+        ]
+      },
+      "entryKind": "troop-type",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "profiles.skink cohorts.troopType"
+      ]
+    },
+    {
+      "blockId": "b0165",
+      "unitContext": {
+        "name": "Skink Cohorts",
+        "sourceBlockId": "b0163",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Skink",
+          "Skink Brave"
+        ]
+      },
+      "entryKind": "base-size",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.skink cohorts.baseSize"
+      ]
+    },
+    {
+      "blockId": "b0166",
+      "unitContext": {
+        "name": "Skink Cohorts",
+        "sourceBlockId": "b0163",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Skink",
+          "Skink Brave"
+        ]
+      },
+      "entryKind": "unit-size",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.skink-cohorts.minimum"
+      ]
+    },
+    {
+      "blockId": "b0167",
+      "unitContext": {
+        "name": "Skink Cohorts",
+        "sourceBlockId": "b0163",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Skink",
+          "Skink Brave"
+        ]
+      },
+      "entryKind": "equipment",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.skink cohorts.equipment"
+      ]
+    },
+    {
+      "blockId": "h0076",
+      "unitContext": {
+        "name": "Skink Cohorts",
+        "sourceBlockId": "b0163",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Skink",
+          "Skink Brave"
+        ]
+      },
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.skink cohorts.notes"
+      ]
+    },
+    {
+      "blockId": "b0168",
+      "unitContext": {
+        "name": "Skink Cohorts",
+        "sourceBlockId": "b0163",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Skink",
+          "Skink Brave"
+        ]
+      },
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.skink cohorts.notes"
+      ]
+    },
+    {
+      "blockId": "b0169",
+      "unitContext": {
+        "name": "Skink Cohorts",
+        "sourceBlockId": "b0163",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Skink",
+          "Skink Brave"
+        ]
+      },
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.skink cohorts.notes"
+      ]
+    },
+    {
+      "blockId": "b0170",
+      "unitContext": {
+        "name": "Skink Cohorts",
+        "sourceBlockId": "b0163",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Skink",
+          "Skink Brave"
+        ]
+      },
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.skink cohorts.notes"
+      ]
+    },
+    {
+      "blockId": "b0171",
+      "unitContext": {
+        "name": "Skink Cohorts",
+        "sourceBlockId": "b0163",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Skink",
+          "Skink Brave"
+        ]
+      },
+      "entryKind": "option",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.skink-cohorts.options"
+      ]
+    },
+    {
+      "blockId": "b0172",
+      "unitContext": {
+        "name": "Skink Cohorts",
+        "sourceBlockId": "b0163",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Skink",
+          "Skink Brave"
+        ]
+      },
+      "entryKind": "special-rules",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.skink-cohorts.specialRules"
+      ]
+    },
+    {
+      "blockId": "b0173",
+      "unitContext": {
+        "name": "Skink Cohorts",
+        "sourceBlockId": "b0163",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Skink",
+          "Skink Brave"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.spawn-kin"
+      ]
+    },
+    {
+      "blockId": "b0174",
+      "unitContext": {
+        "name": "Skink Cohorts",
+        "sourceBlockId": "b0163",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Skink",
+          "Skink Brave"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.spawn-kin"
+      ]
+    },
+    {
+      "blockId": "b0175",
+      "unitContext": {
+        "name": "Skink Cohorts",
+        "sourceBlockId": "b0163",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Skink",
+          "Skink Brave"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.spawn-kin"
+      ]
+    },
+    {
+      "blockId": "b0176",
+      "unitContext": {
+        "name": "Skink Cohorts",
+        "sourceBlockId": "b0163",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Skink",
+          "Skink Brave"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.spawn-kin"
+      ]
+    },
+    {
+      "blockId": "b0177",
+      "unitContext": {
+        "name": "Skink Cohorts",
+        "sourceBlockId": "b0163",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Skink",
+          "Skink Brave"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.spawn-kin"
+      ]
+    },
+    {
+      "blockId": "b0178",
+      "unitContext": {
+        "name": "Skink Skirmishers",
+        "sourceBlockId": "b0178",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Skink Skirmisher",
+          "Patrol Leader"
+        ]
+      },
+      "entryKind": "statline",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "profiles.skink skirmishers"
+      ]
+    },
+    {
+      "blockId": "b0187",
+      "unitContext": {
+        "name": "Skink Skirmishers",
+        "sourceBlockId": "b0178",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Skink Skirmisher",
+          "Patrol Leader"
+        ]
+      },
+      "entryKind": "special-rules",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.skink-skirmishers.specialRules"
+      ]
+    },
+    {
+      "blockId": "b0194",
+      "unitContext": {
+        "name": "Chameleon Skinks",
+        "sourceBlockId": "b0188",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Chameleon Skink",
+          "Patrol Leader"
+        ]
+      },
+      "entryKind": "special-rules",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.chameleon-skinks.specialRules"
+      ]
+    },
+    {
+      "blockId": "b0195",
+      "unitContext": {
+        "name": "Chameleon Skinks",
+        "sourceBlockId": "b0188",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Chameleon Skink",
+          "Patrol Leader"
+        ]
+      },
+      "entryKind": "weapon-profile",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.blowpipe.weaponProfile"
+      ]
+    },
+    {
+      "blockId": "h0079",
+      "unitContext": {
+        "name": "Chameleon Skinks",
+        "sourceBlockId": "b0188",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Chameleon Skink",
+          "Patrol Leader"
+        ]
+      },
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.chameleon"
+      ]
+    },
+    {
+      "blockId": "b0196",
+      "unitContext": {
+        "name": "Chameleon Skinks",
+        "sourceBlockId": "b0188",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Chameleon Skink",
+          "Patrol Leader"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.chameleon"
+      ]
+    },
+    {
+      "blockId": "b0197",
+      "unitContext": {
+        "name": "Saurus Warriors",
+        "sourceBlockId": "b0197",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Saurus Warrior",
+          "Spawn Leader"
+        ]
+      },
+      "entryKind": "statline",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "profiles.saurus warriors"
+      ]
+    },
+    {
+      "blockId": "b0201",
+      "unitContext": {
+        "name": "Saurus Warriors",
+        "sourceBlockId": "b0197",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Saurus Warrior",
+          "Spawn Leader"
+        ]
+      },
+      "entryKind": "equipment",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.saurus warriors.equipment"
+      ]
+    },
+    {
+      "blockId": "b0205",
+      "unitContext": {
+        "name": "Saurus Warriors",
+        "sourceBlockId": "b0197",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Saurus Warrior",
+          "Spawn Leader"
+        ]
+      },
+      "entryKind": "option",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.saurus-warrior.options"
+      ]
+    },
+    {
+      "blockId": "b0206",
+      "unitContext": {
+        "name": "Saurus Warriors",
+        "sourceBlockId": "b0197",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Saurus Warrior",
+          "Spawn Leader"
+        ]
+      },
+      "entryKind": "special-rules",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.saurus-warrior.specialRules"
+      ]
+    },
+    {
+      "blockId": "b0207",
+      "unitContext": {
+        "name": "Saurus Warriors",
+        "sourceBlockId": "b0197",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Saurus Warrior",
+          "Spawn Leader"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.saurus warriors.notes"
+      ]
+    },
+    {
+      "blockId": "b0208",
+      "unitContext": {
+        "name": "Temple Guard",
+        "sourceBlockId": "b0208",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Temple Guard",
+          "Revered Guardian"
+        ]
+      },
+      "entryKind": "statline",
+      "changeKinds": [
+        "changed",
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "profiles.temple guard",
+        "profiles.temple guard"
+      ]
+    },
+    {
+      "blockId": "b0212",
+      "unitContext": {
+        "name": "Temple Guard",
+        "sourceBlockId": "b0208",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Temple Guard",
+          "Revered Guardian"
+        ]
+      },
+      "entryKind": "equipment",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.temple guard.equipment"
+      ]
+    },
+    {
+      "blockId": "b0214",
+      "unitContext": {
+        "name": "Temple Guard",
+        "sourceBlockId": "b0208",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Temple Guard",
+          "Revered Guardian"
+        ]
+      },
+      "entryKind": "option",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.temple-guard.options",
+        "units.temple-guard.options"
+      ]
+    },
+    {
+      "blockId": "b0216",
+      "unitContext": {
+        "name": "Temple Guard",
+        "sourceBlockId": "b0208",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Temple Guard",
+          "Revered Guardian"
+        ]
+      },
+      "entryKind": "special-rules",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.temple-guard.specialRules",
+        "units.temple-guard.specialRules"
+      ]
+    },
+    {
+      "blockId": "b0217",
+      "unitContext": {
+        "name": "Temple Guard",
+        "sourceBlockId": "b0208",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Temple Guard",
+          "Revered Guardian"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "changed",
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.guardians"
+      ]
+    },
+    {
+      "blockId": "b0220",
+      "unitContext": {
+        "name": "Kroxigor",
+        "sourceBlockId": "b0218",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Kroxigor",
+          "Ancient"
+        ]
+      },
+      "entryKind": "base-size",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.kroxigors.baseSize"
+      ]
+    },
+    {
+      "blockId": "b0222",
+      "unitContext": {
+        "name": "Kroxigor",
+        "sourceBlockId": "b0218",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Kroxigor",
+          "Ancient"
+        ]
+      },
+      "entryKind": "equipment",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.kroxigors.equipment"
+      ]
+    },
+    {
+      "blockId": "b0224",
+      "unitContext": {
+        "name": "Kroxigor",
+        "sourceBlockId": "b0218",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Kroxigor",
+          "Ancient"
+        ]
+      },
+      "entryKind": "special-rules",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.kroxigors.specialRules"
+      ]
+    },
+    {
+      "blockId": "b0233",
+      "unitContext": {
+        "name": "Salamander Packs",
+        "sourceBlockId": "b0233",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Salamander",
+          "Skink Handler x3"
+        ]
+      },
+      "entryKind": "statline",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "profiles.salamander pack"
+      ]
+    },
+    {
+      "blockId": "b0234",
+      "unitContext": {
+        "name": "Salamander Packs",
+        "sourceBlockId": "b0233",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Salamander",
+          "Skink Handler x3"
+        ]
+      },
+      "entryKind": "troop-type",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "profiles.salamander pack.troopType"
+      ]
+    },
+    {
+      "blockId": "b0235",
+      "unitContext": {
+        "name": "Salamander Packs",
+        "sourceBlockId": "b0233",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Salamander",
+          "Skink Handler x3"
+        ]
+      },
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.salamander pack.notes"
+      ]
+    },
+    {
+      "blockId": "b0236",
+      "unitContext": {
+        "name": "Salamander Packs",
+        "sourceBlockId": "b0233",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Salamander",
+          "Skink Handler x3"
+        ]
+      },
+      "entryKind": "special-rules",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.salamander-packs.specialRules"
+      ]
+    },
+    {
+      "blockId": "b0237",
+      "unitContext": {
+        "name": "Salamander Packs",
+        "sourceBlockId": "b0233",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Salamander",
+          "Skink Handler x3"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.salamander pack.notes"
+      ]
+    },
+    {
+      "blockId": "b0238",
+      "unitContext": {
+        "name": "Salamander Packs",
+        "sourceBlockId": "b0233",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Salamander",
+          "Skink Handler x3"
+        ]
+      },
+      "entryKind": "weapon-profile",
+      "changeKinds": [
+        "new",
+        "changed"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.fiery-breath.weaponProfile"
+      ]
+    },
+    {
+      "blockId": "b0239",
+      "unitContext": {
+        "name": "Salamander Packs",
+        "sourceBlockId": "b0233",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Salamander",
+          "Skink Handler x3"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "changed",
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.salamander pack.notes"
+      ]
+    },
+    {
+      "blockId": "b0240",
+      "unitContext": {
+        "name": "Razordon Packs",
+        "sourceBlockId": "b0240",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Razordon",
+          "Skink Handler x3"
+        ]
+      },
+      "entryKind": "statline",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "profiles.razordon pack"
+      ]
+    },
+    {
+      "blockId": "b0241",
+      "unitContext": {
+        "name": "Razordon Packs",
+        "sourceBlockId": "b0240",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Razordon",
+          "Skink Handler x3"
+        ]
+      },
+      "entryKind": "troop-type",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "profiles.razordon pack.troopType"
+      ]
+    },
+    {
+      "blockId": "b0242",
+      "unitContext": {
+        "name": "Razordon Packs",
+        "sourceBlockId": "b0240",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Razordon",
+          "Skink Handler x3"
+        ]
+      },
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.razordon pack.notes"
+      ]
+    },
+    {
+      "blockId": "b0244",
+      "unitContext": {
+        "name": "Razordon Packs",
+        "sourceBlockId": "b0240",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Razordon",
+          "Skink Handler x3"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.razordon pack.notes"
+      ]
+    },
+    {
+      "blockId": "b0245",
+      "unitContext": {
+        "name": "Razordon Packs",
+        "sourceBlockId": "b0240",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Razordon",
+          "Skink Handler x3"
+        ]
+      },
+      "entryKind": "weapon-profile",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.wicked-claws.weaponProfile",
+        "rules.razor-barbs.weaponProfile"
+      ]
+    },
+    {
+      "blockId": "b0246",
+      "unitContext": {
+        "name": "Razordon Packs",
+        "sourceBlockId": "b0240",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Razordon",
+          "Skink Handler x3"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.razordon pack.notes"
+      ]
+    },
+    {
+      "blockId": "b0251",
+      "unitContext": {
+        "name": "Cold One Riders",
+        "sourceBlockId": "b0248",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Cold One Rider",
+          "Pack Leader",
+          "Cold One"
+        ]
+      },
+      "entryKind": "unit-size",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.cold-one-riders.minimum"
+      ]
+    },
+    {
+      "blockId": "b0252",
+      "unitContext": {
+        "name": "Cold One Riders",
+        "sourceBlockId": "b0248",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Cold One Rider",
+          "Pack Leader",
+          "Cold One"
+        ]
+      },
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.cold one riders.notes"
+      ]
+    },
+    {
+      "blockId": "b0253",
+      "unitContext": {
+        "name": "Cold One Riders",
+        "sourceBlockId": "b0248",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Cold One Rider",
+          "Pack Leader",
+          "Cold One"
+        ]
+      },
+      "entryKind": "option",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.cold-one-riders.options"
+      ]
+    },
+    {
+      "blockId": "b0254",
+      "unitContext": {
+        "name": "Cold One Riders",
+        "sourceBlockId": "b0248",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Cold One Rider",
+          "Pack Leader",
+          "Cold One"
+        ]
+      },
+      "entryKind": "option",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.cold-one-riders.options"
+      ]
+    },
+    {
+      "blockId": "b0256",
+      "unitContext": {
+        "name": "Cold One Riders",
+        "sourceBlockId": "b0248",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Cold One Rider",
+          "Pack Leader",
+          "Cold One"
+        ]
+      },
+      "entryKind": "special-rules",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.cold-one-riders.specialRules"
+      ]
+    },
+    {
+      "blockId": "b0257",
+      "unitContext": {
+        "name": "Terradon Riders",
+        "sourceBlockId": "b0257",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Terradon Rider",
+          "Sky Leader",
+          "Terradon"
+        ]
+      },
+      "entryKind": "statline",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "profiles.terradon riders"
+      ]
+    },
+    {
+      "blockId": "b0261",
+      "unitContext": {
+        "name": "Terradon Riders",
+        "sourceBlockId": "b0257",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Terradon Rider",
+          "Sky Leader",
+          "Terradon"
+        ]
+      },
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.terradon riders.notes"
+      ]
+    },
+    {
+      "blockId": "b0262",
+      "unitContext": {
+        "name": "Terradon Riders",
+        "sourceBlockId": "b0257",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Terradon Rider",
+          "Sky Leader",
+          "Terradon"
+        ]
+      },
+      "entryKind": "option",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.terradon-riders.options"
+      ]
+    },
+    {
+      "blockId": "b0263",
+      "unitContext": {
+        "name": "Terradon Riders",
+        "sourceBlockId": "b0257",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Terradon Rider",
+          "Sky Leader",
+          "Terradon"
+        ]
+      },
+      "entryKind": "option",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.terradon-riders.options"
+      ]
+    },
+    {
+      "blockId": "b0266",
+      "unitContext": {
+        "name": "Terradon Riders",
+        "sourceBlockId": "b0257",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Terradon Rider",
+          "Sky Leader",
+          "Terradon"
+        ]
+      },
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.terradon riders.notes"
+      ]
+    },
+    {
+      "blockId": "b0267",
+      "unitContext": {
+        "name": "Terradon Riders",
+        "sourceBlockId": "b0257",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Terradon Rider",
+          "Sky Leader",
+          "Terradon"
+        ]
+      },
+      "entryKind": "special-rules",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.terradon-riders.specialRules"
+      ]
+    },
+    {
+      "blockId": "b0268",
+      "unitContext": {
+        "name": "Terradon Riders",
+        "sourceBlockId": "b0257",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Terradon Rider",
+          "Sky Leader",
+          "Terradon"
+        ]
+      },
+      "entryKind": "weapon-profile",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.fireleech-bolas.weaponProfile"
+      ]
+    },
+    {
+      "blockId": "b0269",
+      "unitContext": {
+        "name": "Terradon Riders",
+        "sourceBlockId": "b0257",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Terradon Rider",
+          "Sky Leader",
+          "Terradon"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.terradon riders.notes"
+      ]
+    },
+    {
+      "blockId": "b0270",
+      "unitContext": {
+        "name": "Ripperdactyl Riders",
+        "sourceBlockId": "b0270",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Ripperdactyl Rider",
+          "Ripperdactyl Champion",
+          "Ripperdactyl"
+        ]
+      },
+      "entryKind": "statline",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "profiles.ripperdactyl riders"
+      ]
+    },
+    {
+      "blockId": "b0274",
+      "unitContext": {
+        "name": "Ripperdactyl Riders",
+        "sourceBlockId": "b0270",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Ripperdactyl Rider",
+          "Ripperdactyl Champion",
+          "Ripperdactyl"
+        ]
+      },
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.ripperdactyl riders.notes"
+      ]
+    },
+    {
+      "blockId": "b0275",
+      "unitContext": {
+        "name": "Ripperdactyl Riders",
+        "sourceBlockId": "b0270",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Ripperdactyl Rider",
+          "Ripperdactyl Champion",
+          "Ripperdactyl"
+        ]
+      },
+      "entryKind": "option",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.ripperdactyl-riders.options"
+      ]
+    },
+    {
+      "blockId": "b0276",
+      "unitContext": {
+        "name": "Ripperdactyl Riders",
+        "sourceBlockId": "b0270",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Ripperdactyl Rider",
+          "Ripperdactyl Champion",
+          "Ripperdactyl"
+        ]
+      },
+      "entryKind": "special-rules",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.ripperdactyl-riders.specialRules"
+      ]
+    },
+    {
+      "blockId": "b0277",
+      "unitContext": {
+        "name": "Ripperdactyl Riders",
+        "sourceBlockId": "b0270",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Ripperdactyl Rider",
+          "Ripperdactyl Champion",
+          "Ripperdactyl"
+        ]
+      },
+      "entryKind": "weapon-profile",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.wicked-claws.weaponProfile"
+      ]
+    },
+    {
+      "blockId": "b0279",
+      "unitContext": {
+        "name": "Ripperdactyl Riders",
+        "sourceBlockId": "b0270",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Ripperdactyl Rider",
+          "Ripperdactyl Champion",
+          "Ripperdactyl"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.toad-rage"
+      ]
+    },
+    {
+      "blockId": "b0280",
+      "unitContext": {
+        "name": "Carnosaur",
+        "sourceBlockId": "b0280",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Carnosaur"
+        ]
+      },
+      "entryKind": "statline",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "profiles.carnosaur"
+      ]
+    },
+    {
+      "blockId": "b0285",
+      "unitContext": {
+        "name": "Carnosaur",
+        "sourceBlockId": "b0280",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Carnosaur"
+        ]
+      },
+      "entryKind": "special-rules",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "profiles.carnosaur.specialRules"
+      ]
+    },
+    {
+      "blockId": "b0289",
+      "unitContext": {
+        "name": "Carnosaur",
+        "sourceBlockId": "b0280",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Carnosaur"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.slashing-talons-combat-s-3-multiple-wounds-d3"
+      ]
+    },
+    {
+      "blockId": "b0292",
+      "unitContext": {
+        "name": "Stegadons",
+        "sourceBlockId": "b0292",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Stegadon",
+          "Ancient Stegadon",
+          "Skink Crew (x5)"
+        ]
+      },
+      "entryKind": "statline",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "profiles.stegadon"
+      ]
+    },
+    {
+      "blockId": "b0296",
+      "unitContext": {
+        "name": "Stegadons",
+        "sourceBlockId": "b0292",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Stegadon",
+          "Ancient Stegadon",
+          "Skink Crew (x5)"
+        ]
+      },
+      "entryKind": "armour-value",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.stegadon.armourValue"
+      ]
+    },
+    {
+      "blockId": "b0300",
+      "unitContext": {
+        "name": "Stegadons",
+        "sourceBlockId": "b0292",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Stegadon",
+          "Ancient Stegadon",
+          "Skink Crew (x5)"
+        ]
+      },
+      "entryKind": "option",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.stegadon.options"
+      ]
+    },
+    {
+      "blockId": "b0301",
+      "unitContext": {
+        "name": "Stegadons",
+        "sourceBlockId": "b0292",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Stegadon",
+          "Ancient Stegadon",
+          "Skink Crew (x5)"
+        ]
+      },
+      "entryKind": "special-rules",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.stegadon.specialRules"
+      ]
+    },
+    {
+      "blockId": "h0099",
+      "unitContext": {
+        "name": "Stegadons",
+        "sourceBlockId": "b0292",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Stegadon",
+          "Ancient Stegadon",
+          "Skink Crew (x5)"
+        ]
+      },
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.great-horns"
+      ]
+    },
+    {
+      "blockId": "b0302",
+      "unitContext": {
+        "name": "Stegadons",
+        "sourceBlockId": "b0292",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Stegadon",
+          "Ancient Stegadon",
+          "Skink Crew (x5)"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.great-horns"
+      ]
+    },
+    {
+      "blockId": "b0304",
+      "unitContext": {
+        "name": "Stegadons",
+        "sourceBlockId": "b0292",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Stegadon",
+          "Ancient Stegadon",
+          "Skink Crew (x5)"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "changed",
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.engine-of-the-gods"
+      ]
+    },
+    {
+      "blockId": "b0305",
+      "unitContext": {
+        "name": "Stegadons",
+        "sourceBlockId": "b0292",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Stegadon",
+          "Ancient Stegadon",
+          "Skink Crew (x5)"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.engine-of-the-gods"
+      ]
+    },
+    {
+      "blockId": "b0308",
+      "unitContext": {
+        "name": "Stegadons",
+        "sourceBlockId": "b0292",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Stegadon",
+          "Ancient Stegadon",
+          "Skink Crew (x5)"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.engine-of-the-gods"
+      ]
+    },
+    {
+      "blockId": "b0311",
+      "unitContext": {
+        "name": "Stegadons",
+        "sourceBlockId": "b0292",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Stegadon",
+          "Ancient Stegadon",
+          "Skink Crew (x5)"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.portent-of-warding"
+      ]
+    },
+    {
+      "blockId": "b0312",
+      "unitContext": {
+        "name": "Stegadons",
+        "sourceBlockId": "b0292",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Stegadon",
+          "Ancient Stegadon",
+          "Skink Crew (x5)"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.portent-of-warding"
+      ]
+    },
+    {
+      "blockId": "b0313",
+      "unitContext": {
+        "name": "Stegadons",
+        "sourceBlockId": "b0292",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Stegadon",
+          "Ancient Stegadon",
+          "Skink Crew (x5)"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.portent-of-warding"
+      ]
+    },
+    {
+      "blockId": "b0314",
+      "unitContext": {
+        "name": "Stegadons",
+        "sourceBlockId": "b0292",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Stegadon",
+          "Ancient Stegadon",
+          "Skink Crew (x5)"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.portent-of-warding"
+      ]
+    },
+    {
+      "blockId": "b0315",
+      "unitContext": {
+        "name": "Stegadons",
+        "sourceBlockId": "b0292",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Stegadon",
+          "Ancient Stegadon",
+          "Skink Crew (x5)"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.portent-of-warding"
+      ]
+    },
+    {
+      "blockId": "b0316",
+      "unitContext": {
+        "name": "Stegadons",
+        "sourceBlockId": "b0292",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Stegadon",
+          "Ancient Stegadon",
+          "Skink Crew (x5)"
+        ]
+      },
+      "entryKind": "weapon-profile",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.great-horns.weaponProfile",
+        "rules.giant-bow.weaponProfile",
+        "rules.giant-blowpipes.weaponProfile"
+      ]
+    },
+    {
+      "blockId": "b0319",
+      "unitContext": {
+        "name": "Bastiladon",
+        "sourceBlockId": "b0319",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Bastiladon",
+          "Skink Crew (x3)"
+        ]
+      },
+      "entryKind": "statline",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "profiles.bastiladon"
+      ]
+    },
+    {
+      "blockId": "b0327",
+      "unitContext": {
+        "name": "Bastiladon",
+        "sourceBlockId": "b0319",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Bastiladon",
+          "Skink Crew (x3)"
+        ]
+      },
+      "entryKind": "option",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.bastiladon.options"
+      ]
+    },
+    {
+      "blockId": "b0328",
+      "unitContext": {
+        "name": "Bastiladon",
+        "sourceBlockId": "b0319",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Bastiladon",
+          "Skink Crew (x3)"
+        ]
+      },
+      "entryKind": "special-rules",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.bastiladon.specialRules"
+      ]
+    },
+    {
+      "blockId": "b0331",
+      "unitContext": {
+        "name": "Bastiladon",
+        "sourceBlockId": "b0319",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Bastiladon",
+          "Skink Crew (x3)"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.ark-of-sotek"
+      ]
+    },
+    {
+      "blockId": "b0340",
+      "unitContext": {
+        "name": "Bastiladon",
+        "sourceBlockId": "b0319",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Bastiladon",
+          "Skink Crew (x3)"
+        ]
+      },
+      "entryKind": "weapon-profile",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.thunderous-bludgeon.weaponProfile"
+      ]
+    },
+    {
+      "blockId": "b0341",
+      "unitContext": {
+        "name": "Troglodon",
+        "sourceBlockId": "b0341",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Troglodon",
+          "Skink Oracle"
+        ]
+      },
+      "entryKind": "statline",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "profiles.troglodon"
+      ]
+    },
+    {
+      "blockId": "b0345",
+      "unitContext": {
+        "name": "Troglodon",
+        "sourceBlockId": "b0341",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Troglodon",
+          "Skink Oracle"
+        ]
+      },
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.troglodon.notes"
+      ]
+    },
+    {
+      "blockId": "b0348",
+      "unitContext": {
+        "name": "Troglodon",
+        "sourceBlockId": "b0341",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Troglodon",
+          "Skink Oracle"
+        ]
+      },
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.troglodon.notes"
+      ]
+    },
+    {
+      "blockId": "b0349",
+      "unitContext": {
+        "name": "Troglodon",
+        "sourceBlockId": "b0341",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Troglodon",
+          "Skink Oracle"
+        ]
+      },
+      "entryKind": "option",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.troglodon.options"
+      ]
+    },
+    {
+      "blockId": "b0350",
+      "unitContext": {
+        "name": "Troglodon",
+        "sourceBlockId": "b0341",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Troglodon",
+          "Skink Oracle"
+        ]
+      },
+      "entryKind": "special-rules",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.troglodon.specialRules"
+      ]
+    },
+    {
+      "blockId": "b0351",
+      "unitContext": {
+        "name": "Troglodon",
+        "sourceBlockId": "b0341",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Troglodon",
+          "Skink Oracle"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.troglodon.notes"
+      ]
+    },
+    {
+      "blockId": "b0352",
+      "unitContext": {
+        "name": "Troglodon",
+        "sourceBlockId": "b0341",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Troglodon",
+          "Skink Oracle"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.primeval-roar"
+      ]
+    }
+  ]
+}

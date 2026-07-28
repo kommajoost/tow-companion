@@ -92,7 +92,7 @@ export function CombatStats({ unit }: { unit: ArmyUnit }) {
   // One profile row. In loadout mode an AP column is inserted after S; every wielder profile (each
   // model, incl. the champion) shows the chosen weapon's effective S/AP (from its OWN base S) and
   // Attacks; mounts/steeds keep their base S (natural attacks, no AP). Off = verbatim base profile.
-  const profileTable = (stats: { k: string; v: string }[]) => {
+  const profileTable = (stats: { k: string; v: string; modified?: boolean }[]) => {
     const sBase = statValue(stats, 'S');
     const e = on && mw && isWielder(stats) ? effectiveMelee(sBase ?? 0, mw, charge) : null;
     const cols: { k: string; v: string; hl: boolean }[] = [];
@@ -109,7 +109,7 @@ export function CombatStats({ unit }: { unit: ArmyUnit }) {
         const baseA = parseInt(st.v.match(/\d+/)?.[0] ?? '', 10);
         cols.push({ k: 'A', v: Number.isFinite(baseA) ? String(baseA + e.aMod) : st.v, hl: true });
       } else {
-        cols.push({ k: st.k, v: st.v, hl: false });
+        cols.push({ k: st.k, v: st.v, hl: !!st.modified });
       }
     }
     return (

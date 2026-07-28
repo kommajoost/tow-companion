@@ -1,0 +1,2780 @@
+{
+  "id": "sk-renegade-v2-coverage",
+  "army": "skaven",
+  "reference": "sk-renegade-v2-reference.json",
+  "generatedBy": "scripts/compile-renegade-v2.mjs",
+  "counts": {
+    "applied": 119,
+    "captured": 30,
+    "unresolved": 0,
+    "unsupported": 0,
+    "todo": 3
+  },
+  "blocks": [
+    {
+      "blockId": "b0063",
+      "unitContext": null,
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "composition.sourceRules.Characters"
+      ]
+    },
+    {
+      "blockId": "b0067",
+      "unitContext": null,
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "composition.sourceRules.Core"
+      ]
+    },
+    {
+      "blockId": "b0070",
+      "unitContext": null,
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "composition.sourceRules.Special"
+      ]
+    },
+    {
+      "blockId": "h0011",
+      "unitContext": null,
+      "entryKind": "heading",
+      "changeKinds": [
+        "todo"
+      ],
+      "status": "todo",
+      "targets": []
+    },
+    {
+      "blockId": "b0077",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "todo"
+      ],
+      "status": "todo",
+      "targets": []
+    },
+    {
+      "blockId": "b0078",
+      "unitContext": null,
+      "entryKind": "list",
+      "changeKinds": [
+        "todo"
+      ],
+      "status": "todo",
+      "targets": []
+    },
+    {
+      "blockId": "b0084",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.expendable"
+      ]
+    },
+    {
+      "blockId": "b0085",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.expendable"
+      ]
+    },
+    {
+      "blockId": "b0086",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.expendable"
+      ]
+    },
+    {
+      "blockId": "b0087",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.expendable"
+      ]
+    },
+    {
+      "blockId": "b0088",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.poisoned-wind"
+      ]
+    },
+    {
+      "blockId": "b0089",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.poisoned-wind"
+      ]
+    },
+    {
+      "blockId": "b0094",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.warpstone-weapons"
+      ]
+    },
+    {
+      "blockId": "b0095",
+      "unitContext": null,
+      "entryKind": "table",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.warpstone-weapons"
+      ]
+    },
+    {
+      "blockId": "b0096",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.verminous-valour"
+      ]
+    },
+    {
+      "blockId": "b0097",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.verminous-valour"
+      ]
+    },
+    {
+      "blockId": "b0098",
+      "unitContext": null,
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.verminous-valour"
+      ]
+    },
+    {
+      "blockId": "b0099",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.verminous-valour"
+      ]
+    },
+    {
+      "blockId": "b0100",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.verminous-valour"
+      ]
+    },
+    {
+      "blockId": "b0101",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.verminous-valour"
+      ]
+    },
+    {
+      "blockId": "b0102",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.verminous-valour"
+      ]
+    },
+    {
+      "blockId": "b0103",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.scurrying-masses"
+      ]
+    },
+    {
+      "blockId": "b0104",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.scurrying-masses"
+      ]
+    },
+    {
+      "blockId": "b0105",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.scurrying-masses"
+      ]
+    },
+    {
+      "blockId": "h0016",
+      "unitContext": null,
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "magicItemText.the-fellblade"
+      ]
+    },
+    {
+      "blockId": "b0108",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "magicItemText.the-fellblade"
+      ]
+    },
+    {
+      "blockId": "b0109",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "magicItemText.weeping-blade"
+      ]
+    },
+    {
+      "blockId": "b0111",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "magicItemText.blade-of-nurglitch"
+      ]
+    },
+    {
+      "blockId": "b0115",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "magicItemText.death-globe"
+      ]
+    },
+    {
+      "blockId": "b0116",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "magicItemText.death-globe"
+      ]
+    },
+    {
+      "blockId": "h0019",
+      "unitContext": null,
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "magicItemText.warpstone-armour"
+      ]
+    },
+    {
+      "blockId": "b0117",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "magicItemText.warpstone-armour"
+      ]
+    },
+    {
+      "blockId": "h0025",
+      "unitContext": null,
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "magicItemText.storm-banner"
+      ]
+    },
+    {
+      "blockId": "b0122",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "magicItemText.storm-banner"
+      ]
+    },
+    {
+      "blockId": "h0026",
+      "unitContext": null,
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "magicItemText.grand-banner-of-superiority"
+      ]
+    },
+    {
+      "blockId": "b0125",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "magicItemText.a-unit-carrying-the-banner-of-verminous-scurrying-gains-the-swiftstride-special-rule-plague-banner"
+      ]
+    },
+    {
+      "blockId": "b0126",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "magicItemText.a-unit-carrying-the-banner-of-verminous-scurrying-gains-the-swiftstride-special-rule-plague-banner"
+      ]
+    },
+    {
+      "blockId": "b0127",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "magicItemText.brass-orb"
+      ]
+    },
+    {
+      "blockId": "b0128",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "magicItemText.skalm"
+      ]
+    },
+    {
+      "blockId": "h0035",
+      "unitContext": null,
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "magicItemText.storm-daemon"
+      ]
+    },
+    {
+      "blockId": "b0131",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "magicItemText.storm-daemon"
+      ]
+    },
+    {
+      "blockId": "b0132",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "magicItemText.warpstone-tokens"
+      ]
+    },
+    {
+      "blockId": "b0154",
+      "unitContext": {
+        "name": "Grey Seers",
+        "sourceBlockId": "b0154",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Grey Seer"
+        ]
+      },
+      "entryKind": "statline",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "profiles.grey seer"
+      ]
+    },
+    {
+      "blockId": "b0172",
+      "unitContext": {
+        "name": "Clan Skryre Warlock Engineers",
+        "sourceBlockId": "b0164",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Warlock Engineer"
+        ]
+      },
+      "entryKind": "option",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.warlock-engineer.options"
+      ]
+    },
+    {
+      "blockId": "b0174",
+      "unitContext": {
+        "name": "Clan Skryre Warlock Engineers",
+        "sourceBlockId": "b0164",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Warlock Engineer"
+        ]
+      },
+      "entryKind": "option",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.warlock-engineer.options"
+      ]
+    },
+    {
+      "blockId": "b0175",
+      "unitContext": {
+        "name": "Clan Skryre Warlock Engineers",
+        "sourceBlockId": "b0164",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Warlock Engineer"
+        ]
+      },
+      "entryKind": "option",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.warlock-engineer.options"
+      ]
+    },
+    {
+      "blockId": "h0049",
+      "unitContext": {
+        "name": "Clan Skryre Warlock Engineers",
+        "sourceBlockId": "b0164",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Warlock Engineer"
+        ]
+      },
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.warlock-optics"
+      ]
+    },
+    {
+      "blockId": "b0177",
+      "unitContext": {
+        "name": "Clan Skryre Warlock Engineers",
+        "sourceBlockId": "b0164",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Warlock Engineer"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.warlock-optics"
+      ]
+    },
+    {
+      "blockId": "b0182",
+      "unitContext": {
+        "name": "Clan Skryre Warlock Engineers",
+        "sourceBlockId": "b0164",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Warlock Engineer"
+        ]
+      },
+      "entryKind": "weapon-profile",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.doomrocket.weaponProfile"
+      ]
+    },
+    {
+      "blockId": "b0183",
+      "unitContext": {
+        "name": "Clan Skryre Warlock Engineers",
+        "sourceBlockId": "b0164",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Warlock Engineer"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.warlock engineer.notes"
+      ]
+    },
+    {
+      "blockId": "b0184",
+      "unitContext": {
+        "name": "Clan Eshin Master Assassins",
+        "sourceBlockId": "b0184",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Master Assassin"
+        ]
+      },
+      "entryKind": "statline",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "profiles.master assassin"
+      ]
+    },
+    {
+      "blockId": "b0187",
+      "unitContext": {
+        "name": "Clan Eshin Master Assassins",
+        "sourceBlockId": "b0184",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Master Assassin"
+        ]
+      },
+      "entryKind": "equipment",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.master assassin.equipment"
+      ]
+    },
+    {
+      "blockId": "b0188",
+      "unitContext": {
+        "name": "Clan Eshin Master Assassins",
+        "sourceBlockId": "b0184",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Master Assassin"
+        ]
+      },
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.master assassin.notes"
+      ]
+    },
+    {
+      "blockId": "b0189",
+      "unitContext": {
+        "name": "Clan Eshin Master Assassins",
+        "sourceBlockId": "b0184",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Master Assassin"
+        ]
+      },
+      "entryKind": "special-rules",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.master-assassin.specialRules"
+      ]
+    },
+    {
+      "blockId": "h0053",
+      "unitContext": {
+        "name": "Clan Eshin Master Assassins",
+        "sourceBlockId": "b0184",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Master Assassin"
+        ]
+      },
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.dodge"
+      ]
+    },
+    {
+      "blockId": "b0190",
+      "unitContext": {
+        "name": "Clan Eshin Master Assassins",
+        "sourceBlockId": "b0184",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Master Assassin"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.dodge"
+      ]
+    },
+    {
+      "blockId": "b0191",
+      "unitContext": {
+        "name": "Clan Eshin Master Assassins",
+        "sourceBlockId": "b0184",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Master Assassin"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.eshin-infiltration"
+      ]
+    },
+    {
+      "blockId": "b0210",
+      "unitContext": {
+        "name": "Clan Pestilens Plague Priests",
+        "sourceBlockId": "b0195",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Plague Priest"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.r-s-ap-special-rules"
+      ]
+    },
+    {
+      "blockId": "b0211",
+      "unitContext": {
+        "name": "Stormvermin",
+        "sourceBlockId": "b0211",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Stormvermin",
+          "Fangleader"
+        ]
+      },
+      "entryKind": "statline",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "profiles.stormvermin",
+        "profiles.stormvermin"
+      ]
+    },
+    {
+      "blockId": "b0212",
+      "unitContext": {
+        "name": "Stormvermin",
+        "sourceBlockId": "b0211",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Stormvermin",
+          "Fangleader"
+        ]
+      },
+      "entryKind": "troop-type",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "profiles.stormvermin.troopType",
+        "profiles.stormvermin.troopType"
+      ]
+    },
+    {
+      "blockId": "b0228",
+      "unitContext": {
+        "name": "Clanrats",
+        "sourceBlockId": "b0219",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Clanrat",
+          "Clawleader"
+        ]
+      },
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.clanrats.notes"
+      ]
+    },
+    {
+      "blockId": "b0229",
+      "unitContext": {
+        "name": "Clanrats",
+        "sourceBlockId": "b0219",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Clanrat",
+          "Clawleader"
+        ]
+      },
+      "entryKind": "option",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.clanrats.options"
+      ]
+    },
+    {
+      "blockId": "b0236",
+      "unitContext": {
+        "name": "Weapon Teams",
+        "sourceBlockId": "b0231",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Weapon Team Crew"
+        ]
+      },
+      "entryKind": "option",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.weapon-team.options"
+      ]
+    },
+    {
+      "blockId": "b0237",
+      "unitContext": {
+        "name": "Weapon Teams",
+        "sourceBlockId": "b0231",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Weapon Team Crew"
+        ]
+      },
+      "entryKind": "special-rules",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.weapon-team.specialRules"
+      ]
+    },
+    {
+      "blockId": "b0240",
+      "unitContext": {
+        "name": "Weapon Teams",
+        "sourceBlockId": "b0231",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Weapon Team Crew"
+        ]
+      },
+      "entryKind": "weapon-profile",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.doom-flayer.weaponProfile"
+      ]
+    },
+    {
+      "blockId": "b0244",
+      "unitContext": {
+        "name": "Weapon Teams",
+        "sourceBlockId": "b0231",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Weapon Team Crew"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.wind-mortar-move-or-shoot-poisoned-wind"
+      ]
+    },
+    {
+      "blockId": "b0246",
+      "unitContext": {
+        "name": "Weapon Teams",
+        "sourceBlockId": "b0231",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Weapon Team Crew"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.weapon team.notes"
+      ]
+    },
+    {
+      "blockId": "b0248",
+      "unitContext": {
+        "name": "Weapon Teams",
+        "sourceBlockId": "b0231",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Weapon Team Crew"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.weapon team.notes"
+      ]
+    },
+    {
+      "blockId": "b0251",
+      "unitContext": {
+        "name": "Weapon Teams",
+        "sourceBlockId": "b0231",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Weapon Team Crew"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.weapon team.notes"
+      ]
+    },
+    {
+      "blockId": "b0252",
+      "unitContext": {
+        "name": "Skaven Dregs",
+        "sourceBlockId": "b0252",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Dreg-rat"
+        ]
+      },
+      "entryKind": "statline",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "profiles.skaven dregs"
+      ]
+    },
+    {
+      "blockId": "b0253",
+      "unitContext": {
+        "name": "Skaven Dregs",
+        "sourceBlockId": "b0252",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Dreg-rat"
+        ]
+      },
+      "entryKind": "troop-type",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "profiles.skaven dregs.troopType"
+      ]
+    },
+    {
+      "blockId": "b0254",
+      "unitContext": {
+        "name": "Skaven Dregs",
+        "sourceBlockId": "b0252",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Dreg-rat"
+        ]
+      },
+      "entryKind": "base-size",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.skaven dregs.baseSize"
+      ]
+    },
+    {
+      "blockId": "b0255",
+      "unitContext": {
+        "name": "Skaven Dregs",
+        "sourceBlockId": "b0252",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Dreg-rat"
+        ]
+      },
+      "entryKind": "unit-size",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.skaven-dregs.minimum"
+      ]
+    },
+    {
+      "blockId": "b0256",
+      "unitContext": {
+        "name": "Skaven Dregs",
+        "sourceBlockId": "b0252",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Dreg-rat"
+        ]
+      },
+      "entryKind": "equipment",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.skaven dregs.equipment"
+      ]
+    },
+    {
+      "blockId": "h0072",
+      "unitContext": {
+        "name": "Skaven Dregs",
+        "sourceBlockId": "b0252",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Dreg-rat"
+        ]
+      },
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.skaven dregs.notes"
+      ]
+    },
+    {
+      "blockId": "b0257",
+      "unitContext": {
+        "name": "Skaven Dregs",
+        "sourceBlockId": "b0252",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Dreg-rat"
+        ]
+      },
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.skaven dregs.notes"
+      ]
+    },
+    {
+      "blockId": "b0258",
+      "unitContext": {
+        "name": "Skaven Dregs",
+        "sourceBlockId": "b0252",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Dreg-rat"
+        ]
+      },
+      "entryKind": "option",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.skaven-dregs.options"
+      ]
+    },
+    {
+      "blockId": "b0259",
+      "unitContext": {
+        "name": "Skaven Dregs",
+        "sourceBlockId": "b0252",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Dreg-rat"
+        ]
+      },
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.skaven dregs.notes"
+      ]
+    },
+    {
+      "blockId": "b0260",
+      "unitContext": {
+        "name": "Skaven Dregs",
+        "sourceBlockId": "b0252",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Dreg-rat"
+        ]
+      },
+      "entryKind": "option",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.skaven-dregs.options"
+      ]
+    },
+    {
+      "blockId": "b0261",
+      "unitContext": {
+        "name": "Skaven Dregs",
+        "sourceBlockId": "b0252",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Dreg-rat"
+        ]
+      },
+      "entryKind": "special-rules",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.skaven-dregs.specialRules"
+      ]
+    },
+    {
+      "blockId": "h0073",
+      "unitContext": {
+        "name": "Skaven Dregs",
+        "sourceBlockId": "b0252",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Dreg-rat"
+        ]
+      },
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.cornered-rats"
+      ]
+    },
+    {
+      "blockId": "b0262",
+      "unitContext": {
+        "name": "Skaven Dregs",
+        "sourceBlockId": "b0252",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Dreg-rat"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.cornered-rats"
+      ]
+    },
+    {
+      "blockId": "b0263",
+      "unitContext": {
+        "name": "Skaven Dregs",
+        "sourceBlockId": "b0252",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Dreg-rat"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.cornered-rats"
+      ]
+    },
+    {
+      "blockId": "b0264",
+      "unitContext": {
+        "name": "Warplock Jezzails",
+        "sourceBlockId": "b0264",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Jezzail Team"
+        ]
+      },
+      "entryKind": "statline",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "profiles.warplock jezzails"
+      ]
+    },
+    {
+      "blockId": "h0074",
+      "unitContext": {
+        "name": "Warplock Jezzails",
+        "sourceBlockId": "b0264",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Jezzail Team"
+        ]
+      },
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.warplock jezzails.notes"
+      ]
+    },
+    {
+      "blockId": "b0270",
+      "unitContext": {
+        "name": "Warplock Jezzails",
+        "sourceBlockId": "b0264",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Jezzail Team"
+        ]
+      },
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.warplock jezzails.notes"
+      ]
+    },
+    {
+      "blockId": "b0271",
+      "unitContext": {
+        "name": "Warplock Jezzails",
+        "sourceBlockId": "b0264",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Jezzail Team"
+        ]
+      },
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.warplock jezzails.notes"
+      ]
+    },
+    {
+      "blockId": "b0273",
+      "unitContext": {
+        "name": "Warplock Jezzails",
+        "sourceBlockId": "b0264",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Jezzail Team"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.pavise"
+      ]
+    },
+    {
+      "blockId": "b0281",
+      "unitContext": {
+        "name": "Poisoned Wind Globadiers",
+        "sourceBlockId": "b0276",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Globadiers"
+        ]
+      },
+      "entryKind": "special-rules",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.poisoned-wind-globadiers.specialRules"
+      ]
+    },
+    {
+      "blockId": "b0283",
+      "unitContext": {
+        "name": "Poisoned Wind Globadiers",
+        "sourceBlockId": "b0276",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Globadiers"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.poisoned wind globadiers.notes"
+      ]
+    },
+    {
+      "blockId": "b0290",
+      "unitContext": {
+        "name": "Packmasters & Master Moulders",
+        "sourceBlockId": "b0290",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Packmaster",
+          "Master Moulder"
+        ]
+      },
+      "entryKind": "statline",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "profiles.packmasters master moulders"
+      ]
+    },
+    {
+      "blockId": "b0293",
+      "unitContext": {
+        "name": "Packmasters & Master Moulders",
+        "sourceBlockId": "b0290",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Packmaster",
+          "Master Moulder"
+        ]
+      },
+      "entryKind": "unit-size",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.packmasters master moulders.notes"
+      ]
+    },
+    {
+      "blockId": "b0295",
+      "unitContext": {
+        "name": "Packmasters & Master Moulders",
+        "sourceBlockId": "b0290",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Packmaster",
+          "Master Moulder"
+        ]
+      },
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.packmasters master moulders.notes"
+      ]
+    },
+    {
+      "blockId": "b0298",
+      "unitContext": {
+        "name": "Packmasters & Master Moulders",
+        "sourceBlockId": "b0290",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Packmaster",
+          "Master Moulder"
+        ]
+      },
+      "entryKind": "special-rules",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "profiles.packmasters master moulders.specialRules"
+      ]
+    },
+    {
+      "blockId": "h0079",
+      "unitContext": {
+        "name": "Packmasters & Master Moulders",
+        "sourceBlockId": "b0290",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Packmaster",
+          "Master Moulder"
+        ]
+      },
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.leader-of-the-pack"
+      ]
+    },
+    {
+      "blockId": "b0299",
+      "unitContext": {
+        "name": "Packmasters & Master Moulders",
+        "sourceBlockId": "b0290",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Packmaster",
+          "Master Moulder"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.leader-of-the-pack"
+      ]
+    },
+    {
+      "blockId": "b0300",
+      "unitContext": {
+        "name": "Packmasters & Master Moulders",
+        "sourceBlockId": "b0290",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Packmaster",
+          "Master Moulder"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.leader-of-the-pack"
+      ]
+    },
+    {
+      "blockId": "b0302",
+      "unitContext": {
+        "name": "Rat Ogres",
+        "sourceBlockId": "b0302",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Rat Ogre"
+        ]
+      },
+      "entryKind": "statline",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "profiles.rat ogres"
+      ]
+    },
+    {
+      "blockId": "b0308",
+      "unitContext": {
+        "name": "Rat Ogres",
+        "sourceBlockId": "b0302",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Rat Ogre"
+        ]
+      },
+      "entryKind": "option",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.rat-ogres.options"
+      ]
+    },
+    {
+      "blockId": "b0309",
+      "unitContext": {
+        "name": "Rat Ogres",
+        "sourceBlockId": "b0302",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Rat Ogre"
+        ]
+      },
+      "entryKind": "special-rules",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.rat-ogres.specialRules"
+      ]
+    },
+    {
+      "blockId": "b0310",
+      "unitContext": {
+        "name": "Giant Rats",
+        "sourceBlockId": "b0310",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Giant Rat"
+        ]
+      },
+      "entryKind": "statline",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "profiles.giant rats"
+      ]
+    },
+    {
+      "blockId": "b0316",
+      "unitContext": {
+        "name": "Giant Rats",
+        "sourceBlockId": "b0310",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Giant Rat"
+        ]
+      },
+      "entryKind": "option",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.giant-rats.options"
+      ]
+    },
+    {
+      "blockId": "b0317",
+      "unitContext": {
+        "name": "Giant Rats",
+        "sourceBlockId": "b0310",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Giant Rat"
+        ]
+      },
+      "entryKind": "special-rules",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.giant-rats.specialRules"
+      ]
+    },
+    {
+      "blockId": "b0318",
+      "unitContext": {
+        "name": "Night Runners",
+        "sourceBlockId": "b0318",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Night Runner",
+          "Nightleader"
+        ]
+      },
+      "entryKind": "statline",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "profiles.night runners"
+      ]
+    },
+    {
+      "blockId": "b0322",
+      "unitContext": {
+        "name": "Night Runners",
+        "sourceBlockId": "b0318",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Night Runner",
+          "Nightleader"
+        ]
+      },
+      "entryKind": "equipment",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.night runners.equipment"
+      ]
+    },
+    {
+      "blockId": "b0325",
+      "unitContext": {
+        "name": "Night Runners",
+        "sourceBlockId": "b0318",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Night Runner",
+          "Nightleader"
+        ]
+      },
+      "entryKind": "option",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.night-runners.options"
+      ]
+    },
+    {
+      "blockId": "b0326",
+      "unitContext": {
+        "name": "Night Runners",
+        "sourceBlockId": "b0318",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Night Runner",
+          "Nightleader"
+        ]
+      },
+      "entryKind": "special-rules",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.night-runners.specialRules"
+      ]
+    },
+    {
+      "blockId": "b0327",
+      "unitContext": {
+        "name": "Gutter Runners",
+        "sourceBlockId": "b0327",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Gutter Runner",
+          "Assassin"
+        ]
+      },
+      "entryKind": "statline",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "profiles.gutter runners"
+      ]
+    },
+    {
+      "blockId": "b0337",
+      "unitContext": {
+        "name": "Gutter Runners",
+        "sourceBlockId": "b0327",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Gutter Runner",
+          "Assassin"
+        ]
+      },
+      "entryKind": "special-rules",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.gutter-runners.specialRules"
+      ]
+    },
+    {
+      "blockId": "b0345",
+      "unitContext": {
+        "name": "Plague Monks",
+        "sourceBlockId": "b0338",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Plague Monk",
+          "Plague Deacon"
+        ]
+      },
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.plague monks.notes"
+      ]
+    },
+    {
+      "blockId": "b0346",
+      "unitContext": {
+        "name": "Plague Monks",
+        "sourceBlockId": "b0338",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Plague Monk",
+          "Plague Deacon"
+        ]
+      },
+      "entryKind": "special-rules",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.plague-monks-core.specialRules",
+        "units.plague-monks.specialRules"
+      ]
+    },
+    {
+      "blockId": "b0347",
+      "unitContext": {
+        "name": "Plague Censer Bearers",
+        "sourceBlockId": "b0347",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Censer Bearer"
+        ]
+      },
+      "entryKind": "statline",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "profiles.plague censer bearers"
+      ]
+    },
+    {
+      "blockId": "b0350",
+      "unitContext": {
+        "name": "Plague Censer Bearers",
+        "sourceBlockId": "b0347",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Censer Bearer"
+        ]
+      },
+      "entryKind": "unit-size",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.plague-censer-bearers.minimum"
+      ]
+    },
+    {
+      "blockId": "b0352",
+      "unitContext": {
+        "name": "Plague Censer Bearers",
+        "sourceBlockId": "b0347",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Censer Bearer"
+        ]
+      },
+      "entryKind": "special-rules",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.plague-censer-bearers.specialRules"
+      ]
+    },
+    {
+      "blockId": "b0353",
+      "unitContext": {
+        "name": "Plague Censer Bearers",
+        "sourceBlockId": "b0347",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Censer Bearer"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.r-s-ap-special-rules"
+      ]
+    },
+    {
+      "blockId": "h0087",
+      "unitContext": {
+        "name": "Plague Censer Bearers",
+        "sourceBlockId": "b0347",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Censer Bearer"
+        ]
+      },
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.plague-disciples"
+      ]
+    },
+    {
+      "blockId": "b0354",
+      "unitContext": {
+        "name": "Plague Censer Bearers",
+        "sourceBlockId": "b0347",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Censer Bearer"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.plague-disciples"
+      ]
+    },
+    {
+      "blockId": "b0355",
+      "unitContext": {
+        "name": "Screaming Bell",
+        "sourceBlockId": "b0355",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Screaming Bell",
+          "Rat Ogre Crew (x1)"
+        ]
+      },
+      "entryKind": "statline",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "profiles.screaming bell"
+      ]
+    },
+    {
+      "blockId": "b0363",
+      "unitContext": {
+        "name": "Screaming Bell",
+        "sourceBlockId": "b0355",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Screaming Bell",
+          "Rat Ogre Crew (x1)"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.screaming bell.notes"
+      ]
+    },
+    {
+      "blockId": "b0364",
+      "unitContext": {
+        "name": "Screaming Bell",
+        "sourceBlockId": "b0355",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Screaming Bell",
+          "Rat Ogre Crew (x1)"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.blessings-of-the-horned-rat"
+      ]
+    },
+    {
+      "blockId": "b0365",
+      "unitContext": {
+        "name": "Screaming Bell",
+        "sourceBlockId": "b0355",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Screaming Bell",
+          "Rat Ogre Crew (x1)"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.tolling-the-bell"
+      ]
+    },
+    {
+      "blockId": "b0366",
+      "unitContext": {
+        "name": "Screaming Bell",
+        "sourceBlockId": "b0355",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Screaming Bell",
+          "Rat Ogre Crew (x1)"
+        ]
+      },
+      "entryKind": "table",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.tolling-the-bell-table"
+      ]
+    },
+    {
+      "blockId": "b0368",
+      "unitContext": {
+        "name": "Plague Furnace",
+        "sourceBlockId": "b0368",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Plague Furnace",
+          "Plague Monk Crew (x3)"
+        ]
+      },
+      "entryKind": "statline",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "profiles.plague furnace"
+      ]
+    },
+    {
+      "blockId": "b0375",
+      "unitContext": {
+        "name": "Plague Furnace",
+        "sourceBlockId": "b0368",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Plague Furnace",
+          "Plague Monk Crew (x3)"
+        ]
+      },
+      "entryKind": "special-rules",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "profiles.plague furnace.specialRules"
+      ]
+    },
+    {
+      "blockId": "b0376",
+      "unitContext": {
+        "name": "Plague Furnace",
+        "sourceBlockId": "b0368",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Plague Furnace",
+          "Plague Monk Crew (x3)"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.plague furnace.notes"
+      ]
+    },
+    {
+      "blockId": "b0378",
+      "unitContext": {
+        "name": "Plague Furnace",
+        "sourceBlockId": "b0368",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Plague Furnace",
+          "Plague Monk Crew (x3)"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.great-censer"
+      ]
+    },
+    {
+      "blockId": "b0379",
+      "unitContext": {
+        "name": "Plague Furnace",
+        "sourceBlockId": "b0368",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Plague Furnace",
+          "Plague Monk Crew (x3)"
+        ]
+      },
+      "entryKind": "weapon-profile",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.billowing-death.weaponProfile"
+      ]
+    },
+    {
+      "blockId": "b0380",
+      "unitContext": {
+        "name": "Plague Furnace",
+        "sourceBlockId": "b0368",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Plague Furnace",
+          "Plague Monk Crew (x3)"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.plague furnace.notes"
+      ]
+    },
+    {
+      "blockId": "b0382",
+      "unitContext": {
+        "name": "Doomwheel",
+        "sourceBlockId": "b0382",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Doomwheel",
+          "Warlock (x1)",
+          "Rats"
+        ]
+      },
+      "entryKind": "statline",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "profiles.doomwheel"
+      ]
+    },
+    {
+      "blockId": "b0384",
+      "unitContext": {
+        "name": "Doomwheel",
+        "sourceBlockId": "b0382",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Doomwheel",
+          "Warlock (x1)",
+          "Rats"
+        ]
+      },
+      "entryKind": "armour-value",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.doomwheel.armourValue"
+      ]
+    },
+    {
+      "blockId": "b0386",
+      "unitContext": {
+        "name": "Doomwheel",
+        "sourceBlockId": "b0382",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Doomwheel",
+          "Warlock (x1)",
+          "Rats"
+        ]
+      },
+      "entryKind": "special-rules",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.doomwheel.specialRules"
+      ]
+    },
+    {
+      "blockId": "b0387",
+      "unitContext": {
+        "name": "Doomwheel",
+        "sourceBlockId": "b0382",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Doomwheel",
+          "Warlock (x1)",
+          "Rats"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.doomwheel.notes"
+      ]
+    },
+    {
+      "blockId": "b0389",
+      "unitContext": {
+        "name": "Doomwheel",
+        "sourceBlockId": "b0382",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Doomwheel",
+          "Warlock (x1)",
+          "Rats"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.crushing-bulk"
+      ]
+    },
+    {
+      "blockId": "h0095",
+      "unitContext": {
+        "name": "Doomwheel",
+        "sourceBlockId": "b0382",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Doomwheel",
+          "Warlock (x1)",
+          "Rats"
+        ]
+      },
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.r-s-ap-special-rules"
+      ]
+    },
+    {
+      "blockId": "b0390",
+      "unitContext": {
+        "name": "Doomwheel",
+        "sourceBlockId": "b0382",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Doomwheel",
+          "Warlock (x1)",
+          "Rats"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.r-s-ap-special-rules"
+      ]
+    },
+    {
+      "blockId": "b0391",
+      "unitContext": {
+        "name": "Doomwheel",
+        "sourceBlockId": "b0382",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Doomwheel",
+          "Warlock (x1)",
+          "Rats"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.multiple-wounds-d3"
+      ]
+    },
+    {
+      "blockId": "b0392",
+      "unitContext": {
+        "name": "Doomwheel",
+        "sourceBlockId": "b0382",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Doomwheel",
+          "Warlock (x1)",
+          "Rats"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.multiple-wounds-d3"
+      ]
+    },
+    {
+      "blockId": "h0096",
+      "unitContext": {
+        "name": "Doomwheel",
+        "sourceBlockId": "b0382",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Doomwheel",
+          "Warlock (x1)",
+          "Rats"
+        ]
+      },
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.multiple-wounds-d3"
+      ]
+    },
+    {
+      "blockId": "b0393",
+      "unitContext": {
+        "name": "Doomwheel",
+        "sourceBlockId": "b0382",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Doomwheel",
+          "Warlock (x1)",
+          "Rats"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.multiple-wounds-d3"
+      ]
+    },
+    {
+      "blockId": "b0394",
+      "unitContext": {
+        "name": "Doomwheel",
+        "sourceBlockId": "b0382",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Doomwheel",
+          "Warlock (x1)",
+          "Rats"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.multiple-wounds-d3"
+      ]
+    },
+    {
+      "blockId": "h0097",
+      "unitContext": {
+        "name": "Doomwheel",
+        "sourceBlockId": "b0382",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Doomwheel",
+          "Warlock (x1)",
+          "Rats"
+        ]
+      },
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.doomwheel-mishap-chart"
+      ]
+    },
+    {
+      "blockId": "b0395",
+      "unitContext": {
+        "name": "Doomwheel",
+        "sourceBlockId": "b0382",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Doomwheel",
+          "Warlock (x1)",
+          "Rats"
+        ]
+      },
+      "entryKind": "table",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.doomwheel-mishap-chart"
+      ]
+    },
+    {
+      "blockId": "b0399",
+      "unitContext": {
+        "name": "Hell Pit Abomination",
+        "sourceBlockId": "b0396",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Hell Pit Abomination"
+        ]
+      },
+      "entryKind": "equipment",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.hell pit abomination.equipment"
+      ]
+    },
+    {
+      "blockId": "b0401",
+      "unitContext": {
+        "name": "Hell Pit Abomination",
+        "sourceBlockId": "b0396",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Hell Pit Abomination"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.hell pit abomination.notes"
+      ]
+    },
+    {
+      "blockId": "h0100",
+      "unitContext": {
+        "name": "Hell Pit Abomination",
+        "sourceBlockId": "b0396",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Hell Pit Abomination"
+        ]
+      },
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.warpstone-spikes"
+      ]
+    },
+    {
+      "blockId": "b0402",
+      "unitContext": {
+        "name": "Hell Pit Abomination",
+        "sourceBlockId": "b0396",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Hell Pit Abomination"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.warpstone-spikes"
+      ]
+    },
+    {
+      "blockId": "b0417",
+      "unitContext": {
+        "name": "Warp Lightning Cannon",
+        "sourceBlockId": "b0409",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Warp Lightning Cannon",
+          "Engineer & Crew"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.magical-attacks"
+      ]
+    },
+    {
+      "blockId": "b0418",
+      "unitContext": {
+        "name": "Warp Lightning Cannon",
+        "sourceBlockId": "b0409",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Warp Lightning Cannon",
+          "Engineer & Crew"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.warp-lightning-special-rules"
+      ]
+    },
+    {
+      "blockId": "b0424",
+      "unitContext": {
+        "name": "Plagueclaw Catapult",
+        "sourceBlockId": "b0419",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Plagueclaw Catapult",
+          "Plague Monk Crew"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.r-s-ap-special-rules"
+      ]
+    },
+    {
+      "blockId": "h0110",
+      "unitContext": {
+        "name": "Plagueclaw Catapult",
+        "sourceBlockId": "b0419",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Plagueclaw Catapult",
+          "Plague Monk Crew"
+        ]
+      },
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.skaven-faq"
+      ]
+    },
+    {
+      "blockId": "b0425",
+      "unitContext": {
+        "name": "Plagueclaw Catapult",
+        "sourceBlockId": "b0419",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Plagueclaw Catapult",
+          "Plague Monk Crew"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.skaven-faq"
+      ]
+    },
+    {
+      "blockId": "b0426",
+      "unitContext": {
+        "name": "Plagueclaw Catapult",
+        "sourceBlockId": "b0419",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Plagueclaw Catapult",
+          "Plague Monk Crew"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.skaven-faq"
+      ]
+    }
+  ]
+}

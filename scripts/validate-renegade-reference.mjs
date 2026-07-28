@@ -20,7 +20,7 @@ const documents = new Map();
 for (const file of FILES) {
   const reference = JSON.parse(readFileSync(new URL(file, DIR), 'utf8'));
   documents.set(file, reference);
-  assert(reference.schemaVersion === 2, `${file}: expected schemaVersion 2`);
+  assert(reference.schemaVersion === 3, `${file}: expected schemaVersion 3`);
 
   const ids = new Set();
   for (const block of reference.blocks) {
@@ -29,6 +29,10 @@ for (const file of FILES) {
     assert(Array.isArray(block.headingPath), `${file}/${block.id}: headingPath is missing`);
     assert(block.headingPath.length > 0 || block.scope === 'front-matter', `${file}/${block.id}: army-list block has no headingPath`);
     assert(block.context?.profile !== 'M WS BS S T W I A Ld Points', `${file}/${block.id}: table header leaked into context.profile`);
+    assert(typeof block.entryKind === 'string', `${file}/${block.id}: entryKind is missing`);
+    if (block.tableType === 'statline') {
+      assert(block.unitContext?.sourceBlockId === block.id, `${file}/${block.id}: statline did not start its own unitContext`);
+    }
 
     if (block.type === 'table') {
       assert(TABLE_TYPES.has(block.tableType), `${file}/${block.id}: unknown tableType ${block.tableType}`);
@@ -86,6 +90,10 @@ assert(
 const chaosDwarfs = documents.get('cd-renegade-v2-reference.json');
 const deathmaskOption = chaosDwarfs.blocks.find((block) => block.text.includes('Deathmask (champion) +6 points per unit'));
 assert(deathmaskOption?.headingPath.includes('Infernal Guard'), 'Chaos Dwarfs: Deathmask option lost its Infernal Guard context');
+assert(
+  deathmaskOption?.unitContext?.sourceBlockId,
+  'Chaos Dwarfs: Deathmask option lost its semantic unitContext',
+);
 assert(
   deathmaskOption?.pointsMentions.some((mention) => mention.value === 6 && mention.basis === 'per-unit'),
   'Chaos Dwarfs: Deathmask +6 points per unit was not classified',

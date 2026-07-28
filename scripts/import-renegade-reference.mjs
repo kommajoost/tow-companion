@@ -257,6 +257,12 @@ function visualHeadingLevel(node, styles, segments) {
   if (!meaningful.length || !meaningful.every((segment) => segment.bold)) return null;
   const text = flattenText(segments);
   if (!text || text.length > 120) return null;
+  // These are entry fields, not document headings. Treating them as headings made the active path
+  // jump to "Options:" or an entire Special Rules sentence and detached the following blocks from
+  // their unit.
+  if (/^(unit size|troop type|base size|armour value|equipment|options|special rules|notes?|character mount)\s*:/i.test(text)) {
+    return null;
+  }
   const size = maximumFontSize(node, styles);
   if (size < 10) return null;
   if (size >= 18) return 1;
@@ -492,6 +498,52 @@ function annotateStatlineTables(blocks) {
   }
 }
 
+function entryKind(block) {
+  if (block.tableType === 'statline') return 'statline';
+  if (block.tableType === 'weapon-profile') return 'weapon-profile';
+  if (/^Unit Size:/i.test(block.text)) return 'unit-size';
+  if (/^Troop Type:/i.test(block.text)) return 'troop-type';
+  if (/^Base Size:/i.test(block.text)) return 'base-size';
+  if (/^Armour Value:/i.test(block.text)) return 'armour-value';
+  if (/^Equipment:/i.test(block.text)) return 'equipment';
+  if (/^Special Rules(?:\s*\([^)]*\))?:/i.test(block.text)) return 'special-rules';
+  if (/\+\s*\d+\s*points?/i.test(block.text)) return 'option';
+  return block.type;
+}
+
+/** Add semantic unit ownership without rewriting the lossless Docs heading hierarchy.
+ *
+ * A statline starts an army-list entry. Every following table, option paragraph and rule belongs to
+ * that entry until the next statline starts. This mirrors how the pack is read and, crucially,
+ * separates equal profile names used in different entries (for example Bloodletter rank-and-file
+ * versus the Bloodletter profile inside a Herald entry).
+ */
+function annotateUnitContexts(blocks) {
+  let current = null;
+  for (const block of blocks) {
+    if (block.scope !== 'army-list') {
+      block.unitContext = null;
+      block.entryKind = entryKind(block);
+      continue;
+    }
+    if (block.tableType === 'statline') {
+      const deepestHeading = [...(block.headingPath ?? [])].reverse().find(Boolean) ?? null;
+      const title = block.tableHeading ?? deepestHeading;
+      current = title ? {
+        name: title,
+        sourceBlockId: block.id,
+        method: block.tableHeading ? 'table-title' : 'preceding-heading',
+        confidence: block.tableHeading ? 'high' : 'medium',
+        profileNames: (block.statlineRows ?? []).map((row) => row.name),
+      } : null;
+    }
+    block.unitContext = current ? { ...current, profileNames: [...current.profileNames] } : null;
+    block.unitId = null;
+    block.entryKind = entryKind(block);
+    block.contextConfidence = current?.confidence ?? 'none';
+  }
+}
+
 function countChangedSegments(blocks) {
   const result = { changed: 0, new: 0, todo: 0 };
   const count = (segments) => {
@@ -513,6 +565,7 @@ for (const pack of PACKS) {
   const blocks = collectBlocks(root, styles);
   decorateContexts(blocks);
   annotateStatlineTables(blocks);
+  annotateUnitContexts(blocks);
 
   const version = (flattenText(blocks.slice(0, 15).flatMap((block) =>
     block.type === 'paragraph' ? block.segments : [],
@@ -524,7 +577,7 @@ for (const pack of PACKS) {
   const segments = countChangedSegments(blocks);
   const reference = {
     id: `${pack.comp}-reference`,
-    schemaVersion: 2,
+    schemaVersion: 3,
     army: pack.slug,
     label: pack.label,
     version,
@@ -540,6 +593,9 @@ for (const pack of PACKS) {
       new: 'Changed since the previous Renegade draft (magenta in the source)',
       todo: 'Incomplete or in development (yellow in the source)',
       headingPath: 'Active Google Docs heading hierarchy for this block, from broadest to most specific',
+      unitContext: 'Semantic army-list entry propagated from a statline table until the next statline',
+      unitId: 'Intentionally null in the lossless reference; catalogue mapping belongs to the compiler manifest',
+      entryKind: 'Semantic block kind such as statline, option, special-rules or weapon-profile',
       tableType: {
         statline: 'Header contains M/WS/BS/S/T/W/I/A/Ld/Points',
         'weapon-profile': 'Header contains R/S/AP/Special Rules',

@@ -76,7 +76,7 @@ export function UnitCard({
   }, [unit.magicItems]);
   // A chosen mount also appears in the loadout line; tapping it opens its profile + special rules.
   const mountByName = useMemo(() => {
-    const m = new Map<string, { profiles: UnitProfile[]; specialRules: string[]; troopType?: string }>();
+    const m = new Map<string, { profiles: UnitProfile[]; specialRules: string[]; troopType?: string; details?: string[] }>();
     for (const mt of unit.mounts ?? []) m.set(mt.name.toLowerCase(), mt);
     return m;
   }, [unit.mounts]);
@@ -125,7 +125,18 @@ export function UnitCard({
               <tbody>
                 <tr>
                   {p.stats.map((s, i) => (
-                    <td key={i} style={{ textAlign: 'center', color: TOW.ink, border: `1px solid ${TOW.line}`, padding: '3px 2px' }}>{s.v}</td>
+                    <td
+                      key={i}
+                      title={s.modified ? `${s.base} ${s.source ? `+ ${s.source}` : 'modified'}` : undefined}
+                      style={{
+                        textAlign: 'center',
+                        color: s.modified ? TOW.goldDeep : TOW.ink,
+                        fontWeight: s.modified ? 700 : 400,
+                        background: s.modified ? 'rgba(184,134,47,0.10)' : 'transparent',
+                        border: `1px solid ${TOW.line}`,
+                        padding: '3px 2px',
+                      }}
+                    >{s.v}</td>
                   ))}
                 </tr>
               </tbody>
@@ -173,7 +184,7 @@ export function UnitCard({
             const onClick = mi
               ? () => setInfo({ title: shown, flavour: mi.flavour, rules: mi.specialRules })
               : mt
-                ? () => setInfo({ title: shown, profiles: mt.profiles, rules: mt.specialRules, troopType: mt.troopType })
+                ? () => setInfo({ title: shown, profiles: mt.profiles, rules: mt.specialRules, troopType: mt.troopType, details: mt.details })
                 : slug ? () => openRule(slug) : null;
             return (
               <span key={i} style={{ display: 'inline-flex', alignItems: 'center' }}>

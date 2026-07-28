@@ -165,7 +165,7 @@ export interface CompanionData {
 export interface UnitProfile {
   label: string;
   /** Ordered stat cells, e.g. [{k:'M',v:'9'}, {k:'WS',v:'3'}, …]. */
-  stats: { k: string; v: string }[];
+  stats: { k: string; v: string; modified?: boolean; base?: string; source?: string }[];
 }
 
 export interface ArmyUnit {
@@ -203,7 +203,7 @@ export interface ArmyUnit {
   /** A chosen mount (Dark Pegasus, Black Dragon, …) with its own stat profile + special rules + its
    *  own troop type — the game surfaces it as a tappable chip so the player can see the mount's full
    *  info. */
-  mounts?: { name: string; profiles: UnitProfile[]; specialRules: string[]; troopType?: string }[];
+  mounts?: { name: string; profiles: UnitProfile[]; specialRules: string[]; troopType?: string; details?: string[] }[];
 }
 
 export interface Army {
@@ -212,6 +212,9 @@ export interface Army {
   system: string; // line 2, part 1
   faction: string; // line 2, part 2
   composition: string; // line 2, rest
+  /** Stable composition-overlay id (for example `de-renegade-v2`).
+   *  Kept beside the display label so a saved/remote game can restore the pack's rule text. */
+  overlayId?: string;
   units: ArmyUnit[];
   raw: string; // original pasted text
 }

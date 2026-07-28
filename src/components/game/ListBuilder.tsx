@@ -17,7 +17,9 @@ import { useBackClose } from '../../lib/backStack';
 import { useData } from '../../data';
 import { getRuleIndex, resolveOptionSlug, resolveRuleSlug } from '../../lib/armyRules';
 import { useUI } from '../../state';
-import { applyOverlay, applyOverlayItems, hasOverlay, isOverlay, overlayCompsFor, OVERLAY_FILES, type CompositionOverlay } from '../../lib/overlays';
+import { applyOverlay, applyOverlayItems, applyOverlayMountText, applyOverlayStatIndex, hasOverlay, isOverlay, overlayCompsFor, overlayStatsFor, OVERLAY_FILES, type CompositionOverlay, type MountProfileText } from '../../lib/overlays';
+import { InfoSheet, type InfoSheetData } from './InfoSheet';
+import type { UnitProfile } from '../../types';
 
 const BASE = import.meta.env.BASE_URL;
 const eb = engraved as React.CSSProperties;
@@ -43,9 +45,13 @@ interface SavedList extends BuilderList {
 const newId = (p: string) => `${p}${Date.now().toString(36)}${Math.floor(Math.random() * 1e6).toString(36)}`;
 
 // OWB's normalizeRuleName (rules index is keyed by this) + a final-word singular fallback.
-const normRule = (s: string) => (s || '').toLowerCase().replace(/ *\([^)]*\) */g, '').replace(/[{}[\]*]/g, '').replace(/^[0-9]x /g, '').replace(/[“”]/g, '"').trim();
 interface StatRow { Name: string; M: string; WS: string; BS: string; S: string; T: string; W: string; I: string; A: string; Ld: string }
-let statIndexCache: Record<string, { stats?: StatRow[] }> | null = null;
+let statIndexCache: Record<string, { stats?: StatRow[]; troopType?: string }> | null = null;
+type MountText = Record<string, MountProfileText>;
+const normMountTag = (s: string) => (s || '').toLowerCase().replace(/ *\([^)]*\) */g, '')
+  .replace(/[{}[\]*]/g, '').replace(/^[0-9]+x /g, '').replace(/\s+/g, ' ').trim();
+const normMountProfile = (s: string) => (s || '').toLowerCase().replace(/\{[^}]*\}/g, '')
+  .replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim();
 
 // Per-army metadata from the-old-world.json: which compositions it offers + which magic-item lists.
 interface ArmyMeta { comps: string[]; items: string[] }
@@ -66,7 +72,9 @@ export function ListBuilder() {
   const [metaByArmy, setMetaByArmy] = useState<Record<string, ArmyMeta>>({});
   const [catalogues, setCatalogues] = useState<Record<string, OwbArmy>>({}); // slug → catalogue (on demand)
   const [itemsData, setItemsData] = useState<MagicItemsData | null>(null);
-  const [statIdx, setStatIdx] = useState<Record<string, { stats?: StatRow[] }> | null>(statIndexCache);
+  const [statIdx, setStatIdx] = useState<Record<string, { stats?: StatRow[]; troopType?: string }> | null>(statIndexCache);
+  const [baseMountText, setBaseMountText] = useState<MountText>({});
+  const [mountInfo, setMountInfo] = useState<InfoSheetData | null>(null);
   const [lists, setLists] = usePersistentState<SavedList[]>('tow:lists', []);
   const [groups, setGroups] = usePersistentState<{ id: string; name: string }[]>('tow:list-groups', []);
   const [activeId, setActiveId] = usePersistentState<string | null>('tow:builder-active', null);
@@ -96,6 +104,7 @@ export function ListBuilder() {
       setMetaByArmy(map);
     }).catch(() => {});
     fetch(`${BASE}owb/magic-items.json`).then((r) => r.json()).then(setItemsData).catch(() => setItemsData(null));
+    fetch(`${BASE}owb/mount-text.json`).then((r) => r.json()).then(setBaseMountText).catch(() => {});
     if (statIndexCache) setStatIdx(statIndexCache);
     else fetch(`${BASE}owb/rules-index.json`).then((r) => r.json()).then((idx) => { statIndexCache = idx; setStatIdx(idx); }).catch(() => {});
   }, []);
@@ -305,6 +314,14 @@ export function ListBuilder() {
     if (!itemsData || !activeOverlay || activeOverlay.baseArmy !== activeArmySlug) return itemsData;
     return applyOverlayItems(itemsData, activeOverlay);
   }, [itemsData, activeOverlay, activeArmySlug]);
+  const activeStatIdx = useMemo(
+    () => statIdx ? applyOverlayStatIndex(statIdx, activeOverlay) : statIdx,
+    [statIdx, activeOverlay],
+  );
+  const activeMountText = useMemo(
+    () => applyOverlayMountText(baseMountText, activeOverlay),
+    [baseMountText, activeOverlay],
+  );
   // The pack's own wording for the rules it changes, installed globally while a pack list is open. It
   // has to be global: the rule sheet renders outside this tree, so a local override would leave the
   // sheet showing the standard rule for a list the pack has already repriced.
@@ -328,11 +345,8 @@ export function ListBuilder() {
   const armyName = (slug: string) => armies.find((a) => a.slug === slug)?.name ?? slug;
   const statsFor = useMemo(() => (unitName: string): StatRow[] => {
     if (!statIdx) return [];
-    const key = normRule(unitName);
-    let e = statIdx[key];
-    if (!e?.stats?.length) { const w = key.split(' '); const last = w[w.length - 1]; if (/s$/.test(last)) e = statIdx[[...w.slice(0, -1), last.replace(/s$/, '')].join(' ')]; }
-    return e?.stats ?? [];
-  }, [statIdx]);
+    return overlayStatsFor(statIdx, unitName, activeOverlay);
+  }, [statIdx, activeOverlay]);
 
   const updateActive = (p: Partial<BuilderList> | ((l: SavedList) => Partial<BuilderList>)) =>
     setLists((ls) => ls.map((l) => (l.id === activeId ? { ...l, ...(typeof p === 'function' ? p(l) : p), updatedAt: Date.now() } : l)));
@@ -466,7 +480,7 @@ export function ListBuilder() {
           compName={(c) => compName(c, active.army)}
           itemsData={activeItemsData ?? undefined}
           armyItemLists={meta?.items ?? []}
-          statIdx={statIdx}
+          statIdx={activeStatIdx}
           // The desktop rail no longer carries a list-switcher: switching or creating a list belongs on
           // the lists overview (reachable via "‹ LISTS" in the builder header), not in the left column
           // of a list being built, where it crowded out the unit catalogue.
@@ -484,13 +498,38 @@ export function ListBuilder() {
           onShowInfo={(what) => {
             if (what.kind === 'item') return; // item text lives in the builder's own popover
             const label = what.name;
-            const slug = what.kind === 'mount'
-              ? (resolveOptionSlug(label, ruleIdx) ?? resolveRuleSlug(label, ruleIdx))
-              : (resolveRuleSlug(label, ruleIdx) ?? resolveOptionSlug(label, ruleIdx));
+            if (what.kind === 'mount') {
+              const profileKey = normMountProfile(label);
+              const taggedKey = normMountTag(label);
+              const rows = statsFor(label);
+              const text = activeMountText[profileKey] ?? activeMountText[taggedKey] ?? {};
+              const profiles: UnitProfile[] = rows.map((row) => ({
+                label: row.Name,
+                stats: ['M', 'WS', 'BS', 'S', 'T', 'W', 'I', 'A', 'Ld']
+                  .map((key) => ({ k: key, v: row[key as keyof StatRow] ?? '-' })),
+              }));
+              const details = [
+                text.baseSize ? `Base size: ${text.baseSize}` : null,
+                text.armourValue ? `Armour value: ${text.armourValue}` : null,
+                ...(text.equipment ?? []).map((value) => `Equipment: ${value}`),
+                ...(text.notes ?? []),
+              ].filter((value): value is string => !!value);
+              setMountInfo({
+                title: label.replace(/\s*\{[^}]*\}/g, '').trim(),
+                troopType: text.troopType ?? activeStatIdx?.[profileKey]?.troopType
+                  ?? activeStatIdx?.[taggedKey]?.troopType,
+                profiles,
+                rules: text.specialRules ?? [],
+                details,
+              });
+              return;
+            }
+            const slug = resolveRuleSlug(label, ruleIdx) ?? resolveOptionSlug(label, ruleIdx);
             if (slug) openRule(slug);
           }}
         />
         {instellingenBlad}
+        <InfoSheet info={mountInfo} onClose={() => setMountInfo(null)} />
         </>
       );
     }
@@ -510,6 +549,8 @@ export function ListBuilder() {
         compName={(c) => compName(c, active.army)}
         itemsData={activeItemsData ?? undefined}
         armyItemLists={meta?.items ?? []}
+        magicTextPatch={activeOverlay?.magicItemText}
+        mountTextPatch={activeMountText}
       />
       {instellingenBlad}
       </>

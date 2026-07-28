@@ -7,7 +7,7 @@ import {
   type ReactNode,
 } from 'react';
 import type { CompanionData, FlowData, FlowStep, Lore, Rule, RulesData } from './types';
-import { applyOverlayRules, type CompositionOverlay } from './lib/overlays';
+import { applyOverlayLores, applyOverlayRules, type CompositionOverlay } from './lib/overlays';
 
 interface DataContextValue extends RulesData {
   // Always provided by the provider (defaulted), so non-optional here.
@@ -26,8 +26,8 @@ interface DataContextValue extends RulesData {
    *
    * Lives here rather than in the builder because the rule SHEET is global — it renders outside the
    * builder's tree, so an override held locally would never reach it and tapping a rule would show the
-   * standard wording while the list is priced by the pack. Set while a pack list is open, cleared when
-   * it closes.
+   * standard wording while the list is priced by the pack. Set while a pack list is open in either the
+   * builder or game roster, and cleared when that view closes.
    */
   setRuleOverlay: (overlay: CompositionOverlay | null) => void;
 }
@@ -88,14 +88,15 @@ export function DataProvider({ children }: { children: ReactNode }) {
     // that everything derived from it agrees — above all the name→slug index, which is how a unit's
     // special-rule label finds its text.
     const rules = ruleOverlay ? applyOverlayRules(data.rules, ruleOverlay) : data.rules;
+    const lores = ruleOverlay ? applyOverlayLores(data.lores ?? {}, ruleOverlay) : data.lores ?? {};
     return {
       ...data,
       rules,
-      lores: data.lores ?? {},
+      lores,
       loreList: data.loreList ?? [],
       getRule: (slug) => (slug ? rules[slug] : undefined),
       getFlow: (slug) => (slug ? flow.steps[slug] : undefined),
-      getLore: (slug) => (slug ? (data.lores ?? {})[slug] : undefined),
+      getLore: (slug) => (slug ? lores[slug] : undefined),
       hiddenSteps,
       companion,
       setRuleOverlay,

@@ -7,6 +7,10 @@ export const CATEGORIES: Category[] = ['characters', 'core', 'special', 'rare', 
 
 export interface OwbOption {
   name_en: string; points?: number; perModel?: boolean; active?: boolean;
+  /** Hidden by a composition overlay while retaining its catalogue index for saved-list stability. */
+  hidden?: boolean;
+  /** An option variant that belongs only to one OWB army composition. */
+  armyComposition?: string;
   // `alwaysActive` — the option is always on and cannot be toggled off (a free base, e.g. the
   // "Wizard" header on a Sorceress). `exclusive` — the option is one-of among its SIBLINGS in the
   // same nested list (a radio choice, e.g. "Level 3 Wizard" vs "Level 4 Wizard").
@@ -35,7 +39,7 @@ export interface OwbUnit {
   id: string; name_en: string; points?: number; minimum?: number; maximum?: number;
   command?: OwbOption[]; equipment?: OwbOption[]; armor?: OwbOption[]; options?: OwbOption[];
   mounts?: OwbOption[]; lores?: string[]; specialRules?: { name_en?: string };
-  items?: OwbItemSection[];
+  items?: OwbItemSection[]; spellCount?: number;
   /** Per army-composition placement (from OWB): { <compId>: { category, notes } }. A unit's list
    *  category can differ per composition (e.g. State Troops are Core normally, Special for a knightly
    *  order), and a unit is only available in the compositions it lists. */
@@ -83,8 +87,13 @@ export const OPTION_GROUPS: { key: keyof OwbUnit; label: string; radio?: boolean
 export interface OptionBlock { key: keyof OwbUnit; label: string; radio: boolean; items: { i: number; opt: OwbOption }[] }
 export function unitBlocks(unit: OwbUnit): OptionBlock[] {
   return OPTION_GROUPS.map(({ key, label, radio }) => {
-    const list = (Array.isArray(unit[key]) ? (unit[key] as OwbOption[]) : []).filter((o) => o && o.name_en);
-    return { key, label, radio: !!radio, items: list.map((opt, i) => ({ i, opt })) };
+    const list = Array.isArray(unit[key]) ? (unit[key] as OwbOption[]) : [];
+    return {
+      key,
+      label,
+      radio: !!radio,
+      items: list.map((opt, i) => ({ i, opt })).filter(({ opt }) => opt && opt.name_en && !opt.hidden),
+    };
   }).filter((b) => b.items.length > 0);
 }
 
@@ -92,9 +101,22 @@ export function unitBlocks(unit: OwbUnit): OptionBlock[] {
 export function radioSelected(unit: OwbUnit, entry: ListEntry, key: keyof OwbUnit): string {
   const items = (Array.isArray(unit[key]) ? (unit[key] as OwbOption[]) : []);
   const stored = entry.opts.find((k) => k.startsWith(`${key}/`));
-  if (stored) return stored;
-  const def = items.findIndex((o) => o.active);
-  return `${key}/${def >= 0 ? def : 0}`;
+  if (stored) {
+    const storedIndex = Number(stored.split('/')[1]);
+    const chosen = items[storedIndex];
+    if (chosen && !chosen.hidden) return stored;
+    // A V2 overlay can hide an old composition-specific variant. Redirect an existing saved choice
+    // to the visible variant with the same display name without rewriting the saved list.
+    if (chosen?.hidden) {
+      const name = chosen.name_en.replace(/\s*\{[^}]*\}/g, '').trim().toLowerCase();
+      const replacement = items.findIndex((o) =>
+        !o.hidden && o.name_en.replace(/\s*\{[^}]*\}/g, '').trim().toLowerCase() === name);
+      if (replacement >= 0) return `${String(key)}/${replacement}`;
+    }
+  }
+  const def = items.findIndex((o) => o.active && !o.hidden);
+  const first = items.findIndex((o) => !o.hidden);
+  return `${String(key)}/${def >= 0 ? def : Math.max(0, first)}`;
 }
 
 // ---- Nested sub-options (one level under ANY group item) --------------------------------------
@@ -344,7 +366,12 @@ export function selectedOptions(unit: OwbUnit, entry: ListEntry): { group: keyof
   for (const key of entry.opts) {
     const [g, iStr] = key.split('/');
     const list = groupItems(unit, g as keyof OwbUnit);
-    const opt = list[Number(iStr)];
+    let opt = list[Number(iStr)];
+    if (opt?.hidden && OPTION_GROUPS.some((group) => group.key === g && group.radio)) {
+      const effective = Number(radioSelected(unit, entry, g as keyof OwbUnit).split('/')[1]);
+      opt = list[effective];
+    }
+    if (opt?.hidden) continue;
     if (opt) out.push({ group: g as keyof OwbUnit, opt });
   }
   return out;

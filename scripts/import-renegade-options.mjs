@@ -136,20 +136,16 @@ for (const [key, army] of Object.entries(PACKS)) {
   // /check/renegade.html. Deliberately not folded into the overlay: the app fetches that on every
   // Renegade list and has no use for diagnostics.
   const review = { applied: [], refused: [], unmatched: [] };
-  let cur = null;
   let todo = 0;
 
   for (const b of ref.blocks) {
-    if (b.tableType === 'statline' && Array.isArray(b.statlineRows)) {
-      // A statline table means a new unit entry starts here. If its heading does NOT resolve against the
-      // catalogue, the anchor is CLEARED rather than left on the previous unit: carrying it over silently
-      // files the new unit's options under the old one. That is what put the Saurus Oldblood's
-      // "Additional hand weapon +3" on the Slann Mage-Priest, which has no such option at all.
-      cur = resolveUnit((b.headingPath || []).slice(-1)[0] || '');
-      continue;
-    }
+    if (b.tableType === 'statline' && Array.isArray(b.statlineRows)) continue;
     // Yellow is the pack flagging its own unfinished work.
     if ((b.changeKinds || []).includes('todo')) { todo++; continue; }
+    // Schema v3 supplies the semantic statline owner on every loose paragraph/list. The raw Docs
+    // headingPath is retained for audit, but may legitimately still say "Monsoon" or the previous
+    // unit where Google Docs did not create a heading node.
+    const cur = resolveUnit(b.unitContext?.name || '');
 
     const texts = [];
     if (b.type === 'list' && Array.isArray(b.items)) {
@@ -237,6 +233,9 @@ for (const [key, army] of Object.entries(PACKS)) {
   // The review file. Its whole purpose is that the option lines the importer could NOT act on are
   // readable next to the source instead of living only in this script's stderr — so they can be checked
   // and the extraction improved. Written per pack, read only by /check/renegade.html.
+  const appliedRows = dedupe(review.applied);
+  const refusedRows = dedupe(review.refused);
+  const unmatchedRows = dedupe(review.unmatched);
   writeFileSync(new URL(`${key}-renegade-v2-review.json`, REN), `${JSON.stringify({
     id: `${key}-renegade-v2-review`,
     army,
@@ -245,16 +244,16 @@ for (const [key, army] of Object.entries(PACKS)) {
       + 'that name on the unit, so it is either worded differently in the OWB catalogue or the pack adds '
       + 'a new option. `refused` = matched but deliberately not applied, with the reason.',
     stats: {
-      applied: review.applied.length,
-      refused: review.refused.length,
-      unmatched: review.unmatched.length,
+      applied: appliedRows.length,
+      refused: refusedRows.length,
+      unmatched: unmatchedRows.length,
       todoBlocksSkipped: todo,
     },
     // Deduplicated: a unit that sits in two catalogue categories (War Hydra is Special AND Rare) is
     // resolved to both, so the same source line would otherwise be listed twice.
-    applied: dedupe(review.applied),
-    refused: dedupe(review.refused),
-    unmatched: dedupe(review.unmatched),
+    applied: appliedRows,
+    refused: refusedRows,
+    unmatched: unmatchedRows,
   }, null, 2)}\n`);
 
   G.changed += changed; G.unmatched += unmatched.length; G.todo += todo;

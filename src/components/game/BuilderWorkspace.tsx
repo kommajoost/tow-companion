@@ -10,10 +10,11 @@ import {
   unitCategoryFor, unitAllowedIn, unitCompNote,
   subOptionGroups, toggleSubOption, setExclusiveSubOption,
   magicCategories, selectedMagicKeys, selectedMagicItems, toggleMagicItem, magicGroupSpent, magicWouldExceed, magicItemId,
-  loadoutLabels, magicTypeLabel, DEFAULT_MAGIC_BUDGET,
+  loadoutLabels, magicTypeLabel, selectedMountIndex, DEFAULT_MAGIC_BUDGET,
   type Category, type OwbArmy, type OwbUnit, type BuilderList, type ListEntry, type Validation,
   type MagicItemsData, type MagicCategory, type MagicItem,
 } from '../../lib/owbBuilder';
+import { applyMountStatModifiers, mountStatModifiers } from '../../lib/mountModifiers';
 import { CompositionInfo } from './CompositionInfo';
 import { CompositionRulePicker } from './CompositionRulePicker';
 import { useSwipeToDismiss } from '../../lib/useSwipeToDismiss';
@@ -37,7 +38,10 @@ const BASE = import.meta.env.BASE_URL;
 type MagicText = Record<string, { description?: string; body?: string }>;
 // Mount special rules (normalised mount name → rule names), from scripts/sync-mount-text.mjs — so a
 // mount's eye shows its full info (profile + special rules), not just the stat line.
-type MountText = Record<string, { specialRules?: string[] }>;
+type MountText = Record<string, {
+  specialRules?: string[]; troopType?: string; baseSize?: string; armourValue?: string;
+  equipment?: string[]; notes?: string[];
+}>;
 const normMount = (s: string) => (s || '').toLowerCase().replace(/ *\([^)]*\) */g, '').replace(/[{}[\]*]/g, '').replace(/^[0-9]x /g, '').replace(/[“”]/g, '"').trim();
 const RUNE_TYPE_RULE: Record<string, string> = {
   'weapon-runes': 'weapon-runes',
@@ -69,11 +73,16 @@ function Stepper({ value, min, max, onChange, sm }: { value: number; min: number
   );
 }
 
-function MiniProfile({ rows }: { rows: StatRow[] }) {
+function MiniProfile({ rows, modifiers = {} }: { rows: StatRow[]; modifiers?: Record<string, number> }) {
   if (!rows.length) return null;
   const multi = rows.length > 1;
   const th: React.CSSProperties = { ...eb, fontSize: 7.5, color: TOW.gold, padding: '3px 0 2px', background: 'rgba(138,108,48,0.09)', borderBottom: `1px solid ${TOW.line}`, textAlign: 'center' };
-  const td = (v: string): React.CSSProperties => ({ fontFamily: towFont.display, fontWeight: 700, fontSize: 12, color: v === '0' || v === '-' ? TOW.faint : TOW.ink, padding: '4px 0', textAlign: 'center' });
+  const td = (k: string, v: string): React.CSSProperties => ({
+    fontFamily: towFont.display, fontWeight: modifiers[k] ? 700 : 600, fontSize: 12,
+    color: modifiers[k] ? TOW.goldDeep : v === '0' || v === '-' ? TOW.faint : TOW.ink,
+    background: modifiers[k] ? 'rgba(184,134,47,0.10)' : 'transparent',
+    padding: '4px 0', textAlign: 'center',
+  });
   return (
     <div className="no-scrollbar" style={{ overflowX: 'auto' }}>
       <table style={{ borderCollapse: 'collapse', width: '100%', minWidth: multi ? 300 : 0, border: `1px solid ${TOW.line}`, borderRadius: 7, background: TOW.cardLt, tableLayout: 'fixed' }}>
@@ -85,7 +94,15 @@ function MiniProfile({ rows }: { rows: StatRow[] }) {
           {rows.map((r, ri) => (
             <tr key={ri} style={{ borderTop: ri ? `1px solid ${TOW.line}` : 'none' }}>
               {multi && <td style={{ fontFamily: towFont.serif, fontSize: 11, color: TOW.parchDim, padding: '4px 6px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{r.Name}</td>}
-              {STAT_COLS.map((k) => <td key={k} style={td(r[k] ?? '-')}>{(r[k] ?? '-') === '0' ? '–' : r[k] ?? '–'}</td>)}
+              {STAT_COLS.map((k) => (
+                <td
+                  key={k}
+                  title={modifiers[k] ? `${modifiers[k] > 0 ? '+' : ''}${modifiers[k]} from selected mount` : undefined}
+                  style={td(k, r[k] ?? '-')}
+                >
+                  {(r[k] ?? '-') === '0' ? '–' : r[k] ?? '–'}
+                </td>
+              ))}
             </tr>
           ))}
         </tbody>
@@ -143,7 +160,7 @@ function complianceRows(v: Validation): ComplianceRow[] {
   return out;
 }
 
-export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army, armySlug, statsFor, comps, armyName, compName, itemsData, armyItemLists }: {
+export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army, armySlug, statsFor, comps, armyName, compName, itemsData, armyItemLists, magicTextPatch, mountTextPatch }: {
   // `list` is een SavedList; we lezen hier alleen de campagne-velden extra (BuilderList blijft ongemoeid).
   list: BuilderList & { points: number; campaign?: boolean; campaignSpeler?: string; campaignNaam?: string; campaignFase?: number }; name: string;
   onUpdate: (fn: (l: BuilderList) => Partial<BuilderList>) => void;
@@ -157,6 +174,8 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
   compName: (comp: string) => string;
   itemsData?: MagicItemsData;
   armyItemLists?: string[];
+  magicTextPatch?: MagicText;
+  mountTextPatch?: MountText;
 }) {
   const { rules, lores } = useData();
   const { openRule } = useUI();
@@ -210,10 +229,12 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
   const [settings, setSettings] = useState(false);
   const [info, setInfo] = useState<{ title: string; rows: StatRow[]; note?: string; ruleSlug?: string; flavour?: string; body?: string; ruleChips?: { name: string; slug: string | null }[]; chipsLabel?: string } | null>(null); // mount/unit profile / magic-item / lore popup
   const [compInfo, setCompInfo] = useState<string | null>(null); // composition-rule explanation popup
-  const [magicText, setMagicText] = useState<MagicText>({});
-  const [mountText, setMountText] = useState<MountText>({});
-  useEffect(() => { fetch(`${BASE}owb/magic-item-text.json`).then((r) => r.json()).then(setMagicText).catch(() => {}); }, []);
-  useEffect(() => { fetch(`${BASE}owb/mount-text.json`).then((r) => r.json()).then(setMountText).catch(() => {}); }, []);
+  const [baseMagicText, setBaseMagicText] = useState<MagicText>({});
+  const magicText = useMemo(() => ({ ...baseMagicText, ...(magicTextPatch ?? {}) }), [baseMagicText, magicTextPatch]);
+  const [baseMountText, setBaseMountText] = useState<MountText>({});
+  const mountText = useMemo(() => ({ ...baseMountText, ...(mountTextPatch ?? {}) }), [baseMountText, mountTextPatch]);
+  useEffect(() => { fetch(`${BASE}owb/magic-item-text.json`).then((r) => r.json()).then(setBaseMagicText).catch(() => {}); }, []);
+  useEffect(() => { fetch(`${BASE}owb/mount-text.json`).then((r) => r.json()).then(setBaseMountText).catch(() => {}); }, []);
   // One-time migration of older lists: magic picks once stored under the section's FIRST type (e.g. a
   // talisman as `magic/weapon/…`) show unchecked under the per-type UI while still costing points.
   // Canonicalise stale keys to `magic/<type>/<id>`. We DETECT via the closure (read-only) and only
@@ -290,6 +311,13 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
   const baseCatOf = (u: OwbUnit): Category => CATEGORIES.find((c) => (army[c] ?? []).includes(u)) ?? 'core';
   const effCatOf = (u: OwbUnit): Category => unitCategoryFor(u, list.composition, baseCatOf(u));
   const availableHere = (u: OwbUnit): boolean => unitAllowedIn(u, list.composition);
+  const riderProfileFor = (u: OwbUnit, entry: ListEntry) => {
+    const mount = u.mounts?.[selectedMountIndex(u, entry)];
+    const modifiers = mount?.name_en && !/^on foot$/i.test(mount.name_en)
+      ? mountStatModifiers(statsFor(mount.name_en))
+      : {};
+    return { rows: applyMountStatModifiers(statsFor(u.name_en), modifiers), modifiers };
+  };
 
   const needle = q.trim().toLowerCase();
   const allUnits = CATEGORIES.flatMap((c) => (army[c] ?? []));
@@ -332,9 +360,17 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
           if (hasRule) { openOptionRule(opt.name_en); return; }
           // A mount (or any profile-bearing option): show its stat profile PLUS its special rules as
           // tappable chips (each opens the rule), not just the bare profile.
-          const sr = mountText[normMount(opt.name_en)]?.specialRules ?? [];
+          const tx = mountText[normMount(cleanLabel(opt.name_en))] ?? mountText[normMount(opt.name_en)] ?? {};
+          const sr = tx.specialRules ?? [];
           const ruleChips = sr.map((name) => ({ name, slug: resolveRuleSlug(cleanLabel(name), ruleIdx) }));
-          setInfo({ title: cleanLabel(opt.name_en), rows: profileRows, ruleChips });
+          const details = [
+            tx.troopType ? `Troop type: ${tx.troopType}` : null,
+            tx.baseSize ? `Base size: ${tx.baseSize}` : null,
+            tx.armourValue ? `Armour value: ${tx.armourValue}` : null,
+            ...(tx.equipment ?? []).map((value) => `Equipment: ${value}`),
+            ...(tx.notes ?? []),
+          ].filter((value): value is string => !!value);
+          setInfo({ title: cleanLabel(opt.name_en), rows: profileRows, body: details.join('\n'), ruleChips });
         }} />}
       </div>
     );
@@ -961,7 +997,10 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
                   {list.campaign && !(selEntry.customName ?? '').trim() && (
                     <div style={{ ...eb, fontSize: 8, color: TOW.blood, margin: '-5px 0 10px' }}>Unit name required — campaign veterans follow this name</div>
                   )}
-                  <MiniProfile rows={statsFor(selUnit.name_en)} />
+                  {(() => {
+                    const effective = riderProfileFor(selUnit, selEntry);
+                    return <MiniProfile rows={effective.rows} modifiers={effective.modifiers} />;
+                  })()}
                   {((selUnit.maximum ?? 1) !== 1 || (selUnit.minimum ?? 1) > 1) && (
                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: 12, padding: '8px 11px', borderRadius: 9, background: TOW.cardLt, border: `1px solid ${TOW.line}` }}>
                       <span style={{ ...eb, fontSize: 8.5, color: TOW.muted }}>Models · {selUnit.minimum ?? 1}{selUnit.maximum ? `–${selUnit.maximum}` : '+'}</span>
@@ -1063,7 +1102,12 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
         <Sheet title={editEntry.customName || editUnit.name_en} sub={`${editEntry.customName ? `${editUnit.name_en} · ` : ''}${fmt(entryPoints(editUnit, editEntry, itemsData))} pts · ${CAT_LABEL[effCatOf(editUnit)]}`} onClose={() => setSheet(null)}
           headerExtra={list.campaign ? <NaamKnop genoemd={!!(editEntry.customName ?? '').trim()} onClick={() => openNaamDialoog(editEntry.uid, editUnit.name_en, editEntry.customName ?? '', editEntry.cat)} /> : undefined}
           foot={<button onClick={() => { removeE(editEntry.uid); setSheet(null); }} style={{ width: '100%', padding: 12, borderRadius: 10, border: `1px solid rgba(124,43,34,0.4)`, background: 'transparent', color: TOW.blood, cursor: 'pointer', fontFamily: towFont.display, fontWeight: 600, fontSize: 13, letterSpacing: '0.04em' }}>Remove from list</button>}>
-          <div style={{ marginBottom: 14 }}><MiniProfile rows={statsFor(editUnit.name_en)} /></div>
+          <div style={{ marginBottom: 14 }}>
+            {(() => {
+              const effective = riderProfileFor(editUnit, editEntry);
+              return <MiniProfile rows={effective.rows} modifiers={effective.modifiers} />;
+            })()}
+          </div>
           {((editUnit.maximum ?? 1) !== 1 || (editUnit.minimum ?? 1) > 1) && (
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14, padding: '10px 13px', borderRadius: 10, background: TOW.cardLt, border: `1px solid ${TOW.line}` }}>
               <span style={{ ...eb, fontSize: 9, color: TOW.muted }}>Models · {editUnit.minimum ?? 1}{editUnit.maximum ? `–${editUnit.maximum}` : '+'}</span>

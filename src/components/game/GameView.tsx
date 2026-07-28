@@ -12,6 +12,8 @@ import { OwbInstructions } from './OwbInstructions';
 import { ArmyListPicker } from './ArmyListPicker';
 import { EndBattleOverview } from './EndBattleOverview';
 import { berekenVictory } from '../../lib/victoryPoints';
+import { useData } from '../../data';
+import { inferOverlayId, isOverlay, OVERLAY_FILES } from '../../lib/overlays';
 import type { Army, ArmyUnit } from '../../types';
 
 const eb = engraved as React.CSSProperties;
@@ -28,6 +30,7 @@ const Shield = ({ c, size = 22 }: { c: string; size?: number }) => (
 // Wide: a "This game" sidebar (code, You/Opponent, round, VP) beside a roster reading pane.
 export function GameView() {
   const { code, seat, myArmy, myName, opponentArmy, opponentName, setMyArmy, setOpponentArmy, tracker, setTracker, leaveGame } = useGame();
+  const { setRuleOverlay } = useData();
   // GameView only mounts while a game is active, so a hardware Back here leaves the game.
   useBackClose(true, leaveGame);
   const [side, setSide] = useState<'me' | 'opp'>('me');
@@ -49,6 +52,30 @@ export function GameView() {
   const wide = w >= 700; // pane is window−76 when the global rail is shown
 
   const army: Army | null = side === 'me' ? myArmy : opponentArmy;
+
+  // The rule sheet lives outside the builder, so the selected pack must travel with the Army and be
+  // restored here. This also switches correctly when both players use different community packs.
+  useEffect(() => {
+    const overlayId = army?.overlayId ?? inferOverlayId(army?.composition, army?.faction);
+    const file = overlayId ? OVERLAY_FILES[overlayId] : undefined;
+    let cancelled = false;
+    if (!file) {
+      setRuleOverlay(null);
+      return;
+    }
+    fetch(`${BASE}renegade/${file}`)
+      .then((response) => response.ok ? response.json() : null)
+      .then((json) => {
+        if (!cancelled) setRuleOverlay(isOverlay(json) && json.id === overlayId ? json : null);
+      })
+      .catch(() => {
+        if (!cancelled) setRuleOverlay(null);
+      });
+    return () => {
+      cancelled = true;
+      setRuleOverlay(null);
+    };
+  }, [army?.overlayId, army?.composition, army?.faction, setRuleOverlay]);
 
   // Both armies are editable (you track spells and casualties for both sides).
   const editable = true;

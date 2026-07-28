@@ -164,9 +164,10 @@ export function BuilderFlow({
     // version rather than showing nothing.
     labels: { faction: armyName, composition: compName(list.composition), rule: ruleLabel(list.rule) },
     armyItemLists,
+    statIdx,
     getUnit,
     update,
-  }), [list, army, itemsData, derived, armyName, compName, armyItemLists, getUnit, update]);
+  }), [list, army, itemsData, derived, armyName, compName, armyItemLists, statIdx, getUnit, update]);
 
   // ── Roster rows ───────────────────────────────────────────────────────────────────────────────
   // Built once for every screen that shows the army. `category` is the EFFECTIVE one; `entry.cat`

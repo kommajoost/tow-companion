@@ -12,89 +12,225 @@
   },
   "status": "draft",
   "scope": "points-and-rules",
+  "inheritsComposition": "doc-renegade",
   "units": {
     "bloodletters-of-khorne": {
       "points": 13,
       "_was": 14,
       "_changed": [
         "points",
-        "options"
+        "options",
+        "unit-size"
       ],
       "options": [
         {
           "group": "command",
           "name_en": "Bloodreaper (champion)",
           "points": 6,
-          "_was": 7
+          "_was": 7,
+          "action": "patch",
+          "perModel": false
         },
         {
           "group": "command",
           "name_en": "Standard bearer",
           "points": 6,
-          "_was": 7
+          "_was": 7,
+          "action": "patch",
+          "perModel": false
         },
         {
           "group": "command",
           "name_en": "Musician",
           "points": 6,
-          "_was": 7
+          "_was": 7,
+          "action": "patch",
+          "perModel": false
         }
-      ]
+      ],
+      "minimum": 5
     },
     "flesh-hounds-of-khorne-core": {
       "points": 30,
       "_was": 32,
       "_changed": [
-        "points"
-      ]
+        "points",
+        "unit-size",
+        "special-rules"
+      ],
+      "minimum": 4,
+      "specialRules": "Armour Bane (1), Close Order, Counter Charge, Daemonic, Daemons of Khorne, Impetuous, Magic Resistance (-2), Swiftstride"
     },
     "flesh-hounds-of-khorne": {
       "points": 30,
       "_was": 32,
       "_changed": [
-        "points"
-      ]
+        "points",
+        "unit-size",
+        "special-rules"
+      ],
+      "minimum": 4,
+      "specialRules": "Armour Bane (1), Close Order, Counter Charge, Daemonic, Daemons of Khorne, Impetuous, Magic Resistance (-2), Swiftstride"
     },
     "great-unclean-one": {
       "points": 360,
       "_was": 330,
       "_changed": [
-        "points"
+        "points",
+        "special-rules",
+        "options"
+      ],
+      "specialRules": "Close Order, Daemonic, Daemon of Nurgle, Infernal Favour (2), Large Target, Lore of Daemons, Poisoned Attacks, Regeneration (5+), Singular Essence, Stomp Attacks (D3+1), Terror",
+      "options": [
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Level 2 Wizard",
+          "points": 30,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Level 3 Wizard",
+          "points": 60,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Level 4 Wizard",
+          "points": 30,
+          "perModel": false
+        }
       ]
     },
     "plaguebearers-of-nurgle": {
       "points": 12,
       "_was": 13,
       "_changed": [
-        "points"
-      ]
+        "points",
+        "unit-size"
+      ],
+      "minimum": 5
     },
     "fiends-of-slaanesh": {
       "points": 46,
       "_was": 66,
       "_changed": [
-        "points"
-      ]
+        "points",
+        "unit-size"
+      ],
+      "minimum": 2
     },
     "lord-of-change": {
       "points": 340,
       "_was": 310,
       "_changed": [
-        "points"
+        "points",
+        "special-rules",
+        "options"
+      ],
+      "specialRules": "Close Order, Daemonic, Daemon of Tzeentch, Flaming Attacks, Fly (9), Infernal Favour (2), Large Target, Lore of Daemons, Stomp Attacks (D3), Singular Essence, Swiftstride, Terror",
+      "options": [
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Tzeentchian Wand",
+          "points": 20,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Level 3 Wizard",
+          "points": 30,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Level 4 Wizard",
+          "points": 30,
+          "perModel": false
+        }
       ]
     },
     "chaos-furies": {
       "points": 11,
       "_was": 12,
       "_changed": [
-        "points"
+        "points",
+        "special-rules",
+        "options"
+      ],
+      "specialRules": "Daemonic, Levies, Fly (8), Furious Charge, Skirmishers, Swiftstride, Vanguard",
+      "options": [
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "Daemons of Khorne",
+          "points": 2,
+          "perModel": true
+        },
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "Daemons of Nurgle",
+          "points": 1,
+          "perModel": true
+        },
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "Daemons of Slaanesh",
+          "points": 2,
+          "perModel": true
+        },
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "Daemons of Tzeentch",
+          "points": 1,
+          "perModel": true
+        }
       ]
     },
     "soul-grinder": {
       "points": 240,
       "_was": 255,
       "_changed": [
-        "points"
+        "points",
+        "options"
+      ],
+      "options": [
+        {
+          "group": "equipment",
+          "action": "upsert",
+          "name_en": "Hand weapon, Iron claw, Harvester cannon, Phlegm Bombardment",
+          "points": 30
+        },
+        {
+          "group": "equipment",
+          "action": "patch",
+          "name_en": "Hand weapon, Iron claw, Harvester cannon, Baleful torrent",
+          "points": 25,
+          "perModel": false
+        },
+        {
+          "group": "equipment",
+          "action": "patch",
+          "name_en": "Hand weapon, Iron claw, Harvester cannon, Warp gaze",
+          "points": 30,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "Phlegm Bombardment",
+          "points": 30,
+          "perModel": false
+        }
       ]
     },
     "seekers-of-slaanesh-core": {
@@ -115,15 +251,19 @@
       "points": 125,
       "_was": 145,
       "_changed": [
-        "points"
-      ]
+        "points",
+        "special-rules"
+      ],
+      "specialRules": "Armour Bane (1, Steed of Slaanesh only), Close Order, Counter Charge, Daemonic, Daemonic Charge (-1), Daemon of Slaanesh, First Charge, Impact Hits (2D6+1), Open Order, Poisoned Attacks (Steed of Slaanesh only), Swiftstride"
     },
     "seeker-chariot-of-slaanesh": {
       "points": 85,
       "_was": 100,
       "_changed": [
-        "points"
-      ]
+        "points",
+        "special-rules"
+      ],
+      "specialRules": "Armour Bane (1, Steed of Slaanesh only), Counter Charge, Daemonic, Daemonic Charge (-1), Daemon of Slaanesh, First Charge, Impact Hits (D3+1), Open Order, Poisoned Attacks (Steed of Slaanesh only), Swiftstride"
     },
     "burning-chariot-of-tzeentch": {
       "points": 140,
@@ -138,7 +278,16 @@
           "group": "options",
           "name_en": "Plague Proboscis (+1 Initiative)",
           "points": 1,
-          "_was": 2
+          "_was": 2,
+          "action": "patch",
+          "perModel": true
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Venom sting",
+          "points": 2,
+          "perModel": true
         }
       ],
       "_changed": [
@@ -151,7 +300,173 @@
           "group": "mounts",
           "name_en": "Disc of Tzeentch",
           "points": 35,
-          "_was": 20
+          "_was": 20,
+          "action": "patch",
+          "perModel": false
+        }
+      ],
+      "_changed": [
+        "options",
+        "special-rules"
+      ],
+      "specialRules": "Daemonic, Daemon of Tzeentch, Infernal Favour (1), Locus of Change, Lore of Daemons"
+    },
+    "bloodthirster": {
+      "specialRules": "Close Order, Daemonic, Daemonic Charge (-2), Daemon of Khorne, Fly (10), Furious Charge, Impact Hits (D3+1), Impetuous, Infernal Favour (2), Large Target, Magic Resistance (-2), Terror",
+      "_changed": [
+        "special-rules"
+      ]
+    },
+    "daemonic-herald-of-khorne": {
+      "specialRules": "Daemonic, Daemon of Khorne, Furious Charge*, Impetuous, Infernal Favour (1), Magic Resistance (-2), Locus of Wrath",
+      "_changed": [
+        "special-rules"
+      ]
+    },
+    "bloodcrushers-of-khorne": {
+      "specialRules": "Armoured Hide (1), Close Order, Daemonic, Daemonic Charge (-2), Daemon of Khorne, Impact Hits (2), Impetuous, Magic Resistance (-1), Swiftstride",
+      "_changed": [
+        "special-rules"
+      ]
+    },
+    "daemonic-herald-of-nurgle": {
+      "specialRules": "Daemonic, Daemon of Nurgle, Infernal Favour (1), Locus of Fecundity, Lore of Daemons, Poisoned Attacks, Regeneration (6+)",
+      "_changed": [
+        "special-rules",
+        "options"
+      ],
+      "options": [
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Level 1 Wizard",
+          "points": 30,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Level 2 Wizard",
+          "points": 30,
+          "perModel": false
+        }
+      ]
+    },
+    "beasts-of-nurgle": {
+      "minimum": 1,
+      "_changed": [
+        "unit-size",
+        "special-rules"
+      ],
+      "specialRules": "Attention Seeker, Open Order, Daemonic, Daemons of Nurgle, Impetuous, Infernal Favour (1), Loner, Poisoned Attacks, Random Attacks, Regeneration (5+), Slime Trail"
+    },
+    "nurglings-core": {
+      "specialRules": "Daemonic, Daemons of Nurgle, Loner, Poisoned Attacks, Random Attacks, Regeneration (6+), Scouts, Skirmishers",
+      "_changed": [
+        "special-rules"
+      ]
+    },
+    "nurglings": {
+      "specialRules": "Daemonic, Daemons of Nurgle, Loner, Poisoned Attacks, Random Attacks, Regeneration (6+), Scouts, Skirmishers",
+      "_changed": [
+        "special-rules"
+      ]
+    },
+    "keeper-of-secrets": {
+      "specialRules": "Close Order, Daemonic, Daemon of Slaanesh, Evasive, Infernal Favour (2), Large Target, Lore of Daemons, Reserve Move, Stomp Attacks (D3+1), Swiftstride, Terror",
+      "_changed": [
+        "special-rules"
+      ]
+    },
+    "daemonettes-of-slaanesh": {
+      "minimum": 5,
+      "_changed": [
+        "unit-size",
+        "special-rules"
+      ],
+      "specialRules": "Open Order, Daemonic, Daemons of Slaanesh"
+    },
+    "pink-horrors-of-tzeentch-core": {
+      "specialRules": "Close Order, Daemonic, Daemons of Tzeentch, Open Order, Scintillating Sorcery",
+      "_changed": [
+        "special-rules"
+      ]
+    },
+    "pink-horrors-of-tzeentch": {
+      "specialRules": "Close Order, Daemonic, Daemons of Tzeentch, Open Order, Scintillating Sorcery",
+      "_changed": [
+        "special-rules"
+      ]
+    },
+    "blue-horrors-of-tzeentch-core": {
+      "specialRules": "Daemonic, Daemons of Tzeentch, Move through Cover, Open Order, Skirmishers",
+      "_changed": [
+        "special-rules"
+      ]
+    },
+    "blue-horrors-of-tzeentch": {
+      "specialRules": "Daemonic, Daemons of Tzeentch, Move through Cover, Open Order, Skirmishers",
+      "_changed": [
+        "special-rules"
+      ]
+    },
+    "screamers-of-tzeentch": {
+      "minimum": 2,
+      "_changed": [
+        "unit-size",
+        "special-rules"
+      ],
+      "specialRules": "Daemonic, Daemons of Tzeentch, Fly (9), Loner, Skirmishers, Slashing Attack"
+    },
+    "daemon-prince": {
+      "specialRules": "Chaos Armour, Daemonic, Infernal Favour (2), Lore of Daemons, Regeneration (5+), Singular Essence",
+      "_changed": [
+        "special-rules"
+      ]
+    },
+    "flamers-of-tzeentch": {
+      "_changed": [
+        "command",
+        "options"
+      ],
+      "options": [
+        {
+          "group": "command",
+          "action": "upsert",
+          "name_en": "Exalted Flamer",
+          "points": 30
+        },
+        {
+          "group": "command",
+          "action": "patch",
+          "name_en": "Pyroclaster (champion)",
+          "points": 7,
+          "perModel": false
+        },
+        {
+          "group": "command",
+          "action": "upsert",
+          "name_en": "A Pyroclaster may be upgraded to an Exalted Flamer (champion)",
+          "points": 30,
+          "perModel": false
+        }
+      ]
+    },
+    "daemonic-herald-of-slaanesh": {
+      "options": [
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Level 1 Wizard",
+          "points": 30,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Level 2 Wizard",
+          "points": 30,
+          "perModel": false
         }
       ],
       "_changed": [
@@ -159,7 +474,326 @@
       ]
     }
   },
-  "magicItems": {},
+  "magicItems": {
+    "daemonic-gifts-common": [
+      {
+        "name_de": "Ätherklinge",
+        "name_en": "Æther Blade",
+        "name_cn": "以太之刃",
+        "name_fr": "Lame d’Éther",
+        "name_it": "Æther Lama",
+        "points": 50,
+        "type": "daemonic-gift-common",
+        "onePerArmy": true,
+        "stackable": true,
+        "maximum": 1,
+        "name": "æther blade"
+      },
+      {
+        "name_de": "Geflügelter Alptraum",
+        "name_en": "Winged Horror",
+        "name_cn": "有翼惧物",
+        "name_fr": "Horreur Ailée",
+        "name_it": "Winged Horror",
+        "points": 50,
+        "type": "daemonic-gift-common",
+        "onePerArmy": true,
+        "stackable": true,
+        "maximum": 1,
+        "name": "winged horror"
+      },
+      {
+        "name-fr": "Nombreux Bras*",
+        "name_de": "Vielarmiges Monstrum*",
+        "name_en": "Many Arms",
+        "name_cn": "额外臂膀*",
+        "name_it": "Many Arms*",
+        "points": 30,
+        "stackable": true,
+        "type": "daemonic-gift-common",
+        "name_fr": "Bras Multiples*",
+        "onePerArmy": false,
+        "name": "many arms"
+      },
+      {
+        "name_en": "Chromatic Tome",
+        "name": "chromatic tome",
+        "points": 20,
+        "type": "daemonic-gift-common",
+        "onePerArmy": false,
+        "stackable": true
+      }
+    ],
+    "daemonic-icons-common": [
+      {
+        "name_en": "Exalted Locus",
+        "name": "exalted locus",
+        "points": 60,
+        "type": "daemonic-icon-common",
+        "onePerArmy": true
+      },
+      {
+        "name_en": "Unholy Victory",
+        "name": "unholy victory",
+        "points": 50,
+        "type": "daemonic-icon-common",
+        "onePerArmy": true
+      },
+      {
+        "name_en": "Chaotic Glory",
+        "name": "chaotic glory",
+        "points": 15,
+        "type": "daemonic-icon-common",
+        "onePerArmy": true
+      }
+    ],
+    "daemonic-gifts-khorne": [
+      {
+        "name_de": "Spruchfresser",
+        "name_en": "Spell Eater",
+        "name_cn": "吞法者",
+        "name_fr": "Mange Sorts",
+        "name_it": "Spell Eater",
+        "points": 50,
+        "type": "daemonic-gift-khorne",
+        "onePerArmy": true,
+        "stackable": true,
+        "maximum": 1,
+        "name": "spell eater"
+      },
+      {
+        "name_de": "Rüstung des Khorne",
+        "name_en": "Armour Of Khorne",
+        "name_cn": "恐虐甲胄",
+        "name_fr": "Armure de Khorne",
+        "name_it": "Armour of Khorne",
+        "points": 25,
+        "type": "daemonic-gift-khorne",
+        "onePerArmy": true,
+        "stackable": true,
+        "maximum": 1,
+        "name": "armour of khorne"
+      },
+      {
+        "name_de": "Axt des Khorne*",
+        "name_en": "Axe Of Khorne",
+        "name_cn": "恐虐大斧*",
+        "name_fr": "Hache de Khorne*",
+        "name_it": "Axe of Khorne*",
+        "points": 25,
+        "stackable": true,
+        "type": "daemonic-gift-khorne",
+        "onePerArmy": false,
+        "name": "axe of khorne"
+      }
+    ],
+    "daemonic-icons-khorne": [
+      {
+        "name_de": "Schädelikone",
+        "name_en": "Skull Totem",
+        "name_cn": "颅骨图腾",
+        "name_fr": "Totem des Crânes",
+        "name_it": "Skull Totem",
+        "points": 50,
+        "type": "daemonic-icon-khorne",
+        "onePerArmy": true,
+        "name": "skull totem"
+      },
+      {
+        "name_en": "A unit carrying the Skull Totem (but not its mounts) gains the Furious Charge special rule. During a turn in which it charged, models within a unit carrying the Skull Totem improve the Armour Piercing characteristic of their weapons by 1, and may re-roll any rolls To Wound of a natural 1. Great Standard Of Sundering",
+        "name": "a unit carrying the skull totem but not its mounts gains the furious charge special rule during a turn in which it charged models within a unit carrying the skull totem improve the armour piercing characteristic of their weapons by 1 and may re roll any rolls to wound of a natural 1 great standard of sundering",
+        "points": 45,
+        "type": "daemonic-icon-khorne",
+        "onePerArmy": true
+      },
+      {
+        "name_de": "Ikone des ewigen Krieges",
+        "name_en": "Icon Of Endless War",
+        "name_cn": "无尽之战圣像",
+        "name_fr": "Icône de Guerre Infinie",
+        "name_it": "Icon of Endless War",
+        "points": 30,
+        "type": "daemonic-icon-khorne",
+        "onePerArmy": true,
+        "name": "icon of endless war"
+      }
+    ],
+    "daemonic-gifts-nurgle": [
+      {
+        "name_de": "Zierrat des Nurgle",
+        "name_en": "Trappings Of Nurgle",
+        "name_cn": "纳垢装束",
+        "name_fr": "Atours de Nurgle",
+        "name_it": "Trappings of Nurgle",
+        "points": 25,
+        "type": "daemonic-gift-nurgle",
+        "onePerArmy": true,
+        "stackable": true,
+        "maximum": 1,
+        "name": "trappings of nurgle"
+      }
+    ],
+    "daemonic-icons-nurgle": [
+      {
+        "name_de": "Ikone der immerwährenden Virulenz",
+        "name_en": "Icon Of Eternal Virulence",
+        "name_cn": "永恒之毒圣像",
+        "name_fr": "Icône de Virulence Infinie",
+        "name_it": "Icon of Eternal Virulence",
+        "points": 50,
+        "type": "daemonic-icon-nurgle",
+        "onePerArmy": true,
+        "name": "icon of eternal virulence"
+      },
+      {
+        "name_de": "Rotten Icon",
+        "name_en": "Rotten Icon",
+        "name_cn": "腐化溃烂圣像",
+        "name_fr": "Icône Pourrie",
+        "name_it": "Rotten Icon",
+        "points": 15,
+        "type": "daemonic-icon-nurgle",
+        "onePerArmy": true,
+        "name": "rotten icon"
+      }
+    ],
+    "daemonic-gifts-slaanesh": [
+      {
+        "name_de": "Hinreissende Höllenmuse",
+        "name_en": "Infernal Enrapturess",
+        "name_cn": "地狱奏乐者",
+        "name_fr": "Enchantement Infernal",
+        "name_it": "Infernal Enrapturess",
+        "points": 50,
+        "type": "daemonic-gift-slaanesh",
+        "onePerArmy": true,
+        "stackable": true,
+        "maximum": 1,
+        "name": "infernal enrapturess"
+      },
+      {
+        "name_de": "Sirenengesang",
+        "name_en": "Siren Song",
+        "name_cn": "塞壬之歌",
+        "name_fr": "Chant de la Sirène",
+        "name_it": "Siren Song",
+        "points": 30,
+        "type": "daemonic-gift-slaanesh",
+        "onePerArmy": true,
+        "stackable": true,
+        "maximum": 1,
+        "name": "siren song"
+      },
+      {
+        "name_de": "Fesselnder Blick*",
+        "name_en": "Enrapturing Gaze",
+        "name_cn": "狂喜凝视*",
+        "name_fr": "Regard Envoûtant*",
+        "name_it": "Enrapturing Gaze*",
+        "points": 20,
+        "stackable": true,
+        "type": "daemonic-gift-slaanesh",
+        "onePerArmy": false,
+        "name": "enrapturing gaze"
+      }
+    ],
+    "daemonic-icons-slaanesh": [
+      {
+        "name_de": "Banner of Acquiescence",
+        "name_en": "Banner Of Acquiescence",
+        "name_cn": "屈从之旗",
+        "name_fr": "Bannière du Consentement",
+        "name_it": "Banner of Acquiescence",
+        "points": 50,
+        "type": "daemonic-icon-slaanesh",
+        "onePerArmy": true,
+        "name": "banner of acquiescence"
+      },
+      {
+        "name_en": "Icon of the Eternal Dance",
+        "name": "icon of the eternal dance",
+        "points": 25,
+        "type": "daemonic-icon-slaanesh",
+        "onePerArmy": true
+      },
+      {
+        "name_de": "Sirenenstandarte",
+        "name_en": "Siren Standard",
+        "name_cn": "塞壬战旗",
+        "name_fr": "Étendard de la Sirène",
+        "name_it": "Siren Standard",
+        "points": 15,
+        "type": "daemonic-icon-slaanesh",
+        "onePerArmy": true,
+        "name": "siren standard"
+      }
+    ],
+    "daemonic-gifts-tzeentch": [
+      {
+        "name_de": "Schicksal des Tzeentch",
+        "name_en": "Will Of Tzeentch",
+        "name_cn": "奸奇意志",
+        "name_fr": "Volonté de Tzeentch",
+        "name_it": "Will of Tzeentch",
+        "points": 35,
+        "type": "daemonic-gift-tzeentch",
+        "onePerArmy": true,
+        "stackable": true,
+        "maximum": 1,
+        "name": "will of tzeentch"
+      },
+      {
+        "name_de": "Gleißende Korona*",
+        "name_en": "Iridescent Corona",
+        "name_cn": "虹光日冕*",
+        "name_fr": "Couronne Irisée*",
+        "name_it": "Iridescent Corona*",
+        "points": 30,
+        "stackable": true,
+        "type": "daemonic-gift-tzeentch",
+        "onePerArmy": false,
+        "name": "iridescent corona"
+      },
+      {
+        "name_de": "Doppelköpfig",
+        "name_en": "Twin Heads",
+        "name_cn": "双头",
+        "name_fr": "Têtes Jumelles",
+        "name_it": "Twin Heads",
+        "points": 30,
+        "type": "daemonic-gift-tzeentch",
+        "onePerArmy": true,
+        "stackable": true,
+        "maximum": 1,
+        "name": "twin heads"
+      }
+    ],
+    "daemonic-icons-tzeentch": [
+      {
+        "name_de": "Banner of Discord",
+        "name_en": "Banner Of Discord",
+        "name_cn": "不谐之旗",
+        "name_fr": "Bannière de Discorde",
+        "name_it": "Banner of Discord",
+        "points": 50,
+        "type": "daemonic-icon-tzeentch",
+        "onePerArmy": true,
+        "name": "banner of discord"
+      },
+      {
+        "name_de": "Ikone der Zauberei*",
+        "name_en": "Icon Of Sorcery",
+        "name_cn": "巫术圣像*",
+        "name_fr": "Icône de Sorcellerie*",
+        "name_it": "Icon of Sorcery*",
+        "points": 20,
+        "stackable": true,
+        "type": "daemonic-icon-tzeentch",
+        "onePerArmy": false,
+        "name": "icon of sorcery"
+      }
+    ]
+  },
   "rules": {
     "daemonic-psychology": {
       "name_en": "Daemonic Psychology",
@@ -258,6 +892,1069 @@
         "Daemon(s) Of Nurgle Any enemy model that directs its attacks against a Daemon of A Daemon of Tzeentch that is also a Wizard may apply a Nurgle during the Combat phase must re-roll any rolls To Hit +1 modifier to any Casting roll they make. of a natural 6. Note that this is a modifier to the result of a roll � it does not negate a roll of a natural double 1."
       ],
       "overrides": null
+    },
+    "warpflame": {
+      "name_en": "Warpflame",
+      "body": [
+        "| R | S | AP | Special Rules Warpflame | 18\" | 4 | -1 | Flaming Attacks, Move & Shoot, | | | | Multiple Shots (D3+1), Quick Shot"
+      ],
+      "weaponProfile": {
+        "range": "18\"",
+        "strength": "4",
+        "ap": "-1",
+        "specialRules": "Flaming Attacks, Move & Shoot,, Multiple Shots (D3+1), Quick Shot"
+      },
+      "overrides": "warpflame"
+    },
+    "solid-shot": {
+      "name_en": "Solid shot",
+      "body": [],
+      "weaponProfile": {
+        "range": "36\"",
+        "strength": "8",
+        "ap": "-2",
+        "specialRules": "Armour Bane (2), Cannon Fire,, Cumbersome, Multiple Wounds (D3)"
+      },
+      "overrides": null
+    },
+    "scatter-shot": {
+      "name_en": "Scatter shot",
+      "body": [],
+      "weaponProfile": {
+        "range": "12”",
+        "strength": "4",
+        "ap": "-1",
+        "specialRules": "Cumbersome, Needs More Nails"
+      },
+      "overrides": null
+    },
+    "phlegm-bombardment": {
+      "name_en": "Phlegm Bombardment",
+      "body": [],
+      "weaponProfile": {
+        "range": "6-24\"",
+        "strength": "4(8)",
+        "ap": "-1(-3)",
+        "specialRules": "Bombardment, Cumbersome, Flaming Attacks, Multiple Wounds (D3+1)"
+      },
+      "overrides": null
+    },
+    "daemonic": {
+      "name_en": "Daemonic",
+      "body": [
+        "Models with this special rule are ‘Daemonic.’ All Daemonic models have a 5+ Ward save against any wounds suffered that were caused by a non-magical enemy attack. In addition, All Daemonic models have the following universal special rules:",
+        "Daemonic Instability • Daemonic Psychology • Fear • Immune to Psychology • Magical Attacks • Unbreakable • Warp-spawned",
+        "A character with this special rule cannot join a unit without this special rule, and vice versa."
+      ],
+      "overrides": "daemonic"
+    },
+    "daemonic-charge-x": {
+      "name_en": "Daemonic Charge (-X)",
+      "body": [
+        "Impact Hits caused by this model have an Armour Piercing characteristic shown in the brackets after the name of this special rule."
+      ],
+      "overrides": null
+    },
+    "daemon-s-of-khorne": {
+      "name_en": "Daemon(s) Of Khorne",
+      "body": [
+        "Daemons of Khorne have the Furious Charge special rule and during a turn in which it made a charge move, a Daemon of Khorne (but not its mount) gains a +1 modifier to its Strength characteristic."
+      ],
+      "overrides": null
+    },
+    "daemon-s-of-nurgle": {
+      "name_en": "Daemon(s) Of Nurgle",
+      "body": [
+        "Any enemy model that directs its attacks against a Daemon of Nurgle during the Combat phase must re-roll any rolls To Hit of a natural 6."
+      ],
+      "overrides": null
+    },
+    "daemon-s-of-slaanesh": {
+      "name_en": "Daemon(s) Of Slaanesh",
+      "body": [
+        "Any enemy model that shoots at a Daemon Of Slaanesh suffers an additional -1 To Hit modifier. Daemons of Slaanesh increase their maximum possible charge range by 1\" and have a +1 modifier to the result of any Charge, Pursuit, or Flee roll they make."
+      ],
+      "overrides": null
+    },
+    "daemon-s-of-tzeentch": {
+      "name_en": "Daemon(s) Of Tzeentch",
+      "body": [
+        "A Daemon of Tzeentch that is also a Wizard may apply a +1 modifier to any Casting roll they make.",
+        "Note that this is a modifier to the result of a roll – it does not negate a roll of a natural double 1."
+      ],
+      "overrides": null
+    },
+    "locus-of-wrath": {
+      "name_en": "Locus of Wrath",
+      "body": [
+        "The Herald, its mount, and any unit that they have joined gain the Hatred (all enemies) Special Rule."
+      ],
+      "overrides": null
+    },
+    "plagueflail-combat-s-2-3-multiple-wounds-d3": {
+      "name_en": "Plagueflail Combat S+2 -3 Multiple Wounds (D3)",
+      "body": [
+        "Notes: A Plagueflail’s Strength modifier and Armour Bane (1) special rule apply only against enemy models the wielder charged this turn."
+      ],
+      "overrides": null
+    },
+    "locus-of-fecundity": {
+      "name_en": "Locus of Fecundity",
+      "body": [
+        "The Herald and any unit they have joined gain the Regeneration (5+) special rule."
+      ],
+      "overrides": null
+    },
+    "venom-sting-combat-s-1-armour-bane-1": {
+      "name_en": "Venom sting Combat S -1 Armour Bane (1)",
+      "body": [
+        "Note: In combat, a Rot Fly makes one of its attacks each turn with this weapon."
+      ],
+      "overrides": null
+    },
+    "locus-of-swiftness": {
+      "name_en": "Locus of Swiftness",
+      "body": [
+        "The Herald and any unit they have joined gain the Strike First Special rule."
+      ],
+      "overrides": null
+    },
+    "r-s-ap-special-rules": {
+      "name_en": "R S AP Special Rules",
+      "body": [
+        "Venomous tail Combat S - Poisoned Attacks, Strike First",
+        "Note: In combat, this model may make one of its attacks each turn with this weapon."
+      ],
+      "overrides": null
+    },
+    "master-of-sorcery": {
+      "name_en": "Master of Sorcery",
+      "body": [
+        "A Lord of Change does not randomly generate their spells. Instead, they may choose which spells they know from their chosen lore (and may discard one to select that lore's signature spell or a Daemons of Tzeentch spell from the Lore of Daemons.)"
+      ],
+      "overrides": null
+    },
+    "locus-of-change": {
+      "name_en": "Locus of Change",
+      "body": [
+        "The Herald and any unit they have joined may re-roll any Ward Save roll of a natural 1."
+      ],
+      "overrides": null
+    },
+    "scintillating-sorcery": {
+      "name_en": "Scintillating Sorcery",
+      "body": [
+        "A unit of Pink Horrors knows one of the following spells: Glittering Robe from the Lore of Illusion, Pink Fire, or Gift of Mutation from the Lore of Daemons. The unit may cast this spell as a Bound spell:",
+        "If the unit includes a Iridescent Horror, it may cast this Bound spell with a Power Level of 1. • If it includes both an Iridescent Horror and a standard bearer, it may cast this Bound spell with a Power Level of 2. • Otherwise, the unit may cast this Bound spell with a Power Level of 0."
+      ],
+      "overrides": "scintillating-sorcery"
+    },
+    "slashing-attack": {
+      "name_en": "Slashing Attack",
+      "body": [
+        "A unit with this special rule may perform a ‘Slashing Attack’ against a single enemy unit that is not engaged in combat. To do so, this unit must move (by flying) over the unit it wishes to attack during the Remaining Moves sub-phase. Once this unit’s movement is complete, the enemy unit suffers D3 Strength 4 hits, each with an AP of -1, for each model in this unit that moved over it."
+      ],
+      "overrides": "slashing-attack"
+    },
+    "spell-plague-wind": {
+      "name_en": "Plague Wind (Daemons Of Nurgle)",
+      "body": [
+        "Type: Magical Vortex",
+        "Casting Value: 7+",
+        "Range: 12\"",
+        "Effect: Remains in play. Place a small (3\") blast template so that its central hole is within 12\" of the caster. Whilst in play, the template is treated as dangerous terrain. The template scatters D6\" during every Start of Turn sub-phase (see page 95). Any unit (friend or foe, but not including Daemons of Nurgle) that moves through the template, or that the template moves over suffers a -1 modifier to its Toughness characteristic for the remainder of the turn."
+      ],
+      "overrides": "spell-plague-wind"
+    },
+    "spell-blue-fire": {
+      "name_en": "Blue Fire (Daemons Of Tzeentch)",
+      "body": [
+        "Type: Magic Missile",
+        "Casting Value: 9+",
+        "Range: 18\"",
+        "Effect: The target enemy unit suffers D6+3 Strength 4 hits, each with an AP of -2 and with the Flaming Attacks special rule."
+      ],
+      "overrides": "spell-blue-fire"
+    },
+    "spell-pink-fire": {
+      "name_en": "Pink Fire (Daemons Of Tzeentch)",
+      "body": [
+        "Type: Magic Missile",
+        "Casting Value: 8+",
+        "Range: 18\"",
+        "Effect: The target enemy unit suffers D3+3 Strength 3 hits, each with an AP of - and with the Flaming Attacks special rule."
+      ],
+      "overrides": "spell-pink-fire"
+    },
+    "spell-gift-of-mutation": {
+      "name_en": "Gift Of Mutation (Daemons Of Tzeentch)",
+      "body": [
+        "Type: Hex",
+        "Casting Value: 8+/11+",
+        "Range: 12\"",
+        "Effect: If this spell is cast with a casting result of 8 or more, the target enemy unit suffers a -D3 modifier to one of the following characteristics (to a minimum of 1, chosen by the casting player). If this spell is cast with a casting result of 12 or more, the target enemy unit suffers a -D3 modifier to two of the following characteristics (to a minimum of 1, chosen by the casting player). This spell lasts until your next Start of Turn sub-phase:",
+        "Weapon Skill • Strength • Toughness"
+      ],
+      "overrides": "spell-gift-of-mutation"
+    },
+    "plaguesword": {
+      "name_en": "Plaguesword",
+      "body": [
+        "R S AP Special Rules",
+        "Plaguesword Combat S -1 Armour Bane (1)"
+      ],
+      "overrides": "plaguesword"
+    },
+    "lamprey-s-bite": {
+      "name_en": "Lamprey’s Bite",
+      "body": [
+        "Notes: The Multiple Wounds (D3) special rule only applies against enemy models whose troop type is ‘monster’."
+      ],
+      "overrides": "lampreys-bite"
+    }
+  },
+  "profiles": {
+    "bloodletters of khorne": {
+      "stats": [
+        {
+          "Name": "Bloodletter",
+          "M": "5",
+          "WS": "5",
+          "BS": "3",
+          "S": "4",
+          "T": "3",
+          "W": "1",
+          "I": "4",
+          "A": "1",
+          "Ld": "7"
+        },
+        {
+          "Name": "Bloodreaper",
+          "M": "5",
+          "WS": "5",
+          "BS": "3",
+          "S": "4",
+          "T": "3",
+          "W": "1",
+          "I": "4",
+          "A": "2",
+          "Ld": "7"
+        }
+      ],
+      "equipment": [
+        "Hellblades (see page 35) and brazen scales (counts as heavy armour)"
+      ],
+      "notes": [
+        "A Bloodreaper may purchase Daemonic Gifts up to a total of 25 points"
+      ],
+      "troopType": "Heavy infantry",
+      "baseSize": "30 x 30 mm",
+      "specialRules": [
+        "Close Order",
+        "Daemonic",
+        "Daemons of Khorne",
+        "Impetuous",
+        "Magic Resistance (-1)"
+      ]
+    },
+    "plaguebearers of nurgle": {
+      "stats": [
+        {
+          "Name": "Plaguebearer",
+          "M": "4",
+          "WS": "3",
+          "BS": "3",
+          "S": "4",
+          "T": "4",
+          "W": "1",
+          "I": "2",
+          "A": "1",
+          "Ld": "7"
+        },
+        {
+          "Name": "Plagueridden",
+          "M": "4",
+          "WS": "3",
+          "BS": "3",
+          "S": "4",
+          "T": "4",
+          "W": "1",
+          "I": "2",
+          "A": "2",
+          "Ld": "7"
+        }
+      ],
+      "troopType": "Heavy infantry",
+      "notes": [
+        "A Plagueridden may purchase Daemonic Gifts up to a total of 25 points"
+      ],
+      "baseSize": "30 x 30 mm",
+      "equipment": [
+        "Plagueswords (see page 35)"
+      ],
+      "specialRules": [
+        "Close Order",
+        "Daemonic",
+        "Daemons of Nurgle",
+        "Poisoned Attacks",
+        "Regeneration (6+)"
+      ]
+    },
+    "seekers of slaanesh": {
+      "stats": [
+        {
+          "Name": "Seeker",
+          "M": "-",
+          "WS": "4",
+          "BS": "3",
+          "S": "3",
+          "T": "3",
+          "W": "1",
+          "I": "5",
+          "A": "1",
+          "Ld": "7"
+        },
+        {
+          "Name": "Heartseeker",
+          "M": "-",
+          "WS": "4",
+          "BS": "3",
+          "S": "3",
+          "T": "3",
+          "W": "1",
+          "I": "5",
+          "A": "2",
+          "Ld": "7"
+        },
+        {
+          "Name": "Steed of Slaanesh",
+          "M": "9",
+          "WS": "3",
+          "BS": "-",
+          "S": "3",
+          "T": "-",
+          "W": "-",
+          "I": "5",
+          "A": "1",
+          "Ld": "-"
+        }
+      ],
+      "notes": [
+        "A Heartseeker may purchase Daemonic Gifts up to a total of 25 points"
+      ],
+      "troopType": "Light cavalry",
+      "baseSize": "30 x 60 mm",
+      "equipment": [],
+      "specialRules": [
+        "Armour Bane (1, Steed of Slaanesh only)",
+        "Counter Charge",
+        "Daemonic",
+        "Daemon of Slaanesh",
+        "Fast Cavalry",
+        "Open Order",
+        "Poisoned Attacks (Steed of Slaanesh only)",
+        "Skirmishers",
+        "Swiftstride"
+      ]
+    },
+    "hellflayer of slaanesh": {
+      "stats": [
+        {
+          "Name": "Hellflayer",
+          "M": "-",
+          "WS": "-",
+          "BS": "-",
+          "S": "4",
+          "T": "4",
+          "W": "4",
+          "I": "-",
+          "A": "-",
+          "Ld": "-"
+        },
+        {
+          "Name": "Exalted Alluress",
+          "M": "-",
+          "WS": "5",
+          "BS": "3",
+          "S": "3",
+          "T": "-",
+          "W": "-",
+          "I": "5",
+          "A": "2",
+          "Ld": "7"
+        },
+        {
+          "Name": "Daemonette Crew (x2)",
+          "M": "-",
+          "WS": "4",
+          "BS": "3",
+          "S": "3",
+          "T": "-",
+          "W": "-",
+          "I": "5",
+          "A": "1",
+          "Ld": "7"
+        },
+        {
+          "Name": "Steed of Slaanesh (x2)",
+          "M": "9",
+          "WS": "3",
+          "BS": "-",
+          "S": "3",
+          "T": "-",
+          "W": "-",
+          "I": "5",
+          "A": "1",
+          "Ld": "-"
+        }
+      ],
+      "troopType": "Light Chariot",
+      "baseSize": "100 x 60 mm",
+      "armourValue": "5+",
+      "equipment": [],
+      "specialRules": [
+        "Armour Bane (1, Steed of Slaanesh only)",
+        "Close Order",
+        "Counter Charge",
+        "Daemonic",
+        "Daemonic Charge (-1)",
+        "Daemon of Slaanesh",
+        "First Charge",
+        "Impact Hits (2D6+1)",
+        "Open Order",
+        "Poisoned Attacks (Steed of Slaanesh only)",
+        "Swiftstride"
+      ]
+    },
+    "seeker chariot of slaanesh": {
+      "stats": [
+        {
+          "Name": "Seeker Chariot",
+          "M": "-",
+          "WS": "-",
+          "BS": "-",
+          "S": "4",
+          "T": "4",
+          "W": "4",
+          "I": "-",
+          "A": "-",
+          "Ld": "-"
+        },
+        {
+          "Name": "Daemonette Crew (x2)",
+          "M": "-",
+          "WS": "4",
+          "BS": "3",
+          "S": "3",
+          "T": "-",
+          "W": "-",
+          "I": "5",
+          "A": "1",
+          "Ld": "7"
+        },
+        {
+          "Name": "Steed of Slaanesh (x2)",
+          "M": "9",
+          "WS": "3",
+          "BS": "-",
+          "S": "3",
+          "T": "-",
+          "W": "-",
+          "I": "5",
+          "A": "1",
+          "Ld": "-"
+        }
+      ],
+      "troopType": "Light Chariot",
+      "baseSize": "50 x 100 mm",
+      "armourValue": "5+",
+      "equipment": [],
+      "specialRules": [
+        "Armour Bane (1, Steed of Slaanesh only)",
+        "Counter Charge",
+        "Daemonic",
+        "Daemonic Charge (-1)",
+        "Daemon of Slaanesh",
+        "First Charge",
+        "Impact Hits (D3+1)",
+        "Open Order",
+        "Poisoned Attacks (Steed of Slaanesh only)",
+        "Swiftstride"
+      ],
+      "notes": [
+        "Character Mount: A Seeker Chariot of Slaanesh may be included in your army as a character’s mount. If so, its points are added to that of its rider."
+      ]
+    },
+    "burning chariot of tzeentch": {
+      "stats": [
+        {
+          "Name": "Burning Chariot",
+          "M": "-",
+          "WS": "-",
+          "BS": "-",
+          "S": "4",
+          "T": "4",
+          "W": "4",
+          "I": "-",
+          "A": "-",
+          "Ld": "-"
+        },
+        {
+          "Name": "Exalted Flamer",
+          "M": "-",
+          "WS": "2",
+          "BS": "5",
+          "S": "4",
+          "T": "-",
+          "W": "-",
+          "I": "4",
+          "A": "2",
+          "Ld": "7"
+        },
+        {
+          "Name": "Blue Horror Crew (x3)",
+          "M": "-",
+          "WS": "2",
+          "BS": "3",
+          "S": "3",
+          "T": "-",
+          "W": "-",
+          "I": "3",
+          "A": "1",
+          "Ld": "7"
+        },
+        {
+          "Name": "Screamer (x2)",
+          "M": "1",
+          "WS": "3",
+          "BS": "-",
+          "S": "4",
+          "T": "-",
+          "W": "-",
+          "I": "4",
+          "A": "2",
+          "Ld": "-"
+        }
+      ],
+      "troopType": "Heavy Chariot",
+      "baseSize": "50 x 100 mm",
+      "armourValue": "4+",
+      "equipment": [],
+      "specialRules": [
+        "Close Order",
+        "Daemonic",
+        "Daemon of Tzeentch",
+        "Fly (9)",
+        "Impact Hits (D6+1)",
+        "Lore of Daemons"
+      ]
+    },
+    "flesh hounds of khorne": {
+      "stats": [
+        {
+          "Name": "Flesh Hound",
+          "M": "8",
+          "WS": "5",
+          "BS": "0",
+          "S": "4",
+          "T": "4",
+          "W": "2",
+          "I": "4",
+          "A": "2",
+          "Ld": "7"
+        }
+      ],
+      "equipment": [
+        "Claws and fangs (counts as hand weapons), daemonic talons and brazen scales (counts as heavy armour)"
+      ],
+      "troopType": "Heavy cavalry",
+      "baseSize": "30 x 60 mm",
+      "specialRules": [
+        "Armour Bane (1)",
+        "Close Order",
+        "Counter Charge",
+        "Daemonic",
+        "Daemons of Khorne",
+        "Impetuous",
+        "Magic Resistance (-2)",
+        "Swiftstride"
+      ]
+    },
+    "great unclean one": {
+      "stats": [
+        {
+          "Name": "Great Unclean One",
+          "M": "6",
+          "WS": "6",
+          "BS": "3",
+          "S": "6",
+          "T": "7",
+          "W": "7",
+          "I": "4",
+          "A": "5",
+          "Ld": "9"
+        }
+      ],
+      "notes": [
+        "Magic: A Great Unclean One is a Level 3 Wizard. Every Great Unclean One knows spells from one of the following Lores of Magic:"
+      ]
+    },
+    "keeper of secrets": {
+      "stats": [
+        {
+          "Name": "Keeper of Secrets",
+          "M": "10",
+          "WS": "9",
+          "BS": "6",
+          "S": "6",
+          "T": "6",
+          "W": "6",
+          "I": "8",
+          "A": "6",
+          "Ld": "9"
+        }
+      ],
+      "equipment": [
+        "Hand weapon, Impaling claws (see below)"
+      ]
+    },
+    "fiends of slaanesh": {
+      "stats": [
+        {
+          "Name": "Fiend of Slaanesh",
+          "M": "8",
+          "WS": "4",
+          "BS": "0",
+          "S": "4",
+          "T": "4",
+          "W": "3",
+          "I": "6",
+          "A": "3",
+          "Ld": "7"
+        }
+      ],
+      "troopType": "Monstrous cavalry",
+      "baseSize": "50 x 75 mm",
+      "equipment": [
+        "Piercing claws (see page 35) and venomous tail (see below)"
+      ],
+      "specialRules": [
+        "Close Order",
+        "Daemonic",
+        "Daemons of Slaanesh",
+        "Soporific Musk",
+        "Swiftstride"
+      ],
+      "notes": [
+        "Note: In combat, this model may make one of its attacks each turn with this weapon."
+      ]
+    },
+    "lord of change": {
+      "stats": [
+        {
+          "Name": "Lord of Change",
+          "M": "6",
+          "WS": "6",
+          "BS": "6",
+          "S": "6",
+          "T": "6",
+          "W": "6",
+          "I": "6",
+          "A": "4",
+          "Ld": "9"
+        }
+      ],
+      "notes": [
+        "Magic: A Lord of Change is a Level 3 Wizard. Every Lord of Change knows spells from one of the following Lores of Magic:"
+      ]
+    },
+    "soul grinder": {
+      "stats": [
+        {
+          "Name": "Soul Grinder",
+          "M": "8",
+          "WS": "3",
+          "BS": "3",
+          "S": "6",
+          "T": "6",
+          "W": "6",
+          "I": "3",
+          "A": "4",
+          "Ld": "7"
+        }
+      ],
+      "equipment": [
+        "Hand weapon, iron claw (see below), harvester cannon (see below), Baleful torrent (see below), and daemonic flesh (counts as heavy armour full plate)"
+      ],
+      "notes": [
+        "May replace Baleful torrent with one of the following:",
+        "Notes: This Weapon shoots like a Stone Thrower, using the ‘Bombardment’ special rule and a 3” blast template. If a ‘Misfire’ is rolled on the Artillery dice, this model loses a single Wound (instead of rolling on a Misfire table). The Multiple Wounds (D3+1) special rule applies only to a single model whose base lies underneath the central hole of the blast template."
+      ],
+      "troopType": "Behemoth",
+      "baseSize": "150 x 100 mm",
+      "specialRules": [
+        "Close Order",
+        "Daemonic",
+        "Furious Charge",
+        "Large Target",
+        "Reserve Move",
+        "Stomp Attacks (D6+1)",
+        "Terror"
+      ]
+    },
+    "daemonic herald of nurgle": {
+      "troopType": "Heavy infantry (character)",
+      "notes": [
+        "Magic: A Herald of Nurgle is a Level 1 Wizard. A Herald of Nurgle that is a Wizard knows spells from one of the following Lores of Magic:"
+      ]
+    },
+    "screamers of tzeentch": {
+      "troopType": "War beasts Monstrous Cavalry"
+    },
+    "blood throne of khorne": {
+      "stats": [
+        {
+          "Name": "Blood Throne",
+          "M": "7",
+          "WS": "5",
+          "BS": "-",
+          "S": "5",
+          "T": "5",
+          "W": "4",
+          "I": "2",
+          "A": "3",
+          "Ld": "-"
+        },
+        {
+          "Name": "Bloodletter Crew (x2)",
+          "M": "-",
+          "WS": "5",
+          "BS": "3",
+          "S": "4",
+          "T": "-",
+          "W": "-",
+          "I": "4",
+          "A": "1",
+          "Ld": "7"
+        }
+      ],
+      "armourValue": "3+",
+      "troopType": "Heavy Chariot",
+      "baseSize": "50 x 100 mm",
+      "equipment": [],
+      "specialRules": [
+        "Close Order",
+        "Daemonic",
+        "Daemon of Khorne",
+        "First Charge",
+        "Gorefeast",
+        "Impact Hits (D6+1)",
+        "Impetuous",
+        "Totem of Endless Bloodletting"
+      ],
+      "notes": [
+        "Character Mount: A Blood Throne of Khorne may only be included in your army as a character’s mount. Its points are added to that of its rider."
+      ]
+    },
+    "palanquin of nurgle": {
+      "troopType": "Heavy Infantry",
+      "baseSize": "50 x 50 mm min, 60 x 60 mm max"
+    },
+    "exalted seeker chariot of slaanesh": {
+      "stats": [
+        {
+          "Name": "Exalted Seeker Chariot",
+          "M": "-",
+          "WS": "-",
+          "BS": "-",
+          "S": "4",
+          "T": "4",
+          "W": "5",
+          "I": "-",
+          "A": "-",
+          "Ld": "-"
+        },
+        {
+          "Name": "Daemonette Crew (x3)",
+          "M": "-",
+          "WS": "4",
+          "BS": "3",
+          "S": "3",
+          "T": "-",
+          "W": "-",
+          "I": "5",
+          "A": "1",
+          "Ld": "7"
+        },
+        {
+          "Name": "Steed of Slaanesh (x4)",
+          "M": "9",
+          "WS": "3",
+          "BS": "-",
+          "S": "3",
+          "T": "-",
+          "W": "-",
+          "I": "5",
+          "A": "1",
+          "Ld": "-"
+        }
+      ],
+      "specialRules": [
+        "Armour Bane (1, Steed of Slaanesh only)",
+        "Close Order",
+        "Counter Charge",
+        "Daemonic",
+        "Daemon of Slaanesh",
+        "First Charge",
+        "Impact Hits (D6+1)",
+        "Poisoned Attacks (Steed of Slaanesh only)"
+      ],
+      "troopType": "Heavy Chariot",
+      "baseSize": "100 x 150 mm",
+      "armourValue": "4+",
+      "equipment": [],
+      "notes": [
+        "Character Mount: An Exalted Seeker Chariot of Slaanesh may only be included in your army as a character’s mount. Its points are added to that of its rider."
+      ]
+    },
+    "disc of tzeentch": {
+      "stats": [
+        {
+          "Name": "Disc of Tzeentch",
+          "M": "1",
+          "WS": "3",
+          "BS": "-",
+          "S": "4",
+          "T": "(+1)",
+          "W": "-",
+          "I": "4",
+          "A": "3",
+          "Ld": "-"
+        }
+      ],
+      "troopType": "Light cavalry Monstrous Cavalry",
+      "baseSize": "50 x 50 mm",
+      "equipment": [
+        "Tentacles (counts as a hand weapon)"
+      ],
+      "specialRules": [
+        "Daemonic",
+        "Daemon of Tzeentch",
+        "Fly (10)",
+        "Swiftstride"
+      ]
+    },
+    "bloodthirster": {
+      "baseSize": "50 x 50 mm (min), 100 x 150 mm (max)",
+      "equipment": [
+        "Hand weapon, Lash of Khorne, and heavy armour daemonic flesh (counts as full plate)"
+      ],
+      "notes": [
+        "May replace their Lash of Khorne with one of the following:",
+        "Bloodflail (see below) 20 points • Great axe (see below) 35 points",
+        "Bloodflail | R S Combat S+2 | AP -2 | Special Rules Armour Bane (1), Multiple Wounds (D3) Notes: A Bloodflail’s Strength modifier and Armour Bane (1) special rule apply only against enemy models the wielder charged this turn. Great axe | R Combat | S S+2 | AP -3 | Special Rules Armour Bane (2), Monster Slayer, Killing Blow, Requires Two Hands, Strike Last | | | | | R | S | AP | Special Rules Lash of Khorne | Combat | S | -2 | Armour Bane (1), Extra Attack (1), Strike First"
+      ]
+    },
+    "daemonic herald of khorne": {
+      "equipment": [
+        "Hellblade (see page 35) and brazen scales (counts as heavy armour)"
+      ],
+      "notes": [
+        "*Note that this special rule does not apply to this model's mount (should it have one)."
+      ]
+    },
+    "juggernaut of khorne": {
+      "specialRules": [
+        "Armoured Hide (1)",
+        "Daemonic",
+        "Daemonic Charge (-2)",
+        "Daemon of Khorne",
+        "First Charge",
+        "Impact Hits (2)",
+        "Swiftstride"
+      ]
+    },
+    "bloodcrushers of khorne": {
+      "notes": [
+        "Bloodletters: Hellblades (see page 35) and brazen scales (counts as heavy armour) • Juggernauts of Khorne: Brass bound hooves (see below) and brazen hide (counts as barding)",
+        "A Bloodreaper may purchase Daemonic Gifts up to a total of 25 points"
+      ]
+    },
+    "skull cannon of khorne": {
+      "armourValue": "3+",
+      "notes": [
+        "First Charge, Impact Hits (D3+1), Impetuous, Magic Resistance (-1),",
+        "Notes: A Cannon of Khorne has two profiles, representing its two modes of firing. When firing solid shot, this weapon shoots like a cannon, using the ‘Cannon Fire’ special rule. If a ‘Misfire’ is rolled on the Artillery dice during step 2, this model loses a single Wound (instead of rolling on a Misfire table). When firing scatter shot, This weapon shoots like a cannon firing grape shot, using the ‘Needs More Nails’ special rule. If a ‘Misfire’ is rolled on the Artillery dice, this model loses a single Wound (instead of rolling on a Misfire table). This weapon does not have a 360 line of sight, it can only shoot into the Skull Cannon of Khorne’s front arc."
+      ]
+    },
+    "plague drones of nurgle": {
+      "notes": [
+        "A Plagueridden may purchase Daemonic Gifts up to a total of 25 points"
+      ]
+    },
+    "daemonic herald of slaanesh": {
+      "notes": [
+        "Magic: A Herald of Slaanesh is a Level 1 Wizard. A Herald of Slaanesh that is a Wizard knows spells from one of the following Lores of Magic:"
+      ]
+    },
+    "daemonettes of slaanesh": {
+      "notes": [
+        "An Alluress may purchase Daemonic Gifts up to a total of 25 points"
+      ]
+    },
+    "daemonic herald of tzeentch": {
+      "notes": [
+        "Locus of Change, Lore of Daemons"
+      ]
+    },
+    "pink horrors of tzeentch": {
+      "notes": [
+        "An Iridescent Horror may purchase Daemonic Gifts up to a total of 25 points"
+      ]
+    },
+    "daemon prince": {
+      "baseSize": "50 x 50 mm (min) to 60x60 mm (max)"
+    }
+  },
+  "magicItemText": {
+    "ther-blade": {
+      "body": "No armour saves are permitted against wounds caused by this Daemon’s hand weapon (Ward and Regeneration saves can be attempted as normal)."
+    },
+    "winged-horror": {
+      "body": "Daemonic Heralds whose troop type is ‘regular ‘infantry’ only. This model gains the Fly (8) and Swiftstride special rules."
+    },
+    "many-arms": {
+      "body": "0-2 per model. This model has a +1 modifier to its Attacks characteristic."
+    },
+    "chromatic-tome": {
+      "body": "0-1 per Wizard. The owner of a Chromatic Tome knows one more spell (chosen in the usual way) than is normal for their Level of Wizardry.\n\nNote that this does not increase the Wizard's Level.\n\nChaotic Icons\n\nThe following Daemonic Icons can be purchased by any Daemon, regardless of their Daemonic Alignment:"
+    },
+    "exalted-locus": {
+      "body": "Daemonic Locus only. The Herald’s Special Rule (Locus of Wrath, Locus of Fecundity, Locus of Swiftness, or Locus of Change) affects all friendly units in Command range with the same Daemonic Alignment.\n\nBanner Of"
+    },
+    "unholy-victory": {
+      "body": "When calculating its combat result, a unit carrying the Banner of Unholy Victory may claim an additional bonus of +D3 combat result points."
+    },
+    "chaotic-glory": {
+      "body": "Models within a unit carrying the Standard Of\n\nChaotic Glory improve their Leadership characteristic by 1 (to a maximum of 10).\n\nGifts Of Khorne\n\nThe following Daemonic Gifts can only be purchased by Daemons of Khorne:"
+    },
+    "spell-eater": {
+      "body": "This model may be nominated to attempt a Wizardly Dispel, as if it were a Wizard. For the purposes of Wizardly Dispel attempts, this model counts as a Level 3 Wizard."
+    },
+    "armour-of-khorne": {
+      "body": "The Armour of Khorne gives its wearer an armour value of 3+, which cannot be improved in any way. is a suit of heavy armour . In addition, its wearer has a 5+ Ward save against any wounds suffered."
+    },
+    "axe-of-khorne": {
+      "body": "R S AP Special Rules\n\nCombat S+1 -2 Killing Blow, Magical Attacks,\n\nRequires Two Hands"
+    },
+    "skull-totem": {
+      "body": "A unit carrying the Skull Totem (but not its mounts) gains the Furious Charge special rule. During a turn in which it charged, models within a unit carrying the Skull Totem improve the Armour Piercing characteristic of their weapons by 1, and may re-roll any rolls To Wound of a natural 1. Great Standard Of Sundering 45 points\n\nAny enemy Wizard that can draw a line of sight to the model carrying the Great Standard of Sundering suffers a -1 modifier to any Casting roll it makes."
+    },
+    "icon-of-endless-war": {
+      "body": "When a unit carrying the Banner of Rage Icon Of Endless War declares a charge, it may re-roll its Charge roll.\n\nGifts Of Nurgle\n\nThe following Daemonic Gifts can only be purchased by Daemons of Nurgle:"
+    },
+    "trappings-of-nurgle": {
+      "body": "The Trappings of Nurgle is a suit of armour that gives its wearer an armour value of 4+ which cannot be improved in any way. In addition, a Wizard with this Gift of Nurgle may wear armour without penalty\n\nIcons Of Nurgle\n\nThe following Daemonic Icons can only be purchased by Daemons of Nurgle:"
+    },
+    "rotten-icon": {
+      "body": "Enemy units cannot claim any bonus combat result points for being engaged within the flank or rear arc. of a unit carrying the Rotten Icon.\n\nGifts Of Slaanesh\n\nThe following Daemonic Gifts can only be purchased by Daemons of Slaanesh:"
+    },
+    "infernal-enrapturess": {
+      "body": "Daemonic Heralds whose troop type is ‘infantry’ only. Whilst within this character’s Command range, friendly Daemons\n\nof Slaanesh that are also Wizards (not including this model) may apply a +1 modifier to any Casting roll they make. Whilst within this character’s Command range, enemy Wizards suffer a -1 modifier to any Casting roll they make."
+    },
+    "siren-song": {
+      "body": "Single use. At the start of your opponent’s Declare Charges & Charge Reactions sub-phase, nominate a single enemy unit that is able to declare a charge against this model (or its unit) within 6”. That enemy unit must make a Leadership test. If this test is passed, the unit may act as normal. However, if this test is failed, it must declare a charge against this model (or its unit)."
+    },
+    "enrapturing-gaze": {
+      "body": "Enemy models units engaged in combat with this model cannot use the Inspiring Presence special rule of their General.\n\nIcons Of Slaanesh\n\nThe following Daemonic Icons can only be purchased by Daemons of Slaanesh:"
+    },
+    "banner-of-acquiescence": {
+      "body": "A single enemy unit engaged in combat with the bearer of the Banner of Acquiescence suffers a -D3 modifier to its Weapon Skill and Initiative characteristics (to a minimum of 1)."
+    },
+    "icon-of-the-eternal-dance": {
+      "body": "Enemy units may not make Stomp Attacks against a unit carrying the Icon of the Eternal Dance."
+    },
+    "siren-standard": {
+      "body": "If an enemy unit charged by a unit carrying the Siren Standard wishes to Flee (or Fire & Flee) as a charge reaction, it must first make a Leadership test. If this test is passed, the unit may Flee (or Fire & Flee). However, if this test is failed, the unit must Hold.\n\nGifts Of Tzeentch\n\nThe following Daemonic Gifts can only be purchased by Daemons of Tzeentch:"
+    },
+    "will-of-tzeentch": {
+      "body": "Once per round, this model may re-roll a single D6. This may be a D6 rolled on its own, as part of a batch of dice, or as part of a multiple dice roll."
+    },
+    "iridescent-corona": {
+      "body": "Any enemy model that targets this model or a unit it has joined, during the Shooting phase suffers an additional -1 To Hit modifier."
+    },
+    "twin-heads": {
+      "body": "Lord of Change only. This model knows spells from two Lores of Magic, rather than the usual one. When choosing the spells that the Lord of Change knows you may discard one spell as normal, replacing it with the signature spell of either Lore of Magic, or with a single Daemons of Tzeentch spell from the Lore of Daemons.\n\nThis model knows one more spell (chosen in the usual way) than is normal for their Level of Wizardry.\n\nNote that this does not increase the Wizard’s Level.\n\nIcons Of Tzeentch\n\nThe following Daemonic Icons can only be purchased by Daemons of Tzeentch:"
+    },
+    "banner-of-discord": {
+      "body": "A unit carrying the Banner of Discord gains the Magic Resistance (-3) special rule. In addition, friendly units within 6\" of the model carrying this standard gain the Magic Resistance (-1) special rule."
+    },
+    "icon-of-sorcery": {
+      "body": "Pink Horrors only. When a unit carrying the Icon of Sorcery casts Pink Fire from the Lore of Daemons, the Strength of these hits is increased by +1, and their Armour Piercing characteristic is improved by -1, for each point of the casting unit's current Rank Bonus. does so with a power level equal to twice its Rank Bonus."
+    },
+    "a-unit-carrying-the-skull-totem-but-not-its-mounts-gains-the-furious-charge-special-rule-during-a-turn-in-which-it-charged-models-within-a-unit-carrying-the-skull-totem-improve-the-armour-piercing-characteristic-of-their-weapons-by-1-and-may-re-roll-any-rolls-to-wound-of-a-natural-1-great-standard-of-sundering": {
+      "body": "Any enemy Wizard that can draw a line of sight to the model carrying the Great Standard of Sundering suffers a -1 modifier to any Casting roll it makes."
+    }
+  },
+  "lores": {
+    "lore-of-daemons": {
+      "name": "Lore of Daemons",
+      "spells": [
+        {
+          "slug": "spell-plague-wind",
+          "name": "Plague Wind",
+          "number": null,
+          "signature": true
+        },
+        {
+          "slug": "spell-blue-fire",
+          "name": "Blue Fire (Daemons Of Tzeentch)",
+          "number": null,
+          "signature": true
+        },
+        {
+          "slug": "spell-pink-fire",
+          "name": "Pink Fire",
+          "number": null,
+          "signature": true
+        },
+        {
+          "slug": "spell-gift-of-mutation",
+          "name": "Gift of Mutation",
+          "number": null,
+          "signature": true
+        }
+      ]
+    }
+  },
+  "notes": [],
+  "composition": {
+    "sourceRules": {
+      "Characters": [
+        "0-1 Greater Daemon (of Khorne, Nurgle, Slaanesh or Tzeentch) per 1,000 points and per unit with the same Daemonic Alignment. • 0-1 Daemonic Herald of Khorne, Nurgle, Slaanesh or Tzeentch per unit with the same Daemonic Alignment • 0-1 Daemon Prince per 1,000 points"
+      ],
+      "Core": [
+        "Bloodletters, Plaguebearers, Daemonettes, Pink Horrors, Chaos Furies",
+        "If your General is a \"Daemon of X\" the following may be taken as core:",
+        "Khorne: Flesh Hounds • Nurgle: Nurglings • Slaanesh: Seekers • Tzeentch: Blue Horrors and Brimstone Horrors"
+      ],
+      "Special": [
+        "Flesh Hounds, Bloodcrushers • Nurglings, Beasts of Nurgle • Seekers of Slaanesh, Fiends of Slaanesh, Seeker Chariot of Slaanesh • Blue Horrors, Brimstone Horrors, Screamers of Tzeentch, Flamers of Tzeentch",
+        "If your General is a \"Daemon of X\" 0-1 of the following may be taken in Special:",
+        "Khorne: Soul Grinder (Daemon of Khorne Only) • Nurgle: Plague Drones • Slaanesh: Hellflayers • Tzeentch: Burning Chariots"
+      ],
+      "Rare": [
+        "0-1 Skull Cannon of Khorne per 1,000 points • Plague Drones • Hellflayers • Burning Chariots • Soul Grinders"
+      ],
+      "Battle Standard Bearer": [
+        "A single Daemonic Herald in your army may be upgraded to be your Battle Standard for +25 points. A Daemonic Herald that has been upgraded to be your Battle Standard replaces the “Hold your Ground” rule with the ‘Daemonic Locus’ special rule (see page 32). In addition to their usual allowance of points to spend on Daemonic Gifts, a Daemonic Locus can purchase a single Daemonic Icon with no points limit."
+      ],
+      "Allies": [
+        "Allies",
+        "Up to 25% of your army’s points value may be spent on a single allied contingent drawn from one of the following Grand Army composition lists:",
+        "Beastmen Brayherds • Dark Elves • Chaos Dwarfs • Warriors of Chaos • Skaven (Suspicious)",
+        "Daemons of Chaos Allies In addition to the Allies listed in Ravening Hordes, armies made using the Beastmen Brayherds, or Warriors of Chaos Grand Army compositions may include an Allied Contingent drawn from the Daemons of Chaos Legacy Army composition list"
+      ]
     }
   }
 }

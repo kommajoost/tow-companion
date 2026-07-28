@@ -12,7 +12,35 @@
   },
   "status": "draft",
   "scope": "points-and-rules",
+  "inheritsComposition": "sk-renegade",
   "units": {
+    "clanrats": {
+      "_changed": [
+        "command",
+        "options"
+      ],
+      "options": [
+        {
+          "group": "command",
+          "name_en": "Standard bearer",
+          "option": {
+            "magic": {
+              "types": [
+                "banner"
+              ],
+              "maxPoints": 50
+            }
+          }
+        },
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "magic standard worth up to",
+          "points": 50,
+          "perModel": false
+        }
+      ]
+    },
     "grey-seer": {
       "points": 155,
       "_was": 185,
@@ -24,8 +52,10 @@
       "points": 120,
       "_was": 90,
       "_changed": [
-        "points"
-      ]
+        "points",
+        "special-rules"
+      ],
+      "specialRules": "Ambushers, Eshin Infiltration, Evasive, Feigned Flight, Fire & Flee, Hidden, Move through Cover, Poisoned Attacks, Scurry Away, Verminous Valour, Warpstone Weapons, Strikes First, Dodge"
     },
     "stormvermin": {
       "points": 9,
@@ -38,15 +68,39 @@
       "points": 40,
       "_was": 48,
       "_changed": [
-        "points"
+        "points",
+        "special-rules",
+        "options"
+      ],
+      "specialRules": "Close Order, Armour Bane (2), Fear, Frenzy, Horde, Scurry Away, Warband, Scurrying Masses, Warpstone Weapons, Motley Crew",
+      "options": [
+        {
+          "group": "command",
+          "name_en": "Master Moulder (champion)",
+          "points": 20,
+          "_was": 7,
+          "action": "patch",
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "Packmaster for every two Rat Ogres",
+          "points": 5,
+          "perModel": true
+        }
       ]
     },
     "plague-censer-bearers": {
       "points": 16,
       "_was": 13,
       "_changed": [
-        "points"
-      ]
+        "points",
+        "unit-size",
+        "special-rules"
+      ],
+      "minimum": 5,
+      "specialRules": "Frenzy, Scurry Away, Skirmishers, Stubborn, Warband, Hatred (all enemies), Detachment, Plague Disciples"
     },
     "warplock-jezzails": {
       "points": 15,
@@ -61,7 +115,213 @@
           "group": "equipment",
           "name_en": "Hand weapons, Warpfire Thrower",
           "points": 40,
-          "_was": 60
+          "_was": 60,
+          "action": "patch",
+          "perModel": true
+        },
+        {
+          "group": "equipment",
+          "action": "patch",
+          "name_en": "Hand weapons, Doom-flayer",
+          "points": 40,
+          "perModel": true
+        },
+        {
+          "group": "equipment",
+          "action": "patch",
+          "name_en": "Hand weapons, Poisoned Wind Mortar",
+          "points": 55,
+          "perModel": true
+        },
+        {
+          "group": "equipment",
+          "action": "patch",
+          "name_en": "Hand weapons, Ratling Gun",
+          "points": 50,
+          "perModel": true
+        },
+        {
+          "group": "equipment",
+          "action": "patch",
+          "name_en": "Hand weapons, Warp Grinder",
+          "points": 30,
+          "perModel": true
+        }
+      ],
+      "_changed": [
+        "options",
+        "special-rules"
+      ],
+      "specialRules": "Loner, Skirmish, Scurry Away, Detachment"
+    },
+    "poisoned-wind-globadiers": {
+      "specialRules": "Scurry Away, Skirmishers, Warband, Life is Cheap",
+      "_changed": [
+        "special-rules"
+      ]
+    },
+    "giant-rats": {
+      "specialRules": "Close Order, Open Order, Fight in Extra Rank, Horde, Scurry Away, Warband, Motley Crew",
+      "_changed": [
+        "special-rules",
+        "command",
+        "options"
+      ],
+      "options": [
+        {
+          "group": "command",
+          "name_en": "Master Moulder (champion)",
+          "points": 20,
+          "_was": 7,
+          "action": "patch",
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "Packmaster for every three Giant Rats",
+          "points": 5,
+          "perModel": true
+        }
+      ]
+    },
+    "night-runners": {
+      "specialRules": "Evasive, Fire & Flee, Scurry Away, Skirmishers, Vanguard, Regimental Unit",
+      "_changed": [
+        "special-rules",
+        "options"
+      ],
+      "options": [
+        {
+          "group": "command",
+          "action": "patch",
+          "name_en": "Nightleader",
+          "points": 6,
+          "perModel": false
+        }
+      ]
+    },
+    "gutter-runners": {
+      "specialRules": "Evasive, Feigned Flight, Fire & Flee, Move through Cover, Scouts, Scurry Away, Skirmishers, Poisoned Attacks",
+      "_changed": [
+        "special-rules"
+      ]
+    },
+    "plague-monks-core": {
+      "specialRules": "Close Order, Frenzy, Horde, Scurry Away, Warband, Regimental Unit",
+      "_changed": [
+        "special-rules"
+      ]
+    },
+    "plague-monks": {
+      "specialRules": "Close Order, Frenzy, Horde, Scurry Away, Warband, Regimental Unit",
+      "_changed": [
+        "special-rules"
+      ]
+    },
+    "doomwheel": {
+      "specialRules": "Close Order, Crushing Bulk, Immune to Psychology, Impact Hits (D6+1), Large Target, Random Attacks (Rats only), Random Movement, Stomp Attacks (D3)",
+      "_changed": [
+        "special-rules"
+      ]
+    },
+    "skaven-dregs": {
+      "minimum": 20,
+      "maximum": 20,
+      "_changed": [
+        "unit-size",
+        "special-rules",
+        "options"
+      ],
+      "specialRules": "Close Order, Levies, Horde, Scurry Away, Expendable, Cornered Rats, Loner",
+      "options": [
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Spears",
+          "points": 1,
+          "perModel": true
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Shields",
+          "points": 1,
+          "perModel": true
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Slings",
+          "points": 1,
+          "perModel": true
+        },
+        {
+          "group": "command",
+          "action": "patch",
+          "name_en": "Packmaster",
+          "points": 5,
+          "perModel": true
+        },
+        {
+          "group": "command",
+          "action": "upsert",
+          "name_en": "Upgrade one Packmaster to a Master Moulder (champion)",
+          "points": 20,
+          "perModel": false
+        },
+        {
+          "group": "command",
+          "action": "patch",
+          "name_en": "Musician",
+          "points": 2,
+          "perModel": false
+        }
+      ]
+    },
+    "warlock-engineer": {
+      "options": [
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Level 1 Wizard",
+          "points": 30,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Level 2 Wizard",
+          "points": 60,
+          "perModel": false
+        },
+        {
+          "group": "equipment",
+          "action": "patch",
+          "name_en": "Hand weapon, Warplock musket",
+          "points": 9,
+          "perModel": false
+        },
+        {
+          "group": "equipment",
+          "action": "patch",
+          "name_en": "Hand weapon, Warplock pistol",
+          "points": 6,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "Doomrocket (0-1 Per Army)",
+          "points": 35,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "Warlock Optics",
+          "points": 10,
+          "perModel": false
         }
       ],
       "_changed": [
@@ -69,7 +329,248 @@
       ]
     }
   },
-  "magicItems": {},
+  "addedUnits": {
+    "core": [
+      {
+        "id": "skaven-dregs",
+        "name_en": "Skaven Dregs",
+        "points": 2,
+        "minimum": 20,
+        "maximum": 40,
+        "command": [
+          {
+            "name_en": "Packmaster",
+            "points": 5,
+            "minimum": 0,
+            "maximum": 0
+          },
+          {
+            "name_en": "Master Moulder",
+            "points": 20,
+            "minimum": 0,
+            "maximum": 0,
+            "magic": {
+              "types": [
+                "weapon",
+                "armor",
+                "talisman",
+                "enchanted-item"
+              ],
+              "maxPoints": 25
+            }
+          },
+          {
+            "name_en": "Musician",
+            "points": 2
+          }
+        ],
+        "equipment": [
+          {
+            "name_en": "Hand weapons",
+            "points": 0,
+            "perModel": true,
+            "active": true
+          }
+        ],
+        "armor": [],
+        "options": [
+          {
+            "name_en": "Spears",
+            "points": 1,
+            "perModel": true
+          },
+          {
+            "name_en": "Shields",
+            "points": 1,
+            "perModel": true
+          },
+          {
+            "name_en": "Slings",
+            "points": 1,
+            "perModel": true
+          }
+        ],
+        "mounts": [],
+        "items": [],
+        "lores": [],
+        "specialRules": {
+          "name_en": "Close Order, Levies, Horde, Scurry Away, Expendable, Cornered Rats, Loner"
+        }
+      }
+    ]
+  },
+  "magicItems": {
+    "skaven": [
+      {
+        "name_de": "Die Fellklinge",
+        "name_en": "The Fellblade",
+        "name_cn": "堕落之刃",
+        "name_es": "La hoja caída",
+        "name_fr": "Lame Fatale",
+        "name_it": "The Fellblade",
+        "points": 100,
+        "type": "weapon",
+        "onePerArmy": true,
+        "name": "the fellblade"
+      },
+      {
+        "name_de": "Weinende Klinge",
+        "name_en": "Weeping Blade",
+        "name_cn": "悲泣之刃",
+        "name_es": "Hoja llorona",
+        "name_fr": "Lame Suintante",
+        "name_it": "Weeping Lama",
+        "points": 40,
+        "type": "weapon",
+        "onePerArmy": true,
+        "name": "weeping blade"
+      },
+      {
+        "name_de": "Klinge von Nurglitch",
+        "name_en": "Blade Of Nurglitch",
+        "name_cn": "纳垢里奇之刃",
+        "name_es": "Hoja de Nurglitch",
+        "name_fr": "Lame de Nurglitch",
+        "name_it": "Lama of Nurglitch",
+        "points": 15,
+        "type": "weapon",
+        "onePerArmy": true,
+        "name": "blade of nurglitch"
+      },
+      {
+        "name_de": "Todesglobus*",
+        "name_en": "Death Globe",
+        "name_cn": "死亡之球*",
+        "name_es": "Globo de la muerte*",
+        "name_fr": "Sphère de Mort*",
+        "name_it": "Death Globe*",
+        "points": 25,
+        "stackable": true,
+        "type": "weapon",
+        "onePerArmy": false,
+        "name": "death globe"
+      },
+      {
+        "name_de": "Warpstein-Rüstung*",
+        "name_en": "Warpstone Armour",
+        "name_cn": "次元石铠甲*",
+        "name_es": "Armadura de piedra bruja*",
+        "name_fr": "Armure d’Éclats de Malepierre*",
+        "name_it": "Warpstone Armour*",
+        "points": 15,
+        "stackable": true,
+        "type": "armor-mages",
+        "onePerArmy": false,
+        "name": "warpstone armour"
+      },
+      {
+        "name_de": "Sturmbanner",
+        "name_en": "Storm Banner",
+        "name_cn": "风暴旗",
+        "name_es": "Estandarte de tormenta",
+        "name_fr": "Bannière d’Orage",
+        "name_it": "Storm Banner",
+        "points": 75,
+        "type": "banner",
+        "onePerArmy": true,
+        "name": "storm banner"
+      },
+      {
+        "name_de": "Großes Banner der Überlegenheit",
+        "name_en": "Grand Banner Of Superiority",
+        "name_cn": "氏族优势旗帜",
+        "name_es": "Gran Estandarte de Superioridad",
+        "name_fr": "Bannière de Supériorité",
+        "name_it": "Grand Banner of Superiority",
+        "points": 40,
+        "type": "banner",
+        "onePerArmy": true,
+        "name": "grand banner of superiority"
+      },
+      {
+        "name_en": "A unit carrying the Banner of Verminous Scurrying gains the Swiftstride special rule. Plague Banner",
+        "name": "a unit carrying the banner of verminous scurrying gains the swiftstride special rule plague banner",
+        "points": 30,
+        "type": "banner",
+        "onePerArmy": true
+      },
+      {
+        "name_de": "Banner des Ungezieferhuschens",
+        "name_en": "Banner Of Verminous Scurrying",
+        "name_cn": "灾祸肆虐旗帜",
+        "name_es": "Estandarte de escurrimientos verminosos",
+        "name_fr": "Bannière de Vivacité Vermineuse",
+        "name_it": "Banner of Verminous Scurrying",
+        "points": 35,
+        "type": "banner",
+        "onePerArmy": true,
+        "name": "banner of verminous scurrying"
+      },
+      {
+        "name_de": "Messingkugel",
+        "name_en": "Brass Orb",
+        "name_cn": "黄铜球",
+        "name_es": "Orbe de latón",
+        "name_fr": "Orbe d’Airain",
+        "name_it": "Brass Orb",
+        "points": 50,
+        "type": "enchanted-item",
+        "onePerArmy": true,
+        "name": "brass orb"
+      },
+      {
+        "name_de": "Skalm",
+        "name_en": "Skalm",
+        "name_cn": "药膏",
+        "name_es": "Skálm",
+        "name_fr": "Skataplasme",
+        "name_it": "Skalm",
+        "points": 35,
+        "type": "enchanted-item",
+        "onePerArmy": true,
+        "name": "skalm"
+      },
+      {
+        "name_de": "Sturmdämon",
+        "name_en": "Storm Daemon",
+        "name_cn": "风暴恶魔",
+        "name_es": "Demonio de la tormenta",
+        "name_fr": "Orbe des Tempêtes",
+        "name_it": "Storm Daemon",
+        "points": 40,
+        "type": "arcane-item",
+        "onePerArmy": true,
+        "name": "storm daemon"
+      },
+      {
+        "name_de": "Warpstein-Token*",
+        "name_en": "Warpstone Tokens",
+        "name_cn": "次元石块*",
+        "name_es": "Fichas de piedra bruja*",
+        "name_fr": "Fragments de Malepierre*",
+        "name_it": "Warpstone Tokens*",
+        "points": 15,
+        "stackable": true,
+        "type": "arcane-item",
+        "onePerArmy": false,
+        "name": "warpstone tokens"
+      },
+      {
+        "name_en": "May purchase Warlock Optics (see below) +10 points • May purchase magic items up to a total of",
+        "name": "may purchase warlock optics see below 10 points may purchase magic items up to a total of",
+        "points": 50,
+        "type": "enchanted-item",
+        "onePerArmy": true
+      },
+      {
+        "name_en": "May purchase magic items up to a total of",
+        "name": "may purchase magic items up to a total of",
+        "points": 75,
+        "type": "enchanted-item",
+        "onePerArmy": true
+      }
+    ]
+  },
   "rules": {
     "expendable": {
       "name_en": "Expendable",
@@ -104,6 +605,808 @@
         "Note that this may not be combined with any leadership bonus provided by Warband or the Inspiring Presence special rule."
       ],
       "overrides": "scurrying-masses"
+    },
+    "cornered-rats": {
+      "name_en": "Cornered Rats",
+      "body": [
+        "Should a unit of Skaven Dregs break and flee from combat, treat it as completely destroyed and remove it from play. If it contains ten or more models, before removing it every unit within 2D6\" suffers D3 Strength 3 hits. For every additional five Dregs above five, add +1 to the D3, to a maximum of +3. Opponents that were engaged may then restrain and reform, or overrun."
+      ],
+      "overrides": null
+    },
+    "leader-of-the-pack": {
+      "name_en": "Leader of the Pack",
+      "body": [
+        "Models with this special rule can only be taken as part of a unit of Dregs, Rat Ogres or Giant Rats. They may be positioned behind the front rank.",
+        "A Master Moulder may move through the ranks as if it were a character and may issue and accept challenges even when it is not within the fighting rank."
+      ],
+      "overrides": null
+    },
+    "doomrocket": {
+      "name_en": "Doomrocket",
+      "body": [],
+      "weaponProfile": {
+        "range": "36”",
+        "strength": "5(10)",
+        "ap": "-2",
+        "specialRules": "Bombardment, Multiple Wounds (D3+1)"
+      },
+      "overrides": null
+    },
+    "doom-flayer": {
+      "name_en": "Doom-flayer",
+      "body": [],
+      "weaponProfile": {
+        "range": "Combat",
+        "strength": "4",
+        "ap": "-1",
+        "specialRules": "Counter Charge, Extra Attacks (D6),, Impact Hits (D6+1), Swiftstride"
+      },
+      "overrides": "doom-flayer"
+    },
+    "billowing-death": {
+      "name_en": "Billowing Death",
+      "body": [],
+      "weaponProfile": {
+        "range": "N/A",
+        "strength": "N/A",
+        "ap": "N/A",
+        "specialRules": "Breath Weapon, Magical Attacks"
+      },
+      "overrides": "billowing-death"
+    },
+    "poisoned-wind": {
+      "name_en": "Poisoned Wind",
+      "body": [
+        "When a model using a weapon with this special rule makes a roll To Wound, a roll of 5+ is always a success, even if the target's Toughness is so high that the weapon would not normally be able to wound it. Finally, no armour save is permitted against wounds caused by a weapon with this special rule (Ward and Regeneration saves can be attempted as normal).",
+        "Note that models wielding weapons that have this special rule are immune to this special rule."
+      ],
+      "overrides": "poisoned-wind"
+    },
+    "warpstone-weapons": {
+      "name_en": "Warpstone Weapons",
+      "body": [
+        "A hand weapon carried by a model with this special rule has the Magical Attacks special rule and an Armour Piercing characteristic of -1.",
+        "Note that this special rule only applies to a single, ordinary hand weapon. If the model is using two hand weapons or any other sort of weapon, this special rule ceases to apply.",
+        "Skaven Misfire table:",
+        "1 | Whoompff! All of the unit’s ammunition detonates prematurely. All friendly and enemy units within 3” suffer D3 hits using this weapon’s profile. Once resolved, this unit is removed. 2-5 | Wildly off Target. The unit loses control of its weapon. Roll the scatter dice. Resolve the weapon’s attacks against the first unit within range and line of sight (friend or foe) in the direction of the arrow (including a Hit). If a further Misfire is rolled, this unit is removed. 6 | Pppphhtt! The weapon does not fire this turn."
+      ],
+      "overrides": "warpstone-weapons"
+    },
+    "warlock-optics": {
+      "name_en": "Warlock Optics",
+      "body": [
+        "This model has a +1 modifier to their Ballistic Skill characteristic and the Ignores Cover special rule."
+      ],
+      "overrides": null
+    },
+    "dodge": {
+      "name_en": "Dodge",
+      "body": [
+        "This model has a 5+ Ward Save."
+      ],
+      "overrides": null
+    },
+    "eshin-infiltration": {
+      "name_en": "Eshin Infiltration",
+      "body": [
+        "When a friendly unit of Night Runners or Gutter Runners with the Ambushers special rule arrives from reserve, it can be placed on the battlefield anywhere completely within 12\" of a revealed Master Assassin, but not within 6\" of any enemy models (rather than entering the battle as reinforcements). The unit cannot charge during this turn and counts as having moved for the purposes of shooting, but can otherwise act as normal.",
+        "Note that this character cannot use this special rule whilst it remains hidden."
+      ],
+      "overrides": "eshin-infiltration"
+    },
+    "r-s-ap-special-rules": {
+      "name_en": "R S AP Special Rules",
+      "body": [
+        "Plague censer Combat S+2 -1 Poisoned Attacks, Requires Two Hands Notes: A Plague censer’s Strength modifier applies only against enemy models the wielder charged this turn. In addition, during the Combat phase, a model armed with a plague censer may re-roll any rolls To Wound of a natural 1."
+      ],
+      "overrides": null
+    },
+    "wind-mortar-move-or-shoot-poisoned-wind": {
+      "name_en": "Wind mortar Move or Shoot, Poisoned Wind",
+      "body": [
+        "Notes: This weapon shoots like a stone thrower, using the ‘Bombardment’ special rule, a 3\" blast template and the Skaven Misfire table."
+      ],
+      "overrides": null
+    },
+    "pavise": {
+      "name_en": "Pavise",
+      "body": [
+        "A pavise is a large, heavy shield, anchored to the ground by iron spikes.",
+        "A pavise gives its wielder a 4+ armour value against attacks made by enemy models that lie within the wielder’s front arc. However, a pavise offers no protection to its wielder against attacks made by enemy models that lie within the wielder’s flank or rear arcs."
+      ],
+      "overrides": "pavise"
+    },
+    "plague-disciples": {
+      "name_en": "Plague Disciples",
+      "body": [
+        "When used as a detachment, Models with this special rule may only be taken as a detachment for a regiment of Plague Monks."
+      ],
+      "overrides": null
+    },
+    "blessings-of-the-horned-rat": {
+      "name_en": "Blessings Of The Horned Rat",
+      "body": [
+        "This model has a 5+ Ward save against any wounds suffered. In addition, auy unit joined by the Screaming Bell gains the Stubborn special rule."
+      ],
+      "overrides": "blessings-of-the-horned-rat"
+    },
+    "tolling-the-bell": {
+      "name_en": "Tolling The Bell",
+      "body": [
+        "A Screaming Bell may be rung during the Command sub-phase of your turn. Roll on the table below to determine the effect this has. Any double rolled except for double 1 and double 6 results in a “Magical Backlash” in addition to any other effects."
+      ],
+      "overrides": "tolling-the-bell"
+    },
+    "tolling-the-bell-table": {
+      "name_en": "Tolling The Bell Table",
+      "body": [
+        "2 | Magical Backlash: The Screaming Bell and every unit (friend or foe) that is within 3” suffers D3 wounds, each with an AP of -1 3 and 4 | Emboldened: Until your next Start of Turn sub-phase, all friendly units within this model's Command range may re-roll any Leadership tests including Break tests. 5 and 6 | Unholy Clamour: Any friendly unit that is within this model's Command range during the Declare Charges & Charge Reactions sub-phase of this turn increases its maximum possible charge range by 3\" and, when it makes a Charge roll, may apply a +D3 modifier to the result. 7 | Deafening Peals: All enemy models within 24” of this model with Toughness 6 or more suffer D3 wounds. Armour saves may be taken as normal. 8 and 9 | Resonant Power: Until the end of this turn, all friendly Skaven Wizards within this model's Command range may apply a +1 modifier to any Casting roll they make. 10 and 11 | Rapturous Ringing: Until your next Start of Turn sub-phase, all friendly Skaven units within this model's Command range gain the Extra Attacks (+1) special rule. 12 | Sonorous Knell: Any enemy unit that is within this model's Command range, including units that are fleeing or that are engaged in combat, must make a Leadership test. If this test is failed, the unit suffers D3+3 wounds, with no armour save permitted (Ward and Regeneration saves can be attempted as normal)",
+        "Character Mount: A Screaming Bell may only be included in your army as a character’s mount. Its points are added to that of its rider. The rider of a Screaming Bell may not use Verminous Valour. This unit may only use the Pushed into Battle special rule to join a unit of Clanrats or Stormvermin."
+      ],
+      "overrides": null
+    },
+    "great-censer": {
+      "name_en": "Great Censer",
+      "body": [
+        "Stomp Attacks made by a Plague Furnace represent the Great Censer being let loose to swing into the enemy with devastating effect. Any Stomp Attacks made by a Plague Furnace have an Armour Piercing characteristic of -2.",
+        "In addition, whilst within 6\" of one or more models with this special rule, the noxious fumes billowing from the Great Censer cause enemy units to suffer a -1 modifier to their Toughness characteristic (to a minimum of 1)."
+      ],
+      "overrides": "great-censer"
+    },
+    "crushing-bulk": {
+      "name_en": "Crushing Bulk",
+      "body": [
+        "Any Stomp Attacks made by a Doom Wheel have an Armour Piercing characteristic of",
+        "-2. In addition, the first time in the game that any enemy unit suffers Impact Hits from this model, the enemy unit becomes Disrupted until the end of the current Combat phase."
+      ],
+      "overrides": "crushing-bulk"
+    },
+    "multiple-wounds-d3": {
+      "name_en": "Multiple Wounds (D3)",
+      "body": [
+        "Notes: This weapon does not fire normally. Instead, it shoots using the ‘Zzzzap!’ special rule.",
+        "Zzzzap!",
+        "In each friendly Shooting Phase, even when engaged in close combat, the Doomwheel automatically shoots Warp Lightning Bolts 3 times. However, the controlling player may attempt to prevent the Doomwheel from shooting this turn by passing a Leadership Test using the Warlock’s Leadership characteristic. Each Warp Lightning Bolt automatically hits the nearest unit (friend or foe), regardless of line of sight and direction. Roll the Artillery dice to determine the strength of each shot and resolve the roll to wound one at a time. If the closest unit dies from the first bolt, the second bolt hits the next closest unit in range, and so on. If two targets are equidistant, the owning player may choose which unit is struck.",
+        "If you roll a Misfire result, no more shots are fired this turn. You must immediately roll a D6 and consult the Doomwheel Mishap chart:"
+      ],
+      "overrides": null
+    },
+    "doomwheel-mishap-chart": {
+      "name_en": "Doomwheel Mishap Chart",
+      "body": [
+        "D6 | Result 1-2 | Disaster: The Doomwheel immediately takes D6 Strength 5 hits. In addition, the Doomwheel loses 1 D6 from their Random Movement (X) special rule. If Random Movement (X) is reduced to zero, the Doomwheel is removed as a casualty and counts as destroyed. 3-5 | Out of Control: If the Doomwheel is unengaged in combat, roll the scatter dice. Pivot the model so that it is facing in the direction of the arrow (including a Hit). The Doomwheel immediately moves as far as possible in a straight line using its current Random Movement (X) characteristic. If it makes contact with an enemy unit, the Doomwheel counts as having charged, aligns against the enemy unit and stops moving. If the Doomwheel makes contact with a friendly unit, resolve Impact Hits immediately after contact and then move the Doomwheel directly away 1\". 6 | Burst of Speed: The Doomwheel gains an extra D6 to their Random Movement (X) special rule to a maximum of 4D6."
+      ],
+      "overrides": null
+    },
+    "warpstone-spikes": {
+      "name_en": "Warpstone Spikes",
+      "body": [
+        "Any Impact Hits made by a Hell Pit Abomination have an Armour Piercing characteristic of -2 and Magical Attacks."
+      ],
+      "overrides": null
+    },
+    "magical-attacks": {
+      "name_en": "Magical Attacks",
+      "body": [
+        "Notes: This weapon does not use its crew’s Ballistic Skill. Instead, it shoots using the ‘Lightning Strike’ special rule. This weapon uses the Skaven Misfire table."
+      ],
+      "overrides": "magical-attacks"
+    },
+    "warp-lightning-special-rules": {
+      "name_en": "Warp Lightning Special Rules",
+      "body": [
+        "Lightning Strike: When shooting with this weapon, draw a straight line, 8D6\" in length, from the model’s base edge. Any model (friend or foe) whose base falls under this line suffers a hit, the Strength of which is determined by rolling an Artillery dice. If a ‘Misfire’ is rolled when rolling to determine the Strength of this weapon, something has gone horribly wrong. Roll immediately on the Skaven Misfire table to determine exactly what. Note: Unless they are the closest model to the cannon, an enemy character that is within 3” of a friendly unit that contains five or more models of the same troop type cannot be struck by a Warp Lightning Cannon, even if their base lies directly under the path of the line drawn from this model."
+      ],
+      "overrides": null
+    },
+    "skaven-faq": {
+      "name_en": "Skaven FAQ",
+      "body": [
+        "Q: What happens if an enemy unit engaged with Skaven Dregs is forced to give ground during the Shooting Phase? If they are targeted by Wind Blast for example?",
+        "A: The Skaven Dreg unit may follow-up or test to restrain. If they choose to follow-up, the combat will happen during the following Combat Phase. These moves do not change the status of the combat IE: chargers from previous phases still count as charging, etc."
+      ],
+      "overrides": null
+    }
+  },
+  "profiles": {
+    "skaven dregs": {
+      "stats": [
+        {
+          "Name": "Dreg-rat",
+          "M": "5",
+          "WS": "2",
+          "BS": "2",
+          "S": "3",
+          "T": "3",
+          "W": "1",
+          "I": "4",
+          "A": "1",
+          "Ld": "2"
+        }
+      ],
+      "troopType": "Regular infantry",
+      "baseSize": "25 x 25 mm",
+      "equipment": [
+        "Hand weapons"
+      ],
+      "notes": [
+        "Options:",
+        "The entire unit may take any of the following:",
+        "Any unit may:"
+      ],
+      "specialRules": [
+        "Close Order",
+        "Levies",
+        "Horde",
+        "Scurry Away",
+        "Expendable",
+        "Cornered Rats",
+        "Loner"
+      ]
+    },
+    "stormvermin": {
+      "stats": [
+        {
+          "Name": "Stormvermin",
+          "M": "5",
+          "WS": "4",
+          "BS": "3",
+          "S": "3",
+          "T": "3",
+          "W": "1",
+          "I": "5",
+          "A": "1",
+          "Ld": "5"
+        },
+        {
+          "Name": "Fangleader",
+          "M": "5",
+          "WS": "4",
+          "BS": "3",
+          "S": "3",
+          "T": "3",
+          "W": "1",
+          "I": "5",
+          "A": "2",
+          "Ld": "6"
+        }
+      ],
+      "troopType": "Heavy infantry",
+      "baseSize": "25 x 25 mm",
+      "equipment": [
+        "Hand weapons, halberds, heavy armour"
+      ],
+      "specialRules": [
+        "Close Order",
+        "Horde",
+        "Scurry Away",
+        "Warband",
+        "Warpstone Weapons",
+        "Regimental Unit"
+      ]
+    },
+    "night runners": {
+      "stats": [
+        {
+          "Name": "Night Runner",
+          "M": "6",
+          "WS": "3",
+          "BS": "3",
+          "S": "3",
+          "T": "3",
+          "W": "1",
+          "I": "5",
+          "A": "1",
+          "Ld": "5"
+        },
+        {
+          "Name": "Nightleader",
+          "M": "6",
+          "WS": "3",
+          "BS": "4",
+          "S": "3",
+          "T": "3",
+          "W": "1",
+          "I": "5",
+          "A": "2",
+          "Ld": "5"
+        }
+      ],
+      "equipment": [
+        "Two hand weapons"
+      ],
+      "troopType": "Regular infantry",
+      "baseSize": "25 x 25 mm",
+      "specialRules": [
+        "Evasive",
+        "Fire & Flee",
+        "Scurry Away",
+        "Skirmishers",
+        "Vanguard",
+        "Regimental Unit"
+      ]
+    },
+    "gutter runners": {
+      "stats": [
+        {
+          "Name": "Gutter Runner",
+          "M": "6",
+          "WS": "4",
+          "BS": "4",
+          "S": "3",
+          "T": "3",
+          "W": "1",
+          "I": "5",
+          "A": "1",
+          "Ld": "7"
+        },
+        {
+          "Name": "Assassin",
+          "M": "6",
+          "WS": "4",
+          "BS": "5",
+          "S": "3",
+          "T": "3",
+          "W": "1",
+          "I": "5",
+          "A": "2",
+          "Ld": "7"
+        }
+      ],
+      "troopType": "Regular infantry",
+      "baseSize": "25 x 25 mm",
+      "equipment": [
+        "Two hand weapons"
+      ],
+      "specialRules": [
+        "Evasive",
+        "Feigned Flight",
+        "Fire & Flee",
+        "Move through Cover",
+        "Scouts",
+        "Scurry Away",
+        "Skirmishers",
+        "Poisoned Attacks"
+      ]
+    },
+    "doomwheel": {
+      "stats": [
+        {
+          "Name": "Doomwheel",
+          "M": "3D6",
+          "WS": "-",
+          "BS": "-",
+          "S": "6",
+          "T": "5",
+          "W": "5",
+          "I": "-",
+          "A": "-",
+          "Ld": "-"
+        },
+        {
+          "Name": "Warlock (x1)",
+          "M": "-",
+          "WS": "3",
+          "BS": "3",
+          "S": "3",
+          "T": "-",
+          "W": "-",
+          "I": "3",
+          "A": "1",
+          "Ld": "7"
+        },
+        {
+          "Name": "Rats",
+          "M": "-",
+          "WS": "2",
+          "BS": "0",
+          "S": "2",
+          "T": "-",
+          "W": "-",
+          "I": "4",
+          "A": "2D6",
+          "Ld": "5"
+        }
+      ],
+      "armourValue": "4+",
+      "notes": [
+        "Stomp Attacks (D3)"
+      ],
+      "troopType": "Base Size: Unit Size: | Heavy chariot 50 x 100 mm 1 | | | | | | | | |",
+      "equipment": [],
+      "specialRules": [
+        "Close Order",
+        "Crushing Bulk",
+        "Immune to Psychology",
+        "Impact Hits (D6+1)",
+        "Large Target",
+        "Random Attacks (Rats only)",
+        "Random Movement"
+      ]
+    },
+    "grey seer": {
+      "stats": [
+        {
+          "Name": "Grey Seer",
+          "M": "5",
+          "WS": "3",
+          "BS": "3",
+          "S": "3",
+          "T": "4",
+          "W": "3",
+          "I": "5",
+          "A": "2",
+          "Ld": "7"
+        }
+      ]
+    },
+    "master assassin": {
+      "stats": [
+        {
+          "Name": "Master Assassin",
+          "M": "6",
+          "WS": "8",
+          "BS": "7",
+          "S": "4",
+          "T": "4",
+          "W": "2",
+          "I": "8",
+          "A": "4",
+          "Ld": "7"
+        }
+      ],
+      "equipment": [
+        "Hand weapon and throwing weapons"
+      ],
+      "notes": [
+        "May purchase magic items up to a total of 75 points"
+      ]
+    },
+    "warplock jezzails": {
+      "stats": [
+        {
+          "Name": "Jezzail Team",
+          "M": "5",
+          "WS": "3",
+          "BS": "3",
+          "S": "3",
+          "T": "3",
+          "W": "2",
+          "I": "3",
+          "A": "2",
+          "Ld": "5"
+        }
+      ],
+      "notes": [
+        "Options:",
+        "0-1 unit per 1,000 points may:",
+        "Have the Reserve Move special rule: 2 points per model"
+      ],
+      "troopType": "Regular infantry",
+      "baseSize": "25 x 50 mm",
+      "equipment": [
+        "Hand weapons, warplock jezzails (see below) and pavise"
+      ],
+      "specialRules": [
+        "Open Order",
+        "Scurry Away",
+        "Warband"
+      ]
+    },
+    "rat ogres": {
+      "stats": [
+        {
+          "Name": "Rat Ogre",
+          "M": "6",
+          "WS": "4",
+          "BS": "1",
+          "S": "5",
+          "T": "4",
+          "W": "3",
+          "I": "4",
+          "A": "3",
+          "Ld": "5"
+        }
+      ],
+      "troopType": "Monstrous infantry",
+      "baseSize": "50mm",
+      "equipment": [
+        "Hand weapons, and mutated hides (counts as heavy armour)"
+      ],
+      "specialRules": [
+        "Close Order",
+        "Armour Bane (2)",
+        "Fear",
+        "Frenzy",
+        "Horde",
+        "Scurry Away",
+        "Warband",
+        "Scurrying Masses",
+        "Warpstone Weapons",
+        "Motley Crew"
+      ]
+    },
+    "giant rats": {
+      "stats": [
+        {
+          "Name": "Giant Rat",
+          "M": "6",
+          "WS": "2",
+          "BS": "0",
+          "S": "3",
+          "T": "3",
+          "W": "1",
+          "I": "4",
+          "A": "1",
+          "Ld": "3"
+        }
+      ],
+      "troopType": "War beasts",
+      "baseSize": "25 x 25 mm",
+      "equipment": [
+        "Claws and teeth (counts as hand weapons)"
+      ],
+      "specialRules": [
+        "Close Order",
+        "Open Order",
+        "Fight in Extra Rank",
+        "Horde",
+        "Scurry Away",
+        "Warband",
+        "Motley Crew"
+      ]
+    },
+    "plague censer bearers": {
+      "stats": [
+        {
+          "Name": "Censer Bearer",
+          "M": "5",
+          "WS": "3",
+          "BS": "3",
+          "S": "3",
+          "T": "4",
+          "W": "1",
+          "I": "3",
+          "A": "2",
+          "Ld": "5"
+        }
+      ],
+      "troopType": "Regular infantry",
+      "baseSize": "25 x 25 mm",
+      "equipment": [
+        "Hand weapons and plague censers (see below)"
+      ],
+      "specialRules": [
+        "Frenzy",
+        "Scurry Away",
+        "Skirmishers",
+        "Stubborn",
+        "Warband",
+        "Hatred (all enemies)",
+        "Detachment",
+        "Plague Disciples"
+      ]
+    },
+    "packmasters master moulders": {
+      "stats": [
+        {
+          "Name": "Packmaster",
+          "M": "6",
+          "WS": "3",
+          "BS": "3",
+          "S": "3",
+          "T": "3",
+          "W": "1",
+          "I": "4",
+          "A": "1",
+          "Ld": "6"
+        },
+        {
+          "Name": "Master Moulder",
+          "M": "6",
+          "WS": "5",
+          "BS": "3",
+          "S": "4",
+          "T": "4",
+          "W": "2",
+          "I": "5",
+          "A": "2",
+          "Ld": "7"
+        }
+      ],
+      "notes": [
+        "Any Packmaster or Master Moulder in the unit must take one of the following:",
+        "Unit Size: (see Dregs, Rat Ogre, & Giant Rat profiles)"
+      ],
+      "specialRules": [
+        "Close Order",
+        "Horde",
+        "Leader of the Pack",
+        "Motley Crew",
+        "Scurry Away",
+        "Warband",
+        "Verminous Valour (Master Moulder Only)"
+      ],
+      "troopType": "Regular infantry",
+      "baseSize": "25 x 25 mm",
+      "equipment": [
+        "Hand weapons and light armour"
+      ]
+    },
+    "screaming bell": {
+      "stats": [
+        {
+          "Name": "Screaming Bell",
+          "M": "5",
+          "WS": "-",
+          "BS": "-",
+          "S": "5",
+          "T": "6",
+          "W": "5",
+          "I": "-",
+          "A": "-",
+          "Ld": "-"
+        },
+        {
+          "Name": "Rat Ogre Crew (x1)",
+          "M": "-",
+          "WS": "3",
+          "BS": "0",
+          "S": "5",
+          "T": "-",
+          "W": "-",
+          "I": "4",
+          "A": "3",
+          "Ld": "5"
+        }
+      ],
+      "notes": [
+        "Dragged Along, Impact Hits (D6+1), Large Target, Magic Resistance (-3), Pushed into Battle, Scurrying Masses, Stubborn, Terror, Tolling the Bell, Warpstone Weapons (Rat Ogre only)",
+        "Character Mount: A Screaming Bell may only be included in your army as a character’s mount. Its points are added to that of its rider. The rider of a Screaming Bell may not use Verminous Valour. This unit may only use the Pushed into Battle special rule to join a unit of Clanrats or Stormvermin."
+      ],
+      "troopType": "Heavy chariot",
+      "baseSize": "60 x 100 mm min, 75x100 mm max",
+      "armourValue": "4+",
+      "equipment": [],
+      "specialRules": [
+        "Armour Bane (2, Rat Ogre only)",
+        "Blessings of the Horned Rat"
+      ]
+    },
+    "plague furnace": {
+      "stats": [
+        {
+          "Name": "Plague Furnace",
+          "M": "5",
+          "WS": "-",
+          "BS": "-",
+          "S": "5",
+          "T": "6",
+          "W": "5",
+          "I": "-",
+          "A": "-",
+          "Ld": "-"
+        },
+        {
+          "Name": "Plague Monk Crew (x3)",
+          "M": "-",
+          "WS": "3",
+          "BS": "0",
+          "S": "3",
+          "T": "-",
+          "W": "-",
+          "I": "3",
+          "A": "2",
+          "Ld": "5"
+        }
+      ],
+      "specialRules": [
+        "Dragged Along",
+        "Terror",
+        "Frenzy",
+        "Great Censer",
+        "Impact Hits (D6+1)"
+      ],
+      "notes": [
+        "Large Target, Magic Resistance (-1), Poisoned Attacks, Pushed into Battle, Scurrying Masses, Stomp Attacks (D3+1)",
+        "Notes: Any model whose base lies underneath the template risks being hit. All models that have been hit must take a Toughness test. If this test is failed, the target model suffers a wound. No armour save is permitted against wounds caused by this weapon (Ward and Regeneration saves can be attempted as normal).",
+        "Character Mount: A Plague Furnace may only be included in your army as a character’s mount. Its points are added to that of its rider. The rider of a Plague Furnace may not use Verminous Valour. This model may only use the Pushed Into Battle special rule to join a unit of Plague Monks."
+      ],
+      "troopType": "Heavy chariot",
+      "baseSize": "60 x 100 mm",
+      "armourValue": "4+",
+      "equipment": []
+    },
+    "warlock engineer": {
+      "notes": [
+        "Notes: One use only. This weapon shoots like a stone thrower, using the Bombardment special rule, a 5\" blast template and the Skaven Misfire table. The Multiple Wounds (D3+1) special rule applies only to a single model whose base lies underneath the central hole of the blast template."
+      ]
+    },
+    "clanrats": {
+      "notes": [
+        "0-1 unit per 1,000 points may:"
+      ]
+    },
+    "weapon team": {
+      "notes": [
+        "Notes: This weapon shoots like an organ gun, using the ‘Multi-Barrelled’ special rule and the Skaven Misfire table.",
+        "Notes: This weapon shoots like a fire thrower, using the ‘Column of Fire’ special rule and the Skaven Misfire table. Any unit that suffers one or more unsaved wounds from this weapon must make a Panic test as if it had taken heavy casualties.",
+        "Skaven Dregs"
+      ]
+    },
+    "poisoned wind globadiers": {
+      "notes": [
+        "Notes: Ignores the penalty for shooting at long range. If the roll To Hit is successful, a Poisoned Wind globe causes D3 hits to the target enemy unit, rather than the usual one. However, if a natural 1 is rolled when making a roll To Hit with this weapon, immediately roll another D6. On a roll of 1, D3 hits are caused on the shooting unit. Life is Cheap Providing the Globadiers are not in base contact with an enemy model, they may target any enemy unit within range and line of sight, even if that unit is engaged in close combat. Resolve all rolls to hit as normal. Then, using all failed to hit rolls, roll to wound on a friendly unit engaged in the combat chosen by your opponent."
+      ]
+    },
+    "plague monks": {
+      "notes": [
+        "A Plague Deacon may purchase magic items up to a total of 25 points • 0-1 unit per 1,000 points may purchase a magic standard worth up to 50 points • 0-1 unit per 1,000 points may select a single Plague Censer Bearer unit as a detachment."
+      ]
+    },
+    "hell pit abomination": {
+      "equipment": [
+        "Warpstone claws (see below) and mutated hide (counts as heavy armour)"
+      ],
+      "notes": [
+        "Too Horrible to Die, Unbreakable, Impact Hits (D3+1), Warpstone Spikes"
+      ]
+    }
+  },
+  "magicItemText": {
+    "the-fellblade": {
+      "body": "| R | S | AP | Special Rules The Fellblade | Combat | S+3 | N/A | Magical Attacks, Multiple Wounds (D3), | | | | Poisoned Attacks\n\nNotes: No Armour, Ward or Regeneration saves are permitted against wounds caused by this weapon. However, during the Command sub-phase of their turn, the wielder of the Fellblade must roll a D6. On a roll of 3+ there is no effect. On a roll of 1-2 the wielder suffers a single wound with no Armour Save allowed. Ward and Regeneration saves may be taken as normal."
+    },
+    "weeping-blade": {
+      "body": "| R S | AP | Special Rules Weeping Blade | Combat S | -2 | Magical Attacks, Multiple Wounds (D3), | | | Poisoned Attacks"
+    },
+    "blade-of-nurglitch": {
+      "body": "R S | AP | Special Rules Blade of Nurglitch Combat S+1 | - | Magical Attacks\n\nNotes: Any enemy model that suffers one or more unsaved wounds from the Blade of Nurglitch must immediately make a Toughness test. If this test is failed, they suffer a -1 modifier to their Toughness characteristic (to a minimum of 1) for the remainder of the game."
+    },
+    "death-globe": {
+      "body": "R S AP Special Rules\n\nDeath Globe 9\" 2 N/A Magical Attacks, Move & Shoot, Quick Shot, Poisoned Wind\n\nNotes: Single use. A model armed with a Death Globe may target a specific model within its target unit, such as a champion or a character. Make a roll To Hit as normal. If successful, centre a small (3\") blast template over the target model. Any model whose base lies underneath the template risks being hit.\n\nMagic Armour"
+    },
+    "warpstone-armour": {
+      "body": "The Warpstone Armour is a suit of heavy armour which may be purchased and worn even if the character does not have the option to be equipped with armour. A Wizard may wear this armour without penalty."
+    },
+    "storm-banner": {
+      "body": "Single use. A unit carrying the Storm Banner may activate it during any Command sub-phase. For this player turn and the next: all friendly and enemy units cannot use the Fly (X) special rule, the range of all missile weapons is halved (rounding fractions up) and all war machines cannot shoot."
+    },
+    "grand-banner-of-superiority": {
+      "body": "When calculating its combat result, a unit carrying the Grand Banner of Superiority may claim an additional bonus of +D3 combat result points."
+    },
+    "banner-of-verminous-scurrying": {
+      "body": "A unit carrying the Banner of Verminous Scurrying gains the Swiftstride special rule. Plague Banner 30 points\n\nUnit of Plague Monks Only. Single use. The Plague Banner may be activated at the start of any Combat Phase. For the remainder of the phase all Plague Monk models in the unit may re-roll failed To Hit rolls and failed To Wound rolls."
+    },
+    "brass-orb": {
+      "body": "Single use. Instead of attacking normally during the Combat phase, the bearer of the Brass Orb can toss it at a single model they are engaged in combat with. Make a single roll To Hit. If successful, the target model must make an Initiative test. If this test is failed, the target model is removed from play as a casualty."
+    },
+    "skalm": {
+      "body": "Single use. During the Command sub-phase of their turn, the bearer of Skalm can use it. The model immediately recovers D3 lost wounds and, until your next Start of Turn sub-phase, has a +1 modifier to their Toughness characteristic."
+    },
+    "storm-daemon": {
+      "body": "The wielder of the Storm Daemon can cast the Warp Lightning spell from the Lore of the Horned Rat as a Bound spell, with a Power Level of 2."
+    },
+    "warpstone-tokens": {
+      "body": "A Wizard may purchase up to three Warpstone Tokens, each of which is single use. Before making a Casting roll, a Wizard may choose to consume a single Warpstone Token. For each Token consumed, they may roll an additional D3 and add its result to their Casting roll. After the casting roll, roll a D6. On a roll of one the Wizard loses a single Wound."
+    },
+    "a-unit-carrying-the-banner-of-verminous-scurrying-gains-the-swiftstride-special-rule-plague-banner": {
+      "body": "Unit of Plague Monks Only. Single use. The Plague Banner may be activated at the start of any Combat Phase. For the remainder of the phase all Plague Monk models in the unit may re-roll failed To Hit rolls and failed To Wound rolls.\n\nEnchanted Items"
+    }
+  },
+  "lores": {},
+  "notes": [],
+  "composition": {
+    "sourceRules": {
+      "Characters": [
+        "0-1 Skaven Warlord or Clan Eshin Master Assassin per 1,000 points • 0-1 Grey Seer per 1,000 points • Clan Skryre Warlock Engineer, Clan Pestilens Plague Priest, or Skaven Chieftains"
+      ],
+      "Core": [
+        "0-1 unit of Plague Monks (if Army includes a Clan Pestilens Plague Priest) • Clanrats, Nightrunners, Giant Rats and Rat Swarms • 0-1 Skaven Dregs for each unit of Clanrats taken."
+      ],
+      "Special": [
+        "Warplock Jezzails, • Poisoned Wind Globadiers 0-1 per 1,000 points"
+      ]
     }
   }
 }

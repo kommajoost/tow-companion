@@ -12,20 +12,24 @@
   },
   "status": "draft",
   "scope": "points-and-rules",
+  "inheritsComposition": "lm-renegade",
   "units": {
     "skink-skirmishers": {
       "points": 6,
       "_was": 5,
       "_changed": [
-        "points"
-      ]
+        "points",
+        "special-rules"
+      ],
+      "specialRules": "Aquatic, Cold Blooded, Move through Cover, Poisoned Attacks (javelins only), Skirmishers"
     },
     "saurus-warrior": {
       "points": 12,
       "_was": 14,
       "_changed": [
         "points",
-        "options"
+        "options",
+        "special-rules"
       ],
       "options": [
         {
@@ -45,22 +49,72 @@
           "name_en": "Musician",
           "points": 6,
           "_was": 7
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Shieldwall",
+          "points": 1,
+          "perModel": true
+        },
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "Drilled special rule",
+          "points": 1,
+          "perModel": true
         }
-      ]
+      ],
+      "specialRules": "Close Order, Cold Blooded, Obsidian Blades, Predatory Fighter, Armoured Hide (2)"
     },
     "temple-guard": {
       "points": 15,
       "_was": 16,
       "_changed": [
-        "points"
+        "points",
+        "special-rules",
+        "options"
+      ],
+      "specialRules": "Close Order, Cold Blooded, Guardians, Obsidian Blades, Predatory Fighter, Armoured Hide (2), Shieldwall, Stubborn",
+      "options": [
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "Drilled",
+          "points": 1,
+          "perModel": true
+        },
+        {
+          "group": "command",
+          "action": "patch",
+          "name_en": "Revered Guardian (champion)",
+          "points": 7,
+          "perModel": false
+        },
+        {
+          "group": "command",
+          "action": "patch",
+          "name_en": "Standard bearer",
+          "points": 7,
+          "perModel": false
+        },
+        {
+          "group": "command",
+          "action": "patch",
+          "name_en": "Musician",
+          "points": 7,
+          "perModel": false
+        }
       ]
     },
     "salamander-packs": {
       "points": 65,
       "_was": 75,
       "_changed": [
-        "points"
-      ]
+        "points",
+        "special-rules"
+      ],
+      "specialRules": "Aquatic, Beast Handlers, Cold Blooded, Fear, Reserve Move, Skirmishers"
     },
     "razordon-packs": {
       "points": 75,
@@ -73,7 +127,26 @@
       "points": 195,
       "_was": 215,
       "_changed": [
-        "points"
+        "points",
+        "special-rules",
+        "options"
+      ],
+      "specialRules": "Close Order, Cold Blooded, Great Horns, Howdah, Immune to Psychology, Impact Hits (D3+1), Large Target, Poisoned Attacks (javelins only), Skink Riders, Stomp Attacks (D3+2), Stubborn, Terror",
+      "options": [
+        {
+          "group": "equipment",
+          "action": "upsert",
+          "name_en": "Hand weapons, Javelins, Great horns, Engine of the Gods",
+          "points": 35,
+          "perModel": false
+        },
+        {
+          "group": "equipment",
+          "action": "patch",
+          "name_en": "Hand weapons, Javelins, Great horns, Giant blowpipes",
+          "points": 0,
+          "perModel": false
+        }
       ]
     },
     "ancient-stegadon": {
@@ -87,18 +160,560 @@
       "points": 140,
       "_was": 160,
       "_changed": [
-        "points"
+        "points",
+        "special-rules",
+        "options"
+      ],
+      "specialRules": "Close Order, Cold Blooded, Immune to Psychology, Impact Hits (D3), Impervious Defence, Large Target, Poisoned Attacks (javelins only), Stomp Attacks (D3+1), Skink Riders, Stubborn, Terror",
+      "options": [
+        {
+          "group": "equipment",
+          "name_en": "Hand weapons, Javelins, Thunderous bludgeon, Solar Engine",
+          "points": 35,
+          "_was": 15
+        },
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "Replace its Ark of Sotek with a Solar Engine",
+          "points": 35,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Fourth Skink crew member",
+          "points": 5,
+          "perModel": false
+        }
       ]
     },
     "troglodon": {
       "points": 140,
       "_was": 200,
       "_changed": [
-        "points"
+        "points",
+        "special-rules",
+        "options"
+      ],
+      "specialRules": "Arcane Vassal, Armoured Hide (3), Aquatic, Close Order, Cold Blooded, Immune to Psychology, Large Target, Lore of Lustria, Predatory Fighter (Troglodon Only), Primeval Roar, Skink Riders, Stomp Attacks (2), Stubborn, Terror",
+      "options": [
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "Level 2 Wizard (Skink Oracle)",
+          "points": 30,
+          "perModel": false
+        }
+      ]
+    },
+    "slann-mage-priest": {
+      "specialRules": "Arcane Shield, Cold Blooded, Close Order, Fly (8), Large Target, Lore of Lustria, Palanquin, Wisdom of the Old Ones",
+      "_changed": [
+        "special-rules"
+      ]
+    },
+    "chameleon-skinks": {
+      "specialRules": "Aquatic, Ambushers, Chameleon, Cold Blooded, Evasive, Fire & Flee, Loner, Move through Cover, Scouts, Skirmishers",
+      "_changed": [
+        "special-rules"
+      ]
+    },
+    "kroxigors": {
+      "specialRules": "Aquatic, Close Order, Cold Blooded, Fear, Predatory Fighter, Skirmish Screen",
+      "_changed": [
+        "special-rules"
+      ]
+    },
+    "cold-one-riders": {
+      "minimum": 4,
+      "_changed": [
+        "unit-size",
+        "special-rules",
+        "options"
+      ],
+      "specialRules": "Armour Bane (1, Cold One only), Armoured Hide (3), Close Order, Counter Charge, Cold Blooded, Fear, Obsidian Blades, Predatory Fighter (Rider and Pack Leader only), Stupidity, Swiftstride",
+      "options": [
+        {
+          "group": "armor",
+          "action": "upsert",
+          "name_en": "Light armour",
+          "points": 4,
+          "perModel": true
+        },
+        {
+          "group": "command",
+          "action": "patch",
+          "name_en": "Pack Leader (champion)",
+          "points": 7,
+          "perModel": false
+        },
+        {
+          "group": "command",
+          "action": "patch",
+          "name_en": "Standard bearer",
+          "points": 7,
+          "perModel": false
+        },
+        {
+          "group": "command",
+          "action": "patch",
+          "name_en": "Musician",
+          "points": 7,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Drilled",
+          "points": 2,
+          "perModel": true
+        },
+        {
+          "group": "equipment",
+          "action": "patch",
+          "name_en": "Cavalry spears, Shields",
+          "points": 1,
+          "perModel": true
+        }
+      ]
+    },
+    "terradon-riders": {
+      "specialRules": "Armoured Hide (2), Cold Blooded, Drop Rocks, Fear, Fire & Flee, Fly (10), Poisoned Attacks (javelins only), Skink Riders, Skirmishers, Swiftstride",
+      "_changed": [
+        "special-rules",
+        "options"
+      ],
+      "options": [
+        {
+          "group": "equipment",
+          "name_en": "Hand weapons, Fireleech bolas",
+          "points": 2,
+          "perModel": true,
+          "_was": 1
+        },
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "shields",
+          "points": 1,
+          "perModel": true
+        }
+      ]
+    },
+    "ripperdactyl-riders": {
+      "specialRules": "Armoured Hide (2), Cleaving Blow (Ripperdactyl only), Cold Blooded, Counter Charge, Fear, Fly (9), Furious Charge, Predatory Fighter (Ripperdactyl only), Impetuous, Skink Riders, Skirmishers, Swiftstride, Toad Rage",
+      "_changed": [
+        "special-rules",
+        "options"
+      ],
+      "options": [
+        {
+          "group": "command",
+          "action": "patch",
+          "name_en": "Ripperdactyl Champion",
+          "points": 6,
+          "perModel": false
+        }
+      ]
+    },
+    "skink-cohorts": {
+      "minimum": 10,
+      "_changed": [
+        "unit-size",
+        "special-rules",
+        "options"
+      ],
+      "specialRules": "Aquatic, Close Order, Cold Blooded, Move through Cover, Poisoned Attacks (javelins and shortbows only), Spawn-kin",
+      "options": [
+        {
+          "group": "command",
+          "action": "patch",
+          "name_en": "Skink Brave (champion)",
+          "points": 5,
+          "perModel": false
+        },
+        {
+          "group": "command",
+          "action": "patch",
+          "name_en": "Standard bearer",
+          "points": 5,
+          "perModel": false
+        },
+        {
+          "group": "command",
+          "action": "patch",
+          "name_en": "Musician",
+          "points": 5,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Kroxigor",
+          "points": 49,
+          "perModel": true
+        }
+      ]
+    },
+    "saurus-oldblood": {
+      "options": [
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Shield",
+          "points": 2,
+          "perModel": false
+        },
+        {
+          "group": "equipment",
+          "action": "upsert",
+          "name_en": "light armour",
+          "points": 3,
+          "perModel": false
+        }
+      ],
+      "_changed": [
+        "options"
+      ]
+    },
+    "saurus-scar-veteran": {
+      "options": [
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Shield",
+          "points": 2,
+          "perModel": false
+        },
+        {
+          "group": "equipment",
+          "action": "upsert",
+          "name_en": "light armour",
+          "points": 3,
+          "perModel": false
+        }
+      ],
+      "_changed": [
+        "options"
+      ]
+    },
+    "skink-priest": {
+      "options": [
+        {
+          "group": "equipment",
+          "action": "upsert",
+          "name_en": "shield",
+          "points": 2,
+          "perModel": false
+        },
+        {
+          "group": "armor",
+          "action": "patch",
+          "name_en": "Light armour (Calloused hide)*",
+          "points": 3,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "Scouts special rule",
+          "points": 10,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "Vanguard special rule",
+          "points": 5,
+          "perModel": false
+        }
+      ],
+      "_changed": [
+        "options"
+      ]
+    },
+    "skink-chief": {
+      "options": [
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Shield",
+          "points": 2,
+          "perModel": false
+        },
+        {
+          "group": "armor",
+          "action": "patch",
+          "name_en": "Light armour (Calloused hide)",
+          "points": 3,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "Scouts special rule",
+          "points": 10,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "Vanguard special rule",
+          "points": 5,
+          "perModel": false
+        }
+      ],
+      "_changed": [
+        "options"
       ]
     }
   },
-  "magicItems": {},
+  "addedUnits": {
+    "core": [
+      {
+        "id": "skink-cohorts",
+        "name_en": "Skink Cohorts",
+        "points": 5,
+        "minimum": 10,
+        "maximum": 0,
+        "command": [
+          {
+            "name_en": "Skink Brave (champion)",
+            "points": 5
+          },
+          {
+            "name_en": "Standard bearer",
+            "points": 5
+          },
+          {
+            "name_en": "Musician",
+            "points": 5
+          }
+        ],
+        "equipment": [
+          {
+            "name_en": "Hand weapons, Blowpipes",
+            "points": 0,
+            "perModel": true,
+            "active": true
+          },
+          {
+            "name_en": "Hand weapons, Javelins, Shields",
+            "points": 0,
+            "perModel": true
+          },
+          {
+            "name_en": "Hand weapons, Shortbows",
+            "points": 0,
+            "perModel": true
+          }
+        ],
+        "armor": [
+          {
+            "name_en": "Calloused hides (light armour)",
+            "points": 0,
+            "perModel": true,
+            "active": true
+          }
+        ],
+        "options": [
+          {
+            "name_en": "Kroxigor",
+            "points": 49,
+            "minimum": 0,
+            "maximum": 3
+          }
+        ],
+        "mounts": [],
+        "items": [],
+        "lores": [],
+        "specialRules": {
+          "name_en": "Aquatic, Close Order, Cold Blooded, Move through Cover, Poisoned Attacks (javelins and shortbows only), Spawn-kin"
+        }
+      }
+    ]
+  },
+  "magicItems": {
+    "lizardmen": [
+      {
+        "name_de": "Shild des Spiegelsees",
+        "name_en": "Shield Of The Mirror Pool",
+        "name_cn": "镜湖盾牌",
+        "name_fr": "Bouclier du Bassin Miroitant",
+        "name_it": "Scudo of the Mirror Pool",
+        "points": 40,
+        "type": "armor",
+        "onePerArmy": true,
+        "name": "shield of the mirror pool"
+      },
+      {
+        "name_de": "Sonnenstandarte des Chotec",
+        "name_en": "Sun Standard Of Chotec",
+        "name_cn": "辍特克日光旗",
+        "name_fr": "Étendard du Soleil de Chotec",
+        "name_it": "Sun Standard of Chotec",
+        "points": 65,
+        "type": "banner",
+        "onePerArmy": true,
+        "name": "sun standard of chotec"
+      },
+      {
+        "name_de": "Jaguarstandarte",
+        "name_en": "Jaguar Standard",
+        "name_cn": "美洲豹之旗",
+        "name_fr": "Bannière du Jaguar",
+        "name_it": "Jaguar Standard",
+        "points": 30,
+        "type": "banner",
+        "onePerArmy": true,
+        "name": "jaguar standard"
+      },
+      {
+        "name_de": "Feuerfroschgift",
+        "name_en": "Venom Of The Firefly Frog",
+        "name_cn": "萤火虫蟾蜍毒液",
+        "name_fr": "Venin du Crapaud Luciole",
+        "name_it": "Venom of the Firefly Frog",
+        "points": 15,
+        "type": "enchanted-item",
+        "onePerArmy": true,
+        "name": "venom of the firefly frog"
+      },
+      {
+        "name_de": "Itxi-Larven*",
+        "name_en": "Itxi Grub",
+        "name_cn": "埃希蛆虫干*",
+        "name_fr": "Larve d’Itxi*",
+        "name_it": "Itxi Grub*",
+        "points": 20,
+        "stackable": true,
+        "type": "arcane-item",
+        "onePerArmy": false,
+        "name": "itxi grub"
+      },
+      {
+        "name_de": "Bewahrende Hände der Alten",
+        "name_en": "Cupped Hands Of The Old Ones",
+        "name_cn": "古圣护手",
+        "name_fr": "Main des Anciens",
+        "name_it": "Cupped Hands of the Old Ones",
+        "points": 55,
+        "type": "arcane-item",
+        "onePerArmy": true,
+        "name": "cupped hands of the old ones"
+      },
+      {
+        "name_en": "May take a single purchase 0-3 Disciplines of the Old Ones up to a total of 100 points • May purchase magic items up to a total of",
+        "name": "may take a single purchase 0 3 disciplines of the old ones up to a total of 100 points may purchase magic items up to a total of",
+        "points": 100,
+        "type": "enchanted-item",
+        "onePerArmy": true
+      },
+      {
+        "name_en": "May take a shield +2 points • May take light armour +3 points • May be mounted See page 5 • A Saurus Oldblood may purchase magic items up to a total of 100 points • A Saurus Scar-Veteran may purchase magic items up to a total of",
+        "name": "may take a shield 2 points may take light armour 3 points may be mounted see page 5 a saurus oldblood may purchase magic items up to a total of 100 points a saurus scar veteran may purchase magic items up to a total of",
+        "points": 50,
+        "type": "enchanted-item",
+        "onePerArmy": true
+      },
+      {
+        "name_en": "Upgrade one model to a Pack Leader (champion) +7 points per unit • Upgrade one model to a standard bearer +7 points per unit • Upgrade one model to a musician +7 points per unit • Take light armour +4 points per model • Have the Drilled special rule +2 points per model • Purchase a magic standard worth up to",
+        "name": "upgrade one model to a pack leader champion 7 points per unit upgrade one model to a standard bearer 7 points per unit upgrade one model to a musician 7 points per unit take light armour 4 points per model have the drilled special rule 2 points per model purchase a magic standard worth up to",
+        "points": 50,
+        "type": "enchanted-item",
+        "onePerArmy": true
+      },
+      {
+        "name_en": "A Sky Leader may purchase magic items up to a total of",
+        "name": "a sky leader may purchase magic items up to a total of",
+        "points": 25,
+        "type": "enchanted-item",
+        "onePerArmy": true
+      },
+      {
+        "name_en": "Any unit may upgrade one model to a Ripperdactyl Champion +6 points per unit • A Champion may purchase magic items up to a total of",
+        "name": "any unit may upgrade one model to a ripperdactyl champion 6 points per unit a champion may purchase magic items up to a total of",
+        "points": 25,
+        "type": "enchanted-item",
+        "onePerArmy": true
+      },
+      {
+        "name_en": "Be a Level 2 Wizard +30 points • Purchase magic items up to a total of",
+        "name": "be a level 2 wizard 30 points purchase magic items up to a total of",
+        "points": 50,
+        "type": "enchanted-item",
+        "onePerArmy": true
+      }
+    ],
+    "disciplines-old-ones": [
+      {
+        "name_en": "The Focused Rumination",
+        "name": "the focused rumination",
+        "points": 65,
+        "type": "discipline-old-ones",
+        "onePerArmy": true
+      },
+      {
+        "name_en": "Higher State Of Mind Consciousness",
+        "name": "higher state of mind consciousness",
+        "points": 60,
+        "type": "discipline-old-ones",
+        "onePerArmy": true
+      },
+      {
+        "name_en": "Focus of Mystery",
+        "name": "focus of mystery",
+        "points": 45,
+        "type": "discipline-old-ones",
+        "onePerArmy": true
+      },
+      {
+        "name_de": "Wandering Deliberations",
+        "name_en": "Wandering Deliberations",
+        "name_cn": "游离深思",
+        "name_fr": "Réflexions Vagabondes",
+        "name_it": "Wandering Deliberations",
+        "points": 35,
+        "type": "discipline-old-ones",
+        "onePerArmy": false,
+        "name": "wandering deliberations"
+      },
+      {
+        "name_de": "Becalming Cogitation",
+        "name_en": "Becalming Cogitation",
+        "name_cn": "定心熟虑",
+        "name_fr": "Aphorisme Apaisant",
+        "name_it": "Becalming Cogitation",
+        "points": 30,
+        "type": "discipline-old-ones",
+        "onePerArmy": false,
+        "name": "becalming cogitation"
+      },
+      {
+        "name_de": "Sorcerous Void",
+        "name_en": "Sorcerous Void",
+        "name_cn": "虚空杂音",
+        "name_fr": "Présence Surnaturelle",
+        "name_it": "Sorcerous Void",
+        "points": 25,
+        "type": "discipline-old-ones",
+        "onePerArmy": false,
+        "name": "sorcerous void"
+      },
+      {
+        "name_de": "Soul of Stone",
+        "name_en": "Soul Of Stone",
+        "name_cn": "顽石之魂",
+        "name_fr": "Âme de Marbre",
+        "name_it": "Anima of Stone",
+        "points": 15,
+        "type": "discipline-old-ones",
+        "onePerArmy": false,
+        "name": "soul of stone"
+      }
+    ]
+  },
   "rules": {
     "aquatic": {
       "name_en": "Aquatic",
@@ -131,6 +746,976 @@
         "Blessed by Itzl, skinks are cunning riders, and let their ferocious mounts do the brunt of the fighting Attacks made against this unit are resolved against the weapon skill of the rider, the crew, or monster, whichever is higher."
       ],
       "overrides": null
+    },
+    "spawn-kin": {
+      "name_en": "Spawn-kin",
+      "body": [
+        "When a Skink Cohort containing Kroxigor deploys or reforms, the Kroxigor are placed in the second rank as close to the centre as possible, with any that do not fit in the ranks immediately behind. If no second rank remains, they join the front rank.",
+        "Enemy shooting is allocated between the Skinks and Kroxigor as described for Enemy Shooting (Characters). Wounds do not spill over between the Skinks and Kroxigor.",
+        "A Kroxigor behind a Skink in base contact with an enemy counts as being in base contact with that enemy and is part of the fighting rank. A Kroxigor behind a fighting Skink but not in contact this way may make one attack. Impact Hits and Stomp Attacks can only be allocated to Kroxigor when fewer than five rank-and-file Skinks remain."
+      ],
+      "overrides": null
+    },
+    "blowpipe": {
+      "name_en": "Blowpipe",
+      "body": [],
+      "weaponProfile": {
+        "range": "12\"",
+        "strength": "3",
+        "ap": "-",
+        "specialRules": "Multiple Shots (2), Poisoned Attacks, Move & Shoot"
+      },
+      "overrides": "blowpipe"
+    },
+    "fiery-breath": {
+      "name_en": "Fiery breath",
+      "body": [],
+      "weaponProfile": {
+        "range": "-",
+        "strength": "4",
+        "ap": "-2",
+        "specialRules": "Column of Fire (Rulebook p. 229), Cumbersome, Flaming Attacks, Move & Shoot"
+      },
+      "overrides": null
+    },
+    "wicked-claws": {
+      "name_en": "Wicked claws",
+      "body": [],
+      "weaponProfile": {
+        "range": "Combat",
+        "strength": "S",
+        "ap": "-2",
+        "specialRules": "-"
+      },
+      "overrides": "wicked-claws"
+    },
+    "razor-barbs": {
+      "name_en": "Razor barbs",
+      "body": [],
+      "weaponProfile": {
+        "range": "R 12\"",
+        "strength": "S 3",
+        "ap": "AP -1",
+        "specialRules": "Special Rules Move & Shoot, Multiple Shots (D3) Needs More Nails (Rulebook, p. 227), Quick Shot"
+      },
+      "overrides": "razor-barbs"
+    },
+    "fireleech-bolas": {
+      "name_en": "Fireleech bolas",
+      "body": [],
+      "weaponProfile": {
+        "range": "9\"",
+        "strength": "4",
+        "ap": "-",
+        "specialRules": "Armourbane (1), Flaming Attacks, Move & Shoot, Quick Shot"
+      },
+      "overrides": "fireleech-bolas"
+    },
+    "great-horns": {
+      "name_en": "Great horns",
+      "body": [],
+      "weaponProfile": {
+        "range": "Combat",
+        "strength": "S",
+        "ap": "-3",
+        "specialRules": "-"
+      },
+      "overrides": "great-horns"
+    },
+    "giant-bow": {
+      "name_en": "Giant bow",
+      "body": [],
+      "weaponProfile": {
+        "range": "R 36\"",
+        "strength": "S 5",
+        "ap": "AP -2",
+        "specialRules": "Special Rules Multiple Wounds (2), Poisoned Attacks, Through & Through, Move & Shoot"
+      },
+      "overrides": "giant-bow"
+    },
+    "giant-blowpipes": {
+      "name_en": "Giant blowpipes",
+      "body": [],
+      "weaponProfile": {
+        "range": "R 18\"",
+        "strength": "S 3",
+        "ap": "AP -",
+        "specialRules": "Special Rules Cumbersome, Multiple Shots (2D6),, Poisoned Attacks, Move & Shoot"
+      },
+      "overrides": "giant-blowpipes"
+    },
+    "thunderous-bludgeon": {
+      "name_en": "Thunderous bludgeon",
+      "body": [],
+      "weaponProfile": {
+        "range": "Combat",
+        "strength": "+3",
+        "ap": "-3",
+        "specialRules": "Strike Last, Multiple Wounds (D3)"
+      },
+      "overrides": "thunderous-bludgeon"
+    },
+    "arcane-vassal": {
+      "name_en": "Arcane Vassal",
+      "body": [
+        "Once per turn, unless this model is fleeing or engaged in combat, a single friendly Slann Mage-Priest that is within 24\" of this model may ‘channel’ a spell through this model.",
+        "If they do, the range (including the range to dispel unless it is a vortex), targeting restrictions and all effects of the spell are measured from this model, rather than from the caster. If the spell requires a line of sight, it is determined from this model.",
+        "Note that spells with a range of ‘Self’ cannot be channelled in this way."
+      ],
+      "overrides": "arcane-vassal"
+    },
+    "cold-blooded": {
+      "name_en": "Cold Blooded",
+      "body": [
+        "When required to make a Fear, Panic or Terror test, Leadership or Break Test, models with this special rule may roll an extra D6 and discard the highest result."
+      ],
+      "overrides": "cold-blooded"
+    },
+    "drop-rocks": {
+      "name_en": "Drop Rocks",
+      "body": [
+        "Once per game, a unit with this special rule may perform a ‘Drop Rocks’ attack against a single enemy unit that is not engaged in combat. To do so, this unit must move (by flying) over the unit it wishes to attack during the Remaining Moves sub-phase. Once this unit’s movement is complete, the enemy unit suffers D3 Strength 4 hits, each with an AP of -1, for each model in this unit that moved over it."
+      ],
+      "overrides": "drop-rocks"
+    },
+    "wisdom-of-the-old-ones": {
+      "name_en": "Wisdom of the Old Ones",
+      "body": [
+        "Once per turn, the Slann Mage-Priest may re-roll one of the D6 when making a Casting Roll. This ability may not be used to re-roll a Miscast. In addition, it knows one more spell (chosen in the usual way) than is normal for their Level of Wizardry."
+      ],
+      "overrides": null
+    },
+    "palanquin": {
+      "name_en": "Palanquin",
+      "body": [
+        "This character may join a unit with the Guardians special rule despite having the Fly special rule. As long as the front rank has a minimum of 4 models they must be placed in the second rank. However, they continue to confer benefits to the unit in the form of Leadership and Special Rules. As long as this model is not in base to base contact with an enemy model, they do not count as being in a fighting rank and they may cast and dispel as normal, even if its unit is engaged in Combat. However, it may not cast Assailment spells. For the purposes of shooting and casting spells, this model has a 360&deg; vision arc and ignores models in the unit for drawing line of sight.",
+        "If the model with this rule is unable to fit neatly into the unit, count its base size as if it were on the correct base size for all purposes for as long as it remains in the unit. IE: a Mage-Priest (50mm x 50mm) counts as having a base of 60mm x 60mm when it joins a unit of Temple Guard (30mm x 30mm). To achieve this, you may use a spacer, or simply leave room to either side of its base on the movement tray so that rear ranks can close around it correctly."
+      ],
+      "overrides": null
+    },
+    "chameleon": {
+      "name_en": "Chameleon",
+      "body": [
+        "Any enemy model that shoots at a unit with this rule suffers an additional -1 To Hit modifier."
+      ],
+      "overrides": null
+    },
+    "guardians": {
+      "name_en": "Guardians",
+      "body": [
+        "Should a friendly Slann Mage-Priest model that is within 3\" of this unit suffer a hit during the Shooting phase, roll a D6. On a roll of 2+, you may choose to transfer that hit and all of its effects onto this unit. This unit may be joined by a character with the Palanquin special rule. In addition, any model in a unit of Temple Guard that is within the Command range of contains a Slann Mage-Priest can issue and accept challenges in the same manner as a character."
+      ],
+      "overrides": "guardians"
+    },
+    "toad-rage": {
+      "name_en": "Toad Rage",
+      "body": [
+        "Before the game starts, but after Scouts have been deployed, you may place one Lustrian blot toad marker for each unit of Ripperdactyl Riders in your army (counting only units, not including characters mounted on Ripperdactyls). A single blot toad marker can be placed on any enemy unit on the battlefield, this marker remains throughout the battle.",
+        "When engaged in combat with an enemy unit with a blot toad marker, Ripperdactyls (but not their riders) gain the Extra Attacks (1), and the Hatred (blot toad marker) special rules may reroll any roll To Hit of a natural 1."
+      ],
+      "overrides": "toad-rage"
+    },
+    "slashing-talons-combat-s-3-multiple-wounds-d3": {
+      "name_en": "Slashing talons Combat S -3 Multiple Wounds (D3)",
+      "body": [
+        "Notes: The Multiple Wounds (D3) special rule only applies against enemy models whose troop type is ‘monster’.",
+        "Character Mount: A Carnosaur may only be included in your army as a character’s mount. Its points are added to that of its rider."
+      ],
+      "overrides": null
+    },
+    "engine-of-the-gods": {
+      "name_en": "Engine Of The Gods",
+      "body": [
+        "An Ancient Stegadon equipped with an Engine of the Gods gains the following special rules:",
+        "Arcane Configuration: If your army contains two or more Engines of the Gods, Friendly Wizards and Friendly models that cast a Bound spell whilst within 12\" of one or more Engine of the Gods may apply a +1 modifier to the Casting roll. may apply a +1 modifier to any Casting roll they make whilst within 6\" of an Engine of the Gods.",
+        "An Engine of the Gods can cast the following Bound spells, with a Power Level of 2:",
+        "Burning Alignment:",
+        "Type: Magic Missile",
+        "Casting Value: 9+",
+        "Range: 15\"",
+        "Effect: The target enemy unit suffers 2D6 Strength 4 hits, each with an AP of -. This Bound spell has the Flaming Attacks special rule."
+      ],
+      "overrides": "engine-of-the-gods"
+    },
+    "portent-of-warding": {
+      "name_en": "Portent of Warding",
+      "body": [
+        "Type: Enchantment",
+        "Casting Value: 8+",
+        "Range: Self",
+        "Effect: Remains in Play. Whilst this Bound spell is in play, this model and any friendly unit within 12\" of this model gains a 6+ Ward save against any wounds suffered. However, if this model casts the Burning Alignment Bound spell, this Bound spell will immediately expire."
+      ],
+      "overrides": null
+    },
+    "ark-of-sotek": {
+      "name_en": "Ark Of Sotek",
+      "body": [
+        "A Bastiladon equipped with an Ark of Sotek gains the following special rules:",
+        "Slithering Serpents: During the Shooting phase, every enemy unit within D6\" of this model suffers 2D6 Strength 2 hits, each with an AP of - with the Poison Attacks special rule.",
+        "Spawn of Sotek: During the Command sub-phase of its turn, roll a D6. On a roll of 4+, a single Jungle Swarm within 6\" of this model regains D3 lost Wounds ."
+      ],
+      "overrides": "ark-of-sotek"
+    },
+    "primeval-roar": {
+      "name_en": "Primeval Roar",
+      "body": [
+        "Once per game, during the Command sub-phase of their turn, this model may attempt to unleash the primeval savagery of the Lizardmen by making a Leadership test (using its own Leadership). If this test is passed, until the end of that turn all friendly Lizardmen units with the Predatory Fighter special rule within 8\" of this model gain the Furious Charge special rule gain an additional attack on any successful To Hit roll of a 5 or a 6 until the end of the turn."
+      ],
+      "overrides": "primeval-roar"
+    },
+    "spell-apotheosis": {
+      "name_en": "Apotheosis",
+      "body": [
+        "Type: Enchantment Casting Value: 8+/10+ Range: 24\"",
+        "Effect: This spell can only target friendly characters whose troop type is ‘infantry’ or ‘cavalry,’ but may target characters engaged in combat. If this spell is cast with a casting result of 8 or more, the target friendly model immediately regains 1 lost Wound. If this spell is cast with a casting result of 10 or more, the target friendly model immediately regains D3+1 lost Wounds. If this spell is cast with a casting result of 10 or more, the target friendly model immediately regains D3 lost Wounds. If this spell is cast with a casting result of 12 or more, the target friendly model immediately regains D3+1 lost Wounds.",
+        "In addition, the target friendly character gains the Fear special rule. If they already have the Fear special rule, they instead gain the Terror special rule."
+      ],
+      "overrides": "spell-apotheosis"
+    },
+    "spell-monsoon": {
+      "name_en": "Monsoon",
+      "body": [
+        "Type: Magical Vortex",
+        "Casting Value: 10+",
+        "Range: 18\"",
+        "Effect: Remains in play. Place a large (5\") blast template so that its central hole is within 18\" of the caster. Whilst in play, the template is treated as a ‘water feature’ that is dangerous terrain over which no line of sight can be drawn. During every Start of Turn sub-phase (see page 95) the template scatters may move D6\" in a direction of the caster’s choosing. Any enemy unit that moves through the template, or that the template moves over becomes 'drenched' for as long as this spell remains in play the remainder of the game. The template moves D6\" in a random direction during every Start of Turn sub-phase. Any enemy unit the moving template touches or moves over becomes ‘drenched’ for the remainder of the game.",
+        "A drenched unit suffers a -1 To Hit modifier during the Shooting phase. A drenched model whose troop type is ‘war machine’ must roll a D6 before shooting. On a roll of 3 or less the model fails to shoot this turn."
+      ],
+      "overrides": "spell-monsoon"
+    }
+  },
+  "profiles": {
+    "skink cohorts": {
+      "stats": [
+        {
+          "Name": "Skink",
+          "M": "6",
+          "WS": "2",
+          "BS": "3",
+          "S": "3",
+          "T": "2",
+          "W": "1",
+          "I": "4",
+          "A": "1",
+          "Ld": "5"
+        },
+        {
+          "Name": "Skink Brave",
+          "M": "6",
+          "WS": "2",
+          "BS": "4",
+          "S": "3",
+          "T": "2",
+          "W": "1",
+          "I": "4",
+          "A": "1",
+          "Ld": "5"
+        }
+      ],
+      "troopType": "Regular infantry",
+      "baseSize": "25 x 25 mm",
+      "equipment": [
+        "Hand weapons and calloused hides (counts as light armour)"
+      ],
+      "notes": [
+        "Options:",
+        "The entire unit must take one of the following:",
+        "Blowpipes Free • Javelins and Shields Free • Shortbows Free",
+        "Any unit may:"
+      ],
+      "specialRules": [
+        "Aquatic",
+        "Close Order",
+        "Cold Blooded",
+        "Move through Cover",
+        "Poisoned Attacks (javelins and shortbows only)",
+        "Spawn-kin"
+      ]
+    },
+    "skink skirmishers": {
+      "stats": [
+        {
+          "Name": "Skink Skirmisher",
+          "M": "6",
+          "WS": "2",
+          "BS": "3",
+          "S": "3",
+          "T": "2",
+          "W": "1",
+          "I": "4",
+          "A": "1",
+          "Ld": "5"
+        },
+        {
+          "Name": "Patrol Leader",
+          "M": "6",
+          "WS": "2",
+          "BS": "4",
+          "S": "3",
+          "T": "2",
+          "W": "1",
+          "I": "4",
+          "A": "1",
+          "Ld": "5"
+        }
+      ],
+      "troopType": "Regular infantry",
+      "baseSize": "25 x 25 mm",
+      "equipment": [
+        "Hand weapons and calloused hides (counts as light armour)"
+      ],
+      "specialRules": [
+        "Aquatic",
+        "Cold Blooded",
+        "Move through Cover",
+        "Poisoned Attacks (javelins only)",
+        "Skirmishers"
+      ]
+    },
+    "saurus warriors": {
+      "stats": [
+        {
+          "Name": "Saurus Warrior",
+          "M": "4",
+          "WS": "3",
+          "BS": "0",
+          "S": "4",
+          "T": "4",
+          "W": "1",
+          "I": "1",
+          "A": "2",
+          "Ld": "8"
+        },
+        {
+          "Name": "Spawn Leader",
+          "M": "4",
+          "WS": "3",
+          "BS": "0",
+          "S": "4",
+          "T": "4",
+          "W": "1",
+          "I": "1",
+          "A": "3",
+          "Ld": "8"
+        }
+      ],
+      "equipment": [
+        "Hand weapons, scaly skin (counts as heavy armour) and shields"
+      ],
+      "notes": [
+        "Armoured Hide (2)"
+      ],
+      "troopType": "Heavy infantry",
+      "baseSize": "30 x 30 mm",
+      "specialRules": [
+        "Close Order",
+        "Cold Blooded",
+        "Obsidian Blades",
+        "Predatory Fighter"
+      ]
+    },
+    "temple guard": {
+      "stats": [
+        {
+          "Name": "Temple Guard",
+          "M": "4",
+          "WS": "4",
+          "BS": "0",
+          "S": "4",
+          "T": "4",
+          "W": "1",
+          "I": "2",
+          "A": "2",
+          "Ld": "8"
+        },
+        {
+          "Name": "Revered Guardian",
+          "M": "4",
+          "WS": "4",
+          "BS": "0",
+          "S": "4",
+          "T": "4",
+          "W": "1",
+          "I": "2",
+          "A": "3",
+          "Ld": "8"
+        }
+      ],
+      "equipment": [
+        "Hand weapons, halberds, scaly skin (counts as heavy armour), light armour and shields"
+      ],
+      "troopType": "Heavy infantry",
+      "baseSize": "30 x 30 mm",
+      "specialRules": [
+        "Close Order",
+        "Cold Blooded",
+        "Guardians",
+        "Obsidian Blades",
+        "Predatory Fighter",
+        "Armoured Hide (2)",
+        "Shieldwall",
+        "Stubborn"
+      ]
+    },
+    "salamander pack": {
+      "stats": [
+        {
+          "Name": "Salamander",
+          "M": "6",
+          "WS": "3",
+          "BS": "3",
+          "S": "5",
+          "T": "4",
+          "W": "3",
+          "I": "4",
+          "A": "2",
+          "Ld": "5"
+        },
+        {
+          "Name": "Skink Handler x3",
+          "M": "6",
+          "WS": "2",
+          "BS": "3",
+          "S": "3",
+          "T": "2",
+          "W": "1",
+          "I": "4",
+          "A": "1",
+          "Ld": "5"
+        }
+      ],
+      "troopType": "Regular infantry (Skink handlers), War beasts (Salamanders) Base Size: 25 x 25 mm (Skink Handlers), 50 x 75 mm (Salamanders) Unit Size: 3+/1+*",
+      "notes": [
+        "Skink Handlers: Hand weapons and calloused hides (counts as light armour) • Salamanders: Wicked claws (see below), fiery breath (see below) and scaly skin (counts as heavy armour) plated carapace (counts as full plate)",
+        "*When writing your muster list, A Salamander Pack contains at least three Skink handlers for every one Salamander.",
+        "Notes: If the artillery dice result is a misfire, no shots are fired and D3 Skink Handlers are removed until there are none remaining. If no Skink Handlers remain when a misfire is rolled, a Salamander loses a wound instead."
+      ]
+    },
+    "razordon pack": {
+      "stats": [
+        {
+          "Name": "Razordon",
+          "M": "6",
+          "WS": "3",
+          "BS": "3",
+          "S": "5",
+          "T": "4",
+          "W": "3",
+          "I": "4",
+          "A": "2",
+          "Ld": "5"
+        },
+        {
+          "Name": "Skink Handler x3",
+          "M": "6",
+          "WS": "2",
+          "BS": "3",
+          "S": "3",
+          "T": "2",
+          "W": "1",
+          "I": "4",
+          "A": "1",
+          "Ld": "5"
+        }
+      ],
+      "troopType": "Regular infantry (Skink handlers), War beasts (Razordons) Base Size: 25 x 25 mm (Skink Handlers), 50 x 75 mm (Razordons) Unit Size: 3+/1+*",
+      "notes": [
+        "Skink Handlers: Hand weapons and calloused hides (counts as light armour) • Razordons: Wicked claws (see below), razor barbs (see below) and scaly skin (counts as heavy armour) plated carapace (counts as full plate)",
+        "*When writing your muster list, A Razordon Pack contains at least three Skink handlers for every one Razordon.",
+        "Note: If the artillery dice result is a misfire, no shots are fired and D3 Skink Handlers are removed until there are none remaining. If no Skink Handlers remain when a misfire is rolled, a Razordon loses a wound instead."
+      ]
+    },
+    "terradon riders": {
+      "stats": [
+        {
+          "Name": "Terradon Rider",
+          "M": "-",
+          "WS": "2",
+          "BS": "3",
+          "S": "3",
+          "T": "3",
+          "W": "2",
+          "I": "4",
+          "A": "1",
+          "Ld": "5"
+        },
+        {
+          "Name": "Sky Leader",
+          "M": "-",
+          "WS": "2",
+          "BS": "4",
+          "S": "3",
+          "T": "3",
+          "W": "2",
+          "I": "4",
+          "A": "1",
+          "Ld": "5"
+        },
+        {
+          "Name": "Terradon",
+          "M": "2",
+          "WS": "3",
+          "BS": "-",
+          "S": "4",
+          "T": "-",
+          "W": "-",
+          "I": "2",
+          "A": "2",
+          "Ld": "-"
+        }
+      ],
+      "notes": [
+        "Terradon Riders: Hand weapons, calloused hides (counts as light armour) and javelins • Terradons: Claws and teeth (counts as hand weapons)",
+        "A Sky Leader may purchase magic items up to a total of 25 points",
+        "Note: A model armed with Fireleech Bolas suffers no negative modifiers for firing at long range. In addition, if the roll To Hit is successful, a Fireleech Bola causes D3 hits to the target enemy unit."
+      ],
+      "troopType": "Monstrous cavalry",
+      "baseSize": "40 x 40 mm",
+      "equipment": [],
+      "specialRules": [
+        "Armoured Hide (2)",
+        "Cold Blooded",
+        "Drop Rocks",
+        "Fear",
+        "Fire & Flee",
+        "Fly (10)",
+        "Poisoned Attacks (javelins only)",
+        "Skink Riders",
+        "Skirmishers",
+        "Swiftstride"
+      ]
+    },
+    "ripperdactyl riders": {
+      "stats": [
+        {
+          "Name": "Ripperdactyl Rider",
+          "M": "-",
+          "WS": "2",
+          "BS": "3",
+          "S": "3",
+          "T": "3",
+          "W": "2",
+          "I": "4",
+          "A": "1",
+          "Ld": "5"
+        },
+        {
+          "Name": "Ripperdactyl Champion",
+          "M": "-",
+          "WS": "2",
+          "BS": "3",
+          "S": "3",
+          "T": "3",
+          "W": "2",
+          "I": "4",
+          "A": "2",
+          "Ld": "5"
+        },
+        {
+          "Name": "Ripperdactyl",
+          "M": "2",
+          "WS": "4",
+          "BS": "-",
+          "S": "4",
+          "T": "-",
+          "W": "-",
+          "I": "3",
+          "A": "3",
+          "Ld": "-"
+        }
+      ],
+      "notes": [
+        "Ripperdactyl Riders: Cavalry spears, calloused hides (counts as light armour) and shields • Ripperdactyls: Claws and teeth (counts as hand weapons) Wicked claws"
+      ],
+      "troopType": "Monstrous cavalry",
+      "baseSize": "40 x 40 mm",
+      "equipment": [],
+      "specialRules": [
+        "Armoured Hide (2)",
+        "Cleaving Blow (Ripperdactyl only)",
+        "Cold Blooded",
+        "Counter Charge",
+        "Fear",
+        "Fly (9)",
+        "Furious Charge Predatory Fighter (Ripperdactyl only)",
+        "Impetuous",
+        "Skink Riders",
+        "Skirmishers",
+        "Swiftstride",
+        "Toad Rage"
+      ]
+    },
+    "stegadon": {
+      "stats": [
+        {
+          "Name": "Stegadon",
+          "M": "6",
+          "WS": "3",
+          "BS": "-",
+          "S": "5",
+          "T": "6",
+          "W": "6",
+          "I": "2",
+          "A": "4",
+          "Ld": "-"
+        },
+        {
+          "Name": "Ancient Stegadon",
+          "M": "6",
+          "WS": "4",
+          "BS": "-",
+          "S": "6",
+          "T": "6",
+          "W": "6",
+          "I": "1",
+          "A": "3",
+          "Ld": "-"
+        },
+        {
+          "Name": "Skink Crew (x5)",
+          "M": "-",
+          "WS": "2",
+          "BS": "3",
+          "S": "3",
+          "T": "-",
+          "W": "-",
+          "I": "4",
+          "A": "1",
+          "Ld": "6"
+        }
+      ],
+      "armourValue": "4+ (Stegadon) 3+ (Stegadon Ancient)"
+    },
+    "bastiladon": {
+      "stats": [
+        {
+          "Name": "Bastiladon",
+          "M": "4",
+          "WS": "3",
+          "BS": "-",
+          "S": "4",
+          "T": "5",
+          "W": "4",
+          "I": "1",
+          "A": "3",
+          "Ld": "-"
+        },
+        {
+          "Name": "Skink Crew (x3)",
+          "M": "-",
+          "WS": "2",
+          "BS": "3",
+          "S": "3",
+          "T": "-",
+          "W": "-",
+          "I": "4",
+          "A": "1",
+          "Ld": "6"
+        }
+      ],
+      "troopType": "Monstrous creature",
+      "baseSize": "60 x 100 mm",
+      "armourValue": "3+",
+      "equipment": [],
+      "specialRules": [
+        "Close Order",
+        "Cold Blooded",
+        "Immune to Psychology",
+        "Impact Hits (D3)",
+        "Impervious Defence",
+        "Large Target",
+        "Poisoned Attacks (javelins only)",
+        "Stomp Attacks (D3+1)",
+        "Skink Riders",
+        "Stubborn",
+        "Terror"
+      ]
+    },
+    "troglodon": {
+      "stats": [
+        {
+          "Name": "Troglodon",
+          "M": "8",
+          "WS": "3",
+          "BS": "-",
+          "S": "5",
+          "T": "5",
+          "W": "5",
+          "I": "2",
+          "A": "3",
+          "Ld": "-"
+        },
+        {
+          "Name": "Skink Oracle",
+          "M": "-",
+          "WS": "2",
+          "BS": "3",
+          "S": "3",
+          "T": "-",
+          "W": "-",
+          "I": "4",
+          "A": "1",
+          "Ld": "8"
+        }
+      ],
+      "notes": [
+        "Troglodon: Venomous talons (see below), venom spray (see below) and scaly skin (counts as heavy armour) • Skink Oracle: Hand weapon",
+        "A Skink Oracle may:",
+        "Immune to Psychology, Large Target, Lore of Lustria, Predatory Fighter (Troglodon Only), Primeval Roar, Skink Riders, Stomp Attacks (2), Stubborn, Terror"
+      ],
+      "troopType": "Monstrous creature",
+      "baseSize": "50 x 100 mm",
+      "equipment": [],
+      "specialRules": [
+        "Arcane Vassal",
+        "Armoured Hide (3)",
+        "Aquatic",
+        "Close Order",
+        "Cold Blooded"
+      ]
+    },
+    "slann mage priest": {
+      "stats": [
+        {
+          "Name": "Slann Mage-Priest",
+          "M": "4",
+          "WS": "2",
+          "BS": "3",
+          "S": "3",
+          "T": "4",
+          "W": "5",
+          "I": "2",
+          "A": "1",
+          "Ld": "9"
+        }
+      ],
+      "troopType": "Monstrous creature infantry",
+      "baseSize": "50 x 50 mm min, 60 mm max",
+      "notes": [
+        "May take a single purchase 0-3 Disciplines of the Old Ones up to a total of 100 points • May purchase magic items up to a total of 100 points"
+      ]
+    },
+    "cold one": {
+      "stats": [
+        {
+          "Name": "Cold One",
+          "M": "7",
+          "WS": "3",
+          "BS": "-",
+          "S": "4",
+          "T": "-",
+          "W": "-",
+          "I": "2",
+          "A": "2",
+          "Ld": "-"
+        }
+      ],
+      "notes": [
+        "Note: A character mounted on a Terradon has +1 Toughness and +1 Wound."
+      ],
+      "troopType": "Monstrous cavalry",
+      "baseSize": "40 x 40 mm",
+      "equipment": [
+        "Claws and teeth (counts as a hand weapon)"
+      ],
+      "specialRules": [
+        "Armoured Hide (1)",
+        "Drop Rocks",
+        "Fear",
+        "Fly (10)",
+        "Swiftstride"
+      ]
+    },
+    "carnosaur": {
+      "stats": [
+        {
+          "Name": "Carnosaur",
+          "M": "7",
+          "WS": "4",
+          "BS": "0",
+          "S": "7",
+          "T": "(+1)",
+          "W": "(+4)",
+          "I": "2",
+          "A": "4",
+          "Ld": "-"
+        }
+      ],
+      "specialRules": [
+        "Blood Frenzy",
+        "Close Order",
+        "Cold Blooded",
+        "Large Target",
+        "Predatory Fighter",
+        "Stomp Attacks (2)",
+        "Swiftstride",
+        "Terror"
+      ],
+      "troopType": "Behemoth",
+      "baseSize": "50 x 100 mm",
+      "equipment": [
+        "Slashing talons (see below) and scaly skin (counts as heavy armour)"
+      ],
+      "notes": [
+        "Character Mount: A Carnosaur may only be included in your army as a character’s mount. Its points are added to that of its rider."
+      ]
+    },
+    "ripperdactyl": {
+      "stats": [
+        {
+          "Name": "Ripperdactyl",
+          "M": "2",
+          "WS": "4",
+          "BS": "-",
+          "S": "4",
+          "T": "(+1)",
+          "W": "(+1)",
+          "I": "3",
+          "A": "3",
+          "Ld": "-"
+        }
+      ],
+      "equipment": [
+        "Wicked claws Claws and teeth (counts as a hand weapon)"
+      ],
+      "specialRules": [
+        "Armoured Hide (1)",
+        "Cleaving Blow (Ripperdactyl only)",
+        "Fear",
+        "Fly (9)",
+        "Furious Charge",
+        "Predatory Fighter (Ripperdactyl only)",
+        "Impetuous",
+        "Swiftstride",
+        "Toad Rage (see page 11)",
+        "Furious Charge Predatory Fighter (Ripperdactyl only)"
+      ],
+      "notes": [
+        "Note: A character mounted on a Ripperdactyl has +1 Toughness and +1 Wound."
+      ],
+      "troopType": "Monstrous cavalry",
+      "baseSize": "40 x 40 mm"
+    },
+    "saurus oldblood": {
+      "equipment": [
+        "Hand weapon and scaly skin (counts as heavy armour)"
+      ],
+      "notes": [
+        "Oldblood: Cold Blooded, Furious Charge*, Obsidian Blades, Predatory Fighter, Rallying Cry, Armoured Hide (2) • Scar-Veteran: Cold Blooded, Furious Charge*, Obsidian Blades, Predatory Fighter, Rallying Cry, Armoured Hide (1)",
+        "*Note that this special rule does not apply to this model’s mount (should it have one)"
+      ]
+    },
+    "saurus scar veteran": {
+      "equipment": [
+        "Hand weapon and scaly skin (counts as heavy armour)"
+      ],
+      "notes": [
+        "Oldblood: Cold Blooded, Furious Charge*, Obsidian Blades, Predatory Fighter, Rallying Cry, Armoured Hide (2) • Scar-Veteran: Cold Blooded, Furious Charge*, Obsidian Blades, Predatory Fighter, Rallying Cry, Armoured Hide (1)",
+        "*Note that this special rule does not apply to this model’s mount (should it have one)"
+      ]
+    },
+    "skink priest": {
+      "equipment": [
+        "Hand weapon and calloused hide (counts as light armour)"
+      ],
+      "notes": [
+        "Skink Priest: Arcane Vassal, Armoured Hide (1), Aquatic*, Cold Blooded, Lore of Lustria • Skink Chief: Armoured Hide (1), Aquatic*, Cold Blooded, Poisoned Attacks*"
+      ]
+    },
+    "skink chief": {
+      "equipment": [
+        "Hand weapon and calloused hide (counts as light armour)"
+      ],
+      "notes": [
+        "Skink Priest: Arcane Vassal, Armoured Hide (1), Aquatic*, Cold Blooded, Lore of Lustria • Skink Chief: Armoured Hide (1), Aquatic*, Cold Blooded, Poisoned Attacks*"
+      ]
+    },
+    "kroxigors": {
+      "baseSize": "40 x 40 mm min, 50 x 50 mm max",
+      "equipment": [
+        "Great weapons and plated carapace (counts as full plate) scaly skin (counts as heavy armour)"
+      ]
+    },
+    "cold one riders": {
+      "notes": [
+        "Cold One Riders: Hand weapons scaly skin (counts as heavy armour) cavalry spears, and shields • Cold Ones: Claws and teeth (counts as hand weapons)"
+      ]
+    }
+  },
+  "magicItemText": {
+    "shield-of-the-mirror-pool": {
+      "body": "The Shield of the Mirror Pool is a shield. In addition, any magic missile that strikes the bearer or any unit he is with is reflected on the roll of 4+ on a D6. If the spell is reflected, the caster (and their unit) become the target of the spell. The caster may make a Wizardly dispel attempt. In addition, each time the bearer loses one or more Wounds to a Magic Missile, the caster suffers a single Strength 5 hit with an AP of -2."
+    },
+    "sun-standard-of-chotec": {
+      "body": "Enemy units cannot declare a Stand & Shoot charge reaction against a unit carrying the Sun Standard of Chotec. In addition, enemy models suffer a -1 modifier on any To Hit rolls made against the unit carrying this banner. any enemy model that targets a unit carrying this banner during the Shooting phase suffers an additional -1 To Hit modifier."
+    },
+    "jaguar-standard": {
+      "body": "When a unit carrying the Jaguar Standard makes a Pursuit or Charge roll, it may roll an extra D6 and discard the lowest result.\n\nEnchanted Items"
+    },
+    "venom-of-the-firefly-frog": {
+      "body": "All attacks made during the Combat phase by the bearer of the Venom of the Firefly Frog have the Poisoned Attacks and Flaming Attacks Magical Attacks special rules.\n\nNote that this only applies to non-magical weapons and does not apply to a model’s mount (should it have one)."
+    },
+    "itxi-grub": {
+      "body": "Single use. Before making a Casting roll, the bearer may attempt to consume a single Itxi Grub by making a Leadership test Toughness test using their own Leadership. If this test is passed, the bearer may apply a +3 modifier to the Casting roll. However, if this test is failed, the bearer immediately loses a single Wound."
+    },
+    "higher-state-of-mind-consciousness": {
+      "body": "This character gains the Ethereal special rule."
+    },
+    "focus-of-mystery": {
+      "body": "This Character does not randomly generate their spells. Instead, they know all of the spells from their chosen lore. The character may discard up to two of these spells in favour of up to two spells chosen from the Lore of Lustria or their lore's signature spell.\n\nNote this Discipline cannot be combined with Wandering Deliberations."
+    },
+    "wandering-deliberations": {
+      "body": "Instead of generating spells normally, this character knows four five signature spells chosen from the following Lores of Magic: Battle Magic, Daemonology, Dark Magic,\n\nElementalism, High Magic, Illusion and Necromancy. The character may discard up to two of these signature spells in favour of up to two spells from the Lore of Lustria (see page 21)."
+    },
+    "becalming-cogitation": {
+      "body": "Once per turn, the Slann Mage-Priest may re-roll one of the D6 when making a Wizardly dispel attempt. In addition, this character increases their Dispel range by 3\"."
+    },
+    "sorcerous-void": {
+      "body": "This character gains the Magic Resistance (-D3) special rule. Roll the D3 before armies are deployed."
+    },
+    "soul-of-stone": {
+      "body": "The first time that a Slann suffers a Miscast, the spell fails\n\nautomatically, but no roll on the Miscast table is taken. When rolling on the Miscast table, this character can modify the result by -1 (to a minimum of 2), or by +1 (to a maximum of 12)."
+    },
+    "the-focused-rumination": {
+      "body": "This character may apply a +1 modifier to any of their Casting or Dispel rolls. In addition, this character can cast one more spell than is normal for their Level of Wizardry per turn."
+    }
+  },
+  "lores": {
+    "lore-of-lustria": {
+      "name": "Lore of Lustria",
+      "spells": [
+        {
+          "slug": "spell-apotheosis",
+          "name": "Apotheosis",
+          "number": null,
+          "signature": true
+        },
+        {
+          "slug": "spell-monsoon",
+          "name": "Monsoon",
+          "number": null,
+          "signature": true
+        }
+      ]
+    }
+  },
+  "notes": [
+    "A Slann Mage-Priest may purchase up to three a single Disciplines of the Old Ones. Each Discipline may only be taken once per army."
+  ],
+  "composition": {
+    "sourceRules": {
+      "Characters": [
+        "0-1 Slann Mage-Priest or 0-1 Saurus Oldblood per 1,000 points • Saurus Scar-Veterans, Skink Chiefs, and Skink Priests"
+      ],
+      "Core": [
+        "1+ unit of Saurus Warriors, Skink Cohorts, Skink Skirmishers and Jungle Swarms • 0-1 unit of Temple Guard (if your General is a Slann Mage-Priest)"
+      ],
+      "Special": [
+        "Chameleon Skinks, Kroxigor, Ripperdactyl Riders, Terradon Riders, Bastiladons, Stegadons, Temple Guard and Cold One Riders • 0-1 unit of Terradon Riders per Skink Hero taken • 0-1 unit of Ripperdactyl Riders per Skink Hero taken • 0-2 Bastiladons per 1,000 points"
+      ],
+      "Rare": [
+        "Ancient Stegadons, Salamander Packs, Razordon Packs and Troglodons • 0-1 Salamander Pack or Razordon Pack per 1,000 points • 0-1 Stegadon or Troglodon per 1,000 points"
+      ]
     }
   }
 }

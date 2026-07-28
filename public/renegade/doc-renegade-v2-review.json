@@ -4,9 +4,9 @@
   "generatedFrom": "doc-renegade-v2-reference.json",
   "what": "Option price lines found in the pack, and what happened to each. `unmatched` = no option of that name on the unit, so it is either worded differently in the OWB catalogue or the pack adds a new option. `refused` = matched but deliberately not applied, with the reason.",
   "stats": {
-    "applied": 9,
-    "refused": 6,
-    "unmatched": 17,
+    "applied": 5,
+    "refused": 4,
+    "unmatched": 14,
     "todoBlocksSkipped": 12
   },
   "applied": [

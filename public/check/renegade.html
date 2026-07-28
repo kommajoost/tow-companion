@@ -78,6 +78,10 @@
     color: var(--faint); font: 500 8px/1 ui-monospace, SFMono-Regular, Consolas, monospace;
     letter-spacing: .04em; margin-bottom: 5px;
   }
+  .source-context {
+    color: var(--muted); font: 11px/1.45 ui-monospace, SFMono-Regular, Consolas, monospace;
+    margin: -1px 0 8px; overflow-wrap: anywhere;
+  }
   .source-table { min-width: 760px; font-size: 12.5px; }
   .source-table td { padding: 5px 8px; border: 1px solid var(--line); }
   .row-meta {
@@ -150,16 +154,23 @@ function sourceBlock(block) {
     ? ` · ${esc(block.tableType)}${block.pointsBasis ? ` · ${esc(block.pointsBasis)}` : ''}`
     : '';
   const label = `<div class="source-id">${esc(block.id)} · ${esc(block.type)}${tableInfo} · ${block.changeKinds.map(esc).join(' + ')}</div>`;
+  const path = Array.isArray(block.headingPath) && block.headingPath.length
+    ? `<div>pad: ${block.headingPath.map(esc).join(' → ')}</div>`
+    : '';
+  const owner = block.unitContext?.name
+    ? `<div>unit: <b>${esc(block.unitContext.name)}</b> · ${esc(block.unitContext.method)} · ${esc(block.unitContext.confidence)}</div>`
+    : '<div>unit: — (legerbrede regel/compositie)</div>';
+  const context = `<div class="source-context">${path}${owner}soort: ${esc(block.entryKind || block.tableType || block.type)}</div>`;
   if (block.type === 'heading') {
-    return `<div class="source-block" id="source-${esc(block.id)}">${label}<h3>${rich(block.segments)}</h3></div>`;
+    return `<div class="source-block" id="source-${esc(block.id)}">${label}${context}<h3>${rich(block.segments)}</h3></div>`;
   }
   if (block.type === 'paragraph') {
-    return `<div class="source-block" id="source-${esc(block.id)}">${label}<p>${rich(block.segments)}</p></div>`;
+    return `<div class="source-block" id="source-${esc(block.id)}">${label}${context}<p>${rich(block.segments)}</p></div>`;
   }
   if (block.type === 'list') {
     const items = block.items.map((item) => `<li>${rich(item.segments)}</li>`).join('');
     const tag = block.ordered ? 'ol' : 'ul';
-    return `<div class="source-block" id="source-${esc(block.id)}">${label}<${tag} class="source-list">${items}</${tag}></div>`;
+    return `<div class="source-block" id="source-${esc(block.id)}">${label}${context}<${tag} class="source-list">${items}</${tag}></div>`;
   }
   const rowMeta = new Map((block.statlineRows || []).map((entry) => [entry.rowIndex, entry]));
   const rows = block.rows.map((row, rowIndex) => {
@@ -171,20 +182,21 @@ function sourceBlock(block) {
       return `<td${cell.colspan > 1 ? ` colspan="${cell.colspan}"` : ''}${cell.rowspan > 1 ? ` rowspan="${cell.rowspan}"` : ''}>${rich(cell.segments)}${annotation}</td>`;
     }).join('')}</tr>`;
   }).join('');
-  return `<div class="source-block" id="source-${esc(block.id)}">${label}<div class="scroll"><table class="source-table"><tbody>${rows}</tbody></table></div></div>`;
+  return `<div class="source-block" id="source-${esc(block.id)}">${label}${context}<div class="scroll"><table class="source-table"><tbody>${rows}</tbody></table></div></div>`;
 }
 
 async function main() {
   const comp = COMP[army];
   if (!comp) { el('who').textContent = `onbekende army "${army}"`; return; }
 
-  const [overlay, cat, reference, review] = await Promise.all([
-    fetch(`../renegade/${comp}.json`).then((r) => r.json()),
-    fetch(`../owb/${army}.json`).then((r) => r.json()),
-    fetch(`../renegade/${comp}-reference.json`).then((r) => r.json()),
+  const [overlay, cat, reference, review, coverage] = await Promise.all([
+    fetch(`../renegade/${comp}.json`, { cache: 'no-store' }).then((r) => r.json()),
+    fetch(`../owb/${army}.json`, { cache: 'no-store' }).then((r) => r.json()),
+    fetch(`../renegade/${comp}-reference.json`, { cache: 'no-store' }).then((r) => r.json()),
     // Written by scripts/import-renegade-options.mjs. Absent is not an error — it only exists once that
     // importer has run for this pack.
-    fetch(`../renegade/${comp}-review.json`).then((r) => (r.ok ? r.json() : null)).catch(() => null),
+    fetch(`../renegade/${comp}-review.json`, { cache: 'no-store' }).then((r) => (r.ok ? r.json() : null)).catch(() => null),
+    fetch(`../renegade/${comp}-coverage.json`, { cache: 'no-store' }).then((r) => (r.ok ? r.json() : null)).catch(() => null),
   ]);
 
   // Flatten the catalogue by unit id, keeping EVERY occurrence. A unit can legitimately sit in more
@@ -197,6 +209,20 @@ async function main() {
       const e = units[u.id] || (units[u.id] = { name: u.name_en, at: [] });
       // The unit's own priceable options, one level of nesting included — the option table below needs
       // them to confirm that each patched name still exists on the unit.
+      const opts = [];
+      for (const g of ['equipment', 'armor', 'options', 'command', 'mounts']) {
+        (u[g] || []).forEach((o) => {
+          opts.push({ group: g, name: o.name_en, points: o.points });
+          (o.options || []).forEach((s) => opts.push({ group: g, name: s.name_en, points: s.points }));
+        });
+      }
+      e.at.push({ category, points: u.points, opts });
+    }
+  }
+  for (const [category, arr] of Object.entries(overlay.addedUnits || {})) {
+    if (!Array.isArray(arr)) continue;
+    for (const u of arr) {
+      const e = units[u.id] || (units[u.id] = { name: u.name_en, at: [] });
       const opts = [];
       for (const g of ['equipment', 'armor', 'options', 'command', 'mounts']) {
         (u[g] || []).forEach((o) => {
@@ -247,7 +273,7 @@ async function main() {
   // `_was` is what the base cost WHEN THE OVERLAY WAS GENERATED. Re-checking it against the live
   // catalogue is the point of this table: `npm run sync-owb` can move a base price, and then the
   // overlay is quietly claiming a change that is no longer the real change.
-  const rows = Object.entries(overlay.units);
+  const rows = Object.entries(overlay.units).filter(([, patch]) => typeof patch.points === 'number');
   const order = { characters: 0, core: 1, special: 2, rare: 3, mercenaries: 4, allies: 5 };
   const firstCat = (u) => (u && u.at.length ? u.at[0].category : undefined);
   rows.sort((a, b) => {
@@ -256,7 +282,7 @@ async function main() {
       || String(ua ? ua.name : a[0]).localeCompare(String(ub ? ub.name : b[0]));
   });
   let stale = 0;
-  html += `<h2>Unit-aanpassingen — ${rows.length}</h2><div class="scroll"><table><thead><tr>
+  html += `<h2>Unitprijsaanpassingen — ${rows.length}</h2><div class="scroll"><table><thead><tr>
     <th>categorie</th><th>unit</th><th class="num">basis</th><th class="num">RV2</th>
     <th class="num">verschil</th><th>controle</th></tr></thead><tbody>`;
   for (const [id, patch] of rows) {
@@ -310,18 +336,88 @@ async function main() {
     html += `<div class="scroll"><table><thead><tr><th>unit</th><th>optie</th><th>groep</th>
       <th class="num">basis</th><th class="num">RV2</th><th class="num">verschil</th><th>controle</th></tr></thead><tbody>`;
     for (const r of optRows) {
-      const d = r.points - r._was;
-      const check = r.live
-        ? '<span style="color:var(--faint)">✓</span>'
-        : '<span class="flag">⚠ optienaam bestaat niet meer op deze unit — de patch doet niets</span>';
+      const basis = typeof r._was === 'number' ? r._was : r.live?.points;
+      const d = typeof r.points === 'number' && typeof basis === 'number' ? r.points - basis : null;
+      const check = r.action === 'upsert' && !r.live
+        ? '<span style="color:var(--faint)">✓ wordt toegevoegd</span>'
+        : r.action === 'remove' && r.live
+          ? '<span style="color:var(--faint)">✓ wordt verwijderd</span>'
+          : r.live
+            ? '<span style="color:var(--faint)">✓</span>'
+            : '<span class="flag">⚠ doeloptie bestaat niet en de patch voegt haar niet toe</span>';
       html += `<tr><td>${esc(r.unit)}</td><td>${esc(r.name_en)}</td><td class="cat">${esc(r.group)}</td>
-        <td class="num" style="color:var(--muted)">${r._was}</td><td class="num"><b>${r.points}</b></td>
-        <td class="num ${d > 0 ? 'up' : 'down'}">${d > 0 ? '+' : ''}${d}</td><td>${check}</td></tr>`;
+        <td class="num" style="color:var(--muted)">${basis ?? '—'}</td><td class="num"><b>${r.action === 'remove' ? 'verwijderd' : r.points ?? 'gewijzigd'}</b></td>
+        <td class="num ${d > 0 ? 'up' : 'down'}">${d == null ? '—' : `${d > 0 ? '+' : ''}${d}`}</td><td>${check}</td></tr>`;
     }
     html += '</tbody></table></div>';
   }
 
   // ── rules ──────────────────────────────────────────────────────────────────────────────────────
+  const addedRows = Object.entries(overlay.addedUnits || {}).flatMap(([category, list]) =>
+    (list || []).map((unit) => ({ category, unit })));
+  html += `<h2>Nieuwe units — ${addedRows.length}</h2>`;
+  if (!addedRows.length) html += '<p class="note">Dit pack voegt geen nieuwe datasheets toe.</p>';
+  else {
+    html += '<div class="scroll"><table><thead><tr><th>categorie</th><th>unit</th><th class="num">punten</th><th>unit size</th><th>special rules</th></tr></thead><tbody>';
+    for (const { category, unit } of addedRows) {
+      html += `<tr><td class="cat">${esc(category)}</td><td>${esc(unit.name_en)}</td><td class="num">${unit.points ?? '—'}</td>
+        <td>${esc(`${unit.minimum ?? 1}${unit.maximum ? `–${unit.maximum}` : '+'}`)}</td>
+        <td>${esc(unit.specialRules?.name_en || '—')}</td></tr>`;
+    }
+    html += '</tbody></table></div>';
+  }
+
+  const compositionRows = Object.entries(overlay.composition?.sourceRules || {});
+  html += `<h2>Compositieregels — ${compositionRows.reduce((total, [, rules]) => total + rules.length, 0)}</h2>`;
+  for (const [section, clauses] of compositionRows) {
+    html += `<div class="rule"><h3>${esc(section)}</h3>${paras(clauses)}</div>`;
+  }
+
+  if ((overlay.notes || []).length) {
+    html += `<h2>Overige pack-bepalingen — ${overlay.notes.length}</h2><div class="rule">${paras(overlay.notes)}</div>`;
+  }
+
+  const profileRows = Object.entries(overlay.profiles || {});
+  html += `<h2>V2-profielen — ${profileRows.length}</h2>`;
+  if (profileRows.length) {
+    html += '<div class="scroll"><table><thead><tr><th>unit/mount</th><th>troop type</th><th>profielrijen</th></tr></thead><tbody>';
+    for (const [name, profile] of profileRows) {
+      const metadata = [
+        profile.baseSize && `base ${profile.baseSize}`,
+        profile.armourValue && `armour ${profile.armourValue}`,
+        ...(profile.equipment || []).map((value) => `equipment: ${value}`),
+        ...(profile.specialRules || []).map((value) => `rule: ${value}`),
+        ...(profile.notes || []).map((value) => `note: ${value}`),
+      ].filter(Boolean).join(' · ');
+      html += `<tr><td>${esc(name)}</td><td>${esc(profile.troopType || '—')}</td>
+        <td>${esc([(profile.stats || []).map((row) => `${row.Name}: M${row.M} WS${row.WS} BS${row.BS} S${row.S} T${row.T} W${row.W} I${row.I} A${row.A} Ld${row.Ld}`).join(' · '), metadata].filter(Boolean).join(' · ') || '—')}</td></tr>`;
+    }
+    html += '</tbody></table></div>';
+  }
+
+  const itemRows = Object.entries(overlay.magicItems || {}).flatMap(([list, items]) =>
+    (items || []).map((item) => ({ list, item })));
+  html += `<h2>Magic items, gifts en disciplines — ${itemRows.length}</h2>`;
+  if (itemRows.length) {
+    html += '<div class="scroll"><table><thead><tr><th>lijst</th><th>naam</th><th>type</th><th class="num">punten</th><th>V2-tekst</th></tr></thead><tbody>';
+    for (const { list, item } of itemRows) {
+      const itemSlug = String(item.name || item.name_en).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+      html += `<tr><td class="cat">${esc(list)}</td><td>${esc(item.name_en)}</td><td>${esc(item.type)}</td><td class="num">${item.points ?? '—'}</td>
+        <td>${esc(overlay.magicItemText?.[itemSlug]?.body || '—')}</td></tr>`;
+    }
+    html += '</tbody></table></div>';
+  }
+
+  const loreRows = Object.entries(overlay.lores || {});
+  html += `<h2>Gewijzigde spreukenlijsten — ${loreRows.length}</h2>`;
+  if (loreRows.length) {
+    html += '<div class="scroll"><table><thead><tr><th>lore</th><th>gewijzigde/nieuwe spreuken</th></tr></thead><tbody>';
+    for (const [lore, patch] of loreRows) {
+      html += `<tr><td>${esc(patch.name || lore)}</td><td>${esc((patch.spells || []).map((spell) => spell.name).join(' · '))}</td></tr>`;
+    }
+    html += '</tbody></table></div>';
+  }
+
   const ruleEntries = Object.entries(overlay.rules || {});
   html += `<h2>Gewijzigde regels — ${ruleEntries.length}</h2>`;
   if (!ruleEntries.length) {
@@ -381,6 +477,23 @@ async function main() {
     }
   }
 
+  if (coverage) {
+    const c = coverage.counts || {};
+    const open = (c.unresolved || 0) + (c.unsupported || 0);
+    html += `<h2>Implementatiedekking</h2>
+      <div class="coverage">
+        <div><small>automatisch toegepast</small><strong>${c.applied || 0}</strong></div>
+        <div><small>gestructureerd vastgelegd</small><strong>${c.captured || 0}</strong></div>
+        <div><small>onopgelost</small><strong>${c.unresolved || 0}</strong></div>
+        <div><small>nog niet ondersteund</small><strong>${c.unsupported || 0}</strong></div>
+        <div><small>bron-todo</small><strong>${c.todo || 0}</strong></div>
+      </div>
+      <p class="note">${open
+        ? `<span class="flag">${open} gemarkeerde blokken hebben nog geen bevestigde implementatie.</span>`
+        : 'Alle niet-todo bronblokken hebben een bevestigde implementatiestatus.'}
+        De ledger staat in <a href="../renegade/${esc(comp)}-coverage.json">${esc(comp)}-coverage.json</a>.</p>`;
+  }
+
   // ── every highlighted source block ─────────────────────────────────────────────────────────────
   const byId = new Map(reference.blocks.map((block) => [block.id, block]));
   const sourceBlocks = reference.armyListChangedBlockIds.map((id) => byId.get(id)).filter(Boolean);
@@ -399,13 +512,12 @@ async function main() {
   }
 
   // ── implementation status ──────────────────────────────────────────────────────────────────────
+  const remaining = coverage ? (coverage.counts.unresolved || 0) + (coverage.counts.unsupported || 0) : null;
   html += `<h2>Implementatiestatus</h2><p class="note">
-    De broncontrole is volledig: alle gemarkeerde army-listregels, profielen, opties, uitrusting,
-    magic items, composition-regels en loretekst staan hierboven en in de JSON. De actieve
-    <b>${esc(comp)}</b>-overlay heeft nog scope <b>${esc(overlay.scope)}</b> en past momenteel
-    ${rows.length} unitprijswijzigingen en ${ruleEntries.length} afwijkende regelteksten toe.
-    De overige bronblokken zijn nu expliciet zichtbaar als implementatiewerk in plaats van stilzwijgend
-    te ontbreken.</p>`;
+    De bronextractie is volledig; de implementatie is ${remaining === 0 ? '<b>volledig bevestigd</b>' : '<b>nog niet volledig</b>'}.
+    De actieve <b>${esc(comp)}</b>-overlay past momenteel ${rows.length} unitprijswijzigingen,
+    ${optRows.length} optiemutaties en ${ruleEntries.length} afwijkende regelteksten toe.
+    ${remaining == null ? '' : `Volgens de coverage-ledger staan nog <b>${remaining}</b> niet-todo blokken open.`}</p>`;
 
   el('out').innerHTML = html;
 

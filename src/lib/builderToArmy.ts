@@ -5,15 +5,21 @@
 
 import type { Army, ArmyUnit, UnitProfile } from '../types';
 import { CATEGORIES, campaignUnitId, entryPoints, loadoutLabels, magicItemId, selectedMagicItems, selectedMountIndex, selectedOptions, validate, type BuilderList, type Category, type OwbArmy, type OwbUnit, type MagicItemsData } from './owbBuilder';
+import { applyMountStatModifiers, mountStatModifiers } from './mountModifiers';
 
 /** Per-item flavour + rules text snapshot (public/owb/magic-item-text.json), keyed by item slug. */
 export type MagicText = Record<string, { description?: string; body?: string }>;
 
 /** Per-mount special-rules snapshot (public/owb/mount-text.json), keyed by normalised mount name. */
-export type MountText = Record<string, { specialRules?: string[] }>;
+export type MountText = Record<string, {
+  specialRules?: string[]; troopType?: string; baseSize?: string; armourValue?: string;
+  equipment?: string[]; notes?: string[];
+}>;
 
 // Normalise a mount/option name to the mount-text key (strip "(…)", "{…}", "*", a leading "2x ").
 const normMount = (s: string) => (s || '').toLowerCase().replace(/ *\([^)]*\) */g, '').replace(/[{}[\]*]/g, '').replace(/^[0-9]+x /g, '').trim();
+const normMountProfile = (s: string) => (s || '').toLowerCase().replace(/\{[^}]*\}/g, '')
+  .replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim();
 
 // A magic item's snapshot body is usually a clean "Rule, Rule, Rule" list (e.g. a weapon's
 // "Armour Bane (1), Magical Attacks", a rune's effects). Prose ("Notes: …" or full sentences) is kept
@@ -47,7 +53,7 @@ export function builderListToArmy(
   list: NamedBuilderList,
   catalogue: OwbArmy,
   statsFor: (name: string) => StatRow[],
-  opts: { faction?: string; composition?: string; itemsData?: MagicItemsData; armyItemLists?: string[]; magicText?: MagicText; mountText?: MountText; troopTypeFor?: (name: string) => string | undefined; factionNames?: string[] } = {},
+  opts: { faction?: string; composition?: string; overlayId?: string; itemsData?: MagicItemsData; armyItemLists?: string[]; magicText?: MagicText; mountText?: MountText; troopTypeFor?: (name: string) => string | undefined; factionNames?: string[] } = {},
 ): Army {
   // A shared datasheet (e.g. the War Hydra) bundles weapons for several armies, tagged like
   // "Serrated maws {renegade}" / "Fiery breath {dark elves}". Keep only the ones for THIS army:
@@ -75,9 +81,25 @@ export function builderListToArmy(
     const droppedChampions = (Array.isArray(u.command) ? u.command : [])
       .filter((o) => /\(champion\)/i.test(o?.name_en || '') && !o.active && !selectedOptNames.has((o.name_en || '').toLowerCase()))
       .map((o) => (o.name_en || '').replace(/\s*\(champion\)\s*/i, '').trim().toLowerCase());
-    const profiles: UnitProfile[] = statsFor(u.name_en)
-      .filter((r) => !droppedChampions.includes((r.Name || '').toLowerCase()))
-      .map((r) => ({ label: r.Name, stats: STAT_COLS.map((k) => ({ k, v: r[k] ?? '-' })) }));
+    const mIdx = selectedMountIndex(u, e);
+    const mOpt = mIdx >= 0 && Array.isArray(u.mounts) ? u.mounts[mIdx] : undefined;
+    const mRows = mOpt?.name_en && !/^on foot$/i.test(mOpt.name_en)
+      ? (statsFor(mOpt.name_en).length ? statsFor(mOpt.name_en) : statsFor(normMount(mOpt.name_en)))
+      : [];
+    const mountModifiers = mountStatModifiers(mRows);
+    const baseRows = statsFor(u.name_en)
+      .filter((r) => !droppedChampions.includes((r.Name || '').toLowerCase()));
+    const effectiveRows = applyMountStatModifiers(baseRows, mountModifiers);
+    const mountName = mOpt?.name_en?.replace(/\s*\{[^}]*\}/g, '').trim();
+    const profiles: UnitProfile[] = effectiveRows.map((r, rowIndex) => ({
+      label: r.Name,
+      stats: STAT_COLS.map((k) => {
+        const base = baseRows[rowIndex]?.[k] ?? '-';
+        const value = r[k] ?? '-';
+        const modified = value !== base;
+        return { k, v: value, ...(modified ? { modified: true, base, source: mountName } : {}) };
+      }),
+    }));
     const specialRules = (u.specialRules?.name_en || '').split(',').map((s) => s.trim()).filter(Boolean);
     // Selected magic items (one pass). `magicItems` = ALL of them (weapons, armour, talismans,
     // enchanted/arcane items, runes, banners) → tappable terms on the unit card. `magicWeapons` =
@@ -97,15 +119,23 @@ export function builderListToArmy(
       });
     // Chosen mount → its own stat profile (statsFor) + special rules (mount-text), surfaced in-game.
     const mounts: ArmyUnit['mounts'] = [];
-    const mIdx = selectedMountIndex(u, e);
-    const mOpt = mIdx >= 0 && Array.isArray(u.mounts) ? u.mounts[mIdx] : undefined;
     if (mOpt?.name_en && !/^on foot$/i.test(mOpt.name_en)) {
       const nm = normMount(mOpt.name_en);
-      const rows = statsFor(mOpt.name_en).length ? statsFor(mOpt.name_en) : statsFor(nm);
-      const mProfiles: UnitProfile[] = rows.map((r) => ({ label: r.Name, stats: STAT_COLS.map((k) => ({ k, v: r[k] ?? '-' })) }));
-      const mRules = opts.mountText?.[nm]?.specialRules ?? [];
-      const mType = opts.troopTypeFor?.(mOpt.name_en) ?? opts.troopTypeFor?.(nm);
-      if (mProfiles.length || mRules.length) mounts.push({ name: mOpt.name_en, profiles: mProfiles, specialRules: mRules, troopType: mType });
+      const profileKey = normMountProfile(mOpt.name_en);
+      const mProfiles: UnitProfile[] = mRows.map((r) => ({ label: r.Name, stats: STAT_COLS.map((k) => ({ k, v: r[k] ?? '-' })) }));
+      const text = opts.mountText?.[profileKey] ?? opts.mountText?.[nm] ?? {};
+      const mRules = text.specialRules ?? [];
+      const mType = text.troopType ?? opts.troopTypeFor?.(mOpt.name_en)
+        ?? opts.troopTypeFor?.(profileKey) ?? opts.troopTypeFor?.(nm);
+      const details = [
+        text.baseSize ? `Base size: ${text.baseSize}` : null,
+        text.armourValue ? `Armour value: ${text.armourValue}` : null,
+        ...(text.equipment ?? []).map((value) => `Equipment: ${value}`),
+        ...(text.notes ?? []),
+      ].filter((value): value is string => !!value);
+      if (mProfiles.length || mRules.length || details.length) {
+        mounts.push({ name: mOpt.name_en, profiles: mProfiles, specialRules: mRules, troopType: mType, details });
+      }
     }
     units.push({
       id: e.uid,
@@ -139,6 +169,7 @@ export function builderListToArmy(
     system: 'Warhammer: The Old World',
     faction: opts.faction || 'Dark Elves',
     composition: opts.composition || list.composition,
+    overlayId: opts.overlayId,
     units,
     raw: '',
   };

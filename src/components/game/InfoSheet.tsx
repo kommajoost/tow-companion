@@ -18,6 +18,8 @@ export interface InfoSheetData {
   flavour?: string;
   profiles?: UnitProfile[];
   rules: string[];
+  /** Datasheet context that is neither a stat nor a special rule (base, equipment, mount note). */
+  details?: string[];
 }
 
 // A modal for things that have no rule page of their own — a magic item (flavour + rules) or a mount
@@ -70,6 +72,10 @@ export function InfoSheet({ info, onClose }: { info: InfoSheetData | null; onClo
         {info.flavour && (
           <p style={{ margin: '0 0 6px', fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 13, color: TOW.parchDim, lineHeight: 1.5 }}>{info.flavour}</p>
         )}
+
+        {info.details?.map((detail, i) => (
+          <p key={i} style={{ margin: '0 0 5px', fontFamily: towFont.serif, fontSize: 12.5, color: TOW.parchDim, lineHeight: 1.45 }}>{detail}</p>
+        ))}
 
         {info.profiles?.map((p, pi) => (
           <div key={pi} className="no-scrollbar" style={{ overflowX: 'auto', marginBottom: 8 }}>

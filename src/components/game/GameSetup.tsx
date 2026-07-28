@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { TOW, towFont, engraved } from '../../design/tow';
 import { usePersistentState, setPersisted } from '../../store';
 import { useGame } from '../../game';
@@ -6,6 +6,10 @@ import { parseArmyList } from '../../lib/armyParser';
 import { builderListToArmy, listTotal, type MagicText, type MountText } from '../../lib/builderToArmy';
 import { makeTroopTypeLookup, enrichArmyTroopTypes } from '../../lib/troopTypes';
 import { compName } from '../../lib/armies';
+import {
+  applyOverlay, applyOverlayItems, applyOverlayMagicText, applyOverlayMountText, applyOverlayStatIndex, hasOverlay, isOverlay,
+  overlayStatsFor, OVERLAY_FILES, type CompositionOverlay,
+} from '../../lib/overlays';
 import type { BuilderList, OwbArmy, MagicItemsData } from '../../lib/owbBuilder';
 import { OwbInstructions } from './OwbInstructions';
 import { BattleSetup } from './BattleSetup';
@@ -15,7 +19,6 @@ import { myCampaignBattles, type CampaignBattleSummary } from '../../lib/campaig
 
 const eb = engraved as React.CSSProperties;
 const BASE = import.meta.env.BASE_URL;
-const normRule = (s: string) => (s || '').toLowerCase().replace(/ *\([^)]*\) */g, '').replace(/[{}[\]*]/g, '').replace(/^[0-9]x /g, '').replace(/[“”]/g, '"').trim();
 interface SavedList extends BuilderList { id: string; name: string; army: string; createdAt: number; updatedAt: number }
 interface StatRow { Name: string; M: string; WS: string; BS: string; S: string; T: string; W: string; I: string; A: string; Ld: string }
 
@@ -57,6 +60,7 @@ export function GameSetup() {
   const [itemsData, setItemsData] = useState<MagicItemsData | null>(null);
   const [magicText, setMagicText] = useState<MagicText>({});
   const [mountText, setMountText] = useState<MountText>({});
+  const [overlays, setOverlays] = useState<Record<string, CompositionOverlay>>({});
 
   useEffect(() => {
     fetch(`${BASE}owb/rules-index.json`).then((r) => r.json()).then(setStatIdx).catch(() => {});
@@ -83,22 +87,41 @@ export function GameSetup() {
     return () => { cancelled = true; };
   }, [lists, catalogues]);
 
-  const statsFor = useMemo(() => (unitName: string): StatRow[] => {
-    if (!statIdx) return [];
-    const key = normRule(unitName);
-    let e = statIdx[key];
-    if (!e?.stats?.length) { const w = key.split(' '); const last = w[w.length - 1]; if (/s$/.test(last)) e = statIdx[[...w.slice(0, -1), last.replace(/s$/, '')].join(' ')]; }
-    return e?.stats ?? [];
-  }, [statIdx]);
+  useEffect(() => {
+    const need = Array.from(new Set(lists.map((list) => list.composition)))
+      .filter((composition) => hasOverlay(composition) && !overlays[composition]);
+    if (!need.length) return;
+    let cancelled = false;
+    Promise.all(need.map((composition) => fetch(`${BASE}renegade/${OVERLAY_FILES[composition]}`)
+      .then((response) => response.ok ? response.json() : null)
+      .then((json) => isOverlay(json) ? [composition, json] as const : null)
+      .catch(() => null)))
+      .then((pairs) => {
+        if (cancelled) return;
+        const found: Record<string, CompositionOverlay> = {};
+        for (const pair of pairs) if (pair) found[pair[0]] = pair[1];
+        if (Object.keys(found).length) setOverlays((current) => ({ ...current, ...found }));
+      });
+    return () => { cancelled = true; };
+  }, [lists, overlays]);
 
   const armyNameFor = (slug: string) => armyNames[slug] ?? slug;
-  const troopTypeFor = useMemo(() => makeTroopTypeLookup(statIdx), [statIdx]);
 
   const pickedList = pickedId ? lists.find((l) => l.id === pickedId) || null : null;
-  const pickedCatalogue = pickedList ? catalogues[pickedList.army] ?? null : null;
+  const rawPickedCatalogue = pickedList ? catalogues[pickedList.army] ?? null : null;
+  const pickedOverlay = pickedList && hasOverlay(pickedList.composition)
+    ? overlays[pickedList.composition] ?? null
+    : null;
+  const pickedCatalogue = rawPickedCatalogue && pickedOverlay
+    ? applyOverlay(rawPickedCatalogue, pickedOverlay)
+    : rawPickedCatalogue;
+  const pickedItemsData = itemsData && pickedOverlay ? applyOverlayItems(itemsData, pickedOverlay) : itemsData;
+  const pickedStatIdx = statIdx && pickedOverlay ? applyOverlayStatIndex(statIdx, pickedOverlay) : statIdx;
+  const statsFor = (name: string): StatRow[] => statIdx ? overlayStatsFor(statIdx, name, pickedOverlay) : [];
+  const troopTypeFor = makeTroopTypeLookup(pickedStatIdx);
   const army: Army | null =
-    pickedList && pickedCatalogue
-      ? builderListToArmy(pickedList, pickedCatalogue, statsFor, { faction: armyNameFor(pickedList.army), composition: compName(pickedList.composition, pickedList.army), itemsData: itemsData ?? undefined, armyItemLists: itemsByArmy[pickedList.army] ?? [], magicText, mountText, troopTypeFor, factionNames: Object.values(armyNames) })
+    pickedList && pickedCatalogue && (!hasOverlay(pickedList.composition) || pickedOverlay)
+      ? builderListToArmy(pickedList, pickedCatalogue, statsFor, { faction: armyNameFor(pickedList.army), composition: compName(pickedList.composition, pickedList.army), overlayId: pickedOverlay?.id, itemsData: pickedItemsData ?? undefined, armyItemLists: itemsByArmy[pickedList.army] ?? [], magicText: applyOverlayMagicText(magicText, pickedOverlay), mountText: applyOverlayMountText(mountText, pickedOverlay), troopTypeFor, factionNames: Object.values(armyNames) })
       : paste.trim() ? enrichArmyTroopTypes(parseArmyList(paste), troopTypeFor) : null;
 
   const loadGames = useCallback(async () => {
@@ -176,10 +199,15 @@ export function GameSetup() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 8 }}>
               {lists.map((l) => {
                 const on = pickedId === l.id;
-                const cat = catalogues[l.army] ?? null;
-                const total = cat ? listTotal(l, cat, itemsData ?? undefined) : null;
+                const raw = catalogues[l.army] ?? null;
+                const overlay = hasOverlay(l.composition) ? overlays[l.composition] ?? null : null;
+                const cat = raw && overlay ? applyOverlay(raw, overlay) : raw;
+                const itemPool = itemsData && overlay ? applyOverlayItems(itemsData, overlay) : itemsData;
+                const total = cat && (!hasOverlay(l.composition) || overlay)
+                  ? listTotal(l, cat, itemPool ?? undefined)
+                  : null;
                 return (
-                  <button key={l.id} onClick={() => setPickedId(on ? null : l.id)}
+                  <button key={l.id} disabled={!cat || (hasOverlay(l.composition) && !overlay)} onClick={() => setPickedId(on ? null : l.id)}
                     style={{ display: 'flex', alignItems: 'center', gap: 8, textAlign: 'left', padding: '11px 13px', borderRadius: 11, cursor: 'pointer', border: `1px solid ${on ? TOW.goldDeep : TOW.line}`, background: on ? TOW.cardLt : TOW.panel2 }}>
                     <span style={{ flex: 1, minWidth: 0, fontFamily: towFont.display, fontWeight: 600, fontSize: 15, color: TOW.ink, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{l.name}</span>
                     <span style={{ ...eb, fontSize: 8, color: TOW.muted, flexShrink: 0 }}>{total ?? '…'}/{l.points} pts · {l.entries.length} unit{l.entries.length === 1 ? '' : 's'}</span>

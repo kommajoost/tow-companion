@@ -35,10 +35,11 @@ import { useBackClose } from '../../lib/backStack';
 import { makeTroopTypeLookup } from '../../lib/troopTypes';
 import {
   DEFAULT_MAGIC_BUDGET, entryPoints, magicCategories, magicGroupSpent, magicItemId,
-  magicWouldExceed, radioSelected, selectedMagicKeys, setExclusiveSubOption, subOptionGroups,
+  magicWouldExceed, radioSelected, selectedMagicKeys, selectedMountIndex, setExclusiveSubOption, subOptionGroups,
   toggleMagicItem, toggleSubOption, unitBlocks, unitCategoryFor,
   type Category, type ListEntry, type MagicCategory, type MagicItem, type OwbOption,
 } from '../../lib/owbBuilder';
+import { applyMountStatModifiers, mountStatModifiers } from '../../lib/mountModifiers';
 import { BUILDER, BudgetBar, fmt, HAIRLINE, SectionHeader, StatStrip, type BudgetSegment } from './primitives';
 import type { BuilderCtx } from './types';
 
@@ -291,7 +292,8 @@ export function UnitOptions(props: {
 
   // ── hooks: all unconditional, before any early return ──────────────────────────────────────────
   const { lores } = useData();
-  const statIdx = useStatIndex();
+  const fetchedStatIdx = useStatIndex();
+  const statIdx = (ctx.statIdx as StatIndex | null | undefined) ?? fetchedStatIdx;
   const statsFor = useMemo(() => (unitName: string): StatRow[] => {
     if (!statIdx) return [];
     const key = normRule(unitName);
@@ -395,7 +397,11 @@ export function UnitOptions(props: {
     CAT_LABEL[effCat],
   ].filter(Boolean).join(' · ');
 
-  const profiles = statsFor(cleanLabel(unit.name_en));
+  const selectedMount = unit.mounts?.[selectedMountIndex(unit, entry)];
+  const mountModifiers = selectedMount?.name_en && !/^on foot$/i.test(selectedMount.name_en)
+    ? mountStatModifiers(statsFor(cleanLabel(selectedMount.name_en)))
+    : {};
+  const profiles = applyMountStatModifiers(statsFor(cleanLabel(unit.name_en)), mountModifiers);
   const profile = profiles[Math.min(profileIdx, profiles.length - 1)];
 
   const blocks = unitBlocks(unit);
@@ -707,7 +713,14 @@ export function UnitOptions(props: {
               </div>
             ) : null}
             <StatStrip
-              stats={STAT_COLS.map((k) => ({ label: k, value: profile[k] && profile[k] !== '0' ? profile[k]! : '–' }))}
+              stats={STAT_COLS.map((k) => ({
+                label: k,
+                value: profile[k] && profile[k] !== '0' ? profile[k]! : '–',
+                modified: !!mountModifiers[k],
+                title: mountModifiers[k]
+                  ? `${mountModifiers[k] > 0 ? '+' : ''}${mountModifiers[k]} from ${cleanLabel(selectedMount?.name_en ?? 'mount')}`
+                  : undefined,
+              }))}
               save={profile.Sv}
             />
           </div>

@@ -12,6 +12,109 @@
   },
   "status": "draft",
   "scope": "points-and-rules",
+  "inheritsComposition": "de-renegade",
+  "composition": {
+    "includeOnly": true,
+    "units": {
+      "dark-elf-dreadlord": {
+        "category": "characters",
+        "notes": "0-1 Dark Elf Dreadlord or Supreme Sorceress per 1,000 points"
+      },
+      "dark-elf-master": {
+        "category": "characters"
+      },
+      "supreme-sorceress": {
+        "category": "characters",
+        "notes": "0-1 Dark Elf Dreadlord or Supreme Sorceress per 1,000 points"
+      },
+      "sorceress": {
+        "category": "characters"
+      },
+      "high-beastmaster": {
+        "category": "characters"
+      },
+      "death-hag": {
+        "category": "characters"
+      },
+      "khainite-assassin": {
+        "category": "characters"
+      },
+      "dark-elf-warriors": {
+        "category": "core"
+      },
+      "repeater-crossbowmen": {
+        "category": "core"
+      },
+      "black-ark-corsairs": {
+        "category": "core"
+      },
+      "dark-riders": {
+        "category": "core"
+      },
+      "har-ganeth-executioners": {
+        "category": "special"
+      },
+      "witch-elves": {
+        "category": "special",
+        "notes": "0-1 unit may be taken as Core if the army includes one or more Death Hags"
+      },
+      "dark-elf-shades": {
+        "category": "special"
+      },
+      "harpies": {
+        "category": "special"
+      },
+      "black-guard-of-naggarond": {
+        "category": "special",
+        "notes": "0-1 unit per 1,000 points"
+      },
+      "cold-one-knights": {
+        "category": "special",
+        "notes": "0-1 unit per 1,000 points"
+      },
+      "scourgerunner-chariots": {
+        "category": "special",
+        "notes": "0-2 Scourgerunner Chariots or Cold One Chariots per 1,000 points"
+      },
+      "cold-one-chariots": {
+        "category": "special",
+        "notes": "0-2 Scourgerunner Chariots or Cold One Chariots per 1,000 points"
+      },
+      "sisters-of-slaughter": {
+        "category": "rare"
+      },
+      "bloodwrack-shrines": {
+        "category": "rare"
+      },
+      "war-hydra": {
+        "category": "rare",
+        "notes": "0-1 War Hydra or Kharibdyss may be taken as Special if the army includes a High Beastmaster"
+      },
+      "kharibdyss": {
+        "category": "rare",
+        "notes": "0-1 War Hydra or Kharibdyss may be taken as Special if the army includes a High Beastmaster"
+      },
+      "bloodwrack-medusas": {
+        "category": "rare"
+      },
+      "doomfire-warlocks": {
+        "category": "rare",
+        "notes": "0-1 unit per 1,000 points"
+      },
+      "reaper-bolt-throwers": {
+        "category": "rare",
+        "notes": "0-2 units per 1,000 points"
+      }
+    },
+    "sourceRules": {
+      "Special": [
+        "Har Ganeth Executioners, Witch Elves, Dark Elf Shades and Harpies • 0-1 unit of Black Guard of Naggarond per 1,000 points • 0-1 unit of Cold One Knights per 1,000 points • 0-2 Scourgerunner Chariots or Cold One Chariots per 1,000 points • If your army includes a High Beastmaster, 0-1 War Hydra or Kharibdyss may be taken as a Special choice"
+      ],
+      "Rare": [
+        "Sisters of Slaughter, Bloodwrack Shrines, War Hydras, Kharibdyss, Merwyrms (See page 45 of Arcane Journal: High Elves) and Bloodwrack Medusas • 0-1 unit of Doomfire Warlocks per 1,000 points • 0-2 Reaper Bolt Throwers per 1,000 points"
+      ]
+    }
+  },
   "units": {
     "supreme-sorceress": {
       "points": 155,
@@ -31,36 +134,69 @@
       "points": 10,
       "_was": 11,
       "_changed": [
-        "points"
-      ]
+        "points",
+        "unit-size"
+      ],
+      "minimum": 5
     },
     "har-ganeth-executioners": {
       "points": 14,
       "_was": 15,
       "_changed": [
-        "points"
-      ]
-    },
-    "sisters-of-slaughter": {
-      "points": 14,
-      "_was": 17,
-      "_changed": [
-        "points"
+        "points",
+        "unit-size",
+        "options"
+      ],
+      "minimum": 5,
+      "options": [
+        {
+          "group": "options",
+          "name_en": "Drilled",
+          "points": 1,
+          "perModel": true,
+          "_was": 2,
+          "action": "patch"
+        },
+        {
+          "group": "command",
+          "action": "patch",
+          "name_en": "Draich Master (champion)",
+          "points": 6,
+          "perModel": false
+        },
+        {
+          "group": "command",
+          "action": "patch",
+          "name_en": "Standard bearer",
+          "points": 6,
+          "perModel": false
+        },
+        {
+          "group": "command",
+          "action": "patch",
+          "name_en": "Musician",
+          "points": 6,
+          "perModel": false
+        }
       ]
     },
     "war-hydra": {
       "points": 165,
       "_was": 200,
       "_changed": [
-        "points"
-      ]
+        "points",
+        "special-rules"
+      ],
+      "specialRules": "Close Order, Extra Attacks (+remaining Wounds), Immune to Psychology, Large Target, Monster Handlers, Regeneration (5+), Flammable, Stomp Attacks (D3+1), Terror, If One Head is Severed… Another Takes Its Place"
     },
     "bloodwrack-medusas": {
       "points": 70,
       "_was": 85,
       "_changed": [
-        "points"
-      ]
+        "points",
+        "special-rules"
+      ],
+      "specialRules": "Close Order, Elven Reflexes, Fear, Frenzy, Hatred (High Elves), Magic Resistance (-1), Murderous, Poisoned Attacks, Stony Stare, Impetuous"
     },
     "kharibdyss": {
       "points": 145,
@@ -73,8 +209,10 @@
       "points": 140,
       "_was": 175,
       "_changed": [
-        "points"
-      ]
+        "points",
+        "special-rules"
+      ],
+      "specialRules": "Close Order, Dragged Along, Will of the Gods, Elven Reflexes, Frenzy, Hatred (High Elves), Impact Hits (D6+1), Large Target, Magic Resistance (-1), Murderous, Poisoned Attacks, Stony Stare, Terror, Impetuous"
     },
     "cold-one-chariots": {
       "points": 110,
@@ -82,9 +220,285 @@
       "_changed": [
         "points"
       ]
+    },
+    "death-hag": {
+      "specialRules": "Eternal Hatred, Frenzy, Hatred (all enemies), Loner, Murderous, Poisoned Attacks, Strike First, Warband",
+      "_changed": [
+        "special-rules"
+      ]
+    },
+    "khainite-assassin": {
+      "specialRules": "Eternal Hatred, Hatred (All Enemies), Hidden, Immune to Psychology, Murderous, Strike First, Poisoned Attacks",
+      "_changed": [
+        "special-rules",
+        "mounts"
+      ],
+      "options": [
+        {
+          "group": "mounts",
+          "action": "upsert",
+          "name_en": "Dark Steed",
+          "points": 14
+        },
+        {
+          "group": "mounts",
+          "action": "upsert",
+          "name_en": "Cold One",
+          "points": 18
+        },
+        {
+          "group": "mounts",
+          "action": "upsert",
+          "name_en": "Dark Pegasus",
+          "points": 35
+        }
+      ]
+    },
+    "dark-elf-warriors": {
+      "minimum": 5,
+      "_changed": [
+        "unit-size"
+      ]
+    },
+    "black-ark-corsairs": {
+      "minimum": 5,
+      "_changed": [
+        "unit-size",
+        "special-rules",
+        "options"
+      ],
+      "specialRules": "Elven Reflexes, Hatred (High Elves), Move through Cover, Open Order, Sea Dragon Cloak, Vanguard",
+      "options": [
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "Ambushers",
+          "points": 1,
+          "perModel": true
+        },
+        {
+          "group": "command",
+          "action": "patch",
+          "name_en": "Reaver (champion)",
+          "points": 6,
+          "perModel": false
+        },
+        {
+          "group": "command",
+          "action": "patch",
+          "name_en": "Standard bearer",
+          "points": 6,
+          "perModel": false
+        },
+        {
+          "group": "command",
+          "action": "patch",
+          "name_en": "Musician",
+          "points": 6,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "Veteran special rule",
+          "points": 1,
+          "perModel": false
+        }
+      ]
+    },
+    "black-guard-of-naggarond": {
+      "minimum": 5,
+      "_changed": [
+        "unit-size",
+        "special-rules"
+      ],
+      "specialRules": "Close Order, Elven Reflexes, Eternal Hatred, Hatred (All Enemies), Immune to Psychology, Martial Prowess, Stubborn"
+    },
+    "dark-elf-shades": {
+      "specialRules": "Elven Reflexes, Evasive, Hatred (High Elves), Move through Cover, Scouts, Skirmishers, Fire & Flee",
+      "_changed": [
+        "special-rules",
+        "options"
+      ],
+      "options": [
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "Feigned Flight",
+          "points": 1,
+          "perModel": true
+        },
+        {
+          "group": "command",
+          "action": "patch",
+          "name_en": "Bloodshade (champion)",
+          "points": 6,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Ambushers",
+          "points": 1,
+          "perModel": true
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Chariot Runners",
+          "points": 1,
+          "perModel": true
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Veteran",
+          "points": 1,
+          "perModel": true
+        }
+      ]
+    },
+    "witch-elves": {
+      "minimum": 5,
+      "_changed": [
+        "unit-size",
+        "special-rules"
+      ],
+      "specialRules": "Close Order, Elven Reflexes, Frenzy, Hatred (High Elves), Horde, Loner, Murderous, Poisoned Attacks, Strike First, Warband"
+    },
+    "cold-one-knights": {
+      "specialRules": "Armour Bane (1, Cold One only), Armoured Hide (1), Close Order, Elven Reflexes, Fear, First Charge, Hatred (High Elves), Stupidity, Swiftstride, Counter Charge",
+      "_changed": [
+        "special-rules"
+      ]
+    },
+    "sisters-of-slaughter": {
+      "points": 14,
+      "_was": 17,
+      "_changed": [
+        "points",
+        "unit-size",
+        "special-rules",
+        "command"
+      ],
+      "minimum": 5,
+      "specialRules": "Dance of Death, Elven Reflexes, Hatred (High Elves), Murderous, Strike First, Open Order, Skirmishers, Warband, First to the Fray",
+      "options": [
+        {
+          "group": "command",
+          "name_en": "Hag (champion)",
+          "renameTo": "Handmaiden of Shards (champion)",
+          "points": 7,
+          "option": {
+            "magic": {
+              "types": [
+                "weapon",
+                "armor",
+                "talisman",
+                "enchanted-item"
+              ],
+              "maxPoints": 25
+            }
+          }
+        }
+      ]
     }
   },
-  "magicItems": {},
+  "magicItems": {
+    "dark-elves": [
+      {
+        "name_en": "Whip Of Agony",
+        "name": "whip of agony",
+        "points": 20,
+        "type": "weapon",
+        "onePerArmy": true,
+        "_was": 30,
+        "name_de": "Peitsche der Qualen",
+        "name_cn": "痛苦之鞭",
+        "name_fr": "Fouet de l’Agonie",
+        "name_it": "Whip of Agony"
+      },
+      {
+        "name_en": "Banner Of Nagarythe",
+        "name": "banner of nagarythe",
+        "points": 50,
+        "type": "banner",
+        "onePerArmy": true,
+        "_was": 65,
+        "name_de": "Banner von Nagarythe",
+        "name_cn": "纳加瑞斯之旗",
+        "name_fr": "Bannière de Nagarythe",
+        "name_it": "Banner of Nagarythe"
+      },
+      {
+        "name_en": "Cold-Blooded Banner",
+        "name": "cold-blooded banner",
+        "points": 20,
+        "type": "banner",
+        "onePerArmy": true,
+        "name_de": "Banner der Kaltblütigkeit",
+        "name_cn": "冷血旗帜",
+        "name_fr": "Bannière de Sang-froid",
+        "name_it": "Cold-Blooded Banner"
+      },
+      {
+        "name_en": "Black Dragon Egg",
+        "name": "black dragon egg",
+        "points": 35,
+        "type": "enchanted-item",
+        "onePerArmy": true,
+        "name_de": "Schwarzes Drachenei",
+        "name_cn": "黑龙卵",
+        "name_fr": "Œuf de Dragon Noir",
+        "name_it": "Black Drago Egg"
+      },
+      {
+        "name_en": "Focus Familiar",
+        "name": "focus familiar",
+        "points": 10,
+        "type": "arcane-item",
+        "stackable": true,
+        "onePerArmy": false,
+        "name_de": "Zauberhomonkulus*",
+        "name_cn": "专注魔宠*",
+        "name_fr": "Familier Espion*",
+        "name_it": "Focus Familiar*"
+      },
+      {
+        "name_en": "Tome Of Furion",
+        "name": "tome of furion",
+        "points": 15,
+        "type": "arcane-item",
+        "stackable": true,
+        "onePerArmy": false,
+        "name_de": "Buch des Furion",
+        "name_cn": "富里翁秘著",
+        "name_fr": "Livre de Furion",
+        "name_it": "Tome of Furion"
+      },
+      {
+        "name_en": "Upgrade one model to a Draich Master (champion) +6 points per unit • Upgrade one model to a standard bearer +6 points per unit • Upgrade one model to a musician +6 points per unit • Have the Drilled special rule +1 points per model • Purchase a magic standard worth up to",
+        "name": "upgrade one model to a draich master champion 6 points per unit upgrade one model to a standard bearer 6 points per unit upgrade one model to a musician 6 points per unit have the drilled special rule 1 points per model purchase a magic standard worth up to",
+        "points": 50,
+        "type": "enchanted-item",
+        "onePerArmy": true
+      },
+      {
+        "name_en": "A Draich Master may purchase magic items up to a total of",
+        "name": "a draich master may purchase magic items up to a total of",
+        "points": 50,
+        "type": "enchanted-item",
+        "onePerArmy": true
+      },
+      {
+        "name_en": "A Handmaiden of Shards may purchase magic items up to a total of",
+        "name": "a handmaiden of shards may purchase magic items up to a total of",
+        "points": 25,
+        "type": "enchanted-item",
+        "onePerArmy": true
+      }
+    ]
+  },
   "rules": {
     "will-of-the-gods": {
       "name_en": "Will of the Gods",
@@ -92,6 +506,724 @@
         "A model with this special rule may join a unit of Infantry with unit strength 10 or more despite being a Heavy Chariot. If it does so, it must always be placed in the centre of the front rank, and it no longer has the Lumbering rule (Rulebook p. 195). Only one model with this special rule may join each unit."
       ],
       "overrides": null
+    },
+    "hekartis-blessing": {
+      "name_en": "Hekarti's Blessing",
+      "body": [
+        "Once per turn, a model with this special rule may re-roll a single failed Casting roll."
+      ],
+      "overrides": "hekartis-blessing"
+    },
+    "murderous": {
+      "name_en": "Murderous",
+      "body": [
+        "When engaged in combat, a model with this special rule may re-roll any rolls To Wound of a natural 1.",
+        "This special rule only applies to mundane weapons and does not apply to a model's mount. If the model is using a magic weapon this special rule ceases to apply."
+      ],
+      "overrides": "murderous"
+    },
+    "cursing-word": {
+      "name_en": "Cursing Word",
+      "body": [
+        "Type: Hex. Casting Value: 9+.",
+        "Whilst this spell is in play, the target enemy unit reduces either its Weapon Skill characteristic or its Ballistic Skill characteristic (chosen by the casting Wizard's controlling player) by D3. If this spell is cast, the effects of any other Hex previously cast on the target unit immediately expire. This spell lasts until the beginning of your next Start of Turn sub-phase."
+      ],
+      "overrides": "spell-cursing-word"
+    },
+    "power-of-darkness": {
+      "name_en": "Power of Darkness",
+      "body": [
+        "Type: Enchantment. Casting Value: 7+. Range: Self.",
+        "Remains in Play. Whilst this spell is in play, the caster gains a +1 modifier to their Casting rolls."
+      ],
+      "overrides": null
+    },
+    "dance-of-death": {
+      "name_en": "Dance of Death",
+      "body": [
+        "Models with this rule have a 6+ Ward save against any wounds suffered. In addition, enemy units engaged in combat with a model with this rule suffer a -1 modifier to their Maximum Rank Bonus."
+      ],
+      "overrides": "dance-of-death"
+    },
+    "cursed-coven": {
+      "name_en": "Cursed Coven",
+      "body": [
+        "A unit of Doomfire Warlocks knows a single, randomly generated spell from either the Dark Magic or Daemonology Lore of Magic. This spell may be discarded and the unit may instead select the signature spell of its chosen Lore of Magic.",
+        "If the unit has a Master, it casts this Bound spell at Power Level 1. If it includes a Master and has Unit Strength 5 or more, it casts at Power Level 2. Otherwise, it casts at Power Level 0."
+      ],
+      "overrides": "cursed-coven"
+    },
+    "dark-runes": {
+      "name_en": "Dark Runes",
+      "body": [
+        "Models with this special rule have a 4+ Ward save against any wounds suffered."
+      ],
+      "overrides": "dark-runes"
+    },
+    "altar-of-khaine": {
+      "name_en": "Altar of Khaine",
+      "body": [
+        "This model has a 5+ Ward save against any wounds suffered. In addition, any unit joined by this model gains a 6+ Ward save against any wounds suffered."
+      ],
+      "overrides": null
+    },
+    "blessings-of-khaine": {
+      "name_en": "Blessings of Khaine",
+      "body": [
+        "During the Command sub-phase, this model may make a Leadership test using its own unmodified Leadership. If passed, until your next Start of Turn sub-phase this model and one friendly Death Hag, Khainite Assassin, Witch Elves unit or Har Ganeth Executioners unit within Command range gain one blessing.",
+        "Fury of Khaine grants Extra Attacks (1). Strength of Khaine grants Cleaving Blow. Bloodshield of Khaine grants a 5+ Ward save against any wounds suffered.",
+        "The affected unit must be declared. A model or unit can only be affected by one Blessing per turn, even if the army contains multiple Cauldrons of Blood."
+      ],
+      "overrides": "blessings-of-khaine"
+    },
+    "if-one-head-is-severed-another-takes-its-place": {
+      "name_en": "If One Head is Severed… Another Takes Its Place",
+      "body": [
+        "In your Command sub-phase roll a D6 for each wound that the War Hydra has lost. On each roll of a 4+ the War Hydra immediately recovers a wound."
+      ],
+      "overrides": null
+    },
+    "har-ganeth-greatsword-profile": {
+      "name_en": "Har Ganeth Greatsword (Profile)",
+      "body": [],
+      "weaponProfile": {
+        "range": "Combat",
+        "strength": "S+2",
+        "ap": "-2",
+        "specialRules": "Cleaving Blow, Requires Two Hands"
+      },
+      "overrides": "har-ganeth-greatsword-profile"
+    },
+    "ravager-harpoon-profile": {
+      "name_en": "Ravager Harpoon (Profile)",
+      "body": [],
+      "weaponProfile": {
+        "range": "24\"",
+        "strength": "6",
+        "ap": "-3",
+        "specialRules": "Cumbersome, Multiple Wounds (D3), Ponderous"
+      },
+      "overrides": "ravager-harpoon-profile"
+    },
+    "petrifying-gaze-profile": {
+      "name_en": "Petrifying Gaze (Profile)",
+      "body": [],
+      "weaponProfile": {
+        "range": "18\"",
+        "strength": "2",
+        "ap": "N/A",
+        "specialRules": "Magical Attacks, Multiple Wounds (D3), Multiple Shots (D3)"
+      },
+      "overrides": "petrifying-gaze-profile"
+    },
+    "har-ganeth": {
+      "name_en": "Har Ganeth",
+      "body": [],
+      "weaponProfile": {
+        "range": "Combat",
+        "strength": "S+2",
+        "ap": "-2",
+        "specialRules": "Cleaving Blow, Requires Two Hands"
+      },
+      "overrides": null
+    },
+    "ravager-harpoon": {
+      "name_en": "Ravager harpoon",
+      "body": [],
+      "weaponProfile": {
+        "range": "24\"",
+        "strength": "6",
+        "ap": "-3",
+        "specialRules": "Cumbersome, Multiple Wounds (D3), Ponderous"
+      },
+      "overrides": "ravager-harpoon"
+    },
+    "petrifying-gaze": {
+      "name_en": "Petrifying gaze",
+      "body": [],
+      "weaponProfile": {
+        "range": "18\"",
+        "strength": "2",
+        "ap": "N/A",
+        "specialRules": "Magical Attacks, Multiple Wounds (D3), Multiple Shots (D3)"
+      },
+      "overrides": "petrifying-gaze"
+    },
+    "eternal-hatred": {
+      "name_en": "Eternal Hatred",
+      "body": [
+        "Against High Elves, this model’s Hatred applies in every round of close combat, not just the first.",
+        "Note that this special rule does not apply to this model’s mount (should it have one).",
+        "Will of the Gods A model with this special rule may join a unit of Infantry with unit strength 10 or more despite being a Heavy Chariot. If it does so, it must always be placed in the centre of the front rank, and it no longer has the Lumbering rule (Rulebook p. 195). Only one model with this special rule may join each unit. Hekarti’s Blessing",
+        "Once per turn, a model with this special rule may re-roll a single failed Casting roll."
+      ],
+      "overrides": "eternal-hatred"
+    },
+    "hidden": {
+      "name_en": "Hidden",
+      "body": [
+        "Khainite Assassins are not placed on the battlefield at the start of the game. Instead, they are ‘hidden’ within a friendly Dark Elf unit whose troop type is ‘infantry’ and that has a Unit Strength of five or more (excluding Harpies, including units with the Loner special rule). Make a note of which unit each Assassin is hiding within. A hidden Assassin may be revealed during any Start of Turn sub-phase or at the start of any Combat phase. Position the revealed Assassin as you would a character that has joined the unit.",
+        "If a unit in which a Khainite Assassin is hiding is destroyed or flees the battlefield before the Assassin is revealed, the Assassin is removed as a casualty. A Khainite Assassin cannot be your army General."
+      ],
+      "overrides": null
+    },
+    "forbidden-poisons": {
+      "name_en": "Forbidden Poisons",
+      "body": [
+        "As described above, a Khainite Assassin may take one of the following forbidden poisons:",
+        "Black Lotus: For each unsaved Wound inflicted upon them by this character, enemy characters suffer a -1 modifier to their Leadership characteristic, to a minimum of 2, for the remainder of the game. • Dark Venom: This character has the Killing Blow special rule. • Manbane: When this character makes a roll To Wound, a roll of 4+ is always a success, regardless of the target’s Toughness."
+      ],
+      "overrides": "forbidden-poisons"
+    },
+    "first-to-the-fray": {
+      "name_en": "First to the Fray",
+      "body": [
+        "This model increases its maximum possible charge range by 3\" and, when it makes a Charge roll, may apply a +D3 modifier to the result."
+      ],
+      "overrides": "first-to-the-fray"
+    },
+    "r-s-ap-special-rules": {
+      "name_en": "R S AP Special Rules",
+      "body": [
+        "Serrated maws Combat S - Armour Bane (1), Multiple Wounds (2) Notes: In combat, this model must make each attack granted by the Extra Attacks (+remaining Wounds) special rule with this weapon."
+      ],
+      "overrides": null
+    },
+    "spell-cursing-word": {
+      "name_en": "Cursing Word",
+      "body": [
+        "Type: Hex",
+        "Casting Value: 9+",
+        "Range: 12\"",
+        "Effect: Whilst this spell is in play, the target enemy unit reduces either its Weapon skill characteristic, or its Ballistic Skill characteristic (chosen by the casting Wizard’s controlling player) by D3. If this spell is cast, the effects of any other Hex previously cast on the target unit immediately expire. This spell lasts until the beginning of your next Start of Turn sub-phase."
+      ],
+      "overrides": "spell-cursing-word"
+    },
+    "spell-power-of-darkness": {
+      "name_en": "Power of Darkness",
+      "body": [
+        "Type: Enchantment",
+        "Casting Value: 7+",
+        "Range: Self",
+        "Effect: Remains in Play. Whilst this spell is in play, the caster gains a +1 modifier to their Casting rolls."
+      ],
+      "overrides": null
     }
-  }
+  },
+  "profiles": {
+    "supreme sorceress": {
+      "stats": [
+        {
+          "Name": "Supreme Sorceress",
+          "M": "5",
+          "WS": "4",
+          "BS": "4",
+          "S": "3",
+          "T": "3",
+          "W": "3",
+          "I": "5",
+          "A": "2",
+          "Ld": "8"
+        }
+      ]
+    },
+    "sorceress": {
+      "stats": [
+        {
+          "Name": "Sorceress",
+          "M": "5",
+          "WS": "4",
+          "BS": "4",
+          "S": "3",
+          "T": "3",
+          "W": "2",
+          "I": "4",
+          "A": "1",
+          "Ld": "8"
+        }
+      ]
+    },
+    "dark elf warriors": {
+      "stats": [
+        {
+          "Name": "Dark Elf Warrior",
+          "M": "5",
+          "WS": "4",
+          "BS": "4",
+          "S": "3",
+          "T": "3",
+          "W": "1",
+          "I": "4",
+          "A": "1",
+          "Ld": "8"
+        },
+        {
+          "Name": "Lordling",
+          "M": "5",
+          "WS": "4",
+          "BS": "4",
+          "S": "3",
+          "T": "3",
+          "W": "1",
+          "I": "4",
+          "A": "2",
+          "Ld": "8"
+        },
+        {
+          "Name": "Repeater Crossbowman",
+          "M": "5",
+          "WS": "4",
+          "BS": "4",
+          "S": "3",
+          "T": "3",
+          "W": "1",
+          "I": "4",
+          "A": "1",
+          "Ld": "8"
+        },
+        {
+          "Name": "Lordling",
+          "M": "5",
+          "WS": "4",
+          "BS": "5",
+          "S": "3",
+          "T": "3",
+          "W": "1",
+          "I": "4",
+          "A": "1",
+          "Ld": "8"
+        }
+      ]
+    },
+    "har ganeth executioners": {
+      "stats": [
+        {
+          "Name": "Executioner",
+          "M": "5",
+          "WS": "5",
+          "BS": "4",
+          "S": "4",
+          "T": "3",
+          "W": "1",
+          "I": "5",
+          "A": "1",
+          "Ld": "9"
+        },
+        {
+          "Name": "Draich Master",
+          "M": "5",
+          "WS": "5",
+          "BS": "4",
+          "S": "4",
+          "T": "3",
+          "W": "1",
+          "I": "5",
+          "A": "2",
+          "Ld": "9"
+        }
+      ],
+      "notes": [
+        "A Draich Master may purchase magic items up to a total of 50 points"
+      ],
+      "troopType": "Regular infantry",
+      "baseSize": "25 x 25 mm",
+      "equipment": [
+        "Hand weapons, Har Ganeth greatswords and heavy armour"
+      ],
+      "specialRules": [
+        "Close Order",
+        "Elven Reflexes",
+        "Hatred (High Elves)",
+        "Murderous",
+        "Veteran"
+      ]
+    },
+    "sisters of slaughter": {
+      "stats": [
+        {
+          "Name": "Sister of Slaughter",
+          "M": "5",
+          "WS": "6",
+          "BS": "4",
+          "S": "3",
+          "T": "3",
+          "W": "1",
+          "I": "6",
+          "A": "2",
+          "Ld": "9"
+        },
+        {
+          "Name": "Handmaiden of Shards",
+          "M": "5",
+          "WS": "6",
+          "BS": "4",
+          "S": "3",
+          "T": "3",
+          "W": "1",
+          "I": "6",
+          "A": "3",
+          "Ld": "9"
+        }
+      ],
+      "notes": [
+        "A Handmaiden of Shards may purchase magic items up to a total of 25 points"
+      ],
+      "troopType": "Regular infantry",
+      "baseSize": "25 x 25 mm",
+      "equipment": [
+        "Hand weapons and lash & buckler (see below)"
+      ],
+      "specialRules": [
+        "Dance of Death",
+        "Elven Reflexes",
+        "Hatred (High Elves)",
+        "Murderous",
+        "Strike First",
+        "Open Order",
+        "Skirmishers",
+        "Warband",
+        "First to the Fray"
+      ]
+    },
+    "cold one chariot": {
+      "stats": [
+        {
+          "Name": "Chariot",
+          "M": "-",
+          "WS": "-",
+          "BS": "-",
+          "S": "5",
+          "T": "5",
+          "W": "4",
+          "I": "-",
+          "A": "-",
+          "Ld": "-"
+        },
+        {
+          "Name": "Knight Charioteer (x2)",
+          "M": "-",
+          "WS": "5",
+          "BS": "4",
+          "S": "4",
+          "T": "-",
+          "W": "-",
+          "I": "5",
+          "A": "1",
+          "Ld": "9"
+        },
+        {
+          "Name": "Cold One (x2)",
+          "M": "7",
+          "WS": "3",
+          "BS": "-",
+          "S": "4",
+          "T": "-",
+          "W": "-",
+          "I": "2",
+          "A": "2",
+          "Ld": "-"
+        }
+      ]
+    },
+    "bloodwrack shrines": {
+      "stats": [
+        {
+          "Name": "Bloodwrack Shrine",
+          "M": "7",
+          "WS": "-",
+          "BS": "-",
+          "S": "5",
+          "T": "5",
+          "W": "5",
+          "I": "-",
+          "A": "-",
+          "Ld": "-"
+        },
+        {
+          "Name": "Shrinekeeper (x2)",
+          "M": "-",
+          "WS": "4",
+          "BS": "4",
+          "S": "3",
+          "T": "-",
+          "W": "-",
+          "I": "5",
+          "A": "1",
+          "Ld": "8"
+        },
+        {
+          "Name": "Bloodwrack Medusa",
+          "M": "-",
+          "WS": "5",
+          "BS": "5",
+          "S": "4",
+          "T": "-",
+          "W": "-",
+          "I": "5",
+          "A": "3",
+          "Ld": "-"
+        }
+      ],
+      "notes": [
+        "Shrinekeepers: Cavalry spears • Bloodwrack Medusa: Halberd and petrifying gaze (see below)"
+      ]
+    },
+    "war hydra": {
+      "stats": [
+        {
+          "Name": "War Hydra",
+          "M": "6",
+          "WS": "4",
+          "BS": "0",
+          "S": "5",
+          "T": "5",
+          "W": "5",
+          "I": "3",
+          "A": "2",
+          "Ld": "6"
+        },
+        {
+          "Name": "Beastmaster Handlers (x2)",
+          "M": "6",
+          "WS": "4",
+          "BS": "-",
+          "S": "3",
+          "T": "-",
+          "W": "-",
+          "I": "4",
+          "A": "1",
+          "Ld": "8"
+        }
+      ],
+      "armourValue": "4+",
+      "troopType": "Behemoth",
+      "baseSize": "60 x 100 mm (War Hydra), 25 x 25 mm (Beastmaster Handlers)",
+      "equipment": [],
+      "specialRules": [
+        "Close Order",
+        "Extra Attacks (+remaining Wounds)",
+        "Immune to Psychology",
+        "Large Target",
+        "Monster Handlers",
+        "Regeneration (5+)",
+        "Flammable",
+        "Stomp Attacks (D3+1)",
+        "Terror",
+        "If One Head is Severed… Another Takes Its Place"
+      ]
+    },
+    "kharibdyss": {
+      "stats": [
+        {
+          "Name": "Kharibdyss",
+          "M": "6",
+          "WS": "5",
+          "BS": "0",
+          "S": "7",
+          "T": "5",
+          "W": "5",
+          "I": "4",
+          "A": "5",
+          "Ld": "6"
+        },
+        {
+          "Name": "Beastmaster Handlers (x2)",
+          "M": "6",
+          "WS": "4",
+          "BS": "-",
+          "S": "3",
+          "T": "-",
+          "W": "-",
+          "I": "4",
+          "A": "1",
+          "Ld": "8"
+        }
+      ],
+      "armourValue": "4+",
+      "troopType": "Behemoth",
+      "baseSize": "60 x 100 mm (Kharibdyss), 25 x 25 mm (Beastmaster Handlers)",
+      "equipment": [],
+      "specialRules": [
+        "Abyssal Howl",
+        "Close Order",
+        "Immune to Psychology",
+        "Large Target",
+        "Monster Handlers",
+        "Stomp Attacks (D3+1)",
+        "Terror"
+      ]
+    },
+    "bloodwrack medusas": {
+      "stats": [
+        {
+          "Name": "Bloodwrack Medusa",
+          "M": "7",
+          "WS": "5",
+          "BS": "5",
+          "S": "4",
+          "T": "4",
+          "W": "4",
+          "I": "5",
+          "A": "3",
+          "Ld": "7"
+        }
+      ]
+    },
+    "manticore": {
+      "stats": [
+        {
+          "Name": "Manticore",
+          "M": "6",
+          "WS": "5",
+          "BS": "-",
+          "S": "5",
+          "T": "(+2)",
+          "W": "(+4)",
+          "I": "5",
+          "A": "4",
+          "Ld": "-"
+        }
+      ],
+      "notes": [
+        "Note: A character mounted on a Manticore has +2 Toughness and +4 Wounds.",
+        "Character Mount: A Manticore may only be included in your army as a character’s mount. Its points are added to that of its rider."
+      ],
+      "troopType": "Monstrous creature",
+      "baseSize": "60 x 100 mm",
+      "equipment": [
+        "Wicked claws (see below) and scaly skin (counts as heavy armour)"
+      ],
+      "specialRules": [
+        "Close Order",
+        "Fly (9)",
+        "Large Target",
+        "Stomp Attacks (D3)",
+        "Swiftstride",
+        "Terror",
+        "Wilful Beast"
+      ]
+    },
+    "cauldron of blood": {
+      "stats": [
+        {
+          "Name": "Cauldron of Blood",
+          "M": "5",
+          "WS": "-",
+          "BS": "-",
+          "S": "5",
+          "T": "5",
+          "W": "5",
+          "I": "-",
+          "A": "-",
+          "Ld": "-"
+        },
+        {
+          "Name": "Witch Elf Crew (x2)",
+          "M": "-",
+          "WS": "4",
+          "BS": "4",
+          "S": "3",
+          "T": "-",
+          "W": "-",
+          "I": "5",
+          "A": "1",
+          "Ld": "8"
+        }
+      ],
+      "baseSize": "Min 60 x 100 mm, max 75x100",
+      "specialRules": [
+        "Close Order",
+        "Dragged Along",
+        "Will of the Gods",
+        "Elven Reflexes",
+        "Frenzy",
+        "Hatred (High Elves)",
+        "Impact Hits (D6+1)",
+        "Large Target",
+        "Magic Resistance (-1)",
+        "Terror",
+        "Blessings Of Khaine",
+        "Altar of Khaine",
+        "Murderous",
+        "Poisoned Attacks",
+        "Strike First"
+      ],
+      "notes": [
+        "Special Rules (Witch Elf Crew): Murderous, Poisoned Attacks, Strike First",
+        "Character Mount: A Cauldron of Blood may only be included in your army as a character’s mount. Its points are added to that of its rider. ."
+      ],
+      "troopType": "Heavy Chariot",
+      "armourValue": "4+",
+      "equipment": []
+    },
+    "black guard of naggarond": {
+      "troopType": "Heavy infantry"
+    },
+    "death hag": {
+      "notes": [
+        "May take one of the following gifts of Khaine:"
+      ]
+    },
+    "cold one": {
+      "specialRules": [
+        "Armour Bane (1, Cold One only)",
+        "Armoured Hide (1)",
+        "Fear",
+        "First Charge",
+        "Stupidity",
+        "Swiftstride",
+        "Counter Charge"
+      ]
+    },
+    "dark elf shades": {
+      "equipment": [
+        "Hand weapons, repeater crossbows, and light armour"
+      ]
+    },
+    "witch elves": {
+      "notes": [
+        "Strike First, Warband"
+      ]
+    }
+  },
+  "magicItemText": {
+    "whip-of-agony": {
+      "body": "R S AP Special Rules\n\nWhip of Agony Combat S+1 -1 Magical Attacks, Strike First\n\nNotes: High Beastmasters only. Any enemy model that suffers one or more unsaved wounds from the Whip of Agony suffers a -1 modifier to its Toughness characteristic (to a minimum of 1) for the remainder of the game.\n\nMagic Armour"
+    },
+    "banner-of-nagarythe": {
+      "body": "A unit carrying the Banner of Nagarythe gains the Stubborn special rule. In addition, when calculating its combat result, the unit may claim an additional bonus of +1 combat\n\nresult point."
+    },
+    "cold-blooded-banner": {
+      "body": "Single use. A unit carrying the Cold-blooded Banner may use it after making any test against its Leadership characteristic, including a Break test. When it does, it may re-roll the test.\n\nEnchanted Items"
+    },
+    "black-dragon-egg": {
+      "body": "Single use. During the Command sub-phase of their turn, the bearer of a Black Dragon Egg can consume it. Until your next Command sub-phase, the model has a Toughness characteristic of 6 (which cannot be improved further) and gains noxious breath (see page 18)."
+    },
+    "focus-familiar": {
+      "body": "Single use. The owner of a Focus Familiar may use it when they attempt to cast a spell. Place a marker (such as a Familiar model) completely within 12\" of the owner. The range (including the range to dispel unless it is a vortex) and all effects of the spell, are measured from this marker, rather than from the owner. If the spell requires a line of sight, this is determined from the marker (which has a 360&deg; vision arc). If the spell remains in play, keep the marker on the board until the spell is dispelled or removed from play."
+    },
+    "tome-of-furion": {
+      "body": "0-1 per model. The bearer of the Tome of Furion knows one more spell (chosen in the usual way) than is normal for their Level of Wizardry."
+    }
+  },
+  "lores": {
+    "lore-of-naggaroth": {
+      "name": "Lore of Naggaroth",
+      "spells": [
+        {
+          "slug": "spell-cursing-word",
+          "name": "Cursing Word",
+          "number": null,
+          "signature": true
+        },
+        {
+          "slug": "spell-power-of-darkness-renegade-v2",
+          "name": "Power of Darkness",
+          "number": null,
+          "signature": true
+        }
+      ]
+    }
+  },
+  "notes": []
 }
