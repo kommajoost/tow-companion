@@ -61,6 +61,20 @@
       "_changed": [
         "points"
       ]
+    },
+    "bull-centaur-renders": {
+      "points": 54,
+      "_was": 56,
+      "_changed": [
+        "points"
+      ]
+    },
+    "deathshrieker-rocket-launcher": {
+      "points": 110,
+      "_was": 120,
+      "_changed": [
+        "points"
+      ]
     }
   },
   "magicItems": {},

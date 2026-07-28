@@ -68,6 +68,13 @@
       "_changed": [
         "points"
       ]
+    },
+    "bloodwrack-shrines": {
+      "points": 140,
+      "_was": 175,
+      "_changed": [
+        "points"
+      ]
     }
   },
   "magicItems": {},

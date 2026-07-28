@@ -75,6 +75,41 @@
       "_changed": [
         "points"
       ]
+    },
+    "seekers-of-slaanesh-core": {
+      "points": 19,
+      "_was": 21,
+      "_changed": [
+        "points"
+      ]
+    },
+    "seekers-of-slaanesh": {
+      "points": 19,
+      "_was": 21,
+      "_changed": [
+        "points"
+      ]
+    },
+    "hellflayer-of-slaanesh": {
+      "points": 125,
+      "_was": 145,
+      "_changed": [
+        "points"
+      ]
+    },
+    "seeker-chariot-of-slaanesh": {
+      "points": 85,
+      "_was": 100,
+      "_changed": [
+        "points"
+      ]
+    },
+    "burning-chariot-of-tzeentch": {
+      "points": 140,
+      "_was": 190,
+      "_changed": [
+        "points"
+      ]
     }
   },
   "magicItems": {},

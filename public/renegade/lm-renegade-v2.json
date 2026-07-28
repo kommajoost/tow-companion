@@ -47,6 +47,34 @@
       "_changed": [
         "points"
       ]
+    },
+    "stegadon": {
+      "points": 195,
+      "_was": 215,
+      "_changed": [
+        "points"
+      ]
+    },
+    "ancient-stegadon": {
+      "points": 210,
+      "_was": 230,
+      "_changed": [
+        "points"
+      ]
+    },
+    "bastiladon": {
+      "points": 140,
+      "_was": 160,
+      "_changed": [
+        "points"
+      ]
+    },
+    "troglodon": {
+      "points": 140,
+      "_was": 200,
+      "_changed": [
+        "points"
+      ]
     }
   },
   "magicItems": {},

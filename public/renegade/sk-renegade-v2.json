@@ -47,6 +47,13 @@
       "_changed": [
         "points"
       ]
+    },
+    "warplock-jezzails": {
+      "points": 15,
+      "_was": 19,
+      "_changed": [
+        "points"
+      ]
     }
   },
   "magicItems": {},

@@ -63,7 +63,8 @@ const PACKS = [
 
 const OUTPUT_DIR = new URL('../public/renegade/', import.meta.url);
 const VOID = new Set(['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'link', 'meta', 'source', 'wbr']);
-const BLOCK = new Set(['p', 'table', 'ul', 'ol']);
+const HEADING_TAGS = new Set(['h1', 'h2', 'h3', 'h4', 'h5', 'h6']);
+const BLOCK = new Set(['p', 'table', 'ul', 'ol', ...HEADING_TAGS]);
 const CHANGE_COLORS = new Map([
   ['#0000ff', 'changed'],
   ['blue', 'changed'],
@@ -224,18 +225,104 @@ function findDescendants(node, tags, result = []) {
   return result;
 }
 
+function pointsMentions(text) {
+  const mentions = [];
+  for (const match of text.matchAll(/(?<![\d,])([+-]?\d+)\s*points?(?:\s*per\s*(model|unit))?/gi)) {
+    mentions.push({
+      raw: match[0],
+      value: Number.parseInt(match[1], 10),
+      modifier: /^[+-]/.test(match[1]),
+      basis: match[2] ? `per-${match[2].toLowerCase()}` : 'fixed',
+    });
+  }
+  return mentions;
+}
+
+function fontSizePt(value) {
+  const match = /^([\d.]+)(pt|px)?$/i.exec(String(value ?? '').trim());
+  if (!match) return null;
+  const numeric = Number.parseFloat(match[1]);
+  return match[2]?.toLowerCase() === 'px' ? numeric * 0.75 : numeric;
+}
+
+function maximumFontSize(node, styles) {
+  if (node.type !== 'element') return 0;
+  const own = fontSizePt(nodeStyle(node, styles)['font-size']) ?? 0;
+  return Math.max(own, ...(node.children ?? []).map((child) => maximumFontSize(child, styles)), 0);
+}
+
+function visualHeadingLevel(node, styles, segments) {
+  if (node.tag !== 'p') return null;
+  const meaningful = segments.filter((segment) => segment.text.trim());
+  if (!meaningful.length || !meaningful.every((segment) => segment.bold)) return null;
+  const text = flattenText(segments);
+  if (!text || text.length > 120) return null;
+  const size = maximumFontSize(node, styles);
+  if (size < 10) return null;
+  if (size >= 18) return 1;
+  if (size >= 12) return 2;
+  return 3;
+}
+
 function makeParagraph(node, styles) {
   const segments = cleanSegments(rawSegments(node, styles));
-  return { type: 'paragraph', text: flattenText(segments), segments, changeKinds: changeKinds(segments) };
+  const text = flattenText(segments);
+  return {
+    type: 'paragraph',
+    text,
+    segments,
+    changeKinds: changeKinds(segments),
+    pointsMentions: pointsMentions(text),
+    visualHeadingLevel: visualHeadingLevel(node, styles, segments),
+  };
+}
+
+function makeHeading(node, styles) {
+  const segments = cleanSegments(rawSegments(node, styles));
+  const text = flattenText(segments);
+  return {
+    type: 'heading',
+    level: Number.parseInt(node.tag.slice(1), 10),
+    text,
+    segments,
+    changeKinds: changeKinds(segments),
+    pointsMentions: pointsMentions(text),
+  };
 }
 
 function makeList(node, styles) {
   const items = findDescendants(node, new Set(['li'])).map((item) => {
     const segments = cleanSegments(rawSegments(item, styles));
-    return { text: flattenText(segments), segments, changeKinds: changeKinds(segments) };
+    const text = flattenText(segments);
+    return { text, segments, changeKinds: changeKinds(segments), pointsMentions: pointsMentions(text) };
   }).filter((item) => item.text);
   const segments = items.flatMap((item) => item.segments);
-  return { type: 'list', ordered: node.tag === 'ol', items, text: items.map((item) => item.text).join(' • '), changeKinds: changeKinds(segments) };
+  const text = items.map((item) => item.text).join(' • ');
+  return {
+    type: 'list',
+    ordered: node.tag === 'ol',
+    items,
+    text,
+    changeKinds: changeKinds(segments),
+    pointsMentions: items.flatMap((item) => item.pointsMentions),
+  };
+}
+
+function headerTokens(row) {
+  return new Set(row.flatMap((cell) => cell.text.match(/[A-Za-z]+/g) ?? []).map((token) => token.toUpperCase()));
+}
+
+function classifyTable(rows) {
+  for (let rowIndex = 0; rowIndex < rows.length; rowIndex++) {
+    const tokens = headerTokens(rows[rowIndex]);
+    if (['M', 'WS', 'BS', 'S', 'T', 'W', 'I', 'A', 'LD', 'POINTS'].every((token) => tokens.has(token))) {
+      return { tableType: 'statline', headerRowIndex: rowIndex };
+    }
+    if (['R', 'S', 'AP', 'SPECIAL', 'RULES'].every((token) => tokens.has(token))) {
+      return { tableType: 'weapon-profile', headerRowIndex: rowIndex };
+    }
+  }
+  return { tableType: 'other', headerRowIndex: null };
 }
 
 function makeTable(node, styles) {
@@ -252,11 +339,13 @@ function makeTable(node, styles) {
     }),
   ).filter((row) => row.length);
   const segments = rows.flatMap((row) => row.flatMap((cell) => cell.segments));
+  const classification = classifyTable(rows);
   return {
     type: 'table',
     rows,
     text: rows.map((row) => row.map((cell) => cell.text).join(' | ')).join('\n'),
     changeKinds: changeKinds(segments),
+    ...classification,
   };
 }
 
@@ -265,7 +354,13 @@ function collectBlocks(root, styles) {
   const visit = (node) => {
     if (node.type !== 'element') return;
     if (BLOCK.has(node.tag)) {
-      const block = node.tag === 'table' ? makeTable(node, styles) : node.tag === 'ul' || node.tag === 'ol' ? makeList(node, styles) : makeParagraph(node, styles);
+      const block = HEADING_TAGS.has(node.tag)
+        ? makeHeading(node, styles)
+        : node.tag === 'table'
+          ? makeTable(node, styles)
+          : node.tag === 'ul' || node.tag === 'ol'
+            ? makeList(node, styles)
+            : makeParagraph(node, styles);
       if (block.text) blocks.push(block);
       return;
     }
@@ -275,68 +370,125 @@ function collectBlocks(root, styles) {
   return blocks;
 }
 
-function isProfileTable(block) {
-  if (block.type !== 'table' || block.rows.length < 2) return false;
-  return block.rows.some((row) => {
-    const labels = row.map((cell) => cell.text.trim());
-    return labels.includes('M') && labels.includes('WS') && labels.includes('T') && labels.includes('Points');
-  });
-}
-
-function profileName(block) {
-  if (!isProfileTable(block)) return null;
-  const first = block.rows[0]?.map((cell) => cell.text).filter(Boolean).join(' ').replace(/\s+/g, ' ').trim();
-  return first && first.length <= 100 ? first : null;
-}
-
-function paragraphIsBold(block) {
-  const meaningful = block.segments.filter((segment) => segment.text.trim());
-  return meaningful.length > 0 && meaningful.every((segment) => segment.bold);
-}
-
-function majorHeading(text, armyLabel) {
-  const normalized = text.replace(/\s+/g, ' ').trim();
-  if (/Grand Army Composition List/i.test(normalized)) return 'Grand Army Composition List';
-  // Contents entries carry a page number ("Lore of Naggaroth 26") and are not the actual heading.
-  if (/\s\d+$/.test(normalized)) return null;
-  if (new RegExp(`${armyLabel.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')} Special Rules`, 'i').test(normalized)) return `${armyLabel} Special Rules`;
-  if (/^(Magic Items|Magic Weapons|Magic Armour|Talismans|Enchanted Items|Arcane Items|Magic Standards)$/i.test(normalized)) return normalized;
-  if (/^(The )?Lore of\b/i.test(normalized)) return normalized;
-  if (/\b(Profile|Profiles|FAQ|Army List)\b/i.test(normalized) && normalized.length < 90) return normalized;
-  return null;
-}
-
-function decorateContexts(blocks, armyLabel) {
-  let section = 'Front matter / change log';
-  let heading = null;
-  let profile = null;
-  let grandArmySeen = 0;
+function decorateContexts(blocks) {
+  let headings = [];
   let mainStarted = false;
+  let blockIndex = 0;
+  let headingIndex = 0;
 
-  for (let index = 0; index < blocks.length; index++) {
-    const block = blocks[index];
-    const foundMajor = block.type === 'paragraph' ? majorHeading(block.text, armyLabel) : null;
-    if (foundMajor === 'Grand Army Composition List') {
-      grandArmySeen++;
-      // The first occurrence is normally the contents/overview; the last is the actual army list.
-      if (grandArmySeen >= 2) mainStarted = true;
-    }
-    if (foundMajor) {
-      section = foundMajor;
-      heading = null;
-      profile = null;
+  for (const block of blocks) {
+    const level = block.type === 'heading' ? block.level : block.visualHeadingLevel;
+    if (level) {
+      headings = headings.filter((entry) => entry.level < level);
+      headings.push({ level, text: block.text, source: block.type === 'heading' ? 'docs-heading' : 'visual-heading' });
+      if (/^Grand Army Composition List$/i.test(block.text)) mainStarted = true;
     }
 
-    const foundProfile = profileName(block);
-    if (foundProfile) profile = foundProfile;
-
-    if (block.type === 'paragraph' && block.text.length <= 100 && paragraphIsBold(block)) {
-      heading = block.text;
+    if (block.type === 'heading') {
+      headingIndex++;
+      block.id = `h${String(headingIndex).padStart(4, '0')}`;
+    } else {
+      blockIndex++;
+      block.id = `b${String(blockIndex).padStart(4, '0')}`;
     }
-
-    block.id = `b${String(index + 1).padStart(4, '0')}`;
     block.scope = mainStarted ? 'army-list' : 'front-matter';
-    block.context = { section, heading, profile };
+    block.headingPath = headings.map((entry) => entry.text);
+    block.headingPathDetail = headings.map((entry) => ({ ...entry }));
+    const h1 = [...headings].reverse().find((entry) => entry.level === 1)?.text ?? 'Front matter / change log';
+    const h2 = [...headings].reverse().find((entry) => entry.level === 2)?.text ?? null;
+    const deepest = headings.at(-1)?.text ?? null;
+    block.context = {
+      section: h1,
+      heading: deepest,
+      profile: h2,
+    };
+  }
+}
+
+function parseUnitSize(text) {
+  const match = /^Unit Size:\s*(\d+)(\+)?/i.exec(text);
+  if (!match) return null;
+  return { raw: match[0].replace(/^Unit Size:\s*/i, ''), minimum: Number.parseInt(match[1], 10), openEnded: Boolean(match[2]) };
+}
+
+function annotateStatlineTables(blocks) {
+  for (let blockIndex = 0; blockIndex < blocks.length; blockIndex++) {
+    const table = blocks[blockIndex];
+    if (table.type !== 'table' || table.tableType !== 'statline') continue;
+
+    let unitSize = null;
+    for (let nextIndex = blockIndex + 1; nextIndex < blocks.length; nextIndex++) {
+      const next = blocks[nextIndex];
+      const nextHeadingLevel = next.type === 'heading' ? next.level : next.visualHeadingLevel;
+      if (nextHeadingLevel && nextHeadingLevel <= 2) break;
+      if (next.type === 'paragraph' || next.type === 'heading') {
+        unitSize = parseUnitSize(next.text);
+        if (unitSize) break;
+      }
+    }
+    table.unitSize = unitSize;
+    const multiModelUnit = Boolean(unitSize?.openEnded || (unitSize?.minimum ?? 0) > 1);
+    table.pointsBasis = unitSize && !multiModelUnit ? 'per-unit' : 'per-model';
+
+    if (table.headerRowIndex > 0) {
+      const title = table.rows
+        .slice(0, table.headerRowIndex)
+        .flatMap((row) => row.map((cell) => cell.text).filter(Boolean))
+        .join(' ')
+        .replace(/\s+/g, ' ')
+        .trim();
+      if (title && title.length <= 120) {
+        table.tableHeading = title;
+        const rootHeading = table.headingPathDetail.find((entry) => entry.level === 1);
+        table.headingPath = [rootHeading?.text, title].filter(Boolean);
+        table.headingPathDetail = [
+          ...(rootHeading ? [rootHeading] : []),
+          { level: 2, text: title, source: 'table-title' },
+        ];
+        table.context = {
+          section: rootHeading?.text ?? table.context.section,
+          heading: title,
+          profile: title,
+        };
+      }
+    }
+
+    const statlineRows = [];
+    let hasBasePoints = false;
+    for (let rowIndex = table.headerRowIndex; rowIndex < table.rows.length; rowIndex++) {
+      const row = table.rows[rowIndex];
+      const name = row[0]?.text.trim() ?? '';
+      const pointsCellText = [...row].reverse().find((cell) => cell.text.trim())?.text.trim() ?? '';
+      const raw = (pointsCellText.match(/(?:^|\s)(\+\d+|\d+|-)$/) ?? [])[1] ?? '';
+      if (!name || /^(model|name)$/i.test(name) || !(raw === '-' || /^[-+]?\d+$/.test(raw))) continue;
+
+      let role;
+      let basis;
+      if (/^\+\d+$/.test(raw)) {
+        role = hasBasePoints ? 'champion' : 'mount';
+        basis = hasBasePoints ? 'per-unit' : 'per-model';
+      } else if (raw === '-') {
+        role = 'crew-or-mount';
+        basis = 'included';
+      } else {
+        role = multiModelUnit ? (hasBasePoints ? 'alternate-profile' : 'rank-and-file') : 'base-model';
+        basis = table.pointsBasis;
+        hasBasePoints = true;
+      }
+
+      statlineRows.push({
+        rowIndex,
+        name,
+        role,
+        points: {
+          raw,
+          value: raw === '-' ? null : Number.parseInt(raw.replace(/^\+/, ''), 10),
+          modifier: raw.startsWith('+'),
+          basis,
+        },
+      });
+    }
+    table.statlineRows = statlineRows;
   }
 }
 
@@ -346,7 +498,7 @@ function countChangedSegments(blocks) {
     for (const segment of segments) if (segment.change) result[segment.change]++;
   };
   for (const block of blocks) {
-    if (block.type === 'paragraph') count(block.segments);
+    if (block.type === 'paragraph' || block.type === 'heading') count(block.segments);
     if (block.type === 'list') for (const item of block.items) count(item.segments);
     if (block.type === 'table') for (const row of block.rows) for (const cell of row) count(cell.segments);
   }
@@ -359,7 +511,8 @@ for (const pack of PACKS) {
   const styles = cssClassStyles(html);
   const root = parseHtml(html);
   const blocks = collectBlocks(root, styles);
-  decorateContexts(blocks, pack.label);
+  decorateContexts(blocks);
+  annotateStatlineTables(blocks);
 
   const version = (flattenText(blocks.slice(0, 15).flatMap((block) =>
     block.type === 'paragraph' ? block.segments : [],
@@ -371,6 +524,7 @@ for (const pack of PACKS) {
   const segments = countChangedSegments(blocks);
   const reference = {
     id: `${pack.comp}-reference`,
+    schemaVersion: 2,
     army: pack.slug,
     label: pack.label,
     version,
@@ -385,6 +539,26 @@ for (const pack of PACKS) {
       changed: 'Differs from the official Legacy PDF (blue in the source)',
       new: 'Changed since the previous Renegade draft (magenta in the source)',
       todo: 'Incomplete or in development (yellow in the source)',
+      headingPath: 'Active Google Docs heading hierarchy for this block, from broadest to most specific',
+      tableType: {
+        statline: 'Header contains M/WS/BS/S/T/W/I/A/Ld/Points',
+        'weapon-profile': 'Header contains R/S/AP/Special Rules',
+        other: 'Table does not match either profile signature',
+      },
+      statlineRole: {
+        'rank-and-file': 'Primary model in a multi-model unit',
+        champion: 'Per-unit upgraded model; Points is a +N modifier',
+        'base-model': 'Primary model in a single-model unit or character entry',
+        'alternate-profile': 'Additional separately priced base profile in the same entry',
+        mount: 'Mount profile with a +N modifier and no base model row in the table',
+        'crew-or-mount': 'Included supporting profile; the source Points cell is "-"',
+      },
+      pointsBasis: {
+        'per-model': 'Cost applies to each model',
+        'per-unit': 'Cost applies once to the unit',
+        included: 'No separate cost; included in another profile',
+        fixed: 'Fixed cost where the source does not say per model or per unit',
+      },
     },
     stats: {
       totalBlocks: blocks.length,
@@ -393,6 +567,8 @@ for (const pack of PACKS) {
       changedSegments: segments.changed,
       newSegments: segments.new,
       todoSegments: segments.todo,
+      statlineTables: blocks.filter((block) => block.tableType === 'statline').length,
+      weaponProfileTables: blocks.filter((block) => block.tableType === 'weapon-profile').length,
     },
     changedBlockIds,
     armyListChangedBlockIds,

@@ -40,6 +40,13 @@
       "_changed": [
         "points"
       ]
+    },
+    "stonehorn-riders": {
+      "points": 220,
+      "_was": 245,
+      "_changed": [
+        "points"
+      ]
     }
   },
   "magicItems": {
