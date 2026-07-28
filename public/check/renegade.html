@@ -53,6 +53,42 @@
   .rule { border-top: 1px solid var(--line); padding: 15px 0; }
   .rule h3 { margin: 0 0 3px; font-size: 15.5px; font-weight: 700; }
   .rule p { margin: 0 0 9px; max-width: 74ch; }
+  .coverage {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(135px, 1fr)); gap: 1px;
+    background: var(--line); border: 1px solid var(--line); margin: 12px 0 8px;
+  }
+  .coverage > div { background: var(--paper2); padding: 10px 12px; }
+  .coverage small {
+    display: block; color: var(--faint); font: 600 8px/1.3 ui-sans-serif, system-ui, sans-serif;
+    letter-spacing: .14em; text-transform: uppercase; margin-bottom: 3px;
+  }
+  .coverage strong { color: var(--ink); font-size: 18px; font-weight: 500; }
+  .legend { display: flex; flex-wrap: wrap; gap: 7px 16px; margin: 10px 0 16px; color: var(--muted); font-size: 12px; }
+  .swatch { display: inline-block; width: 8px; height: 8px; margin-right: 5px; border-radius: 50%; }
+  .swatch.changed { background: #6c9ce8; }
+  .swatch.new { background: #d978c7; }
+  .swatch.todo { background: #d9b779; }
+  .source-group {
+    margin: 24px 0 5px; color: var(--gold-deep); font: 600 9px/1.4 ui-sans-serif, system-ui, sans-serif;
+    letter-spacing: .14em; text-transform: uppercase;
+  }
+  .source-block { border-top: 1px solid var(--line); padding: 11px 0 12px; }
+  .source-block p { max-width: 92ch; margin: 0 0 6px; }
+  .source-id {
+    color: var(--faint); font: 500 8px/1 ui-monospace, SFMono-Regular, Consolas, monospace;
+    letter-spacing: .04em; margin-bottom: 5px;
+  }
+  .source-table { min-width: 760px; font-size: 12.5px; }
+  .source-table td { padding: 5px 8px; border: 1px solid var(--line); }
+  .source-list { margin: 0; padding-left: 21px; max-width: 94ch; }
+  .source-list li { margin: 0 0 5px; }
+  .seg-changed { color: #8eb6f2; background: rgba(70, 118, 190, .12); }
+  .seg-new { color: #e495d5; background: rgba(190, 76, 166, .12); }
+  .seg-todo { color: #e6c983; background: rgba(190, 155, 68, .12); }
+  .source-note {
+    border: 1px solid var(--line-strong); background: var(--paper2); padding: 12px 14px;
+    color: var(--muted); font-size: 12.5px; max-width: 92ch;
+  }
   .badge {
     display: inline-block; font: 600 8.5px/1 ui-sans-serif, system-ui, sans-serif; letter-spacing: .14em;
     text-transform: uppercase; padding: 3px 6px; border: 1px solid var(--gold-deep);
@@ -96,14 +132,37 @@ const el = (id) => document.getElementById(id);
 
 // A rule's text is stored as an array of paragraphs; render each as its own <p>.
 const paras = (body) => (Array.isArray(body) ? body : [String(body)]).map((p) => `<p>${esc(p)}</p>`).join('');
+const rich = (segments) => (segments || []).map((segment) => {
+  const cls = segment.change ? ` class="seg-${esc(segment.change)}"` : '';
+  let text = esc(segment.text).replace(/\n/g, '<br>');
+  if (segment.italic) text = `<i>${text}</i>`;
+  if (segment.bold) text = `<b>${text}</b>`;
+  return `<span${cls}>${text}</span>`;
+}).join('');
+
+function sourceBlock(block) {
+  const label = `<div class="source-id">${esc(block.id)} · ${esc(block.type)} · ${block.changeKinds.map(esc).join(' + ')}</div>`;
+  if (block.type === 'paragraph') {
+    return `<div class="source-block" id="source-${esc(block.id)}">${label}<p>${rich(block.segments)}</p></div>`;
+  }
+  if (block.type === 'list') {
+    const items = block.items.map((item) => `<li>${rich(item.segments)}</li>`).join('');
+    const tag = block.ordered ? 'ol' : 'ul';
+    return `<div class="source-block" id="source-${esc(block.id)}">${label}<${tag} class="source-list">${items}</${tag}></div>`;
+  }
+  const rows = block.rows.map((row) => `<tr>${row.map((cell) =>
+    `<td${cell.colspan > 1 ? ` colspan="${cell.colspan}"` : ''}${cell.rowspan > 1 ? ` rowspan="${cell.rowspan}"` : ''}>${rich(cell.segments)}</td>`).join('')}</tr>`).join('');
+  return `<div class="source-block" id="source-${esc(block.id)}">${label}<div class="scroll"><table class="source-table"><tbody>${rows}</tbody></table></div></div>`;
+}
 
 async function main() {
   const comp = COMP[army];
   if (!comp) { el('who').textContent = `onbekende army "${army}"`; return; }
 
-  const [overlay, cat] = await Promise.all([
+  const [overlay, cat, reference] = await Promise.all([
     fetch(`../renegade/${comp}.json`).then((r) => r.json()),
     fetch(`../owb/${army}.json`).then((r) => r.json()),
+    fetch(`../renegade/${comp}-reference.json`).then((r) => r.json()),
   ]);
 
   // Flatten the catalogue by unit id, keeping EVERY occurrence. A unit can legitimately sit in more
@@ -124,14 +183,34 @@ async function main() {
   el('army').onchange = (e) => { location.search = `?army=${e.target.value}`; };
 
   el('meta').innerHTML = [
-    ['pack', `${overlay.label} — ${overlay.source.name}`],
-    ['versie', overlay.packVersion ?? '—'],
+    ['pack', `${overlay.label} — ${reference.source.name}`],
+    ['versie', reference.version ?? overlay.packVersion ?? '—'],
     ['status', overlay.status],
     ['scope', overlay.scope],
-    ['bron', `<a href="${esc(overlay.source.url)}" target="_blank" rel="noopener">${esc(overlay.source.author)}</a>`],
+    ['bron', `<a href="${esc(reference.source.url)}" target="_blank" rel="noopener">${esc(reference.source.author)}</a>`],
   ].map(([k, v]) => `${k} <b>${v}</b>`).join('');
 
   let html = '';
+
+  // ── complete source coverage ─────────────────────────────────────────────────────────────────
+  // Generated from the Google Docs HTML, not from the partial app overlay. Every coloured source
+  // segment and every uncoloured table cell around it are retained for auditing and implementation.
+  html += `<h2>Brondekking — volledige draft</h2>
+    <div class="coverage">
+      <div><small>documentblokken</small><strong>${reference.stats.totalBlocks}</strong></div>
+      <div><small>afwijkende blokken</small><strong>${reference.stats.armyListChangedBlocks}</strong></div>
+      <div><small>blauwe segmenten</small><strong>${reference.stats.changedSegments}</strong></div>
+      <div><small>magenta segmenten</small><strong>${reference.stats.newSegments}</strong></div>
+      <div><small>gele todo-segmenten</small><strong>${reference.stats.todoSegments}</strong></div>
+    </div>
+    <div class="legend">
+      <span><i class="swatch changed"></i>afwijkend van de officiële Legacy PDF</span>
+      <span><i class="swatch new"></i>nieuw sinds de vorige Renegade-draft</span>
+      <span><i class="swatch todo"></i>nog incompleet/in ontwikkeling</span>
+    </div>
+    <p class="note">De machineleesbare bron bevat ook alle ongewijzigde tekst en tabellen:
+      <a href="../renegade/${esc(comp)}-reference.json">open ${esc(comp)}-reference.json</a>.
+      De lijst onderaan toont ieder gemarkeerd bronblok uit de eigenlijke army list.</p>`;
 
   // ── units ──────────────────────────────────────────────────────────────────────────────────────
   // `_was` is what the base cost WHEN THE OVERLAY WAS GENERATED. Re-checking it against the live
@@ -198,12 +277,33 @@ async function main() {
     html += '</div>';
   }
 
-  // ── what this page cannot tell you ─────────────────────────────────────────────────────────────
-  html += `<h2>Wat hier niet in staat</h2><p class="note">
-    De overlay patcht alleen punten en regeltekst. Statlines, optie-/uitrustingsprijzen, magic items en
-    de Lores of Magic komen <b>niet</b> uit het pack — daar toont de app nog de basiswaarden, ook onder
-    Renegade V2. Regels waarvan de packtekst gelijk is aan wat de app al had, zijn bij het importeren
-    weggelaten en staan dus niet in de lijst hierboven; die lijst is per definitie alleen het verschil.</p>`;
+  // ── every highlighted source block ─────────────────────────────────────────────────────────────
+  const byId = new Map(reference.blocks.map((block) => [block.id, block]));
+  const sourceBlocks = reference.armyListChangedBlockIds.map((id) => byId.get(id)).filter(Boolean);
+  html += `<h2>Alle bronaanpassingen — ${sourceBlocks.length} blokken</h2>
+    <div class="source-note">Dit is de complete extractie van de gekleurde bronwijzigingen, inclusief
+    omliggende tabelcellen. Een blok op deze pagina is nog niet automatisch in de app geïmplementeerd.
+    De tabellen hierboven tonen uitsluitend wat de huidige overlay al daadwerkelijk toepast.</div>`;
+  let previousContext = '';
+  for (const block of sourceBlocks) {
+    const parts = [block.context.section, block.context.profile, block.context.heading]
+      .filter(Boolean).filter((value, index, values) => values.indexOf(value) === index);
+    const context = parts.join(' · ');
+    if (context && context !== previousContext) {
+      html += `<div class="source-group">${esc(context)}</div>`;
+      previousContext = context;
+    }
+    html += sourceBlock(block);
+  }
+
+  // ── implementation status ──────────────────────────────────────────────────────────────────────
+  html += `<h2>Implementatiestatus</h2><p class="note">
+    De broncontrole is volledig: alle gemarkeerde army-listregels, profielen, opties, uitrusting,
+    magic items, composition-regels en loretekst staan hierboven en in de JSON. De actieve
+    <b>${esc(comp)}</b>-overlay heeft nog scope <b>${esc(overlay.scope)}</b> en past momenteel
+    ${rows.length} unitprijswijzigingen en ${ruleEntries.length} afwijkende regelteksten toe.
+    De overige bronblokken zijn nu expliciet zichtbaar als implementatiewerk in plaats van stilzwijgend
+    te ontbreken.</p>`;
 
   el('out').innerHTML = html;
 
