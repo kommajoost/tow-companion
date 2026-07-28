@@ -152,28 +152,28 @@ export function ListBuilder() {
   //   * de catalogus-metadata is binnen (we hebben de composities van dat leger nodig);
   //   * de list-sync is uitgereconcilieerd — anders maakt een tweede apparaat een dubbele lijst
   //     voordat het de bestaande uit de cloud heeft gezien.
-  const autoGedaan = useRef(false);
-  useEffect(() => {
-    if (autoGedaan.current || !campagne) return;
-    if (sync.status === 'syncing') return;
-    if (armies.length === 0 || Object.keys(metaByArmy).length === 0) return;
-    const slug = campagne.speler.factieSlug;
-    if (!campagne.factieVast || !slug || !armies.some((a) => a.slug === slug)) return;
-    if (lists.some((l) => l.campaign && l.campaignSpeler === campagne.speler.id)) {
-      autoGedaan.current = true;
-      return;
-    }
-    autoGedaan.current = true;
+  // De campagne-lijsten van de ACTIEVE campagne, en of hun leger nog klopt met de campagne-factie.
+  // Dat laatste kan verschuiven: wie zich vergist bij het kiezen van zijn factie en het door de
+  // grensmaster laat terugzetten, houdt anders een lijst voor het verkeerde leger — en de factie is
+  // (terecht) niet in de builder te wijzigen, dus dan zit je vast.
+  const factieSlug = campagne?.speler.factieSlug ?? null;
+  const campagneLijsten = campagne ? lists.filter((l) => l.campaign && l.campaignSpeler === campagne.speler.id) : [];
+  const verkeerdLeger = factieSlug ? campagneLijsten.filter((l) => l.army !== factieSlug) : [];
+
+  const autoGedaan = useRef<string | null>(null);
+  /** Maak de campagne-lijst aan (en gooi eventueel meegegeven verouderde lijsten weg). */
+  const maakCampagneLijst = (weg: Set<string> = new Set()) => {
+    if (!campagne || !factieSlug) return;
     // Bewust metaByArmy en niet compsByArmy: die laatste wordt hieronder pas berekend, en de
     // overlay-composities (Renegade-pack) zijn hier toch niet wat je als campagne-default wilt.
-    const comps = metaByArmy[slug]?.comps ?? [slug];
+    const comps = metaByArmy[factieSlug]?.comps ?? [factieSlug];
     const regels = campagne.compositie.filter((id) => COMPOSITION_RULES.some((r) => r.id === id));
     const id = newId('l');
     setLists((ls) => [{
       id,
       name: `${campagne.label} army`,
-      army: slug,
-      composition: comps[0] ?? slug,
+      army: factieSlug,
+      composition: comps[0] ?? factieSlug,
       rule: regels[0] ?? 'open-war',
       points: campagne.puntenCap,
       entries: [],
@@ -183,8 +183,37 @@ export function ListBuilder() {
       campaignSpeler: campagne.speler.id,
       campaignNaam: campagne.speler.naam,
       campaignFase: campagne.fase,
-    }, ...ls]);
-  }, [campagne, sync.status, armies, metaByArmy, lists, setLists]);
+    }, ...ls.filter((l) => !weg.has(l.id))]);
+  };
+
+  useEffect(() => {
+    if (!campagne || !factieSlug) return;
+    if (sync.status === 'syncing') return;
+    if (armies.length === 0 || Object.keys(metaByArmy).length === 0) return;
+    if (!campagne.factieVast || !armies.some((a) => a.slug === factieSlug)) return;
+    // Sleutel op campagne + factie: verschuift de factie, dan mag dit opnieuw draaien.
+    const sleutel = `${campagne.key}:${factieSlug}`;
+    if (autoGedaan.current === sleutel) return;
+
+    if (campagneLijsten.some((l) => l.army === factieSlug)) { autoGedaan.current = sleutel; return; }
+    // Een LEGE lijst voor het verkeerde leger is niets waard: vervang 'm stil. Zit er werk in, dan
+    // blijft hij staan en biedt het paneel de keuze — iemands units gooien we niet ongevraagd weg.
+    if (verkeerdLeger.some((l) => (l.entries?.length ?? 0) > 0)) return;
+    autoGedaan.current = sleutel;
+    maakCampagneLijst(new Set(verkeerdLeger.map((l) => l.id)));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [campagne, factieSlug, sync.status, armies, metaByArmy, lists]);
+
+  /** Herstel na een factie-wissel waar wél werk in de oude lijst zit: de oude lijst blijft bestaan
+   *  als GEWONE lijst (niets weg) en er komt een nieuwe campagne-lijst voor het juiste leger. */
+  const herstelCampagneLijst = () => {
+    if (!campagne || !factieSlug) return;
+    const oud = new Set(verkeerdLeger.map((l) => l.id));
+    setLists((ls) => ls.map((l) => (oud.has(l.id)
+      ? { ...l, campaign: undefined, campaignSpeler: undefined, campaignNaam: undefined, campaignFase: undefined, computedPoints: undefined, updatedAt: Date.now() }
+      : l)));
+    autoGedaan.current = null; // het effect hierboven maakt de juiste lijst aan
+  };
 
   // ── Campagne: de puntenlimiet van een campagne-lijst volgt de Act ───────────────────────────────
   // `points` is het doel waartegen de builder valideert. Voor een campagne-lijst is dat NIET vrij: het
@@ -589,12 +618,13 @@ export function ListBuilder() {
         {/* Campagne bovenaan: dit is waar een speler die vanaf Isle of Celedon binnenkomt landt. */}
         <CeledonPanel
           lijsten={lists.map((l) => ({
-            id: l.id, name: l.name, points: l.points,
+            id: l.id, name: l.name, army: l.army, units: l.entries?.length ?? 0, points: l.points,
             computed: l.computedPoints ?? (catalogues[l.army] ? validate(l, getUnitFor(catalogues[l.army]), itemsData ?? undefined).total : null),
             campaign: l.campaign, campaignSpeler: l.campaignSpeler,
           }))}
           onOpen={(id) => setActiveId(id)}
           onTour={() => setPersisted('tow:celedon-tour', 'pending')}
+          onHerstel={herstelCampagneLijst}
         />
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12, flexWrap: 'wrap' }}>
           <h1 style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 22, color: TOW.ink, margin: 0 }}>My lists</h1>

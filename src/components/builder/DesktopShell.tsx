@@ -1000,6 +1000,11 @@ function Rail({
       {/* ── 2 · Army — read-only summary; a row opens the container's editor for that field ────── */}
       <div data-tour="lijst-naam" style={{ flexShrink: 0, padding: `0 ${BUILDER.gutter}px`, boxSizing: 'border-box' }}>
         <SectionHeader label="Army" />
+        {/* Zonder dit regeltje moet je maar raden dat deze rijen tapbaar zijn — ze zien eruit als een
+            samenvatting, en dat waren ze tot 28-07 ook. */}
+        <div style={{ ...engraved as React.CSSProperties, fontSize: 7.5, color: TOW.faint, margin: '-2px 0 4px' }}>
+          Tap a row to edit
+        </div>
         <CompactRow name="Faction" trailing={<RailValue text={labels?.faction || prettySlug(list?.army ?? '')} />} onClick={() => onEditArmyField('faction')} />
         <CompactRow name="Composition" trailing={<RailValue text={labels?.composition || '—'} />} onClick={() => onEditArmyField('composition')} />
         <CompactRow name="Game mode" trailing={<RailValue text={labels?.rule || '—'} />} onClick={() => onEditArmyField('rule')} />

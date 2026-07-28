@@ -17,14 +17,16 @@ const ruleName = (id: string): string => COMPOSITION_RULES.find((r) => r.id === 
 
 /** One saved list as this panel needs it (kept minimal so ListBuilder stays the owner of the data). */
 export interface PanelLijst {
-  id: string; name: string; points: number; computed: number | null;
+  id: string; name: string; army: string; units: number; points: number; computed: number | null;
   campaign?: boolean; campaignSpeler?: string;
 }
 
-export function CeledonPanel({ lijsten, onOpen, onTour }: {
+export function CeledonPanel({ lijsten, onOpen, onTour, onHerstel }: {
   lijsten: PanelLijst[];
   onOpen: (id: string) => void;
   onTour: () => void;
+  /** Maak een nieuwe campagne-lijst voor de huidige factie; de oude blijft als gewone lijst staan. */
+  onHerstel: () => void;
 }) {
   const { campagnes, actief, laden, fout } = useCampagnes();
   const { session, loading: authLaden, ssoError } = useAuth();
@@ -54,7 +56,12 @@ export function CeledonPanel({ lijsten, onOpen, onTour }: {
   }
 
   const eigen = lijsten.filter((l) => l.campaign && l.campaignSpeler === actief.speler.id);
-  const lijst = eigen[0] ?? null;
+  const slug = actief.speler.factieSlug;
+  // De lijst die bij de huidige factie hoort. Staat er alleen een lijst voor een ANDER leger, dan is de
+  // factie verschoven nadat die lijst gemaakt was; dat is geen fout van de speler en moet met één klik
+  // te herstellen zijn, want de factie zelf is (terecht) niet in de builder te wijzigen.
+  const lijst = eigen.find((l) => !slug || l.army === slug) ?? null;
+  const oudLeger = !lijst ? eigen[0] ?? null : null;
   const punten = lijst?.computed ?? null;
   const over = punten != null && punten > actief.puntenCap;
   const regels = actief.compositie.map(ruleName).join(' or ');
@@ -96,7 +103,26 @@ export function CeledonPanel({ lijsten, onOpen, onTour }: {
         {regels && <Chip label={regels} />}
       </div>
 
-      {!lijst ? (
+      {oudLeger ? (
+        // Er is wél een campagne-lijst, maar voor een ander leger dan de campagne nu zegt — en er zit
+        // werk in (anders had de app hem al vervangen). Zijn keuze: die units zijn van hem.
+        <>
+          <p style={{ ...tekst, marginTop: 10 }}>
+            Your campaign list <b style={{ color: TOW.ink }}>{oudLeger.name}</b> is a{' '}
+            <b style={{ color: TOW.ink }}>{oudLeger.army.replace(/-/g, ' ')}</b> army, but the campaign now says{' '}
+            <b style={{ color: TOW.ink }}>{actief.speler.factie}</b>. Start the right one — the old list stays, as a
+            normal list you can keep or delete.
+          </p>
+          <div style={{ display: 'flex', gap: 8, marginTop: 12, flexWrap: 'wrap' }}>
+            <button onClick={onHerstel} style={{ ...knop, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(138,108,48,0.14)', color: TOW.gold }}>
+              Start a {actief.speler.factie} list
+            </button>
+            <button onClick={() => onOpen(oudLeger.id)} style={{ ...knop, border: `1px solid ${TOW.line}`, background: 'transparent', color: TOW.inkDim }}>
+              Look at the old one
+            </button>
+          </div>
+        </>
+      ) : !lijst ? (
         // Geen lijst betekent hier NIET "druk op de knop" — die is er niet meer, de lijst maakt
         // zichzelf aan (ListBuilder). Het enige dat dit tegenhoudt is een factie die nog niet vastligt.
         <>
@@ -105,11 +131,6 @@ export function CeledonPanel({ lijsten, onOpen, onTour }: {
               ? 'Setting up your campaign list…'
               : 'Confirm your faction on Isle of Celedon first — then your list appears here by itself, with the right points limit and composition already set.'}
           </p>
-          <div style={{ display: 'flex', gap: 8, marginTop: 12, flexWrap: 'wrap' }}>
-            <button onClick={onTour} style={{ ...knop, border: `1px solid ${TOW.line}`, background: 'transparent', color: TOW.inkDim }}>
-              Show me around
-            </button>
-          </div>
         </>
       ) : (
         <>
@@ -152,6 +173,12 @@ export function CeledonPanel({ lijsten, onOpen, onTour }: {
           )}
         </>
       )}
+      {/* De rondleiding moet ALTIJD terug te vinden zijn, niet alleen op het moment dat je nog geen
+          lijst hebt — dat is precies wanneer je er niks aan hebt. */}
+      <button onClick={onTour} style={{
+        marginTop: 10, padding: 0, border: 'none', background: 'transparent', cursor: 'pointer',
+        fontFamily: towFont.serif, fontSize: 12, color: TOW.muted, textDecoration: 'underline',
+      }}>Show me around</button>
       {eigen.length > 1 && (
         <p style={{ ...tekstDim, marginTop: 8 }}>
           You have {eigen.length} lists marked for this campaign; Celedon reads the most recently changed one.

@@ -71,8 +71,9 @@ function stappen(label: string, cap: number, fase: number): Stap[] {
       doel: '[data-tour="lijst-naam"]',
       titel: 'Name and composition',
       tekst:
-        'Tap here to rename the list or switch army composition (Grand Army, Renegade Crowns, …). Your faction, the ' +
-        'points limit and the game mode come from the campaign, so those are shown but fixed.',
+        'Tap any row in this Army block to rename the list or switch army composition (Grand Army, Renegade ' +
+        'Crowns, …). On a phone you tap the list name in the header instead. Your faction, the points limit and ' +
+        'the game mode come from the campaign, so those are shown but fixed.',
     },
     {
       doel: '[data-tour="tab-army"],[data-tour="rail-army"]',
@@ -132,6 +133,10 @@ export function CeledonTour() {
   const [rect, setRect] = useState<DOMRect | null>(null);
 
   const loopt = stand === 'pending';
+
+  // Bij (her)starten weer bij stap 1 beginnen. Zonder dit bleef `i` op de laatste stap staan van de
+  // vorige keer, dus "Show me around" opende meteen "That is all" — de tour leek niet te herstarten.
+  useEffect(() => { if (loopt) setI(0); }, [loopt]);
 
   const stapjes = stappen(actief?.label ?? 'Isle of Celedon', actief?.puntenCap ?? 500, actief?.fase ?? 1);
   const stap = stapjes[Math.min(i, stapjes.length - 1)];
@@ -210,11 +215,12 @@ export function CeledonTour() {
           width: rect.width + pad * 2, height: rect.height + pad * 2,
           borderRadius: 14, pointerEvents: 'none',
           border: `2px solid ${TOW.goldBright}`,
-          boxShadow: '0 0 0 9999px rgba(20,14,8,0.72)',
+          // Net genoeg om de aandacht te sturen; op 0.72 was de rest van de app onleesbaar.
+          boxShadow: '0 0 0 9999px rgba(20,14,8,0.42)',
           transition: 'top .18s ease, left .18s ease, width .18s ease, height .18s ease',
         }} />
       ) : (
-        <div style={{ position: 'fixed', inset: 0, background: 'rgba(20,14,8,0.72)' }} />
+        <div style={{ position: 'fixed', inset: 0, background: 'rgba(20,14,8,0.42)' }} />
       )}
 
       <div style={{
