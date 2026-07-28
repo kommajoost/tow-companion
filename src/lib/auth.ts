@@ -36,9 +36,12 @@ function setState(next: AuthState) {
   emit();
 }
 
-// ---- Seamless hand-off from the campaign app (SSO) --------------------------------------------
+// ---- Legacy seamless hand-off (SSO) ------------------------------------------------------------
 //
-// "Open Old World Companion" on Isle of Celedon asks its own server for a ONE-TIME token (a magic
+// The current `?celedon=1` Preparation entry deliberately skips token exchange: OWC uses its own
+// session or shows the account dialog. The handler below remains for older non-Celedon SSO links.
+//
+// Historically, "Open Old World Companion" asked its own server for a ONE-TIME token (a magic
 // link that is never mailed) and sends us here as `#sso=<token>`. We exchange it for a session of
 // our own — a separate refresh-token family from the campaign tab's, so neither app can log the
 // other out when its token rotates. Sharing the campaign's tokens outright would do exactly that.
@@ -54,6 +57,25 @@ function takeSsoToken(): string | null {
     const url = new URL(window.location.href);
     const hash = new URLSearchParams(url.hash.replace(/^#/, ''));
     let token = hash.get('sso');
+    // Preparation's current entry flow is explicit: on ?celedon=1 OWC uses its OWN existing
+    // session or shows the account dialog. Discard a token from an older/cached campaign build, but
+    // keep the celedon query intact for AppShell. Other legacy SSO links continue to work below.
+    if (url.searchParams.has('celedon')) {
+      let changed = false;
+      if (token) {
+        hash.delete('sso');
+        changed = true;
+      }
+      if (url.searchParams.has('sso')) {
+        url.searchParams.delete('sso');
+        changed = true;
+      }
+      if (changed) {
+        const rest = hash.toString();
+        window.history.replaceState(null, '', `${url.pathname}${url.search}${rest ? `#${rest}` : ''}`);
+      }
+      return null;
+    }
     if (token) {
       hash.delete('sso');
       const rest = hash.toString();

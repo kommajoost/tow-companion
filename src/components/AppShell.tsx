@@ -1,6 +1,7 @@
-import { useCallback, useEffect, useState } from 'react';
-import { usePersistentState, setPersisted, getPersisted } from '../store';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { usePersistentState, setPersisted } from '../store';
 import { TOW } from '../design/tow';
+import { useAuth } from '../lib/auth';
 import { HomeCover } from './HomeCover';
 import { CompanionView } from './companion/CompanionView';
 import { BrowseMode } from './BrowseMode';
@@ -9,6 +10,7 @@ import { ListBuilder } from './game/ListBuilder';
 import { SettingsMode } from './SettingsMode';
 import { NavRail } from './NavRail';
 import { CeledonTour } from './CeledonTour';
+import { CeledonLoginDialog } from './CeledonLoginDialog';
 import { TowIcon, type IconId } from '../design/icons';
 import { useBackClose } from '../lib/backStack';
 
@@ -49,6 +51,12 @@ function useWide(threshold = 800) {
 export function AppShell() {
   const [screen, setScreen] = usePersistentState<Screen>('tow:screen', 'home');
   const [tab, setTab] = usePersistentState<Tab>('tow:tab', 'play');
+  const { session, loading: authLoading } = useAuth();
+  const [celedonEntry, setCeledonEntry] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    return new URLSearchParams(window.location.search).has('celedon');
+  });
+  const celedonTourStarted = useRef(false);
   const wide = useWide();
 
   // Deep-link: /?battle=<code> opens a campaign battle (mirrors the campaign app's ?campaign=<code>).
@@ -68,21 +76,32 @@ export function AppShell() {
   }, []);
 
   // Deep-link: /?celedon=1 — arriving from the campaign app's "Open Old World Companion" button.
-  // Land straight on Army (skipping the cover, which would be a dead end for someone who has never
-  // seen this app) and arm the guided tour. The sign-in itself already happened in lib/auth.ts.
-  // The tour only offers itself ONCE per device; Settings has a restart button.
+  // Land straight on Army, then wait for OWC's own auth session. Signed out players see the account
+  // dialog first; signed in players go straight into the guided Army-list tour.
   useEffect(() => {
     if (typeof window === 'undefined') return;
     const url = new URL(window.location.href);
     if (!url.searchParams.get('celedon')) return;
-    if (getPersisted<string | null>('tow:celedon-tour', null) === null) {
-      setPersisted('tow:celedon-tour', 'pending');
-    }
+    setPersisted('tow:celedon-tour', 'waiting-login');
     setScreen('app');
     setTab('army');
     url.searchParams.delete('celedon');
     window.history.replaceState(null, '', `${url.pathname}${url.search}${url.hash}`);
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Every explicit hand-off from Preparation starts the Army-list tutorial, even when this device
+  // completed it before. A successful login updates the auth store and follows this same path.
+  useEffect(() => {
+    if (!celedonEntry || authLoading || !session || celedonTourStarted.current) return;
+    celedonTourStarted.current = true;
+    setPersisted('tow:celedon-tour', 'pending');
+    setCeledonEntry(false);
+  }, [authLoading, celedonEntry, session]);
+
+  const cancelCeledonEntry = useCallback(() => {
+    setPersisted('tow:celedon-tour', 'done');
+    setCeledonEntry(false);
   }, []);
 
   // In-memory history of tabs visited this session (oldest → newest-but-one). Switching to a new
@@ -155,6 +174,10 @@ export function AppShell() {
         <NavRail tab={tab} onTab={navTab} onHome={() => setScreen('home')} />
         {content}
         <CeledonTour />
+        <CeledonLoginDialog
+          open={celedonEntry && !authLoading && !session}
+          onCancel={cancelCeledonEntry}
+        />
       </div>
     );
   }
@@ -185,6 +208,10 @@ export function AppShell() {
         })}
       </nav>
       <CeledonTour />
+      <CeledonLoginDialog
+        open={celedonEntry && !authLoading && !session}
+        onCancel={cancelCeledonEntry}
+      />
     </div>
   );
 }
