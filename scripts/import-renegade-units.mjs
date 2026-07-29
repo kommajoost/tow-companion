@@ -15,6 +15,18 @@
 // because silently picking one would hide a real disagreement about points.
 import { readFileSync, writeFileSync } from 'node:fs';
 
+// ── SUPERSEDED — will not run without --force ────────────────────────────────────────────────────
+// The canonical pipeline is now: import-renegade-reference → compile-renegade-v2 → validate-renegade-v2.
+// This script predates it and writes each unit patch WHOLESALE, so re-running it would drop minimum / maximum / replace / options
+// that the compiler now maintains. It is kept because it is where that data originally came from
+// (compile-renegade-v2 preserves points, option prices and prose rules it finds in the overlay), not
+// because it should be run again.
+if (!process.argv.includes('--force')) {
+  console.error('superseded by compile-renegade-v2; pass --force only if you mean to overwrite');
+  process.exit(1);
+}
+
+
 const PACKS = {
   ok: 'ogre-kingdoms', de: 'dark-elves', sk: 'skaven',
   cd: 'chaos-dwarfs', doc: 'daemons-of-chaos', lm: 'lizardmen',

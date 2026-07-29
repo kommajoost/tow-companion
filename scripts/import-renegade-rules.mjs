@@ -22,6 +22,18 @@
 // loses nothing and keeps demonstrably wrong rules text out of the app.
 import { readFileSync, writeFileSync } from 'node:fs';
 
+// ── SUPERSEDED — will not run without --force ────────────────────────────────────────────────────
+// The canonical pipeline is now: import-renegade-reference → compile-renegade-v2 → validate-renegade-v2.
+// This script predates it and writes overlay.rules WHOLESALE, so re-running it would drop the fuller rule set
+// that the compiler now maintains. It is kept because it is where that data originally came from
+// (compile-renegade-v2 preserves points, option prices and prose rules it finds in the overlay), not
+// because it should be run again.
+if (!process.argv.includes('--force')) {
+  console.error('superseded by compile-renegade-v2; pass --force only if you mean to overwrite');
+  process.exit(1);
+}
+
+
 const [src, overlayPath] = process.argv.slice(2);
 if (!src || !overlayPath) {
   console.error('usage: node scripts/import-renegade-rules.mjs <pack-pdf.txt> <overlay.json>');
