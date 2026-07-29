@@ -72,8 +72,13 @@ export interface RosterRow {
   count: number;
   /** This unit carries magic items → the ✦ glyph after the name. */
   magic: boolean;
-  /** Below the unit's minimum size → the count prefix gets the violation marker. */
-  undersized: boolean;
+  /** Outside the unit's legal size → the count prefix gets the violation marker.
+   *
+   *  Covers BOTH directions. It used to be `undersized` and looked only at the minimum, so a unit ABOVE
+   *  its maximum was named in the violation band while its own row showed nothing: the row and the band
+   *  disagreed about the same unit. Derived from the same `minimum`/`maximum` fields `builderDerived`
+   *  uses for its `unit-size` violation, so the two cannot drift apart. */
+  sizeIssue: 'under' | 'over' | null;
 }
 
 /** One selectable catalogue entry in the picker (screen 2a). */

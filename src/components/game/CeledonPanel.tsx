@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import { TOW, towFont, engraved } from '../../design/tow';
 import { COMPOSITION_RULES } from '../../lib/owbBuilder';
 import { useCampagnes, kiesCampagne } from '../../lib/campaign';
+import { useListSync } from '../../listSync';
 import { useAuth } from '../../lib/auth';
 
 // The campaign banner at the top of "My lists". Most players arrive here straight from Isle of
@@ -29,6 +31,9 @@ export function CeledonPanel({ lijsten, onOpen, onTour, onHerstel }: {
   onHerstel: () => void;
 }) {
   const { campagnes, actief, laden, fout } = useCampagnes();
+  // The list SYNC is what actually carries a list to the campaign; the send button only triggers it.
+  const { pushNow, key: syncKey } = useListSync();
+  const [stuur, setStuur] = useState<'rust' | 'bezig' | 'klaar' | 'fout'>('rust');
   const { session, loading: authLaden, ssoError } = useAuth();
 
   // Signed out and no campaign in sight → this is a plain builder session; show nothing.
@@ -166,10 +171,44 @@ export function CeledonPanel({ lijsten, onOpen, onTour, onHerstel }: {
               when Act {actief.fase + 1} does.
             </p>
           ) : (
-            <p style={{ ...tekstDim, marginTop: 8 }}>
-              Changes are saved and picked up by the campaign on their own. Lock the list on Isle of Celedon when
-              you are happy with it.
-            </p>
+            <>
+              {/* SEND NOW, not "submit". The campaign already receives every change on its own — the
+                  list sync pushes on each local edit, debounced — so this button does not unlock a step
+                  that was missing; it makes the invisible visible, pushing immediately and saying when
+                  it landed. Naming it "Submit" would be a lie in the other direction: submitting a list
+                  for an Act means LOCKING it, and that lives on Isle of Celedon. There is no RPC here
+                  that can do it (the campaign side exposes read, rename-unit and delete-unit only), so
+                  a button claiming to would do nothing and report success. */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: 9, flexWrap: 'wrap', marginTop: 10 }}>
+                <button
+                  onClick={async () => {
+                    setStuur('bezig');
+                    try { await pushNow(); setStuur('klaar'); } catch { setStuur('fout'); }
+                  }}
+                  disabled={!syncKey || stuur === 'bezig'}
+                  style={{
+                    ...knop,
+                    border: `1px solid ${syncKey ? TOW.goldDeep : TOW.line}`,
+                    background: syncKey ? 'rgba(138,108,48,0.14)' : 'transparent',
+                    color: syncKey ? TOW.gold : TOW.faint,
+                    cursor: syncKey && stuur !== 'bezig' ? 'pointer' : 'default',
+                  }}
+                >
+                  {stuur === 'bezig' ? 'Sending…' : 'Send to campaign now'}
+                </button>
+                <span style={{ ...tekstDim, margin: 0 }}>
+                  {!syncKey
+                    ? 'Sign in on Settings first — without sync there is nothing to send to.'
+                    : stuur === 'klaar' ? 'Sent. The campaign has this version.'
+                      : stuur === 'fout' ? 'Could not send — check your connection and try again.'
+                        : 'Normally automatic; this pushes it straight away.'}
+                </span>
+              </div>
+              <p style={{ ...tekstDim, marginTop: 8 }}>
+                Changes are saved and picked up by the campaign on their own. Lock the list on Isle of Celedon when
+                you are happy with it.
+              </p>
+            </>
           )}
         </>
       )}

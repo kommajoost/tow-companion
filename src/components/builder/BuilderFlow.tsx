@@ -191,7 +191,11 @@ export function BuilderFlow({
         points: entryPoints(unit, entry, itemsData),
         count: entry.count,
         magic,
-        undersized: entry.count < (unit.minimum ?? 1),
+        // The same inputs `builderDerived` uses for its `unit-size` violation: `minimum ?? 1`, and
+        // `maximum` where 0 means "no maximum".
+        sizeIssue: entry.count < (unit.minimum ?? 1)
+          ? 'under'
+          : ((unit.maximum ?? 0) > 0 && entry.count > (unit.maximum ?? 0) ? 'over' : null),
       });
     }
     return out;

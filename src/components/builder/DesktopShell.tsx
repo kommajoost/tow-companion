@@ -655,6 +655,55 @@ export function DesktopShell(props: {
         </div>
       </div>
 
+      {/* ═══════════════ violations — directly under the top bar, ONE PER LINE ═══════════════
+          Above the body, not in the status bar at the bottom: these are the reasons the list is not
+          legal, and they were the one thing on screen furthest from the roster they refer to. And one
+          per line rather than joined with " · " — with two or three problems the joined run never fit
+          its 30px, so the bar announced a problem and then hid what it was.
+
+          This band DOES change the body's height when it appears, which the fixed-30px status bar was
+          shaped to avoid. That trade is deliberate: the messages have to be readable, and there is no
+          height at which an unknown number of them fits. */}
+      {bandActive ? (
+        <div
+          style={{
+            flexShrink: 0, boxSizing: 'border-box', padding: `6px ${BUILDER.gutter}px 7px`,
+            display: 'flex', alignItems: 'flex-start', gap: 9,
+            background: TOW.bandFill, borderBottom: `1px solid ${TOW.bandLine}`,
+          }}
+        >
+          <span aria-hidden style={{ flexShrink: 0, fontSize: 9, lineHeight: 1.35, color: TOW.goldDeep }}>▲</span>
+          <span style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 2 }}>
+            {bandMessages.map((m) => (
+              <span
+                key={m}
+                style={{
+                  fontFamily: towFont.serif, fontSize: 11.5, lineHeight: 1.35, color: TOW.goldDeep,
+                }}
+              >
+                {m}
+              </span>
+            ))}
+          </span>
+          {/* Only when a handler exists — the container passes none today, and a dead link is worse
+              than none. */}
+          {onResolve ? (
+            <button
+              type="button"
+              onClick={onResolve}
+              style={{
+                flexShrink: 0, background: 'none', border: 'none', padding: 0, margin: 0,
+                cursor: 'pointer', color: TOW.goldDeep, textDecoration: 'underline',
+                ...eb, fontSize: 8.5, letterSpacing: '0.16em',
+                WebkitTapHighlightColor: 'transparent',
+              }}
+            >
+              Resolve
+            </button>
+          ) : null}
+        </div>
+      ) : null}
+
       {/* ═══════════════ body ═══════════════ */}
       <div style={{ flex: 1, minHeight: 0, display: 'flex', position: 'relative', overflow: 'hidden' }}>
         {/* ── left column: the rail, OR the catalogue in its place ─────────────────────────────── */}
@@ -790,35 +839,11 @@ export function DesktopShell(props: {
           borderTop: `1px solid ${bandActive ? TOW.bandLine : TOW.lineStrong}`,
         }}
       >
-        {bandActive ? (
-          <>
-            <span aria-hidden style={{ flexShrink: 0, fontSize: 9, lineHeight: 1, color: TOW.goldDeep }}>▲</span>
-            <span
-              style={{
-                flex: 1, minWidth: 0, fontFamily: towFont.serif, fontSize: 11.5, lineHeight: 1.2,
-                color: TOW.goldDeep, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
-              }}
-            >
-              {bandMessages.join(' · ')}
-            </span>
-            {/* Only rendered when a handler is supplied — the container currently passes none, so the
-                band reports the violation without offering to fix it. A dead link is worse than none. */}
-            {onResolve ? (
-              <button
-                type="button"
-                onClick={onResolve}
-                style={{
-                  flexShrink: 0, background: 'none', border: 'none', padding: 0, margin: 0,
-                  cursor: 'pointer', color: TOW.goldDeep, textDecoration: 'underline',
-                  ...eb, fontSize: 8.5, letterSpacing: '0.16em',
-                  WebkitTapHighlightColor: 'transparent',
-                }}
-              >
-                Resolve
-              </button>
-            ) : null}
-          </>
-        ) : (
+        {/* The violations moved OUT of this bar and up under the top bar — see the band above. They were
+            joined with " · " into one nowrap line here, so a list with several problems showed the first
+            and ellipsised the rest, at the bottom of the screen away from the roster they refer to. This
+            bar is now only ever the tally line, which is also why it can keep its fixed 30px. */}
+        {(
           <>
             <span
               style={{

@@ -341,13 +341,19 @@ export function RosterScreen(props: {
         >
           <div style={{ display: 'flex', alignItems: 'baseline', gap: 6, color: TOW.goldDeep }}>
             <span aria-hidden style={{ flexShrink: 0, fontSize: 8.5, lineHeight: 1.25 }}>▲</span>
-            <span
-              style={{
-                flex: 1, minWidth: 0, fontFamily: towFont.serif, fontSize: 10.5, lineHeight: 1.25,
-                whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
-              }}
-            >
-              {bandMessages.join(' · ')}
+            {/* ONE MESSAGE PER LINE. These used to be joined with " · " into a single nowrap line, so
+                with more than one problem the run never fit and the rest was ellipsised away — the band
+                said there was a problem while hiding what it was. Each message is a separate row now and
+                the band grows to fit; a list with three problems is worth three lines. */}
+            <span style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 2 }}>
+              {bandMessages.map((m) => (
+                <span
+                  key={m}
+                  style={{ fontFamily: towFont.serif, fontSize: 10.5, lineHeight: 1.25 }}
+                >
+                  {m}
+                </span>
+              ))}
             </span>
             {/* The Resolve SHEET is another phase's work — this is only the link that asks for it, and
                 it is omitted entirely when no handler was passed (a dead link is worse than none). */}
@@ -401,7 +407,7 @@ export function RosterScreen(props: {
                       whisper={row.whisper}
                       points={row.points}
                       magic={row.magic}
-                      undersized={row.undersized}
+                      sizeIssue={row.sizeIssue}
                       // The row that caused the last change keeps the white background + 3px inset
                       // accent rail until the next interaction; the row whose actions are showing gets
                       // the same treatment, which is also what makes the action strip's own TOW.panel
