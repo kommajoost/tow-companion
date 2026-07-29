@@ -3,6 +3,7 @@
 import { readFileSync } from 'node:fs';
 
 const REN = new URL('../public/renegade/', import.meta.url);
+const PUBLIC = new URL('../public/', import.meta.url);
 const PACKS = ['de', 'sk', 'ok', 'cd', 'doc', 'lm'];
 const fail = (message) => { throw new Error(message); };
 const read = (name) => JSON.parse(readFileSync(new URL(name, REN), 'utf8'));
@@ -70,6 +71,7 @@ for (const key of PACKS) {
 }
 
 const de = read('de-renegade-v2.json');
+const baseRules = JSON.parse(readFileSync(new URL('rules.json', PUBLIC), 'utf8'));
 assert(de.composition?.includeOnly === true, 'de: explicit V2 composition allow-list missing');
 assert(de.units['repeater-crossbowmen']?.minimum === 5, 'de: Repeater Crossbowmen minimum');
 assert(de.rules['har-ganeth-greatsword-profile']?.weaponProfile?.ap === '-2'
@@ -88,6 +90,27 @@ assert(hydraRule?.name_en === hydraRuleName, 'de: War Hydra V2 regeneration rule
 assert(hydraRule?.body?.join(' ').includes('roll a D6 for each wound that the War Hydra has lost')
   && hydraRule.body.join(' ').includes('On each roll of a 4+ the War Hydra immediately recovers a wound.'),
   'de: War Hydra V2 regeneration rule explanation missing or incomplete');
+assert(!(de.magicItems['dark-elves'] ?? []).some((item) =>
+  /upgrade one model|may purchase magic items/i.test(item.name_en)),
+  'de: unit upgrades leaked into the global magic-item catalogue');
+assert(!Object.values(de.magicItemText ?? {}).some((item) =>
+  /(?:^|\n\n)(?:Magic Weapons|Magic Armour|Talismans|Enchanted Items|Arcane Items|Magic Standards)$/i.test(item.body ?? '')),
+  'de: a magic-item popup contains the next category heading');
+const naggarothBase = baseRules.lores?.['lore-of-naggaroth']?.spells ?? [];
+const naggarothPatch = de.lores?.['lore-of-naggaroth']?.spells ?? [];
+const naggarothMerged = [...naggarothBase];
+for (const spell of naggarothPatch) {
+  const at = naggarothMerged.findIndex((candidate) =>
+    candidate.slug === spell.slug || norm(candidate.name) === norm(spell.name));
+  if (at >= 0) naggarothMerged[at] = spell;
+  else naggarothMerged.push(spell);
+}
+assert(['Black Horror', 'Cursing Word', 'Power of Darkness'].every((name) =>
+  naggarothMerged.some((spell) => spell.name === name)),
+  'de: Lore of Naggaroth popup does not contain the complete V2 spell list');
+assert(de.rules['spell-cursing-word']?.body?.some((line) => /Casting Value: 9\+/.test(line))
+  && de.rules['spell-power-of-darkness']?.body?.some((line) => /Casting Value: 7\+/.test(line)),
+  'de: Lore of Naggaroth V2 spell text missing');
 
 const sk = read('sk-renegade-v2.json');
 assert(sk.addedUnits?.core?.some((unit) => unit.id === 'skaven-dregs' && unit.points === 2), 'sk: Skaven Dregs missing');

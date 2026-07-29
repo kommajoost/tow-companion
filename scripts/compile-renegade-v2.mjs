@@ -72,7 +72,17 @@ const ARMY_ITEM_LIST = {
   lm: 'lizardmen',
 };
 
+const inMagicItemSection = (block) => {
+  if (block.unitContext) return false;
+  const path = (block.headingPath ?? []).map(norm);
+  return path.some((part) => ITEM_SECTION_TYPES[part] || DOC_ITEM_LISTS[part])
+    || path.some((part) => /magic items|gifts & icons|disciplines of the old ones|big names/i.test(part));
+};
 const itemTitle = (block) => {
+  // A unit option such as "A Draich Master may purchase magic items up to 50 points" has the same
+  // textual shape as an item title. It is still a UNIT option and must never leak into the global
+  // enchanted-item catalogue merely because a stale Docs heading mentions a magic-item section.
+  if (!inMagicItemSection(block)) return null;
   const candidates = [block.text, ...(block.headingPath ?? []).slice().reverse()];
   for (const raw of candidates) {
     const text = decodeEntities(raw).replace(/\s+/g, ' ').trim();
@@ -448,6 +458,16 @@ for (const [key, army] of Object.entries(PACKS)) {
   // Magic items are naturally grouped by their real Google Docs heading path. Compile every item
   // touched by a marked block, including its complete V2 prose, so price and displayed rule text move
   // together. Existing OWB metadata (type/stackability) wins whenever the item already exists.
+  // Remove any lookalike unit options produced by an older compiler run. The overlay is read as its
+  // own input, so merely rejecting them below would otherwise leave the stale generated rows behind.
+  const unitOptionLookalikes = new Set(reference.blocks
+    .filter((block) => block.unitContext)
+    .map(directItemTitle)
+    .filter(Boolean)
+    .map((title) => norm(title.name)));
+  for (const [listId, items] of Object.entries(overlay.magicItems ?? {})) {
+    overlay.magicItems[listId] = items.filter((item) => !unitOptionLookalikes.has(norm(item.name_en)));
+  }
   const touchedItems = new Map();
   for (const block of reference.blocks.filter((candidate) => candidate.scope === 'army-list' && actionable(candidate))) {
     const title = itemTitle(block);
@@ -498,7 +518,11 @@ for (const [key, army] of Object.entries(PACKS)) {
     const section = [seed];
     for (let next = at + 1; next < reference.blocks.length; next++) {
       const candidate = reference.blocks[next];
-      if ((candidate.headingPath?.[0] ?? '') !== top || directItemTitle(candidate)) break;
+      // A category heading ("Magic Armour", "Enchanted Items", …) closes the previous item's body.
+      // Without this boundary it appeared as the final sentence in the previous item's popup.
+      if ((candidate.headingPath?.[0] ?? '') !== top
+        || directItemTitle(candidate)
+        || ITEM_SECTION_TYPES[norm(candidate.text)]) break;
       section.push(candidate);
     }
     if (!section.some(actionable)) continue;

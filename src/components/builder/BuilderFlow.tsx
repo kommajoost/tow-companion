@@ -58,7 +58,7 @@ export interface BuilderFlowProps {
    *  whichever half they use — without it, TypeScript's weak-type check rejects a stats-typed index. */
   statIdx?: Record<string, { troopType?: string; stats?: unknown[] }> | null;
   /** Opens the app's rule/profile sheet. The container does not own rule resolution. */
-  onShowInfo?: (what: { kind: 'rule'; name: string } | { kind: 'item'; itemId: string } | { kind: 'mount'; name: string }) => void;
+  onShowInfo?: (what: { kind: 'rule'; name: string } | { kind: 'item'; itemId: string } | { kind: 'mount'; name: string } | { kind: 'lore'; slug: string }) => void;
 
   // ── Desktop-only extras ──────────────────────────────────────────────────────────────────────
   // The rail used to carry a list-switcher here (savedLists / onOpenList / onNewList). It is gone:

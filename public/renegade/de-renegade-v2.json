@@ -475,27 +475,6 @@
         "name_cn": "富里翁秘著",
         "name_fr": "Livre de Furion",
         "name_it": "Tome of Furion"
-      },
-      {
-        "name_en": "Upgrade one model to a Draich Master (champion) +6 points per unit • Upgrade one model to a standard bearer +6 points per unit • Upgrade one model to a musician +6 points per unit • Have the Drilled special rule +1 points per model • Purchase a magic standard worth up to",
-        "name": "upgrade one model to a draich master champion 6 points per unit upgrade one model to a standard bearer 6 points per unit upgrade one model to a musician 6 points per unit have the drilled special rule 1 points per model purchase a magic standard worth up to",
-        "points": 50,
-        "type": "enchanted-item",
-        "onePerArmy": true
-      },
-      {
-        "name_en": "A Draich Master may purchase magic items up to a total of",
-        "name": "a draich master may purchase magic items up to a total of",
-        "points": 50,
-        "type": "enchanted-item",
-        "onePerArmy": true
-      },
-      {
-        "name_en": "A Handmaiden of Shards may purchase magic items up to a total of",
-        "name": "a handmaiden of shards may purchase magic items up to a total of",
-        "points": 25,
-        "type": "enchanted-item",
-        "onePerArmy": true
       }
     ]
   },
@@ -1188,13 +1167,13 @@
   },
   "magicItemText": {
     "whip-of-agony": {
-      "body": "R S AP Special Rules\n\nWhip of Agony Combat S+1 -1 Magical Attacks, Strike First\n\nNotes: High Beastmasters only. Any enemy model that suffers one or more unsaved wounds from the Whip of Agony suffers a -1 modifier to its Toughness characteristic (to a minimum of 1) for the remainder of the game.\n\nMagic Armour"
+      "body": "R S AP Special Rules\n\nWhip of Agony Combat S+1 -1 Magical Attacks, Strike First\n\nNotes: High Beastmasters only. Any enemy model that suffers one or more unsaved wounds from the Whip of Agony suffers a -1 modifier to its Toughness characteristic (to a minimum of 1) for the remainder of the game."
     },
     "banner-of-nagarythe": {
       "body": "A unit carrying the Banner of Nagarythe gains the Stubborn special rule. In addition, when calculating its combat result, the unit may claim an additional bonus of +1 combat\n\nresult point."
     },
     "cold-blooded-banner": {
-      "body": "Single use. A unit carrying the Cold-blooded Banner may use it after making any test against its Leadership characteristic, including a Break test. When it does, it may re-roll the test.\n\nEnchanted Items"
+      "body": "Single use. A unit carrying the Cold-blooded Banner may use it after making any test against its Leadership characteristic, including a Break test. When it does, it may re-roll the test."
     },
     "black-dragon-egg": {
       "body": "Single use. During the Command sub-phase of their turn, the bearer of a Black Dragon Egg can consume it. Until your next Command sub-phase, the model has a Toughness characteristic of 6 (which cannot be improved further) and gains noxious breath (see page 18)."

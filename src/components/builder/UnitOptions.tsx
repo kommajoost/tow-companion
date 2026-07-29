@@ -282,7 +282,7 @@ export function UnitOptions(props: {
   onDuplicate?: () => void;
   /** Opent het regel-/profielpaneel van de app. De container bezit de regeldata en de
    *  slug-resolutie; geef door wat je wilt tonen. */
-  onShowInfo?: (what: { kind: 'rule'; name: string } | { kind: 'item'; itemId: string } | { kind: 'mount'; name: string }) => void;
+  onShowInfo?: (what: { kind: 'rule'; name: string } | { kind: 'item'; itemId: string } | { kind: 'mount'; name: string } | { kind: 'lore'; slug: string }) => void;
   /** Tighter rows and smaller type, for the desktop inspector. The phone flow leaves it off: there this
    *  screen IS the screen and every row is a tap target. */
   dense?: boolean;
@@ -802,7 +802,7 @@ export function UnitOptions(props: {
                     delta="included"
                     deltaMuted
                     onToggle={() => setLore(slug, on)}
-                    onInfo={onShowInfo ? () => onShowInfo({ kind: 'rule', name: lore.name }) : undefined}
+                    onInfo={onShowInfo ? () => onShowInfo({ kind: 'lore', slug }) : undefined}
                     infoTitle={`About ${lore.name}`}
                   />
                   {on && spells.length > 0 ? (

@@ -64,7 +64,7 @@ export function ListBuilder() {
   // the field — not as an opt-in. Once the new flow has proven itself, both the flag and
   // BuilderWorkspace can go.
   const [useV2] = usePersistentState<boolean>('tow:builder-v2', true);
-  const { rules, setRuleOverlay } = useData();
+  const { rules, lores, setRuleOverlay } = useData();
   const { openRule } = useUI();
   const ruleIdx = useMemo(() => getRuleIndex(rules ?? {}), [rules]);
 
@@ -497,6 +497,17 @@ export function ListBuilder() {
           // than an empty sheet.
           onShowInfo={(what) => {
             if (what.kind === 'item') return; // item text lives in the builder's own popover
+            if (what.kind === 'lore') {
+              const lore = lores[what.slug];
+              if (lore) {
+                setMountInfo({
+                  title: lore.name,
+                  details: [`${lore.spells.length} spell${lore.spells.length === 1 ? '' : 's'} in this army composition`],
+                  rules: lore.spells.map((spell) => spell.name),
+                });
+              }
+              return;
+            }
             const label = what.name;
             if (what.kind === 'mount') {
               const profileKey = normMountProfile(label);
