@@ -201,7 +201,7 @@ export function DesktopShell(props: {
   onExport?: () => void;
   onPrint?: () => void;
   /** Doorgegeven aan <UnitOptions> in de inspector. */
-  onShowInfo?: (what: { kind: 'rule'; name: string } | { kind: 'item'; itemId: string } | { kind: 'mount'; name: string } | { kind: 'lore'; slug: string }) => void;
+  onShowInfo?: (what: { kind: 'rule'; name: string } | { kind: 'item'; itemId: string; name: string } | { kind: 'mount'; name: string } | { kind: 'lore'; slug: string }) => void;
 }): React.JSX.Element | null {
   const {
     ctx, rows, rosterTable, cataloguePane, catalogueOpen, selectedUid,

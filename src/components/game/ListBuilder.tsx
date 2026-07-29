@@ -17,8 +17,9 @@ import { useBackClose } from '../../lib/backStack';
 import { useData } from '../../data';
 import { getRuleIndex, resolveOptionSlug, resolveRuleSlug } from '../../lib/armyRules';
 import { useUI } from '../../state';
-import { applyOverlay, applyOverlayItems, applyOverlayMountText, applyOverlayStatIndex, hasOverlay, isOverlay, overlayCompsFor, overlayStatsFor, OVERLAY_FILES, type CompositionOverlay, type MountProfileText } from '../../lib/overlays';
+import { applyOverlay, applyOverlayItems, applyOverlayMagicText, applyOverlayMountText, applyOverlayStatIndex, hasOverlay, isOverlay, overlayCompsFor, overlayStatsFor, OVERLAY_FILES, type CompositionOverlay, type MountProfileText } from '../../lib/overlays';
 import { InfoSheet, type InfoSheetData } from './InfoSheet';
+import type { MagicText } from '../../lib/builderToArmy';
 import type { UnitProfile } from '../../types';
 
 const BASE = import.meta.env.BASE_URL;
@@ -74,6 +75,10 @@ export function ListBuilder() {
   const [itemsData, setItemsData] = useState<MagicItemsData | null>(null);
   const [statIdx, setStatIdx] = useState<Record<string, { stats?: StatRow[]; troopType?: string }> | null>(statIndexCache);
   const [baseMountText, setBaseMountText] = useState<MountText>({});
+  // Magic-item flavour + rules text, keyed by item slug. The rule SCRAPE has no page for magic items at
+  // all, so this file is the only source for what an item does — without it the eye on every magic item
+  // and banner has nothing to open.
+  const [baseMagicText, setBaseMagicText] = useState<MagicText>({});
   const [mountInfo, setMountInfo] = useState<InfoSheetData | null>(null);
   const [lists, setLists] = usePersistentState<SavedList[]>('tow:lists', []);
   const [groups, setGroups] = usePersistentState<{ id: string; name: string }[]>('tow:list-groups', []);
@@ -105,6 +110,7 @@ export function ListBuilder() {
     }).catch(() => {});
     fetch(`${BASE}owb/magic-items.json`).then((r) => r.json()).then(setItemsData).catch(() => setItemsData(null));
     fetch(`${BASE}owb/mount-text.json`).then((r) => r.json()).then(setBaseMountText).catch(() => {});
+    fetch(`${BASE}owb/magic-item-text.json`).then((r) => r.json()).then(setBaseMagicText).catch(() => {});
     if (statIndexCache) setStatIdx(statIndexCache);
     else fetch(`${BASE}owb/rules-index.json`).then((r) => r.json()).then((idx) => { statIndexCache = idx; setStatIdx(idx); }).catch(() => {});
   }, []);
@@ -322,6 +328,10 @@ export function ListBuilder() {
     () => applyOverlayMountText(baseMountText, activeOverlay),
     [baseMountText, activeOverlay],
   );
+  const activeMagicText = useMemo(
+    () => applyOverlayMagicText(baseMagicText, activeOverlay),
+    [baseMagicText, activeOverlay],
+  );
   // The pack's own wording for the rules it changes, installed globally while a pack list is open. It
   // has to be global: the rule sheet renders outside this tree, so a local override would leave the
   // sheet showing the standard rule for a list the pack has already repriced.
@@ -496,7 +506,23 @@ export function ListBuilder() {
           // rule sheet, so it maps a label to a slug here. An unresolvable label opens nothing rather
           // than an empty sheet.
           onShowInfo={(what) => {
-            if (what.kind === 'item') return; // item text lives in the builder's own popover
+            if (what.kind === 'item') {
+              // Magic items have NO page in rules.json — the scrape does not cover them — so there is no
+              // slug for `openRule` to resolve and this used to `return` here, which is why the eye on
+              // every magic item and banner did nothing. Their text lives in `magic-item-text.json`, and
+              // `InfoSheet` exists precisely for "things with no rule page of their own". `body` is a
+              // comma-separated list of special rules, and InfoSheet turns each into a rule link, so it
+              // is split rather than shown as one string.
+              const tx = activeMagicText[what.itemId];
+              setMountInfo({
+                title: what.name,
+                flavour: tx?.description,
+                rules: (tx?.body ?? '').split(',').map((r) => r.trim()).filter(Boolean),
+                // Say so when there is no text at all, instead of opening a blank sheet.
+                details: tx?.description || tx?.body ? undefined : ['No description recorded for this item.'],
+              });
+              return;
+            }
             if (what.kind === 'lore') {
               const lore = lores[what.slug];
               if (lore) {

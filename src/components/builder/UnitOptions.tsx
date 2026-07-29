@@ -282,7 +282,7 @@ export function UnitOptions(props: {
   onDuplicate?: () => void;
   /** Opent het regel-/profielpaneel van de app. De container bezit de regeldata en de
    *  slug-resolutie; geef door wat je wilt tonen. */
-  onShowInfo?: (what: { kind: 'rule'; name: string } | { kind: 'item'; itemId: string } | { kind: 'mount'; name: string } | { kind: 'lore'; slug: string }) => void;
+  onShowInfo?: (what: { kind: 'rule'; name: string } | { kind: 'item'; itemId: string; name: string } | { kind: 'mount'; name: string } | { kind: 'lore'; slug: string }) => void;
   /** Tighter rows and smaller type, for the desktop inspector. The phone flow leaves it off: there this
    *  screen IS the screen and every row is a tap target. */
   dense?: boolean;
@@ -559,7 +559,7 @@ export function UnitOptions(props: {
         blocked={blocked}
         reason={blocked ? blockReason(cat, item, budget) : undefined}
         onToggle={() => patch((e) => ({ ...e, opts: toggleMagicItem(e, cat.id, item, cat.maxItems) }))}
-        onInfo={onShowInfo ? () => onShowInfo({ kind: 'item', itemId: magicItemId(item) }) : undefined}
+        onInfo={onShowInfo ? () => onShowInfo({ kind: 'item', itemId: magicItemId(item), name: cleanLabel(item.name_en) }) : undefined}
         infoTitle={`About ${cleanLabel(item.name_en)}`}
       />
     );
