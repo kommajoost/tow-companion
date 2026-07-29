@@ -27,13 +27,12 @@ export function ArmyListPicker({ onPick, label = 'Choose one of your saved army 
   lockedListName?: string | null;
   /** With a locked campaign list, hand it over as soon as it can be built — no click. There is nothing
    *  to choose: the campaign already decided which list plays, so asking was busywork. Still SHOWN, so
-   *  you can see what was loaded (and override it via "show all"). */
+   *  you can see which list was loaded. */
   autoPick?: boolean;
 }) {
   // Lists can span different armies, so we keep a per-army catalogue cache + army metadata and
   // convert each list with ITS OWN catalogue/faction/composition.
   const [lists] = usePersistentState<SavedList[]>('tow:lists', []);
-  const [showAll, setShowAll] = useState(false); // campaign lock: override the auto-matched list
   const [catalogues, setCatalogues] = useState<Record<string, OwbArmy>>({}); // slug → catalogue
   const [armyNames, setArmyNames] = useState<Record<string, string>>({}); // slug → display name
   const [itemsByArmy, setItemsByArmy] = useState<Record<string, string[]>>({}); // slug → magic-item lists
@@ -101,11 +100,12 @@ export function ArmyListPicker({ onPick, label = 'Choose one of your saved army 
   };
 
   // Campaign battle: the list is already locked in the campaign, so match it by name and show ONLY
-  // that one — no picking among all saved lists. `showAll` lets the player override if the match is
-  // wrong; no match on this device falls back to the full picker with the original label.
+  // that one — no picking, and no override either. If the name match fails on this device there is no
+  // locked list to show, and it falls back to the full picker with the original label; that is the
+  // honest failure, rather than offering a swap that would disagree with the campaign.
   const normName = (s: string) => (s || '').trim().toLowerCase();
   const locked = lockedListName ? lists.find((l) => normName(l.name) === normName(lockedListName)) ?? null : null;
-  const solo = locked && !showAll;
+  const solo = !!locked;
   const shown = solo ? [locked] : lists;
   const heading = solo ? 'Your locked campaign list' : label;
 
@@ -148,11 +148,10 @@ export function ArmyListPicker({ onPick, label = 'Choose one of your saved army 
           );
         })}
       </div>
-      {solo ? (
-        <button onClick={() => setShowAll(true)} style={{ display: 'block', margin: '9px auto 2px', background: 'none', border: 'none', cursor: 'pointer', fontFamily: towFont.serif, fontSize: 12.5, color: TOW.muted, textDecoration: 'underline' }}>
-          use a different list
-        </button>
-      ) : (
+      {/* No "use a different list" here. Under a campaign lock there is genuinely no choice to make:
+          the campaign decided which list plays, and swapping in another one locally would only
+          disagree with what the campaign has recorded. */}
+      {solo ? null : (
         <div style={{ ...eb, fontSize: 8, color: TOW.faint, textAlign: 'center', margin: '11px 0 2px' }}>— or paste an export below —</div>
       )}
     </div>
