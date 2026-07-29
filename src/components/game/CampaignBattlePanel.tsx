@@ -4,6 +4,8 @@ import { useGame } from '../../game';
 import { getCachedCampaign, getCampaignCode } from '../../lib/campaign';
 import { battleByCode, type CampaignBattle, type BattleSide, type Perk, type FoundItem } from '../../lib/campaignBattle';
 import { ArmyListPicker } from './ArmyListPicker';
+import { BattleBoard } from './BattleBoard';
+import type { BattleSetupState } from '../../lib/battle';
 import type { Army } from '../../types';
 
 const eb = engraved as React.CSSProperties;
@@ -146,74 +148,34 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
   const pretty = (s: string) => s.replace(/[-_]/g, ' ').replace(/^./, (c) => c.toUpperCase());
 
   /**
-   * The battlefield, drawn to scale from the campaign's own coordinates.
+  /**
+   * The battlefield, drawn by the app's OWN board renderer.
    *
-   * Every piece carries x/y/w/h in table inches, so this is a faithful plan of the table rather than an
-   * impression of one: an SVG whose viewBox IS the table, which makes each rectangle land exactly where
-   * the campaign put it and keeps the whole thing correct at any width. Drawn only when the table size
-   * is known — without it there is no coordinate space and the rectangles would be meaningless.
+   * `BattleBoard` is what the Companion's battlefield generator draws with, so reusing it is the only
+   * way the two genuinely LOOK the same — an imitation would drift the moment either changed. It already
+   * works in table inches (viewBox = the table), and its `editable={false}` mode exists for exactly this:
+   * show the board, do not let it be dragged.
    *
-   * Deliberately NOT a copy of the war hub's styling, which I cannot see; it reads the same numbers and
-   * renders them in this app's own palette, so the two agree on WHERE things are.
+   * The conversion is nothing: the campaign sends terrain as `{id, type, x, y, w, h, difficult}`, which IS
+   * `TerrainPiece`, and its type ids (building, field, hill, wood, marsh) are the same set the app uses.
+   * Only drawn when the table size is known — without it there is no coordinate space, and the pieces
+   * would land in invented positions.
    */
-  const fill: Record<string, string> = {
-    building: 'rgba(184,134,47,0.30)',
-    field: 'rgba(120,150,90,0.22)',
-    forest: 'rgba(90,140,90,0.26)',
-    wood: 'rgba(90,140,90,0.26)',
-    water: 'rgba(90,130,170,0.24)',
-    river: 'rgba(90,130,170,0.24)',
-    hill: 'rgba(150,120,80,0.24)',
-    ruins: 'rgba(150,140,130,0.24)',
-  };
-  const battlefieldMap = tableW && tableH ? (
+  const boardSetup: BattleSetupState | null = tableW && tableH ? {
+    scenario: asStr(sheet.scenario) ?? '',
+    tableW,
+    tableH,
+    terrain: terrain.filter((t): t is typeof t & { x: number; y: number; w: number; h: number } =>
+      t.x != null && t.y != null && t.w != null && t.h != null)
+      .map((t, i) => ({ id: `c${i}`, type: t.type, x: t.x, y: t.y, w: t.w, h: t.h, difficult: t.difficult })),
+    secondaries: quests,
+  } : null;
+  const battlefieldMap = boardSetup ? (
     <div style={{ marginTop: 12 }}>
       <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginBottom: 5 }}>
         Battlefield · {tableLabel ?? `${tableW}×${tableH}″`}{groundType ? ` · ${pretty(groundType)}` : ''}
       </div>
-      <svg
-        viewBox={`0 0 ${tableW} ${tableH}`}
-        role="img"
-        aria-label={`Battlefield ${tableW} by ${tableH} inches with ${terrain.length} terrain piece${terrain.length === 1 ? '' : 's'}`}
-        style={{ width: '100%', height: 'auto', display: 'block', borderRadius: 8, border: `1px solid ${TOW.lineStrong}`, background: TOW.panel2 }}
-      >
-        {/* A 6″ grid, so distances are readable off the plan instead of guessed. `vectorEffect` keeps
-            the lines hairline-thin however far the SVG is scaled up. */}
-        {Array.from({ length: Math.floor(tableW / 6) }, (_, i) => (i + 1) * 6).map((x) => (
-          <line key={`v${x}`} x1={x} y1={0} x2={x} y2={tableH} stroke={TOW.line} strokeWidth={0.15} vectorEffect="non-scaling-stroke" />
-        ))}
-        {Array.from({ length: Math.floor(tableH / 6) }, (_, i) => (i + 1) * 6).map((y) => (
-          <line key={`h${y}`} x1={0} y1={y} x2={tableW} y2={y} stroke={TOW.line} strokeWidth={0.15} vectorEffect="non-scaling-stroke" />
-        ))}
-        {/* Halfway line — the deployment reference both players measure from. */}
-        <line x1={tableW / 2} y1={0} x2={tableW / 2} y2={tableH} stroke={TOW.goldDeep} strokeWidth={0.4} strokeDasharray="1.5 1.5" vectorEffect="non-scaling-stroke" />
-        {terrain.map((t, i) => (
-          t.x != null && t.y != null && t.w != null && t.h != null ? (
-            <g key={`${t.type}-${i}`}>
-              <rect
-                x={t.x} y={t.y} width={t.w} height={t.h}
-                fill={fill[t.type] ?? 'rgba(200,200,200,0.18)'}
-                stroke={TOW.goldDeep}
-                strokeWidth={0.25}
-                vectorEffect="non-scaling-stroke"
-                // Difficult ground is called out by a dashed edge as well as in the label, because
-                // colour alone is not a distinction everyone can see.
-                strokeDasharray={t.difficult ? '1 1' : undefined}
-                rx={0.6}
-              />
-              <title>{`${pretty(t.type)} ${t.w}×${t.h}″${t.difficult ? ' · difficult ground' : ''}`}</title>
-            </g>
-          ) : null
-        ))}
-      </svg>
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginTop: 6 }}>
-        {terrain.map((t, i) => (
-          <span key={`lg-${i}`} style={{ display: 'flex', alignItems: 'center', gap: 5, fontFamily: serif, fontSize: 11.5, color: TOW.muted }}>
-            <span style={{ width: 10, height: 10, borderRadius: 2, background: fill[t.type] ?? 'rgba(200,200,200,0.18)', border: `1px ${t.difficult ? 'dashed' : 'solid'} ${TOW.goldDeep}` }} />
-            {pretty(t.type)}{t.size ? ` ${t.size}` : ''}{t.difficult ? ' · difficult' : ''}
-          </span>
-        ))}
-      </div>
+      <BattleBoard setup={boardSetup} onChange={() => {}} selectedId={null} onSelect={() => {}} editable={false} />
     </div>
   ) : null;
 
