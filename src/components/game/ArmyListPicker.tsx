@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { TOW, towFont, engraved } from '../../design/tow';
 import { usePersistentState } from '../../store';
 import { builderListToArmy, listTotal, type MagicText, type MountText } from '../../lib/builderToArmy';
@@ -21,7 +21,15 @@ const BASE = import.meta.env.BASE_URL;
 interface SavedList extends BuilderList { id: string; name: string; army: string; createdAt: number; updatedAt: number }
 interface StatRow { Name: string; M: string; WS: string; BS: string; S: string; T: string; W: string; I: string; A: string; Ld: string }
 
-export function ArmyListPicker({ onPick, label = 'Choose one of your saved army lists', lockedListName = null }: { onPick: (a: Army) => void; label?: string; lockedListName?: string | null }) {
+export function ArmyListPicker({ onPick, label = 'Choose one of your saved army lists', lockedListName = null, autoPick = false }: {
+  onPick: (a: Army) => void;
+  label?: string;
+  lockedListName?: string | null;
+  /** With a locked campaign list, hand it over as soon as it can be built — no click. There is nothing
+   *  to choose: the campaign already decided which list plays, so asking was busywork. Still SHOWN, so
+   *  you can see what was loaded (and override it via "show all"). */
+  autoPick?: boolean;
+}) {
   // Lists can span different armies, so we keep a per-army catalogue cache + army metadata and
   // convert each list with ITS OWN catalogue/faction/composition.
   const [lists] = usePersistentState<SavedList[]>('tow:lists', []);
@@ -77,7 +85,6 @@ export function ArmyListPicker({ onPick, label = 'Choose one of your saved army 
     return () => { cancelled = true; };
   }, [lists, overlays]);
 
-  if (lists.length === 0) return null;
 
   const armyNameFor = (slug: string) => armyNames[slug] ?? slug;
   const toArmy = (l: SavedList): Army | null => {
@@ -101,6 +108,24 @@ export function ArmyListPicker({ onPick, label = 'Choose one of your saved army 
   const solo = locked && !showAll;
   const shown = solo ? [locked] : lists;
   const heading = solo ? 'Your locked campaign list' : label;
+
+  // AUTO-PICK. With a locked campaign list there is nothing to choose — the campaign already decided
+  // which list plays — so it is handed over as soon as it can actually be built. Guarded by a ref so it
+  // fires exactly once: `toArmy` returns null until the catalogue, stat index and any composition
+  // overlay have loaded, and this effect re-runs as each of those arrives.
+  const autoPicked = useRef(false);
+  useEffect(() => {
+    if (!autoPick || autoPicked.current || !locked) return;
+    const army = toArmy(locked);
+    if (!army) return;            // data still loading — a later run catches it
+    autoPicked.current = true;
+    onPick(army);
+    // `toArmy` and `onPick` are new identities every render; the ref is what makes this idempotent.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [autoPick, locked, catalogues, statIdx, itemsData, overlays, armyNames, itemsByArmy, magicText, mountText]);
+
+  // Every hook has run by here, so this early return is safe.
+  if (lists.length === 0) return null;
 
   return (
     <div style={{ marginBottom: 14 }}>

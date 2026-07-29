@@ -31,7 +31,7 @@ interface GameContextValue {
    *  (not a freshly-generated one). Seats the user as host (attacker) or guest (defender): if no
    *  tow_games row exists for that code yet it's created with the user in their seat, otherwise the
    *  user joins their seat. Both players thus land in the same realtime game. Returns true on success. */
-  openCampaignBattle: (code: string, seat: 'host' | 'guest', name: string, army: Army | null, veteranen?: BattleVeteranen) => Promise<boolean>;
+  openCampaignBattle: (code: string, seat: 'host' | 'guest', name: string, army: Army | null, veteranen?: BattleVeteranen, opponentName?: string) => Promise<boolean>;
   /** Recent games (newest first) for the join lobby. */
   listGames: () => Promise<GameSummary[]>;
   startSolo: (army?: Army | null) => void;
@@ -262,13 +262,19 @@ export function GameProvider({ children }: { children: ReactNode }) {
   // code; unlike joinGame it creates the row on first open. Both participants call this with their
   // own seat, so they meet in the same realtime game. Writes only the user's own seat columns.
   const openCampaignBattle = useCallback(
-    async (battleCode: string, mySeat: 'host' | 'guest', name: string, army: Army | null, veteranen?: BattleVeteranen): Promise<boolean> => {
+    async (battleCode: string, mySeat: 'host' | 'guest', name: string, army: Army | null, veteranen?: BattleVeteranen, opponentName?: string): Promise<boolean> => {
       setBusy(true);
       setError(null);
       const c = battleCode.trim().toUpperCase();
       const nameCol = mySeat === 'host' ? 'host_name' : 'guest_name';
       const armyCol = mySeat === 'host' ? 'host_army' : 'guest_army';
       const fallbackName = mySeat === 'host' ? 'Host' : 'Guest';
+      const oppCol = mySeat === 'host' ? 'guest_name' : 'host_name';
+      // The campaign knows both players by name, so the other seat can be pre-filled instead of reading
+      // "Opponent" until they happen to open the battle themselves. Only ever as a DEFAULT: it is written
+      // when that column is still empty, never over a name the opponent has already put there.
+      const seedOpp = (row: Record<string, unknown> | null | undefined) =>
+        (opponentName && !String(row?.[oppCol] ?? '').trim() ? { [oppCol]: opponentName } : {});
       // Host = aanvaller, guest = verdediger. Stempel MIJN kant z'n campagne-veteranen op het leger
       // vóór we het naar `tow_games` schrijven, zodat de info met de army mee-synct naar beide spelers.
       const mySide = mySeat === 'host' ? 'aanvaller' : 'verdediger';
@@ -286,7 +292,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
           const { data: created, error: insErr } = await withTimeout(
             supabase
               .from(TOW_GAMES)
-              .insert({ code: c, [nameCol]: name || fallbackName, [armyCol]: army2 ?? null })
+              .insert({ code: c, [nameCol]: name || fallbackName, [armyCol]: army2 ?? null, ...seedOpp(null) })
               .select()
               .single(),
             15000,
@@ -306,7 +312,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
         const { data: updated, error: updErr } = await withTimeout(
           supabase
             .from(TOW_GAMES)
-            .update({ [nameCol]: name || fallbackName, [armyCol]: army2 ?? null })
+            .update({ [nameCol]: name || fallbackName, [armyCol]: army2 ?? null, ...seedOpp(existing as Record<string, unknown> | null) })
             .eq('code', c)
             .select()
             .single(),
