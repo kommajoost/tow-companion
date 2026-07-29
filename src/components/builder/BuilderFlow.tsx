@@ -177,6 +177,16 @@ export function BuilderFlow({
   // crash on someone's army list.
   const rows = useMemo<RosterRow[]>(() => {
     const out: RosterRow[] = [];
+    // uid → the engine's own messages for that entry. Read rather than re-derived: re-deriving is how
+    // the row and the band came to disagree in the first place, and `validate()` checks entry-level
+    // rules this file has no business knowing about (the Battle March and Grand Melee single-unit caps,
+    // `unitAllowedIn`, the campaign's named-unit requirement).
+    const issuesByUid = new Map<string, string[]>();
+    for (const w of derived.entryWarnings ?? []) {
+      const list0 = issuesByUid.get(w.uid);
+      if (list0) list0.push(w.message);
+      else issuesByUid.set(w.uid, [w.message]);
+    }
     for (const entry of list.entries ?? []) {
       const unit = getUnit(entry.cat, entry.unitId);
       if (!unit) continue;
@@ -191,15 +201,11 @@ export function BuilderFlow({
         points: entryPoints(unit, entry, itemsData),
         count: entry.count,
         magic,
-        // The same inputs `builderDerived` uses for its `unit-size` violation: `minimum ?? 1`, and
-        // `maximum` where 0 means "no maximum".
-        sizeIssue: entry.count < (unit.minimum ?? 1)
-          ? 'under'
-          : ((unit.maximum ?? 0) > 0 && entry.count > (unit.maximum ?? 0) ? 'over' : null),
+        issues: issuesByUid.get(entry.uid) ?? [],
       });
     }
     return out;
-  }, [list.entries, list.composition, getUnit, itemsData, armyItemLists]);
+  }, [list.entries, list.composition, getUnit, itemsData, armyItemLists, derived.entryWarnings]);
 
   // ── Picker entries ────────────────────────────────────────────────────────────────────────────
   const troopTypeFor = useMemo(() => makeTroopTypeLookup(statIdx ?? null), [statIdx]);

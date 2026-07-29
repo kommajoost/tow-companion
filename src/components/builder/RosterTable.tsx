@@ -376,18 +376,16 @@ export function RosterTable(props: {
                       already prints ▲ at (the validation band, and SectionHeader's own meta), and it
                       brings the widest realistic case ("▲ 100×") to 38.8px, inside budget. */}
                   <span style={QTY_CELL}>
-                    {row.sizeIssue ? (
-                      // Not aria-hidden any more: on desktop this marker IS the per-unit report of the
-                      // problem the band names, so it carries the reason as a title and as text for a
-                      // screen reader instead of being decoration.
+                    {row.issues.length ? (
+                      // Not aria-hidden: this marker IS the per-unit report of what the band names, so it
+                      // carries the engine's own message as a title and as screen-reader text rather than
+                      // being decoration. Several problems on one unit are listed, not summarised.
                       <span
-                        title={row.sizeIssue === 'over'
-                          ? `Above the maximum unit size (${row.unit.maximum})`
-                          : `Below the minimum unit size (${row.unit.minimum ?? 1})`}
+                        title={row.issues.join('\n')}
                         style={{ display: 'inline-block', fontSize: 8.5, marginRight: 2 }}
                       >
                         ▲<span style={{ position: 'absolute', left: -9999, width: 1, overflow: 'hidden' }}>
-                          {row.sizeIssue === 'over' ? 'above maximum size' : 'below minimum size'}
+                          {row.issues.join('. ')}
                         </span>
                       </span>
                     ) : null}

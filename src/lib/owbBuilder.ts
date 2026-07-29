@@ -419,6 +419,18 @@ export interface Validation {
   total: number;
   byCategory: Record<Category, CategoryTally>;
   warnings: string[];
+  /**
+   * The subset of `warnings` that is about ONE specific entry, carrying that entry's uid.
+   *
+   * `warnings` is a flat `string[]`, which is fine for a band that lists problems but loses the one
+   * thing a ROSTER needs: which unit each problem belongs to. So a list could report "Sorceress over the
+   * 25% single-character cap" while the Sorceress' own row showed nothing to look at.
+   *
+   * Every message here is ALSO in `warnings`, verbatim and in the same order — this adds identity, it
+   * does not replace or reword anything, so existing callers and the band's de-duplication are
+   * untouched.
+   */
+  entryWarnings: { uid: string; message: string }[];
 }
 
 // Tally points per category and check them against the composition's limits (percent of the points
@@ -439,6 +451,13 @@ export function validate(
   for (const c of CATEGORIES) byCategory[c] = { points: 0, limit: limits[c], cap: null, floor: null, over: false, under: false };
 
   const warnings: string[] = [];
+  /** Records a warning that belongs to ONE entry, into both lists at once. Same string in `warnings`,
+   *  so nothing downstream sees a change; the uid is the addition. */
+  const entryWarnings: Validation['entryWarnings'] = [];
+  const warnEntry = (uid: string, message: string) => {
+    warnings.push(message);
+    entryWarnings.push({ uid, message });
+  };
   let total = 0;
   // A unit's category for limits depends on the chosen army composition (army-of-infamy lists can
   // move it), so tally by its EFFECTIVE category, not the catalogue array it was added from.
@@ -453,10 +472,10 @@ export function validate(
     rows.push({ e, unit, p, level: wizardLevelOf(unit, e), cat: effCat });
     const min = unit.minimum ?? 1;
     const max = unit.maximum ?? 0; // 0 = no max
-    if (e.count < min) warnings.push(`${unit.name_en}: below minimum size (${min})`);
-    if (max > 0 && e.count > max) warnings.push(`${unit.name_en}: above maximum size (${max})`);
-    if (!unitAllowedIn(unit, list.composition)) warnings.push(`${unit.name_en}: not allowed in this army composition`);
-    if (campaignMods?.namedUnits && !(e.customName ?? '').trim()) warnings.push(`${unit.name_en}: needs a unit name (campaign veterans follow the name)`);
+    if (e.count < min) warnEntry(e.uid, `${unit.name_en}: below minimum size (${min})`);
+    if (max > 0 && e.count > max) warnEntry(e.uid, `${unit.name_en}: above maximum size (${max})`);
+    if (!unitAllowedIn(unit, list.composition)) warnEntry(e.uid, `${unit.name_en}: not allowed in this army composition`);
+    if (campaignMods?.namedUnits && !(e.customName ?? '').trim()) warnEntry(e.uid, `${unit.name_en}: needs a unit name (campaign veterans follow the name)`);
   }
 
   for (const c of CATEGORIES) {
@@ -480,7 +499,7 @@ export function validate(
   // Grand Melee: a single character or unit may not exceed 25% of the army's points.
   if (hasGrandMelee && target > 0) {
     const cap25 = Math.floor(0.25 * target);
-    for (const r of rows) if (r.p > cap25) warnings.push(`${r.unit.name_en} over the 25% single-unit cap (${r.p}/${cap25} pts)`);
+    for (const r of rows) if (r.p > cap25) warnEntry(r.e.uid, `${r.unit.name_en} over the 25% single-unit cap (${r.p}/${cap25} pts)`);
   }
 
   // Grand Melee: 0-1 Level 3 Wizard per 1,000 pts; 0-1 Level 4 Wizard per 2,000 pts (named characters
@@ -524,14 +543,14 @@ export function validate(
         const pct = capPct[r.cat];
         if (pct == null) continue;
         const capPts = Math.floor((pct / 100) * target);
-        if (r.p > capPts) warnings.push(`${r.unit.name_en} over the ${pct}% single-${r.cat === 'characters' ? 'character' : 'unit'} cap (${r.p}/${capPts} pts)`);
+        if (r.p > capPts) warnEntry(r.e.uid, `${r.unit.name_en} over the ${pct}% single-${r.cat === 'characters' ? 'character' : 'unit'} cap (${r.p}/${capPts} pts)`);
       }
     }
   }
 
   if (total > target) warnings.push(`Over the points limit by ${total - target}`);
 
-  return { total, byCategory, warnings };
+  return { total, byCategory, warnings, entryWarnings };
 }
 
 const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);

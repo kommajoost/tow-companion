@@ -407,7 +407,7 @@ export function RosterScreen(props: {
                       whisper={row.whisper}
                       points={row.points}
                       magic={row.magic}
-                      sizeIssue={row.sizeIssue}
+                      issues={row.issues}
                       // The row that caused the last change keeps the white background + 3px inset
                       // accent rail until the next interaction; the row whose actions are showing gets
                       // the same treatment, which is also what makes the action strip's own TOW.panel

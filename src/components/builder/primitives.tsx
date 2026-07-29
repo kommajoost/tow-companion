@@ -229,10 +229,10 @@ export function SectionHeader({ label, meta, violated, dense }: {
  * glyph — the two bits of information you most need when scanning a roster.
  */
 export function UnitRow({
-  count, name, whisper, points, magic, selected, sizeIssue, onClick, onLongPress,
+  count, name, whisper, points, magic, selected, issues, onClick, onLongPress,
 }: {
   count?: number; name: string; whisper?: string; points: number;
-  magic?: boolean; selected?: boolean; sizeIssue?: 'under' | 'over' | null;
+  magic?: boolean; selected?: boolean; issues?: string[];
   onClick?: () => void; onLongPress?: () => void;
 }): React.JSX.Element {
   const { handlers, consumeLongPress } = useLongPress(onLongPress);
@@ -240,7 +240,7 @@ export function UnitRow({
   // SPEC SLIP, resolved deliberately. Spec 1a pins the count prefix to Blood ("Count prefix in
   // #9c2b2b 600") and the validation section pins the out-of-size state to the SAME colour ("count
   // prefix turns #9c2b2b") — so colour alone cannot distinguish them and the flag would render as a
-  // no-op. A silent no-op is worse than either reading: a screen would set `sizeIssue` and the
+  // no-op. A silent no-op is worse than either reading: a screen would set `issues` and the
   // violation would simply never show. So the marker is taken from the spec's OWN violation
   // vocabulary in the same document — "the meta turns #9c2b2b and gains a ▲ prefix" (section header,
   // 1a) — and applied here as a ▲ before the count. Colour stays exactly as specified; only the
@@ -266,7 +266,7 @@ export function UnitRow({
         <span style={{ display: 'flex', alignItems: 'baseline', minWidth: 0 }}>
           {count != null ? (
             <span style={{ ...ROW_FIXED, fontWeight: 600, color: countColour }}>
-              {sizeIssue ? '▲ ' : ''}{count}×&nbsp;
+              {issues && issues.length ? '▲ ' : ''}{count}×&nbsp;
             </span>
           ) : null}
           <span style={ROW_NAME}>{name}</span>
@@ -274,7 +274,14 @@ export function UnitRow({
             <span style={{ ...ROW_FIXED, color: TOW.gold, paddingLeft: 4 }}>✦</span>
           ) : null}
         </span>
-        {whisper ? <span style={ROW_WHISPER}>{whisper}</span> : null}
+        {/* A problem REPLACES the loadout whisper rather than being added under it: the row is a fixed
+            44px and a third line would break that rhythm for every row in the list. The loadout is
+            still one tap away in the unit editor, and "over the 25% cap" is the more urgent of the two.
+            A `title` would be the desktop answer, but this row is built for a phone, where there is no
+            hover to reveal one. */}
+        {issues && issues.length ? (
+          <span style={{ ...ROW_WHISPER, color: TOW.gold }}>{issues[0]}</span>
+        ) : whisper ? <span style={ROW_WHISPER}>{whisper}</span> : null}
       </span>
       <span style={ROW_POINTS}>{fmt(points)}</span>
     </>

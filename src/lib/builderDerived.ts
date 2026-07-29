@@ -64,6 +64,12 @@ export interface DerivedList {
    *  they feed DIFFERENT surfaces: `violations` → the spec's band, `warnings` → the issues/Resolve
    *  list. Never render both in one place. */
   warnings: string[];
+  /** The subset of `warnings` that belongs to ONE entry, with its uid — forwarded from `validate()`.
+   *
+   *  Every entry-level problem is here, not just the size ones: the Grand Melee and Battle March
+   *  single-unit caps, `unitAllowedIn`, and the campaign's named-unit requirement. A roster row reads
+   *  this to flag itself, so the row and the band can never disagree about which unit is at fault. */
+  entryWarnings: { uid: string; message: string }[];
   unitCount: number;
   modelCount: number;
 }
@@ -195,6 +201,9 @@ export function deriveList(list: BuilderList, army: OwbArmy, itemsData?: MagicIt
     // Verbatim, unfiltered — see the field's doc comment. Everything validate() checks reaches the
     // caller, including the composition-rule and campaign checks that have no typed shape above.
     warnings: v.warnings,
+    // Same messages, with the entry each belongs to — see `Validation.entryWarnings`. This is what lets
+    // a roster ROW carry its own problem instead of only the band naming it.
+    entryWarnings: v.entryWarnings,
     unitCount,
     modelCount,
   };

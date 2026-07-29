@@ -842,23 +842,22 @@ export function DesktopShell(props: {
         {/* The violations moved OUT of this bar and up under the top bar — see the band above. They were
             joined with " · " into one nowrap line here, so a list with several problems showed the first
             and ellipsised the rest, at the bottom of the screen away from the roster they refer to. This
-            bar is now only ever the tally line, which is also why it can keep its fixed 30px. */}
-        {(
-          <>
-            <span
-              style={{
-                flex: 1, minWidth: 0, fontFamily: towFont.serif, fontSize: 11.5, lineHeight: 1.2,
-                color: TOW.muted, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
-                fontVariantNumeric: 'tabular-nums',
-              }}
-            >
-              <span style={{ color: TOW.goldDeep }}>✓</span>
-              {` Legal list · ${derived.unitCount} unit${derived.unitCount === 1 ? '' : 's'}`}
-              {` · ${derived.modelCount} model${derived.modelCount === 1 ? '' : 's'}`}
-              {` · ${characterCount} character${characterCount === 1 ? '' : 's'}`}
-            </span>
-          </>
-        )}
+            bar is now only ever the tally line — but it must still SAY which state it is in.
+            REGRESSION FIXED: when the violation text moved out, this line kept its hardcoded "✓ Legal
+            list" unconditionally, so an illegal list showed a passing violation band above a bottom bar
+            insisting everything was fine. `bandActive` now picks the glyph and the word. */}
+        <span
+          style={{
+            flex: 1, minWidth: 0, fontFamily: towFont.serif, fontSize: 11.5, lineHeight: 1.2,
+            color: TOW.muted, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
+            fontVariantNumeric: 'tabular-nums',
+          }}
+        >
+          <span style={{ color: TOW.goldDeep }}>{bandActive ? '▲' : '✓'}</span>
+          {`${bandActive ? ' Not legal' : ' Legal list'} · ${derived.unitCount} unit${derived.unitCount === 1 ? '' : 's'}`}
+          {` · ${derived.modelCount} model${derived.modelCount === 1 ? '' : 's'}`}
+          {` · ${characterCount} character${characterCount === 1 ? '' : 's'}`}
+        </span>
         {stamp ? (
           <span
             style={{

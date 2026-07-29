@@ -72,13 +72,14 @@ export interface RosterRow {
   count: number;
   /** This unit carries magic items → the ✦ glyph after the name. */
   magic: boolean;
-  /** Outside the unit's legal size → the count prefix gets the violation marker.
+  /** Everything the engine finds wrong with THIS entry, verbatim — empty when it is fine.
    *
-   *  Covers BOTH directions. It used to be `undersized` and looked only at the minimum, so a unit ABOVE
-   *  its maximum was named in the violation band while its own row showed nothing: the row and the band
-   *  disagreed about the same unit. Derived from the same `minimum`/`maximum` fields `builderDerived`
-   *  uses for its `unit-size` violation, so the two cannot drift apart. */
-  sizeIssue: 'under' | 'over' | null;
+   *  Straight from `validate()`'s `entryWarnings`, so a row shows exactly the message the band shows:
+   *  never a paraphrase, never a different set. Two earlier shapes were both too narrow — `undersized`
+   *  looked only at a unit's minimum, `sizeIssue` only at its minimum and maximum — so a Sorceress over
+   *  the Battle March 25% single-character cap was named in the band while her own row showed nothing to
+   *  look at. Any entry-level rule the engine checks now flags its row without further work. */
+  issues: string[];
 }
 
 /** One selectable catalogue entry in the picker (screen 2a). */
