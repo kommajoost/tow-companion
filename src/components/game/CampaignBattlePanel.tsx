@@ -21,6 +21,9 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
   const [loading, setLoading] = useState(true);
   const [loadErr, setLoadErr] = useState<string | null>(null);
   const [name, setName] = useState('');
+  // The army waiting to go into the battle. Held here rather than opened straight away: the pre-game
+  // briefing is the point of this screen, so starting is a separate, deliberate press.
+  const [staged, setStaged] = useState<Army | null>(null);
 
   // The linked campaign player id (attacker/defender ids are campaign-player ids). Read the cached
   // context the same way Settings/BuilderWorkspace do; no fetch here — the link is a prerequisite.
@@ -325,8 +328,8 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
       </div>
       <p style={{ fontFamily: serif, fontSize: 14, color: TOW.parchDim, margin: '0 0 16px' }}>
         {myLijst?.naam
-          ? <>Your campaign list is locked as <strong>“{myLijst.naam}”</strong>{myLijst.punten ? ` (${myLijst.punten} pts)` : ''} — it loads below. Open the shared game and your opponent opens the same code on their device; you play with the live tracker.</>
-          : <>Load your <strong>full Companion army list</strong> for this battle, then open the shared game. Your opponent opens the same code on their device and you play with the live tracker.</>}
+          ? <>Your campaign list is locked as <strong>“{myLijst.naam}”</strong>{myLijst.punten ? ` (${myLijst.punten} pts)` : ''} and loads by itself. Read the briefing above, then start the battle when you are ready — your opponent opens the same code on their device and you play with the live tracker.</>
+          : <>Load your <strong>full Companion army list</strong> for this battle, then start it. Your opponent opens the same code on their device and you play with the live tracker.</>}
       </p>
 
       {/* NO NAME FIELD. A campaign battle is between two named campaign players, so asking you to type
@@ -342,20 +345,36 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
           unit NAMES, without options or statlines, so the opponent's line-up is listed above but their
           full army has to come off their own device. */}
       <ArmyListPicker
-        onPick={openWith}
+        // STAGES the army; it does not start the battle. Handing this straight to `openWith` made the
+        // whole briefing flash past — the army loaded, the game opened, and the screen you came here to
+        // read was gone before you could read it. Loading and starting are two decisions, and only the
+        // second one is yours to make.
+        onPick={setStaged}
         label="Choose your army list for this battle"
         lockedListName={myLijst?.naam ?? null}
         autoPick
       />
 
-      <div style={{ display: 'flex', gap: 14, alignItems: 'center', marginTop: 8 }}>
+      <div style={{ display: 'flex', gap: 14, alignItems: 'center', flexWrap: 'wrap', marginTop: 14 }}>
         <button
-          onClick={() => openWith(null)}
+          onClick={() => openWith(staged)}
           disabled={busy}
-          style={{ border: `1px solid ${TOW.lineStrong}`, borderRadius: 10, background: 'transparent', color: TOW.muted, cursor: 'pointer', padding: '10px 16px', fontFamily: display, fontWeight: 600, fontSize: 13.5, opacity: busy ? 0.5 : 1 }}
+          style={{
+            border: `1px solid ${TOW.goldDeep}`, borderRadius: 10,
+            background: staged ? 'rgba(184,134,47,0.16)' : 'transparent',
+            color: TOW.gold, cursor: busy ? 'default' : 'pointer', padding: '11px 20px',
+            fontFamily: display, fontWeight: 700, fontSize: 14.5, opacity: busy ? 0.5 : 1,
+          }}
         >
-          {busy ? 'Opening…' : 'Open the game & add my army later'}
+          {busy ? 'Starting…' : 'Start battle'}
         </button>
+        <span style={{ fontFamily: serif, fontSize: 13, color: TOW.muted }}>
+          {staged
+            ? `${staged.units.length} unit${staged.units.length === 1 ? '' : 's'} loaded — opens the shared game on code ${code}.`
+            // Starting without an army is allowed on purpose: it is better to get both players into the
+            // tracker and add the list there than to be stuck behind a list this device cannot build.
+            : 'No army loaded yet — you can still start and add it inside the game.'}
+        </span>
         {dismissBtn}
       </div>
 
