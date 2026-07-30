@@ -110,6 +110,10 @@ export interface CampaignBattle {
   veteranen?: BattleVeteranen;
   /** Actieve gebouw-perks per kant — alleen gevuld als `beideGelockt`. Optioneel (zie boven). */
   perks?: BattlePerks;
+  /** Act-nummer en de punten-cap van die Act. De cap bepaalt welke legergrootte-kolom van de officiële
+   *  Tournament-Points-tabel geldt. Optioneel: oudere servers sturen het niet mee. */
+  fase?: number;
+  cap?: number;
   /** Aangehangen found magic item per kant (max 1) — alleen gevuld als `beideGelockt`. Optioneel
    *  (oude servers sturen het niet mee → undefined). */
   items?: BattleItems;
@@ -248,6 +252,37 @@ export interface BattleResultaat {
     /** Battle-scar-trigger: unit onder 25% start-US, of removed, of vluchtend bij einde spel. */
     scar_trigger: boolean;
   }[];
+}
+
+/** De zeven officiële uitkomsten (Tournament Points), altijd vanuit de AANVALLER gezien. */
+export type ToernooiResultaat = 'CD' | 'RD' | 'MD' | 'D' | 'MV' | 'RV' | 'CV';
+
+export const RESULTAAT_NAAM: Record<ToernooiResultaat, string> = {
+  CD: 'Crushing Defeat', RD: 'Resounding Defeat', MD: 'Marginal Defeat', D: 'Draw',
+  MV: 'Marginal Victory', RV: 'Resounding Victory', CV: 'Crushing Victory',
+};
+export const TP_VAN_RESULTAAT: Record<ToernooiResultaat, number> = {
+  CD: 0, RD: 1, MD: 2, D: 3, MV: 4, RV: 5, CV: 6,
+};
+/** De uitkomst gespiegeld naar de andere kant (winnaar ↔ verliezer). */
+export const SPIEGEL: Record<ToernooiResultaat, ToernooiResultaat> = {
+  CV: 'CD', RV: 'RD', MV: 'MD', D: 'D', MD: 'MV', RD: 'RV', CD: 'CV',
+};
+
+/**
+ * Vraag de SERVER om de officiële uitslag bij dit VP-verschil. Bewust géén eigen kopie van de
+ * VP-tabel hier: die staat al in de campagne-DB (`towc_vp_resultaat`) én in de campagne-frontend.
+ * Een derde kopie zou onvermijdelijk uit de pas gaan lopen.
+ * `cap` = de punten-cap van de Act (bepaalt de legergrootte-kolom); komt mee met `battleByCode`.
+ */
+export async function officieleUitslag(vpAanvaller: number, vpVerdediger: number, cap: number): Promise<ToernooiResultaat | null> {
+  const { data, error } = await supabase.rpc('towc_vp_resultaat', {
+    p_vp_aanv: Math.max(0, Math.round(vpAanvaller)),
+    p_vp_verd: Math.max(0, Math.round(vpVerdediger)),
+    p_cap: cap,
+  });
+  if (error || typeof data !== 'string') return null;
+  return data as ToernooiResultaat;
 }
 
 /** Meld de uitslag van een campagne-battle terug (als voorstel). Gated op de sync-code. */
