@@ -189,8 +189,8 @@ function EmptyState({ line, hint }: { line: string; hint?: string }): React.JSX.
  *    button's 44px target back to the row's 30px content box — and a clipped region is not hittable,
  *    so the spec's 44×44 requirement would silently evaporate. Ellipsising is done by the name span.
  */
-function EntryRow({ entry, fits, selected, onSelect, onAdd }: {
-  entry: PickerEntry; fits: boolean; selected: boolean; onSelect: () => void; onAdd: () => void;
+function EntryRow({ entry, fits, remaining, selected, onSelect, onAdd }: {
+  entry: PickerEntry; fits: boolean; remaining: number; selected: boolean; onSelect: () => void; onAdd: () => void;
 }): React.JSX.Element {
   const name = entry.unit.name_en ?? entry.unit.id;
 
@@ -202,9 +202,13 @@ function EntryRow({ entry, fits, selected, onSelect, onAdd }: {
     ? `min ${n(entry.minSize)}`
     : `${n(entry.minSize)} model${entry.minSize === 1 ? '' : 's'}`;
   const cost = entry.perModel != null ? `${n(entry.perModel)} pt/model` : `${n(entry.addCost)} pt`;
-  const whisper = fits
-    ? [entry.troopType, size, cost, entry.note].filter(Boolean).join(' · ')
-    : `${n(entry.addCost)} pt · exceeds remaining points`;
+  // The over-budget line ADDS to the facts instead of replacing them. It used to swap the whole whisper
+  // for "exceeds remaining points", which threw away the troop type, the unit size and the per-model
+  // cost — exactly what you need to decide whether to take it anyway.
+  const whisper = [entry.troopType, size, cost, entry.note].filter(Boolean).join(' · ')
+    // Once the list is ALREADY over, "how much over" is simply the unit's whole price, and printing it
+    // twice on one line ("150 pt · 150 pt over") is noise. Then the note only has to say the state.
+    + (fits ? '' : remaining > 0 ? ` · ${n(entry.addCost - remaining)} pt over` : ' · over budget');
 
   return (
     <div
@@ -223,7 +227,6 @@ function EntryRow({ entry, fits, selected, onSelect, onAdd }: {
         boxShadow: selected ? `inset 3px 0 0 ${TOW.gold}` : 'none',
         // Over budget is REPORTED, never enforced: the row dims and states the reason, but it stays
         // fully interactive — no `disabled`, no `pointerEvents: none`.
-        opacity: fits ? 1 : 0.42,
         cursor: 'pointer', textAlign: 'left', WebkitTapHighlightColor: 'transparent',
       }}
     >
@@ -535,6 +538,7 @@ export function PickerScreen(props: {
                     key={key}
                     entry={e}
                     fits={entryFits(e, remaining)}
+                    remaining={remaining}
                     selected={selectedKey === key}
                     // Tapping the selected row again clears it — the footer has no cancel, so this is
                     // the way back out of a selection.

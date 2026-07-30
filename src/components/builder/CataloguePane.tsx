@@ -146,9 +146,11 @@ function EmptyState({ line, hint }: { line: string; hint?: string }): React.JSX.
  * statline can be read before committing. Keyboard focus does exactly the same thing — it is the
  * pointer-less equivalent of hover, and without it a keyboard user could never see a preview.
  */
-function EntryRow({ entry, fits, selected, hovered, onSelect, onHover, onAdd }: {
+function EntryRow({ entry, fits, remaining, selected, hovered, onSelect, onHover, onAdd }: {
   entry: PickerEntry;
   fits: boolean;
+  /** Points left in the list — turns "does not fit" into "by how much". */
+  remaining: number;
   selected: boolean;
   hovered: boolean;
   onSelect: () => void;
@@ -167,9 +169,13 @@ function EntryRow({ entry, fits, selected, hovered, onSelect, onHover, onAdd }: 
     ? `min ${n(entry.minSize)}`
     : `${n(entry.minSize)} model${entry.minSize === 1 ? '' : 's'}`;
   const cost = entry.perModel != null ? `${n(entry.perModel)} pt/model` : `${n(entry.addCost)} pt`;
-  const whisper = fits
-    ? [entry.troopType, size, cost, entry.note].filter(Boolean).join(' · ')
-    : `${n(entry.addCost)} pt · exceeds remaining points`;
+  // The over-budget line ADDS to the facts instead of replacing them. It used to swap the whole whisper
+  // for "exceeds remaining points", which threw away the troop type, the unit size and the per-model
+  // cost — exactly what you need to decide whether to take it anyway.
+  const whisper = [entry.troopType, size, cost, entry.note].filter(Boolean).join(' · ')
+    // Once the list is ALREADY over, "how much over" is simply the unit's whole price, and printing it
+    // twice on one line ("150 pt · 150 pt over") is noise. Then the note only has to say the state.
+    + (fits ? '' : remaining > 0 ? ` · ${n(entry.addCost - remaining)} pt over` : ' · over budget');
 
   // ONE vocabulary for these states, shared with RosterTable and PickerScreen: hover lifts the ground,
   // selection adds a 3px inset rail. This pane used to also draw a full 1px accent RING — on hover and
@@ -200,9 +206,11 @@ function EntryRow({ entry, fits, selected, hovered, onSelect, onHover, onAdd }: 
         background: active ? TOW.panel : 'transparent',
         borderBottom: `1px solid ${HAIRLINE}`,
         boxShadow: selected ? rail : 'none',
-        // Over budget is REPORTED, never enforced: the row dims and states the reason, but it stays
-        // fully interactive — no `disabled`, no `pointerEvents: none`. Only "Fits ✓" hides it.
-        opacity: fits ? 1 : 0.42,
+        // Over budget is REPORTED, never enforced — and it no longer LOOKS enforced either. This row
+        // used to drop to 0.42 opacity, which reads as disabled: it was fully clickable all along, but
+        // nobody believes a greyed-out row. The cost turning accent-gold, plus "N pt over" on the
+        // whisper, says the same thing without pretending the unit is unavailable. Only "Fits ✓" hides
+        // anything, and that is the player asking for it.
         cursor: 'pointer', textAlign: 'left',
       }}
     >
@@ -579,6 +587,7 @@ export function CataloguePane(props: {
                   key={key}
                   entry={e}
                   fits={fitting.has(e)}
+                  remaining={remaining}
                   selected={selectedKey === key}
                   hovered={hoverKey === key}
                   // Clicking the selected row again clears it — the footer has no cancel, so this is
