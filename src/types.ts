@@ -242,6 +242,11 @@ export interface GameTracker {
   /** Handmatige VP-bonussen per kant (General/BSB down, buitgemaakte standaards, scenario-VP).
    *  Optioneel + back-compat: oude trackers hebben dit niet; berekenVictory valt terug op {}. */
   bonus?: { host?: VpBonus; guest?: VpBonus };
+  /** Campagne-rapport: beide spelers moeten de uitslag goedkeuren vóór er iemand mag indienen.
+   *  `sig` is de vingerafdruk van de cijfers waarvóór de goedkeuringen gelden — verandert er daarna
+   *  nog iets (VP-bonus, casualty), dan wijkt de sig af en vervallen beide goedkeuringen vanzelf.
+   *  Leeft in de tracker, dus 'ie lift mee op de bestaande realtime-sync van de game-rij. */
+  report?: { sig: string; host?: boolean; guest?: boolean };
 }
 
 /** A shared game row (mirrors the tow_games table). */

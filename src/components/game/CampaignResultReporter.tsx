@@ -92,7 +92,7 @@ function collectVeteraan(tracker: GameTracker, ownArmy: Army | null, ownSeat: 'h
 
 // embedded = gerenderd binnen het einde-battle-overzicht (form direct open, geen eigen rand).
 export function CampaignResultReporter({ embedded = false }: { embedded?: boolean } = {}) {
-  const { code, game, tracker, seat, myArmy } = useGame();
+  const { code, game, tracker, seat, myArmy, setTracker } = useGame();
   const [battle, setBattle] = useState<CampaignBattle | null>(null);
   const [open, setOpen] = useState(embedded);
   // Geen winnaar-keuze meer (30-07): de uitslag volgt uit de Victory Points via de officiële
@@ -149,6 +149,35 @@ export function CampaignResultReporter({ embedded = false }: { embedded?: boolea
     () => (battle ? collectVeteraan(tracker, myArmy, ownSeat) : []),
     [battle, tracker, myArmy, ownSeat],
   );
+
+  // ── Dubbele goedkeuring (30-07) ──────────────────────────────────────────────────────────────
+  // Beide spelers vullen samen dezelfde cijfers in (de tracker is al realtime gedeeld) en moeten de
+  // uitslag allebei goedkeuren vóór er iemand mag indienen. `sig` is de vingerafdruk van de cijfers:
+  // wijzigt er daarna nog iets, dan klopt de opgeslagen sig niet meer en vervallen beide vinkjes.
+  const solo = seat === 'solo' || !game?.guest_army;
+  const sig = useMemo(
+    () => JSON.stringify([vpHost, vpGuest, kills.map((k) => [k.side, k.unitId, k.lost, k.fleeing])]),
+    [vpHost, vpGuest, kills],
+  );
+  const rapport = tracker.report;
+  const sigGeldig = !!rapport && rapport.sig === sig;
+  const hostOk = sigGeldig && !!rapport?.host;
+  const guestOk = sigGeldig && !!rapport?.guest;
+  const ikOk = ownSeat === 'host' ? hostOk : guestOk;
+  const tegenOk = ownSeat === 'host' ? guestOk : hostOk;
+  // Solo/zonder tegenstander is er niemand om het mee eens te worden → direct indienbaar. (Zonder deze
+  // uitzondering zou de submit-knop daar permanent op slot staan, want de goedkeurknop rendert niet.)
+  const beidenAkkoord = solo ? true : hostOk && guestOk;
+
+  /** Mijn goedkeuring aan/uit zetten. Bij een gewijzigde sig beginnen we schoon (de ander moet dan
+   *  opnieuw kijken — dat is precies de bedoeling). */
+  const zetAkkoord = (akkoord: boolean) => {
+    const basis = sigGeldig ? rapport : undefined;
+    setTracker({
+      ...tracker,
+      report: { sig, host: basis?.host, guest: basis?.guest, [ownSeat]: akkoord || undefined },
+    });
+  };
 
   if (!code || !battle) return null; // not a campaign battle → nothing to report
 
@@ -284,11 +313,65 @@ export function CampaignResultReporter({ embedded = false }: { embedded?: boolea
       <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginBottom: 5 }}>Notes (optional)</div>
       <textarea value={notes} onChange={(e) => setNotes(e.target.value)} rows={2} placeholder="Anything the campaign should know…" style={{ width: '100%', borderRadius: 10, border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt, color: TOW.ink, padding: '9px 11px', fontFamily: serif, fontSize: 13, boxSizing: 'border-box', resize: 'vertical', marginBottom: 12 }} />
 
+      {/* Beide spelers moeten akkoord gaan. Wijzigt iemand daarna nog een cijfer, dan klopt de sig niet
+          meer en staan beide vinkjes vanzelf weer uit. */}
+      {!solo && (
+        <>
+          <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginBottom: 5 }}>Both players must agree</div>
+          <div style={{ display: 'flex', gap: 6, marginBottom: 4 }}>
+            {([['host', hostName, hostOk], ['guest', guestName, guestOk]] as const).map(([kant, naam, ok]) => (
+              <div
+                key={kant}
+                style={{
+                  flex: 1, minWidth: 0, borderRadius: 9, padding: '8px 10px',
+                  border: `1px solid ${ok ? TOW.goldDeep : TOW.line}`,
+                  background: ok ? TOW.cardLt : 'transparent',
+                  fontFamily: serif, fontSize: 12.5, color: ok ? TOW.ink : TOW.muted,
+                  overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis',
+                }}
+              >
+                {ok ? '✓ ' : '○ '}{naam}
+                {kant === ownSeat && <span style={{ color: TOW.muted }}> (you)</span>}
+              </div>
+            ))}
+          </div>
+          <button
+            onClick={() => zetAkkoord(!ikOk)}
+            style={{
+              width: '100%', marginBottom: 10, borderRadius: 10, cursor: 'pointer', padding: '10px 14px',
+              border: `1px solid ${ikOk ? TOW.lineStrong : TOW.goldDeep}`,
+              background: ikOk ? 'transparent' : TOW.cardLt,
+              color: ikOk ? TOW.muted : TOW.ink, fontFamily: display, fontWeight: 600, fontSize: 13.5,
+            }}
+          >
+            {ikOk ? 'Withdraw my approval' : 'I agree with this result'}
+          </button>
+          <div style={{ fontFamily: serif, fontSize: 12, color: TOW.muted, marginBottom: 12 }}>
+            {beidenAkkoord
+              ? 'Both approved — either player can send it to the campaign now.'
+              : ikOk
+                ? `Waiting for ${ownSeat === 'host' ? guestName : hostName} to approve.`
+                : tegenOk
+                  ? `${ownSeat === 'host' ? guestName : hostName} approved — check the numbers and approve to unlock sending.`
+                  : 'Change any number and both approvals reset, so you always agree on the same result.'}
+          </div>
+        </>
+      )}
+
       {err && <div style={{ fontFamily: serif, fontSize: 13, color: TOW.blood, marginBottom: 10 }}>{err}</div>}
 
       <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
-        <button onClick={submit} disabled={busy} style={{ flex: 1, border: 'none', borderRadius: 10, cursor: 'pointer', padding: '11px 16px', background: `linear-gradient(180deg, ${TOW.goldBright}, ${TOW.gold} 55%, ${TOW.goldDeep})`, color: TOW.onGrad, fontFamily: display, fontWeight: 700, fontSize: 14, opacity: busy ? 0.5 : 1 }}>
-          {busy ? 'Reporting…' : 'Report to campaign'}
+        <button
+          onClick={submit}
+          disabled={busy || !beidenAkkoord}
+          style={{
+            flex: 1, border: 'none', borderRadius: 10, cursor: busy || !beidenAkkoord ? 'not-allowed' : 'pointer',
+            padding: '11px 16px', background: `linear-gradient(180deg, ${TOW.goldBright}, ${TOW.gold} 55%, ${TOW.goldDeep})`,
+            color: TOW.onGrad, fontFamily: display, fontWeight: 700, fontSize: 14,
+            opacity: busy || !beidenAkkoord ? 0.45 : 1,
+          }}
+        >
+          {busy ? 'Reporting…' : beidenAkkoord ? 'Report to campaign' : 'Both must approve first'}
         </button>
         {!embedded && <button onClick={() => setOpen(false)} style={{ border: `1px solid ${TOW.lineStrong}`, borderRadius: 10, background: 'transparent', color: TOW.muted, cursor: 'pointer', padding: '11px 14px', fontFamily: display, fontSize: 13 }}>Cancel</button>}
       </div>
