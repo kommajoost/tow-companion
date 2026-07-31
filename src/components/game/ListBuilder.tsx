@@ -3,6 +3,7 @@ import { usePersistentState } from '../../store';
 import { TOW, towFont, engraved } from '../../design/tow';
 import { validate, type Category, type OwbArmy, type OwbUnit, type BuilderList, type MagicItemsData } from '../../lib/owbBuilder';
 import { compName } from '../../lib/armies';
+import { troopTypeName } from '../../lib/troopTypes';
 import { BuilderWorkspace } from './BuilderWorkspace';
 import { BuilderFlow } from '../builder/BuilderFlow';
 import { NewListSetup, type NewListValues } from './NewListSetup';
@@ -553,8 +554,10 @@ export function ListBuilder() {
               ].filter((value): value is string => !!value);
               setMountInfo({
                 title: label.replace(/\s*\{[^}]*\}/g, '').trim(),
-                troopType: text.troopType ?? activeStatIdx?.[profileKey]?.troopType
-                  ?? activeStatIdx?.[taggedKey]?.troopType,
+                // rules-index stores troop-type CODES ("MCa"), so this showed a raw "MCA" — unreadable,
+                // and never resolvable to the rule page it names. Mapped to the rulebook's own wording.
+                troopType: troopTypeName(text.troopType ?? activeStatIdx?.[profileKey]?.troopType
+                  ?? activeStatIdx?.[taggedKey]?.troopType),
                 profiles,
                 rules: text.specialRules ?? [],
                 details,

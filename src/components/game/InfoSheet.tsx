@@ -65,9 +65,31 @@ export function InfoSheet({ info, onClose }: { info: InfoSheetData | null; onClo
           <button onClick={onClose} aria-label="Close" style={{ border: 'none', background: 'none', cursor: 'pointer', fontSize: 22, lineHeight: 1, color: TOW.muted, padding: '0 4px' }}>×</button>
         </div>
 
-        {info.troopType && (
-          <div style={{ ...eb, fontSize: 8, color: TOW.muted, margin: '0 0 8px' }}>{info.troopType}</div>
-        )}
+        {/* The troop type is a LINK when the rulebook has a page for it, which it does for all fourteen
+            of them. It is a bundle of rules — how the thing moves, how it fights, what it may join — and
+            printing it as a dead label left the reader with the name of a rule they could not read.
+            `resolveRuleSlug` handles the plural titles ("Behemoth" → Behemoths). No page, no link. */}
+        {info.troopType && (() => {
+          const ttSlug = resolveRuleSlug(info.troopType, idx);
+          return (
+            <div style={{ ...eb, fontSize: 8, color: TOW.muted, margin: '0 0 8px' }}>
+              {ttSlug ? (
+                <button
+                  type="button"
+                  onClick={() => openRule(ttSlug)}
+                  title={`What ${info.troopType} means`}
+                  style={{
+                    border: 'none', background: 'none', padding: 0, margin: 0, font: 'inherit',
+                    letterSpacing: 'inherit', textTransform: 'inherit',
+                    color: TOW.goldDeep, cursor: 'pointer', borderBottom: `1px dotted ${TOW.goldDeep}`,
+                  }}
+                >
+                  {info.troopType}
+                </button>
+              ) : info.troopType}
+            </div>
+          );
+        })()}
 
         {info.flavour && (
           <p style={{ margin: '0 0 6px', fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 13, color: TOW.parchDim, lineHeight: 1.5 }}>{info.flavour}</p>

@@ -124,6 +124,37 @@ const ICON_BTN: React.CSSProperties = {
   border: 'none', background: 'transparent', cursor: 'pointer', color: TOW.faint,
   display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 0,
 };
+/**
+ * A troop type as a link to its rulebook page.
+ *
+ * A troop type is not a label, it is a bundle of rules — how the unit moves, how it fights, what it may
+ * join — and every one of them has its own page. Dotted-underlined so it reads as a link inside a line
+ * of plain text, and it renders as plain text when the container has no way to show a rule, rather than
+ * offering a link that goes nowhere.
+ */
+function TroopTypeLink({ name, onShowInfo }: {
+  name: string;
+  onShowInfo?: (what: { kind: 'rule'; name: string } | { kind: 'item'; itemId: string; name: string } | { kind: 'mount'; name: string } | { kind: 'lore'; slug: string }) => void;
+}): React.JSX.Element {
+  if (!onShowInfo) return <>{name}</>;
+  return (
+    <button
+      type="button"
+      onClick={(e) => { e.stopPropagation(); onShowInfo({ kind: 'rule', name }); }}
+      title={`What ${name} means`}
+      style={{
+        border: 'none', background: 'none', padding: 0, margin: 0, font: 'inherit',
+        letterSpacing: 'inherit', textTransform: 'inherit',
+        color: TOW.goldDeep, cursor: 'pointer',
+        borderBottom: `1px dotted ${TOW.goldDeep}`,
+        WebkitTapHighlightColor: 'transparent',
+      }}
+    >
+      {name}
+    </button>
+  );
+}
+
 /** The "eye" that opens the rule/profile panel. The panel itself belongs to the container: this
  *  screen only says WHAT to show (`onShowInfo`) and never resolves a slug of its own. */
 function Eye({ onClick, title }: { onClick: () => void; title: string }): React.JSX.Element {
@@ -391,11 +422,13 @@ export function UnitOptions(props: {
 
   const effCat = unitCategoryFor(unit, ctx.list.composition, entry.cat);
   const title = entry.customName || unit.name_en;
-  const eyebrow = [
-    entry.customName ? cleanLabel(unit.name_en) : null,
-    troopTypeFor(cleanLabel(unit.name_en)),
-    CAT_LABEL[effCat],
-  ].filter(Boolean).join(' · ');
+  // The troop type is pulled OUT of the joined eyebrow so it can be a link. It is not decoration: a
+  // troop type is a bundle of rules (how it moves, how it fights, what it may join), each with its own
+  // rulebook page — and every one of the 14 codes in `TROOP_TYPE_NAMES` resolves to one, mostly under a
+  // plural title ("Behemoth" → Behemoths, "War Machine" → War Machines), which `resolveRuleSlug` already
+  // handles via its singular/plural fallback.
+  const unitTroopType = troopTypeFor(cleanLabel(unit.name_en));
+  const eyebrowBefore = entry.customName ? cleanLabel(unit.name_en) : null;
 
   const selectedMount = unit.mounts?.[selectedMountIndex(unit, entry)];
   const mountModifiers = selectedMount?.name_en && !/^on foot$/i.test(selectedMount.name_en)
@@ -652,7 +685,19 @@ export function UnitOptions(props: {
         <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10, padding: `9px ${BUILDER.gutter}px 0` }}>
           <BackButton onClick={onBack} />
           <div style={{ flex: 1, minWidth: 0 }}>
-            {eyebrow ? <div style={{ ...eb, fontSize: 7.5, color: TOW.muted, marginBottom: 2 }}>{eyebrow}</div> : null}
+            {/* The troop type sits in this line as a LINK, dotted-underlined so it reads as one. The
+                surrounding parts (a renamed unit's real name, the list category) are not rules and stay
+                plain text. */}
+            <div style={{ ...eb, fontSize: 7.5, color: TOW.muted, marginBottom: 2 }}>
+              {eyebrowBefore ? `${eyebrowBefore} · ` : ''}
+              {unitTroopType ? (
+                <>
+                  <TroopTypeLink name={unitTroopType} onShowInfo={onShowInfo} />
+                  {' · '}
+                </>
+              ) : null}
+              {CAT_LABEL[effCat]}
+            </div>
             <div style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 15.5, lineHeight: 1.15, color: TOW.ink }}>
               {cleanLabel(title)}
             </div>
