@@ -6,3 +6,12 @@ dist-ssr
 .vercel
 .tmp
 *.log
+tsconfig.tsbuildinfo
+
+# Source material we read FROM, never ship: rulebook PDFs, spreadsheets and scanned
+# scenario pages that live loose in the repo root. GitHub rejects a push containing a
+# file over 100 MB, and the Matched Play Guide alone is 177 MB — so a plain `git add -A`
+# fails at the pre-receive hook rather than at commit time, with the whole commit to redo.
+*.pdf
+*.xlsx
+/TOW input/

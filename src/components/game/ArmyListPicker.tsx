@@ -21,10 +21,17 @@ const BASE = import.meta.env.BASE_URL;
 interface SavedList extends BuilderList { id: string; name: string; army: string; createdAt: number; updatedAt: number }
 interface StatRow { Name: string; M: string; WS: string; BS: string; S: string; T: string; W: string; I: string; A: string; Ld: string }
 
-export function ArmyListPicker({ onPick, label = 'Choose one of your saved army lists', lockedListName = null, autoPick = false }: {
+export function ArmyListPicker({ onPick, label = 'Choose one of your saved army lists', lockedListName = null, campaignPlayerId = null, lockedListArmy = null, autoPick = false }: {
   onPick: (a: Army) => void;
   label?: string;
   lockedListName?: string | null;
+  /** Campagne-speler-id waarvoor dit een campagne-battle is. Hiermee vinden we de campagne-lijst op de
+   *  VLAG die de builder zelf zet (`campaign` + `campaignSpeler`) in plaats van op naam. Naam-matching
+   *  brak zodra de lijst hernoemd was ná het locken, of als een ander device 'm anders had staan — en
+   *  dan kreeg je de gewone "kies een lijst"-picker, alsof het geen campagne-battle was (Joost 30-07). */
+  campaignPlayerId?: string | null;
+  /** Leger-slug van de gelockte lijst — gebruikt om bij dubbele lijstnamen de juiste te kiezen. */
+  lockedListArmy?: string | null;
   /** With a locked campaign list, hand it over as soon as it can be built — no click. There is nothing
    *  to choose: the campaign already decided which list plays, so asking was busywork. Still SHOWN, so
    *  you can see which list was loaded. */
@@ -104,7 +111,25 @@ export function ArmyListPicker({ onPick, label = 'Choose one of your saved army 
   // locked list to show, and it falls back to the full picker with the original label; that is the
   // honest failure, rather than offering a swap that would disagree with the campaign.
   const normName = (s: string) => (s || '').trim().toLowerCase();
-  const locked = lockedListName ? lists.find((l) => normName(l.name) === normName(lockedListName)) ?? null : null;
+  // Eerst op de campagne-VLAG (de builder zet die zelf op de lijst die voor deze speler meedoet), dan
+  // pas op naam. De naam is de zwakste schakel: die verandert zodra je je lijst hernoemt, terwijl de
+  // battle de naam bewaart die hij bij het locken zag.
+  const opVlag = campaignPlayerId
+    ? lists.find((l) => {
+        const x = l as unknown as { campaign?: unknown; campaignSpeler?: unknown };
+        return x.campaign === true && x.campaignSpeler === campaignPlayerId;
+      }) ?? null
+    : null;
+  // Naam-terugval: namen zijn NIET uniek (twee lijsten "Playtest army", één dark-elves en één
+  // wood-elf-realms). Daarom eerst een naam+leger-match, en alleen als dat niets geeft naam alleen —
+  // anders laadt hij het verkeerde leger onder de juiste naam.
+  const opNaam = lockedListName
+    ? lists.find((l) => normName(l.name) === normName(lockedListName)
+        && (!lockedListArmy || normName(l.army) === normName(lockedListArmy)))
+      ?? lists.find((l) => normName(l.name) === normName(lockedListName))
+      ?? null
+    : null;
+  const locked = opVlag ?? opNaam;
   const solo = !!locked;
   const shown = solo ? [locked] : lists;
   const heading = solo ? 'Your locked campaign list' : label;
@@ -130,6 +155,15 @@ export function ArmyListPicker({ onPick, label = 'Choose one of your saved army 
   return (
     <div style={{ marginBottom: 14 }}>
       <div style={{ ...eb, fontSize: 9, color: TOW.muted, marginBottom: 7 }}>{heading}</div>
+      {/* De campagne verwacht een gelockte lijst, maar dit apparaat kan 'm niet vinden. Zonder deze regel
+          verscheen gewoon de normale keuzelijst en leek het alsof het geen campagne-battle was. */}
+      {!locked && (lockedListName || campaignPlayerId) && (
+        <div style={{ fontFamily: towFont.serif, fontSize: 12.5, color: TOW.muted, lineHeight: 1.4, marginBottom: 8 }}>
+          {lockedListName
+            ? `Your campaign list “${lockedListName}” is not on this device yet — sync your lists (Settings) or pick it by hand below.`
+            : 'No campaign list found on this device yet — sync your lists (Settings) or pick one by hand below.'}
+        </div>
+      )}
       <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
         {shown.map((l) => {
           const raw = catalogues[l.army] ?? null;

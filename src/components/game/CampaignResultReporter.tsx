@@ -155,6 +155,12 @@ export function CampaignResultReporter({ embedded = false }: { embedded?: boolea
   // uitslag allebei goedkeuren vóór er iemand mag indienen. `sig` is de vingerafdruk van de cijfers:
   // wijzigt er daarna nog iets, dan klopt de opgeslagen sig niet meer en vervallen beide vinkjes.
   const solo = seat === 'solo' || !game?.guest_army;
+  // Tegen een door de campagne bestuurde AI is er niemand die kan goedkeuren (30-07). Dat viel eerder
+  // automatisch onder `solo`, omdat de tegenstander-kolom leeg bleef — maar sinds het AI-leger wél
+  // wordt meegeschreven (zodat je niet meer zelf hun lijst moet kiezen) is dat niet langer waar, en
+  // stond de dubbele goedkeuring een AI-battle in de weg. Expliciet op de ai-vlag uit de campagne dus.
+  const tegenIsAi = ownSeat === 'host' ? battle?.verdediger.ai === true : battle?.aanvaller.ai === true;
+  const geenTegenpartij = solo || tegenIsAi;
   const sig = useMemo(
     () => JSON.stringify([vpHost, vpGuest, kills.map((k) => [k.side, k.unitId, k.lost, k.fleeing])]),
     [vpHost, vpGuest, kills],
@@ -167,7 +173,7 @@ export function CampaignResultReporter({ embedded = false }: { embedded?: boolea
   const tegenOk = ownSeat === 'host' ? guestOk : hostOk;
   // Solo/zonder tegenstander is er niemand om het mee eens te worden → direct indienbaar. (Zonder deze
   // uitzondering zou de submit-knop daar permanent op slot staan, want de goedkeurknop rendert niet.)
-  const beidenAkkoord = solo ? true : hostOk && guestOk;
+  const beidenAkkoord = geenTegenpartij ? true : hostOk && guestOk;
 
   /** Mijn goedkeuring aan/uit zetten. Bij een gewijzigde sig beginnen we schoon (de ander moet dan
    *  opnieuw kijken — dat is precies de bedoeling). */
@@ -314,8 +320,9 @@ export function CampaignResultReporter({ embedded = false }: { embedded?: boolea
       <textarea value={notes} onChange={(e) => setNotes(e.target.value)} rows={2} placeholder="Anything the campaign should know…" style={{ width: '100%', borderRadius: 10, border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt, color: TOW.ink, padding: '9px 11px', fontFamily: serif, fontSize: 13, boxSizing: 'border-box', resize: 'vertical', marginBottom: 12 }} />
 
       {/* Beide spelers moeten akkoord gaan. Wijzigt iemand daarna nog een cijfer, dan klopt de sig niet
-          meer en staan beide vinkjes vanzelf weer uit. */}
-      {!solo && (
+          meer en staan beide vinkjes vanzelf weer uit. Tegen een AI (of solo) is er niemand om het mee
+          eens te worden: dan geen vinkjes-blok, want een knop die op niemand kan wachten is een val. */}
+      {!geenTegenpartij && (
         <>
           <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginBottom: 5 }}>Both players must agree</div>
           <div style={{ display: 'flex', gap: 6, marginBottom: 4 }}>
@@ -356,6 +363,15 @@ export function CampaignResultReporter({ embedded = false }: { embedded?: boolea
                   : 'Change any number and both approvals reset, so you always agree on the same result.'}
           </div>
         </>
+      )}
+
+      {/* Wel een tegenstander, maar een AI: zeg waarom er niets goed te keuren valt. Anders lijkt het
+          alsof de dubbele goedkeuring stuk is. */}
+      {tegenIsAi && (
+        <div style={{ fontFamily: serif, fontSize: 12.5, color: TOW.muted, marginBottom: 12 }}>
+          {(ownSeat === 'host' ? battle?.verdediger.naam : battle?.aanvaller.naam) || 'Your opponent'} is run by the
+          campaign, so there is no second approval — check the numbers and send it in.
+        </div>
       )}
 
       {err && <div style={{ fontFamily: serif, fontSize: 13, color: TOW.blood, marginBottom: 10 }}>{err}</div>}

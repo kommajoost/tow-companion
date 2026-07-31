@@ -102,6 +102,20 @@ export function ListSyncProvider({ children }: { children: ReactNode }) {
           lastPushed.current = snap(cloud.lists, cloud.groups);
           if (cloud.updatedAt !== syncAt) setSyncAt(cloud.updatedAt);
         }
+        // Backfill (30-07): een rij die door een oudere build gepusht is heeft nog geen
+        // campagne-opsplitsing (punten + opties per unit). Zonder deze eenmalige push zou de campagne
+        // daarop moeten wachten tot de speler toevallig z'n lijst wijzigt. Draait alleen als er
+        // campagne-lijsten zijn en verandert de lijsten zelf niet.
+        if (cloud && !cancelled) {
+          // Minder opsplitsingen dan lijsten → een oudere build vulde deze rij (of hij is nooit gevuld).
+          // Eén keer opnieuw pushen; de lijsten zelf veranderen daarbij niet.
+          if ((cloud.lists ?? []).length > cloud.renderedCount) {
+            try {
+              const ts = await pushLists(key, cloud.lists, cloud.groups);
+              if (!cancelled) { lastPushed.current = snap(cloud.lists, cloud.groups); setSyncAt(ts); }
+            } catch { /* stil: de lijsten zelf staan al goed in de cloud */ }
+          }
+        }
         if (!cancelled) { setStatus('synced'); setError(null); }
       } catch (e) {
         if (!cancelled) { setStatus('error'); setError(msg(e)); }

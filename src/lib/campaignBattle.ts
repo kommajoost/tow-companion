@@ -23,6 +23,9 @@ export interface BattleSide {
   naam: string;
   factie: string;
   kleur: string;
+  /** Door de campagne bestuurde AI-general. Die drukt nooit op Start en keurt nooit een rapport goed,
+   *  dus er valt niets te wachten: de server stempelt zo'n kant automatisch mee (30-07). */
+  ai: boolean;
 }
 
 /** Samenvatting van een gekozen campagne-lijst (alleen namen/punten — GEEN stats). Alleen gevuld
@@ -32,7 +35,34 @@ export interface BattleLijstSamenvatting {
   naam: string;
   punten: number;
   leger: string;
-  units: string[];
+  /** Sinds 30-07 volledige unit-regels: aantal, categorie, punten en de gekozen opties, uitgerekend
+   *  door OWC zelf en via de campagne doorgegeven. Battles van vóór die datum leverden kale namen;
+   *  die worden hier naar `{ naam }` opgetild, met punten/opties leeg. */
+  units: BattleLijstUnit[];
+}
+
+/** Eén unit-regel in een campagne-lijst. `punten` is null als de campagne het (nog) niet weet — dan
+ *  tonen we een streepje in plaats van een verzonnen getal. */
+export interface BattleLijstUnit {
+  uid: string | null;
+  unitId: string | null;
+  naam: string;
+  cat: string | null;
+  modellen: number;
+  punten: number | null;
+  opties: string[];
+}
+
+/** Wie heeft er al op Start (en op Eindigen) gedrukt. De battle loopt pas als BEIDE kanten gestart
+ *  zijn, en is pas afgelopen als beide 'klaar' staan — anders kon één speler het potje alleen
+ *  beginnen en zelfs afsluiten (Joost 30-07). Optioneel: een oudere server stuurt het niet mee. */
+export interface BattleHanden {
+  startAanv: string | null;
+  startVerd: string | null;
+  klaarAanv: string | null;
+  klaarVerd: string | null;
+  beideGestart: boolean;
+  beideKlaar: boolean;
 }
 
 /** Eén veteraan-unit (campagne-progressie) voor een battle-kant. De server voegt dit toe aan
@@ -117,11 +147,31 @@ export interface CampaignBattle {
   /** Aangehangen found magic item per kant (max 1) — alleen gevuld als `beideGelockt`. Optioneel
    *  (oude servers sturen het niet mee → undefined). */
   items?: BattleItems;
+  /** Start-/klaar-stand van beide kanten. Optioneel (oude server → undefined; dan geen poort). */
+  handen?: BattleHanden;
 }
 
 function parseSide(raw: unknown): BattleSide {
   const s = (raw && typeof raw === 'object' ? raw : {}) as Record<string, unknown>;
-  return { id: str(s.id), naam: str(s.naam), factie: str(s.factie), kleur: str(s.kleur) };
+  return { id: str(s.id), naam: str(s.naam), factie: str(s.factie), kleur: str(s.kleur), ai: s.ai === true };
+}
+
+/** Eén unit-regel, tolerant voor beide formaten: een kale naam-string (oude battles) of het volledige
+ *  object. Ontbrekende punten blijven null — nooit 0, want 0 pts is een bewering. */
+function parseLijstUnit(raw: unknown): BattleLijstUnit {
+  if (typeof raw === 'string') {
+    return { uid: null, unitId: null, naam: raw, cat: null, modellen: 1, punten: null, opties: [] };
+  }
+  const u = (raw && typeof raw === 'object' ? raw : {}) as Record<string, unknown>;
+  return {
+    uid: typeof u.uid === 'string' ? u.uid : null,
+    unitId: typeof u.unitId === 'string' ? u.unitId : null,
+    naam: str(u.naam),
+    cat: typeof u.cat === 'string' ? u.cat : null,
+    modellen: Math.max(1, num(u.modellen) || 1),
+    punten: typeof u.punten === 'number' ? u.punten : null,
+    opties: arr(u.opties).filter((o): o is string => typeof o === 'string'),
+  };
 }
 
 function parseLijst(raw: unknown): BattleLijstSamenvatting | null {
@@ -131,7 +181,20 @@ function parseLijst(raw: unknown): BattleLijstSamenvatting | null {
     naam: str(l.naam),
     punten: num(l.punten),
     leger: str(l.leger),
-    units: arr(l.units).filter((u): u is string => typeof u === 'string'),
+    units: arr(l.units).map(parseLijstUnit).filter((u) => !!u.naam),
+  };
+}
+
+/** Undefined als het veld ontbreekt (oude server). */
+function parseHanden(raw: unknown): BattleHanden | undefined {
+  if (!raw || typeof raw !== 'object') return undefined;
+  const h = raw as Record<string, unknown>;
+  const ts = (v: unknown): string | null => (typeof v === 'string' && v ? v : null);
+  return {
+    startAanv: ts(h.startAanv), startVerd: ts(h.startVerd),
+    klaarAanv: ts(h.klaarAanv), klaarVerd: ts(h.klaarVerd),
+    beideGestart: h.beideGestart === true,
+    beideKlaar: h.beideKlaar === true,
   };
 }
 
@@ -206,6 +269,7 @@ function parseBattle(data: unknown): CampaignBattle {
     veteranen: parseVeteranen(d.veteranen),
     perks: parsePerks(d.perks),
     items: parseItems(d.items),
+    handen: parseHanden(d.handen),
   };
 }
 
@@ -222,6 +286,22 @@ export async function battleByCode(code: string): Promise<CampaignBattle> {
   const { data, error } = await supabase.rpc('towc_battle_by_code', { p_code: cleanBattleCode(code) });
   if (error) throw error;
   return parseBattle(data);
+}
+
+/** Zet (of haal) je eigen Start-/Eindigen-stempel op deze battle. De battle begint pas als BEIDE
+ *  kanten 'start' gezet hebben; 'klaar' weigert server-side zolang er niet gestart is. Geeft de
+ *  verse stand van beide kanten terug. */
+export async function battleHandZet(
+  code: string,
+  kant: 'aanvaller' | 'verdediger',
+  soort: 'start' | 'klaar' = 'start',
+  aan = true,
+): Promise<BattleHanden | undefined> {
+  const { data, error } = await supabase.rpc('towc_battle_hand_zet', {
+    p_code: cleanBattleCode(code), p_kant: kant, p_soort: soort, p_aan: aan,
+  });
+  if (error) throw error;
+  return parseHanden(data);
 }
 
 /** De uitslag zoals OWC 'm terugmeldt aan de campagne. Winnaar + VP-keys zijn CAMPAGNE-speler-ids

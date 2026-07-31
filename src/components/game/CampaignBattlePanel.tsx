@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { TOW, towFont, engraved } from '../../design/tow';
 import { useGame } from '../../game';
 import { getCachedCampaign, getCampaignCode } from '../../lib/campaign';
-import { battleByCode, type CampaignBattle, type BattleSide, type Perk, type FoundItem } from '../../lib/campaignBattle';
+import { battleByCode, battleHandZet, type CampaignBattle, type BattleSide, type Perk, type FoundItem, type BattleLijstSamenvatting } from '../../lib/campaignBattle';
 import { ArmyListPicker } from './ArmyListPicker';
 import { BattleBoard } from './BattleBoard';
 import type { BattleSetupState } from '../../lib/battle';
@@ -11,6 +11,87 @@ import type { Army } from '../../types';
 const eb = engraved as React.CSSProperties;
 const display = towFont.display;
 const serif = towFont.serif;
+
+/** Slug → readable ("empire-of-man" → "Empire of man"). Module scope so the list block can use it too. */
+const pretty = (s: string) => s.replace(/[-_]/g, ' ').replace(/^./, (c) => c.toUpperCase());
+
+/**
+ * One side's army list, collapsed to a single line and expandable to the FULL line-up: every unit with
+ * its model count, category, points and the options it actually carries (30-07-2026).
+ *
+ * The campaign used to hand over unit NAMES only, which is why this used to be one grey line of text —
+ * and why the opponent's army could not be loaded at all. It now carries the whole thing, worked out by
+ * this app's own `entryPoints`/`optionSummary` and passed through, so both sides read the same numbers.
+ * A unit whose points the campaign does not know shows a dash: an unknown cost is not 0.
+ */
+function LijstBlok({ lijst, heading, open: openInit = false }: {
+  lijst: BattleLijstSamenvatting | null;
+  heading: string;
+  open?: boolean;
+}) {
+  const [open, setOpen] = useState(openInit);
+  if (!lijst) return null;
+  const units = lijst.units;
+  const modellen = units.reduce((s, u) => s + (u.modellen || 0), 0);
+  const detail = units.some((u) => u.punten != null || u.opties.length > 0);
+  return (
+    <div style={{ marginTop: 12 }}>
+      <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginBottom: 5 }}>{heading}</div>
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
+        disabled={units.length === 0}
+        aria-expanded={open}
+        style={{
+          display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 10, width: '100%',
+          border: `1px solid ${TOW.line}`, borderRadius: 9, background: TOW.panel2,
+          padding: '9px 11px', textAlign: 'left', cursor: units.length ? 'pointer' : 'default',
+        }}
+      >
+        <span style={{ minWidth: 0 }}>
+          <span style={{ display: 'block', fontFamily: serif, fontSize: 13.5, color: TOW.parch }}>{lijst.naam}</span>
+          <span style={{ display: 'block', fontFamily: serif, fontSize: 12, color: TOW.faint, marginTop: 1 }}>
+            {[lijst.leger ? pretty(lijst.leger) : null,
+              units.length ? `${units.length} units` : null,
+              modellen ? `${modellen} models` : null].filter(Boolean).join(' · ')}
+          </span>
+        </span>
+        <span style={{ flexShrink: 0, display: 'flex', alignItems: 'center', gap: 7 }}>
+          {lijst.punten ? <span style={{ fontFamily: serif, fontSize: 12.5, color: TOW.parchDim }}>{lijst.punten} pts</span> : null}
+          {units.length > 0 && <span style={{ fontFamily: serif, fontSize: 13, color: TOW.faint }}>{open ? '▾' : '▸'}</span>}
+        </span>
+      </button>
+      {open && units.length > 0 && (
+        <ul style={{ listStyle: 'none', margin: '6px 0 0', padding: 0, display: 'flex', flexDirection: 'column', gap: 5 }}>
+          {units.map((u, i) => (
+            <li key={u.uid ?? `${u.naam}-${i}`} style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 10, padding: '0 3px' }}>
+              <span style={{ minWidth: 0 }}>
+                <span style={{ display: 'block', fontFamily: serif, fontSize: 12.5, color: TOW.parchDim }}>
+                  {u.modellen > 1 ? <span style={{ color: TOW.faint }}>{u.modellen}× </span> : null}
+                  {u.naam}
+                  {u.cat ? <span style={{ color: TOW.faint }}> · {pretty(u.cat)}</span> : null}
+                </span>
+                {u.opties.length > 0 && (
+                  <span style={{ display: 'block', fontFamily: serif, fontSize: 11.5, color: TOW.faint, lineHeight: 1.35 }}>
+                    {u.opties.join(' · ')}
+                  </span>
+                )}
+              </span>
+              <span style={{ flexShrink: 0, fontFamily: serif, fontSize: 12, color: TOW.parchDim, fontVariantNumeric: 'tabular-nums' }}>
+                {u.punten != null ? `${u.punten} pts` : '—'}
+              </span>
+            </li>
+          ))}
+          {!detail && (
+            <li style={{ fontFamily: serif, fontSize: 11.5, color: TOW.faint, lineHeight: 1.35, padding: '0 3px' }}>
+              Points and options per unit appear once this list has been synced from the builder again.
+            </li>
+          )}
+        </ul>
+      )}
+    </div>
+  );
+}
 
 // The Game tab's campaign-battle entry. Given a pending sync code (from the ?battle= deep-link or a
 // typed code), it looks the battle up, shows a short header, works out which side the linked campaign
@@ -26,6 +107,13 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
   // The army waiting to go into the battle. Held here rather than opened straight away: the pre-game
   // briefing is the point of this screen, so starting is a separate, deliberate press.
   const [staged, setStaged] = useState<Army | null>(null);
+  // Start-handshake: bezig-vlag + foutregel voor het zetten van je eigen "ik ben klaar".
+  const [handBezig, setHandBezig] = useState(false);
+  const [handFout, setHandFout] = useState<string | null>(null);
+  // Leger van een AI-tegenstander. Die opent deze battle nooit zelf, dus zonder dit blijft hun kant van
+  // de tracker leeg en moet jij hun lijst erbij zoeken (Joost 30-07). De AI-dummy is een gedeelde lijst,
+  // dus die staat op je eigen apparaat en kan langs dezelfde weg geladen worden als je eigen leger.
+  const [stagedTegen, setStagedTegen] = useState<Army | null>(null);
 
   // The linked campaign player id (attacker/defender ids are campaign-player ids). Read the cached
   // context the same way Settings/BuilderWorkspace do; no fetch here — the link is a prerequisite.
@@ -47,6 +135,24 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
 
   useEffect(() => { load(); }, [load]);
 
+  // Wachten op de tegenpartij: zolang IK klaar sta en de ander niet, elke 3s de stand ophalen. Zonder
+  // dit zou je op je eigen scherm blijven wachten tot je handmatig ververst (Joost 30-07).
+  useEffect(() => {
+    if (!battle?.handen) return;
+    // Tegen een AI valt er niets te pollen: die kant is server-side al meegestempeld.
+    const tegenIsAi = battle.aanvaller.id === myPlayerId ? battle.verdediger.ai : battle.aanvaller.ai;
+    if (tegenIsAi) return;
+    const mijn = battle.aanvaller.id === myPlayerId ? battle.handen.startAanv : battle.handen.startVerd;
+    if (!mijn || battle.handen.beideGestart) return;
+    const t = setInterval(() => {
+      battleByCode(code)
+        .then((b) => setBattle((cur) => (cur ? { ...cur, handen: b.handen ?? cur.handen } : b)))
+        .catch(() => { /* stil: de volgende tik probeert het opnieuw */ });
+    }, 3000);
+    return () => clearInterval(t);
+  }, [battle?.handen, battle?.aanvaller.id, myPlayerId, code]);
+
+
   // Seed the name field from the campaign player's name once the battle loads.
   useEffect(() => {
     if (!battle || name) return;
@@ -63,6 +169,17 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
     : battle.aanvaller.id === myPlayerId ? 'host'
     : battle.verdediger.id === myPlayerId ? 'guest'
     : null;
+
+  /** Open de gedeelde tracker op deze code. Eén plek, want twee wegen leiden hierheen: jij drukt als
+   *  laatste op Start, óf je tegenstander doet dat terwijl jij staat te wachten (de poll hieronder). */
+  const startNu = useCallback(async (army: Army | null, tegenLeger: Army | null = null) => {
+    if (!battle || !mySeat) return;
+    const mijn = mySeat === 'host' ? battle.aanvaller : battle.verdediger;
+    const tegen = mySeat === 'host' ? battle.verdediger : battle.aanvaller;
+    const ok = await openCampaignBattle(code, mySeat, mijn.naam || name, army, battle.veteranen, tegen.naam || undefined, tegenLeger);
+    if (ok) onDismiss(); // GameProvider heeft nu een seat → GameMode wisselt naar GameView
+  }, [battle, mySeat, code, name, openCampaignBattle, onDismiss]);
+
 
   const wrap = (children: React.ReactNode) => (
     <div className="tow-field" style={{ height: '100%', overflowY: 'auto', color: TOW.ink }}>
@@ -145,7 +262,6 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
     : [];
   const tableW = asNum(sheet.tableW);
   const tableH = asNum(sheet.tableH);
-  const pretty = (s: string) => s.replace(/[-_]/g, ' ').replace(/^./, (c) => c.toUpperCase());
 
   /**
   /**
@@ -198,22 +314,9 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
   /** One side's locked list: name, points and the units in it. This is a SUMMARY from the campaign —
    *  unit names only, no options or statlines — so it is presented as a line-up, not as an army. Only
    *  your OWN full army is loadable, out of your own Companion lists. */
-  const renderLijst = (lijst: typeof battle.aanvLijst, heading: string) =>
-    lijst ? (
-      <div style={{ marginTop: 12 }}>
-        <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginBottom: 5 }}>{heading}</div>
-        <div style={{ fontFamily: serif, fontSize: 13, color: TOW.parchDim }}>
-          {lijst.naam}
-          {lijst.punten ? ` · ${lijst.punten} pts` : ''}
-          {lijst.leger ? ` · ${pretty(lijst.leger)}` : ''}
-        </div>
-        {lijst.units.length > 0 && (
-          <div style={{ fontFamily: serif, fontSize: 12.5, color: TOW.faint, marginTop: 3 }}>
-            {lijst.units.join(' · ')}
-          </div>
-        )}
-      </div>
-    ) : null;
+  const renderLijst = (lijst: typeof battle.aanvLijst, heading: string) => (
+    <LijstBlok lijst={lijst} heading={heading} />
+  );
 
   // Active building perks (from the campaign) shown read-only. Label as a chip, effect as tooltip.
   const renderPerks = (perks: Perk[], heading: string) =>
@@ -347,19 +450,32 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
 
   // ── Participant → load your own army and open the game ──
   const mySide = mySeat === 'host' ? battle.aanvaller : battle.verdediger;
-  const myLijst = mySeat === 'host' ? battle.aanvLijst : battle.verdLijst; // locked summary (name only)
+  const myLijst = mySeat === 'host' ? battle.aanvLijst : battle.verdLijst;
+  const oppLijst = mySeat === 'host' ? battle.verdLijst : battle.aanvLijst;
 
   const oppSide = mySeat === 'host' ? battle.verdediger : battle.aanvaller;
 
-  const openWith = async (army: Army | null) => {
-    // Pass the battle's veteran data so openCampaignBattle can stamp my side's units with their
-    // campaign abilities + scars before the army is written to tow_games (rides along to both players).
-    //
-    // The NAME is the campaign's, not something typed here: this is a campaign battle between two known
-    // players. And the opponent's name goes along so the tracker shows who you are actually playing
-    // instead of "Opponent" until they get round to opening the battle on their own device.
-    const ok = await openCampaignBattle(code, mySeat, mySide.naam || name, army, battle.veteranen, oppSide.naam || undefined);
-    if (ok) onDismiss(); // GameProvider now has a seat → GameMode swaps to GameView
+
+  // ── De start-handshake ────────────────────────────────────────────────────────────────────────
+  const mijnKant: 'aanvaller' | 'verdediger' = mySeat === 'host' ? 'aanvaller' : 'verdediger';
+  const handen = battle.handen;
+  const ikGereed = !!handen && !!(mijnKant === 'aanvaller' ? handen.startAanv : handen.startVerd);
+  const beideGestart = !!handen?.beideGestart;
+
+  /** Zet of trek mijn Start-stempel in. Opent NIETS: staan beide kanten, dan wisselt de knop naar
+   *  "Open battle" en druk je zelf door — anders schiet dit briefing-scherm voorbij. */
+  const zetHand = async (aan: boolean) => {
+    if (handBezig) return;
+    setHandBezig(true);
+    setHandFout(null);
+    try {
+      const h = await battleHandZet(code, mijnKant, 'start', aan);
+      setBattle((b) => (b ? { ...b, handen: h ?? b.handen } : b));
+    } catch (e) {
+      setHandFout(e instanceof Error ? e.message : 'Could not set your readiness.');
+    } finally {
+      setHandBezig(false);
+    }
   };
 
 
@@ -396,31 +512,85 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
         onPick={setStaged}
         label="Choose your army list for this battle"
         lockedListName={myLijst?.naam ?? null}
+        lockedListArmy={myLijst?.leger ?? null}
+        campaignPlayerId={myPlayerId}
         autoPick
       />
 
+      {/* AI-tegenstander: hun leger komt van deze kant mee, want er is geen tweede device dat 'm gaat
+          openen. De AI-dummy is een gedeelde lijst, dus dezelfde picker vindt 'm op naam + leger. Bij
+          een MENSELIJKE tegenstander doen we dit niet: dan is hun lijst hun eigen zaak. */}
+      {oppSide.ai && oppLijst && (
+        <ArmyListPicker
+          onPick={setStagedTegen}
+          label={`${oppSide.naam || 'Opponent'} — the campaign's AI list`}
+          lockedListName={oppLijst.naam}
+          lockedListArmy={oppLijst.leger}
+          autoPick
+        />
+      )}
+
+      {/* ── Twee handen op de knop, in twee stappen (Joost 30-07) ──────────────────────────────────
+          1. "Start battle" zet JOUW stempel op de battle. Eén speler kon eerder alleen beginnen — en
+             zelfs afsluiten — terwijl de ander nog niets gedaan had.
+          2. Staan beide stempels, dan verschijnt "Open battle" en ga je zélf naar de tracker. Dat
+             openen gebeurt NIET automatisch: dit briefing-scherm is het halve punt van deze pagina, en
+             met een stempel van een vorige sessie schoot je er anders meteen door.
+          Een AI-kant stempelt server-side automatisch mee, dus daar sta je direct op stap 2.
+          Draait de server nog zonder handen-stand (`handen === undefined`), dan blijft de oude directe
+          start over — beter dan een knop die niets doet. */}
       <div style={{ display: 'flex', gap: 14, alignItems: 'center', flexWrap: 'wrap', marginTop: 14 }}>
         <button
-          onClick={() => openWith(staged)}
-          disabled={busy}
+          onClick={() => {
+            if (!handen) { void startNu(staged, stagedTegen); return; } // oude server: één druk, direct openen
+            if (beideGestart) { void startNu(staged, stagedTegen); return; } // stap 2
+            if (!ikGereed) void zetHand(true);                  // stap 1
+          }}
+          disabled={busy || handBezig || (ikGereed && !beideGestart)}
           style={{
             border: `1px solid ${TOW.goldDeep}`, borderRadius: 10,
-            background: staged ? 'rgba(184,134,47,0.16)' : 'transparent',
-            color: TOW.gold, cursor: busy ? 'default' : 'pointer', padding: '11px 20px',
-            fontFamily: display, fontWeight: 700, fontSize: 14.5, opacity: busy ? 0.5 : 1,
+            background: beideGestart || staged || ikGereed ? 'rgba(184,134,47,0.16)' : 'transparent',
+            color: TOW.gold,
+            cursor: busy || handBezig || (ikGereed && !beideGestart) ? 'default' : 'pointer', padding: '11px 20px',
+            fontFamily: display, fontWeight: 700, fontSize: 14.5,
+            opacity: busy || handBezig || (ikGereed && !beideGestart) ? 0.5 : 1,
           }}
         >
-          {busy ? 'Starting…' : 'Start battle'}
+          {busy ? 'Opening…' : handBezig ? 'Working…'
+            : beideGestart ? 'Open battle'
+            : ikGereed ? 'Waiting for your opponent…'
+            : 'Start battle'}
         </button>
+        {ikGereed && !beideGestart && !oppSide.ai && (
+          <button
+            onClick={() => void zetHand(false)}
+            disabled={handBezig}
+            style={{
+              border: `1px solid ${TOW.line}`, borderRadius: 10, background: 'transparent',
+              color: TOW.parchDim, cursor: handBezig ? 'default' : 'pointer', padding: '10px 16px',
+              fontFamily: display, fontWeight: 700, fontSize: 13.5,
+            }}
+          >
+            Not ready yet
+          </button>
+        )}
         <span style={{ fontFamily: serif, fontSize: 13, color: TOW.muted }}>
-          {staged
-            ? `${staged.units.length} unit${staged.units.length === 1 ? '' : 's'} loaded — opens the shared game on code ${code}.`
-            // Starting without an army is allowed on purpose: it is better to get both players into the
-            // tracker and add the list there than to be stuck behind a list this device cannot build.
-            : 'No army loaded yet — you can still start and add it inside the game.'}
+          {beideGestart
+            ? oppSide.ai
+              // Een AI heeft geen device om op te drukken; die kant stemt server-side automatisch mee.
+              ? `${oppSide.naam || 'Your opponent'} is run by the campaign, so no second press is needed — read the briefing, then open the battle when you are ready.`
+              : `Both sides are ready. Open the battle to move to the tracker on code ${code}.`
+            : ikGereed
+            ? `You are ready. ${oppSide.naam || 'Your opponent'} has to press Start on their own device before you can open the battle.`
+            : staged
+              ? `${staged.units.length} unit${staged.units.length === 1 ? '' : 's'} loaded — press Start to tell your opponent you are ready.`
+              // Ready zonder leger mag bewust: liever beide spelers in de tracker en de lijst daar
+              // toevoegen dan vastzitten achter een lijst die dit apparaat niet kan bouwen.
+              : 'No army loaded yet — you can still press Start and add it inside the game.'}
         </span>
         {dismissBtn}
       </div>
+      {handFout && <div style={{ fontFamily: serif, fontSize: 13.5, color: TOW.blood, marginTop: 10 }}>{handFout}</div>}
 
       {error && <div style={{ fontFamily: serif, fontSize: 13.5, color: TOW.blood, marginTop: 12 }}>{error}</div>}
     </>,

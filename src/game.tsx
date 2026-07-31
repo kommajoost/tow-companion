@@ -31,7 +31,7 @@ interface GameContextValue {
    *  (not a freshly-generated one). Seats the user as host (attacker) or guest (defender): if no
    *  tow_games row exists for that code yet it's created with the user in their seat, otherwise the
    *  user joins their seat. Both players thus land in the same realtime game. Returns true on success. */
-  openCampaignBattle: (code: string, seat: 'host' | 'guest', name: string, army: Army | null, veteranen?: BattleVeteranen, opponentName?: string) => Promise<boolean>;
+  openCampaignBattle: (code: string, seat: 'host' | 'guest', name: string, army: Army | null, veteranen?: BattleVeteranen, opponentName?: string, opponentArmy?: Army | null) => Promise<boolean>;
   /** Recent games (newest first) for the join lobby. */
   listGames: () => Promise<GameSummary[]>;
   startSolo: (army?: Army | null) => void;
@@ -262,7 +262,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
   // code; unlike joinGame it creates the row on first open. Both participants call this with their
   // own seat, so they meet in the same realtime game. Writes only the user's own seat columns.
   const openCampaignBattle = useCallback(
-    async (battleCode: string, mySeat: 'host' | 'guest', name: string, army: Army | null, veteranen?: BattleVeteranen, opponentName?: string): Promise<boolean> => {
+    async (battleCode: string, mySeat: 'host' | 'guest', name: string, army: Army | null, veteranen?: BattleVeteranen, opponentName?: string, opponentArmy?: Army | null): Promise<boolean> => {
       setBusy(true);
       setError(null);
       const c = battleCode.trim().toUpperCase();
@@ -279,6 +279,16 @@ export function GameProvider({ children }: { children: ReactNode }) {
       // vóór we het naar `tow_games` schrijven, zodat de info met de army mee-synct naar beide spelers.
       const mySide = mySeat === 'host' ? 'aanvaller' : 'verdediger';
       const army2 = annotateArmyWithVets(army, veteranen?.[mySide]);
+      // Tegenstander-leger meegeven (30-07): een door de campagne bestuurde AI opent deze battle nooit
+      // op een eigen device, dus zonder dit blijft de tegenstander-kant van de tracker leeg en moet JIJ
+      // hun lijst erbij zoeken. Net als de naam-seed: alleen als die kolom nog leeg is — nooit over een
+      // leger dat een echte tegenstander er al in heeft gezet.
+      const oppSide = mySeat === 'host' ? 'verdediger' : 'aanvaller';
+      const oppArmy2 = annotateArmyWithVets(opponentArmy ?? null, veteranen?.[oppSide]);
+      const seedOppArmy = (row: Record<string, unknown> | null | undefined) =>
+        (oppArmy2 && !row?.[armyCol === 'host_army' ? 'guest_army' : 'host_army']
+          ? { [armyCol === 'host_army' ? 'guest_army' : 'host_army']: oppArmy2 }
+          : {});
       try {
         const { data: existing, error: selErr } = await withTimeout(
           supabase.from(TOW_GAMES).select('*').eq('code', c).maybeSingle(),
@@ -292,7 +302,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
           const { data: created, error: insErr } = await withTimeout(
             supabase
               .from(TOW_GAMES)
-              .insert({ code: c, [nameCol]: name || fallbackName, [armyCol]: army2 ?? null, ...seedOpp(null) })
+              .insert({ code: c, [nameCol]: name || fallbackName, [armyCol]: army2 ?? null, ...seedOpp(null), ...seedOppArmy(null) })
               .select()
               .single(),
             15000,
@@ -312,7 +322,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
         const { data: updated, error: updErr } = await withTimeout(
           supabase
             .from(TOW_GAMES)
-            .update({ [nameCol]: name || fallbackName, [armyCol]: army2 ?? null, ...seedOpp(existing as Record<string, unknown> | null) })
+            .update({ [nameCol]: name || fallbackName, [armyCol]: army2 ?? null, ...seedOpp(existing as Record<string, unknown> | null), ...seedOppArmy(existing as Record<string, unknown> | null) })
             .eq('code', c)
             .select()
             .single(),
