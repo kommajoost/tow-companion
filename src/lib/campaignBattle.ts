@@ -149,6 +149,12 @@ export interface CampaignBattle {
   items?: BattleItems;
   /** Start-/klaar-stand van beide kanten. Optioneel (oude server → undefined; dan geen poort). */
   handen?: BattleHanden;
+  /** Loopt de WAR PHASE van deze Act al? Een battle wordt in de War phase gespeeld, niet terwijl er nog
+   *  generals marcheren — de server weigert een start met NOG_REALM_PHASE. Optioneel: een oudere server
+   *  stuurt het niet mee (undefined) en dan houden we de knop open, want dan is er ook geen poort. */
+  warFase?: boolean;
+  /** Ruwe act_status uit de campagne ('initiatief' | 'beurten' | 'battles' | 'afronding'). */
+  actStatus?: string | null;
 }
 
 function parseSide(raw: unknown): BattleSide {
@@ -270,6 +276,8 @@ function parseBattle(data: unknown): CampaignBattle {
     perks: parsePerks(d.perks),
     items: parseItems(d.items),
     handen: parseHanden(d.handen),
+    warFase: typeof d.warFase === 'boolean' ? d.warFase : undefined,
+    actStatus: typeof d.actStatus === 'string' ? d.actStatus : null,
   };
 }
 

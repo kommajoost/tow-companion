@@ -461,6 +461,9 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
   const handen = battle.handen;
   const ikGereed = !!handen && !!(mijnKant === 'aanvaller' ? handen.startAanv : handen.startVerd);
   const beideGestart = !!handen?.beideGestart;
+  // Een battle wordt in de WAR PHASE gespeeld: zolang er nog generals marcheren weigert de server een
+  // start (NOG_REALM_PHASE). Ontbreekt het veld (oudere server), dan is er ook geen poort → open laten.
+  const magStarten = battle.warFase !== false;
 
   /** Zet of trek mijn Start-stempel in. Opent NIETS: staan beide kanten, dan wisselt de knop naar
    *  "Open battle" en druk je zelf door — anders schiet dit briefing-scherm voorbij. */
@@ -546,7 +549,7 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
             if (beideGestart) { void startNu(staged, stagedTegen); return; } // stap 2
             if (!ikGereed) void zetHand(true);                  // stap 1
           }}
-          disabled={busy || handBezig || (ikGereed && !beideGestart)}
+          disabled={busy || handBezig || !magStarten || (ikGereed && !beideGestart)}
           style={{
             border: `1px solid ${TOW.goldDeep}`, borderRadius: 10,
             background: beideGestart || staged || ikGereed ? 'rgba(184,134,47,0.16)' : 'transparent',
@@ -557,6 +560,7 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
           }}
         >
           {busy ? 'Opening…' : handBezig ? 'Working…'
+            : !magStarten ? 'Not yet — Realm phase'
             : beideGestart ? 'Open battle'
             : ikGereed ? 'Waiting for your opponent…'
             : 'Start battle'}
@@ -575,7 +579,9 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
           </button>
         )}
         <span style={{ fontFamily: serif, fontSize: 13, color: TOW.muted }}>
-          {beideGestart
+          {!magStarten
+            ? 'The campaign is still in its Realm phase — generals are taking their turns. Read the briefing; the battle opens once every general has marched.'
+            : beideGestart
             ? oppSide.ai
               // Een AI heeft geen device om op te drukken; die kant stemt server-side automatisch mee.
               ? `${oppSide.naam || 'Your opponent'} is run by the campaign, so no second press is needed — read the briefing, then open the battle when you are ready.`
