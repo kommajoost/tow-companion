@@ -3,9 +3,9 @@ import { TOW, towFont, engraved } from '../../design/tow';
 import { useGame } from '../../game';
 import { unitTotalStrength } from '../../lib/armyRules';
 import {
-  battleByCode, reportBattleResult, officieleUitslag,
+  battleByCode, battleQuests, reportBattleResult, officieleUitslag,
   RESULTAAT_NAAM, TP_VAN_RESULTAAT, SPIEGEL,
-  type CampaignBattle, type BattleResultaat, type ToernooiResultaat,
+  type CampaignBattle, type BattleResultaat, type ToernooiResultaat, type BattleQuests,
 } from '../../lib/campaignBattle';
 import { berekenVictory, type VpBonus, type Uitslag } from '../../lib/victoryPoints';
 import type { Army, GameTracker } from '../../types';
@@ -104,6 +104,10 @@ export function CampaignResultReporter({ embedded = false }: { embedded?: boolea
   const [done, setDone] = useState(false);
   const [err, setErr] = useState<string | null>(null);
 
+  // De openstaande battle-quest van BEIDE kanten (01-08). Battle-quests zijn tafel-feiten, dus de
+  // twee spelers vinken ze hier samen af; de campagne-app kan ze niet zelf verifiëren.
+  const [quests, setQuests] = useState<BattleQuests>({ aanvaller: null, verdediger: null });
+
   // Probe once per code: is this game a campaign battle? Silent on the "not a campaign battle" path.
   useEffect(() => {
     if (!code) { setBattle(null); return; }
@@ -111,6 +115,9 @@ export function CampaignResultReporter({ embedded = false }: { embedded?: boolea
     battleByCode(code)
       .then((b) => { if (alive) setBattle(b); })
       .catch(() => { if (alive) setBattle(null); });
+    battleQuests(code)
+      .then((q) => { if (alive) setQuests(q); })
+      .catch(() => { if (alive) setQuests({ aanvaller: null, verdediger: null }); });
     return () => { alive = false; };
   }, [code]);
 
@@ -137,6 +144,13 @@ export function CampaignResultReporter({ embedded = false }: { embedded?: boolea
     return () => { alive = false; };
   }, [battle, vpHost, vpGuest]);
 
+  // Quest-vinkjes staan op de TRACKER, niet in lokale state: zo synct realtime ze naar de andere
+  // speler en lopen ze mee in de report-sig (zie hieronder).
+  const questAanvOk = tracker.quests?.host === true;
+  const questVerdOk = tracker.quests?.guest === true;
+  const zetQuest = (zijde: 'host' | 'guest', aan: boolean) =>
+    setTracker({ ...tracker, quests: { ...(tracker.quests ?? {}), [zijde]: aan || undefined } });
+
   const kills = useMemo(
     () => (battle ? collectKills(tracker, game?.host_army?.units, game?.guest_army?.units) : []),
     [battle, tracker, game?.host_army, game?.guest_army],
@@ -162,8 +176,10 @@ export function CampaignResultReporter({ embedded = false }: { embedded?: boolea
   const tegenIsAi = ownSeat === 'host' ? battle?.verdediger.ai === true : battle?.aanvaller.ai === true;
   const geenTegenpartij = solo || tegenIsAi;
   const sig = useMemo(
-    () => JSON.stringify([vpHost, vpGuest, kills.map((k) => [k.side, k.unitId, k.lost, k.fleeing])]),
-    [vpHost, vpGuest, kills],
+    // 01-08: de quest-vinkjes zitten IN de sig. Anders kon iemand na de goedkeuring van de ander nog
+    // een quest aanvinken en glipte dat langs de dubbele controle.
+    () => JSON.stringify([vpHost, vpGuest, kills.map((k) => [k.side, k.unitId, k.lost, k.fleeing]), questAanvOk, questVerdOk]),
+    [vpHost, vpGuest, kills, questAanvOk, questVerdOk],
   );
   const rapport = tracker.report;
   const sigGeldig = !!rapport && rapport.sig === sig;
@@ -226,6 +242,8 @@ export function CampaignResultReporter({ embedded = false }: { embedded?: boolea
       kills,
       notities,
       veteraan,
+      questAanv: questAanvOk || undefined,
+      questVerd: questVerdOk || undefined,
     };
     try {
       await reportBattleResult(code, resultaat);
@@ -312,6 +330,41 @@ export function CampaignResultReporter({ embedded = false }: { embedded?: boolea
           </div>
           <div style={{ fontFamily: serif, fontStyle: 'italic', fontSize: 11.5, color: TOW.muted, marginBottom: 12 }}>
             +1 XP for surviving above 50% strength, +1 per kill/trophy — applied to your campaign veterans once the grensmaster approves.
+          </div>
+        </>
+      )}
+
+      {/* Battle-quests (01-08). Tafel-feiten die de campagne-app niet kan verifiëren, dus vinken de twee
+          spelers ze hier samen af — beiden zien beide quests en beiden mogen ze zetten. De vinkjes
+          staan op de tracker (realtime gedeeld) en zitten in de report-sig, dus een wijziging laat de
+          goedkeuringen vervallen. Alleen battle-quests komen hier binnen; realm-quests worden
+          server-side geverifieerd bij het afsluiten van de Act. */}
+      {(quests.aanvaller || quests.verdediger) && (
+        <>
+          <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginBottom: 5 }}>Battle quests — did they pull it off?</div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginBottom: 12 }}>
+            {([['host', quests.aanvaller, hostName, questAanvOk] as const, ['guest', quests.verdediger, guestName, questVerdOk] as const])
+              .filter(([, q]) => !!q)
+              .map(([kant, q, naam, ok]) => (
+                <button
+                  key={kant}
+                  onClick={() => zetQuest(kant, !ok)}
+                  style={{
+                    textAlign: 'left', cursor: 'pointer', borderRadius: 9, padding: '9px 11px',
+                    border: `1px solid ${ok ? TOW.goldDeep : TOW.line}`,
+                    background: ok ? TOW.cardLt : 'transparent',
+                  }}
+                >
+                  <div style={{ fontFamily: display, fontSize: 13, color: ok ? TOW.ink : TOW.muted }}>
+                    {ok ? '✓ ' : '○ '}{q!.naam}
+                    <span style={{ fontFamily: serif, fontWeight: 400, color: TOW.muted }}> — {naam}</span>
+                  </div>
+                  <div style={{ fontFamily: serif, fontSize: 12, color: TOW.muted, marginTop: 2 }}>{q!.opdracht}</div>
+                  <div style={{ fontFamily: serif, fontSize: 11.5, color: TOW.muted, marginTop: 2, fontStyle: 'italic' }}>
+                    +{q!.fame} Fame, +{q!.goud} gold if achieved
+                  </div>
+                </button>
+              ))}
           </div>
         </>
       )}

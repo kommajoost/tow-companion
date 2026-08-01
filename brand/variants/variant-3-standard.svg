@@ -1,0 +1,32 @@
+<svg width="256" height="256" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Old World Companion — war standard">
+  <title>Variant 3 — Heraldic war standard (banner + sword)</title>
+  <defs>
+    <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#241e18"/><stop offset="1" stop-color="#100d0b"/></linearGradient>
+    <radialGradient id="halo" cx="0.5" cy="0.4" r="0.6"><stop offset="0" stop-color="#cda64f" stop-opacity="0.16"/><stop offset="0.6" stop-color="#9c2b2b" stop-opacity="0.06"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="0.25" y2="1"><stop offset="0" stop-color="#e9cd83"/><stop offset="0.5" stop-color="#cda64f"/><stop offset="1" stop-color="#a47d31"/></linearGradient>
+    <linearGradient id="cloth" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#a83232"/><stop offset="1" stop-color="#7e2020"/></linearGradient>
+  </defs>
+
+  <rect width="256" height="256" rx="58" fill="url(#ground)"/>
+  <rect width="256" height="256" rx="58" fill="url(#halo)"/>
+
+  <!-- finial + crossbar -->
+  <path d="M128 28 136 50 120 50Z" fill="url(#gold)"/>
+  <path d="M128 50 V66" stroke="url(#gold)" stroke-width="4" stroke-linecap="round"/>
+  <path d="M66 66 H190" stroke="url(#gold)" stroke-width="5.5" stroke-linecap="round"/>
+  <circle cx="66" cy="66" r="5.5" fill="url(#gold)"/>
+  <circle cx="190" cy="66" r="5.5" fill="url(#gold)"/>
+  <path d="M101 68 V82 M155 68 V82" stroke="url(#gold)" stroke-width="3.2" stroke-linecap="round"/>
+
+  <!-- gonfalon banner (swallowtail) -->
+  <path d="M83 82 H173 V186 L128 161 L83 186 Z" fill="url(#cloth)" stroke="url(#gold)" stroke-width="3.2" stroke-linejoin="round"/>
+
+  <!-- upright sword charge -->
+  <g>
+    <path d="M128 94 134 112 122 112Z" fill="url(#gold)"/>
+    <path d="M128 110 V146" stroke="url(#gold)" stroke-width="5.5" stroke-linecap="round"/>
+    <path d="M112 146 H144" stroke="url(#gold)" stroke-width="5.5" stroke-linecap="round"/>
+    <path d="M128 146 V158" stroke="url(#gold)" stroke-width="4.6" stroke-linecap="round"/>
+    <circle cx="128" cy="162" r="5" fill="url(#gold)"/>
+  </g>
+</svg>

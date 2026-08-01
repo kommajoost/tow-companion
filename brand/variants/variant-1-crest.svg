@@ -1,0 +1,34 @@
+<svg width="256" height="256" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Old World Companion — crest">
+  <title>Variant 1 — Heraldic crest (shield + crossed swords)</title>
+  <defs>
+    <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#241e18"/><stop offset="1" stop-color="#100d0b"/></linearGradient>
+    <radialGradient id="halo" cx="0.5" cy="0.42" r="0.6"><stop offset="0" stop-color="#cda64f" stop-opacity="0.16"/><stop offset="0.6" stop-color="#9c2b2b" stop-opacity="0.06"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+    <linearGradient id="gold" gradientUnits="userSpaceOnUse" x1="108" y1="40" x2="148" y2="210"><stop offset="0" stop-color="#e9cd83"/><stop offset="0.5" stop-color="#cda64f"/><stop offset="1" stop-color="#a47d31"/></linearGradient>
+  </defs>
+
+  <rect width="256" height="256" rx="58" fill="url(#ground)"/>
+  <rect width="256" height="256" rx="58" fill="url(#halo)"/>
+  <rect x="9" y="9" width="238" height="238" rx="50" fill="none" stroke="#cda64f" stroke-opacity="0.22" stroke-width="1.2"/>
+
+  <!-- crossed swords behind the shield (inlined so strokes render) -->
+  <g transform="rotate(45 128 128)">
+    <path d="M128 28 134 48 122 48Z" fill="url(#gold)"/>
+    <path d="M128 46 V168" stroke="url(#gold)" stroke-width="7" stroke-linecap="round"/>
+    <path d="M110 168 H146" stroke="url(#gold)" stroke-width="7" stroke-linecap="round"/>
+    <path d="M128 168 V188" stroke="url(#gold)" stroke-width="6" stroke-linecap="round"/>
+    <circle cx="128" cy="193" r="6" fill="url(#gold)"/>
+  </g>
+  <g transform="rotate(-45 128 128)">
+    <path d="M128 28 134 48 122 48Z" fill="url(#gold)"/>
+    <path d="M128 46 V168" stroke="url(#gold)" stroke-width="7" stroke-linecap="round"/>
+    <path d="M110 168 H146" stroke="url(#gold)" stroke-width="7" stroke-linecap="round"/>
+    <path d="M128 168 V188" stroke="url(#gold)" stroke-width="6" stroke-linecap="round"/>
+    <circle cx="128" cy="193" r="6" fill="url(#gold)"/>
+  </g>
+
+  <!-- small shield charge at the crossing so the full sword X stays legible -->
+  <path d="M101 99 H155 V125 C155 149 142 164 128 172 C114 164 101 149 101 125 Z" fill="#181410" stroke="url(#gold)" stroke-width="3.2" stroke-linejoin="round"/>
+  <path d="M101 120 H155" stroke="url(#gold)" stroke-width="1.5" stroke-opacity="0.55"/>
+  <circle cx="128" cy="138" r="8" fill="#9c2b2b" stroke="url(#gold)" stroke-width="2.2"/>
+  <circle cx="128" cy="138" r="2.1" fill="url(#gold)"/>
+</svg>

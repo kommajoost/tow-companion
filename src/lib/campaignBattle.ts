@@ -324,6 +324,11 @@ export interface BattleResultaat {
   kills: unknown[];
   /** Vrije notities of null. */
   notities: string | null;
+  /** 01-08: battle-quest gehaald, per kant. Battle-quests zijn TAFEL-feiten ("vang de standaard",
+   *  "versla hun generaal") die de campagne-app nooit zelf kan zien, dus vinken de twee spelers ze
+   *  hier samen af. De campagne-RPC roept per `true` towc_spel_quest_voltooi aan; false = geen actie. */
+  questAanv?: boolean;
+  questVerd?: boolean;
   /** Campagne-relevante per-unit feiten voor de MELDENDE speler z'n EIGEN leger — voedt de
    *  veteraan-XP + battle-scar-triggers van "De Grensvorsten". De campagne-RPC mag dit voorlopig
    *  negeren; het gaat mee in dezelfde jsonb-payload. Optioneel (oude clients sturen het niet). */
@@ -374,6 +379,46 @@ export async function officieleUitslag(vpAanvaller: number, vpVerdediger: number
 }
 
 /** Meld de uitslag van een campagne-battle terug (als voorstel). Gated op de sync-code. */
+/** De actieve BATTLE-quest van één kant, met de tekst uit de campagne-catalogus. */
+export interface BattleQuest {
+  speler: string;
+  questId: string;
+  naam: string;
+  opdracht: string;
+  fame: number;
+  goud: number;
+}
+
+/** Beide kanten hun openstaande battle-quest voor deze Act (null = geen, of een realm-quest die
+ *  server-side geverifieerd wordt en dus niet aan tafel afgevinkt hoort te worden). */
+export interface BattleQuests {
+  aanvaller: BattleQuest | null;
+  verdediger: BattleQuest | null;
+}
+
+function parseQuest(v: unknown): BattleQuest | null {
+  if (!v || typeof v !== 'object') return null;
+  const d = v as Record<string, unknown>;
+  if (typeof d.questId !== 'string' || !d.questId) return null;
+  return {
+    speler: str(d.speler),
+    questId: d.questId,
+    naam: str(d.naam, d.questId),
+    opdracht: str(d.opdracht),
+    fame: num(d.fame),
+    goud: num(d.goud),
+  };
+}
+
+/** Haal de battle-quests van beide kanten op. Onbekende code / geen campagne-battle → beide null. */
+export async function battleQuests(code: string): Promise<BattleQuests> {
+  const { data, error } = await supabase.rpc('towc_battle_quests', { p_code: cleanBattleCode(code) });
+  if (error) throw error;
+  const d = (data && typeof data === 'object' ? data : {}) as Record<string, unknown>;
+  if (d.ok !== true) return { aanvaller: null, verdediger: null };
+  return { aanvaller: parseQuest(d.aanvaller), verdediger: parseQuest(d.verdediger) };
+}
+
 export async function reportBattleResult(code: string, resultaat: BattleResultaat): Promise<void> {
   const { data, error } = await supabase.rpc('towc_battle_resultaat', {
     p_code: cleanBattleCode(code),

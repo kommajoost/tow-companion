@@ -1,0 +1,26 @@
+<svg width="256" height="256" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Old World Companion — OW seal">
+  <title>Variant 2 — Engraved OW monogram seal</title>
+  <defs>
+    <linearGradient id="ground" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#241e18"/><stop offset="1" stop-color="#100d0b"/></linearGradient>
+    <radialGradient id="halo" cx="0.5" cy="0.42" r="0.6"><stop offset="0" stop-color="#cda64f" stop-opacity="0.16"/><stop offset="0.6" stop-color="#9c2b2b" stop-opacity="0.06"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="0.25" y2="1"><stop offset="0" stop-color="#e9cd83"/><stop offset="0.5" stop-color="#cda64f"/><stop offset="1" stop-color="#a47d31"/></linearGradient>
+  </defs>
+
+  <rect width="256" height="256" rx="58" fill="url(#ground)"/>
+  <rect width="256" height="256" rx="58" fill="url(#halo)"/>
+
+  <!-- engraved double seal ring -->
+  <circle cx="128" cy="128" r="93" fill="none" stroke="url(#gold)" stroke-width="3"/>
+  <circle cx="128" cy="128" r="82" fill="none" stroke="#cda64f" stroke-opacity="0.45" stroke-width="1.1"/>
+
+  <!-- cardinal lozenges -->
+  <g fill="url(#gold)">
+    <path d="M128 28 134 36 128 44 122 36Z"/>
+    <path d="M128 212 134 220 128 228 122 220Z"/>
+    <path d="M28 128 36 122 44 128 36 134Z"/>
+    <path d="M212 128 220 122 228 128 220 134Z"/>
+  </g>
+
+  <!-- OW monogram -->
+  <text x="128" y="156" text-anchor="middle" font-family="Cinzel, Georgia, 'Times New Roman', serif" font-size="82" font-weight="700" letter-spacing="1" fill="url(#gold)">OW</text>
+</svg>

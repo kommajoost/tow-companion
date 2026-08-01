@@ -247,6 +247,10 @@ export interface GameTracker {
    *  nog iets (VP-bonus, casualty), dan wijkt de sig af en vervallen beide goedkeuringen vanzelf.
    *  Leeft in de tracker, dus 'ie lift mee op de bestaande realtime-sync van de game-rij. */
   report?: { sig: string; host?: boolean; guest?: boolean };
+  /** 01-08: battle-quest gehaald, per seat. Staat op de tracker zodat het realtime meesynct met de
+   *  andere speler en meeloopt in de report-`sig` (verandert een vinkje, dan vervallen beide
+   *  goedkeuringen — zelfde regel als voor de VP's). */
+  quests?: { host?: boolean; guest?: boolean };
 }
 
 /** A shared game row (mirrors the tow_games table). */
