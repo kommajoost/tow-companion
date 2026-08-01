@@ -16,7 +16,7 @@ import { setPersisted } from '../../store';
 import { COMPOSITION_RULES } from '../../lib/owbBuilder';
 import { useBackClose } from '../../lib/backStack';
 import { useData } from '../../data';
-import { getRuleIndex, resolveOptionSlug, resolveRuleSlug } from '../../lib/armyRules';
+import { getRuleIndex, resolveOptionSlug, resolveRuleSlug, splitCompoundLabel } from '../../lib/armyRules';
 import { useUI } from '../../state';
 import { applyOverlay, applyOverlayItems, applyOverlayMagicText, applyOverlayMountText, applyOverlayStatIndex, hasOverlay, isOverlay, overlayCompsFor, overlayStatsFor, OVERLAY_FILES, type CompositionOverlay, type MountProfileText } from '../../lib/overlays';
 import { InfoSheet, type InfoSheetData } from './InfoSheet';
@@ -564,7 +564,21 @@ export function ListBuilder() {
               return;
             }
             const slug = resolveRuleSlug(label, ruleIdx) ?? resolveOptionSlug(label, ruleIdx);
-            if (slug) openRule(slug);
+            if (slug) { openRule(slug); return; }
+
+            // A label naming SEVERAL pieces of wargear ("Hand weapons, Additional hand weapon",
+            // "Light armour, Shields") matches no page, because no page is named after the
+            // combination — so the eye on 261 of the catalogue's option rows did nothing at all.
+            // The parts each have a page, so offer the parts: InfoSheet already turns a list of
+            // labels into one tappable chip apiece, which is exactly the choice being offered.
+            const parts = splitCompoundLabel(label);
+            const slugs = parts.map((p) => resolveRuleSlug(p, ruleIdx) ?? resolveOptionSlug(p, ruleIdx));
+            const found = slugs.filter((s): s is string => !!s);
+            if (!found.length) return; // nothing to read — better than an empty sheet
+            // Both halves pointing at one page ("Two Hand Weapons/Additional Hand Weapon" covers each)
+            // means there is a single rule to read: open it, rather than a sheet holding one chip.
+            if (found.length === parts.length && new Set(found).size === 1) { openRule(found[0]); return; }
+            setMountInfo({ title: label, rules: parts });
           }}
         />
         {instellingenBlad}

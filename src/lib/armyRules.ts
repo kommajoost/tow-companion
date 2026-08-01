@@ -53,6 +53,19 @@ export function buildRuleIndex(rules: Record<string, Rule>): Map<string, string>
     const best = cands.reduce((a, b) => (b.name.length < a.name.length ? b : a));
     idx.set(k, best.slug);
   }
+
+  // A rule page whose title names two things at once — "Two Hand Weapons/Additional Hand Weapon",
+  // "Ithilmar Armour/Ithilmar Barding" — is ONE page reachable under either name. Army lists cite the
+  // halves ("Additional hand weapon"), which matched nothing, so the page existed but no label could
+  // reach it. There are two such titles in the data, yielding four aliases and colliding with nothing;
+  // `exact` still wins, so a half that is also a page in its own right keeps its own page.
+  for (const r of Object.values(rules)) {
+    if (r.slug.endsWith('-profile') || !r.name.includes('/')) continue;
+    for (const half of r.name.split('/')) {
+      const k = normalize(half);
+      if (k && !exact.has(k) && !idx.has(k)) idx.set(k, r.slug);
+    }
+  }
   return idx;
 }
 
@@ -146,6 +159,34 @@ function knownSlugs(idx: Map<string, string>): Set<string> {
     slugSetCache.set(idx, s);
   }
   return s;
+}
+
+/** Split an option label that names SEVERAL pieces of wargear at once into its parts.
+ *
+ *  A third of the catalogue's option labels are compounds — "Hand weapons, Additional hand weapon",
+ *  "Light armour, Shields", "Demolition Rockets, Infernal Incendiaries, Hand weapons". No rule page
+ *  is named after the combination, so resolving the whole string finds nothing and the option's eye
+ *  did nothing at all. Each PART does have a page, so the parts are what to offer.
+ *
+ *  Splits only at the top level: "Hand weapons (Claws, fangs, tusks, teeth)" is one piece of wargear
+ *  whose parenthetical happens to contain commas, and cutting there would leave four fragments that
+ *  resolve to nothing. Returns a single-element array for an ordinary label, so callers can treat
+ *  every label the same way. */
+export function splitCompoundLabel(label: string): string[] {
+  const parts: string[] = [];
+  let depth = 0;
+  let start = 0;
+  for (let i = 0; i < label.length; i++) {
+    const c = label[i];
+    if (c === '(' || c === '[' || c === '{') depth++;
+    else if (c === ')' || c === ']' || c === '}') depth = Math.max(0, depth - 1);
+    else if (c === ',' && depth === 0) {
+      parts.push(label.slice(start, i));
+      start = i + 1;
+    }
+  }
+  parts.push(label.slice(start));
+  return parts.map((p) => p.trim()).filter(Boolean);
 }
 
 // Resolve a wargear/option label (e.g. "Wizard [Level 3 Wizard]", "Shields", "Lances",

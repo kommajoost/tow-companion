@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useData } from '../../data';
 import { useUI } from '../../state';
-import { getRuleIndex, resolveRuleSlug } from '../../lib/armyRules';
+import { getRuleIndex, resolveRuleSlug, resolveOptionSlug } from '../../lib/armyRules';
 import { useBackClose } from '../../lib/backStack';
 import { useSwipeToDismiss, DragHandle } from '../../lib/useSwipeToDismiss';
 import { TOW, towFont, engraved } from '../../design/tow';
@@ -47,8 +47,14 @@ export function InfoSheet({ info, onClose }: { info: InfoSheetData | null; onClo
 
   // Rules that resolve to a rule page → tappable chips; the rest (a magic item's prose effect) →
   // wrapped paragraphs, so a long sentence reads normally instead of one horizontally-scrolling line.
-  const chips = info.rules.filter((r) => resolveRuleSlug(r, idx));
-  const prose = info.rules.filter((r) => !resolveRuleSlug(r, idx));
+  //
+  // `resolveOptionSlug` is the second try, not a different question: it is the same label→page lookup
+  // with the wargear aliases the rulebook needs — a command role ("Alluress (champion)" → Champions),
+  // "General", "Battle Standard Bearer". A hundred of the labels this sheet is now handed resolve ONLY
+  // that way, and without it they would print as dead paragraphs beside their tappable neighbours.
+  const slugOf = (r: string) => resolveRuleSlug(r, idx) ?? resolveOptionSlug(r, idx);
+  const chips = info.rules.filter((r) => slugOf(r));
+  const prose = info.rules.filter((r) => !slugOf(r));
 
   return (
     <div
@@ -112,7 +118,7 @@ export function InfoSheet({ info, onClose }: { info: InfoSheetData | null; onClo
         {chips.length > 0 && (
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 8 }}>
             {chips.map((label, i) => (
-              <button key={i} onClick={() => openRule(resolveRuleSlug(label, idx)!)} style={{ ...chip, cursor: 'pointer', border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.10)', color: TOW.goldDeep }}>{label}</button>
+              <button key={i} onClick={() => openRule(slugOf(label)!)} style={{ ...chip, cursor: 'pointer', border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.10)', color: TOW.goldDeep }}>{label}</button>
             ))}
           </div>
         )}
