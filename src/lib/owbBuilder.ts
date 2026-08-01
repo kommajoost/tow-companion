@@ -15,6 +15,13 @@ export interface OwbOption {
   // "Wizard" header on a Sorceress). `exclusive` — the option is one-of among its SIBLINGS in the
   // same nested list (a radio choice, e.g. "Level 3 Wizard" vs "Level 4 Wizard").
   alwaysActive?: boolean; exclusive?: boolean; minimum?: number; maximum?: number;
+  // `stackable` — NOT a toggle: a COUNT of how many models in the unit take it, each paying `points`.
+  // The army lists word it "Any model in the unit may take one of the following: Additional hand
+  // weapon +3 points per model", so a unit can mix — two models with great weapons, one with an
+  // ironfist — which a checkbox cannot express. OWB prices these as `count × points` (src/utils/
+  // points.js); we had no notion of it, so a checkbox charged the price ONCE for the whole unit.
+  // The count lives in `ListEntry.optCounts`, keyed by the same "<group>/<index>" key as `opts`.
+  stackable?: boolean;
   // Any option (in any group) may carry NESTED sub-options. These apply only while the parent is
   // active: for a radio group when the parent is the selected choice; for a toggle group when the
   // parent is toggled on (or `alwaysActive`). Exclusive children form a single radio set; the rest
@@ -249,7 +256,10 @@ export function toggleMountSubOption(entry: ListEntry, mountIndex: number, optIn
 export function summaryLabels(unit: OwbUnit, entry: ListEntry, itemsData?: MagicItemsData): string[] {
   const labels = selectedOptions(unit, entry)
     .filter(({ opt }) => !opt.active)
-    .map(({ opt }) => opt.name_en);
+    // A stackable option carries HOW MANY models take it, and the roster line is the only place that
+    // shows a loadout without opening the unit — "Great weapon" alone would hide whether one model
+    // or the whole unit has it, which is most of what the choice was.
+    .map(({ opt, key }) => (opt.stackable ? `${opt.name_en} ×${stackTaken(unit, entry, key, opt)}` : opt.name_en));
   // Nested sub-options of active parents: toggles when on; exclusive picks unless they are the
   // free `active` default (e.g. show "Level 4 Wizard" / "Venomous tail", not "Level 3 Wizard").
   for (const g of subOptionGroups(unit, entry)) {
@@ -282,7 +292,20 @@ export function loadoutLabels(unit: OwbUnit, entry: ListEntry, itemsData?: Magic
       add(b.items.find((it) => it.i === i)?.opt.name_en);
     } else {
       // toggles: every `active` base option plus any the player switched on.
-      for (const { i, opt } of b.items) if (opt.active || entry.opts.includes(`${String(b.key)}/${i}`)) add(opt.name_en);
+      for (const { i, opt } of b.items) {
+        const key = `${String(b.key)}/${i}`;
+        if (!opt.active && !entry.opts.includes(key)) continue;
+        // A stackable option is a number of models, and the roster line is where a loadout is read
+        // without opening the unit — "Great weapon" alone would not say whether that is one model or
+        // all of them. Appended whole rather than via `add`, which splits a label on its commas.
+        if (opt.stackable) {
+          const n = stackTaken(unit, entry, key, opt);
+          const label = `${opt.name_en} ×${n}`;
+          if (n > 0 && !labels.includes(label)) labels.push(label);
+          continue;
+        }
+        add(opt.name_en);
+      }
     }
   }
   for (const g of subOptionGroups(unit, entry)) for (const it of g.items) {
@@ -297,7 +320,9 @@ export function loadoutLabels(unit: OwbUnit, entry: ListEntry, itemsData?: Magic
 // One chosen entry in the list. `opts` holds selected option keys "group/index".
 // `lores`/`spells` (Wizards only) are the lore + spell choices made in the builder, carried into a
 // game Army by builderListToArmy (so the in-game spell card is pre-filled).
-export interface ListEntry { uid: string; cat: Category; unitId: string; count: number; opts: string[]; lores?: string[]; spells?: string[]; customName?: string }  // customName: campagne — named unit (veteranen-identiteit in De Grensvorsten)
+export interface ListEntry { uid: string; cat: Category; unitId: string; count: number; opts: string[]; optCounts?: Record<string, number>; lores?: string[]; spells?: string[]; customName?: string }  // customName: campagne — named unit (veteranen-identiteit in De Grensvorsten)
+// `optCounts` — how many models take each `stackable` option, keyed by its "<group>/<index>" opts key.
+// Optional and absent by default, so every list saved before it existed reads back unchanged.
 export interface BuilderList { composition: string; rule: string; points: number; entries: ListEntry[] }
 
 /** Stabiele CAMPAGNE-sleutel van één lijst-entry ("De Grensvorsten" hangt hier de veteranen-XP,
@@ -360,9 +385,55 @@ export function limitsFor(_rule: string): Record<Category, CatLimit> {
 const groupItems = (unit: OwbUnit, group: keyof OwbUnit): OwbOption[] =>
   (Array.isArray(unit[group]) ? (unit[group] as OwbOption[]) : []).filter((o) => o && o.name_en);
 
-/** Selected options for an entry, as {group, option} pairs. */
-export function selectedOptions(unit: OwbUnit, entry: ListEntry): { group: keyof OwbUnit; opt: OwbOption }[] {
-  const out: { group: keyof OwbUnit; opt: OwbOption }[] = [];
+/** The raw stored count for a `stackable` option — 0 when nothing was ever recorded. Prefer
+ *  `stackTaken`, which also reads the older lists that have no counts. */
+export function stackCount(entry: ListEntry, key: string): number {
+  const n = entry.optCounts?.[key];
+  return typeof n === 'number' && n > 0 ? Math.floor(n) : 0;
+}
+
+/** The most models that may take a `stackable` option: the option's own cap when the data sets one
+ *  (Nasty Skulkers, max 3), otherwise the unit's size — "any model in the unit may take one of the
+ *  following", so at most every model. `maximum: 0` appears in the data for options that have NO cap,
+ *  so it is read as absent rather than as "none allowed". */
+export function stackMax(unit: OwbUnit, entry: ListEntry, opt: OwbOption): number {
+  void unit;
+  const cap = opt.maximum ?? 0;
+  return cap > 0 ? Math.min(cap, entry.count) : entry.count;
+}
+
+/** How many models actually take a `stackable` option, for pricing and for the stepper.
+ *
+ *  A list saved before counts existed has the option's key in `opts` and no count at all. Read
+ *  literally that is zero models, which would silently drop points from a list the player already
+ *  had. It is also not what the tick meant: it was the only way to say "this unit has additional
+ *  hand weapons", so the whole unit is the honest reading — and the reading that makes those lists
+ *  cost what the army list says they cost. The count is capped either way. */
+export function stackTaken(unit: OwbUnit, entry: ListEntry, key: string, opt: OwbOption): number {
+  const max = stackMax(unit, entry, opt);
+  const stored = entry.optCounts?.[key];
+  if (typeof stored === 'number') return Math.max(0, Math.min(Math.floor(stored), max));
+  return entry.opts.includes(key) ? max : 0;
+}
+
+/** Set how many models take a `stackable` option, clamped to [0, stackMax]. Keeps `opts` in step:
+ *  the key is present exactly while the count is above zero, so every existing "is this option on?"
+ *  check keeps working without knowing about counts. Returns the new entry (no mutation). */
+export function setStackCount(unit: OwbUnit, entry: ListEntry, key: string, opt: OwbOption, n: number): ListEntry {
+  const clamped = Math.max(0, Math.min(Math.floor(n), stackMax(unit, entry, opt)));
+  const counts = { ...(entry.optCounts ?? {}) };
+  if (clamped > 0) counts[key] = clamped;
+  else delete counts[key];
+  const opts = clamped > 0
+    ? (entry.opts.includes(key) ? entry.opts : [...entry.opts, key])
+    : entry.opts.filter((k) => k !== key);
+  return { ...entry, opts, optCounts: counts };
+}
+
+/** Selected options for an entry, as {group, option} pairs. `key` rides along so a caller can look up
+ *  a stackable option's count without rebuilding the key it just parsed. */
+export function selectedOptions(unit: OwbUnit, entry: ListEntry): { group: keyof OwbUnit; opt: OwbOption; key: string }[] {
+  const out: { group: keyof OwbUnit; opt: OwbOption; key: string }[] = [];
   for (const key of entry.opts) {
     const [g, iStr] = key.split('/');
     const list = groupItems(unit, g as keyof OwbUnit);
@@ -372,7 +443,7 @@ export function selectedOptions(unit: OwbUnit, entry: ListEntry): { group: keyof
       opt = list[effective];
     }
     if (opt?.hidden) continue;
-    if (opt) out.push({ group: g as keyof OwbUnit, opt });
+    if (opt) out.push({ group: g as keyof OwbUnit, opt, key });
   }
   return out;
 }
@@ -383,8 +454,12 @@ export function selectedOptions(unit: OwbUnit, entry: ListEntry): { group: keyof
  *  (keeps the older 2-arg call sites working until the magic-items UI supplies the data). */
 export function entryPoints(unit: OwbUnit, entry: ListEntry, itemsData?: MagicItemsData): number {
   let pts = (unit.points ?? 0) * entry.count;
-  for (const { opt } of selectedOptions(unit, entry)) {
-    pts += (opt.points ?? 0) * (opt.perModel ? entry.count : 1);
+  for (const { opt, key } of selectedOptions(unit, entry)) {
+    // A stackable option is priced by HOW MANY models take it; `perModel` by the whole unit; the
+    // rest once. Charging a stackable option once was the bug: a 5-strong Wardancer unit taking
+    // additional hand weapons paid 1 point, not 5.
+    const times = opt.stackable ? stackTaken(unit, entry, key, opt) : opt.perModel ? entry.count : 1;
+    pts += (opt.points ?? 0) * times;
   }
   // Nested sub-options of active parents (mount toggles, wizard levels, …). The free `active`
   // exclusive default is implicit/free; only a non-default exclusive pick (or any on toggle) costs.

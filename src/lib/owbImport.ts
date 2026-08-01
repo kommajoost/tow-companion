@@ -69,19 +69,29 @@ export function importOwbText(text: string, army: OwbArmy, itemsData?: MagicItem
     // tracked so they aren't ALSO consumed as magic items below (only true leftovers feed magic).
     const radioChoice = new Map<string, string>();
     const toggles: string[] = [];
+    const stackCounts: Record<string, number> = {};
     const consumed = new Set<number>(); // indices into pu.options matched by a normal option group
     pu.options.forEach((optText, idx) => {
-      const on = norm(optText);
+      // OWB writes a stackable option as "3x Additional hand weapon" (src/utils/unit.jsx), the count
+      // being how many models take it. Strip it before matching — left on, it only ever matched via
+      // the loose contains-pass — and keep the number, because for these the number IS the price.
+      const qty = optText.match(/^\s*(\d+)\s*x\s+/i);
+      const on = norm(qty ? optText.slice(qty[0].length) : optText);
       if (!on) return;
       const k = matchOpt(on);
       if (!k) return;
       consumed.add(idx);
       const [gk, iStr] = k.split('/');
+      const opt = groupItems(unit, gk as keyof OwbUnit)[Number(iStr)];
       if (RADIO_GROUPS.has(gk)) {
-        const opt = groupItems(unit, gk as keyof OwbUnit)[Number(iStr)];
         if (opt && !opt.active) radioChoice.set(gk, k);
       } else if (!toggles.includes(k)) {
         toggles.push(k);
+        // No number on the line (a hand-typed list rather than an OWB export) means the intent is
+        // unrecorded. Best-effort, in keeping with the rest of this importer: assume the whole unit
+        // takes it, which is the ordinary case for a wargear upgrade, and let the option's own cap
+        // pull it back where the data sets one. Never left at 0 — that would silently drop the cost.
+        if (opt?.stackable) stackCounts[k] = qty ? Number(qty[1]) : count;
       }
     });
 
@@ -133,7 +143,13 @@ export function importOwbText(text: string, army: OwbArmy, itemsData?: MagicItem
       });
     }
 
-    entries.push({ uid: newUid(), cat, unitId: unit.id, count, opts: [...radioChoice.values(), ...toggles, ...mountOpts, ...magicOpts] });
+    entries.push({
+      uid: newUid(), cat, unitId: unit.id, count,
+      opts: [...radioChoice.values(), ...toggles, ...mountOpts, ...magicOpts],
+      // Only when there is something to say: an entry with no stackable option keeps the exact shape
+      // it had before counts existed, so nothing downstream sees a new empty field.
+      ...(Object.keys(stackCounts).length ? { optCounts: stackCounts } : {}),
+    });
   }
 
   const header: ImportResult['header'] = {};

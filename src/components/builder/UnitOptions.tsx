@@ -35,7 +35,8 @@ import { useBackClose } from '../../lib/backStack';
 import { makeTroopTypeLookup } from '../../lib/troopTypes';
 import {
   DEFAULT_MAGIC_BUDGET, entryPoints, magicCategories, magicGroupSpent, magicItemId,
-  magicWouldExceed, radioSelected, selectedMagicKeys, selectedMountIndex, setExclusiveSubOption, subOptionGroups,
+  magicWouldExceed, radioSelected, selectedMagicKeys, selectedMountIndex, setExclusiveSubOption,
+  setStackCount, stackMax, stackTaken, subOptionGroups,
   toggleMagicItem, toggleSubOption, unitBlocks, unitCategoryFor,
   type Category, type ListEntry, type MagicCategory, type MagicItem, type OwbOption,
 } from '../../lib/owbBuilder';
@@ -171,8 +172,11 @@ function Eye({ onClick, title }: { onClick: () => void; title: string }): React.
  *  each button is a transparent 44 × 44 box wrapping the 34 × 30 face — no pseudo-elements needed,
  *  which inline styles cannot express anyway. Min/max are clamped twice: the button disables at the
  *  bound (so "min 10" reads as an explanation, not an error) and `setCount` clamps again on write. */
-function Stepper({ value, min, max, onChange, dense }: {
+function Stepper({ value, min, max, onChange, dense, what = 'models' }: {
   value: number; min: number; max: number; onChange: (v: number) => void; dense?: boolean;
+  /** What the number counts, for the buttons' accessible names — several steppers can share a screen
+   *  (the unit's size, plus one per stackable option), and "More models" on all of them is ambiguous. */
+  what?: string;
 }): React.JSX.Element {
   const face = (off: boolean): React.CSSProperties => ({
     width: BUILDER.control.back, height: BUILDER.control.stepper, boxSizing: 'border-box',
@@ -192,14 +196,14 @@ function Stepper({ value, min, max, onChange, dense }: {
   const atMax = value >= max;
   return (
     <div style={{ display: 'flex', alignItems: 'center' }}>
-      <button type="button" disabled={atMin} aria-label="Fewer models" onClick={() => onChange(value - 1)} style={hit(atMin)}>
+      <button type="button" disabled={atMin} aria-label={`Fewer ${what}`} onClick={() => onChange(value - 1)} style={hit(atMin)}>
         <span style={face(atMin)}>−</span>
       </button>
       <span style={{
         minWidth: 30, textAlign: 'center', fontFamily: towFont.display, fontWeight: 700, fontSize: 15,
         color: TOW.ink, fontVariantNumeric: 'tabular-nums',
       }}>{value}</span>
-      <button type="button" disabled={atMax} aria-label="More models" onClick={() => onChange(value + 1)} style={hit(atMax)}>
+      <button type="button" disabled={atMax} aria-label={`More ${what}`} onClick={() => onChange(value + 1)} style={hit(atMax)}>
         <span style={face(atMax)}>＋</span>
       </button>
     </div>
@@ -277,6 +281,36 @@ function OptionRow({ kind, on, label, sub, delta, deltaMuted, blocked, reason, o
           {blocked && reason ? <span style={{ ...ROW_SUB(dense), color: TOW.gold, textAlign: 'right' }}>{reason}</span> : null}
         </span>
       </button>
+      {onInfo ? <Eye onClick={onInfo} title={infoTitle ?? 'Show rule'} /> : null}
+    </div>
+  );
+}
+
+/** A `stackable` option: not "does this unit have it" but "how many models take it".
+ *
+ *  The army lists say "Any model in the unit may take ONE of the following: Additional hand weapon
+ *  +3 points per model • Great weapon +4 points per model", so a unit can be mixed and the price
+ *  follows the number of models taking each. A checkbox could not say that, and charged the price
+ *  once for the whole unit — a five-strong Wardancer unit taking additional hand weapons paid 1
+ *  point instead of 5. The stepper is the same control the unit's own size uses, so the number in
+ *  the middle means the same thing in both places: models. */
+function StackRow({ label, sub, each, count, max, onChange, onInfo, infoTitle, dense }: {
+  label: string; sub?: string; each: string; count: number; max: number;
+  onChange: (n: number) => void; onInfo?: () => void; infoTitle?: string; dense?: boolean;
+}): React.JSX.Element {
+  return (
+    <div style={{
+      display: 'flex', alignItems: 'center', gap: dense ? 4 : 8, width: '100%',
+      borderBottom: `1px solid ${HAIRLINE}`,
+      background: count > 0 ? TOW.panel : 'transparent',
+      minHeight: dense ? 32 : 46, padding: dense ? '2px 0' : '4px 0',
+    }}>
+      <span style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 1 }}>
+        <span style={ROW_LABEL(dense)}>{label}</span>
+        {sub ? <span style={{ ...ROW_SUB(dense), whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{sub}</span> : null}
+      </span>
+      <span style={{ ...ROW_DELTA, color: count > 0 ? TOW.inkDim : TOW.faint, whiteSpace: 'nowrap' }}>{each}</span>
+      <Stepper value={count} min={0} max={max} onChange={onChange} dense={dense} what="taking it" />
       {onInfo ? <Eye onClick={onInfo} title={infoTitle ?? 'Show rule'} /> : null}
     </div>
   );
@@ -496,6 +530,36 @@ export function UnitOptions(props: {
     // ENFORCED (validate() checks it) — only the prose is gone. If it should come back, it needs a real
     // home: an info panel that can take arbitrary text, not a second line on a list row.
     const sub = group === 'mounts' ? troopTypeFor(label) : undefined;
+
+    // A stackable option is a COUNT of models, not a yes/no — see StackRow. Only top-level groups:
+    // a nested sub-option keys as "subopt/<group>/<parent>" and none in the data is stackable, so
+    // one there keeps the plain toggle rather than writing a count under a key nothing reads.
+    if (opt.stackable && !group.includes('/')) {
+      const key = `${group}/${i}`;
+      const max = stackMax(unit, entry, opt);
+      const now = stackTaken(unit, entry, key, opt);
+      // Some of these come with their own floor ("Royal Host Warriors", minimum 10): taking it at all
+      // means taking at least that many, so the first tap jumps there and stepping below it clears.
+      const floor = Math.max(1, opt.minimum ?? 0);
+      const capNote = (opt.maximum ?? 0) > 0 ? `max ${opt.maximum}` : undefined;
+      return (
+        <StackRow
+          key={key}
+          dense={dense}
+          label={label}
+          sub={capNote}
+          each={d.text ? `${d.text} each` : ''}
+          count={now}
+          max={max}
+          onChange={(v) => {
+            const next = v > now ? Math.max(v, floor) : v < floor ? 0 : v;
+            patch((e) => setStackCount(unit, e, key, opt, next));
+          }}
+          onInfo={infoFor(group, opt.name_en)}
+          infoTitle={`About ${label}`}
+        />
+      );
+    }
     return (
       <OptionRow
         dense={dense}
@@ -542,7 +606,14 @@ export function UnitOptions(props: {
     const toggles = b.items.filter(({ opt }) => !opt.alwaysActive);
     if (!toggles.length) return undefined;
     const chosen = toggles.filter(({ i }) => entry.opts.includes(`${String(b.key)}/${i}`));
-    const spent = chosen.reduce((n, { opt }) => n + (opt.points ?? 0) * (opt.perModel ? entry.count : 1), 0);
+    const spent = chosen.reduce((n, { i, opt }) => {
+      // Mirrors entryPoints(): stackable is priced by how many models take it, so this header must
+      // read the count too — summing the bare price said "+1" over a row that was charging +5.
+      const times = opt.stackable
+        ? stackTaken(unit, entry, `${String(b.key)}/${i}`, opt)
+        : opt.perModel ? entry.count : 1;
+      return n + (opt.points ?? 0) * times;
+    }, 0);
     return `${chosen.length} of ${toggles.length}${spent ? ` · +${fmt(spent)}` : ''}`;
   };
 

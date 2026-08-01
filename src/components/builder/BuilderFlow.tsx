@@ -258,7 +258,13 @@ export function BuilderFlow({
       if (i < 0) return {};
       // A copy is a NEW unit, so it gets a new uid — it must not inherit the original's campaign
       // veteran identity, or two units would claim the same XP.
-      const copy: ListEntry = { ...l.entries[i], uid: newUid(), opts: [...l.entries[i].opts] };
+      // `opts` and `optCounts` are copied, not shared: the spread would hand both units the same
+      // array and object, so editing one unit's loadout would silently edit its twin's.
+      const src = l.entries[i];
+      const copy: ListEntry = {
+        ...src, uid: newUid(), opts: [...src.opts],
+        ...(src.optCounts ? { optCounts: { ...src.optCounts } } : {}),
+      };
       return { entries: [...l.entries.slice(0, i + 1), copy, ...l.entries.slice(i + 1)] };
     });
   }, [update]);
