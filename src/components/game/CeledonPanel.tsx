@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { TOW, towFont, engraved } from '../../design/tow';
 import { COMPOSITION_RULES } from '../../lib/owbBuilder';
-import { useCampagnes, kiesCampagne } from '../../lib/campaign';
+import { useCampagnes, kiesCampagne, keurLijst, dienLijstIn, verversCampagnes, type LijstKeuring } from '../../lib/campaign';
 import { useListSync } from '../../listSync';
 import { useAuth } from '../../lib/auth';
 
@@ -16,6 +16,10 @@ import { useAuth } from '../../lib/auth';
 
 const eb = engraved as React.CSSProperties;
 const ruleName = (id: string): string => COMPOSITION_RULES.find((r) => r.id === id)?.name ?? id;
+
+/** The campaign's verdict, plus whether we have one at all. `onbekend` = we could not reach the
+ *  campaign; that must read differently from "the list is fine", so it never enables submitting. */
+interface KeuringState { stand: 'laden' | 'klaar' | 'onbekend'; keuring: LijstKeuring | null }
 
 /** One saved list as this panel needs it (kept minimal so ListBuilder stays the owner of the data). */
 export interface PanelLijst {
@@ -32,9 +36,34 @@ export function CeledonPanel({ lijsten, onOpen, onTour, onHerstel }: {
 }) {
   const { campagnes, actief, laden, fout } = useCampagnes();
   // The list SYNC is what actually carries a list to the campaign; the send button only triggers it.
-  const { pushNow, key: syncKey } = useListSync();
+  const { pushNow, key: syncKey, lastSyncedAt } = useListSync();
   const [stuur, setStuur] = useState<'rust' | 'bezig' | 'klaar' | 'fout'>('rust');
   const { session, loading: authLaden, ssoError } = useAuth();
+
+  // ── De keuring van de campagne ────────────────────────────────────────────────────────────────
+  // The campaign judges the list that is IN THE CLOUD, so this is refetched whenever a push lands
+  // (`lastSyncedAt` changes on every successful one) — never off the local list, which would report
+  // a verdict on a version the campaign has not seen. A failed fetch leaves the last verdict
+  // standing rather than clearing it: a dropped connection is not evidence the list became legal.
+  const spelerId = actief?.speler.id ?? null;
+  const [keuring, setKeuring] = useState<KeuringState>({ stand: 'laden', keuring: null });
+  const [indienen, setIndienen] = useState<'rust' | 'bezig'>('rust');
+  const [indienFout, setIndienFout] = useState<string | null>(null);
+
+  const haalKeuring = useCallback(async (id: string) => {
+    try {
+      setKeuring((k) => ({ stand: k.keuring ? 'klaar' : 'laden', keuring: k.keuring }));
+      const k = await keurLijst(id);
+      setKeuring({ stand: 'klaar', keuring: k });
+    } catch {
+      setKeuring((k) => ({ stand: k.keuring ? 'klaar' : 'onbekend', keuring: k.keuring }));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!spelerId) { setKeuring({ stand: 'onbekend', keuring: null }); return; }
+    void haalKeuring(spelerId);
+  }, [spelerId, lastSyncedAt, haalKeuring]);
 
   // Signed out and no campaign in sight → this is a plain builder session; show nothing.
   // The one exception is a failed hand-off from the campaign app: then the player IS expecting to be
@@ -70,6 +99,16 @@ export function CeledonPanel({ lijsten, onOpen, onTour, onHerstel }: {
   const punten = lijst?.computed ?? null;
   const over = punten != null && punten > actief.puntenCap;
   const regels = actief.compositie.map(ruleName).join(' or ');
+
+  // De keuring, uitgepakt voor de weergave. `ok:false` is geen oordeel over de lijst maar over de
+  // verbinding of de vindbaarheid ervan — dat mag nooit als "goedgekeurd" of als lijstfout lezen.
+  const oordeel = keuring.keuring?.ok ? keuring.keuring : null;
+  const blokkades = oordeel
+    ? oordeel.fouten
+    : keuring.keuring && keuring.keuring.fout === 'GEEN_CAMPAGNE_LIJST'
+      ? ['The campaign has not received this list yet — press "Re-check now" once.']
+      : [];
+  const kanIndienen = !!syncKey && !!spelerId && !!oordeel && oordeel.mag && !oordeel.gelockt;
 
   return (
     <div style={box} data-tour="celedon-panel">
@@ -172,42 +211,100 @@ export function CeledonPanel({ lijsten, onOpen, onTour, onHerstel }: {
             </p>
           ) : (
             <>
-              {/* SEND NOW, not "submit". The campaign already receives every change on its own — the
-                  list sync pushes on each local edit, debounced — so this button does not unlock a step
-                  that was missing; it makes the invisible visible, pushing immediately and saying when
-                  it landed. Naming it "Submit" would be a lie in the other direction: submitting a list
-                  for an Act means LOCKING it, and that lives on Isle of Celedon. There is no RPC here
-                  that can do it (the campaign side exposes read, rename-unit and delete-unit only), so
-                  a button claiming to would do nothing and report success. */}
-              <div style={{ display: 'flex', alignItems: 'center', gap: 9, flexWrap: 'wrap', marginTop: 10 }}>
+              {/* SUBMITTING now happens HERE, where the list is built — it used to live only on Isle
+                  of Celedon, which meant you found out your list broke a campaign rule after leaving
+                  this app. The campaign's verdict is shown first and the button follows it: no
+                  verdict, or a verdict with errors, and there is nothing to submit. The lock RPC
+                  re-judges server-side, so this button can never push through something illegal. */}
+              {blokkades.length > 0 && (
+                <ul style={{ display: 'flex', flexDirection: 'column', gap: 5, margin: '11px 0 0', padding: 0, listStyle: 'none' }}>
+                  {blokkades.map((f, i) => (
+                    <li key={i} style={{
+                      borderRadius: 8, border: '1px solid rgba(124,43,34,0.45)', background: 'rgba(124,43,34,0.08)',
+                      padding: '7px 9px', fontFamily: towFont.serif, fontSize: 12.5, lineHeight: 1.45, color: TOW.blood,
+                    }}>{f}</li>
+                  ))}
+                </ul>
+              )}
+              {oordeel && oordeel.waarschuwingen.length > 0 && (
+                <ul style={{ display: 'flex', flexDirection: 'column', gap: 2, margin: '8px 0 0', padding: 0, listStyle: 'none' }}>
+                  {oordeel.waarschuwingen.map((w, i) => (
+                    <li key={i} style={{ ...tekstDim, fontSize: 11.5 }}>• {w}</li>
+                  ))}
+                </ul>
+              )}
+
+              <div style={{ display: 'flex', alignItems: 'center', gap: 9, flexWrap: 'wrap', marginTop: 11 }}>
+                <button
+                  onClick={async () => {
+                    if (!spelerId) return;
+                    setIndienen('bezig');
+                    setIndienFout(null);
+                    try {
+                      // Push FIRST: the campaign locks whatever version it has in the cloud, and the
+                      // debounced auto-sync may not have carried the last keystroke yet.
+                      await pushNow();
+                      const k = await dienLijstIn(spelerId);
+                      setKeuring({ stand: 'klaar', keuring: k });
+                      // The lock flips `gelockt` in the context too, which is what puts this panel
+                      // (and the builder) into read-only.
+                      await verversCampagnes();
+                    } catch (e) {
+                      setIndienFout(e instanceof Error ? e.message : 'Could not submit the list.');
+                      if (spelerId) void haalKeuring(spelerId);
+                    } finally {
+                      setIndienen('rust');
+                    }
+                  }}
+                  disabled={!kanIndienen || indienen === 'bezig'}
+                  style={{
+                    ...knop,
+                    border: `1px solid ${kanIndienen ? TOW.goldDeep : TOW.line}`,
+                    background: kanIndienen ? 'rgba(138,108,48,0.14)' : 'transparent',
+                    color: kanIndienen ? TOW.gold : TOW.faint,
+                    cursor: kanIndienen && indienen !== 'bezig' ? 'pointer' : 'default',
+                  }}
+                >
+                  {indienen === 'bezig' ? 'Submitting…' : `Submit for Act ${actief.fase}`}
+                </button>
+                <span style={{ ...tekstDim, margin: 0 }}>
+                  {indienFout ? indienFout
+                    : !syncKey ? 'Sign in on Settings first — without sync there is nothing to submit.'
+                      : keuring.stand === 'laden' ? 'Checking your list against the campaign…'
+                        : keuring.stand === 'onbekend' ? 'Could not reach the campaign to check your list.'
+                          : blokkades.length > 0 ? 'Fix the problems above first — the campaign will not accept the list.'
+                            : 'Your list is legal. Submitting locks it for this Act.'}
+                </span>
+              </div>
+
+              {/* The auto-sync still runs on every edit; this only says so, so nobody thinks their
+                  work is unsaved until they press the button. */}
+              <div style={{ display: 'flex', alignItems: 'center', gap: 9, flexWrap: 'wrap', marginTop: 9 }}>
                 <button
                   onClick={async () => {
                     setStuur('bezig');
-                    try { await pushNow(); setStuur('klaar'); } catch { setStuur('fout'); }
+                    try {
+                      await pushNow();
+                      setStuur('klaar');
+                      if (spelerId) await haalKeuring(spelerId);
+                    } catch { setStuur('fout'); }
                   }}
                   disabled={!syncKey || stuur === 'bezig'}
                   style={{
-                    ...knop,
-                    border: `1px solid ${syncKey ? TOW.goldDeep : TOW.line}`,
-                    background: syncKey ? 'rgba(138,108,48,0.14)' : 'transparent',
-                    color: syncKey ? TOW.gold : TOW.faint,
+                    ...knop, padding: '6px 11px', fontSize: 12,
+                    border: `1px solid ${TOW.line}`, background: 'transparent',
+                    color: syncKey ? TOW.muted : TOW.faint,
                     cursor: syncKey && stuur !== 'bezig' ? 'pointer' : 'default',
                   }}
                 >
-                  {stuur === 'bezig' ? 'Sending…' : 'Send to campaign now'}
+                  {stuur === 'bezig' ? 'Checking…' : 'Re-check now'}
                 </button>
-                <span style={{ ...tekstDim, margin: 0 }}>
-                  {!syncKey
-                    ? 'Sign in on Settings first — without sync there is nothing to send to.'
-                    : stuur === 'klaar' ? 'Sent. The campaign has this version.'
-                      : stuur === 'fout' ? 'Could not send — check your connection and try again.'
-                        : 'Normally automatic; this pushes it straight away.'}
+                <span style={{ ...tekstDim, margin: 0, fontSize: 11.5 }}>
+                  {stuur === 'fout'
+                    ? 'Could not reach the campaign — check your connection.'
+                    : 'Changes save and re-check on their own; this does it straight away.'}
                 </span>
               </div>
-              <p style={{ ...tekstDim, marginTop: 8 }}>
-                Changes are saved and picked up by the campaign on their own. Lock the list on Isle of Celedon when
-                you are happy with it.
-              </p>
             </>
           )}
         </>

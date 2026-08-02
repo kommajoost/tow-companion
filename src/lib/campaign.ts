@@ -13,6 +13,11 @@ import { getPersisted, setPersisted } from '../store';
 // De server (towc_account_campagnes) geeft ze allemaal terug; is er meer dan één, dan kiest de speler.
 // Bij precies één campagne — de situatie van elke gewone speler — gebeurt dat stil.
 
+/** In welke Acts een unit laten vallen mag. Vast, zodat niemand z'n eigen historie hoeft te kennen.
+ *  Staat hier bovenaan omdat `parseEen` 'm nodig heeft, en die draait al bij module-init (de
+ *  cache-hydratie onderaan dit bestand). */
+export const DROP_ACTS = [2, 4, 6];
+
 // localStorage-sleutels (via de gedeelde store, niet rechtstreeks localStorage).
 const CODE_KEY = 'tow:campaignCode';
 const CTX_KEY = 'tow:campaignCtx';
@@ -26,6 +31,10 @@ export interface CampaignSpeler {
   factieSlug: string;
 }
 export interface CampaignEvent { id: string; details?: Record<string, unknown> }
+/** Eén regel uit het groei-register: waar een unit aan de campagne begon. `eersteKosten` is null als
+ *  de campagne die Act nog geen punten per unit bewaarde (snapshots van vóór 30-07) — dan is er geen
+ *  plafond te berekenen en blokkeert er niets. */
+export interface CampaignBaseline { uid: string; introFase: number; eersteKosten: number | null; cat: string; acts: number }
 export interface CampaignUnit { naam: string; catalogusId: string | null; cat: string | null; xp: number; abilities: number; littekens: number; status: string }
 export interface CampaignContext {
   ok: true;
@@ -58,6 +67,12 @@ export interface CampaignContext {
   events: CampaignEvent[];
   // Regiment-register: je named units in de campagne (met XP) — voedt de kies-bestaand-dropdown.
   units: CampaignUnit[];
+  // Groei-register: per unit-uid waar 'ie aan de campagne begon. Samen met de staffel hieronder
+  // levert dit het plafond dat elke bestaande unit deze Act mag kosten.
+  baseline: CampaignBaseline[];
+  // In welke Acts je een unit mag laten vallen (vast: 2, 4 en 6) en of dat NU mag.
+  dropActs: number[];
+  magDroppen: boolean;
 }
 
 // ---- Defensieve parsing -------------------------------------------------------------------------
@@ -134,6 +149,25 @@ function parseEen(raw: unknown): CampaignContext {
     rosterOpties: arr(d.rosterOpties).map(parseOptie),
     tafelTactiek: arr(d.tafelTactiek).map(parseOptie),
     events: arr(d.events).map(parseEvent),
+    baseline: arr(d.baseline).map((raw2) => {
+      const b = (raw2 && typeof raw2 === 'object' ? raw2 : {}) as Record<string, unknown>;
+      const kosten = Number(b.eersteKosten);
+      return {
+        uid: str(b.uid),
+        introFase: num(b.introFase, 1),
+        // Bewust NIET naar 0 afronden: onbekend moet onbekend blijven, anders zou een unit met een
+        // ontbrekende historie ineens een plafond van 0 krijgen en nooit meer legaal zijn.
+        eersteKosten: Number.isFinite(kosten) ? kosten : null,
+        cat: str(b.cat),
+        acts: num(b.acts),
+      };
+    }).filter((b) => b.uid),
+    // Oudere servers sturen dropActs niet mee; 2/4/6 is de regel, dus dat is de veilige default.
+    dropActs: (() => {
+      const lijst = arr(d.dropActs).map((v) => Number(v)).filter((n) => Number.isFinite(n));
+      return lijst.length ? lijst : DROP_ACTS;
+    })(),
+    magDroppen: bool(d.magDroppen),
   };
 }
 
@@ -265,6 +299,77 @@ export async function verwijderRegiment(code: string, unitId: string): Promise<v
   if (d.ok !== true) throw new Error(str(d.fout, 'CAMPAGNE_FOUT'));
 }
 
+// ---- De lijstkeuring van de campagne ------------------------------------------------------------
+// De campagne keurt de lijst die in de CLOUD staat (tow_lists), niet de lijst in dit tabblad. Vraag
+// 'm dus pas op nadat de sync geduwd heeft — `lastSyncedAt` uit useListSync is daar het signaal
+// voor. De server is de autoriteit: dezelfde functie beslist of je mag indienen.
+
+/** De keuring van één campagne-lijst zoals `towc_lijst_diff` 'm teruggeeft. */
+export interface LijstKeuring {
+  ok: boolean;
+  /** Alleen bij ok=false: waarom er niets te keuren viel (bv. GEEN_CAMPAGNE_LIJST). */
+  fout?: string;
+  hint?: string;
+  fase: number;
+  cap: number;
+  punten: number;
+  puntenBekend: boolean;
+  /** Blokkerend: zolang hier iets in staat mag de lijst niet ingediend worden. */
+  fouten: string[];
+  waarschuwingen: string[];
+  /** Het eindoordeel van de server. */
+  mag: boolean;
+  gelockt: boolean;
+  magDroppen: boolean;
+  dropActs: number[];
+  eersteAct: boolean;
+  drops: string[];
+}
+
+function parseKeuring(raw: unknown): LijstKeuring {
+  const d = (raw && typeof raw === 'object' ? raw : {}) as Record<string, unknown>;
+  const strs = (v: unknown): string[] => arr(v).filter((x): x is string => typeof x === 'string');
+  return {
+    ok: d.ok === true,
+    fout: typeof d.fout === 'string' ? d.fout : undefined,
+    hint: typeof d.hint === 'string' ? d.hint : undefined,
+    fase: num(d.fase, 1),
+    cap: num(d.cap),
+    punten: num(d.punten),
+    puntenBekend: bool(d.puntenBekend),
+    fouten: strs(d.fouten),
+    waarschuwingen: strs(d.waarschuwingen),
+    // Geen expliciet oordeel (oude server, of ok=false) ⇒ niet indienen. Nooit stilzwijgend "mag wel".
+    mag: bool(d.mag),
+    gelockt: bool(d.gelockt),
+    magDroppen: bool(d.magDroppen),
+    dropActs: arr(d.dropActs).map((v) => Number(v)).filter((n) => Number.isFinite(n)),
+    eersteAct: bool(d.eersteAct),
+    drops: strs(d.drops),
+  };
+}
+
+/** Keur de lijst van deze speler zoals de campagne 'm nu in de cloud ziet. */
+export async function keurLijst(speler: string): Promise<LijstKeuring> {
+  const { data, error } = await supabase.rpc('towc_lijst_diff', { p_speler: speler });
+  if (error) throw error;
+  return parseKeuring(data);
+}
+
+/** Dien de lijst in voor de huidige Act. De server keurt zelf opnieuw en weigert een lijst met
+ *  fouten — deze knop kan dus niets forceren wat de campagne niet toestaat. */
+export async function dienLijstIn(speler: string): Promise<LijstKeuring> {
+  const { data, error } = await supabase.rpc('towc_lijst_lock', { p_speler: speler });
+  if (error) throw error;
+  const d = (data && typeof data === 'object' ? data : {}) as Record<string, unknown>;
+  // Weigering komt terug als { ok:false, fout:'LIJST_ONGELDIG', fouten:[…] } — geen volledige keuring.
+  if (d.ok !== true) {
+    const k = parseKeuring(d);
+    throw new Error(k.fouten[0] ?? str(d.fout, 'Could not submit the list.'));
+  }
+  return parseKeuring(data);
+}
+
 /** De naam-slug zoals de campagne 'm als unit-identiteit gebruikt (zelfde regex als server-side). */
 export const regimentSlug = (naam: string): string => naam.toLowerCase().replace(/[^a-zA-Z0-9]+/g, '-');
 
@@ -310,7 +415,43 @@ export function eigenSyncKey(): string | null {
 // de voormalige roster-gebouwen zijn PERK-gebouwen (hun `effect`-tekst = tafel-regel). Het enige wat
 // nog mechanisch geldt is de fase-puntencap — die lees je rechtstreeks van `ctx.puntenCap`.
 
-/** De enige mechanisch afgedwongen lijstbouw-modifier: de fase-puntencap. */
+/** De fase-puntencap — de eerste van de drie mechanisch afgedwongen lijstbouw-regels. */
 export function campaignPointsCap(ctx: CampaignContext): number {
   return ctx.puntenCap;
+}
+
+// ---- Groei per unit -----------------------------------------------------------------------------
+// Regel 2 (02-08-2026): een unit die al eerder is ingediend mag elke Act een beetje duurder worden,
+// gemeten tegen de kosten waarmee 'ie DEBUTEERDE — niet tegen de vorige Act. De ruimte stapelt dus
+// op en je mag 'm bewaren. Een unit uit Act 1 van 150 pt mag in Act 5 hooguit 150 + 4×25 = 250 pt
+// kosten. Nieuwe units hebben geen plafond: die passen alleen binnen de gewone puntencap.
+//
+// De server (towc_groei_staffel / towc_lijst_diff) rekent exact hetzelfde na bij het indienen. Deze
+// kopie bestaat zodat de speler het TIJDENS het bouwen ziet in plaats van pas bij het inleveren;
+// de server blijft de autoriteit.
+
+/** Groeiruimte per Act. Characters krijgen het dubbele: een Act-1 generaal moet magic items en
+ *  wizard-levels kunnen meenemen naar een lijst die uiteindelijk 4× zo groot is. */
+export const groeiStaffel = (cat: string): number => (cat === 'characters' ? 50 : 25);
+
+export interface GroeiPlafond { max: number; basis: number; introFase: number; staffel: number }
+
+/**
+ * Het plafond per unit-uid voor de huidige Act, klaar om als `campaignMods.groei` aan `validate`
+ * te geven. `catVan` levert de HUIDIGE categorie van een entry: die bepaalt de staffel, en een unit
+ * kan sinds z'n debuut van categorie gewisseld zijn. Units zonder bewaarde debuutkosten blijven
+ * eruit — geen plafond is beter dan een verzonnen plafond.
+ */
+export function groeiPlafonds(
+  ctx: CampaignContext,
+  catVan: (uid: string) => string | undefined,
+): Record<string, GroeiPlafond> {
+  const uit: Record<string, GroeiPlafond> = {};
+  for (const b of ctx.baseline) {
+    if (b.eersteKosten == null) continue;
+    const staffel = groeiStaffel(catVan(b.uid) ?? b.cat);
+    const acts = Math.max(0, ctx.fase - b.introFase);
+    uit[b.uid] = { max: b.eersteKosten + staffel * acts, basis: b.eersteKosten, introFase: b.introFase, staffel };
+  }
+  return uit;
 }

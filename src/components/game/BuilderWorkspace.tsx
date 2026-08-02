@@ -18,7 +18,7 @@ import { applyMountStatModifiers, mountStatModifiers } from '../../lib/mountModi
 import { CompositionInfo } from './CompositionInfo';
 import { CompositionRulePicker } from './CompositionRulePicker';
 import { useSwipeToDismiss } from '../../lib/useSwipeToDismiss';
-import { useCampagnes, type CampaignContext, type CampaignUnit } from '../../lib/campaign';
+import { useCampagnes, groeiPlafonds, type CampaignContext, type CampaignUnit } from '../../lib/campaign';
 
 // Responsive Army Builder workspace (Claude Design "Army Builder" PC + mobile, ported onto our
 // real OWB data). Wide screens get a three-column builder (catalogue · muster · unit detail);
@@ -190,9 +190,16 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
   const [capBumped, setCapBumped] = useState(false); // fase schoof op ⇒ we hebben de cap net bijgewerkt
   const [unlocksOpen, setUnlocksOpen] = useState(false); // "Campaign unlocks"-paneel open/dicht
 
-  // Mechanisch afgedwongen campagne-modifier: alleen de fase-cap als puntenbasis. De roster-unlocks
-  // bestaan niet meer (perks = tafel-regels), dus verder niets af te dwingen in validate().
-  const campaignMods = campaignCtx ? { pointsCap: campaignCtx.puntenCap, namedUnits: true } : undefined;
+  // Mechanisch afgedwongen campagne-modifiers: de fase-cap als puntenbasis, en het groeiplafond per
+  // unit die al eerder is ingediend. De roster-unlocks bestaan niet meer (perks = tafel-regels).
+  // De categorie komt uit de HUIDIGE lijst-entry — die bepaalt de staffel (characters 50, rest 25).
+  const groei = useMemo(
+    () => (campaignCtx
+      ? groeiPlafonds(campaignCtx, (uid) => list.entries.find((e) => e.uid === uid)?.cat)
+      : undefined),
+    [campaignCtx, list.entries],
+  );
+  const campaignMods = campaignCtx ? { pointsCap: campaignCtx.puntenCap, namedUnits: true, groei } : undefined;
 
   // Cap-sync: als de fase is opgeschoven staat list.points nog op de oude cap → werk 'm bij (één keer
   // per verschil; de gelijkheids-guard voorkomt een oneindige lus) en meld het in de campagne-balk.
@@ -201,7 +208,7 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
     if (campaignCtx.puntenCap !== list.points) { onUpdate(() => ({ points: campaignCtx.puntenCap })); setCapBumped(true); }
   }, [campaignCtx, list.points]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  const v = useMemo(() => validate(list, getUnit, itemsData, campaignMods), [list, army, itemsData, campaignCtx]); // eslint-disable-line react-hooks/exhaustive-deps
+  const v = useMemo(() => validate(list, getUnit, itemsData, campaignMods), [list, army, itemsData, campaignCtx, groei]); // eslint-disable-line react-hooks/exhaustive-deps
   const comp = useMemo(() => complianceRows(v), [v]);
   const compByCat: Partial<Record<Category, ComplianceRow>> = {};
   comp.forEach((c) => { compByCat[c.cat] = c; });

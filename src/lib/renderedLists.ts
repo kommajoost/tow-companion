@@ -1,6 +1,7 @@
 import { entryPoints, type BuilderList, type ListEntry, type MagicItemsData, type OwbArmy, type OwbUnit, type Category } from './owbBuilder';
 import { deriveList, optionSummary } from './builderDerived';
 import { applyOverlay, applyOverlayItems, hasOverlay, OVERLAY_FILES, type CompositionOverlay } from './overlays';
+import { makeUnitStrengthLookup } from './troopTypes';
 
 /* ── Uitgerekende lijst-opsplitsing voor de campagne (30-07-2026) ───────────────────────────────
    De campagne-app (Isle of Celedon) kan geen punten of optie-labels berekenen: de catalogus met
@@ -28,6 +29,11 @@ export interface RenderedEntry {
   count: number;
   punten: number | null;
   opties: string[];
+  /** Unit Strength van de hele unit (models × US per model uit de Troop Type Table). De campagne
+   *  gebruikt dit voor Fresh Blood, dat officieel op US gaat en niet op modellen — 3 ruiters erbij is
+   *  al US 6. `null` = niet te bepalen (onbekend troop type, of een "As Starting Wounds"-type zonder
+   *  bruikbare statline); de campagne valt dan terug op het aantal modellen. */
+  us: number | null;
 }
 export interface RenderedList {
   id: string;
@@ -110,8 +116,28 @@ async function haalOverlay(comp: string): Promise<CompositionOverlay | null> {
 /** Splits de compacte optie-samenvatting terug in losse labels (de campagne toont ze als chips). */
 const labels = (s: string): string[] => (s || '').split(SEP).map((x) => x.trim()).filter(Boolean);
 
+// De rules-index (public/owb/rules-index.json) draagt per unit-naam het troop type en de statline —
+// samen goed voor de Unit Strength. Eén fetch per sessie, net als de catalogus-cache hierboven.
+type RuleIdx = Record<string, { troopType?: string; stats?: { W?: string }[] }>;
+let ruleIdxCache: RuleIdx | null | undefined;
+async function haalRuleIndex(): Promise<RuleIdx | null> {
+  if (ruleIdxCache !== undefined) return ruleIdxCache;
+  try {
+    const r = await fetch(`${BASE}owb/rules-index.json`);
+    ruleIdxCache = r.ok ? ((await r.json()) as RuleIdx) : null;
+  } catch {
+    ruleIdxCache = null;
+  }
+  return ruleIdxCache;
+}
+
 /** Reken één lijst uit. Onbekende unit (catalogus mist 'm) → wel de regel, geen punten. */
-function renderEen(list: SavedLike, army: OwbArmy | null, itemsData: MagicItemsData | null): RenderedList {
+function renderEen(
+  list: SavedLike,
+  army: OwbArmy | null,
+  itemsData: MagicItemsData | null,
+  usVoor: (naam: string, models: number) => number | null,
+): RenderedList {
   // Validatie via deriveList: `warnings` is volgens de eigen documentatie de AUTORITATIEVE, complete
   // set — precies wat de builder in z'n "N to fix"-paneel zet. Zonder catalogus valt er niets te
   // valideren; dan null (niet: leeg, want dat zou "alles in orde" beweren).
@@ -126,14 +152,18 @@ function renderEen(list: SavedLike, army: OwbArmy | null, itemsData: MagicItemsD
   const getUnit = (cat: Category, id: string): OwbUnit | undefined => army?.[cat]?.find((u) => u.id === id);
   const entries: RenderedEntry[] = (list.entries ?? []).map((e: ListEntry) => {
     const unit = getUnit(e.cat, e.unitId);
+    const count = Math.max(1, e.count || 1);
     return {
       uid: e.uid,
       unitId: e.unitId,
       naam: (e.customName || unit?.name_en || e.unitId || 'Unit').trim(),
       cat: e.cat,
-      count: Math.max(1, e.count || 1),
+      count,
       punten: unit ? entryPoints(unit, e, itemsData ?? undefined) : null,
       opties: unit ? labels(optionSummary(unit, e, itemsData ?? undefined)) : [],
+      // Op de CATALOGUS-naam, niet op de custom naam: "The Bleeding Hand" staat niet in de
+      // rules-index, "Witch Elves" wel.
+      us: unit ? usVoor(unit.name_en, count) : null,
     };
   });
   const bekend = entries.every((x) => x.punten != null);
@@ -169,14 +199,15 @@ export async function renderLists(lists: unknown[]): Promise<RenderedList[]> {
   const overlays = new Map<string, CompositionOverlay | null>(
     await Promise.all(comps.map(async (c) => [c, await haalOverlay(c)] as const)),
   );
+  const usVoor = makeUnitStrengthLookup(await haalRuleIndex());
   return kandidaten.map((l) => {
     const bron = perSlug.get(l.army ?? '') ?? { a: null, i: null };
     const nodig = !!l.composition && hasOverlay(l.composition);
     const ov = nodig ? overlays.get(l.composition) ?? null : null;
     // Overlay nodig maar niet geladen → geen catalogus doorgeven, dan blijft `fouten` null (onbekend).
-    if (nodig && !ov) return renderEen(l, null, null);
+    if (nodig && !ov) return renderEen(l, null, null, usVoor);
     const cat = ov && bron.a ? applyOverlay(bron.a, ov) : bron.a;
     const items = ov && bron.i ? applyOverlayItems(bron.i, ov) : bron.i;
-    return renderEen(l, cat, items);
+    return renderEen(l, cat, items, usVoor);
   });
 }

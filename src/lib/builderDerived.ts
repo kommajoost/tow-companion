@@ -89,12 +89,22 @@ const CAT_LABEL: Record<Category, string> = {
  *
  * `army` is the parsed catalogue (public/owb/<slug>.json); entries whose unit is missing from it are
  * skipped, exactly as `validate()` skips them — a stale list never throws, it just under-reports.
+ *
+ * `campaignMods` passes the campaign's own list rules straight through to `validate()`: the phase
+ * points cap, the named-unit requirement and the per-unit growth ceiling. Omit it for a plain list —
+ * and for `renderedLists`, which reports the TOW rules to the campaign server, never the campaign's
+ * own rules (the server checks those itself, against data the client cannot be trusted with).
  */
-export function deriveList(list: BuilderList, army: OwbArmy, itemsData?: MagicItemsData): DerivedList {
+export function deriveList(
+  list: BuilderList,
+  army: OwbArmy,
+  itemsData?: MagicItemsData,
+  campaignMods?: Parameters<typeof validate>[3],
+): DerivedList {
   const getUnit = (cat: Category, id: string): OwbUnit | undefined => army?.[cat]?.find((u) => u.id === id);
 
   // ── the one and only points/limits computation ────────────────────────────────────────────────
-  const v = validate(list, getUnit, itemsData);
+  const v = validate(list, getUnit, itemsData, campaignMods);
   const totalPoints = v.total;
   // The points target. Clamped at 0 so a missing/NaN/negative target can never produce a negative
   // percentage denominator; `validate()` itself already treats a falsy target as 0.

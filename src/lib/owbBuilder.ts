@@ -515,10 +515,17 @@ export function validate(
   list: BuilderList,
   getUnit: (cat: Category, id: string) => OwbUnit | undefined,
   itemsData?: MagicItemsData,
-  // Campagne-modifiers (De Grensvorsten). Weglaten ⇒ identiek aan de niet-campagne-validatie.
-  // `pointsCap` vervangt de puntenbasis (fase-cap i.p.v. de vrij gekozen list.points). Dit is de
-  // ENIGE mechanisch afgedwongen modifier; alle campagne-perks zijn tafel-regels.
-  campaignMods?: { pointsCap?: number; namedUnits?: boolean },  // namedUnits: campagne — elke unit MOET een eigen naam hebben (veteranen-identiteit)
+  // Campagne-modifiers (Isle of Celedon). Weglaten ⇒ identiek aan de niet-campagne-validatie.
+  // `pointsCap` vervangt de puntenbasis (fase-cap i.p.v. de vrij gekozen list.points).
+  // `groei` is het groeiplafond per bestaande unit — zie de GROEI-blok hieronder.
+  campaignMods?: {
+    pointsCap?: number;
+    namedUnits?: boolean;  // campagne — elke unit MOET een eigen naam hebben (veteranen-identiteit)
+    /** Per unit-uid het maximum dat die unit deze Act mag kosten, plus waar dat vandaan komt.
+     *  Alleen units die in een eerdere Act zijn ingediend staan erin; nieuwe units kennen geen
+     *  plafond (die passen alleen binnen de gewone puntencap). Komt uit de campagne-server. */
+    groei?: Record<string, { max: number; basis: number; introFase: number; staffel: number }>;
+  },
 ): Validation {
   const limits = limitsFor(list.rule);
   const target = campaignMods?.pointsCap ?? (list.points || 0);
@@ -551,6 +558,14 @@ export function validate(
     if (max > 0 && e.count > max) warnEntry(e.uid, `${unit.name_en}: above maximum size (${max})`);
     if (!unitAllowedIn(unit, list.composition)) warnEntry(e.uid, `${unit.name_en}: not allowed in this army composition`);
     if (campaignMods?.namedUnits && !(e.customName ?? '').trim()) warnEntry(e.uid, `${unit.name_en}: needs a unit name (campaign veterans follow the name)`);
+    // GROEI — een unit die al eerder is ingediend mag maar een beetje duurder worden per Act,
+    // gemeten tegen de kosten waarmee 'ie debuteerde (niet tegen de vorige Act). Zo gaan de +250
+    // punten per Act naar NIEUWE units in plaats van naar het oppompen van één blok. De server
+    // rekent exact hetzelfde na bij het indienen; dit is de versie die je tijdens het bouwen ziet.
+    const g = campaignMods?.groei?.[e.uid];
+    if (g && p > g.max) {
+      warnEntry(e.uid, `${unit.name_en} is ${p} pts; joined in Act ${g.introFase} at ${g.basis}, so the ceiling here is ${g.max} (+${g.staffel} per Act)`);
+    }
   }
 
   for (const c of CATEGORIES) {

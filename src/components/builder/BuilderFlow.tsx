@@ -29,6 +29,7 @@ import {
 } from '../../lib/owbBuilder';
 import { deriveList, optionSummary } from '../../lib/builderDerived';
 import { makeTroopTypeLookup } from '../../lib/troopTypes';
+import { useCampagnes, groeiPlafonds } from '../../lib/campaign';
 import { RosterScreen } from './RosterScreen';
 import { PickerScreen } from './PickerScreen';
 import { UnitOptions } from './UnitOptions';
@@ -145,7 +146,26 @@ export function BuilderFlow({
     [army],
   );
 
-  const derived = useMemo(() => deriveList(list, army, itemsData), [list, army, itemsData]);
+  // ── Campagne-regels (Isle of Celedon) ─────────────────────────────────────────────────────────
+  // Een campagne-lijst is niet vrij: de fase-cap is de puntenbasis, elke unit moet een naam hebben
+  // (daar hangt de campagne de veteranen-XP aan), en een unit die al eerder is ingediend mag maar
+  // een beetje duurder worden per Act. Die drie gaan mee naar `validate()`, zodat ze in de band ÉN
+  // op de unit-rij zelf verschijnen — precies zoals een te grote unit dat al doet. Zonder dit zag je
+  // ze pas bij het indienen op de campagne-site. De server rekent alles opnieuw na bij het locken.
+  const { actief: campagneActief } = useCampagnes();
+  const campaignCtx = (list as { campaign?: boolean }).campaign ? campagneActief : null;
+  const campaignMods = useMemo(
+    () => (campaignCtx
+      ? {
+        pointsCap: campaignCtx.puntenCap,
+        namedUnits: true,
+        groei: groeiPlafonds(campaignCtx, (uid) => list.entries.find((e) => e.uid === uid)?.cat),
+      }
+      : undefined),
+    [campaignCtx, list.entries],
+  );
+
+  const derived = useMemo(() => deriveList(list, army, itemsData, campaignMods), [list, army, itemsData, campaignMods]);
 
   /** The single mutation path handed to every screen. Always a functional update, and it spreads the
    *  existing list so campaign/group/sync fields we know nothing about survive — dropping them would
