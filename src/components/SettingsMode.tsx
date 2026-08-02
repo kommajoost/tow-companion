@@ -196,6 +196,7 @@ function ListSyncSection({
   goldBtn: React.CSSProperties; ghostBtn: React.CSSProperties;
 }) {
   const sync = useListSync();
+  const { user } = useAuth();
   const [pass, setPass] = usePersistentState<string | null>('tow:syncPass', null);
   const [input, setInput] = useState('');
   const [busy, setBusy] = useState(false);
@@ -268,6 +269,22 @@ function ListSyncSection({
           <div style={{ ...body, marginBottom: 10 }}>
             Your saved lists &amp; groups sync to every device that uses this password. Enter the same password on your other device.
           </div>
+          {/* Ingelogd, maar dit apparaat hangt aan een eigen wachtwoord-sleutel. Inloggen stapt daar
+              bewust NIET overheen (anders raak je je wachtwoord-lijsten kwijt), maar dat betekende ook
+              dat je account-lijsten hier nooit binnenkwamen en uit-en-weer-inloggen niets deed — zonder
+              dat iets dat vertelde (Joost 02-08). Nu staat het er, met de overstap ernaast. */}
+          {user && sync.useAccountKey && (
+            <div style={{ border: `1px solid ${TOW.gold}`, borderRadius: 10, padding: '10px 12px', marginBottom: 10, background: 'rgba(184,134,47,0.08)' }}>
+              <div style={{ ...body, marginBottom: 8 }}>
+                You’re signed in as <b>{user.email}</b>, but this device syncs on its own password — so the
+                lists on your account are <b>not</b> the ones you see here. Signing out and back in will not
+                change that.
+              </div>
+              <button style={{ ...ghostBtn, borderColor: TOW.gold, color: TOW.ink }} onClick={() => sync.useAccountKey?.()}>
+                Use my account’s lists instead
+              </button>
+            </div>
+          )}
           {pass ? (
             <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6 }}>
               <code style={{ flex: 1, minWidth: 0, fontFamily: towFont.display, fontWeight: 700, fontSize: 15, color: TOW.ink, background: TOW.cardLt, border: `1px solid ${TOW.lineStrong}`, borderRadius: 10, padding: '10px 12px', overflow: 'hidden', textOverflow: 'ellipsis' }}>{reveal ? pass : '•'.repeat(Math.min(12, Math.max(4, pass.length)))}</code>

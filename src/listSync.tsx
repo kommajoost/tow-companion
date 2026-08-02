@@ -67,6 +67,8 @@ interface ListSyncValue {
   pullNow: () => Promise<void>;
   pushNow: () => Promise<void>;
   disconnect: () => void;
+  /** Stap over op de sleutel van het ingelogde account. Null als er niemand is ingelogd. */
+  useAccountKey: (() => void) | null;
   /** Open botsing: de cloud zou lijsten wegnemen die hier staan. Niets synct tot dit beantwoord is. */
   conflict: SyncConflict | null;
   /** 'cloud' = neem de cloudversie over; 'hier' = houd dit apparaat en schrijf dat naar de cloud. */
@@ -295,12 +297,27 @@ export function ListSyncProvider({ children }: { children: ReactNode }) {
     }
   }, [conflict, lists, groups, setLists, setGroups, setSyncAt]);
 
+  /** Handmatig overstappen naar de accountsleutel.
+   *
+   *  Inloggen doet dit NIET uit zichzelf: een zelfgekozen wachtwoord-sleutel wint, zodat je bestaande
+   *  cloud-lijsten niet onder je vandaan verdwijnen omdat je toevallig inlogt. Keerzijde is dat een
+   *  telefoon die ooit een wachtwoord kreeg voor altijd op die sleutel blijft, ook na uit- en weer
+   *  inloggen — je account-lijsten komen dan nooit binnen (Joost 02-08). Vandaar deze bewuste stap.
+   *  De pull erna beslist zelf of er iets zou verdwijnen en vraagt het dan. */
+  const useAccountKey = useCallback(() => {
+    if (!user) return;
+    setViaAccount(true);
+    setSyncAt(null);            // forceer een verse vergelijking met de cloud
+    setKey(accountSyncKey(user.id));
+  }, [user, setViaAccount, setSyncAt, setKey]);
+
   const value = useMemo<ListSyncValue>(() => ({
     key, viaAccount: viaAccount && !!key, status, lastSyncedAt: syncAt, error,
     listCount: Array.isArray(lists) ? lists.length : 0,
     createKey, peek, adoptCloud, pushMine, pullNow, pushNow, disconnect,
+    useAccountKey: user ? useAccountKey : null,
     conflict, resolveConflict,
-  }), [key, viaAccount, status, syncAt, error, lists, createKey, peek, adoptCloud, pushMine, pullNow, pushNow, disconnect, conflict, resolveConflict]);
+  }), [key, viaAccount, status, syncAt, error, lists, createKey, peek, adoptCloud, pushMine, pullNow, pushNow, disconnect, user, useAccountKey, conflict, resolveConflict]);
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
 }
