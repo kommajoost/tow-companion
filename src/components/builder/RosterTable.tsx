@@ -396,6 +396,14 @@ export function RosterTable(props: {
                       ellipsising name so a very long name truncates instead of eating the glyph. */}
                   <span style={{ display: 'flex', alignItems: 'baseline', minWidth: 0 }}>
                     <span style={{ ...NAME_CELL, fontWeight: isSel ? 600 : 400 }}>{row.name}</span>
+                    {/* De eigen naam van de speler (campagne) staat NAAST het datasheet, niet ervoor:
+                        gedempt en cursief, zodat de kolom leesbaar blijft als "wat is dit". Hier past
+                        het op dezelfde regel omdat de loadout z'n eigen kolom heeft. */}
+                    {row.bijnaam ? (
+                      <span style={{ ...NAME_CELL, flexShrink: 1, paddingLeft: 6, fontSize: 11.5, fontStyle: 'italic', color: TOW.muted }}>
+                        {row.bijnaam}
+                      </span>
+                    ) : null}
                     {row.magic ? (
                       <span
                         aria-hidden
@@ -431,14 +439,14 @@ export function RosterTable(props: {
                   >
                     <GlyphButton
                       glyph="⧉"
-                      label={`Duplicate ${row.name}`}
+                      label={`Duplicate ${row.bijnaam || row.name}`}
                       tone={TOW.goldDeep}
                       visible={hot}
                       onClick={() => onDuplicate(row.uid)}
                     />
                     <GlyphButton
                       glyph="✕"
-                      label={`Remove ${row.name}`}
+                      label={`Remove ${row.bijnaam || row.name}`}
                       tone={TOW.gold}
                       visible={hot}
                       onClick={() => onRemove(row.uid)}

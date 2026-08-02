@@ -229,9 +229,14 @@ export function SectionHeader({ label, meta, violated, dense }: {
  * glyph — the two bits of information you most need when scanning a roster.
  */
 export function UnitRow({
-  count, name, whisper, points, magic, selected, issues, onClick, onLongPress,
+  count, name, bijnaam, whisper, points, magic, selected, issues, onClick, onLongPress,
 }: {
-  count?: number; name: string; whisper?: string; points: number;
+  count?: number; name: string;
+  /** De naam die de speler deze unit gaf (campagne). Staat op de WHISPER-regel en niet op de
+   *  naamregel: de rij is precies 44px met twee regels, en de naamregel moet zeggen WAT dit is —
+   *  het datasheet herken je zo altijd, ook als twee regimenten dezelfde eigennaam-stijl hebben. */
+  bijnaam?: string;
+  whisper?: string; points: number;
   magic?: boolean; selected?: boolean; issues?: string[];
   onClick?: () => void; onLongPress?: () => void;
 }): React.JSX.Element {
@@ -281,7 +286,13 @@ export function UnitRow({
             hover to reveal one. */}
         {issues && issues.length ? (
           <span style={{ ...ROW_WHISPER, color: TOW.gold }}>{issues[0]}</span>
-        ) : whisper ? <span style={ROW_WHISPER}>{whisper}</span> : null}
+        ) : bijnaam || whisper ? (
+          <span style={ROW_WHISPER}>
+            {bijnaam ? <span style={{ color: TOW.muted, fontStyle: 'italic' }}>{bijnaam}</span> : null}
+            {bijnaam && whisper ? ' · ' : ''}
+            {whisper}
+          </span>
+        ) : null}
       </span>
       <span style={ROW_POINTS}>{fmt(points)}</span>
     </>

@@ -179,7 +179,14 @@ export interface ArmyUnit {
    *  unit z'n gewonnen veteran-abilities + battle-scars. Rijdt via `tow_games` mee naar beide spelers,
    *  zodat de UnitCard ze read-only toont. Optioneel: alleen aanwezig voor gematchte veteraan-units. */
   veteraan?: { abilities: { t: string; keuze: string | null }[]; littekens: number };
+  /** De naam die op het scherm hoort: de eigen naam van de speler als die er is, anders het
+   *  datasheet. Blijft de sleutel voor alles wat op naam matcht (statlines van een geplakte lijst). */
   name: string;
+  /** De CATALOGUSNAAM ("Dark Elf Warriors"), ook als `name` een campagne-eigennaam draagt. Alleen
+   *  gezet door de lijstbouwer, die de catalogus kent — een geplakte OWB-lijst heeft 'm niet.
+   *  Overal waar een unit getoond wordt is DIT de primaire regel en is `name` de secundaire: bij een
+   *  leger vol eigennamen ("Dreth's Thunder") zie je anders nergens meer WAT er op tafel staat. */
+  datasheet?: string;
   count: number | null; // leading multiplier (e.g. 15 Warriors), null for single models
   points: number | null;
   category: string; // e.g. "Core Units"

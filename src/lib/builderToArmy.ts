@@ -144,6 +144,7 @@ export function builderListToArmy(
       // veteraan-XP op de juiste campagne-unit landt. + custom-naam als display.
       campaignId: campaignUnitId(e),
       name: e.customName?.trim() || u.name_en,
+      datasheet: u.name_en,
       count: multi ? e.count : null,
       points: entryPoints(u, e, opts.itemsData),
       category: CAT_LABEL[e.cat],

@@ -62,8 +62,12 @@ export interface RosterRow {
    *  `entry.cat` — a composition may move a unit. Group and tally by THIS one; `entry.cat` stays the
    *  stored base category. */
   category: Category;
-  /** Display name: the custom (campaign) name when set, else the unit's own name. */
+  /** Display name: ALTIJD de catalogusnaam ("Dark Elf Warriors"). Die is primair, ook als de speler
+   *  de unit een eigen naam gaf — bij het scannen van een roster wil je eerst weten WELK datasheet
+   *  dit is; de eigennaam zegt dat niet. */
   name: string;
+  /** De naam die de speler deze unit gaf (campagne), als secundaire regel. Leeg/undefined = geen. */
+  bijnaam?: string;
   /** The whisper line — chosen options joined by " · " (`optionSummary`). */
   whisper: string;
   /** Points for the whole unit, including options and magic items. */

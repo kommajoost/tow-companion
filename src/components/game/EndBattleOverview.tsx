@@ -1,3 +1,4 @@
+import { unitToonRegel } from '../../lib/unitNaam';
 import { TOW, towFont, engraved } from '../../design/tow';
 import { useGame } from '../../game';
 import { useBackClose } from '../../lib/backStack';
@@ -180,7 +181,7 @@ function CasualtySide({
               const total = unitTotalStrength(u);
               return (
                 <div key={u.id} style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
-                  <span style={{ flex: 1, minWidth: 0, fontFamily: serif, fontSize: 13, color: TOW.ink, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{u.name}</span>
+                  <span style={{ flex: 1, minWidth: 0, fontFamily: serif, fontSize: 13, color: TOW.ink, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{unitToonRegel(u)}</span>
                   <span style={{ fontFamily: serif, fontSize: 12, color: TOW.parchDim, whiteSpace: 'nowrap' }}>{t.lost}/{total} lost</span>
                   {t.fleeing && <span style={tag}>Fleeing</span>}
                   {t.weg && <span style={destroyedTag}>Destroyed</span>}

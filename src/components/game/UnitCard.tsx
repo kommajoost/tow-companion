@@ -1,3 +1,4 @@
+import { unitToon } from '../../lib/unitNaam';
 import { useMemo, useState } from 'react';
 import { useData } from '../../data';
 import { useUI } from '../../state';
@@ -57,6 +58,7 @@ export function UnitCard({
   collapsed?: boolean;
   onToggleCollapse?: () => void;
 }) {
+  const toon = unitToon(unit);
   const { rules } = useData();
   const { openRule } = useUI();
   const idx = useMemo(() => buildRuleIndex(rules), [rules]);
@@ -93,10 +95,17 @@ export function UnitCard({
         <div style={{ flex: 1, minWidth: 0 }}>
           <h3 style={{ margin: 0, fontFamily: towFont.display, fontWeight: 700, fontSize: 16, color: TOW.ink, textDecoration: dead ? 'line-through' : 'none', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: collapsed ? 'nowrap' : 'normal' }}>
             {unit.count ? <span style={{ color: TOW.goldDeep }}>{unit.count}× </span> : null}
-            {unit.name}
+            {toon.primair}
           </h3>
-          {unit.troopType && (
-            <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginTop: 2 }}>{unit.troopType}</div>
+          {/* De eigen campagne-naam ("Dreth's Thunder") staat ONDER het datasheet, niet erboven: aan
+              tafel moet de kop zeggen wat er staat. De naam blijft wel zichtbaar — het is de
+              veteraan-identiteit en de speler noemt de unit zo. */}
+          {(toon.secundair || unit.troopType) && (
+            <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginTop: 2 }}>
+              {toon.secundair ? <span style={{ color: TOW.gold }}>{toon.secundair}</span> : null}
+              {toon.secundair && unit.troopType ? ' · ' : ''}
+              {unit.troopType}
+            </div>
           )}
         </div>
         {unit.points != null && (

@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { unitToon, unitToonRegel } from '../../lib/unitNaam';
 import { TOW, towFont, engraved } from '../../design/tow';
 import { useGame } from '../../game';
 import { unitTotalStrength } from '../../lib/armyRules';
@@ -54,7 +55,7 @@ function collectKills(
   const push = (seat: 'host' | 'guest', side: 'attacker' | 'defender', units?: { id: string; name: string }[]) => {
     for (const u of units ?? []) {
       const t = tracker.units[`${seat}:${u.id}`];
-      if (t && (t.lost > 0 || t.fleeing)) out.push({ side, unitId: u.id, unit: u.name, lost: t.lost, fleeing: t.fleeing });
+      if (t && (t.lost > 0 || t.fleeing)) out.push({ side, unitId: u.id, unit: unitToonRegel(u), lost: t.lost, fleeing: t.fleeing });
     }
   };
   push('host', 'attacker', hostArmyUnits);
@@ -163,6 +164,14 @@ export function CampaignResultReporter({ embedded = false }: { embedded?: boolea
     () => (battle ? collectVeteraan(tracker, myArmy, ownSeat) : []),
     [battle, tracker, myArmy, ownSeat],
   );
+  // Weergave-namen per gemelde unitId. collectVeteraan sleutelt op `campaignId ?? id`, dus hier ook —
+  // anders vindt de lookup niets zodra een unit een campagne-sleutel heeft.
+  const toonPerUnit = useMemo(() => {
+    const m = new Map<string, ReturnType<typeof unitToon>>();
+    for (const u of myArmy?.units ?? []) m.set(u.campaignId ?? u.id, unitToon(u));
+    return m;
+  }, [myArmy]);
+  const toonVan = (id: string) => toonPerUnit.get(id) ?? { primair: '', secundair: null };
 
   // ── Dubbele goedkeuring (30-07) ──────────────────────────────────────────────────────────────
   // Beide spelers vullen samen dezelfde cijfers in (de tracker is al realtime gedeeld) en moeten de
@@ -320,7 +329,14 @@ export function CampaignResultReporter({ embedded = false }: { embedded?: boolea
               const xp = (v.overleefd_50 ? 1 : 0) + v.kills;
               return (
                 <div key={i} style={{ display: 'flex', alignItems: 'baseline', gap: 8, fontFamily: serif, fontSize: 13, color: TOW.ink }}>
-                  <span style={{ flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{v.naam || v.unitId}</span>
+                  <span style={{ flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                    {/* Datasheet primair, de eigen naam erachter: bij een leger vol eigennamen zie je
+                        anders niet meer welke unit welke XP pakt. */}
+                    {toonVan(v.unitId).primair || v.naam || v.unitId}
+                    {toonVan(v.unitId).secundair ? (
+                      <span style={{ color: TOW.muted, fontStyle: 'italic' }}> · {toonVan(v.unitId).secundair}</span>
+                    ) : null}
+                  </span>
                   <span style={{ flexShrink: 0, fontFamily: display, fontWeight: 600, fontSize: 12, color: xp > 0 ? TOW.goldDeep : TOW.muted }}>
                     {xp > 0 ? `+${xp} XP` : '—'}{v.scar_trigger ? ' · scar risk' : ''}
                   </span>
@@ -346,22 +362,43 @@ export function CampaignResultReporter({ embedded = false }: { embedded?: boolea
             {([['host', quests.aanvaller, hostName, questAanvOk] as const, ['guest', quests.verdediger, guestName, questVerdOk] as const])
               .filter(([, q]) => !!q)
               .map(([kant, q, naam, ok]) => (
+                // Een NIET-aangevinkte quest stond volledig in TOW.muted: titel, opdracht en beloning
+                // allemaal grijs, op een grijze rand, zonder achtergrond. Dat leest als disabled
+                // terwijl dit juist de knop is die je moet indrukken (Joost, 02-08). Ongevinkt is nu
+                // een gewone actieve kaart met een zichtbaar leeg vakje; alleen de BELONING blijft
+                // gedempt, want die is nog niet verdiend.
                 <button
                   key={kant}
+                  type="button"
+                  aria-pressed={ok}
                   onClick={() => zetQuest(kant, !ok)}
                   style={{
                     textAlign: 'left', cursor: 'pointer', borderRadius: 9, padding: '9px 11px',
-                    border: `1px solid ${ok ? TOW.goldDeep : TOW.line}`,
-                    background: ok ? TOW.cardLt : 'transparent',
+                    border: `1px solid ${ok ? TOW.goldDeep : TOW.lineStrong}`,
+                    background: ok ? TOW.cardLt : TOW.panel2,
                   }}
                 >
-                  <div style={{ fontFamily: display, fontSize: 13, color: ok ? TOW.ink : TOW.muted }}>
-                    {ok ? '✓ ' : '○ '}{q!.naam}
-                    <span style={{ fontFamily: serif, fontWeight: 400, color: TOW.muted }}> — {naam}</span>
+                  <div style={{ display: 'flex', alignItems: 'baseline', gap: 7 }}>
+                    <span
+                      aria-hidden
+                      style={{
+                        flexShrink: 0, width: 15, height: 15, borderRadius: 4, alignSelf: 'center',
+                        display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+                        border: `1px solid ${ok ? TOW.gold : TOW.lineStrong}`,
+                        background: ok ? TOW.gold : 'transparent',
+                        color: TOW.onGrad, fontSize: 11, lineHeight: 1,
+                      }}
+                    >
+                      {ok ? '✓' : ''}
+                    </span>
+                    <span style={{ flex: 1, minWidth: 0, fontFamily: display, fontSize: 13, color: TOW.ink }}>
+                      {q!.naam}
+                      <span style={{ fontFamily: serif, fontWeight: 400, color: TOW.muted }}> — {naam}</span>
+                    </span>
                   </div>
-                  <div style={{ fontFamily: serif, fontSize: 12, color: TOW.muted, marginTop: 2 }}>{q!.opdracht}</div>
-                  <div style={{ fontFamily: serif, fontSize: 11.5, color: TOW.muted, marginTop: 2, fontStyle: 'italic' }}>
-                    +{q!.fame} Fame, +{q!.goud} gold if achieved
+                  <div style={{ fontFamily: serif, fontSize: 12, color: TOW.inkDim, marginTop: 3 }}>{q!.opdracht}</div>
+                  <div style={{ fontFamily: serif, fontSize: 11.5, color: ok ? TOW.gold : TOW.muted, marginTop: 2, fontStyle: 'italic' }}>
+                    {ok ? `+${q!.fame} Fame, +${q!.goud} gold` : `+${q!.fame} Fame, +${q!.goud} gold if achieved — tap to mark it done`}
                   </div>
                 </button>
               ))}

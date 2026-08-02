@@ -404,6 +404,7 @@ export function RosterScreen(props: {
                     <UnitRow
                       count={row.count}
                       name={row.name}
+                      bijnaam={row.bijnaam}
                       whisper={row.whisper}
                       points={row.points}
                       magic={row.magic}

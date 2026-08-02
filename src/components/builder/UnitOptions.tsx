@@ -459,14 +459,15 @@ export function UnitOptions(props: {
   }
 
   const effCat = unitCategoryFor(unit, ctx.list.composition, entry.cat);
-  const title = entry.customName || unit.name_en;
+  // De KOP is altijd het datasheet. De eigen naam van de speler staat in de naam-rij eronder, groot
+  // genoeg om te lezen maar secundair: dit scherm gaat over wat de unit IS en wat je eraan verandert.
+  const title = unit.name_en;
   // The troop type is pulled OUT of the joined eyebrow so it can be a link. It is not decoration: a
   // troop type is a bundle of rules (how it moves, how it fights, what it may join), each with its own
   // rulebook page — and every one of the 14 codes in `TROOP_TYPE_NAMES` resolves to one, mostly under a
   // plural title ("Behemoth" → Behemoths, "War Machine" → War Machines), which `resolveRuleSlug` already
   // handles via its singular/plural fallback.
   const unitTroopType = troopTypeFor(cleanLabel(unit.name_en));
-  const eyebrowBefore = entry.customName ? cleanLabel(unit.name_en) : null;
 
   const selectedMount = unit.mounts?.[selectedMountIndex(unit, entry)];
   const mountModifiers = selectedMount?.name_en && !/^on foot$/i.test(selectedMount.name_en)
@@ -764,7 +765,6 @@ export function UnitOptions(props: {
                 surrounding parts (a renamed unit's real name, the list category) are not rules and stay
                 plain text. */}
             <div style={{ ...eb, fontSize: 7.5, color: TOW.muted, marginBottom: 2 }}>
-              {eyebrowBefore ? `${eyebrowBefore} · ` : ''}
               {unitTroopType ? (
                 <>
                   <TroopTypeLink name={unitTroopType} onShowInfo={onShowInfo} />
