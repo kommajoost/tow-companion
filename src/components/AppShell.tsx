@@ -75,6 +75,22 @@ export function AppShell() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Deep-link: /?army=1 — "Open Companion" vanaf de Army-hub van de campagne. Alleen ROUTEREN naar
+  // de lijstbouwer, zonder de rondleiding: die knop is voor een speler die elke Act z'n lijst komt
+  // bijwerken, en die moet niet telkens de 35-staps tour krijgen. Zonder param herstelde OWC gewoon
+  // je laatste tab — voor wie ooit een campagne-battle opende was dat de Game-tab met een dode code,
+  // en dan landde je op "Could not load this battle" i.p.v. op je leger (Joost 02-08).
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const url = new URL(window.location.href);
+    if (!url.searchParams.get('army')) return;
+    setScreen('app');
+    setTab('army');
+    url.searchParams.delete('army');
+    window.history.replaceState(null, '', `${url.pathname}${url.search}${url.hash}`);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   // Deep-link: /?celedon=1 — arriving from the campaign app's "Open Old World Companion" button.
   // Land straight on Army, then wait for OWC's own auth session. Signed out players see the account
   // dialog first; signed in players go straight into the guided Army-list tour.

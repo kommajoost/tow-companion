@@ -210,6 +210,11 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
         <p style={{ fontFamily: serif, fontSize: 15, color: TOW.blood, margin: '0 0 16px' }}>
           {loadErr === 'ONBEKENDE_CODE' ? `No campaign battle found for code ${code}.` : (loadErr || 'Could not load this battle.')}
         </p>
+        {loadErr === 'ONBEKENDE_CODE' && (
+          <p style={{ fontFamily: serif, fontSize: 13, color: TOW.muted, margin: '-8px 0 16px' }}>
+            This battle is over or was withdrawn. Clearing it takes you back to the normal Game tab.
+          </p>
+        )}
         <div style={{ display: 'flex', gap: 14, alignItems: 'center' }}>
           <button onClick={load} style={{ border: `1px solid ${TOW.goldDeep}`, borderRadius: 10, background: 'rgba(184,134,47,0.10)', color: TOW.goldDeep, cursor: 'pointer', padding: '9px 16px', fontFamily: display, fontWeight: 600, fontSize: 13.5 }}>Try again</button>
           {dismissBtn}

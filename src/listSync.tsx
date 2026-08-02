@@ -14,7 +14,43 @@ import { useAuth } from './lib/auth';
 // straight out of `tow_lists`, so a list that never reaches the cloud is invisible to it. Before
 // 28-07-2026 that needed a sync password, which meant "signed in" was not enough to be coupled.
 
-type Status = 'off' | 'syncing' | 'synced' | 'error';
+type Status = 'off' | 'syncing' | 'synced' | 'error' | 'conflict';
+
+/** Een naam van een lijst, voor de botsings-dialoog. */
+export interface SyncConflict {
+  key: string;
+  cloud: CloudLists;
+  /** Namen van lijsten die HIER staan en niet in de cloud — precies wat je kwijt zou raken. */
+  verdwijnen: string[];
+  /** Aantal lijsten op dit apparaat / in de cloud. */
+  hier: number;
+  daar: number;
+}
+
+/** De id's van een lijst-array (dezelfde `id` die de app zelf gebruikt). */
+const lijstIds = (v: unknown[]): Set<string> => {
+  const s = new Set<string>();
+  for (const l of Array.isArray(v) ? v : []) {
+    const id = l && typeof l === 'object' ? (l as { id?: unknown }).id : null;
+    if (typeof id === 'string' && id) s.add(id);
+  }
+  return s;
+};
+const telLijsten = (v: unknown[]): number => (Array.isArray(v) ? v.length : 0);
+
+/** Namen van lijsten die in `mijn` zitten maar niet in `hun` — op id vergeleken, niet op inhoud, want
+ *  een elders bewerkte lijst is geen verlies en moet gewoon doorlopen. */
+function ontbrekendeLijsten(mijn: unknown[], hun: unknown[]): string[] {
+  const daar = lijstIds(hun);
+  const uit: string[] = [];
+  for (const l of Array.isArray(mijn) ? mijn : []) {
+    if (!l || typeof l !== 'object') continue;
+    const { id, name } = l as { id?: unknown; name?: unknown };
+    if (typeof id !== 'string' || !id || daar.has(id)) continue;
+    uit.push(typeof name === 'string' && name.trim() ? name : 'Naamloze lijst');
+  }
+  return uit;
+}
 
 interface ListSyncValue {
   key: string | null;
@@ -31,6 +67,10 @@ interface ListSyncValue {
   pullNow: () => Promise<void>;
   pushNow: () => Promise<void>;
   disconnect: () => void;
+  /** Open botsing: de cloud zou lijsten wegnemen die hier staan. Niets synct tot dit beantwoord is. */
+  conflict: SyncConflict | null;
+  /** 'cloud' = neem de cloudversie over; 'hier' = houd dit apparaat en schrijf dat naar de cloud. */
+  resolveConflict: (keuze: 'cloud' | 'hier') => Promise<void>;
 }
 
 const Ctx = createContext<ListSyncValue | null>(null);
@@ -68,6 +108,19 @@ export function ListSyncProvider({ children }: { children: ReactNode }) {
     if (viaAccount && key !== mine) { setSyncAt(null); setKey(mine); }
   }, [user, key, viaAccount, setKey, setViaAccount, setSyncAt]);
 
+  // ── Botsing: de cloud zou lijsten wegnemen die dit apparaat wél heeft ────────────────────────────
+  // Tot 02-08 nam het ophalen de cloud ALTIJD stil over. Meestal klopt dat — de cloud is de
+  // gedeelde waarheid — maar één keer niet: een apparaat met lijsten dat voor het eerst een sleutel
+  // krijgt (bv. door in te loggen) zag z'n eigen werk zonder één woord verdwijnen. En omdat de push
+  // last-write-wins is en de server geen geschiedenis bijhield, was dat definitief.
+  //
+  // Alleen dát geval wordt nu voorgelegd: lijsten die LOKAAL bestaan en in de cloud ontbreken
+  // (vergeleken op id, niet op inhoud). Alle andere verschillen — de cloud is nieuwer, heeft er juist
+  // eentje bij, of een lijst is elders bewerkt — lopen door zoals altijd. Anders zou elke gewone
+  // bewerking op een tweede apparaat een dialoog opleveren en leert iedereen 'm wegklikken.
+  const [conflict, setConflict] = useState<SyncConflict | null>(null);
+  /** Staat er een onbeantwoorde botsing? Dan mag NIETS pushen tot de speler gekozen heeft. */
+  const geblokkeerd = useRef(false);
   const lastPushed = useRef<string | null>(null); // combined lists+groups snapshot known to match the cloud
   const ready = useRef(false);                    // gate auto-push until the first pull settles
   // A combined snapshot of everything we sync (lists + group folders), for change detection.
@@ -91,7 +144,20 @@ export function ListSyncProvider({ children }: { children: ReactNode }) {
           lastPushed.current = snap(lists, groups);
           setSyncAt(ts);
         } else if (cloud.updatedAt !== syncAt && snap(cloud.lists, cloud.groups) !== snap(lists, groups)) {
-          // another device changed the lists/groups — adopt them
+          // another device changed the lists/groups — adopt them, UNLESS that would drop lists this
+          // device has and the cloud does not. Then we stop and ask: keeping quiet here is what made
+          // a whole evening's work vanish. `ready` stays false so the auto-push cannot fire either —
+          // neither side overwrites the other while the question is open.
+          const weg = ontbrekendeLijsten(lists, cloud.lists);
+          if (weg.length) {
+            setConflict({ key, cloud, verdwijnen: weg, hier: telLijsten(lists), daar: telLijsten(cloud.lists) });
+            setStatus('conflict');
+            // Grendel, geen `return`: een return voert `finally` alsnog uit en zet `ready` op true,
+            // waarna de auto-push dit apparaat over de cloud heen zou schrijven — precies de andere
+            // helft van hetzelfde ongeluk. Zolang deze ref staat doet de push-effect niets.
+            geblokkeerd.current = true;
+            return;
+          }
           lastPushed.current = snap(cloud.lists, cloud.groups);
           setLists(cloud.lists);
           setGroups(cloud.groups);
@@ -129,6 +195,7 @@ export function ListSyncProvider({ children }: { children: ReactNode }) {
   // Push local changes (debounced) once the initial reconcile is done.
   useEffect(() => {
     if (!key || !ready.current) return;
+    if (geblokkeerd.current) return; // onbeantwoorde botsing — niets overschrijven
     if (localSnap === lastPushed.current) return;
     const t = setTimeout(async () => {
       setStatus('syncing');
@@ -202,11 +269,38 @@ export function ListSyncProvider({ children }: { children: ReactNode }) {
     setStatus('off'); setError(null);
   }, [setKey, setViaAccount, setSyncAt]);
 
+  /** Beantwoord de botsing. Pas hierna gaat de grendel eraf, zodat de keuze niet alsnog door een
+   *  wachtende auto-push wordt ingehaald. */
+  const resolveConflict = useCallback(async (keuze: 'cloud' | 'hier') => {
+    const c = conflict;
+    if (!c) return;
+    setStatus('syncing');
+    try {
+      if (keuze === 'cloud') {
+        lastPushed.current = snap(c.cloud.lists, c.cloud.groups);
+        setLists(c.cloud.lists);
+        setGroups(c.cloud.groups);
+        setSyncAt(c.cloud.updatedAt);
+      } else {
+        const ts = await pushLists(c.key, lists, groups);
+        lastPushed.current = snap(lists, groups);
+        setSyncAt(ts);
+      }
+      setConflict(null);
+      geblokkeerd.current = false;
+      ready.current = true;
+      setStatus('synced'); setError(null);
+    } catch (e) {
+      setStatus('error'); setError(msg(e));
+    }
+  }, [conflict, lists, groups, setLists, setGroups, setSyncAt]);
+
   const value = useMemo<ListSyncValue>(() => ({
     key, viaAccount: viaAccount && !!key, status, lastSyncedAt: syncAt, error,
     listCount: Array.isArray(lists) ? lists.length : 0,
     createKey, peek, adoptCloud, pushMine, pullNow, pushNow, disconnect,
-  }), [key, viaAccount, status, syncAt, error, lists, createKey, peek, adoptCloud, pushMine, pullNow, pushNow, disconnect]);
+    conflict, resolveConflict,
+  }), [key, viaAccount, status, syncAt, error, lists, createKey, peek, adoptCloud, pushMine, pullNow, pushNow, disconnect, conflict, resolveConflict]);
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
 }
