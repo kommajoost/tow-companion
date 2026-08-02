@@ -3,6 +3,7 @@
 import { readFileSync } from 'node:fs';
 
 const REN = new URL('../public/renegade/', import.meta.url);
+const OWB = new URL('../public/owb/', import.meta.url);
 const PUBLIC = new URL('../public/', import.meta.url);
 const PACKS = ['de', 'sk', 'ok', 'cd', 'doc', 'lm'];
 const fail = (message) => { throw new Error(message); };
@@ -28,6 +29,21 @@ for (const key of PACKS) {
   assert((coverage.counts.unresolved ?? 0) === 0, `${key}: unresolved non-todo source blocks remain`);
   assert((coverage.counts.unsupported ?? 0) === 0, `${key}: unsupported non-todo source blocks remain`);
 
+  // De basiscatalogus van dit pack — nodig om te toetsen of een MOUNT die de overlay toevoegt
+  // überhaupt bij die unit hoort. Ontbreekt het bestand, dan slaan we die toets over in plaats van
+  // de hele validatie te laten vallen.
+  let basis = null;
+  try { basis = JSON.parse(readFileSync(new URL(`${overlay.baseArmy}.json`, OWB), 'utf8')); } catch { basis = null; }
+  const basisUnit = (id) => {
+    if (!basis) return null;
+    for (const arr of Object.values(basis)) {
+      if (!Array.isArray(arr)) continue;
+      const hit = arr.find((u) => u && u.id === id);
+      if (hit) return hit;
+    }
+    return null;
+  };
+
   for (const [unitId, patch] of Object.entries(overlay.units)) {
     if (patch.points != null) assert(Number.isFinite(patch.points) && patch.points >= 0, `${key}/${unitId}: invalid points`);
     if (patch.minimum != null) assert(Number.isInteger(patch.minimum) && patch.minimum > 0, `${key}/${unitId}: invalid minimum`);
@@ -39,6 +55,24 @@ for (const key of PACKS) {
       assert(option.name_en && typeof option.name_en === 'string', `${key}/${unitId}: option without name`);
       if (option.points != null) assert(Number.isFinite(option.points) && option.points >= 0,
         `${key}/${unitId}/${option.name_en}: invalid option points`);
+      // MOUNTS: een unit mag alleen een rijdier krijgen dat de basiscatalogus al voor die unit kent.
+      //
+      // Dit is een tripwire, geen smaakkwestie. Op 02-08 gaf de overlay de Khainite Assassin drie
+      // mounts, de Firebelly een Stonehorn en de Hunter "Ambushers" en "Scouts" als rijdier. Oorzaak:
+      // de zin "A Tyrant, Bruiser or Hunter may be mounted on a:" werd door de extractie op de komma
+      // als KOP gelezen, waardoor het unit-anker verschoof en een gedeelde "Character Mounts"-sectie
+      // aan de verkeerde unit hing. Dat is stil fout gegaan tot een speler het zag.
+      //
+      // Een nieuwe mount is bijna nooit wat Renegade doet — het herprijst er hooguit een. Dus: staat
+      // hij niet in de basis, dan is het vrijwel zeker drift en moet de compilatie klappen in plaats
+      // van het in de app te zetten. Is het tóch bedoeld, dan hoort de mount eerst in de catalogus.
+      if (option.group === 'mounts' && option.action !== 'remove') {
+        const bu = basisUnit(unitId);
+        if (bu) {
+          const kent = (bu.mounts ?? []).some((m) => m && norm(m.name_en) === norm(option.name_en));
+          assert(kent, `${key}/${unitId}: overlay voegt mount "${option.name_en}" toe die de catalogus niet voor deze unit kent — waarschijnlijk anker-drift in de extractie`);
+        }
+      }
     }
   }
 

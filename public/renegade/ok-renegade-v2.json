@@ -161,20 +161,6 @@
           "perModel": false
         },
         {
-          "group": "mounts",
-          "name_en": "Ambushers",
-          "points": 6,
-          "action": "patch",
-          "perModel": false
-        },
-        {
-          "group": "mounts",
-          "name_en": "Scouts",
-          "points": 4,
-          "action": "patch",
-          "perModel": false
-        },
-        {
           "group": "options",
           "action": "patch",
           "name_en": "Additional hand weapon",
@@ -244,22 +230,9 @@
     },
     "firebelly": {
       "_changed": [
-        "mounts",
         "options"
       ],
       "options": [
-        {
-          "group": "mounts",
-          "action": "upsert",
-          "name_en": "Stonehorn",
-          "points": 195
-        },
-        {
-          "group": "mounts",
-          "action": "upsert",
-          "name_en": "Thundertusk",
-          "points": 185
-        },
         {
           "group": "options",
           "action": "patch",

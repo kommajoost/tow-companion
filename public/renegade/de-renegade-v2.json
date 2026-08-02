@@ -230,28 +230,7 @@
     "khainite-assassin": {
       "specialRules": "Eternal Hatred, Hatred (All Enemies), Hidden, Immune to Psychology, Murderous, Strike First, Poisoned Attacks",
       "_changed": [
-        "special-rules",
-        "mounts"
-      ],
-      "options": [
-        {
-          "group": "mounts",
-          "action": "upsert",
-          "name_en": "Dark Steed",
-          "points": 14
-        },
-        {
-          "group": "mounts",
-          "action": "upsert",
-          "name_en": "Cold One",
-          "points": 18
-        },
-        {
-          "group": "mounts",
-          "action": "upsert",
-          "name_en": "Dark Pegasus",
-          "points": 35
-        }
+        "special-rules"
       ]
     },
     "dark-elf-warriors": {
