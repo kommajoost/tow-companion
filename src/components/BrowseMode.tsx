@@ -2,7 +2,8 @@ import { useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useData } from '../data';
 import { useUI } from '../state';
 import { TOW } from '../design/tow';
-import type { NavSection } from '../types';
+import type { ErrataItem, NavSection } from '../types';
+import { RichText } from '../lib/RichText';
 import { QuickRollButton, QuickRollSheet } from './CombatCalc';
 
 const MAX_RESULTS = 60;
@@ -52,9 +53,14 @@ function PinnedMenu() {
 // column; wide screens get a TOC + search sidebar beside a reading pane (the design's
 // two-pane reference). Rules open in the stacked pop-up sheet.
 export function BrowseMode() {
-  const { nav, rules, getRule } = useData();
+  const { nav, rules, getRule, errata, faq } = useData();
   const { openRule } = useUI();
   const [section, setSection] = useState<NavSection | null>(null);
+  // De wiki's Errata- en FAQ-pagina's staan niet in de nav (die kent alleen regelsecties), dus ze
+  // krijgen hier hun eigen ingang naast de secties. Ze zijn geen Rule en openen dus niet in het
+  // regel-paneel; ze klappen ter plekke open.
+  const [blad, setBlad] = useState<'errata' | 'faq' | null>(null);
+  const [open, setOpen] = useState<string | null>(null);
   const [query, setQuery] = useState('');
   const [filter, setFilter] = useState('');
   const [quickOpen, setQuickOpen] = useState(false);
@@ -150,6 +156,62 @@ export function BrowseMode() {
     </>
   );
 
+  /** De zichtbare kinderen gegroepeerd op hun bron-boek. Eén groep (= geen `association` in de data)
+   *  rendert als de kale lijst van vroeger, zonder koppen. */
+  const groepen = useMemo<[string, string[]][]>(() => {
+    const per = new Map<string, string[]>();
+    for (const slug of children) {
+      const r = getRule(slug);
+      const bron = r?.association?.[0] ?? '';
+      const lijst = per.get(bron);
+      if (lijst) lijst.push(slug); else per.set(bron, [slug]);
+    }
+    if (per.size <= 1) return [['', children]];
+    return [...per.entries()].sort((a, b) => {
+      if (a[0] === 'Rulebook') return -1;   // de kernregels eerst; die zoek je het vaakst
+      if (b[0] === 'Rulebook') return 1;
+      if (!a[0]) return 1;                  // naamloos achteraan
+      if (!b[0]) return -1;
+      return a[0].localeCompare(b[0]);
+    });
+  }, [children, getRule]);
+
+  /** Errata/FAQ: één filterbare lijst waarin een item ter plekke openklapt. Geen eigen paneel, want
+   *  dit is geen regel maar een aantekening erbij — en een tik minder om te lezen. */
+  const bladItems: ErrataItem[] = blad === 'errata' ? errata : blad === 'faq' ? faq : [];
+  const bladZichtbaar = bladItems.filter((it) =>
+    !f || it.name.toLowerCase().includes(f) || it.bodyIndex.toLowerCase().includes(f));
+  const bladContent = blad && (
+    <>
+      <p className="mb-3 text-[12.5px] leading-relaxed text-ink-dim">
+        {blad === 'errata'
+          ? 'Games Workshop’s corrections to the printed books. The wiki has already worked these into the rule text itself, so this is the record of what changed.'
+          : 'The official questions and answers. These are rulings that do not appear in any rule text.'}
+      </p>
+      <input value={filter} onChange={(e) => setFilter(e.target.value)}
+        placeholder={`Filter ${bladItems.length} ${blad === 'errata' ? 'corrections' : 'answers'}…`}
+        className="mb-3 w-full rounded-xl border border-border bg-bg px-3 py-2.5 text-ink placeholder:text-ink-faint focus:border-accent focus:outline-none" />
+      <ul className="space-y-1">
+        {bladZichtbaar.map((it) => (
+          <li key={it.slug}>
+            <button onClick={() => setOpen((o) => (o === it.slug ? null : it.slug))}
+              className="flex w-full items-start gap-2 rounded-lg border border-border-soft bg-surface/40 px-3 py-2.5 text-left active:bg-surface-3">
+              <span className="min-w-0 flex-1 text-ink">{it.name}</span>
+              <span className="mt-0.5 shrink-0 text-ink-faint">{open === it.slug ? '–' : '+'}</span>
+            </button>
+            {open === it.slug && (
+              <div className="mt-1 rounded-lg border border-border-soft bg-surface-2 px-3 py-3 text-[13.5px] leading-relaxed text-ink">
+                {it.body ? <RichText doc={it.body} /> : <p>{it.bodyIndex}</p>}
+                {it.source && <p className="mt-2 text-[11px] text-ink-faint">{it.source}</p>}
+              </div>
+            )}
+          </li>
+        ))}
+        {bladZichtbaar.length === 0 && <li className="px-1 py-4 text-sm text-ink-faint">Nothing matches.</li>}
+      </ul>
+    </>
+  );
+
   const sectionContent = section && (
     <>
       <button onClick={() => openRule(section.slug)} className="mb-3 w-full rounded-xl border border-border-soft bg-surface-2 px-3 py-2.5 text-left text-sm text-accent active:bg-surface-3">
@@ -158,20 +220,34 @@ export function BrowseMode() {
       {section.childSlugs.length > 12 && (
         <input value={filter} onChange={(e) => setFilter(e.target.value)} placeholder={`Filter ${section.childSlugs.length} rules…`} className="mb-3 w-full rounded-xl border border-border bg-bg px-3 py-2.5 text-ink placeholder:text-ink-faint focus:border-accent focus:outline-none" />
       )}
-      <ul className="space-y-1">
-        {children.map((slug) => {
-          const r = getRule(slug);
-          return (
-            <li key={slug}>
-              <button onClick={() => openRule(slug)} className="flex w-full items-center gap-2 rounded-lg border border-border-soft bg-surface/40 px-3 py-2.5 text-left active:bg-surface-3">
-                <span className="min-w-0 flex-1 truncate text-ink">{r?.name ?? slug}</span>
-                <span className="text-ink-faint">›</span>
-              </button>
-            </li>
-          );
-        })}
-        {children.length === 0 && <li className="px-1 py-4 text-sm text-ink-faint">No matching rules.</li>}
-      </ul>
+      {/* Gegroepeerd op het BOEK waar de regel uit komt — de wiki's eigen `association`. Special Rules
+          telt 663 kinderen en Weapons of War 271; als platte lijst is dat niet te overzien, terwijl
+          er maar 83 respectievelijk 49 uit het Rulebook komen en de rest bij één legerboek hoort.
+          Rulebook staat bovenaan, de rest alfabetisch. Secties zonder die data (de meeste) houden
+          precies de lijst die ze hadden. */}
+      {groepen.map(([bron, slugs]) => (
+        <div key={bron} className="mb-3">
+          {groepen.length > 1 && (
+            <div className="mb-1 px-1 font-display text-[9px] uppercase tracking-widest text-ink-faint">
+              {bron} <span className="text-ink-faint/70">{slugs.length}</span>
+            </div>
+          )}
+          <ul className="space-y-1">
+            {slugs.map((slug) => {
+              const r = getRule(slug);
+              return (
+                <li key={slug}>
+                  <button onClick={() => openRule(slug)} className="flex w-full items-center gap-2 rounded-lg border border-border-soft bg-surface/40 px-3 py-2.5 text-left active:bg-surface-3">
+                    <span className="min-w-0 flex-1 truncate text-ink">{r?.name ?? slug}</span>
+                    <span className="text-ink-faint">›</span>
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      ))}
+      {children.length === 0 && <p className="px-1 py-4 text-sm text-ink-faint">No matching rules.</p>}
     </>
   );
 
@@ -203,12 +279,32 @@ export function BrowseMode() {
                 return (
                   <li key={s.slug}>
                     <button
-                      onClick={() => { setSection(s); setFilter(''); setQuery(''); }}
+                      onClick={() => { setSection(s); setBlad(null); setOpen(null); setFilter(''); setQuery(''); }}
                       className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left"
                       style={{ background: active ? 'rgba(138,108,48,0.12)' : 'transparent', color: active ? TOW.goldDeep : TOW.ink }}
                     >
                       <span className="min-w-0 flex-1 truncate text-sm" style={{ fontWeight: active ? 600 : 400 }}>{s.name}</span>
                       <span className="shrink-0 text-xs text-ink-faint">{s.childSlugs.length || '—'}</span>
+                    </button>
+                  </li>
+                );
+              })}
+            </ul>
+            {/* Errata en FAQ staan niet in de wiki-nav, maar zijn wel de recentste regelwijzigingen —
+                dus een eigen kopje onder de secties in plaats van verstopt. */}
+            <div className="mb-2 mt-4 px-1 font-display text-[9px] uppercase tracking-widest text-ink-faint">Amendments</div>
+            <ul className="space-y-1">
+              {([['errata', 'Errata', errata.length], ['faq', 'FAQ', faq.length]] as const).map(([id, label, n]) => {
+                const active = blad === id && q.length < 2;
+                return (
+                  <li key={id}>
+                    <button
+                      onClick={() => { setBlad(id); setSection(null); setOpen(null); setFilter(''); setQuery(''); }}
+                      className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left"
+                      style={{ background: active ? 'rgba(138,108,48,0.12)' : 'transparent', color: active ? TOW.goldDeep : TOW.ink }}
+                    >
+                      <span className="min-w-0 flex-1 truncate text-sm" style={{ fontWeight: active ? 600 : 400 }}>{label}</span>
+                      <span className="shrink-0 text-xs text-ink-faint">{n || '—'}</span>
                     </button>
                   </li>
                 );
@@ -221,6 +317,11 @@ export function BrowseMode() {
           <div className="mx-auto max-w-2xl px-7 py-7">
             {q.length >= 2 ? (
               resultsList
+            ) : blad ? (
+              <>
+                <h2 className="mb-4 font-display text-2xl text-gold">{blad === 'errata' ? 'Errata' : 'FAQ'}</h2>
+                {bladContent}
+              </>
             ) : section ? (
               <>
                 <h2 className="mb-4 font-display text-2xl text-gold">{section.name}</h2>
@@ -253,7 +354,7 @@ export function BrowseMode() {
         <div className="flex-1 overflow-y-auto px-3 pb-28 pt-3">{resultsList}</div>
       </div>
     );
-  } else if (!section) {
+  } else if (!section && !blad) {
     body = (
       <div ref={rootRef} className="flex h-full flex-col">
         <div className="border-b border-border-soft px-3 py-2.5">
@@ -275,8 +376,32 @@ export function BrowseMode() {
               </li>
             ))}
           </ul>
+          {/* Errata en FAQ — niet in de wiki-nav, wel de recentste wijzigingen. */}
+          <div className="mb-2 mt-5 px-1 font-display text-[9px] uppercase tracking-widest text-ink-faint">Amendments</div>
+          <ul className="space-y-1.5">
+            {([['errata', 'Errata', errata.length], ['faq', 'FAQ', faq.length]] as const).map(([id, label, n]) => (
+              <li key={id}>
+                <button onClick={() => { setBlad(id); setOpen(null); setFilter(''); }} className="flex w-full items-center gap-3 rounded-xl border border-border bg-surface-2 px-3 py-3 text-left active:bg-surface-3">
+                  <span className="min-w-0 flex-1 truncate font-display text-lg text-ink">{label}</span>
+                  <span className="shrink-0 text-xs text-ink-faint">{n || '—'}</span>
+                  <span className="text-ink-faint">›</span>
+                </button>
+              </li>
+            ))}
+          </ul>
           {sourceNote}
         </div>
+      </div>
+    );
+  } else if (blad) {
+    body = (
+      <div ref={rootRef} className="flex h-full flex-col">
+        <div className="flex items-center gap-2 border-b border-border-soft px-3 py-2">
+          <button onClick={() => { setBlad(null); setOpen(null); setFilter(''); }} className="rounded-lg px-2 py-1.5 text-sm text-ink-dim active:bg-surface-2">‹ All</button>
+          <span className="min-w-0 flex-1 truncate font-display text-lg text-gold">{blad === 'errata' ? 'Errata' : 'FAQ'}</span>
+          {headerControls}
+        </div>
+        <div className="flex-1 overflow-y-auto px-3 pb-28 pt-3">{bladContent}</div>
       </div>
     );
   } else {
@@ -284,7 +409,7 @@ export function BrowseMode() {
       <div ref={rootRef} className="flex h-full flex-col">
         <div className="flex items-center gap-2 border-b border-border-soft px-3 py-2">
           <button onClick={() => { setSection(null); setFilter(''); }} className="rounded-lg px-2 py-1.5 text-sm text-ink-dim active:bg-surface-2">‹ All</button>
-          <span className="min-w-0 flex-1 truncate font-display text-lg text-gold">{section.name}</span>
+          <span className="min-w-0 flex-1 truncate font-display text-lg text-gold">{section?.name}</span>
           {headerControls}
         </div>
         <div className="flex-1 overflow-y-auto px-3 pb-28 pt-3">{sectionContent}</div>

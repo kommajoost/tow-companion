@@ -307,9 +307,15 @@ function record(slug, data, parentSlug) {
   const refs = new Set();
   if (f.body) slimBodyAndCollectRefs(f.body, refs);
 
+  // De wiki's eigen "Last update"-datum (Contentful sys.updatedAt). Die legden we niet vast, en
+  // daardoor was er geen manier om te zien WAT er sinds de vorige scrape veranderd is — bij een
+  // GW-errata die de wiki verwerkt heeft is dat precies de vraag. Nu is een diff één query.
+  const bijgewerkt = entry.sys && typeof entry.sys.updatedAt === 'string' ? entry.sys.updatedAt : null;
+
   rules[slug] = {
     slug,
     name: f.name || slug,
+    updatedAt: bijgewerkt,
     order: typeof f.order === 'number' ? f.order : null,
     pageReference: typeof f.pageReference === 'number' ? f.pageReference : null,
     parentSlug: parentSlug || null,
@@ -539,11 +545,60 @@ function buildNav() {
     .sort((a, b) => (a.order ?? 9999) - (b.order ?? 9999));
 }
 
+/** De Errata- en FAQ-pagina's.
+ *
+ *  Deze twee staan NIET in de nav, dus de sectie-crawl kwam er nooit langs en we hadden ze niet —
+ *  terwijl GW's errata en Q&A juist de recentste regelwijzigingen dragen. De wiki verwerkt een errata
+ *  ook in de regeltekst zelf (zie de `updatedAt`-datums), dus dit is niet de operatieve regel maar de
+ *  VERANTWOORDING: wat er precies veranderde en waarom, plus de FAQ-uitspraken die nergens anders in
+ *  de regeltekst terechtkomen.
+ *
+ *  Eén fetch per pagina volstaat: de lijst draagt per item de volledige `body` mee, dus er is geen
+ *  detailpagina nodig. */
+async function crawlErrataEnFaq() {
+  const uit = { errata: [], faq: [] };
+  for (const pad of ['errata', 'faq']) {
+    const { status, data } = await getPage(pad);
+    if (!data) { console.warn(`  ! /${pad} -> ${status}`); continue; }
+    const entries = data.props?.pageProps?.entries;
+    if (!Array.isArray(entries)) { console.warn(`  ! /${pad} had geen entries`); continue; }
+    for (const e of entries) {
+      const f = e && e.fields;
+      if (!f || !f.slug) continue;
+      const refs = new Set();
+      if (f.body) slimBodyAndCollectRefs(f.body, refs);
+      uit[pad].push({
+        slug: f.slug,
+        // De FAQ-items hebben geen naam — daar is de vraag zelf de kop, en die staat alleen in de slug.
+        name: f.name || slugNaarVraag(f.slug),
+        body: f.body || null,
+        bodyIndex: f.bodyIndex || '',
+        source: typeof f.source === 'string' ? f.source : linkNames(f.source)[0] ?? null,
+        updatedAt: e.sys && typeof e.sys.updatedAt === 'string' ? e.sys.updatedAt : null,
+        refSlugs: [...refs],
+      });
+    }
+    console.log(`  /${pad}: ${uit[pad].length} items`);
+  }
+  return uit;
+}
+
+/** "can-a-wizard-purchase-magic-armour" -> "Can a wizard purchase magic armour?" — de FAQ-slug is
+ *  het enige dat de vraag bevat. Een vraagteken erachter omdat het er altijd een is. */
+function slugNaarVraag(slug) {
+  const t = String(slug || '').replace(/-/g, ' ').trim();
+  if (!t) return 'Question';
+  return t.charAt(0).toUpperCase() + t.slice(1) + '?';
+}
+
 async function main() {
   console.log('Crawling tow.whfb.app ...\n');
   for (const section of SECTIONS) {
     await crawlSection(section);
   }
+
+  console.log('\nCrawling errata & FAQ ...');
+  const errataFaq = await crawlErrataEnFaq();
 
   // Crawl the magic lores and every spell they list (each becomes a `spell-<slug>` rule).
   console.log('\nCrawling magic lores & spells ...');
@@ -608,10 +663,14 @@ async function main() {
   }
   console.log(`Classified      : ${geclassificeerd} rules got association/ruleType`);
 
+  console.log(`Errata / FAQ    : ${errataFaq.errata.length} / ${errataFaq.faq.length}`);
+
   const out = {
     source: BASE,
     scrapedAt: new Date().toISOString(),
     rules,
+    errata: errataFaq.errata,
+    faq: errataFaq.faq,
     turn,
     nav,
     lores: magic.lores,

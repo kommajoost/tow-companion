@@ -38,6 +38,13 @@ export interface Rule {
   nextSlug: string | null;
   /** Related rules surfaced by the wiki. */
   crossRefSlugs: string[];
+  /** De wiki's eigen "Last update" (Contentful sys.updatedAt) — waarmee te zien is wat een errata
+   *  geraakt heeft. Optioneel: oudere data-bundels hebben 'm niet. */
+  updatedAt?: string | null;
+  /** Uit welk boek de regel komt ("Rulebook", "Ravening Hordes", "Arcane Journal: …"). Alleen op
+   *  regels die onder een sectie hangen — de wiki draagt dit op de sectiepagina, niet op de regel. */
+  association?: string[];
+  ruleType?: string | null;
   /** Slugs referenced by inline links inside the body. */
   refSlugs: string[];
 }
@@ -74,10 +81,31 @@ export interface Lore {
   spells: LoreSpell[];
 }
 
+/** Eén item van de wiki's Errata- of FAQ-pagina.
+ *
+ *  De wiki verwerkt een errata OOK in de regeltekst zelf, dus dit is niet de operatieve regel maar de
+ *  verantwoording: wát er veranderde ("Add 'Furious Charge' to the list of special rules"), en bij de
+ *  FAQ de uitspraken die nergens in een regeltekst landen. */
+export interface ErrataItem {
+  slug: string;
+  /** Bij errata "Page 96 - Bestigor Herds"; bij de FAQ de vraag, afgeleid uit de slug. */
+  name: string;
+  body: RichNode | null;
+  bodyIndex: string;
+  /** Het boek waar het item over gaat, als de wiki dat meegeeft. */
+  source: string | null;
+  updatedAt: string | null;
+  refSlugs: string[];
+}
+
 export interface RulesData {
   source: string;
   scrapedAt: string;
   rules: Record<string, Rule>;
+  /** GW-errata zoals de wiki ze lijst (optioneel — afwezig in oudere data-bundels). */
+  errata?: ErrataItem[];
+  /** De officiële Q&A. */
+  faq?: ErrataItem[];
   turn: { phases: Phase[]; magicSlug: string | null };
   nav: NavSection[];
   /** Magic lores keyed by slug (optional — absent in older data bundles). */

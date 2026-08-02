@@ -6,13 +6,16 @@ import {
   useState,
   type ReactNode,
 } from 'react';
-import type { CompanionData, FlowData, FlowStep, Lore, Rule, RulesData } from './types';
+import type { CompanionData, ErrataItem, FlowData, FlowStep, Lore, Rule, RulesData } from './types';
 import { applyOverlayLores, applyOverlayRules, type CompositionOverlay } from './lib/overlays';
 
 interface DataContextValue extends RulesData {
   // Always provided by the provider (defaulted), so non-optional here.
   lores: Record<string, Lore>;
   loreList: string[];
+  /** Altijd een array (leeg bij een oudere data-bundel), zodat schermen niet hoeven te bewaken. */
+  errata: ErrataItem[];
+  faq: ErrataItem[];
   getRule: (slug: string | null | undefined) => Rule | undefined;
   getFlow: (slug: string | null | undefined) => FlowStep | undefined;
   /** Look up a Lore of Magic by slug (undefined if not found). */
@@ -94,6 +97,8 @@ export function DataProvider({ children }: { children: ReactNode }) {
       rules,
       lores,
       loreList: data.loreList ?? [],
+      errata: data.errata ?? [],
+      faq: data.faq ?? [],
       getRule: (slug) => (slug ? rules[slug] : undefined),
       getFlow: (slug) => (slug ? flow.steps[slug] : undefined),
       getLore: (slug) => (slug ? lores[slug] : undefined),
