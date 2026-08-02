@@ -81,8 +81,8 @@ export function BrowseMode() {
 
   // Lower-cased search index over every rule, built once.
   const index = useMemo(
-    () =>
-      Object.values(rules)
+    () => [
+      ...Object.values(rules)
         // Skip empty section stubs and the standalone weapon/chart "(Profile)" entries —
         // those are already shown inline on their parent weapon/rule.
         .filter((r) => r.body && !r.slug.endsWith('-profile') && !r.slug.endsWith('-chart'))
@@ -92,8 +92,23 @@ export function BrowseMode() {
           nameLower: r.name.toLowerCase(),
           hay: (r.name + ' ' + r.bodyIndex).toLowerCase(),
           bodyIndex: r.bodyIndex,
+          soort: 'rule' as const,
         })),
-    [rules],
+      // Errata en FAQ zijn OFFICIËLE regelwijzigingen, geen aantekening erbij: 188 van de 285
+      // errata gaan over legerboek-eenheden en -items die hier helemaal geen regelpagina hebben,
+      // dus het errata-item is dáár de enige vindplaats van de geldende regel. Ze horen dus in de
+      // zoekresultaten — anders zoek je op "Bestigor Herds" en vind je de wijziging niet.
+      ...[...errata.map((e) => [e, 'errata'] as const), ...faq.map((e) => [e, 'faq'] as const)]
+        .map(([e, soort]) => ({
+          slug: e.slug,
+          name: e.name,
+          nameLower: e.name.toLowerCase(),
+          hay: (e.name + ' ' + e.bodyIndex).toLowerCase(),
+          bodyIndex: e.bodyIndex,
+          soort,
+        })),
+    ],
+    [rules, errata, faq],
   );
 
   const q = query.trim().toLowerCase();
@@ -144,9 +159,23 @@ export function BrowseMode() {
       ) : (
         <ul className="space-y-1">
           {results.map((e) => (
-            <li key={e.slug}>
-              <button onClick={() => openRule(e.slug)} className="flex w-full flex-col gap-0.5 rounded-lg border border-border-soft bg-surface-2 px-3 py-2.5 text-left active:bg-surface-3">
-                <span className="truncate font-medium text-ink">{e.name}</span>
+            <li key={e.soort + '/' + e.slug}>
+              <button
+                onClick={() => {
+                  if (e.soort === 'rule') { openRule(e.slug); return; }
+                  // Geen regelpagina: open het bijbehorende blad met dit item al uitgeklapt.
+                  setBlad(e.soort); setSection(null); setOpen(e.slug); setFilter(''); setQuery('');
+                }}
+                className="flex w-full flex-col gap-0.5 rounded-lg border border-border-soft bg-surface-2 px-3 py-2.5 text-left active:bg-surface-3"
+              >
+                <span className="flex items-center gap-2">
+                  <span className="min-w-0 flex-1 truncate font-medium text-ink">{e.name}</span>
+                  {e.soort !== 'rule' && (
+                    <span className="shrink-0 rounded-full border border-border px-1.5 text-[10px] uppercase tracking-wider text-gold">
+                      {e.soort === 'errata' ? 'Errata' : 'FAQ'}
+                    </span>
+                  )}
+                </span>
                 {e.bodyIndex && <span className="line-clamp-2 text-xs text-ink-faint">{e.bodyIndex.slice(0, 160)}</span>}
               </button>
             </li>
@@ -185,8 +214,8 @@ export function BrowseMode() {
     <>
       <p className="mb-3 text-[12.5px] leading-relaxed text-ink-dim">
         {blad === 'errata'
-          ? 'Games Workshop’s corrections to the printed books. The wiki has already worked these into the rule text itself, so this is the record of what changed.'
-          : 'The official questions and answers. These are rulings that do not appear in any rule text.'}
+          ? 'Official corrections from Games Workshop. These change the rules. Where a rule has its own page here its wording is already updated, but most of these amend army-book entries that appear nowhere else — so this is the only place to read them.'
+          : 'Official rulings from Games Workshop. They settle questions the rules leave open and carry the same weight as the rules themselves.'}
       </p>
       <input value={filter} onChange={(e) => setFilter(e.target.value)}
         placeholder={`Filter ${bladItems.length} ${blad === 'errata' ? 'corrections' : 'answers'}…`}
