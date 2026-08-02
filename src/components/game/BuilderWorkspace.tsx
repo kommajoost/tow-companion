@@ -4,7 +4,7 @@ import { useUI } from '../../state';
 import { TOW, towFont, engraved } from '../../design/tow';
 import { getRuleIndex, resolveRuleSlug, resolveOptionSlug } from '../../lib/armyRules';
 import { useBackClose } from '../../lib/backStack';
-import { stelNamenVoor } from '../../lib/naamForge';
+import { NaamDialoog } from './NaamDialoog';
 import {
   CATEGORIES, COMPOSITION_RULES, validate, entryPoints, unitBlocks, radioSelected, summaryLabels,
   unitCategoryFor, unitAllowedIn, unitCompNote,
@@ -274,13 +274,10 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
   // Campagne — named unit: de eigen naam van deze unit ("The Blackspears"). Wordt in De Grensvorsten
   // de veteranen-identiteit (XP/abilities/scars volgen deze naam over lijsten en battles heen).
   const setCustomName = (uid: string, naam: string) => onUpdate((l) => ({ entries: l.entries.map((e) => (e.uid === uid ? { ...e, customName: naam || undefined } : e)) }));
-  // Naam-smid: factie/type-bewuste suggesties (naamForge). Per geselecteerde unit gegenereerd.
-  const [naamSuggesties, setNaamSuggesties] = useState<string[]>([]);
-  const rolNamen = (unitNaam: string, cat?: string) => setNaamSuggesties(stelNamenVoor(armySlug, unitNaam, 4, cat));
-  // Naam-dialoog: draft + expliciete Save (niet live) — geopend via de Name-knop in de unit-detail-kop.
+  // Naam-dialoog: gedeeld met de standaard-builder (components/game/NaamDialoog) zodat de naam-smid
+  // en het regiment-register in beide builders identiek zijn. Geopend via de Name-knop in de kop.
   const [naamUid, setNaamUid] = useState<string | null>(null);
-  const [naamConcept, setNaamConcept] = useState('');
-  const openNaamDialoog = (uid: string, unitNaam: string, huidig: string, cat?: string) => { setNaamConcept(huidig); rolNamen(unitNaam, cat); setNaamUid(uid); };
+  const openNaamDialoog = (uid: string) => setNaamUid(uid);
   const setCount = (uid: string, c: number) => onUpdate((l) => ({ entries: l.entries.map((e) => {
     if (e.uid !== uid) return e; const u = getUnit(e.cat, e.unitId); const min = u?.minimum ?? 1; const max = (u?.maximum ?? 0) === 0 ? 9999 : (u?.maximum ?? 1);
     return { ...e, count: Math.max(min, Math.min(max, c)) };
@@ -844,62 +841,21 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
   );
 
   // ════════════════════ NAAM-DIALOOG (campagne) — gedeeld door wide + narrow ════════════════════
-  // Geopend via de "Name"-knop in de unit-detail-kop; draft + expliciete Save (pas dán toegepast).
   const naamDialoog = (() => {
     if (!naamUid || !list.campaign) return null;
     const e = list.entries.find((x) => x.uid === naamUid);
     const u = e ? getUnit(e.cat, e.unitId) : null;
     if (!e || !u) return null;
-    const register = (campaignCtx?.units ?? []).filter((r) => r.naam && (!r.catalogusId || r.catalogusId === u.id));
-    const klaar = naamConcept.trim().length > 0;
-    const bewaar = () => { if (klaar) { setCustomName(e.uid, naamConcept.trim()); setNaamUid(null); } };
     return (
-      <div onClick={() => setNaamUid(null)} style={{ position: 'absolute', inset: 0, zIndex: 70, background: 'rgba(30,20,8,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 }}>
-        <div onClick={(ev) => ev.stopPropagation()} style={{ width: '100%', maxWidth: 440, background: TOW.panel, borderRadius: 16, border: `1px solid ${TOW.lineStrong}`, boxShadow: '0 16px 50px rgba(40,24,8,0.34)', padding: 16, animation: 'sheet-pop .18s ease-out' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
-            <span style={{ ...eb, fontSize: 8, color: TOW.muted }}>Campaign · {u.name_en}</span>
-            <button onClick={() => setNaamUid(null)} aria-label="Close" style={{ marginLeft: 'auto', width: 30, height: 30, borderRadius: 8, border: `1px solid ${TOW.line}`, background: TOW.cardLt, cursor: 'pointer', color: TOW.muted, fontSize: 18, lineHeight: 1 }}>×</button>
-          </div>
-          <div style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 18, color: TOW.ink, marginBottom: 4 }}>Name this regiment</div>
-          <div style={{ fontFamily: towFont.serif, fontSize: 12, color: TOW.muted, marginBottom: 10 }}>Campaign veterans follow this name — XP, abilities and scars stay with it across lists.</div>
-          <input
-            value={naamConcept}
-            onChange={(ev) => setNaamConcept(ev.target.value)}
-            onKeyDown={(ev) => { if (ev.key === 'Enter') bewaar(); }}
-            placeholder={e.cat === 'characters' ? `e.g. "Aldric the Grim" (${u.name_en})` : `e.g. "The Blackspears" (${u.name_en})`}
-            maxLength={40}
-            autoFocus
-            style={{ width: '100%', boxSizing: 'border-box', padding: '10px 12px', borderRadius: 9, border: `1.5px solid ${klaar ? TOW.lineStrong : TOW.blood}`, background: TOW.cardLt, fontFamily: towFont.serif, fontSize: 14, color: TOW.ink, outline: 'none' }}
-          />
-          {register.length > 0 && (
-            <select
-              value=""
-              onChange={(ev) => { if (ev.target.value) setNaamConcept(ev.target.value); }}
-              style={{ width: '100%', boxSizing: 'border-box', marginTop: 7, padding: '9px 10px', borderRadius: 9, border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt, fontFamily: towFont.serif, fontSize: 13, color: TOW.ink }}
-            >
-              <option value="">Pick an existing regiment…</option>
-              {register.map((r) => (
-                <option key={r.naam} value={r.naam}>
-                  {r.naam} · {r.xp} XP{r.abilities ? ` · ${r.abilities} abilit${r.abilities === 1 ? 'y' : 'ies'}` : ''}{r.littekens ? ` · ${r.littekens} scar${r.littekens === 1 ? '' : 's'}` : ''}
-                </option>
-              ))}
-            </select>
-          )}
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5, marginTop: 8, alignItems: 'center' }}>
-            <button onClick={() => rolNamen(u.name_en, e.cat)} style={{ border: `1px solid ${TOW.line}`, background: 'transparent', borderRadius: 7, cursor: 'pointer', color: TOW.goldDeep, padding: '4px 9px', ...eb, fontSize: 7.5 }}>
-              {naamSuggesties.length ? 'Reroll names' : 'Suggest names'}
-            </button>
-            {naamSuggesties.map((n) => (
-              <button key={n} onClick={() => setNaamConcept(n)} style={{ border: `1px solid ${TOW.line}`, background: naamConcept === n ? 'rgba(138,108,48,0.2)' : 'rgba(138,108,48,0.08)', borderRadius: 99, cursor: 'pointer', color: TOW.ink, padding: '4px 10px', fontFamily: towFont.serif, fontSize: 11.5 }}>
-                {n}
-              </button>
-            ))}
-          </div>
-          <button onClick={bewaar} disabled={!klaar} style={{ width: '100%', marginTop: 14, padding: 12, borderRadius: 10, border: 'none', cursor: klaar ? 'pointer' : 'default', background: klaar ? goldGrad : TOW.cardLt, color: klaar ? TOW.onGrad : TOW.muted, fontFamily: towFont.display, fontWeight: 700, fontSize: 14, letterSpacing: '0.04em' }}>
-            Save name
-          </button>
-        </div>
-      </div>
+      <NaamDialoog
+        unitNaam={u.name_en}
+        cat={e.cat}
+        armySlug={armySlug}
+        huidig={e.customName ?? ''}
+        register={(campaignCtx?.units ?? []).filter((r) => r.naam && (!r.catalogusId || r.catalogusId === u.id))}
+        onBewaar={(naam) => { setCustomName(e.uid, naam); setNaamUid(null); }}
+        onSluit={() => setNaamUid(null)}
+      />
     );
   })();
 
@@ -998,7 +954,7 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
                       <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginTop: 3 }}>{selEntry.customName ? `${selUnit.name_en} · ` : ''}{fmt(entryPoints(selUnit, selEntry, itemsData))} pts · {CAT_LABEL[effCatOf(selUnit)]}</div>
                     </div>
                     {list.campaign && (
-                      <NaamKnop genoemd={!!(selEntry.customName ?? '').trim()} onClick={() => openNaamDialoog(selEntry.uid, selUnit.name_en, selEntry.customName ?? '', selEntry.cat)} />
+                      <NaamKnop genoemd={!!(selEntry.customName ?? '').trim()} onClick={() => openNaamDialoog(selEntry.uid)} />
                     )}
                   </div>
                   {list.campaign && !(selEntry.customName ?? '').trim() && (
@@ -1107,7 +1063,7 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
       {/* editor sheet */}
       {editEntry && editUnit && (
         <Sheet title={editEntry.customName || editUnit.name_en} sub={`${editEntry.customName ? `${editUnit.name_en} · ` : ''}${fmt(entryPoints(editUnit, editEntry, itemsData))} pts · ${CAT_LABEL[effCatOf(editUnit)]}`} onClose={() => setSheet(null)}
-          headerExtra={list.campaign ? <NaamKnop genoemd={!!(editEntry.customName ?? '').trim()} onClick={() => openNaamDialoog(editEntry.uid, editUnit.name_en, editEntry.customName ?? '', editEntry.cat)} /> : undefined}
+          headerExtra={list.campaign ? <NaamKnop genoemd={!!(editEntry.customName ?? '').trim()} onClick={() => openNaamDialoog(editEntry.uid)} /> : undefined}
           foot={<button onClick={() => { removeE(editEntry.uid); setSheet(null); }} style={{ width: '100%', padding: 12, borderRadius: 10, border: `1px solid rgba(124,43,34,0.4)`, background: 'transparent', color: TOW.blood, cursor: 'pointer', fontFamily: towFont.display, fontWeight: 600, fontSize: 13, letterSpacing: '0.04em' }}>Remove from list</button>}>
           <div style={{ marginBottom: 14 }}>
             {(() => {

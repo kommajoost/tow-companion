@@ -351,8 +351,12 @@ export function UnitOptions(props: {
   /** Tighter rows and smaller type, for the desktop inspector. The phone flow leaves it off: there this
    *  screen IS the screen and every row is a tap target. */
   dense?: boolean;
+  /** Campagne: open de naam-dialoog voor deze unit. Alleen meegegeven voor een campagne-lijst, waar
+   *  een eigen naam VERPLICHT is (de veteranen-identiteit hangt eraan). Ontbreekt hij, dan toont dit
+   *  scherm geen naam-rij — een gewone lijst heeft er niets aan. */
+  onNaam?: () => void;
 }): React.JSX.Element {
-  const { ctx, uid, onBack, onRemove, onDuplicate, onShowInfo, dense } = props;
+  const { ctx, uid, onBack, onRemove, onDuplicate, onShowInfo, dense, onNaam } = props;
   const { itemsData } = ctx;
 
   // ── hooks: all unconditional, before any early return ──────────────────────────────────────────
@@ -794,6 +798,40 @@ export function UnitOptions(props: {
             </div>
           </div>
         </div>
+
+        {/* Campagne — naam-rij. Staat BOVEN de count-rij en niet als icoontje in de kop, omdat dit
+            voor een campagne-speler geen randzaak is: zonder naam is de lijst niet in te dienen, en
+            de naam is waar z'n veteranen-XP aan hangt. Ongenoemd leest daarom als een openstaande
+            taak (rood), genoemd als een gewone waarde die je kunt wijzigen. */}
+        {onNaam ? (
+          <button
+            type="button"
+            onClick={onNaam}
+            aria-label={entry.customName ? `Change the name of ${entry.customName}` : `Name this ${unit.name_en}`}
+            style={{
+              display: 'flex', alignItems: 'center', gap: 10, textAlign: 'left', boxSizing: 'border-box',
+              margin: `0 ${BUILDER.gutter}px 10px`, width: `calc(100% - ${BUILDER.gutter * 2}px)`,
+              padding: '9px 11px', borderRadius: 10, cursor: 'pointer',
+              border: `1px solid ${entry.customName ? TOW.lineStrong : TOW.blood}`,
+              background: entry.customName ? TOW.cardLt : 'rgba(124,43,34,0.07)',
+            }}
+          >
+            <span style={{ flex: 1, minWidth: 0 }}>
+              <span style={{ ...eb, fontSize: 7.5, color: entry.customName ? TOW.muted : TOW.blood, display: 'block' }}>
+                {entry.cat === 'characters' ? 'Character name' : 'Regiment name'}
+              </span>
+              <span style={{
+                fontFamily: towFont.serif, fontSize: 13.5, color: entry.customName ? TOW.ink : TOW.blood,
+                display: 'block', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
+              }}>
+                {entry.customName || 'Not named yet — the campaign needs one'}
+              </span>
+            </span>
+            <span style={{ ...eb, fontSize: 7.5, color: TOW.goldDeep, flexShrink: 0 }}>
+              {entry.customName ? 'Change' : 'Name it'}
+            </span>
+          </button>
+        ) : null}
 
         {/* Count row — only a multi-model unit has a count to change. */}
         {multiModel ? (

@@ -30,6 +30,7 @@ import {
 import { deriveList, optionSummary } from '../../lib/builderDerived';
 import { makeTroopTypeLookup } from '../../lib/troopTypes';
 import { useCampagnes, groeiPlafonds } from '../../lib/campaign';
+import { NaamDialoog } from '../game/NaamDialoog';
 import { RosterScreen } from './RosterScreen';
 import { PickerScreen } from './PickerScreen';
 import { UnitOptions } from './UnitOptions';
@@ -448,6 +449,21 @@ export function BuilderFlow({
     }));
   }, [currentUid, update, getUnit]);
 
+  // ── Campagne: de naam van een unit ────────────────────────────────────────────────────────────
+  // Elke unit in een campagne-lijst MOET een eigen naam hebben — daar hangt Isle of Celedon de
+  // veteranen-identiteit aan (XP, abilities, littekens volgen de naam over lijsten en battles heen).
+  // Die dialoog bestond alleen in de oude BuilderWorkspace, dus in deze builder — de standaard —
+  // was een naam simpelweg niet in te stellen. De dialoog leeft nu op dit niveau zodat zowel het
+  // telefoon-scherm als de desktop-inspector 'm kunnen openen.
+  const [naamUid, setNaamUid] = useState<string | null>(null);
+  const naamEntry = naamUid ? list.entries.find((e) => e.uid === naamUid) ?? null : null;
+  const naamUnit = naamEntry ? getUnit(naamEntry.cat, naamEntry.unitId) : null;
+  const zetNaam = useCallback((uid: string, naam: string) => {
+    update((l) => ({ entries: l.entries.map((e) => (e.uid === uid ? { ...e, customName: naam || undefined } : e)) }));
+  }, [update]);
+  /** Alleen voor een campagne-lijst; een gewone lijst krijgt geen naam-rij te zien. */
+  const openNaam = campaignCtx ? (uid: string) => setNaamUid(uid) : undefined;
+
   // ── Render ────────────────────────────────────────────────────────────────────────────────────
   const desktopShell = desktop ? (
     <DesktopShell
@@ -498,6 +514,7 @@ export function BuilderFlow({
       onExport={onExport}
       onPrint={onPrint}
       onShowInfo={onShowInfo}
+      onNaam={openNaam}
     />
   ) : null;
 
@@ -527,6 +544,7 @@ export function BuilderFlow({
           onRemove={() => removeUnit(screen.uid)}
           onDuplicate={() => duplicateUnit(screen.uid)}
           onShowInfo={onShowInfo}
+          onNaam={openNaam ? () => openNaam(screen.uid) : undefined}
         />
       );
     }
@@ -552,6 +570,17 @@ export function BuilderFlow({
           braces on purpose: a shortcut listener surviving behind a phone layout would eat arrows and
           Backspace with no visible cause. */}
       {desktop ? desktopShell : shell}
+      {naamEntry && naamUnit && campaignCtx ? (
+        <NaamDialoog
+          unitNaam={naamUnit.name_en}
+          cat={naamEntry.cat}
+          armySlug={list.army}
+          huidig={naamEntry.customName ?? ''}
+          register={(campaignCtx?.units ?? []).filter((r) => r.naam && (!r.catalogusId || r.catalogusId === naamUnit.id))}
+          onBewaar={(naam) => { zetNaam(naamEntry.uid, naam); setNaamUid(null); }}
+          onSluit={() => setNaamUid(null)}
+        />
+      ) : null}
     </div>
   );
 }
