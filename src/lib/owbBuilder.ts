@@ -518,9 +518,11 @@ export function validate(
   // Campagne-modifiers (Isle of Celedon). Weglaten ⇒ identiek aan de niet-campagne-validatie.
   // `pointsCap` vervangt de puntenbasis (fase-cap i.p.v. de vrij gekozen list.points).
   // `groei` is het groeiplafond per bestaande unit — zie de GROEI-blok hieronder.
+  // 02-08: de NAAM-EIS is eruit. Die stamde uit de tijd dat de campagne veteranen op een slug van de
+  // unit-naam matchte; sinds de uid-sleutel (towc_unit_sleutel) hangt de identiteit aan `entry.uid`
+  // en is een eigen naam puur smaak. Een lijst tegenhouden om iets cosmetisch is dan niet uit te leggen.
   campaignMods?: {
     pointsCap?: number;
-    namedUnits?: boolean;  // campagne — elke unit MOET een eigen naam hebben (veteranen-identiteit)
     /** Per unit-uid het maximum dat die unit deze Act mag kosten, plus waar dat vandaan komt.
      *  Alleen units die in een eerdere Act zijn ingediend staan erin; nieuwe units kennen geen
      *  plafond (die passen alleen binnen de gewone puntencap). Komt uit de campagne-server. */
@@ -557,7 +559,6 @@ export function validate(
     if (e.count < min) warnEntry(e.uid, `${unit.name_en}: below minimum size (${min})`);
     if (max > 0 && e.count > max) warnEntry(e.uid, `${unit.name_en}: above maximum size (${max})`);
     if (!unitAllowedIn(unit, list.composition)) warnEntry(e.uid, `${unit.name_en}: not allowed in this army composition`);
-    if (campaignMods?.namedUnits && !(e.customName ?? '').trim()) warnEntry(e.uid, `${unit.name_en}: needs a unit name (campaign veterans follow the name)`);
     // GROEI — een unit die al eerder is ingediend mag maar een beetje duurder worden per Act,
     // gemeten tegen de kosten waarmee 'ie debuteerde (niet tegen de vorige Act). Zo gaan de +250
     // punten per Act naar NIEUWE units in plaats van naar het oppompen van één blok. De server

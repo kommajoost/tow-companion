@@ -199,7 +199,7 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
       : undefined),
     [campaignCtx, list.entries],
   );
-  const campaignMods = campaignCtx ? { pointsCap: campaignCtx.puntenCap, namedUnits: true, groei } : undefined;
+  const campaignMods = campaignCtx ? { pointsCap: campaignCtx.puntenCap, groei } : undefined;
 
   // Cap-sync: als de fase is opgeschoven staat list.points nog op de oude cap → werk 'm bij (één keer
   // per verschil; de gelijkheids-guard voorkomt een oneindige lus) en meld het in de campagne-balk.
@@ -639,7 +639,6 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
             {multi ? <span style={{ color: TOW.gold }}>{e.count}× </span> : null}{e.customName || u.name_en}
             {e.customName ? <span style={{ fontFamily: towFont.serif, fontWeight: 400, fontSize: 11.5, color: TOW.muted }}> · {u.name_en}</span> : null}
             {/* Campagne: naam is verplicht (veteranen-identiteit) — rood merkteken zolang 'ie ontbreekt. */}
-            {list.campaign && !e.customName ? <span style={{ ...eb, fontSize: 7, color: '#fff', background: TOW.blood, borderRadius: 99, padding: '2px 6px', marginLeft: 6, verticalAlign: 'middle' }}>NAME</span> : null}
           </span>
           <span style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 13, color: TOW.parchDim }}>{fmt(entryPoints(u, e, itemsData))}</span>
         </div>
@@ -957,9 +956,6 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
                       <NaamKnop genoemd={!!(selEntry.customName ?? '').trim()} onClick={() => openNaamDialoog(selEntry.uid)} />
                     )}
                   </div>
-                  {list.campaign && !(selEntry.customName ?? '').trim() && (
-                    <div style={{ ...eb, fontSize: 8, color: TOW.blood, margin: '-5px 0 10px' }}>Unit name required — campaign veterans follow this name</div>
-                  )}
                   {(() => {
                     const effective = riderProfileFor(selUnit, selEntry);
                     return <MiniProfile rows={effective.rows} modifiers={effective.modifiers} />;

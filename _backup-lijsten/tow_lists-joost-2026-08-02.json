@@ -1,0 +1,5905 @@
+[
+ {
+  "lists": [
+   {
+    "id": "lmsbzrmm35ed0",
+    "army": "dark-elves",
+    "name": "Playtest army",
+    "rule": "battle-march",
+    "points": 500,
+    "entries": [
+     {
+      "cat": "characters",
+      "uid": "umsc0d7gnh1xm",
+      "opts": [
+       "subopt/options/0/1"
+      ],
+      "count": 1,
+      "unitId": "sorceress"
+     },
+     {
+      "cat": "core",
+      "uid": "umsc0dbgjixf6",
+      "opts": [],
+      "count": 10,
+      "unitId": "dark-elf-warriors"
+     },
+     {
+      "cat": "core",
+      "uid": "umsc0ddavhkop",
+      "opts": [],
+      "count": 5,
+      "unitId": "dark-riders"
+     },
+     {
+      "cat": "special",
+      "uid": "umsc0dvx8bocn",
+      "opts": [],
+      "count": 1,
+      "unitId": "cold-one-chariots"
+     }
+    ],
+    "campaign": true,
+    "createdAt": 1785686719035,
+    "updatedAt": 1785687757532,
+    "composition": "dark-elves",
+    "campaignFase": 2,
+    "campaignNaam": "Joost van Rooijen",
+    "campaignSpeler": "c1",
+    "computedPoints": 390
+   },
+   {
+    "id": "lmraasehq7hei",
+    "army": "dark-elves",
+    "name": "Hold",
+    "rule": "combined-arms-grand-melee",
+    "points": 1500,
+    "entries": [
+     {
+      "cat": "characters",
+      "uid": "emraashqu8uz7",
+      "opts": [
+       "mounts/3",
+       "command/0",
+       "magic/enchanted-item/ruby-ring-of-ruin"
+      ],
+      "count": 1,
+      "lores": [
+       "battle-magic"
+      ],
+      "spells": [],
+      "unitId": "supreme-sorceress"
+     },
+     {
+      "cat": "characters",
+      "uid": "emraawmu981n6",
+      "opts": [
+       "subopt/options/0/1",
+       "mounts/1"
+      ],
+      "count": 1,
+      "unitId": "sorceress"
+     },
+     {
+      "cat": "characters",
+      "uid": "emraaskxd49pi",
+      "opts": [
+       "subopt/options/0/1",
+       "magic/arcane-item/tome-of-furion"
+      ],
+      "count": 1,
+      "unitId": "sorceress"
+     },
+     {
+      "cat": "core",
+      "uid": "emraatofwc0ea",
+      "opts": [
+       "command/2",
+       "command/1",
+       "command/0",
+       "equipment/1"
+      ],
+      "count": 18,
+      "unitId": "dark-elf-warriors"
+     },
+     {
+      "cat": "core",
+      "uid": "emraat2p493sk",
+      "opts": [],
+      "count": 10,
+      "unitId": "repeater-crossbowmen"
+     },
+     {
+      "cat": "core",
+      "uid": "emraatc85fvln",
+      "opts": [
+       "equipment/1",
+       "options/0"
+      ],
+      "count": 6,
+      "unitId": "dark-riders"
+     },
+     {
+      "cat": "core",
+      "uid": "emraathyi49m0",
+      "opts": [
+       "equipment/1",
+       "options/0"
+      ],
+      "count": 6,
+      "unitId": "dark-riders"
+     },
+     {
+      "cat": "rare",
+      "uid": "emraav89xjjl7",
+      "opts": [],
+      "count": 1,
+      "unitId": "war-hydra"
+     },
+     {
+      "cat": "rare",
+      "uid": "emraauckx4fmh",
+      "opts": [],
+      "count": 1,
+      "unitId": "reaper-bolt-throwers"
+     },
+     {
+      "cat": "rare",
+      "uid": "emraauhdma491",
+      "opts": [],
+      "count": 1,
+      "unitId": "reaper-bolt-throwers"
+     },
+     {
+      "cat": "special",
+      "uid": "emraauohydgsz",
+      "opts": [],
+      "count": 1,
+      "unitId": "cold-one-chariots"
+     }
+    ],
+    "createdAt": 1783407516254,
+    "updatedAt": 1783408700074,
+    "composition": "de-renegade"
+   },
+   {
+    "id": "lmr81nctyeik5",
+    "army": "dark-elves",
+    "name": "Campaign",
+    "rule": "battle-march",
+    "points": 500,
+    "entries": [
+     {
+      "cat": "characters",
+      "uid": "emr81nfko3e",
+      "opts": [
+       "subopt/options/0/1",
+       "mounts/3"
+      ],
+      "count": 1,
+      "lores": [
+       "daemonology"
+      ],
+      "spells": [],
+      "unitId": "sorceress",
+      "customName": "Vaelra of the Cold Coast"
+     },
+     {
+      "cat": "core",
+      "uid": "emr81nx0xde8r",
+      "opts": [
+       "command/0",
+       "command/1",
+       "command/2",
+       "equipment/1"
+      ],
+      "count": 15,
+      "unitId": "dark-elf-warriors",
+      "customName": "The Black Regiment"
+     },
+     {
+      "cat": "core",
+      "uid": "emr81obbmix3v",
+      "opts": [],
+      "count": 5,
+      "unitId": "dark-riders",
+      "customName": "Black Riders"
+     },
+     {
+      "cat": "special",
+      "uid": "emr84j9pfbcsn",
+      "opts": [],
+      "count": 1,
+      "unitId": "cold-one-chariots",
+      "customName": "Stupido"
+     }
+    ],
+    "campaign": true,
+    "createdAt": 1783271231928,
+    "updatedAt": 1783279358790,
+    "composition": "dark-elves",
+    "campaignFase": 1,
+    "campaignNaam": "Player 1",
+    "campaignSpeler": "p0",
+    "computedPoints": 495
+   },
+   {
+    "id": "lmr6oe39zb6v9",
+    "army": "dark-elves",
+    "name": "1k magic assasin RBT",
+    "rule": "combined-arms-grand-melee",
+    "points": 1000,
+    "entries": [
+     {
+      "cat": "characters",
+      "uid": "emqslg23x65tr",
+      "opts": [
+       "mounts/0",
+       "magic/arcane-item/lore-familiar",
+       "command/0"
+      ],
+      "count": 1,
+      "lores": [
+       "daemonology"
+      ],
+      "spells": [],
+      "unitId": "supreme-sorceress"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqslg6xwcyid",
+      "opts": [
+       "subopt/options/0/1",
+       "mounts/2",
+       "magic/arcane-item/tome-of-furion"
+      ],
+      "count": 1,
+      "lores": [
+       "daemonology"
+      ],
+      "spells": [],
+      "unitId": "sorceress"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqslgasv86rt",
+      "opts": [
+       "equipment/1",
+       "magic/forbidden-poison/dark-venom"
+      ],
+      "count": 1,
+      "unitId": "khainite-assassin"
+     },
+     {
+      "cat": "core",
+      "uid": "emqslgkze9v1u",
+      "opts": [
+       "command/0",
+       "command/1",
+       "command/2",
+       "equipment/1"
+      ],
+      "count": 18,
+      "unitId": "dark-elf-warriors"
+     },
+     {
+      "cat": "core",
+      "uid": "emqslgw3eh7z4",
+      "opts": [
+       "options/0",
+       "equipment/0"
+      ],
+      "count": 5,
+      "unitId": "dark-riders"
+     },
+     {
+      "cat": "special",
+      "uid": "emqslh3u957l4",
+      "opts": [
+       "command/0",
+       "armor/0"
+      ],
+      "count": 5,
+      "unitId": "cold-one-knights"
+     },
+     {
+      "cat": "rare",
+      "uid": "emr6r3fkiexxn",
+      "opts": [],
+      "count": 1,
+      "unitId": "reaper-bolt-throwers"
+     },
+     {
+      "cat": "rare",
+      "uid": "emr6r3hux2kij",
+      "opts": [],
+      "count": 1,
+      "unitId": "reaper-bolt-throwers"
+     }
+    ],
+    "groupId": "gmqpg3e2ekkas",
+    "createdAt": 1783188498457,
+    "updatedAt": 1783193663602,
+    "composition": "de-renegade"
+   },
+   {
+    "id": "lmr64bsghifgb",
+    "army": "dark-elves",
+    "name": "Magic max shooty",
+    "rule": "combined-arms-grand-melee",
+    "points": 1000,
+    "entries": [
+     {
+      "cat": "characters",
+      "uid": "emr64cvyi5a8b",
+      "opts": [
+       "mounts/3",
+       "magic/enchanted-item/ruby-ring-of-ruin",
+       "command/0"
+      ],
+      "count": 1,
+      "lores": [
+       "daemonology"
+      ],
+      "spells": [],
+      "unitId": "supreme-sorceress"
+     },
+     {
+      "cat": "characters",
+      "uid": "emr64c0qqg895",
+      "opts": [
+       "subopt/options/0/1",
+       "mounts/2",
+       "magic/arcane-item/tome-of-furion"
+      ],
+      "count": 1,
+      "unitId": "sorceress"
+     },
+     {
+      "cat": "core",
+      "uid": "emr64dkzebvw",
+      "opts": [
+       "command/2",
+       "command/1",
+       "command/0"
+      ],
+      "count": 19,
+      "unitId": "dark-elf-warriors"
+     },
+     {
+      "cat": "special",
+      "uid": "emr64dw6y3dj7",
+      "opts": [
+       "command/2",
+       "command/1",
+       "command/0",
+       "armor/0"
+      ],
+      "count": 7,
+      "unitId": "cold-one-knights"
+     },
+     {
+      "cat": "core",
+      "uid": "emr64dzx18cao",
+      "opts": [
+       "equipment/1",
+       "options/0",
+       "options/1"
+      ],
+      "count": 6,
+      "unitId": "dark-riders"
+     },
+     {
+      "cat": "characters",
+      "uid": "emr64fh6zi74t",
+      "opts": [
+       "subopt/options/0/1"
+      ],
+      "count": 1,
+      "unitId": "sorceress"
+     }
+    ],
+    "createdAt": 1783154798801,
+    "updatedAt": 1783155683278,
+    "composition": "de-renegade"
+   },
+   {
+    "id": "lmr32y0qd7q39",
+    "army": "dark-elves",
+    "name": "Bm basic",
+    "rule": "battle-march",
+    "points": 500,
+    "entries": [
+     {
+      "cat": "characters",
+      "uid": "emr32zby2k9xm",
+      "opts": [
+       "command/0",
+       "subopt/options/0/1"
+      ],
+      "count": 1,
+      "unitId": "sorceress"
+     },
+     {
+      "cat": "core",
+      "uid": "emr336f40g19u",
+      "opts": [],
+      "count": 14,
+      "unitId": "dark-elf-warriors"
+     },
+     {
+      "cat": "core",
+      "uid": "emr32zu1nhua4",
+      "opts": [
+       "equipment/1",
+       "options/0"
+      ],
+      "count": 5,
+      "unitId": "dark-riders"
+     },
+     {
+      "cat": "core",
+      "uid": "emr32zom084dw",
+      "opts": [],
+      "count": 10,
+      "unitId": "repeater-crossbowmen"
+     },
+     {
+      "cat": "rare",
+      "uid": "emr3496f84ged",
+      "opts": [],
+      "count": 1,
+      "unitId": "reaper-bolt-throwers"
+     }
+    ],
+    "createdAt": 1782971078197,
+    "updatedAt": 1782973304992,
+    "composition": "de-renegade"
+   },
+   {
+    "id": "lmqvfobbs7abo",
+    "army": "dark-elves",
+    "name": "1,5k terror team",
+    "rule": "combined-arms-grand-melee",
+    "points": 1500,
+    "entries": [
+     {
+      "cat": "special",
+      "uid": "emqe3e1x37j6r",
+      "opts": [
+       "armor/1",
+       "command/0",
+       "command/1",
+       "command/2"
+      ],
+      "count": 7,
+      "unitId": "cold-one-knights"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqe5oepwjymp",
+      "opts": [
+       "equipment/1",
+       "command/0",
+       "armor/1",
+       "options/2",
+       "options/1",
+       "magic/talisman/pendant-of-khaeleth",
+       "mounts/2"
+      ],
+      "count": 1,
+      "unitId": "high-beastmaster"
+     },
+     {
+      "cat": "characters",
+      "uid": "emr4txozybalf",
+      "opts": [
+       "mounts/3",
+       "magic/enchanted-item/ruby-ring-of-ruin",
+       "magic/arcane-item/tome-of-furion",
+       "magic/arcane-item/focus-familiar"
+      ],
+      "count": 1,
+      "lores": [],
+      "spells": [],
+      "unitId": "supreme-sorceress"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqe6syg9epn9",
+      "opts": [
+       "subopt/options/0/1",
+       "mounts/2",
+       "magic/arcane-item/lore-familiar"
+      ],
+      "count": 1,
+      "lores": [
+       "daemonology"
+      ],
+      "spells": [],
+      "unitId": "sorceress"
+     },
+     {
+      "cat": "rare",
+      "uid": "emqvfpipni0xi",
+      "opts": [],
+      "count": 1,
+      "unitId": "war-hydra"
+     },
+     {
+      "cat": "core",
+      "uid": "emqzqnfelfsz0",
+      "opts": [
+       "options/0"
+      ],
+      "count": 10,
+      "unitId": "repeater-crossbowmen"
+     },
+     {
+      "cat": "core",
+      "uid": "emqe3e1x21aq6",
+      "opts": [
+       "options/0",
+       "command/2",
+       "equipment/1",
+       "command/0",
+       "options/1"
+      ],
+      "count": 6,
+      "unitId": "dark-riders"
+     },
+     {
+      "cat": "core",
+      "uid": "emqzqnmh26lvc",
+      "opts": [
+       "options/0",
+       "equipment/1",
+       "command/0",
+       "options/2"
+      ],
+      "count": 6,
+      "unitId": "dark-riders"
+     }
+    ],
+    "groupId": "gmqe7f3vmpmj",
+    "createdAt": 1782508730968,
+    "updatedAt": 1783077508088,
+    "composition": "de-renegade"
+   },
+   {
+    "id": "lmqjp0x2w95u3",
+    "army": "dark-elves",
+    "name": "Battlemarch balance",
+    "rule": "battle-march",
+    "points": 500,
+    "entries": [
+     {
+      "cat": "characters",
+      "uid": "emqjp1dokav0l",
+      "opts": [
+       "subopt/options/0/1",
+       "mounts/0",
+       "magic/arcane-item/tome-of-furion"
+      ],
+      "count": 1,
+      "lores": [
+       "daemonology"
+      ],
+      "spells": [],
+      "unitId": "sorceress"
+     },
+     {
+      "cat": "core",
+      "uid": "emqjp5nyfc7gg",
+      "opts": [
+       "command/0",
+       "command/2",
+       "command/1",
+       "equipment/1"
+      ],
+      "count": 16,
+      "unitId": "dark-elf-warriors"
+     },
+     {
+      "cat": "core",
+      "uid": "emqjp4g3ibb7x",
+      "opts": [
+       "equipment/1",
+       "options/0"
+      ],
+      "count": 5,
+      "unitId": "dark-riders"
+     },
+     {
+      "cat": "special",
+      "uid": "emqk0hlfxd4me",
+      "opts": [],
+      "count": 1,
+      "unitId": "cold-one-chariots"
+     }
+    ],
+    "groupId": "gmqjva1liyjo",
+    "createdAt": 1781798841464,
+    "updatedAt": 1781869143523,
+    "composition": "de-renegade"
+   },
+   {
+    "id": "lmqjsasxn6f70",
+    "army": "dark-elves",
+    "name": "Battlemarch pewpew",
+    "rule": "battle-march",
+    "points": 500,
+    "entries": [
+     {
+      "cat": "characters",
+      "uid": "emqjsendncgfw",
+      "opts": [
+       "subopt/options/0/0",
+       "magic/enchanted-item/ruby-ring-of-ruin"
+      ],
+      "count": 1,
+      "lores": [
+       "daemonology"
+      ],
+      "spells": [],
+      "unitId": "sorceress"
+     },
+     {
+      "cat": "rare",
+      "uid": "emqjsezfdk3y3",
+      "opts": [],
+      "count": 1,
+      "unitId": "reaper-bolt-throwers"
+     },
+     {
+      "cat": "core",
+      "uid": "emqjtvrandorq",
+      "opts": [],
+      "count": 10,
+      "unitId": "repeater-crossbowmen"
+     },
+     {
+      "cat": "core",
+      "uid": "emqju6q3wjnan",
+      "opts": [
+       "equipment/1",
+       "options/1",
+       "options/0"
+      ],
+      "count": 5,
+      "unitId": "dark-riders"
+     },
+     {
+      "cat": "core",
+      "uid": "emqju6t3zknjg",
+      "opts": [
+       "equipment/1",
+       "options/0"
+      ],
+      "count": 5,
+      "unitId": "dark-riders"
+     }
+    ],
+    "groupId": "gmqjva1liyjo",
+    "createdAt": 1781804341499,
+    "updatedAt": 1781881723180,
+    "composition": "de-renegade"
+   },
+   {
+    "id": "lmqjoho8xbmw6",
+    "army": "vampire-counts",
+    "name": "Vampage",
+    "rule": "open-war",
+    "points": 2500,
+    "entries": [
+     {
+      "cat": "characters",
+      "uid": "emqjohlgv9a2m",
+      "opts": [],
+      "count": 1,
+      "unitId": "strigoi-ghoul-king"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqjohlgwe5oi",
+      "opts": [],
+      "count": 1,
+      "unitId": "vampire-thrall"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqjohlgw5yvg",
+      "opts": [],
+      "count": 1,
+      "unitId": "vampire-count"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqjohlgygk8e",
+      "opts": [
+       "mounts/4",
+       "options/0"
+      ],
+      "count": 1,
+      "unitId": "master-necromancer"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqjohlgziyiu",
+      "opts": [
+       "options/0"
+      ],
+      "count": 1,
+      "unitId": "master-necromancer"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqjohlh040tl",
+      "opts": [
+       "options/0"
+      ],
+      "count": 1,
+      "unitId": "necromantic-acolyte"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqjohlh03kf1",
+      "opts": [],
+      "count": 1,
+      "unitId": "tomb-banshee"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqjohlh0286i",
+      "opts": [],
+      "count": 1,
+      "unitId": "tomb-banshee"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqjohlh0gjhm",
+      "opts": [],
+      "count": 1,
+      "unitId": "wight-king"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqjohlh14m6q",
+      "opts": [],
+      "count": 1,
+      "unitId": "cairn-wraith"
+     },
+     {
+      "cat": "core",
+      "uid": "emqjohlh14z3d",
+      "opts": [
+       "equipment/1"
+      ],
+      "count": 40,
+      "unitId": "skeleton-warriors"
+     },
+     {
+      "cat": "core",
+      "uid": "emqjohlh11fvg",
+      "opts": [
+       "options/0",
+       "command/1",
+       "command/2",
+       "command/0"
+      ],
+      "count": 24,
+      "unitId": "grave-guard-core"
+     },
+     {
+      "cat": "core",
+      "uid": "emqjohlh1jems",
+      "opts": [
+       "command/0"
+      ],
+      "count": 15,
+      "unitId": "dire-wolves"
+     },
+     {
+      "cat": "core",
+      "uid": "emqjohlh15013",
+      "opts": [
+       "command/0"
+      ],
+      "count": 6,
+      "unitId": "black-knights-core"
+     },
+     {
+      "cat": "special",
+      "uid": "emqjohlh13wfl",
+      "opts": [],
+      "count": 4,
+      "unitId": "fell-bats"
+     },
+     {
+      "cat": "special",
+      "uid": "emqjohlh14vk7",
+      "opts": [],
+      "count": 3,
+      "unitId": "spirit-hosts"
+     },
+     {
+      "cat": "special",
+      "uid": "emqjohlh1ecop",
+      "opts": [],
+      "count": 3,
+      "unitId": "spirit-hosts"
+     },
+     {
+      "cat": "special",
+      "uid": "emqjohlh1flm2",
+      "opts": [],
+      "count": 3,
+      "unitId": "spirit-hosts"
+     },
+     {
+      "cat": "rare",
+      "uid": "emqjohlh2b2ub",
+      "opts": [],
+      "count": 1,
+      "unitId": "black-coach"
+     }
+    ],
+    "groupId": "gmqjva8eb24ma",
+    "createdAt": 1781797943553,
+    "updatedAt": 1781809355638,
+    "composition": "vampire-counts"
+   },
+   {
+    "id": "lmqf2bn0f7bol",
+    "army": "dwarfen-mountain-holds",
+    "name": "Test volgende game",
+    "rule": "combined-arms",
+    "points": 1500,
+    "entries": [
+     {
+      "cat": "characters",
+      "uid": "emqf2bjsufjlo",
+      "opts": [
+       "command/0"
+      ],
+      "count": 1,
+      "unitId": "burlok-damminson"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqf2bjswkxdi",
+      "opts": [
+       "equipment/1",
+       "magic/weapon-runes/master-rune-of-calm",
+       "magic/weapon-runes/rune-of-spellbreaking"
+      ],
+      "count": 1,
+      "unitId": "runesmith"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqf2bjsxiyu6",
+      "opts": [
+       "options/0",
+       "options/1",
+       "magic/weapon-runes/rune-of-concussive-force",
+       "magic/weapon-runes/rune-of-rapid-fire"
+      ],
+      "count": 1,
+      "unitId": "engineer-sapper"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqf2bjsy7x5",
+      "opts": [
+       "equipment/3",
+       "options/1",
+       "command/1",
+       "magic/weapon-runes/master-rune-of-bursting-flame",
+       "magic/weapon-runes/rune-of-rapid-fire",
+       "magic/weapon-runes/rune-of-passage",
+       "magic/banner-runes/master-rune-of-stromni-redbeard"
+      ],
+      "count": 1,
+      "unitId": "thane"
+     },
+     {
+      "cat": "core",
+      "uid": "emqf2bjsy75bc",
+      "opts": [],
+      "count": 2,
+      "unitId": "scout-gyrocopters"
+     },
+     {
+      "cat": "core",
+      "uid": "emqf2bjszcg5m",
+      "opts": [
+       "options/0",
+       "options/1",
+       "options/2",
+       "command/0",
+       "command/1",
+       "command/2",
+       "equipment/0"
+      ],
+      "count": 14,
+      "unitId": "thunderers"
+     },
+     {
+      "cat": "core",
+      "uid": "emqf2bjsz2rup",
+      "opts": [
+       "options/0",
+       "options/1",
+       "command/0",
+       "command/1",
+       "command/2",
+       "equipment/2"
+      ],
+      "count": 8,
+      "unitId": "rangers-core"
+     },
+     {
+      "cat": "special",
+      "uid": "emqf2bjszbvul",
+      "opts": [
+       "equipment/2"
+      ],
+      "count": 2,
+      "unitId": "gyrocopters"
+     },
+     {
+      "cat": "special",
+      "uid": "emqf2bjsz5n59",
+      "opts": [
+       "options/0"
+      ],
+      "count": 1,
+      "unitId": "cannon"
+     },
+     {
+      "cat": "special",
+      "uid": "emqf2bjt025fx",
+      "opts": [
+       "options/0"
+      ],
+      "count": 1,
+      "unitId": "cannon"
+     },
+     {
+      "cat": "rare",
+      "uid": "emqf2bjt0g6n",
+      "opts": [
+       "equipment/2"
+      ],
+      "count": 1,
+      "unitId": "gyrobomber"
+     }
+    ],
+    "groupId": "gmqjva8eb24ma",
+    "createdAt": 1781518845760,
+    "updatedAt": 1781809363626,
+    "composition": "dwarfen-mountain-holds"
+   },
+   {
+    "id": "lmqh6clrb6ohj",
+    "army": "dark-elves",
+    "name": "DE charge",
+    "rule": "open-war",
+    "points": 1500,
+    "entries": [
+     {
+      "cat": "characters",
+      "uid": "emqh6pm20eojm",
+      "opts": [
+       "command/0",
+       "equipment/1",
+       "options/2",
+       "options/1",
+       "mounts/2",
+       "magic/talisman/pendant-of-khaeleth"
+      ],
+      "count": 1,
+      "unitId": "high-beastmaster"
+     },
+     {
+      "cat": "core",
+      "uid": "emqh6rgz88vja",
+      "opts": [
+       "options/0"
+      ],
+      "count": 10,
+      "unitId": "repeater-crossbowmen"
+     },
+     {
+      "cat": "core",
+      "uid": "emqh6rnabd777",
+      "opts": [
+       "command/0",
+       "command/2",
+       "equipment/1",
+       "options/0",
+       "options/2"
+      ],
+      "count": 6,
+      "unitId": "dark-riders"
+     },
+     {
+      "cat": "core",
+      "uid": "emqh6rx148wzj",
+      "opts": [
+       "command/0",
+       "command/2",
+       "equipment/1",
+       "options/0"
+      ],
+      "count": 6,
+      "unitId": "dark-riders"
+     },
+     {
+      "cat": "special",
+      "uid": "emqh6s9r9l0h",
+      "opts": [
+       "command/0",
+       "command/2",
+       "command/1",
+       "armor/1",
+       "magic/banner/banner-of-har-ganeth"
+      ],
+      "count": 8,
+      "unitId": "cold-one-knights"
+     },
+     {
+      "cat": "rare",
+      "uid": "emqh7jvcjiy9w",
+      "opts": [],
+      "count": 1,
+      "unitId": "reaper-bolt-throwers"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqh7k8f38isw",
+      "opts": [
+       "magic/enchanted-item/ruby-ring-of-ruin",
+       "mounts/3",
+       "magic/arcane-item/lore-familiar"
+      ],
+      "count": 1,
+      "lores": [
+       "battle-magic"
+      ],
+      "spells": [],
+      "unitId": "supreme-sorceress"
+     },
+     {
+      "cat": "rare",
+      "uid": "emqh7nhq51dwp",
+      "opts": [],
+      "count": 1,
+      "unitId": "reaper-bolt-throwers"
+     },
+     {
+      "cat": "special",
+      "uid": "emqh7nop1hpf4",
+      "opts": [],
+      "count": 1,
+      "unitId": "cold-one-chariots"
+     }
+    ],
+    "groupId": "gmqjvapgs4q6r",
+    "createdAt": 1781646541608,
+    "updatedAt": 1781809397408,
+    "composition": "de-renegade"
+   },
+   {
+    "id": "lmqxecyl4ecu1",
+    "army": "dark-elves",
+    "name": "1k assasin shooty",
+    "rule": "combined-arms-grand-melee",
+    "points": 1000,
+    "entries": [
+     {
+      "cat": "characters",
+      "uid": "emqslg23x65tr",
+      "opts": [
+       "magic/arcane-item/lore-familiar",
+       "command/0",
+       "mounts/0"
+      ],
+      "count": 1,
+      "lores": [
+       "daemonology"
+      ],
+      "spells": [],
+      "unitId": "supreme-sorceress"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqslgasv86rt",
+      "opts": [
+       "magic/forbidden-poison/dark-venom",
+       "equipment/1"
+      ],
+      "count": 1,
+      "unitId": "khainite-assassin"
+     },
+     {
+      "cat": "core",
+      "uid": "emqslgkze9v1u",
+      "opts": [
+       "command/0",
+       "command/1",
+       "command/2",
+       "equipment/1"
+      ],
+      "count": 18,
+      "unitId": "dark-elf-warriors"
+     },
+     {
+      "cat": "special",
+      "uid": "emqslh3u957l4",
+      "opts": [
+       "armor/1"
+      ],
+      "count": 5,
+      "unitId": "cold-one-knights"
+     },
+     {
+      "cat": "rare",
+      "uid": "emqxedet4ixlu",
+      "opts": [],
+      "count": 1,
+      "unitId": "reaper-bolt-throwers"
+     },
+     {
+      "cat": "rare",
+      "uid": "emqxeeyqtkscj",
+      "opts": [],
+      "count": 1,
+      "unitId": "reaper-bolt-throwers"
+     },
+     {
+      "cat": "core",
+      "uid": "emr96p8z14745",
+      "opts": [],
+      "count": 10,
+      "unitId": "repeater-crossbowmen"
+     },
+     {
+      "cat": "core",
+      "uid": "emr96omt7cqot",
+      "opts": [
+       "equipment/1",
+       "options/0",
+       "options/1"
+      ],
+      "count": 5,
+      "unitId": "dark-riders"
+     }
+    ],
+    "groupId": "gmqpg3e2ekkas",
+    "createdAt": 1782627453976,
+    "updatedAt": 1783340206467,
+    "composition": "de-renegade"
+   },
+   {
+    "id": "lmqp0z0mq1ur2",
+    "army": "dark-elves",
+    "name": "1k magic buffs",
+    "rule": "combined-arms-grand-melee",
+    "points": 1000,
+    "entries": [
+     {
+      "cat": "characters",
+      "uid": "emqjvwkude97l",
+      "opts": [
+       "equipment/0",
+       "command/0",
+       "subopt/options/0/0",
+       "magic/arcane-item/tome-of-furion",
+       "mounts/2"
+      ],
+      "count": 1,
+      "lores": [
+       "daemonology"
+      ],
+      "spells": [],
+      "unitId": "supreme-sorceress"
+     },
+     {
+      "cat": "special",
+      "uid": "emqjvvee19zgw",
+      "opts": [
+       "command/2",
+       "command/1",
+       "command/0",
+       "armor/0"
+      ],
+      "count": 7,
+      "unitId": "cold-one-knights"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqp0zo5me849",
+      "opts": [
+       "subopt/options/0/1",
+       "magic/arcane-item/lore-familiar"
+      ],
+      "count": 1,
+      "lores": [
+       "dark-magic"
+      ],
+      "spells": [],
+      "unitId": "sorceress"
+     },
+     {
+      "cat": "core",
+      "uid": "emqp106nq850k",
+      "opts": [
+       "command/0",
+       "command/1",
+       "command/2",
+       "equipment/1",
+       "magic/banner/banner-of-har-ganeth"
+      ],
+      "count": 18,
+      "unitId": "dark-elf-warriors"
+     },
+     {
+      "cat": "core",
+      "uid": "emqjvvaxph3p3",
+      "opts": [
+       "equipment/1",
+       "options/0",
+       "options/2"
+      ],
+      "count": 8,
+      "unitId": "dark-riders"
+     },
+     {
+      "cat": "rare",
+      "uid": "emqslagagd11b",
+      "opts": [],
+      "count": 1,
+      "unitId": "reaper-bolt-throwers"
+     }
+    ],
+    "groupId": "gmqpg3e2ekkas",
+    "createdAt": 1782121239026,
+    "updatedAt": 1782336763384,
+    "composition": "de-renegade"
+   },
+   {
+    "id": "lmqjwlevpk8e6",
+    "army": "dark-elves",
+    "name": "1k manti buff",
+    "rule": "combined-arms-grand-melee",
+    "points": 1000,
+    "entries": [
+     {
+      "cat": "characters",
+      "uid": "emqjx5mm44ods",
+      "opts": [
+       "equipment/1",
+       "command/0",
+       "armor/1",
+       "options/1",
+       "options/2",
+       "mounts/2",
+       "magic/talisman/talisman-of-protection"
+      ],
+      "count": 1,
+      "unitId": "high-beastmaster"
+     },
+     {
+      "cat": "core",
+      "uid": "emqjx7ecdiouu",
+      "opts": [
+       "command/2",
+       "command/1",
+       "command/0",
+       "equipment/1"
+      ],
+      "count": 17,
+      "unitId": "dark-elf-warriors"
+     },
+     {
+      "cat": "core",
+      "uid": "emqjx7t5oac4h",
+      "opts": [
+       "options/0",
+       "equipment/1",
+       "options/1"
+      ],
+      "count": 5,
+      "unitId": "dark-riders"
+     },
+     {
+      "cat": "special",
+      "uid": "emqjx81ye98io",
+      "opts": [
+       "command/2",
+       "command/1",
+       "command/0",
+       "armor/1"
+      ],
+      "count": 6,
+      "unitId": "cold-one-knights"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqr54qgbgg3y",
+      "opts": [
+       "magic/arcane-item/lore-familiar",
+       "mounts/2"
+      ],
+      "count": 1,
+      "unitId": "supreme-sorceress"
+     }
+    ],
+    "groupId": "gmqpg3e2ekkas",
+    "createdAt": 1781811554965,
+    "updatedAt": 1782857169712,
+    "composition": "de-renegade"
+   },
+   {
+    "id": "lmqoc64xk16ex",
+    "army": "dark-elves",
+    "name": "1k terror",
+    "rule": "combined-arms-grand-melee",
+    "points": 1000,
+    "entries": [
+     {
+      "cat": "characters",
+      "uid": "emqoc68dia35y",
+      "opts": [
+       "armor/1",
+       "equipment/1",
+       "options/2",
+       "options/1",
+       "mounts/2",
+       "command/0"
+      ],
+      "count": 1,
+      "unitId": "high-beastmaster"
+     },
+     {
+      "cat": "core",
+      "uid": "emqod6rm6ad8v",
+      "opts": [],
+      "count": 10,
+      "unitId": "repeater-crossbowmen"
+     },
+     {
+      "cat": "core",
+      "uid": "emqoc841i8d9r",
+      "opts": [
+       "equipment/1",
+       "options/0",
+       "options/1"
+      ],
+      "count": 7,
+      "unitId": "dark-riders"
+     },
+     {
+      "cat": "special",
+      "uid": "emqpa6qun8wf3",
+      "opts": [
+       "command/2",
+       "command/1",
+       "command/0"
+      ],
+      "count": 5,
+      "unitId": "cold-one-knights"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqpa64fha96k",
+      "opts": [
+       "subopt/options/0/1",
+       "magic/arcane-item/lore-familiar",
+       "mounts/1"
+      ],
+      "count": 1,
+      "lores": [
+       "daemonology"
+      ],
+      "spells": [],
+      "unitId": "sorceress"
+     },
+     {
+      "cat": "special",
+      "uid": "emqpa7djn3a0m",
+      "opts": [],
+      "count": 1,
+      "unitId": "war-hydra"
+     }
+    ],
+    "groupId": "gmqpg3e2ekkas",
+    "createdAt": 1782079580792,
+    "updatedAt": 1782249294817,
+    "composition": "de-renegade"
+   },
+   {
+    "id": "lmqjw42vxh18n",
+    "army": "dark-elves",
+    "name": "1k drive by shooting",
+    "rule": "combined-arms-grand-melee",
+    "points": 1000,
+    "entries": [
+     {
+      "cat": "characters",
+      "uid": "emqjw44d4dxqi",
+      "opts": [
+       "mounts/3",
+       "magic/arcane-item/tome-of-furion",
+       "command/0"
+      ],
+      "count": 1,
+      "lores": [
+       "daemonology"
+      ],
+      "spells": [],
+      "unitId": "supreme-sorceress"
+     },
+     {
+      "cat": "special",
+      "uid": "emqjw5enageza",
+      "opts": [
+       "command/2",
+       "command/1",
+       "command/0",
+       "armor/1"
+      ],
+      "count": 6,
+      "unitId": "cold-one-knights"
+     },
+     {
+      "cat": "core",
+      "uid": "emqjw6bdfdlg3",
+      "opts": [
+       "equipment/1",
+       "options/0",
+       "options/1"
+      ],
+      "count": 7,
+      "unitId": "dark-riders"
+     },
+     {
+      "cat": "core",
+      "uid": "emqjw6lczfds9",
+      "opts": [],
+      "count": 10,
+      "unitId": "repeater-crossbowmen"
+     },
+     {
+      "cat": "rare",
+      "uid": "emqjweyzn3cki",
+      "opts": [],
+      "count": 1,
+      "unitId": "reaper-bolt-throwers"
+     },
+     {
+      "cat": "characters",
+      "uid": "emql9r75pj61r",
+      "opts": [
+       "subopt/options/0/1",
+       "mounts/1",
+       "magic/enchanted-item/ruby-ring-of-ruin"
+      ],
+      "count": 1,
+      "lores": [
+       "daemonology"
+      ],
+      "spells": [],
+      "unitId": "sorceress"
+     },
+     {
+      "cat": "rare",
+      "uid": "emqpgecx81uel",
+      "opts": [],
+      "count": 1,
+      "unitId": "reaper-bolt-throwers"
+     }
+    ],
+    "groupId": "gmqpg3e2ekkas",
+    "createdAt": 1781810746269,
+    "updatedAt": 1782147149036,
+    "composition": "de-renegade"
+   },
+   {
+    "id": "lmqfmii1ag6a6",
+    "army": "dark-elves",
+    "name": "1,5k manti shoot n ride",
+    "rule": "combined-arms-grand-melee",
+    "points": 1500,
+    "entries": [
+     {
+      "cat": "core",
+      "uid": "emqfmitdg4yep",
+      "opts": [
+       "equipment/1",
+       "options/2",
+       "options/0",
+       "command/0",
+       "command/2"
+      ],
+      "count": 6,
+      "unitId": "dark-riders"
+     },
+     {
+      "cat": "core",
+      "uid": "emqfmjijrfdqn",
+      "opts": [
+       "equipment/1",
+       "options/0",
+       "command/0",
+       "command/2",
+       "options/1"
+      ],
+      "count": 6,
+      "unitId": "dark-riders"
+     },
+     {
+      "cat": "special",
+      "uid": "emqfmkwko8xjf",
+      "opts": [
+       "command/0",
+       "command/2",
+       "command/1",
+       "armor/1"
+      ],
+      "count": 7,
+      "unitId": "cold-one-knights"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqfmlbvul0ti",
+      "opts": [
+       "command/0",
+       "equipment/1",
+       "armor/1",
+       "options/2",
+       "mounts/2",
+       "magic/talisman/pendant-of-khaeleth"
+      ],
+      "count": 1,
+      "unitId": "high-beastmaster"
+     },
+     {
+      "cat": "rare",
+      "uid": "emqfmsg0l4nim",
+      "opts": [],
+      "count": 1,
+      "unitId": "reaper-bolt-throwers"
+     },
+     {
+      "cat": "rare",
+      "uid": "emqfmz008cczz",
+      "opts": [],
+      "count": 1,
+      "unitId": "reaper-bolt-throwers"
+     },
+     {
+      "cat": "core",
+      "uid": "emqgclirpecag",
+      "opts": [
+       "options/0"
+      ],
+      "count": 10,
+      "unitId": "repeater-crossbowmen"
+     },
+     {
+      "cat": "special",
+      "uid": "emqgcnaeq34ib",
+      "opts": [],
+      "count": 1,
+      "unitId": "cold-one-chariots"
+     },
+     {
+      "cat": "characters",
+      "uid": "emquo63gwcgt8",
+      "opts": [
+       "subopt/options/0/1",
+       "mounts/2",
+       "magic/arcane-item/lore-familiar"
+      ],
+      "count": 1,
+      "lores": [
+       "daemonology"
+      ],
+      "spells": [],
+      "unitId": "sorceress"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqzkxdesghj8",
+      "opts": [
+       "subopt/options/0/1",
+       "mounts/3",
+       "magic/arcane-item/tome-of-furion"
+      ],
+      "count": 1,
+      "unitId": "sorceress"
+     }
+    ],
+    "groupId": "gmqe7f3vmpmj",
+    "createdAt": 1781552758223,
+    "updatedAt": 1782759644870,
+    "composition": "de-renegade"
+   },
+   {
+    "id": "lmqe5fr28ec2j",
+    "army": "dark-elves",
+    "name": "1,5k magic manti",
+    "rule": "open-war",
+    "points": 1500,
+    "entries": [
+     {
+      "cat": "core",
+      "uid": "emqppgcg63c24",
+      "opts": [
+       "command/2",
+       "command/1",
+       "command/0",
+       "equipment/1",
+       "magic/banner/banner-of-swirling-wind"
+      ],
+      "count": 18,
+      "unitId": "dark-elf-warriors"
+     },
+     {
+      "cat": "core",
+      "uid": "emqpphcrefdmx",
+      "opts": [],
+      "count": 10,
+      "unitId": "repeater-crossbowmen"
+     },
+     {
+      "cat": "core",
+      "uid": "emqe3e1x21aq6",
+      "opts": [
+       "options/0",
+       "command/0",
+       "command/2",
+       "command/1",
+       "equipment/0"
+      ],
+      "count": 8,
+      "unitId": "dark-riders"
+     },
+     {
+      "cat": "special",
+      "uid": "emqe3e1x37j6r",
+      "opts": [
+       "armor/1",
+       "command/0",
+       "command/1",
+       "command/2",
+       "magic/banner/banner-of-har-ganeth"
+      ],
+      "count": 7,
+      "unitId": "cold-one-knights"
+     },
+     {
+      "cat": "rare",
+      "uid": "emqe3e1x4ja5k",
+      "opts": [],
+      "count": 1,
+      "unitId": "reaper-bolt-throwers"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqe5oepwjymp",
+      "opts": [
+       "equipment/1",
+       "command/0",
+       "armor/1",
+       "options/2",
+       "options/1",
+       "magic/talisman/pendant-of-khaeleth",
+       "mounts/2"
+      ],
+      "count": 1,
+      "unitId": "high-beastmaster"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqe7hsmn4q9c",
+      "opts": [
+       "subopt/options/0/0",
+       "magic/arcane-item/lore-familiar",
+       "mounts/0"
+      ],
+      "count": 1,
+      "lores": [
+       "battle-magic"
+      ],
+      "spells": [],
+      "unitId": "supreme-sorceress"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqe6syg9epn9",
+      "opts": [
+       "subopt/options/0/1",
+       "magic/arcane-item/tome-of-furion",
+       "mounts/2"
+      ],
+      "count": 1,
+      "lores": [
+       "dark-magic"
+      ],
+      "spells": [],
+      "unitId": "sorceress"
+     },
+     {
+      "cat": "rare",
+      "uid": "emqfngo6d7f8v",
+      "opts": [],
+      "count": 1,
+      "unitId": "reaper-bolt-throwers"
+     }
+    ],
+    "groupId": "gmqe7f3vmpmj",
+    "createdAt": 1781463610305,
+    "updatedAt": 1782804806269,
+    "composition": "de-renegade"
+   },
+   {
+    "id": "lmqyxts4aldb6",
+    "army": "dark-elves",
+    "name": "1,5k magic assassin shot",
+    "rule": "combined-arms-grand-melee",
+    "points": 1500,
+    "entries": [
+     {
+      "cat": "characters",
+      "uid": "emqe3e1x15aum",
+      "opts": [
+       "options/0",
+       "command/0",
+       "subopt/options/0/0",
+       "mounts/0",
+       "magic/arcane-item/lore-familiar"
+      ],
+      "count": 1,
+      "unitId": "supreme-sorceress"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqe3e1x1eiv2",
+      "opts": [
+       "options/0",
+       "magic/arcane-item/tome-of-furion",
+       "subopt/options/0/1",
+       "mounts/2"
+      ],
+      "count": 1,
+      "unitId": "sorceress"
+     },
+     {
+      "cat": "core",
+      "uid": "emqtdzmwtfwmw",
+      "opts": [
+       "command/2",
+       "command/1",
+       "command/0",
+       "equipment/1"
+      ],
+      "count": 18,
+      "unitId": "dark-elf-warriors"
+     },
+     {
+      "cat": "core",
+      "uid": "emqyxuduphyvf",
+      "opts": [],
+      "count": 10,
+      "unitId": "repeater-crossbowmen"
+     },
+     {
+      "cat": "core",
+      "uid": "emqe3e1x26lkx",
+      "opts": [
+       "equipment/1",
+       "options/0",
+       "command/0",
+       "options/1"
+      ],
+      "count": 6,
+      "unitId": "dark-riders"
+     },
+     {
+      "cat": "special",
+      "uid": "emqe3e1x37j6r",
+      "opts": [
+       "armor/1",
+       "command/0",
+       "command/1",
+       "command/2"
+      ],
+      "count": 7,
+      "unitId": "cold-one-knights"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqte25bb7zye",
+      "opts": [
+       "equipment/1",
+       "magic/forbidden-poison/dark-venom"
+      ],
+      "count": 1,
+      "unitId": "khainite-assassin"
+     },
+     {
+      "cat": "rare",
+      "uid": "emqe3e1x4ja5k",
+      "opts": [],
+      "count": 1,
+      "unitId": "reaper-bolt-throwers"
+     },
+     {
+      "cat": "rare",
+      "uid": "emqyxvc3g1l2b",
+      "opts": [],
+      "count": 1,
+      "unitId": "reaper-bolt-throwers"
+     },
+     {
+      "cat": "special",
+      "uid": "emr0c0s4vgh0s",
+      "opts": [],
+      "count": 1,
+      "unitId": "cold-one-chariots"
+     },
+     {
+      "cat": "core",
+      "uid": "emr37fsskj4rd",
+      "opts": [
+       "equipment/1",
+       "options/0",
+       "options/2"
+      ],
+      "count": 6,
+      "unitId": "dark-riders"
+     }
+    ],
+    "groupId": "gmqe7f3vmpmj",
+    "createdAt": 1782720617626,
+    "updatedAt": 1782978645945,
+    "composition": "de-renegade"
+   },
+   {
+    "id": "lmqe3eb7chbhj",
+    "army": "dark-elves",
+    "name": "1,5k magic assassin",
+    "rule": "combined-arms-grand-melee",
+    "points": 1500,
+    "entries": [
+     {
+      "cat": "characters",
+      "uid": "emqe3e1x15aum",
+      "opts": [
+       "options/0",
+       "command/0",
+       "subopt/options/0/0",
+       "mounts/0",
+       "magic/arcane-item/lore-familiar"
+      ],
+      "count": 1,
+      "unitId": "supreme-sorceress"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqe3e1x1eiv2",
+      "opts": [
+       "options/0",
+       "magic/arcane-item/tome-of-furion",
+       "subopt/options/0/1",
+       "mounts/2"
+      ],
+      "count": 1,
+      "unitId": "sorceress"
+     },
+     {
+      "cat": "core",
+      "uid": "emqtdzmwtfwmw",
+      "opts": [
+       "command/2",
+       "command/1",
+       "command/0",
+       "equipment/1",
+       "magic/banner/banner-of-swirling-wind"
+      ],
+      "count": 19,
+      "unitId": "dark-elf-warriors"
+     },
+     {
+      "cat": "core",
+      "uid": "emqe3e1x26lkx",
+      "opts": [
+       "equipment/1",
+       "options/0",
+       "options/1",
+       "command/0"
+      ],
+      "count": 8,
+      "unitId": "dark-riders"
+     },
+     {
+      "cat": "special",
+      "uid": "emqe3e1x37j6r",
+      "opts": [
+       "armor/1",
+       "command/0",
+       "command/1",
+       "command/2",
+       "magic/banner/banner-of-har-ganeth"
+      ],
+      "count": 7,
+      "unitId": "cold-one-knights"
+     },
+     {
+      "cat": "special",
+      "uid": "emqe3e1x381hi",
+      "opts": [],
+      "count": 1,
+      "unitId": "cold-one-chariots"
+     },
+     {
+      "cat": "rare",
+      "uid": "emqe3e1x4ja5k",
+      "opts": [],
+      "count": 1,
+      "unitId": "reaper-bolt-throwers"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqte25bb7zye",
+      "opts": [
+       "equipment/1",
+       "magic/forbidden-poison/dark-venom"
+      ],
+      "count": 1,
+      "unitId": "khainite-assassin"
+     },
+     {
+      "cat": "rare",
+      "uid": "emqtwstmn8jg3",
+      "opts": [],
+      "count": 1,
+      "unitId": "war-hydra"
+     }
+    ],
+    "groupId": "gmqe7f3vmpmj",
+    "createdAt": 1781460183864,
+    "updatedAt": 1782545779624,
+    "composition": "de-renegade"
+   },
+   {
+    "id": "lmqslfwlqg0es",
+    "army": "dark-elves",
+    "name": "1k magic assasin",
+    "rule": "combined-arms-grand-melee",
+    "points": 1000,
+    "entries": [
+     {
+      "cat": "characters",
+      "uid": "emqslg23x65tr",
+      "opts": [
+       "mounts/0",
+       "magic/arcane-item/lore-familiar",
+       "command/0"
+      ],
+      "count": 1,
+      "lores": [
+       "daemonology"
+      ],
+      "spells": [],
+      "unitId": "supreme-sorceress"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqslg6xwcyid",
+      "opts": [
+       "subopt/options/0/1",
+       "mounts/2",
+       "magic/arcane-item/tome-of-furion"
+      ],
+      "count": 1,
+      "lores": [
+       "daemonology"
+      ],
+      "spells": [],
+      "unitId": "sorceress"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqslgasv86rt",
+      "opts": [
+       "equipment/1",
+       "magic/forbidden-poison/dark-venom"
+      ],
+      "count": 1,
+      "unitId": "khainite-assassin"
+     },
+     {
+      "cat": "core",
+      "uid": "emqslgkze9v1u",
+      "opts": [
+       "command/0",
+       "command/1",
+       "command/2",
+       "equipment/1"
+      ],
+      "count": 18,
+      "unitId": "dark-elf-warriors"
+     },
+     {
+      "cat": "core",
+      "uid": "emqslgw3eh7z4",
+      "opts": [
+       "equipment/1",
+       "options/0"
+      ],
+      "count": 5,
+      "unitId": "dark-riders"
+     },
+     {
+      "cat": "special",
+      "uid": "emqslh3u957l4",
+      "opts": [
+       "armor/1",
+       "command/0"
+      ],
+      "count": 5,
+      "unitId": "cold-one-knights"
+     },
+     {
+      "cat": "special",
+      "uid": "emqsli53ab056",
+      "opts": [],
+      "count": 1,
+      "unitId": "cold-one-chariots"
+     }
+    ],
+    "groupId": "gmqpg3e2ekkas",
+    "createdAt": 1782337017807,
+    "updatedAt": 1782804852886,
+    "composition": "de-renegade"
+   },
+   {
+    "id": "lmr4l9bkkecan",
+    "army": "dark-elves",
+    "name": "2k magic assassin bm",
+    "rule": "combined-arms-grand-melee",
+    "points": 2000,
+    "entries": [
+     {
+      "cat": "characters",
+      "uid": "emr4l9f793k4e",
+      "opts": [
+       "equipment/1",
+       "armor/1",
+       "options/2",
+       "options/1",
+       "mounts/2",
+       "magic/talisman/pendant-of-khaeleth"
+      ],
+      "count": 1,
+      "unitId": "high-beastmaster"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqe3e1x15aum",
+      "opts": [
+       "options/0",
+       "command/0",
+       "mounts/0",
+       "magic/arcane-item/lore-familiar",
+       "subopt/options/0/1"
+      ],
+      "count": 1,
+      "unitId": "supreme-sorceress"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqe3e1x1eiv2",
+      "opts": [
+       "options/0",
+       "magic/arcane-item/tome-of-furion",
+       "subopt/options/0/1",
+       "mounts/2"
+      ],
+      "count": 1,
+      "unitId": "sorceress"
+     },
+     {
+      "cat": "core",
+      "uid": "emqtdzmwtfwmw",
+      "opts": [
+       "command/2",
+       "command/1",
+       "command/0",
+       "equipment/1"
+      ],
+      "count": 18,
+      "unitId": "dark-elf-warriors"
+     },
+     {
+      "cat": "core",
+      "uid": "emqyxuduphyvf",
+      "opts": [],
+      "count": 10,
+      "unitId": "repeater-crossbowmen"
+     },
+     {
+      "cat": "core",
+      "uid": "emqe3e1x26lkx",
+      "opts": [
+       "equipment/1",
+       "options/0"
+      ],
+      "count": 6,
+      "unitId": "dark-riders"
+     },
+     {
+      "cat": "special",
+      "uid": "emqe3e1x37j6r",
+      "opts": [
+       "armor/1",
+       "command/0",
+       "command/1",
+       "command/2",
+       "magic/banner/banner-of-har-ganeth"
+      ],
+      "count": 7,
+      "unitId": "cold-one-knights"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqte25bb7zye",
+      "opts": [
+       "equipment/1",
+       "magic/forbidden-poison/dark-venom"
+      ],
+      "count": 1,
+      "unitId": "khainite-assassin"
+     },
+     {
+      "cat": "rare",
+      "uid": "emqe3e1x4ja5k",
+      "opts": [],
+      "count": 1,
+      "unitId": "reaper-bolt-throwers"
+     },
+     {
+      "cat": "rare",
+      "uid": "emqyxvc3g1l2b",
+      "opts": [],
+      "count": 1,
+      "unitId": "reaper-bolt-throwers"
+     },
+     {
+      "cat": "special",
+      "uid": "emr0c0s4vgh0s",
+      "opts": [],
+      "count": 1,
+      "unitId": "cold-one-chariots"
+     },
+     {
+      "cat": "core",
+      "uid": "emr37fsskj4rd",
+      "opts": [
+       "equipment/1",
+       "options/0",
+       "options/2"
+      ],
+      "count": 6,
+      "unitId": "dark-riders"
+     },
+     {
+      "cat": "special",
+      "uid": "emr4l9uleg9mt",
+      "opts": [],
+      "count": 1,
+      "unitId": "war-hydra"
+     }
+    ],
+    "groupId": "gmr4lcdnx5285",
+    "createdAt": 1783062304725,
+    "updatedAt": 1783062463327,
+    "composition": "de-renegade"
+   },
+   {
+    "id": "lmr5ecksv5eoh",
+    "army": "dark-elves",
+    "name": "Magic maxi",
+    "rule": "combined-arms-grand-melee",
+    "points": 1500,
+    "entries": [
+     {
+      "cat": "characters",
+      "uid": "emr5eegark1kx",
+      "opts": [
+       "mounts/3",
+       "magic/enchanted-item/ruby-ring-of-ruin",
+       "magic/arcane-item/focus-familiar",
+       "magic/arcane-item/tome-of-furion"
+      ],
+      "count": 1,
+      "lores": [
+       "daemonology"
+      ],
+      "spells": [],
+      "unitId": "supreme-sorceress"
+     },
+     {
+      "cat": "characters",
+      "uid": "emr5eespyl6to",
+      "opts": [
+       "subopt/options/0/1",
+       "mounts/2",
+       "magic/arcane-item/lore-familiar"
+      ],
+      "count": 1,
+      "lores": [
+       "daemonology"
+      ],
+      "spells": [],
+      "unitId": "sorceress"
+     },
+     {
+      "cat": "characters",
+      "uid": "emr5eeze0j8ju",
+      "opts": [
+       "subopt/options/0/1"
+      ],
+      "count": 1,
+      "lores": [
+       "daemonology"
+      ],
+      "spells": [],
+      "unitId": "sorceress"
+     },
+     {
+      "cat": "core",
+      "uid": "emr5ei5mrjcfl",
+      "opts": [
+       "command/0",
+       "command/1",
+       "command/2"
+      ],
+      "count": 19,
+      "unitId": "dark-elf-warriors"
+     },
+     {
+      "cat": "special",
+      "uid": "emr5eidfm8bzk",
+      "opts": [
+       "command/0",
+       "command/2",
+       "command/1",
+       "armor/0"
+      ],
+      "count": 7,
+      "unitId": "cold-one-knights"
+     },
+     {
+      "cat": "core",
+      "uid": "emr5ej5r049mx",
+      "opts": [],
+      "count": 10,
+      "unitId": "repeater-crossbowmen"
+     },
+     {
+      "cat": "core",
+      "uid": "emr5eiqk082n3",
+      "opts": [
+       "equipment/1",
+       "options/0",
+       "options/1"
+      ],
+      "count": 6,
+      "unitId": "dark-riders"
+     },
+     {
+      "cat": "rare",
+      "uid": "emr5ejlwc9gyh",
+      "opts": [],
+      "count": 1,
+      "unitId": "reaper-bolt-throwers"
+     },
+     {
+      "cat": "rare",
+      "uid": "emr5ejo5oki2q",
+      "opts": [],
+      "count": 1,
+      "unitId": "reaper-bolt-throwers"
+     },
+     {
+      "cat": "rare",
+      "uid": "emr5ekwpr6yx0",
+      "opts": [],
+      "count": 1,
+      "unitId": "war-hydra"
+     }
+    ],
+    "groupId": "gmqe7f3vmpmj",
+    "createdAt": 1783111165519,
+    "updatedAt": 1783153815178,
+    "composition": "de-renegade"
+   }
+  ],
+  "groups": [
+   {
+    "id": "gmqjva1liyjo",
+    "name": "Battlemarch"
+   },
+   {
+    "id": "gmqjva8eb24ma",
+    "name": "others"
+   },
+   {
+    "id": "gmqjvapgs4q6r",
+    "name": "1500"
+   },
+   {
+    "id": "gmqjvarct5sts",
+    "name": "1000"
+   }
+  ],
+  "sync_key": "YPGDWZLWV5UH7ZH8",
+  "updated_at": "2026-08-02T16:22:39.11623+00:00"
+ },
+ {
+  "lists": [
+   {
+    "id": "lmsbzrmm35ed0",
+    "army": "dark-elves",
+    "name": "Playtest army",
+    "rule": "battle-march",
+    "points": 750,
+    "entries": [],
+    "campaign": true,
+    "createdAt": 1785686719035,
+    "updatedAt": 1785686719035,
+    "composition": "dark-elves",
+    "campaignFase": 2,
+    "campaignNaam": "Joost van Rooijen",
+    "campaignSpeler": "c1",
+    "computedPoints": 0
+   },
+   {
+    "id": "lmraasehq7hei",
+    "army": "dark-elves",
+    "name": "Hold",
+    "rule": "combined-arms-grand-melee",
+    "points": 1500,
+    "entries": [
+     {
+      "cat": "characters",
+      "uid": "emraashqu8uz7",
+      "opts": [
+       "mounts/3",
+       "command/0",
+       "magic/enchanted-item/ruby-ring-of-ruin"
+      ],
+      "count": 1,
+      "lores": [
+       "battle-magic"
+      ],
+      "spells": [],
+      "unitId": "supreme-sorceress"
+     },
+     {
+      "cat": "characters",
+      "uid": "emraawmu981n6",
+      "opts": [
+       "subopt/options/0/1",
+       "mounts/1"
+      ],
+      "count": 1,
+      "unitId": "sorceress"
+     },
+     {
+      "cat": "characters",
+      "uid": "emraaskxd49pi",
+      "opts": [
+       "subopt/options/0/1",
+       "magic/arcane-item/tome-of-furion"
+      ],
+      "count": 1,
+      "unitId": "sorceress"
+     },
+     {
+      "cat": "core",
+      "uid": "emraatofwc0ea",
+      "opts": [
+       "command/2",
+       "command/1",
+       "command/0",
+       "equipment/1"
+      ],
+      "count": 18,
+      "unitId": "dark-elf-warriors"
+     },
+     {
+      "cat": "core",
+      "uid": "emraat2p493sk",
+      "opts": [],
+      "count": 10,
+      "unitId": "repeater-crossbowmen"
+     },
+     {
+      "cat": "core",
+      "uid": "emraatc85fvln",
+      "opts": [
+       "equipment/1",
+       "options/0"
+      ],
+      "count": 6,
+      "unitId": "dark-riders"
+     },
+     {
+      "cat": "core",
+      "uid": "emraathyi49m0",
+      "opts": [
+       "equipment/1",
+       "options/0"
+      ],
+      "count": 6,
+      "unitId": "dark-riders"
+     },
+     {
+      "cat": "rare",
+      "uid": "emraav89xjjl7",
+      "opts": [],
+      "count": 1,
+      "unitId": "war-hydra"
+     },
+     {
+      "cat": "rare",
+      "uid": "emraauckx4fmh",
+      "opts": [],
+      "count": 1,
+      "unitId": "reaper-bolt-throwers"
+     },
+     {
+      "cat": "rare",
+      "uid": "emraauhdma491",
+      "opts": [],
+      "count": 1,
+      "unitId": "reaper-bolt-throwers"
+     },
+     {
+      "cat": "special",
+      "uid": "emraauohydgsz",
+      "opts": [],
+      "count": 1,
+      "unitId": "cold-one-chariots"
+     }
+    ],
+    "createdAt": 1783407516254,
+    "updatedAt": 1783408700074,
+    "composition": "de-renegade"
+   },
+   {
+    "id": "lmr6oe39zb6v9",
+    "army": "dark-elves",
+    "name": "1k magic assasin RBT",
+    "rule": "combined-arms-grand-melee",
+    "points": 1000,
+    "entries": [
+     {
+      "cat": "characters",
+      "uid": "emqslg23x65tr",
+      "opts": [
+       "mounts/0",
+       "magic/arcane-item/lore-familiar",
+       "command/0"
+      ],
+      "count": 1,
+      "lores": [
+       "daemonology"
+      ],
+      "spells": [],
+      "unitId": "supreme-sorceress"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqslg6xwcyid",
+      "opts": [
+       "subopt/options/0/1",
+       "mounts/2",
+       "magic/arcane-item/tome-of-furion"
+      ],
+      "count": 1,
+      "lores": [
+       "daemonology"
+      ],
+      "spells": [],
+      "unitId": "sorceress"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqslgasv86rt",
+      "opts": [
+       "equipment/1",
+       "magic/forbidden-poison/dark-venom"
+      ],
+      "count": 1,
+      "unitId": "khainite-assassin"
+     },
+     {
+      "cat": "core",
+      "uid": "emqslgkze9v1u",
+      "opts": [
+       "command/0",
+       "command/1",
+       "command/2",
+       "equipment/1"
+      ],
+      "count": 18,
+      "unitId": "dark-elf-warriors"
+     },
+     {
+      "cat": "core",
+      "uid": "emqslgw3eh7z4",
+      "opts": [
+       "options/0",
+       "equipment/0"
+      ],
+      "count": 5,
+      "unitId": "dark-riders"
+     },
+     {
+      "cat": "special",
+      "uid": "emqslh3u957l4",
+      "opts": [
+       "command/0",
+       "armor/0"
+      ],
+      "count": 5,
+      "unitId": "cold-one-knights"
+     },
+     {
+      "cat": "rare",
+      "uid": "emr6r3fkiexxn",
+      "opts": [],
+      "count": 1,
+      "unitId": "reaper-bolt-throwers"
+     },
+     {
+      "cat": "rare",
+      "uid": "emr6r3hux2kij",
+      "opts": [],
+      "count": 1,
+      "unitId": "reaper-bolt-throwers"
+     }
+    ],
+    "groupId": "gmqpg3e2ekkas",
+    "createdAt": 1783188498457,
+    "updatedAt": 1783193663602,
+    "composition": "de-renegade"
+   },
+   {
+    "id": "lmr64bsghifgb",
+    "army": "dark-elves",
+    "name": "Magic max shooty",
+    "rule": "combined-arms-grand-melee",
+    "points": 1000,
+    "entries": [
+     {
+      "cat": "characters",
+      "uid": "emr64cvyi5a8b",
+      "opts": [
+       "mounts/3",
+       "magic/enchanted-item/ruby-ring-of-ruin",
+       "command/0"
+      ],
+      "count": 1,
+      "lores": [
+       "daemonology"
+      ],
+      "spells": [],
+      "unitId": "supreme-sorceress"
+     },
+     {
+      "cat": "characters",
+      "uid": "emr64c0qqg895",
+      "opts": [
+       "subopt/options/0/1",
+       "mounts/2",
+       "magic/arcane-item/tome-of-furion"
+      ],
+      "count": 1,
+      "unitId": "sorceress"
+     },
+     {
+      "cat": "core",
+      "uid": "emr64dkzebvw",
+      "opts": [
+       "command/2",
+       "command/1",
+       "command/0"
+      ],
+      "count": 19,
+      "unitId": "dark-elf-warriors"
+     },
+     {
+      "cat": "special",
+      "uid": "emr64dw6y3dj7",
+      "opts": [
+       "command/2",
+       "command/1",
+       "command/0",
+       "armor/0"
+      ],
+      "count": 7,
+      "unitId": "cold-one-knights"
+     },
+     {
+      "cat": "core",
+      "uid": "emr64dzx18cao",
+      "opts": [
+       "equipment/1",
+       "options/0",
+       "options/1"
+      ],
+      "count": 6,
+      "unitId": "dark-riders"
+     },
+     {
+      "cat": "characters",
+      "uid": "emr64fh6zi74t",
+      "opts": [
+       "subopt/options/0/1"
+      ],
+      "count": 1,
+      "unitId": "sorceress"
+     }
+    ],
+    "createdAt": 1783154798801,
+    "updatedAt": 1783155683278,
+    "composition": "de-renegade"
+   },
+   {
+    "id": "lmr32y0qd7q39",
+    "army": "dark-elves",
+    "name": "Bm basic",
+    "rule": "battle-march",
+    "points": 500,
+    "entries": [
+     {
+      "cat": "characters",
+      "uid": "emr32zby2k9xm",
+      "opts": [
+       "command/0",
+       "subopt/options/0/1"
+      ],
+      "count": 1,
+      "unitId": "sorceress"
+     },
+     {
+      "cat": "core",
+      "uid": "emr336f40g19u",
+      "opts": [],
+      "count": 14,
+      "unitId": "dark-elf-warriors"
+     },
+     {
+      "cat": "core",
+      "uid": "emr32zu1nhua4",
+      "opts": [
+       "equipment/1",
+       "options/0"
+      ],
+      "count": 5,
+      "unitId": "dark-riders"
+     },
+     {
+      "cat": "core",
+      "uid": "emr32zom084dw",
+      "opts": [],
+      "count": 10,
+      "unitId": "repeater-crossbowmen"
+     },
+     {
+      "cat": "rare",
+      "uid": "emr3496f84ged",
+      "opts": [],
+      "count": 1,
+      "unitId": "reaper-bolt-throwers"
+     }
+    ],
+    "createdAt": 1782971078197,
+    "updatedAt": 1782973304992,
+    "composition": "de-renegade"
+   },
+   {
+    "id": "lmqvfobbs7abo",
+    "army": "dark-elves",
+    "name": "1,5k terror team",
+    "rule": "combined-arms-grand-melee",
+    "points": 1500,
+    "entries": [
+     {
+      "cat": "special",
+      "uid": "emqe3e1x37j6r",
+      "opts": [
+       "armor/1",
+       "command/0",
+       "command/1",
+       "command/2"
+      ],
+      "count": 7,
+      "unitId": "cold-one-knights"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqe5oepwjymp",
+      "opts": [
+       "equipment/1",
+       "command/0",
+       "armor/1",
+       "options/2",
+       "options/1",
+       "magic/talisman/pendant-of-khaeleth",
+       "mounts/2"
+      ],
+      "count": 1,
+      "unitId": "high-beastmaster"
+     },
+     {
+      "cat": "characters",
+      "uid": "emr4txozybalf",
+      "opts": [
+       "mounts/3",
+       "magic/enchanted-item/ruby-ring-of-ruin",
+       "magic/arcane-item/tome-of-furion",
+       "magic/arcane-item/focus-familiar"
+      ],
+      "count": 1,
+      "lores": [],
+      "spells": [],
+      "unitId": "supreme-sorceress"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqe6syg9epn9",
+      "opts": [
+       "subopt/options/0/1",
+       "mounts/2",
+       "magic/arcane-item/lore-familiar"
+      ],
+      "count": 1,
+      "lores": [
+       "daemonology"
+      ],
+      "spells": [],
+      "unitId": "sorceress"
+     },
+     {
+      "cat": "rare",
+      "uid": "emqvfpipni0xi",
+      "opts": [],
+      "count": 1,
+      "unitId": "war-hydra"
+     },
+     {
+      "cat": "core",
+      "uid": "emqzqnfelfsz0",
+      "opts": [
+       "options/0"
+      ],
+      "count": 10,
+      "unitId": "repeater-crossbowmen"
+     },
+     {
+      "cat": "core",
+      "uid": "emqe3e1x21aq6",
+      "opts": [
+       "options/0",
+       "command/2",
+       "equipment/1",
+       "command/0",
+       "options/1"
+      ],
+      "count": 6,
+      "unitId": "dark-riders"
+     },
+     {
+      "cat": "core",
+      "uid": "emqzqnmh26lvc",
+      "opts": [
+       "options/0",
+       "equipment/1",
+       "command/0",
+       "options/2"
+      ],
+      "count": 6,
+      "unitId": "dark-riders"
+     }
+    ],
+    "groupId": "gmqe7f3vmpmj",
+    "createdAt": 1782508730968,
+    "updatedAt": 1783077508088,
+    "composition": "de-renegade"
+   },
+   {
+    "id": "lmqjp0x2w95u3",
+    "army": "dark-elves",
+    "name": "Battlemarch balance",
+    "rule": "battle-march",
+    "points": 500,
+    "entries": [
+     {
+      "cat": "characters",
+      "uid": "emqjp1dokav0l",
+      "opts": [
+       "subopt/options/0/1",
+       "mounts/0",
+       "magic/arcane-item/tome-of-furion"
+      ],
+      "count": 1,
+      "lores": [
+       "daemonology"
+      ],
+      "spells": [],
+      "unitId": "sorceress"
+     },
+     {
+      "cat": "core",
+      "uid": "emqjp5nyfc7gg",
+      "opts": [
+       "command/0",
+       "command/2",
+       "command/1",
+       "equipment/1"
+      ],
+      "count": 16,
+      "unitId": "dark-elf-warriors"
+     },
+     {
+      "cat": "core",
+      "uid": "emqjp4g3ibb7x",
+      "opts": [
+       "equipment/1",
+       "options/0"
+      ],
+      "count": 5,
+      "unitId": "dark-riders"
+     },
+     {
+      "cat": "special",
+      "uid": "emqk0hlfxd4me",
+      "opts": [],
+      "count": 1,
+      "unitId": "cold-one-chariots"
+     }
+    ],
+    "groupId": "gmqjva1liyjo",
+    "createdAt": 1781798841464,
+    "updatedAt": 1781869143523,
+    "composition": "de-renegade"
+   },
+   {
+    "id": "lmqjsasxn6f70",
+    "army": "dark-elves",
+    "name": "Battlemarch pewpew",
+    "rule": "battle-march",
+    "points": 500,
+    "entries": [
+     {
+      "cat": "characters",
+      "uid": "emqjsendncgfw",
+      "opts": [
+       "subopt/options/0/0",
+       "magic/enchanted-item/ruby-ring-of-ruin"
+      ],
+      "count": 1,
+      "lores": [
+       "daemonology"
+      ],
+      "spells": [],
+      "unitId": "sorceress"
+     },
+     {
+      "cat": "rare",
+      "uid": "emqjsezfdk3y3",
+      "opts": [],
+      "count": 1,
+      "unitId": "reaper-bolt-throwers"
+     },
+     {
+      "cat": "core",
+      "uid": "emqjtvrandorq",
+      "opts": [],
+      "count": 10,
+      "unitId": "repeater-crossbowmen"
+     },
+     {
+      "cat": "core",
+      "uid": "emqju6q3wjnan",
+      "opts": [
+       "equipment/1",
+       "options/1",
+       "options/0"
+      ],
+      "count": 5,
+      "unitId": "dark-riders"
+     },
+     {
+      "cat": "core",
+      "uid": "emqju6t3zknjg",
+      "opts": [
+       "equipment/1",
+       "options/0"
+      ],
+      "count": 5,
+      "unitId": "dark-riders"
+     }
+    ],
+    "groupId": "gmqjva1liyjo",
+    "createdAt": 1781804341499,
+    "updatedAt": 1781881723180,
+    "composition": "de-renegade"
+   },
+   {
+    "id": "lmqjoho8xbmw6",
+    "army": "vampire-counts",
+    "name": "Vampage",
+    "rule": "open-war",
+    "points": 2500,
+    "entries": [
+     {
+      "cat": "characters",
+      "uid": "emqjohlgv9a2m",
+      "opts": [],
+      "count": 1,
+      "unitId": "strigoi-ghoul-king"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqjohlgwe5oi",
+      "opts": [],
+      "count": 1,
+      "unitId": "vampire-thrall"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqjohlgw5yvg",
+      "opts": [],
+      "count": 1,
+      "unitId": "vampire-count"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqjohlgygk8e",
+      "opts": [
+       "mounts/4",
+       "options/0"
+      ],
+      "count": 1,
+      "unitId": "master-necromancer"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqjohlgziyiu",
+      "opts": [
+       "options/0"
+      ],
+      "count": 1,
+      "unitId": "master-necromancer"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqjohlh040tl",
+      "opts": [
+       "options/0"
+      ],
+      "count": 1,
+      "unitId": "necromantic-acolyte"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqjohlh03kf1",
+      "opts": [],
+      "count": 1,
+      "unitId": "tomb-banshee"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqjohlh0286i",
+      "opts": [],
+      "count": 1,
+      "unitId": "tomb-banshee"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqjohlh0gjhm",
+      "opts": [],
+      "count": 1,
+      "unitId": "wight-king"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqjohlh14m6q",
+      "opts": [],
+      "count": 1,
+      "unitId": "cairn-wraith"
+     },
+     {
+      "cat": "core",
+      "uid": "emqjohlh14z3d",
+      "opts": [
+       "equipment/1"
+      ],
+      "count": 40,
+      "unitId": "skeleton-warriors"
+     },
+     {
+      "cat": "core",
+      "uid": "emqjohlh11fvg",
+      "opts": [
+       "options/0",
+       "command/1",
+       "command/2",
+       "command/0"
+      ],
+      "count": 24,
+      "unitId": "grave-guard-core"
+     },
+     {
+      "cat": "core",
+      "uid": "emqjohlh1jems",
+      "opts": [
+       "command/0"
+      ],
+      "count": 15,
+      "unitId": "dire-wolves"
+     },
+     {
+      "cat": "core",
+      "uid": "emqjohlh15013",
+      "opts": [
+       "command/0"
+      ],
+      "count": 6,
+      "unitId": "black-knights-core"
+     },
+     {
+      "cat": "special",
+      "uid": "emqjohlh13wfl",
+      "opts": [],
+      "count": 4,
+      "unitId": "fell-bats"
+     },
+     {
+      "cat": "special",
+      "uid": "emqjohlh14vk7",
+      "opts": [],
+      "count": 3,
+      "unitId": "spirit-hosts"
+     },
+     {
+      "cat": "special",
+      "uid": "emqjohlh1ecop",
+      "opts": [],
+      "count": 3,
+      "unitId": "spirit-hosts"
+     },
+     {
+      "cat": "special",
+      "uid": "emqjohlh1flm2",
+      "opts": [],
+      "count": 3,
+      "unitId": "spirit-hosts"
+     },
+     {
+      "cat": "rare",
+      "uid": "emqjohlh2b2ub",
+      "opts": [],
+      "count": 1,
+      "unitId": "black-coach"
+     }
+    ],
+    "groupId": "gmqjva8eb24ma",
+    "createdAt": 1781797943553,
+    "updatedAt": 1781809355638,
+    "composition": "vampire-counts"
+   },
+   {
+    "id": "lmqf2bn0f7bol",
+    "army": "dwarfen-mountain-holds",
+    "name": "Test volgende game",
+    "rule": "combined-arms",
+    "points": 1500,
+    "entries": [
+     {
+      "cat": "characters",
+      "uid": "emqf2bjsufjlo",
+      "opts": [
+       "command/0"
+      ],
+      "count": 1,
+      "unitId": "burlok-damminson"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqf2bjswkxdi",
+      "opts": [
+       "equipment/1",
+       "magic/weapon-runes/master-rune-of-calm",
+       "magic/weapon-runes/rune-of-spellbreaking"
+      ],
+      "count": 1,
+      "unitId": "runesmith"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqf2bjsxiyu6",
+      "opts": [
+       "options/0",
+       "options/1",
+       "magic/weapon-runes/rune-of-concussive-force",
+       "magic/weapon-runes/rune-of-rapid-fire"
+      ],
+      "count": 1,
+      "unitId": "engineer-sapper"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqf2bjsy7x5",
+      "opts": [
+       "equipment/3",
+       "options/1",
+       "command/1",
+       "magic/weapon-runes/master-rune-of-bursting-flame",
+       "magic/weapon-runes/rune-of-rapid-fire",
+       "magic/weapon-runes/rune-of-passage",
+       "magic/banner-runes/master-rune-of-stromni-redbeard"
+      ],
+      "count": 1,
+      "unitId": "thane"
+     },
+     {
+      "cat": "core",
+      "uid": "emqf2bjsy75bc",
+      "opts": [],
+      "count": 2,
+      "unitId": "scout-gyrocopters"
+     },
+     {
+      "cat": "core",
+      "uid": "emqf2bjszcg5m",
+      "opts": [
+       "options/0",
+       "options/1",
+       "options/2",
+       "command/0",
+       "command/1",
+       "command/2",
+       "equipment/0"
+      ],
+      "count": 14,
+      "unitId": "thunderers"
+     },
+     {
+      "cat": "core",
+      "uid": "emqf2bjsz2rup",
+      "opts": [
+       "options/0",
+       "options/1",
+       "command/0",
+       "command/1",
+       "command/2",
+       "equipment/2"
+      ],
+      "count": 8,
+      "unitId": "rangers-core"
+     },
+     {
+      "cat": "special",
+      "uid": "emqf2bjszbvul",
+      "opts": [
+       "equipment/2"
+      ],
+      "count": 2,
+      "unitId": "gyrocopters"
+     },
+     {
+      "cat": "special",
+      "uid": "emqf2bjsz5n59",
+      "opts": [
+       "options/0"
+      ],
+      "count": 1,
+      "unitId": "cannon"
+     },
+     {
+      "cat": "special",
+      "uid": "emqf2bjt025fx",
+      "opts": [
+       "options/0"
+      ],
+      "count": 1,
+      "unitId": "cannon"
+     },
+     {
+      "cat": "rare",
+      "uid": "emqf2bjt0g6n",
+      "opts": [
+       "equipment/2"
+      ],
+      "count": 1,
+      "unitId": "gyrobomber"
+     }
+    ],
+    "groupId": "gmqjva8eb24ma",
+    "createdAt": 1781518845760,
+    "updatedAt": 1781809363626,
+    "composition": "dwarfen-mountain-holds"
+   },
+   {
+    "id": "lmqh6clrb6ohj",
+    "army": "dark-elves",
+    "name": "DE charge",
+    "rule": "open-war",
+    "points": 1500,
+    "entries": [
+     {
+      "cat": "characters",
+      "uid": "emqh6pm20eojm",
+      "opts": [
+       "command/0",
+       "equipment/1",
+       "options/2",
+       "options/1",
+       "mounts/2",
+       "magic/talisman/pendant-of-khaeleth"
+      ],
+      "count": 1,
+      "unitId": "high-beastmaster"
+     },
+     {
+      "cat": "core",
+      "uid": "emqh6rgz88vja",
+      "opts": [
+       "options/0"
+      ],
+      "count": 10,
+      "unitId": "repeater-crossbowmen"
+     },
+     {
+      "cat": "core",
+      "uid": "emqh6rnabd777",
+      "opts": [
+       "command/0",
+       "command/2",
+       "equipment/1",
+       "options/0",
+       "options/2"
+      ],
+      "count": 6,
+      "unitId": "dark-riders"
+     },
+     {
+      "cat": "core",
+      "uid": "emqh6rx148wzj",
+      "opts": [
+       "command/0",
+       "command/2",
+       "equipment/1",
+       "options/0"
+      ],
+      "count": 6,
+      "unitId": "dark-riders"
+     },
+     {
+      "cat": "special",
+      "uid": "emqh6s9r9l0h",
+      "opts": [
+       "command/0",
+       "command/2",
+       "command/1",
+       "armor/1",
+       "magic/banner/banner-of-har-ganeth"
+      ],
+      "count": 8,
+      "unitId": "cold-one-knights"
+     },
+     {
+      "cat": "rare",
+      "uid": "emqh7jvcjiy9w",
+      "opts": [],
+      "count": 1,
+      "unitId": "reaper-bolt-throwers"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqh7k8f38isw",
+      "opts": [
+       "magic/enchanted-item/ruby-ring-of-ruin",
+       "mounts/3",
+       "magic/arcane-item/lore-familiar"
+      ],
+      "count": 1,
+      "lores": [
+       "battle-magic"
+      ],
+      "spells": [],
+      "unitId": "supreme-sorceress"
+     },
+     {
+      "cat": "rare",
+      "uid": "emqh7nhq51dwp",
+      "opts": [],
+      "count": 1,
+      "unitId": "reaper-bolt-throwers"
+     },
+     {
+      "cat": "special",
+      "uid": "emqh7nop1hpf4",
+      "opts": [],
+      "count": 1,
+      "unitId": "cold-one-chariots"
+     }
+    ],
+    "groupId": "gmqjvapgs4q6r",
+    "createdAt": 1781646541608,
+    "updatedAt": 1781809397408,
+    "composition": "de-renegade"
+   },
+   {
+    "id": "lmqxecyl4ecu1",
+    "army": "dark-elves",
+    "name": "1k assasin shooty",
+    "rule": "combined-arms-grand-melee",
+    "points": 1000,
+    "entries": [
+     {
+      "cat": "characters",
+      "uid": "emqslg23x65tr",
+      "opts": [
+       "magic/arcane-item/lore-familiar",
+       "command/0",
+       "mounts/0"
+      ],
+      "count": 1,
+      "lores": [
+       "daemonology"
+      ],
+      "spells": [],
+      "unitId": "supreme-sorceress"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqslgasv86rt",
+      "opts": [
+       "magic/forbidden-poison/dark-venom",
+       "equipment/1"
+      ],
+      "count": 1,
+      "unitId": "khainite-assassin"
+     },
+     {
+      "cat": "core",
+      "uid": "emqslgkze9v1u",
+      "opts": [
+       "command/0",
+       "command/1",
+       "command/2",
+       "equipment/1"
+      ],
+      "count": 18,
+      "unitId": "dark-elf-warriors"
+     },
+     {
+      "cat": "special",
+      "uid": "emqslh3u957l4",
+      "opts": [
+       "armor/1"
+      ],
+      "count": 5,
+      "unitId": "cold-one-knights"
+     },
+     {
+      "cat": "rare",
+      "uid": "emqxedet4ixlu",
+      "opts": [],
+      "count": 1,
+      "unitId": "reaper-bolt-throwers"
+     },
+     {
+      "cat": "rare",
+      "uid": "emqxeeyqtkscj",
+      "opts": [],
+      "count": 1,
+      "unitId": "reaper-bolt-throwers"
+     },
+     {
+      "cat": "core",
+      "uid": "emr96p8z14745",
+      "opts": [],
+      "count": 10,
+      "unitId": "repeater-crossbowmen"
+     },
+     {
+      "cat": "core",
+      "uid": "emr96omt7cqot",
+      "opts": [
+       "equipment/1",
+       "options/0",
+       "options/1"
+      ],
+      "count": 5,
+      "unitId": "dark-riders"
+     }
+    ],
+    "groupId": "gmqpg3e2ekkas",
+    "createdAt": 1782627453976,
+    "updatedAt": 1783340206467,
+    "composition": "de-renegade"
+   },
+   {
+    "id": "lmqp0z0mq1ur2",
+    "army": "dark-elves",
+    "name": "1k magic buffs",
+    "rule": "combined-arms-grand-melee",
+    "points": 1000,
+    "entries": [
+     {
+      "cat": "characters",
+      "uid": "emqjvwkude97l",
+      "opts": [
+       "equipment/0",
+       "command/0",
+       "subopt/options/0/0",
+       "magic/arcane-item/tome-of-furion",
+       "mounts/2"
+      ],
+      "count": 1,
+      "lores": [
+       "daemonology"
+      ],
+      "spells": [],
+      "unitId": "supreme-sorceress"
+     },
+     {
+      "cat": "special",
+      "uid": "emqjvvee19zgw",
+      "opts": [
+       "command/2",
+       "command/1",
+       "command/0",
+       "armor/0"
+      ],
+      "count": 7,
+      "unitId": "cold-one-knights"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqp0zo5me849",
+      "opts": [
+       "subopt/options/0/1",
+       "magic/arcane-item/lore-familiar"
+      ],
+      "count": 1,
+      "lores": [
+       "dark-magic"
+      ],
+      "spells": [],
+      "unitId": "sorceress"
+     },
+     {
+      "cat": "core",
+      "uid": "emqp106nq850k",
+      "opts": [
+       "command/0",
+       "command/1",
+       "command/2",
+       "equipment/1",
+       "magic/banner/banner-of-har-ganeth"
+      ],
+      "count": 18,
+      "unitId": "dark-elf-warriors"
+     },
+     {
+      "cat": "core",
+      "uid": "emqjvvaxph3p3",
+      "opts": [
+       "equipment/1",
+       "options/0",
+       "options/2"
+      ],
+      "count": 8,
+      "unitId": "dark-riders"
+     },
+     {
+      "cat": "rare",
+      "uid": "emqslagagd11b",
+      "opts": [],
+      "count": 1,
+      "unitId": "reaper-bolt-throwers"
+     }
+    ],
+    "groupId": "gmqpg3e2ekkas",
+    "createdAt": 1782121239026,
+    "updatedAt": 1782336763384,
+    "composition": "de-renegade"
+   },
+   {
+    "id": "lmqjwlevpk8e6",
+    "army": "dark-elves",
+    "name": "1k manti buff",
+    "rule": "combined-arms-grand-melee",
+    "points": 1000,
+    "entries": [
+     {
+      "cat": "characters",
+      "uid": "emqjx5mm44ods",
+      "opts": [
+       "equipment/1",
+       "command/0",
+       "armor/1",
+       "options/1",
+       "options/2",
+       "mounts/2",
+       "magic/talisman/talisman-of-protection"
+      ],
+      "count": 1,
+      "unitId": "high-beastmaster"
+     },
+     {
+      "cat": "core",
+      "uid": "emqjx7ecdiouu",
+      "opts": [
+       "command/2",
+       "command/1",
+       "command/0",
+       "equipment/1"
+      ],
+      "count": 17,
+      "unitId": "dark-elf-warriors"
+     },
+     {
+      "cat": "core",
+      "uid": "emqjx7t5oac4h",
+      "opts": [
+       "options/0",
+       "equipment/1",
+       "options/1"
+      ],
+      "count": 5,
+      "unitId": "dark-riders"
+     },
+     {
+      "cat": "special",
+      "uid": "emqjx81ye98io",
+      "opts": [
+       "command/2",
+       "command/1",
+       "command/0",
+       "armor/1"
+      ],
+      "count": 6,
+      "unitId": "cold-one-knights"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqr54qgbgg3y",
+      "opts": [
+       "magic/arcane-item/lore-familiar",
+       "mounts/2"
+      ],
+      "count": 1,
+      "unitId": "supreme-sorceress"
+     }
+    ],
+    "groupId": "gmqpg3e2ekkas",
+    "createdAt": 1781811554965,
+    "updatedAt": 1782857169712,
+    "composition": "de-renegade"
+   },
+   {
+    "id": "lmqoc64xk16ex",
+    "army": "dark-elves",
+    "name": "1k terror",
+    "rule": "combined-arms-grand-melee",
+    "points": 1000,
+    "entries": [
+     {
+      "cat": "characters",
+      "uid": "emqoc68dia35y",
+      "opts": [
+       "armor/1",
+       "equipment/1",
+       "options/2",
+       "options/1",
+       "mounts/2",
+       "command/0"
+      ],
+      "count": 1,
+      "unitId": "high-beastmaster"
+     },
+     {
+      "cat": "core",
+      "uid": "emqod6rm6ad8v",
+      "opts": [],
+      "count": 10,
+      "unitId": "repeater-crossbowmen"
+     },
+     {
+      "cat": "core",
+      "uid": "emqoc841i8d9r",
+      "opts": [
+       "equipment/1",
+       "options/0",
+       "options/1"
+      ],
+      "count": 7,
+      "unitId": "dark-riders"
+     },
+     {
+      "cat": "special",
+      "uid": "emqpa6qun8wf3",
+      "opts": [
+       "command/2",
+       "command/1",
+       "command/0"
+      ],
+      "count": 5,
+      "unitId": "cold-one-knights"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqpa64fha96k",
+      "opts": [
+       "subopt/options/0/1",
+       "magic/arcane-item/lore-familiar",
+       "mounts/1"
+      ],
+      "count": 1,
+      "lores": [
+       "daemonology"
+      ],
+      "spells": [],
+      "unitId": "sorceress"
+     },
+     {
+      "cat": "special",
+      "uid": "emqpa7djn3a0m",
+      "opts": [],
+      "count": 1,
+      "unitId": "war-hydra"
+     }
+    ],
+    "groupId": "gmqpg3e2ekkas",
+    "createdAt": 1782079580792,
+    "updatedAt": 1782249294817,
+    "composition": "de-renegade"
+   },
+   {
+    "id": "lmqjw42vxh18n",
+    "army": "dark-elves",
+    "name": "1k drive by shooting",
+    "rule": "combined-arms-grand-melee",
+    "points": 1000,
+    "entries": [
+     {
+      "cat": "characters",
+      "uid": "emqjw44d4dxqi",
+      "opts": [
+       "mounts/3",
+       "magic/arcane-item/tome-of-furion",
+       "command/0"
+      ],
+      "count": 1,
+      "lores": [
+       "daemonology"
+      ],
+      "spells": [],
+      "unitId": "supreme-sorceress"
+     },
+     {
+      "cat": "special",
+      "uid": "emqjw5enageza",
+      "opts": [
+       "command/2",
+       "command/1",
+       "command/0",
+       "armor/1"
+      ],
+      "count": 6,
+      "unitId": "cold-one-knights"
+     },
+     {
+      "cat": "core",
+      "uid": "emqjw6bdfdlg3",
+      "opts": [
+       "equipment/1",
+       "options/0",
+       "options/1"
+      ],
+      "count": 7,
+      "unitId": "dark-riders"
+     },
+     {
+      "cat": "core",
+      "uid": "emqjw6lczfds9",
+      "opts": [],
+      "count": 10,
+      "unitId": "repeater-crossbowmen"
+     },
+     {
+      "cat": "rare",
+      "uid": "emqjweyzn3cki",
+      "opts": [],
+      "count": 1,
+      "unitId": "reaper-bolt-throwers"
+     },
+     {
+      "cat": "characters",
+      "uid": "emql9r75pj61r",
+      "opts": [
+       "subopt/options/0/1",
+       "mounts/1",
+       "magic/enchanted-item/ruby-ring-of-ruin"
+      ],
+      "count": 1,
+      "lores": [
+       "daemonology"
+      ],
+      "spells": [],
+      "unitId": "sorceress"
+     },
+     {
+      "cat": "rare",
+      "uid": "emqpgecx81uel",
+      "opts": [],
+      "count": 1,
+      "unitId": "reaper-bolt-throwers"
+     }
+    ],
+    "groupId": "gmqpg3e2ekkas",
+    "createdAt": 1781810746269,
+    "updatedAt": 1782147149036,
+    "composition": "de-renegade"
+   },
+   {
+    "id": "lmqfmii1ag6a6",
+    "army": "dark-elves",
+    "name": "1,5k manti shoot n ride",
+    "rule": "combined-arms-grand-melee",
+    "points": 1500,
+    "entries": [
+     {
+      "cat": "core",
+      "uid": "emqfmitdg4yep",
+      "opts": [
+       "equipment/1",
+       "options/2",
+       "options/0",
+       "command/0",
+       "command/2"
+      ],
+      "count": 6,
+      "unitId": "dark-riders"
+     },
+     {
+      "cat": "core",
+      "uid": "emqfmjijrfdqn",
+      "opts": [
+       "equipment/1",
+       "options/0",
+       "command/0",
+       "command/2",
+       "options/1"
+      ],
+      "count": 6,
+      "unitId": "dark-riders"
+     },
+     {
+      "cat": "special",
+      "uid": "emqfmkwko8xjf",
+      "opts": [
+       "command/0",
+       "command/2",
+       "command/1",
+       "armor/1"
+      ],
+      "count": 7,
+      "unitId": "cold-one-knights"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqfmlbvul0ti",
+      "opts": [
+       "command/0",
+       "equipment/1",
+       "armor/1",
+       "options/2",
+       "mounts/2",
+       "magic/talisman/pendant-of-khaeleth"
+      ],
+      "count": 1,
+      "unitId": "high-beastmaster"
+     },
+     {
+      "cat": "rare",
+      "uid": "emqfmsg0l4nim",
+      "opts": [],
+      "count": 1,
+      "unitId": "reaper-bolt-throwers"
+     },
+     {
+      "cat": "rare",
+      "uid": "emqfmz008cczz",
+      "opts": [],
+      "count": 1,
+      "unitId": "reaper-bolt-throwers"
+     },
+     {
+      "cat": "core",
+      "uid": "emqgclirpecag",
+      "opts": [
+       "options/0"
+      ],
+      "count": 10,
+      "unitId": "repeater-crossbowmen"
+     },
+     {
+      "cat": "special",
+      "uid": "emqgcnaeq34ib",
+      "opts": [],
+      "count": 1,
+      "unitId": "cold-one-chariots"
+     },
+     {
+      "cat": "characters",
+      "uid": "emquo63gwcgt8",
+      "opts": [
+       "subopt/options/0/1",
+       "mounts/2",
+       "magic/arcane-item/lore-familiar"
+      ],
+      "count": 1,
+      "lores": [
+       "daemonology"
+      ],
+      "spells": [],
+      "unitId": "sorceress"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqzkxdesghj8",
+      "opts": [
+       "subopt/options/0/1",
+       "mounts/3",
+       "magic/arcane-item/tome-of-furion"
+      ],
+      "count": 1,
+      "unitId": "sorceress"
+     }
+    ],
+    "groupId": "gmqe7f3vmpmj",
+    "createdAt": 1781552758223,
+    "updatedAt": 1782759644870,
+    "composition": "de-renegade"
+   },
+   {
+    "id": "lmqe5fr28ec2j",
+    "army": "dark-elves",
+    "name": "1,5k magic manti",
+    "rule": "open-war",
+    "points": 1500,
+    "entries": [
+     {
+      "cat": "core",
+      "uid": "emqppgcg63c24",
+      "opts": [
+       "command/2",
+       "command/1",
+       "command/0",
+       "equipment/1",
+       "magic/banner/banner-of-swirling-wind"
+      ],
+      "count": 18,
+      "unitId": "dark-elf-warriors"
+     },
+     {
+      "cat": "core",
+      "uid": "emqpphcrefdmx",
+      "opts": [],
+      "count": 10,
+      "unitId": "repeater-crossbowmen"
+     },
+     {
+      "cat": "core",
+      "uid": "emqe3e1x21aq6",
+      "opts": [
+       "options/0",
+       "command/0",
+       "command/2",
+       "command/1",
+       "equipment/0"
+      ],
+      "count": 8,
+      "unitId": "dark-riders"
+     },
+     {
+      "cat": "special",
+      "uid": "emqe3e1x37j6r",
+      "opts": [
+       "armor/1",
+       "command/0",
+       "command/1",
+       "command/2",
+       "magic/banner/banner-of-har-ganeth"
+      ],
+      "count": 7,
+      "unitId": "cold-one-knights"
+     },
+     {
+      "cat": "rare",
+      "uid": "emqe3e1x4ja5k",
+      "opts": [],
+      "count": 1,
+      "unitId": "reaper-bolt-throwers"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqe5oepwjymp",
+      "opts": [
+       "equipment/1",
+       "command/0",
+       "armor/1",
+       "options/2",
+       "options/1",
+       "magic/talisman/pendant-of-khaeleth",
+       "mounts/2"
+      ],
+      "count": 1,
+      "unitId": "high-beastmaster"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqe7hsmn4q9c",
+      "opts": [
+       "subopt/options/0/0",
+       "magic/arcane-item/lore-familiar",
+       "mounts/0"
+      ],
+      "count": 1,
+      "lores": [
+       "battle-magic"
+      ],
+      "spells": [],
+      "unitId": "supreme-sorceress"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqe6syg9epn9",
+      "opts": [
+       "subopt/options/0/1",
+       "magic/arcane-item/tome-of-furion",
+       "mounts/2"
+      ],
+      "count": 1,
+      "lores": [
+       "dark-magic"
+      ],
+      "spells": [],
+      "unitId": "sorceress"
+     },
+     {
+      "cat": "rare",
+      "uid": "emqfngo6d7f8v",
+      "opts": [],
+      "count": 1,
+      "unitId": "reaper-bolt-throwers"
+     }
+    ],
+    "groupId": "gmqe7f3vmpmj",
+    "createdAt": 1781463610305,
+    "updatedAt": 1782804806269,
+    "composition": "de-renegade"
+   },
+   {
+    "id": "lmqyxts4aldb6",
+    "army": "dark-elves",
+    "name": "1,5k magic assassin shot",
+    "rule": "combined-arms-grand-melee",
+    "points": 1500,
+    "entries": [
+     {
+      "cat": "characters",
+      "uid": "emqe3e1x15aum",
+      "opts": [
+       "options/0",
+       "command/0",
+       "subopt/options/0/0",
+       "mounts/0",
+       "magic/arcane-item/lore-familiar"
+      ],
+      "count": 1,
+      "unitId": "supreme-sorceress"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqe3e1x1eiv2",
+      "opts": [
+       "options/0",
+       "magic/arcane-item/tome-of-furion",
+       "subopt/options/0/1",
+       "mounts/2"
+      ],
+      "count": 1,
+      "unitId": "sorceress"
+     },
+     {
+      "cat": "core",
+      "uid": "emqtdzmwtfwmw",
+      "opts": [
+       "command/2",
+       "command/1",
+       "command/0",
+       "equipment/1"
+      ],
+      "count": 18,
+      "unitId": "dark-elf-warriors"
+     },
+     {
+      "cat": "core",
+      "uid": "emqyxuduphyvf",
+      "opts": [],
+      "count": 10,
+      "unitId": "repeater-crossbowmen"
+     },
+     {
+      "cat": "core",
+      "uid": "emqe3e1x26lkx",
+      "opts": [
+       "equipment/1",
+       "options/0",
+       "command/0",
+       "options/1"
+      ],
+      "count": 6,
+      "unitId": "dark-riders"
+     },
+     {
+      "cat": "special",
+      "uid": "emqe3e1x37j6r",
+      "opts": [
+       "armor/1",
+       "command/0",
+       "command/1",
+       "command/2"
+      ],
+      "count": 7,
+      "unitId": "cold-one-knights"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqte25bb7zye",
+      "opts": [
+       "equipment/1",
+       "magic/forbidden-poison/dark-venom"
+      ],
+      "count": 1,
+      "unitId": "khainite-assassin"
+     },
+     {
+      "cat": "rare",
+      "uid": "emqe3e1x4ja5k",
+      "opts": [],
+      "count": 1,
+      "unitId": "reaper-bolt-throwers"
+     },
+     {
+      "cat": "rare",
+      "uid": "emqyxvc3g1l2b",
+      "opts": [],
+      "count": 1,
+      "unitId": "reaper-bolt-throwers"
+     },
+     {
+      "cat": "special",
+      "uid": "emr0c0s4vgh0s",
+      "opts": [],
+      "count": 1,
+      "unitId": "cold-one-chariots"
+     },
+     {
+      "cat": "core",
+      "uid": "emr37fsskj4rd",
+      "opts": [
+       "equipment/1",
+       "options/0",
+       "options/2"
+      ],
+      "count": 6,
+      "unitId": "dark-riders"
+     }
+    ],
+    "groupId": "gmqe7f3vmpmj",
+    "createdAt": 1782720617626,
+    "updatedAt": 1782978645945,
+    "composition": "de-renegade"
+   },
+   {
+    "id": "lmqe3eb7chbhj",
+    "army": "dark-elves",
+    "name": "1,5k magic assassin",
+    "rule": "combined-arms-grand-melee",
+    "points": 1500,
+    "entries": [
+     {
+      "cat": "characters",
+      "uid": "emqe3e1x15aum",
+      "opts": [
+       "options/0",
+       "command/0",
+       "subopt/options/0/0",
+       "mounts/0",
+       "magic/arcane-item/lore-familiar"
+      ],
+      "count": 1,
+      "unitId": "supreme-sorceress"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqe3e1x1eiv2",
+      "opts": [
+       "options/0",
+       "magic/arcane-item/tome-of-furion",
+       "subopt/options/0/1",
+       "mounts/2"
+      ],
+      "count": 1,
+      "unitId": "sorceress"
+     },
+     {
+      "cat": "core",
+      "uid": "emqtdzmwtfwmw",
+      "opts": [
+       "command/2",
+       "command/1",
+       "command/0",
+       "equipment/1",
+       "magic/banner/banner-of-swirling-wind"
+      ],
+      "count": 19,
+      "unitId": "dark-elf-warriors"
+     },
+     {
+      "cat": "core",
+      "uid": "emqe3e1x26lkx",
+      "opts": [
+       "equipment/1",
+       "options/0",
+       "options/1",
+       "command/0"
+      ],
+      "count": 8,
+      "unitId": "dark-riders"
+     },
+     {
+      "cat": "special",
+      "uid": "emqe3e1x37j6r",
+      "opts": [
+       "armor/1",
+       "command/0",
+       "command/1",
+       "command/2",
+       "magic/banner/banner-of-har-ganeth"
+      ],
+      "count": 7,
+      "unitId": "cold-one-knights"
+     },
+     {
+      "cat": "special",
+      "uid": "emqe3e1x381hi",
+      "opts": [],
+      "count": 1,
+      "unitId": "cold-one-chariots"
+     },
+     {
+      "cat": "rare",
+      "uid": "emqe3e1x4ja5k",
+      "opts": [],
+      "count": 1,
+      "unitId": "reaper-bolt-throwers"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqte25bb7zye",
+      "opts": [
+       "equipment/1",
+       "magic/forbidden-poison/dark-venom"
+      ],
+      "count": 1,
+      "unitId": "khainite-assassin"
+     },
+     {
+      "cat": "rare",
+      "uid": "emqtwstmn8jg3",
+      "opts": [],
+      "count": 1,
+      "unitId": "war-hydra"
+     }
+    ],
+    "groupId": "gmqe7f3vmpmj",
+    "createdAt": 1781460183864,
+    "updatedAt": 1782545779624,
+    "composition": "de-renegade"
+   },
+   {
+    "id": "lmqslfwlqg0es",
+    "army": "dark-elves",
+    "name": "1k magic assasin",
+    "rule": "combined-arms-grand-melee",
+    "points": 1000,
+    "entries": [
+     {
+      "cat": "characters",
+      "uid": "emqslg23x65tr",
+      "opts": [
+       "mounts/0",
+       "magic/arcane-item/lore-familiar",
+       "command/0"
+      ],
+      "count": 1,
+      "lores": [
+       "daemonology"
+      ],
+      "spells": [],
+      "unitId": "supreme-sorceress"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqslg6xwcyid",
+      "opts": [
+       "subopt/options/0/1",
+       "mounts/2",
+       "magic/arcane-item/tome-of-furion"
+      ],
+      "count": 1,
+      "lores": [
+       "daemonology"
+      ],
+      "spells": [],
+      "unitId": "sorceress"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqslgasv86rt",
+      "opts": [
+       "equipment/1",
+       "magic/forbidden-poison/dark-venom"
+      ],
+      "count": 1,
+      "unitId": "khainite-assassin"
+     },
+     {
+      "cat": "core",
+      "uid": "emqslgkze9v1u",
+      "opts": [
+       "command/0",
+       "command/1",
+       "command/2",
+       "equipment/1"
+      ],
+      "count": 18,
+      "unitId": "dark-elf-warriors"
+     },
+     {
+      "cat": "core",
+      "uid": "emqslgw3eh7z4",
+      "opts": [
+       "equipment/1",
+       "options/0"
+      ],
+      "count": 5,
+      "unitId": "dark-riders"
+     },
+     {
+      "cat": "special",
+      "uid": "emqslh3u957l4",
+      "opts": [
+       "armor/1",
+       "command/0"
+      ],
+      "count": 5,
+      "unitId": "cold-one-knights"
+     },
+     {
+      "cat": "special",
+      "uid": "emqsli53ab056",
+      "opts": [],
+      "count": 1,
+      "unitId": "cold-one-chariots"
+     }
+    ],
+    "groupId": "gmqpg3e2ekkas",
+    "createdAt": 1782337017807,
+    "updatedAt": 1782804852886,
+    "composition": "de-renegade"
+   },
+   {
+    "id": "lmr4l9bkkecan",
+    "army": "dark-elves",
+    "name": "2k magic assassin bm",
+    "rule": "combined-arms-grand-melee",
+    "points": 2000,
+    "entries": [
+     {
+      "cat": "characters",
+      "uid": "emr4l9f793k4e",
+      "opts": [
+       "equipment/1",
+       "armor/1",
+       "options/2",
+       "options/1",
+       "mounts/2",
+       "magic/talisman/pendant-of-khaeleth"
+      ],
+      "count": 1,
+      "unitId": "high-beastmaster"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqe3e1x15aum",
+      "opts": [
+       "options/0",
+       "command/0",
+       "mounts/0",
+       "magic/arcane-item/lore-familiar",
+       "subopt/options/0/1"
+      ],
+      "count": 1,
+      "unitId": "supreme-sorceress"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqe3e1x1eiv2",
+      "opts": [
+       "options/0",
+       "magic/arcane-item/tome-of-furion",
+       "subopt/options/0/1",
+       "mounts/2"
+      ],
+      "count": 1,
+      "unitId": "sorceress"
+     },
+     {
+      "cat": "core",
+      "uid": "emqtdzmwtfwmw",
+      "opts": [
+       "command/2",
+       "command/1",
+       "command/0",
+       "equipment/1"
+      ],
+      "count": 18,
+      "unitId": "dark-elf-warriors"
+     },
+     {
+      "cat": "core",
+      "uid": "emqyxuduphyvf",
+      "opts": [],
+      "count": 10,
+      "unitId": "repeater-crossbowmen"
+     },
+     {
+      "cat": "core",
+      "uid": "emqe3e1x26lkx",
+      "opts": [
+       "equipment/1",
+       "options/0"
+      ],
+      "count": 6,
+      "unitId": "dark-riders"
+     },
+     {
+      "cat": "special",
+      "uid": "emqe3e1x37j6r",
+      "opts": [
+       "armor/1",
+       "command/0",
+       "command/1",
+       "command/2",
+       "magic/banner/banner-of-har-ganeth"
+      ],
+      "count": 7,
+      "unitId": "cold-one-knights"
+     },
+     {
+      "cat": "characters",
+      "uid": "emqte25bb7zye",
+      "opts": [
+       "equipment/1",
+       "magic/forbidden-poison/dark-venom"
+      ],
+      "count": 1,
+      "unitId": "khainite-assassin"
+     },
+     {
+      "cat": "rare",
+      "uid": "emqe3e1x4ja5k",
+      "opts": [],
+      "count": 1,
+      "unitId": "reaper-bolt-throwers"
+     },
+     {
+      "cat": "rare",
+      "uid": "emqyxvc3g1l2b",
+      "opts": [],
+      "count": 1,
+      "unitId": "reaper-bolt-throwers"
+     },
+     {
+      "cat": "special",
+      "uid": "emr0c0s4vgh0s",
+      "opts": [],
+      "count": 1,
+      "unitId": "cold-one-chariots"
+     },
+     {
+      "cat": "core",
+      "uid": "emr37fsskj4rd",
+      "opts": [
+       "equipment/1",
+       "options/0",
+       "options/2"
+      ],
+      "count": 6,
+      "unitId": "dark-riders"
+     },
+     {
+      "cat": "special",
+      "uid": "emr4l9uleg9mt",
+      "opts": [],
+      "count": 1,
+      "unitId": "war-hydra"
+     }
+    ],
+    "groupId": "gmr4lcdnx5285",
+    "createdAt": 1783062304725,
+    "updatedAt": 1783062463327,
+    "composition": "de-renegade"
+   },
+   {
+    "id": "lmr5ecksv5eoh",
+    "army": "dark-elves",
+    "name": "Magic maxi",
+    "rule": "combined-arms-grand-melee",
+    "points": 1500,
+    "entries": [
+     {
+      "cat": "characters",
+      "uid": "emr5eegark1kx",
+      "opts": [
+       "mounts/3",
+       "magic/enchanted-item/ruby-ring-of-ruin",
+       "magic/arcane-item/focus-familiar",
+       "magic/arcane-item/tome-of-furion"
+      ],
+      "count": 1,
+      "lores": [
+       "daemonology"
+      ],
+      "spells": [],
+      "unitId": "supreme-sorceress"
+     },
+     {
+      "cat": "characters",
+      "uid": "emr5eespyl6to",
+      "opts": [
+       "subopt/options/0/1",
+       "mounts/2",
+       "magic/arcane-item/lore-familiar"
+      ],
+      "count": 1,
+      "lores": [
+       "daemonology"
+      ],
+      "spells": [],
+      "unitId": "sorceress"
+     },
+     {
+      "cat": "characters",
+      "uid": "emr5eeze0j8ju",
+      "opts": [
+       "subopt/options/0/1"
+      ],
+      "count": 1,
+      "lores": [
+       "daemonology"
+      ],
+      "spells": [],
+      "unitId": "sorceress"
+     },
+     {
+      "cat": "core",
+      "uid": "emr5ei5mrjcfl",
+      "opts": [
+       "command/0",
+       "command/1",
+       "command/2"
+      ],
+      "count": 19,
+      "unitId": "dark-elf-warriors"
+     },
+     {
+      "cat": "special",
+      "uid": "emr5eidfm8bzk",
+      "opts": [
+       "command/0",
+       "command/2",
+       "command/1",
+       "armor/0"
+      ],
+      "count": 7,
+      "unitId": "cold-one-knights"
+     },
+     {
+      "cat": "core",
+      "uid": "emr5ej5r049mx",
+      "opts": [],
+      "count": 10,
+      "unitId": "repeater-crossbowmen"
+     },
+     {
+      "cat": "core",
+      "uid": "emr5eiqk082n3",
+      "opts": [
+       "equipment/1",
+       "options/0",
+       "options/1"
+      ],
+      "count": 6,
+      "unitId": "dark-riders"
+     },
+     {
+      "cat": "rare",
+      "uid": "emr5ejlwc9gyh",
+      "opts": [],
+      "count": 1,
+      "unitId": "reaper-bolt-throwers"
+     },
+     {
+      "cat": "rare",
+      "uid": "emr5ejo5oki2q",
+      "opts": [],
+      "count": 1,
+      "unitId": "reaper-bolt-throwers"
+     },
+     {
+      "cat": "rare",
+      "uid": "emr5ekwpr6yx0",
+      "opts": [],
+      "count": 1,
+      "unitId": "war-hydra"
+     }
+    ],
+    "groupId": "gmqe7f3vmpmj",
+    "createdAt": 1783111165519,
+    "updatedAt": 1783153815178,
+    "composition": "de-renegade"
+   }
+  ],
+  "groups": [
+   {
+    "id": "gmqjva1liyjo",
+    "name": "Battlemarch"
+   },
+   {
+    "id": "gmqjva8eb24ma",
+    "name": "others"
+   },
+   {
+    "id": "gmqjvapgs4q6r",
+    "name": "1500"
+   },
+   {
+    "id": "gmqjvarct5sts",
+    "name": "1000"
+   }
+  ],
+  "sync_key": "30D205911C5F916DDCCC0FEF565674DF1AB473FAE3747FDCEC9C3CC20896B06E",
+  "updated_at": "2026-08-02T16:07:31.929209+00:00"
+ },
+ {
+  "lists": [
+   {
+    "id": "lms6ejtzoansq",
+    "army": "empire-of-man",
+    "name": "AI playtest Dummy",
+    "rule": "battle-march",
+    "points": 500,
+    "entries": [
+     {
+      "cat": "characters",
+      "uid": "ums6ek3e3bfsp",
+      "opts": [
+       "armor/1",
+       "equipment/3",
+       "options/0",
+       "options/4",
+       "command/0",
+       "mounts/0",
+       "options/2"
+      ],
+      "count": 1,
+      "unitId": "chapter-master"
+     },
+     {
+      "cat": "core",
+      "uid": "ums6eloht5ntq",
+      "opts": [],
+      "count": 15,
+      "unitId": "state-troops-detachment"
+     },
+     {
+      "cat": "core",
+      "uid": "ums6elsv0d645",
+      "opts": [],
+      "count": 5,
+      "unitId": "empire-knights"
+     },
+     {
+      "cat": "special",
+      "uid": "ums6ely0r81tj",
+      "opts": [],
+      "count": 6,
+      "unitId": "pistoliers"
+     },
+     {
+      "cat": "rare",
+      "uid": "ums6emk3l4zt5",
+      "opts": [],
+      "count": 8,
+      "unitId": "flagellants"
+     }
+    ],
+    "createdAt": 1785348752533,
+    "updatedAt": 1785349199228,
+    "composition": "empire-of-man"
+   },
+   {
+    "id": "lms6cgq2kfzdw",
+    "army": "dark-elves",
+    "name": "Playtest army",
+    "rule": "battle-march",
+    "points": 500,
+    "entries": [
+     {
+      "cat": "characters",
+      "uid": "ums6ckedj5rjz",
+      "opts": [
+       "subopt/options/0/1",
+       "mounts/3"
+      ],
+      "count": 1,
+      "unitId": "sorceress"
+     },
+     {
+      "cat": "core",
+      "uid": "ums6ckjp8gfef",
+      "opts": [
+       "command/0",
+       "command/2",
+       "command/1"
+      ],
+      "count": 20,
+      "unitId": "dark-elf-warriors"
+     },
+     {
+      "cat": "core",
+      "uid": "ums6ckqul1nrd",
+      "opts": [],
+      "count": 10,
+      "unitId": "dark-riders"
+     }
+    ],
+    "campaign": true,
+    "createdAt": 1785345248253,
+    "updatedAt": 1785347748966,
+    "composition": "dark-elves",
+    "campaignFase": 1,
+    "campaignNaam": "Player 1",
+    "campaignSpeler": "p0",
+    "computedPoints": 475
+   },
+   {
+    "id": "lms6boao12s52",
+    "army": "dark-elves",
+    "name": "New list 9",
+    "rule": "battle-march",
+    "points": 500,
+    "entries": [
+     {
+      "cat": "core",
+      "uid": "ums6bofekdoai",
+      "opts": [],
+      "count": 25,
+      "unitId": "dark-elf-warriors"
+     },
+     {
+      "cat": "rare",
+      "uid": "ums6bot8r8wr0",
+      "opts": [],
+      "count": 1,
+      "unitId": "war-hydra"
+     }
+    ],
+    "createdAt": 1785343921922,
+    "updatedAt": 1785343945995,
+    "composition": "dark-elves"
+   },
+   {
+    "id": "lms5rytx68tyz",
+    "army": "dark-elves",
+    "name": "Bm500 riders",
+    "rule": "battle-march",
+    "points": 500,
+    "entries": [
+     {
+      "cat": "characters",
+      "uid": "ums5rywa38qv2",
+      "opts": [
+       "subopt/options/0/1",
+       "magic/arcane-item/tome-of-furion",
+       "mounts/0"
+      ],
+      "count": 1,
+      "lores": [
+       "daemonology"
+      ],
+      "spells": [],
+      "unitId": "sorceress"
+     },
+     {
+      "cat": "core",
+      "uid": "ums5ryxwd1pjg",
+      "opts": [
+       "command/2",
+       "command/1",
+       "command/0",
+       "equipment/1"
+      ],
+      "count": 17,
+      "unitId": "dark-elf-warriors"
+     },
+     {
+      "cat": "core",
+      "uid": "ums5rz0ehe5wc",
+      "opts": [
+       "equipment/1",
+       "options/0",
+       "command/2",
+       "options/2"
+      ],
+      "count": 5,
+      "unitId": "dark-riders"
+     },
+     {
+      "cat": "core",
+      "uid": "ums5rz1fmcsw7",
+      "opts": [
+       "equipment/1",
+       "options/0",
+       "command/2"
+      ],
+      "count": 5,
+      "unitId": "dark-riders"
+     }
+    ],
+    "createdAt": 1785310821114,
+    "updatedAt": 1785316882452,
+    "composition": "de-renegade-v2"
+   },
+   {
+    "id": "lms56yhnkasvf",
+    "army": "dark-elves",
+    "name": "Bm500",
+    "rule": "battle-march",
+    "points": 500,
+    "entries": [
+     {
+      "cat": "characters",
+      "uid": "ums56ymze3w8f",
+      "opts": [
+       "subopt/options/0/1",
+       "magic/arcane-item/tome-of-furion"
+      ],
+      "count": 1,
+      "lores": [
+       "battle-magic"
+      ],
+      "spells": [],
+      "unitId": "sorceress"
+     },
+     {
+      "cat": "core",
+      "uid": "ums573u5fay4s",
+      "opts": [
+       "command/2",
+       "command/1",
+       "command/0",
+       "equipment/1"
+      ],
+      "count": 17,
+      "unitId": "dark-elf-warriors"
+     },
+     {
+      "cat": "core",
+      "uid": "ums5741pt4om6",
+      "opts": [
+       "options/0"
+      ],
+      "count": 10,
+      "unitId": "repeater-crossbowmen"
+     },
+     {
+      "cat": "core",
+      "uid": "ums574autgc7p",
+      "opts": [
+       "options/0",
+       "equipment/1"
+      ],
+      "count": 5,
+      "unitId": "dark-riders"
+     }
+    ],
+    "createdAt": 1785275533280,
+    "updatedAt": 1785275840647,
+    "composition": "de-renegade-v2"
+   },
+   {
+    "id": "lms4w9ro1ky8g",
+    "army": "dark-elves",
+    "name": "1k beastmaster hydra",
+    "rule": "combined-arms-grand-melee",
+    "points": 1000,
+    "entries": [
+     {
+      "cat": "characters",
+      "uid": "ums4w9uqq42u7",
+      "opts": [
+       "subopt/options/0/1",
+       "magic/arcane-item/tome-of-furion"
+      ],
+      "count": 1,
+      "lores": [
+       "dark-magic"
+      ],
+      "spells": [],
+      "unitId": "sorceress"
+     },
+     {
+      "cat": "characters",
+      "uid": "ums4w9x03gr9q",
+      "opts": [
+       "options/1",
+       "armor/1",
+       "mounts/2",
+       "command/0",
+       "options/2",
+       "magic/talisman/talisman-of-protection",
+       "equipment/1"
+      ],
+      "count": 1,
+      "unitId": "high-beastmaster"
+     },
+     {
+      "cat": "core",
+      "uid": "ums4wbh9b9ltf",
+      "opts": [
+       "command/0",
+       "command/2",
+       "command/1",
+       "equipment/1"
+      ],
+      "count": 19,
+      "unitId": "dark-elf-warriors"
+     },
+     {
+      "cat": "core",
+      "uid": "ums4wblzik8p4",
+      "opts": [
+       "equipment/1",
+       "options/0",
+       "options/2"
+      ],
+      "count": 5,
+      "unitId": "dark-riders"
+     },
+     {
+      "cat": "special",
+      "uid": "ums4wbp0r7wku",
+      "opts": [
+       "armor/1"
+      ],
+      "count": 5,
+      "unitId": "cold-one-knights"
+     },
+     {
+      "cat": "rare",
+      "uid": "ums4wbr51bn4l",
+      "opts": [],
+      "count": 1,
+      "unitId": "war-hydra"
+     }
+    ],
+    "createdAt": 1785257583698,
+    "updatedAt": 1785310793890,
+    "composition": "de-renegade-v2"
+   },
+   {
+    "id": "lms4oyweidpqu",
+    "army": "wood-elf-realms",
+    "name": "Playtest army",
+    "rule": "battle-march",
+    "points": 500,
+    "entries": [
+     {
+      "cat": "characters",
+      "uid": "ums56iv7ght7t",
+      "opts": [],
+      "count": 1,
+      "unitId": "shadowdancer"
+     },
+     {
+      "cat": "characters",
+      "uid": "ums56iwfbiuuw",
+      "opts": [],
+      "count": 1,
+      "unitId": "branchwraith"
+     },
+     {
+      "cat": "characters",
+      "uid": "ums56ixbm7jiq",
+      "opts": [],
+      "count": 1,
+      "unitId": "orion"
+     },
+     {
+      "cat": "characters",
+      "uid": "ums56ixmq4utc",
+      "opts": [],
+      "count": 1,
+      "unitId": "waystalker"
+     },
+     {
+      "cat": "core",
+      "uid": "ums56izs9i454",
+      "opts": [],
+      "count": 5,
+      "unitId": "dryads"
+     }
+    ],
+    "createdAt": 1785245319306,
+    "updatedAt": 1785345248182,
+    "composition": "wood-elf-realms"
+   },
+   {
+    "id": "lms4nwl4rch1w",
+    "army": "dark-elves",
+    "name": "Isle of Celedon army",
+    "rule": "battle-march",
+    "points": 500,
+    "entries": [
+     {
+      "cat": "characters",
+      "uid": "ums4pg4kf80eb",
+      "opts": [
+       "subopt/options/0/1",
+       "magic/arcane-item/tome-of-furion"
+      ],
+      "count": 1,
+      "lores": [
+       "battle-magic"
+      ],
+      "spells": [],
+      "unitId": "sorceress"
+     },
+     {
+      "cat": "core",
+      "uid": "ums4pghho89n",
+      "opts": [
+       "command/2",
+       "equipment/1",
+       "command/0",
+       "command/1"
+      ],
+      "count": 17,
+      "unitId": "dark-elf-warriors"
+     },
+     {
+      "cat": "core",
+      "uid": "ums4pgjnbec1g",
+      "opts": [
+       "options/0"
+      ],
+      "count": 10,
+      "unitId": "repeater-crossbowmen"
+     },
+     {
+      "cat": "core",
+      "uid": "ums4pgl9nanfm",
+      "opts": [
+       "options/0",
+       "equipment/1"
+      ],
+      "count": 5,
+      "unitId": "dark-riders"
+     }
+    ],
+    "campaign": true,
+    "createdAt": 1785243531771,
+    "updatedAt": 1785255424880,
+    "composition": "de-renegade-v2",
+    "campaignFase": 1,
+    "campaignNaam": "Joost van Rooijen",
+    "campaignSpeler": "c1",
+    "computedPoints": 498
+   },
+   {
+    "id": "m1",
+    "army": "dark-elves",
+    "name": "1,5K Magic Manti",
+    "rule": "open-war",
+    "points": 1500,
+    "entries": [
+     {
+      "cat": "characters",
+      "uid": "a1",
+      "opts": [],
+      "count": 1,
+      "unitId": "high-beastmaster"
+     },
+     {
+      "cat": "characters",
+      "uid": "a2",
+      "opts": [],
+      "count": 1,
+      "lores": [
+       "battle-magic"
+      ],
+      "spells": [],
+      "unitId": "supreme-sorceress"
+     },
+     {
+      "cat": "core",
+      "uid": "a3",
+      "opts": [],
+      "count": 19,
+      "unitId": "dark-elf-warriors"
+     },
+     {
+      "cat": "core",
+      "uid": "a4",
+      "opts": [],
+      "count": 5,
+      "unitId": "dark-riders"
+     },
+     {
+      "cat": "special",
+      "uid": "a5",
+      "opts": [],
+      "count": 7,
+      "unitId": "cold-one-knights"
+     },
+     {
+      "cat": "rare",
+      "uid": "ums361pnh7607",
+      "opts": [],
+      "count": 1,
+      "unitId": "war-hydra"
+     }
+    ],
+    "createdAt": 1785083508845,
+    "updatedAt": 1785166948120,
+    "composition": "de-renegade"
+   },
+   {
+    "id": "l2",
+    "army": "dark-elves",
+    "name": "Dark Riders Host",
+    "rule": "open-war",
+    "points": 800,
+    "entries": [
+     {
+      "cat": "characters",
+      "uid": "ums20zga5g5us",
+      "opts": [],
+      "count": 1,
+      "unitId": "high-beastmaster"
+     },
+     {
+      "cat": "core",
+      "uid": "ums20zkvbir6o",
+      "opts": [
+       "equipment/1",
+       "command/2",
+       "command/1",
+       "command/0"
+      ],
+      "count": 10,
+      "unitId": "dark-elf-warriors"
+     }
+    ],
+    "createdAt": 1785083508845,
+    "updatedAt": 1785086735961,
+    "composition": "dark-elves"
+   },
+   {
+    "id": "l3",
+    "army": "ogre-kingdoms",
+    "name": "Ogre Kingdoms",
+    "rule": "open-war",
+    "points": 2000,
+    "entries": [
+     {
+      "cat": "characters",
+      "uid": "ums237bkil2oo",
+      "opts": [],
+      "count": 1,
+      "unitId": "slaughtermaster"
+     }
+    ],
+    "createdAt": 1785083508845,
+    "updatedAt": 1785087828306,
+    "composition": "ogre-kingdoms"
+   }
+  ],
+  "groups": [
+   {
+    "id": "gmrfd0upl2yjz",
+    "name": "Campaign"
+   }
+  ],
+  "sync_key": "ACCT79CB7E28305949E49951A31B74736842",
+  "updated_at": "2026-07-29T18:19:59.839531+00:00"
+ },
+ {
+  "lists": [
+   {
+    "id": "lmsblwnq13rkb",
+    "army": "dark-elves",
+    "name": "BM chariot",
+    "rule": "battle-march",
+    "points": 750,
+    "entries": [
+     {
+      "cat": "characters",
+      "uid": "ums7ze0v68i6p",
+      "opts": [
+       "subopt/options/0/1",
+       "mounts/0",
+       "magic/arcane-item/tome-of-furion",
+       "command/0"
+      ],
+      "count": 1,
+      "lores": [
+       "daemonology"
+      ],
+      "spells": [],
+      "unitId": "sorceress"
+     },
+     {
+      "cat": "core",
+      "uid": "ums7zfdw2cvs0",
+      "opts": [
+       "equipment/1",
+       "options/0"
+      ],
+      "count": 5,
+      "unitId": "dark-riders"
+     },
+     {
+      "cat": "core",
+      "uid": "ums8k794v234u",
+      "opts": [
+       "command/2",
+       "command/1",
+       "command/0",
+       "equipment/1"
+      ],
+      "count": 19,
+      "unitId": "dark-elf-warriors"
+     },
+     {
+      "cat": "rare",
+      "uid": "umsblx1uj7i7s",
+      "opts": [],
+      "count": 1,
+      "unitId": "war-hydra"
+     },
+     {
+      "cat": "special",
+      "uid": "umsbm190oaadn",
+      "opts": [],
+      "count": 5,
+      "unitId": "cold-one-knights"
+     }
+    ],
+    "groupId": "gmsa0m859ldor",
+    "createdAt": 1785663439130,
+    "updatedAt": 1785663653352,
+    "composition": "de-renegade-v2"
+   },
+   {
+    "id": "lms6ejtzoansq",
+    "army": "empire-of-man",
+    "name": "AI playtest Dummy",
+    "rule": "battle-march",
+    "points": 500,
+    "entries": [
+     {
+      "cat": "characters",
+      "uid": "ums6ek3e3bfsp",
+      "opts": [
+       "armor/1",
+       "equipment/3",
+       "options/0",
+       "options/4",
+       "command/0",
+       "mounts/0",
+       "options/2"
+      ],
+      "count": 1,
+      "unitId": "chapter-master"
+     },
+     {
+      "cat": "core",
+      "uid": "ums6eloht5ntq",
+      "opts": [],
+      "count": 15,
+      "unitId": "state-troops-detachment"
+     },
+     {
+      "cat": "core",
+      "uid": "ums6elsv0d645",
+      "opts": [],
+      "count": 5,
+      "unitId": "empire-knights"
+     },
+     {
+      "cat": "special",
+      "uid": "ums6ely0r81tj",
+      "opts": [],
+      "count": 6,
+      "unitId": "pistoliers"
+     },
+     {
+      "cat": "rare",
+      "uid": "ums6emk3l4zt5",
+      "opts": [],
+      "count": 8,
+      "unitId": "flagellants"
+     }
+    ],
+    "createdAt": 1785348752533,
+    "updatedAt": 1785349199228,
+    "composition": "empire-of-man"
+   },
+   {
+    "id": "lms6cgq2kfzdw",
+    "army": "dark-elves",
+    "name": "Playtest army",
+    "rule": "battle-march",
+    "points": 500,
+    "entries": [
+     {
+      "cat": "characters",
+      "uid": "ums6ckedj5rjz",
+      "opts": [
+       "subopt/options/0/1",
+       "mounts/0",
+       "command/0",
+       "magic/arcane-item/tome-of-furion"
+      ],
+      "count": 1,
+      "lores": [
+       "daemonology"
+      ],
+      "spells": [],
+      "unitId": "sorceress"
+     },
+     {
+      "cat": "core",
+      "uid": "ums6ckjp8gfef",
+      "opts": [
+       "command/0",
+       "command/2",
+       "command/1"
+      ],
+      "count": 19,
+      "unitId": "dark-elf-warriors"
+     },
+     {
+      "cat": "core",
+      "uid": "ums6ckqul1nrd",
+      "opts": [
+       "options/0",
+       "equipment/1"
+      ],
+      "count": 5,
+      "unitId": "dark-riders"
+     },
+     {
+      "cat": "core",
+      "uid": "ums8mgcigcsl3",
+      "opts": [
+       "options/0"
+      ],
+      "count": 10,
+      "unitId": "repeater-crossbowmen"
+     }
+    ],
+    "campaign": true,
+    "createdAt": 1785345248253,
+    "updatedAt": 1785482984610,
+    "composition": "de-renegade-v2",
+    "campaignFase": 1,
+    "campaignNaam": "Player 1",
+    "campaignSpeler": "p0",
+    "computedPoints": 497
+   },
+   {
+    "id": "lms4w9ro1ky8g",
+    "army": "dark-elves",
+    "name": "1k beastmaster hydra",
+    "rule": "combined-arms-grand-melee",
+    "points": 1000,
+    "entries": [
+     {
+      "cat": "characters",
+      "uid": "ums4w9uqq42u7",
+      "opts": [
+       "subopt/options/0/1",
+       "magic/arcane-item/tome-of-furion"
+      ],
+      "count": 1,
+      "lores": [
+       "dark-magic"
+      ],
+      "spells": [],
+      "unitId": "sorceress"
+     },
+     {
+      "cat": "characters",
+      "uid": "ums4w9x03gr9q",
+      "opts": [
+       "options/1",
+       "armor/1",
+       "mounts/2",
+       "command/0",
+       "options/2",
+       "magic/talisman/talisman-of-protection",
+       "equipment/1"
+      ],
+      "count": 1,
+      "unitId": "high-beastmaster"
+     },
+     {
+      "cat": "core",
+      "uid": "ums4wbh9b9ltf",
+      "opts": [
+       "command/0",
+       "command/2",
+       "command/1",
+       "equipment/1"
+      ],
+      "count": 19,
+      "unitId": "dark-elf-warriors"
+     },
+     {
+      "cat": "core",
+      "uid": "ums4wblzik8p4",
+      "opts": [
+       "equipment/1",
+       "options/0",
+       "options/2"
+      ],
+      "count": 5,
+      "unitId": "dark-riders"
+     },
+     {
+      "cat": "special",
+      "uid": "ums4wbp0r7wku",
+      "opts": [
+       "armor/1"
+      ],
+      "count": 5,
+      "unitId": "cold-one-knights"
+     },
+     {
+      "cat": "rare",
+      "uid": "ums4wbr51bn4l",
+      "opts": [],
+      "count": 1,
+      "unitId": "war-hydra"
+     }
+    ],
+    "createdAt": 1785257583698,
+    "updatedAt": 1785310793890,
+    "composition": "de-renegade-v2"
+   },
+   {
+    "id": "lms4oyweidpqu",
+    "army": "wood-elf-realms",
+    "name": "Playtest army",
+    "rule": "battle-march",
+    "points": 500,
+    "entries": [
+     {
+      "cat": "characters",
+      "uid": "ums56iv7ght7t",
+      "opts": [],
+      "count": 1,
+      "unitId": "shadowdancer"
+     },
+     {
+      "cat": "characters",
+      "uid": "ums56iwfbiuuw",
+      "opts": [],
+      "count": 1,
+      "unitId": "branchwraith"
+     },
+     {
+      "cat": "characters",
+      "uid": "ums56ixbm7jiq",
+      "opts": [],
+      "count": 1,
+      "unitId": "orion"
+     },
+     {
+      "cat": "characters",
+      "uid": "ums56ixmq4utc",
+      "opts": [],
+      "count": 1,
+      "unitId": "waystalker"
+     },
+     {
+      "cat": "core",
+      "uid": "ums56izs9i454",
+      "opts": [],
+      "count": 5,
+      "unitId": "dryads"
+     }
+    ],
+    "createdAt": 1785245319306,
+    "updatedAt": 1785345248182,
+    "composition": "wood-elf-realms"
+   },
+   {
+    "id": "lms4nwl4rch1w",
+    "army": "dark-elves",
+    "name": "Isle of Celedon army",
+    "rule": "battle-march",
+    "points": 750,
+    "entries": [
+     {
+      "cat": "characters",
+      "uid": "ums4pg4kf80eb",
+      "opts": [
+       "subopt/options/0/1",
+       "magic/arcane-item/tome-of-furion",
+       "mounts/3",
+       "magic/talisman/dawnstone"
+      ],
+      "count": 1,
+      "lores": [
+       "battle-magic"
+      ],
+      "spells": [],
+      "unitId": "sorceress",
+      "customName": "Vaelra of Naggarond"
+     },
+     {
+      "cat": "core",
+      "uid": "ums4pgjnbec1g",
+      "opts": [
+       "options/0"
+      ],
+      "count": 10,
+      "unitId": "repeater-crossbowmen",
+      "customName": "The Venom Bolts of Naggarond"
+     },
+     {
+      "cat": "core",
+      "uid": "umsbk4uz0260z",
+      "opts": [],
+      "count": 7,
+      "unitId": "black-ark-corsairs",
+      "customName": "The Cruel Thorns"
+     },
+     {
+      "cat": "rare",
+      "uid": "umsbpsgi7ihru",
+      "opts": [],
+      "count": 1,
+      "unitId": "reaper-bolt-throwers",
+      "customName": "Dreth’s Thunder"
+     }
+    ],
+    "campaign": true,
+    "createdAt": 1785243531771,
+    "updatedAt": 1785671703370,
+    "composition": "de-renegade-v2",
+    "campaignFase": 1,
+    "campaignNaam": "Joost van Rooijen",
+    "campaignSpeler": "c1",
+    "computedPoints": 462
+   },
+   {
+    "id": "m1",
+    "army": "dark-elves",
+    "name": "1,5K Magic Manti",
+    "rule": "open-war",
+    "points": 1500,
+    "entries": [
+     {
+      "cat": "characters",
+      "uid": "a1",
+      "opts": [],
+      "count": 1,
+      "unitId": "high-beastmaster"
+     },
+     {
+      "cat": "characters",
+      "uid": "a2",
+      "opts": [],
+      "count": 1,
+      "lores": [
+       "battle-magic"
+      ],
+      "spells": [],
+      "unitId": "supreme-sorceress"
+     },
+     {
+      "cat": "core",
+      "uid": "a3",
+      "opts": [],
+      "count": 19,
+      "unitId": "dark-elf-warriors"
+     },
+     {
+      "cat": "core",
+      "uid": "a4",
+      "opts": [],
+      "count": 5,
+      "unitId": "dark-riders"
+     },
+     {
+      "cat": "special",
+      "uid": "a5",
+      "opts": [],
+      "count": 7,
+      "unitId": "cold-one-knights"
+     },
+     {
+      "cat": "rare",
+      "uid": "ums361pnh7607",
+      "opts": [],
+      "count": 1,
+      "unitId": "war-hydra"
+     }
+    ],
+    "createdAt": 1785083508845,
+    "updatedAt": 1785166948120,
+    "composition": "de-renegade"
+   },
+   {
+    "id": "l2",
+    "army": "dark-elves",
+    "name": "Dark Riders Host",
+    "rule": "open-war",
+    "points": 800,
+    "entries": [
+     {
+      "cat": "characters",
+      "uid": "ums20zga5g5us",
+      "opts": [],
+      "count": 1,
+      "unitId": "high-beastmaster"
+     },
+     {
+      "cat": "core",
+      "uid": "ums20zkvbir6o",
+      "opts": [
+       "equipment/1",
+       "command/2",
+       "command/1",
+       "command/0"
+      ],
+      "count": 10,
+      "unitId": "dark-elf-warriors"
+     }
+    ],
+    "createdAt": 1785083508845,
+    "updatedAt": 1785086735961,
+    "composition": "dark-elves"
+   },
+   {
+    "id": "l3",
+    "army": "ogre-kingdoms",
+    "name": "Ogre Kingdoms",
+    "rule": "open-war",
+    "points": 2000,
+    "entries": [
+     {
+      "cat": "characters",
+      "uid": "ums237bkil2oo",
+      "opts": [],
+      "count": 1,
+      "unitId": "slaughtermaster"
+     }
+    ],
+    "createdAt": 1785083508845,
+    "updatedAt": 1785087828306,
+    "composition": "ogre-kingdoms"
+   },
+   {
+    "id": "lms8lbfymdraq",
+    "army": "dark-elves",
+    "name": "BM shootout",
+    "rule": "battle-march",
+    "points": 500,
+    "entries": [
+     {
+      "cat": "characters",
+      "uid": "ums7ze0v68i6p",
+      "opts": [
+       "subopt/options/0/1",
+       "command/0",
+       "mounts/0"
+      ],
+      "count": 1,
+      "lores": [
+       "battle-magic"
+      ],
+      "spells": [],
+      "unitId": "sorceress"
+     },
+     {
+      "cat": "core",
+      "uid": "ums7zfdw2cvs0",
+      "opts": [
+       "equipment/1",
+       "options/0",
+       "options/1"
+      ],
+      "count": 5,
+      "unitId": "dark-riders"
+     },
+     {
+      "cat": "core",
+      "uid": "ums8lc1uv9lro",
+      "opts": [
+       "options/0"
+      ],
+      "count": 10,
+      "unitId": "repeater-crossbowmen"
+     },
+     {
+      "cat": "rare",
+      "uid": "umsa0nzgrjnkd",
+      "opts": [],
+      "count": 1,
+      "unitId": "reaper-bolt-throwers"
+     },
+     {
+      "cat": "core",
+      "uid": "umsa0oevect9r",
+      "opts": [
+       "equipment/1",
+       "options/0",
+       "options/2"
+      ],
+      "count": 5,
+      "unitId": "dark-riders"
+     }
+    ],
+    "groupId": "gmsa0m859ldor",
+    "createdAt": 1785481050766,
+    "updatedAt": 1785663372134,
+    "composition": "de-renegade-v2"
+   },
+   {
+    "id": "lms5rytx68tyz",
+    "army": "dark-elves",
+    "name": "Bm500 riders",
+    "rule": "battle-march",
+    "points": 500,
+    "entries": [
+     {
+      "cat": "characters",
+      "uid": "ums5rywa38qv2",
+      "opts": [
+       "subopt/options/0/1",
+       "magic/arcane-item/tome-of-furion",
+       "mounts/0"
+      ],
+      "count": 1,
+      "lores": [
+       "daemonology"
+      ],
+      "spells": [],
+      "unitId": "sorceress"
+     },
+     {
+      "cat": "core",
+      "uid": "ums5ryxwd1pjg",
+      "opts": [
+       "command/2",
+       "command/1",
+       "command/0",
+       "equipment/1"
+      ],
+      "count": 17,
+      "unitId": "dark-elf-warriors"
+     },
+     {
+      "cat": "core",
+      "uid": "ums5rz0ehe5wc",
+      "opts": [
+       "equipment/1",
+       "options/0",
+       "command/2",
+       "options/2"
+      ],
+      "count": 5,
+      "unitId": "dark-riders"
+     },
+     {
+      "cat": "core",
+      "uid": "ums5rz1fmcsw7",
+      "opts": [
+       "equipment/1",
+       "options/0",
+       "command/2"
+      ],
+      "count": 5,
+      "unitId": "dark-riders"
+     }
+    ],
+    "groupId": "gmsa0m859ldor",
+    "createdAt": 1785310821114,
+    "updatedAt": 1785567226950,
+    "composition": "de-renegade-v2"
+   },
+   {
+    "id": "lms7zdxxril7s",
+    "army": "dark-elves",
+    "name": "BM chariot",
+    "rule": "battle-march",
+    "points": 500,
+    "entries": [
+     {
+      "cat": "characters",
+      "uid": "ums7ze0v68i6p",
+      "opts": [
+       "subopt/options/0/1",
+       "mounts/0",
+       "magic/arcane-item/tome-of-furion",
+       "command/0"
+      ],
+      "count": 1,
+      "lores": [
+       "daemonology"
+      ],
+      "spells": [],
+      "unitId": "sorceress"
+     },
+     {
+      "cat": "core",
+      "uid": "ums7zfdw2cvs0",
+      "opts": [
+       "equipment/1",
+       "options/0"
+      ],
+      "count": 5,
+      "unitId": "dark-riders"
+     },
+     {
+      "cat": "special",
+      "uid": "ums7zkqrr562t",
+      "opts": [],
+      "count": 1,
+      "unitId": "cold-one-chariots"
+     },
+     {
+      "cat": "core",
+      "uid": "ums8k794v234u",
+      "opts": [
+       "command/2",
+       "command/1",
+       "command/0",
+       "equipment/1"
+      ],
+      "count": 17,
+      "unitId": "dark-elf-warriors"
+     }
+    ],
+    "groupId": "gmsa0m859ldor",
+    "createdAt": 1785444215825,
+    "updatedAt": 1785567220822,
+    "composition": "de-renegade-v2"
+   },
+   {
+    "id": "lms56yhnkasvf",
+    "army": "dark-elves",
+    "name": "Bm500",
+    "rule": "battle-march",
+    "points": 500,
+    "entries": [
+     {
+      "cat": "characters",
+      "uid": "ums56ymze3w8f",
+      "opts": [
+       "subopt/options/0/1",
+       "magic/arcane-item/tome-of-furion"
+      ],
+      "count": 1,
+      "lores": [
+       "battle-magic"
+      ],
+      "spells": [],
+      "unitId": "sorceress"
+     },
+     {
+      "cat": "core",
+      "uid": "ums573u5fay4s",
+      "opts": [
+       "command/2",
+       "command/1",
+       "command/0",
+       "equipment/1"
+      ],
+      "count": 17,
+      "unitId": "dark-elf-warriors"
+     },
+     {
+      "cat": "core",
+      "uid": "ums5741pt4om6",
+      "opts": [
+       "options/0"
+      ],
+      "count": 10,
+      "unitId": "repeater-crossbowmen"
+     },
+     {
+      "cat": "core",
+      "uid": "ums574autgc7p",
+      "opts": [
+       "options/0",
+       "equipment/1"
+      ],
+      "count": 5,
+      "unitId": "dark-riders"
+     }
+    ],
+    "groupId": "gmsa0m859ldor",
+    "createdAt": 1785275533280,
+    "updatedAt": 1785567229742,
+    "composition": "de-renegade-v2"
+   }
+  ],
+  "groups": [
+   {
+    "id": "gmsa0m859ldor",
+    "name": "Battlemarch"
+   }
+  ],
+  "sync_key": "DAC9563437221551BABE438B497D54C65662F67238C3EB2AA8899204E3FE52F6",
+  "updated_at": "2026-08-02T11:55:05.303144+00:00"
+ }
+]

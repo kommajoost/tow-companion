@@ -816,10 +816,10 @@ export function UnitOptions(props: {
           </div>
         </div>
 
-        {/* Campagne — naam-rij. Staat BOVEN de count-rij en niet als icoontje in de kop, omdat dit
-            voor een campagne-speler geen randzaak is: zonder naam is de lijst niet in te dienen, en
-            de naam is waar z'n veteranen-XP aan hangt. Ongenoemd leest daarom als een openstaande
-            taak (rood), genoemd als een gewone waarde die je kunt wijzigen. */}
+        {/* Campagne — naam-rij. Staat BOVEN de count-rij en niet als icoontje in de kop: een eigen
+            naam is waar je regiment z'n verhaal aan ophangt, dus 'm moeten zoeken zou raar zijn.
+            Het is wél OPTIONEEL (02-08): de veteranen-identiteit hangt aan `entry.uid`, niet aan de
+            naam, dus een naamloze unit is niets mis mee. Vandaar een uitnodiging, geen rode taak. */}
         {onNaam ? (
           <button
             type="button"
@@ -829,19 +829,19 @@ export function UnitOptions(props: {
               display: 'flex', alignItems: 'center', gap: 10, textAlign: 'left', boxSizing: 'border-box',
               margin: `0 ${BUILDER.gutter}px 10px`, width: `calc(100% - ${BUILDER.gutter * 2}px)`,
               padding: '9px 11px', borderRadius: 10, cursor: 'pointer',
-              border: `1px solid ${entry.customName ? TOW.lineStrong : TOW.blood}`,
-              background: entry.customName ? TOW.cardLt : 'rgba(124,43,34,0.07)',
+              border: `1px solid ${TOW.lineStrong}`,
+              background: TOW.cardLt,
             }}
           >
             <span style={{ flex: 1, minWidth: 0 }}>
-              <span style={{ ...eb, fontSize: 7.5, color: entry.customName ? TOW.muted : TOW.blood, display: 'block' }}>
+              <span style={{ ...eb, fontSize: 7.5, color: TOW.muted, display: 'block' }}>
                 {entry.cat === 'characters' ? 'Character name' : 'Regiment name'}
               </span>
               <span style={{
-                fontFamily: towFont.serif, fontSize: 13.5, color: entry.customName ? TOW.ink : TOW.blood,
+                fontFamily: towFont.serif, fontSize: 13.5, color: entry.customName ? TOW.ink : TOW.faint,
                 display: 'block', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
               }}>
-                {entry.customName || 'Not named yet — the campaign needs one'}
+                {entry.customName || 'Unnamed — optional'}
               </span>
             </span>
             <span style={{ ...eb, fontSize: 7.5, color: TOW.goldDeep, flexShrink: 0 }}>

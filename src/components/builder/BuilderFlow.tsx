@@ -148,9 +148,9 @@ export function BuilderFlow({
   );
 
   // ── Campagne-regels (Isle of Celedon) ─────────────────────────────────────────────────────────
-  // Een campagne-lijst is niet vrij: de fase-cap is de puntenbasis, elke unit moet een naam hebben
-  // (daar hangt de campagne de veteranen-XP aan), en een unit die al eerder is ingediend mag maar
-  // een beetje duurder worden per Act. Die drie gaan mee naar `validate()`, zodat ze in de band ÉN
+  // Een campagne-lijst is niet vrij: de fase-cap is de puntenbasis, en een unit die al eerder is
+  // ingediend mag maar een beetje duurder worden per Act (en niet krimpen). Die gaan mee naar
+  // `validate()`, zodat ze in de band ÉN
   // op de unit-rij zelf verschijnen — precies zoals een te grote unit dat al doet. Zonder dit zag je
   // ze pas bij het indienen op de campagne-site. De server rekent alles opnieuw na bij het locken.
   const { actief: campagneActief } = useCampagnes();
@@ -159,7 +159,6 @@ export function BuilderFlow({
     () => (campaignCtx
       ? {
         pointsCap: campaignCtx.puntenCap,
-        namedUnits: true,
         groei: groeiPlafonds(campaignCtx, (uid) => list.entries.find((e) => e.uid === uid)?.cat),
       }
       : undefined),

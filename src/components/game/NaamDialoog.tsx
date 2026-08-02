@@ -63,7 +63,8 @@ export function NaamDialoog({ unitNaam, cat, armySlug, huidig, register, onBewaa
           {cat === 'characters' ? 'Name this character' : 'Name this regiment'}
         </div>
         <div style={{ fontFamily: towFont.serif, fontSize: 12, color: TOW.muted, marginBottom: 10 }}>
-          Campaign veterans follow this name — XP, abilities and scars stay with it across lists.
+          Optional. The campaign tracks this regiment's XP, abilities and scars either way — a name just
+          makes it yours, and you can change it later without losing any of that.
         </div>
         <input
           value={concept}

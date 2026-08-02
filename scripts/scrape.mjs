@@ -256,6 +256,34 @@ function entrySlugs(entries) {
   return entries.map((e) => e && e.fields && e.fields.slug).filter(Boolean);
 }
 
+// A linked Contentful entry (or array of them) → its name(s). The wiki nests these one level
+// deeper than the scalar fields, which is why they were missed for so long.
+function linkNames(v) {
+  const arr = Array.isArray(v) ? v : v ? [v] : [];
+  return arr.map((x) => x && x.fields && x.fields.name).filter(Boolean);
+}
+
+/** Per child slug: which book it comes from (`association`) and what kind of rule it is
+ *  (`ruleType`).
+ *
+ *  This is the wiki's OWN classification and it only travels on the SECTION page — the slim
+ *  `entries[]` there carry {name, slug, ruleType, association} while the rule's own page does not.
+ *  Without it "Special Rules" is 663 undifferentiated entries, of which just 83 are Rulebook and
+ *  the rest belong to one army book or another; that flat wall is what made both the section list
+ *  and a busy rule's cross-references unreadable. One fetch per section covers every child. */
+function childMeta(entries) {
+  const out = {};
+  if (!Array.isArray(entries)) return out;
+  for (const e of entries) {
+    const f = e && e.fields;
+    if (!f || !f.slug) continue;
+    const association = linkNames(f.association);
+    const ruleType = linkNames(f.ruleType)[0] ?? null;
+    if (association.length || ruleType) out[f.slug] = { association, ruleType };
+  }
+  return out;
+}
+
 function crossRefSlugs(cr) {
   const rules = cr && cr.rule;
   if (!Array.isArray(rules)) return [];
@@ -263,6 +291,8 @@ function crossRefSlugs(cr) {
 }
 
 const rules = {};
+/** slug → {association, ruleType}, harvested from the section pages (see childMeta). */
+const childMetaBySlug = {};
 
 function record(slug, data, parentSlug) {
   const pp = data && data.props && data.props.pageProps;
@@ -305,6 +335,10 @@ async function crawlSection(section) {
     console.warn(`  ! section ${section} produced no entry`);
     return;
   }
+  // Stash the section's classification of its children BEFORE crawling them: their own pages do
+  // not carry it, so this is the only place it exists.
+  const meta = childMeta(data.props && data.props.pageProps && data.props.pageProps.entries);
+  Object.assign(childMetaBySlug, meta);
   const children = rec.childSlugs.filter((s) => s && !rules[s]);
   let done = 0;
   for (let i = 0; i < children.length; i += CONCURRENCY) {
@@ -563,6 +597,16 @@ async function main() {
   );
 
   console.log(`Lores           : ${magic.loreList.length}`);
+
+  // De sectie-classificatie op de regels zelf zetten, zodat de app niets hoeft te kruisverwijzen.
+  let geclassificeerd = 0;
+  for (const [slug, m] of Object.entries(childMetaBySlug)) {
+    if (!rules[slug]) continue;
+    if (m.association.length) rules[slug].association = m.association;
+    if (m.ruleType) rules[slug].ruleType = m.ruleType;
+    geclassificeerd++;
+  }
+  console.log(`Classified      : ${geclassificeerd} rules got association/ruleType`);
 
   const out = {
     source: BASE,
