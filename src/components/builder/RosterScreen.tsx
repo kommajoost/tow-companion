@@ -407,6 +407,7 @@ export function RosterScreen(props: {
                       bijnaam={row.bijnaam}
                       whisper={row.whisper}
                       points={row.points}
+                      groeiMax={row.groeiMax}
                       magic={row.magic}
                       issues={row.issues}
                       // The row that caused the last change keeps the white background + 3px inset

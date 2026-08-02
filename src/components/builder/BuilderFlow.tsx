@@ -219,6 +219,7 @@ export function BuilderFlow({
         category: unitCategoryFor(unit, list.composition, entry.cat),
         name: unit.name_en,
         bijnaam: (entry.customName ?? '').trim() || undefined,
+        groeiMax: campaignMods?.groei?.[entry.uid]?.max,
         whisper: optionSummary(unit, entry, itemsData),
         points: entryPoints(unit, entry, itemsData),
         count: entry.count,
@@ -516,6 +517,7 @@ export function BuilderFlow({
       onPrint={onPrint}
       onShowInfo={onShowInfo}
       onNaam={openNaam}
+      groeiMaxVan={(uid) => campaignMods?.groei?.[uid]?.max}
     />
   ) : null;
 
@@ -546,6 +548,7 @@ export function BuilderFlow({
           onDuplicate={() => duplicateUnit(screen.uid)}
           onShowInfo={onShowInfo}
           onNaam={openNaam ? () => openNaam(screen.uid) : undefined}
+          groeiMax={campaignMods?.groei?.[screen.uid]?.max}
         />
       );
     }

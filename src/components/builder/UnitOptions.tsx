@@ -351,12 +351,15 @@ export function UnitOptions(props: {
   /** Tighter rows and smaller type, for the desktop inspector. The phone flow leaves it off: there this
    *  screen IS the screen and every row is a tap target. */
   dense?: boolean;
+  /** Campagne: het puntenplafond van deze unit deze Act (debuutkosten + staffel × Acts). Undefined
+   *  voor een nieuwe unit of een gewone lijst. */
+  groeiMax?: number;
   /** Campagne: open de naam-dialoog voor deze unit. Alleen meegegeven voor een campagne-lijst, waar
    *  een eigen naam VERPLICHT is (de veteranen-identiteit hangt eraan). Ontbreekt hij, dan toont dit
    *  scherm geen naam-rij — een gewone lijst heeft er niets aan. */
   onNaam?: () => void;
 }): React.JSX.Element {
-  const { ctx, uid, onBack, onRemove, onDuplicate, onShowInfo, dense, onNaam } = props;
+  const { ctx, uid, onBack, onRemove, onDuplicate, onShowInfo, dense, onNaam, groeiMax } = props;
   const { itemsData } = ctx;
 
   // ── hooks: all unconditional, before any early return ──────────────────────────────────────────
@@ -796,6 +799,16 @@ export function UnitOptions(props: {
             <div style={{ fontFamily: towFont.serif, fontSize: 10.5, color: TOW.faint, whiteSpace: 'nowrap' }}>
               {perModel != null ? `${fmt(perModel)}/model` : 'points'}
             </div>
+            {/* Campagne: het groeiplafond van deze unit. Altijd zichtbaar terwijl je opties aanzet —
+                dat is precies het moment waarop je wilt weten hoeveel ruimte er nog is. */}
+            {groeiMax != null ? (
+              <div style={{
+                fontFamily: towFont.serif, fontSize: 10.5, whiteSpace: 'nowrap', marginTop: 1,
+                color: unitPoints > groeiMax ? TOW.blood : TOW.faint,
+              }}>
+                max {fmt(groeiMax)} this Act
+              </div>
+            ) : null}
           </div>
         </div>
 

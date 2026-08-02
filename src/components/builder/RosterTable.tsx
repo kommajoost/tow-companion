@@ -426,6 +426,13 @@ export function RosterTable(props: {
                   {/* Points — to Ink when selected. */}
                   <span style={{ ...NUM_CELL, color: isSel ? TOW.ink : TOW.muted }}>
                     {fmt(row.points)}
+                    {/* Het groeiplafond staat er ALTIJD bij, niet pas als je eroverheen gaat: anders
+                        weet je pas dat er een grens was toen je 'm al overschreed. */}
+                    {row.groeiMax != null ? (
+                      <span style={{ display: 'block', fontSize: 10.5, color: row.points > row.groeiMax ? TOW.blood : TOW.faint }}>
+                        max {fmt(row.groeiMax)}
+                      </span>
+                    ) : null}
                   </span>
 
                   {/* Actions — ALWAYS mounted, `transparent` until the row is hot. This is the whole

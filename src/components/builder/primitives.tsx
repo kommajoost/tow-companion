@@ -229,9 +229,11 @@ export function SectionHeader({ label, meta, violated, dense }: {
  * glyph — the two bits of information you most need when scanning a roster.
  */
 export function UnitRow({
-  count, name, bijnaam, whisper, points, magic, selected, issues, onClick, onLongPress,
+  count, name, bijnaam, whisper, points, groeiMax, magic, selected, issues, onClick, onLongPress,
 }: {
   count?: number; name: string;
+  /** Campagne: het puntenplafond van deze unit deze Act. Staat er altijd bij, niet pas bij overschrijding. */
+  groeiMax?: number;
   /** De naam die de speler deze unit gaf (campagne). Staat op de WHISPER-regel en niet op de
    *  naamregel: de rij is precies 44px met twee regels, en de naamregel moet zeggen WAT dit is —
    *  het datasheet herken je zo altijd, ook als twee regimenten dezelfde eigennaam-stijl hebben. */
@@ -294,7 +296,14 @@ export function UnitRow({
           </span>
         ) : null}
       </span>
-      <span style={ROW_POINTS}>{fmt(points)}</span>
+      <span style={{ ...ROW_POINTS, textAlign: 'right' }}>
+        {fmt(points)}
+        {groeiMax != null ? (
+          <span style={{ display: 'block', fontSize: 10, color: points > groeiMax ? TOW.blood : TOW.faint }}>
+            max {fmt(groeiMax)}
+          </span>
+        ) : null}
+      </span>
     </>
   );
 

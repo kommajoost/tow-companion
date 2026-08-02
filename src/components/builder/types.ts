@@ -68,6 +68,10 @@ export interface RosterRow {
   name: string;
   /** De naam die de speler deze unit gaf (campagne), als secundaire regel. Leeg/undefined = geen. */
   bijnaam?: string;
+  /** Campagne: het maximum dat deze unit deze Act mag kosten (debuutkosten + staffel × Acts). Alleen
+   *  gezet voor een unit die al eerder is ingediend — een nieuwe unit heeft geen plafond. Altijd
+   *  tonen, niet pas bij overschrijding: je wilt zien hoeveel ruimte je nog hebt vóór je hem opmaakt. */
+  groeiMax?: number;
   /** The whisper line — chosen options joined by " · " (`optionSummary`). */
   whisper: string;
   /** Points for the whole unit, including options and magic items. */
