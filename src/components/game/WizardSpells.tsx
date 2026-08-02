@@ -1,3 +1,4 @@
+import { unitToonRegel } from '../../lib/unitNaam';
 import { useMemo, useState } from 'react';
 import { useData } from '../../data';
 import { useUI } from '../../state';
@@ -124,7 +125,7 @@ export function WizardSpells({
 
       {editable && open && (
         <SpellPicker
-          unitName={unit.name}
+          unitName={unitToonRegel(unit)}
           level={level}
           lores={lores}
           loreList={loreList}

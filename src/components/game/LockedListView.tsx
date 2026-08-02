@@ -94,7 +94,12 @@ export function LockedListView({ list, army, armyName, compName, itemsData, fase
                     borderBottom: `1px solid ${TOW.hairline}`,
                   }}>
                     <span style={{ flex: 1, minWidth: 0, fontFamily: towFont.serif, fontSize: 15, color: TOW.ink }}>
-                      {e.customName?.trim() || u?.name_en || e.unitId}
+                      {/* Datasheet primair; de eigen campagne-naam eronder. Anders lees je een lijst
+                          van louter eigennamen en zie je nergens welke units je hebt ingediend. */}
+                      {u?.name_en || e.customName?.trim() || e.unitId}
+                      {u?.name_en && e.customName?.trim() ? (
+                        <span style={{ fontStyle: 'italic', color: TOW.muted }}> · {e.customName.trim()}</span>
+                      ) : null}
                       {e.count > 1 && <span style={{ color: TOW.faint }}> ×{e.count}</span>}
                     </span>
                   </div>

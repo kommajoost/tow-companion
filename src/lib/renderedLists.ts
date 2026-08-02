@@ -29,6 +29,9 @@ export interface RenderedEntry {
   count: number;
   punten: number | null;
   opties: string[];
+  /** De CATALOGUSNAAM ("Dark Elf Warriors"). `naam` kan de eigen campagne-naam dragen; overal waar
+   *  een unit getoond wordt is het datasheet de hoofdregel en de eigen naam de extra regel. */
+  datasheet: string | null;
   /** Unit Strength van de hele unit (models × US per model uit de Troop Type Table). De campagne
    *  gebruikt dit voor Fresh Blood, dat officieel op US gaat en niet op modellen — 3 ruiters erbij is
    *  al US 6. `null` = niet te bepalen (onbekend troop type, of een "As Starting Wounds"-type zonder
@@ -161,6 +164,7 @@ function renderEen(
       count,
       punten: unit ? entryPoints(unit, e, itemsData ?? undefined) : null,
       opties: unit ? labels(optionSummary(unit, e, itemsData ?? undefined)) : [],
+      datasheet: unit?.name_en ?? null,
       // Op de CATALOGUS-naam, niet op de custom naam: "The Bleeding Hand" staat niet in de
       // rules-index, "Witch Elves" wel.
       us: unit ? usVoor(unit.name_en, count) : null,

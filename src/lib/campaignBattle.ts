@@ -47,6 +47,8 @@ export interface BattleLijstUnit {
   uid: string | null;
   unitId: string | null;
   naam: string;
+  /** Catalogusnaam; null bij een oude battle die alleen namen bewaarde. */
+  datasheet: string | null;
   cat: string | null;
   modellen: number;
   punten: number | null;
@@ -166,13 +168,14 @@ function parseSide(raw: unknown): BattleSide {
  *  object. Ontbrekende punten blijven null — nooit 0, want 0 pts is een bewering. */
 function parseLijstUnit(raw: unknown): BattleLijstUnit {
   if (typeof raw === 'string') {
-    return { uid: null, unitId: null, naam: raw, cat: null, modellen: 1, punten: null, opties: [] };
+    return { uid: null, unitId: null, naam: raw, datasheet: null, cat: null, modellen: 1, punten: null, opties: [] };
   }
   const u = (raw && typeof raw === 'object' ? raw : {}) as Record<string, unknown>;
   return {
     uid: typeof u.uid === 'string' ? u.uid : null,
     unitId: typeof u.unitId === 'string' ? u.unitId : null,
     naam: str(u.naam),
+    datasheet: typeof u.datasheet === 'string' && u.datasheet ? u.datasheet : null,
     cat: typeof u.cat === 'string' ? u.cat : null,
     modellen: Math.max(1, num(u.modellen) || 1),
     punten: typeof u.punten === 'number' ? u.punten : null,

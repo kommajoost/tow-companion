@@ -68,9 +68,15 @@ function LijstBlok({ lijst, heading, open: openInit = false }: {
               <span style={{ minWidth: 0 }}>
                 <span style={{ display: 'block', fontFamily: serif, fontSize: 12.5, color: TOW.parchDim }}>
                   {u.modellen > 1 ? <span style={{ color: TOW.faint }}>{u.modellen}× </span> : null}
-                  {u.naam}
+                  {u.datasheet || u.naam}
                   {u.cat ? <span style={{ color: TOW.faint }}> · {pretty(u.cat)}</span> : null}
                 </span>
+                {/* De eigen campagne-naam als EXTRA regel; het datasheet blijft de hoofdregel. */}
+                {u.datasheet && u.naam && u.naam !== u.datasheet ? (
+                  <span style={{ display: 'block', fontFamily: serif, fontStyle: 'italic', fontSize: 11.5, color: TOW.faint }}>
+                    {u.naam}
+                  </span>
+                ) : null}
                 {u.opties.length > 0 && (
                   <span style={{ display: 'block', fontFamily: serif, fontSize: 11.5, color: TOW.faint, lineHeight: 1.35 }}>
                     {u.opties.join(' · ')}
