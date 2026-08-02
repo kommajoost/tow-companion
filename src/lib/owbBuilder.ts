@@ -524,7 +524,7 @@ export function validate(
     /** Per unit-uid het maximum dat die unit deze Act mag kosten, plus waar dat vandaan komt.
      *  Alleen units die in een eerdere Act zijn ingediend staan erin; nieuwe units kennen geen
      *  plafond (die passen alleen binnen de gewone puntencap). Komt uit de campagne-server. */
-    groei?: Record<string, { max: number; basis: number; introFase: number; staffel: number }>;
+    groei?: Record<string, { max: number; basis: number; introFase: number; staffel: number; minModellen?: number | null; laatsteFase?: number | null }>;
   },
 ): Validation {
   const limits = limitsFor(list.rule);
@@ -565,6 +565,11 @@ export function validate(
     const g = campaignMods?.groei?.[e.uid];
     if (g && p > g.max) {
       warnEntry(e.uid, `${unit.name_en} is ${p} pts; joined in Act ${g.introFase} at ${g.basis}, so the ceiling here is ${g.max} (+${g.staffel} per Act)`);
+    }
+    // Een unit mag groeien maar nooit KRIMPEN — anders speel je punten vrij door een regiment uit te
+    // kleden, en dat omzeilt het plafond hierboven volledig.
+    if (g?.minModellen != null && e.count < g.minModellen) {
+      warnEntry(e.uid, `${unit.name_en} has ${e.count} models; it had ${g.minModellen} in Act ${g.laatsteFase ?? g.introFase} and may never shrink`);
     }
   }
 

@@ -354,12 +354,15 @@ export function UnitOptions(props: {
   /** Campagne: het puntenplafond van deze unit deze Act (debuutkosten + staffel × Acts). Undefined
    *  voor een nieuwe unit of een gewone lijst. */
   groeiMax?: number;
+  /** Campagne: zoveel modellen had deze unit bij haar laatste inzending. Ze mag groeien maar nooit
+   *  krimpen, dus dit is de ondergrens van de stepper — je kunt er niet eens onder klikken. */
+  groeiMinModellen?: number;
   /** Campagne: open de naam-dialoog voor deze unit. Alleen meegegeven voor een campagne-lijst, waar
    *  een eigen naam VERPLICHT is (de veteranen-identiteit hangt eraan). Ontbreekt hij, dan toont dit
    *  scherm geen naam-rij — een gewone lijst heeft er niets aan. */
   onNaam?: () => void;
 }): React.JSX.Element {
-  const { ctx, uid, onBack, onRemove, onDuplicate, onShowInfo, dense, onNaam, groeiMax } = props;
+  const { ctx, uid, onBack, onRemove, onDuplicate, onShowInfo, dense, onNaam, groeiMax, groeiMinModellen } = props;
   const { itemsData } = ctx;
 
   // ── hooks: all unconditional, before any early return ──────────────────────────────────────────
@@ -400,7 +403,7 @@ export function UnitOptions(props: {
     entries: l.entries.map((e) => {
       if (e.uid !== uid) return e;
       const u = ctx.getUnit(e.cat, e.unitId);
-      const min = u?.minimum ?? 1;
+      const min = Math.max(u?.minimum ?? 1, groeiMinModellen ?? 0);
       const max = (u?.maximum ?? 0) === 0 ? 9999 : (u?.maximum ?? 1);
       return { ...e, count: Math.max(min, Math.min(max, c)) };
     }),
@@ -443,7 +446,8 @@ export function UnitOptions(props: {
   }
   const change = unitPoints - baseline.current.pts;
 
-  const min = unit.minimum ?? 1;
+  // De campagne-ondergrens telt mee: krimpen mag niet, dus de stepper laat het niet eens toe.
+  const min = Math.max(unit.minimum ?? 1, groeiMinModellen ?? 0);
   const rawMax = unit.maximum ?? 0;
   const max = rawMax === 0 ? 9999 : rawMax;
   /** A multi-model unit — the only kind with a count to change. A single-model character has no
@@ -852,6 +856,9 @@ export function UnitOptions(props: {
             <Stepper value={entry.count} min={min} max={max} onChange={setCount} dense={dense} />
             <span style={{ fontFamily: towFont.serif, fontSize: 11, color: TOW.faint }}>
               min {min}{rawMax > 0 ? ` · max ${rawMax}` : ''}
+              {groeiMinModellen != null && groeiMinModellen > (unit.minimum ?? 1)
+                ? <span style={{ color: TOW.gold }}> · campaign: never shrink</span>
+                : null}
             </span>
           </div>
         ) : null}

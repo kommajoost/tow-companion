@@ -518,6 +518,7 @@ export function BuilderFlow({
       onShowInfo={onShowInfo}
       onNaam={openNaam}
       groeiMaxVan={(uid) => campaignMods?.groei?.[uid]?.max}
+      groeiMinModellenVan={(uid) => campaignMods?.groei?.[uid]?.minModellen ?? undefined}
     />
   ) : null;
 
@@ -549,6 +550,7 @@ export function BuilderFlow({
           onShowInfo={onShowInfo}
           onNaam={openNaam ? () => openNaam(screen.uid) : undefined}
           groeiMax={campaignMods?.groei?.[screen.uid]?.max}
+          groeiMinModellen={campaignMods?.groei?.[screen.uid]?.minModellen ?? undefined}
         />
       );
     }

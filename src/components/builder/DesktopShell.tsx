@@ -206,12 +206,14 @@ export function DesktopShell(props: {
   onNaam?: (uid: string) => void;
   /** Campagne: het puntenplafond van een unit deze Act, voor de inspector-kop. */
   groeiMaxVan?: (uid: string) => number | undefined;
+  /** Campagne: de model-ondergrens van een unit (krimpen mag niet). */
+  groeiMinModellenVan?: (uid: string) => number | undefined;
 }): React.JSX.Element | null {
   const {
     ctx, rows, rosterTable, cataloguePane, catalogueOpen, selectedUid,
     autosavedAt, onBack, onEditArmyField, onOpenCatalogue, onEscape,
     onMoveSelection, onReorder, onChangeCount, onDuplicate, onRemove, onResolve, onImportOwb,
-    onExport, onPrint, onShowInfo, onNaam, groeiMaxVan,
+    onExport, onPrint, onShowInfo, onNaam, groeiMaxVan, groeiMinModellenVan,
   } = props;
   const { derived, labels, list } = ctx;
 
@@ -815,6 +817,7 @@ export function DesktopShell(props: {
               onShowInfo={onShowInfo}
               onNaam={onNaam ? () => onNaam(selectedUid) : undefined}
               groeiMax={groeiMaxVan?.(selectedUid)}
+              groeiMinModellen={groeiMinModellenVan?.(selectedUid)}
               // Tighter rows here only. This is a 392px column read with a mouse while the roster stays
               // visible; at the phone's 46px rows it showed very little for its height.
               dense

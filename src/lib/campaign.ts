@@ -34,7 +34,12 @@ export interface CampaignEvent { id: string; details?: Record<string, unknown> }
 /** Eén regel uit het groei-register: waar een unit aan de campagne begon. `eersteKosten` is null als
  *  de campagne die Act nog geen punten per unit bewaarde (snapshots van vóór 30-07) — dan is er geen
  *  plafond te berekenen en blokkeert er niets. */
-export interface CampaignBaseline { uid: string; introFase: number; eersteKosten: number | null; cat: string; acts: number }
+export interface CampaignBaseline {
+  uid: string; introFase: number; eersteKosten: number | null; cat: string; acts: number;
+  /** Zoveel modellen had deze unit bij haar LAATSTE inzending — de ondergrens. Een unit mag groeien,
+   *  nooit krimpen: anders speel je punten vrij door een regiment uit te kleden. */
+  laatsteModellen: number | null; laatsteFase: number | null;
+}
 export interface CampaignUnit { naam: string; catalogusId: string | null; cat: string | null; xp: number; abilities: number; littekens: number; status: string }
 export interface CampaignContext {
   ok: true;
@@ -160,6 +165,8 @@ function parseEen(raw: unknown): CampaignContext {
         eersteKosten: Number.isFinite(kosten) ? kosten : null,
         cat: str(b.cat),
         acts: num(b.acts),
+        laatsteModellen: Number.isFinite(Number(b.laatsteModellen)) ? Number(b.laatsteModellen) : null,
+        laatsteFase: Number.isFinite(Number(b.laatsteFase)) ? Number(b.laatsteFase) : null,
       };
     }).filter((b) => b.uid),
     // Oudere servers sturen dropActs niet mee; 2/4/6 is de regel, dus dat is de veilige default.
@@ -434,7 +441,11 @@ export function campaignPointsCap(ctx: CampaignContext): number {
  *  wizard-levels kunnen meenemen naar een lijst die uiteindelijk 4× zo groot is. */
 export const groeiStaffel = (cat: string): number => (cat === 'characters' ? 50 : 25);
 
-export interface GroeiPlafond { max: number; basis: number; introFase: number; staffel: number }
+export interface GroeiPlafond {
+  max: number; basis: number; introFase: number; staffel: number;
+  /** Ondergrens in modellen (uit de laatste inzending), of null als die er niet is. */
+  minModellen: number | null; laatsteFase: number | null;
+}
 
 /**
  * Het plafond per unit-uid voor de huidige Act, klaar om als `campaignMods.groei` aan `validate`
@@ -451,7 +462,10 @@ export function groeiPlafonds(
     if (b.eersteKosten == null) continue;
     const staffel = groeiStaffel(catVan(b.uid) ?? b.cat);
     const acts = Math.max(0, ctx.fase - b.introFase);
-    uit[b.uid] = { max: b.eersteKosten + staffel * acts, basis: b.eersteKosten, introFase: b.introFase, staffel };
+    uit[b.uid] = {
+      max: b.eersteKosten + staffel * acts, basis: b.eersteKosten, introFase: b.introFase, staffel,
+      minModellen: b.laatsteModellen, laatsteFase: b.laatsteFase,
+    };
   }
   return uit;
 }
