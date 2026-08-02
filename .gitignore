@@ -15,3 +15,6 @@ tsconfig.tsbuildinfo
 *.pdf
 *.xlsx
 /TOW input/
+
+# Hersteldumps van gesynchroniseerde lijsten — persoonlijke data, hoort niet in de repo.
+/_backup-lijsten/
