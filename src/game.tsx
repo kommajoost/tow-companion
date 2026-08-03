@@ -112,15 +112,31 @@ function annotateArmyWithVets(army: Army | null, vets: VetUnit[] | undefined): A
 
 const EMPTY_TRACKER: GameTracker = { round: 1, vp: {}, units: {} };
 // The DB default is `{}`, so fill in any missing fields before use.
+/**
+ * Normaliseer de tracker uit de cloud: `round`, `vp` en `units` moeten altijd de juiste vorm hebben
+ * (oude en handmatig aangeraakte rijen kunnen ze missen), de rest blijft ONGEMOEID.
+ *
+ * Die laatste regel is de correctie (02-08). Deze functie somde alleen de velden op die er tóén waren
+ * en herbouwde de tracker daaruit — dus alles wat er later bij kwam werd bij het LEZEN weggegooid,
+ * terwijl `setTracker` het wél naar de database schreef. Dat sloopte twee dingen stil:
+ *   • `quests` — je tikte een battle-quest aan, de schrijfactie ging door, maar de UI las 'm nooit
+ *     terug. Het vinkje bleef leeg en de knop leek dood (Joost: "ik kan de quests niet aanklikken").
+ *   • `report` — dezelfde oorzaak, dus de dubbele goedkeuring kon in principe nooit blijven staan.
+ * Daarom nu eerst spreaden en daarna alleen de drie verplichte velden overschrijven: een nieuw
+ * tracker-veld overleeft dit voortaan zonder dat iemand hieraan hoeft te denken.
+ */
 function normTracker(t: GameTracker | null | undefined): GameTracker {
   if (!t || typeof t !== 'object') return { round: 1, vp: {}, units: {} };
-  return {
+  const uit: GameTracker = {
+    ...t,
     round: typeof t.round === 'number' ? t.round : 1,
     vp: t.vp && typeof t.vp === 'object' ? t.vp : {},
     units: t.units && typeof t.units === 'object' ? t.units : {},
-    // Neem `bonus` alleen over als het echt een object is (oude trackers hebben 'm niet → undefined).
-    ...(t.bonus && typeof t.bonus === 'object' ? { bonus: t.bonus } : {}),
   };
+  // `bonus` mag geen rommel zijn: de VP-engine leest 'm defensief, maar een string i.p.v. een object
+  // hier doorlaten zou een fout verplaatsen naar de plek waar 'ie moeilijker te vinden is.
+  if (uit.bonus && typeof uit.bonus !== 'object') delete uit.bonus;
+  return uit;
 }
 
 export function GameProvider({ children }: { children: ReactNode }) {
