@@ -14,7 +14,7 @@
 import { useMemo, useState } from 'react';
 import { TOW, towFont, engraved } from '../../design/tow';
 import { useBackClose } from '../../lib/backStack';
-import { exportFilename, listToText, type ExportFormat, type ExportMeta, type ExportOptions, type ExportRow } from '../../lib/listExport';
+import { exportFilename, listToPrintHtml, listToText, type ExportFormat, type ExportMeta, type ExportOptions, type ExportRow } from '../../lib/listExport';
 
 const eb = engraved as React.CSSProperties;
 
@@ -76,31 +76,27 @@ export function ExportSheet({
     URL.revokeObjectURL(url);
   };
 
-  /** PDF = het printvenster van de browser op een eigen, schone pagina.
+  /** PDF = het printvenster van de browser, met een OPGEMAAKT blad erin.
    *
-   *  Bewust in een nieuw venster en niet met een print-stylesheet over de app heen: dit scherm zit in
-   *  een app met een vaste dock, panelen die scrollen en een donker thema. Dat allemaal
-   *  wegprinten kost meer regels CSS dan het simpelweg opnieuw opschrijven, en één vergeten
-   *  `position: fixed` levert een half afgesneden pagina. Zwart op wit, want een donkere achtergrond
-   *  print als een blad vol toner. */
+   *  Niet de platte tekst door de printer halen (Joost 04-08): `listToPrintHtml` bouwt uit dezelfde
+   *  rijen een echt document — kop met het totaal, categorieën met subtotaal, punten in een
+   *  rechtsuitgelijnde kolom, statlines als tabel, en units die niet over een paginarand breken.
+   *
+   *  In een nieuw venster, niet met een print-stylesheet over de app heen: die heeft een vaste dock en
+   *  scrollende panelen, en één vergeten `position: fixed` levert een half afgesneden blad. Geen
+   *  PDF-bibliotheek: het printvenster kent papierformaat en marges al, en die verschillen per
+   *  printer — dus beter niet namaken. */
   const bewaarPdf = () => {
     const w = window.open('', '_blank');
     if (!w) return; // pop-up geblokkeerd — de andere twee uitgangen werken nog
-    const esc = (s: string) => s.replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c] as string));
-    w.document.write(`<!doctype html><html><head><meta charset="utf-8"><title>${esc(meta.listName)}</title>
-<style>
-  @page { margin: 16mm; }
-  body { font: 12px/1.5 ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; color: #111; background: #fff; white-space: pre-wrap; }
-  h1 { font: 700 18px/1.3 Georgia, serif; margin: 0 0 2mm; }
-  .meta { font: 12px/1.4 Georgia, serif; color: #555; margin: 0 0 6mm; }
-</style></head><body>
-<h1>${esc(meta.listName)}</h1>
-<div class="meta">${esc(`${meta.faction} · ${meta.composition} · ${meta.rule} — ${meta.total} / ${meta.cap} points`)}</div>
-${esc(tekst.split('\n').slice(3).join('\n'))}
-</body></html>`);
+    w.document.write(listToPrintHtml(rows, meta, {
+      format, specialRules: detailKan && specialRules, stats: detailKan && stats, statsFor,
+    }));
     w.document.close();
     w.focus();
-    w.print();
+    // Wachten tot de stylesheet is toegepast: print() op een net-geschreven document pakt in Safari
+    // en oudere webviews soms nog de ongestileerde staat.
+    w.setTimeout(() => w.print(), 150);
   };
 
   const knop: React.CSSProperties = {
