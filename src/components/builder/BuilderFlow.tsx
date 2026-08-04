@@ -37,6 +37,8 @@ import { UnitOptions } from './UnitOptions';
 import { DesktopShell } from './DesktopShell';
 import { RosterTable, rosterTableOrder } from './RosterTable';
 import { CataloguePane } from './CataloguePane';
+import { ExportSheet } from './ExportSheet';
+import type { ExportMeta, ExportRow } from '../../lib/listExport';
 import type { BuilderCtx, BuilderScreen, PickerEntry, RosterRow, SavedListLike } from './types';
 
 /** Same shape `ListBuilder` already passes to `BuilderWorkspace`, so this is a drop-in swap. */
@@ -91,10 +93,12 @@ const ruleLabel = (slug: string): string =>
 // from the rules-index itself.
 export function BuilderFlow({
   list, name, onUpdate, onBack, army, armyName, compName, itemsData, armyItemLists,
-  statIdx, onShowInfo,
+  statsFor, statIdx, onShowInfo,
   onEditArmyField, onImportOwb, onExport, onPrint,
 }: BuilderFlowProps): React.JSX.Element {
   const [screen, setScreen] = useState<BuilderScreen>({ kind: 'roster' });
+  /** Staat het export-venster open? Leeft hier: het hangt aan de hele lijst, niet aan één scherm. */
+  const [exportOpen, setExportOpen] = useState(false);
   /** The row to flash after an edit returns to the roster — the spec's "briefly highlighted". */
   const [highlightUid, setHighlightUid] = useState<string | undefined>(undefined);
 
@@ -512,8 +516,11 @@ export function BuilderFlow({
       onDuplicate={() => { if (currentUid) duplicateUnit(currentUid); }}
       onRemove={() => { if (currentUid) { removeUnit(currentUid); setSelectedUids([]); } }}
       onImportOwb={onImportOwb}
-      onExport={onExport}
-      onPrint={onPrint}
+      // Export én Print openen hetzelfde venster: "Save as PDF" ís het printvenster van de browser,
+      // dus twee ingangen naar één ding. Daarmee verdwijnen ook twee "not built yet"-knoppen. De
+      // props van de container blijven bestaan voor het geval die ooit z'n eigen route wil.
+      onExport={onExport ?? (() => setExportOpen(true))}
+      onPrint={onPrint ?? (() => setExportOpen(true))}
       onShowInfo={onShowInfo}
       onNaam={openNaam}
       groeiMaxVan={(uid) => campaignMods?.groei?.[uid]?.max}
@@ -559,6 +566,7 @@ export function BuilderFlow({
         rows={rows}
         onBack={onBack}
         onEditList={onEditArmyField ? () => onEditArmyField('composition') : undefined}
+        onExport={() => setExportOpen(true)}
         onAddUnit={(category) => setScreen({ kind: 'picker', category })}
         onSelectUnit={(uid) => setScreen({ kind: 'options', uid })}
         onDuplicate={duplicateUnit}
@@ -575,6 +583,27 @@ export function BuilderFlow({
           braces on purpose: a shortcut listener surviving behind a phone layout would eat arrows and
           Backspace with no visible cause. */}
       {desktop ? desktopShell : shell}
+      {/* Export — leest de rijen die de roster al toont, dus de export kan nooit iets anders zeggen
+          dan het scherm. `statsFor` was tot nu toe een ongebruikte prop; de statline-schakelaar is
+          z'n eerste echte afnemer. */}
+      {exportOpen && (
+        <ExportSheet
+          rows={rows.map((r): ExportRow => ({
+            name: r.name, bijnaam: r.bijnaam, category: r.category,
+            count: r.count, points: r.points, whisper: r.whisper, unit: r.unit,
+          }))}
+          meta={{
+            listName: name || 'Untitled list',
+            faction: armyName,
+            composition: compName(list.composition),
+            rule: ruleLabel(list.rule),
+            cap: list.points ?? 0,
+            total: derived.totalPoints,
+          } satisfies ExportMeta}
+          statsFor={statsFor}
+          onClose={() => setExportOpen(false)}
+        />
+      )}
       {naamEntry && naamUnit && campaignCtx ? (
         <NaamDialoog
           unitNaam={naamUnit.name_en}

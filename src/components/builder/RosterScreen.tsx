@@ -96,11 +96,14 @@ export function RosterScreen(props: {
   onRemove: (uid: string) => void;
   onResolve?: () => void;
   highlightUid?: string;
+  /** Opent het export-venster. Op een telefoon was er geen enkele ingang: de Export-knop bestaat
+   *  alleen in de desktop-topbar, terwijl je je lijst juist op je telefoon bij je hebt. */
+  onExport?: () => void;
   /** Opens the container's list-settings sheet (rename, army composition). Without it the header
    *  title is inert text, exactly as it was before. */
   onEditList?: () => void;
 }): React.JSX.Element {
-  const { ctx, rows, onBack, onAddUnit, onSelectUnit, onDuplicate, onRemove, onResolve, highlightUid, onEditList } = props;
+  const { ctx, rows, onBack, onAddUnit, onSelectUnit, onDuplicate, onRemove, onResolve, highlightUid, onEditList, onExport } = props;
   const { derived, labels, list } = ctx;
 
   // LONG-PRESS ACTIONS — chosen shape and why.
@@ -256,6 +259,28 @@ export function RosterScreen(props: {
               {[labels?.faction, labels?.composition, labels?.rule].filter(Boolean).join(' · ')}
             </span>
           </span>
+
+          {/* Export — een glyph naast de punten, want de titel is al de weg naar de instellingen en een
+              tweede tekstknop past niet in een 74px-header. */}
+          {onExport && (
+            <button
+              type="button"
+              onClick={onExport}
+              aria-label="Export list"
+              title="Export list"
+              style={{
+                flexShrink: 0, width: 36, height: 36, marginRight: 2, padding: 0,
+                border: 'none', background: 'transparent', color: TOW.faint, cursor: 'pointer',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                WebkitTapHighlightColor: 'transparent',
+              }}
+            >
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" aria-hidden="true">
+                <path d="M12 16V4m0 0L8 8m4-4l4 4" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2" strokeLinecap="round" />
+              </svg>
+            </button>
+          )}
 
           <span
             data-tour="lijst-punten"
