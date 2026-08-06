@@ -10,6 +10,10 @@ import {
   useCampagnes, kiesCampagne, verversCampagnes, hernoemRegiment, regimentSlug,
 } from '../lib/campaign';
 import { usePersistentState, setPersisted } from '../store';
+import {
+  useTestAccounts, voegTestAccountToe, verwijderTestAccount, wisselNaarTestAccount,
+  STANDAARD_TESTACCOUNTS, type TestAccount,
+} from '../lib/testAccounts';
 import { LogoMark } from './LogoMark';
 
 const eb = engraved as React.CSSProperties;
@@ -182,6 +186,9 @@ export function SettingsMode() {
             <span style={{ fontFamily: towFont.serif, fontSize: 12.5, color: TOW.muted }}>build {BUILD_SHA} · {BUILD_DATE}</span>
           </div>
         </div>
+
+        {/* Test accounts (advanced) */}
+        <TestAccountsSection card={card} title={title} body={body} goldBtn={goldBtn} ghostBtn={ghostBtn} />
       </div>
     </div>
   );
@@ -849,6 +856,180 @@ function FeedbackSection({
             )}
           </div>
         )}
+      </div>
+    </div>
+  );
+}
+
+// ── Test accounts (advanced) ─────────────────────────────────────────────────────────────────────
+// Joost speelt de campagne met zichzelf als meerdere spelers: een paar echte wegwerp-accounts
+// (gmail-plus-aliassen) waartussen hij wisselt om per speler een lijst te bouwen en battles te
+// spelen. Wisselen = écht uit- en inloggen (zie lib/testAccounts.ts), daarna herlaadt de app.
+//
+// Bewust ingeklapt en helemaal onderaan: een gewone speler heeft hier niets te zoeken, maar er valt
+// ook niets te beveiligen — het zijn je eigen wachtwoorden, die je zelf invoert. Wel eerlijk zeggen
+// dat ze leesbaar op dit apparaat staan.
+const AMBER = '#c07a1e';
+
+function TestAccountsSection({
+  card, title, body, goldBtn, ghostBtn,
+}: {
+  card: React.CSSProperties; title: React.CSSProperties; body: React.CSSProperties;
+  goldBtn: React.CSSProperties; ghostBtn: React.CSSProperties;
+}) {
+  const accounts = useTestAccounts();
+  const { user } = useAuth();
+  const [open, setOpen] = usePersistentState<boolean>('tow:testaccounts-open', false);
+  const [toon, setToon] = useState<string | null>(null);      // e-mail waarvan het wachtwoord zichtbaar is
+  const [busy, setBusy] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [herladen, setHerladen] = useState(false);
+  const [label, setLabel] = useState('');
+  const [email, setEmail] = useState('');
+  const [pass, setPass] = useState('');
+  const [eigen, setEigen] = useState(false);
+
+  const inputStyle: React.CSSProperties = {
+    width: '100%', borderRadius: 10, border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt,
+    color: TOW.ink, padding: '9px 11px', fontFamily: towFont.serif, fontSize: 14, boxSizing: 'border-box',
+  };
+
+  const mail = (user?.email || '').trim().toLowerCase();
+
+  const voegToe = () => {
+    const { error: err } = voegTestAccountToe({ label, email, password: pass, eigen });
+    if (err) { setError(err); return; }
+    setLabel(''); setEmail(''); setPass(''); setEigen(false); setError(null);
+  };
+
+  const seed = () => {
+    for (const a of STANDAARD_TESTACCOUNTS) voegTestAccountToe(a);
+    setError(null);
+  };
+
+  const wissel = async (a: TestAccount) => {
+    if (busy) return;
+    setBusy(a.email); setError(null); setHerladen(false);
+    const { error: err, herladenNodig } = await wisselNaarTestAccount(a);
+    if (err) { setError(err); setBusy(null); }        // bij succes herlaadt de pagina
+    else if (herladenNodig) setHerladen(true);        // tenzij de browser dat negeerde
+  };
+
+  if (!open) {
+    return (
+      <div style={{ textAlign: 'center', padding: '4px 0 8px' }}>
+        <button
+          onClick={() => setOpen(true)}
+          style={{ background: 'none', border: 'none', cursor: 'pointer', fontFamily: towFont.serif, fontSize: 12.5, color: TOW.muted, textDecoration: 'underline', padding: 0 }}
+        >
+          Test accounts (advanced)
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <div style={card}>
+      <div style={{ display: 'flex', alignItems: 'center', marginBottom: 6 }}>
+        <div style={{ ...title, marginBottom: 0 }}>Test accounts</div>
+        <button
+          onClick={() => setOpen(false)}
+          style={{ marginLeft: 'auto', background: 'none', border: 'none', cursor: 'pointer', fontFamily: towFont.serif, fontSize: 12.5, color: TOW.muted, textDecoration: 'underline' }}
+        >
+          Hide
+        </button>
+      </div>
+
+      <div style={{ ...body, marginBottom: 10 }}>
+        Play the campaign as several players from this device. Each entry is a real account: switching
+        signs you out and back in with that password (about a second), then reloads the app so its army
+        lists and campaign link come up clean.
+      </div>
+
+      <div style={{ border: `1px solid ${AMBER}`, background: 'rgba(192,122,30,0.10)', borderRadius: 10, padding: '9px 11px', marginBottom: 12 }}>
+        <div style={{ fontFamily: towFont.serif, fontSize: 12.5, color: TOW.ink, lineHeight: 1.45 }}>
+          These passwords are stored <b>readable</b> in this browser and are shown here on request. Only
+          ever put throwaway test accounts in this list — never another player’s account.
+        </div>
+      </div>
+
+      {accounts.length === 0 ? (
+        <div style={{ ...body, fontStyle: 'italic', marginBottom: 12 }}>No test accounts yet.</div>
+      ) : (
+        <div style={{ marginBottom: 12 }}>
+          {accounts.map((a) => {
+            const on = a.email.trim().toLowerCase() === mail;
+            const zichtbaar = toon === a.email;
+            return (
+              <div key={a.email} style={{ border: `1px solid ${on ? (a.eigen ? TOW.goldDeep : AMBER) : TOW.line}`, background: on ? 'rgba(192,122,30,0.08)' : TOW.cardLt, borderRadius: 10, padding: '9px 11px', marginBottom: 6 }}>
+                <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
+                  <span style={{ flex: 1, minWidth: 0, fontFamily: towFont.display, fontWeight: 600, fontSize: 14, color: TOW.ink, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                    {a.label}{a.eigen ? ' · own account' : ''}
+                  </span>
+                  {on && <span style={{ ...eb, fontSize: 7.5, color: a.eigen ? TOW.goldDeep : AMBER, flexShrink: 0 }}>Active</span>}
+                </div>
+                <div style={{ fontFamily: towFont.serif, fontSize: 12, color: TOW.muted, marginTop: 2, overflow: 'hidden', textOverflow: 'ellipsis' }}>{a.email}</div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 7 }}>
+                  <code style={{ flex: 1, minWidth: 0, fontFamily: towFont.serif, fontSize: 12.5, color: zichtbaar ? TOW.ink : TOW.muted, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                    {zichtbaar ? a.password : '•'.repeat(Math.min(14, Math.max(6, a.password.length)))}
+                  </code>
+                  <button onClick={() => setToon(zichtbaar ? null : a.email)} style={{ ...ghostBtn, flexShrink: 0, padding: '5px 10px', fontSize: 12 }}>
+                    {zichtbaar ? 'Hide' : 'Show'}
+                  </button>
+                </div>
+                <div style={{ display: 'flex', gap: 6, marginTop: 8, flexWrap: 'wrap' }}>
+                  <button
+                    disabled={on || !!busy}
+                    onClick={() => void wissel(a)}
+                    style={{ ...goldBtn, padding: '7px 14px', fontSize: 12.5, opacity: on || busy ? 0.5 : 1, cursor: on || busy ? 'default' : 'pointer' }}
+                  >
+                    {busy === a.email ? 'Switching…' : on ? 'Signed in' : 'Switch'}
+                  </button>
+                  <button
+                    disabled={!!busy}
+                    onClick={() => { verwijderTestAccount(a.email); if (toon === a.email) setToon(null); }}
+                    style={{ ...ghostBtn, padding: '7px 12px', fontSize: 12.5, color: TOW.muted, borderColor: TOW.line, opacity: busy ? 0.5 : 1 }}
+                  >
+                    Remove
+                  </button>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+
+      {/* Toevoegen */}
+      <div style={{ ...eb, fontSize: 8.5, color: TOW.goldDeep, marginBottom: 6 }}>Add an account</div>
+      <input value={label} onChange={(e) => setLabel(e.target.value)} placeholder="Label (e.g. Player 2)" style={{ ...inputStyle, marginBottom: 6 }} />
+      <input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" autoComplete="off" style={{ ...inputStyle, marginBottom: 6 }} />
+      <input value={pass} onChange={(e) => setPass(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && voegToe()} placeholder="Password" autoComplete="off" style={{ ...inputStyle, marginBottom: 6 }} />
+      <label style={{ display: 'flex', alignItems: 'center', gap: 7, marginBottom: 9, cursor: 'pointer' }}>
+        <input type="checkbox" checked={eigen} onChange={(e) => setEigen(e.target.checked)} />
+        <span style={{ fontFamily: towFont.serif, fontSize: 12.5, color: TOW.parchDim }}>This is my own account (no “testing as” warning)</span>
+      </label>
+      <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+        <button style={{ ...goldBtn, padding: '9px 16px', fontSize: 13.5, opacity: email.trim() && pass ? 1 : 0.5 }} disabled={!email.trim() || !pass} onClick={voegToe}>
+          Add account
+        </button>
+        <button style={{ ...ghostBtn, padding: '9px 14px', fontSize: 13 }} onClick={seed}>
+          Add the three campaign test accounts
+        </button>
+      </div>
+      {error && <div style={{ ...body, color: TOW.blood, marginTop: 10 }}>{error}</div>}
+      {herladen && (
+        <div style={{ marginTop: 10 }}>
+          <div style={{ ...body, color: AMBER, marginBottom: 6 }}>
+            Signed in — this browser didn’t reload by itself. One tap finishes the switch.
+          </div>
+          <button style={{ ...goldBtn, padding: '9px 16px', fontSize: 13.5 }} onClick={() => window.location.replace(window.location.href)}>
+            Reload now
+          </button>
+        </div>
+      )}
+      <div style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 11, color: TOW.faint, marginTop: 10, lineHeight: 1.45 }}>
+        Switching puts this device on the new account’s own list sync. If you used a self-chosen sync
+        password before, set it again under “Sync army lists” when you’re done testing.
       </div>
     </div>
   );

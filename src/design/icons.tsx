@@ -162,6 +162,21 @@ export function CometIcon({ size, color = 'currentColor', sw = 1.7, style, title
   );
 }
 
+// Two arrows passing each other — switching between accounts. Deliberately outside IconId: that
+// record is the nav-tab family, and this is a tool that only appears when test accounts exist.
+export function SwitchIcon({ size, color = 'currentColor', sw = 1.7, style, title }: IconProps) {
+  return (
+    <Svg size={size} style={style} title={title}>
+      <g stroke={color} strokeWidth={sw} strokeLinecap="round" strokeLinejoin="round">
+        <path d="M4.5 9H17" />
+        <path d="M13.6 5.4 17.2 9 13.6 12.6" />
+        <path d="M19.5 15H7" />
+        <path d="M10.4 11.4 6.8 15 10.4 18.6" />
+      </g>
+    </Svg>
+  );
+}
+
 export const ICONS: Record<IconId, (p: IconProps) => React.ReactElement> = {
   turns: TurnsIcon,
   rulebook: RulebookIcon,

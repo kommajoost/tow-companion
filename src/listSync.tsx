@@ -2,6 +2,7 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useRef, use
 import { usePersistentState } from './store';
 import { accountSyncKey, makeSyncKey, pullLists, pushLists, type CloudLists } from './lib/listSync';
 import { useAuth } from './lib/auth';
+import { testSwitchBezig } from './lib/testAccounts';
 
 // Keeps `tow:lists` in sync across a player's devices:
 //  • signed in → automatically, on a key derived from the account (nothing to set up);
@@ -132,6 +133,10 @@ export function ListSyncProvider({ children }: { children: ReactNode }) {
   // On mount and whenever the key changes: reconcile with the cloud.
   useEffect(() => {
     let cancelled = false;
+    // Middenin een testaccount-wissel: de lokale lijsten zijn dan al gewist en de sleutel is al van
+    // het nieuwe account. Zou de seed-tak hier lopen, dan kreeg het nieuwe account de lijsten van het
+    // vorige. De wissel herlaadt de pagina, dus deze verzoening gebeurt zo meteen alsnog — schoon.
+    if (testSwitchBezig()) return;
     if (!key) { setStatus('off'); ready.current = true; lastPushed.current = null; return; }
     ready.current = false;
     setStatus('syncing');
@@ -198,6 +203,7 @@ export function ListSyncProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     if (!key || !ready.current) return;
     if (geblokkeerd.current) return; // onbeantwoorde botsing — niets overschrijven
+    if (testSwitchBezig()) return;   // accountwissel loopt — niet met halve staat naar de cloud
     if (localSnap === lastPushed.current) return;
     const t = setTimeout(async () => {
       setStatus('syncing');

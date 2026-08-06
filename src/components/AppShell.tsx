@@ -11,6 +11,7 @@ import { SettingsMode } from './SettingsMode';
 import { NavRail } from './NavRail';
 import { CeledonTour } from './CeledonTour';
 import { CeledonLoginDialog } from './CeledonLoginDialog';
+import { TestAccountSwitcher } from './TestAccountSwitcher';
 import { TowIcon, type IconId } from '../design/icons';
 import { useBackClose } from '../lib/backStack';
 
@@ -222,6 +223,8 @@ export function AppShell() {
             </button>
           );
         })}
+        {/* Testaccount-switcher: alleen zichtbaar zodra er testaccounts geconfigureerd zijn. */}
+        <TestAccountSwitcher placement="tabbar" />
       </nav>
       <CeledonTour />
       <CeledonLoginDialog

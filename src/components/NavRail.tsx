@@ -1,6 +1,7 @@
 import { TOW, towFont } from '../design/tow';
 import { LogoMark } from './LogoMark';
 import { TurnsIcon, RulebookIcon, GameIcon, ArmyIcon, SettingsIcon } from '../design/icons';
+import { TestAccountSwitcher } from './TestAccountSwitcher';
 
 // Global icon rail shown on wide screens (replaces the bottom tab bar on laptop/tablet).
 // A slim deeper-parchment column: emblem → Home at the top, the four main sections, and
@@ -72,6 +73,8 @@ export function NavRail({ tab, onTab, onHome }: { tab: NavTab; onTab: (t: NavTab
       ))}
 
       <div style={{ marginTop: 'auto', width: 40, height: 1, background: TOW.line, margin: 'auto auto 8px' }} />
+      {/* Alleen zichtbaar zodra er testaccounts in Settings staan. */}
+      <TestAccountSwitcher placement="rail" />
       <RailItem tour="rail-settings" active={tab === 'settings'} label="Settings" icon={<SettingsIcon size={21} color={tab === 'settings' ? TOW.goldDeep : mutedIcon} />} onClick={() => onTab('settings')} />
     </div>
   );
