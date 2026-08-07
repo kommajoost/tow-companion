@@ -174,6 +174,10 @@ export async function wisselNaarTestAccount(acc: TestAccount): Promise<WisselRes
       }
     }
 
+    // Vertrekken we van de EIGEN login? Bewaar die sessie dan eerst — "Your account" in de switcher
+    // herstelt haar straks met één tik, zonder dat het echte wachtwoord hier hoeft te staan (07-08).
+    await stashEigenSessie();
+
     // Alleen deze browser uitloggen: een globale signOut zou ook je telefoon uit dit account gooien.
     try { await supabase.auth.signOut({ scope: 'local' }); } catch { /* al uitgelogd is prima */ }
 
@@ -199,6 +203,82 @@ export async function wisselNaarTestAccount(acc: TestAccount): Promise<WisselRes
   } catch (e) {
     bezig = false;
     return { error: e instanceof Error ? e.message : 'Could not switch accounts.' };
+  }
+}
+
+// ---- De eigen sessie (07-08): terug zonder je echte wachtwoord op te slaan ----------------------
+// Bij elke wissel wég van een niet-test-login stashen we de sessie-tokens; "Your account" in de
+// switcher herstelt ze via setSession. Refresh-tokens zijn eenmalig: na een geslaagd herstel wordt
+// de stash ververst met het nieuwe paar. Verlopen (te lang weg)? Dan eerlijk terug naar Account.
+
+const EIGEN_SESSIE_KEY = 'tow-eigen-sessie';
+
+export interface EigenSessie { email: string; access: string; refresh: string }
+
+/** De bewaarde eigen sessie, of null. */
+export function eigenSessie(): EigenSessie | null {
+  const d = getPersisted<unknown>(EIGEN_SESSIE_KEY, null) as Record<string, unknown> | null;
+  if (!d || typeof d.email !== 'string' || typeof d.access !== 'string' || typeof d.refresh !== 'string') return null;
+  return { email: d.email, access: d.access, refresh: d.refresh };
+}
+
+/** Bewaar de HUIDIGE sessie als "eigen" — alleen als die geen (niet-eigen) testaccount is. */
+async function stashEigenSessie(): Promise<void> {
+  try {
+    const { data } = await supabase.auth.getSession();
+    const s = data.session;
+    const email = (s?.user?.email ?? '').trim();
+    if (!s?.access_token || !s.refresh_token || !email) return;
+    const rij = vindTestAccount(email);
+    if (rij && !rij.eigen) return;
+    setPersisted<EigenSessie>(EIGEN_SESSIE_KEY, { email, access: s.access_token, refresh: s.refresh_token });
+  } catch { /* best-effort */ }
+}
+
+/** Terug naar de eigen login: dezelfde veilige wissel-flow, maar met de bewaarde sessie i.p.v. een
+ *  wachtwoord. */
+export async function wisselNaarEigenSessie(): Promise<WisselResultaat> {
+  if (bezig) return { error: 'A switch is already running.' };
+  const es = eigenSessie();
+  if (!es) return { error: 'No saved sign-in for your own account — sign in once under Account.' };
+  bezig = true;
+  try {
+    const lijsten = getPersisted<unknown[]>('tow:lists', []);
+    const groepen = getPersisted<unknown[]>('tow:list-groups', []);
+    const oudeKey = getPersisted<string | null>('tow:syncKey', null);
+    if (oudeKey && Array.isArray(lijsten) && lijsten.length > 0) {
+      try {
+        await pushLists(oudeKey, lijsten, groepen);
+      } catch {
+        bezig = false;
+        return { error: 'Could not save the current lists to the cloud first (offline?) — nothing was changed.' };
+      }
+    }
+
+    try { await supabase.auth.signOut({ scope: 'local' }); } catch { /* al uitgelogd is prima */ }
+
+    const { data, error } = await supabase.auth.setSession({ access_token: es.access, refresh_token: es.refresh });
+    if (error || !data.session) {
+      bezig = false;
+      setPersisted<EigenSessie | null>(EIGEN_SESSIE_KEY, null);
+      return { error: 'Your saved session has expired — sign in again under Account.' };
+    }
+    // setSession roteert het refresh-token: de stash meteen verversen, anders is de volgende keer dood.
+    setPersisted<EigenSessie>(EIGEN_SESSIE_KEY, {
+      email: (data.session.user.email ?? es.email).trim(),
+      access: data.session.access_token,
+      refresh: data.session.refresh_token,
+    });
+
+    wisAccountStaat();
+    setPersisted<boolean>('tow:syncViaAccount', true);
+    setPersisted<string | null>('tow:syncKey', accountSyncKey(data.session.user.id));
+    herlaad();
+    await new Promise((r) => window.setTimeout(r, 2500));
+    return { error: null, herladenNodig: true };
+  } catch (e) {
+    bezig = false;
+    return { error: e instanceof Error ? e.message : 'Could not switch back.' };
   }
 }
 

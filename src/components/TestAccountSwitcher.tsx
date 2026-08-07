@@ -4,7 +4,8 @@ import { SwitchIcon } from '../design/icons';
 import { useAuth } from '../lib/auth';
 import { useBackClose } from '../lib/backStack';
 import {
-  useTestAccounts, wisselNaarTestAccount, testAccountUitloggen, type TestAccount,
+  useTestAccounts, wisselNaarTestAccount, wisselNaarEigenSessie, testAccountUitloggen, eigenSessie,
+  type TestAccount,
 } from '../lib/testAccounts';
 
 // De testaccount-switcher in de vaste navigatie: op een breed scherm in de icon-rail, op de telefoon
@@ -53,6 +54,10 @@ export function TestAccountSwitcher({ placement }: { placement: Placement }) {
   const mail = (user?.email || '').trim().toLowerCase();
   const actief = accounts.find((a) => a.email.trim().toLowerCase() === mail) ?? null;
   const testing = !!actief && !actief.eigen;
+  // De eigen login (07-08): de sessie die bij de eerste wissel is bewaard, of de huidige sessie als
+  // die geen (niet-eigen) testaccount is. Zo staat je gewone account áltijd in de lijst.
+  const eigenStash = eigenSessie();
+  const eigenActief = !!mail && (!actief || actief.eigen === true);
 
   const toggle = () => {
     if (open) { setOpen(false); return; }
@@ -79,6 +84,15 @@ export function TestAccountSwitcher({ placement }: { placement: Placement }) {
     if (busy) return;
     setBusy('*'); setError(null); setHerladen(false);
     const { error: err, herladenNodig } = await testAccountUitloggen();
+    if (err) { setError(err); setBusy(null); }
+    else if (herladenNodig) setHerladen(true);
+  };
+
+  /** Terug naar de eigen login via de bewaarde sessie (geen wachtwoord nodig). */
+  const naarEigen = async () => {
+    if (busy) return;
+    setBusy('eigen'); setError(null); setHerladen(false);
+    const { error: err, herladenNodig } = await wisselNaarEigenSessie();
     if (err) { setError(err); setBusy(null); }
     else if (herladenNodig) setHerladen(true);
   };
@@ -147,6 +161,33 @@ export function TestAccountSwitcher({ placement }: { placement: Placement }) {
               <div style={{ fontFamily: towFont.serif, fontSize: 11.5, color: TOW.muted, marginBottom: 8, overflow: 'hidden', textOverflow: 'ellipsis' }}>
                 {user.email}
               </div>
+            )}
+
+            {/* "Your account" bovenaan: de bewaarde eigen sessie — één tik terug, zonder wachtwoord. */}
+            {(eigenStash || eigenActief) && (
+              <button
+                role="menuitem"
+                disabled={eigenActief || !!busy}
+                onClick={() => void naarEigen()}
+                style={{
+                  width: '100%', display: 'flex', alignItems: 'center', gap: 8, textAlign: 'left',
+                  padding: '9px 10px', marginBottom: 4, borderRadius: 9,
+                  cursor: eigenActief || busy ? 'default' : 'pointer',
+                  border: `1px solid ${eigenActief ? TOW.goldDeep : TOW.line}`,
+                  background: eigenActief ? 'rgba(138,108,48,0.14)' : TOW.cardLt,
+                  opacity: busy && busy !== 'eigen' ? 0.5 : 1,
+                }}
+              >
+                <span aria-hidden style={{ width: 12, flexShrink: 0, color: eigenActief ? TOW.goldDeep : 'transparent', fontSize: 13, lineHeight: 1 }}>✓</span>
+                <span style={{ flex: 1, minWidth: 0 }}>
+                  <span style={{ display: 'block', fontFamily: towFont.display, fontWeight: 600, fontSize: 13.5, color: TOW.ink, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                    Your account
+                  </span>
+                  <span style={{ display: 'block', fontFamily: towFont.serif, fontSize: 11, color: TOW.muted, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                    {busy === 'eigen' ? 'Signing in…' : eigenActief ? mail : eigenStash?.email}
+                  </span>
+                </span>
+              </button>
             )}
 
             {accounts.map((a) => {
