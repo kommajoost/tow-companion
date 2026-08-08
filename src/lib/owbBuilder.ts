@@ -660,6 +660,29 @@ export interface Validation {
 // Tally points per category and check them against the composition's limits (percent of the points
 // target) plus each unit's min/max model count. Pass `itemsData` (parsed magic-items.json) to fold
 // magic-item points into the total/category tallies; omit it and they count 0.
+/** OWB's `src/utils/rules.js`, gesynchroniseerd naar public/owb/composition-rules.json.
+ *
+ *  Per compositie en categorie de 0-X-beperkingen in GESTRUCTUREERDE vorm. De catalogus draagt
+ *  dezelfde beperkingen als proza ("0-2 war machines chosen from the following list per 1000 points"),
+ *  maar daar een parser op bouwen is raden — dit is de bron waar OWB zelf mee valideert. */
+export interface CompUnitRule {
+  ids: string[];
+  min?: number;
+  max?: number;
+  /** "per N points": max × floor(listPoints / N). */
+  points?: number;
+  /** Voorwaardelijke velden. Zie `dwingMaxAf` voor waarom die (meestal) overgeslagen worden. */
+  requires?: string[];
+  requiresGeneral?: boolean;
+  requiresType?: unknown;
+  requiredByType?: unknown;
+  requiresMounted?: unknown;
+  requiresOption?: unknown;
+  requiresMagicItem?: unknown;
+  perUnit?: unknown;
+}
+export type CompositionRules = Record<string, Partial<Record<string, { units?: CompUnitRule[] }>>>;
+
 export function validate(
   list: BuilderList,
   getUnit: (cat: Category, id: string) => OwbUnit | undefined,
@@ -677,6 +700,9 @@ export function validate(
      *  plafond (die passen alleen binnen de gewone puntencap). Komt uit de campagne-server. */
     groei?: Record<string, { max: number; basis: number; introFase: number; staffel: number; minModellen?: number | null; laatsteFase?: number | null }>;
   },
+  /** De 0-X-beperkingen (composition-rules.json). ACHTERAAN op purpose: elke bestaande positionele
+   *  aanroep blijft zo werken, en zonder die data wordt er simpelweg niet op getoetst. */
+  compRules?: CompositionRules,
 ): Validation {
   const limits = limitsFor(list.rule, list.composition);
   const target = campaignMods?.pointsCap ?? (list.points || 0);
@@ -793,6 +819,18 @@ export function validate(
     }
   }
 
+  // ---- Restriction notes: het RESTANT dat de gestructureerde regels niet dekken ----------------
+  // De hoofdmoot zit in het blok hieronder: OWB's rules.js, 312 max-regels, gestructureerd.
+  //
+  // Dit blok leest de PROZA-notitie van de catalogus en dekt wat daar niet in staat. Eerlijk gemeten
+  // (04-08) is dat wéinig: 26 units hebben een 0-X-notitie zonder gestructureerde regel, en de parser
+  // kan er daarvan precies ÉÉN afdwingen — "0-1 Dwarf Cart per 1000 points" bij slayer-host. De rest
+  // is voorwaardelijk ("per King or Thane taken", "if your army includes Ungrim Ironfist") of staat in
+  // een vorm die de parser niet leest ("0-1 unit of Empire Knights Panther").
+  //
+  // Het blijft staan omdat één afgedwongen regel meer is dan geen, en omdat de skip hieronder de
+  // dubbele melding wegneemt die ontstond toen beide controles langs elkaar heen werkten. Wie hier
+  // meer uit wil halen: dat zit in de parser, niet in een tweede bron.
   // ---- Restriction notes ("0-1 per 1000 points") ------------------------------------------------
   // The catalogue's own per-entry restrictions, which the builder showed but never checked. Names in
   // a note are resolved against the units ACTUALLY IN THE LIST: an entry that is not in the list
@@ -813,8 +851,18 @@ export function validate(
       return tails.length === 1 ? tails[0][1] : undefined;
     };
 
+    // Units die de gestructureerde regels van DEZE compositie al toetsen — hier overslaan.
+    const structGedekt = new Set<string>();
+    for (const b of Object.values(compRules?.[list.composition] ?? {})) {
+      for (const u of b?.units ?? []) {
+        if (u.max == null || (u.requires && !u.requiresGeneral)) continue;
+        for (const id of u.ids ?? []) structGedekt.add(id);
+      }
+    }
+
     const seen = new Set<string>();
     for (const r of rows) {
+      if (structGedekt.has(r.unit.id)) continue;
       for (const lim of parseCompNote(unitNote(r.unit, list.composition)).limits) {
         // A "per N points" limit says nothing without a points target — and floor(0 / 1000) = 0 would
         // otherwise flag every restricted entry in a list that has no target set.
@@ -843,6 +891,39 @@ export function validate(
         warnings.push(message);
         for (const x of involved) entryWarnings.push({ uid: x.e.uid, message });
       }
+    }
+  }
+
+  // ---- 0-X beperkingen ("0-1 Duke", "0-2 war machines per 1000 points") -------------------------
+  // Uit OWB's eigen `rules.js`, met exact hun semantiek (src/utils/validation.js):
+  //   • max = points ? floor(listPoints / points) * max : max
+  //   • de check wordt OVERGESLAGEN als de regel `requires` heeft zonder `requiresGeneral` — dat zijn
+  //     voorwaardelijke opties ("0-1 unit of X per Y taken") die pas gelden als aan de voorwaarde is
+  //     voldaan, en die voorwaarde modelleren we (nog) niet. Meewarnen zou dan onterecht zijn.
+  //   • BATTLE MARCH: daar vervalt de per-punten-max helemaal, want die lijst mag onder de 1.000
+  //     punten juist één zo'n optie hebben. In plaats daarvan mag je er maar ÉÉN in je hele lijst.
+  if (compRules && target > 0) {
+    const comp = compRules[list.composition];
+    const isBattleMarch = rule === 'battle-march';
+    let nul_x_gebruikt = 0;
+    for (const [, blok] of Object.entries(comp ?? {})) {
+      for (const r of blok?.units ?? []) {
+        if (r.max == null || !Array.isArray(r.ids) || !r.ids.length) continue;
+        if (r.requires && !r.requiresGeneral) continue;
+        const inLijst = rows.filter((x) => r.ids.includes(x.e.unitId));
+        if (!inLijst.length) continue;
+        const max = r.points ? Math.floor(target / r.points) * r.max : r.max;
+        if (isBattleMarch && r.points) { nul_x_gebruikt += 1; continue; }
+        if (inLijst.length > max) {
+          const namen = [...new Set(inLijst.map((x) => x.unit.name_en))].join(', ');
+          const perPt = r.points ? ` (0-${r.max} per ${r.points} pts)` : '';
+          warnings.push(`${namen}: ${inLijst.length} taken, ${max} allowed${perPt}`);
+          for (const x of inLijst) warnEntry(x.e.uid, `Over the 0-${r.max} limit${perPt}`);
+        }
+      }
+    }
+    if (isBattleMarch && nul_x_gebruikt > 1) {
+      warnings.push(`Battle March allows a single "0-X per 1,000 points" option — you have ${nul_x_gebruikt}`);
     }
   }
 

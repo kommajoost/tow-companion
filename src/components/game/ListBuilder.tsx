@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { usePersistentState } from '../../store';
 import { TOW, towFont, engraved } from '../../design/tow';
-import { validate, type OwbArmy, type OwbUnit, type BuilderList, type MagicItemsData } from '../../lib/owbBuilder';
+import { validate, type OwbArmy, type OwbUnit, type BuilderList, type MagicItemsData, type CompositionRules } from '../../lib/owbBuilder';
 import { compName } from '../../lib/armies';
 import { troopTypeName } from '../../lib/troopTypes';
 import { BuilderWorkspace } from './BuilderWorkspace';
@@ -84,6 +84,9 @@ export function ListBuilder() {
   const [metaByArmy, setMetaByArmy] = useState<Record<string, ArmyMeta>>({});
   const [catalogues, setCatalogues] = useState<Record<string, OwbArmy>>({}); // slug → catalogue (on demand)
   const [itemsData, setItemsData] = useState<MagicItemsData | null>(null);
+  /** De 0-X-beperkingen per compositie (OWB's rules.js, gesynchroniseerd). Null tot geladen: dan
+   *  wordt er simpelweg nog niet op getoetst in plaats van ten onrechte te waarschuwen. */
+  const [compRules, setCompRules] = useState<CompositionRules | null>(null);
   const [statIdx, setStatIdx] = useState<Record<string, { stats?: StatRow[]; troopType?: string }> | null>(statIndexCache);
   const [baseMountText, setBaseMountText] = useState<MountText>({});
   // Magic-item flavour + rules text, keyed by item slug. The rule SCRAPE has no page for magic items at
@@ -114,6 +117,7 @@ export function ListBuilder() {
     fetch(`${BASE}owb/index.json`).then((r) => r.json()).then((idx) => {
       if (Array.isArray(idx?.armies)) setArmies(idx.armies.map((a: { slug: string; name: string }) => ({ slug: a.slug, name: a.name })));
     }).catch(() => {});
+    fetch(`${BASE}owb/composition-rules.json`).then((r) => r.json()).then((r) => setCompRules(r)).catch(() => {});
     fetch(`${BASE}owb/the-old-world.json`).then((r) => r.json()).then((m) => {
       const map: Record<string, ArmyMeta> = {};
       for (const a of (m.armies ?? [])) map[a.id] = {
@@ -559,6 +563,7 @@ export function ListBuilder() {
           compName={(c) => compName(c, active.army)}
           itemsData={activeItemsData ?? undefined}
           armyItemLists={meta?.items ?? []}
+        compRules={compRules ?? undefined}
           statIdx={activeStatIdx}
           // The desktop rail no longer carries a list-switcher: switching or creating a list belongs on
           // the lists overview (reachable via "‹ LISTS" in the builder header), not in the left column

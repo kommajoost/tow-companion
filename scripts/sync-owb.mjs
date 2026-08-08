@@ -37,6 +37,25 @@ async function getJson(path) {
   return res.json();
 }
 
+/** OWB's composition rules live in a JS module, niet in JSON: `export const rules = { … }`.
+ *
+ *  Daar staan de 0-X-beperkingen in gestructureerde vorm — per compositie en categorie een
+ *  `units: [{ ids, min, max, points, requires… }]`. Wij dwongen die tot 04-08 niet af omdat we alleen
+ *  de PROZA-notitie uit de catalogus hadden ("0-1 Duke", "0-2 war machines … per 1000 points"), en
+ *  daar een parser op bouwen is raden. Dit is de bron zelf.
+ *
+ *  Omzetten door de module te importeren via een data-URL: geen eval van vreemde tekst, gewoon de
+ *  ES-module laten laden zoals de browser dat ook zou doen. Faalt dat, dan is dat een harde fout —
+ *  stil doorgaan zou betekenen dat de app een lijst goedkeurt die het niet is. */
+async function getRulesModule(path) {
+  const res = await fetch(`${RAW}/${path}`);
+  if (!res.ok) throw new Error(`${path} → HTTP ${res.status}`);
+  const src = await res.text();
+  const mod = await import(`data:text/javascript;base64,${Buffer.from(src).toString('base64')}`);
+  if (!mod.rules || typeof mod.rules !== 'object') throw new Error(`${path} → geen \`rules\` export`);
+  return mod.rules;
+}
+
 async function main() {
   await mkdir(OUT, { recursive: true });
 
@@ -44,6 +63,17 @@ async function main() {
   const rulesIndex = await getJson('src/components/rules-index/rules-index-export.json');
   await writeFile(join(OUT, 'rules-index.json'), JSON.stringify(rulesIndex));
   console.log(`rules-index.json  (${Object.keys(rulesIndex).length} entries)`);
+
+  // Composition rules: de 0-X-beperkingen per compositie (zie getRulesModule).
+  const compRules = await getRulesModule('src/utils/rules.js');
+  await writeFile(join(OUT, 'composition-rules.json'), JSON.stringify(compRules));
+  {
+    let n = 0;
+    for (const comp of Object.values(compRules)) {
+      for (const cat of Object.values(comp)) if (cat && typeof cat === 'object') n += (cat.units ?? []).length;
+    }
+    console.log(`composition-rules.json  (${Object.keys(compRules).length} compositions, ${n} unit rules)`);
+  }
 
   // Game metadata: per-army composition options, allies and mercenaries rules.
   const meta = await getJson('src/assets/the-old-world.json');

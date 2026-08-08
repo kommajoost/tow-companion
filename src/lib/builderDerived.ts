@@ -100,11 +100,13 @@ export function deriveList(
   army: OwbArmy,
   itemsData?: MagicItemsData,
   campaignMods?: Parameters<typeof validate>[3],
+  /** De 0-X-beperkingen; zonder deze wordt er niet op getoetst (zie validate). */
+  compRules?: Parameters<typeof validate>[4],
 ): DerivedList {
   const getUnit = (cat: Category, id: string): OwbUnit | undefined => army?.[cat]?.find((u) => u.id === id);
 
   // ── the one and only points/limits computation ────────────────────────────────────────────────
-  const v = validate(list, getUnit, itemsData, campaignMods);
+  const v = validate(list, getUnit, itemsData, campaignMods, compRules);
   const totalPoints = v.total;
   // The points target. Clamped at 0 so a missing/NaN/negative target can never produce a negative
   // percentage denominator; `validate()` itself already treats a falsy target as 0.

@@ -56,6 +56,8 @@ export interface BuilderFlowProps {
   compName: (comp: string) => string;
   itemsData?: MagicItemsData;
   armyItemLists: string[];
+  /** De 0-X-beperkingen (public/owb/composition-rules.json), doorgegeven door ListBuilder. */
+  compRules?: Parameters<typeof deriveList>[4];
   /** The rules-index (`public/owb/rules-index.json`), for troop-type lookups in the picker. Optional:
    *  without it the whisper line simply omits the troop type rather than guessing one.
    *  `stats` is declared alongside `troopType` because entries carry both and callers type the index by
@@ -92,7 +94,7 @@ const ruleLabel = (slug: string): string =>
 // still to come. `statsFor` in particular is redundant here because `UnitOptions` resolves statlines
 // from the rules-index itself.
 export function BuilderFlow({
-  list, name, onUpdate, onBack, army, armyName, compName, itemsData, armyItemLists,
+  list, name, onUpdate, onBack, army, armyName, compName, itemsData, armyItemLists, compRules,
   statsFor, statIdx, onShowInfo,
   onEditArmyField, onImportOwb, onExport, onPrint,
 }: BuilderFlowProps): React.JSX.Element {
@@ -169,7 +171,7 @@ export function BuilderFlow({
     [campaignCtx, list.entries],
   );
 
-  const derived = useMemo(() => deriveList(list, army, itemsData, campaignMods), [list, army, itemsData, campaignMods]);
+  const derived = useMemo(() => deriveList(list, army, itemsData, campaignMods, compRules), [list, army, itemsData, campaignMods, compRules]);
 
   /** The single mutation path handed to every screen. Always a functional update, and it spreads the
    *  existing list so campaign/group/sync fields we know nothing about survive — dropping them would
