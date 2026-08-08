@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { usePersistentState } from '../../store';
 import { TOW, towFont, engraved } from '../../design/tow';
-import { validate, type OwbArmy, type BuilderList, type MagicItemsData } from '../../lib/owbBuilder';
+import { validate, type OwbArmy, type OwbUnit, type BuilderList, type MagicItemsData } from '../../lib/owbBuilder';
 import { compName } from '../../lib/armies';
 import { troopTypeName } from '../../lib/troopTypes';
 import { BuilderWorkspace } from './BuilderWorkspace';
@@ -56,7 +56,17 @@ const normMountProfile = (s: string) => (s || '').toLowerCase().replace(/\{[^}]*
   .replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim();
 
 // Per-army metadata from the-old-world.json: which compositions it offers + which magic-item lists.
-interface ArmyMeta { comps: string[]; items: string[] }
+/** Eén huurlingen-bron: units die je uit `army` mag inhuren. */
+interface MercBron { army: string; units: string[] }
+interface ArmyMeta {
+  comps: string[];
+  items: string[];
+  /** Welke huurlingen deze army per COMPOSITIE mag inhuren — OWB's eigen veld uit
+   *  the-old-world.json, dat we tot 04-08 wegggooiden bij het inlezen. De units zelf staan gewoon in
+   *  de catalogus van hun eigen leger; dit is puur een verwijzing. Vandaar dat een Dark Elves-speler
+   *  geen Badlands Ogre Bulls kon toevoegen terwijl de regels dat wel toestaan. */
+  mercenaries: Record<string, MercBron[]>;
+}
 
 export function ListBuilder() {
   // ── The redesigned builder is now the DEFAULT ─────────────────────────────────────────────────
@@ -106,7 +116,11 @@ export function ListBuilder() {
     }).catch(() => {});
     fetch(`${BASE}owb/the-old-world.json`).then((r) => r.json()).then((m) => {
       const map: Record<string, ArmyMeta> = {};
-      for (const a of (m.armies ?? [])) map[a.id] = { comps: Array.isArray(a.armyComposition) ? a.armyComposition : [a.id], items: Array.isArray(a.items) ? a.items : [] };
+      for (const a of (m.armies ?? [])) map[a.id] = {
+        comps: Array.isArray(a.armyComposition) ? a.armyComposition : [a.id],
+        items: Array.isArray(a.items) ? a.items : [],
+        mercenaries: (a.mercenaries && typeof a.mercenaries === 'object') ? a.mercenaries : {},
+      };
       setMetaByArmy(map);
     }).catch(() => {});
     fetch(`${BASE}owb/magic-items.json`).then((r) => r.json()).then(setItemsData).catch(() => setItemsData(null));
@@ -292,6 +306,49 @@ export function ListBuilder() {
     return () => { cancelled = true; };
   }, [activeArmySlug, catalogues]);
 
+  // ── Huurlingen ─────────────────────────────────────────────────────────────────────────────────
+  // Een huurling staat in de catalogus van ZIJN EIGEN leger; de metadata zegt alleen wie hem mag
+  // inhuren, per compositie. Dus eerst die bron-legers binnenhalen, en daarna de units erbij zoeken.
+  /** De bron-legers die de compositie van de open lijst nodig heeft. */
+  const mercBronnen = useMemo<MercBron[]>(() => {
+    if (!active) return [];
+    const perComp = metaByArmy[active.army]?.mercenaries;
+    return perComp?.[active.composition] ?? [];
+  }, [active, metaByArmy]);
+
+  useEffect(() => {
+    const need = Array.from(new Set(mercBronnen.map((b) => b.army))).filter((s) => s && !catalogues[s]);
+    if (!need.length) return;
+    let cancelled = false;
+    Promise.all(need.map((slug) =>
+      fetch(`${BASE}owb/${slug}.json`).then((r) => r.json()).then((c) => [slug, c] as const).catch(() => null)))
+      .then((paren) => {
+        if (cancelled) return;
+        const verse = paren.filter((p): p is readonly [string, OwbArmy] => !!p);
+        if (verse.length) setCatalogues((m) => ({ ...m, ...Object.fromEntries(verse) }));
+      });
+    return () => { cancelled = true; };
+  }, [mercBronnen, catalogues]);
+
+  /** De huurlingen-units zelf, opgezocht in het bron-leger. Een unit die (nog) niet te vinden is —
+   *  catalogus nog aan het laden, of een id dat OWB hernoemde — wordt overgeslagen: liever een
+   *  kortere lijst dan een rij die nergens op slaat. */
+  const mercUnits = useMemo(() => {
+    const uit: OwbUnit[] = [];
+    for (const bron of mercBronnen) {
+      const cat = catalogues[bron.army];
+      if (!cat) continue;
+      const alle = Object.values(cat).filter(Array.isArray).flat() as OwbUnit[];
+      for (const id of bron.units) {
+        const u = alle.find((x) => x && x.id === id);
+        // De naam van het bron-leger erbij: "Badlands Ogre Bulls" zegt niet dat je Orcs inhuurt, en
+        // in een lijst van drie huurlingen uit drie legers wil je dat wél weten.
+        if (u) uit.push(u);
+      }
+    }
+    return uit;
+  }, [mercBronnen, catalogues]);
+
   // Load the catalogue of every distinct army among the saved lists (for the "My lists" totals).
   useEffect(() => {
     const need = Array.from(new Set(lists.map((l) => l.army))).filter((s) => s && !catalogues[s]);
@@ -314,9 +371,21 @@ export function ListBuilder() {
   // Only patch when the overlay actually belongs to this army — a composition id is unique, but a
   // stale cache entry pointing at another faction would silently reprice the wrong units.
   const activeCatalogue = useMemo(() => {
-    if (!rawActiveCatalogue || !activeOverlay || activeOverlay.baseArmy !== activeArmySlug) return rawActiveCatalogue;
-    return applyOverlay(rawActiveCatalogue, activeOverlay);
-  }, [rawActiveCatalogue, activeOverlay, activeArmySlug]);
+    const basis = (!rawActiveCatalogue || !activeOverlay || activeOverlay.baseArmy !== activeArmySlug)
+      ? rawActiveCatalogue
+      : applyOverlay(rawActiveCatalogue, activeOverlay);
+    if (!basis || !mercUnits.length) return basis;
+    // De huurlingen als `mercenaries`-categorie erbij zetten in plaats van ergens apart. Die categorie
+    // BESTAAT al in de hele keten — picker-chip, 20%-limiet in validate(), punten, roster, export —
+    // dus alles werkt hierna vanzelf en er hoeft nergens anders iets van huurlingen te weten.
+    // Overschrijft niet: een leger dat ze zelf al in z'n catalogus heeft (Empire, O&G, Dwarfs) houdt
+    // die, en de metadata vult alleen aan wat er nog niet staat.
+    const bestaand = Array.isArray(basis.mercenaries) ? basis.mercenaries : [];
+    const ids = new Set(bestaand.map((u) => u.id));
+    const extra = mercUnits.filter((u) => !ids.has(u.id));
+    if (!extra.length) return basis;
+    return { ...basis, mercenaries: [...bestaand, ...extra] };
+  }, [rawActiveCatalogue, activeOverlay, activeArmySlug, mercUnits]);
   const activeItemsData = useMemo(() => {
     if (!itemsData || !activeOverlay || activeOverlay.baseArmy !== activeArmySlug) return itemsData;
     return applyOverlayItems(itemsData, activeOverlay);

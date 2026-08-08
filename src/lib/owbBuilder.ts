@@ -47,6 +47,13 @@ export interface OwbUnit {
   command?: OwbOption[]; equipment?: OwbOption[]; armor?: OwbOption[]; options?: OwbOption[];
   mounts?: OwbOption[]; lores?: string[]; specialRules?: { name_en?: string };
   items?: OwbItemSection[]; spellCount?: number;
+  /** A named/unique character (Settra, Orion, Galrauch …). Present in the catalogue but never read
+   *  until now; the promotion rules use it to keep unique characters out (they have no lighter
+   *  version and their profile is one-off). */
+  named?: boolean;
+  /** The unit's own restriction note, e.g. "0-1 Supreme Sorceress per 1000 points". The
+   *  composition-specific note in `armyComposition[<comp>].notes` overrides it — see `unitNote`. */
+  notes?: { name_en?: string };
   /** Per army-composition placement (from OWB): { <compId>: { category, notes } }. A unit's list
    *  category can differ per composition (e.g. State Troops are Core normally, Special for a knightly
    *  order), and a unit is only available in the compositions it lists. */
@@ -375,11 +382,35 @@ export const COMPOSITION_RULE_SLUGS: Record<string, string[]> = {
   'battle-march': ['mustering-a-battle-march'],
 };
 
-export function limitsFor(_rule: string): Record<Category, CatLimit> {
+/** Composities waar de MERCENARIES-grens afwijkt van de gebruikelijke 20%.
+ *
+ *  Uitgelezen uit de legerlijsten zelf (regel: "Mercenaries — Up to N% of your army's points value
+ *  may be spent on…"). De 20% stond hardgecodeerd voor iedereen, en dat klopte voor elf composities
+ *  niet — vooral de armies of infamy, die er ruimer in zitten. Alles wat hier niet staat is 20%. */
+export const MERCENARY_PERCENT: Record<string, number> = {
+  'jade-fleet': 33,
+  'renegade-crowns': 33,
+  'bretonnian-exiles': 25,
+  'nomadic-waaagh': 25,
+  'city-state-of-nuln': 25,
+  'royal-clan': 25,
+  'wolves-of-the-sea': 25,
+  'errantry-crusades': 25,
+  'heralds-of-darkness': 25,
+  'expeditionary-force': 25,
+  'troll-horde': 25,
+};
+
+export function limitsFor(_rule: string, composition?: string): Record<Category, CatLimit> {
   // The category percentage limits come from the Grand Army composition list and are the same under
   // every composition rule. The rule-specific restrictions (Grand Melee's 25%-per-single-unit and
   // wizard-level caps, Combined Arms' per-unit counts, Battle March's caps) are applied in validate().
-  return GRAND_ARMY;
+  //
+  // Eén uitzondering, en die hangt aan de ARMY COMPOSITION, niet aan de regel: sommige lijsten mogen
+  // meer aan huurlingen uitgeven dan de gebruikelijke 20%.
+  const merc = composition ? MERCENARY_PERCENT[composition] : undefined;
+  if (merc == null) return GRAND_ARMY;
+  return { ...GRAND_ARMY, mercenaries: { maxPercent: merc } };
 }
 
 const groupItems = (unit: OwbUnit, group: keyof OwbUnit): OwbOption[] =>
@@ -529,7 +560,7 @@ export function validate(
     groei?: Record<string, { max: number; basis: number; introFase: number; staffel: number; minModellen?: number | null; laatsteFase?: number | null }>;
   },
 ): Validation {
-  const limits = limitsFor(list.rule);
+  const limits = limitsFor(list.rule, list.composition);
   const target = campaignMods?.pointsCap ?? (list.points || 0);
   const byCategory = {} as Record<Category, CategoryTally>;
   for (const c of CATEGORIES) byCategory[c] = { points: 0, limit: limits[c], cap: null, floor: null, over: false, under: false };
