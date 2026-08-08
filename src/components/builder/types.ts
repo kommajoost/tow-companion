@@ -110,7 +110,7 @@ export interface PickerEntry {
   /** `addCost` exceeds the remaining points → dim to 0.42 and swap the whisper for the reason.
    *  NEVER disable the row: the spec is explicit that going over is reported, not enforced. */
   unaffordable: boolean;
-  /** The composition's restriction note (`unitCompNote`), when it has one. */
+  /** The restriction note that applies here (`unitNote`), when there is one. */
   note?: string;
 }
 

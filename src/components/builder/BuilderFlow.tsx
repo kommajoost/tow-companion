@@ -24,7 +24,7 @@ import { TOW, towFont } from '../../design/tow';
 import { getPersisted, setPersisted } from '../../store';
 import {
   CATEGORIES, COMPOSITION_RULES, entryPoints, selectedMagicItems, unitAllowedIn, unitCategoryFor,
-  unitBlocks, unitCompNote,
+  unitBlocks, unitNote,
   type BuilderList, type Category, type ListEntry, type MagicItemsData, type OwbArmy, type OwbUnit,
 } from '../../lib/owbBuilder';
 import { deriveList, optionSummary } from '../../lib/builderDerived';
@@ -259,7 +259,7 @@ export function BuilderFlow({
           minSize,
           troopType: troopTypeFor(unit.name_en) ?? '',
           unaffordable: addCost > derived.remainingPoints,
-          note: unitCompNote(unit, list.composition),
+          note: unitNote(unit, list.composition),
         });
       }
     }

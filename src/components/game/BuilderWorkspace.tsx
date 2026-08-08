@@ -7,7 +7,7 @@ import { useBackClose } from '../../lib/backStack';
 import { NaamDialoog } from './NaamDialoog';
 import {
   CATEGORIES, COMPOSITION_RULES, validate, entryPoints, unitBlocks, radioSelected, summaryLabels,
-  unitCategoryFor, unitAllowedIn, unitCompNote,
+  unitCategoryFor, unitAllowedIn, unitNote,
   subOptionGroups, toggleSubOption, setExclusiveSubOption,
   magicCategories, selectedMagicKeys, selectedMagicItems, toggleMagicItem, magicGroupSpent, magicWouldExceed, magicItemId,
   loadoutLabels, magicTypeLabel, selectedMountIndex, DEFAULT_MAGIC_BUDGET,
@@ -719,7 +719,7 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
       {(needle || tab !== 'register') && catalogUnits.map((u) => {
         const cat = baseCatOf(u);
         const n = countInList(u.id);
-        const note = unitCompNote(u, list.composition);
+        const note = unitNote(u, list.composition);
         return (
           <button key={u.id} onClick={() => onPick(u, cat)} style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 10, padding: '12px', borderRadius: 11, marginBottom: 7, border: `1px solid ${TOW.line}`, background: TOW.cardLt, cursor: 'pointer', textAlign: 'left' }}>
             <div style={{ flex: 1, minWidth: 0 }}>

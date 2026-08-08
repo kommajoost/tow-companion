@@ -37,9 +37,10 @@ import {
   DEFAULT_MAGIC_BUDGET, entryPoints, magicCategories, magicGroupSpent, magicItemId,
   magicWouldExceed, radioSelected, selectedMagicKeys, selectedMountIndex, setExclusiveSubOption,
   setStackCount, stackMax, stackTaken, subOptionGroups,
-  toggleMagicItem, toggleSubOption, unitBlocks, unitCategoryFor,
-  type Category, type ListEntry, type MagicCategory, type MagicItem, type OwbOption,
+  toggleMagicItem, toggleSubOption, unitBlocks, unitCategoryFor, validate,
+  type Category, type ListEntry, type MagicCategory, type MagicItem, type OwbOption, type OwbUnit,
 } from '../../lib/owbBuilder';
+import { planPromotion, promotionTargets, type PromotionTarget } from '../../lib/promotions';
 import { applyMountStatModifiers, mountStatModifiers } from '../../lib/mountModifiers';
 import { BUILDER, BudgetBar, fmt, HAIRLINE, SectionHeader, StatStrip, type BudgetSegment } from './primitives';
 import type { BuilderCtx } from './types';
@@ -336,6 +337,135 @@ const Chevron = ({ open }: { open: boolean }): React.JSX.Element => (
 );
 
 // ══════════════════════════════════════════════════════════════════════════════════════════════
+// Promote — a character grows into the heavier version of itself
+// ══════════════════════════════════════════════════════════════════════════════════════════════
+// "Promotion or Death" (AJ: The Razing of Westerland p. 25) lets a character be replaced by its
+// heavier counterpart between phases. The curated table of which-becomes-which and the whole re-map
+// live in `src/lib/promotions.ts`; this is only the confirmation in front of it.
+//
+// The confirmation is not ceremony. A promotion is IRREVERSIBLE in one direction that matters — the
+// options the heavier entry does not have are gone — and it moves points, sometimes past a limit. So
+// the sheet states three things before you commit: what it costs, what does not carry over, and which
+// rules the list would newly break. All three are computed, none are guessed.
+
+/** The list validation messages a plan would ADD — the engine's own verdict on the hypothetical list,
+ *  diffed against the one it gives today. Nothing is re-derived here. */
+function newWarningsFor(ctx: BuilderCtx, next: ListEntry): string[] {
+  const getUnit = (cat: Category, id: string) => ctx.getUnit(cat, id);
+  const before = validate(ctx.list, getUnit, ctx.itemsData).warnings;
+  const after = validate(
+    { ...ctx.list, entries: ctx.list.entries.map((e) => (e.uid === next.uid ? next : e)) },
+    getUnit, ctx.itemsData,
+  ).warnings;
+  const seen = new Map<string, number>();
+  for (const w of before) seen.set(w, (seen.get(w) ?? 0) + 1);
+  const out: string[] = [];
+  for (const w of after) {
+    const n = seen.get(w) ?? 0;
+    if (n > 0) seen.set(w, n - 1); else out.push(w);
+  }
+  return out;
+}
+
+function PromoteSheet({ ctx, entry, from, to, onClose, onConfirm }: {
+  ctx: BuilderCtx; entry: ListEntry; from: OwbUnit; to: OwbUnit;
+  onClose: () => void; onConfirm: (next: ListEntry) => void;
+}): React.JSX.Element {
+  const plan = useMemo(
+    () => planPromotion(from, to, entry, ctx.itemsData, ctx.armyItemLists),
+    [from, to, entry, ctx.itemsData, ctx.armyItemLists],
+  );
+  const breaks = useMemo(() => newWarningsFor(ctx, plan.entry), [ctx, plan.entry]);
+  const delta = plan.pointsAfter - plan.pointsBefore;
+
+  return (
+    <div
+      onClick={onClose}
+      style={{
+        position: 'absolute', inset: 0, zIndex: 70, background: 'rgba(30,20,8,0.5)',
+        display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16,
+      }}
+    >
+      <div
+        onClick={(ev) => ev.stopPropagation()}
+        style={{
+          width: '100%', maxWidth: 440, maxHeight: '86%', overflowY: 'auto', boxSizing: 'border-box',
+          background: TOW.panel, borderRadius: 16, border: `1px solid ${TOW.lineStrong}`,
+          boxShadow: '0 16px 50px rgba(40,24,8,0.34)', padding: 16, animation: 'sheet-pop .18s ease-out',
+        }}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
+          <span style={{ ...eb, fontSize: 8, color: TOW.muted }}>Promotion</span>
+          <button
+            type="button" onClick={onClose} aria-label="Close"
+            style={{ marginLeft: 'auto', width: 30, height: 30, borderRadius: 8, border: `1px solid ${TOW.line}`, background: TOW.cardLt, cursor: 'pointer', color: TOW.muted, fontSize: 18, lineHeight: 1 }}
+          >×</button>
+        </div>
+
+        <div style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 18, color: TOW.ink, marginBottom: 4 }}>
+          {cleanLabel(from.name_en)} → {cleanLabel(to.name_en)}
+        </div>
+        <div style={{ fontFamily: towFont.serif, fontSize: 12, color: TOW.muted, marginBottom: 12 }}>
+          {entry.customName ? `${entry.customName} keeps ` : 'This character keeps '}
+          the same identity: the campaign's XP, veteran abilities and battle scars follow the unit, not
+          the datasheet. Unspent XP is lost.
+        </div>
+
+        {/* Points — the first thing you want, so it is the first thing shown. */}
+        <div style={{
+          display: 'flex', alignItems: 'baseline', gap: 8, padding: '9px 11px', borderRadius: 10,
+          border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt, marginBottom: 10,
+        }}>
+          <span style={{ ...eb, fontSize: 7.5, color: TOW.muted }}>Points</span>
+          <span style={{ marginLeft: 'auto', fontFamily: towFont.display, fontWeight: 700, fontSize: 15, color: TOW.ink, fontVariantNumeric: 'tabular-nums' }}>
+            {fmt(plan.pointsBefore)} → {fmt(plan.pointsAfter)}
+          </span>
+          <span style={{ fontFamily: towFont.serif, fontSize: 12.5, color: delta > 0 ? TOW.gold : TOW.muted, fontVariantNumeric: 'tabular-nums' }}>
+            {delta === 0 ? '±0' : `${delta > 0 ? '+' : '−'}${fmt(Math.abs(delta))}`}
+          </span>
+        </div>
+
+        {plan.dropped.length > 0 ? (
+          <div style={{ marginBottom: 10 }}>
+            <div style={{ ...eb, fontSize: 7.5, color: TOW.muted, marginBottom: 3 }}>These options do not carry over</div>
+            <div style={{ fontFamily: towFont.serif, fontSize: 12.5, color: TOW.ink, lineHeight: 1.4 }}>
+              {plan.dropped.map(cleanLabel).join(' · ')}
+            </div>
+          </div>
+        ) : null}
+
+        {breaks.length > 0 ? (
+          <div style={{
+            marginBottom: 10, padding: '9px 11px', borderRadius: 10,
+            border: `1px solid ${TOW.blood}`, background: 'rgba(140,32,24,0.08)',
+          }}>
+            <div style={{ ...eb, fontSize: 7.5, color: TOW.blood, marginBottom: 3 }}>After this promotion the list breaks</div>
+            <ul style={{ margin: 0, paddingLeft: 16, fontFamily: towFont.serif, fontSize: 12.5, color: TOW.ink, lineHeight: 1.45 }}>
+              {breaks.map((w) => <li key={w}>{w}</li>)}
+            </ul>
+          </div>
+        ) : null}
+
+        <div style={{ display: 'flex', gap: 8 }}>
+          <button type="button" onClick={onClose} style={{ ...FOOT_BTN, flex: 1, borderColor: TOW.lineStrong, color: TOW.inkDim }}>
+            Cancel
+          </button>
+          {/* Enabled even when the list would break: this app REPORTS limits, it does not block them
+              (see the file header) — and half of promoting is deciding what to trim next. */}
+          <button
+            type="button"
+            onClick={() => { onConfirm(plan.entry); onClose(); }}
+            style={{ ...FOOT_BTN, flex: 1, borderColor: TOW.gold, color: TOW.gold }}
+          >
+            Promote
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+// ══════════════════════════════════════════════════════════════════════════════════════════════
 // UnitOptions
 // ══════════════════════════════════════════════════════════════════════════════════════════════
 
@@ -389,11 +519,29 @@ export function UnitOptions(props: {
    *  if the baseline was captured before `itemsData` landed (otherwise every magic item on the entry
    *  would read as a change the user just made). */
   const baseline = useRef<{ pts: number; withItems: boolean } | null>(null);
+  /** The promotion whose confirmation sheet is open, by target unit id. */
+  const [promoteToId, setPromoteToId] = useState<string | null>(null);
   // This screen IS a layer: hardware/browser Back must return to the roster, not leave the app.
   useBackClose(true, onBack);
 
   const entry = ctx.list.entries.find((e) => e.uid === uid) ?? null;
   const unit = entry ? ctx.getUnit(entry.cat, entry.unitId) ?? null : null;
+
+  // ── Promotion ──────────────────────────────────────────────────────────────────────────────────
+  // Offered for any list, campaign or not: the rule is a Warhammer rule, not a campaign one. What the
+  // campaign needs is that the entry keeps its `uid` — which `planPromotion` guarantees and the write
+  // below preserves, because it maps the entries in place instead of removing and re-adding.
+  const promotions: PromotionTarget[] = useMemo(
+    () => (unit && entry?.cat === 'characters'
+      ? promotionTargets(ctx.list.army, unit, ctx.army?.characters ?? [])
+      : []),
+    [unit, entry?.cat, ctx.list.army, ctx.army],
+  );
+  const promoteTo = promotions.find((p) => p.unit.id === promoteToId)?.unit ?? null;
+  /** Rewrite the entry IN PLACE. Same uid, same position — the campaign server reads this as the
+   *  character it has been tracking all along, not as a new one with a fresh growth ceiling. */
+  const applyPromotion = (next: ListEntry) =>
+    ctx.update((l) => ({ entries: l.entries.map((e) => (e.uid === next.uid ? next : e)) }));
 
   // ── mutations — every one a FUNCTIONAL update that spreads the entry ────────────────────────────
   const patch = (fn: (e: ListEntry) => ListEntry) =>
@@ -850,6 +998,50 @@ export function UnitOptions(props: {
           </button>
         ) : null}
 
+        {/* Promote — only for a character the curated table actually has a path for, so most units
+            never see this row at all. It sits up here with the identity of the unit rather than down
+            with Duplicate/Remove: a promotion is not an edit to the loadout, it is a change of who
+            this character IS, and the loadout follows from it. */}
+        {promotions.map(({ unit: target, path }) => {
+          const delta = (target.points ?? 0) - (unit.points ?? 0);
+          return (
+            <button
+              key={target.id}
+              type="button"
+              onClick={() => setPromoteToId(target.id)}
+              aria-label={`Promote ${entry.customName || unit.name_en} to ${cleanLabel(target.name_en)}`}
+              style={{
+                display: 'flex', alignItems: 'center', gap: 10, textAlign: 'left', boxSizing: 'border-box',
+                margin: `0 ${BUILDER.gutter}px 10px`, width: `calc(100% - ${BUILDER.gutter * 2}px)`,
+                padding: '9px 11px', borderRadius: 10, cursor: 'pointer',
+                border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt,
+              }}
+            >
+              <span style={{ flex: 1, minWidth: 0 }}>
+                <span style={{ ...eb, fontSize: 7.5, color: TOW.muted, display: 'block' }}>
+                  {/* A `likely` path is one this campaign's research graded as thematic rather than
+                      certain (a Herald becoming a Greater Daemon). Saying so is cheaper than a
+                      footnote nobody reads. */}
+                  Promotion{path.confidence === 'likely' ? ' · thematic' : ''}
+                </span>
+                <span style={{
+                  fontFamily: towFont.serif, fontSize: 13.5, color: TOW.ink,
+                  display: 'block', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
+                }}>
+                  Become {cleanLabel(target.name_en)}
+                </span>
+              </span>
+              <span style={{
+                ...eb, fontSize: 7.5, color: TOW.goldDeep, flexShrink: 0, fontVariantNumeric: 'tabular-nums',
+              }}>
+                {/* The BASE difference, which is what the catalogue can promise before the loadout is
+                    re-mapped. The exact figure for THIS entry is on the confirmation. */}
+                {delta >= 0 ? `+${fmt(delta)}` : `−${fmt(-delta)}`} base
+              </span>
+            </button>
+          );
+        })}
+
         {/* Count row — only a multi-model unit has a count to change. */}
         {multiModel ? (
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: `0 ${BUILDER.gutter}px` }}>
@@ -1052,6 +1244,16 @@ export function UnitOptions(props: {
         </div>
       </div>
 
+      {promoteTo ? (
+        <PromoteSheet
+          ctx={ctx}
+          entry={entry}
+          from={unit}
+          to={promoteTo}
+          onClose={() => setPromoteToId(null)}
+          onConfirm={applyPromotion}
+        />
+      ) : null}
     </div>
   );
 }

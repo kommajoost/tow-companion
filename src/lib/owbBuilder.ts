@@ -84,6 +84,121 @@ export function unitCompNote(unit: OwbUnit, composition: string): string | undef
   return compMap(unit)?.[composition]?.notes?.name_en || undefined;
 }
 
+/** The restriction note that ACTUALLY applies to a unit in this composition: the composition's own
+ *  note when it has one, otherwise the unit's base `notes`.
+ *
+ *  `unitCompNote` alone was not enough, and that was a real gap rather than a nicety: most armies
+ *  (Dark Elves, Orcs & Goblins, Ogres …) carry no `armyComposition` map at all, so every one of their
+ *  notes — including "0-1 Supreme Sorceress per 1000 points" — resolved to `undefined` and was neither
+ *  shown nor checked. */
+export function unitNote(unit: OwbUnit, composition: string): string | undefined {
+  return unitCompNote(unit, composition) || unit.notes?.name_en?.trim() || undefined;
+}
+
+// ---- Restriction notes, PARSED ----------------------------------------------------------------
+// The catalogue states a unit's list restriction as free text ("0-1 per 1000 points", "0-1 Black Orc
+// Warboss or Black Orc Bigboss"). Until now that text was only ever DISPLAYED — nothing checked it —
+// so a 500-point list could field a Supreme Sorceress ("0-1 per 1000 points" ⇒ zero at 500) without a
+// murmur. `parseCompNote` reads the handful of shapes that actually occur in `public/owb/*.json` and
+// leaves everything else alone.
+//
+// THE RULE THIS FOLLOWS: a note we cannot parse must NEVER block a list. Every pattern below is
+// fully anchored, every name has to resolve against a unit that is really in the list, and any clause
+// carrying a word that betrays a shape we do not model (conditionals, per-unit ratios, "may be taken
+// as a Core choice", war-machine pick-lists) is dropped on the floor. The cost of that is a missed
+// warning; the cost of the opposite is a false accusation about someone's army list.
+
+/** One "you may field at most N of these" limit read out of a restriction note. */
+export interface NoteLimit {
+  /** The N in "0-N". */
+  max: number;
+  /** The points step N scales with ("per 1000 points"), or null for a flat maximum. */
+  perPoints: number | null;
+  /** The entry names the limit is shared between, or null when it is about the unit carrying it. */
+  names: string[] | null;
+  /** The clause this came from, verbatim — quoted back in the warning so it can be traced. */
+  text: string;
+}
+
+// Words that mean "this clause is not a plain 0-N cap on a set of named entries". Deliberately broad:
+// dropping a clause costs a warning, mis-reading one costs trust.
+// NOT in the list, though it looks like it belongs: "general". It reads as the conditional shape
+// ("0-1 if General is Doombull or Gorebull") but it is also half of a real entry name — "0-1 General
+// of the Empire or Grand Master per 1000 points" — and `if` / `your` already catch every conditional.
+const NOTE_STOPWORDS = /\b(if|may|per|units?|army|chosen|following|list|taken|choices?|regiments?|detachments?|your|includes?|additional|upgraded|must|only|purchase|belong(?:ing)?)\b/i;
+
+/** Split the name blob of a note ("Lector of Sigmar or High Priest of Ulric") into entry names, or
+ *  null when the blob is not a name list at all. */
+function noteNames(blob: string): string[] | null {
+  // A parenthetical is either an aside on one name ("Khemrian Warsphinx (not counting character
+  // mounts)") or a list inside a list ("Greater Daemon (of Khorne, Nurgle, Slaanesh or Tzeentch)") —
+  // and the second kind would otherwise be torn into four fictional entry names by the comma split.
+  // Dropped whole; a LEFTOVER bracket means the clause was already cut through one, so give up.
+  const flat = blob.replace(/\([^)]*\)/g, ' ').replace(/\s+/g, ' ').trim();
+  if (!flat || /[()]/.test(flat)) return null;
+  if (NOTE_STOPWORDS.test(flat)) return null;
+  const names = flat.split(/\s*,\s*|\s+or\s+/i).map((s) => s.trim()).filter(Boolean);
+  return names.length ? names : null;
+}
+
+/** One fully-anchored clause → a limit, or null when it is a shape we do not model. */
+function parseNoteClause(clause: string): NoteLimit | null {
+  const c = clause.trim();
+  let m: RegExpMatchArray | null;
+  // "0-1 per 1000 points" / "0-2 per 1000 points" — about the unit carrying the note.
+  if ((m = c.match(/^0-(\d+)\s+per\s+(\d+)\s*(?:points|pts)$/i))) return { max: +m[1], perPoints: +m[2], names: null, text: c };
+  // "0-1 per army" — same, but a flat maximum.
+  if ((m = c.match(/^0-(\d+)\s+per\s+army$/i))) return { max: +m[1], perPoints: null, names: null, text: c };
+  // "0-1 Dark Elf Dreadlord or Supreme Sorceress per 1000 points" — one slot shared by named entries.
+  if ((m = c.match(/^0-(\d+)\s+(.+?)\s+per\s+(\d+)\s*(?:points|pts)$/i))) {
+    const names = noteNames(m[2]);
+    return names ? { max: +m[1], perPoints: +m[3], names, text: c } : null;
+  }
+  // "0-4 Dwarf Carts per army".
+  if ((m = c.match(/^0-(\d+)\s+(.+?)\s+per\s+army$/i))) {
+    const names = noteNames(m[2]);
+    return names ? { max: +m[1], perPoints: null, names, text: c } : null;
+  }
+  // "0-1 Grand Master" / "0-1 Chaos Lord or Daemon Prince" — a flat maximum on named entries.
+  if ((m = c.match(/^0-(\d+)\s+(.+)$/i))) {
+    const names = noteNames(m[2]);
+    return names ? { max: +m[1], perPoints: null, names, text: c } : null;
+  }
+  return null;
+}
+
+/** Read a restriction note into the limits it states, plus the clauses we could not read.
+ *
+ *  `unparsed` is returned rather than swallowed so the gap is inspectable — it is diagnostic only and
+ *  no caller may treat it as a violation. Notably, the "1+ X" MINIMUM shapes all land there on
+ *  purpose: they sit on the very entry that satisfies them, so a list without the entry never reaches
+ *  the note and checking it would only ever fire on lists that are already fine. */
+export function parseCompNote(note?: string): { limits: NoteLimit[]; unparsed: string[] } {
+  const raw = (note ?? '').trim();
+  if (!raw) return { limits: [], unparsed: [] };
+  // "1,000 points" → "1000 points" (so the digit-group comma survives the clause split), and drop the
+  // explanatory tail some notes hang behind a colon.
+  const head = raw.replace(/(\d),(\d{3})\b/g, '$1$2').split(':')[0].trim();
+  if (!head) return { limits: [], unparsed: [raw] };
+  // WHOLE FIRST, then per clause: several notes list their shared entries with commas ("0-1 Shugengan
+  // Lord, Gate Master, Lord Magistrate or Supreme Astromancer per 1000 points"), which a comma split
+  // would tear apart into nonsense.
+  const whole = parseNoteClause(head);
+  if (whole) return { limits: [whole], unparsed: [] };
+  const limits: NoteLimit[] = [];
+  const unparsed: string[] = [];
+  for (const piece of head.split(/\s*,\s*/)) {
+    const p = piece.trim();
+    if (!p) continue;
+    const one = parseNoteClause(p);
+    if (one) limits.push(one); else unparsed.push(p);
+  }
+  return { limits, unparsed };
+}
+
+/** Catalogue bookkeeping out of a name, for comparing a note's wording with an entry's name. */
+const plainName = (s: string): string => (s || '').replace(/\{[^}]*\}/g, ' ').replace(/\*/g, '').replace(/\s+/g, ' ').trim();
+
 // The option groups a unit can spend points on (lores are free spell picks → omitted here).
 // `radio` groups are single-choice (you carry one weapon loadout, wear one armour, ride one mount);
 // the rest are toggles you can mix (musician + standard, Shield + Sea Dragon Cloak, …). OWB marks
@@ -413,7 +528,10 @@ export function limitsFor(_rule: string, composition?: string): Record<Category,
   return { ...GRAND_ARMY, mercenaries: { maxPercent: merc } };
 }
 
-const groupItems = (unit: OwbUnit, group: keyof OwbUnit): OwbOption[] =>
+/** The renderable options of one group, in the SAME order `entry.opts` indexes them by. Exported so
+ *  anything that has to re-key an entry (the promotion re-map) reads the identical list rather than
+ *  keeping its own copy of the filter. */
+export const groupItems = (unit: OwbUnit, group: keyof OwbUnit): OwbOption[] =>
   (Array.isArray(unit[group]) ? (unit[group] as OwbOption[]) : []).filter((o) => o && o.name_en);
 
 /** The raw stored count for a `stackable` option — 0 when nothing was ever recorded. Prefer
@@ -671,6 +789,59 @@ export function validate(
         if (pct == null) continue;
         const capPts = Math.floor((pct / 100) * target);
         if (r.p > capPts) warnEntry(r.e.uid, `${r.unit.name_en} over the ${pct}% single-${r.cat === 'characters' ? 'character' : 'unit'} cap (${r.p}/${capPts} pts)`);
+      }
+    }
+  }
+
+  // ---- Restriction notes ("0-1 per 1000 points") ------------------------------------------------
+  // The catalogue's own per-entry restrictions, which the builder showed but never checked. Names in
+  // a note are resolved against the units ACTUALLY IN THE LIST: an entry that is not in the list
+  // contributes nothing to the count anyway, so there is no reason to scan the whole catalogue — and a
+  // name that resolves to nothing simply counts zero, which can only ever LOSE a warning, never invent
+  // one.
+  {
+    const byName = new Map<string, string>();
+    for (const r of rows) byName.set(plainName(r.unit.name_en).toLowerCase(), r.unit.id);
+    const resolveName = (name: string): string | undefined => {
+      const key = plainName(name).toLowerCase();
+      const exact = byName.get(key);
+      if (exact) return exact;
+      // A few notes qualify the name where the catalogue does not ("High Elf Noble" vs "Noble").
+      // Allowed only when EXACTLY ONE list unit's name is a whole-word tail of the note's name —
+      // otherwise "Black Orc Warboss" would happily bind to "Orc Warboss".
+      const tails = [...byName.entries()].filter(([n]) => key.endsWith(` ${n}`));
+      return tails.length === 1 ? tails[0][1] : undefined;
+    };
+
+    const seen = new Set<string>();
+    for (const r of rows) {
+      for (const lim of parseCompNote(unitNote(r.unit, list.composition)).limits) {
+        // A "per N points" limit says nothing without a points target — and floor(0 / 1000) = 0 would
+        // otherwise flag every restricted entry in a list that has no target set.
+        if (lim.perPoints != null && (target <= 0 || lim.perPoints <= 0)) continue;
+        const ids = lim.names
+          ? [...new Set(lim.names.map(resolveName).filter((id): id is string => !!id))]
+          : [r.unit.id];
+        if (ids.length === 0) continue;
+        const allowed = lim.perPoints != null ? lim.max * Math.floor(target / lim.perPoints) : lim.max;
+        // Entries that share one slot carry the SAME note (all three Orc bosses say "0-1 Black Orc
+        // Warboss, Orc Warboss or Orc Weirdnob per 1000 points"), so the rule is checked once.
+        // Overlapping but DIFFERENT rules are all reported: a Dreadlord and a Supreme Sorceress in a
+        // 500-point list each break something of their own, and hiding either would be hiding a
+        // problem the player still has to fix.
+        const key = `${[...ids].sort().join('|')}@${allowed}`;
+        if (seen.has(key)) continue;
+        seen.add(key);
+        const involved = rows.filter((x) => ids.includes(x.unit.id));
+        const taken = involved.reduce((n, x) => n + x.e.count, 0);
+        if (taken <= allowed) continue;
+        const names = [...new Set(involved.map((x) => plainName(x.unit.name_en)))];
+        const label = names.length > 1 ? `${names.slice(0, -1).join(', ')} or ${names[names.length - 1]}` : names[0];
+        const message = `${label}: ${taken} taken, ${allowed} allowed (${lim.text})`;
+        // Recorded once in `warnings` but attached to EVERY entry in the shared slot: the rule is
+        // about the group, so each row lights up while the band still says it once.
+        warnings.push(message);
+        for (const x of involved) entryWarnings.push({ uid: x.e.uid, message });
       }
     }
   }
