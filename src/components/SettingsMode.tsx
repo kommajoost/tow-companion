@@ -3,7 +3,7 @@ import { TOW, towFont, engraved } from '../design/tow';
 import { useTheme } from '../theme';
 import { usePwa } from '../pwa';
 import { supabase, TOW_FEEDBACK } from '../lib/supabase';
-import { useAuth, authSignIn, authSignUp, authSignOut } from '../lib/auth';
+import { useAuth, authSignIn, authSignUp, authSignOut, authResetPassword } from '../lib/auth';
 import { useListSync } from '../listSync';
 import { deriveKey, type CloudLists } from '../lib/listSync';
 import {
@@ -466,6 +466,33 @@ function AccountSection({
           <button style={{ ...goldBtn, width: '100%', opacity: canSubmit ? 1 : 0.5 }} disabled={!canSubmit} onClick={submit}>
             {busy ? (mode === 'signup' ? 'Creating…' : 'Signing in…') : loading ? 'Please wait…' : (mode === 'signup' ? 'Create account' : 'Sign in')}
           </button>
+
+          {/* Wachtwoord vergeten — alleen bij Sign in; bij Register slaat het nergens op. Zelfde
+              gedrag als in de campagne-login-popup, inclusief het neutrale antwoord: of een account
+              bestaat is niets wat een inlogformulier hoort te verklappen. */}
+          {mode === 'signin' && (
+            <button
+              type="button"
+              disabled={busy}
+              onClick={async () => {
+                const adres = email.trim();
+                if (!adres) { setNotice(null); setError('Fill in your email above first.'); return; }
+                setBusy(true); setError(null); setNotice(null);
+                const { error: fout } = await authResetPassword(adres);
+                setBusy(false);
+                if (fout) setError(fout);
+                else setNotice(`If ${adres} has an account, a reset link is on its way. Open it on this device and you can set a new password here.`);
+              }}
+              style={{
+                display: 'block', margin: '10px auto 0', border: 'none', background: 'none',
+                padding: 4, cursor: busy ? 'default' : 'pointer', opacity: busy ? 0.5 : 1,
+                fontFamily: towFont.serif, fontSize: 13, color: TOW.goldDeep,
+                textDecoration: 'underline', textUnderlineOffset: 3,
+              }}
+            >
+              Forgot your password?
+            </button>
+          )}
 
           {error && <div style={{ ...body, color: TOW.blood, marginTop: 10 }}>{error}</div>}
           {notice && <div style={{ ...body, color: TOW.goldDeep, marginTop: 10 }}>{notice}</div>}
