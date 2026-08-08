@@ -22,6 +22,10 @@ interface AuthState {
   /** Set when a hand-off from the campaign app was attempted and failed, so the UI can explain
    *  itself instead of silently showing a sign-in form the player didn't expect. */
   ssoError?: string | null;
+  /** De speler kwam binnen via een wachtwoord-herstel-link. Supabase maakt daar een echte sessie van,
+   *  dus zonder deze vlag zou hij gewoon "ingelogd" zijn en nooit een nieuw wachtwoord kunnen zetten —
+   *  precies het ding waarvoor hij op de link klikte. */
+  recovery?: boolean;
 }
 
 let state: AuthState = { session: null, loading: true };
@@ -31,8 +35,15 @@ function emit() {
   for (const fn of listeners) fn();
 }
 
-function setState(next: AuthState) {
-  state = next; // new object each time → useSyncExternalStore sees the change
+/** MERGE, geen vervanging.
+ *
+ *  Stond hier eerst als een harde toewijzing, en dat werkte zolang de state alleen sessie-velden had.
+ *  Met `recovery` erbij niet meer: elke andere setState bouwt een nieuw object zonder dat veld, dus de
+ *  vlag werd gewist door het eerstvolgende getSession/SSO-resultaat — en dan verdween het scherm waar
+ *  je je nieuwe wachtwoord moet zetten voordat je het kon zien (gevonden 04-08 bij het testen).
+ *  Nog steeds een nieuw object, dus useSyncExternalStore ziet de wijziging. */
+function setState(next: Partial<AuthState>) {
+  state = { ...state, ...next };
   emit();
 }
 
@@ -118,8 +129,15 @@ if (typeof window !== 'undefined') {
     hydrateFromStorage();
   }
 
-  supabase.auth.onAuthStateChange((_event, session) => {
-    setState({ session: session ?? null, loading: false, ssoError: session ? null : state.ssoError });
+  supabase.auth.onAuthStateChange((event, session) => {
+    setState({
+      session: session ?? null,
+      loading: false,
+      ssoError: session ? null : state.ssoError,
+      // Blijft staan tot het nieuwe wachtwoord gezet is (of tot uitloggen): de events erna
+      // (TOKEN_REFRESHED, USER_UPDATED) mogen de vraag niet wegpoetsen.
+      recovery: event === 'PASSWORD_RECOVERY' ? true : event === 'SIGNED_OUT' ? false : state.recovery,
+    });
   });
 }
 
@@ -138,12 +156,14 @@ export interface UseAuthResult {
   loading: boolean;
   /** Non-null when a hand-off from the campaign app failed (see takeSsoToken above). */
   ssoError: string | null;
+  /** Binnengekomen via een herstel-link: de app moet om een nieuw wachtwoord vragen. */
+  recovery: boolean;
 }
 
 /** React hook: the current session/user, kept live via onAuthStateChange. */
 export function useAuth(): UseAuthResult {
   const s = useSyncExternalStore(subscribe, getSnapshot, getSnapshot);
-  return { session: s.session, user: s.session?.user ?? null, loading: s.loading, ssoError: s.ssoError ?? null };
+  return { session: s.session, user: s.session?.user ?? null, loading: s.loading, ssoError: s.ssoError ?? null, recovery: !!s.recovery };
 }
 
 /** Non-React read of the current session (null when signed out). Handy for the later coupling. */
@@ -201,6 +221,24 @@ export async function authSignUp(
 }
 
 /** Sign out and clear the persisted session. */
+/** Stuur een herstel-mail. De link brengt de speler terug op de app, waar `recovery` aangaat.
+ *
+ *  `redirectTo` is de app zelf: er is geen router, dus een eigen /reset-pad zou een 404 zijn. Supabase
+ *  hangt het token in de URL-fragment, de client pikt dat op en vuurt PASSWORD_RECOVERY. */
+export async function authResetPassword(email: string): Promise<{ error: string | null }> {
+  const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), {
+    redirectTo: window.location.origin + window.location.pathname,
+  });
+  return { error: error ? friendlyAuthError(error) : null };
+}
+
+/** Zet een nieuw wachtwoord voor de INGELOGDE sessie (de herstel-sessie). */
+export async function authUpdatePassword(password: string): Promise<{ error: string | null }> {
+  const { error } = await supabase.auth.updateUser({ password });
+  if (!error) setState({ ...state, recovery: false });
+  return { error: error ? friendlyAuthError(error) : null };
+}
+
 export async function authSignOut(): Promise<{ error: string | null }> {
   const { error } = await supabase.auth.signOut();
   return { error: error ? friendlyAuthError(error) : null };

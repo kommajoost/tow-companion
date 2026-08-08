@@ -6,6 +6,7 @@ import { PwaProvider } from './pwa';
 import { AppShell } from './components/AppShell';
 import { RuleSheet } from './components/RuleSheet';
 import { SyncConflictSheet } from './components/SyncConflictSheet';
+import { NewPasswordDialog } from './components/NewPasswordDialog';
 import { UpdatePrompt } from './components/UpdatePrompt';
 
 export default function App() {
@@ -20,6 +21,9 @@ export default function App() {
               {/* Vraagt welke kopie je houdt als synchroniseren lijsten zou wissen. Binnen de provider,
                   want hij leest de botsing daaruit; app-breed, want hij mag geen enkel scherm missen. */}
               <SyncConflictSheet />
+              {/* Vraagt om een nieuw wachtwoord na een herstel-link. App-breed, want de login-popup
+                  waar het begon is dan allang dicht — je komt terug uit je mail. */}
+              <NewPasswordDialog />
             </ListSyncProvider>
           </GameProvider>
         </UIStateProvider>

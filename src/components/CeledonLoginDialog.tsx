@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { TOW, engraved, towFont } from '../design/tow';
-import { authSignIn } from '../lib/auth';
+import { authResetPassword, authSignIn } from '../lib/auth';
 import { LogoMark } from './LogoMark';
 
 const eb = engraved as React.CSSProperties;
@@ -17,11 +17,15 @@ export function CeledonLoginDialog({
   const [password, setPassword] = useState('');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  /** Bevestiging na een verstuurde herstel-mail. Bewust GEEN aparte modus of tweede scherm: het adres
+   *  staat al in het veld hierboven, dus één tik volstaat en je blijft zien waar je was. */
+  const [resetNote, setResetNote] = useState<string | null>(null);
   const emailRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (!open) return;
     setError(null);
+    setResetNote(null);
     const timer = window.setTimeout(() => emailRef.current?.focus(), 80);
     return () => window.clearTimeout(timer);
   }, [open]);
@@ -214,6 +218,44 @@ export function CeledonLoginDialog({
             {busy ? 'Signing in…' : 'Sign in & start the Army tour'}
           </button>
         </form>
+
+        {/* Wachtwoord vergeten — onder de knop, niet ernaast: het is de uitweg als het bovenstaande
+            niet lukt, en dan wil je 'm zien staan zonder dat hij om aandacht vecht. */}
+        <div style={{ marginTop: 12, textAlign: 'center' }}>
+          {resetNote ? (
+            <p style={{ margin: 0, fontFamily: towFont.serif, fontSize: 13, lineHeight: 1.5, color: TOW.goldDeep }}>
+              {resetNote}
+            </p>
+          ) : (
+            <button
+              type="button"
+              disabled={busy}
+              onClick={async () => {
+                const adres = email.trim();
+                if (!adres) {
+                  setError('Fill in your email first, then tap “Forgot your password?”.');
+                  emailRef.current?.focus();
+                  return;
+                }
+                setBusy(true);
+                setError(null);
+                const { error: fout } = await authResetPassword(adres);
+                setBusy(false);
+                // Ook bij een onbekend adres hetzelfde antwoord: of een account bestaat is niets wat
+                // een inlogscherm hoort te verklappen.
+                if (fout) setError(fout);
+                else setResetNote(`If ${adres} has an account, a reset link is on its way. Open it on this device and you can set a new password here.`);
+              }}
+              style={{
+                border: 'none', background: 'none', padding: 4, cursor: busy ? 'default' : 'pointer',
+                fontFamily: towFont.serif, fontSize: 13, color: TOW.goldDeep,
+                textDecoration: 'underline', textUnderlineOffset: 3, opacity: busy ? 0.5 : 1,
+              }}
+            >
+              Forgot your password?
+            </button>
+          )}
+        </div>
 
         <button
           type="button"
