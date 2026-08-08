@@ -159,6 +159,35 @@ export interface CampaignBattle {
   actStatus?: string | null;
 }
 
+// ---- Battle-soort ----------------------------------------------------------------------------
+// De campagne stempelt elke battle met een `type`. Tot 08-08-2026 gooide dit scherm dat veld weg, wat
+// prima ging zolang élke battle over een hex ging — maar de CHALLENGE doet dat niet, en dan is "waar
+// vecht ik hier eigenlijk voor" geen detail meer. Alleen labelen en uitleggen: de VP-telling en het
+// resultaat-rapport blijven voor elk type identiek, want de campagne beslist wat een uitslag oplevert.
+
+/** Battle-soort → leesbaar label. Onbekende soorten geven null; het scherm laat de regel dan weg
+ *  in plaats van een verzonnen naam te tonen. */
+export const BATTLE_TYPE_LABEL: Record<string, string> = {
+  attack: 'Conquest',
+  raid: 'Raid',
+  claim: 'Claim duel',
+  calling: 'The Calling',
+  challenge: 'Challenge',
+};
+
+/** Eén regel over wat er in dit type battle op het spel staat. Alleen gevuld waar de soort iets
+ *  uitlegt dat je niet aan de rest van het scherm kunt aflezen — vandaag is dat de challenge, de enige
+ *  soort waarbij er niets op de kaart verandert. */
+export const BATTLE_TYPE_NOTE: Record<string, string> = {
+  challenge:
+    'A challenge: no territory is at stake. What rides on it is the wager the two of you agreed in the campaign — the gold you both put up and any magic item each side staked — and it is a real game, so your regiments earn their XP and carry any battle scars home. Scored exactly like every other battle.',
+};
+
+/** Label van een battle-soort, of null als de campagne iets stuurt dat we niet kennen. */
+export const battleTypeLabel = (type: string): string | null => BATTLE_TYPE_LABEL[type] ?? null;
+/** Uitleg-regel bij een battle-soort, of null als de soort geen uitleg nodig heeft. */
+export const battleTypeNote = (type: string): string | null => BATTLE_TYPE_NOTE[type] ?? null;
+
 function parseSide(raw: unknown): BattleSide {
   const s = (raw && typeof raw === 'object' ? raw : {}) as Record<string, unknown>;
   return { id: str(s.id), naam: str(s.naam), factie: str(s.factie), kleur: str(s.kleur), ai: s.ai === true };

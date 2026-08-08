@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { TOW, towFont, engraved } from '../../design/tow';
 import { useGame } from '../../game';
 import { getCachedCampaign, getCampaignCode } from '../../lib/campaign';
-import { battleByCode, battleHandZet, type CampaignBattle, type BattleSide, type Perk, type FoundItem, type BattleLijstSamenvatting } from '../../lib/campaignBattle';
+import { battleByCode, battleHandZet, battleTypeLabel, battleTypeNote, type CampaignBattle, type BattleSide, type Perk, type FoundItem, type BattleLijstSamenvatting } from '../../lib/campaignBattle';
 import { ArmyListPicker } from './ArmyListPicker';
 import { BattleBoard } from './BattleBoard';
 import type { BattleSetupState } from '../../lib/battle';
@@ -235,6 +235,10 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
   );
 
   const scenarioName = typeof battle.scenario?.scenarioNaam === 'string' ? (battle.scenario.scenarioNaam as string) : null;
+  // What KIND of battle this is (Conquest / Raid / Claim duel / The Calling / Challenge). Only labelled
+  // and, where it matters, explained — how it is scored and reported does not depend on the type.
+  const typeLabel = battleTypeLabel(battle.type);
+  const typeNote = battleTypeNote(battle.type);
 
   // ── The rest of the BattleSheet ────────────────────────────────────────────────────────────────
   // `battle.scenario` is the campaign's raw sheet and this screen read exactly one field out of it —
@@ -372,7 +376,7 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
 
   const header = (
     <div style={{ border: `1px solid ${TOW.line}`, borderRadius: 12, background: TOW.panel2, padding: '14px 15px', marginBottom: 18 }}>
-      <div style={{ ...eb, fontSize: 8.5, color: TOW.goldDeep, marginBottom: 8 }}>Campaign battle · {battle.code}{scenarioName ? ` · ${scenarioName}` : ''}</div>
+      <div style={{ ...eb, fontSize: 8.5, color: TOW.goldDeep, marginBottom: 8 }}>Campaign battle{typeLabel ? ` · ${typeLabel}` : ''} · {battle.code}{scenarioName ? ` · ${scenarioName}` : ''}</div>
       <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
         <div style={{ flex: 1, minWidth: 0 }}><SideChip side={battle.aanvaller} label="Attacker" /></div>
         <span style={{ fontFamily: serif, fontStyle: 'italic', fontSize: 13, color: TOW.faint, flexShrink: 0 }}>vs</span>
@@ -386,6 +390,13 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
       {/* Why this battle is being fought — the campaign's own sentence, not a paraphrase. */}
       {reason && (
         <div style={{ fontFamily: serif, fontSize: 13.5, color: TOW.parchDim, marginTop: 10 }}>{reason}</div>
+      )}
+
+      {/* What the SORT of battle means, where that is not obvious from the rest of the screen. A
+          challenge is the only one that leaves the map alone, so it is the only one that says so —
+          and it says nothing about how the game is scored, because that is identical for every type. */}
+      {typeNote && (
+        <div style={{ fontFamily: serif, fontStyle: 'italic', fontSize: 13, color: TOW.muted, marginTop: 8 }}>{typeNote}</div>
       )}
 
       {/* Battle quests. The campaign calls them `secondaries`; they decide what you are playing FOR, so
