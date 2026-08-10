@@ -76,6 +76,31 @@ for (const key of PACKS) {
     }
   }
 
+  // LORES: een pack dat een lore aanpast moet die lore ook als REGELPAGINA overschrijven.
+  //
+  // De wiki heeft per lore één pagina met de spreukteksten eringebakken, plus losse spreukpagina's.
+  // De compiler overschreef alleen die losse pagina's, dus de speler kreeg de lore-pagina van het
+  // v1-pack te zien: Cursing Word op 7+ in plaats van 9+, en Power of Darkness ontbrak helemaal
+  // (Joost 10-08). De losse spreuk klopte wel — maar niemand opent die; je tikt op de special rule.
+  //
+  // NOG NIET GEDAAN, bewust vastgelegd i.p.v. stilgezwegen (10-08): vier packs missen die lore-pagina
+  // nog. Ze zijn niet in één keer mee te nemen omdat de brontekst per pack anders is opgebouwd — een
+  // generieke extractie vond bij ok NIETS, en miste bij lm 'Apotheosis' en bij cd 'Flames of Hashut'.
+  // Halve teksten publiceren is hier erger dan wachten: de speler leest ze aan tafel als regel.
+  // Haal een pack uit deze lijst zodra z'n lore-pagina er is, dan bewaakt de check hem voortaan.
+  const LORE_NOG_TE_DOEN = new Set(['cd', 'doc', 'lm', 'ok']);
+  for (const [loreSlug, patch] of Object.entries(overlay.lores ?? {})) {
+    if (LORE_NOG_TE_DOEN.has(key)) continue;
+    const rule = Object.values(overlay.rules ?? {})
+      .find((r) => typeof r.overrides === 'string' && r.overrides.startsWith(loreSlug));
+    assert(rule, `${key}/${loreSlug}: pack past de lore aan maar overschrijft de lore-PAGINA niet — dan leest de speler de oude versie`);
+    const body = (rule.body ?? []).join(' ').toLowerCase();
+    for (const spell of patch.spells ?? []) {
+      assert(body.includes(String(spell.name).toLowerCase()),
+        `${key}/${loreSlug}: "${spell.name}" staat niet op de lore-pagina van het pack`);
+    }
+  }
+
   for (const [name, profile] of Object.entries(overlay.profiles ?? {})) {
     for (const row of profile.stats ?? []) {
       for (const field of ['Name', 'M', 'WS', 'BS', 'S', 'T', 'W', 'I', 'A', 'Ld']) {
