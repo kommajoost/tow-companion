@@ -53,6 +53,11 @@ export interface CampaignContext {
   factieVast: boolean;
   /** Is de lijst voor de HUIDIGE Act vergrendeld? Dan mag hij hier niet meer gewijzigd worden. */
   gelockt: boolean;
+  /** Naam + leger van de lijst die de campagne ECHT heeft ontvangen (towc_spel_lijst). Hiermee weet de
+   *  builder WELKE lijst vast staat. Zonder dit gold de lock voor elke campagne-lijst van die speler --
+   *  ook een vers aangemaakte lege, die dan meteen "Locked for Act 1" toonde (Jasper, 10-08). */
+  lijstNaam?: string | null;
+  lijstLeger?: string | null;
   /** Voorbereiding: is de speler al uitgevaren? Game-slot: altijd true. */
   setSail: boolean;
   /** De koppelcode van het game-slot — nog gebruikt door de battle-brug. Null bij een voorbereiding. */
@@ -132,6 +137,8 @@ function parseEen(raw: unknown): CampaignContext {
     label: str(d.label) || (bron === 'voorbereiding' ? 'Isle of Celedon' : 'Playtest'),
     factieVast: bron === 'game' ? true : bool(d.factieVast),
     gelockt: bool(d.gelockt),
+    lijstNaam: typeof d.lijstNaam === 'string' ? d.lijstNaam : null,
+    lijstLeger: typeof d.lijstLeger === 'string' ? d.lijstLeger : null,
     setSail: bron === 'game' ? true : bool(d.setSail),
     koppelcode: typeof d.koppelcode === 'string' ? d.koppelcode : undefined,
     fase: num(d.fase, 1),
@@ -257,6 +264,21 @@ if (typeof window !== 'undefined') {
   const cached = getCachedCampaign()?.context ?? null;
   if (cached) state = { campagnes: [cached], actief: cached, laden: true, fout: null };
   void verversCampagnes();
+  // TERUG IN DE APP = OPNIEUW OPHALEN (10-08). De context werd alleen bij het opstarten en bij een
+  // auth-wijziging geladen. Ontgrendelde je je lijst in de campagne-app, dan bleef de Companion in een
+  // al open tab de oude stand tonen ("werkt nog niet echt", Joost). Nu verversen we zodra het tabblad
+  // weer zichtbaar wordt of focus krijgt -- precies het moment waarop je van de ene app naar de andere
+  // wisselt. Gethrottled op 5s zodat wisselen tussen tabs geen stortvloed aan calls geeft.
+  let laatsteVervers = Date.now();
+  const misschienVervers = () => {
+    if (document.visibilityState === 'hidden') return;
+    if (Date.now() - laatsteVervers < 5000) return;
+    laatsteVervers = Date.now();
+    void verversCampagnes();
+  };
+  document.addEventListener('visibilitychange', misschienVervers);
+  window.addEventListener('focus', misschienVervers);
+
   supabase.auth.onAuthStateChange((event) => {
     // TOKEN_REFRESHED verandert niets aan WIE je bent — daar hoeft de campagne niet opnieuw voor.
     if (event === 'TOKEN_REFRESHED') return;
