@@ -671,12 +671,21 @@
       "name_en": "Lore of Naggaroth",
       "body": [
         "A Wizard with the ‘Lore of Naggaroth’ special rule may discard one of their randomly generated spells as normal. When they do so, they may select instead either the signature spell of their chosen Lore of Magic, or one of the spells listed below.",
-        "Cursing Word — Hex. Casting Value: 9+. Range: 12\"",
-        "Whilst this spell is in play, the target enemy unit reduces either its Weapon skill characteristic, or its Ballistic Skill characteristic (chosen by the casting Wizard’s controlling player) by D3. If this spell is cast, the effects of any other Hex previously cast on the target unit immediately expire. This spell lasts until the beginning of your next Start of Turn sub-phase.",
-        "Power of Darkness — Enchantment. Casting Value: 7+. Range: Self",
-        "Remains in Play. Whilst this spell is in play, the caster gains a +1 modifier to their Casting rolls.",
-        "Black Horror — Magical Vortex. Casting Value: 9+. Range: 18\"",
-        "Remains in play. Place a large (5\") blast template so that its central hole is within 18\" of the caster. Whilst in play, the template is treated as difficult terrain. The template scatters 2D6” during every Start of Turn sub-phase (see page 95). Any enemy unit that moves through the template, or that the template moves over must immediately make D6 Strength Tests. For each test that is failed, the unit loses a single Wound."
+        "Cursing Word",
+        "Type: Hex",
+        "Casting Value: 9+",
+        "Range: 12\"",
+        "Effect: Whilst this spell is in play, the target enemy unit reduces either its Weapon skill characteristic, or its Ballistic Skill characteristic (chosen by the casting Wizard’s controlling player) by D3. If this spell is cast, the effects of any other Hex previously cast on the target unit immediately expire. This spell lasts until the beginning of your next Start of Turn sub-phase.",
+        "Power of Darkness",
+        "Type: Enchantment",
+        "Casting Value: 7+",
+        "Range: Self",
+        "Effect: Remains in Play. Whilst this spell is in play, the caster gains a +1 modifier to their Casting rolls.",
+        "Black Horror",
+        "Type: Magical Vortex",
+        "Casting Value: 9+",
+        "Range: 18\"",
+        "Effect: Remains in play. Place a large (5\") blast template so that its central hole is within 18\" of the caster. Whilst in play, the template is treated as difficult terrain. The template scatters 2D6” during every Start of Turn sub-phase (see page 95). Any enemy unit that moves through the template, or that the template moves over must immediately make D6 Strength Tests. For each test that is failed, the unit loses a single Wound."
       ],
       "overrides": "lore-of-naggaroth-renegade"
     }

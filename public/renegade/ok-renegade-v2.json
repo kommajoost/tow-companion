@@ -678,6 +678,21 @@
         "Notes: Ranged attacks made with this weapon apply Killing Blows in the same manner as melee attacks."
       ],
       "overrides": "chaintrap"
+    },
+    "lore-of-the-great-maw": {
+      "name_en": "Lore of the Great Maw",
+      "body": [
+        "A Wizard with the ‘Lore of the Great Maw’ special rule may discard one of their randomly generated spells as normal. When they do so, they may select instead either the signature spell of their chosen Lore of Magic, or one of the spells listed below.",
+        "Toothcracker",
+        "Type: Enchantment Casting Value: 7+/10+ Range: 12\"",
+        "Effect: If this spell is cast with a casting result of 7 or more, the target friendly unit gains a +1 modifier to its Toughness characteristic (to a maximum of 10). If this spell is cast with a casting result of 10 or more, the target friendly unit gains a",
+        "+2 modifier to its Toughness characteristic (to a maximum of 10). This spell lasts until your next Start of Turn sub-phase.",
+        "Trollguts",
+        "Type: Enchantment Casting Value: 7+/10+",
+        "Range: 15\"",
+        "Effect: If this spell is cast with a casting result of 7 or more, the target friendly unit gains the Regeneration (6+) special rule. If this spell is cast with a casting result of 10 or more, the target friendly unit gains the Regeneration (5+) special rule. This spell lasts until your next Start of Turn sub-phase."
+      ],
+      "overrides": "lore-of-the-great-maw-renegade"
     }
   },
   "profiles": {
