@@ -51,6 +51,8 @@ export interface OwbUnit {
    *  until now; the promotion rules use it to keep unique characters out (they have no lighter
    *  version and their profile is one-off). */
   named?: boolean;
+  /** Taken as part of a parent regiment, not as its own list entry — see `isDetachment`. */
+  detachment?: boolean;
   /** The unit's own restriction note, e.g. "0-1 Supreme Sorceress per 1000 points". The
    *  composition-specific note in `armyComposition[<comp>].notes` overrides it — see `unitNote`. */
   notes?: { name_en?: string };
@@ -74,8 +76,28 @@ export function unitCategoryFor(unit: OwbUnit, composition: string, base: Catego
   const c = compMap(unit)?.[composition]?.category;
   return c && (CATEGORIES as readonly string[]).includes(c) ? c : base;
 }
-/** Whether a unit may be fielded in `composition` (a mapped unit is only available where it's listed). */
+/** A detachment entry with NOTHING on it: no equipment, no options, no special rules.
+ *
+ *  The catalogue spells a detachment twice — as a standalone entry flagged `detachment`, and as the
+ *  real profile inside its parent's `detachments` array. Where the standalone copy is empty it can
+ *  represent nothing at all: Beastmen "Gors" and "Ungors" sit in Core with no equipment, no options
+ *  and no special rules, because all of it lives on the Primal Warherd that fields them. That is how
+ *  Joost found them (11-08) — units that look broken.
+ *
+ *  Only the EMPTY ones are withheld. Upstream Old World Builder filters every `detachment` out of its
+ *  picker, but it can also attach them to a parent and we cannot yet; dropping the ones that do carry
+ *  points and options (Skaven Weapon Teams, Empire detachments, Night Goblin Fanatics, the Wood Elf
+ *  beasts) would leave no way to field them at all. Wrongly placed beats absent, until detachments
+ *  are modelled properly. */
+export const isStubDetachment = (unit: OwbUnit): boolean => unit.detachment === true
+  && !unit.specialRules?.name_en
+  && !(unit.command?.length || unit.equipment?.length || unit.armor?.length
+    || unit.options?.length || unit.mounts?.length);
+
+/** Whether a unit may be fielded in `composition` (a mapped unit is only available where it's listed).
+ *  An empty detachment stub is offered by no composition — there is nothing to field. */
 export function unitAllowedIn(unit: OwbUnit, composition: string): boolean {
+  if (isStubDetachment(unit)) return false;
   const ac = compMap(unit);
   return !ac || !!ac[composition];
 }
@@ -733,7 +755,14 @@ export function validate(
     const max = unit.maximum ?? 0; // 0 = no max
     if (e.count < min) warnEntry(e.uid, `${unit.name_en}: below minimum size (${min})`);
     if (max > 0 && e.count > max) warnEntry(e.uid, `${unit.name_en}: above maximum size (${max})`);
-    if (!unitAllowedIn(unit, list.composition)) warnEntry(e.uid, `${unit.name_en}: not allowed in this army composition`);
+    // Two different reasons, two different messages. A list saved before detachments were filtered out
+    // still has the entry, and "not allowed in this army composition" would send you looking in the
+    // wrong place — the unit is fine, it just is not something you take on its own.
+    if (isStubDetachment(unit)) {
+      warnEntry(e.uid, `${unit.name_en}: a detachment, taken as part of its parent regiment rather than as its own entry`);
+    } else if (!unitAllowedIn(unit, list.composition)) {
+      warnEntry(e.uid, `${unit.name_en}: not allowed in this army composition`);
+    }
     // GROEI — een unit die al eerder is ingediend mag maar een beetje duurder worden per Act,
     // gemeten tegen de kosten waarmee 'ie debuteerde (niet tegen de vorige Act). Zo gaan de +250
     // punten per Act naar NIEUWE units in plaats van naar het oppompen van één blok. De server
