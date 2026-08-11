@@ -528,14 +528,16 @@ export function UnitOptions(props: {
   const unit = entry ? ctx.getUnit(entry.cat, entry.unitId) ?? null : null;
 
   // ── Promotion ──────────────────────────────────────────────────────────────────────────────────
-  // Offered for any list, campaign or not: the rule is a Warhammer rule, not a campaign one. What the
-  // campaign needs is that the entry keeps its `uid` — which `planPromotion` guarantees and the write
+  // CAMPAIGN LISTS ONLY (Joost, 11-08-2026). Promotion is the campaign's "Promotion or Death" move:
+  // it spends the character's unspent XP and the campaign tracks the switch. On a plain list it did
+  // nothing an ordinary swap could not do, and it muddied the builder — so the button lives only
+  // where the rule does. The entry keeps its `uid` — which `planPromotion` guarantees and the write
   // below preserves, because it maps the entries in place instead of removing and re-adding.
   const promotions: PromotionTarget[] = useMemo(
-    () => (unit && entry?.cat === 'characters'
+    () => (unit && entry?.cat === 'characters' && ctx.list.campaign
       ? promotionTargets(ctx.list.army, unit, ctx.army?.characters ?? [])
       : []),
-    [unit, entry?.cat, ctx.list.army, ctx.army],
+    [unit, entry?.cat, ctx.list.army, ctx.list.campaign, ctx.army],
   );
   const promoteTo = promotions.find((p) => p.unit.id === promoteToId)?.unit ?? null;
   /** Rewrite the entry IN PLACE. Same uid, same position — the campaign server reads this as the

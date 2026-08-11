@@ -21,6 +21,9 @@ export interface SavedListLike extends BuilderList {
   name: string;
   /** Army slug — which `public/owb/<slug>.json` this list is built from. */
   army: string;
+  /** True for a campaign list (Isle of Celedon). Gates campaign-only builder features such as
+   *  character promotion. Optional because plain lists simply do not carry it. */
+  campaign?: boolean;
 }
 
 /** Everything a builder screen needs about the open list, assembled ONCE by the container so the

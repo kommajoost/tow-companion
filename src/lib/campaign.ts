@@ -15,8 +15,8 @@ import { getPersisted, setPersisted } from '../store';
 
 /** In welke Acts een unit laten vallen mag. Vast, zodat niemand z'n eigen historie hoeft te kennen.
  *  Staat hier bovenaan omdat `parseEen` 'm nodig heeft, en die draait al bij module-init (de
- *  cache-hydratie onderaan dit bestand). */
-export const DROP_ACTS = [2, 4, 6];
+ *  cache-hydratie onderaan dit bestand). Sinds 11-08-2026 zijn de drop-Acts 3 en 5 (was 2/4/6). */
+export const DROP_ACTS = [3, 5];
 
 // localStorage-sleutels (via de gedeelde store, niet rechtstreeks localStorage).
 const CODE_KEY = 'tow:campaignCode';
@@ -182,7 +182,7 @@ function parseEen(raw: unknown): CampaignContext {
         laatsteFase: Number.isFinite(Number(b.laatsteFase)) ? Number(b.laatsteFase) : null,
       };
     }).filter((b) => b.uid),
-    // Oudere servers sturen dropActs niet mee; 2/4/6 is de regel, dus dat is de veilige default.
+    // Oudere servers sturen dropActs niet mee; DROP_ACTS is de regel, dus dat is de veilige default.
     dropActs: (() => {
       const lijst = arr(d.dropActs).map((v) => Number(v)).filter((n) => Number.isFinite(n));
       return lijst.length ? lijst : DROP_ACTS;
