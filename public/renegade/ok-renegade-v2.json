@@ -66,8 +66,10 @@
       "points": 39,
       "_was": 41,
       "_changed": [
-        "points"
-      ]
+        "points",
+        "special-rules"
+      ],
+      "specialRules": "Close Order, Open Order, Fear, Impact Hits (1), Ogre Kingdoms Charge, Ogre Club, Ravenous Hunger"
     },
     "yhetees": {
       "points": 43,
@@ -230,7 +232,8 @@
     },
     "firebelly": {
       "_changed": [
-        "options"
+        "options",
+        "special-rules"
       ],
       "options": [
         {
@@ -247,7 +250,8 @@
           "points": 30,
           "perModel": false
         }
-      ]
+      ],
+      "specialRules": "Armour Bane (1), Blessings of the Volcano God, Fear, Flaming Attacks, Impact Hits (1), Ogre Kingdoms Charge"
     },
     "thundertusk-riders": {
       "_changed": [

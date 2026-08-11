@@ -1,2596 +1,2599 @@
 {
-  "id": "ok-renegade-v2-coverage",
-  "army": "ogre-kingdoms",
-  "reference": "ok-renegade-v2-reference.json",
-  "generatedBy": "scripts/compile-renegade-v2.mjs",
-  "counts": {
-    "applied": 102,
-    "captured": 29,
-    "unresolved": 0,
-    "unsupported": 0,
-    "todo": 11
+ "id": "ok-renegade-v2-coverage",
+ "army": "ogre-kingdoms",
+ "reference": "ok-renegade-v2-reference.json",
+ "generatedBy": "scripts/compile-renegade-v2.mjs",
+ "counts": {
+  "applied": 103,
+  "captured": 29,
+  "unresolved": 0,
+  "unsupported": 0,
+  "todo": 10
+ },
+ "blocks": [
+  {
+   "blockId": "b0076",
+   "unitContext": null,
+   "entryKind": "list",
+   "changeKinds": [
+    "changed"
+   ],
+   "status": "captured",
+   "targets": [
+    "composition.sourceRules.Core"
+   ]
   },
-  "blocks": [
-    {
-      "blockId": "b0076",
-      "unitContext": null,
-      "entryKind": "list",
-      "changeKinds": [
-        "changed"
-      ],
-      "status": "captured",
-      "targets": [
-        "composition.sourceRules.Core"
-      ]
-    },
-    {
-      "blockId": "b0078",
-      "unitContext": null,
-      "entryKind": "list",
-      "changeKinds": [
-        "changed"
-      ],
-      "status": "captured",
-      "targets": [
-        "composition.sourceRules.Special"
-      ]
-    },
-    {
-      "blockId": "b0080",
-      "unitContext": null,
-      "entryKind": "list",
-      "changeKinds": [
-        "changed"
-      ],
-      "status": "captured",
-      "targets": [
-        "composition.sourceRules.Rare"
-      ]
-    },
-    {
-      "blockId": "b0088",
-      "unitContext": null,
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.ogre-kingdoms-charge"
-      ]
-    },
-    {
-      "blockId": "b0089",
-      "unitContext": null,
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.ogre-kingdoms-charge"
-      ]
-    },
-    {
-      "blockId": "b0090",
-      "unitContext": null,
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.ogre-kingdoms-charge"
-      ]
-    },
-    {
-      "blockId": "b0091",
-      "unitContext": null,
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.ogre-kingdoms-charge"
-      ]
-    },
-    {
-      "blockId": "h0015",
-      "unitContext": null,
-      "entryKind": "heading",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.ravenous-hunger"
-      ]
-    },
-    {
-      "blockId": "b0092",
-      "unitContext": null,
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.ravenous-hunger"
-      ]
-    },
-    {
-      "blockId": "h0018",
-      "unitContext": null,
-      "entryKind": "heading",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.numbing-chill"
-      ]
-    },
-    {
-      "blockId": "b0095",
-      "unitContext": null,
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.numbing-chill"
-      ]
-    },
-    {
-      "blockId": "h0019",
-      "unitContext": null,
-      "entryKind": "heading",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.ogre-club"
-      ]
-    },
-    {
-      "blockId": "b0096",
-      "unitContext": null,
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.ogre-club"
-      ]
-    },
-    {
-      "blockId": "b0097",
-      "unitContext": null,
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.ogre-club"
-      ]
-    },
-    {
-      "blockId": "h0020",
-      "unitContext": null,
-      "entryKind": "heading",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.ravenous-hunger"
-      ]
-    },
-    {
-      "blockId": "b0098",
-      "unitContext": null,
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.ravenous-hunger"
-      ]
-    },
-    {
-      "blockId": "b0099",
-      "unitContext": null,
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "captured",
-      "targets": [
-        "notes"
-      ]
-    },
-    {
-      "blockId": "h0022",
-      "unitContext": null,
-      "entryKind": "heading",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "magicItemText.beastkiller"
-      ]
-    },
-    {
-      "blockId": "b0100",
-      "unitContext": null,
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "magicItemText.beastkiller"
-      ]
-    },
-    {
-      "blockId": "b0101",
-      "unitContext": null,
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "magicItemText.beastkiller"
-      ]
-    },
-    {
-      "blockId": "b0102",
-      "unitContext": null,
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "magicItemText.mawseeker"
-      ]
-    },
-    {
-      "blockId": "b0103",
-      "unitContext": null,
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "magicItemText.wallcrusher"
-      ]
-    },
-    {
-      "blockId": "b0104",
-      "unitContext": null,
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "magicItemText.wallcrusher"
-      ]
-    },
-    {
-      "blockId": "b0105",
-      "unitContext": null,
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "magicItemText.mountaineater"
-      ]
-    },
-    {
-      "blockId": "b0106",
-      "unitContext": null,
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "magicItemText.giantbreaker"
-      ]
-    },
-    {
-      "blockId": "b0107",
-      "unitContext": null,
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "magicItemText.kineater"
-      ]
-    },
-    {
-      "blockId": "b0108",
-      "unitContext": null,
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "magicItemText.longstrider"
-      ]
-    },
-    {
-      "blockId": "b0109",
-      "unitContext": null,
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "magicItemText.deathcheater"
-      ]
-    },
-    {
-      "blockId": "b0112",
-      "unitContext": null,
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "magicItemText.thundermace"
-      ]
-    },
-    {
-      "blockId": "h0038",
-      "unitContext": null,
-      "entryKind": "heading",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "magicItemText.gut-maw"
-      ]
-    },
-    {
-      "blockId": "b0117",
-      "unitContext": null,
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "magicItemText.gut-maw"
-      ]
-    },
-    {
-      "blockId": "h0041",
-      "unitContext": null,
-      "entryKind": "heading",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "magicItemText.spangleshard"
-      ]
-    },
-    {
-      "blockId": "h0042",
-      "unitContext": null,
-      "entryKind": "heading",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "magicItemText.cathayan-jet-pendant"
-      ]
-    },
-    {
-      "blockId": "b0120",
-      "unitContext": null,
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "magicItemText.cathayan-jet-pendant"
-      ]
-    },
-    {
-      "blockId": "h0044",
-      "unitContext": null,
-      "entryKind": "heading",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "magicItemText.dragonhide-banner"
-      ]
-    },
-    {
-      "blockId": "b0121",
-      "unitContext": null,
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "magicItemText.dragonhide-banner"
-      ]
-    },
-    {
-      "blockId": "h0056",
-      "unitContext": null,
-      "entryKind": "heading",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "magicItemText.tooth-gnoblar"
-      ]
-    },
-    {
-      "blockId": "b0132",
-      "unitContext": null,
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "magicItemText.tooth-gnoblar"
-      ]
-    },
-    {
-      "blockId": "b0134",
-      "unitContext": null,
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "lores.lore-of-the-great-maw.spell-toothcracker"
-      ]
-    },
-    {
-      "blockId": "b0136",
-      "unitContext": null,
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "lores.lore-of-the-great-maw.spell-toothcracker"
-      ]
-    },
-    {
-      "blockId": "b0137",
-      "unitContext": null,
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "changed"
-      ],
-      "status": "applied",
-      "targets": [
-        "lores.lore-of-the-great-maw.spell-trollguts"
-      ]
-    },
-    {
-      "blockId": "b0139",
-      "unitContext": null,
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "changed"
-      ],
-      "status": "applied",
-      "targets": [
-        "lores.lore-of-the-great-maw.spell-trollguts"
-      ]
-    },
-    {
-      "blockId": "b0140",
-      "unitContext": null,
-      "entryKind": "weapon-profile",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "captured",
-      "targets": [
-        "rules.harpoon-launcher"
-      ]
-    },
-    {
-      "blockId": "b0141",
-      "unitContext": null,
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.harpoon-launcher"
-      ]
-    },
-    {
-      "blockId": "b0142",
-      "unitContext": null,
-      "entryKind": "weapon-profile",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "captured",
-      "targets": [
-        "rules.ogre-kingdoms-ironfist"
-      ]
-    },
-    {
-      "blockId": "b0143",
-      "unitContext": null,
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.ogre-kingdoms-ironfist"
-      ]
-    },
-    {
-      "blockId": "b0150",
-      "unitContext": null,
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.chaintrap"
-      ]
-    },
-    {
-      "blockId": "b0158",
-      "unitContext": {
-        "name": "Tyrannical Overlords",
-        "sourceBlockId": "b0152",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Tyrant",
-          "Bruiser"
-        ]
-      },
-      "entryKind": "special-rules",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "units.tyrant.specialRules",
-        "units.bruiser.specialRules"
-      ]
-    },
-    {
-      "blockId": "b0159",
-      "unitContext": {
-        "name": "Tyrannical Overlords",
-        "sourceBlockId": "b0152",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Tyrant",
-          "Bruiser"
-        ]
-      },
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "captured",
-      "targets": [
-        "profiles.tyrant.notes",
-        "profiles.bruiser.notes"
-      ]
-    },
-    {
-      "blockId": "b0161",
-      "unitContext": {
-        "name": "Tyrannical Overlords",
-        "sourceBlockId": "b0152",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Tyrant",
-          "Bruiser"
-        ]
-      },
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.bull-charge"
-      ]
-    },
-    {
-      "blockId": "b0162",
-      "unitContext": {
-        "name": "Emissaries Of The Great Maw",
-        "sourceBlockId": "b0162",
-        "method": "preceding-heading",
-        "confidence": "medium",
-        "profileNames": [
-          "Slaughtermaster",
-          "Butcher"
-        ]
-      },
-      "entryKind": "statline",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "profiles.slaughtermaster",
-        "profiles.butcher"
-      ]
-    },
-    {
-      "blockId": "b0169",
-      "unitContext": {
-        "name": "Emissaries Of The Great Maw",
-        "sourceBlockId": "b0162",
-        "method": "preceding-heading",
-        "confidence": "medium",
-        "profileNames": [
-          "Slaughtermaster",
-          "Butcher"
-        ]
-      },
-      "entryKind": "option",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "units.slaughtermaster.options",
-        "units.butcher.options"
-      ]
-    },
-    {
-      "blockId": "b0171",
-      "unitContext": {
-        "name": "Emissaries Of The Great Maw",
-        "sourceBlockId": "b0162",
-        "method": "preceding-heading",
-        "confidence": "medium",
-        "profileNames": [
-          "Slaughtermaster",
-          "Butcher"
-        ]
-      },
-      "entryKind": "option",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "units.slaughtermaster.options",
-        "units.butcher.options"
-      ]
-    },
-    {
-      "blockId": "b0173",
-      "unitContext": {
-        "name": "Emissaries Of The Great Maw",
-        "sourceBlockId": "b0162",
-        "method": "preceding-heading",
-        "confidence": "medium",
-        "profileNames": [
-          "Slaughtermaster",
-          "Butcher"
-        ]
-      },
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.butcher-s-cauldron"
-      ]
-    },
-    {
-      "blockId": "b0178",
-      "unitContext": {
-        "name": "Hunters",
-        "sourceBlockId": "b0174",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Hunter"
-        ]
-      },
-      "entryKind": "option",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "units.hunter.options"
-      ]
-    },
-    {
-      "blockId": "b0179",
-      "unitContext": {
-        "name": "Hunters",
-        "sourceBlockId": "b0174",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Hunter"
-        ]
-      },
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "captured",
-      "targets": [
-        "profiles.hunter.notes"
-      ]
-    },
-    {
-      "blockId": "b0180",
-      "unitContext": {
-        "name": "Hunters",
-        "sourceBlockId": "b0174",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Hunter"
-        ]
-      },
-      "entryKind": "option",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "units.hunter.options"
-      ]
-    },
-    {
-      "blockId": "b0182",
-      "unitContext": {
-        "name": "Hunters",
-        "sourceBlockId": "b0174",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Hunter"
-        ]
-      },
-      "entryKind": "option",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "units.hunter.options"
-      ]
-    },
-    {
-      "blockId": "b0183",
-      "unitContext": {
-        "name": "Hunters",
-        "sourceBlockId": "b0174",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Hunter"
-        ]
-      },
-      "entryKind": "list",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "captured",
-      "targets": [
-        "profiles.hunter.notes"
-      ]
-    },
-    {
-      "blockId": "b0184",
-      "unitContext": {
-        "name": "Hunters",
-        "sourceBlockId": "b0174",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Hunter"
-        ]
-      },
-      "entryKind": "special-rules",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "units.hunter.specialRules"
-      ]
-    },
-    {
-      "blockId": "b0185",
-      "unitContext": {
-        "name": "Hunters",
-        "sourceBlockId": "b0174",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Hunter"
-        ]
-      },
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "captured",
-      "targets": [
-        "profiles.hunter.notes"
-      ]
-    },
-    {
-      "blockId": "b0187",
-      "unitContext": {
-        "name": "Hunters",
-        "sourceBlockId": "b0174",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Hunter"
-        ]
-      },
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new",
-        "changed"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.running-with-the-pack"
-      ]
-    },
-    {
-      "blockId": "b0195",
-      "unitContext": {
-        "name": "Firebellies",
-        "sourceBlockId": "b0189",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Firebelly"
-        ]
-      },
-      "entryKind": "option",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "units.firebelly.options"
-      ]
-    },
-    {
-      "blockId": "h0080",
-      "unitContext": {
-        "name": "Firebellies",
-        "sourceBlockId": "b0189",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Firebelly"
-        ]
-      },
-      "entryKind": "heading",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.blessings-of-the-volcano-god"
-      ]
-    },
-    {
-      "blockId": "b0197",
-      "unitContext": {
-        "name": "Firebellies",
-        "sourceBlockId": "b0189",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Firebelly"
-        ]
-      },
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.blessings-of-the-volcano-god"
-      ]
-    },
-    {
-      "blockId": "b0200",
-      "unitContext": {
-        "name": "Firebellies",
-        "sourceBlockId": "b0189",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Firebelly"
-        ]
-      },
-      "entryKind": "option",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.character-mounts"
-      ]
-    },
-    {
-      "blockId": "b0211",
-      "unitContext": {
-        "name": "Ogre Bulls",
-        "sourceBlockId": "b0201",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Ogre",
-          "Crusher"
-        ]
-      },
-      "entryKind": "special-rules",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "units.ogre-bulls.specialRules"
-      ]
-    },
-    {
-      "blockId": "b0221",
-      "unitContext": {
-        "name": "Ironguts",
-        "sourceBlockId": "b0212",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Irongut",
-          "Gutlord"
-        ]
-      },
-      "entryKind": "special-rules",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "units.ironguts.specialRules"
-      ]
-    },
-    {
-      "blockId": "b0222",
-      "unitContext": {
-        "name": "Leadbelchers",
-        "sourceBlockId": "b0222",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Leadbelcher",
-          "Thunderfist"
-        ]
-      },
-      "entryKind": "statline",
-      "changeKinds": [
-        "todo",
-        "new"
-      ],
-      "status": "todo",
-      "targets": []
-    },
-    {
-      "blockId": "b0223",
-      "unitContext": {
-        "name": "Leadbelchers",
-        "sourceBlockId": "b0222",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Leadbelcher",
-          "Thunderfist"
-        ]
-      },
-      "entryKind": "troop-type",
-      "changeKinds": [
-        "todo"
-      ],
-      "status": "todo",
-      "targets": []
-    },
-    {
-      "blockId": "b0224",
-      "unitContext": {
-        "name": "Leadbelchers",
-        "sourceBlockId": "b0222",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Leadbelcher",
-          "Thunderfist"
-        ]
-      },
-      "entryKind": "base-size",
-      "changeKinds": [
-        "todo"
-      ],
-      "status": "todo",
-      "targets": []
-    },
-    {
-      "blockId": "b0225",
-      "unitContext": {
-        "name": "Leadbelchers",
-        "sourceBlockId": "b0222",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Leadbelcher",
-          "Thunderfist"
-        ]
-      },
-      "entryKind": "unit-size",
-      "changeKinds": [
-        "todo"
-      ],
-      "status": "todo",
-      "targets": []
-    },
-    {
-      "blockId": "b0226",
-      "unitContext": {
-        "name": "Leadbelchers",
-        "sourceBlockId": "b0222",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Leadbelcher",
-          "Thunderfist"
-        ]
-      },
-      "entryKind": "equipment",
-      "changeKinds": [
-        "todo"
-      ],
-      "status": "todo",
-      "targets": []
-    },
-    {
-      "blockId": "h0085",
-      "unitContext": {
-        "name": "Leadbelchers",
-        "sourceBlockId": "b0222",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Leadbelcher",
-          "Thunderfist"
-        ]
-      },
-      "entryKind": "heading",
-      "changeKinds": [
-        "todo"
-      ],
-      "status": "todo",
-      "targets": []
-    },
-    {
-      "blockId": "b0227",
-      "unitContext": {
-        "name": "Leadbelchers",
-        "sourceBlockId": "b0222",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Leadbelcher",
-          "Thunderfist"
-        ]
-      },
-      "entryKind": "list",
-      "changeKinds": [
-        "todo"
-      ],
-      "status": "todo",
-      "targets": []
-    },
-    {
-      "blockId": "b0228",
-      "unitContext": {
-        "name": "Leadbelchers",
-        "sourceBlockId": "b0222",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Leadbelcher",
-          "Thunderfist"
-        ]
-      },
-      "entryKind": "option",
-      "changeKinds": [
-        "todo"
-      ],
-      "status": "todo",
-      "targets": []
-    },
-    {
-      "blockId": "b0229",
-      "unitContext": {
-        "name": "Leadbelchers",
-        "sourceBlockId": "b0222",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Leadbelcher",
-          "Thunderfist"
-        ]
-      },
-      "entryKind": "option",
-      "changeKinds": [
-        "todo"
-      ],
-      "status": "todo",
-      "targets": []
-    },
-    {
-      "blockId": "b0230",
-      "unitContext": {
-        "name": "Leadbelchers",
-        "sourceBlockId": "b0222",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Leadbelcher",
-          "Thunderfist"
-        ]
-      },
-      "entryKind": "special-rules",
-      "changeKinds": [
-        "todo",
-        "new"
-      ],
-      "status": "todo",
-      "targets": []
-    },
-    {
-      "blockId": "b0231",
-      "unitContext": {
-        "name": "Leadbelchers",
-        "sourceBlockId": "b0222",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Leadbelcher",
-          "Thunderfist"
-        ]
-      },
-      "entryKind": "weapon-profile",
-      "changeKinds": [
-        "todo",
-        "new"
-      ],
-      "status": "todo",
-      "targets": []
-    },
-    {
-      "blockId": "b0232",
-      "unitContext": {
-        "name": "Leadbelchers",
-        "sourceBlockId": "b0222",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Leadbelcher",
-          "Thunderfist"
-        ]
-      },
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "captured",
-      "targets": [
-        "profiles.leadbelchers.notes"
-      ]
-    },
-    {
-      "blockId": "b0239",
-      "unitContext": {
-        "name": "Gnoblar Trappers",
-        "sourceBlockId": "b0233",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Gnoblar Trapper",
-          "Snarefinger"
-        ]
-      },
-      "entryKind": "special-rules",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "units.gnoblar-trappers.specialRules"
-      ]
-    },
-    {
-      "blockId": "h0087",
-      "unitContext": {
-        "name": "Gnoblar Trappers",
-        "sourceBlockId": "b0233",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Gnoblar Trapper",
-          "Snarefinger"
-        ]
-      },
-      "entryKind": "heading",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.traps-snares"
-      ]
-    },
-    {
-      "blockId": "b0240",
-      "unitContext": {
-        "name": "Gnoblar Trappers",
-        "sourceBlockId": "b0233",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Gnoblar Trapper",
-          "Snarefinger"
-        ]
-      },
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.traps-snares"
-      ]
-    },
-    {
-      "blockId": "h0088",
-      "unitContext": {
-        "name": "Gnoblar Trappers",
-        "sourceBlockId": "b0233",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Gnoblar Trapper",
-          "Snarefinger"
-        ]
-      },
-      "entryKind": "heading",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.entourage"
-      ]
-    },
-    {
-      "blockId": "b0241",
-      "unitContext": {
-        "name": "Gnoblar Trappers",
-        "sourceBlockId": "b0233",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Gnoblar Trapper",
-          "Snarefinger"
-        ]
-      },
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.entourage"
-      ]
-    },
-    {
-      "blockId": "b0246",
-      "unitContext": {
-        "name": "Maneaters",
-        "sourceBlockId": "b0242",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Maneater",
-          "Maneater Captain"
-        ]
-      },
-      "entryKind": "equipment",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "captured",
-      "targets": [
-        "profiles.maneaters.equipment"
-      ]
-    },
-    {
-      "blockId": "b0250",
-      "unitContext": {
-        "name": "Maneaters",
-        "sourceBlockId": "b0242",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Maneater",
-          "Maneater Captain"
-        ]
-      },
-      "entryKind": "option",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "units.maneaters.options"
-      ]
-    },
-    {
-      "blockId": "b0253",
-      "unitContext": {
-        "name": "Maneaters",
-        "sourceBlockId": "b0242",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Maneater",
-          "Maneater Captain"
-        ]
-      },
-      "entryKind": "option",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "units.maneaters.options"
-      ]
-    },
-    {
-      "blockId": "b0254",
-      "unitContext": {
-        "name": "Maneaters",
-        "sourceBlockId": "b0242",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Maneater",
-          "Maneater Captain"
-        ]
-      },
-      "entryKind": "list",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "captured",
-      "targets": [
-        "profiles.maneaters.notes"
-      ]
-    },
-    {
-      "blockId": "b0255",
-      "unitContext": {
-        "name": "Maneaters",
-        "sourceBlockId": "b0242",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Maneater",
-          "Maneater Captain"
-        ]
-      },
-      "entryKind": "special-rules",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "units.maneaters.specialRules"
-      ]
-    },
-    {
-      "blockId": "b0263",
-      "unitContext": {
-        "name": "Yhetees",
-        "sourceBlockId": "b0263",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Yhetee",
-          "Greyback"
-        ]
-      },
-      "entryKind": "statline",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "profiles.yhetees"
-      ]
-    },
-    {
-      "blockId": "b0269",
-      "unitContext": {
-        "name": "Yhetees",
-        "sourceBlockId": "b0263",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Yhetee",
-          "Greyback"
-        ]
-      },
-      "entryKind": "option",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "units.yhetees.options"
-      ]
-    },
-    {
-      "blockId": "b0270",
-      "unitContext": {
-        "name": "Yhetees",
-        "sourceBlockId": "b0263",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Yhetee",
-          "Greyback"
-        ]
-      },
-      "entryKind": "special-rules",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "units.yhetees.specialRules"
-      ]
-    },
-    {
-      "blockId": "b0292",
-      "unitContext": {
-        "name": "Mournfang Cavalry",
-        "sourceBlockId": "b0280",
-        "method": "preceding-heading",
-        "confidence": "medium",
-        "profileNames": [
-          "Ogre",
-          "Crusher",
-          "Mournfang"
-        ]
-      },
-      "entryKind": "special-rules",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "units.mournfang-cavalry.specialRules"
-      ]
-    },
-    {
-      "blockId": "b0295",
-      "unitContext": {
-        "name": "Mournfang Cavalry",
-        "sourceBlockId": "b0280",
-        "method": "preceding-heading",
-        "confidence": "medium",
-        "profileNames": [
-          "Ogre",
-          "Crusher",
-          "Mournfang"
-        ]
-      },
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.mournfang-charge"
-      ]
-    },
-    {
-      "blockId": "b0296",
-      "unitContext": {
-        "name": "Mournfang Cavalry",
-        "sourceBlockId": "b0280",
-        "method": "preceding-heading",
-        "confidence": "medium",
-        "profileNames": [
-          "Ogre",
-          "Crusher",
-          "Mournfang"
-        ]
-      },
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.mournfang-charge"
-      ]
-    },
-    {
-      "blockId": "b0306",
-      "unitContext": {
-        "name": "Ironblaster",
-        "sourceBlockId": "b0297",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Ironblaster",
-          "Leadbelcher (x1)",
-          "Gnoblar Scrapper (x1)",
-          "Rhinox (x1)"
-        ]
-      },
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "changed"
-      ],
-      "status": "captured",
-      "targets": [
-        "profiles.ironblaster.notes"
-      ]
-    },
-    {
-      "blockId": "h0097",
-      "unitContext": {
-        "name": "Ironblaster",
-        "sourceBlockId": "b0297",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Ironblaster",
-          "Leadbelcher (x1)",
-          "Gnoblar Scrapper (x1)",
-          "Rhinox (x1)"
-        ]
-      },
-      "entryKind": "heading",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "captured",
-      "targets": [
-        "profiles.ironblaster.notes"
-      ]
-    },
-    {
-      "blockId": "h0098",
-      "unitContext": {
-        "name": "Ironblaster",
-        "sourceBlockId": "b0297",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Ironblaster",
-          "Leadbelcher (x1)",
-          "Gnoblar Scrapper (x1)",
-          "Rhinox (x1)"
-        ]
-      },
-      "entryKind": "heading",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.d6-result"
-      ]
-    },
-    {
-      "blockId": "b0307",
-      "unitContext": {
-        "name": "Ironblaster",
-        "sourceBlockId": "b0297",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Ironblaster",
-          "Leadbelcher (x1)",
-          "Gnoblar Scrapper (x1)",
-          "Rhinox (x1)"
-        ]
-      },
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.d6-result"
-      ]
-    },
-    {
-      "blockId": "b0308",
-      "unitContext": {
-        "name": "Ironblaster",
-        "sourceBlockId": "b0297",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Ironblaster",
-          "Leadbelcher (x1)",
-          "Gnoblar Scrapper (x1)",
-          "Rhinox (x1)"
-        ]
-      },
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.d6-result"
-      ]
-    },
-    {
-      "blockId": "b0309",
-      "unitContext": {
-        "name": "Ironblaster",
-        "sourceBlockId": "b0297",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Ironblaster",
-          "Leadbelcher (x1)",
-          "Gnoblar Scrapper (x1)",
-          "Rhinox (x1)"
-        ]
-      },
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.d6-result"
-      ]
-    },
-    {
-      "blockId": "b0310",
-      "unitContext": {
-        "name": "Ironblaster",
-        "sourceBlockId": "b0297",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Ironblaster",
-          "Leadbelcher (x1)",
-          "Gnoblar Scrapper (x1)",
-          "Rhinox (x1)"
-        ]
-      },
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.d6-result"
-      ]
-    },
-    {
-      "blockId": "b0311",
-      "unitContext": {
-        "name": "Ironblaster",
-        "sourceBlockId": "b0297",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Ironblaster",
-          "Leadbelcher (x1)",
-          "Gnoblar Scrapper (x1)",
-          "Rhinox (x1)"
-        ]
-      },
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.d6-result"
-      ]
-    },
-    {
-      "blockId": "b0321",
-      "unitContext": {
-        "name": "Gnoblar Scraplauncher",
-        "sourceBlockId": "b0312",
-        "method": "preceding-heading",
-        "confidence": "medium",
-        "profileNames": [
-          "Scraplauncher",
-          "Gnoblar Scrapper (x7)",
-          "Rhinox (x1)"
-        ]
-      },
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.catapult-deluge-of-sharp-instruments"
-      ]
-    },
-    {
-      "blockId": "h0102",
-      "unitContext": {
-        "name": "Gnoblar Scraplauncher",
-        "sourceBlockId": "b0312",
-        "method": "preceding-heading",
-        "confidence": "medium",
-        "profileNames": [
-          "Scraplauncher",
-          "Gnoblar Scrapper (x7)",
-          "Rhinox (x1)"
-        ]
-      },
-      "entryKind": "heading",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.deluge-of-sharp-instruments"
-      ]
-    },
-    {
-      "blockId": "b0323",
-      "unitContext": {
-        "name": "Gnoblar Scraplauncher",
-        "sourceBlockId": "b0312",
-        "method": "preceding-heading",
-        "confidence": "medium",
-        "profileNames": [
-          "Scraplauncher",
-          "Gnoblar Scrapper (x7)",
-          "Rhinox (x1)"
-        ]
-      },
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.deluge-of-sharp-instruments"
-      ]
-    },
-    {
-      "blockId": "h0103",
-      "unitContext": {
-        "name": "Gnoblar Scraplauncher",
-        "sourceBlockId": "b0312",
-        "method": "preceding-heading",
-        "confidence": "medium",
-        "profileNames": [
-          "Scraplauncher",
-          "Gnoblar Scrapper (x7)",
-          "Rhinox (x1)"
-        ]
-      },
-      "entryKind": "heading",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "captured",
-      "targets": [
-        "profiles.gnoblar scraplauncher.notes"
-      ]
-    },
-    {
-      "blockId": "h0104",
-      "unitContext": {
-        "name": "Gnoblar Scraplauncher",
-        "sourceBlockId": "b0312",
-        "method": "preceding-heading",
-        "confidence": "medium",
-        "profileNames": [
-          "Scraplauncher",
-          "Gnoblar Scrapper (x7)",
-          "Rhinox (x1)"
-        ]
-      },
-      "entryKind": "heading",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.d6-result"
-      ]
-    },
-    {
-      "blockId": "b0324",
-      "unitContext": {
-        "name": "Gnoblar Scraplauncher",
-        "sourceBlockId": "b0312",
-        "method": "preceding-heading",
-        "confidence": "medium",
-        "profileNames": [
-          "Scraplauncher",
-          "Gnoblar Scrapper (x7)",
-          "Rhinox (x1)"
-        ]
-      },
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.d6-result"
-      ]
-    },
-    {
-      "blockId": "b0325",
-      "unitContext": {
-        "name": "Gnoblar Scraplauncher",
-        "sourceBlockId": "b0312",
-        "method": "preceding-heading",
-        "confidence": "medium",
-        "profileNames": [
-          "Scraplauncher",
-          "Gnoblar Scrapper (x7)",
-          "Rhinox (x1)"
-        ]
-      },
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.d6-result"
-      ]
-    },
-    {
-      "blockId": "b0326",
-      "unitContext": {
-        "name": "Gnoblar Scraplauncher",
-        "sourceBlockId": "b0312",
-        "method": "preceding-heading",
-        "confidence": "medium",
-        "profileNames": [
-          "Scraplauncher",
-          "Gnoblar Scrapper (x7)",
-          "Rhinox (x1)"
-        ]
-      },
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.d6-result"
-      ]
-    },
-    {
-      "blockId": "b0327",
-      "unitContext": {
-        "name": "Gnoblar Scraplauncher",
-        "sourceBlockId": "b0312",
-        "method": "preceding-heading",
-        "confidence": "medium",
-        "profileNames": [
-          "Scraplauncher",
-          "Gnoblar Scrapper (x7)",
-          "Rhinox (x1)"
-        ]
-      },
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.d6-result"
-      ]
-    },
-    {
-      "blockId": "b0328",
-      "unitContext": {
-        "name": "Gnoblar Scraplauncher",
-        "sourceBlockId": "b0312",
-        "method": "preceding-heading",
-        "confidence": "medium",
-        "profileNames": [
-          "Scraplauncher",
-          "Gnoblar Scrapper (x7)",
-          "Rhinox (x1)"
-        ]
-      },
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.d6-result"
-      ]
-    },
-    {
-      "blockId": "b0329",
-      "unitContext": {
-        "name": "Stonehorns",
-        "sourceBlockId": "b0329",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Stonehorn",
-          "Ogre Beast Rider (x1)",
-          "Ogre Crew"
-        ]
-      },
-      "entryKind": "statline",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "profiles.stonehorns"
-      ]
-    },
-    {
-      "blockId": "b0336",
-      "unitContext": {
-        "name": "Stonehorns",
-        "sourceBlockId": "b0329",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Stonehorn",
-          "Ogre Beast Rider (x1)",
-          "Ogre Crew"
-        ]
-      },
-      "entryKind": "list",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "captured",
-      "targets": [
-        "profiles.stonehorns.notes"
-      ]
-    },
-    {
-      "blockId": "b0337",
-      "unitContext": {
-        "name": "Stonehorns",
-        "sourceBlockId": "b0329",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Stonehorn",
-          "Ogre Beast Rider (x1)",
-          "Ogre Crew"
-        ]
-      },
-      "entryKind": "option",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "captured",
-      "targets": [
-        "profiles.stonehorns.notes"
-      ]
-    },
-    {
-      "blockId": "b0338",
-      "unitContext": {
-        "name": "Stonehorns",
-        "sourceBlockId": "b0329",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Stonehorn",
-          "Ogre Beast Rider (x1)",
-          "Ogre Crew"
-        ]
-      },
-      "entryKind": "list",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "captured",
-      "targets": [
-        "profiles.stonehorns.notes"
-      ]
-    },
-    {
-      "blockId": "b0339",
-      "unitContext": {
-        "name": "Stonehorns",
-        "sourceBlockId": "b0329",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Stonehorn",
-          "Ogre Beast Rider (x1)",
-          "Ogre Crew"
-        ]
-      },
-      "entryKind": "option",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "captured",
-      "targets": [
-        "profiles.stonehorns.notes"
-      ]
-    },
-    {
-      "blockId": "b0340",
-      "unitContext": {
-        "name": "Stonehorns",
-        "sourceBlockId": "b0329",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Stonehorn",
-          "Ogre Beast Rider (x1)",
-          "Ogre Crew"
-        ]
-      },
-      "entryKind": "option",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "captured",
-      "targets": [
-        "profiles.stonehorns.notes"
-      ]
-    },
-    {
-      "blockId": "b0341",
-      "unitContext": {
-        "name": "Stonehorns",
-        "sourceBlockId": "b0329",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Stonehorn",
-          "Ogre Beast Rider (x1)",
-          "Ogre Crew"
-        ]
-      },
-      "entryKind": "special-rules",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "profiles.stonehorns.specialRules"
-      ]
-    },
-    {
-      "blockId": "b0345",
-      "unitContext": {
-        "name": "Stonehorns",
-        "sourceBlockId": "b0329",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Stonehorn",
-          "Ogre Beast Rider (x1)",
-          "Ogre Crew"
-        ]
-      },
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.stone-skeleton"
-      ]
-    },
-    {
-      "blockId": "b0346",
-      "unitContext": {
-        "name": "Stone Skeleton",
-        "sourceBlockId": "b0346",
-        "method": "preceding-heading",
-        "confidence": "medium",
-        "profileNames": [
-          "Stonehorn Mount",
-          "Ogre Crew"
-        ]
-      },
-      "entryKind": "statline",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "profiles.stone skeleton"
-      ]
-    },
-    {
-      "blockId": "b0347",
-      "unitContext": {
-        "name": "Stone Skeleton",
-        "sourceBlockId": "b0346",
-        "method": "preceding-heading",
-        "confidence": "medium",
-        "profileNames": [
-          "Stonehorn Mount",
-          "Ogre Crew"
-        ]
-      },
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "captured",
-      "targets": [
-        "profiles.stone skeleton.notes"
-      ]
-    },
-    {
-      "blockId": "b0348",
-      "unitContext": {
-        "name": "Thundertusks",
-        "sourceBlockId": "b0348",
-        "method": "preceding-heading",
-        "confidence": "medium",
-        "profileNames": [
-          "Thundertusk",
-          "Ogre Beast Rider (x1)",
-          "Ogre Crew (x1)"
-        ]
-      },
-      "entryKind": "statline",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "profiles.thundertusks"
-      ]
-    },
-    {
-      "blockId": "b0354",
-      "unitContext": {
-        "name": "Thundertusks",
-        "sourceBlockId": "b0348",
-        "method": "preceding-heading",
-        "confidence": "medium",
-        "profileNames": [
-          "Thundertusk",
-          "Ogre Beast Rider (x1)",
-          "Ogre Crew (x1)"
-        ]
-      },
-      "entryKind": "list",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "captured",
-      "targets": [
-        "profiles.thundertusks.notes"
-      ]
-    },
-    {
-      "blockId": "b0355",
-      "unitContext": {
-        "name": "Thundertusks",
-        "sourceBlockId": "b0348",
-        "method": "preceding-heading",
-        "confidence": "medium",
-        "profileNames": [
-          "Thundertusk",
-          "Ogre Beast Rider (x1)",
-          "Ogre Crew (x1)"
-        ]
-      },
-      "entryKind": "list",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "captured",
-      "targets": [
-        "profiles.thundertusks.notes"
-      ]
-    },
-    {
-      "blockId": "b0356",
-      "unitContext": {
-        "name": "Thundertusks",
-        "sourceBlockId": "b0348",
-        "method": "preceding-heading",
-        "confidence": "medium",
-        "profileNames": [
-          "Thundertusk",
-          "Ogre Beast Rider (x1)",
-          "Ogre Crew (x1)"
-        ]
-      },
-      "entryKind": "option",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "captured",
-      "targets": [
-        "profiles.thundertusks.notes"
-      ]
-    },
-    {
-      "blockId": "b0357",
-      "unitContext": {
-        "name": "Thundertusks",
-        "sourceBlockId": "b0348",
-        "method": "preceding-heading",
-        "confidence": "medium",
-        "profileNames": [
-          "Thundertusk",
-          "Ogre Beast Rider (x1)",
-          "Ogre Crew (x1)"
-        ]
-      },
-      "entryKind": "list",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "captured",
-      "targets": [
-        "profiles.thundertusks.notes"
-      ]
-    },
-    {
-      "blockId": "b0358",
-      "unitContext": {
-        "name": "Thundertusks",
-        "sourceBlockId": "b0348",
-        "method": "preceding-heading",
-        "confidence": "medium",
-        "profileNames": [
-          "Thundertusk",
-          "Ogre Beast Rider (x1)",
-          "Ogre Crew (x1)"
-        ]
-      },
-      "entryKind": "option",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "captured",
-      "targets": [
-        "profiles.thundertusks.notes"
-      ]
-    },
-    {
-      "blockId": "b0359",
-      "unitContext": {
-        "name": "Thundertusks",
-        "sourceBlockId": "b0348",
-        "method": "preceding-heading",
-        "confidence": "medium",
-        "profileNames": [
-          "Thundertusk",
-          "Ogre Beast Rider (x1)",
-          "Ogre Crew (x1)"
-        ]
-      },
-      "entryKind": "special-rules",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "profiles.thundertusks.specialRules"
-      ]
-    },
-    {
-      "blockId": "h0111",
-      "unitContext": {
-        "name": "Thundertusks",
-        "sourceBlockId": "b0348",
-        "method": "preceding-heading",
-        "confidence": "medium",
-        "profileNames": [
-          "Thundertusk",
-          "Ogre Beast Rider (x1)",
-          "Ogre Crew (x1)"
-        ]
-      },
-      "entryKind": "heading",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.r-s-ap-special-rules"
-      ]
-    },
-    {
-      "blockId": "b0361",
-      "unitContext": {
-        "name": "Thundertusks",
-        "sourceBlockId": "b0348",
-        "method": "preceding-heading",
-        "confidence": "medium",
-        "profileNames": [
-          "Thundertusk",
-          "Ogre Beast Rider (x1)",
-          "Ogre Crew (x1)"
-        ]
-      },
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.r-s-ap-special-rules"
-      ]
-    },
-    {
-      "blockId": "b0362",
-      "unitContext": {
-        "name": "Thundertusks",
-        "sourceBlockId": "b0348",
-        "method": "preceding-heading",
-        "confidence": "medium",
-        "profileNames": [
-          "Thundertusk",
-          "Ogre Beast Rider (x1)",
-          "Ogre Crew (x1)"
-        ]
-      },
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.r-s-ap-special-rules"
-      ]
-    },
-    {
-      "blockId": "h0112",
-      "unitContext": {
-        "name": "Thundertusks",
-        "sourceBlockId": "b0348",
-        "method": "preceding-heading",
-        "confidence": "medium",
-        "profileNames": [
-          "Thundertusk",
-          "Ogre Beast Rider (x1)",
-          "Ogre Crew (x1)"
-        ]
-      },
-      "entryKind": "heading",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.smooth-ride"
-      ]
-    },
-    {
-      "blockId": "b0363",
-      "unitContext": {
-        "name": "Thundertusks",
-        "sourceBlockId": "b0348",
-        "method": "preceding-heading",
-        "confidence": "medium",
-        "profileNames": [
-          "Thundertusk",
-          "Ogre Beast Rider (x1)",
-          "Ogre Crew (x1)"
-        ]
-      },
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.smooth-ride"
-      ]
-    },
-    {
-      "blockId": "b0364",
-      "unitContext": {
-        "name": "Thundertusks",
-        "sourceBlockId": "b0348",
-        "method": "preceding-heading",
-        "confidence": "medium",
-        "profileNames": [
-          "Thundertusk",
-          "Ogre Beast Rider (x1)",
-          "Ogre Crew (x1)"
-        ]
-      },
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.smooth-ride"
-      ]
-    },
-    {
-      "blockId": "b0365",
-      "unitContext": {
-        "name": "Smooth Ride",
-        "sourceBlockId": "b0365",
-        "method": "preceding-heading",
-        "confidence": "medium",
-        "profileNames": [
-          "Thundertusk Mount",
-          "Ogre Crew (x1)"
-        ]
-      },
-      "entryKind": "statline",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "profiles.smooth ride"
-      ]
-    },
-    {
-      "blockId": "b0366",
-      "unitContext": {
-        "name": "Smooth Ride",
-        "sourceBlockId": "b0365",
-        "method": "preceding-heading",
-        "confidence": "medium",
-        "profileNames": [
-          "Thundertusk Mount",
-          "Ogre Crew (x1)"
-        ]
-      },
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "captured",
-      "targets": [
-        "profiles.smooth ride.notes"
-      ]
-    },
-    {
-      "blockId": "b0392",
-      "unitContext": {
-        "name": "Gorgers",
-        "sourceBlockId": "b0392",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Gorger"
-        ]
-      },
-      "entryKind": "statline",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "profiles.gorger"
-      ]
-    },
-    {
-      "blockId": "b0397",
-      "unitContext": {
-        "name": "Gorgers",
-        "sourceBlockId": "b0392",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Gorger"
-        ]
-      },
-      "entryKind": "special-rules",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "units.gorgers.specialRules"
-      ]
-    },
-    {
-      "blockId": "b0399",
-      "unitContext": {
-        "name": "Gorgers",
-        "sourceBlockId": "b0392",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Gorger"
-        ]
-      },
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "captured",
-      "targets": [
-        "profiles.gorger.notes"
-      ]
-    }
-  ]
+  {
+   "blockId": "b0078",
+   "unitContext": null,
+   "entryKind": "list",
+   "changeKinds": [
+    "changed"
+   ],
+   "status": "captured",
+   "targets": [
+    "composition.sourceRules.Special"
+   ]
+  },
+  {
+   "blockId": "b0080",
+   "unitContext": null,
+   "entryKind": "list",
+   "changeKinds": [
+    "changed"
+   ],
+   "status": "captured",
+   "targets": [
+    "composition.sourceRules.Rare"
+   ]
+  },
+  {
+   "blockId": "b0088",
+   "unitContext": null,
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "rules.ogre-kingdoms-charge"
+   ]
+  },
+  {
+   "blockId": "b0089",
+   "unitContext": null,
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "rules.ogre-kingdoms-charge"
+   ]
+  },
+  {
+   "blockId": "b0090",
+   "unitContext": null,
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "rules.ogre-kingdoms-charge"
+   ]
+  },
+  {
+   "blockId": "b0091",
+   "unitContext": null,
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "rules.ogre-kingdoms-charge"
+   ]
+  },
+  {
+   "blockId": "h0015",
+   "unitContext": null,
+   "entryKind": "heading",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "rules.ravenous-hunger"
+   ]
+  },
+  {
+   "blockId": "b0092",
+   "unitContext": null,
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "rules.ravenous-hunger"
+   ]
+  },
+  {
+   "blockId": "h0018",
+   "unitContext": null,
+   "entryKind": "heading",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "rules.numbing-chill"
+   ]
+  },
+  {
+   "blockId": "b0095",
+   "unitContext": null,
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "rules.numbing-chill"
+   ]
+  },
+  {
+   "blockId": "h0019",
+   "unitContext": null,
+   "entryKind": "heading",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "rules.ogre-club"
+   ]
+  },
+  {
+   "blockId": "b0096",
+   "unitContext": null,
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "rules.ogre-club"
+   ]
+  },
+  {
+   "blockId": "b0097",
+   "unitContext": null,
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "rules.ogre-club"
+   ]
+  },
+  {
+   "blockId": "h0020",
+   "unitContext": null,
+   "entryKind": "heading",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "rules.ravenous-hunger"
+   ]
+  },
+  {
+   "blockId": "b0098",
+   "unitContext": null,
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "rules.ravenous-hunger"
+   ]
+  },
+  {
+   "blockId": "b0099",
+   "unitContext": null,
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "captured",
+   "targets": [
+    "notes"
+   ]
+  },
+  {
+   "blockId": "h0022",
+   "unitContext": null,
+   "entryKind": "heading",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "magicItemText.beastkiller"
+   ]
+  },
+  {
+   "blockId": "b0100",
+   "unitContext": null,
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "magicItemText.beastkiller"
+   ]
+  },
+  {
+   "blockId": "b0101",
+   "unitContext": null,
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "magicItemText.beastkiller"
+   ]
+  },
+  {
+   "blockId": "b0102",
+   "unitContext": null,
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "magicItemText.mawseeker"
+   ]
+  },
+  {
+   "blockId": "b0103",
+   "unitContext": null,
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "magicItemText.wallcrusher"
+   ]
+  },
+  {
+   "blockId": "b0104",
+   "unitContext": null,
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "magicItemText.wallcrusher"
+   ]
+  },
+  {
+   "blockId": "b0105",
+   "unitContext": null,
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "magicItemText.mountaineater"
+   ]
+  },
+  {
+   "blockId": "b0106",
+   "unitContext": null,
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "magicItemText.giantbreaker"
+   ]
+  },
+  {
+   "blockId": "b0107",
+   "unitContext": null,
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "magicItemText.kineater"
+   ]
+  },
+  {
+   "blockId": "b0108",
+   "unitContext": null,
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "magicItemText.longstrider"
+   ]
+  },
+  {
+   "blockId": "b0109",
+   "unitContext": null,
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "magicItemText.deathcheater"
+   ]
+  },
+  {
+   "blockId": "b0112",
+   "unitContext": null,
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "magicItemText.thundermace"
+   ]
+  },
+  {
+   "blockId": "h0038",
+   "unitContext": null,
+   "entryKind": "heading",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "magicItemText.gut-maw"
+   ]
+  },
+  {
+   "blockId": "b0117",
+   "unitContext": null,
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "magicItemText.gut-maw"
+   ]
+  },
+  {
+   "blockId": "h0041",
+   "unitContext": null,
+   "entryKind": "heading",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "magicItemText.spangleshard"
+   ]
+  },
+  {
+   "blockId": "h0042",
+   "unitContext": null,
+   "entryKind": "heading",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "magicItemText.cathayan-jet-pendant"
+   ]
+  },
+  {
+   "blockId": "b0120",
+   "unitContext": null,
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "magicItemText.cathayan-jet-pendant"
+   ]
+  },
+  {
+   "blockId": "h0044",
+   "unitContext": null,
+   "entryKind": "heading",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "magicItemText.dragonhide-banner"
+   ]
+  },
+  {
+   "blockId": "b0121",
+   "unitContext": null,
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "magicItemText.dragonhide-banner"
+   ]
+  },
+  {
+   "blockId": "h0056",
+   "unitContext": null,
+   "entryKind": "heading",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "magicItemText.tooth-gnoblar"
+   ]
+  },
+  {
+   "blockId": "b0132",
+   "unitContext": null,
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "magicItemText.tooth-gnoblar"
+   ]
+  },
+  {
+   "blockId": "b0134",
+   "unitContext": null,
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "lores.lore-of-the-great-maw.spell-toothcracker"
+   ]
+  },
+  {
+   "blockId": "b0136",
+   "unitContext": null,
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "lores.lore-of-the-great-maw.spell-toothcracker"
+   ]
+  },
+  {
+   "blockId": "b0137",
+   "unitContext": null,
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "changed"
+   ],
+   "status": "applied",
+   "targets": [
+    "lores.lore-of-the-great-maw.spell-trollguts"
+   ]
+  },
+  {
+   "blockId": "b0139",
+   "unitContext": null,
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "changed"
+   ],
+   "status": "applied",
+   "targets": [
+    "lores.lore-of-the-great-maw.spell-trollguts"
+   ]
+  },
+  {
+   "blockId": "b0140",
+   "unitContext": null,
+   "entryKind": "weapon-profile",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "captured",
+   "targets": [
+    "rules.harpoon-launcher"
+   ]
+  },
+  {
+   "blockId": "b0141",
+   "unitContext": null,
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "rules.harpoon-launcher"
+   ]
+  },
+  {
+   "blockId": "b0142",
+   "unitContext": null,
+   "entryKind": "weapon-profile",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "captured",
+   "targets": [
+    "rules.ogre-kingdoms-ironfist"
+   ]
+  },
+  {
+   "blockId": "b0143",
+   "unitContext": null,
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "rules.ogre-kingdoms-ironfist"
+   ]
+  },
+  {
+   "blockId": "b0150",
+   "unitContext": null,
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "rules.chaintrap"
+   ]
+  },
+  {
+   "blockId": "b0158",
+   "unitContext": {
+    "name": "Tyrannical Overlords",
+    "sourceBlockId": "b0152",
+    "method": "table-title",
+    "confidence": "high",
+    "profileNames": [
+     "Tyrant",
+     "Bruiser"
+    ]
+   },
+   "entryKind": "special-rules",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "units.tyrant.specialRules",
+    "units.bruiser.specialRules"
+   ]
+  },
+  {
+   "blockId": "b0159",
+   "unitContext": {
+    "name": "Tyrannical Overlords",
+    "sourceBlockId": "b0152",
+    "method": "table-title",
+    "confidence": "high",
+    "profileNames": [
+     "Tyrant",
+     "Bruiser"
+    ]
+   },
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "captured",
+   "targets": [
+    "profiles.tyrant.notes",
+    "profiles.bruiser.notes"
+   ]
+  },
+  {
+   "blockId": "b0161",
+   "unitContext": {
+    "name": "Tyrannical Overlords",
+    "sourceBlockId": "b0152",
+    "method": "table-title",
+    "confidence": "high",
+    "profileNames": [
+     "Tyrant",
+     "Bruiser"
+    ]
+   },
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "rules.bull-charge"
+   ]
+  },
+  {
+   "blockId": "b0162",
+   "unitContext": {
+    "name": "Emissaries Of The Great Maw",
+    "sourceBlockId": "b0162",
+    "method": "preceding-heading",
+    "confidence": "medium",
+    "profileNames": [
+     "Slaughtermaster",
+     "Butcher"
+    ]
+   },
+   "entryKind": "statline",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "profiles.slaughtermaster",
+    "profiles.butcher"
+   ]
+  },
+  {
+   "blockId": "b0169",
+   "unitContext": {
+    "name": "Emissaries Of The Great Maw",
+    "sourceBlockId": "b0162",
+    "method": "preceding-heading",
+    "confidence": "medium",
+    "profileNames": [
+     "Slaughtermaster",
+     "Butcher"
+    ]
+   },
+   "entryKind": "option",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "units.slaughtermaster.options",
+    "units.butcher.options"
+   ]
+  },
+  {
+   "blockId": "b0171",
+   "unitContext": {
+    "name": "Emissaries Of The Great Maw",
+    "sourceBlockId": "b0162",
+    "method": "preceding-heading",
+    "confidence": "medium",
+    "profileNames": [
+     "Slaughtermaster",
+     "Butcher"
+    ]
+   },
+   "entryKind": "option",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "units.slaughtermaster.options",
+    "units.butcher.options"
+   ]
+  },
+  {
+   "blockId": "b0173",
+   "unitContext": {
+    "name": "Emissaries Of The Great Maw",
+    "sourceBlockId": "b0162",
+    "method": "preceding-heading",
+    "confidence": "medium",
+    "profileNames": [
+     "Slaughtermaster",
+     "Butcher"
+    ]
+   },
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "rules.butcher-s-cauldron"
+   ]
+  },
+  {
+   "blockId": "b0178",
+   "unitContext": {
+    "name": "Hunters",
+    "sourceBlockId": "b0174",
+    "method": "table-title",
+    "confidence": "high",
+    "profileNames": [
+     "Hunter"
+    ]
+   },
+   "entryKind": "option",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "units.hunter.options"
+   ]
+  },
+  {
+   "blockId": "b0179",
+   "unitContext": {
+    "name": "Hunters",
+    "sourceBlockId": "b0174",
+    "method": "table-title",
+    "confidence": "high",
+    "profileNames": [
+     "Hunter"
+    ]
+   },
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "captured",
+   "targets": [
+    "profiles.hunter.notes"
+   ]
+  },
+  {
+   "blockId": "b0180",
+   "unitContext": {
+    "name": "Hunters",
+    "sourceBlockId": "b0174",
+    "method": "table-title",
+    "confidence": "high",
+    "profileNames": [
+     "Hunter"
+    ]
+   },
+   "entryKind": "option",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "units.hunter.options"
+   ]
+  },
+  {
+   "blockId": "b0182",
+   "unitContext": {
+    "name": "Hunters",
+    "sourceBlockId": "b0174",
+    "method": "table-title",
+    "confidence": "high",
+    "profileNames": [
+     "Hunter"
+    ]
+   },
+   "entryKind": "option",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "units.hunter.options"
+   ]
+  },
+  {
+   "blockId": "b0183",
+   "unitContext": {
+    "name": "Hunters",
+    "sourceBlockId": "b0174",
+    "method": "table-title",
+    "confidence": "high",
+    "profileNames": [
+     "Hunter"
+    ]
+   },
+   "entryKind": "list",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "captured",
+   "targets": [
+    "profiles.hunter.notes"
+   ]
+  },
+  {
+   "blockId": "b0184",
+   "unitContext": {
+    "name": "Hunters",
+    "sourceBlockId": "b0174",
+    "method": "table-title",
+    "confidence": "high",
+    "profileNames": [
+     "Hunter"
+    ]
+   },
+   "entryKind": "special-rules",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "units.hunter.specialRules"
+   ]
+  },
+  {
+   "blockId": "b0185",
+   "unitContext": {
+    "name": "Hunters",
+    "sourceBlockId": "b0174",
+    "method": "table-title",
+    "confidence": "high",
+    "profileNames": [
+     "Hunter"
+    ]
+   },
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "captured",
+   "targets": [
+    "profiles.hunter.notes"
+   ]
+  },
+  {
+   "blockId": "b0187",
+   "unitContext": {
+    "name": "Hunters",
+    "sourceBlockId": "b0174",
+    "method": "table-title",
+    "confidence": "high",
+    "profileNames": [
+     "Hunter"
+    ]
+   },
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new",
+    "changed"
+   ],
+   "status": "applied",
+   "targets": [
+    "rules.running-with-the-pack"
+   ]
+  },
+  {
+   "blockId": "b0195",
+   "unitContext": {
+    "name": "Firebellies",
+    "sourceBlockId": "b0189",
+    "method": "table-title",
+    "confidence": "high",
+    "profileNames": [
+     "Firebelly"
+    ]
+   },
+   "entryKind": "option",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "units.firebelly.options"
+   ]
+  },
+  {
+   "blockId": "h0080",
+   "unitContext": {
+    "name": "Firebellies",
+    "sourceBlockId": "b0189",
+    "method": "table-title",
+    "confidence": "high",
+    "profileNames": [
+     "Firebelly"
+    ]
+   },
+   "entryKind": "heading",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "rules.blessings-of-the-volcano-god"
+   ]
+  },
+  {
+   "blockId": "b0197",
+   "unitContext": {
+    "name": "Firebellies",
+    "sourceBlockId": "b0189",
+    "method": "table-title",
+    "confidence": "high",
+    "profileNames": [
+     "Firebelly"
+    ]
+   },
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "rules.blessings-of-the-volcano-god"
+   ]
+  },
+  {
+   "blockId": "b0200",
+   "unitContext": {
+    "name": "Firebellies",
+    "sourceBlockId": "b0189",
+    "method": "table-title",
+    "confidence": "high",
+    "profileNames": [
+     "Firebelly"
+    ]
+   },
+   "entryKind": "option",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "rules.character-mounts"
+   ]
+  },
+  {
+   "blockId": "b0211",
+   "unitContext": {
+    "name": "Ogre Bulls",
+    "sourceBlockId": "b0201",
+    "method": "table-title",
+    "confidence": "high",
+    "profileNames": [
+     "Ogre",
+     "Crusher"
+    ]
+   },
+   "entryKind": "special-rules",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "units.ogre-bulls.specialRules"
+   ]
+  },
+  {
+   "blockId": "b0221",
+   "unitContext": {
+    "name": "Ironguts",
+    "sourceBlockId": "b0212",
+    "method": "table-title",
+    "confidence": "high",
+    "profileNames": [
+     "Irongut",
+     "Gutlord"
+    ]
+   },
+   "entryKind": "special-rules",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "units.ironguts.specialRules"
+   ]
+  },
+  {
+   "blockId": "b0222",
+   "unitContext": {
+    "name": "Leadbelchers",
+    "sourceBlockId": "b0222",
+    "method": "table-title",
+    "confidence": "high",
+    "profileNames": [
+     "Leadbelcher",
+     "Thunderfist"
+    ]
+   },
+   "entryKind": "statline",
+   "changeKinds": [
+    "todo",
+    "new"
+   ],
+   "status": "todo",
+   "targets": []
+  },
+  {
+   "blockId": "b0223",
+   "unitContext": {
+    "name": "Leadbelchers",
+    "sourceBlockId": "b0222",
+    "method": "table-title",
+    "confidence": "high",
+    "profileNames": [
+     "Leadbelcher",
+     "Thunderfist"
+    ]
+   },
+   "entryKind": "troop-type",
+   "changeKinds": [
+    "todo"
+   ],
+   "status": "todo",
+   "targets": []
+  },
+  {
+   "blockId": "b0224",
+   "unitContext": {
+    "name": "Leadbelchers",
+    "sourceBlockId": "b0222",
+    "method": "table-title",
+    "confidence": "high",
+    "profileNames": [
+     "Leadbelcher",
+     "Thunderfist"
+    ]
+   },
+   "entryKind": "base-size",
+   "changeKinds": [
+    "todo"
+   ],
+   "status": "todo",
+   "targets": []
+  },
+  {
+   "blockId": "b0225",
+   "unitContext": {
+    "name": "Leadbelchers",
+    "sourceBlockId": "b0222",
+    "method": "table-title",
+    "confidence": "high",
+    "profileNames": [
+     "Leadbelcher",
+     "Thunderfist"
+    ]
+   },
+   "entryKind": "unit-size",
+   "changeKinds": [
+    "todo"
+   ],
+   "status": "todo",
+   "targets": []
+  },
+  {
+   "blockId": "b0226",
+   "unitContext": {
+    "name": "Leadbelchers",
+    "sourceBlockId": "b0222",
+    "method": "table-title",
+    "confidence": "high",
+    "profileNames": [
+     "Leadbelcher",
+     "Thunderfist"
+    ]
+   },
+   "entryKind": "equipment",
+   "changeKinds": [
+    "todo"
+   ],
+   "status": "todo",
+   "targets": []
+  },
+  {
+   "blockId": "h0085",
+   "unitContext": {
+    "name": "Leadbelchers",
+    "sourceBlockId": "b0222",
+    "method": "table-title",
+    "confidence": "high",
+    "profileNames": [
+     "Leadbelcher",
+     "Thunderfist"
+    ]
+   },
+   "entryKind": "heading",
+   "changeKinds": [
+    "todo"
+   ],
+   "status": "todo",
+   "targets": []
+  },
+  {
+   "blockId": "b0227",
+   "unitContext": {
+    "name": "Leadbelchers",
+    "sourceBlockId": "b0222",
+    "method": "table-title",
+    "confidence": "high",
+    "profileNames": [
+     "Leadbelcher",
+     "Thunderfist"
+    ]
+   },
+   "entryKind": "list",
+   "changeKinds": [
+    "todo"
+   ],
+   "status": "todo",
+   "targets": []
+  },
+  {
+   "blockId": "b0228",
+   "unitContext": {
+    "name": "Leadbelchers",
+    "sourceBlockId": "b0222",
+    "method": "table-title",
+    "confidence": "high",
+    "profileNames": [
+     "Leadbelcher",
+     "Thunderfist"
+    ]
+   },
+   "entryKind": "option",
+   "changeKinds": [
+    "todo"
+   ],
+   "status": "todo",
+   "targets": []
+  },
+  {
+   "blockId": "b0229",
+   "unitContext": {
+    "name": "Leadbelchers",
+    "sourceBlockId": "b0222",
+    "method": "table-title",
+    "confidence": "high",
+    "profileNames": [
+     "Leadbelcher",
+     "Thunderfist"
+    ]
+   },
+   "entryKind": "option",
+   "changeKinds": [
+    "todo"
+   ],
+   "status": "todo",
+   "targets": []
+  },
+  {
+   "blockId": "b0230",
+   "unitContext": {
+    "name": "Leadbelchers",
+    "sourceBlockId": "b0222",
+    "method": "table-title",
+    "confidence": "high",
+    "profileNames": [
+     "Leadbelcher",
+     "Thunderfist"
+    ]
+   },
+   "entryKind": "special-rules",
+   "changeKinds": [
+    "todo",
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "units.leadbelchers.specialRules"
+   ],
+   "appliedBy": "hand, 2026-08-11 — zie commit"
+  },
+  {
+   "blockId": "b0231",
+   "unitContext": {
+    "name": "Leadbelchers",
+    "sourceBlockId": "b0222",
+    "method": "table-title",
+    "confidence": "high",
+    "profileNames": [
+     "Leadbelcher",
+     "Thunderfist"
+    ]
+   },
+   "entryKind": "weapon-profile",
+   "changeKinds": [
+    "todo",
+    "new"
+   ],
+   "status": "todo",
+   "targets": []
+  },
+  {
+   "blockId": "b0232",
+   "unitContext": {
+    "name": "Leadbelchers",
+    "sourceBlockId": "b0222",
+    "method": "table-title",
+    "confidence": "high",
+    "profileNames": [
+     "Leadbelcher",
+     "Thunderfist"
+    ]
+   },
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "captured",
+   "targets": [
+    "profiles.leadbelchers.notes"
+   ]
+  },
+  {
+   "blockId": "b0239",
+   "unitContext": {
+    "name": "Gnoblar Trappers",
+    "sourceBlockId": "b0233",
+    "method": "table-title",
+    "confidence": "high",
+    "profileNames": [
+     "Gnoblar Trapper",
+     "Snarefinger"
+    ]
+   },
+   "entryKind": "special-rules",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "units.gnoblar-trappers.specialRules"
+   ]
+  },
+  {
+   "blockId": "h0087",
+   "unitContext": {
+    "name": "Gnoblar Trappers",
+    "sourceBlockId": "b0233",
+    "method": "table-title",
+    "confidence": "high",
+    "profileNames": [
+     "Gnoblar Trapper",
+     "Snarefinger"
+    ]
+   },
+   "entryKind": "heading",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "rules.traps-snares"
+   ]
+  },
+  {
+   "blockId": "b0240",
+   "unitContext": {
+    "name": "Gnoblar Trappers",
+    "sourceBlockId": "b0233",
+    "method": "table-title",
+    "confidence": "high",
+    "profileNames": [
+     "Gnoblar Trapper",
+     "Snarefinger"
+    ]
+   },
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "rules.traps-snares"
+   ]
+  },
+  {
+   "blockId": "h0088",
+   "unitContext": {
+    "name": "Gnoblar Trappers",
+    "sourceBlockId": "b0233",
+    "method": "table-title",
+    "confidence": "high",
+    "profileNames": [
+     "Gnoblar Trapper",
+     "Snarefinger"
+    ]
+   },
+   "entryKind": "heading",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "rules.entourage"
+   ]
+  },
+  {
+   "blockId": "b0241",
+   "unitContext": {
+    "name": "Gnoblar Trappers",
+    "sourceBlockId": "b0233",
+    "method": "table-title",
+    "confidence": "high",
+    "profileNames": [
+     "Gnoblar Trapper",
+     "Snarefinger"
+    ]
+   },
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "rules.entourage"
+   ]
+  },
+  {
+   "blockId": "b0246",
+   "unitContext": {
+    "name": "Maneaters",
+    "sourceBlockId": "b0242",
+    "method": "table-title",
+    "confidence": "high",
+    "profileNames": [
+     "Maneater",
+     "Maneater Captain"
+    ]
+   },
+   "entryKind": "equipment",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "captured",
+   "targets": [
+    "profiles.maneaters.equipment"
+   ]
+  },
+  {
+   "blockId": "b0250",
+   "unitContext": {
+    "name": "Maneaters",
+    "sourceBlockId": "b0242",
+    "method": "table-title",
+    "confidence": "high",
+    "profileNames": [
+     "Maneater",
+     "Maneater Captain"
+    ]
+   },
+   "entryKind": "option",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "units.maneaters.options"
+   ]
+  },
+  {
+   "blockId": "b0253",
+   "unitContext": {
+    "name": "Maneaters",
+    "sourceBlockId": "b0242",
+    "method": "table-title",
+    "confidence": "high",
+    "profileNames": [
+     "Maneater",
+     "Maneater Captain"
+    ]
+   },
+   "entryKind": "option",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "units.maneaters.options"
+   ]
+  },
+  {
+   "blockId": "b0254",
+   "unitContext": {
+    "name": "Maneaters",
+    "sourceBlockId": "b0242",
+    "method": "table-title",
+    "confidence": "high",
+    "profileNames": [
+     "Maneater",
+     "Maneater Captain"
+    ]
+   },
+   "entryKind": "list",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "captured",
+   "targets": [
+    "profiles.maneaters.notes"
+   ]
+  },
+  {
+   "blockId": "b0255",
+   "unitContext": {
+    "name": "Maneaters",
+    "sourceBlockId": "b0242",
+    "method": "table-title",
+    "confidence": "high",
+    "profileNames": [
+     "Maneater",
+     "Maneater Captain"
+    ]
+   },
+   "entryKind": "special-rules",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "units.maneaters.specialRules"
+   ]
+  },
+  {
+   "blockId": "b0263",
+   "unitContext": {
+    "name": "Yhetees",
+    "sourceBlockId": "b0263",
+    "method": "table-title",
+    "confidence": "high",
+    "profileNames": [
+     "Yhetee",
+     "Greyback"
+    ]
+   },
+   "entryKind": "statline",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "profiles.yhetees"
+   ]
+  },
+  {
+   "blockId": "b0269",
+   "unitContext": {
+    "name": "Yhetees",
+    "sourceBlockId": "b0263",
+    "method": "table-title",
+    "confidence": "high",
+    "profileNames": [
+     "Yhetee",
+     "Greyback"
+    ]
+   },
+   "entryKind": "option",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "units.yhetees.options"
+   ]
+  },
+  {
+   "blockId": "b0270",
+   "unitContext": {
+    "name": "Yhetees",
+    "sourceBlockId": "b0263",
+    "method": "table-title",
+    "confidence": "high",
+    "profileNames": [
+     "Yhetee",
+     "Greyback"
+    ]
+   },
+   "entryKind": "special-rules",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "units.yhetees.specialRules"
+   ]
+  },
+  {
+   "blockId": "b0292",
+   "unitContext": {
+    "name": "Mournfang Cavalry",
+    "sourceBlockId": "b0280",
+    "method": "preceding-heading",
+    "confidence": "medium",
+    "profileNames": [
+     "Ogre",
+     "Crusher",
+     "Mournfang"
+    ]
+   },
+   "entryKind": "special-rules",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "units.mournfang-cavalry.specialRules"
+   ]
+  },
+  {
+   "blockId": "b0295",
+   "unitContext": {
+    "name": "Mournfang Cavalry",
+    "sourceBlockId": "b0280",
+    "method": "preceding-heading",
+    "confidence": "medium",
+    "profileNames": [
+     "Ogre",
+     "Crusher",
+     "Mournfang"
+    ]
+   },
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "rules.mournfang-charge"
+   ]
+  },
+  {
+   "blockId": "b0296",
+   "unitContext": {
+    "name": "Mournfang Cavalry",
+    "sourceBlockId": "b0280",
+    "method": "preceding-heading",
+    "confidence": "medium",
+    "profileNames": [
+     "Ogre",
+     "Crusher",
+     "Mournfang"
+    ]
+   },
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "rules.mournfang-charge"
+   ]
+  },
+  {
+   "blockId": "b0306",
+   "unitContext": {
+    "name": "Ironblaster",
+    "sourceBlockId": "b0297",
+    "method": "table-title",
+    "confidence": "high",
+    "profileNames": [
+     "Ironblaster",
+     "Leadbelcher (x1)",
+     "Gnoblar Scrapper (x1)",
+     "Rhinox (x1)"
+    ]
+   },
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "changed"
+   ],
+   "status": "captured",
+   "targets": [
+    "profiles.ironblaster.notes"
+   ]
+  },
+  {
+   "blockId": "h0097",
+   "unitContext": {
+    "name": "Ironblaster",
+    "sourceBlockId": "b0297",
+    "method": "table-title",
+    "confidence": "high",
+    "profileNames": [
+     "Ironblaster",
+     "Leadbelcher (x1)",
+     "Gnoblar Scrapper (x1)",
+     "Rhinox (x1)"
+    ]
+   },
+   "entryKind": "heading",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "captured",
+   "targets": [
+    "profiles.ironblaster.notes"
+   ]
+  },
+  {
+   "blockId": "h0098",
+   "unitContext": {
+    "name": "Ironblaster",
+    "sourceBlockId": "b0297",
+    "method": "table-title",
+    "confidence": "high",
+    "profileNames": [
+     "Ironblaster",
+     "Leadbelcher (x1)",
+     "Gnoblar Scrapper (x1)",
+     "Rhinox (x1)"
+    ]
+   },
+   "entryKind": "heading",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "rules.d6-result"
+   ]
+  },
+  {
+   "blockId": "b0307",
+   "unitContext": {
+    "name": "Ironblaster",
+    "sourceBlockId": "b0297",
+    "method": "table-title",
+    "confidence": "high",
+    "profileNames": [
+     "Ironblaster",
+     "Leadbelcher (x1)",
+     "Gnoblar Scrapper (x1)",
+     "Rhinox (x1)"
+    ]
+   },
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "rules.d6-result"
+   ]
+  },
+  {
+   "blockId": "b0308",
+   "unitContext": {
+    "name": "Ironblaster",
+    "sourceBlockId": "b0297",
+    "method": "table-title",
+    "confidence": "high",
+    "profileNames": [
+     "Ironblaster",
+     "Leadbelcher (x1)",
+     "Gnoblar Scrapper (x1)",
+     "Rhinox (x1)"
+    ]
+   },
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "rules.d6-result"
+   ]
+  },
+  {
+   "blockId": "b0309",
+   "unitContext": {
+    "name": "Ironblaster",
+    "sourceBlockId": "b0297",
+    "method": "table-title",
+    "confidence": "high",
+    "profileNames": [
+     "Ironblaster",
+     "Leadbelcher (x1)",
+     "Gnoblar Scrapper (x1)",
+     "Rhinox (x1)"
+    ]
+   },
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "rules.d6-result"
+   ]
+  },
+  {
+   "blockId": "b0310",
+   "unitContext": {
+    "name": "Ironblaster",
+    "sourceBlockId": "b0297",
+    "method": "table-title",
+    "confidence": "high",
+    "profileNames": [
+     "Ironblaster",
+     "Leadbelcher (x1)",
+     "Gnoblar Scrapper (x1)",
+     "Rhinox (x1)"
+    ]
+   },
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "rules.d6-result"
+   ]
+  },
+  {
+   "blockId": "b0311",
+   "unitContext": {
+    "name": "Ironblaster",
+    "sourceBlockId": "b0297",
+    "method": "table-title",
+    "confidence": "high",
+    "profileNames": [
+     "Ironblaster",
+     "Leadbelcher (x1)",
+     "Gnoblar Scrapper (x1)",
+     "Rhinox (x1)"
+    ]
+   },
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "rules.d6-result"
+   ]
+  },
+  {
+   "blockId": "b0321",
+   "unitContext": {
+    "name": "Gnoblar Scraplauncher",
+    "sourceBlockId": "b0312",
+    "method": "preceding-heading",
+    "confidence": "medium",
+    "profileNames": [
+     "Scraplauncher",
+     "Gnoblar Scrapper (x7)",
+     "Rhinox (x1)"
+    ]
+   },
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "rules.catapult-deluge-of-sharp-instruments"
+   ]
+  },
+  {
+   "blockId": "h0102",
+   "unitContext": {
+    "name": "Gnoblar Scraplauncher",
+    "sourceBlockId": "b0312",
+    "method": "preceding-heading",
+    "confidence": "medium",
+    "profileNames": [
+     "Scraplauncher",
+     "Gnoblar Scrapper (x7)",
+     "Rhinox (x1)"
+    ]
+   },
+   "entryKind": "heading",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "rules.deluge-of-sharp-instruments"
+   ]
+  },
+  {
+   "blockId": "b0323",
+   "unitContext": {
+    "name": "Gnoblar Scraplauncher",
+    "sourceBlockId": "b0312",
+    "method": "preceding-heading",
+    "confidence": "medium",
+    "profileNames": [
+     "Scraplauncher",
+     "Gnoblar Scrapper (x7)",
+     "Rhinox (x1)"
+    ]
+   },
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "rules.deluge-of-sharp-instruments"
+   ]
+  },
+  {
+   "blockId": "h0103",
+   "unitContext": {
+    "name": "Gnoblar Scraplauncher",
+    "sourceBlockId": "b0312",
+    "method": "preceding-heading",
+    "confidence": "medium",
+    "profileNames": [
+     "Scraplauncher",
+     "Gnoblar Scrapper (x7)",
+     "Rhinox (x1)"
+    ]
+   },
+   "entryKind": "heading",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "captured",
+   "targets": [
+    "profiles.gnoblar scraplauncher.notes"
+   ]
+  },
+  {
+   "blockId": "h0104",
+   "unitContext": {
+    "name": "Gnoblar Scraplauncher",
+    "sourceBlockId": "b0312",
+    "method": "preceding-heading",
+    "confidence": "medium",
+    "profileNames": [
+     "Scraplauncher",
+     "Gnoblar Scrapper (x7)",
+     "Rhinox (x1)"
+    ]
+   },
+   "entryKind": "heading",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "rules.d6-result"
+   ]
+  },
+  {
+   "blockId": "b0324",
+   "unitContext": {
+    "name": "Gnoblar Scraplauncher",
+    "sourceBlockId": "b0312",
+    "method": "preceding-heading",
+    "confidence": "medium",
+    "profileNames": [
+     "Scraplauncher",
+     "Gnoblar Scrapper (x7)",
+     "Rhinox (x1)"
+    ]
+   },
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "rules.d6-result"
+   ]
+  },
+  {
+   "blockId": "b0325",
+   "unitContext": {
+    "name": "Gnoblar Scraplauncher",
+    "sourceBlockId": "b0312",
+    "method": "preceding-heading",
+    "confidence": "medium",
+    "profileNames": [
+     "Scraplauncher",
+     "Gnoblar Scrapper (x7)",
+     "Rhinox (x1)"
+    ]
+   },
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "rules.d6-result"
+   ]
+  },
+  {
+   "blockId": "b0326",
+   "unitContext": {
+    "name": "Gnoblar Scraplauncher",
+    "sourceBlockId": "b0312",
+    "method": "preceding-heading",
+    "confidence": "medium",
+    "profileNames": [
+     "Scraplauncher",
+     "Gnoblar Scrapper (x7)",
+     "Rhinox (x1)"
+    ]
+   },
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "rules.d6-result"
+   ]
+  },
+  {
+   "blockId": "b0327",
+   "unitContext": {
+    "name": "Gnoblar Scraplauncher",
+    "sourceBlockId": "b0312",
+    "method": "preceding-heading",
+    "confidence": "medium",
+    "profileNames": [
+     "Scraplauncher",
+     "Gnoblar Scrapper (x7)",
+     "Rhinox (x1)"
+    ]
+   },
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "rules.d6-result"
+   ]
+  },
+  {
+   "blockId": "b0328",
+   "unitContext": {
+    "name": "Gnoblar Scraplauncher",
+    "sourceBlockId": "b0312",
+    "method": "preceding-heading",
+    "confidence": "medium",
+    "profileNames": [
+     "Scraplauncher",
+     "Gnoblar Scrapper (x7)",
+     "Rhinox (x1)"
+    ]
+   },
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "rules.d6-result"
+   ]
+  },
+  {
+   "blockId": "b0329",
+   "unitContext": {
+    "name": "Stonehorns",
+    "sourceBlockId": "b0329",
+    "method": "table-title",
+    "confidence": "high",
+    "profileNames": [
+     "Stonehorn",
+     "Ogre Beast Rider (x1)",
+     "Ogre Crew"
+    ]
+   },
+   "entryKind": "statline",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "profiles.stonehorns"
+   ]
+  },
+  {
+   "blockId": "b0336",
+   "unitContext": {
+    "name": "Stonehorns",
+    "sourceBlockId": "b0329",
+    "method": "table-title",
+    "confidence": "high",
+    "profileNames": [
+     "Stonehorn",
+     "Ogre Beast Rider (x1)",
+     "Ogre Crew"
+    ]
+   },
+   "entryKind": "list",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "captured",
+   "targets": [
+    "profiles.stonehorns.notes"
+   ]
+  },
+  {
+   "blockId": "b0337",
+   "unitContext": {
+    "name": "Stonehorns",
+    "sourceBlockId": "b0329",
+    "method": "table-title",
+    "confidence": "high",
+    "profileNames": [
+     "Stonehorn",
+     "Ogre Beast Rider (x1)",
+     "Ogre Crew"
+    ]
+   },
+   "entryKind": "option",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "captured",
+   "targets": [
+    "profiles.stonehorns.notes"
+   ]
+  },
+  {
+   "blockId": "b0338",
+   "unitContext": {
+    "name": "Stonehorns",
+    "sourceBlockId": "b0329",
+    "method": "table-title",
+    "confidence": "high",
+    "profileNames": [
+     "Stonehorn",
+     "Ogre Beast Rider (x1)",
+     "Ogre Crew"
+    ]
+   },
+   "entryKind": "list",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "captured",
+   "targets": [
+    "profiles.stonehorns.notes"
+   ]
+  },
+  {
+   "blockId": "b0339",
+   "unitContext": {
+    "name": "Stonehorns",
+    "sourceBlockId": "b0329",
+    "method": "table-title",
+    "confidence": "high",
+    "profileNames": [
+     "Stonehorn",
+     "Ogre Beast Rider (x1)",
+     "Ogre Crew"
+    ]
+   },
+   "entryKind": "option",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "captured",
+   "targets": [
+    "profiles.stonehorns.notes"
+   ]
+  },
+  {
+   "blockId": "b0340",
+   "unitContext": {
+    "name": "Stonehorns",
+    "sourceBlockId": "b0329",
+    "method": "table-title",
+    "confidence": "high",
+    "profileNames": [
+     "Stonehorn",
+     "Ogre Beast Rider (x1)",
+     "Ogre Crew"
+    ]
+   },
+   "entryKind": "option",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "captured",
+   "targets": [
+    "profiles.stonehorns.notes"
+   ]
+  },
+  {
+   "blockId": "b0341",
+   "unitContext": {
+    "name": "Stonehorns",
+    "sourceBlockId": "b0329",
+    "method": "table-title",
+    "confidence": "high",
+    "profileNames": [
+     "Stonehorn",
+     "Ogre Beast Rider (x1)",
+     "Ogre Crew"
+    ]
+   },
+   "entryKind": "special-rules",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "profiles.stonehorns.specialRules"
+   ]
+  },
+  {
+   "blockId": "b0345",
+   "unitContext": {
+    "name": "Stonehorns",
+    "sourceBlockId": "b0329",
+    "method": "table-title",
+    "confidence": "high",
+    "profileNames": [
+     "Stonehorn",
+     "Ogre Beast Rider (x1)",
+     "Ogre Crew"
+    ]
+   },
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "rules.stone-skeleton"
+   ]
+  },
+  {
+   "blockId": "b0346",
+   "unitContext": {
+    "name": "Stone Skeleton",
+    "sourceBlockId": "b0346",
+    "method": "preceding-heading",
+    "confidence": "medium",
+    "profileNames": [
+     "Stonehorn Mount",
+     "Ogre Crew"
+    ]
+   },
+   "entryKind": "statline",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "profiles.stone skeleton"
+   ]
+  },
+  {
+   "blockId": "b0347",
+   "unitContext": {
+    "name": "Stone Skeleton",
+    "sourceBlockId": "b0346",
+    "method": "preceding-heading",
+    "confidence": "medium",
+    "profileNames": [
+     "Stonehorn Mount",
+     "Ogre Crew"
+    ]
+   },
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "captured",
+   "targets": [
+    "profiles.stone skeleton.notes"
+   ]
+  },
+  {
+   "blockId": "b0348",
+   "unitContext": {
+    "name": "Thundertusks",
+    "sourceBlockId": "b0348",
+    "method": "preceding-heading",
+    "confidence": "medium",
+    "profileNames": [
+     "Thundertusk",
+     "Ogre Beast Rider (x1)",
+     "Ogre Crew (x1)"
+    ]
+   },
+   "entryKind": "statline",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "profiles.thundertusks"
+   ]
+  },
+  {
+   "blockId": "b0354",
+   "unitContext": {
+    "name": "Thundertusks",
+    "sourceBlockId": "b0348",
+    "method": "preceding-heading",
+    "confidence": "medium",
+    "profileNames": [
+     "Thundertusk",
+     "Ogre Beast Rider (x1)",
+     "Ogre Crew (x1)"
+    ]
+   },
+   "entryKind": "list",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "captured",
+   "targets": [
+    "profiles.thundertusks.notes"
+   ]
+  },
+  {
+   "blockId": "b0355",
+   "unitContext": {
+    "name": "Thundertusks",
+    "sourceBlockId": "b0348",
+    "method": "preceding-heading",
+    "confidence": "medium",
+    "profileNames": [
+     "Thundertusk",
+     "Ogre Beast Rider (x1)",
+     "Ogre Crew (x1)"
+    ]
+   },
+   "entryKind": "list",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "captured",
+   "targets": [
+    "profiles.thundertusks.notes"
+   ]
+  },
+  {
+   "blockId": "b0356",
+   "unitContext": {
+    "name": "Thundertusks",
+    "sourceBlockId": "b0348",
+    "method": "preceding-heading",
+    "confidence": "medium",
+    "profileNames": [
+     "Thundertusk",
+     "Ogre Beast Rider (x1)",
+     "Ogre Crew (x1)"
+    ]
+   },
+   "entryKind": "option",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "captured",
+   "targets": [
+    "profiles.thundertusks.notes"
+   ]
+  },
+  {
+   "blockId": "b0357",
+   "unitContext": {
+    "name": "Thundertusks",
+    "sourceBlockId": "b0348",
+    "method": "preceding-heading",
+    "confidence": "medium",
+    "profileNames": [
+     "Thundertusk",
+     "Ogre Beast Rider (x1)",
+     "Ogre Crew (x1)"
+    ]
+   },
+   "entryKind": "list",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "captured",
+   "targets": [
+    "profiles.thundertusks.notes"
+   ]
+  },
+  {
+   "blockId": "b0358",
+   "unitContext": {
+    "name": "Thundertusks",
+    "sourceBlockId": "b0348",
+    "method": "preceding-heading",
+    "confidence": "medium",
+    "profileNames": [
+     "Thundertusk",
+     "Ogre Beast Rider (x1)",
+     "Ogre Crew (x1)"
+    ]
+   },
+   "entryKind": "option",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "captured",
+   "targets": [
+    "profiles.thundertusks.notes"
+   ]
+  },
+  {
+   "blockId": "b0359",
+   "unitContext": {
+    "name": "Thundertusks",
+    "sourceBlockId": "b0348",
+    "method": "preceding-heading",
+    "confidence": "medium",
+    "profileNames": [
+     "Thundertusk",
+     "Ogre Beast Rider (x1)",
+     "Ogre Crew (x1)"
+    ]
+   },
+   "entryKind": "special-rules",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "profiles.thundertusks.specialRules"
+   ]
+  },
+  {
+   "blockId": "h0111",
+   "unitContext": {
+    "name": "Thundertusks",
+    "sourceBlockId": "b0348",
+    "method": "preceding-heading",
+    "confidence": "medium",
+    "profileNames": [
+     "Thundertusk",
+     "Ogre Beast Rider (x1)",
+     "Ogre Crew (x1)"
+    ]
+   },
+   "entryKind": "heading",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "rules.r-s-ap-special-rules"
+   ]
+  },
+  {
+   "blockId": "b0361",
+   "unitContext": {
+    "name": "Thundertusks",
+    "sourceBlockId": "b0348",
+    "method": "preceding-heading",
+    "confidence": "medium",
+    "profileNames": [
+     "Thundertusk",
+     "Ogre Beast Rider (x1)",
+     "Ogre Crew (x1)"
+    ]
+   },
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "rules.r-s-ap-special-rules"
+   ]
+  },
+  {
+   "blockId": "b0362",
+   "unitContext": {
+    "name": "Thundertusks",
+    "sourceBlockId": "b0348",
+    "method": "preceding-heading",
+    "confidence": "medium",
+    "profileNames": [
+     "Thundertusk",
+     "Ogre Beast Rider (x1)",
+     "Ogre Crew (x1)"
+    ]
+   },
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "rules.r-s-ap-special-rules"
+   ]
+  },
+  {
+   "blockId": "h0112",
+   "unitContext": {
+    "name": "Thundertusks",
+    "sourceBlockId": "b0348",
+    "method": "preceding-heading",
+    "confidence": "medium",
+    "profileNames": [
+     "Thundertusk",
+     "Ogre Beast Rider (x1)",
+     "Ogre Crew (x1)"
+    ]
+   },
+   "entryKind": "heading",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "rules.smooth-ride"
+   ]
+  },
+  {
+   "blockId": "b0363",
+   "unitContext": {
+    "name": "Thundertusks",
+    "sourceBlockId": "b0348",
+    "method": "preceding-heading",
+    "confidence": "medium",
+    "profileNames": [
+     "Thundertusk",
+     "Ogre Beast Rider (x1)",
+     "Ogre Crew (x1)"
+    ]
+   },
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "rules.smooth-ride"
+   ]
+  },
+  {
+   "blockId": "b0364",
+   "unitContext": {
+    "name": "Thundertusks",
+    "sourceBlockId": "b0348",
+    "method": "preceding-heading",
+    "confidence": "medium",
+    "profileNames": [
+     "Thundertusk",
+     "Ogre Beast Rider (x1)",
+     "Ogre Crew (x1)"
+    ]
+   },
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "rules.smooth-ride"
+   ]
+  },
+  {
+   "blockId": "b0365",
+   "unitContext": {
+    "name": "Smooth Ride",
+    "sourceBlockId": "b0365",
+    "method": "preceding-heading",
+    "confidence": "medium",
+    "profileNames": [
+     "Thundertusk Mount",
+     "Ogre Crew (x1)"
+    ]
+   },
+   "entryKind": "statline",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "profiles.smooth ride"
+   ]
+  },
+  {
+   "blockId": "b0366",
+   "unitContext": {
+    "name": "Smooth Ride",
+    "sourceBlockId": "b0365",
+    "method": "preceding-heading",
+    "confidence": "medium",
+    "profileNames": [
+     "Thundertusk Mount",
+     "Ogre Crew (x1)"
+    ]
+   },
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "captured",
+   "targets": [
+    "profiles.smooth ride.notes"
+   ]
+  },
+  {
+   "blockId": "b0392",
+   "unitContext": {
+    "name": "Gorgers",
+    "sourceBlockId": "b0392",
+    "method": "table-title",
+    "confidence": "high",
+    "profileNames": [
+     "Gorger"
+    ]
+   },
+   "entryKind": "statline",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "profiles.gorger"
+   ]
+  },
+  {
+   "blockId": "b0397",
+   "unitContext": {
+    "name": "Gorgers",
+    "sourceBlockId": "b0392",
+    "method": "table-title",
+    "confidence": "high",
+    "profileNames": [
+     "Gorger"
+    ]
+   },
+   "entryKind": "special-rules",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "units.gorgers.specialRules"
+   ]
+  },
+  {
+   "blockId": "b0399",
+   "unitContext": {
+    "name": "Gorgers",
+    "sourceBlockId": "b0392",
+    "method": "table-title",
+    "confidence": "high",
+    "profileNames": [
+     "Gorger"
+    ]
+   },
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "captured",
+   "targets": [
+    "profiles.gorger.notes"
+   ]
+  }
+ ]
 }

@@ -689,7 +689,47 @@ for (const [key, army] of Object.entries(PACKS)) {
     });
   }
 
+  // A wrapped "Special Rules:" line carries its colour on whichever PART the author touched. The
+  // stitcher below walks forward from a changed special-rules block, but the Terrorgheist (vc) has
+  // the mirror image — head line untouched, continuation marked new ("… Wailing Dirge (-2)") — and
+  // the head never entered this loop, so the changed rule silently kept its old text. Lift the
+  // continuation's colour onto the head, and mark the continuation as consumed so its fragment does
+  // not ALSO land somewhere as a half-line note.
+  const stitchedContinuations = new Map(); // continuation blockId -> head blockId
+  const promotedHeads = new Map();         // head blockId -> its result, booked on the continuation
+  for (let i = 0; i < reference.blocks.length; i++) {
+    const head = reference.blocks[i];
+    if (head.entryKind !== 'special-rules') continue;
+    let tail = (head.text ?? '').trim();
+    const parts = [];
+    for (let j = i + 1; /[,;]$/.test(tail) && j < reference.blocks.length; j++) {
+      const next = reference.blocks[j];
+      if (next.unitContext?.sourceBlockId !== head.unitContext?.sourceBlockId || next.tableType === 'statline') break;
+      if (!next.text || /^(Unit Size|Troop Type|Base Size|Armour Value|Equipment|Options)\s*:/i.test(next.text)) break;
+      parts.push(next);
+      tail = next.text.trim();
+    }
+    if (changed(head) || !parts.some(changed)) continue;
+    // The coverage ledger stays 1:1 with the blocks the SOURCE marks as changed, so the head —
+    // uncoloured in the source — borrows the colour to get processed but books its result on the
+    // continuation block that actually carries the change.
+    head.changeKinds = [...new Set(parts.flatMap((p) => p.changeKinds ?? []))];
+    promotedHeads.set(head.id, null);
+    parts.filter(changed).forEach((p) => stitchedContinuations.set(p.id, head.id));
+  }
+
   for (const block of reference.blocks.filter((candidate) => candidate.scope === 'army-list' && changed(candidate))) {
+    const viaHead = stitchedContinuations.get(block.id);
+    if (viaHead) {
+      const booked = promotedHeads.get(viaHead);
+      coverage.push({
+        blockId: block.id, unitContext: block.unitContext, entryKind: block.entryKind,
+        changeKinds: block.changeKinds, status: booked?.status ?? 'applied',
+        targets: booked?.targets ?? [],
+        reason: 'continuation of a Special Rules line, applied via its head block',
+      });
+      continue;
+    }
     const result = {
       blockId: block.id,
       unitContext: block.unitContext,
@@ -698,16 +738,20 @@ for (const [key, army] of Object.entries(PACKS)) {
       status: 'unresolved',
       targets: [],
     };
+    const boek = () => {
+      if (promotedHeads.has(block.id)) promotedHeads.set(block.id, result);
+      else coverage.push(result);
+    };
     if (block.changeKinds.includes('todo')) {
       result.status = 'todo';
-      coverage.push(result);
+      boek();
       continue;
     }
     const compiledTarget = implementedBlocks.get(block.id);
     if (compiledTarget) {
       result.status = typeof compiledTarget === 'string' ? 'applied' : compiledTarget.status;
       result.targets.push(typeof compiledTarget === 'string' ? compiledTarget : compiledTarget.target);
-      coverage.push(result);
+      boek();
       continue;
     }
 
@@ -822,12 +866,16 @@ for (const [key, army] of Object.entries(PACKS)) {
         result.status = 'captured';
       }
     } else if (block.entryKind === 'unit-size') {
-      const match = /^Unit Size:\s*(\d+)(\+)?/i.exec(block.text);
+      // Three source shapes: "1" (fixed), "5+" (open), "2-6" (a range). The range variant arrived
+      // with Vampire Counts (Spirit Hosts); the old expression read it as a fixed "2" and silently
+      // capped the unit at its minimum.
+      const match = /^Unit Size:\s*(\d+)\s*(?:-\s*(\d+))?\s*(\+)?/i.exec(block.text);
       if (match && hits.length) {
         for (const { unit } of hits) {
           const patch = overlay.units[unit.id] ?? {};
           patch.minimum = Number(match[1]);
-          if (!match[2]) patch.maximum = Number(match[1]);
+          if (match[2]) patch.maximum = Number(match[2]);
+          else if (!match[3]) patch.maximum = Number(match[1]);
           addChanged(patch, 'unit-size');
           overlay.units[unit.id] = patch;
           result.targets.push(`units.${unit.id}.minimum`);
@@ -933,7 +981,7 @@ for (const [key, army] of Object.entries(PACKS)) {
       result.targets.push('notes');
       result.status = 'captured';
     }
-    coverage.push(result);
+    boek();
   }
 
   // A mount popup needs more than the highlighted delta: its complete troop type, base, equipment

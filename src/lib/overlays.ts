@@ -216,7 +216,7 @@ export function applyOverlay(base: OwbArmy, overlay: CompositionOverlay): OwbArm
   const out = { ...base } as OwbArmy & Record<string, unknown>;
   for (const [cat, arr] of Object.entries(base as Record<string, unknown>)) {
     if (!Array.isArray(arr)) continue;
-    out[cat] = (arr as OwbUnit[]).map((u) => {
+    out[cat] = (arr as OwbUnit[]).map((u): OwbUnit | null => {
       const patch = overlay.units[u.id];
       const baseComp = u.armyComposition ?? {};
       const explicit = overlay.composition?.units?.[u.id];
@@ -232,8 +232,16 @@ export function applyOverlay(base: OwbArmy, overlay: CompositionOverlay): OwbArm
           category: explicit?.category ?? inherited?.category ?? cat as Category,
           notes: explicit?.notes ? { name_en: explicit.notes } : inherited?.notes,
         };
-      } else {
+      } else if (mappedCatalogue) {
         delete comp[overlay.id];
+      } else {
+        // A unit WITHOUT an armyComposition map is "available everywhere" by convention, so deleting
+        // our key from it excludes nothing — the only way to honour `allowed: false` is to drop the
+        // unit from this composition's catalogue. Safe here: applyOverlay builds the catalogue for
+        // one chosen composition, and units are addressed by id, never by array index. First needed
+        // for Daemons: the pack folds the four "Chaos Furies of <god>" entries into one priced unit
+        // with mark options, but the unmapped originals kept riding along beside it.
+        return null;
       }
       // Only real fields are copied over; `_was`/`_changed` stay out of the unit.
       const next: OwbUnit = { ...u, armyComposition: comp };
@@ -263,7 +271,7 @@ export function applyOverlay(base: OwbArmy, overlay: CompositionOverlay): OwbArm
       }
       if (patch.options?.length) applyOptionPatches(next, patch.options);
       return next;
-    });
+    }).filter((u): u is OwbUnit => u != null);
   }
   for (const [category, added] of Object.entries(overlay.addedUnits ?? {})) {
     if (!Array.isArray(added) || !(CATEGORIES as readonly string[]).includes(category)) continue;

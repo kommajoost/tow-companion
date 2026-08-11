@@ -4,8 +4,8 @@
   "reference": "vc-renegade-v2-reference.json",
   "generatedBy": "scripts/compile-renegade-v2.mjs",
   "counts": {
-    "applied": 106,
-    "captured": 48,
+    "applied": 107,
+    "captured": 47,
     "unresolved": 0,
     "unsupported": 0,
     "todo": 3
@@ -2554,10 +2554,12 @@
       "changeKinds": [
         "new"
       ],
-      "status": "captured",
+      "status": "applied",
       "targets": [
-        "profiles.terrorgheist.notes"
-      ]
+        "units.terrorgheist.specialRules",
+        "units.terrorgheist.specialRules"
+      ],
+      "reason": "continuation of a Special Rules line, applied via its head block"
     },
     {
       "blockId": "b0388",

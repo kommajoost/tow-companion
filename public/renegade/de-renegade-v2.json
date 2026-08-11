@@ -846,7 +846,8 @@
         }
       ],
       "notes": [
-        "A Handmaiden of Shards may purchase magic items up to a total of 25 points"
+        "A Handmaiden of Shards may purchase magic items up to a total of 25 points",
+        "Notes: A Lash & Buckler counts as both a handweapon and shield and allows the use of the Parry special rule."
       ],
       "troopType": "Regular infantry",
       "baseSize": "25 x 25 mm",

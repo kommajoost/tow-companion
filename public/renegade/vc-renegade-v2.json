@@ -178,7 +178,7 @@
     },
     "spirit-hosts": {
       "minimum": 2,
-      "maximum": 2,
+      "maximum": 6,
       "_changed": [
         "unit-size"
       ]
@@ -285,7 +285,13 @@
     "necromantic-acolyte": {},
     "wight-king": {},
     "hexwraiths": {},
-    "black-coach": {}
+    "black-coach": {},
+    "terrorgheist": {
+      "specialRules": "Close Order, Fly (9), Indomitable (1), Infested, Large Target, Necromantic Undead, Regeneration (5+), Stomp Attacks (D6), Swiftstride, Terror, Wailing Dirge (-2)",
+      "_changed": [
+        "special-rules"
+      ]
+    }
   },
   "magicItems": {
     "vampire-counts": [

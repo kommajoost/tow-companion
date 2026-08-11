@@ -291,8 +291,10 @@
         }
       ],
       "_changed": [
-        "options"
-      ]
+        "options",
+        "special-rules"
+      ],
+      "specialRules": "Armour Bane (2, Rot Fly only), Daemonic, Daemons of Nurgle, Fly (9), Poisoned Attacks, Regeneration (5+), Skirmishers, Swiftstride"
     },
     "daemonic-herald-of-tzeentch": {
       "options": [
@@ -1988,6 +1990,20 @@
         "Beastmen Brayherds • Dark Elves • Chaos Dwarfs • Warriors of Chaos • Skaven (Suspicious)",
         "Daemons of Chaos Allies In addition to the Allies listed in Ravening Hordes, armies made using the Beastmen Brayherds, or Warriors of Chaos Grand Army compositions may include an Allied Contingent drawn from the Daemons of Chaos Legacy Army composition list"
       ]
+    },
+    "units": {
+      "chaos-furies-of-slaanesh": {
+        "allowed": false
+      },
+      "chaos-furies-of-nurgle": {
+        "allowed": false
+      },
+      "chaos-furies-of-khorne": {
+        "allowed": false
+      },
+      "chaos-furies-of-tzeentch": {
+        "allowed": false
+      }
     }
   }
 }
