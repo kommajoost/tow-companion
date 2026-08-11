@@ -21,6 +21,7 @@ const PACKS = {
   cd: 'chaos-dwarfs',
   doc: 'daemons-of-chaos',
   lm: 'lizardmen',
+  vc: 'vampire-counts',
 };
 const only = process.argv[2];
 
@@ -389,6 +390,15 @@ const parseEmbeddedStats = (block) => {
   return out.length ? out : null;
 };
 
+// Datasheets a draft has renamed since upstream OWB last synced. Keyed by pack, draft name → catalogue
+// name. Only for a pairing that the source itself forces: the Vampire Counts "Vampires" datasheet
+// carries exactly two profiles, and the other one (Vampire Thrall) matches by name, so "Vampire Lord"
+// can only be the entry OWB still calls "Vampire Count". Anything less certain belongs in the coverage
+// ledger as unresolved, not here — this table is for facts, not for guesses about intent.
+const UNIT_ALIASES = {
+  vc: new Map([['vampire lord', 'vampire count']]),
+};
+
 const changed = (block) => Array.isArray(block.changeKinds) && block.changeKinds.length > 0;
 const actionable = (block) => changed(block) && !block.changeKinds.includes('todo');
 const addChanged = (patch, field) => {
@@ -707,6 +717,41 @@ for (const [key, army] of Object.entries(PACKS)) {
       ? [...new Set(hits.map(({ unit }) => norm(unit.name_en)))]
       : block.unitContext?.name ? [norm(block.unitContext.name)] : [];
     if (block.tableType === 'statline') {
+      // Points, straight off the statline. Until Vampire Counts every pack agreed with the catalogue
+      // on every priced row, because upstream OWB had already absorbed those drafts — so the pipeline
+      // never needed this and the handful of repricings came from the superseded units importer.
+      // V1.5.3.1 is newer than upstream, and seven units silently kept their old price (Varghulf 140
+      // where the pack says 110). At the table that reads as a legal list; it isn't.
+      //
+      // Narrow on purpose: one name, one plain integer, resolving to a single datasheet. A modifier
+      // row ("+5" for a champion) is a command upgrade, not a unit price, and is left alone.
+      for (const row of block.statlineRows ?? []) {
+        if (row.points?.value == null || row.points?.modifier) continue;
+        const alias = UNIT_ALIASES[key]?.get(norm(row.name));
+        const lookup = alias ?? row.name;
+        const rowHits = resolveUnits(index, { name: lookup, profileNames: [lookup] });
+        for (const { unit } of rowHits) {
+          const patch = (overlay.units[unit.id] ??= {});
+          if (alias) {
+            // Show the draft's name, not the catalogue's — the player is holding the draft.
+            patch.replace = { ...(patch.replace ?? {}), name_en: row.name };
+            addChanged(patch, 'name');
+            result.targets.push(`units.${unit.id}.name_en`);
+            result.status = 'applied';
+          }
+          if (unit.points === row.points.value) continue;
+          if (typeof patch.points === 'number' && patch.points !== row.points.value) {
+            // Two sources disagreeing about a price is a real conflict; report it, never pick one.
+            console.warn(`${key}: ${unit.id} points conflict — overlay ${patch.points}, statline ${row.points.value}`);
+            continue;
+          }
+          patch.points = row.points.value;
+          patch._was = unit.points;
+          addChanged(patch, 'points');
+          result.targets.push(`units.${unit.id}.points`);
+          result.status = 'applied';
+        }
+      }
       const stats = parseRectangularStats(block) ?? parseEmbeddedStats(block);
       if (stats) {
         if (hits.length) {

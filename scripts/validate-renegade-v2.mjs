@@ -5,7 +5,7 @@ import { readFileSync } from 'node:fs';
 const REN = new URL('../public/renegade/', import.meta.url);
 const OWB = new URL('../public/owb/', import.meta.url);
 const PUBLIC = new URL('../public/', import.meta.url);
-const PACKS = ['de', 'sk', 'ok', 'cd', 'doc', 'lm'];
+const PACKS = ['de', 'sk', 'ok', 'cd', 'doc', 'lm', 'vc'];
 const fail = (message) => { throw new Error(message); };
 const read = (name) => JSON.parse(readFileSync(new URL(name, REN), 'utf8'));
 const assert = (condition, message) => { if (!condition) fail(message); };
@@ -86,9 +86,13 @@ for (const key of PACKS) {
     const rule = Object.values(overlay.rules ?? {})
       .find((r) => typeof r.overrides === 'string' && r.overrides.startsWith(loreSlug));
     assert(rule, `${key}/${loreSlug}: pack past de lore aan maar overschrijft de lore-PAGINA niet — dan leest de speler de oude versie`);
-    const body = (rule.body ?? []).join(' ').toLowerCase();
+    // Apostrof-ongevoelig: de pagina houdt de typografische apostrof uit de brontekst
+    // ("Vanhal’s"), de spreukenlijst krijgt via de compiler een rechte. Beide horen zo, en de
+    // pagina verbatim laten weegt zwaarder dan een vergelijking die daarover struikelt.
+    const plat = (value) => String(value).toLowerCase().replace(/[‘’ʼ]/g, "'");
+    const body = plat((rule.body ?? []).join(' '));
     for (const spell of patch.spells ?? []) {
-      assert(body.includes(String(spell.name).toLowerCase()),
+      assert(body.includes(plat(spell.name)),
         `${key}/${loreSlug}: "${spell.name}" staat niet op de lore-pagina van het pack`);
     }
   }
@@ -182,4 +186,4 @@ assert(lm.addedUnits?.core?.some((unit) => unit.id === 'skink-cohorts' && unit.p
 assert(/Furious Charge, Predatory Fighter/.test(lm.units['ripperdactyl-riders']?.specialRules ?? ''),
   'lm: Ripperdactyl rule separator');
 
-console.log('Renegade V2 overlays validated: 6 packs');
+console.log(`Renegade V2 overlays validated: ${PACKS.length} packs`);

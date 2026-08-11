@@ -1,0 +1,1243 @@
+{
+  "id": "vc-renegade-v2",
+  "label": "Renegade V2",
+  "baseArmy": "vampire-counts",
+  "packVersion": "1.5.3.1",
+  "source": {
+    "name": "Renegade Legacy Pack",
+    "author": "Square Based",
+    "url": "https://squarebased.com/",
+    "official": false,
+    "terms": "Free to use in whole or in part (squarebased.com)"
+  },
+  "status": "draft",
+  "scope": "points-and-rules",
+  "units": {
+    "vampire-thrall": {
+      "options": [
+        {
+          "group": "armor",
+          "action": "patch",
+          "name_en": "Light armour",
+          "points": 3,
+          "perModel": false
+        },
+        {
+          "group": "armor",
+          "action": "patch",
+          "name_en": "Heavy armour",
+          "points": 6,
+          "perModel": false
+        },
+        {
+          "group": "armor",
+          "action": "patch",
+          "name_en": "Full plate armour",
+          "points": 9,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "Be a Level 2 Wizard",
+          "points": 60,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "Be a Level 3 Wizard",
+          "points": 60,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Level 1 Wizard",
+          "points": 30,
+          "perModel": false
+        }
+      ],
+      "_changed": [
+        "options",
+        "points"
+      ],
+      "points": 70,
+      "_was": 75
+    },
+    "strigoi-ghoul-king": {
+      "specialRules": "Dark Vitality, Flammable, Ghoulkin, Hatred (all enemies), Indomitable (1), Lore of Undeath, Necromantic Undead, Poisoned Attacks, Regeneration (5+), The Hunger, Vanguard",
+      "_changed": [
+        "special-rules"
+      ]
+    },
+    "tomb-banshee": {
+      "specialRules": "Ethereal, Indomitable (1), Magical Attacks, Necromantic Undead, Regeneration (6+), Terror, Wailing Dirge (-1)",
+      "_changed": [
+        "special-rules"
+      ]
+    },
+    "grave-guard-core": {
+      "minimum": 5,
+      "_changed": [
+        "unit-size"
+      ]
+    },
+    "grave-guard": {
+      "minimum": 5,
+      "_changed": [
+        "unit-size"
+      ]
+    },
+    "skeleton-warriors": {
+      "options": [
+        {
+          "group": "equipment",
+          "action": "patch",
+          "name_en": "Thrusting spears",
+          "points": 1,
+          "perModel": true
+        },
+        {
+          "group": "armor",
+          "action": "patch",
+          "name_en": "Light armour, Shields",
+          "points": 1,
+          "perModel": true
+        },
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "Implacable Defence special rule",
+          "points": 10,
+          "perModel": false
+        }
+      ],
+      "_changed": [
+        "options",
+        "points"
+      ],
+      "points": 4,
+      "_was": 5
+    },
+    "zombies": {
+      "specialRules": "Close Order, Horde, Necromantic Undead, Regeneration (6+), the Newly Dead, Shambling Horde.",
+      "_changed": [
+        "special-rules"
+      ]
+    },
+    "crypt-ghouls": {
+      "minimum": 5,
+      "_changed": [
+        "unit-size",
+        "options",
+        "special-rules",
+        "points"
+      ],
+      "options": [
+        {
+          "group": "command",
+          "action": "patch",
+          "name_en": "Crypt Ghast",
+          "points": 6,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "Ambushers special rule",
+          "points": 1,
+          "perModel": true
+        }
+      ],
+      "specialRules": "Armour Bane (1), Dark Vitality, Move through Cover, Necromantic Undead, Open Order, Poisoned Attacks, Regeneration (6+), Reserve Move, Skirmishers, The Hunger",
+      "points": 8,
+      "_was": 9
+    },
+    "crypt-horrors": {
+      "specialRules": "Dark Vitality, Indomitable (1), Move through Cover, Necromantic Undead, Open Order, Regeneration (5+), Stomp Attacks (1), The Hunger",
+      "_changed": [
+        "special-rules"
+      ]
+    },
+    "bat-swarm": {
+      "minimum": 2,
+      "_changed": [
+        "unit-size",
+        "special-rules"
+      ],
+      "specialRules": "Fly (7), Necromantic Undead, Regeneration (6+), Skirmishers, Cloud of Horror"
+    },
+    "vargheists": {
+      "minimum": 2,
+      "_changed": [
+        "unit-size",
+        "special-rules"
+      ],
+      "specialRules": "Armour Bane (2), Dark Vitality, Dispersed Formation, Flammable, Fly (9), Frenzy, Furious Charge, Indomitable (1), Impetuous, Necromantic Undead, Regeneration (5+), Skirmishers, The Hunger"
+    },
+    "spirit-hosts": {
+      "minimum": 2,
+      "maximum": 2,
+      "_changed": [
+        "unit-size"
+      ]
+    },
+    "blood-knights": {
+      "minimum": 4,
+      "_changed": [
+        "unit-size"
+      ]
+    },
+    "black-knights-core": {
+      "minimum": 4,
+      "_changed": [
+        "unit-size",
+        "options",
+        "special-rules"
+      ],
+      "options": [
+        {
+          "group": "equipment",
+          "action": "patch",
+          "name_en": "Lances, Skeletal hooves",
+          "points": 2,
+          "perModel": true
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Barding",
+          "points": 2,
+          "perModel": true
+        }
+      ],
+      "specialRules": "Cleaving Blow (Black Knights & Hell Knight only), Close Order, First Charge, Necromantic Undead, Regeneration (6+), Swiftstride, Spectral Steed"
+    },
+    "black-knights": {
+      "minimum": 4,
+      "_changed": [
+        "unit-size",
+        "options",
+        "special-rules"
+      ],
+      "options": [
+        {
+          "group": "equipment",
+          "action": "patch",
+          "name_en": "Lances, Skeletal hooves",
+          "points": 2,
+          "perModel": true
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Barding",
+          "points": 2,
+          "perModel": true
+        }
+      ],
+      "specialRules": "Cleaving Blow (Black Knights & Hell Knight only), Close Order, First Charge, Necromantic Undead, Regeneration (6+), Swiftstride, Spectral Steed"
+    },
+    "corpse-cart": {
+      "specialRules": "Close Order, Dark Vitality, First Charge, Impact Hits (D3+1), Indomitable (1), Lore of Undeath, Necromantic Undead, Random Attacks (The Restless Dead only), Regeneration (6+), Vigor Mortis",
+      "_changed": [
+        "special-rules",
+        "points"
+      ],
+      "points": 60,
+      "_was": 115
+    },
+    "varghulf": {
+      "specialRules": "Bestial Fury, Close Order, Counter Charge, Dark Vitality, Flammable, Frenzy, Indomitable (1), Necromantic Undead, Regeneration (5+), Swiftstride, Terror, The Hunger",
+      "_changed": [
+        "special-rules",
+        "points"
+      ],
+      "points": 110,
+      "_was": 140
+    },
+    "master-necromancer": {
+      "points": 145,
+      "_was": 130,
+      "_changed": [
+        "points"
+      ]
+    },
+    "wight-lord": {
+      "points": 60,
+      "_was": 40,
+      "_changed": [
+        "points"
+      ]
+    },
+    "vampire-count": {
+      "replace": {
+        "name_en": "Vampire Lord"
+      },
+      "_changed": [
+        "name",
+        "points"
+      ],
+      "points": 185,
+      "_was": 160
+    },
+    "necromantic-acolyte": {},
+    "wight-king": {},
+    "hexwraiths": {},
+    "black-coach": {}
+  },
+  "magicItems": {
+    "vampire-counts": [
+      {
+        "name_de": "Carsteinring",
+        "name_en": "Von Carstein Ring",
+        "name_cn": "冯卡斯坦因血戒",
+        "name_es": "Anillo de Von Carstein",
+        "name_fr": "Anneau des Von Carstein",
+        "name_it": "Von Carstein Anello",
+        "points": 40,
+        "type": "talisman",
+        "onePerArmy": true,
+        "name": "von carstein ring"
+      },
+      {
+        "name_de": "Drakenhofbanner",
+        "name_en": "Drakenhof Banner",
+        "name_cn": "邓肯霍夫军旗",
+        "name_es": "Estandarte de Drakenhof",
+        "name_fr": "Bannière de Drakenhof",
+        "name_it": "Drakenhof Banner",
+        "points": 60,
+        "type": "banner",
+        "onePerArmy": true,
+        "name": "drakenhof banner"
+      },
+      {
+        "name_de": "Banner der Hügelgräber",
+        "name_en": "Banner Of The Barrows",
+        "name_cn": "古坟军旗",
+        "name_es": "Estandarte de los túmulos",
+        "name_fr": "Bannière des Tertres",
+        "name_it": "Banner of the Barrows",
+        "points": 50,
+        "type": "banner",
+        "onePerArmy": true,
+        "name": "banner of the barrows"
+      },
+      {
+        "name_de": "Kreischendes Banner",
+        "name_en": "The Screaming Banner",
+        "name_cn": "哀嚎军旗",
+        "name_es": "La bandera de los gritos",
+        "name_fr": "Bannière Hurlante",
+        "name_it": "The Screaming Banner",
+        "points": 25,
+        "type": "banner",
+        "onePerArmy": true,
+        "name": "the screaming banner"
+      },
+      {
+        "name_de": "Helm der absoluten Kontrolle",
+        "name_en": "Helm Of Commandment",
+        "name_cn": "诫命之盔",
+        "name_es": "Yelmo de mandamiento",
+        "name_fr": "Heaume de Commandement",
+        "name_it": "Helm of Commandment",
+        "points": 40,
+        "type": "enchanted-item",
+        "onePerArmy": true,
+        "name": "helm of commandment"
+      },
+      {
+        "name_de": "Staubhand",
+        "name_en": "Hand Of Dust",
+        "name_cn": "归尘之手",
+        "name_es": "Mano De Polvo",
+        "name_fr": "Main de Poussière",
+        "name_it": "Hand of Dust",
+        "points": 35,
+        "type": "enchanted-item",
+        "onePerArmy": true,
+        "name": "hand of dust"
+      },
+      {
+        "name_de": "Zepter des Noirot",
+        "name_en": "Sceptre Of De Noirot",
+        "name_cn": "德朗诺的权杖",
+        "name_es": "Cetro de De Noirot",
+        "name_fr": "Sceptre de De Noirot",
+        "name_it": "Sceptre of De Noirot",
+        "points": 35,
+        "type": "arcane-item",
+        "onePerArmy": true,
+        "name": "sceptre of de noirot"
+      }
+    ]
+  },
+  "rules": {
+    "master-of-the-dead": {
+      "name_en": "Master of the Dead",
+      "body": [
+        "Your army must include at least one Wizard to be its Master of the Dead.If your army includes several Wizards, the Master of the Dead will be the one with the highest Level of Wizardry. If two or more models have the highest Wizard Level, you may choose which one is the Master of the Dead when writing your muster list. You must tell your opponent which model is your Master of the Dead before deploying your army.",
+        "Should your Master of the Dead be slain, the magical animus of the army starts to dissipate. As soon as your Master of the Dead is removed from play as a casualty, all friendly units with the Necromantic Undead special rule lose the Regeneration (X) special rule.",
+        "In addition, at the end of the phase in which your Master of the Dead was removed from play as a casualty, and during each of your Start of Turn sub-phases for the remainder of the game, all friendly units with the Necromantic Undead special rule that are currently on the battlefield must make a Leadership test. If this test is failed, the unit loses a number of Wounds equal to the amount by which it failed the test.",
+        "For example, your army’s Master of the Dead is destroyed during your opponent’s Shooting phase. At the end of that phase a unit of Skeleton Warriors (Ld 5) makes a Leadership test and rolls a 7 (failing the test by 2). That unit immediately loses two Wounds. During your next Start of Turn sub-phase, the same unit makes another Leadership test, this time rolling a 6, resulting in the loss of one Wound."
+      ],
+      "overrides": null
+    },
+    "dark-vitality": {
+      "name_en": "Dark Vitality",
+      "body": [
+        "Models with this special rule are not affected if the Master of the Dead for your army is slain. Furthermore, unless they have joined a unit that does not have this special rule they (and their mounts) can march as normal. In addition, A Vampire Count or Vampire Thrall Wizard with this special rule may wear armour or carry a shield without penalty. IE: They may Cast and Dispel as Normal."
+      ],
+      "overrides": "dark-vitality"
+    },
+    "necromantic-undead": {
+      "name_en": "Necromantic Undead",
+      "body": [
+        "Models with this special rule are ‘Undead.’ Undead models cannot march (unless they have the Fly (X) special rule and choose to move by flying). In addition, all Undead models have the following universal special rules:",
+        "Fear • Immune to Psychology • Unbreakable • Unstable",
+        "A character with this special rule cannot join a unit without this special rule, and vice versa Invocation Of Nehek",
+        "During the Command sub-phase of their turn, if they are not engaged in combat, this character may attempt to resurrect the fallen (see page 28) by making a Leadership test (using their own Leadership). If this test is passed, a single friendly unit that has the Necromantic Undead special rule and is within 12\" of this character recovers a number of lost Wounds. However, magically repairing great Undead beasts is much harder than",
+        "raising Zombies from the dirt. Therefore, how many Wounds are recovered depends upon the unit’s troop type and this character’s Level of Wizardry:",
+        "If the unit’s troop type is ‘regular infantry’ or ‘swarms,’ it recovers a number of Wounds equal to this character’s Level of Wizardry +D3. • If the unit’s troop type is ‘light cavalry’ or ‘war beasts,’ it recovers a number of Wounds equal to this character’s Level of Wizardry +1. • If the unit’s troop type is ‘heavy infantry,’ ‘monstrous infantry,’ ‘heavy cavalry,’ ‘monstrous cavalry’ or ‘light chariot,’ it recovers a number of Wounds equal to this character’s Level of Wizardry. • If the unit’s troop type is ‘heavy chariot,’ ‘monstrous creature,’ ‘behemoth’ or ‘war machine,’ it recovers a single Wound. • Models with the Dark Vitality or Ethereal special rules recover half the amount of wounds as described above (including any bonuses), rounding fractions up."
+      ],
+      "overrides": "necromantic-undead"
+    },
+    "the-newly-dead": {
+      "name_en": "The Newly Dead",
+      "body": [
+        "When resurrecting the fallen, a unit with this special rule can be taken beyond its starting size by an additional 20 models."
+      ],
+      "overrides": "the-newly-dead"
+    },
+    "spectral-steed": {
+      "name_en": "Spectral Steed",
+      "body": [
+        "A unit comprised entirely of modes with this special rule treats all terrain as open ground for the purposes of movement. They cannot end their movement inside impassable terrain, though they can pass through it."
+      ],
+      "overrides": "spell-spectral-steed"
+    },
+    "the-hunger": {
+      "name_en": "The Hunger",
+      "body": [
+        "At the end of a Combat phase in which a unit with this special rule caused one or more unsaved wounds, roll a D6 for each unsaved wound caused. For each roll of 5+, models with this special rule recover one lost Wound, following the rules for Resurrecting the Fallen. However, a model with the Behemoth troop type may only ever recover a maximum of one Wound per phase in this manner.",
+        "In addition, if a unit with this special rule wishes to Pursue or Overrun, it must make a Leadership test. If this test is failed, the unit still Pursues or Overruns, but rolls a single D6 to determine the distance moved, rather than the usual 2D6."
+      ],
+      "overrides": "the-hunger"
+    },
+    "wailing-dirge-x": {
+      "name_en": "Wailing Dirge (X)",
+      "body": [
+        "During the Shooting phase of its turn, unless it marched during the preceding Movement phase, A model with this special rule may make a ‘Wailing Dirge’ attack. A Wailing Dirge attack is a Shooting attack with the Magical Attacks special rule and a range of 8”. A Wailing Dirge attack can target an enemy Lone character regardless of the usual rules for targeting Lone characters. may target any enemy unit that is within 8\" of this model (including units that are engaged in combat) and that this model can draw a line of sight to. or that this model is engaged in combat with If this model is engaged in combat during the Shooting phase, it may target a unit in base contact with a Wailing Dirge attack and may do so even if it charged this turn.",
+        "A Wailing Dirge attack does not roll to hit and wound as normal. Instead, the target must make a Leadership test with a -2 negative modifier to its Leadership characteristic shown in the brackets after the name of this special rule (shown here as ‘X’). If this test is failed, the target suffers a number of wounds equal to the amount by which it failed the test, with no armour or Regeneration saves permitted (Ward saves can be attempted as normal).",
+        "Note that a Wailing Dirge attack may reduce the target's Leadership characteristic to a minimum of 2 a Wailing Dirge attack can target an enemy character, regardless of the usual rules for targeting Lone characters.",
+        "."
+      ],
+      "overrides": null
+    },
+    "the-death-of-a-general": {
+      "name_en": "The Death Of A General",
+      "body": [
+        "Every Vampire Counts army is animated and driven onwards by the sorcery of its General. To represent this, the General of a Vampire Counts army must also be a Wizard (be they a Vampire, a Necromancer or a Strigoi Ghoul King). If your army includes only a single Wizard, that Wizard must be your General, even if they are not the character with the highest Leadership in your army.",
+        "Should your General be slain, the magical animus of the army starts to dissipate. As soon as your General is removed from play as a casualty, all friendly units with the Necromantic Undead special rule lose the Regeneration (X) special rule.",
+        "In addition, at the end of the phase in which your General was removed from play as a casualty, and during each of your Start of Turn sub-phases for the remainder of the game, all friendly units with the Necromantic Undead special rule that are currently on the battlefield must make a Leadership test. If this test is failed, the unit loses a number of Wounds equal to the amount by which it failed the test.",
+        "For example, your army’s General is destroyed during your opponent’s Shooting phase. At the end of that phase a unit of Skeleton Warriors (Ld 5) makes a Leadership test and rolls a 7 (failing the test by 2). That unit immediately loses two Wounds. During your next Start of Turn sub-phase, the same unit makes another Leadership test, this time rolling a 6, resulting in the loss of one Wound."
+      ],
+      "overrides": "the-death-of-a-general"
+    },
+    "ghoulkin": {
+      "name_en": "Ghoulkin",
+      "body": [
+        "If a model with this special rule is your General, all Crypt Ghouls, Crypt Horrors and Vargulfs gain the Vanguard special rule."
+      ],
+      "overrides": null
+    },
+    "character-mounts": {
+      "name_en": "Character Mounts",
+      "body": [
+        "A character that can be mounted may choose a mount from the following list. Some mounts are covered in detail on this page. Those that are not have their own dedicated entries later in this army list.",
+        "A Vampire Lord or Vampire Thrall may be mounted on a:",
+        "Nightmare +16 points • Coven Throne See page 16 • Abyssal Terror (Vampire Lord only) See page 22 • Zombie Dragon (Vampire Lord only) See page 20",
+        "A Master Necromancer or Necromantic Acolyte may be mounted on a:",
+        "Nightmare +16 points • Corpse Cart (Necromantic Acolyte only) • Mortis Engine (Master Necromancer only) See page 17 • Abyssal Terror (Master Necromancer only) See page 22 • Zombie Dragon (Master Necromancer only) See page 20",
+        "A Strigoi Ghoul King may be mounted on a:",
+        "Terrorgheist See page 21",
+        "A Wight King or Wight Lord may be mounted on a:",
+        "Skeletal Steed +14 points"
+      ],
+      "overrides": null
+    },
+    "shambling-horde": {
+      "name_en": "Shambling Horde",
+      "body": [
+        "A unit with this special rule never receives an initiative bonus for charging an enemy in its front, flank or rear arc. In addition, when this unit Pursues or Overruns, roll a single D6 to determine the distance moved, rather than the usual 2D6."
+      ],
+      "overrides": null
+    },
+    "cloud-of-horror": {
+      "name_en": "Cloud of Horror",
+      "body": [
+        "At the start of the Combat phase, any enemy unit in base contact with one or more models with this special rule must make a Leadership test. If this test is failed, that unit gains the Strikes Last special rule until the end of the phase."
+      ],
+      "overrides": null
+    },
+    "accursed-reliquary": {
+      "name_en": "Accursed Reliquary",
+      "body": [
+        "Whilst within the Command range of one or more models with this special rule, friendly units with the Necromantic Undead special rule gain a +1 modifier to their Movement and Initiative characteristics."
+      ],
+      "overrides": "accursed-reliquary"
+    },
+    "blasphemous-tome": {
+      "name_en": "Blasphemous Tome",
+      "body": [
+        "All Wizards (friend or foe) may apply a +1 modifier to any Casting roll whilst within the Command range of one or more models with this special rule. However, if any Wizard miscasts whilst within this model’s Command range, they must roll twice on the Miscast table and apply both results.",
+        "Character Mount: A Mortis Engine may only be included in your army as a character’s mount. Its points are added to that of its rider."
+      ],
+      "overrides": "blasphemous-tome"
+    },
+    "balefire-brazier": {
+      "name_en": "Balefire Brazier",
+      "body": [
+        "Enemy Wizards that are within 18\" of one or more models with this special rule when attempting to cast a spell must increase that spell’s casting value by 1."
+      ],
+      "overrides": "balefire-brazier"
+    },
+    "warped-tintinnabulation": {
+      "name_en": "Warped Tintinnabulation",
+      "body": [
+        "When a friendly unit that is within 12\" of this model recovers a number of lost Wounds due to a character using the Invocation of Nehek special rule, roll a D6. On a roll of 4+, the unit recovers one additional Wound add +1 to the result. In addition, friendly units within 12\" of one or more models with this special rule reduce the number of Wounds lost due to the Unstable special rule by 1.",
+        "Note that this is cumulative with the Indomitable (X) special rule (see page 27)."
+      ],
+      "overrides": "warped-tintinnabulation"
+    },
+    "vigor-mortis": {
+      "name_en": "Vigor Mortis",
+      "body": [
+        "Whilst within 6\" of one or more models with this special rule, friendly units of Zombies lose the Shambling Hordes special rule, gain the Newly Dead special rule, and modify their Weapon Skill characteristic by +1. In addition, whenever a friendly unit of Zombies within 6\" of one or more models with this special rule recovers lost Wounds due to the Invocation of Nehek special rule, it recovers an additional D3 Wounds.",
+        "Character Mount: A Corpse Cart may be included in your army as a character's mount. If so, the Necromantic Acolyte replaces the Corpsemaster and the Corpse Cart’s points are added to that of its rider."
+      ],
+      "overrides": null
+    },
+    "carrion-feeders": {
+      "name_en": "Carrion Feeders",
+      "body": [
+        "Enemy units engaged in combat with this model suffer a -1 modifier to their Initiative Weapon Skill characteristic."
+      ],
+      "overrides": "carrion-feeders"
+    },
+    "infested": {
+      "name_en": "Infested",
+      "body": [
+        "When this model loses its last Wound and is removed from play, every unit in base contact with it (friend or foe) suffers D6 Strength 2 hits, each with an AP of -1."
+      ],
+      "overrides": "infested"
+    },
+    "spell-vanhal-s-danse-macabre": {
+      "name_en": "Vanhal’s Danse Macabre",
+      "body": [
+        "Type: Enchantment Casting Value: 7+/11+ Range: 12\"",
+        "Effect: If this spell is cast with a casting result of 7 or more, the target friendly unit gains a +D3 modifier to one of the following characteristics (to a maximum of 10). If this",
+        "spell is cast with a casting result of 11 or more, the target friendly unit gains a +D3 modifier to two of the following characteristics (to a maximum of 10). This spell lasts until your next Start of Turn sub-phase.",
+        "Movement • Weapon Skill • Initiative"
+      ],
+      "overrides": "spell-vanhals-danse-macabre"
+    },
+    "spell-hellish-vigour": {
+      "name_en": "Hellish Vigour",
+      "body": [
+        "Type: Enchantment Casting Value: 6+/10+ Range: Self",
+        "Effect: If this spell is cast with a casting result of 6 or more, a single friendly unit that has the Necromantic Undead special rule and is within the caster’s Command range gains the Reserve Move special rule. If this spell is cast with a casting result of 10 or more, every friendly unit that has the Necromantic Undead special rule and is within the caster’s Command range gains the Reserve Move special rule. This spell lasts until the end of this turn.",
+        "Risen Zombie | M WS BS | S | T | W | I | A | Ld 4 2 0 | 3 | 3 | 1 | 1 | 1 | 2"
+      ],
+      "overrides": "spell-hellish-vigour"
+    },
+    "spell-raise-dead": {
+      "name_en": "Raise Dead",
+      "body": [
+        "Type: Enchantment",
+        "Casting Value: 9+",
+        "Range: 12\"",
+        "Effect: Place a unit of 2D3 Risen Zombies on the battlefield anywhere completely within 12\" of this model, but not within 1\" of any enemy models. This unit cannot declare a charge during the turn in which it was raised:",
+        "Note that units of Zombies that are created in this way are not worth any Victory Points, do not count as Core, and are considered to have a starting unit size of 10 models for the purposes of the Invocation of Nehek special rule. Troop Type: Regular infantry",
+        "Note that Risen Zombies are not worth any Victory Points."
+      ],
+      "overrides": "spell-raise-dead"
+    },
+    "lore-of-undeath": {
+      "name_en": "Lore of Undeath",
+      "body": [
+        "A Wizard with the ‘Lore of Undeath’ special rule may discard one of their randomly generated spells as normal. When they do so, they may select instead either the signature spell of their chosen Lore of Magic, or one of the spells listed below.",
+        "Vanhal’s Danse Macabre",
+        "Type: Enchantment Casting Value: 7+/11+ Range: 12\"",
+        "Effect: If this spell is cast with a casting result of 7 or more, the target friendly unit gains a +D3 modifier to one of the following characteristics (to a maximum of 10). If this",
+        "spell is cast with a casting result of 11 or more, the target friendly unit gains a +D3 modifier to two of the following characteristics (to a maximum of 10). This spell lasts until your next Start of Turn sub-phase.",
+        "Movement • Weapon Skill • Initiative",
+        "Hellish Vigour",
+        "Type: Enchantment Casting Value: 6+/10+ Range: Self",
+        "Effect: If this spell is cast with a casting result of 6 or more, a single friendly unit that has the Necromantic Undead special rule and is within the caster’s Command range gains the Reserve Move special rule. If this spell is cast with a casting result of 10 or more, every friendly unit that has the Necromantic Undead special rule and is within the caster’s Command range gains the Reserve Move special rule. This spell lasts until the end of this turn.",
+        "Risen Zombie | M WS BS | S | T | W | I | A | Ld",
+        "4 2 0 | 3 | 3 | 1 | 1 | 1 | 2",
+        "Raise Dead",
+        "Type: Enchantment",
+        "Casting Value: 9+",
+        "Range: 12\"",
+        "Effect: Place a unit of 2D3 Risen Zombies on the battlefield anywhere completely within 12\" of this model, but not within 1\" of any enemy models. This unit cannot declare a charge during the turn in which it was raised:",
+        "Note that units of Zombies that are created in this way are not worth any Victory Points, do not count as Core, and are considered to have a starting unit size of 10 models for the purposes of the Invocation of Nehek special rule. Troop Type: Regular infantry",
+        "Base Size: 25 x 25 mm",
+        "Unit Size: 2D3",
+        "Equipment: Hand weapons",
+        "Special Rules: Necromantic Undead, Regeneration (6+), Skirmishers, the Newly Dead",
+        "Note that Risen Zombies are not worth any Victory Points."
+      ],
+      "overrides": "lore-of-undeath-renegade"
+    }
+  },
+  "lores": {
+    "lore-of-undeath": {
+      "name": "Lore of Undeath",
+      "spells": [
+        {
+          "slug": "spell-vanhals-danse-macabre",
+          "name": "Vanhal's Danse Macabre",
+          "number": null,
+          "signature": true
+        },
+        {
+          "slug": "spell-hellish-vigour",
+          "name": "Hellish Vigour",
+          "number": null,
+          "signature": true
+        },
+        {
+          "slug": "spell-raise-dead",
+          "name": "Raise Dead",
+          "number": null,
+          "signature": true
+        }
+      ]
+    }
+  },
+  "profiles": {
+    "vampire thrall": {
+      "stats": [
+        {
+          "Name": "Vampire Lord",
+          "M": "6",
+          "WS": "7",
+          "BS": "5",
+          "S": "5",
+          "T": "5",
+          "W": "4",
+          "I": "6",
+          "A": "5",
+          "Ld": "9"
+        },
+        {
+          "Name": "Vampire Thrall",
+          "M": "6",
+          "WS": "6",
+          "BS": "4",
+          "S": "5",
+          "T": "4",
+          "W": "2",
+          "I": "5",
+          "A": "3",
+          "Ld": "7"
+        }
+      ],
+      "notes": [
+        "Magic: A Vampire Lord is a level 1 Wizard (see below). A Vampire Lord or Vampire Thrall that is a Wizard knows spells from one of the following Lores of Magic:",
+        "May be mounted See page 8 • A Vampire Lord may:",
+        "Vampire Lord: Accursed Weapons, Dark Vitality, Flammable, Indomitable (2), Lore of Undeath, Necromantic Undead, Regeneration (5+) • Vampire Thrall: Accursed Weapons, Banner of the Count, Dark Vitality, Flammable, Indomitable (1), Lore of Undeath, Necromantic Undead, Regeneration (5+)"
+      ]
+    },
+    "master necromancer": {
+      "stats": [
+        {
+          "Name": "Master Necromancer",
+          "M": "4",
+          "WS": "3",
+          "BS": "3",
+          "S": "3",
+          "T": "4",
+          "W": "3",
+          "I": "3",
+          "A": "2",
+          "Ld": "8"
+        }
+      ]
+    },
+    "necromantic acolyte": {
+      "stats": [
+        {
+          "Name": "Necromantic Acolyte",
+          "M": "4",
+          "WS": "3",
+          "BS": "3",
+          "S": "3",
+          "T": "3",
+          "W": "2",
+          "I": "3",
+          "A": "1",
+          "Ld": "7"
+        }
+      ]
+    },
+    "strigoi ghoul king": {
+      "equipment": [
+        "Hand weapon, Wicked Claws, and scaly skin (counts as heavy armour)"
+      ],
+      "notes": [
+        "Wicked claws | R S Combat S | AP -2 | Special Rules -"
+      ]
+    },
+    "wight king": {
+      "stats": [
+        {
+          "Name": "Wight King",
+          "M": "4",
+          "WS": "5",
+          "BS": "0",
+          "S": "5",
+          "T": "5",
+          "W": "3",
+          "I": "4",
+          "A": "3",
+          "Ld": "9"
+        }
+      ]
+    },
+    "wight lord": {
+      "stats": [
+        {
+          "Name": "Wight Lord",
+          "M": "4",
+          "WS": "4",
+          "BS": "0",
+          "S": "4",
+          "T": "5",
+          "W": "2",
+          "I": "4",
+          "A": "2",
+          "Ld": "8"
+        }
+      ]
+    },
+    "skeletal steed": {
+      "stats": [
+        {
+          "Name": "Skeletal Steed",
+          "M": "8",
+          "WS": "2",
+          "BS": "-",
+          "S": "3",
+          "T": "-",
+          "W": "-",
+          "I": "2",
+          "A": "1",
+          "Ld": "-"
+        }
+      ],
+      "specialRules": [
+        "First Charge",
+        "Necromantic Undead",
+        "Swiftstride",
+        "Spectral Steed"
+      ],
+      "troopType": "Heavy cavalry",
+      "baseSize": "30 x 60 mm",
+      "equipment": [
+        "Skeletal hooves (counts as a hand weapon) and barding"
+      ]
+    },
+    "skeleton warriors": {
+      "stats": [
+        {
+          "Name": "Skeleton Warrior",
+          "M": "4",
+          "WS": "2",
+          "BS": "2",
+          "S": "3",
+          "T": "3",
+          "W": "1",
+          "I": "2",
+          "A": "1",
+          "Ld": "5"
+        },
+        {
+          "Name": "Skeleton Champion",
+          "M": "4",
+          "WS": "2",
+          "BS": "2",
+          "S": "3",
+          "T": "3",
+          "W": "1",
+          "I": "2",
+          "A": "2",
+          "Ld": "5"
+        }
+      ],
+      "equipment": [
+        "Hand weapons light armour and shields"
+      ],
+      "troopType": "Regular infantry",
+      "baseSize": "25 x 25 mm",
+      "specialRules": [
+        "Close Order",
+        "Horde",
+        "Necromantic Undead",
+        "Regeneration (6+)"
+      ]
+    },
+    "zombies": {
+      "stats": [
+        {
+          "Name": "Zombie",
+          "M": "4",
+          "WS": "1",
+          "BS": "0",
+          "S": "3",
+          "T": "2",
+          "W": "1",
+          "I": "1",
+          "A": "1",
+          "Ld": "2"
+        }
+      ],
+      "specialRules": [
+        "Close Order",
+        "Horde",
+        "Necromantic Undead",
+        "Regeneration (6+)",
+        "the Newly Dead",
+        "Shambling Horde."
+      ]
+    },
+    "crypt ghouls": {
+      "stats": [
+        {
+          "Name": "Crypt Ghoul",
+          "M": "5",
+          "WS": "3",
+          "BS": "3",
+          "S": "3",
+          "T": "4",
+          "W": "1",
+          "I": "3",
+          "A": "2",
+          "Ld": "5"
+        },
+        {
+          "Name": "Crypt Ghast",
+          "M": "5",
+          "WS": "3",
+          "BS": "3",
+          "S": "3",
+          "T": "4",
+          "W": "1",
+          "I": "3",
+          "A": "3",
+          "Ld": "5"
+        }
+      ],
+      "equipment": [
+        "Hand weapons and calloused hide (counts as light armour)"
+      ],
+      "troopType": "Regular infantry",
+      "baseSize": "25 x 25 mm",
+      "specialRules": [
+        "Armour Bane (1)",
+        "Dark Vitality",
+        "Move through Cover",
+        "Necromantic Undead",
+        "Open Order",
+        "Poisoned Attacks",
+        "Regeneration (6+)",
+        "Reserve Move",
+        "Skirmishers",
+        "The Hunger"
+      ]
+    },
+    "crypt horrors": {
+      "equipment": [
+        "Filth-encrusted claws (see below) and scaly skin (counts as heavy armour)"
+      ]
+    },
+    "vargheists": {
+      "equipment": [
+        "Wicked claws (see below) and calloused hide (counts as light armour)"
+      ],
+      "notes": [
+        "Wicked claws | R S Combat S | AP -2 | Special Rules - Dispersed Formation To maintain Skirmish formation, every model in this unit must be within 3\" of another model belonging to the same unit, rather than the usual 1\". However, unlike most Skirmishers, models with this special rule do not have a 360&deg; vision arc; they instead have a 90&deg; vision arc, corresponding to their front arc. Fell Bats | M WS BS | S | T | W | I | A | Ld | Points Fell Bat | 1 3 0 | 3 | 3 | 2 | 3 | 2 | 3 | 15"
+      ]
+    },
+    "black knights": {
+      "stats": [
+        {
+          "Name": "Black Knight",
+          "M": "-",
+          "WS": "3",
+          "BS": "0",
+          "S": "4",
+          "T": "4",
+          "W": "1",
+          "I": "3",
+          "A": "1",
+          "Ld": "6"
+        },
+        {
+          "Name": "Hell Knight",
+          "M": "-",
+          "WS": "3",
+          "BS": "0",
+          "S": "4",
+          "T": "4",
+          "W": "1",
+          "I": "3",
+          "A": "2",
+          "Ld": "6"
+        },
+        {
+          "Name": "Skeletal Steed",
+          "M": "8",
+          "WS": "2",
+          "BS": "-",
+          "S": "3",
+          "T": "-",
+          "W": "-",
+          "I": "2",
+          "A": "1",
+          "Ld": "-"
+        }
+      ],
+      "notes": [
+        "Black Knights: Hand weapons, heavy armour and shields • Skeletal Steeds: Skeletal hooves (counts as hand weapons) and barding"
+      ],
+      "troopType": "Heavy cavalry",
+      "baseSize": "30 x 60 mm",
+      "equipment": [],
+      "specialRules": [
+        "Cleaving Blow (Black Knights & Hell Knight only)",
+        "Close Order",
+        "First Charge",
+        "Necromantic Undead",
+        "Regeneration (6+)",
+        "Swiftstride",
+        "Spectral Steed"
+      ]
+    },
+    "hexwraiths": {
+      "stats": [
+        {
+          "Name": "Hexwraith",
+          "M": "-",
+          "WS": "3",
+          "BS": "0",
+          "S": "3",
+          "T": "3",
+          "W": "1",
+          "I": "2",
+          "A": "1",
+          "Ld": "5"
+        },
+        {
+          "Name": "Hellwraith",
+          "M": "-",
+          "WS": "3",
+          "BS": "0",
+          "S": "3",
+          "T": "3",
+          "W": "1",
+          "I": "2",
+          "A": "2",
+          "Ld": "5"
+        },
+        {
+          "Name": "Skeletal Steed",
+          "M": "8",
+          "WS": "2",
+          "BS": "-",
+          "S": "3",
+          "T": "-",
+          "W": "-",
+          "I": "2",
+          "A": "1",
+          "Ld": "-"
+        }
+      ],
+      "specialRules": [
+        "Ethereal",
+        "Flaming Attacks",
+        "Fly (8)",
+        "Magical Attacks",
+        "Necromantic Undead",
+        "Open Order",
+        "Regeneration (6+)",
+        "Spectral Reapers",
+        "Swiftstride",
+        "Terror"
+      ]
+    },
+    "coven throne": {
+      "stats": [
+        {
+          "Name": "Coven Throne",
+          "M": "-",
+          "WS": "-",
+          "BS": "-",
+          "S": "5",
+          "T": "5",
+          "W": "5",
+          "I": "-",
+          "A": "-",
+          "Ld": "-"
+        },
+        {
+          "Name": "Pallid Handmaidens (x2)",
+          "M": "-",
+          "WS": "5",
+          "BS": "3",
+          "S": "5",
+          "T": "-",
+          "W": "-",
+          "I": "5",
+          "A": "2",
+          "Ld": "7"
+        },
+        {
+          "Name": "Spirit Horde",
+          "M": "6",
+          "WS": "3",
+          "BS": "0",
+          "S": "3",
+          "T": "-",
+          "W": "-",
+          "I": "1",
+          "A": "D6",
+          "Ld": "-"
+        }
+      ],
+      "notes": [
+        "Pallid Handmaidens: Hand weapons • Spirit Horde: Hand weapons and spectral lances",
+        "Spectral Lance | R S Combat S+2 | AP -2 | Special Rules Armour Bane (1)",
+        "Notes: A Spectral lance can only be used during a turn in which the wielder charged, and its Strength and Armour Piercing modifiers apply only against enemy models the wielder charged that turn.",
+        "Character Mount: A Coven Throne may only be included in your army as a character’s mount. Its points are added to that of its rider."
+      ],
+      "specialRules": [
+        "Accursed Weapons (Pallid Handmaidens only)",
+        "Close Order",
+        "Dark Vitality",
+        "First Charge",
+        "Fly (8)",
+        "Ghoulish Glamour",
+        "Impact Hits (D6+1)",
+        "Large Target",
+        "Necromantic Undead",
+        "Random Attacks (Spirit Horde only)",
+        "Regeneration (6+)",
+        "Scrying Pool"
+      ],
+      "troopType": "Heavy chariot",
+      "baseSize": "50 x 100 mm",
+      "armourValue": "4+",
+      "equipment": []
+    },
+    "mortis engine": {
+      "notes": [
+        "Banshees: Hand weapons • Spirit Horde: Hand weapons and spectral lances",
+        "Spectral Lance | R S Combat S+2 | AP -2 | Special Rules Armour Bane (1)",
+        "Notes: A Spectral lance can only be used during a turn in which the wielder charged, and its Strength and Armour Piercing modifiers apply only against enemy models the wielder charged that turn."
+      ],
+      "specialRules": [
+        "Accursed Reliquary",
+        "Blasphemous Tome",
+        "Close Order",
+        "Dark Vitality",
+        "First Charge",
+        "Fly (8)",
+        "Impact Hits (D6+1)",
+        "Large Target",
+        "Necromantic Undead",
+        "Random Attacks (Spirit Horde only)",
+        "Regeneration (6+)",
+        "Wailing Dirge (-2)"
+      ]
+    },
+    "corpse cart": {
+      "stats": [
+        {
+          "Name": "Corpse Cart",
+          "M": "-",
+          "WS": "-",
+          "BS": "-",
+          "S": "4",
+          "T": "4",
+          "W": "4",
+          "I": "-",
+          "A": "-",
+          "Ld": "-"
+        },
+        {
+          "Name": "Corpsemaster (x1)",
+          "M": "-",
+          "WS": "3",
+          "BS": "0",
+          "S": "3",
+          "T": "-",
+          "W": "-",
+          "I": "3",
+          "A": "1",
+          "Ld": "5"
+        },
+        {
+          "Name": "The Restless Dead",
+          "M": "4",
+          "WS": "1",
+          "BS": "0",
+          "S": "3",
+          "T": "-",
+          "W": "-",
+          "I": "1",
+          "A": "2D6",
+          "Ld": "-"
+        }
+      ],
+      "notes": [
+        "Magic: A Corpsemaster is a Level 1 Wizard. Every Corpsemaster knows a spell from the Necromancy Lore of Magic.",
+        "Character Mount: A Corpse Cart may be included in your army as a character's mount. If so, the Necromantic Acolyte replaces the Corpsemaster and the Corpse Cart’s points are added to that of its rider."
+      ],
+      "troopType": "Heavy chariot",
+      "baseSize": "50 x 100 mm",
+      "armourValue": "4+",
+      "equipment": [],
+      "specialRules": [
+        "Close Order",
+        "Dark Vitality",
+        "First Charge",
+        "Impact Hits (D3+1)",
+        "Indomitable (1)",
+        "Lore of Undeath",
+        "Necromantic Undead",
+        "Random Attacks (The Restless Dead only)",
+        "Regeneration (6+)",
+        "Vigor Mortis"
+      ]
+    },
+    "black coach": {
+      "notes": [
+        "Black Coach | | M | WS | BS | S | T | W | I | A | Ld | Points Black Coach | - | - | - | 5 | 6 | 4 | - | - | - | 205 Wraith (x1) | - | 3 | 0 | 3 | - | - | 2 | 2 | 5 | - Nightmares (x2) | 8 | 3 | - | 4 | - | - | 2 | 1 | - | - Troop Type: Base Size: Unit Size: | Heavy Chariot 50 x 100 mm min 100x150 mm max 1"
+      ]
+    },
+    "terrorgheist": {
+      "equipment": [
+        "Filth-encrusted talons (see below), rancid maw (see below) and scaly skin (counts as heavy armour)"
+      ],
+      "notes": [
+        "Necromantic Undead, Regeneration (5+), Stomp Attacks (D6), Swiftstride, Terror, Wailing Dirge (-2)"
+      ]
+    },
+    "varghulf": {
+      "stats": [
+        {
+          "Name": "Varghulf",
+          "M": "8",
+          "WS": "5",
+          "BS": "0",
+          "S": "5",
+          "T": "5",
+          "W": "4",
+          "I": "4",
+          "A": "5",
+          "Ld": "4"
+        }
+      ],
+      "equipment": [
+        "Wicked claws (see below) and scaly skin (counts as heavy armour)"
+      ],
+      "notes": [
+        "Regeneration (5+), Swiftstride, Terror, The Hunger"
+      ],
+      "troopType": "Monstrous creature",
+      "baseSize": "50 x 50 mm",
+      "specialRules": [
+        "Bestial Fury",
+        "Close Order",
+        "Counter Charge",
+        "Dark Vitality",
+        "Flammable",
+        "Frenzy",
+        "Indomitable (1)",
+        "Necromantic Undead"
+      ]
+    }
+  },
+  "notes": [
+    "Red Fury 50 points",
+    "Level 1 Wizard Vampires only. During the Combat phase, for each unsaved wound caused by this model's Attacks, it immediately makes one additional Attack. These additional Attacks cannot generate further Attacks.",
+    "Curse Of The Revenant 40 points",
+    "Honour or Death 35 points",
+    "Any enemy model that wishes to issue a challenge whilst engaged in the same combat as a model with this Vampiric Power must first make a Leadership test (using their own Leadership.) Apply a +1 modifier to the dice roll for each point of difference between its Weapon Skill characteristic and that of the model with this Vampiric Power (to a maximum of +2).",
+    "If the test is passed, the challenge is issued as normal. If the test is failed, the challenge is not issued and the enemy model must Retire, following the rules for refusing a challenge. In addition, challenges issued by a model with this Vampiric Power cannot be refused.",
+    "Models whose troop type is ‘infantry’ only. This Vampire gains the Fly (10) rule, but cannot join a unit. Master Of The Black Arts 30 points",
+    "This Vampiric Power may only be taken by a Vampire Lord that is a Level 3 Wizard, or by a Vampire Thrall that is a Level 1 Wizard. This Vampire increases their Level of Wizardry by 1.",
+    "Dark Acolyte 30 points",
+    "This Vampire gains the Invocation of Nehek special rule (as described on page 5). For the purposes of using this special rule, this model counts as a Level 1 Wizard.",
+    "Quickblood 25 points",
+    "This Vampire gains the Strike First special rule.",
+    "Infinite Hatred 25 points",
+    "This Vampire gains the Hatred (all enemies) special rule.",
+    "Beguile 20 points",
+    "Enemy units must make a Leadership test before making any rolls To Hit against this model during the Combat phase. If this test is failed, only rolls of a natural 6 will hit."
+  ],
+  "magicItemText": {
+    "von-carstein-ring": {
+      "body": "Vampires only. The bearer of this item has a 5+ Ward save against all wounds suffered. In addition, if the bearer loses their final Wound and is removed from play as a casualty, roll a D6. On a roll of 2+, the model is immediately returned to play. Place the model back in the exact position it occupied prior to being removed, with 1 Wound remaining.\n\nOnce this resurrection ability has been used, the Von Carstein Ring is destroyed and its effects are lost for the remainder of the game."
+    },
+    "drakenhof-banner": {
+      "body": "If a unit carrying the Drakenhof Banner has the Regeneration (X+) special rule, it improves the armour value of its Regeneration save by 1."
+    },
+    "banner-of-the-barrows": {
+      "body": "Cannot be taken by a unit with the Dark Vitality special rule. During the Combat phase, when a unit carrying the Banner of the Barrows makes a roll To Hit, a roll of 3+ is always a success, regardless of the target’s Weapon Skill."
+    },
+    "the-screaming-banner": {
+      "body": "When an enemy unit makes a Leadership test due to Fear caused by a unit carrying the Screaming Banner, it must roll an extra D6 and discard the lowest result."
+    },
+    "helm-of-commandment": {
+      "body": "Necromancers and Wights only. During the Command sub-phase of their turn, this character may attempt to enhance the sentience of those around them by making a Leadership test (using their own Leadership). If this test is passed, until your next Start of Turn sub-phase this character and any unit they have joined gains a +1 modifier to their Weapon Skill characteristic (to a maximum of 10)."
+    },
+    "hand-of-dust": {
+      "body": "Necromancers and Wights only. This model can cast the following Bound spell, with a Power Level of 1. Roll a D6 each time the Hand of Dust is used. On a roll of 1, it crumbles to dust and cannot be used again:\n\nType: Assailment Casting Value:8+\n\nRange: Combat\n\nEffect: The target enemy unit suffers 2D6 Strength 5 hits, each with an AP of -1."
+    },
+    "sceptre-of-de-noirot": {
+      "body": "Master Necromancer Only. When the wielder of the Sceptre De Noirot uses the Invocation of Nehek special rule on a friendly unit whose troop type is infantry or cavalry, roll an additional D3 when determining how many wounds are recovered.\n\nThe bearer of the Sceptre of de Noirot may attempt to resurrect the fallen by using the Invocation of Nehek special rule twice during their Command sub-phase (rather than the usual once). Roll a D6 each time the sceptre is used. On a roll of 1, the bearer loses a single Wound."
+    }
+  },
+  "composition": {
+    "sourceRules": {
+      "Characters": [
+        "1+ Wizard (see page 4) • 0-1 Vampire Lord, Master Necromancer or Strigoi Ghoul King per 1,000 points • 0-1 Wight King or Banshee per 1,000 points • Vampire Thralls, Necromantic Acolytes, Wight Lords and Cairn Wraiths"
+      ],
+      "Core": [
+        "Skeleton Warriors, Zombies, Crypt Ghouls, Bat Swarms and Dire Wolves • 0-3 Corpse Carts • 0-1 unit of Grave Guard or Black Knights may be taken as a Core choice"
+      ],
+      "Special": [
+        "0-1 unit of Grave Guard, Black Knights, per 1,000 points • 0-1 unit of Crypt Horrors or Fell Bats per 1,000 points • 0-3 Corpse Carts • Grave Guard, Black Knights, Crypt Horrors, Fell bats • 0-1 Varghulf per 1,000 points • 0-1 unit of Spirit Hosts per Cairn Wraith or Tomb Banshee taken • If your General is a Vampire Lord 0-1 Blood Knights may be taken as a Special choice. • If your General is a Strigoi Ghoul King, 0-1 unit of Vargheists or 0-1 Terrorgheist may be taken as a Special choice"
+      ],
+      "Rare": [
+        "0-1 unit of Vargheists per 1,000 points • 0-1 Terrorgheist or Varghulf per 1,000 points • 0-1 unit of Blood Knights per 1,000 points • 0-2 Black Coaches • Vargheists, Terrorgheist, Blood Knights • 0-1 Black Coaches per 1,000 points • 0-1 unit of Hexwraiths per Cairn Wraith or Tomb Banshee taken"
+      ],
+      "Mercenaries": [
+        "Mercenaries",
+        "Up to 20% of your army’s points value may be spent on the following units taken as mercenaries:",
+        "Free Company Militia and Empire Archers (see the Empire of Man army list on page 59 of Forces of Fantasy)",
+        "Note that mercenary units drawn from another army list gain the Mercenaries special rule and become subject to the ‘Misbehaving Mercenaries’ rules, as described on page 279 of the Warhammer: the Old World rulebook."
+      ],
+      "Allies": [
+        "Vampire Count Allies In addition to the Allies listed in Ravening Hordes, armies made using the Tomb Kings of Khemri Grand Army composition may include an Allied contingent drawn from the Vampire Counts Legacy Army composition."
+      ]
+    }
+  }
+}

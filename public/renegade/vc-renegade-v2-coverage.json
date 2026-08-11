@@ -1,0 +1,2664 @@
+{
+  "id": "vc-renegade-v2-coverage",
+  "army": "vampire-counts",
+  "reference": "vc-renegade-v2-reference.json",
+  "generatedBy": "scripts/compile-renegade-v2.mjs",
+  "counts": {
+    "applied": 106,
+    "captured": 48,
+    "unresolved": 0,
+    "unsupported": 0,
+    "todo": 3
+  },
+  "blocks": [
+    {
+      "blockId": "b0026",
+      "unitContext": null,
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "composition.sourceRules.Characters"
+      ]
+    },
+    {
+      "blockId": "b0028",
+      "unitContext": null,
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "composition.sourceRules.Core"
+      ]
+    },
+    {
+      "blockId": "b0030",
+      "unitContext": null,
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "composition.sourceRules.Special"
+      ]
+    },
+    {
+      "blockId": "b0032",
+      "unitContext": null,
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "composition.sourceRules.Rare"
+      ]
+    },
+    {
+      "blockId": "h0008",
+      "unitContext": null,
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "composition.sourceRules.Mercenaries"
+      ]
+    },
+    {
+      "blockId": "b0033",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "composition.sourceRules.Mercenaries"
+      ]
+    },
+    {
+      "blockId": "b0034",
+      "unitContext": null,
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "composition.sourceRules.Mercenaries"
+      ]
+    },
+    {
+      "blockId": "b0035",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "composition.sourceRules.Mercenaries"
+      ]
+    },
+    {
+      "blockId": "h0009",
+      "unitContext": null,
+      "entryKind": "heading",
+      "changeKinds": [
+        "todo"
+      ],
+      "status": "todo",
+      "targets": []
+    },
+    {
+      "blockId": "b0036",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "todo"
+      ],
+      "status": "todo",
+      "targets": []
+    },
+    {
+      "blockId": "b0037",
+      "unitContext": null,
+      "entryKind": "list",
+      "changeKinds": [
+        "todo"
+      ],
+      "status": "todo",
+      "targets": []
+    },
+    {
+      "blockId": "b0038",
+      "unitContext": null,
+      "entryKind": "table",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "composition.sourceRules.Allies"
+      ]
+    },
+    {
+      "blockId": "h0012",
+      "unitContext": null,
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.master-of-the-dead"
+      ]
+    },
+    {
+      "blockId": "b0042",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.master-of-the-dead"
+      ]
+    },
+    {
+      "blockId": "b0043",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.master-of-the-dead"
+      ]
+    },
+    {
+      "blockId": "b0044",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.master-of-the-dead"
+      ]
+    },
+    {
+      "blockId": "b0045",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.master-of-the-dead"
+      ]
+    },
+    {
+      "blockId": "h0014",
+      "unitContext": null,
+      "entryKind": "heading",
+      "changeKinds": [
+        "new",
+        "changed"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.dark-vitality"
+      ]
+    },
+    {
+      "blockId": "b0059",
+      "unitContext": null,
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.necromantic-undead"
+      ]
+    },
+    {
+      "blockId": "b0061",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.the-newly-dead"
+      ]
+    },
+    {
+      "blockId": "h0021",
+      "unitContext": null,
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.spectral-steed"
+      ]
+    },
+    {
+      "blockId": "b0067",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.spectral-steed"
+      ]
+    },
+    {
+      "blockId": "h0022",
+      "unitContext": null,
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.the-hunger"
+      ]
+    },
+    {
+      "blockId": "b0068",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.the-hunger"
+      ]
+    },
+    {
+      "blockId": "b0069",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.the-hunger"
+      ]
+    },
+    {
+      "blockId": "h0023",
+      "unitContext": null,
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.wailing-dirge-x"
+      ]
+    },
+    {
+      "blockId": "b0070",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new",
+        "changed"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.wailing-dirge-x"
+      ]
+    },
+    {
+      "blockId": "b0071",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.wailing-dirge-x"
+      ]
+    },
+    {
+      "blockId": "b0072",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.wailing-dirge-x"
+      ]
+    },
+    {
+      "blockId": "b0073",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.wailing-dirge-x"
+      ]
+    },
+    {
+      "blockId": "h0039",
+      "unitContext": null,
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "magicItemText.von-carstein-ring"
+      ]
+    },
+    {
+      "blockId": "b0085",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "magicItemText.von-carstein-ring"
+      ]
+    },
+    {
+      "blockId": "b0086",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "magicItemText.von-carstein-ring"
+      ]
+    },
+    {
+      "blockId": "h0042",
+      "unitContext": null,
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "magicItemText.drakenhof-banner"
+      ]
+    },
+    {
+      "blockId": "h0043",
+      "unitContext": null,
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "magicItemText.banner-of-the-barrows"
+      ]
+    },
+    {
+      "blockId": "b0089",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "magicItemText.banner-of-the-barrows"
+      ]
+    },
+    {
+      "blockId": "h0045",
+      "unitContext": null,
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "magicItemText.the-screaming-banner"
+      ]
+    },
+    {
+      "blockId": "h0047",
+      "unitContext": null,
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "magicItemText.helm-of-commandment"
+      ]
+    },
+    {
+      "blockId": "b0092",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "magicItemText.helm-of-commandment"
+      ]
+    },
+    {
+      "blockId": "h0048",
+      "unitContext": null,
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "magicItemText.hand-of-dust"
+      ]
+    },
+    {
+      "blockId": "b0093",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "magicItemText.hand-of-dust"
+      ]
+    },
+    {
+      "blockId": "h0052",
+      "unitContext": null,
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "magicItemText.sceptre-of-de-noirot"
+      ]
+    },
+    {
+      "blockId": "b0100",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "magicItemText.sceptre-of-de-noirot"
+      ]
+    },
+    {
+      "blockId": "b0101",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "magicItemText.sceptre-of-de-noirot"
+      ]
+    },
+    {
+      "blockId": "h0055",
+      "unitContext": null,
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "notes"
+      ]
+    },
+    {
+      "blockId": "h0056",
+      "unitContext": null,
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "notes"
+      ]
+    },
+    {
+      "blockId": "h0057",
+      "unitContext": null,
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "notes"
+      ]
+    },
+    {
+      "blockId": "h0058",
+      "unitContext": null,
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "notes"
+      ]
+    },
+    {
+      "blockId": "h0059",
+      "unitContext": null,
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "notes"
+      ]
+    },
+    {
+      "blockId": "h0060",
+      "unitContext": null,
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "notes"
+      ]
+    },
+    {
+      "blockId": "b0106",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "notes"
+      ]
+    },
+    {
+      "blockId": "b0107",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "notes"
+      ]
+    },
+    {
+      "blockId": "h0062",
+      "unitContext": null,
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "notes"
+      ]
+    },
+    {
+      "blockId": "b0108",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "notes"
+      ]
+    },
+    {
+      "blockId": "b0109",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "notes"
+      ]
+    },
+    {
+      "blockId": "b0110",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "notes"
+      ]
+    },
+    {
+      "blockId": "h0063",
+      "unitContext": null,
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "notes"
+      ]
+    },
+    {
+      "blockId": "b0111",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "notes"
+      ]
+    },
+    {
+      "blockId": "b0112",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "notes"
+      ]
+    },
+    {
+      "blockId": "b0113",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "notes"
+      ]
+    },
+    {
+      "blockId": "b0117",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "changed"
+      ],
+      "status": "applied",
+      "targets": [
+        "lores.lore-of-undeath.spell-vanhals-danse-macabre"
+      ]
+    },
+    {
+      "blockId": "b0118",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "changed"
+      ],
+      "status": "applied",
+      "targets": [
+        "lores.lore-of-undeath.spell-vanhals-danse-macabre"
+      ]
+    },
+    {
+      "blockId": "b0119",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "changed"
+      ],
+      "status": "applied",
+      "targets": [
+        "lores.lore-of-undeath.spell-vanhals-danse-macabre"
+      ]
+    },
+    {
+      "blockId": "b0121",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "changed"
+      ],
+      "status": "applied",
+      "targets": [
+        "lores.lore-of-undeath.spell-hellish-vigour"
+      ]
+    },
+    {
+      "blockId": "b0122",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "changed"
+      ],
+      "status": "applied",
+      "targets": [
+        "lores.lore-of-undeath.spell-hellish-vigour"
+      ]
+    },
+    {
+      "blockId": "b0123",
+      "unitContext": null,
+      "entryKind": "table",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "lores.lore-of-undeath.spell-hellish-vigour"
+      ]
+    },
+    {
+      "blockId": "b0125",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "changed"
+      ],
+      "status": "applied",
+      "targets": [
+        "lores.lore-of-undeath.spell-raise-dead"
+      ]
+    },
+    {
+      "blockId": "b0127",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "lores.lore-of-undeath.spell-raise-dead"
+      ]
+    },
+    {
+      "blockId": "b0128",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "lores.lore-of-undeath.spell-raise-dead"
+      ]
+    },
+    {
+      "blockId": "b0129",
+      "unitContext": null,
+      "entryKind": "base-size",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "lores.lore-of-undeath.spell-raise-dead"
+      ]
+    },
+    {
+      "blockId": "b0130",
+      "unitContext": null,
+      "entryKind": "unit-size",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "lores.lore-of-undeath.spell-raise-dead"
+      ]
+    },
+    {
+      "blockId": "b0131",
+      "unitContext": null,
+      "entryKind": "equipment",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "lores.lore-of-undeath.spell-raise-dead"
+      ]
+    },
+    {
+      "blockId": "b0132",
+      "unitContext": null,
+      "entryKind": "special-rules",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "lores.lore-of-undeath.spell-raise-dead"
+      ]
+    },
+    {
+      "blockId": "b0133",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "lores.lore-of-undeath.spell-raise-dead"
+      ]
+    },
+    {
+      "blockId": "b0134",
+      "unitContext": {
+        "name": "Vampires",
+        "sourceBlockId": "b0134",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Vampire Lord",
+          "Vampire Thrall"
+        ]
+      },
+      "entryKind": "statline",
+      "changeKinds": [
+        "new",
+        "changed"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.vampire-count.name_en",
+        "units.vampire-count.points",
+        "units.vampire-thrall.points",
+        "profiles.vampire thrall"
+      ]
+    },
+    {
+      "blockId": "b0138",
+      "unitContext": {
+        "name": "Vampires",
+        "sourceBlockId": "b0134",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Vampire Lord",
+          "Vampire Thrall"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.vampire thrall.notes"
+      ]
+    },
+    {
+      "blockId": "b0143",
+      "unitContext": {
+        "name": "Vampires",
+        "sourceBlockId": "b0134",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Vampire Lord",
+          "Vampire Thrall"
+        ]
+      },
+      "entryKind": "option",
+      "changeKinds": [
+        "changed"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.vampire-thrall.options"
+      ]
+    },
+    {
+      "blockId": "b0144",
+      "unitContext": {
+        "name": "Vampires",
+        "sourceBlockId": "b0134",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Vampire Lord",
+          "Vampire Thrall"
+        ]
+      },
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.vampire thrall.notes"
+      ]
+    },
+    {
+      "blockId": "b0145",
+      "unitContext": {
+        "name": "Vampires",
+        "sourceBlockId": "b0134",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Vampire Lord",
+          "Vampire Thrall"
+        ]
+      },
+      "entryKind": "option",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.vampire-thrall.options"
+      ]
+    },
+    {
+      "blockId": "b0147",
+      "unitContext": {
+        "name": "Vampires",
+        "sourceBlockId": "b0134",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Vampire Lord",
+          "Vampire Thrall"
+        ]
+      },
+      "entryKind": "option",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.vampire-thrall.options"
+      ]
+    },
+    {
+      "blockId": "b0148",
+      "unitContext": {
+        "name": "Vampires",
+        "sourceBlockId": "b0134",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Vampire Lord",
+          "Vampire Thrall"
+        ]
+      },
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.vampire thrall.notes"
+      ]
+    },
+    {
+      "blockId": "h0074",
+      "unitContext": {
+        "name": "Vampires",
+        "sourceBlockId": "b0134",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Vampire Lord",
+          "Vampire Thrall"
+        ]
+      },
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.the-death-of-a-general"
+      ]
+    },
+    {
+      "blockId": "b0152",
+      "unitContext": {
+        "name": "Vampires",
+        "sourceBlockId": "b0134",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Vampire Lord",
+          "Vampire Thrall"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.the-death-of-a-general"
+      ]
+    },
+    {
+      "blockId": "b0153",
+      "unitContext": {
+        "name": "Vampires",
+        "sourceBlockId": "b0134",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Vampire Lord",
+          "Vampire Thrall"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.the-death-of-a-general"
+      ]
+    },
+    {
+      "blockId": "b0154",
+      "unitContext": {
+        "name": "Vampires",
+        "sourceBlockId": "b0134",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Vampire Lord",
+          "Vampire Thrall"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.the-death-of-a-general"
+      ]
+    },
+    {
+      "blockId": "b0155",
+      "unitContext": {
+        "name": "Vampires",
+        "sourceBlockId": "b0134",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Vampire Lord",
+          "Vampire Thrall"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.the-death-of-a-general"
+      ]
+    },
+    {
+      "blockId": "b0156",
+      "unitContext": {
+        "name": "Necromancers",
+        "sourceBlockId": "b0156",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Master Necromancer",
+          "Necromantic Acolyte"
+        ]
+      },
+      "entryKind": "statline",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.master-necromancer.points",
+        "profiles.master necromancer",
+        "profiles.necromantic acolyte"
+      ]
+    },
+    {
+      "blockId": "b0170",
+      "unitContext": {
+        "name": "Strigoi Ghoul Kings",
+        "sourceBlockId": "b0167",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Strigoi Ghoul King"
+        ]
+      },
+      "entryKind": "equipment",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.strigoi ghoul king.equipment"
+      ]
+    },
+    {
+      "blockId": "b0174",
+      "unitContext": {
+        "name": "Strigoi Ghoul Kings",
+        "sourceBlockId": "b0167",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Strigoi Ghoul King"
+        ]
+      },
+      "entryKind": "special-rules",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.strigoi-ghoul-king.specialRules"
+      ]
+    },
+    {
+      "blockId": "b0175",
+      "unitContext": {
+        "name": "Strigoi Ghoul Kings",
+        "sourceBlockId": "b0167",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Strigoi Ghoul King"
+        ]
+      },
+      "entryKind": "weapon-profile",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.strigoi ghoul king.notes"
+      ]
+    },
+    {
+      "blockId": "h0080",
+      "unitContext": {
+        "name": "Strigoi Ghoul Kings",
+        "sourceBlockId": "b0167",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Strigoi Ghoul King"
+        ]
+      },
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.ghoulkin"
+      ]
+    },
+    {
+      "blockId": "b0176",
+      "unitContext": {
+        "name": "Strigoi Ghoul Kings",
+        "sourceBlockId": "b0167",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Strigoi Ghoul King"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.ghoulkin"
+      ]
+    },
+    {
+      "blockId": "b0183",
+      "unitContext": {
+        "name": "Wights",
+        "sourceBlockId": "b0183",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Wight King",
+          "Wight Lord"
+        ]
+      },
+      "entryKind": "statline",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.wight-lord.points",
+        "profiles.wight king",
+        "profiles.wight lord"
+      ]
+    },
+    {
+      "blockId": "b0196",
+      "unitContext": {
+        "name": "Tomb Banshees",
+        "sourceBlockId": "b0192",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Tomb Banshee"
+        ]
+      },
+      "entryKind": "special-rules",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.tomb-banshee.specialRules"
+      ]
+    },
+    {
+      "blockId": "b0199",
+      "unitContext": {
+        "name": "Tomb Banshees",
+        "sourceBlockId": "b0192",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Tomb Banshee"
+        ]
+      },
+      "entryKind": "option",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.character-mounts"
+      ]
+    },
+    {
+      "blockId": "b0202",
+      "unitContext": {
+        "name": "Skeletal Steed",
+        "sourceBlockId": "b0202",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Skeletal Steed"
+        ]
+      },
+      "entryKind": "statline",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "profiles.skeletal steed"
+      ]
+    },
+    {
+      "blockId": "b0206",
+      "unitContext": {
+        "name": "Skeletal Steed",
+        "sourceBlockId": "b0202",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Skeletal Steed"
+        ]
+      },
+      "entryKind": "special-rules",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "profiles.skeletal steed.specialRules"
+      ]
+    },
+    {
+      "blockId": "b0215",
+      "unitContext": {
+        "name": "Grave Guard",
+        "sourceBlockId": "b0212",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Grave Guard",
+          "Seneschal"
+        ]
+      },
+      "entryKind": "unit-size",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.grave-guard-core.minimum",
+        "units.grave-guard.minimum"
+      ]
+    },
+    {
+      "blockId": "b0222",
+      "unitContext": {
+        "name": "Skeleton Warriors",
+        "sourceBlockId": "b0222",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Skeleton Warrior",
+          "Skeleton Champion"
+        ]
+      },
+      "entryKind": "statline",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.skeleton-warriors.points",
+        "profiles.skeleton warriors"
+      ]
+    },
+    {
+      "blockId": "b0226",
+      "unitContext": {
+        "name": "Skeleton Warriors",
+        "sourceBlockId": "b0222",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Skeleton Warrior",
+          "Skeleton Champion"
+        ]
+      },
+      "entryKind": "equipment",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.skeleton warriors.equipment"
+      ]
+    },
+    {
+      "blockId": "b0228",
+      "unitContext": {
+        "name": "Skeleton Warriors",
+        "sourceBlockId": "b0222",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Skeleton Warrior",
+          "Skeleton Champion"
+        ]
+      },
+      "entryKind": "option",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.skeleton-warriors.options"
+      ]
+    },
+    {
+      "blockId": "b0232",
+      "unitContext": {
+        "name": "Skeleton Warriors",
+        "sourceBlockId": "b0222",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Skeleton Warrior",
+          "Skeleton Champion"
+        ]
+      },
+      "entryKind": "option",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.skeleton-warriors.options"
+      ]
+    },
+    {
+      "blockId": "b0234",
+      "unitContext": {
+        "name": "Zombies",
+        "sourceBlockId": "b0234",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Zombie"
+        ]
+      },
+      "entryKind": "statline",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "profiles.zombies"
+      ]
+    },
+    {
+      "blockId": "b0237",
+      "unitContext": {
+        "name": "Zombies",
+        "sourceBlockId": "b0234",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Zombie"
+        ]
+      },
+      "entryKind": "special-rules",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.zombies.specialRules"
+      ]
+    },
+    {
+      "blockId": "h0098",
+      "unitContext": {
+        "name": "Zombies",
+        "sourceBlockId": "b0234",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Zombie"
+        ]
+      },
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.shambling-horde"
+      ]
+    },
+    {
+      "blockId": "b0238",
+      "unitContext": {
+        "name": "Zombies",
+        "sourceBlockId": "b0234",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Zombie"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.shambling-horde"
+      ]
+    },
+    {
+      "blockId": "b0239",
+      "unitContext": {
+        "name": "Crypt Ghouls",
+        "sourceBlockId": "b0239",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Crypt Ghoul",
+          "Crypt Ghast"
+        ]
+      },
+      "entryKind": "statline",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.crypt-ghouls.points",
+        "profiles.crypt ghouls"
+      ]
+    },
+    {
+      "blockId": "b0242",
+      "unitContext": {
+        "name": "Crypt Ghouls",
+        "sourceBlockId": "b0239",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Crypt Ghoul",
+          "Crypt Ghast"
+        ]
+      },
+      "entryKind": "unit-size",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.crypt-ghouls.minimum"
+      ]
+    },
+    {
+      "blockId": "b0243",
+      "unitContext": {
+        "name": "Crypt Ghouls",
+        "sourceBlockId": "b0239",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Crypt Ghoul",
+          "Crypt Ghast"
+        ]
+      },
+      "entryKind": "equipment",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.crypt ghouls.equipment"
+      ]
+    },
+    {
+      "blockId": "b0245",
+      "unitContext": {
+        "name": "Crypt Ghouls",
+        "sourceBlockId": "b0239",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Crypt Ghoul",
+          "Crypt Ghast"
+        ]
+      },
+      "entryKind": "option",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.crypt-ghouls.options"
+      ]
+    },
+    {
+      "blockId": "b0246",
+      "unitContext": {
+        "name": "Crypt Ghouls",
+        "sourceBlockId": "b0239",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Crypt Ghoul",
+          "Crypt Ghast"
+        ]
+      },
+      "entryKind": "special-rules",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.crypt-ghouls.specialRules"
+      ]
+    },
+    {
+      "blockId": "b0251",
+      "unitContext": {
+        "name": "Crypt Horrors",
+        "sourceBlockId": "b0247",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Crypt Horror",
+          "Crypt Haunter"
+        ]
+      },
+      "entryKind": "equipment",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.crypt horrors.equipment"
+      ]
+    },
+    {
+      "blockId": "b0253",
+      "unitContext": {
+        "name": "Crypt Horrors",
+        "sourceBlockId": "b0247",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Crypt Horror",
+          "Crypt Haunter"
+        ]
+      },
+      "entryKind": "special-rules",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.crypt-horrors.specialRules"
+      ]
+    },
+    {
+      "blockId": "b0258",
+      "unitContext": {
+        "name": "Bat Swarms",
+        "sourceBlockId": "b0255",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Bat Swarm"
+        ]
+      },
+      "entryKind": "unit-size",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.bat-swarm.minimum"
+      ]
+    },
+    {
+      "blockId": "b0260",
+      "unitContext": {
+        "name": "Bat Swarms",
+        "sourceBlockId": "b0255",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Bat Swarm"
+        ]
+      },
+      "entryKind": "special-rules",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.bat-swarm.specialRules"
+      ]
+    },
+    {
+      "blockId": "b0261",
+      "unitContext": {
+        "name": "Bat Swarms",
+        "sourceBlockId": "b0255",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Bat Swarm"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.cloud-of-horror"
+      ]
+    },
+    {
+      "blockId": "b0262",
+      "unitContext": {
+        "name": "Bat Swarms",
+        "sourceBlockId": "b0255",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Bat Swarm"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.cloud-of-horror"
+      ]
+    },
+    {
+      "blockId": "b0266",
+      "unitContext": {
+        "name": "Vargheists",
+        "sourceBlockId": "b0263",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Vargheist",
+          "Vargoyle"
+        ]
+      },
+      "entryKind": "unit-size",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.vargheists.minimum",
+        "units.vargheists.minimum"
+      ]
+    },
+    {
+      "blockId": "b0267",
+      "unitContext": {
+        "name": "Vargheists",
+        "sourceBlockId": "b0263",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Vargheist",
+          "Vargoyle"
+        ]
+      },
+      "entryKind": "equipment",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.vargheists.equipment"
+      ]
+    },
+    {
+      "blockId": "b0269",
+      "unitContext": {
+        "name": "Vargheists",
+        "sourceBlockId": "b0263",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Vargheist",
+          "Vargoyle"
+        ]
+      },
+      "entryKind": "special-rules",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.vargheists.specialRules",
+        "units.vargheists.specialRules"
+      ]
+    },
+    {
+      "blockId": "b0270",
+      "unitContext": {
+        "name": "Vargheists",
+        "sourceBlockId": "b0263",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Vargheist",
+          "Vargoyle"
+        ]
+      },
+      "entryKind": "weapon-profile",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.vargheists.notes"
+      ]
+    },
+    {
+      "blockId": "b0279",
+      "unitContext": {
+        "name": "Spirit Hosts",
+        "sourceBlockId": "b0276",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Spirit Host"
+        ]
+      },
+      "entryKind": "unit-size",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.spirit-hosts.minimum"
+      ]
+    },
+    {
+      "blockId": "b0286",
+      "unitContext": {
+        "name": "Blood Knights",
+        "sourceBlockId": "b0283",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Blood Knight",
+          "Kastellan",
+          "Nightmare"
+        ]
+      },
+      "entryKind": "unit-size",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.blood-knights.minimum"
+      ]
+    },
+    {
+      "blockId": "b0294",
+      "unitContext": {
+        "name": "Black Knights",
+        "sourceBlockId": "b0294",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Black Knight",
+          "Hell Knight",
+          "Skeletal Steed"
+        ]
+      },
+      "entryKind": "statline",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "profiles.black knights",
+        "profiles.black knights"
+      ]
+    },
+    {
+      "blockId": "b0297",
+      "unitContext": {
+        "name": "Black Knights",
+        "sourceBlockId": "b0294",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Black Knight",
+          "Hell Knight",
+          "Skeletal Steed"
+        ]
+      },
+      "entryKind": "unit-size",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.black-knights-core.minimum",
+        "units.black-knights.minimum"
+      ]
+    },
+    {
+      "blockId": "b0298",
+      "unitContext": {
+        "name": "Black Knights",
+        "sourceBlockId": "b0294",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Black Knight",
+          "Hell Knight",
+          "Skeletal Steed"
+        ]
+      },
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.black knights.notes"
+      ]
+    },
+    {
+      "blockId": "b0300",
+      "unitContext": {
+        "name": "Black Knights",
+        "sourceBlockId": "b0294",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Black Knight",
+          "Hell Knight",
+          "Skeletal Steed"
+        ]
+      },
+      "entryKind": "option",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.black-knights-core.options",
+        "units.black-knights.options"
+      ]
+    },
+    {
+      "blockId": "b0304",
+      "unitContext": {
+        "name": "Black Knights",
+        "sourceBlockId": "b0294",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Black Knight",
+          "Hell Knight",
+          "Skeletal Steed"
+        ]
+      },
+      "entryKind": "special-rules",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.black-knights-core.specialRules",
+        "units.black-knights.specialRules"
+      ]
+    },
+    {
+      "blockId": "b0313",
+      "unitContext": {
+        "name": "Hexwraiths",
+        "sourceBlockId": "b0313",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Hexwraith",
+          "Hellwraith",
+          "Skeletal Steed"
+        ]
+      },
+      "entryKind": "statline",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "profiles.hexwraiths"
+      ]
+    },
+    {
+      "blockId": "b0318",
+      "unitContext": {
+        "name": "Coven Throne",
+        "sourceBlockId": "b0318",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Coven Throne",
+          "Pallid Handmaidens (x2)",
+          "Spirit Horde"
+        ]
+      },
+      "entryKind": "statline",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "profiles.coven throne"
+      ]
+    },
+    {
+      "blockId": "b0324",
+      "unitContext": {
+        "name": "Coven Throne",
+        "sourceBlockId": "b0318",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Coven Throne",
+          "Pallid Handmaidens (x2)",
+          "Spirit Horde"
+        ]
+      },
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.coven throne.notes"
+      ]
+    },
+    {
+      "blockId": "b0325",
+      "unitContext": {
+        "name": "Coven Throne",
+        "sourceBlockId": "b0318",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Coven Throne",
+          "Pallid Handmaidens (x2)",
+          "Spirit Horde"
+        ]
+      },
+      "entryKind": "special-rules",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "profiles.coven throne.specialRules"
+      ]
+    },
+    {
+      "blockId": "b0327",
+      "unitContext": {
+        "name": "Coven Throne",
+        "sourceBlockId": "b0318",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Coven Throne",
+          "Pallid Handmaidens (x2)",
+          "Spirit Horde"
+        ]
+      },
+      "entryKind": "weapon-profile",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.coven throne.notes"
+      ]
+    },
+    {
+      "blockId": "b0328",
+      "unitContext": {
+        "name": "Coven Throne",
+        "sourceBlockId": "b0318",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Coven Throne",
+          "Pallid Handmaidens (x2)",
+          "Spirit Horde"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.coven throne.notes"
+      ]
+    },
+    {
+      "blockId": "b0339",
+      "unitContext": {
+        "name": "Mortis Engine",
+        "sourceBlockId": "b0333",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Mortis Engine",
+          "Banshees (x3)",
+          "Spirit Horde"
+        ]
+      },
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.mortis engine.notes"
+      ]
+    },
+    {
+      "blockId": "b0340",
+      "unitContext": {
+        "name": "Mortis Engine",
+        "sourceBlockId": "b0333",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Mortis Engine",
+          "Banshees (x3)",
+          "Spirit Horde"
+        ]
+      },
+      "entryKind": "special-rules",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "profiles.mortis engine.specialRules"
+      ]
+    },
+    {
+      "blockId": "b0341",
+      "unitContext": {
+        "name": "Mortis Engine",
+        "sourceBlockId": "b0333",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Mortis Engine",
+          "Banshees (x3)",
+          "Spirit Horde"
+        ]
+      },
+      "entryKind": "weapon-profile",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.mortis engine.notes"
+      ]
+    },
+    {
+      "blockId": "b0342",
+      "unitContext": {
+        "name": "Mortis Engine",
+        "sourceBlockId": "b0333",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Mortis Engine",
+          "Banshees (x3)",
+          "Spirit Horde"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.mortis engine.notes"
+      ]
+    },
+    {
+      "blockId": "b0343",
+      "unitContext": {
+        "name": "Mortis Engine",
+        "sourceBlockId": "b0333",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Mortis Engine",
+          "Banshees (x3)",
+          "Spirit Horde"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.accursed-reliquary"
+      ]
+    },
+    {
+      "blockId": "b0344",
+      "unitContext": {
+        "name": "Mortis Engine",
+        "sourceBlockId": "b0333",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Mortis Engine",
+          "Banshees (x3)",
+          "Spirit Horde"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.blasphemous-tome"
+      ]
+    },
+    {
+      "blockId": "b0346",
+      "unitContext": {
+        "name": "Corpse Cart",
+        "sourceBlockId": "b0346",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Corpse Cart",
+          "Corpsemaster (x1)",
+          "The Restless Dead"
+        ]
+      },
+      "entryKind": "statline",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.corpse-cart.points",
+        "profiles.corpse cart"
+      ]
+    },
+    {
+      "blockId": "b0353",
+      "unitContext": {
+        "name": "Corpse Cart",
+        "sourceBlockId": "b0346",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Corpse Cart",
+          "Corpsemaster (x1)",
+          "The Restless Dead"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.corpse cart.notes"
+      ]
+    },
+    {
+      "blockId": "b0358",
+      "unitContext": {
+        "name": "Corpse Cart",
+        "sourceBlockId": "b0346",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Corpse Cart",
+          "Corpsemaster (x1)",
+          "The Restless Dead"
+        ]
+      },
+      "entryKind": "special-rules",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.corpse-cart.specialRules"
+      ]
+    },
+    {
+      "blockId": "b0359",
+      "unitContext": {
+        "name": "Corpse Cart",
+        "sourceBlockId": "b0346",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Corpse Cart",
+          "Corpsemaster (x1)",
+          "The Restless Dead"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.balefire-brazier"
+      ]
+    },
+    {
+      "blockId": "b0360",
+      "unitContext": {
+        "name": "Corpse Cart",
+        "sourceBlockId": "b0346",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Corpse Cart",
+          "Corpsemaster (x1)",
+          "The Restless Dead"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.warped-tintinnabulation"
+      ]
+    },
+    {
+      "blockId": "h0119",
+      "unitContext": {
+        "name": "Corpse Cart",
+        "sourceBlockId": "b0346",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Corpse Cart",
+          "Corpsemaster (x1)",
+          "The Restless Dead"
+        ]
+      },
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.vigor-mortis"
+      ]
+    },
+    {
+      "blockId": "b0362",
+      "unitContext": {
+        "name": "Corpse Cart",
+        "sourceBlockId": "b0346",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Corpse Cart",
+          "Corpsemaster (x1)",
+          "The Restless Dead"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.vigor-mortis"
+      ]
+    },
+    {
+      "blockId": "b0363",
+      "unitContext": {
+        "name": "Corpse Cart",
+        "sourceBlockId": "b0346",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Corpse Cart",
+          "Corpsemaster (x1)",
+          "The Restless Dead"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.vigor-mortis"
+      ]
+    },
+    {
+      "blockId": "b0364",
+      "unitContext": {
+        "name": "Black Coach",
+        "sourceBlockId": "b0364",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Black Coach",
+          "Wraith (x1)",
+          "Nightmares (x2)",
+          "Troop Type: Base Size: Unit Size:"
+        ]
+      },
+      "entryKind": "statline",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.black coach.notes"
+      ],
+      "reason": "non-rectangular statline retained losslessly"
+    },
+    {
+      "blockId": "b0379",
+      "unitContext": {
+        "name": "Zombie Dragon",
+        "sourceBlockId": "b0372",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Zombie Dragon"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.carrion-feeders"
+      ]
+    },
+    {
+      "blockId": "b0385",
+      "unitContext": {
+        "name": "Terrorgheist",
+        "sourceBlockId": "b0382",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Terrorgheist"
+        ]
+      },
+      "entryKind": "equipment",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.terrorgheist.equipment"
+      ]
+    },
+    {
+      "blockId": "b0387",
+      "unitContext": {
+        "name": "Terrorgheist",
+        "sourceBlockId": "b0382",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Terrorgheist"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.terrorgheist.notes"
+      ]
+    },
+    {
+      "blockId": "b0388",
+      "unitContext": {
+        "name": "Terrorgheist",
+        "sourceBlockId": "b0382",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Terrorgheist"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.infested"
+      ]
+    },
+    {
+      "blockId": "b0404",
+      "unitContext": {
+        "name": "Varghulf",
+        "sourceBlockId": "b0404",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Varghulf"
+        ]
+      },
+      "entryKind": "statline",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.varghulf.points",
+        "profiles.varghulf"
+      ]
+    },
+    {
+      "blockId": "b0407",
+      "unitContext": {
+        "name": "Varghulf",
+        "sourceBlockId": "b0404",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Varghulf"
+        ]
+      },
+      "entryKind": "equipment",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.varghulf.equipment"
+      ]
+    },
+    {
+      "blockId": "b0408",
+      "unitContext": {
+        "name": "Varghulf",
+        "sourceBlockId": "b0404",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Varghulf"
+        ]
+      },
+      "entryKind": "special-rules",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.varghulf.specialRules"
+      ]
+    },
+    {
+      "blockId": "b0409",
+      "unitContext": {
+        "name": "Varghulf",
+        "sourceBlockId": "b0404",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Varghulf"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.varghulf.notes"
+      ]
+    }
+  ]
+}

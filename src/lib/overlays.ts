@@ -154,6 +154,7 @@ export const OVERLAY_FILES: Record<string, string> = {
   'cd-renegade-v2': 'cd-renegade-v2.json',
   'doc-renegade-v2': 'doc-renegade-v2.json',
   'lm-renegade-v2': 'lm-renegade-v2.json',
+  'vc-renegade-v2': 'vc-renegade-v2.json',
 };
 
 export const hasOverlay = (composition: string): boolean => composition in OVERLAY_FILES;
@@ -177,6 +178,10 @@ export const OVERLAY_BASE_ARMY: Record<string, string> = {
   'cd-renegade-v2': 'chaos-dwarfs',
   'doc-renegade-v2': 'daemons-of-chaos',
   'lm-renegade-v2': 'lizardmen',
+  // Vampire Counts carries no `inheritsComposition`, unlike the other six. OWB has no `vc-renegade`
+  // composition to inherit from, and naming one that does not exist makes `allowed` false for every
+  // unit — the pack would open as an empty army list rather than fail loudly.
+  'vc-renegade-v2': 'vampire-counts',
 };
 
 /** Backwards-compatible recovery for armies saved before `Army.overlayId` existed, and for pasted

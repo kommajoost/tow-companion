@@ -2,11 +2,16 @@
 // machine-readable audit source.
 //
 // Usage:
-//   node scripts/import-renegade-reference.mjs <directory-with-google-doc-exports>
+//   node scripts/import-renegade-reference.mjs <directory-with-google-doc-exports> [slug...]
 //
 // Expected files:
 //   dark-elves.html, skaven.html, ogre-kingdoms.html, chaos-dwarfs.html,
-//   daemons-of-chaos.html and lizardmen.html
+//   daemons-of-chaos.html, lizardmen.html and vampire-counts.html
+//
+// Naming a slug processes only that pack. Without it every pack is rebuilt, which needs ALL the
+// exports present — so importing one new pack would otherwise mean re-downloading six documents
+// whose references are already committed and verified. Rewriting those on a stale download is the
+// exact failure this argument avoids.
 //
 // Google Docs marks every difference from the official Legacy PDF in BLUE, every change
 // since the previous Renegade draft in MAGENTA, and unfinished work in YELLOW. We retain
@@ -18,9 +23,10 @@ import { resolve } from 'node:path';
 
 const sourceDir = process.argv[2];
 if (!sourceDir) {
-  console.error('usage: node scripts/import-renegade-reference.mjs <source-directory>');
+  console.error('usage: node scripts/import-renegade-reference.mjs <source-directory> [slug...]');
   process.exit(1);
 }
+const onlySlugs = new Set(process.argv.slice(3));
 
 const PACKS = [
   {
@@ -58,6 +64,12 @@ const PACKS = [
     comp: 'lm-renegade-v2',
     label: 'Lizardmen',
     docId: '10JbMnZzdadz5bT8WrTIcFzWilhbRWy-chHc6XLf9w4o',
+  },
+  {
+    slug: 'vampire-counts',
+    comp: 'vc-renegade-v2',
+    label: 'Vampire Counts',
+    docId: '19fZUYGvDSKilKPnZhLpd6ZZ8PYJWqfaapEFgs1oNeEs',
   },
 ];
 
@@ -558,6 +570,7 @@ function countChangedSegments(blocks) {
 }
 
 for (const pack of PACKS) {
+  if (onlySlugs.size && !onlySlugs.has(pack.slug)) continue;
   const sourcePath = resolve(sourceDir, `${pack.slug}.html`);
   const html = readFileSync(sourcePath, 'utf8');
   const styles = cssClassStyles(html);
