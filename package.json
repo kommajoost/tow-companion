@@ -1,7 +1,7 @@
 {
   "name": "tow-companion",
   "private": true,
-  "version": "0.1.272",
+  "version": "0.1.273",
   "type": "module",
   "description": "Warhammer: The Old World turn companion - mobile PWA",
   "scripts": {
@@ -14,7 +14,8 @@
     "compile-renegade-v2": "node scripts/compile-renegade-v2.mjs",
     "compile-renegade-lores": "node scripts/compile-renegade-lores.mjs",
     "patch-renegade-yellow": "node scripts/patch-renegade-yellow.mjs",
-    "renegade": "npm run compile-renegade-v2 && npm run compile-renegade-lores && npm run patch-renegade-yellow && npm run validate-renegade-v2",
+    "patch-renegade-equipment": "node scripts/patch-renegade-equipment.mjs",
+    "renegade": "npm run compile-renegade-v2 && npm run compile-renegade-lores && npm run patch-renegade-yellow && npm run patch-renegade-equipment && npm run validate-renegade-v2",
     "validate-renegade-v2": "node scripts/validate-renegade-v2.mjs",
     "validate-renegade-reference": "node scripts/validate-renegade-reference.mjs",
     "sync-owb": "node scripts/sync-owb.mjs",

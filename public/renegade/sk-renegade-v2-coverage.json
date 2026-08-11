@@ -434,7 +434,7 @@
       ],
       "status": "applied",
       "targets": [
-        "magicItemText.a-unit-carrying-the-banner-of-verminous-scurrying-gains-the-swiftstride-special-rule-plague-banner"
+        "magicItemText.banner-of-verminous-scurrying"
       ]
     },
     {
@@ -446,7 +446,7 @@
       ],
       "status": "applied",
       "targets": [
-        "magicItemText.a-unit-carrying-the-banner-of-verminous-scurrying-gains-the-swiftstride-special-rule-plague-banner"
+        "magicItemText.banner-of-verminous-scurrying"
       ]
     },
     {

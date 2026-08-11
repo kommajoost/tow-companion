@@ -353,6 +353,95 @@
         "type": "enchanted-item",
         "onePerArmy": true,
         "name": "hand of dust"
+      },
+      {
+        "name_en": "Sceptre De Noirot",
+        "name": "sceptre de noirot",
+        "points": 35,
+        "type": "arcane-item",
+        "onePerArmy": true
+      }
+    ],
+    "vampiric-powers": [
+      {
+        "name_en": "Red Fury",
+        "name": "red fury",
+        "points": 50,
+        "type": "vampiric-power",
+        "onePerArmy": true
+      },
+      {
+        "name_de": "Fluch des Wiedergängers",
+        "name_en": "Curse Of The Revenant",
+        "name_cn": "亡魂诅咒",
+        "name_es": "Curse of the Revenant",
+        "name_fr": "Malédiction du Revenant",
+        "name_it": "Curse of the Revenant",
+        "nonExclusive": true,
+        "points": 40,
+        "type": "vampiric-power",
+        "onePerArmy": true,
+        "name": "curse of the revenant"
+      },
+      {
+        "name_en": "Honour or Death",
+        "name": "honour or death",
+        "points": 35,
+        "type": "vampiric-power",
+        "onePerArmy": true
+      },
+      {
+        "name_de": "Fliegender Schrecken",
+        "name_en": "Flying Horror",
+        "name_cn": "翱翔惧翼",
+        "name_es": "Flying Horror",
+        "name_fr": "Créature Ailée",
+        "name_it": "Flying Horror",
+        "nonExclusive": true,
+        "points": 35,
+        "type": "vampiric-power",
+        "onePerArmy": true,
+        "name": "flying horror"
+      },
+      {
+        "name_en": "Dark Acolyte",
+        "name_cn": "黑暗侍僧 {renegade}",
+        "name_de": "Dunkler Akolyth",
+        "name_es": "Dark Acolyte",
+        "name_fr": "Sombre Acolyte",
+        "name_it": "Oscuro Acolyte",
+        "nonExclusive": true,
+        "points": 30,
+        "type": "vampiric-power",
+        "onePerArmy": true,
+        "name": "dark acolyte renegade"
+      },
+      {
+        "name_en": "Quickblood",
+        "name": "quickblood",
+        "points": 25,
+        "type": "vampiric-power",
+        "onePerArmy": true
+      },
+      {
+        "name_en": "Infinite Hatred",
+        "name": "infinite hatred",
+        "points": 25,
+        "type": "vampiric-power",
+        "onePerArmy": true
+      },
+      {
+        "name_de": "Bezauberndes Wesen",
+        "name_en": "Beguile",
+        "name_cn": "欺瞒诱惑",
+        "name_es": "Beguile",
+        "name_fr": "Séduction",
+        "name_it": "Beguile",
+        "nonExclusive": true,
+        "points": 20,
+        "type": "vampiric-power",
+        "onePerArmy": true,
+        "name": "beguile"
       }
     ]
   },
@@ -1132,26 +1221,7 @@
       ]
     }
   },
-  "notes": [
-    "Sceptre De Noirot 35 points",
-    "Master Necromancer Only. When the wielder of the Sceptre De Noirot uses the Invocation of Nehek special rule on a friendly unit whose troop type is infantry or cavalry, roll an additional D3 when determining how many wounds are recovered.",
-    "Red Fury 50 points",
-    "Level 1 Wizard Vampires only. During the Combat phase, for each unsaved wound caused by this model's Attacks, it immediately makes one additional Attack. These additional Attacks cannot generate further Attacks.",
-    "Curse Of The Revenant 40 points",
-    "Honour or Death 35 points",
-    "Any enemy model that wishes to issue a challenge whilst engaged in the same combat as a model with this Vampiric Power must first make a Leadership test (using their own Leadership.) Apply a +1 modifier to the dice roll for each point of difference between its Weapon Skill characteristic and that of the model with this Vampiric Power (to a maximum of +2).",
-    "If the test is passed, the challenge is issued as normal. If the test is failed, the challenge is not issued and the enemy model must Retire, following the rules for refusing a challenge. In addition, challenges issued by a model with this Vampiric Power cannot be refused.",
-    "Models whose troop type is ‘infantry’ only. This Vampire gains the Fly (10) rule, but cannot join a unit. Master Of The Black Arts 30 points",
-    "This Vampiric Power may only be taken by a Vampire Lord that is a Level 3 Wizard, This Vampire increases their Level of Wizardry by 1.",
-    "Dark Acolyte 30 points",
-    "This Vampire gains the Invocation of Nehek special rule (as described on page 5).",
-    "Quickblood 25 points",
-    "This Vampire gains the Strike First special rule.",
-    "Infinite Hatred 25 points",
-    "This Vampire gains the Hatred (all enemies) special rule.",
-    "Beguile 20 points",
-    "Enemy units must make a Leadership test before making any rolls To Hit against this model during the Combat phase. If this test is failed, only rolls of a natural 6 will hit."
-  ],
+  "notes": [],
   "magicItemText": {
     "von-carstein-ring": {
       "body": "Vampires only. The bearer of this item has a 5+ Ward save against all wounds suffered. In addition, if the bearer loses their final Wound and is removed from play as a casualty, roll a D6. On a roll of 2+, the model is immediately returned to play. Place the model back in the exact position it occupied prior to being removed, with 1 Wound remaining.\n\nOnce this resurrection ability has been used, the Von Carstein Ring is destroyed and its effects are lost for the remainder of the game."
@@ -1170,6 +1240,33 @@
     },
     "hand-of-dust": {
       "body": "Necromancers and Wights only. This model can cast the following Bound spell, with a Power Level of 1. Roll a D6 each time the Hand of Dust is used. On a roll of 1, it crumbles to dust and cannot be used again:\n\nType: Assailment Casting Value:8+\n\nRange: Combat\n\nEffect: The target enemy unit suffers 2D6 Strength 5 hits, each with an AP of -1."
+    },
+    "sceptre-de-noirot": {
+      "body": "Master Necromancer Only. When the wielder of the Sceptre De Noirot uses the Invocation of Nehek special rule on a friendly unit whose troop type is infantry or cavalry, roll an additional D3 when determining how many wounds are recovered."
+    },
+    "curse-of-the-revenant": {
+      "body": "This Vampire has a +1 modifier to its Wounds characteristic."
+    },
+    "flying-horror": {
+      "body": "Models whose troop type is ‘infantry’ only. This Vampire gains the Fly (10) rule, but cannot join a unit. Master Of The Black Arts 30 points\n\nThis Vampiric Power may only be taken by a Vampire Lord that is a Level 3 Wizard, This Vampire increases their Level of Wizardry by 1."
+    },
+    "dark-acolyte-renegade": {
+      "body": "This Vampire gains the Invocation of Nehek special rule (as described on page 5)."
+    },
+    "quickblood": {
+      "body": "This Vampire gains the Strike First special rule."
+    },
+    "infinite-hatred": {
+      "body": "This Vampire gains the Hatred (all enemies) special rule."
+    },
+    "beguile": {
+      "body": "Enemy units must make a Leadership test before making any rolls To Hit against this model during the Combat phase. If this test is failed, only rolls of a natural 6 will hit."
+    },
+    "red-fury": {
+      "body": "Level 1 Wizard Vampires only. During the Combat phase, for each unsaved wound caused by this model's Attacks, it immediately makes one additional Attack. These additional Attacks cannot generate further Attacks."
+    },
+    "honour-or-death": {
+      "body": "Any enemy model that wishes to issue a challenge whilst engaged in the same combat as a model with this Vampiric Power must first make a Leadership test (using their own Leadership.) Apply a +1 modifier to the dice roll for each point of difference between its Weapon Skill characteristic and that of the model with this Vampiric Power (to a maximum of +2).\n\nIf the test is passed, the challenge is issued as normal. If the test is failed, the challenge is not issued and the enemy model must Retire, following the rules for refusing a challenge. In addition, challenges issued by a model with this Vampiric Power cannot be refused."
     }
   },
   "composition": {

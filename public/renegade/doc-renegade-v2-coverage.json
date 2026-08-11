@@ -962,7 +962,7 @@
    ],
    "status": "applied",
    "targets": [
-    "magicItemText.during-a-turn-in-which-it-charged-models-within-a-unit-carrying-the-skull-totem-improve-the-armour-piercing-characteristic-of-their-weapons-by-1-and-may-re-roll-any-rolls-to-wound-of-a-natural-1-great-standard-of-sundering"
+    "magicItemText.skull-totem"
    ]
   },
   {

@@ -622,6 +622,20 @@
       ]
     }
   },
+  "composition": {
+    "units": {},
+    "sourceRules": {
+      "Core": [
+        "Ogre Bulls, Ironguts, Gnoblar Fighters, Gnoblar Trappers and Sabretusk Packs"
+      ],
+      "Special": [
+        "Leadbelchers, Yhetees and Gnoblar Scraplaunchers • 0-1 unit of Maneaters per 1,000 points • 0-1 unit of Mournfang Cavalry per 1,000 points • 0-1 Ironblaster per 1,000 points"
+      ],
+      "Rare": [
+        "0-1 Thundertusk Riders per 1,000 points • 0-1 Stonehorn Riders per 1,000 points • Gorgers and Giants"
+      ]
+    }
+  },
   "profiles": {
     "tyrant": {
       "notes": [
@@ -999,19 +1013,5 @@
     "tooth-gnoblar": {
       "body": "0-3 per model. Single use. After making a Casting roll for a spell from the Lore of the Great Maw, the bearer may choose to use a Tooth-Gnoblar. If they do so, apply a +1 modifier to the result. A model may only use one Tooth-Gnoblar per Casting roll."
     }
-  },
-  "composition": {
-    "sourceRules": {
-      "Core": [
-        "Ogre Bulls, Ironguts, Gnoblar Fighters, Gnoblar Trappers and Sabretusk Packs"
-      ],
-      "Special": [
-        "Leadbelchers, Yhetees and Gnoblar Scraplaunchers • 0-1 unit of Maneaters per 1,000 points • 0-1 unit of Mournfang Cavalry per 1,000 points • 0-1 Ironblaster per 1,000 points"
-      ],
-      "Rare": [
-        "0-1 Thundertusk Riders per 1,000 points • 0-1 Stonehorn Riders per 1,000 points • Gorgers and Giants"
-      ]
-    },
-    "units": {}
   }
 }

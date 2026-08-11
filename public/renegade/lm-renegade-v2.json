@@ -35,10 +35,19 @@
           "name_en": "light armour",
           "points": 3,
           "perModel": false
+        },
+        {
+          "group": "armor",
+          "action": "patch",
+          "name_en": "Heavy armour (Scaly skin)",
+          "option": {
+            "hidden": true
+          }
         }
       ],
       "_changed": [
-        "options"
+        "options",
+        "equipment"
       ]
     },
     "saurus-scar-veteran": {
@@ -56,10 +65,19 @@
           "name_en": "light armour",
           "points": 3,
           "perModel": false
+        },
+        {
+          "group": "armor",
+          "action": "patch",
+          "name_en": "Heavy armour (Scaly skin)",
+          "option": {
+            "hidden": true
+          }
         }
       ],
       "_changed": [
-        "options"
+        "options",
+        "equipment"
       ]
     },
     "skink-priest": {
@@ -76,7 +94,10 @@
           "action": "patch",
           "name_en": "Light armour (Calloused hide)*",
           "points": 3,
-          "perModel": false
+          "perModel": false,
+          "option": {
+            "hidden": true
+          }
         },
         {
           "group": "options",
@@ -94,7 +115,8 @@
         }
       ],
       "_changed": [
-        "options"
+        "options",
+        "equipment"
       ]
     },
     "skink-chief": {
@@ -111,7 +133,10 @@
           "action": "patch",
           "name_en": "Light armour (Calloused hide)",
           "points": 3,
-          "perModel": false
+          "perModel": false,
+          "option": {
+            "hidden": true
+          }
         },
         {
           "group": "options",
@@ -129,7 +154,8 @@
         }
       ],
       "_changed": [
-        "options"
+        "options",
+        "equipment"
       ]
     },
     "skink-cohorts": {
@@ -192,7 +218,8 @@
       "_changed": [
         "points",
         "options",
-        "special-rules"
+        "special-rules",
+        "equipment"
       ],
       "options": [
         {
@@ -208,6 +235,14 @@
           "name_en": "Drilled",
           "points": 1,
           "perModel": true
+        },
+        {
+          "group": "armor",
+          "action": "patch",
+          "name_en": "Heavy armour (Scaly skin)",
+          "option": {
+            "hidden": true
+          }
         }
       ],
       "specialRules": "Close Order, Cold Blooded, Obsidian Blades, Predatory Fighter, Armoured Hide (2)"
@@ -218,7 +253,8 @@
       "_changed": [
         "points",
         "options",
-        "special-rules"
+        "special-rules",
+        "equipment"
       ],
       "options": [
         {
@@ -248,6 +284,12 @@
           "name_en": "Drilled",
           "points": 1,
           "perModel": true
+        },
+        {
+          "group": "armor",
+          "action": "patch",
+          "name_en": "Heavy armour (Scaly skin)",
+          "renameTo": "Light armour"
         }
       ],
       "specialRules": "Close Order, Cold Blooded, Guardians, Obsidian Blades, Predatory Fighter, Armoured Hide (2), Shieldwall, Stubborn"
@@ -255,7 +297,16 @@
     "kroxigors": {
       "specialRules": "Aquatic, Close Order, Cold Blooded, Fear, Predatory Fighter, Skirmish Screen",
       "_changed": [
-        "special-rules"
+        "special-rules",
+        "equipment"
+      ],
+      "options": [
+        {
+          "group": "armor",
+          "action": "patch",
+          "name_en": "Heavy armour (Scaly skin)",
+          "renameTo": "Full plate armour (Plated carapace)"
+        }
       ]
     },
     "salamander-packs": {
@@ -928,6 +979,23 @@
       }
     ]
   },
+  "composition": {
+    "units": {},
+    "sourceRules": {
+      "Characters": [
+        "0-1 Slann Mage-Priest or 0-1 Saurus Oldblood per 1,000 points • Saurus Scar-Veterans, Skink Chiefs, and Skink Priests"
+      ],
+      "Core": [
+        "Saurus Warriors, Skink Cohorts, Skink Skirmishers and Jungle Swarms • 0-1 unit of Temple Guard (if your General is a Slann Mage-Priest)"
+      ],
+      "Special": [
+        "Chameleon Skinks, Kroxigor, Ripperdactyl Riders, Terradon Riders, Bastiladons, Stegadons, Temple Guard and Cold One Riders"
+      ],
+      "Rare": [
+        "Ancient Stegadons, Salamander Packs, Razordon Packs and Troglodons"
+      ]
+    }
+  },
   "profiles": {
     "slann mage priest": {
       "stats": [
@@ -1571,22 +1639,5 @@
     "the-focused-rumination": {
       "body": "This character may apply a +1 modifier to any of their Casting or Dispel rolls. In addition, this character can cast one more spell than is normal for their Level of Wizardry per turn."
     }
-  },
-  "composition": {
-    "sourceRules": {
-      "Characters": [
-        "0-1 Slann Mage-Priest or 0-1 Saurus Oldblood per 1,000 points • Saurus Scar-Veterans, Skink Chiefs, and Skink Priests"
-      ],
-      "Core": [
-        "Saurus Warriors, Skink Cohorts, Skink Skirmishers and Jungle Swarms • 0-1 unit of Temple Guard (if your General is a Slann Mage-Priest)"
-      ],
-      "Special": [
-        "Chameleon Skinks, Kroxigor, Ripperdactyl Riders, Terradon Riders, Bastiladons, Stegadons, Temple Guard and Cold One Riders"
-      ],
-      "Rare": [
-        "Ancient Stegadons, Salamander Packs, Razordon Packs and Troglodons"
-      ]
-    },
-    "units": {}
   }
 }

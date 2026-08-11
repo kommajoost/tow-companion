@@ -17,7 +17,16 @@
     "bloodthirster": {
       "specialRules": "Close Order, Daemonic, Daemonic Charge (-2), Daemon of Khorne, Fly (10), Impact Hits (D3+1), Impetuous, Infernal Favour (2), Large Target, Magic Resistance (-2), Terror",
       "_changed": [
-        "special-rules"
+        "special-rules",
+        "equipment"
+      ],
+      "options": [
+        {
+          "group": "armor",
+          "action": "patch",
+          "name_en": "Heavy armour",
+          "renameTo": "Full plate armour (Daemonic flesh)"
+        }
       ]
     },
     "daemonic-herald-of-khorne": {
@@ -402,7 +411,8 @@
       "_was": 255,
       "_changed": [
         "points",
-        "options"
+        "options",
+        "equipment"
       ],
       "options": [
         {
@@ -418,6 +428,12 @@
           "name_en": "Phlegm Bombardment",
           "points": 30,
           "perModel": false
+        },
+        {
+          "group": "armor",
+          "action": "patch",
+          "name_en": "Heavy armour (Daemonic flesh)",
+          "renameTo": "Full plate armour (Daemonic flesh)"
         }
       ]
     }
@@ -546,13 +562,6 @@
         "type": "daemonic-icon-khorne",
         "onePerArmy": true,
         "name": "skull totem"
-      },
-      {
-        "name_en": "During a turn in which it charged, models within a unit carrying the Skull Totem improve the Armour Piercing characteristic of their weapons by 1, and may re-roll any rolls To Wound of a natural 1. Great Standard Of Sundering",
-        "name": "during a turn in which it charged models within a unit carrying the skull totem improve the armour piercing characteristic of their weapons by 1 and may re roll any rolls to wound of a natural 1 great standard of sundering",
-        "points": 45,
-        "type": "daemonic-icon-khorne",
-        "onePerArmy": true
       },
       {
         "name_de": "Ikone des ewigen Krieges",
@@ -1882,9 +1891,6 @@
     },
     "icon-of-sorcery": {
       "body": "Pink Horrors only. When a unit carrying the Icon of Sorcery casts Pink Fire from the Lore of Daemons, the Strength of these hits is increased by +1, and their Armour Piercing characteristic is improved by -1, for each point of the casting unit's current Rank Bonus."
-    },
-    "during-a-turn-in-which-it-charged-models-within-a-unit-carrying-the-skull-totem-improve-the-armour-piercing-characteristic-of-their-weapons-by-1-and-may-re-roll-any-rolls-to-wound-of-a-natural-1-great-standard-of-sundering": {
-      "body": "Any enemy Wizard that can draw a line of sight to the model carrying the Great Standard of Sundering suffers a -1 modifier to any Casting roll it makes."
     }
   }
 }

@@ -378,7 +378,16 @@
       "points": 110,
       "_was": 120,
       "_changed": [
-        "points"
+        "points",
+        "equipment"
+      ],
+      "options": [
+        {
+          "group": "armor",
+          "action": "patch",
+          "name_en": "Heavy armour",
+          "renameTo": "Light armour"
+        }
       ]
     },
     "dreadquake-mortar": {
@@ -403,13 +412,33 @@
           "name_en": "Steam Carriage",
           "points": 10,
           "perModel": false
+        },
+        {
+          "group": "armor",
+          "action": "patch",
+          "name_en": "Heavy armour",
+          "renameTo": "Light armour"
         }
       ],
       "_changed": [
-        "options"
+        "options",
+        "equipment"
       ]
     },
-    "hobgoblin-bolt-thrower": {}
+    "hobgoblin-bolt-thrower": {},
+    "magma-cannon": {
+      "options": [
+        {
+          "group": "armor",
+          "action": "patch",
+          "name_en": "Heavy armour",
+          "renameTo": "Light armour"
+        }
+      ],
+      "_changed": [
+        "equipment"
+      ]
+    }
   },
   "magicItems": {
     "chaos-dwarfs": [
@@ -796,6 +825,32 @@
         }
       }
     ]
+  },
+  "composition": {
+    "units": {},
+    "sourceRules": {
+      "Characters": [
+        "0-1 Sorcerer-Prophet or Despot per 1,000 points • 0-1 Bull Centaur Taur’ruk per 1,000 points • Daemonsmith Sorcerers, Seneschals, Castellans, and Hobgoblin Khans • 0-1 Black Orc Boss (see Orc & Goblin Tribes army list)"
+      ],
+      "Core": [
+        "Chaos Dwarf Warriors, Blunderbus Decimators, Infernal Guard, Hobgoblin Cutthroats • 0-1 Hobgoblin Wolf Riders • 0-1 Black Orc Mob (see Orc & Goblin Tribes army list) • 0-1 Infernal Ironsworn (If no Black Orcs taken and your army includes a Castellan)"
+      ],
+      "Special": [
+        "Infernal Ironsworn, Sneaky Gits, K’daai Fireborn, Bull Centaur Renders, Magma Cannons • 0-1 Iron Daemon per 1,000 points",
+        "0-2 Deathshrieker Rocket Launcher per 1,000 points • 0-3 Hobgoblin Bolt Throwers per 1,000 points"
+      ],
+      "Rare": [
+        "Hobgoblin Wolf Riders , Dreadquake Mortars • Hellcannon (see Warriors of Chaos army list) • Chaos Giants (see Beastmen Brayherds army list)"
+      ],
+      "“Mercenaries”": [
+        "“Mercenaries”",
+        "0-1 Bonegrinder Giant (see Arcane Journal Orc & Goblin Tribes) • Orc Mobs, Goblin Mobs (see Orc & Goblin Tribes army list.)"
+      ],
+      "Allies": [
+        "Warriors of Chaos • Ogre Kingdoms • Orc & Goblin Tribes (suspicious)",
+        "Chaos Dwarf Allies In addition to the Allies listed in Ravening Hordes, armies made using the Warriors of Chaos Grand Army composition may include an Allied contingent drawn from the Chaos Dwarfs Legacy Army composition. Armies made using the Orc & Goblin Tribes Grand Army composition may include an Allied Contingent drawn from the Chaos Dwarfs Legacy Army composition list as ‘Suspicious’ allies."
+      ]
+    }
   },
   "profiles": {
     "sorcerer prophet": {
@@ -1348,31 +1403,5 @@
     "daemonic-familiar": {
       "body": "Enemy models engaged in combat with the owner of a Daemonic Familiar must reduce the Ward or Regeneration value of any Ward or Regeneration save they have by 1, to a minimum of 6+."
     }
-  },
-  "composition": {
-    "sourceRules": {
-      "Characters": [
-        "0-1 Sorcerer-Prophet or Despot per 1,000 points • 0-1 Bull Centaur Taur’ruk per 1,000 points • Daemonsmith Sorcerers, Seneschals, Castellans, and Hobgoblin Khans • 0-1 Black Orc Boss (see Orc & Goblin Tribes army list)"
-      ],
-      "Core": [
-        "Chaos Dwarf Warriors, Blunderbus Decimators, Infernal Guard, Hobgoblin Cutthroats • 0-1 Hobgoblin Wolf Riders • 0-1 Black Orc Mob (see Orc & Goblin Tribes army list) • 0-1 Infernal Ironsworn (If no Black Orcs taken and your army includes a Castellan)"
-      ],
-      "Special": [
-        "Infernal Ironsworn, Sneaky Gits, K’daai Fireborn, Bull Centaur Renders, Magma Cannons • 0-1 Iron Daemon per 1,000 points",
-        "0-2 Deathshrieker Rocket Launcher per 1,000 points • 0-3 Hobgoblin Bolt Throwers per 1,000 points"
-      ],
-      "Rare": [
-        "Hobgoblin Wolf Riders , Dreadquake Mortars • Hellcannon (see Warriors of Chaos army list) • Chaos Giants (see Beastmen Brayherds army list)"
-      ],
-      "“Mercenaries”": [
-        "“Mercenaries”",
-        "0-1 Bonegrinder Giant (see Arcane Journal Orc & Goblin Tribes) • Orc Mobs, Goblin Mobs (see Orc & Goblin Tribes army list.)"
-      ],
-      "Allies": [
-        "Warriors of Chaos • Ogre Kingdoms • Orc & Goblin Tribes (suspicious)",
-        "Chaos Dwarf Allies In addition to the Allies listed in Ravening Hordes, armies made using the Warriors of Chaos Grand Army composition may include an Allied contingent drawn from the Chaos Dwarfs Legacy Army composition. Armies made using the Orc & Goblin Tribes Grand Army composition may include an Allied Contingent drawn from the Chaos Dwarfs Legacy Army composition list as ‘Suspicious’ allies."
-      ]
-    },
-    "units": {}
   }
 }

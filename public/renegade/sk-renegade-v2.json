@@ -407,13 +407,6 @@
         "name": "grand banner of superiority"
       },
       {
-        "name_en": "A unit carrying the Banner of Verminous Scurrying gains the Swiftstride special rule. Plague Banner",
-        "name": "a unit carrying the banner of verminous scurrying gains the swiftstride special rule plague banner",
-        "points": 30,
-        "type": "banner",
-        "onePerArmy": true
-      },
-      {
         "name_de": "Banner des Ungezieferhuschens",
         "name_en": "Banner Of Verminous Scurrying",
         "name_cn": "灾祸肆虐旗帜",
@@ -779,6 +772,20 @@
         }
       }
     ]
+  },
+  "composition": {
+    "units": {},
+    "sourceRules": {
+      "Characters": [
+        "0-1 Skaven Warlord or Clan Eshin Master Assassin per 1,000 points • 0-1 Grey Seer per 1,000 points • Clan Skryre Warlock Engineer, Clan Pestilens Plague Priest, or Skaven Chieftains"
+      ],
+      "Core": [
+        "0-1 unit of Plague Monks (if Army includes a Clan Pestilens Plague Priest) • Clanrats, Nightrunners, Giant Rats and Rat Swarms • 0-1 Skaven Dregs for each unit of Clanrats taken."
+      ],
+      "Special": [
+        "Warplock Jezzails, • Poisoned Wind Globadiers 0-1 per 1,000 points"
+      ]
+    }
   },
   "profiles": {
     "grey seer": {
@@ -1356,23 +1363,6 @@
     },
     "warpstone-tokens": {
       "body": "A Wizard may purchase up to three Warpstone Tokens, each of which is single use. Before making a Casting roll, a Wizard may choose to consume a single Warpstone Token. For each Token consumed, they may roll an additional D3 and add its result to their Casting roll. After the casting roll, roll a D6. On a roll of one the Wizard loses a single Wound."
-    },
-    "a-unit-carrying-the-banner-of-verminous-scurrying-gains-the-swiftstride-special-rule-plague-banner": {
-      "body": "Unit of Plague Monks Only. Single use. The Plague Banner may be activated at the start of any Combat Phase. For the remainder of the phase all Plague Monk models in the unit may re-roll failed To Hit rolls and failed To Wound rolls."
     }
-  },
-  "composition": {
-    "sourceRules": {
-      "Characters": [
-        "0-1 Skaven Warlord or Clan Eshin Master Assassin per 1,000 points • 0-1 Grey Seer per 1,000 points • Clan Skryre Warlock Engineer, Clan Pestilens Plague Priest, or Skaven Chieftains"
-      ],
-      "Core": [
-        "0-1 unit of Plague Monks (if Army includes a Clan Pestilens Plague Priest) • Clanrats, Nightrunners, Giant Rats and Rat Swarms • 0-1 Skaven Dregs for each unit of Clanrats taken."
-      ],
-      "Special": [
-        "Warplock Jezzails, • Poisoned Wind Globadiers 0-1 per 1,000 points"
-      ]
-    },
-    "units": {}
   }
 }

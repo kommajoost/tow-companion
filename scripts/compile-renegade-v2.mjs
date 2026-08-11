@@ -71,12 +71,21 @@ const ARMY_ITEM_LIST = {
   ok: 'ogre-kingdoms',
   cd: 'chaos-dwarfs',
   lm: 'lizardmen',
+  vc: 'vampire-counts',
+};
+
+// Faction-specific ability lists that live beside the ordinary magic items. Without an entry here the
+// whole section is invisible to the compiler: Vampire Counts prints eleven Vampiric Powers and the
+// builder offered seven, two of them at the wrong price, because "Vampiric Powers" matched none of the
+// magic-item headings (Joost, 11-08).
+const ABILITY_LISTS = {
+  'vampiric powers': { listId: 'vampiric-powers', type: 'vampiric-power' },
 };
 
 const inMagicItemSection = (block) => {
   if (block.unitContext) return false;
   const path = (block.headingPath ?? []).map(norm);
-  return path.some((part) => ITEM_SECTION_TYPES[part] || DOC_ITEM_LISTS[part])
+  return path.some((part) => ITEM_SECTION_TYPES[part] || DOC_ITEM_LISTS[part] || ABILITY_LISTS[part])
     || path.some((part) => /magic items|gifts & icons|disciplines of the old ones|big names/i.test(part));
 };
 const itemTitle = (block) => {
@@ -88,14 +97,23 @@ const itemTitle = (block) => {
   for (const raw of candidates) {
     const text = decodeEntities(raw).replace(/\s+/g, ' ').trim();
     const match = /^(.+?)\*?\s+(\d+)\s+points?\s*$/i.exec(text);
-    if (match) return { title: text, name: match[1].trim(), points: Number(match[2]), common: /\*/.test(text) };
+    if (!match) continue;
+    // An item title is short. The source sometimes runs a description and the NEXT title together in
+    // one paragraph ("…but cannot join a unit. Master Of The Black Arts 30 points"), and the greedy
+    // read of that produced an item whose name was a whole sentence. Too long means this is prose, so
+    // fall through to the heading path, which names the item on its own.
+    if (match[1].trim().length > 48) continue;
+    return { title: text, name: match[1].trim(), points: Number(match[2]), common: /\*/.test(text) };
   }
   return null;
 };
 const directItemTitle = (block) => {
   const text = decodeEntities(block.text).replace(/\s+/g, ' ').trim();
   const match = /^(.+?)\*?\s+(\d+)\s+points?\s*$/i.exec(text);
-  return match ? { title: text, name: match[1].trim(), points: Number(match[2]), common: /\*/.test(text) } : null;
+  // Same length guard as `itemTitle`: a paragraph that ends in the NEXT item's title is prose, not a
+  // title, and reading it as one created an item called "Models whose troop type is 'infantry' only…".
+  if (!match || match[1].trim().length > 48) return null;
+  return { title: text, name: match[1].trim(), points: Number(match[2]), common: /\*/.test(text) };
 };
 
 const itemListFor = (pack, block, existing) => {
@@ -106,6 +124,7 @@ const itemListFor = (pack, block, existing) => {
   }
   if (pack === 'lm' && path.includes('disciplines of the old ones')) return 'disciplines-old-ones';
   if (pack === 'ok' && path.includes('big names')) return 'big-names';
+  for (const part of path) if (ABILITY_LISTS[part]) return ABILITY_LISTS[part].listId;
   return ARMY_ITEM_LIST[pack];
 };
 
@@ -116,6 +135,7 @@ const itemTypeFor = (block, existing, listId) => {
   if (listId?.startsWith('daemonic-gifts-')) return listId.replace('daemonic-gifts-', 'daemonic-gift-');
   if (listId === 'disciplines-old-ones') return 'discipline-old-ones';
   if (listId === 'big-names') return 'big-name';
+  for (const spec of Object.values(ABILITY_LISTS)) if (listId === spec.listId) return spec.type;
   return 'enchanted-item';
 };
 
@@ -607,7 +627,10 @@ for (const [key, army] of Object.entries(PACKS)) {
     const title = directItemTitle(seed);
     if (!title) continue;
     const top = seed.headingPath?.[0] ?? '';
-    if (!/Magic Items|Gifts & Icons|Disciplines|Big Names/i.test(top)) continue;
+    // Ability lists belong here too. Red Fury and Honour or Death have their rule text styled as a
+    // Docs HEADING, so it becomes its own heading instead of the item's body — exactly the malformed
+    // path this pass exists to repair — and both powers reached the app with no description at all.
+    if (!/Magic Items|Gifts & Icons|Disciplines|Big Names/i.test(top) && !ABILITY_LISTS[norm(top)]) continue;
     const section = [seed];
     for (let next = at + 1; next < reference.blocks.length; next++) {
       const candidate = reference.blocks[next];
