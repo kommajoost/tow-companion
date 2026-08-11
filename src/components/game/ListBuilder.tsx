@@ -10,7 +10,7 @@ import { NewListSetup, type NewListValues } from './NewListSetup';
 import { CeledonPanel } from './CeledonPanel';
 import { LockedListView } from './LockedListView';
 import { ListSettings } from './ListSettings';
-import { useCampagnes } from '../../lib/campaign';
+import { useCampagnes, staatOpSlot } from '../../lib/campaign';
 import { useListSync } from '../../listSync';
 import { setPersisted } from '../../store';
 import { COMPOSITION_RULES } from '../../lib/owbBuilder';
@@ -500,25 +500,9 @@ export function ListBuilder() {
   // changed (the campaign already holds a snapshot of it, so this is about being clear rather than
   // about guarding the data — see LockedListView).
   //
-  // 10-08: dit keek alleen naar "campagne-lijst van deze speler + campagne op slot", en dus kreeg ELKE
-  // campagne-lijst het slot — ook een vers aangemaakte lege lijst (Jasper's "New list 2" stond meteen
-  // op "Locked for Act 1"). De campagne houdt precies ÉÉN ingediende lijst, en die geeft de server nu
-  // mee als lijstNaam + lijstLeger. We matchen op leger + naam; is de lijst ná het indienen hernoemd
-  // (dan matcht de naam niet meer) maar is er van dat leger maar één campagne-lijst, dan is dat 'm.
-  const eigenCampagneLijsten = lists.filter((l) => l.campaign && l.campaignSpeler === campagne?.speler.id);
-  const isIngediendeLijst = (() => {
-    if (!active?.campaign || !campagne || active.campaignSpeler !== campagne.speler.id) return false;
-    const leger = campagne.lijstLeger ?? null;
-    const naam = campagne.lijstNaam ?? null;
-    // Geen snapshot bekend (oude server) ⇒ val terug op het oude gedrag, anders zou een gelockte lijst
-    // ineens bewerkbaar lijken.
-    if (!leger && !naam) return true;
-    if (leger && active.army !== leger) return false;
-    if (naam && active.name.trim() === naam.trim()) return true;
-    const zelfdeLeger = eigenCampagneLijsten.filter((l) => !leger || l.army === leger);
-    return zelfdeLeger.length === 1 && zelfdeLeger[0].id === active.id;
-  })();
-  const opSlot = !!campagne && campagne.gelockt && isIngediendeLijst;
+  // Welke lijst de campagne op slot heeft, beslist `staatOpSlot` in lib/campaign.ts — dezelfde
+  // helper die het Celedon-paneel gebruikt, zodat er nooit meer twee verschillende antwoorden zijn.
+  const opSlot = staatOpSlot(campagne ?? null, active);
 
   // ── open list → the responsive builder (wait for that army's catalogue to load) ──
   if (active) {

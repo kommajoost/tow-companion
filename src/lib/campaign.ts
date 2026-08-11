@@ -53,9 +53,14 @@ export interface CampaignContext {
   factieVast: boolean;
   /** Is de lijst voor de HUIDIGE Act vergrendeld? Dan mag hij hier niet meer gewijzigd worden. */
   gelockt: boolean;
-  /** Naam + leger van de lijst die de campagne ECHT heeft ontvangen (towc_spel_lijst). Hiermee weet de
-   *  builder WELKE lijst vast staat. Zonder dit gold de lock voor elke campagne-lijst van die speler --
-   *  ook een vers aangemaakte lege, die dan meteen "Locked for Act 1" toonde (Jasper, 10-08). */
+  /** De builder-uid van de lijst die de campagne ECHT op slot heeft (towc_spel_lijst.lijst_uid).
+   *  Dit is de EXACTE identiteit: dezelfde `id` als op onze lijst staat, gelijk op elk device dat
+   *  dezelfde sync-sleutel gebruikt. Is deze gevuld, dan hoeft er niets meer geraden te worden.
+   *  Null voor lijsten die vóór 11-08-2026 zijn ingediend (toen legde de server de uid niet vast). */
+  lijstId?: string | null;
+  /** Naam + leger van de ingediende lijst — de terugval voor die oudere inzendingen. Zonder enige
+   *  identiteit gold de lock voor élke campagne-lijst van die speler, ook een vers aangemaakte lege,
+   *  die dan meteen "Locked for Act 1" toonde (Jasper, 10-08). */
   lijstNaam?: string | null;
   lijstLeger?: string | null;
   /** Voorbereiding: is de speler al uitgevaren? Game-slot: altijd true. */
@@ -137,6 +142,7 @@ function parseEen(raw: unknown): CampaignContext {
     label: str(d.label) || (bron === 'voorbereiding' ? 'Isle of Celedon' : 'Playtest'),
     factieVast: bron === 'game' ? true : bool(d.factieVast),
     gelockt: bool(d.gelockt),
+    lijstId: typeof d.lijstId === 'string' && d.lijstId.trim() !== '' ? d.lijstId : null,
     lijstNaam: typeof d.lijstNaam === 'string' ? d.lijstNaam : null,
     lijstLeger: typeof d.lijstLeger === 'string' ? d.lijstLeger : null,
     setSail: bron === 'game' ? true : bool(d.setSail),
@@ -397,6 +403,39 @@ export async function dienLijstIn(speler: string): Promise<LijstKeuring> {
     throw new Error(k.fouten[0] ?? str(d.fout, 'Could not submit the list.'));
   }
   return parseKeuring(data);
+}
+
+/** Het minimum dat we van een opgeslagen lijst moeten weten om 'm te kunnen identificeren. */
+export interface LijstIdentiteit {
+  id: string; name: string; army: string;
+  campaign?: boolean; campaignSpeler?: string;
+}
+
+/** Is DIT de lijst die de campagne voor de huidige Act op slot heeft?
+ *
+ *  Eén bron van waarheid voor de builder én het Celedon-paneel — die liepen uit elkaar en zetten
+ *  daardoor allebei een ander slot. Sinds 11-08-2026 geeft de server de builder-uid van de gelockte
+ *  lijst mee (`lijstId`) en is dit een exacte vergelijking.
+ *
+ *  Voor inzendingen van vóór die datum is er alleen een naam+leger-snapshot; die matchen we strikt.
+ *  Is er geen enkel spoor van de ingediende lijst (oude server, of een lijst die niet meer bestaat),
+ *  dan is het antwoord NEE. Die kant is bewust gekozen: onterecht bewerkbaar is hooguit verwarrend —
+ *  de server keurt bij het indienen opnieuw en weigert een tweede lock (AL_GELOCKT) — terwijl
+ *  onterecht op slot de speler volledig blokkeert. Precies dát overkwam Jasper (10/11-08). */
+export function isIngediendeLijst(ctx: CampaignContext | null, lijst: LijstIdentiteit | null): boolean {
+  if (!ctx || !lijst) return false;
+  if (!lijst.campaign || lijst.campaignSpeler !== ctx.speler.id) return false;
+  if (ctx.lijstId) return lijst.id === ctx.lijstId;
+  const leger = ctx.lijstLeger ?? null;
+  const naam = ctx.lijstNaam ?? null;
+  if (!leger && !naam) return false;
+  if (leger && lijst.army !== leger) return false;
+  return !!naam && lijst.name.trim() === naam.trim();
+}
+
+/** Staat deze lijst op slot? = de campagne is gelockt EN het is de ingediende lijst. */
+export function staatOpSlot(ctx: CampaignContext | null, lijst: LijstIdentiteit | null): boolean {
+  return !!ctx?.gelockt && isIngediendeLijst(ctx, lijst);
 }
 
 /** De naam-slug zoals de campagne 'm als unit-identiteit gebruikt (zelfde regex als server-side). */

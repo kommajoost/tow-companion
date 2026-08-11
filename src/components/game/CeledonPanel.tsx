@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { TOW, towFont, engraved } from '../../design/tow';
 import { COMPOSITION_RULES } from '../../lib/owbBuilder';
-import { useCampagnes, kiesCampagne, keurLijst, dienLijstIn, verversCampagnes, type LijstKeuring } from '../../lib/campaign';
+import { useCampagnes, kiesCampagne, keurLijst, dienLijstIn, verversCampagnes, staatOpSlot, type LijstKeuring } from '../../lib/campaign';
 import { useListSync } from '../../listSync';
 import { useAuth } from '../../lib/auth';
 
@@ -94,8 +94,15 @@ export function CeledonPanel({ lijsten, onOpen, onTour, onHerstel }: {
   // De lijst die bij de huidige factie hoort. Staat er alleen een lijst voor een ANDER leger, dan is de
   // factie verschoven nadat die lijst gemaakt was; dat is geen fout van de speler en moet met één klik
   // te herstellen zijn, want de factie zelf is (terecht) niet in de builder te wijzigen.
-  const lijst = eigen.find((l) => !slug || l.army === slug) ?? null;
+  // Staat de INGEDIENDE lijst er nog? Die krijgt voorrang, zodat het slot-label altijd op de lijst
+  // zit die de campagne echt vast heeft (11-08). Anders de eerste lijst van de huidige factie.
+  const lijst = eigen.find((l) => staatOpSlot(actief, l))
+    ?? eigen.find((l) => !slug || l.army === slug)
+    ?? null;
   const oudLeger = !lijst ? eigen[0] ?? null : null;
+  // Is DEZE lijst de gelockte? `actief.gelockt` alleen zegt dat er érgens een inzending ligt —
+  // dat als "deze lijst is op slot" tonen was precies de verwarring van 10/11-08.
+  const lijstOpSlot = staatOpSlot(actief, lijst);
   const punten = lijst?.computed ?? null;
   const over = punten != null && punten > actief.puntenCap;
   const regels = actief.compositie.map(ruleName).join(' or ');
@@ -189,7 +196,7 @@ export function CeledonPanel({ lijsten, onOpen, onTour, onHerstel }: {
                 {lijst.name}
               </span>
               <span style={{ fontFamily: towFont.serif, fontSize: 11, color: TOW.faint }}>
-                {actief.gelockt ? `Locked for Act ${actief.fase}` : 'Open to change until you lock it'}
+                {lijstOpSlot ? `Locked for Act ${actief.fase}` : 'Open to change until you lock it'}
               </span>
             </span>
             <span style={{
@@ -204,10 +211,19 @@ export function CeledonPanel({ lijsten, onOpen, onTour, onHerstel }: {
               Over the Act {actief.fase} cap — Celedon will not accept the list until it fits.
             </p>
           )}
-          {actief.gelockt ? (
+          {lijstOpSlot ? (
             <p style={{ ...tekstDim, marginTop: 8 }}>
               You submitted this list for Act {actief.fase}. You can look at it, but not change it — it opens up again
               when Act {actief.fase + 1} does.
+            </p>
+          ) : actief.gelockt ? (
+            // Er ligt een inzending voor deze Act, maar niet DEZE lijst — bijvoorbeeld omdat de
+            // ingediende lijst hernoemd of opnieuw gebouwd is. Bewerken mag, maar Celedon speelt
+            // deze Act met wat er al ligt; het slot gaat pas open bij de volgende Act.
+            <p style={{ ...tekstDim, marginTop: 8 }}>
+              Your Act {actief.fase} list is already submitted, and it is not this one. You can keep working on this
+              list, but Celedon plays Act {actief.fase} with the list it received — you can submit again from Act{' '}
+              {actief.fase + 1}.
             </p>
           ) : (
             <>
