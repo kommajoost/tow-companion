@@ -5,7 +5,7 @@ import { builderListToArmy, listTotal, type MagicText, type MountText } from '..
 import { makeTroopTypeLookup } from '../../lib/troopTypes';
 import { compName } from '../../lib/armies';
 import {
-  applyOverlay, applyOverlayItems, applyOverlayMagicText, applyOverlayMountText, applyOverlayStatIndex, hasOverlay, isOverlay,
+  applyOverlayItems, catalogueFor, applyOverlayMagicText, applyOverlayMountText, applyOverlayStatIndex, hasOverlay, isOverlay,
   overlayStatsFor, OVERLAY_FILES, type CompositionOverlay,
 } from '../../lib/overlays';
 import type { BuilderList, OwbArmy, MagicItemsData } from '../../lib/owbBuilder';
@@ -98,7 +98,7 @@ export function ArmyListPicker({ onPick, label = 'Choose one of your saved army 
     if (!raw || !statIdx) return null;
     const overlay = hasOverlay(l.composition) ? overlays[l.composition] : null;
     if (hasOverlay(l.composition) && !overlay) return null;
-    const cat = overlay ? applyOverlay(raw, overlay) : raw;
+    const cat = catalogueFor(raw, l.composition, overlay);
     const itemPool = itemsData && overlay ? applyOverlayItems(itemsData, overlay) : itemsData;
     const resolvedIndex = overlay ? applyOverlayStatIndex(statIdx, overlay) : statIdx;
     const statsFor = (name: string): StatRow[] => overlayStatsFor(statIdx, name, overlay);
@@ -168,7 +168,7 @@ export function ArmyListPicker({ onPick, label = 'Choose one of your saved army 
         {shown.map((l) => {
           const raw = catalogues[l.army] ?? null;
           const overlay = hasOverlay(l.composition) ? overlays[l.composition] : null;
-          const cat = raw && overlay ? applyOverlay(raw, overlay) : raw;
+          const cat = raw ? catalogueFor(raw, l.composition, overlay) : raw;
           const itemPool = itemsData && overlay ? applyOverlayItems(itemsData, overlay) : itemsData;
           const total = cat ? listTotal(l, cat, itemPool ?? undefined) : null;
           const ready = !!cat && (!hasOverlay(l.composition) || !!overlay);

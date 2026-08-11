@@ -18,7 +18,7 @@ import { useBackClose } from '../../lib/backStack';
 import { useData } from '../../data';
 import { getRuleIndex, resolveOptionSlug, resolveRuleSlug, splitCompoundLabel } from '../../lib/armyRules';
 import { useUI } from '../../state';
-import { applyOverlay, applyOverlayItems, applyOverlayMagicText, applyOverlayMountText, applyOverlayStatIndex, hasOverlay, isOverlay, overlayCompsFor, overlayStatsFor, OVERLAY_FILES, type CompositionOverlay, type MountProfileText } from '../../lib/overlays';
+import { applyOverlayItems, catalogueFor, applyOverlayMagicText, applyOverlayMountText, applyOverlayStatIndex, hasOverlay, isOverlay, overlayCompsFor, overlayStatsFor, OVERLAY_FILES, type CompositionOverlay, type MountProfileText } from '../../lib/overlays';
 import { InfoSheet, type InfoSheetData } from './InfoSheet';
 import type { MagicText } from '../../lib/builderToArmy';
 import type { UnitProfile } from '../../types';
@@ -181,12 +181,13 @@ export function ListBuilder() {
     if (!cat || !itemsData) return null;
     let c: OwbArmy = cat;
     let items: MagicItemsData = itemsData;
+    let ov: CompositionOverlay | null = null;
     if (hasOverlay(l.composition)) {
-      const ov = overlays[l.composition];
+      ov = overlays[l.composition] ?? null;
       if (!ov || ov.baseArmy !== l.army) return null; // overlay nodig maar (nog) niet bruikbaar
-      c = applyOverlay(cat, ov);
       items = applyOverlayItems(itemsData, ov);
     }
+    c = catalogueFor(cat, l.composition, ov);
     return validate(l, (k, id) => c[k]?.find((u) => u.id === id), items).total;
   };
 
@@ -375,9 +376,10 @@ export function ListBuilder() {
   // Only patch when the overlay actually belongs to this army — a composition id is unique, but a
   // stale cache entry pointing at another faction would silently reprice the wrong units.
   const activeCatalogue = useMemo(() => {
-    const basis = (!rawActiveCatalogue || !activeOverlay || activeOverlay.baseArmy !== activeArmySlug)
-      ? rawActiveCatalogue
-      : applyOverlay(rawActiveCatalogue, activeOverlay);
+    const bruikbaar = activeOverlay && activeOverlay.baseArmy === activeArmySlug ? activeOverlay : null;
+    const basis = rawActiveCatalogue && activeComp
+      ? catalogueFor(rawActiveCatalogue, activeComp, bruikbaar)
+      : rawActiveCatalogue;
     if (!basis || !mercUnits.length) return basis;
     // De huurlingen als `mercenaries`-categorie erbij zetten in plaats van ergens apart. Die categorie
     // BESTAAT al in de hele keten — picker-chip, 20%-limiet in validate(), punten, roster, export —

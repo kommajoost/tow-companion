@@ -214,6 +214,60 @@ export function isOverlay(v: unknown): v is CompositionOverlay {
  * `unitCategoryFor`). Without it, choosing the overlay composition would hide every unit that already
  * carries an `armyComposition` map — the composition would look empty rather than patched.
  */
+/** Does an option's `armyComposition` tag cover `composition`? The tag is a single id OR a list of
+ *  them — 61 of the 183 tagged options in the catalogue use the list form. */
+const tagCovers = (tag: string | string[] | undefined, composition?: string): boolean => {
+  if (!composition) return false;
+  return Array.isArray(tag) ? tag.includes(composition) : tag === composition;
+};
+
+/**
+ * Hide the option variants that belong to a DIFFERENT army composition.
+ *
+ * OWB carries several versions of the same option side by side, each tagged with the composition it
+ * belongs to: the Gor Herd has three "Ambushers", one for the Grand Army and two for the Wild Herd.
+ * Only the matching one may be offered — Joost saw all three stacked in a Grand Army list (11-08).
+ *
+ * This used to live inside `applyOverlay`, which meant it ran ONLY for the Renegade compositions and
+ * left every ordinary army showing all variants. Worse, it compared with `===`, so an option tagged
+ * with a LIST of compositions matched nothing and was hidden even in the composition it belongs to.
+ *
+ * Hidden rather than removed: a saved list addresses options by array index, so dropping one would
+ * shift every later option of that unit and silently rewrite someone's list.
+ */
+export function hideForeignOptions(unit: OwbUnit, composition: string, inherits?: string): OwbUnit {
+  const next: OwbUnit = { ...unit };
+  for (const group of ['command', 'equipment', 'armor', 'options', 'mounts'] as const) {
+    const list = next[group];
+    if (!Array.isArray(list)) continue;
+    const mark = (options: OwbOption[]): OwbOption[] => options.map((option) => {
+      const sub = Array.isArray(option.options) ? { options: mark(option.options) } : {};
+      if (option.armyComposition === undefined) return { ...option, ...sub };
+      const visible = tagCovers(option.armyComposition, composition) || tagCovers(option.armyComposition, inherits);
+      return { ...option, ...sub, hidden: !visible };
+    });
+    next[group] = mark(list);
+  }
+  return next;
+}
+
+/** The catalogue as it stands for ONE chosen composition: the pack's patches when there is an
+ *  overlay, and in every case only the options that belong to that composition. Everything that
+ *  builds a list goes through here, so an ordinary army gets the same treatment as a Renegade one. */
+export function catalogueFor(
+  base: OwbArmy,
+  composition: string,
+  overlay?: CompositionOverlay | null,
+): OwbArmy {
+  if (overlay) return applyOverlay(base, overlay);
+  const out = { ...base } as OwbArmy & Record<string, unknown>;
+  for (const [cat, arr] of Object.entries(base as Record<string, unknown>)) {
+    if (!Array.isArray(arr)) continue;
+    out[cat] = (arr as OwbUnit[]).map((unit) => hideForeignOptions(unit, composition));
+  }
+  return out as OwbArmy;
+}
+
 export function applyOverlay(base: OwbArmy, overlay: CompositionOverlay): OwbArmy {
   const out = { ...base } as OwbArmy & Record<string, unknown>;
   for (const [cat, arr] of Object.entries(base as Record<string, unknown>)) {
@@ -246,19 +300,7 @@ export function applyOverlay(base: OwbArmy, overlay: CompositionOverlay): OwbArm
         return null;
       }
       // Only real fields are copied over; `_was`/`_changed` stay out of the unit.
-      const next: OwbUnit = { ...u, armyComposition: comp };
-      // OWB can carry the standard and Renegade version of the same mount side by side. Hide variants
-      // for other compositions, but do not remove them: saved lists address options by array index.
-      for (const group of ['command', 'equipment', 'armor', 'options', 'mounts'] as const) {
-        const list = next[group];
-        if (!Array.isArray(list)) continue;
-        next[group] = list.map((option) => {
-          if (!option.armyComposition) return option;
-          const visible = option.armyComposition === overlay.id
-            || option.armyComposition === overlay.inheritsComposition;
-          return { ...option, hidden: !visible };
-        });
-      }
+      const next: OwbUnit = hideForeignOptions({ ...u, armyComposition: comp }, overlay.id, overlay.inheritsComposition);
       if (!patch) return next;
       if (typeof patch.points === 'number') next.points = patch.points;
       if (typeof patch.minimum === 'number') next.minimum = patch.minimum;

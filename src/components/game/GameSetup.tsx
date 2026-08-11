@@ -7,7 +7,7 @@ import { builderListToArmy, listTotal, type MagicText, type MountText } from '..
 import { makeTroopTypeLookup, enrichArmyTroopTypes } from '../../lib/troopTypes';
 import { compName } from '../../lib/armies';
 import {
-  applyOverlay, applyOverlayItems, applyOverlayMagicText, applyOverlayMountText, applyOverlayStatIndex, hasOverlay, isOverlay,
+  applyOverlayItems, catalogueFor, applyOverlayMagicText, applyOverlayMountText, applyOverlayStatIndex, hasOverlay, isOverlay,
   overlayStatsFor, OVERLAY_FILES, type CompositionOverlay,
 } from '../../lib/overlays';
 import type { BuilderList, OwbArmy, MagicItemsData } from '../../lib/owbBuilder';
@@ -112,8 +112,8 @@ export function GameSetup() {
   const pickedOverlay = pickedList && hasOverlay(pickedList.composition)
     ? overlays[pickedList.composition] ?? null
     : null;
-  const pickedCatalogue = rawPickedCatalogue && pickedOverlay
-    ? applyOverlay(rawPickedCatalogue, pickedOverlay)
+  const pickedCatalogue = rawPickedCatalogue && pickedList
+    ? catalogueFor(rawPickedCatalogue, pickedList.composition, pickedOverlay)
     : rawPickedCatalogue;
   const pickedItemsData = itemsData && pickedOverlay ? applyOverlayItems(itemsData, pickedOverlay) : itemsData;
   const pickedStatIdx = statIdx && pickedOverlay ? applyOverlayStatIndex(statIdx, pickedOverlay) : statIdx;
@@ -201,7 +201,7 @@ export function GameSetup() {
                 const on = pickedId === l.id;
                 const raw = catalogues[l.army] ?? null;
                 const overlay = hasOverlay(l.composition) ? overlays[l.composition] ?? null : null;
-                const cat = raw && overlay ? applyOverlay(raw, overlay) : raw;
+                const cat = raw ? catalogueFor(raw, l.composition, overlay) : raw;
                 const itemPool = itemsData && overlay ? applyOverlayItems(itemsData, overlay) : itemsData;
                 const total = cat && (!hasOverlay(l.composition) || overlay)
                   ? listTotal(l, cat, itemPool ?? undefined)

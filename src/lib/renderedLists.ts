@@ -1,6 +1,6 @@
 import { entryPoints, type BuilderList, type ListEntry, type MagicItemsData, type OwbArmy, type OwbUnit, type Category } from './owbBuilder';
 import { deriveList, optionSummary } from './builderDerived';
-import { applyOverlay, applyOverlayItems, hasOverlay, OVERLAY_FILES, type CompositionOverlay } from './overlays';
+import { applyOverlayItems, catalogueFor, hasOverlay, OVERLAY_FILES, type CompositionOverlay } from './overlays';
 import { makeUnitStrengthLookup } from './troopTypes';
 
 /* ── Uitgerekende lijst-opsplitsing voor de campagne (30-07-2026) ───────────────────────────────
@@ -210,7 +210,7 @@ export async function renderLists(lists: unknown[]): Promise<RenderedList[]> {
     const ov = nodig ? overlays.get(l.composition) ?? null : null;
     // Overlay nodig maar niet geladen → geen catalogus doorgeven, dan blijft `fouten` null (onbekend).
     if (nodig && !ov) return renderEen(l, null, null, usVoor);
-    const cat = ov && bron.a ? applyOverlay(bron.a, ov) : bron.a;
+    const cat = bron.a ? catalogueFor(bron.a, l.composition, ov) : bron.a;
     const items = ov && bron.i ? applyOverlayItems(bron.i, ov) : bron.i;
     return renderEen(l, cat, items, usVoor);
   });
