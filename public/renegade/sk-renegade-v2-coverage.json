@@ -4,8 +4,8 @@
   "reference": "sk-renegade-v2-reference.json",
   "generatedBy": "scripts/compile-renegade-v2.mjs",
   "counts": {
-    "applied": 119,
-    "captured": 30,
+    "applied": 121,
+    "captured": 28,
     "unresolved": 0,
     "unsupported": 0,
     "todo": 3
@@ -526,6 +526,7 @@
       ],
       "status": "applied",
       "targets": [
+        "units.grey-seer.points",
         "profiles.grey seer"
       ]
     },
@@ -686,6 +687,7 @@
       ],
       "status": "applied",
       "targets": [
+        "units.master-assassin.points",
         "profiles.master assassin"
       ]
     },
@@ -847,6 +849,8 @@
       ],
       "status": "applied",
       "targets": [
+        "units.stormvermin.points",
+        "units.stormvermin.points",
         "profiles.stormvermin",
         "profiles.stormvermin"
       ]
@@ -1352,6 +1356,7 @@
       ],
       "status": "applied",
       "targets": [
+        "units.warplock-jezzails.points",
         "profiles.warplock jezzails"
       ]
     },
@@ -1639,6 +1644,7 @@
       ],
       "status": "applied",
       "targets": [
+        "units.rat-ogres.points",
         "profiles.rat ogres"
       ]
     },
@@ -1928,6 +1934,7 @@
       ],
       "status": "applied",
       "targets": [
+        "units.plague-censer-bearers.points",
         "profiles.plague censer bearers"
       ]
     },
@@ -2068,10 +2075,11 @@
       "changeKinds": [
         "new"
       ],
-      "status": "captured",
+      "status": "applied",
       "targets": [
-        "profiles.screaming bell.notes"
-      ]
+        "profiles.screaming bell.specialRules"
+      ],
+      "reason": "continuation of a Special Rules line, applied via its head block"
     },
     {
       "blockId": "b0364",
@@ -2605,10 +2613,11 @@
       "changeKinds": [
         "new"
       ],
-      "status": "captured",
+      "status": "applied",
       "targets": [
-        "profiles.hell pit abomination.notes"
-      ]
+        "units.hell-pit-abomination.specialRules"
+      ],
+      "reason": "continuation of a Special Rules line, applied via its head block"
     },
     {
       "blockId": "h0100",

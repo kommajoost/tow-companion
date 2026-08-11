@@ -1,2812 +1,2761 @@
 {
- "id": "cd-renegade-v2-coverage",
- "army": "chaos-dwarfs",
- "reference": "cd-renegade-v2-reference.json",
- "generatedBy": "scripts/compile-renegade-v2.mjs",
- "counts": {
-  "applied": 76,
-  "captured": 70,
-  "unresolved": 0,
-  "unsupported": 0,
-  "todo": 0
- },
- "blocks": [
-  {
-   "blockId": "b0061",
-   "unitContext": null,
-   "entryKind": "list",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "composition.sourceRules.Characters"
-   ]
-  },
-  {
-   "blockId": "b0063",
-   "unitContext": null,
-   "entryKind": "list",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "composition.sourceRules.Core"
-   ]
-  },
-  {
-   "blockId": "b0065",
-   "unitContext": null,
-   "entryKind": "list",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "composition.sourceRules.Special"
-   ]
-  },
-  {
-   "blockId": "b0066",
-   "unitContext": null,
-   "entryKind": "list",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "composition.sourceRules.Special"
-   ]
-  },
-  {
-   "blockId": "b0067",
-   "unitContext": null,
-   "entryKind": "list",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "composition.sourceRules.Special"
-   ]
-  },
-  {
-   "blockId": "b0069",
-   "unitContext": null,
-   "entryKind": "list",
-   "changeKinds": [
-    "new",
-    "changed"
-   ],
-   "status": "captured",
-   "targets": [
-    "composition.sourceRules.Rare"
-   ]
-  },
-  {
-   "blockId": "b0070",
-   "unitContext": null,
-   "entryKind": "list",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "composition.sourceRules.Rare"
-   ]
-  },
-  {
-   "blockId": "h0009",
-   "unitContext": null,
-   "entryKind": "heading",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "composition.sourceRules.“Mercenaries”"
-   ]
-  },
-  {
-   "blockId": "b0072",
-   "unitContext": null,
-   "entryKind": "list",
-   "changeKinds": [
-    "changed",
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "composition.sourceRules.“Mercenaries”"
-   ]
-  },
-  {
-   "blockId": "b0074",
-   "unitContext": null,
-   "entryKind": "list",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "composition.sourceRules.Allies"
-   ]
-  },
-  {
-   "blockId": "b0075",
-   "unitContext": null,
-   "entryKind": "table",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "composition.sourceRules.Allies"
-   ]
-  },
-  {
-   "blockId": "b0079",
-   "unitContext": null,
-   "entryKind": "paragraph",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "rules.blackshard-armour"
-   ]
-  },
-  {
-   "blockId": "b0080",
-   "unitContext": null,
-   "entryKind": "paragraph",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "rules.blazing-body"
-   ]
-  },
-  {
-   "blockId": "b0081",
-   "unitContext": null,
-   "entryKind": "paragraph",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "rules.blazing-body"
-   ]
-  },
-  {
-   "blockId": "b0082",
-   "unitContext": null,
-   "entryKind": "paragraph",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "rules.blazing-body"
-   ]
-  },
-  {
-   "blockId": "b0085",
-   "unitContext": null,
-   "entryKind": "paragraph",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "rules.hellbound"
-   ]
-  },
-  {
-   "blockId": "b0086",
-   "unitContext": null,
-   "entryKind": "paragraph",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "rules.hellbound"
-   ]
-  },
-  {
-   "blockId": "h0032",
-   "unitContext": null,
-   "entryKind": "heading",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "magicItemText.armour-of-bazherak-the-cruel"
-   ]
-  },
-  {
-   "blockId": "b0105",
-   "unitContext": null,
-   "entryKind": "paragraph",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "magicItemText.mantle-of-stone"
-   ]
-  },
-  {
-   "blockId": "b0108",
-   "unitContext": null,
-   "entryKind": "paragraph",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "magicItemText.ashen-banner"
-   ]
-  },
-  {
-   "blockId": "b0111",
-   "unitContext": null,
-   "entryKind": "paragraph",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "magicItemText.daemonic-familiar"
-   ]
-  },
-  {
-   "blockId": "b0130",
-   "unitContext": null,
-   "entryKind": "paragraph",
-   "changeKinds": [
-    "changed"
-   ],
-   "status": "applied",
-   "targets": [
-    "lores.lore-of-hashut.spell-storm-of-ash"
-   ]
-  },
-  {
-   "blockId": "b0133",
-   "unitContext": null,
-   "entryKind": "paragraph",
-   "changeKinds": [
-    "changed"
-   ],
-   "status": "applied",
-   "targets": [
-    "lores.lore-of-hashut.spell-flames-of-hashut"
-   ]
-  },
-  {
-   "blockId": "b0138",
-   "unitContext": null,
-   "entryKind": "paragraph",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "rules.darkforged-weapon"
-   ]
-  },
-  {
-   "blockId": "h0057",
-   "unitContext": null,
-   "entryKind": "heading",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "rules.darkforged-weapon-table"
-   ]
-  },
-  {
-   "blockId": "b0139",
-   "unitContext": null,
-   "entryKind": "table",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "rules.darkforged-weapon-table"
-   ]
-  },
-  {
-   "blockId": "b0144",
-   "unitContext": null,
-   "entryKind": "paragraph",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "rules.hailshot-blunderbuss"
-   ]
-  },
-  {
-   "blockId": "b0145",
-   "unitContext": null,
-   "entryKind": "weapon-profile",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "rules.naptha-bombs"
-   ]
-  },
-  {
-   "blockId": "b0147",
-   "unitContext": {
-    "name": "Sorcerers Of Hashut",
-    "sourceBlockId": "b0147",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Sorcerer-Prophet",
-     "Daemonsmith Sorcerer"
-    ]
-   },
-   "entryKind": "statline",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "profiles.sorcerer prophet",
-    "profiles.daemonsmith sorcerer"
-   ]
-  },
-  {
-   "blockId": "b0151",
-   "unitContext": {
-    "name": "Sorcerers Of Hashut",
-    "sourceBlockId": "b0147",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Sorcerer-Prophet",
-     "Daemonsmith Sorcerer"
-    ]
-   },
-   "entryKind": "list",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "profiles.sorcerer prophet.notes",
-    "profiles.daemonsmith sorcerer.notes"
-   ]
-  },
-  {
-   "blockId": "b0154",
-   "unitContext": {
-    "name": "Sorcerers Of Hashut",
-    "sourceBlockId": "b0147",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Sorcerer-Prophet",
-     "Daemonsmith Sorcerer"
-    ]
-   },
-   "entryKind": "option",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "units.sorcerer-prophet.options",
-    "units.daemonsmith-sorcerer.options"
-   ]
-  },
-  {
-   "blockId": "b0160",
-   "unitContext": {
-    "name": "Sorcerers Of Hashut",
-    "sourceBlockId": "b0147",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Sorcerer-Prophet",
-     "Daemonsmith Sorcerer"
-    ]
-   },
-   "entryKind": "paragraph",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "rules.infernal-engineer"
-   ]
-  },
-  {
-   "blockId": "h0065",
-   "unitContext": {
-    "name": "Sorcerers Of Hashut",
-    "sourceBlockId": "b0147",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Sorcerer-Prophet",
-     "Daemonsmith Sorcerer"
-    ]
-   },
-   "entryKind": "heading",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "profiles.sorcerer prophet.notes",
-    "profiles.daemonsmith sorcerer.notes"
-   ]
-  },
-  {
-   "blockId": "b0162",
-   "unitContext": {
-    "name": "Chaos Dwarf Lords",
-    "sourceBlockId": "b0162",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Despot",
-     "Seneschal"
-    ]
-   },
-   "entryKind": "statline",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "profiles.chaos dwarf lords"
-   ]
-  },
-  {
-   "blockId": "b0163",
-   "unitContext": {
-    "name": "Chaos Dwarf Lords",
-    "sourceBlockId": "b0162",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Despot",
-     "Seneschal"
-    ]
-   },
-   "entryKind": "troop-type",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "profiles.chaos dwarf lords.troopType"
-   ]
-  },
-  {
-   "blockId": "b0164",
-   "unitContext": {
-    "name": "Chaos Dwarf Lords",
-    "sourceBlockId": "b0162",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Despot",
-     "Seneschal"
-    ]
-   },
-   "entryKind": "base-size",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "profiles.chaos dwarf lords.baseSize"
-   ]
-  },
-  {
-   "blockId": "h0066",
-   "unitContext": {
-    "name": "Chaos Dwarf Lords",
-    "sourceBlockId": "b0162",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Despot",
-     "Seneschal"
-    ]
-   },
-   "entryKind": "unit-size",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "profiles.chaos dwarf lords.notes"
-   ]
-  },
-  {
-   "blockId": "b0165",
-   "unitContext": {
-    "name": "Chaos Dwarf Lords",
-    "sourceBlockId": "b0162",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Despot",
-     "Seneschal"
-    ]
-   },
-   "entryKind": "equipment",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "profiles.chaos dwarf lords.equipment"
-   ]
-  },
-  {
-   "blockId": "h0067",
-   "unitContext": {
-    "name": "Chaos Dwarf Lords",
-    "sourceBlockId": "b0162",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Despot",
-     "Seneschal"
-    ]
-   },
-   "entryKind": "heading",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "profiles.chaos dwarf lords.notes"
-   ]
-  },
-  {
-   "blockId": "b0166",
-   "unitContext": {
-    "name": "Chaos Dwarf Lords",
-    "sourceBlockId": "b0162",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Despot",
-     "Seneschal"
-    ]
-   },
-   "entryKind": "list",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "profiles.chaos dwarf lords.notes"
-   ]
-  },
-  {
-   "blockId": "b0167",
-   "unitContext": {
-    "name": "Chaos Dwarf Lords",
-    "sourceBlockId": "b0162",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Despot",
-     "Seneschal"
-    ]
-   },
-   "entryKind": "option",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "profiles.chaos dwarf lords.notes"
-   ]
-  },
-  {
-   "blockId": "b0168",
-   "unitContext": {
-    "name": "Chaos Dwarf Lords",
-    "sourceBlockId": "b0162",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Despot",
-     "Seneschal"
-    ]
-   },
-   "entryKind": "list",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "profiles.chaos dwarf lords.notes"
-   ]
-  },
-  {
-   "blockId": "b0169",
-   "unitContext": {
-    "name": "Chaos Dwarf Lords",
-    "sourceBlockId": "b0162",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Despot",
-     "Seneschal"
-    ]
-   },
-   "entryKind": "option",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "profiles.chaos dwarf lords.notes"
-   ]
-  },
-  {
-   "blockId": "b0170",
-   "unitContext": {
-    "name": "Chaos Dwarf Lords",
-    "sourceBlockId": "b0162",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Despot",
-     "Seneschal"
-    ]
-   },
-   "entryKind": "option",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "profiles.chaos dwarf lords.notes"
-   ]
-  },
-  {
-   "blockId": "b0171",
-   "unitContext": {
-    "name": "Chaos Dwarf Lords",
-    "sourceBlockId": "b0162",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Despot",
-     "Seneschal"
-    ]
-   },
-   "entryKind": "list",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "profiles.chaos dwarf lords.notes"
-   ]
-  },
-  {
-   "blockId": "b0172",
-   "unitContext": {
-    "name": "Chaos Dwarf Lords",
-    "sourceBlockId": "b0162",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Despot",
-     "Seneschal"
-    ]
-   },
-   "entryKind": "list",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "profiles.chaos dwarf lords.notes"
-   ]
-  },
-  {
-   "blockId": "b0173",
-   "unitContext": {
-    "name": "Chaos Dwarf Lords",
-    "sourceBlockId": "b0162",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Despot",
-     "Seneschal"
-    ]
-   },
-   "entryKind": "list",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "profiles.chaos dwarf lords.notes"
-   ]
-  },
-  {
-   "blockId": "b0174",
-   "unitContext": {
-    "name": "Chaos Dwarf Lords",
-    "sourceBlockId": "b0162",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Despot",
-     "Seneschal"
-    ]
-   },
-   "entryKind": "special-rules",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "profiles.chaos dwarf lords.specialRules"
-   ]
-  },
-  {
-   "blockId": "h0068",
-   "unitContext": {
-    "name": "Chaos Dwarf Lords",
-    "sourceBlockId": "b0162",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Despot",
-     "Seneschal"
-    ]
-   },
-   "entryKind": "heading",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "rules.relentless-march"
-   ]
-  },
-  {
-   "blockId": "h0069",
-   "unitContext": {
-    "name": "Chaos Dwarf Lords",
-    "sourceBlockId": "b0162",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Despot",
-     "Seneschal"
-    ]
-   },
-   "entryKind": "heading",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "rules.relentless-march"
-   ]
-  },
-  {
-   "blockId": "h0070",
-   "unitContext": {
-    "name": "Chaos Dwarf Lords",
-    "sourceBlockId": "b0162",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Despot",
-     "Seneschal"
-    ]
-   },
-   "entryKind": "heading",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "profiles.chaos dwarf lords.notes"
-   ]
-  },
-  {
-   "blockId": "b0175",
-   "unitContext": {
-    "name": "Infernal Guard Commanders",
-    "sourceBlockId": "b0175",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Castellan"
-    ]
-   },
-   "entryKind": "statline",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "profiles.infernal guard commanders"
-   ]
-  },
-  {
-   "blockId": "b0176",
-   "unitContext": {
-    "name": "Infernal Guard Commanders",
-    "sourceBlockId": "b0175",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Castellan"
-    ]
-   },
-   "entryKind": "troop-type",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "profiles.infernal guard commanders.troopType"
-   ]
-  },
-  {
-   "blockId": "b0177",
-   "unitContext": {
-    "name": "Infernal Guard Commanders",
-    "sourceBlockId": "b0175",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Castellan"
-    ]
-   },
-   "entryKind": "base-size",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "profiles.infernal guard commanders.baseSize"
-   ]
-  },
-  {
-   "blockId": "h0071",
-   "unitContext": {
-    "name": "Infernal Guard Commanders",
-    "sourceBlockId": "b0175",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Castellan"
-    ]
-   },
-   "entryKind": "unit-size",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "profiles.infernal guard commanders.notes"
-   ]
-  },
-  {
-   "blockId": "b0178",
-   "unitContext": {
-    "name": "Infernal Guard Commanders",
-    "sourceBlockId": "b0175",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Castellan"
-    ]
-   },
-   "entryKind": "equipment",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "profiles.infernal guard commanders.equipment"
-   ]
-  },
-  {
-   "blockId": "h0072",
-   "unitContext": {
-    "name": "Infernal Guard Commanders",
-    "sourceBlockId": "b0175",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Castellan"
-    ]
-   },
-   "entryKind": "heading",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "profiles.infernal guard commanders.notes"
-   ]
-  },
-  {
-   "blockId": "b0179",
-   "unitContext": {
-    "name": "Infernal Guard Commanders",
-    "sourceBlockId": "b0175",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Castellan"
-    ]
-   },
-   "entryKind": "list",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "profiles.infernal guard commanders.notes"
-   ]
-  },
-  {
-   "blockId": "b0180",
-   "unitContext": {
-    "name": "Infernal Guard Commanders",
-    "sourceBlockId": "b0175",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Castellan"
-    ]
-   },
-   "entryKind": "option",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "profiles.infernal guard commanders.notes"
-   ]
-  },
-  {
-   "blockId": "b0181",
-   "unitContext": {
-    "name": "Infernal Guard Commanders",
-    "sourceBlockId": "b0175",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Castellan"
-    ]
-   },
-   "entryKind": "list",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "profiles.infernal guard commanders.notes"
-   ]
-  },
-  {
-   "blockId": "b0182",
-   "unitContext": {
-    "name": "Infernal Guard Commanders",
-    "sourceBlockId": "b0175",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Castellan"
-    ]
-   },
-   "entryKind": "option",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "profiles.infernal guard commanders.notes"
-   ]
-  },
-  {
-   "blockId": "b0183",
-   "unitContext": {
-    "name": "Infernal Guard Commanders",
-    "sourceBlockId": "b0175",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Castellan"
-    ]
-   },
-   "entryKind": "option",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "profiles.infernal guard commanders.notes"
-   ]
-  },
-  {
-   "blockId": "b0184",
-   "unitContext": {
-    "name": "Infernal Guard Commanders",
-    "sourceBlockId": "b0175",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Castellan"
-    ]
-   },
-   "entryKind": "special-rules",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "profiles.infernal guard commanders.specialRules"
-   ]
-  },
-  {
-   "blockId": "h0073",
-   "unitContext": {
-    "name": "Infernal Guard Commanders",
-    "sourceBlockId": "b0175",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Castellan"
-    ]
-   },
-   "entryKind": "heading",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "rules.infernal-taskmaster"
-   ]
-  },
-  {
-   "blockId": "b0185",
-   "unitContext": {
-    "name": "Infernal Guard Commanders",
-    "sourceBlockId": "b0175",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Castellan"
-    ]
-   },
-   "entryKind": "paragraph",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "rules.infernal-taskmaster"
-   ]
-  },
-  {
-   "blockId": "b0191",
-   "unitContext": {
-    "name": "Bull Centaur Taur’ruk",
-    "sourceBlockId": "b0186",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Taur’ruk"
-    ]
-   },
-   "entryKind": "option",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "units.bull-centaur-taur'ruk.options"
-   ]
-  },
-  {
-   "blockId": "b0209",
-   "unitContext": {
-    "name": "Giant Wolf",
-    "sourceBlockId": "b0204",
-    "method": "table-title",
-    "confidence": "high",
-    "profileNames": [
-     "Giant Wolf"
-    ]
-   },
-   "entryKind": "paragraph",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "profiles.giant wolf.notes"
-   ]
-  },
-  {
-   "blockId": "b0210",
-   "unitContext": {
-    "name": "Chaos Dwarf Warriors",
-    "sourceBlockId": "b0210",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Chaos Dwarf Warrior",
-     "Veteran Warrior"
-    ]
-   },
-   "entryKind": "statline",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "profiles.chaos dwarf warriors"
-   ]
-  },
-  {
-   "blockId": "b0211",
-   "unitContext": {
-    "name": "Chaos Dwarf Warriors",
-    "sourceBlockId": "b0210",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Chaos Dwarf Warrior",
-     "Veteran Warrior"
-    ]
-   },
-   "entryKind": "troop-type",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "profiles.chaos dwarf warriors.troopType"
-   ]
-  },
-  {
-   "blockId": "b0212",
-   "unitContext": {
-    "name": "Chaos Dwarf Warriors",
-    "sourceBlockId": "b0210",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Chaos Dwarf Warrior",
-     "Veteran Warrior"
-    ]
-   },
-   "entryKind": "base-size",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "profiles.chaos dwarf warriors.baseSize"
-   ]
-  },
-  {
-   "blockId": "b0213",
-   "unitContext": {
-    "name": "Chaos Dwarf Warriors",
-    "sourceBlockId": "b0210",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Chaos Dwarf Warrior",
-     "Veteran Warrior"
-    ]
-   },
-   "entryKind": "unit-size",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "units.chaos-dwarf-warriors.minimum"
-   ]
-  },
-  {
-   "blockId": "b0214",
-   "unitContext": {
-    "name": "Chaos Dwarf Warriors",
-    "sourceBlockId": "b0210",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Chaos Dwarf Warrior",
-     "Veteran Warrior"
-    ]
-   },
-   "entryKind": "equipment",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "profiles.chaos dwarf warriors.equipment"
-   ]
-  },
-  {
-   "blockId": "h0080",
-   "unitContext": {
-    "name": "Chaos Dwarf Warriors",
-    "sourceBlockId": "b0210",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Chaos Dwarf Warrior",
-     "Veteran Warrior"
-    ]
-   },
-   "entryKind": "heading",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "profiles.chaos dwarf warriors.notes"
-   ]
-  },
-  {
-   "blockId": "b0215",
-   "unitContext": {
-    "name": "Chaos Dwarf Warriors",
-    "sourceBlockId": "b0210",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Chaos Dwarf Warrior",
-     "Veteran Warrior"
-    ]
-   },
-   "entryKind": "list",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "profiles.chaos dwarf warriors.notes"
-   ]
-  },
-  {
-   "blockId": "b0216",
-   "unitContext": {
-    "name": "Chaos Dwarf Warriors",
-    "sourceBlockId": "b0210",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Chaos Dwarf Warrior",
-     "Veteran Warrior"
-    ]
-   },
-   "entryKind": "option",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "units.chaos-dwarf-warriors.options"
-   ]
-  },
-  {
-   "blockId": "b0217",
-   "unitContext": {
-    "name": "Chaos Dwarf Warriors",
-    "sourceBlockId": "b0210",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Chaos Dwarf Warrior",
-     "Veteran Warrior"
-    ]
-   },
-   "entryKind": "list",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "profiles.chaos dwarf warriors.notes"
-   ]
-  },
-  {
-   "blockId": "b0218",
-   "unitContext": {
-    "name": "Chaos Dwarf Warriors",
-    "sourceBlockId": "b0210",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Chaos Dwarf Warrior",
-     "Veteran Warrior"
-    ]
-   },
-   "entryKind": "option",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "units.chaos-dwarf-warriors.options"
-   ]
-  },
-  {
-   "blockId": "b0219",
-   "unitContext": {
-    "name": "Chaos Dwarf Warriors",
-    "sourceBlockId": "b0210",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Chaos Dwarf Warrior",
-     "Veteran Warrior"
-    ]
-   },
-   "entryKind": "list",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "profiles.chaos dwarf warriors.notes"
-   ]
-  },
-  {
-   "blockId": "b0220",
-   "unitContext": {
-    "name": "Chaos Dwarf Warriors",
-    "sourceBlockId": "b0210",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Chaos Dwarf Warrior",
-     "Veteran Warrior"
-    ]
-   },
-   "entryKind": "option",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "units.chaos-dwarf-warriors.options"
-   ]
-  },
-  {
-   "blockId": "b0221",
-   "unitContext": {
-    "name": "Chaos Dwarf Warriors",
-    "sourceBlockId": "b0210",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Chaos Dwarf Warrior",
-     "Veteran Warrior"
-    ]
-   },
-   "entryKind": "special-rules",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "units.chaos-dwarf-warriors.specialRules"
-   ]
-  },
-  {
-   "blockId": "b0222",
-   "unitContext": {
-    "name": "Chaos Dwarf Warriors",
-    "sourceBlockId": "b0210",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Chaos Dwarf Warrior",
-     "Veteran Warrior"
-    ]
-   },
-   "entryKind": "paragraph",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "profiles.chaos dwarf warriors.notes"
-   ]
-  },
-  {
-   "blockId": "b0223",
-   "unitContext": {
-    "name": "Blunderbuss Decimators",
-    "sourceBlockId": "b0223",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Blunderbuss Decimator",
-     "Veteran Warrior"
-    ]
-   },
-   "entryKind": "statline",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "profiles.blunderbuss decimators"
-   ]
-  },
-  {
-   "blockId": "b0224",
-   "unitContext": {
-    "name": "Blunderbuss Decimators",
-    "sourceBlockId": "b0223",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Blunderbuss Decimator",
-     "Veteran Warrior"
-    ]
-   },
-   "entryKind": "troop-type",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "profiles.blunderbuss decimators.troopType"
-   ]
-  },
-  {
-   "blockId": "b0225",
-   "unitContext": {
-    "name": "Blunderbuss Decimators",
-    "sourceBlockId": "b0223",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Blunderbuss Decimator",
-     "Veteran Warrior"
-    ]
-   },
-   "entryKind": "base-size",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "profiles.blunderbuss decimators.baseSize"
-   ]
-  },
-  {
-   "blockId": "b0226",
-   "unitContext": {
-    "name": "Blunderbuss Decimators",
-    "sourceBlockId": "b0223",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Blunderbuss Decimator",
-     "Veteran Warrior"
-    ]
-   },
-   "entryKind": "unit-size",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "units.blunderbuss-decimators.minimum"
-   ]
-  },
-  {
-   "blockId": "b0227",
-   "unitContext": {
-    "name": "Blunderbuss Decimators",
-    "sourceBlockId": "b0223",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Blunderbuss Decimator",
-     "Veteran Warrior"
-    ]
-   },
-   "entryKind": "equipment",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "profiles.blunderbuss decimators.equipment"
-   ]
-  },
-  {
-   "blockId": "h0081",
-   "unitContext": {
-    "name": "Blunderbuss Decimators",
-    "sourceBlockId": "b0223",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Blunderbuss Decimator",
-     "Veteran Warrior"
-    ]
-   },
-   "entryKind": "heading",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "profiles.blunderbuss decimators.notes"
-   ]
-  },
-  {
-   "blockId": "b0228",
-   "unitContext": {
-    "name": "Blunderbuss Decimators",
-    "sourceBlockId": "b0223",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Blunderbuss Decimator",
-     "Veteran Warrior"
-    ]
-   },
-   "entryKind": "list",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "profiles.blunderbuss decimators.notes"
-   ]
-  },
-  {
-   "blockId": "b0229",
-   "unitContext": {
-    "name": "Blunderbuss Decimators",
-    "sourceBlockId": "b0223",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Blunderbuss Decimator",
-     "Veteran Warrior"
-    ]
-   },
-   "entryKind": "option",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "units.blunderbuss-decimators.options"
-   ]
-  },
-  {
-   "blockId": "b0230",
-   "unitContext": {
-    "name": "Blunderbuss Decimators",
-    "sourceBlockId": "b0223",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Blunderbuss Decimator",
-     "Veteran Warrior"
-    ]
-   },
-   "entryKind": "list",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "profiles.blunderbuss decimators.notes"
-   ]
-  },
-  {
-   "blockId": "b0231",
-   "unitContext": {
-    "name": "Blunderbuss Decimators",
-    "sourceBlockId": "b0223",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Blunderbuss Decimator",
-     "Veteran Warrior"
-    ]
-   },
-   "entryKind": "option",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "units.blunderbuss-decimators.options"
-   ]
-  },
-  {
-   "blockId": "b0232",
-   "unitContext": {
-    "name": "Blunderbuss Decimators",
-    "sourceBlockId": "b0223",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Blunderbuss Decimator",
-     "Veteran Warrior"
-    ]
-   },
-   "entryKind": "list",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "profiles.blunderbuss decimators.notes"
-   ]
-  },
-  {
-   "blockId": "b0233",
-   "unitContext": {
-    "name": "Blunderbuss Decimators",
-    "sourceBlockId": "b0223",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Blunderbuss Decimator",
-     "Veteran Warrior"
-    ]
-   },
-   "entryKind": "option",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "units.blunderbuss-decimators.options"
-   ]
-  },
-  {
-   "blockId": "b0234",
-   "unitContext": {
-    "name": "Blunderbuss Decimators",
-    "sourceBlockId": "b0223",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Blunderbuss Decimator",
-     "Veteran Warrior"
-    ]
-   },
-   "entryKind": "list",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "profiles.blunderbuss decimators.notes"
-   ]
-  },
-  {
-   "blockId": "b0235",
-   "unitContext": {
-    "name": "Blunderbuss Decimators",
-    "sourceBlockId": "b0223",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Blunderbuss Decimator",
-     "Veteran Warrior"
-    ]
-   },
-   "entryKind": "option",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "units.blunderbuss-decimators.options"
-   ]
-  },
-  {
-   "blockId": "b0236",
-   "unitContext": {
-    "name": "Blunderbuss Decimators",
-    "sourceBlockId": "b0223",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Blunderbuss Decimator",
-     "Veteran Warrior"
-    ]
-   },
-   "entryKind": "special-rules",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "units.blunderbuss-decimators.specialRules"
-   ]
-  },
-  {
-   "blockId": "h0082",
-   "unitContext": {
-    "name": "Blunderbuss Decimators",
-    "sourceBlockId": "b0223",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Blunderbuss Decimator",
-     "Veteran Warrior"
-    ]
-   },
-   "entryKind": "heading",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "profiles.blunderbuss decimators.notes"
-   ]
-  },
-  {
-   "blockId": "b0237",
-   "unitContext": {
-    "name": "Blunderbuss Decimators",
-    "sourceBlockId": "b0223",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Blunderbuss Decimator",
-     "Veteran Warrior"
-    ]
-   },
-   "entryKind": "paragraph",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "profiles.blunderbuss decimators.notes"
-   ]
-  },
-  {
-   "blockId": "b0239",
-   "unitContext": {
-    "name": "Infernal Guard",
-    "sourceBlockId": "b0239",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Infernal Guard",
-     "Deathmask"
-    ]
-   },
-   "entryKind": "statline",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "profiles.infernal guard"
-   ]
-  },
-  {
-   "blockId": "b0242",
-   "unitContext": {
-    "name": "Infernal Guard",
-    "sourceBlockId": "b0239",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Infernal Guard",
-     "Deathmask"
-    ]
-   },
-   "entryKind": "unit-size",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "units.infernal-guard.minimum"
-   ]
-  },
-  {
-   "blockId": "b0245",
-   "unitContext": {
-    "name": "Infernal Guard",
-    "sourceBlockId": "b0239",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Infernal Guard",
-     "Deathmask"
-    ]
-   },
-   "entryKind": "option",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "units.infernal-guard.options"
-   ]
-  },
-  {
-   "blockId": "b0251",
-   "unitContext": {
-    "name": "Infernal Guard",
-    "sourceBlockId": "b0239",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Infernal Guard",
-     "Deathmask"
-    ]
-   },
-   "entryKind": "option",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "units.infernal-guard.options"
-   ]
-  },
-  {
-   "blockId": "b0253",
-   "unitContext": {
-    "name": "Infernal Ironsworn",
-    "sourceBlockId": "b0253",
-    "method": "table-title",
-    "confidence": "high",
-    "profileNames": [
-     "Infernal Ironsworn",
-     "Overseer"
-    ]
-   },
-   "entryKind": "statline",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "profiles.infernal ironsworn",
-    "profiles.infernal ironsworn"
-   ]
-  },
-  {
-   "blockId": "b0256",
-   "unitContext": {
-    "name": "Infernal Ironsworn",
-    "sourceBlockId": "b0253",
-    "method": "table-title",
-    "confidence": "high",
-    "profileNames": [
-     "Infernal Ironsworn",
-     "Overseer"
-    ]
-   },
-   "entryKind": "unit-size",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "units.infernal-ironsworn-core.minimum",
-    "units.infernal-ironsworn.minimum"
-   ]
-  },
-  {
-   "blockId": "b0257",
-   "unitContext": {
-    "name": "Infernal Ironsworn",
-    "sourceBlockId": "b0253",
-    "method": "table-title",
-    "confidence": "high",
-    "profileNames": [
-     "Infernal Ironsworn",
-     "Overseer"
-    ]
-   },
-   "entryKind": "equipment",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "profiles.infernal ironsworn.equipment"
-   ]
-  },
-  {
-   "blockId": "b0263",
-   "unitContext": {
-    "name": "Infernal Ironsworn",
-    "sourceBlockId": "b0253",
-    "method": "table-title",
-    "confidence": "high",
-    "profileNames": [
-     "Infernal Ironsworn",
-     "Overseer"
-    ]
-   },
-   "entryKind": "option",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "units.infernal-ironsworn-core.options",
-    "units.infernal-ironsworn.options"
-   ]
-  },
-  {
-   "blockId": "b0282",
-   "unitContext": {
-    "name": "K’daai Fireborn",
-    "sourceBlockId": "b0282",
-    "method": "table-title",
-    "confidence": "high",
-    "profileNames": [
-     "K’daai Fireborn",
-     "Manburner"
-    ]
-   },
-   "entryKind": "statline",
-   "changeKinds": [
-    "changed",
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "profiles.k daai fireborn"
-   ]
-  },
-  {
-   "blockId": "b0286",
-   "unitContext": {
-    "name": "K’daai Fireborn",
-    "sourceBlockId": "b0282",
-    "method": "table-title",
-    "confidence": "high",
-    "profileNames": [
-     "K’daai Fireborn",
-     "Manburner"
-    ]
-   },
-   "entryKind": "equipment",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "profiles.k daai fireborn.equipment"
-   ]
-  },
-  {
-   "blockId": "b0288",
-   "unitContext": {
-    "name": "K’daai Fireborn",
-    "sourceBlockId": "b0282",
-    "method": "table-title",
-    "confidence": "high",
-    "profileNames": [
-     "K’daai Fireborn",
-     "Manburner"
-    ]
-   },
-   "entryKind": "special-rules",
-   "changeKinds": [
-    "changed"
-   ],
-   "status": "applied",
-   "targets": [
-    "units.k'daai-fireborn.specialRules"
-   ]
-  },
-  {
-   "blockId": "b0301",
-   "unitContext": {
-    "name": "Bull Centaur Renders",
-    "sourceBlockId": "b0301",
-    "method": "table-title",
-    "confidence": "high",
-    "profileNames": [
-     "Bull Centaur Render 7",
-     "Bull Centaur Ba’hal 7"
-    ]
-   },
-   "entryKind": "statline",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "profiles.bull centaur renders"
-   ]
-  },
-  {
-   "blockId": "b0306",
-   "unitContext": {
-    "name": "Bull Centaur Renders",
-    "sourceBlockId": "b0301",
-    "method": "table-title",
-    "confidence": "high",
-    "profileNames": [
-     "Bull Centaur Render 7",
-     "Bull Centaur Ba’hal 7"
-    ]
-   },
-   "entryKind": "list",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "profiles.bull centaur renders.notes"
-   ]
-  },
-  {
-   "blockId": "b0311",
-   "unitContext": {
-    "name": "Bull Centaur Renders",
-    "sourceBlockId": "b0301",
-    "method": "table-title",
-    "confidence": "high",
-    "profileNames": [
-     "Bull Centaur Render 7",
-     "Bull Centaur Ba’hal 7"
-    ]
-   },
-   "entryKind": "option",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "units.bull-centaur-renders.options"
-   ]
-  },
-  {
-   "blockId": "b0322",
-   "unitContext": {
-    "name": "Iron Daemon",
-    "sourceBlockId": "b0313",
-    "method": "table-title",
-    "confidence": "high",
-    "profileNames": [
-     "Iron Daemon",
-     "Chaos Dwarf Crew (x3)"
-    ]
-   },
-   "entryKind": "paragraph",
-   "changeKinds": [
-    "new",
-    "todo"
-   ],
-   "status": "applied",
-   "targets": [
-    "rules.carriage-hauler"
-   ],
-   "appliedBy": "hand, 2026-08-11 — zie commit"
-  },
-  {
-   "blockId": "b0331",
-   "unitContext": {
-    "name": "Iron Daemon",
-    "sourceBlockId": "b0313",
-    "method": "table-title",
-    "confidence": "high",
-    "profileNames": [
-     "Iron Daemon",
-     "Chaos Dwarf Crew (x3)"
-    ]
-   },
-   "entryKind": "paragraph",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "rules.skullcracker"
-   ]
-  },
-  {
-   "blockId": "b0334",
-   "unitContext": {
-    "name": "The Great Tauruses",
-    "sourceBlockId": "b0332",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Bale Taurus",
-     "Great Taurus"
-    ]
-   },
-   "entryKind": "troop-type",
-   "changeKinds": [
-    "changed"
-   ],
-   "status": "applied",
-   "targets": [
-    "profiles.the great tauruses.troopType"
-   ]
-  },
-  {
-   "blockId": "b0335",
-   "unitContext": {
-    "name": "The Great Tauruses",
-    "sourceBlockId": "b0332",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Bale Taurus",
-     "Great Taurus"
-    ]
-   },
-   "entryKind": "base-size",
-   "changeKinds": [
-    "changed"
-   ],
-   "status": "captured",
-   "targets": [
-    "profiles.the great tauruses.baseSize"
-   ]
-  },
-  {
-   "blockId": "b0351",
-   "unitContext": {
-    "name": "Deathshrieker Rocket Launcher",
-    "sourceBlockId": "b0351",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Deathshrieker",
-     "Chaos Dwarf Crew"
-    ]
-   },
-   "entryKind": "statline",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "profiles.deathshrieker rocket launcher"
-   ]
-  },
-  {
-   "blockId": "b0354",
-   "unitContext": {
-    "name": "Deathshrieker Rocket Launcher",
-    "sourceBlockId": "b0351",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Deathshrieker",
-     "Chaos Dwarf Crew"
-    ]
-   },
-   "entryKind": "equipment",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "profiles.deathshrieker rocket launcher.equipment"
-   ]
-  },
-  {
-   "blockId": "b0358",
-   "unitContext": {
-    "name": "Deathshrieker Rocket Launcher",
-    "sourceBlockId": "b0351",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Deathshrieker",
-     "Chaos Dwarf Crew"
-    ]
-   },
-   "entryKind": "paragraph",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "rules.r-s-ap-special-rules"
-   ]
-  },
-  {
-   "blockId": "b0359",
-   "unitContext": {
-    "name": "Deathshrieker Rocket Launcher",
-    "sourceBlockId": "b0351",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Deathshrieker",
-     "Chaos Dwarf Crew"
-    ]
-   },
-   "entryKind": "paragraph",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "rules.cumbersome-move-or-shoot-multiple-wounds-d6"
-   ]
-  },
-  {
-   "blockId": "b0361",
-   "unitContext": {
-    "name": "Deathshrieker Rocket Launcher",
-    "sourceBlockId": "b0351",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Deathshrieker",
-     "Chaos Dwarf Crew"
-    ]
-   },
-   "entryKind": "paragraph",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "rules.cumbersome-move-or-shoot-multiple-wounds-d6"
-   ]
-  },
-  {
-   "blockId": "b0362",
-   "unitContext": {
-    "name": "Deathshrieker Rocket Launcher",
-    "sourceBlockId": "b0351",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Deathshrieker",
-     "Chaos Dwarf Crew"
-    ]
-   },
-   "entryKind": "paragraph",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "rules.r-s-ap-special-rules"
-   ]
-  },
-  {
-   "blockId": "b0367",
-   "unitContext": {
-    "name": "Dreadquake Mortar",
-    "sourceBlockId": "b0365",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Dreadquake Mortar",
-     "Chaos Dwarf Crew"
-    ]
-   },
-   "entryKind": "base-size",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "profiles.dreadquake mortar.baseSize"
-   ]
-  },
-  {
-   "blockId": "b0368",
-   "unitContext": {
-    "name": "Dreadquake Mortar",
-    "sourceBlockId": "b0365",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Dreadquake Mortar",
-     "Chaos Dwarf Crew"
-    ]
-   },
-   "entryKind": "equipment",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "profiles.dreadquake mortar.equipment"
-   ]
-  },
-  {
-   "blockId": "b0369",
-   "unitContext": {
-    "name": "Dreadquake Mortar",
-    "sourceBlockId": "b0365",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Dreadquake Mortar",
-     "Chaos Dwarf Crew"
-    ]
-   },
-   "entryKind": "option",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "units.dreadquake-mortar.options"
-   ]
-  },
-  {
-   "blockId": "b0371",
-   "unitContext": {
-    "name": "Dreadquake Mortar",
-    "sourceBlockId": "b0365",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Dreadquake Mortar",
-     "Chaos Dwarf Crew"
-    ]
-   },
-   "entryKind": "paragraph",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "rules.r-s-ap-special-rules"
-   ]
-  },
-  {
-   "blockId": "b0372",
-   "unitContext": {
-    "name": "Dreadquake Mortar",
-    "sourceBlockId": "b0365",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Dreadquake Mortar",
-     "Chaos Dwarf Crew"
-    ]
-   },
-   "entryKind": "paragraph",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "rules.multiple-wounds-d3-1-quake-slow-reload"
-   ]
-  },
-  {
-   "blockId": "b0374",
-   "unitContext": {
-    "name": "Dreadquake Mortar",
-    "sourceBlockId": "b0365",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Dreadquake Mortar",
-     "Chaos Dwarf Crew"
-    ]
-   },
-   "entryKind": "paragraph",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "rules.multiple-wounds-d3-1-quake-slow-reload"
-   ]
-  },
-  {
-   "blockId": "b0375",
-   "unitContext": {
-    "name": "Dreadquake Mortar",
-    "sourceBlockId": "b0365",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Dreadquake Mortar",
-     "Chaos Dwarf Crew"
-    ]
-   },
-   "entryKind": "paragraph",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "rules.dreadquake-mortar-special-rules"
-   ]
-  },
-  {
-   "blockId": "b0376",
-   "unitContext": {
-    "name": "Dreadquake Mortar",
-    "sourceBlockId": "b0365",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Dreadquake Mortar",
-     "Chaos Dwarf Crew"
-    ]
-   },
-   "entryKind": "paragraph",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "rules.dreadquake-mortar-special-rules"
-   ]
-  },
-  {
-   "blockId": "h0114",
-   "unitContext": {
-    "name": "Dreadquake Mortar",
-    "sourceBlockId": "b0365",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Dreadquake Mortar",
-     "Chaos Dwarf Crew"
-    ]
-   },
-   "entryKind": "heading",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "profiles.dreadquake mortar.notes"
-   ]
-  },
-  {
-   "blockId": "b0377",
-   "unitContext": {
-    "name": "Indentured Ogres",
-    "sourceBlockId": "b0377",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Ogre Loader"
-    ]
-   },
-   "entryKind": "statline",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "profiles.indentured ogres"
-   ]
-  },
-  {
-   "blockId": "b0378",
-   "unitContext": {
-    "name": "Indentured Ogres",
-    "sourceBlockId": "b0377",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Ogre Loader"
-    ]
-   },
-   "entryKind": "paragraph",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "profiles.indentured ogres.notes"
-   ]
-  },
-  {
-   "blockId": "b0379",
-   "unitContext": {
-    "name": "Indentured Ogres",
-    "sourceBlockId": "b0377",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Ogre Loader"
-    ]
-   },
-   "entryKind": "troop-type",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "profiles.indentured ogres.troopType"
-   ]
-  },
-  {
-   "blockId": "b0380",
-   "unitContext": {
-    "name": "Indentured Ogres",
-    "sourceBlockId": "b0377",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Ogre Loader"
-    ]
-   },
-   "entryKind": "base-size",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "profiles.indentured ogres.baseSize"
-   ]
-  },
-  {
-   "blockId": "b0381",
-   "unitContext": {
-    "name": "Indentured Ogres",
-    "sourceBlockId": "b0377",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Ogre Loader"
-    ]
-   },
-   "entryKind": "unit-size",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "profiles.indentured ogres.notes"
-   ]
-  },
-  {
-   "blockId": "b0382",
-   "unitContext": {
-    "name": "Indentured Ogres",
-    "sourceBlockId": "b0377",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Ogre Loader"
-    ]
-   },
-   "entryKind": "equipment",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "profiles.indentured ogres.equipment"
-   ]
-  },
-  {
-   "blockId": "h0115",
-   "unitContext": {
-    "name": "Indentured Ogres",
-    "sourceBlockId": "b0377",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Ogre Loader"
-    ]
-   },
-   "entryKind": "heading",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "profiles.indentured ogres.notes"
-   ]
-  },
-  {
-   "blockId": "b0383",
-   "unitContext": {
-    "name": "Indentured Ogres",
-    "sourceBlockId": "b0377",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Ogre Loader"
-    ]
-   },
-   "entryKind": "option",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "profiles.indentured ogres.notes"
-   ]
-  },
-  {
-   "blockId": "b0384",
-   "unitContext": {
-    "name": "Indentured Ogres",
-    "sourceBlockId": "b0377",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Ogre Loader"
-    ]
-   },
-   "entryKind": "special-rules",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "profiles.indentured ogres.specialRules"
-   ]
-  },
-  {
-   "blockId": "h0116",
-   "unitContext": {
-    "name": "Indentured Ogres",
-    "sourceBlockId": "b0377",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Ogre Loader"
-    ]
-   },
-   "entryKind": "heading",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "rules.enough-for-everyone"
-   ]
-  },
-  {
-   "blockId": "b0385",
-   "unitContext": {
-    "name": "Indentured Ogres",
-    "sourceBlockId": "b0377",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Ogre Loader"
-    ]
-   },
-   "entryKind": "paragraph",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "rules.enough-for-everyone"
-   ]
-  },
-  {
-   "blockId": "h0117",
-   "unitContext": {
-    "name": "Indentured Ogres",
-    "sourceBlockId": "b0377",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Ogre Loader"
-    ]
-   },
-   "entryKind": "heading",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "rules.indentured-crew"
-   ]
-  },
-  {
-   "blockId": "b0386",
-   "unitContext": {
-    "name": "Indentured Ogres",
-    "sourceBlockId": "b0377",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Ogre Loader"
-    ]
-   },
-   "entryKind": "paragraph",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "rules.indentured-crew"
-   ]
-  },
-  {
-   "blockId": "b0390",
-   "unitContext": {
-    "name": "Magma Cannon",
-    "sourceBlockId": "b0387",
-    "method": "table-title",
-    "confidence": "high",
-    "profileNames": [
-     "Magma Cannon",
-     "Chaos Dwarf Crew"
-    ]
-   },
-   "entryKind": "equipment",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "profiles.magma cannon.equipment"
-   ]
-  },
-  {
-   "blockId": "b0393",
-   "unitContext": {
-    "name": "Hobgoblin Bolt Thrower",
-    "sourceBlockId": "b0393",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Bolt Thrower",
-     "Hobgoblin Crew"
-    ]
-   },
-   "entryKind": "statline",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "profiles.hobgoblin bolt thrower"
-   ]
-  }
- ]
+  "id": "cd-renegade-v2-coverage",
+  "army": "chaos-dwarfs",
+  "reference": "cd-renegade-v2-reference.json",
+  "generatedBy": "scripts/compile-renegade-v2.mjs",
+  "counts": {
+    "applied": 73,
+    "captured": 68,
+    "unresolved": 0,
+    "unsupported": 0,
+    "todo": 1
+  },
+  "blocks": [
+    {
+      "blockId": "b0061",
+      "unitContext": null,
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "composition.sourceRules.Characters"
+      ]
+    },
+    {
+      "blockId": "b0063",
+      "unitContext": null,
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "composition.sourceRules.Core"
+      ]
+    },
+    {
+      "blockId": "b0065",
+      "unitContext": null,
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "composition.sourceRules.Special"
+      ]
+    },
+    {
+      "blockId": "b0066",
+      "unitContext": null,
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "composition.sourceRules.Special"
+      ]
+    },
+    {
+      "blockId": "b0068",
+      "unitContext": null,
+      "entryKind": "list",
+      "changeKinds": [
+        "new",
+        "changed"
+      ],
+      "status": "captured",
+      "targets": [
+        "composition.sourceRules.Rare"
+      ]
+    },
+    {
+      "blockId": "h0009",
+      "unitContext": null,
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "composition.sourceRules.“Mercenaries”"
+      ]
+    },
+    {
+      "blockId": "b0070",
+      "unitContext": null,
+      "entryKind": "list",
+      "changeKinds": [
+        "changed",
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "composition.sourceRules.“Mercenaries”"
+      ]
+    },
+    {
+      "blockId": "b0072",
+      "unitContext": null,
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "composition.sourceRules.Allies"
+      ]
+    },
+    {
+      "blockId": "b0073",
+      "unitContext": null,
+      "entryKind": "table",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "composition.sourceRules.Allies"
+      ]
+    },
+    {
+      "blockId": "b0077",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.blackshard-armour"
+      ]
+    },
+    {
+      "blockId": "b0078",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.blazing-body"
+      ]
+    },
+    {
+      "blockId": "b0079",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.blazing-body"
+      ]
+    },
+    {
+      "blockId": "b0082",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.hellbound"
+      ]
+    },
+    {
+      "blockId": "b0083",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.hellbound"
+      ]
+    },
+    {
+      "blockId": "h0032",
+      "unitContext": null,
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "magicItemText.armour-of-bazherak-the-cruel"
+      ]
+    },
+    {
+      "blockId": "b0102",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "magicItemText.mantle-of-stone"
+      ]
+    },
+    {
+      "blockId": "b0105",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "magicItemText.ashen-banner"
+      ]
+    },
+    {
+      "blockId": "b0108",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "magicItemText.daemonic-familiar"
+      ]
+    },
+    {
+      "blockId": "b0127",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "changed"
+      ],
+      "status": "applied",
+      "targets": [
+        "lores.lore-of-hashut.spell-storm-of-ash"
+      ]
+    },
+    {
+      "blockId": "b0130",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "changed"
+      ],
+      "status": "applied",
+      "targets": [
+        "lores.lore-of-hashut.spell-flames-of-hashut"
+      ]
+    },
+    {
+      "blockId": "b0135",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.darkforged-weapon"
+      ]
+    },
+    {
+      "blockId": "h0057",
+      "unitContext": null,
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "rules.darkforged-weapon-table"
+      ]
+    },
+    {
+      "blockId": "b0136",
+      "unitContext": null,
+      "entryKind": "table",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "rules.darkforged-weapon-table"
+      ]
+    },
+    {
+      "blockId": "b0141",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.hailshot-blunderbuss"
+      ]
+    },
+    {
+      "blockId": "b0142",
+      "unitContext": null,
+      "entryKind": "weapon-profile",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "rules.naptha-bombs"
+      ]
+    },
+    {
+      "blockId": "b0144",
+      "unitContext": {
+        "name": "Sorcerers Of Hashut",
+        "sourceBlockId": "b0144",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Sorcerer-Prophet",
+          "Daemonsmith Sorcerer"
+        ]
+      },
+      "entryKind": "statline",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.sorcerer-prophet.points",
+        "profiles.sorcerer prophet",
+        "profiles.daemonsmith sorcerer"
+      ]
+    },
+    {
+      "blockId": "b0148",
+      "unitContext": {
+        "name": "Sorcerers Of Hashut",
+        "sourceBlockId": "b0144",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Sorcerer-Prophet",
+          "Daemonsmith Sorcerer"
+        ]
+      },
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.sorcerer prophet.notes",
+        "profiles.daemonsmith sorcerer.notes"
+      ]
+    },
+    {
+      "blockId": "b0151",
+      "unitContext": {
+        "name": "Sorcerers Of Hashut",
+        "sourceBlockId": "b0144",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Sorcerer-Prophet",
+          "Daemonsmith Sorcerer"
+        ]
+      },
+      "entryKind": "option",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.sorcerer-prophet.options",
+        "units.daemonsmith-sorcerer.options"
+      ]
+    },
+    {
+      "blockId": "b0157",
+      "unitContext": {
+        "name": "Sorcerers Of Hashut",
+        "sourceBlockId": "b0144",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Sorcerer-Prophet",
+          "Daemonsmith Sorcerer"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.infernal-engineer"
+      ]
+    },
+    {
+      "blockId": "h0065",
+      "unitContext": {
+        "name": "Sorcerers Of Hashut",
+        "sourceBlockId": "b0144",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Sorcerer-Prophet",
+          "Daemonsmith Sorcerer"
+        ]
+      },
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.sorcerer prophet.notes",
+        "profiles.daemonsmith sorcerer.notes"
+      ]
+    },
+    {
+      "blockId": "b0159",
+      "unitContext": {
+        "name": "Chaos Dwarf Lords",
+        "sourceBlockId": "b0159",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Despot",
+          "Seneschal"
+        ]
+      },
+      "entryKind": "statline",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.infernal-seneschal.points",
+        "profiles.chaos dwarf lords"
+      ]
+    },
+    {
+      "blockId": "b0160",
+      "unitContext": {
+        "name": "Chaos Dwarf Lords",
+        "sourceBlockId": "b0159",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Despot",
+          "Seneschal"
+        ]
+      },
+      "entryKind": "troop-type",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "profiles.chaos dwarf lords.troopType"
+      ]
+    },
+    {
+      "blockId": "b0161",
+      "unitContext": {
+        "name": "Chaos Dwarf Lords",
+        "sourceBlockId": "b0159",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Despot",
+          "Seneschal"
+        ]
+      },
+      "entryKind": "base-size",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.chaos dwarf lords.baseSize"
+      ]
+    },
+    {
+      "blockId": "h0066",
+      "unitContext": {
+        "name": "Chaos Dwarf Lords",
+        "sourceBlockId": "b0159",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Despot",
+          "Seneschal"
+        ]
+      },
+      "entryKind": "unit-size",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.chaos dwarf lords.notes"
+      ]
+    },
+    {
+      "blockId": "b0162",
+      "unitContext": {
+        "name": "Chaos Dwarf Lords",
+        "sourceBlockId": "b0159",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Despot",
+          "Seneschal"
+        ]
+      },
+      "entryKind": "equipment",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.chaos dwarf lords.equipment"
+      ]
+    },
+    {
+      "blockId": "h0067",
+      "unitContext": {
+        "name": "Chaos Dwarf Lords",
+        "sourceBlockId": "b0159",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Despot",
+          "Seneschal"
+        ]
+      },
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.chaos dwarf lords.notes"
+      ]
+    },
+    {
+      "blockId": "b0163",
+      "unitContext": {
+        "name": "Chaos Dwarf Lords",
+        "sourceBlockId": "b0159",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Despot",
+          "Seneschal"
+        ]
+      },
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.chaos dwarf lords.notes"
+      ]
+    },
+    {
+      "blockId": "b0164",
+      "unitContext": {
+        "name": "Chaos Dwarf Lords",
+        "sourceBlockId": "b0159",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Despot",
+          "Seneschal"
+        ]
+      },
+      "entryKind": "option",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.chaos dwarf lords.notes"
+      ]
+    },
+    {
+      "blockId": "b0165",
+      "unitContext": {
+        "name": "Chaos Dwarf Lords",
+        "sourceBlockId": "b0159",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Despot",
+          "Seneschal"
+        ]
+      },
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.chaos dwarf lords.notes"
+      ]
+    },
+    {
+      "blockId": "b0166",
+      "unitContext": {
+        "name": "Chaos Dwarf Lords",
+        "sourceBlockId": "b0159",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Despot",
+          "Seneschal"
+        ]
+      },
+      "entryKind": "option",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.chaos dwarf lords.notes"
+      ]
+    },
+    {
+      "blockId": "b0167",
+      "unitContext": {
+        "name": "Chaos Dwarf Lords",
+        "sourceBlockId": "b0159",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Despot",
+          "Seneschal"
+        ]
+      },
+      "entryKind": "option",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.chaos dwarf lords.notes"
+      ]
+    },
+    {
+      "blockId": "b0168",
+      "unitContext": {
+        "name": "Chaos Dwarf Lords",
+        "sourceBlockId": "b0159",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Despot",
+          "Seneschal"
+        ]
+      },
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.chaos dwarf lords.notes"
+      ]
+    },
+    {
+      "blockId": "b0169",
+      "unitContext": {
+        "name": "Chaos Dwarf Lords",
+        "sourceBlockId": "b0159",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Despot",
+          "Seneschal"
+        ]
+      },
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.chaos dwarf lords.notes"
+      ]
+    },
+    {
+      "blockId": "b0170",
+      "unitContext": {
+        "name": "Chaos Dwarf Lords",
+        "sourceBlockId": "b0159",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Despot",
+          "Seneschal"
+        ]
+      },
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.chaos dwarf lords.notes"
+      ]
+    },
+    {
+      "blockId": "b0171",
+      "unitContext": {
+        "name": "Chaos Dwarf Lords",
+        "sourceBlockId": "b0159",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Despot",
+          "Seneschal"
+        ]
+      },
+      "entryKind": "special-rules",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "profiles.chaos dwarf lords.specialRules"
+      ]
+    },
+    {
+      "blockId": "h0068",
+      "unitContext": {
+        "name": "Chaos Dwarf Lords",
+        "sourceBlockId": "b0159",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Despot",
+          "Seneschal"
+        ]
+      },
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.relentless-march"
+      ]
+    },
+    {
+      "blockId": "h0069",
+      "unitContext": {
+        "name": "Chaos Dwarf Lords",
+        "sourceBlockId": "b0159",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Despot",
+          "Seneschal"
+        ]
+      },
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.relentless-march"
+      ]
+    },
+    {
+      "blockId": "h0070",
+      "unitContext": {
+        "name": "Chaos Dwarf Lords",
+        "sourceBlockId": "b0159",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Despot",
+          "Seneschal"
+        ]
+      },
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.chaos dwarf lords.notes"
+      ]
+    },
+    {
+      "blockId": "b0172",
+      "unitContext": {
+        "name": "Infernal Guard Commanders",
+        "sourceBlockId": "b0172",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Castellan"
+        ]
+      },
+      "entryKind": "statline",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.infernal-castellan.points",
+        "profiles.infernal guard commanders"
+      ]
+    },
+    {
+      "blockId": "b0173",
+      "unitContext": {
+        "name": "Infernal Guard Commanders",
+        "sourceBlockId": "b0172",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Castellan"
+        ]
+      },
+      "entryKind": "troop-type",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "profiles.infernal guard commanders.troopType"
+      ]
+    },
+    {
+      "blockId": "b0174",
+      "unitContext": {
+        "name": "Infernal Guard Commanders",
+        "sourceBlockId": "b0172",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Castellan"
+        ]
+      },
+      "entryKind": "base-size",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.infernal guard commanders.baseSize"
+      ]
+    },
+    {
+      "blockId": "h0071",
+      "unitContext": {
+        "name": "Infernal Guard Commanders",
+        "sourceBlockId": "b0172",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Castellan"
+        ]
+      },
+      "entryKind": "unit-size",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.infernal guard commanders.notes"
+      ]
+    },
+    {
+      "blockId": "b0175",
+      "unitContext": {
+        "name": "Infernal Guard Commanders",
+        "sourceBlockId": "b0172",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Castellan"
+        ]
+      },
+      "entryKind": "equipment",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.infernal guard commanders.equipment"
+      ]
+    },
+    {
+      "blockId": "h0072",
+      "unitContext": {
+        "name": "Infernal Guard Commanders",
+        "sourceBlockId": "b0172",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Castellan"
+        ]
+      },
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.infernal guard commanders.notes"
+      ]
+    },
+    {
+      "blockId": "b0176",
+      "unitContext": {
+        "name": "Infernal Guard Commanders",
+        "sourceBlockId": "b0172",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Castellan"
+        ]
+      },
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.infernal guard commanders.notes"
+      ]
+    },
+    {
+      "blockId": "b0177",
+      "unitContext": {
+        "name": "Infernal Guard Commanders",
+        "sourceBlockId": "b0172",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Castellan"
+        ]
+      },
+      "entryKind": "option",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.infernal guard commanders.notes"
+      ]
+    },
+    {
+      "blockId": "b0178",
+      "unitContext": {
+        "name": "Infernal Guard Commanders",
+        "sourceBlockId": "b0172",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Castellan"
+        ]
+      },
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.infernal guard commanders.notes"
+      ]
+    },
+    {
+      "blockId": "b0179",
+      "unitContext": {
+        "name": "Infernal Guard Commanders",
+        "sourceBlockId": "b0172",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Castellan"
+        ]
+      },
+      "entryKind": "option",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.infernal guard commanders.notes"
+      ]
+    },
+    {
+      "blockId": "b0180",
+      "unitContext": {
+        "name": "Infernal Guard Commanders",
+        "sourceBlockId": "b0172",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Castellan"
+        ]
+      },
+      "entryKind": "option",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.infernal guard commanders.notes"
+      ]
+    },
+    {
+      "blockId": "b0181",
+      "unitContext": {
+        "name": "Infernal Guard Commanders",
+        "sourceBlockId": "b0172",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Castellan"
+        ]
+      },
+      "entryKind": "special-rules",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "profiles.infernal guard commanders.specialRules"
+      ]
+    },
+    {
+      "blockId": "h0073",
+      "unitContext": {
+        "name": "Infernal Guard Commanders",
+        "sourceBlockId": "b0172",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Castellan"
+        ]
+      },
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.infernal-taskmaster"
+      ]
+    },
+    {
+      "blockId": "b0182",
+      "unitContext": {
+        "name": "Infernal Guard Commanders",
+        "sourceBlockId": "b0172",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Castellan"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.infernal-taskmaster"
+      ]
+    },
+    {
+      "blockId": "b0188",
+      "unitContext": {
+        "name": "Bull Centaur Taur’ruk",
+        "sourceBlockId": "b0183",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Taur’ruk"
+        ]
+      },
+      "entryKind": "option",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.bull-centaur-taur'ruk.options"
+      ]
+    },
+    {
+      "blockId": "b0206",
+      "unitContext": {
+        "name": "Giant Wolf",
+        "sourceBlockId": "b0201",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Giant Wolf"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.giant wolf.notes"
+      ]
+    },
+    {
+      "blockId": "b0207",
+      "unitContext": {
+        "name": "Chaos Dwarf Warriors",
+        "sourceBlockId": "b0207",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Chaos Dwarf Warrior",
+          "Veteran Warrior"
+        ]
+      },
+      "entryKind": "statline",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "profiles.chaos dwarf warriors"
+      ]
+    },
+    {
+      "blockId": "b0208",
+      "unitContext": {
+        "name": "Chaos Dwarf Warriors",
+        "sourceBlockId": "b0207",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Chaos Dwarf Warrior",
+          "Veteran Warrior"
+        ]
+      },
+      "entryKind": "troop-type",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "profiles.chaos dwarf warriors.troopType"
+      ]
+    },
+    {
+      "blockId": "b0209",
+      "unitContext": {
+        "name": "Chaos Dwarf Warriors",
+        "sourceBlockId": "b0207",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Chaos Dwarf Warrior",
+          "Veteran Warrior"
+        ]
+      },
+      "entryKind": "base-size",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.chaos dwarf warriors.baseSize"
+      ]
+    },
+    {
+      "blockId": "b0210",
+      "unitContext": {
+        "name": "Chaos Dwarf Warriors",
+        "sourceBlockId": "b0207",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Chaos Dwarf Warrior",
+          "Veteran Warrior"
+        ]
+      },
+      "entryKind": "unit-size",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.chaos-dwarf-warriors.minimum"
+      ]
+    },
+    {
+      "blockId": "b0211",
+      "unitContext": {
+        "name": "Chaos Dwarf Warriors",
+        "sourceBlockId": "b0207",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Chaos Dwarf Warrior",
+          "Veteran Warrior"
+        ]
+      },
+      "entryKind": "equipment",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.chaos dwarf warriors.equipment"
+      ]
+    },
+    {
+      "blockId": "h0080",
+      "unitContext": {
+        "name": "Chaos Dwarf Warriors",
+        "sourceBlockId": "b0207",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Chaos Dwarf Warrior",
+          "Veteran Warrior"
+        ]
+      },
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.chaos dwarf warriors.notes"
+      ]
+    },
+    {
+      "blockId": "b0212",
+      "unitContext": {
+        "name": "Chaos Dwarf Warriors",
+        "sourceBlockId": "b0207",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Chaos Dwarf Warrior",
+          "Veteran Warrior"
+        ]
+      },
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.chaos dwarf warriors.notes"
+      ]
+    },
+    {
+      "blockId": "b0213",
+      "unitContext": {
+        "name": "Chaos Dwarf Warriors",
+        "sourceBlockId": "b0207",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Chaos Dwarf Warrior",
+          "Veteran Warrior"
+        ]
+      },
+      "entryKind": "option",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.chaos-dwarf-warriors.options"
+      ]
+    },
+    {
+      "blockId": "b0214",
+      "unitContext": {
+        "name": "Chaos Dwarf Warriors",
+        "sourceBlockId": "b0207",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Chaos Dwarf Warrior",
+          "Veteran Warrior"
+        ]
+      },
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.chaos dwarf warriors.notes"
+      ]
+    },
+    {
+      "blockId": "b0215",
+      "unitContext": {
+        "name": "Chaos Dwarf Warriors",
+        "sourceBlockId": "b0207",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Chaos Dwarf Warrior",
+          "Veteran Warrior"
+        ]
+      },
+      "entryKind": "option",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.chaos-dwarf-warriors.options"
+      ]
+    },
+    {
+      "blockId": "b0216",
+      "unitContext": {
+        "name": "Chaos Dwarf Warriors",
+        "sourceBlockId": "b0207",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Chaos Dwarf Warrior",
+          "Veteran Warrior"
+        ]
+      },
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.chaos dwarf warriors.notes"
+      ]
+    },
+    {
+      "blockId": "b0217",
+      "unitContext": {
+        "name": "Chaos Dwarf Warriors",
+        "sourceBlockId": "b0207",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Chaos Dwarf Warrior",
+          "Veteran Warrior"
+        ]
+      },
+      "entryKind": "option",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.chaos-dwarf-warriors.options"
+      ]
+    },
+    {
+      "blockId": "b0218",
+      "unitContext": {
+        "name": "Chaos Dwarf Warriors",
+        "sourceBlockId": "b0207",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Chaos Dwarf Warrior",
+          "Veteran Warrior"
+        ]
+      },
+      "entryKind": "special-rules",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.chaos-dwarf-warriors.specialRules"
+      ]
+    },
+    {
+      "blockId": "b0219",
+      "unitContext": {
+        "name": "Chaos Dwarf Warriors",
+        "sourceBlockId": "b0207",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Chaos Dwarf Warrior",
+          "Veteran Warrior"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.chaos dwarf warriors.notes"
+      ]
+    },
+    {
+      "blockId": "b0220",
+      "unitContext": {
+        "name": "Blunderbuss Decimators",
+        "sourceBlockId": "b0220",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Blunderbuss Decimator",
+          "Veteran Warrior"
+        ]
+      },
+      "entryKind": "statline",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "profiles.blunderbuss decimators"
+      ]
+    },
+    {
+      "blockId": "b0221",
+      "unitContext": {
+        "name": "Blunderbuss Decimators",
+        "sourceBlockId": "b0220",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Blunderbuss Decimator",
+          "Veteran Warrior"
+        ]
+      },
+      "entryKind": "troop-type",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "profiles.blunderbuss decimators.troopType"
+      ]
+    },
+    {
+      "blockId": "b0222",
+      "unitContext": {
+        "name": "Blunderbuss Decimators",
+        "sourceBlockId": "b0220",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Blunderbuss Decimator",
+          "Veteran Warrior"
+        ]
+      },
+      "entryKind": "base-size",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.blunderbuss decimators.baseSize"
+      ]
+    },
+    {
+      "blockId": "b0223",
+      "unitContext": {
+        "name": "Blunderbuss Decimators",
+        "sourceBlockId": "b0220",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Blunderbuss Decimator",
+          "Veteran Warrior"
+        ]
+      },
+      "entryKind": "unit-size",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.blunderbuss-decimators.minimum"
+      ]
+    },
+    {
+      "blockId": "b0224",
+      "unitContext": {
+        "name": "Blunderbuss Decimators",
+        "sourceBlockId": "b0220",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Blunderbuss Decimator",
+          "Veteran Warrior"
+        ]
+      },
+      "entryKind": "equipment",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.blunderbuss decimators.equipment"
+      ]
+    },
+    {
+      "blockId": "h0081",
+      "unitContext": {
+        "name": "Blunderbuss Decimators",
+        "sourceBlockId": "b0220",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Blunderbuss Decimator",
+          "Veteran Warrior"
+        ]
+      },
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.blunderbuss decimators.notes"
+      ]
+    },
+    {
+      "blockId": "b0225",
+      "unitContext": {
+        "name": "Blunderbuss Decimators",
+        "sourceBlockId": "b0220",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Blunderbuss Decimator",
+          "Veteran Warrior"
+        ]
+      },
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.blunderbuss decimators.notes"
+      ]
+    },
+    {
+      "blockId": "b0226",
+      "unitContext": {
+        "name": "Blunderbuss Decimators",
+        "sourceBlockId": "b0220",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Blunderbuss Decimator",
+          "Veteran Warrior"
+        ]
+      },
+      "entryKind": "option",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.blunderbuss-decimators.options"
+      ]
+    },
+    {
+      "blockId": "b0227",
+      "unitContext": {
+        "name": "Blunderbuss Decimators",
+        "sourceBlockId": "b0220",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Blunderbuss Decimator",
+          "Veteran Warrior"
+        ]
+      },
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.blunderbuss decimators.notes"
+      ]
+    },
+    {
+      "blockId": "b0228",
+      "unitContext": {
+        "name": "Blunderbuss Decimators",
+        "sourceBlockId": "b0220",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Blunderbuss Decimator",
+          "Veteran Warrior"
+        ]
+      },
+      "entryKind": "option",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.blunderbuss-decimators.options"
+      ]
+    },
+    {
+      "blockId": "b0229",
+      "unitContext": {
+        "name": "Blunderbuss Decimators",
+        "sourceBlockId": "b0220",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Blunderbuss Decimator",
+          "Veteran Warrior"
+        ]
+      },
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.blunderbuss decimators.notes"
+      ]
+    },
+    {
+      "blockId": "b0230",
+      "unitContext": {
+        "name": "Blunderbuss Decimators",
+        "sourceBlockId": "b0220",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Blunderbuss Decimator",
+          "Veteran Warrior"
+        ]
+      },
+      "entryKind": "option",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.blunderbuss-decimators.options"
+      ]
+    },
+    {
+      "blockId": "b0231",
+      "unitContext": {
+        "name": "Blunderbuss Decimators",
+        "sourceBlockId": "b0220",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Blunderbuss Decimator",
+          "Veteran Warrior"
+        ]
+      },
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.blunderbuss decimators.notes"
+      ]
+    },
+    {
+      "blockId": "b0232",
+      "unitContext": {
+        "name": "Blunderbuss Decimators",
+        "sourceBlockId": "b0220",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Blunderbuss Decimator",
+          "Veteran Warrior"
+        ]
+      },
+      "entryKind": "option",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.blunderbuss-decimators.options"
+      ]
+    },
+    {
+      "blockId": "b0233",
+      "unitContext": {
+        "name": "Blunderbuss Decimators",
+        "sourceBlockId": "b0220",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Blunderbuss Decimator",
+          "Veteran Warrior"
+        ]
+      },
+      "entryKind": "special-rules",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.blunderbuss-decimators.specialRules"
+      ]
+    },
+    {
+      "blockId": "h0082",
+      "unitContext": {
+        "name": "Blunderbuss Decimators",
+        "sourceBlockId": "b0220",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Blunderbuss Decimator",
+          "Veteran Warrior"
+        ]
+      },
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.blunderbuss decimators.notes"
+      ]
+    },
+    {
+      "blockId": "b0234",
+      "unitContext": {
+        "name": "Blunderbuss Decimators",
+        "sourceBlockId": "b0220",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Blunderbuss Decimator",
+          "Veteran Warrior"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.blunderbuss decimators.notes"
+      ]
+    },
+    {
+      "blockId": "b0236",
+      "unitContext": {
+        "name": "Infernal Guard",
+        "sourceBlockId": "b0236",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Infernal Guard",
+          "Deathmask"
+        ]
+      },
+      "entryKind": "statline",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.infernal-guard.points",
+        "profiles.infernal guard"
+      ]
+    },
+    {
+      "blockId": "b0239",
+      "unitContext": {
+        "name": "Infernal Guard",
+        "sourceBlockId": "b0236",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Infernal Guard",
+          "Deathmask"
+        ]
+      },
+      "entryKind": "unit-size",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.infernal-guard.minimum"
+      ]
+    },
+    {
+      "blockId": "b0242",
+      "unitContext": {
+        "name": "Infernal Guard",
+        "sourceBlockId": "b0236",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Infernal Guard",
+          "Deathmask"
+        ]
+      },
+      "entryKind": "option",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.infernal-guard.options"
+      ]
+    },
+    {
+      "blockId": "b0248",
+      "unitContext": {
+        "name": "Infernal Guard",
+        "sourceBlockId": "b0236",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Infernal Guard",
+          "Deathmask"
+        ]
+      },
+      "entryKind": "option",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.infernal-guard.options"
+      ]
+    },
+    {
+      "blockId": "b0250",
+      "unitContext": {
+        "name": "Infernal Ironsworn",
+        "sourceBlockId": "b0250",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Infernal Ironsworn",
+          "Overseer"
+        ]
+      },
+      "entryKind": "statline",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.infernal-ironsworn-core.points",
+        "units.infernal-ironsworn.points",
+        "profiles.infernal ironsworn",
+        "profiles.infernal ironsworn"
+      ]
+    },
+    {
+      "blockId": "b0253",
+      "unitContext": {
+        "name": "Infernal Ironsworn",
+        "sourceBlockId": "b0250",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Infernal Ironsworn",
+          "Overseer"
+        ]
+      },
+      "entryKind": "unit-size",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.infernal-ironsworn-core.minimum",
+        "units.infernal-ironsworn.minimum"
+      ]
+    },
+    {
+      "blockId": "b0254",
+      "unitContext": {
+        "name": "Infernal Ironsworn",
+        "sourceBlockId": "b0250",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Infernal Ironsworn",
+          "Overseer"
+        ]
+      },
+      "entryKind": "equipment",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.infernal ironsworn.equipment"
+      ]
+    },
+    {
+      "blockId": "b0260",
+      "unitContext": {
+        "name": "Infernal Ironsworn",
+        "sourceBlockId": "b0250",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Infernal Ironsworn",
+          "Overseer"
+        ]
+      },
+      "entryKind": "option",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.infernal-ironsworn-core.options",
+        "units.infernal-ironsworn.options"
+      ]
+    },
+    {
+      "blockId": "b0279",
+      "unitContext": {
+        "name": "K’daai Fireborn",
+        "sourceBlockId": "b0279",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "K’daai Fireborn",
+          "Manburner"
+        ]
+      },
+      "entryKind": "statline",
+      "changeKinds": [
+        "changed",
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.k'daai-fireborn.points",
+        "profiles.k daai fireborn"
+      ]
+    },
+    {
+      "blockId": "b0283",
+      "unitContext": {
+        "name": "K’daai Fireborn",
+        "sourceBlockId": "b0279",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "K’daai Fireborn",
+          "Manburner"
+        ]
+      },
+      "entryKind": "equipment",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.k daai fireborn.equipment"
+      ]
+    },
+    {
+      "blockId": "b0285",
+      "unitContext": {
+        "name": "K’daai Fireborn",
+        "sourceBlockId": "b0279",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "K’daai Fireborn",
+          "Manburner"
+        ]
+      },
+      "entryKind": "special-rules",
+      "changeKinds": [
+        "changed"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.k'daai-fireborn.specialRules"
+      ]
+    },
+    {
+      "blockId": "b0298",
+      "unitContext": {
+        "name": "Bull Centaur Renders",
+        "sourceBlockId": "b0298",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Bull Centaur Render 7",
+          "Bull Centaur Ba’hal 7"
+        ]
+      },
+      "entryKind": "statline",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.bull-centaur-renders.points",
+        "profiles.bull centaur renders"
+      ]
+    },
+    {
+      "blockId": "b0303",
+      "unitContext": {
+        "name": "Bull Centaur Renders",
+        "sourceBlockId": "b0298",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Bull Centaur Render 7",
+          "Bull Centaur Ba’hal 7"
+        ]
+      },
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.bull centaur renders.notes"
+      ]
+    },
+    {
+      "blockId": "b0308",
+      "unitContext": {
+        "name": "Bull Centaur Renders",
+        "sourceBlockId": "b0298",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Bull Centaur Render 7",
+          "Bull Centaur Ba’hal 7"
+        ]
+      },
+      "entryKind": "option",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.bull-centaur-renders.options"
+      ]
+    },
+    {
+      "blockId": "b0319",
+      "unitContext": {
+        "name": "Iron Daemon",
+        "sourceBlockId": "b0310",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Iron Daemon",
+          "Chaos Dwarf Crew (x3)"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new",
+        "todo"
+      ],
+      "status": "todo",
+      "targets": []
+    },
+    {
+      "blockId": "b0328",
+      "unitContext": {
+        "name": "Iron Daemon",
+        "sourceBlockId": "b0310",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Iron Daemon",
+          "Chaos Dwarf Crew (x3)"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.skullcracker"
+      ]
+    },
+    {
+      "blockId": "b0331",
+      "unitContext": {
+        "name": "The Great Tauruses",
+        "sourceBlockId": "b0329",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Bale Taurus",
+          "Great Taurus"
+        ]
+      },
+      "entryKind": "troop-type",
+      "changeKinds": [
+        "changed"
+      ],
+      "status": "applied",
+      "targets": [
+        "profiles.the great tauruses.troopType"
+      ]
+    },
+    {
+      "blockId": "b0332",
+      "unitContext": {
+        "name": "The Great Tauruses",
+        "sourceBlockId": "b0329",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Bale Taurus",
+          "Great Taurus"
+        ]
+      },
+      "entryKind": "base-size",
+      "changeKinds": [
+        "changed"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.the great tauruses.baseSize"
+      ]
+    },
+    {
+      "blockId": "b0348",
+      "unitContext": {
+        "name": "Deathshrieker Rocket Launcher",
+        "sourceBlockId": "b0348",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Deathshrieker",
+          "Chaos Dwarf Crew"
+        ]
+      },
+      "entryKind": "statline",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.deathshrieker-rocket-launcher.points",
+        "profiles.deathshrieker rocket launcher"
+      ]
+    },
+    {
+      "blockId": "b0351",
+      "unitContext": {
+        "name": "Deathshrieker Rocket Launcher",
+        "sourceBlockId": "b0348",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Deathshrieker",
+          "Chaos Dwarf Crew"
+        ]
+      },
+      "entryKind": "equipment",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.deathshrieker rocket launcher.equipment"
+      ]
+    },
+    {
+      "blockId": "b0355",
+      "unitContext": {
+        "name": "Deathshrieker Rocket Launcher",
+        "sourceBlockId": "b0348",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Deathshrieker",
+          "Chaos Dwarf Crew"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.r-s-ap-special-rules"
+      ]
+    },
+    {
+      "blockId": "b0356",
+      "unitContext": {
+        "name": "Deathshrieker Rocket Launcher",
+        "sourceBlockId": "b0348",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Deathshrieker",
+          "Chaos Dwarf Crew"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.cumbersome-move-or-shoot-multiple-wounds-d6"
+      ]
+    },
+    {
+      "blockId": "b0358",
+      "unitContext": {
+        "name": "Deathshrieker Rocket Launcher",
+        "sourceBlockId": "b0348",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Deathshrieker",
+          "Chaos Dwarf Crew"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.cumbersome-move-or-shoot-multiple-wounds-d6"
+      ]
+    },
+    {
+      "blockId": "b0359",
+      "unitContext": {
+        "name": "Deathshrieker Rocket Launcher",
+        "sourceBlockId": "b0348",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Deathshrieker",
+          "Chaos Dwarf Crew"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.r-s-ap-special-rules"
+      ]
+    },
+    {
+      "blockId": "b0364",
+      "unitContext": {
+        "name": "Dreadquake Mortar",
+        "sourceBlockId": "b0362",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Dreadquake Mortar",
+          "Chaos Dwarf Crew"
+        ]
+      },
+      "entryKind": "base-size",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.dreadquake mortar.baseSize"
+      ]
+    },
+    {
+      "blockId": "b0365",
+      "unitContext": {
+        "name": "Dreadquake Mortar",
+        "sourceBlockId": "b0362",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Dreadquake Mortar",
+          "Chaos Dwarf Crew"
+        ]
+      },
+      "entryKind": "equipment",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.dreadquake mortar.equipment"
+      ]
+    },
+    {
+      "blockId": "b0366",
+      "unitContext": {
+        "name": "Dreadquake Mortar",
+        "sourceBlockId": "b0362",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Dreadquake Mortar",
+          "Chaos Dwarf Crew"
+        ]
+      },
+      "entryKind": "option",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.dreadquake-mortar.options"
+      ]
+    },
+    {
+      "blockId": "b0368",
+      "unitContext": {
+        "name": "Dreadquake Mortar",
+        "sourceBlockId": "b0362",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Dreadquake Mortar",
+          "Chaos Dwarf Crew"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.r-s-ap-special-rules"
+      ]
+    },
+    {
+      "blockId": "b0369",
+      "unitContext": {
+        "name": "Dreadquake Mortar",
+        "sourceBlockId": "b0362",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Dreadquake Mortar",
+          "Chaos Dwarf Crew"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.multiple-wounds-d3-1-quake-s"
+      ]
+    },
+    {
+      "blockId": "b0371",
+      "unitContext": {
+        "name": "Dreadquake Mortar",
+        "sourceBlockId": "b0362",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Dreadquake Mortar",
+          "Chaos Dwarf Crew"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.multiple-wounds-d3-1-quake-s"
+      ]
+    },
+    {
+      "blockId": "b0372",
+      "unitContext": {
+        "name": "Dreadquake Mortar",
+        "sourceBlockId": "b0362",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Dreadquake Mortar",
+          "Chaos Dwarf Crew"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.dreadquake-mortar-special-rules"
+      ]
+    },
+    {
+      "blockId": "h0114",
+      "unitContext": {
+        "name": "Dreadquake Mortar",
+        "sourceBlockId": "b0362",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Dreadquake Mortar",
+          "Chaos Dwarf Crew"
+        ]
+      },
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.dreadquake mortar.notes"
+      ]
+    },
+    {
+      "blockId": "b0373",
+      "unitContext": {
+        "name": "Indentured Ogres",
+        "sourceBlockId": "b0373",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Ogre Loader"
+        ]
+      },
+      "entryKind": "statline",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "profiles.indentured ogres"
+      ]
+    },
+    {
+      "blockId": "b0374",
+      "unitContext": {
+        "name": "Indentured Ogres",
+        "sourceBlockId": "b0373",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Ogre Loader"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.indentured ogres.notes"
+      ]
+    },
+    {
+      "blockId": "b0375",
+      "unitContext": {
+        "name": "Indentured Ogres",
+        "sourceBlockId": "b0373",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Ogre Loader"
+        ]
+      },
+      "entryKind": "troop-type",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "profiles.indentured ogres.troopType"
+      ]
+    },
+    {
+      "blockId": "b0376",
+      "unitContext": {
+        "name": "Indentured Ogres",
+        "sourceBlockId": "b0373",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Ogre Loader"
+        ]
+      },
+      "entryKind": "base-size",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.indentured ogres.baseSize"
+      ]
+    },
+    {
+      "blockId": "b0377",
+      "unitContext": {
+        "name": "Indentured Ogres",
+        "sourceBlockId": "b0373",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Ogre Loader"
+        ]
+      },
+      "entryKind": "unit-size",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.indentured ogres.notes"
+      ]
+    },
+    {
+      "blockId": "b0378",
+      "unitContext": {
+        "name": "Indentured Ogres",
+        "sourceBlockId": "b0373",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Ogre Loader"
+        ]
+      },
+      "entryKind": "equipment",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.indentured ogres.equipment"
+      ]
+    },
+    {
+      "blockId": "h0115",
+      "unitContext": {
+        "name": "Indentured Ogres",
+        "sourceBlockId": "b0373",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Ogre Loader"
+        ]
+      },
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.indentured ogres.notes"
+      ]
+    },
+    {
+      "blockId": "b0379",
+      "unitContext": {
+        "name": "Indentured Ogres",
+        "sourceBlockId": "b0373",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Ogre Loader"
+        ]
+      },
+      "entryKind": "option",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.indentured ogres.notes"
+      ]
+    },
+    {
+      "blockId": "b0380",
+      "unitContext": {
+        "name": "Indentured Ogres",
+        "sourceBlockId": "b0373",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Ogre Loader"
+        ]
+      },
+      "entryKind": "special-rules",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "profiles.indentured ogres.specialRules"
+      ]
+    },
+    {
+      "blockId": "h0116",
+      "unitContext": {
+        "name": "Indentured Ogres",
+        "sourceBlockId": "b0373",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Ogre Loader"
+        ]
+      },
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.enough-for-everyone"
+      ]
+    },
+    {
+      "blockId": "b0381",
+      "unitContext": {
+        "name": "Indentured Ogres",
+        "sourceBlockId": "b0373",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Ogre Loader"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.enough-for-everyone"
+      ]
+    },
+    {
+      "blockId": "h0117",
+      "unitContext": {
+        "name": "Indentured Ogres",
+        "sourceBlockId": "b0373",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Ogre Loader"
+        ]
+      },
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.indentured-crew"
+      ]
+    },
+    {
+      "blockId": "b0382",
+      "unitContext": {
+        "name": "Indentured Ogres",
+        "sourceBlockId": "b0373",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Ogre Loader"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.indentured-crew"
+      ]
+    },
+    {
+      "blockId": "b0386",
+      "unitContext": {
+        "name": "Magma Cannon",
+        "sourceBlockId": "b0383",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Magma Cannon",
+          "Chaos Dwarf Crew"
+        ]
+      },
+      "entryKind": "equipment",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.magma cannon.equipment"
+      ]
+    },
+    {
+      "blockId": "b0389",
+      "unitContext": {
+        "name": "Hobgoblin Bolt Thrower",
+        "sourceBlockId": "b0389",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Bolt Thrower",
+          "Hobgoblin Crew"
+        ]
+      },
+      "entryKind": "statline",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "profiles.hobgoblin bolt thrower"
+      ]
+    }
+  ]
 }

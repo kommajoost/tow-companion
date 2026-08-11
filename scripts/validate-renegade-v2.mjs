@@ -21,6 +21,36 @@ for (const key of PACKS) {
   assert(overlay.scope === 'points-and-rules', `${key}: incomplete overlay scope`);
   assert(overlay.inheritsComposition || overlay.composition, `${key}: composition mapping missing`);
 
+  // Een OPTIE kan in de catalogus getagd zijn voor een Renegade-compositie ('vc-renegade'). Erft het
+  // pack die niet, dan verbergt applyOverlay hem — en een verborgen optie ziet eruit als een optie die
+  // niet bestaat. Zo verdween Full plate armour bij de vampires (Joost 11-08). Deze toets vindt elke
+  // compositie waar de catalogus opties aan hangt en eist dat het pack er precies één van erft.
+  const baseVoorOpties = (() => {
+    try { return JSON.parse(readFileSync(new URL(`${overlay.baseArmy}.json`, OWB), 'utf8')); } catch { return null; }
+  })();
+  if (baseVoorOpties) {
+    const comps = new Set();
+    for (const units of Object.values(baseVoorOpties)) {
+      if (!Array.isArray(units)) continue;
+      for (const unit of units) {
+        for (const group of ['command', 'equipment', 'armor', 'options', 'mounts']) {
+          const loop = (items) => {
+            for (const option of items ?? []) {
+              if (typeof option.armyComposition === 'string') comps.add(option.armyComposition);
+              loop(option.options);
+            }
+          };
+          loop(unit[group]);
+        }
+      }
+    }
+    for (const comp of comps) {
+      if (!/-renegade$/.test(comp)) continue;
+      assert(overlay.inheritsComposition === comp,
+        `${key}: catalogus tagt opties voor '${comp}' maar het pack erft '${overlay.inheritsComposition}' — die opties worden verborgen`);
+    }
+  }
+
   const changed = reference.blocks.filter((block) =>
     block.scope === 'army-list' && Array.isArray(block.changeKinds) && block.changeKinds.length);
   assert(coverage.blocks.length === changed.length, `${key}: coverage does not contain every changed block`);
@@ -66,11 +96,21 @@ for (const key of PACKS) {
       // Een nieuwe mount is bijna nooit wat Renegade doet — het herprijst er hooguit een. Dus: staat
       // hij niet in de basis, dan is het vrijwel zeker drift en moet de compilatie klappen in plaats
       // van het in de app te zetten. Is het tóch bedoeld, dan hoort de mount eerst in de catalogus.
+      //
+      // GENEST MEEREKENEN: OWB hangt "Unless mounted, may have one of the following" op als
+      // SUB-opties onder de mount "On foot" (Hunter: Ambushers, Scouts, Vanguard). Die zijn dus
+      // gewone mounts-groep-opties en mogen niet als drift gelden — deze check keek eerst alleen naar
+      // de bovenste laag en liet daardoor een terechte herprijzing (Ambushers 10 -> 6) klappen.
       if (option.group === 'mounts' && option.action !== 'remove') {
         const bu = basisUnit(unitId);
         if (bu) {
-          const kent = (bu.mounts ?? []).some((m) => m && norm(m.name_en) === norm(option.name_en));
-          assert(kent, `${key}/${unitId}: overlay voegt mount "${option.name_en}" toe die de catalogus niet voor deze unit kent — waarschijnlijk anker-drift in de extractie`);
+          const namen = new Set();
+          const loop = (items) => {
+            for (const m of items ?? []) { if (m?.name_en) namen.add(norm(m.name_en)); loop(m.options); }
+          };
+          loop(bu.mounts);
+          assert(namen.has(norm(option.name_en)),
+            `${key}/${unitId}: overlay voegt mount "${option.name_en}" toe die de catalogus niet voor deze unit kent — waarschijnlijk anker-drift in de extractie`);
         }
       }
     }
@@ -137,11 +177,15 @@ assert(de.profiles.manticore?.specialRules?.includes('Wilful Beast'), 'de: Manti
 assert(de.profiles.manticore?.troopType === 'Monstrous creature', 'de: Manticore troop type missing');
 assert(de.profiles.manticore?.baseSize === '60 x 100 mm', 'de: Manticore base size missing');
 assert(de.profiles.manticore?.equipment?.length, 'de: Manticore equipment missing');
+// Genormaliseerd vergelijken, niet letterlijk: de bron is hier zelf inconsistent — de KOP schrijft
+// "Severed…Another" zonder spatie, de regellijst van de unit "Severed… Another" met. De app
+// normaliseert leestekens en witruimte weg bij het opzoeken, dus de koppeling werkt; een letterlijke
+// toets hier zou alleen die bron-inconsistentie tot bouwfout verheffen.
 const hydraRuleName = 'If One Head is Severed… Another Takes Its Place';
 const hydraRule = de.rules['if-one-head-is-severed-another-takes-its-place'];
-assert(de.units['war-hydra']?.specialRules?.split(',').map((rule) => rule.trim()).includes(hydraRuleName),
+assert(de.units['war-hydra']?.specialRules?.split(',').map((rule) => norm(rule)).includes(norm(hydraRuleName)),
   'de: War Hydra does not reference its V2 regeneration rule');
-assert(hydraRule?.name_en === hydraRuleName, 'de: War Hydra V2 regeneration rule name missing');
+assert(norm(hydraRule?.name_en) === norm(hydraRuleName), 'de: War Hydra V2 regeneration rule name missing');
 assert(hydraRule?.body?.join(' ').includes('roll a D6 for each wound that the War Hydra has lost')
   && hydraRule.body.join(' ').includes('On each roll of a 4+ the War Hydra immediately recovers a wound.'),
   'de: War Hydra V2 regeneration rule explanation missing or incomplete');
@@ -183,7 +227,12 @@ assert(doc.units['bloodletters-of-khorne']?.points === 13, 'doc: Bloodletters mu
 
 const lm = read('lm-renegade-v2.json');
 assert(lm.addedUnits?.core?.some((unit) => unit.id === 'skink-cohorts' && unit.points === 5), 'lm: Skink Cohorts missing');
-assert(/Furious Charge, Predatory Fighter/.test(lm.units['ripperdactyl-riders']?.specialRules ?? ''),
-  'lm: Ripperdactyl rule separator');
+// Het draft STREEPT Furious Charge door bij de Ripperdactyl Riders. Zolang de importer doorgestreepte
+// tekst negeerde, plakte "Furious Charge" tegen "Predatory Fighter" en leek dat een ontbrekende komma —
+// daar stond een reparatie voor in de compiler. De oorzaak is weg, dus deze toets bewaakt nu wat er
+// werkelijk hoort te staan: de regel is vervallen, Predatory Fighter staat er los.
+const ripper = lm.units['ripperdactyl-riders']?.specialRules ?? '';
+assert(!/Furious Charge/.test(ripper), 'lm: Ripperdactyl houdt Furious Charge, maar het draft streept die door');
+assert(/Predatory Fighter \(Ripperdactyl only\)/.test(ripper), 'lm: Ripperdactyl mist Predatory Fighter');
 
 console.log(`Renegade V2 overlays validated: ${PACKS.length} packs`);

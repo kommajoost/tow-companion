@@ -15,6 +15,8 @@
     "changed": "Differs from the official Legacy PDF (blue in the source)",
     "new": "Changed since the previous Renegade draft (magenta in the source)",
     "todo": "Incomplete or in development (yellow in the source)",
+    "struck": "Segment is struck through in the source: DELETED text. Kept in `segments` for the audit trail; every derived field (text, items, statlineRows, pointsMentions) is built without it",
+    "struckText": "The struck-through text this block dropped, verbatim",
     "headingPath": "Active Google Docs heading hierarchy for this block, from broadest to most specific",
     "unitContext": "Semantic army-list entry propagated from a statline table until the next statline",
     "unitId": "Intentionally null in the lossless reference; catalogue mapping belongs to the compiler manifest",
@@ -44,8 +46,9 @@
     "changedBlocks": 159,
     "armyListChangedBlocks": 152,
     "changedSegments": 0,
-    "newSegments": 295,
+    "newSegments": 310,
     "todoSegments": 10,
+    "struckBlocks": 4,
     "statlineTables": 25,
     "weaponProfileTables": 15
   },
@@ -374,6 +377,12 @@
           "change": null,
           "bold": false,
           "italic": false
+        },
+        {
+          "text": "\n",
+          "change": null,
+          "bold": false,
+          "italic": false
         }
       ],
       "changeKinds": [],
@@ -396,7 +405,25 @@
       "text": "Renegade Army List DRAFT V1.5.2.2",
       "segments": [
         {
-          "text": "Renegade Army List \nDRAFT V1.5.2.2",
+          "text": "Renegade Army List ",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "\n",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "DRAFT V1.5.2.2",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "\n",
           "change": null,
           "bold": false,
           "italic": false
@@ -536,7 +563,31 @@
       "text": "The rules contained within this document allow players the opportunity to play Warhammer: The Old World using rules that we hope better reflect the legacy, history and feel of the Skaven faction as they have appeared in previous editions. These rules are intended to be fair and fun to use wherever Warhammer: The Old World is played and will be maintained in concert with the playing community for as long as it is necessary to do so. These rules are unofficial and in no way endorsed by the authors or publisher of Warhammer: The Old World.",
       "segments": [
         {
-          "text": "The rules contained within this document allow players the opportunity to play Warhammer: The Old World using rules that we hope better reflect the legacy, history and feel of the Skaven faction as they have appeared in previous editions. \nThese rules are intended to be fair and fun to use wherever Warhammer: The Old World is played and will be maintained in concert with the playing community for as long as it is necessary to do so.\n\n",
+          "text": "The rules contained within this document allow players the opportunity to play Warhammer: The Old World using rules that we hope better reflect the legacy, history and feel of the Skaven faction as they have appeared in previous editions. ",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "\n",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "These rules are intended to be fair and fun to use wherever Warhammer: The Old World is played and will be maintained in concert with the playing community for as long as it is necessary to do so.",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "\n",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "\n",
           "change": null,
           "bold": false,
           "italic": false
@@ -545,6 +596,12 @@
           "text": "These rules are unofficial and in no way endorsed by the authors or publisher of Warhammer: The Old World. ",
           "change": null,
           "bold": true,
+          "italic": false
+        },
+        {
+          "text": " ",
+          "change": null,
+          "bold": false,
           "italic": false
         }
       ],
@@ -579,6 +636,12 @@
           "text": "How to read this document: ",
           "change": null,
           "bold": true,
+          "italic": false
+        },
+        {
+          "text": "\n",
+          "change": null,
+          "bold": false,
           "italic": false
         }
       ],
@@ -616,7 +679,19 @@
       "text": "Where this document differs from the official Legacy PDFs entries will be highlighted in [blue], while any new changes from previous Renegade Legacy Pack entries will be highlighted in [magenta]. This way players can easily spot where this document is different from versions past, as well as any official publications. Sections highlighted in [Yellow] are not yet completed or in development.",
       "segments": [
         {
-          "text": "Where this document differs from the official Legacy PDFs entries will be highlighted in [blue], while any new changes from previous Renegade Legacy Pack entries will be highlighted in ",
+          "text": "Where this document differs from the official Legacy PDFs entries will be highlighted in ",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "[blue]",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": ", while any new changes from previous Renegade Legacy Pack entries will be highlighted in ",
           "change": null,
           "bold": false,
           "italic": false
@@ -640,7 +715,7 @@
           "italic": false
         },
         {
-          "text": " are not yet completed or in development.",
+          "text": " are not yet completed or in development. ",
           "change": null,
           "bold": false,
           "italic": false
@@ -683,7 +758,7 @@
       "text": "Todos:",
       "segments": [
         {
-          "text": "Todos:",
+          "text": "Todos: ",
           "change": null,
           "bold": false,
           "italic": false
@@ -726,7 +801,7 @@
           "text": "Allies (copy the logic of the rules for Grand Army Cathay)",
           "segments": [
             {
-              "text": "Allies (copy the logic of the rules for Grand Army Cathay)",
+              "text": "Allies (copy the logic of the rules for Grand Army Cathay) ",
               "change": null,
               "bold": false,
               "italic": false
@@ -739,7 +814,19 @@
           "text": "Collecting guide (using mix of GW and 3rd party options.)",
           "segments": [
             {
-              "text": "Collecting guide (using mix of GW and 3rd party options.)",
+              "text": "Collecting guide (using mix of GW and 3",
+              "change": null,
+              "bold": false,
+              "italic": false
+            },
+            {
+              "text": "rd",
+              "change": null,
+              "bold": false,
+              "italic": false
+            },
+            {
+              "text": " party options.)",
               "change": null,
               "bold": false,
               "italic": false
@@ -765,7 +852,7 @@
           "text": "Monstrous Renegadum: Skaven Mounts, FW Models, and Verminlords.",
           "segments": [
             {
-              "text": "Monstrous Renegadum: Skaven Mounts, FW Models, and Verminlords.",
+              "text": "Monstrous Renegadum: Skaven Mounts, FW Models, and Verminlords. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -853,6 +940,12 @@
           "change": null,
           "bold": true,
           "italic": false
+        },
+        {
+          "text": "\n",
+          "change": null,
+          "bold": false,
+          "italic": false
         }
       ],
       "changeKinds": [],
@@ -889,7 +982,7 @@
       "text": "As community feedback comes in I will update any changes I’ve made below, along with commentary for my reasoning. So far the process has been incredibly rewarding and the insights that I’ve gotten will make this a much stronger document than anything I could have done myself. So thank you very much for your input, and keep the ideas flowing!",
       "segments": [
         {
-          "text": "As community feedback comes in I will update any changes I’ve made below, along with commentary for my reasoning. So far the process has been incredibly rewarding and the insights that I’ve gotten will make this a much stronger document than anything I could have done myself. So thank you very much for your input, and keep the ideas flowing!",
+          "text": "As community feedback comes in I will update any changes I’ve made below, along with commentary for my reasoning. So far the process has been incredibly rewarding and the insights that I’ve gotten will make this a much stronger document than anything I could have done myself. So thank you very much for your input, and keep the ideas flowing! ",
           "change": null,
           "bold": false,
           "italic": false
@@ -929,7 +1022,7 @@
       "text": "Each time I make a significant update, I will also change the last number of the version. IE: Renegade Skaven 1.5.2.2.",
       "segments": [
         {
-          "text": "Each time I make a significant update, I will also change the last number of the version. IE: Renegade Skaven 1.5.2.2.",
+          "text": "Each time I make a significant update, I will also change the last number of the version. IE: Renegade Skaven 1.5.2.2. ",
           "change": null,
           "bold": false,
           "italic": false
@@ -969,7 +1062,7 @@
       "text": "When will these be finalized? My goal is to have things finalized as soon as possible. Once I feel like we’ve ironed out the bugs and areas of contention I will begin posting the final docs on www.squarebased.com.",
       "segments": [
         {
-          "text": "When will these be finalized? My goal is to have things finalized as soon as possible. Once I feel like we’ve ironed out the bugs and areas of contention I will begin posting the final docs on www.squarebased.com.",
+          "text": "When will these be finalized? My goal is to have things finalized as soon as possible. Once I feel like we’ve ironed out the bugs and areas of contention I will begin posting the final docs on www.squarebased.com. ",
           "change": null,
           "bold": false,
           "italic": false
@@ -1009,7 +1102,7 @@
       "text": "Previous versions can be found below:",
       "segments": [
         {
-          "text": "Previous versions can be found below:",
+          "text": "Previous versions can be found below: ",
           "change": null,
           "bold": false,
           "italic": false
@@ -1049,7 +1142,7 @@
       "text": "1.5.2.1",
       "segments": [
         {
-          "text": "1.5.2.1",
+          "text": "1.5.2.1 ",
           "change": null,
           "bold": false,
           "italic": false
@@ -1089,7 +1182,7 @@
       "text": "Verminous Valour - An Essay from the Desk of Val Heffelfinger",
       "segments": [
         {
-          "text": "Verminous Valour - An Essay from the Desk of Val Heffelfinger",
+          "text": "Verminous Valour - An Essay from the Desk of Val Heffelfinger ",
           "change": null,
           "bold": false,
           "italic": false
@@ -1132,7 +1225,25 @@
           "text": "A big part of what took this update so long was deliberating on Verminous Valour. It’s a rule that has been central to Skaven identity since at least 6th edition. In Old World, I have come to discover that it’s a rule that’s been interpreted in two significantly different ways. Both are viable as far as meeting that “vibe” element of Renegades, however only one is grounded in how the rules were originally written in the Legacy PDF. The first way is essentially like the Bretonnian Prophetess. The character can retire at any time but retains all the buffs and effects on the unit. Unfortunately this just isn’t how the rule was written. I’ve gotten some feedback complaining about “nerfing” VV because people were used to getting all of the buffing benefits. However, when you retire (usually from refusing a challenge) you become Schrodinger's character: the rules don’t really state where you go (the character “take[s] up a position away from the fighting rank.) You don’t contribute attacks or receive attacks anymore and you “Confer no benefits to the unit in the form of Leadership, special rules, or anything else.” The exception the original version of Verminous Valour provided is “however, the unit may still use this character's Leadership.” So that’s all you get when you retire.",
           "segments": [
             {
-              "text": "A big part of what took this update so long was deliberating on Verminous Valour. It’s a rule that has been central to Skaven identity since at least 6th edition. In Old World, I have come to discover that it’s a rule that’s been interpreted in two significantly different ways. Both are viable as far as meeting that “vibe” element of Renegades, however only one is grounded in how the rules were originally written in the Legacy PDF. \n\nThe first way is essentially like the Bretonnian Prophetess. The character can retire at any time but retains all the buffs and effects on the unit. Unfortunately this just isn’t how the rule was written. I’ve gotten some feedback complaining about “nerfing” VV because people were used to getting all of the buffing benefits. However, when you retire (usually from refusing a challenge) you become Schrodinger's character: the rules don’t really state where you go (the character “take[s] up a position away from the fighting rank.) You don’t contribute attacks or receive attacks anymore and you “Confer no benefits to the unit in the form of Leadership, special rules, or anything else.” The exception the original version of Verminous Valour provided is “however, the unit may still use this character's Leadership.” So that’s all you get when you retire.",
+              "text": "A big part of what took this update so long was deliberating on Verminous Valour. It’s a rule that has been central to Skaven identity since at least 6th edition. In Old World, I have come to discover that it’s a rule that’s been interpreted in two significantly different ways. Both are viable as far as meeting that “vibe” element of Renegades, however only one is grounded in how the rules were originally written in the Legacy PDF. ",
+              "change": null,
+              "bold": false,
+              "italic": false
+            },
+            {
+              "text": "\n",
+              "change": null,
+              "bold": false,
+              "italic": false
+            },
+            {
+              "text": "\n",
+              "change": null,
+              "bold": false,
+              "italic": false
+            },
+            {
+              "text": "The first way is essentially like the Bretonnian Prophetess. The character can retire at any time but retains all the buffs and effects on the unit. Unfortunately this just isn’t how the rule was written. I’ve gotten some feedback complaining about “nerfing” VV because people were used to getting all of the buffing benefits. However, when you retire (usually from refusing a challenge) you become Schrodinger's character: the rules don’t really state where you go (the character “take[s] up a position away from the fighting rank.) You don’t contribute attacks or receive attacks anymore and you “Confer no benefits to the unit in the form of Leadership, special rules, or anything else.” The exception the original version of Verminous Valour provided is “however, the unit may still use this character's Leadership.” So that’s all you get when you retire. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -1176,7 +1287,7 @@
       "text": "When I look at the history of the rule, from “Lead from the Back” in 6th to Verminous Valour in 7th and its errata’d version in 8th, we see an increasing restriction on the buffs a character can give the unit from a back rank. Shrinking from something akin to the prophetess in 6th, to allowing the BSBs and Leadership in 7th and finally just Leadership in 8th. The Leadership allowance was carried forward to Old World and that was plausibly purposeful.",
       "segments": [
         {
-          "text": "When I look at the history of the rule, from “Lead from the Back” in 6th to Verminous Valour in 7th and its errata’d version in 8th, we see an increasing restriction on the buffs a character can give the unit from a back rank. Shrinking from something akin to the prophetess in 6th, to allowing the BSBs and Leadership in 7th and finally just Leadership in 8th. The Leadership allowance was carried forward to Old World and that was plausibly purposeful.",
+          "text": "When I look at the history of the rule, from “Lead from the Back” in 6th to Verminous Valour in 7th and its errata’d version in 8th, we see an increasing restriction on the buffs a character can give the unit from a back rank. Shrinking from something akin to the prophetess in 6th, to allowing the BSBs and Leadership in 7th and finally just Leadership in 8th. The Leadership allowance was carried forward to Old World and that was plausibly purposeful. ",
           "change": null,
           "bold": false,
           "italic": false
@@ -1216,7 +1327,25 @@
       "text": "What Old World expanded was WHEN you could slink away. Previously Verminous Valour was related to challenges only, however now a character may retire “at any time.” This pairs rather powerfully with the mechanics of when a character can “move through the ranks” and reposition itself to the fighting rank. At the start of a round of combat a character “may, if they are not within the fighting rank when their combat is chosen … move through the ranks to join the fighting rank.” Under “refusing a challenge” (one of two places rules for “retiring” are written - the other being “too many characters”) it says: “Once a character or champion has been retired from combat [by refusing a challenge], they cannot return to the fighting rank whilst their unit is still engaged with the enemy model that issued the challenge.” With Verminous Valour there has been no challenge and no refusal, and thus, no restriction for returning to a fighting rank in a future round of combat. What this means is that a VV Character who has a higher initiative can make their swings and retire before the enemy has a chance to hit them. They can then return to the fighting rank if the combat is ongoing at the start of the next combat and continue playing peekaboo until the combat resolves (or the Unit Strength of the unit dips below 10.) You can also use this to reposition your gutless rat to avoid a bad matchup, or, seek out something good to stab-stab and probably a billion other things my feeble brain does not comprehend.",
       "segments": [
         {
-          "text": "What Old World expanded was WHEN you could slink away. Previously Verminous Valour was related to challenges only, however now a character may retire “at any time.” This pairs rather powerfully with the mechanics of when a character can “move through the ranks” and reposition itself to the fighting rank. At the start of a round of combat a character “may, if they are not within the fighting rank when their combat is chosen … move through the ranks to join the fighting rank.” Under “refusing a challenge” (one of two places rules for “retiring” are written - the other being “too many characters”) it says: “Once a character or champion has been retired from combat [by refusing a challenge], they cannot return to the fighting rank whilst their unit is still engaged with the enemy model that issued the challenge.” With Verminous Valour there has been no challenge and no refusal, and thus, no restriction for returning to a fighting rank in a future round of combat. \n\nWhat this means is that a VV Character who has a higher initiative can make their swings and retire before the enemy has a chance to hit them. They can then return to the fighting rank if the combat is ongoing at the start of the next combat and continue playing peekaboo until the combat resolves (or the Unit Strength of the unit dips below 10.) You can also use this to reposition your gutless rat to avoid a bad matchup, or, seek out something good to stab-stab and probably a billion other things my feeble brain does not comprehend.",
+          "text": "What Old World expanded was WHEN you could slink away. Previously Verminous Valour was related to challenges only, however now a character may retire “at any time.” This pairs rather powerfully with the mechanics of when a character can “move through the ranks” and reposition itself to the fighting rank. At the start of a round of combat a character “may, if they are not within the fighting rank when their combat is chosen … move through the ranks to join the fighting rank.” Under “refusing a challenge” (one of two places rules for “retiring” are written - the other being “too many characters”) it says: “Once a character or champion has been retired from combat [by refusing a challenge], they cannot return to the fighting rank whilst their unit is still engaged with the enemy model that issued the challenge.” With Verminous Valour there has been no challenge and no refusal, and thus, no restriction for returning to a fighting rank in a future round of combat. ",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "\n",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "\n",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "What this means is that a VV Character who has a higher initiative can make their swings and retire before the enemy has a chance to hit them. They can then return to the fighting rank if the combat is ongoing at the start of the next combat and continue playing peekaboo until the combat resolves (or the Unit Strength of the unit dips below 10.) You can also use this to reposition your gutless rat to avoid a bad matchup, or, seek out something good to stab-stab and probably a billion other things my feeble brain does not comprehend. ",
           "change": null,
           "bold": false,
           "italic": false
@@ -1256,7 +1385,7 @@
       "text": "The second way Verminous Valour is played came as a surprise to me as I was gathering feedback for the first draft, and I suspect, any opponent that has encountered it. My reaction to this mechanic was that I did not like it. The rule makes interaction with Skaven characters very difficult and one sided rules tend to be bad ones. However, the original rule is written in a way that is so permissive, and the mechanics so clear once you read them, that I’m not willing to say that it’s not intended. Playing it this way is 100% legit and I do not fault anyone for making use of it. Ultimately it feels like a rather Skaveny thing to do.",
       "segments": [
         {
-          "text": "The second way Verminous Valour is played came as a surprise to me as I was gathering feedback for the first draft, and I suspect, any opponent that has encountered it. My reaction to this mechanic was that I did not like it. The rule makes interaction with Skaven characters very difficult and one sided rules tend to be bad ones. However, the original rule is written in a way that is so permissive, and the mechanics so clear once you read them, that I’m not willing to say that it’s not intended. Playing it this way is 100% legit and I do not fault anyone for making use of it. Ultimately it feels like a rather Skaveny thing to do.",
+          "text": "The second way Verminous Valour is played came as a surprise to me as I was gathering feedback for the first draft, and I suspect, any opponent that has encountered it. My reaction to this mechanic was that I did not like it. The rule makes interaction with Skaven characters very difficult and one sided rules tend to be bad ones. However, the original rule is written in a way that is so permissive, and the mechanics so clear once you read them, that I’m not willing to say that it’s not intended. Playing it this way is 100% legit and I do not fault anyone for making use of it. Ultimately it feels like a rather Skaveny thing to do. ",
           "change": null,
           "bold": false,
           "italic": false
@@ -1296,7 +1425,7 @@
       "text": "However that leaves us with a conundrum: what to do about Verminous Valour? Played in this way big bricks of Skaven become a big pool of wounds that must be chewed through before getting to the nougat of character in the middle. It also happens to be one of the more successful ways to play Skaven. The truth is that Skaven characters have very little access to quality saves from armour or regeneration, essentially no access to mounts for additional wounds (aside from the Screaming Bell and Furnace) and combat profiles that are fairly middling compared to other factions. This is of course, by design, and a key part of that Skaveny flavour.",
       "segments": [
         {
-          "text": "However that leaves us with a conundrum: what to do about Verminous Valour? Played in this way big bricks of Skaven become a big pool of wounds that must be chewed through before getting to the nougat of character in the middle. It also happens to be one of the more successful ways to play Skaven. The truth is that Skaven characters have very little access to quality saves from armour or regeneration, essentially no access to mounts for additional wounds (aside from the Screaming Bell and Furnace) and combat profiles that are fairly middling compared to other factions. This is of course, by design, and a key part of that Skaveny flavour.",
+          "text": "However that leaves us with a conundrum: what to do about Verminous Valour? Played in this way big bricks of Skaven become a big pool of wounds that must be chewed through before getting to the nougat of character in the middle. It also happens to be one of the more successful ways to play Skaven. The truth is that Skaven characters have very little access to quality saves from armour or regeneration, essentially no access to mounts for additional wounds (aside from the Screaming Bell and Furnace) and combat profiles that are fairly middling compared to other factions. This is of course, by design, and a key part of that Skaveny flavour. ",
           "change": null,
           "bold": false,
           "italic": false
@@ -1336,7 +1465,7 @@
       "text": "In the original Renegades I tried to stick to a “no nerfs” editorial policy, not perfectly, but it remains a guiding principle. Nerfs are a feels bad, and one better have a pretty good reason to restrict or change a rule for the worse. Here, I think the focus should be on making sure that what is permitted is clear, and to reign in some of the scope (You could retire at “any time” so it’s a rule that could be used to dodge a cannonball, for example. Or, even, once attacks are allocated to the character but before a roll to hit is made.)",
       "segments": [
         {
-          "text": "In the original Renegades I tried to stick to a “no nerfs” editorial policy, not perfectly, but it remains a guiding principle. Nerfs are a feels bad, and one better have a pretty good reason to restrict or change a rule for the worse. Here, I think the focus should be on making sure that what is permitted is clear, and to reign in some of the scope (You could retire at “any time” so it’s a rule that could be used to dodge a cannonball, for example. Or, even, once attacks are allocated to the character but before a roll to hit is made.)",
+          "text": "In the original Renegades I tried to stick to a “no nerfs” editorial policy, not perfectly, but it remains a guiding principle. Nerfs are a feels bad, and one better have a pretty good reason to restrict or change a rule for the worse. Here, I think the focus should be on making sure that what is permitted is clear, and to reign in some of the scope (You could retire at “any time” so it’s a rule that could be used to dodge a cannonball, for example. Or, even, once attacks are allocated to the character but before a roll to hit is made.) ",
           "change": null,
           "bold": false,
           "italic": false
@@ -1376,7 +1505,7 @@
       "text": "I strongly considered adding a leadership check to retire or to return to the fighting rank in an ongoing combat, which seems to be the bolt on Old World solution for powerful character mechanics. However, I think the better path is to clarify and restrict the rule. To make it so opponents can easily understand its use if they were to read it. In the future if this proves to be as unfun as casting a half dozen Pillars of Fire and escaping beyond dispel range we can look at potential solutions.",
       "segments": [
         {
-          "text": "I strongly considered adding a leadership check to retire or to return to the fighting rank in an ongoing combat, which seems to be the bolt on Old World solution for powerful character mechanics. However, I think the better path is to clarify and restrict the rule. To make it so opponents can easily understand its use if they were to read it. In the future if this proves to be as unfun as casting a half dozen Pillars of Fire and escaping beyond dispel range we can look at potential solutions.",
+          "text": "I strongly considered adding a leadership check to retire or to return to the fighting rank in an ongoing combat, which seems to be the bolt on Old World solution for powerful character mechanics. However, I think the better path is to clarify and restrict the rule. To make it so opponents can easily understand its use if they were to read it. In the future if this proves to be as unfun as casting a half dozen Pillars of Fire and escaping beyond dispel range we can look at potential solutions. ",
           "change": null,
           "bold": false,
           "italic": false
@@ -1416,7 +1545,7 @@
       "text": "So that’s it. That’s what I did. Thank you for coming to my Skaven Ted Talk. This has literally been keeping me up at night.",
       "segments": [
         {
-          "text": "So that’s it. That’s what I did. Thank you for coming to my Skaven Ted Talk. This has literally been keeping me up at night.",
+          "text": "So that’s it. That’s what I did. Thank you for coming to my Skaven Ted Talk. This has literally been keeping me up at night. ",
           "change": null,
           "bold": false,
           "italic": false
@@ -1456,7 +1585,7 @@
       "text": "Expendable - Simplify",
       "segments": [
         {
-          "text": "Expendable - Simplify",
+          "text": "Expendable - Simplify ",
           "change": null,
           "bold": false,
           "italic": false
@@ -1499,7 +1628,7 @@
           "text": "After playing into it a bit re rolling misses as hits on your own guys was pretty tedious. Changed to the original idea of “all misses are hits” on your own unit instead. This will also make the risk of shooting into combat a bit more dangerous.",
           "segments": [
             {
-              "text": "After playing into it a bit re rolling misses as hits on your own guys was pretty tedious. Changed to the original idea of “all misses are hits” on your own unit instead. This will also make the risk of shooting into combat a bit more dangerous.",
+              "text": "After playing into it a bit re rolling misses as hits on your own guys was pretty tedious. Changed to the original idea of “all misses are hits” on your own unit instead. This will also make the risk of shooting into combat a bit more dangerous. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -1512,7 +1641,7 @@
           "text": "Same change to Poison Wind Globadiers’ “life is cheap”",
           "segments": [
             {
-              "text": "Same change to Poison Wind Globadiers’ “life is cheap”",
+              "text": "Same change to Poison Wind Globadiers’ “life is cheap” ",
               "change": null,
               "bold": false,
               "italic": false
@@ -1599,7 +1728,7 @@
           "text": "Criticism of the woke mind virus aside, it brings me great joy to hear people using the name. I also sometimes like calling them Gregs.",
           "segments": [
             {
-              "text": "Criticism of the woke mind virus aside, it brings me great joy to hear people using the name. I also sometimes like calling them Gregs.",
+              "text": "Criticism of the woke mind virus aside, it brings me great joy to hear people using the name. I also sometimes like calling them Gregs. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -1612,7 +1741,7 @@
           "text": "Removed Scurrying Masses and Pawleader",
           "segments": [
             {
-              "text": "Removed Scurrying Masses and Pawleader",
+              "text": "Removed Scurrying Masses and Pawleader ",
               "change": null,
               "bold": false,
               "italic": false
@@ -1625,7 +1754,7 @@
           "text": "Added ability to bring a packmaster and upgrade one to a master moulder. Idea here is now the unit has access to dependable leadership 7 that can’t be easily killed out of the unit (thanks to verminous valour). Still Loner, still levies. But maybe they have enough to stick on the table for a round of combat.",
           "segments": [
             {
-              "text": "Added ability to bring a packmaster and upgrade one to a master moulder. Idea here is now the unit has access to dependable leadership 7 that can’t be easily killed out of the unit (thanks to verminous valour). Still Loner, still levies. But maybe they have enough to stick on the table for a round of combat.",
+              "text": "Added ability to bring a packmaster and upgrade one to a master moulder. Idea here is now the unit has access to dependable leadership 7 that can’t be easily killed out of the unit (thanks to verminous valour). Still Loner, still levies. But maybe they have enough to stick on the table for a round of combat. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -1638,7 +1767,7 @@
           "text": "Drop to the traditional 2 points per model.",
           "segments": [
             {
-              "text": "Drop to the traditional 2 points per model.",
+              "text": "Drop to the traditional 2 points per model. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -1752,7 +1881,7 @@
           "text": "Restored their leadership because apparently I was the only one offended by a unit champ having the same LD as a Skaven Warlord.",
           "segments": [
             {
-              "text": "Restored their leadership because apparently I was the only one offended by a unit champ having the same LD as a Skaven Warlord.",
+              "text": "Restored their leadership because apparently I was the only one offended by a unit champ having the same LD as a Skaven Warlord. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -1765,7 +1894,7 @@
           "text": "Also LD 6/7 is very useful for them amongst the Dregs.",
           "segments": [
             {
-              "text": "Also LD 6/7 is very useful for them amongst the Dregs.",
+              "text": "Also LD 6/7 is very useful for them amongst the Dregs. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -1778,7 +1907,7 @@
           "text": "RE: use with Dregs… I hope you find this a flavourful solution to allowing Dregs a leadership option. I’d like to think that the Packmaster/ Master Moulder is very good at ducking during moments of incoming friendly fire.",
           "segments": [
             {
-              "text": "RE: use with Dregs… I hope you find this a flavourful solution to allowing Dregs a leadership option. I’d like to think that the Packmaster/ Master Moulder is very good at ducking during moments of incoming friendly fire.",
+              "text": "RE: use with Dregs… I hope you find this a flavourful solution to allowing Dregs a leadership option. I’d like to think that the Packmaster/ Master Moulder is very good at ducking during moments of incoming friendly fire. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -1822,7 +1951,7 @@
       "text": "Poison Wind Globadiers - Restrict, slight nerf.",
       "segments": [
         {
-          "text": "Poison Wind Globadiers - Restrict, slight nerf.",
+          "text": "Poison Wind Globadiers - Restrict, slight nerf. ",
           "change": null,
           "bold": false,
           "italic": false
@@ -1865,7 +1994,7 @@
           "text": "Removed the no long range penalty and limited them to 0-1 / 1000. That will hopefully keep things more manageable and be agreeable to most.",
           "segments": [
             {
-              "text": "Removed the no long range penalty and limited them to 0-1 / 1000. That will hopefully keep things more manageable and be agreeable to most.",
+              "text": "Removed the no long range penalty and limited them to 0-1 / 1000. That will hopefully keep things more manageable and be agreeable to most. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -1909,7 +2038,7 @@
       "text": "Dragged Along - dragged to the curb.",
       "segments": [
         {
-          "text": "Dragged Along - dragged to the curb.",
+          "text": "Dragged Along - dragged to the curb. ",
           "change": null,
           "bold": false,
           "italic": false
@@ -1952,7 +2081,7 @@
           "text": "As was done with the Dark Elf versions I’ve gotten rid of Dragged Along in favour of a simpler rule based on “Will of the Gods” from the Cauldron of Blood in 8th edition. In this case called “Pushed Into Battle” (the former name for dragged along in the 7th/8th Skaven book.)",
           "segments": [
             {
-              "text": "As was done with the Dark Elf versions I’ve gotten rid of Dragged Along in favour of a simpler rule based on “Will of the Gods” from the Cauldron of Blood in 8th edition. In this case called “Pushed Into Battle” (the former name for dragged along in the 7th/8th Skaven book.)",
+              "text": "As was done with the Dark Elf versions I’ve gotten rid of Dragged Along in favour of a simpler rule based on “Will of the Gods” from the Cauldron of Blood in 8th edition. In this case called “Pushed Into Battle” (the former name for dragged along in the 7th/8th Skaven book.) ",
               "change": null,
               "bold": false,
               "italic": false
@@ -1965,7 +2094,7 @@
           "text": "This provides the opportunity to differentiate the two in the future. I went with “Will of the Gods” as the solution as it was a simpler version of “Pushed Into Battle” from a later edition that did mostly the same things in a concise way. You may imagine the Rat Ogre pushing the bell on his own if you don’t wish to have it in a unit for that Stubborn bonus.",
           "segments": [
             {
-              "text": "This provides the opportunity to differentiate the two in the future. I went with “Will of the Gods” as the solution as it was a simpler version of “Pushed Into Battle” from a later edition that did mostly the same things in a concise way. You may imagine the Rat Ogre pushing the bell on his own if you don’t wish to have it in a unit for that Stubborn bonus.",
+              "text": "This provides the opportunity to differentiate the two in the future. I went with “Will of the Gods” as the solution as it was a simpler version of “Pushed Into Battle” from a later edition that did mostly the same things in a concise way. You may imagine the Rat Ogre pushing the bell on his own if you don’t wish to have it in a unit for that Stubborn bonus. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -1978,7 +2107,7 @@
           "text": "Allows both playstyles to be used (inside and outside of units) without the rules bloat and restrictions of Dragged Along.",
           "segments": [
             {
-              "text": "Allows both playstyles to be used (inside and outside of units) without the rules bloat and restrictions of Dragged Along.",
+              "text": "Allows both playstyles to be used (inside and outside of units) without the rules bloat and restrictions of Dragged Along. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -1991,7 +2120,7 @@
           "text": "Changed the movement profiles for the bell and furnace.",
           "segments": [
             {
-              "text": "Changed the movement profiles for the bell and furnace.",
+              "text": "Changed the movement profiles for the bell and furnace. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -2035,7 +2164,7 @@
       "text": "Screaming Bell - tweaks.",
       "segments": [
         {
-          "text": "Screaming Bell - tweaks.",
+          "text": "Screaming Bell - tweaks. ",
           "change": null,
           "bold": false,
           "italic": false
@@ -2078,7 +2207,7 @@
           "text": "Overcooked the negative result a bit, so I’ve dialed it back.",
           "segments": [
             {
-              "text": "Overcooked the negative result a bit, so I’ve dialed it back.",
+              "text": "Overcooked the negative result a bit, so I’ve dialed it back. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -2091,7 +2220,7 @@
           "text": "Changed the negative result to D3 AP-1 wounds (speeds up the process as well)",
           "segments": [
             {
-              "text": "Changed the negative result to D3 AP-1 wounds (speeds up the process as well)",
+              "text": "Changed the negative result to D3 AP-1 wounds (speeds up the process as well) ",
               "change": null,
               "bold": false,
               "italic": false
@@ -2104,7 +2233,7 @@
           "text": "Changed the 12 result to be D3+3 Wounds to all enemies in command range.",
           "segments": [
             {
-              "text": "Changed the 12 result to be D3+3 Wounds to all enemies in command range.",
+              "text": "Changed the 12 result to be D3+3 Wounds to all enemies in command range. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -2117,7 +2246,7 @@
           "text": "Gave the Rat Ogre Warpstone Weapons (just like Rat Ogres)",
           "segments": [
             {
-              "text": "Gave the Rat Ogre Warpstone Weapons (just like Rat Ogres)",
+              "text": "Gave the Rat Ogre Warpstone Weapons (just like Rat Ogres) ",
               "change": null,
               "bold": false,
               "italic": false
@@ -2161,7 +2290,7 @@
       "text": "Giant rats - Changed to Open Order.",
       "segments": [
         {
-          "text": "Giant rats - Changed to Open Order.",
+          "text": "Giant rats - Changed to Open Order. ",
           "change": null,
           "bold": false,
           "italic": false
@@ -2204,7 +2333,7 @@
           "text": "Feels truer to the unit and also provides some additional differentiation between them and other core infantry options.",
           "segments": [
             {
-              "text": "Feels truer to the unit and also provides some additional differentiation between them and other core infantry options.",
+              "text": "Feels truer to the unit and also provides some additional differentiation between them and other core infantry options. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -2291,7 +2420,7 @@
           "text": "0-1 / 1000 may take a banner up to 50 pts. A no brainer option given it is common to core infantry in most armies.",
           "segments": [
             {
-              "text": "0-1 / 1000 may take a banner up to 50 pts. A no brainer option given it is common to core infantry in most armies.",
+              "text": "0-1 / 1000 may take a banner up to 50 pts. A no brainer option given it is common to core infantry in most armies. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -2335,7 +2464,13 @@
       "text": "Abomination - removed “first charge” bonus.",
       "segments": [
         {
-          "text": "Abomination - removed “first charge” bonus.",
+          "text": " ",
+          "change": null,
+          "bold": true,
+          "italic": false
+        },
+        {
+          "text": "Abomination - removed “first charge” bonus. ",
           "change": null,
           "bold": false,
           "italic": false
@@ -2378,7 +2513,7 @@
           "text": "A bit of a hat on a hat for the Abomination. Kept the ap on impact hits though.",
           "segments": [
             {
-              "text": "A bit of a hat on a hat for the Abomination. Kept the ap on impact hits though.",
+              "text": "A bit of a hat on a hat for the Abomination. Kept the ap on impact hits though. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -2422,7 +2557,7 @@
       "text": "Jezzails! Which I totally didn’t forget about",
       "segments": [
         {
-          "text": "Jezzails! Which I totally didn’t forget about",
+          "text": "Jezzails! Which I totally didn’t forget about ",
           "change": null,
           "bold": false,
           "italic": false
@@ -2465,7 +2600,7 @@
           "text": "Removed reserve move and added it as an option instead.",
           "segments": [
             {
-              "text": "Removed reserve move and added it as an option instead.",
+              "text": "Removed reserve move and added it as an option instead. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -2478,7 +2613,7 @@
           "text": "Restored the pavise save to its original",
           "segments": [
             {
-              "text": "Restored the pavise save to its original",
+              "text": "Restored the pavise save to its original ",
               "change": null,
               "bold": false,
               "italic": false
@@ -2491,7 +2626,7 @@
           "text": "Reduced points to 15 - this is one point cheaper than a superior Cathay Crane gunner without upgrades. Feels right to me.",
           "segments": [
             {
-              "text": "Reduced points to 15 - this is one point cheaper than a superior Cathay Crane gunner without upgrades. Feels right to me.",
+              "text": "Reduced points to 15 - this is one point cheaper than a superior Cathay Crane gunner without upgrades. Feels right to me. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -2609,7 +2744,7 @@
           "italic": false
         },
         {
-          "text": "A page devoted to the many contributors, past and present, to the creation of this document and some thoughts on the approach from the editor.",
+          "text": "A page devoted to the many contributors, past and present, to the creation of this document and some thoughts on the approach from the editor. ",
           "change": null,
           "bold": false,
           "italic": false
@@ -2907,7 +3042,7 @@
           "italic": false
         },
         {
-          "text": " Questions and Answers about any unclear interactions arising from these rules.",
+          "text": " Questions and Answers about any unclear interactions arising from these rules. ",
           "change": null,
           "bold": false,
           "italic": false
@@ -2947,7 +3082,7 @@
           "italic": false
         },
         {
-          "text": " A guide for where to find quality miniatures for use with this army.",
+          "text": " A guide for where to find quality miniatures for use with this army. ",
           "change": null,
           "bold": false,
           "italic": false
@@ -3750,7 +3885,7 @@
           "text": "0-1 unit of Plague Monks (if Army includes a Clan Pestilens Plague Priest)",
           "segments": [
             {
-              "text": "0-1 unit of Plague Monks (if Army includes a Clan Pestilens Plague Priest)",
+              "text": "0-1 unit of Plague Monks (if Army includes a Clan Pestilens Plague Priest) ",
               "change": null,
               "bold": false,
               "italic": false
@@ -3763,7 +3898,13 @@
           "text": "Clanrats, Nightrunners, Giant Rats and Rat Swarms",
           "segments": [
             {
-              "text": "Clanrats, Nightrunners, Giant Rats and Rat Swarms",
+              "text": "Clanrats,",
+              "change": null,
+              "bold": false,
+              "italic": false
+            },
+            {
+              "text": " Nightrunners, Giant Rats and Rat Swarms",
               "change": null,
               "bold": false,
               "italic": false
@@ -3931,7 +4072,7 @@
           "text": "Gutter Runners, Rat Ogres, Plague Monks, Stormvermin.",
           "segments": [
             {
-              "text": "Gutter Runners, Rat Ogres, Plague Monks, Stormvermin.",
+              "text": "Gutter Runners, Rat Ogres, Plague Monks, Stormvermin. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -3944,7 +4085,7 @@
           "text": "If your army includes a Clan Skyre Warlock Engineer:",
           "segments": [
             {
-              "text": "If your army includes a Clan Skyre Warlock Engineer:",
+              "text": "If your army includes a Clan Skyre Warlock Engineer: ",
               "change": null,
               "bold": false,
               "italic": false
@@ -3999,7 +4140,7 @@
           "text": "Warplock Jezzails,",
           "segments": [
             {
-              "text": "Warplock Jezzails,",
+              "text": "Warplock Jezzails, ",
               "change": null,
               "bold": false,
               "italic": false
@@ -5249,7 +5390,13 @@
       "text": "Note that models wielding weapons that have this special rule are immune to this special rule.",
       "segments": [
         {
-          "text": "Note that models wielding weapons that have this special rule are immune to this special rule.\n",
+          "text": "Note that models wielding weapons that have this special rule are immune to this special rule.",
+          "change": null,
+          "bold": false,
+          "italic": true
+        },
+        {
+          "text": "\n",
           "change": null,
           "bold": false,
           "italic": true
@@ -5375,7 +5522,19 @@
       "text": "Note that this special rule only applies to a single, ordinary hand weapon. If the model is using two hand weapons or any other sort of weapon, this special rule ceases to apply.",
       "segments": [
         {
-          "text": "Note that this special rule only applies to a single, ordinary hand weapon. If the model is using two hand weapons or any other sort of weapon, this special rule ceases to apply.\n\n",
+          "text": "Note that this special rule only applies to a single, ordinary hand weapon. If the model is using two hand weapons or any other sort of weapon, this special rule ceases to apply.",
+          "change": null,
+          "bold": false,
+          "italic": true
+        },
+        {
+          "text": "\n",
+          "change": null,
+          "bold": false,
+          "italic": true
+        },
+        {
+          "text": "\n",
           "change": null,
           "bold": false,
           "italic": true
@@ -5870,7 +6029,13 @@
       "text": "In subsequent turns, if this model’s unit remains engaged in combat with the same enemy unit, a model with this rule may move through the ranks and join any fighting rank before challenges are issued during step 1.1 of the “Choose Combat & Fight Phase” (“Characters in Combat,” Rulebook p.209.)",
       "segments": [
         {
-          "text": "In subsequent turns, if this model’s unit remains engaged in combat with the same enemy unit, a model with this rule may move through the ranks and join any fighting rank before challenges are issued during step 1.1 of the “Choose Combat & Fight Phase” (“Characters in Combat,” Rulebook p.209.) \n",
+          "text": "In subsequent turns, if this model’s unit remains engaged in combat with the same enemy unit, a model with this rule may move through the ranks and join any fighting rank before challenges are issued during step 1.1 of the “Choose Combat & Fight Phase” (“Characters in Combat,” Rulebook p.209.) ",
+          "change": "new",
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "\n",
           "change": "new",
           "bold": false,
           "italic": false
@@ -5964,7 +6129,19 @@
           "italic": false
         },
         {
-          "text": "\n\nA model with this special rule may join a unit of Infantry with unit strength 10 or more despite being a Heavy Chariot. If it does so, it must always be placed in the centre of the front rank, and it no longer has the Lumbering rule (Rulebook p. 195). Only one model with this special rule may join each unit. ",
+          "text": "\n",
+          "change": "new",
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "\n",
+          "change": "new",
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "A model with this special rule may join a unit of Infantry with unit strength 10 or more despite being a Heavy Chariot. If it does so, it must always be placed in the centre of the front rank, and it no longer has the Lumbering rule (Rulebook p. 195). Only one model with this special rule may join each unit. ",
           "change": "new",
           "bold": false,
           "italic": false
@@ -6080,6 +6257,12 @@
           "change": null,
           "bold": false,
           "italic": false
+        },
+        {
+          "text": " ",
+          "change": null,
+          "bold": false,
+          "italic": false
         }
       ],
       "changeKinds": [
@@ -6128,6 +6311,12 @@
         {
           "text": " ",
           "change": "new",
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": " ",
+          "change": null,
           "bold": false,
           "italic": false
         }
@@ -7317,7 +7506,13 @@
       "text": "Death Globe 9\" 2 N/A Magical Attacks, Move & Shoot, Quick Shot, Poisoned Wind",
       "segments": [
         {
-          "text": "Death Globe 9\" 2 N/A Magical Attacks, Move & Shoot, ",
+          "text": "Death Globe ",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "9\" 2 N/A Magical Attacks, Move & Shoot, ",
           "change": null,
           "bold": false,
           "italic": false
@@ -8148,7 +8343,13 @@
       "text": "Single use. A unit carrying the Storm Banner may activate it during any Command sub-phase. For this player turn and the next: all friendly and enemy units cannot use the Fly (X) special rule, the range of all missile weapons is halved (rounding fractions up) and all war machines cannot shoot.",
       "segments": [
         {
-          "text": "Single use. A unit carrying the Storm Banner may activate it during any Command sub-phase. For this player turn and the next: all friendly and enemy units cannot use the Fly (X) special rule, the range of all missile weapons is halved (rounding fractions up) and all war machines cannot shoot.\n",
+          "text": "Single use. A unit carrying the Storm Banner may activate it during any Command sub-phase. For this player turn and the next: all friendly and enemy units cannot use the Fly (X) special rule, the range of all missile weapons is halved (rounding fractions up) and all war machines cannot shoot.",
+          "change": "new",
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "\n",
           "change": "new",
           "bold": false,
           "italic": false
@@ -8461,7 +8662,19 @@
       "text": "A unit carrying the Banner of Verminous Scurrying gains the Swiftstride special rule. Plague Banner 30 points",
       "segments": [
         {
-          "text": "A unit carrying the Banner of Verminous Scurrying gains the Swiftstride special rule.\n\n",
+          "text": "A unit carrying the Banner of Verminous Scurrying gains the Swiftstride special rule.",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "\n",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "\n",
           "change": null,
           "bold": false,
           "italic": false
@@ -9377,7 +9590,19 @@
       "text": "Skitterleap Type: Conveyance",
       "segments": [
         {
-          "text": "Skitterleap\nType: Conveyance",
+          "text": "Skitterleap",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "\n",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "Type: Conveyance",
           "change": null,
           "bold": false,
           "italic": false
@@ -9424,7 +9649,13 @@
           "italic": false
         },
         {
-          "text": "7+",
+          "text": "7",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "+",
           "change": null,
           "bold": false,
           "italic": false
@@ -9605,6 +9836,12 @@
       "text": "Warp Lightning",
       "segments": [
         {
+          "text": " ",
+          "change": null,
+          "bold": false,
+          "italic": true
+        },
+        {
           "text": "Warp Lightning",
           "change": null,
           "bold": false,
@@ -9700,7 +9937,13 @@
           "italic": false
         },
         {
-          "text": "9+",
+          "text": "9",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "+",
           "change": null,
           "bold": false,
           "italic": false
@@ -10765,7 +11008,13 @@
       "text": "Unit Size: 1",
       "segments": [
         {
-          "text": "Unit Size: 1",
+          "text": "Unit Size: ",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "1",
           "change": null,
           "bold": false,
           "italic": false
@@ -11793,7 +12042,13 @@
       "text": "Unit Size: 1",
       "segments": [
         {
-          "text": "Unit Size: 1",
+          "text": "Unit Size: ",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "1",
           "change": null,
           "bold": false,
           "italic": false
@@ -12880,7 +13135,13 @@
       "text": "Unit Size: 1",
       "segments": [
         {
-          "text": "Unit Size: 1",
+          "text": "Unit Size: ",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "1",
           "change": null,
           "bold": false,
           "italic": false
@@ -15156,7 +15417,13 @@
       "text": "Unit Size: 1",
       "segments": [
         {
-          "text": "Unit Size: 1",
+          "text": "Unit Size: ",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "1",
           "change": null,
           "bold": false,
           "italic": false
@@ -15223,7 +15490,13 @@
           "italic": false
         },
         {
-          "text": "and throwing weapons",
+          "text": "an",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "d throwing weapons",
           "change": null,
           "bold": false,
           "italic": false
@@ -16407,7 +16680,13 @@
       "text": "Unit Size: 1",
       "segments": [
         {
-          "text": "Unit Size: 1",
+          "text": "Unit Size: ",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "1",
           "change": null,
           "bold": false,
           "italic": false
@@ -18740,7 +19019,13 @@
           "italic": false
         },
         {
-          "text": "Close Order, Horde, Scurry Away, Warband, Warpstone Weapons, Regimental Unit",
+          "text": "Close Order, Horde, Scurry Away, Warband, Warpstone Weapons, ",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "Regimental Unit",
           "change": null,
           "bold": false,
           "italic": false
@@ -20197,7 +20482,13 @@
           "italic": false
         },
         {
-          "text": "Close Order, Horde, Scurry Away, Warband, Regimental Unit",
+          "text": "Close Order, Horde, Scurry Away, Warband, ",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "Regimental Unit",
           "change": null,
           "bold": false,
           "italic": false
@@ -20687,7 +20978,13 @@
       "text": "Unit Size: 1",
       "segments": [
         {
-          "text": "Unit Size: 1",
+          "text": "Unit Size: ",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "1",
           "change": null,
           "bold": false,
           "italic": false
@@ -20946,7 +21243,19 @@
           "text": "Poisoned Wind Mortar +55 points per model",
           "segments": [
             {
-              "text": "Poisoned Wind Mortar +55 points per model",
+              "text": "Poisoned Wind Mortar ",
+              "change": null,
+              "bold": false,
+              "italic": false
+            },
+            {
+              "text": "+55",
+              "change": null,
+              "bold": false,
+              "italic": false
+            },
+            {
+              "text": " points per model",
               "change": null,
               "bold": false,
               "italic": false
@@ -20966,7 +21275,19 @@
           "text": "Ratling Gun +50 points per model",
           "segments": [
             {
-              "text": "Ratling Gun +50 points per model",
+              "text": "Ratling Gun ",
+              "change": null,
+              "bold": false,
+              "italic": false
+            },
+            {
+              "text": "+50 ",
+              "change": null,
+              "bold": false,
+              "italic": false
+            },
+            {
+              "text": "points per model",
               "change": null,
               "bold": false,
               "italic": false
@@ -21138,7 +21459,13 @@
           "italic": false
         },
         {
-          "text": "Scurry Away, Detachment",
+          "text": "Scurry Away, ",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "Detachment",
           "change": null,
           "bold": false,
           "italic": false
@@ -21258,7 +21585,7 @@
           "italic": false
         },
         {
-          "text": "Skaven Weapon Teams may ignore the minimum model requirement to form a Detachment. They may only form as many Weapon Team detachments as is noted on their Regimental unit’s description.",
+          "text": "Skaven Weapon Teams may ignore the minimum model requirement to form a Detachment. They may only form as many Weapon Team detachments as is noted on their Regimental unit’s description. ",
           "change": null,
           "bold": false,
           "italic": false
@@ -25525,7 +25852,13 @@
       "text": "A pavise gives its wielder a 4+ armour value against attacks made by enemy models that lie within the wielder’s front arc. However, a pavise offers no protection to its wielder against attacks made by enemy models that lie within the wielder’s flank or rear arcs.",
       "segments": [
         {
-          "text": "A pavise gives its wielder a 4+ armour value",
+          "text": "A pavise gives its wielder a ",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "4+ armour value",
           "change": null,
           "bold": false,
           "italic": false
@@ -25948,7 +26281,13 @@
             "text": "M WS BS",
             "segments": [
               {
-                "text": "M WS BS",
+                "text": "M WS ",
+                "change": null,
+                "bold": true,
+                "italic": false
+              },
+              {
+                "text": "BS",
                 "change": null,
                 "bold": true,
                 "italic": false
@@ -26076,7 +26415,13 @@
             "text": "5 3 3",
             "segments": [
               {
-                "text": "5 3 3",
+                "text": "5 3 ",
+                "change": null,
+                "bold": false,
+                "italic": false
+              },
+              {
+                "text": "3",
                 "change": null,
                 "bold": false,
                 "italic": false
@@ -26486,7 +26831,13 @@
           "italic": false
         },
         {
-          "text": "Life is Cheap\n",
+          "text": "Life is Cheap",
+          "change": "new",
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "\n",
           "change": "new",
           "bold": false,
           "italic": false
@@ -26760,7 +27111,7 @@
     },
     {
       "type": "paragraph",
-      "text": "Notes: Ignores the penalty for shooting at long range. If the roll To Hit is successful, a Poisoned Wind globe causes D3 hits to the target enemy unit, rather than the usual one. However, if a natural 1 is rolled when making a roll To Hit with this weapon, immediately roll another D6. On a roll of 1, D3 hits are caused on the shooting unit. Life is Cheap Providing the Globadiers are not in base contact with an enemy model, they may target any enemy unit within range and line of sight, even if that unit is engaged in close combat. Resolve all rolls to hit as normal. Then, using all failed to hit rolls, roll to wound on a friendly unit engaged in the combat chosen by your opponent.",
+      "text": "Notes: If the roll To Hit is successful, a Poisoned Wind globe causes D3 hits to the target enemy unit, rather than the usual one. However, if a natural 1 is rolled when making a roll To Hit with this weapon, immediately roll another D6. On a roll of 1, D3 hits are caused on the shooting unit. Life is Cheap Providing the Globadiers are not in base contact with an enemy model, they may target any enemy unit within range and line of sight, even if that unit is engaged in close combat. Resolve all rolls to hit as normal. Then, using all failed to hit rolls, roll to wound on a friendly unit engaged in the combat chosen by your opponent.",
       "segments": [
         {
           "text": "Notes: ",
@@ -26772,10 +27123,24 @@
           "text": "Ignores the penalty for shooting at long range.",
           "change": "new",
           "bold": false,
+          "italic": true,
+          "struck": true
+        },
+        {
+          "text": " ",
+          "change": null,
+          "bold": false,
+          "italic": true,
+          "struck": true
+        },
+        {
+          "text": "If the roll To Hit is successful, a Poisoned Wind globe causes D3 hits to the target enemy unit, rather than the usual one. However, if a natural 1 is rolled when making a roll To Hit with this weapon, immediately roll another D6. On a roll of 1, D3 hits are caused on the shooting unit.",
+          "change": null,
+          "bold": false,
           "italic": true
         },
         {
-          "text": " If the roll To Hit is successful, a Poisoned Wind globe causes D3 hits to the target enemy unit, rather than the usual one. However, if a natural 1 is rolled when making a roll To Hit with this weapon, immediately roll another D6. On a roll of 1, D3 hits are caused on the shooting unit.\n",
+          "text": "\n",
           "change": null,
           "bold": false,
           "italic": true
@@ -26787,18 +27152,31 @@
           "italic": false
         },
         {
-          "text": "Life is Cheap\n",
+          "text": "Life is Cheap",
           "change": "new",
           "bold": true,
           "italic": false
         },
         {
-          "text": "\nProviding the Globadiers are not in base contact with an enemy model, they may target any enemy unit within range and line of sight, even if that unit is engaged in close combat. Resolve all rolls to hit as normal. Then, using all failed to hit rolls, roll to wound on a friendly unit engaged in the combat chosen by your opponent.",
+          "text": "\n",
+          "change": "new",
+          "bold": true,
+          "italic": false
+        },
+        {
+          "text": "\n",
+          "change": "new",
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "Providing the Globadiers are not in base contact with an enemy model, they may target any enemy unit within range and line of sight, even if that unit is engaged in close combat. Resolve all rolls to hit as normal. Then, using all failed to hit rolls, roll to wound on a friendly unit engaged in the combat chosen by your opponent.",
           "change": "new",
           "bold": false,
           "italic": false
         }
       ],
+      "struckText": "Ignores the penalty for shooting at long range.",
       "changeKinds": [
         "new"
       ],
@@ -27819,7 +28197,7 @@
             "text": "Master Moulder",
             "segments": [
               {
-                "text": "Master Moulder",
+                "text": "Master Moulder ",
                 "change": null,
                 "bold": false,
                 "italic": false
@@ -29404,7 +29782,13 @@
           "italic": false
         },
         {
-          "text": "Monstrous infantry",
+          "text": "Monstr",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "ous infantry",
           "change": null,
           "bold": false,
           "italic": false
@@ -30833,7 +31217,7 @@
     },
     {
       "type": "paragraph",
-      "text": "Special Rules: Close Order, Open Order, Fight in Extra Rank, Horde, Scurry Away, Warband, Motley Crew",
+      "text": "Special Rules: Open Order, Fight in Extra Rank, Horde, Scurry Away, Warband, Motley Crew",
       "segments": [
         {
           "text": "Special Rules: ",
@@ -30845,13 +31229,15 @@
           "text": " ",
           "change": "new",
           "bold": true,
-          "italic": false
+          "italic": false,
+          "struck": true
         },
         {
           "text": "Close Order,",
           "change": "new",
           "bold": false,
-          "italic": false
+          "italic": false,
+          "struck": true
         },
         {
           "text": " ",
@@ -30878,6 +31264,7 @@
           "italic": false
         }
       ],
+      "struckText": "Close Order,",
       "changeKinds": [
         "new"
       ],
@@ -36939,13 +37326,14 @@
     },
     {
       "type": "paragraph",
-      "text": "Dragged Along, Impact Hits (D6+1), Large Target, Magic Resistance (-3), Pushed into Battle, Scurrying Masses, Stubborn, Terror, Tolling the Bell, Warpstone Weapons (Rat Ogre only)",
+      "text": "Impact Hits (D6+1), Large Target, Magic Resistance (-3), Pushed into Battle, Scurrying Masses, Stubborn, Terror, Tolling the Bell, Warpstone Weapons (Rat Ogre only)",
       "segments": [
         {
           "text": "Dragged Along, ",
           "change": "new",
           "bold": false,
-          "italic": false
+          "italic": false,
+          "struck": true
         },
         {
           "text": "Impact Hits (D6+1), Large Target, Magic Resistance (-3), ",
@@ -36972,6 +37360,7 @@
           "italic": false
         }
       ],
+      "struckText": "Dragged Along,",
       "changeKinds": [
         "new"
       ],
@@ -37636,7 +38025,7 @@
             "rowspan": 1
           },
           {
-            "text": "Sonorous Knell: Any enemy unit that is within this model's Command range, including units that are fleeing or that are engaged in combat, must make a Leadership test. If this test is failed, the unit suffers D3+3 wounds, with no armour save permitted (Ward and Regeneration saves can be attempted as normal)",
+            "text": "Sonorous Knell: Any enemy unit that is within this model's Command range, including units that are fleeing or that are engaged in combat, suffers D3+3 wounds, with no armour save permitted (Ward and Regeneration saves can be attempted as normal)",
             "segments": [
               {
                 "text": "Sonorous Knell:",
@@ -37663,10 +38052,17 @@
                 "italic": false
               },
               {
-                "text": " must make a Leadership test. If this test is failed, the unit ",
+                "text": " ",
                 "change": "new",
                 "bold": false,
                 "italic": false
+              },
+              {
+                "text": "must make a Leadership test. If this test is failed, the unit ",
+                "change": "new",
+                "bold": false,
+                "italic": false,
+                "struck": true
               },
               {
                 "text": " suffers ",
@@ -37681,6 +38077,7 @@
                 "italic": false
               }
             ],
+            "struckText": "must make a Leadership test. If this test is failed, the unit",
             "changeKinds": [
               "new"
             ],
@@ -37689,7 +38086,7 @@
           }
         ]
       ],
-      "text": "2 | Magical Backlash: The Screaming Bell and every unit (friend or foe) that is within 3” suffers D3 wounds, each with an AP of -1\n3 and 4 | Emboldened: Until your next Start of Turn sub-phase, all friendly units within this model's Command range may re-roll any Leadership tests including Break tests.\n5 and 6 | Unholy Clamour: Any friendly unit that is within this model's Command range during the Declare Charges & Charge Reactions sub-phase of this turn increases its maximum possible charge range by 3\" and, when it makes a Charge roll, may apply a +D3 modifier to the result.\n7 | Deafening Peals: All enemy models within 24” of this model with Toughness 6 or more suffer D3 wounds. Armour saves may be taken as normal.\n8 and 9 | Resonant Power: Until the end of this turn, all friendly Skaven Wizards within this model's Command range may apply a +1 modifier to any Casting roll they make.\n10 and 11 | Rapturous Ringing: Until your next Start of Turn sub-phase, all friendly Skaven units within this model's Command range gain the Extra Attacks (+1) special rule.\n12 | Sonorous Knell: Any enemy unit that is within this model's Command range, including units that are fleeing or that are engaged in combat, must make a Leadership test. If this test is failed, the unit suffers D3+3 wounds, with no armour save permitted (Ward and Regeneration saves can be attempted as normal)",
+      "text": "2 | Magical Backlash: The Screaming Bell and every unit (friend or foe) that is within 3” suffers D3 wounds, each with an AP of -1\n3 and 4 | Emboldened: Until your next Start of Turn sub-phase, all friendly units within this model's Command range may re-roll any Leadership tests including Break tests.\n5 and 6 | Unholy Clamour: Any friendly unit that is within this model's Command range during the Declare Charges & Charge Reactions sub-phase of this turn increases its maximum possible charge range by 3\" and, when it makes a Charge roll, may apply a +D3 modifier to the result.\n7 | Deafening Peals: All enemy models within 24” of this model with Toughness 6 or more suffer D3 wounds. Armour saves may be taken as normal.\n8 and 9 | Resonant Power: Until the end of this turn, all friendly Skaven Wizards within this model's Command range may apply a +1 modifier to any Casting roll they make.\n10 and 11 | Rapturous Ringing: Until your next Start of Turn sub-phase, all friendly Skaven units within this model's Command range gain the Extra Attacks (+1) special rule.\n12 | Sonorous Knell: Any enemy unit that is within this model's Command range, including units that are fleeing or that are engaged in combat, suffers D3+3 wounds, with no armour save permitted (Ward and Regeneration saves can be attempted as normal)",
       "changeKinds": [
         "new"
       ],
@@ -37749,7 +38146,19 @@
           "italic": false
         },
         {
-          "text": "A Screaming Bell may only be included in your army as a character’s mount. Its points are added to that of its rider. The rider of a Screaming Bell may not use Verminous Valour. This unit may only use the Pushed into Battle special rule to join a unit of Clanrats or Stormvermin.",
+          "text": "A Screaming Bell may only be included in your army as a character’s mount. Its points are added to that of its rider. ",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "The rider of a Screaming Bell may not use Verminous Valour. This unit may only use the Pushed into Battle special rule to join a unit of Clanrats or Stormvermin.",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": " ",
           "change": null,
           "bold": false,
           "italic": false
@@ -38830,7 +39239,7 @@
     },
     {
       "type": "paragraph",
-      "text": "Special Rules: Dragged Along, Terror, Frenzy, Great Censer, Impact Hits (D6+1),",
+      "text": "Special Rules: Terror, Frenzy, Great Censer, Impact Hits (D6+1),",
       "segments": [
         {
           "text": "Special Rules: ",
@@ -38839,7 +39248,14 @@
           "italic": false
         },
         {
-          "text": "Dragged Along, Terror,",
+          "text": "Dragged Along, ",
+          "change": "new",
+          "bold": false,
+          "italic": false,
+          "struck": true
+        },
+        {
+          "text": "Terror,",
           "change": "new",
           "bold": false,
           "italic": false
@@ -38863,6 +39279,7 @@
           "italic": false
         }
       ],
+      "struckText": "Dragged Along,",
       "changeKinds": [
         "new"
       ],
@@ -39451,7 +39868,19 @@
           "italic": false
         },
         {
-          "text": " A Plague Furnace may only be included in your army as a character’s mount. Its points are added to that of its rider. The rider of a Plague Furnace may not use Verminous Valour. This model may only use the Pushed Into Battle special rule to join a unit of Plague Monks.",
+          "text": " ",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "A Plague Furnace may only be included in your army as a character’s mount. Its points are added to that of its rider. ",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "The rider of a Plague Furnace may not use Verminous Valour. This model may only use the Pushed Into Battle special rule to join a unit of Plague Monks. ",
           "change": null,
           "bold": false,
           "italic": false
@@ -40286,7 +40715,19 @@
             "text": "Heavy chariot 50 x 100 mm 1",
             "segments": [
               {
-                "text": "Heavy chariot 50 x 100 mm\n1",
+                "text": "Heavy chariot 50 x 100 mm",
+                "change": null,
+                "bold": false,
+                "italic": false
+              },
+              {
+                "text": "\n",
+                "change": null,
+                "bold": false,
+                "italic": false
+              },
+              {
+                "text": "1",
                 "change": null,
                 "bold": false,
                 "italic": false
@@ -40567,13 +41008,19 @@
           "text": "Doomwheel: Warp Lightning Bolt",
           "segments": [
             {
-              "text": "Doomwheel: ",
+              "text": "Doomwheel:",
               "change": null,
               "bold": true,
               "italic": false
             },
             {
-              "text": "Warp Lightning Bolt",
+              "text": " ",
+              "change": null,
+              "bold": true,
+              "italic": false
+            },
+            {
+              "text": "Warp Lightning Bolt ",
               "change": null,
               "bold": false,
               "italic": false
@@ -41315,7 +41762,25 @@
       "text": "In each friendly Shooting Phase, even when engaged in close combat, the Doomwheel automatically shoots Warp Lightning Bolts 3 times. However, the controlling player may attempt to prevent the Doomwheel from shooting this turn by passing a Leadership Test using the Warlock’s Leadership characteristic. Each Warp Lightning Bolt automatically hits the nearest unit (friend or foe), regardless of line of sight and direction. Roll the Artillery dice to determine the strength of each shot and resolve the roll to wound one at a time. If the closest unit dies from the first bolt, the second bolt hits the next closest unit in range, and so on. If two targets are equidistant, the owning player may choose which unit is struck.",
       "segments": [
         {
-          "text": "In each friendly Shooting Phase, even when engaged in close combat, the Doomwheel automatically shoots Warp Lightning Bolts 3 times. However, the controlling player may attempt to prevent the Doomwheel from shooting this turn by passing a Leadership Test using the Warlock’s Leadership characteristic. \n\nEach Warp Lightning Bolt automatically hits the nearest unit (friend or foe), regardless of line of sight and direction. Roll the Artillery dice to determine the strength of each shot and resolve the roll to wound one at a time. If the closest unit dies from the first bolt, the second bolt hits the next closest unit in range, and so on. If two targets are equidistant, the owning player may choose which unit is struck.",
+          "text": "In each friendly Shooting Phase, even when engaged in close combat, the Doomwheel automatically shoots Warp Lightning Bolts 3 times. However, the controlling player may attempt to prevent the Doomwheel from shooting this turn by passing a Leadership Test using the Warlock’s Leadership characteristic. ",
+          "change": "new",
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "\n",
+          "change": "new",
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "\n",
+          "change": "new",
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "Each Warp Lightning Bolt automatically hits the nearest unit (friend or foe), regardless of line of sight and direction. Roll the Artillery dice to determine the strength of each shot and resolve the roll to wound one at a time. If the closest unit dies from the first bolt, the second bolt hits the next closest unit in range, and so on. If two targets are equidistant, the owning player may choose which unit is struck.",
           "change": "new",
           "bold": false,
           "italic": false
@@ -41375,7 +41840,13 @@
       "text": "If you roll a Misfire result, no more shots are fired this turn. You must immediately roll a D6 and consult the Doomwheel Mishap chart:",
       "segments": [
         {
-          "text": "If you roll a Misfire result, no more shots are fired this turn. You must immediately roll a D6 and consult the Doomwheel Mishap chart:\n",
+          "text": "If you roll a Misfire result, no more shots are fired this turn. You must immediately roll a D6 and consult the Doomwheel Mishap chart:",
+          "change": "new",
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "\n",
           "change": "new",
           "bold": false,
           "italic": false
@@ -42124,7 +42595,13 @@
       "text": "Unit Size: 1",
       "segments": [
         {
-          "text": "Unit Size: 1",
+          "text": "Unit Size: ",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "1",
           "change": null,
           "bold": false,
           "italic": false
@@ -42311,13 +42788,25 @@
       "text": "Too Horrible to Die, Unbreakable, Impact Hits (D3+1), Warpstone Spikes",
       "segments": [
         {
-          "text": "Too Horrible to Die, Unbreakable, Impact Hits (D3+1), ",
+          "text": "Too Horrible to Die, Unbreakable, ",
           "change": null,
           "bold": false,
           "italic": false
         },
         {
-          "text": "Warpstone Spikes\n",
+          "text": "Impact Hits (D3+1), ",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "Warpstone Spikes",
+          "change": "new",
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "\n",
           "change": "new",
           "bold": false,
           "italic": false
@@ -42433,7 +42922,13 @@
       "text": "Any Impact Hits made by a Hell Pit Abomination have an Armour Piercing characteristic of -2 and Magical Attacks.",
       "segments": [
         {
-          "text": "Any Impact Hits made by a Hell Pit Abomination have an Armour Piercing characteristic of -2 and Magical Attacks. \n",
+          "text": "Any Impact Hits made by a Hell Pit Abomination have an Armour Piercing characteristic of -2 and Magical Attacks. ",
+          "change": "new",
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "\n",
           "change": "new",
           "bold": false,
           "italic": false
@@ -43787,7 +44282,13 @@
       "text": "Unit Size: 1",
       "segments": [
         {
-          "text": "Unit Size: 1",
+          "text": "Unit Size: ",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "1",
           "change": null,
           "bold": false,
           "italic": false
@@ -44083,7 +44584,13 @@
       "text": "Cannon Move or Shoot, Multiple Wounds (D3+1),",
       "segments": [
         {
-          "text": "Cannon Move or Shoot, Multiple Wounds (D3+1),",
+          "text": "Cannon Move or Shoot, ",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "Multiple Wounds (D3+1), ",
           "change": null,
           "bold": false,
           "italic": false
@@ -44349,7 +44856,13 @@
           "italic": false
         },
         {
-          "text": " to determine exactly what. \n",
+          "text": " to determine exactly what. ",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "\n",
           "change": null,
           "bold": false,
           "italic": false
@@ -44414,6 +44927,12 @@
       "level": 2,
       "text": "Plagueclaw Catapult",
       "segments": [
+        {
+          "text": "\n",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
         {
           "text": "Plagueclaw Catapult",
           "change": null,
@@ -45116,7 +45635,13 @@
       "text": "Unit Size: 1",
       "segments": [
         {
-          "text": "Unit Size: 1",
+          "text": "Unit Size: ",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "1",
           "change": null,
           "bold": false,
           "italic": false
@@ -45379,7 +45904,31 @@
           "italic": true
         },
         {
-          "text": " table. When making a roll To Wound for this weapon, a roll of a natural 6 is always a success, even if the target’s Toughness is so high that the weapon would not normally be able to wound it. ",
+          "text": " table. When making a roll To Wound for this weapon,",
+          "change": null,
+          "bold": false,
+          "italic": true
+        },
+        {
+          "text": " ",
+          "change": null,
+          "bold": false,
+          "italic": true
+        },
+        {
+          "text": "a roll",
+          "change": null,
+          "bold": false,
+          "italic": true
+        },
+        {
+          "text": " of a natural 6 is always",
+          "change": null,
+          "bold": false,
+          "italic": true
+        },
+        {
+          "text": " a success, even if the target’s Toughness is so high that the weapon would not normally be able to wound it. ",
           "change": null,
           "bold": false,
           "italic": true

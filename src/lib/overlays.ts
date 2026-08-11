@@ -128,7 +128,12 @@ export interface CompositionOverlay {
   units: Record<string, OverlayUnitPatch>;
   /** Entries introduced by the pack and therefore absent from the synced OWB catalogue. */
   addedUnits?: Partial<Record<Category, OwbUnit[]>>;
-  /** Existing OWB Renegade composition whose availability, categories and notes V2 inherits. */
+  /** Existing OWB Renegade composition whose availability, categories and notes V2 inherits.
+   *
+   *  Set this even when no UNIT in the catalogue carries an `armyComposition` map: individual OPTIONS
+   *  carry the tag too, and an option tagged for a composition we do not inherit is hidden. Vampire
+   *  Counts has exactly that shape — nothing at unit level, but the vampires' "Full plate armour" is
+   *  tagged `vc-renegade` — so leaving this out silently dropped a legal armour choice. */
   inheritsComposition?: string;
   composition?: OverlayComposition;
   /** Complete unit, mount or weapon statlines, keyed by normalized English lookup name. */
@@ -178,9 +183,6 @@ export const OVERLAY_BASE_ARMY: Record<string, string> = {
   'cd-renegade-v2': 'chaos-dwarfs',
   'doc-renegade-v2': 'daemons-of-chaos',
   'lm-renegade-v2': 'lizardmen',
-  // Vampire Counts carries no `inheritsComposition`, unlike the other six. OWB has no `vc-renegade`
-  // composition to inherit from, and naming one that does not exist makes `allowed` false for every
-  // unit — the pack would open as an empty army list rather than fail loudly.
   'vc-renegade-v2': 'vampire-counts',
 };
 

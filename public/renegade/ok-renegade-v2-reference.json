@@ -15,6 +15,8 @@
     "changed": "Differs from the official Legacy PDF (blue in the source)",
     "new": "Changed since the previous Renegade draft (magenta in the source)",
     "todo": "Incomplete or in development (yellow in the source)",
+    "struck": "Segment is struck through in the source: DELETED text. Kept in `segments` for the audit trail; every derived field (text, items, statlineRows, pointsMentions) is built without it",
+    "struckText": "The struck-through text this block dropped, verbatim",
     "headingPath": "Active Google Docs heading hierarchy for this block, from broadest to most specific",
     "unitContext": "Semantic army-list entry propagated from a statline table until the next statline",
     "unitId": "Intentionally null in the lossless reference; catalogue mapping belongs to the compiler manifest",
@@ -44,8 +46,9 @@
     "changedBlocks": 151,
     "armyListChangedBlocks": 142,
     "changedSegments": 8,
-    "newSegments": 233,
+    "newSegments": 244,
     "todoSegments": 66,
+    "struckBlocks": 11,
     "statlineTables": 21,
     "weaponProfileTables": 13
   },
@@ -356,6 +359,12 @@
           "change": null,
           "bold": false,
           "italic": false
+        },
+        {
+          "text": "\n",
+          "change": null,
+          "bold": false,
+          "italic": false
         }
       ],
       "changeKinds": [],
@@ -378,7 +387,19 @@
       "text": "Renegade Army List DRAFT V1.5.2.2",
       "segments": [
         {
-          "text": "Renegade Army List \nDRAFT V1.5.2.2",
+          "text": "Renegade Army List ",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "\n",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "DRAFT V1.5.2.2",
           "change": null,
           "bold": false,
           "italic": false
@@ -518,7 +539,31 @@
       "text": "The rules contained within this document allow players the opportunity to play Warhammer: The Old World using rules that we hope better reflect the legacy, history and feel of the Ogre Kingdoms faction as they have appeared in previous editions. These rules are intended to be fair and fun to use wherever Warhammer: The Old World is played and will be maintained in concert with the playing community for as long as it is necessary to do so. These rules are unofficial and in no way endorsed by the authors or publisher of Warhammer: The Old World.",
       "segments": [
         {
-          "text": "The rules contained within this document allow players the opportunity to play Warhammer: The Old World using rules that we hope better reflect the legacy, history and feel of the Ogre Kingdoms faction as they have appeared in previous editions. \nThese rules are intended to be fair and fun to use wherever Warhammer: The Old World is played and will be maintained in concert with the playing community for as long as it is necessary to do so.\n\n",
+          "text": "The rules contained within this document allow players the opportunity to play Warhammer: The Old World using rules that we hope better reflect the legacy, history and feel of the Ogre Kingdoms faction as they have appeared in previous editions. ",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "\n",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "These rules are intended to be fair and fun to use wherever Warhammer: The Old World is played and will be maintained in concert with the playing community for as long as it is necessary to do so.",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "\n",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "\n",
           "change": null,
           "bold": false,
           "italic": false
@@ -527,6 +572,12 @@
           "text": "These rules are unofficial and in no way endorsed by the authors or publisher of Warhammer: The Old World. ",
           "change": null,
           "bold": true,
+          "italic": false
+        },
+        {
+          "text": " ",
+          "change": null,
+          "bold": false,
           "italic": false
         }
       ],
@@ -558,13 +609,31 @@
       "text": "How to Give Feedback: Please feel free to join the conversation in the comments on any of my posts on Facebook, Reddit or YouTube. Or if you prefer you can send it to me directly by using this form: https://forms.gle/H8Zoeq7ddk5vZm176",
       "segments": [
         {
-          "text": "How to Give Feedback: \n",
+          "text": "How to Give Feedback: ",
           "change": null,
           "bold": true,
           "italic": false
         },
         {
-          "text": "Please feel free to join the conversation in the comments on any of my posts on Facebook, Reddit or YouTube. Or if you prefer you can send it to me directly by using this form: \nhttps://forms.gle/H8Zoeq7ddk5vZm176",
+          "text": "\n",
+          "change": null,
+          "bold": true,
+          "italic": false
+        },
+        {
+          "text": "Please feel free to join the conversation in the comments on any of my posts on Facebook, Reddit or YouTube. Or if you prefer you can send it to me directly by using this form: ",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "\n",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "https://forms.gle/H8Zoeq7ddk5vZm176",
           "change": null,
           "bold": false,
           "italic": false
@@ -602,6 +671,12 @@
           "change": null,
           "bold": true,
           "italic": false
+        },
+        {
+          "text": "\n",
+          "change": null,
+          "bold": false,
+          "italic": false
         }
       ],
       "changeKinds": [],
@@ -638,7 +713,19 @@
       "text": "Where this document differs from the official Legacy PDFs entries will be highlighted in [blue], while any new changes from previous Renegade Legacy Pack entries will be highlighted in [magenta]. This way players can easily spot where this document is different from versions past, as well as any official publications. Sections highlighted in [Yellow] are not yet completed or in development.",
       "segments": [
         {
-          "text": "Where this document differs from the official Legacy PDFs entries will be highlighted in [blue], while any new changes from previous Renegade Legacy Pack entries will be highlighted in ",
+          "text": "Where this document differs from the official Legacy PDFs entries will be highlighted in ",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "[blue]",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": ", while any new changes from previous Renegade Legacy Pack entries will be highlighted in ",
           "change": null,
           "bold": false,
           "italic": false
@@ -662,7 +749,7 @@
           "italic": false
         },
         {
-          "text": " are not yet completed or in development.",
+          "text": " are not yet completed or in development. ",
           "change": null,
           "bold": false,
           "italic": false
@@ -705,7 +792,7 @@
       "text": "Todos:",
       "segments": [
         {
-          "text": "Todos:",
+          "text": "Todos: ",
           "change": null,
           "bold": false,
           "italic": false
@@ -748,7 +835,7 @@
           "text": "Allies (copy the logic of the rules for Grand Army Cathay)",
           "segments": [
             {
-              "text": "Allies (copy the logic of the rules for Grand Army Cathay)",
+              "text": "Allies (copy the logic of the rules for Grand Army Cathay) ",
               "change": null,
               "bold": false,
               "italic": false
@@ -761,7 +848,19 @@
           "text": "Collecting guide (using mix of GW and 3rd party options.)",
           "segments": [
             {
-              "text": "Collecting guide (using mix of GW and 3rd party options.)",
+              "text": "Collecting guide (using mix of GW and 3",
+              "change": null,
+              "bold": false,
+              "italic": false
+            },
+            {
+              "text": "rd",
+              "change": null,
+              "bold": false,
+              "italic": false
+            },
+            {
+              "text": " party options.)",
               "change": null,
               "bold": false,
               "italic": false
@@ -787,7 +886,7 @@
           "text": "Monstrous Renegadum: Mournfang Mount for Tyrant/Bruiser",
           "segments": [
             {
-              "text": "Monstrous Renegadum: Mournfang Mount for Tyrant/Bruiser",
+              "text": "Monstrous Renegadum: Mournfang Mount for Tyrant/Bruiser ",
               "change": null,
               "bold": false,
               "italic": false
@@ -875,6 +974,12 @@
           "change": null,
           "bold": true,
           "italic": false
+        },
+        {
+          "text": "\n",
+          "change": null,
+          "bold": false,
+          "italic": false
         }
       ],
       "changeKinds": [],
@@ -911,7 +1016,7 @@
       "text": "As community feedback comes in I will update any changes I’ve made below, along with commentary for my reasoning. So far the process has been incredibly rewarding and the insights that I’ve gotten will make this a much stronger document than anything I could have done myself. So thank you very much for your input, and keep the ideas flowing!",
       "segments": [
         {
-          "text": "As community feedback comes in I will update any changes I’ve made below, along with commentary for my reasoning. So far the process has been incredibly rewarding and the insights that I’ve gotten will make this a much stronger document than anything I could have done myself. So thank you very much for your input, and keep the ideas flowing!",
+          "text": "As community feedback comes in I will update any changes I’ve made below, along with commentary for my reasoning. So far the process has been incredibly rewarding and the insights that I’ve gotten will make this a much stronger document than anything I could have done myself. So thank you very much for your input, and keep the ideas flowing! ",
           "change": null,
           "bold": false,
           "italic": false
@@ -951,7 +1056,7 @@
       "text": "Each time I make a significant update, I will also change the last number of the version. IE: Renegade Ogres 1.5.2.2.",
       "segments": [
         {
-          "text": "Each time I make a significant update, I will also change the last number of the version. IE: Renegade Ogres 1.5.2.2.",
+          "text": "Each time I make a significant update, I will also change the last number of the version. IE: Renegade Ogres 1.5.2.2. ",
           "change": null,
           "bold": false,
           "italic": false
@@ -991,7 +1096,19 @@
       "text": "When will these be finalized? My goal is to have things finalized as soon as possible. Once I feel like we’ve ironed out the bugs and areas of contention I will begin posting the final docs on www.squarebased.com.",
       "segments": [
         {
-          "text": "When will these be finalized? My goal is to have things finalized as soon as possible. Once I feel like we’ve ironed out the bugs and areas of contention I will begin posting the final docs on www.squarebased.com.",
+          "text": "When will these be finalized? My goal is to have things finalized as soon as possible. Once I feel like we’ve ironed out the bugs and areas of contention I will begin posting the final docs on ",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "www.squarebased.com",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": ". ",
           "change": null,
           "bold": false,
           "italic": false
@@ -1074,7 +1191,7 @@
           "text": "1.5.2.1",
           "segments": [
             {
-              "text": "1.5.2.1",
+              "text": "1.5.2.1 ",
               "change": null,
               "bold": false,
               "italic": false
@@ -1118,7 +1235,7 @@
       "text": "Thanks everyone for the good spirited feedback on Ogres. Even though I took my time to gather ideas and get my thoughts on the page, in the end I feel like I rushed to get out the initial draft. I was then very close to doing the exact same thing with the update, so I hope though this is a few days late from when I intended, that the extra time to marinate has been worth it.",
       "segments": [
         {
-          "text": "Thanks everyone for the good spirited feedback on Ogres. Even though I took my time to gather ideas and get my thoughts on the page, in the end I feel like I rushed to get out the initial draft. I was then very close to doing the exact same thing with the update, so I hope though this is a few days late from when I intended, that the extra time to marinate has been worth it.",
+          "text": "Thanks everyone for the good spirited feedback on Ogres. Even though I took my time to gather ideas and get my thoughts on the page, in the end I feel like I rushed to get out the initial draft. I was then very close to doing the exact same thing with the update, so I hope though this is a few days late from when I intended, that the extra time to marinate has been worth it. ",
           "change": null,
           "bold": false,
           "italic": false
@@ -1158,7 +1275,7 @@
       "text": "Ogre Charge - rethinking the odds of success and impact on the meta game.",
       "segments": [
         {
-          "text": "Ogre Charge - rethinking the odds of success and impact on the meta game.",
+          "text": "Ogre Charge - rethinking the odds of success and impact on the meta game. ",
           "change": null,
           "bold": false,
           "italic": false
@@ -1201,7 +1318,7 @@
           "text": "I still believe that the addition of benefits for a stronger charge is in line with the spirit of tOW and previous versions of Ogre Charge, however, I really didn’t think through how likely the original version made it to happen.",
           "segments": [
             {
-              "text": "I still believe that the addition of benefits for a stronger charge is in line with the spirit of tOW and previous versions of Ogre Charge, however, I really didn’t think through how likely the original version made it to happen.",
+              "text": "I still believe that the addition of benefits for a stronger charge is in line with the spirit of tOW and previous versions of Ogre Charge, however, I really didn’t think through how likely the original version made it to happen. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -1214,7 +1331,7 @@
           "text": "Low Linear Obstacles (as battlefield terrain, magical effects, or unit benefits) essentially negate all Ogre infantry. This can make some matchups particularly binary. Making them essentially immune to the risk of encountering an LLO is similarly a negative play experience for the opponent.",
           "segments": [
             {
-              "text": "Low Linear Obstacles (as battlefield terrain, magical effects, or unit benefits) essentially negate all Ogre infantry. This can make some matchups particularly binary. Making them essentially immune to the risk of encountering an LLO is similarly a negative play experience for the opponent.",
+              "text": "Low Linear Obstacles (as battlefield terrain, magical effects, or unit benefits) essentially negate all Ogre infantry. This can make some matchups particularly binary. Making them essentially immune to the risk of encountering an LLO is similarly a negative play experience for the opponent. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -1227,7 +1344,7 @@
           "text": "Therefore I would like to submit the following: the effect triggers on a natural six rolled when rolling for charge range. This gives the effect a 30% chance of success on the dice, and around 50% with a re-roll. Enough to call it a “chance” rather than a bankable guarantee. Furthermore, rather than the usual 3” for impact hits, the juiced up Ogre Charge triggers only if your charge move actually takes you 6” or more. This provides some opportunity for counterplay if an LLO is essential to your opponent's game, and some positioning skill to set up on the Ogre player’s part.",
           "segments": [
             {
-              "text": "Therefore I would like to submit the following: the effect triggers on a natural six rolled when rolling for charge range. This gives the effect a 30% chance of success on the dice, and around 50% with a re-roll. Enough to call it a “chance” rather than a bankable guarantee. Furthermore, rather than the usual 3” for impact hits, the juiced up Ogre Charge triggers only if your charge move actually takes you 6” or more. This provides some opportunity for counterplay if an LLO is essential to your opponent's game, and some positioning skill to set up on the Ogre player’s part.",
+              "text": "Therefore I would like to submit the following: the effect triggers on a natural six rolled when rolling for charge range. This gives the effect a 30% chance of success on the dice, and around 50% with a re-roll. Enough to call it a “chance” rather than a bankable guarantee. Furthermore, rather than the usual 3” for impact hits, the juiced up Ogre Charge triggers only if your charge move actually takes you 6” or more. This provides some opportunity for counterplay if an LLO is essential to your opponent's game, and some positioning skill to set up on the Ogre player’s part. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -1240,7 +1357,7 @@
           "text": "Added wording that allows this to trigger on pursuits and overruns of greater than 6” as well.",
           "segments": [
             {
-              "text": "Added wording that allows this to trigger on pursuits and overruns of greater than 6” as well.",
+              "text": "Added wording that allows this to trigger on pursuits and overruns of greater than 6” as well. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -1253,7 +1370,7 @@
           "text": "Added note to clarify the intent behind “treating LLOs as Open Ground.”",
           "segments": [
             {
-              "text": "Added note to clarify the intent behind “treating LLOs as Open Ground.”",
+              "text": "Added note to clarify the intent behind “treating LLOs as Open Ground.” ",
               "change": null,
               "bold": false,
               "italic": false
@@ -1266,7 +1383,7 @@
           "text": "Renamed to Ogre Kingdoms Charge to differentiate it in rules databases from the standard Ogre Charge common to other units in the game.",
           "segments": [
             {
-              "text": "Renamed to Ogre Kingdoms Charge to differentiate it in rules databases from the standard Ogre Charge common to other units in the game.",
+              "text": "Renamed to Ogre Kingdoms Charge to differentiate it in rules databases from the standard Ogre Charge common to other units in the game. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -1310,7 +1427,7 @@
       "text": "Warband - Thematic yes, correct approach? No. Alternative option: Ravenous Hunger.",
       "segments": [
         {
-          "text": "Warband - Thematic yes, correct approach? No. Alternative option: Ravenous Hunger.",
+          "text": "Warband - Thematic yes, correct approach? No. Alternative option: Ravenous Hunger. ",
           "change": null,
           "bold": false,
           "italic": false
@@ -1353,7 +1470,7 @@
           "text": "I think the idea behind Warband was well received, however the practical application was not. Rightly pointed out was that Ogres have already reasonably high leadership, and prevalent Warband would essentially remove this aspect from their identity, which is a fail.",
           "segments": [
             {
-              "text": "I think the idea behind Warband was well received, however the practical application was not. Rightly pointed out was that Ogres have already reasonably high leadership, and prevalent Warband would essentially remove this aspect from their identity, which is a fail.",
+              "text": "I think the idea behind Warband was well received, however the practical application was not. Rightly pointed out was that Ogres have already reasonably high leadership, and prevalent Warband would essentially remove this aspect from their identity, which is a fail. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -1366,7 +1483,7 @@
           "text": "What I think this robs them of is a thematic benefit of re-rolling charges that Ogres would get from Warband and that many other armies like them receive in tOW. This I think is still an opportunity.",
           "segments": [
             {
-              "text": "What I think this robs them of is a thematic benefit of re-rolling charges that Ogres would get from Warband and that many other armies like them receive in tOW. This I think is still an opportunity.",
+              "text": "What I think this robs them of is a thematic benefit of re-rolling charges that Ogres would get from Warband and that many other armies like them receive in tOW. This I think is still an opportunity. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -1379,7 +1496,7 @@
           "text": "The Gorger has a special rule called Ravenous Hunger that allows him to re-roll charges. This is not only well named, but I think a rule worth adopting as an army special rule as a compromise on Warband. So let's give it a go on Ogre Infantry Units.",
           "segments": [
             {
-              "text": "The Gorger has a special rule called Ravenous Hunger that allows him to re-roll charges. This is not only well named, but I think a rule worth adopting as an army special rule as a compromise on Warband. So let's give it a go on Ogre Infantry Units.",
+              "text": "The Gorger has a special rule called Ravenous Hunger that allows him to re-roll charges. This is not only well named, but I think a rule worth adopting as an army special rule as a compromise on Warband. So let's give it a go on Ogre Infantry Units. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -1392,7 +1509,7 @@
           "text": "Cut pasted the wording for re-roll charges from Warband and moved Ravenous Hunger to Special rules from Gorger.",
           "segments": [
             {
-              "text": "Cut pasted the wording for re-roll charges from Warband and moved Ravenous Hunger to Special rules from Gorger.",
+              "text": "Cut pasted the wording for re-roll charges from Warband and moved Ravenous Hunger to Special rules from Gorger. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -1436,7 +1553,7 @@
       "text": "Numbing Chill - chill it out a bit.",
       "segments": [
         {
-          "text": "Numbing Chill - chill it out a bit.",
+          "text": "Numbing Chill - chill it out a bit. ",
           "change": null,
           "bold": false,
           "italic": false
@@ -1479,7 +1596,7 @@
           "text": "Reasonable concern around the power of numbing chill, especially with stackable penalties to be hit. The motivation behind this change was the cumbersome nature of subtracting - 1 WS on a model by model basis. I’ve corrected this by returning to the WS penalty but restricting it to “one or more models.”",
           "segments": [
             {
-              "text": "Reasonable concern around the power of numbing chill, especially with stackable penalties to be hit. The motivation behind this change was the cumbersome nature of subtracting - 1 WS on a model by model basis. I’ve corrected this by returning to the WS penalty but restricting it to “one or more models.”",
+              "text": "Reasonable concern around the power of numbing chill, especially with stackable penalties to be hit. The motivation behind this change was the cumbersome nature of subtracting - 1 WS on a model by model basis. I’ve corrected this by returning to the WS penalty but restricting it to “one or more models.” ",
               "change": null,
               "bold": false,
               "italic": false
@@ -1492,7 +1609,7 @@
           "text": "Concern around Strike Last though needs to be moderated a bit. Yes it is a good rule no doubt, but not quite what it was in previous editions. It reduces Initiative to 1 before modifiers, meaning in most cases enemy units on the charge are still hitting Ogres before they can hit them (even those with Great Weapons.) This mechanically again gives benefits for battle hungry Ogres to always want to give punches, rather than receive them.",
           "segments": [
             {
-              "text": "Concern around Strike Last though needs to be moderated a bit. Yes it is a good rule no doubt, but not quite what it was in previous editions. It reduces Initiative to 1 before modifiers, meaning in most cases enemy units on the charge are still hitting Ogres before they can hit them (even those with Great Weapons.) This mechanically again gives benefits for battle hungry Ogres to always want to give punches, rather than receive them.",
+              "text": "Concern around Strike Last though needs to be moderated a bit. Yes it is a good rule no doubt, but not quite what it was in previous editions. It reduces Initiative to 1 before modifiers, meaning in most cases enemy units on the charge are still hitting Ogres before they can hit them (even those with Great Weapons.) This mechanically again gives benefits for battle hungry Ogres to always want to give punches, rather than receive them. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -1505,7 +1622,7 @@
           "text": "Strike Last is also used on the Frostheart Phoenix “Blizzard Aura” (another chilly creature / theme) and can be had by Chaos using a gift of chaos for 35 points.",
           "segments": [
             {
-              "text": "Strike Last is also used on the Frostheart Phoenix “Blizzard Aura” (another chilly creature / theme) and can be had by Chaos using a gift of chaos for 35 points.",
+              "text": "Strike Last is also used on the Frostheart Phoenix “Blizzard Aura” (another chilly creature / theme) and can be had by Chaos using a gift of chaos for 35 points. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -1525,7 +1642,7 @@
           "text": "I feel like this makes the addition of it not out of line with tOW and previous versions of Numbing Chill.",
           "segments": [
             {
-              "text": "I feel like this makes the addition of it not out of line with tOW and previous versions of Numbing Chill.",
+              "text": "I feel like this makes the addition of it not out of line with tOW and previous versions of Numbing Chill. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -1619,7 +1736,7 @@
           "text": "AP on the Ironfist was universally panned. Basically it took the Ironfist which is already one of two best options (along with great weapons) and did not change that consideration.",
           "segments": [
             {
-              "text": "AP on the Ironfist was universally panned. Basically it took the Ironfist which is already one of two best options (along with great weapons) and did not change that consideration.",
+              "text": "AP on the Ironfist was universally panned. Basically it took the Ironfist which is already one of two best options (along with great weapons) and did not change that consideration. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -1632,7 +1749,7 @@
           "text": "HOWEVER!",
           "segments": [
             {
-              "text": "HOWEVER!",
+              "text": "HOWEVER! ",
               "change": null,
               "bold": false,
               "italic": false
@@ -1645,7 +1762,7 @@
           "text": "With some consideration I went digging for an alternative solution. And lo and behold the Ogre Club was originally a rule that modified a handweapon with a single pip of AP… I’ll include a rare bit of flavour text here: “Ogre Clubs are used to bludgeon and dislocate and, as such, conventional armor offers little protection against them. Many warriors struck by an Ogre Club have found their shield arm mangled beyond repair or have their buckled breastplates shatter ribs and damage vital organs even though their armour remains whole.”",
           "segments": [
             {
-              "text": "With some consideration I went digging for an alternative solution. And lo and behold the Ogre Club was originally a rule that modified a handweapon with a single pip of AP… I’ll include a rare bit of flavour text here: “Ogre Clubs are used to bludgeon and dislocate and, as such, conventional armor offers little protection against them. Many warriors struck by an Ogre Club have found their shield arm mangled beyond repair or have their buckled breastplates shatter ribs and damage vital organs even though their armour remains whole.”",
+              "text": "With some consideration I went digging for an alternative solution. And lo and behold the Ogre Club was originally a rule that modified a handweapon with a single pip of AP… I’ll include a rare bit of flavour text here: “Ogre Clubs are used to bludgeon and dislocate and, as such, conventional armor offers little protection against them. Many warriors struck by an Ogre Club have found their shield arm mangled beyond repair or have their buckled breastplates shatter ribs and damage vital organs even though their armour remains whole.” ",
               "change": null,
               "bold": false,
               "italic": false
@@ -1658,7 +1775,7 @@
           "text": "As a matter of fact after digging some more, it looks like Ogre Club was one of the first “make your handweapon slightly better” type rules (along with Choppas, Wight Blades, and Asrai Spears) in 6th edition.",
           "segments": [
             {
-              "text": "As a matter of fact after digging some more, it looks like Ogre Club was one of the first “make your handweapon slightly better” type rules (along with Choppas, Wight Blades, and Asrai Spears) in 6th edition.",
+              "text": "As a matter of fact after digging some more, it looks like Ogre Club was one of the first “make your handweapon slightly better” type rules (along with Choppas, Wight Blades, and Asrai Spears) in 6th edition. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -1671,7 +1788,7 @@
           "text": "Given how virtually every army has a rule like this (Sorry Empire and Bretonnia) I think it’s a perfect Renegade style addition that addresses a significant issue with Ogre Bulls especially.",
           "segments": [
             {
-              "text": "Given how virtually every army has a rule like this (Sorry Empire and Bretonnia) I think it’s a perfect Renegade style addition that addresses a significant issue with Ogre Bulls especially.",
+              "text": "Given how virtually every army has a rule like this (Sorry Empire and Bretonnia) I think it’s a perfect Renegade style addition that addresses a significant issue with Ogre Bulls especially. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -1684,7 +1801,7 @@
           "text": "As for the Ironfist? See below.",
           "segments": [
             {
-              "text": "As for the Ironfist? See below.",
+              "text": "As for the Ironfist? See below. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -1697,7 +1814,7 @@
           "text": "And yes they maintain their Armourbane as well.",
           "segments": [
             {
-              "text": "And yes they maintain their Armourbane as well.",
+              "text": "And yes they maintain their Armourbane as well. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -1741,7 +1858,7 @@
       "text": "Big Names - big choices.",
       "segments": [
         {
-          "text": "Big Names - big choices.",
+          "text": "Big Names - big choices. ",
           "change": null,
           "bold": false,
           "italic": false
@@ -1817,7 +1934,7 @@
           "text": "In both case I think a 0-1 restriction is valid to prevent them from becoming faction defining (especially at higher points levels).",
           "segments": [
             {
-              "text": "In both case I think a 0-1 restriction is valid to prevent them from becoming faction defining (especially at higher points levels).",
+              "text": "In both case I think a 0-1 restriction is valid to prevent them from becoming faction defining (especially at higher points levels). ",
               "change": null,
               "bold": false,
               "italic": false
@@ -1856,7 +1973,7 @@
           "text": "Longstrider - infantry only because apparently this was causing some cognitive dissonance.",
           "segments": [
             {
-              "text": "Longstrider - infantry only because apparently this was causing some cognitive dissonance.",
+              "text": "Longstrider - infantry only because apparently this was causing some cognitive dissonance. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -1869,7 +1986,7 @@
           "text": "Added a clarification to Beast Slayer that “monster slayer” does not work with shooting attacks. (It never did but if you’re unfamiliar with the wording of the rule you would not know that.)",
           "segments": [
             {
-              "text": "Added a clarification to Beast Slayer that “monster slayer” does not work with shooting attacks. (It never did but if you’re unfamiliar with the wording of the rule you would not know that.)",
+              "text": "Added a clarification to Beast Slayer that “monster slayer” does not work with shooting attacks. (It never did but if you’re unfamiliar with the wording of the rule you would not know that.) ",
               "change": null,
               "bold": false,
               "italic": false
@@ -1920,7 +2037,7 @@
       "text": "Magic Items - remove Bangstick, modify tooth gnoblar.",
       "segments": [
         {
-          "text": "Magic Items - remove Bangstick, modify tooth gnoblar.",
+          "text": "Magic Items - remove Bangstick, modify tooth gnoblar. ",
           "change": null,
           "bold": false,
           "italic": false
@@ -1963,7 +2080,7 @@
           "text": "Although the Bangstick is cool - the game probably has enough bound spell magic missiles. Probably an overreach as an identity defining magic items for Ogres. I have killed this darling. (but would be cool for an Arcane Journal some day… )",
           "segments": [
             {
-              "text": "Although the Bangstick is cool - the game probably has enough bound spell magic missiles. Probably an overreach as an identity defining magic items for Ogres. I have killed this darling. (but would be cool for an Arcane Journal some day… )",
+              "text": "Although the Bangstick is cool - the game probably has enough bound spell magic missiles. Probably an overreach as an identity defining magic items for Ogres. I have killed this darling. (but would be cool for an Arcane Journal some day… ) ",
               "change": null,
               "bold": false,
               "italic": false
@@ -1976,7 +2093,7 @@
           "text": "On the other hand, bringing back another utility Gnoblar does feel right (and tying it to Great Maw.)",
           "segments": [
             {
-              "text": "On the other hand, bringing back another utility Gnoblar does feel right (and tying it to Great Maw.)",
+              "text": "On the other hand, bringing back another utility Gnoblar does feel right (and tying it to Great Maw.) ",
               "change": null,
               "bold": false,
               "italic": false
@@ -2023,7 +2140,7 @@
           "text": "However for comparable abilities the going rate is higher than 5 points, and is generally a 1/cast type situation.",
           "segments": [
             {
-              "text": "However for comparable abilities the going rate is higher than 5 points, and is generally a 1/cast type situation.",
+              "text": "However for comparable abilities the going rate is higher than 5 points, and is generally a 1/cast type situation. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -2043,7 +2160,7 @@
           "text": "Removed stacking and increased the cost to 10 points.",
           "segments": [
             {
-              "text": "Removed stacking and increased the cost to 10 points.",
+              "text": "Removed stacking and increased the cost to 10 points. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -2107,7 +2224,7 @@
       "text": "Toothcracker - returned to original casting cost given the improvement to its ability.",
       "segments": [
         {
-          "text": "Toothcracker - returned to original casting cost given the improvement to its ability.",
+          "text": "Toothcracker - returned to original casting cost given the improvement to its ability. ",
           "change": null,
           "bold": false,
           "italic": false
@@ -2147,7 +2264,7 @@
       "text": "Weapons of the Ogre Kingdoms",
       "segments": [
         {
-          "text": "Weapons of the Ogre Kingdoms",
+          "text": "Weapons of the Ogre Kingdoms ",
           "change": null,
           "bold": false,
           "italic": false
@@ -2190,7 +2307,7 @@
           "text": "Changed the Harpoon Launcher to bring it more in line with bolt throwers, added cumbersome, multiple wounds (2)",
           "segments": [
             {
-              "text": "Changed the Harpoon Launcher to bring it more in line with bolt throwers, added cumbersome, multiple wounds (2)",
+              "text": "Changed the Harpoon Launcher to bring it more in line with bolt throwers, added cumbersome, multiple wounds (2) ",
               "change": null,
               "bold": false,
               "italic": false
@@ -2203,7 +2320,7 @@
           "text": "Ironfists! The AP on Ironfists conversation really prompted me to go back to the books. There are of course three versions of Ironfists to look at:",
           "segments": [
             {
-              "text": "Ironfists! The AP on Ironfists conversation really prompted me to go back to the books. There are of course three versions of Ironfists to look at:",
+              "text": "Ironfists! The AP on Ironfists conversation really prompted me to go back to the books. There are of course three versions of Ironfists to look at: ",
               "change": null,
               "bold": false,
               "italic": false
@@ -2250,7 +2367,7 @@
           "text": "6th - It was EITHER a HW and Shield OR Two Handweapons. (St4 in this era would have given it an AP of -1 and when used as HW and Shield granted Parry.)",
           "segments": [
             {
-              "text": "6th - It was EITHER a HW and Shield OR Two Handweapons. (St4 in this era would have given it an AP of -1 and when used as HW and Shield granted Parry.)",
+              "text": "6th - It was EITHER a HW and Shield OR Two Handweapons. (St4 in this era would have given it an AP of -1 and when used as HW and Shield granted Parry.) ",
               "change": null,
               "bold": false,
               "italic": false
@@ -2263,7 +2380,7 @@
           "text": "8th - It was Shield and two handweapons and AP of -1 from being ST4. Granted Parry.",
           "segments": [
             {
-              "text": "8th - It was Shield and two handweapons and AP of -1 from being ST4. Granted Parry.",
+              "text": "8th - It was Shield and two handweapons and AP of -1 from being ST4. Granted Parry. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -2276,7 +2393,7 @@
           "text": "tOW Legacy PDF: A confusing blend of sort of a shield and two hand weapons and no AP, does not grant parry.",
           "segments": [
             {
-              "text": "tOW Legacy PDF: A confusing blend of sort of a shield and two hand weapons and no AP, does not grant parry.",
+              "text": "tOW Legacy PDF: A confusing blend of sort of a shield and two hand weapons and no AP, does not grant parry. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -2323,7 +2440,7 @@
           "text": "Conclusion: Blend ‘em all up in a bucket. Give the option for it to work as a Handweapon and Shield (with a pip of AP) OR two hand weapons and shield (no AP, but an extra attack.)",
           "segments": [
             {
-              "text": "Conclusion: Blend ‘em all up in a bucket. Give the option for it to work as a Handweapon and Shield (with a pip of AP) OR two hand weapons and shield (no AP, but an extra attack.)",
+              "text": "Conclusion: Blend ‘em all up in a bucket. Give the option for it to work as a Handweapon and Shield (with a pip of AP) OR two hand weapons and shield (no AP, but an extra attack.) ",
               "change": null,
               "bold": false,
               "italic": false
@@ -2336,7 +2453,7 @@
           "text": "Rather than linking this to Ogre Club (which was annoying to word) I went with the Ironfist having two profiles for simplicity.",
           "segments": [
             {
-              "text": "Rather than linking this to Ogre Club (which was annoying to word) I went with the Ironfist having two profiles for simplicity.",
+              "text": "Rather than linking this to Ogre Club (which was annoying to word) I went with the Ironfist having two profiles for simplicity. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -2349,7 +2466,7 @@
           "text": "Changed Ironfist to Ogre Kingdoms Ironfist for database purposes.",
           "segments": [
             {
-              "text": "Changed Ironfist to Ogre Kingdoms Ironfist for database purposes.",
+              "text": "Changed Ironfist to Ogre Kingdoms Ironfist for database purposes. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -2362,7 +2479,7 @@
           "text": "Corrected a copy paste error giving AP to Melee Brace of Ogre Pistols",
           "segments": [
             {
-              "text": "Corrected a copy paste error giving AP to Melee Brace of Ogre Pistols",
+              "text": "Corrected a copy paste error giving AP to Melee Brace of Ogre Pistols ",
               "change": null,
               "bold": false,
               "italic": false
@@ -2406,7 +2523,7 @@
       "text": "Emissaries of the Great Maw - tweak Butcher, improve Cauldron.",
       "segments": [
         {
-          "text": "Emissaries of the Great Maw - tweak Butcher, improve Cauldron.",
+          "text": "Emissaries of the Great Maw - tweak Butcher, improve Cauldron. ",
           "change": null,
           "bold": false,
           "italic": false
@@ -2449,7 +2566,7 @@
           "text": "Butcher - Increased points to 95 to account for his superior statline vs other lvl 1s.",
           "segments": [
             {
-              "text": "Butcher - Increased points to 95 to account for his superior statline vs other lvl 1s.",
+              "text": "Butcher - Increased points to 95 to account for his superior statline vs other lvl 1s. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -2462,7 +2579,7 @@
           "text": "Cauldron - changed a failed LD test so that it has the same effect as using Grut’s Sickle. I just want to see Skrag back on the table.",
           "segments": [
             {
-              "text": "Cauldron - changed a failed LD test so that it has the same effect as using Grut’s Sickle. I just want to see Skrag back on the table.",
+              "text": "Cauldron - changed a failed LD test so that it has the same effect as using Grut’s Sickle. I just want to see Skrag back on the table. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -2506,7 +2623,7 @@
       "text": "Hunter - tidy up",
       "segments": [
         {
-          "text": "Hunter - tidy up",
+          "text": "Hunter - tidy up ",
           "change": null,
           "bold": false,
           "italic": false
@@ -2562,7 +2679,7 @@
           "text": "Allow him to take a look out sir if he manages to be hit by a shooting attack and has at least one sabretusk with him.",
           "segments": [
             {
-              "text": "Allow him to take a look out sir if he manages to be hit by a shooting attack and has at least one sabretusk with him.",
+              "text": "Allow him to take a look out sir if he manages to be hit by a shooting attack and has at least one sabretusk with him. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -2649,7 +2766,7 @@
           "text": "Marked yellow because I know personally I want them to be cool but the unit just seems to be a dud.",
           "segments": [
             {
-              "text": "Marked yellow because I know personally I want them to be cool but the unit just seems to be a dud.",
+              "text": "Marked yellow because I know personally I want them to be cool but the unit just seems to be a dud. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -2662,7 +2779,7 @@
           "text": "Previous versions of the cannon don't seem appropriate but also I am not inspired by an old world allegory.",
           "segments": [
             {
-              "text": "Previous versions of the cannon don't seem appropriate but also I am not inspired by an old world allegory.",
+              "text": "Previous versions of the cannon don't seem appropriate but also I am not inspired by an old world allegory. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -2719,7 +2836,7 @@
       "text": "Gnoblar Trappers - traps and snares doesn’t really work due to skirmishers (I didn’t realize this)",
       "segments": [
         {
-          "text": "Gnoblar Trappers - traps and snares doesn’t really work due to skirmishers (I didn’t realize this)",
+          "text": "Gnoblar Trappers - traps and snares doesn’t really work due to skirmishers (I didn’t realize this) ",
           "change": null,
           "bold": false,
           "italic": false
@@ -2762,7 +2879,7 @@
           "text": "Used the “hostile terrain” rule from the Dwarf Engineer Sapper for a rework.",
           "segments": [
             {
-              "text": "Used the “hostile terrain” rule from the Dwarf Engineer Sapper for a rework.",
+              "text": "Used the “hostile terrain” rule from the Dwarf Engineer Sapper for a rework. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -2849,7 +2966,7 @@
           "text": "Removed Big Name on the Crusher (seemed off for many.)",
           "segments": [
             {
-              "text": "Removed Big Name on the Crusher (seemed off for many.)",
+              "text": "Removed Big Name on the Crusher (seemed off for many.) ",
               "change": null,
               "bold": false,
               "italic": false
@@ -2862,7 +2979,7 @@
           "text": "Removed first charge (many thought this was overkill for the unit. I was just honestly surprised they didn’t have it and put it in.)",
           "segments": [
             {
-              "text": "Removed first charge (many thought this was overkill for the unit. I was just honestly surprised they didn’t have it and put it in.)",
+              "text": "Removed first charge (many thought this was overkill for the unit. I was just honestly surprised they didn’t have it and put it in.) ",
               "change": null,
               "bold": false,
               "italic": false
@@ -2875,7 +2992,7 @@
           "text": "Added the bonus charge from Ogre Charge. In their case as they don’t have ravenous hunger it will trigger roughly 30% of the time.",
           "segments": [
             {
-              "text": "Added the bonus charge from Ogre Charge. In their case as they don’t have ravenous hunger it will trigger roughly 30% of the time.",
+              "text": "Added the bonus charge from Ogre Charge. In their case as they don’t have ravenous hunger it will trigger roughly 30% of the time. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -2919,7 +3036,7 @@
       "text": "Stonehorn - Missing crew and tweaks.",
       "segments": [
         {
-          "text": "Stonehorn - Missing crew and tweaks.",
+          "text": "Stonehorn - Missing crew and tweaks. ",
           "change": null,
           "bold": false,
           "italic": false
@@ -2962,7 +3079,7 @@
           "text": "Added Ogre Club.",
           "segments": [
             {
-              "text": "Added Ogre Club.",
+              "text": "Added Ogre Club. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -2975,7 +3092,7 @@
           "text": "Deleted strikes last.",
           "segments": [
             {
-              "text": "Deleted strikes last.",
+              "text": "Deleted strikes last. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -2988,7 +3105,7 @@
           "text": "Added Ogre crew option.",
           "segments": [
             {
-              "text": "Added Ogre crew option.",
+              "text": "Added Ogre crew option. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -3001,7 +3118,7 @@
           "text": "Reworded “Character mount” section to reflect that it retains the Howdah special rule when chosen as a mount (Like an Arachnarok or Khemrian Warsphinx). Previously it lost Howdah and became a Ridden Monster.",
           "segments": [
             {
-              "text": "Reworded “Character mount” section to reflect that it retains the Howdah special rule when chosen as a mount (Like an Arachnarok or Khemrian Warsphinx). Previously it lost Howdah and became a Ridden Monster.",
+              "text": "Reworded “Character mount” section to reflect that it retains the Howdah special rule when chosen as a mount (Like an Arachnarok or Khemrian Warsphinx). Previously it lost Howdah and became a Ridden Monster. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -3088,7 +3205,7 @@
           "text": "Added Ogre Club.",
           "segments": [
             {
-              "text": "Added Ogre Club.",
+              "text": "Added Ogre Club. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -3101,7 +3218,7 @@
           "text": "Model suffers a wound if a misfire is rolled on the Sphere of Ice and cannot shoot.",
           "segments": [
             {
-              "text": "Model suffers a wound if a misfire is rolled on the Sphere of Ice and cannot shoot.",
+              "text": "Model suffers a wound if a misfire is rolled on the Sphere of Ice and cannot shoot. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -3114,7 +3231,7 @@
           "text": "Reduced to 6 wounds (+5 to characters)",
           "segments": [
             {
-              "text": "Reduced to 6 wounds (+5 to characters)",
+              "text": "Reduced to 6 wounds (+5 to characters) ",
               "change": null,
               "bold": false,
               "italic": false
@@ -3127,7 +3244,7 @@
           "text": "Strikes Last retained due to being a very chilly beast.",
           "segments": [
             {
-              "text": "Strikes Last retained due to being a very chilly beast.",
+              "text": "Strikes Last retained due to being a very chilly beast. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -3140,7 +3257,7 @@
           "text": "Reworded “Character mount” section to reflect that it retains the Howdah special rule when chosen as a mount (Like an Arachnarok or Khemrian Warsphinx). Previously it lost Howdah and became a Ridden Monster.",
           "segments": [
             {
-              "text": "Reworded “Character mount” section to reflect that it retains the Howdah special rule when chosen as a mount (Like an Arachnarok or Khemrian Warsphinx). Previously it lost Howdah and became a Ridden Monster.",
+              "text": "Reworded “Character mount” section to reflect that it retains the Howdah special rule when chosen as a mount (Like an Arachnarok or Khemrian Warsphinx). Previously it lost Howdah and became a Ridden Monster. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -3184,7 +3301,7 @@
       "text": "Gorger - reduced changes.",
       "segments": [
         {
-          "text": "Gorger - reduced changes.",
+          "text": "Gorger - reduced changes. ",
           "change": null,
           "bold": false,
           "italic": false
@@ -3227,7 +3344,7 @@
           "text": "Yall were very outspoken about the Gorger being too good. While I politely say that I don’t think he really is, being a T5 Monstrous creature… it has been noted.",
           "segments": [
             {
-              "text": "Yall were very outspoken about the Gorger being too good. While I politely say that I don’t think he really is, being a T5 Monstrous creature… it has been noted.",
+              "text": "Yall were very outspoken about the Gorger being too good. While I politely say that I don’t think he really is, being a T5 Monstrous creature… it has been noted. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -3253,7 +3370,7 @@
           "text": "Removed killing blow and restored his original one off attack.",
           "segments": [
             {
-              "text": "Removed killing blow and restored his original one off attack.",
+              "text": "Removed killing blow and restored his original one off attack. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -3279,7 +3396,7 @@
           "text": "Retained added wound. If a Gorger isn’t the most ideal model ever to go munch on the snacks in a baggage train I don’t know what is.",
           "segments": [
             {
-              "text": "Retained added wound. If a Gorger isn’t the most ideal model ever to go munch on the snacks in a baggage train I don’t know what is.",
+              "text": "Retained added wound. If a Gorger isn’t the most ideal model ever to go munch on the snacks in a baggage train I don’t know what is. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -3292,7 +3409,7 @@
           "text": "Removed increase in points as I wasn’t convinced 110 was necessary to begin with.",
           "segments": [
             {
-              "text": "Removed increase in points as I wasn’t convinced 110 was necessary to begin with.",
+              "text": "Removed increase in points as I wasn’t convinced 110 was necessary to begin with. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -3410,7 +3527,7 @@
           "italic": false
         },
         {
-          "text": "A page devoted to the many contributors, past and present, to the creation of this document and some thoughts on the approach from the editor.",
+          "text": "A page devoted to the many contributors, past and present, to the creation of this document and some thoughts on the approach from the editor. ",
           "change": null,
           "bold": false,
           "italic": false
@@ -3450,7 +3567,7 @@
           "italic": false
         },
         {
-          "text": "What it says on the tin.",
+          "text": "What it says on the tin. ",
           "change": null,
           "bold": false,
           "italic": false
@@ -3674,7 +3791,19 @@
           "italic": false
         },
         {
-          "text": "Every model available to the Ogre Kingdoms has a profile. Here, you will find that model’s characteristics, its equipment, its points value, details of any special rules unique to it and more.",
+          "text": "Every model available to the Ogre Kingdoms has a profile. Here, you will find that model’s characteristics, its equipment, its points value, details of any special rules unique to it",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": " ",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "and more.",
           "change": null,
           "bold": false,
           "italic": false
@@ -3714,7 +3843,7 @@
           "italic": false
         },
         {
-          "text": " Questions and Answers about any unclear interactions arising from these rules.",
+          "text": " Questions and Answers about any unclear interactions arising from these rules. ",
           "change": null,
           "bold": false,
           "italic": false
@@ -3754,7 +3883,7 @@
           "italic": false
         },
         {
-          "text": " A guide for where to find quality miniatures for use with this army.",
+          "text": " A guide for where to find quality miniatures for use with this army. ",
           "change": null,
           "bold": false,
           "italic": false
@@ -4592,28 +4721,43 @@
       "ordered": false,
       "items": [
         {
-          "text": "1+ Ogre Bulls, Ironguts, Gnoblar Fighters, Gnoblar Trappers and Sabretusk Packs",
+          "text": "Ogre Bulls, Ironguts, Gnoblar Fighters, Gnoblar Trappers and Sabretusk Packs",
           "segments": [
             {
               "text": "1+ ",
               "change": "changed",
               "bold": false,
+              "italic": false,
+              "struck": true
+            },
+            {
+              "text": "Ogre Bulls,",
+              "change": null,
+              "bold": false,
               "italic": false
             },
             {
-              "text": "Ogre Bulls, Ironguts, Gnoblar Fighters, Gnoblar Trappers and Sabretusk Packs",
+              "text": " ",
+              "change": null,
+              "bold": false,
+              "italic": false
+            },
+            {
+              "text": "Ironguts, Gnoblar Fighters, Gnoblar Trappers and Sabretusk Packs",
               "change": null,
               "bold": false,
               "italic": false
             }
           ],
+          "struckText": "1+",
           "changeKinds": [
             "changed"
           ],
           "pointsMentions": []
         }
       ],
-      "text": "1+ Ogre Bulls, Ironguts, Gnoblar Fighters, Gnoblar Trappers and Sabretusk Packs",
+      "text": "Ogre Bulls, Ironguts, Gnoblar Fighters, Gnoblar Trappers and Sabretusk Packs",
+      "struckText": "1+",
       "changeKinds": [
         "changed"
       ],
@@ -4979,13 +5123,14 @@
           "pointsMentions": []
         },
         {
-          "text": "0-3 Gorgers and Giants",
+          "text": "Gorgers and Giants",
           "segments": [
             {
               "text": "0-3",
               "change": "changed",
               "bold": false,
-              "italic": false
+              "italic": false,
+              "struck": true
             },
             {
               "text": " Gorgers and Giants",
@@ -4994,13 +5139,15 @@
               "italic": false
             }
           ],
+          "struckText": "0-3",
           "changeKinds": [
             "changed"
           ],
           "pointsMentions": []
         }
       ],
-      "text": "0-1 Thundertusk Riders per 1,000 points • 0-1 Stonehorn Riders per 1,000 points • 0-3 Gorgers and Giants",
+      "text": "0-1 Thundertusk Riders per 1,000 points • 0-1 Stonehorn Riders per 1,000 points • Gorgers and Giants",
+      "struckText": "0-3",
       "changeKinds": [
         "changed"
       ],
@@ -6633,10 +6780,17 @@
     },
     {
       "type": "paragraph",
-      "text": "Models whose troop type is ‘infantry’ only. 0-1 per army. This model (including their mount if it has one) has a +1 modifier to their Toughness characteristic. However, this model is also subject to the Stupidity special rule.",
+      "text": "0-1 per army. This model (including their mount if it has one) has a +1 modifier to their Toughness characteristic. However, this model is also subject to the Stupidity special rule.",
       "segments": [
         {
-          "text": "Models whose troop type is ‘infantry’ only. 0-1 per army. ",
+          "text": "Models whose troop type is ‘infantry’ only.",
+          "change": "new",
+          "bold": false,
+          "italic": false,
+          "struck": true
+        },
+        {
+          "text": " 0-1 per army. ",
           "change": "new",
           "bold": false,
           "italic": false
@@ -6684,6 +6838,7 @@
           "italic": false
         }
       ],
+      "struckText": "Models whose troop type is ‘infantry’ only.",
       "changeKinds": [
         "new"
       ],
@@ -6773,7 +6928,19 @@
       "text": "A model with this Big Name (but not their mount) gains Impact Hits (1). In addition, Wallcrushers and any unit they have joined treat low linear obstacles as open ground. Note: This means that models separated only by a low linear obstacle are considered to be in base contact with one another for the purposes of combat and the enemy unit receives no benefits for defending a low linear obstacle against this unit.",
       "segments": [
         {
-          "text": "A model with this Big Name (but not their mount) gains Impact Hits (1). In addition, Wallcrushers and any unit they have joined treat low linear obstacles as open ground. \n\n",
+          "text": "A model with this Big Name (but not their mount) gains Impact Hits (1). In addition, Wallcrushers and any unit they have joined treat low linear obstacles as open ground. ",
+          "change": "new",
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "\n",
+          "change": "new",
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "\n",
           "change": "new",
           "bold": false,
           "italic": false
@@ -6869,10 +7036,17 @@
     },
     {
       "type": "paragraph",
-      "text": "Models whose troop type is ‘infantry’ only. 0-1 per army. This model cannot be wounded by a roll To Wound of 2, regardless of the Strength of the attack.",
+      "text": "0-1 per army. This model cannot be wounded by a roll To Wound of 2, regardless of the Strength of the attack.",
       "segments": [
         {
-          "text": "Models whose troop type is ‘infantry’ only. 0-1 per army.",
+          "text": "Models whose troop type is ‘infantry’ only.",
+          "change": "new",
+          "bold": false,
+          "italic": false,
+          "struck": true
+        },
+        {
+          "text": " 0-1 per army.",
           "change": "new",
           "bold": false,
           "italic": false
@@ -6896,6 +7070,7 @@
           "italic": false
         }
       ],
+      "struckText": "Models whose troop type is ‘infantry’ only.",
       "changeKinds": [
         "new"
       ],
@@ -7199,7 +7374,13 @@
       "text": "Models whose troop type is ‘infantry’ only. This model has a +1 modifier to their Movement characteristic.",
       "segments": [
         {
-          "text": "Models whose troop type is ‘infantry’ only. This ",
+          "text": "Models whose troop type is ‘infantry’ only.",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": " This ",
           "change": null,
           "bold": false,
           "italic": false
@@ -7786,7 +7967,7 @@
     },
     {
       "type": "paragraph",
-      "text": "Notes: Rather than attacking normally, the wielder of the Thundermace may choose to make a special ‘Thunderstrike’ attack. If they do, make a single roll To Hit. If this is successful, place a small (3\") blast template so that its central hole is directly over the centre of the hit unit. Any enemy model whose base lies underneath the template risks being hit by this weapon.",
+      "text": "Notes: Rather than attacking normally, the wielder of the Thundermace may choose to make a special ‘Thunderstrike’ attack. If they do, place a small (3\") blast template so that its central hole is directly over the centre of the hit unit. Any enemy model whose base lies underneath the template risks being hit by this weapon.",
       "segments": [
         {
           "text": "Notes: ",
@@ -7804,7 +7985,8 @@
           "text": " make a single roll To Hit. If this is successful,",
           "change": "new",
           "bold": false,
-          "italic": true
+          "italic": true,
+          "struck": true
         },
         {
           "text": " place a small (3\") blast template so that its central hole is directly over the centre of the hit unit. Any enemy model whose base lies underneath the template risks being hit by this weapon.",
@@ -7813,6 +7995,7 @@
           "italic": true
         }
       ],
+      "struckText": "make a single roll To Hit. If this is successful,",
       "changeKinds": [
         "new"
       ],
@@ -9161,10 +9344,23 @@
     },
     {
       "type": "paragraph",
-      "text": "A unit carrying the Dragonhide Banner may re-roll any rolls To Hit of a natural 1. In addition, a unit carrying the Dragonhide Banner has the Flaming Attacks Numbing Chill special rule.",
+      "text": "A unit carrying the Dragonhide Banner may re-roll any rolls To Hit of a natural 1. In addition, a unit carrying the Dragonhide Banner has the Numbing Chill special rule.",
       "segments": [
         {
-          "text": "A unit carrying the Dragonhide Banner may re-roll any rolls To Hit of a natural 1. In addition, a unit carrying the Dragonhide Banner has the Flaming Attacks ",
+          "text": "A unit carrying the Dragonhide Banner may re-roll any rolls To Hit of a natural 1. In addition, a unit carrying the Dragonhide Banner has the ",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "Flaming Attacks",
+          "change": null,
+          "bold": false,
+          "italic": false,
+          "struck": true
+        },
+        {
+          "text": " ",
           "change": null,
           "bold": false,
           "italic": false
@@ -9182,6 +9378,7 @@
           "italic": false
         }
       ],
+      "struckText": "Flaming Attacks",
       "changeKinds": [
         "new"
       ],
@@ -11103,7 +11300,7 @@
             "rowspan": 1
           },
           {
-            "text": "Cumbersome, Multiple Wounds (2), Through & Through Ponderous",
+            "text": "Cumbersome, Multiple Wounds (2), Through & Through",
             "segments": [
               {
                 "text": "Cumbersome, ",
@@ -11118,12 +11315,20 @@
                 "italic": false
               },
               {
-                "text": "Through & Through Ponderous",
+                "text": "Through & Through ",
                 "change": "new",
                 "bold": false,
                 "italic": false
+              },
+              {
+                "text": "Ponderous",
+                "change": "new",
+                "bold": false,
+                "italic": false,
+                "struck": true
               }
             ],
+            "struckText": "Ponderous",
             "changeKinds": [
               "new"
             ],
@@ -11132,7 +11337,7 @@
           }
         ]
       ],
-      "text": " | R | S | AP | Special Rules\nHarpoon launcher | 36\" | 6 | -2 | Cumbersome, Multiple Wounds (2), Through & Through Ponderous",
+      "text": " | R | S | AP | Special Rules\nHarpoon launcher | 36\" | 6 | -2 | Cumbersome, Multiple Wounds (2), Through & Through",
       "changeKinds": [
         "new"
       ],
@@ -11867,7 +12072,25 @@
       "text": "Brace of Ogre Pistols R S AP Special Rules",
       "segments": [
         {
-          "text": "Brace of Ogre Pistols R S AP Special Rules",
+          "text": "Brace of Ogre Pistols",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": " R S ",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "AP",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": " Special Rules",
           "change": null,
           "bold": false,
           "italic": false
@@ -12010,7 +12233,19 @@
       "text": "Combat Combat S - Extra Attacks (1), Requires Two Hands",
       "segments": [
         {
-          "text": "Combat Combat S - Extra Attacks (1), Requires Two Hands",
+          "text": "Combat Combat S ",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "-",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": " Extra Attacks (1), Requires Two Hands",
           "change": null,
           "bold": false,
           "italic": false
@@ -12833,7 +13068,31 @@
             "text": "Monstrous infantry (character) 40 x 40 mm 1 Hand weapon and light armour",
             "segments": [
               {
-                "text": "Monstrous infantry (character) 40 x 40 mm\n1\nHand weapon and light armour",
+                "text": "Monstrous infantry (character) 40 x 40 mm",
+                "change": null,
+                "bold": false,
+                "italic": false
+              },
+              {
+                "text": "\n",
+                "change": null,
+                "bold": false,
+                "italic": false
+              },
+              {
+                "text": "1",
+                "change": null,
+                "bold": false,
+                "italic": false
+              },
+              {
+                "text": "\n",
+                "change": null,
+                "bold": false,
+                "italic": false
+              },
+              {
+                "text": "Hand weapon and light armour",
                 "change": null,
                 "bold": false,
                 "italic": false
@@ -13790,7 +14049,7 @@
     },
     {
       "type": "paragraph",
-      "text": "Impact Hits caused by this model (but not its mount) have an Armour Piercing characteristic of -1.",
+      "text": "Impact Hits caused by this model have an Armour Piercing characteristic of -1.",
       "segments": [
         {
           "text": "Impact Hits caused by this model",
@@ -13799,10 +14058,17 @@
           "italic": false
         },
         {
-          "text": " (but not its mount)",
+          "text": " ",
           "change": "new",
           "bold": false,
           "italic": false
+        },
+        {
+          "text": "(but not its mount)",
+          "change": "new",
+          "bold": false,
+          "italic": false,
+          "struck": true
         },
         {
           "text": " have an Armour Piercing characteristic of -1.",
@@ -13811,6 +14077,7 @@
           "italic": false
         }
       ],
+      "struckText": "(but not its mount)",
       "changeKinds": [
         "new"
       ],
@@ -14568,7 +14835,13 @@
       "text": "Unit Size: 1",
       "segments": [
         {
-          "text": "Unit Size: 1",
+          "text": "Unit Size: ",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "1",
           "change": null,
           "bold": false,
           "italic": false
@@ -15451,7 +15724,19 @@
           "italic": false
         },
         {
-          "text": " Leadership). If this test is passed, until your next Start of Turn sub-phase this character and any unit they have joined gains the Regeneration (5+) special rule. ",
+          "text": " Leadership). If this test",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": " ",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "is passed, until your next Start of Turn sub-phase this character and any unit they have joined gains the Regeneration (5+) special rule. ",
           "change": null,
           "bold": false,
           "italic": false
@@ -15977,7 +16262,13 @@
       "text": "Unit Size: 1",
       "segments": [
         {
-          "text": "Unit Size: 1",
+          "text": "Unit Size: ",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "1",
           "change": null,
           "bold": false,
           "italic": false
@@ -17798,7 +18089,13 @@
       "text": "Unit Size: 1",
       "segments": [
         {
-          "text": "Unit Size: 1",
+          "text": "Unit Size: ",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "1",
           "change": null,
           "bold": false,
           "italic": false
@@ -18416,7 +18713,19 @@
           "italic": false
         },
         {
-          "text": "\n\nIn addition, a model with this special rule has a 4+ Ward save against any wounds suffered that were caused by an attack that has the Flaming Attacks special rule.",
+          "text": "\n",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "\n",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "In addition, a model with this special rule has a 4+ Ward save against any wounds suffered that were caused by an attack that has the Flaming Attacks special rule.",
           "change": null,
           "bold": false,
           "italic": false
@@ -22896,7 +23205,7 @@
     },
     {
       "type": "paragraph",
-      "text": "Special Rules: Close Order, Open Order, Fear, Impact Hits (1), Ogre Kingdoms Charge, Ogre Club, Ravenous Hunger",
+      "text": "Special Rules: Open Order, Fear, Impact Hits (1), Ogre Kingdoms Charge, Ogre Club, Ravenous Hunger",
       "segments": [
         {
           "text": "Special Rules: ",
@@ -22905,7 +23214,14 @@
           "italic": false
         },
         {
-          "text": "Close Order, Open Order,",
+          "text": "Close Order",
+          "change": "new",
+          "bold": false,
+          "italic": false,
+          "struck": true
+        },
+        {
+          "text": ", Open Order,",
           "change": "new",
           "bold": false,
           "italic": false
@@ -22923,6 +23239,7 @@
           "italic": false
         }
       ],
+      "struckText": "Close Order",
       "changeKinds": [
         "todo",
         "new"
@@ -31982,6 +32299,12 @@
       "text": "Mournfang Charge",
       "segments": [
         {
+          "text": "\n",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
           "text": "Mournfang Charge",
           "change": null,
           "bold": true,
@@ -32040,7 +32363,19 @@
       "text": "Impact Hits caused by a model with this special rule have the Armour Bane (1) special rule and an Armour Piercing characteristic of -1. In addition, if a unit with this special rule makes a Charge move of 6\" or more following a Charge roll that includes one or more natural 6s, all models in the unit gain Impact Hits (1) and treat low linear obstacles as open ground during the turn in which they charge.",
       "segments": [
         {
-          "text": "Impact Hits caused by a model with this special rule have the Armour Bane (1) special rule and an Armour Piercing characteristic of -1. \n\n",
+          "text": "Impact Hits caused by a model with this special rule have the Armour Bane (1) special rule and an Armour Piercing characteristic of -1. ",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "\n",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "\n",
           "change": null,
           "bold": false,
           "italic": false
@@ -40469,7 +40804,7 @@
       "ordered": false,
       "items": [
         {
-          "text": "Thundertusk: Great tusks (see below) and chill breath Sphere of Frost-wreathed Ice",
+          "text": "Thundertusk: Great tusks (see below) and Sphere of Frost-wreathed Ice",
           "segments": [
             {
               "text": "Thundertusk: ",
@@ -40484,12 +40819,20 @@
               "italic": false
             },
             {
-              "text": "chill breath Sphere of Frost-wreathed Ice",
+              "text": "chill breath ",
+              "change": "new",
+              "bold": false,
+              "italic": false,
+              "struck": true
+            },
+            {
+              "text": "Sphere of Frost-wreathed Ice",
               "change": "new",
               "bold": false,
               "italic": false
             }
           ],
+          "struckText": "chill breath",
           "changeKinds": [
             "new"
           ],
@@ -40505,7 +40848,7 @@
               "italic": false
             },
             {
-              "text": "Hand weapon and chaintrap",
+              "text": "Hand weapon and chaintrap ",
               "change": null,
               "bold": false,
               "italic": false
@@ -40524,7 +40867,7 @@
               "italic": false
             },
             {
-              "text": "Hand weapon and harpoon launcher",
+              "text": "Hand weapon and harpoon launcher ",
               "change": null,
               "bold": false,
               "italic": false
@@ -40534,7 +40877,8 @@
           "pointsMentions": []
         }
       ],
-      "text": "Thundertusk: Great tusks (see below) and chill breath Sphere of Frost-wreathed Ice • Ogre Beast Rider: Hand weapon and chaintrap • Ogre Crew: Hand weapon and harpoon launcher",
+      "text": "Thundertusk: Great tusks (see below) and Sphere of Frost-wreathed Ice • Ogre Beast Rider: Hand weapon and chaintrap • Ogre Crew: Hand weapon and harpoon launcher",
+      "struckText": "chill breath",
       "changeKinds": [
         "new"
       ],
@@ -40943,7 +41287,7 @@
     },
     {
       "type": "paragraph",
-      "text": "Special Rules: Close Order, First Charge, Howdah, Impact Hits (D3), Large Target, Numbing Chill, Stomp Attacks (D3+1), Smooth Ride, Strike Last, Swiftstride, Terror, Ogre Club",
+      "text": "Special Rules: Close Order, First Charge, Howdah, Impact Hits (D3), Large Target, Numbing Chill, Stomp Attacks (D3+1), Smooth Ride, Strike Last, Terror, Ogre Club",
       "segments": [
         {
           "text": "Special Rules: ",
@@ -40958,10 +41302,17 @@
           "italic": false
         },
         {
-          "text": "Stomp Attacks (D3+1), Smooth Ride, Strike Last, Swiftstride, ",
+          "text": "Stomp Attacks (D3+1), Smooth Ride, Strike Last, ",
           "change": "new",
           "bold": false,
           "italic": false
+        },
+        {
+          "text": "Swiftstride, ",
+          "change": "new",
+          "bold": false,
+          "italic": false,
+          "struck": true
         },
         {
           "text": "Terror, ",
@@ -40976,6 +41327,7 @@
           "italic": false
         }
       ],
+      "struckText": "Swiftstride,",
       "changeKinds": [
         "new"
       ],
@@ -42318,7 +42670,13 @@
       "text": "Unit Size: 1",
       "segments": [
         {
-          "text": "Unit Size: 1",
+          "text": "Unit Size: ",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "1",
           "change": null,
           "bold": false,
           "italic": false
@@ -44548,7 +44906,13 @@
       "text": "Unit Size: 1",
       "segments": [
         {
-          "text": "Unit Size: 1",
+          "text": "Unit Size: ",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "1",
           "change": null,
           "bold": false,
           "italic": false
@@ -44619,6 +44983,13 @@
           "change": null,
           "bold": false,
           "italic": false
+        },
+        {
+          "text": " ",
+          "change": null,
+          "bold": false,
+          "italic": false,
+          "struck": true
         }
       ],
       "changeKinds": [],
@@ -44845,7 +45216,7 @@
     },
     {
       "type": "paragraph",
-      "text": "Special Rules: Ambushers, Armoured Hide (2), Close Order, Open Order, Fear, Frenzy, Ravenous Hunger, Regeneration (6+), Swiftstride, Unbreakable",
+      "text": "Special Rules: Ambushers, Armoured Hide (2), Open Order, Fear, Frenzy, Ravenous Hunger, Regeneration (6+), Swiftstride, Unbreakable",
       "segments": [
         {
           "text": "Special Rules: ",
@@ -44860,18 +45231,44 @@
           "italic": false
         },
         {
-          "text": "Armoured Hide (2), Close Order, Open Order, ",
+          "text": "Armoured Hide (2), ",
           "change": "new",
           "bold": false,
           "italic": false
         },
         {
-          "text": "Fear, Frenzy, Ravenous Hunger, Regeneration (6+), Swiftstride, Unbreakable",
+          "text": "Close Order,",
+          "change": "new",
+          "bold": false,
+          "italic": false,
+          "struck": true
+        },
+        {
+          "text": " Open Order, ",
+          "change": "new",
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "Fear, Frenzy, Ravenous Hunger, ",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "Regeneration (6+), Swiftstride, ",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "Unbreakable",
           "change": null,
           "bold": false,
           "italic": false
         }
       ],
+      "struckText": "Close Order,",
       "changeKinds": [
         "new"
       ],

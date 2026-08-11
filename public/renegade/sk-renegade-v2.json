@@ -14,269 +14,11 @@
   "scope": "points-and-rules",
   "inheritsComposition": "sk-renegade",
   "units": {
-    "clanrats": {
-      "_changed": [
-        "command",
-        "options"
-      ],
-      "options": [
-        {
-          "group": "command",
-          "name_en": "Standard bearer",
-          "option": {
-            "magic": {
-              "types": [
-                "banner"
-              ],
-              "maxPoints": 50
-            }
-          }
-        },
-        {
-          "group": "options",
-          "action": "upsert",
-          "name_en": "magic standard worth up to",
-          "points": 50,
-          "perModel": false
-        }
-      ]
-    },
     "grey-seer": {
       "points": 155,
       "_was": 185,
       "_changed": [
         "points"
-      ]
-    },
-    "master-assassin": {
-      "points": 120,
-      "_was": 90,
-      "_changed": [
-        "points",
-        "special-rules"
-      ],
-      "specialRules": "Ambushers, Eshin Infiltration, Evasive, Feigned Flight, Fire & Flee, Hidden, Move through Cover, Poisoned Attacks, Scurry Away, Verminous Valour, Warpstone Weapons, Strikes First, Dodge"
-    },
-    "stormvermin": {
-      "points": 9,
-      "_was": 10,
-      "_changed": [
-        "points"
-      ]
-    },
-    "rat-ogres": {
-      "points": 40,
-      "_was": 48,
-      "_changed": [
-        "points",
-        "special-rules",
-        "options"
-      ],
-      "specialRules": "Close Order, Armour Bane (2), Fear, Frenzy, Horde, Scurry Away, Warband, Scurrying Masses, Warpstone Weapons, Motley Crew",
-      "options": [
-        {
-          "group": "command",
-          "name_en": "Master Moulder (champion)",
-          "points": 20,
-          "_was": 7,
-          "action": "patch",
-          "perModel": false
-        },
-        {
-          "group": "options",
-          "action": "upsert",
-          "name_en": "Packmaster for every two Rat Ogres",
-          "points": 5,
-          "perModel": true
-        }
-      ]
-    },
-    "plague-censer-bearers": {
-      "points": 16,
-      "_was": 13,
-      "_changed": [
-        "points",
-        "unit-size",
-        "special-rules"
-      ],
-      "minimum": 5,
-      "specialRules": "Frenzy, Scurry Away, Skirmishers, Stubborn, Warband, Hatred (all enemies), Detachment, Plague Disciples"
-    },
-    "warplock-jezzails": {
-      "points": 15,
-      "_was": 19,
-      "_changed": [
-        "points"
-      ]
-    },
-    "weapon-team": {
-      "options": [
-        {
-          "group": "equipment",
-          "name_en": "Hand weapons, Warpfire Thrower",
-          "points": 40,
-          "_was": 60,
-          "action": "patch",
-          "perModel": true
-        },
-        {
-          "group": "equipment",
-          "action": "patch",
-          "name_en": "Hand weapons, Doom-flayer",
-          "points": 40,
-          "perModel": true
-        },
-        {
-          "group": "equipment",
-          "action": "patch",
-          "name_en": "Hand weapons, Poisoned Wind Mortar",
-          "points": 55,
-          "perModel": true
-        },
-        {
-          "group": "equipment",
-          "action": "patch",
-          "name_en": "Hand weapons, Ratling Gun",
-          "points": 50,
-          "perModel": true
-        },
-        {
-          "group": "equipment",
-          "action": "patch",
-          "name_en": "Hand weapons, Warp Grinder",
-          "points": 30,
-          "perModel": true
-        }
-      ],
-      "_changed": [
-        "options",
-        "special-rules"
-      ],
-      "specialRules": "Loner, Skirmish, Scurry Away, Detachment"
-    },
-    "poisoned-wind-globadiers": {
-      "specialRules": "Scurry Away, Skirmishers, Warband, Life is Cheap",
-      "_changed": [
-        "special-rules"
-      ]
-    },
-    "giant-rats": {
-      "specialRules": "Close Order, Open Order, Fight in Extra Rank, Horde, Scurry Away, Warband, Motley Crew",
-      "_changed": [
-        "special-rules",
-        "command",
-        "options"
-      ],
-      "options": [
-        {
-          "group": "command",
-          "name_en": "Master Moulder (champion)",
-          "points": 20,
-          "_was": 7,
-          "action": "patch",
-          "perModel": false
-        },
-        {
-          "group": "options",
-          "action": "upsert",
-          "name_en": "Packmaster for every three Giant Rats",
-          "points": 5,
-          "perModel": true
-        }
-      ]
-    },
-    "night-runners": {
-      "specialRules": "Evasive, Fire & Flee, Scurry Away, Skirmishers, Vanguard, Regimental Unit",
-      "_changed": [
-        "special-rules",
-        "options"
-      ],
-      "options": [
-        {
-          "group": "command",
-          "action": "patch",
-          "name_en": "Nightleader",
-          "points": 6,
-          "perModel": false
-        }
-      ]
-    },
-    "gutter-runners": {
-      "specialRules": "Evasive, Feigned Flight, Fire & Flee, Move through Cover, Scouts, Scurry Away, Skirmishers, Poisoned Attacks",
-      "_changed": [
-        "special-rules"
-      ]
-    },
-    "plague-monks-core": {
-      "specialRules": "Close Order, Frenzy, Horde, Scurry Away, Warband, Regimental Unit",
-      "_changed": [
-        "special-rules"
-      ]
-    },
-    "plague-monks": {
-      "specialRules": "Close Order, Frenzy, Horde, Scurry Away, Warband, Regimental Unit",
-      "_changed": [
-        "special-rules"
-      ]
-    },
-    "doomwheel": {
-      "specialRules": "Close Order, Crushing Bulk, Immune to Psychology, Impact Hits (D6+1), Large Target, Random Attacks (Rats only), Random Movement, Stomp Attacks (D3)",
-      "_changed": [
-        "special-rules"
-      ]
-    },
-    "skaven-dregs": {
-      "minimum": 20,
-      "maximum": 20,
-      "_changed": [
-        "unit-size",
-        "special-rules",
-        "options"
-      ],
-      "specialRules": "Close Order, Levies, Horde, Scurry Away, Expendable, Cornered Rats, Loner",
-      "options": [
-        {
-          "group": "options",
-          "action": "patch",
-          "name_en": "Spears",
-          "points": 1,
-          "perModel": true
-        },
-        {
-          "group": "options",
-          "action": "patch",
-          "name_en": "Shields",
-          "points": 1,
-          "perModel": true
-        },
-        {
-          "group": "options",
-          "action": "patch",
-          "name_en": "Slings",
-          "points": 1,
-          "perModel": true
-        },
-        {
-          "group": "command",
-          "action": "patch",
-          "name_en": "Packmaster",
-          "points": 5,
-          "perModel": true
-        },
-        {
-          "group": "command",
-          "action": "upsert",
-          "name_en": "Upgrade one Packmaster to a Master Moulder (champion)",
-          "points": 20,
-          "perModel": false
-        },
-        {
-          "group": "command",
-          "action": "patch",
-          "name_en": "Musician",
-          "points": 2,
-          "perModel": false
-        }
       ]
     },
     "warlock-engineer": {
@@ -327,77 +69,254 @@
       "_changed": [
         "options"
       ]
-    }
-  },
-  "addedUnits": {
-    "core": [
-      {
-        "id": "skaven-dregs",
-        "name_en": "Skaven Dregs",
-        "points": 2,
-        "minimum": 20,
-        "maximum": 40,
-        "command": [
-          {
-            "name_en": "Packmaster",
-            "points": 5,
-            "minimum": 0,
-            "maximum": 0
-          },
-          {
-            "name_en": "Master Moulder",
-            "points": 20,
-            "minimum": 0,
-            "maximum": 0,
-            "magic": {
-              "types": [
-                "weapon",
-                "armor",
-                "talisman",
-                "enchanted-item"
-              ],
-              "maxPoints": 25
-            }
-          },
-          {
-            "name_en": "Musician",
-            "points": 2
-          }
-        ],
-        "equipment": [
-          {
-            "name_en": "Hand weapons",
-            "points": 0,
-            "perModel": true,
-            "active": true
-          }
-        ],
-        "armor": [],
-        "options": [
-          {
-            "name_en": "Spears",
-            "points": 1,
-            "perModel": true
-          },
-          {
-            "name_en": "Shields",
-            "points": 1,
-            "perModel": true
-          },
-          {
-            "name_en": "Slings",
-            "points": 1,
-            "perModel": true
-          }
-        ],
-        "mounts": [],
-        "items": [],
-        "lores": [],
-        "specialRules": {
-          "name_en": "Close Order, Levies, Horde, Scurry Away, Expendable, Cornered Rats, Loner"
+    },
+    "master-assassin": {
+      "points": 120,
+      "_was": 90,
+      "_changed": [
+        "points",
+        "special-rules"
+      ],
+      "specialRules": "Ambushers, Eshin Infiltration, Evasive, Feigned Flight, Fire & Flee, Hidden, Move through Cover, Poisoned Attacks, Scurry Away, Verminous Valour, Warpstone Weapons, Strikes First, Dodge"
+    },
+    "stormvermin": {
+      "points": 9,
+      "_was": 10,
+      "_changed": [
+        "points"
+      ]
+    },
+    "clanrats": {
+      "options": [
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "magic standard worth up to",
+          "points": 50,
+          "perModel": false
         }
-      }
-    ]
+      ],
+      "_changed": [
+        "options"
+      ]
+    },
+    "weapon-team": {
+      "options": [
+        {
+          "group": "equipment",
+          "action": "patch",
+          "name_en": "Hand weapons, Doom-flayer",
+          "points": 40,
+          "perModel": true
+        },
+        {
+          "group": "equipment",
+          "action": "patch",
+          "name_en": "Hand weapons, Poisoned Wind Mortar",
+          "points": 55,
+          "perModel": true
+        },
+        {
+          "group": "equipment",
+          "action": "patch",
+          "name_en": "Hand weapons, Ratling Gun",
+          "points": 50,
+          "perModel": true
+        },
+        {
+          "group": "equipment",
+          "action": "patch",
+          "name_en": "Hand weapons, Warpfire Thrower",
+          "points": 40,
+          "perModel": true
+        },
+        {
+          "group": "equipment",
+          "action": "patch",
+          "name_en": "Hand weapons, Warp Grinder",
+          "points": 30,
+          "perModel": true
+        }
+      ],
+      "_changed": [
+        "options",
+        "special-rules"
+      ],
+      "specialRules": "Loner, Skirmish, Scurry Away, Detachment"
+    },
+    "skaven-dregs": {
+      "minimum": 20,
+      "maximum": 40,
+      "_changed": [
+        "unit-size",
+        "options",
+        "special-rules"
+      ],
+      "options": [
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Spears",
+          "points": 1,
+          "perModel": true
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Shields",
+          "points": 1,
+          "perModel": true
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Slings",
+          "points": 1,
+          "perModel": true
+        },
+        {
+          "group": "command",
+          "action": "patch",
+          "name_en": "Packmaster",
+          "points": 5,
+          "perModel": true
+        },
+        {
+          "group": "command",
+          "action": "upsert",
+          "name_en": "Upgrade one Packmaster to a Master Moulder (champion)",
+          "points": 20,
+          "perModel": false
+        },
+        {
+          "group": "command",
+          "action": "patch",
+          "name_en": "Musician",
+          "points": 2,
+          "perModel": false
+        }
+      ],
+      "specialRules": "Close Order, Levies, Horde, Scurry Away, Expendable, Cornered Rats, Loner"
+    },
+    "warplock-jezzails": {
+      "points": 15,
+      "_was": 19,
+      "_changed": [
+        "points"
+      ]
+    },
+    "poisoned-wind-globadiers": {
+      "specialRules": "Scurry Away, Skirmishers, Warband, Life is Cheap",
+      "_changed": [
+        "special-rules"
+      ]
+    },
+    "rat-ogres": {
+      "points": 40,
+      "_was": 48,
+      "_changed": [
+        "points",
+        "options",
+        "special-rules"
+      ],
+      "options": [
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "Packmaster for every two Rat Ogres",
+          "points": 5,
+          "perModel": true
+        },
+        {
+          "group": "command",
+          "action": "patch",
+          "name_en": "Master Moulder (champion)",
+          "points": 20,
+          "perModel": false
+        }
+      ],
+      "specialRules": "Close Order, Armour Bane (2), Fear, Frenzy, Horde, Scurry Away, Warband, Scurrying Masses, Warpstone Weapons, Motley Crew"
+    },
+    "giant-rats": {
+      "options": [
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "Packmaster for every three Giant Rats",
+          "points": 5,
+          "perModel": true
+        },
+        {
+          "group": "command",
+          "action": "patch",
+          "name_en": "Master Moulder (champion)",
+          "points": 20,
+          "perModel": false
+        }
+      ],
+      "_changed": [
+        "options",
+        "special-rules"
+      ],
+      "specialRules": "Open Order, Fight in Extra Rank, Horde, Scurry Away, Warband, Motley Crew"
+    },
+    "night-runners": {
+      "options": [
+        {
+          "group": "command",
+          "action": "patch",
+          "name_en": "Nightleader",
+          "points": 6,
+          "perModel": false
+        }
+      ],
+      "_changed": [
+        "options",
+        "special-rules"
+      ],
+      "specialRules": "Evasive, Fire & Flee, Scurry Away, Skirmishers, Vanguard, Regimental Unit"
+    },
+    "gutter-runners": {
+      "specialRules": "Evasive, Feigned Flight, Fire & Flee, Move through Cover, Scouts, Scurry Away, Skirmishers, Poisoned Attacks",
+      "_changed": [
+        "special-rules"
+      ]
+    },
+    "plague-monks-core": {
+      "specialRules": "Close Order, Frenzy, Horde, Scurry Away, Warband, Regimental Unit",
+      "_changed": [
+        "special-rules"
+      ]
+    },
+    "plague-monks": {
+      "specialRules": "Close Order, Frenzy, Horde, Scurry Away, Warband, Regimental Unit",
+      "_changed": [
+        "special-rules"
+      ]
+    },
+    "plague-censer-bearers": {
+      "points": 16,
+      "_was": 13,
+      "_changed": [
+        "points",
+        "unit-size",
+        "special-rules"
+      ],
+      "minimum": 5,
+      "specialRules": "Frenzy, Scurry Away, Skirmishers, Stubborn, Warband, Hatred (all enemies), Detachment, Plague Disciples"
+    },
+    "doomwheel": {
+      "specialRules": "Close Order, Crushing Bulk, Immune to Psychology, Impact Hits (D6+1), Large Target, Random Attacks (Rats only), Random Movement, Stomp Attacks (D3)",
+      "_changed": [
+        "special-rules"
+      ]
+    },
+    "hell-pit-abomination": {
+      "specialRules": "Abominable Attacks, Close Order, Immune to Psychology, Large Target, Magic Resistance (-1), Random Attacks, Random Movement, Regeneration (5+), Stomp Attacks (D3+1), Terror, Timmm-berrr!, Too Horrible to Die, Unbreakable, Impact Hits (D3+1), Warpstone Spikes",
+      "_changed": [
+        "special-rules"
+      ]
+    }
   },
   "magicItems": {
     "skaven": [
@@ -554,20 +473,6 @@
         "type": "arcane-item",
         "onePerArmy": false,
         "name": "warpstone tokens"
-      },
-      {
-        "name_en": "May purchase Warlock Optics (see below) +10 points • May purchase magic items up to a total of",
-        "name": "may purchase warlock optics see below 10 points may purchase magic items up to a total of",
-        "points": 50,
-        "type": "enchanted-item",
-        "onePerArmy": true
-      },
-      {
-        "name_en": "May purchase magic items up to a total of",
-        "name": "may purchase magic items up to a total of",
-        "points": 75,
-        "type": "enchanted-item",
-        "onePerArmy": true
       }
     ]
   },
@@ -580,79 +485,6 @@
         "If using a Magic Missile to target an enemy unit engaged with a friendly unit with this rule, failed casting rolls (but not successfully dispelled rolls or miscasts) count as successfully cast on a friendly unit with the Expendable special rule engaged in the combat chosen by your opponent."
       ],
       "overrides": null
-    },
-    "verminous-valour": {
-      "name_en": "Verminous Valour",
-      "body": [
-        "A model with this special rule may voluntarily `retire' (\"Too Many Characters,\" Rulebook, p.209) during the Combat Phase. In order to do so the model must:",
-        "Be joined to a unit that has a Unit Strength of 10 or more.",
-        "Not be part of a Challenge. Not be subject to \"Nowhere to Run\" (Rulebook, p.211). Be able to be placed inside the unit outside of all fighting ranks. Do so before any attacks are allocated and resolved for the current initiative step of a combat that they are in. Should a model `retire' in this way the unit may still use this character's Leadership. All other restrictions for retiring apply.",
-        "In subsequent turns, if this model's unit remains engaged in combat with the same enemy unit, a model with this rule may move through the ranks and join any fighting rank before challenges are issued during step 1.1 of the \"Choose Combat & Fight Phase\" (\"Characters in Combat,\" Rulebook p.209.) If at any time there is nowhere to place a `retired' model outside of a fighting rank they must immediately move through the ranks and take a position in the front row of a fighting rank. They may not make any attacks in this round of combat but they may have attacks directed against them."
-      ],
-      "overrides": "verminous-valour"
-    },
-    "pushed-into-battle": {
-      "name_en": "Pushed Into Battle",
-      "body": [
-        "A model with this special rule may join a unit of Infantry with unit strength 10 or more despite being a Heavy Chariot. If it does so, it must always be placed in the centre of the front rank, and it no longer has the Lumbering rule (Rulebook p. 195). Only one model with this special rule may join each unit."
-      ],
-      "overrides": null
-    },
-    "scurrying-masses": {
-      "name_en": "Scurrying Masses",
-      "body": [
-        "Whilst within 3\" of a friendly Skaven unit, this unit may add a positive (+) modifier to its Leadership characteristic equal to that unit's current Rank Bonus, up to a maximum of Leadership 10.",
-        "Note that this may not be combined with any leadership bonus provided by Warband or the Inspiring Presence special rule."
-      ],
-      "overrides": "scurrying-masses"
-    },
-    "cornered-rats": {
-      "name_en": "Cornered Rats",
-      "body": [
-        "Should a unit of Skaven Dregs break and flee from combat, treat it as completely destroyed and remove it from play. If it contains ten or more models, before removing it every unit within 2D6\" suffers D3 Strength 3 hits. For every additional five Dregs above five, add +1 to the D3, to a maximum of +3. Opponents that were engaged may then restrain and reform, or overrun."
-      ],
-      "overrides": null
-    },
-    "leader-of-the-pack": {
-      "name_en": "Leader of the Pack",
-      "body": [
-        "Models with this special rule can only be taken as part of a unit of Dregs, Rat Ogres or Giant Rats. They may be positioned behind the front rank.",
-        "A Master Moulder may move through the ranks as if it were a character and may issue and accept challenges even when it is not within the fighting rank."
-      ],
-      "overrides": null
-    },
-    "doomrocket": {
-      "name_en": "Doomrocket",
-      "body": [],
-      "weaponProfile": {
-        "range": "36”",
-        "strength": "5(10)",
-        "ap": "-2",
-        "specialRules": "Bombardment, Multiple Wounds (D3+1)"
-      },
-      "overrides": null
-    },
-    "doom-flayer": {
-      "name_en": "Doom-flayer",
-      "body": [],
-      "weaponProfile": {
-        "range": "Combat",
-        "strength": "4",
-        "ap": "-1",
-        "specialRules": "Counter Charge, Extra Attacks (D6),, Impact Hits (D6+1), Swiftstride"
-      },
-      "overrides": "doom-flayer"
-    },
-    "billowing-death": {
-      "name_en": "Billowing Death",
-      "body": [],
-      "weaponProfile": {
-        "range": "N/A",
-        "strength": "N/A",
-        "ap": "N/A",
-        "specialRules": "Breath Weapon, Magical Attacks"
-      },
-      "overrides": "billowing-death"
     },
     "poisoned-wind": {
       "name_en": "Poisoned Wind",
@@ -671,6 +503,26 @@
         "1 | Whoompff! All of the unit’s ammunition detonates prematurely. All friendly and enemy units within 3” suffer D3 hits using this weapon’s profile. Once resolved, this unit is removed. 2-5 | Wildly off Target. The unit loses control of its weapon. Roll the scatter dice. Resolve the weapon’s attacks against the first unit within range and line of sight (friend or foe) in the direction of the arrow (including a Hit). If a further Misfire is rolled, this unit is removed. 6 | Pppphhtt! The weapon does not fire this turn."
       ],
       "overrides": "warpstone-weapons"
+    },
+    "verminous-valour": {
+      "name_en": "Verminous Valour",
+      "body": [
+        "A model with this special rule may voluntarily ‘retire’ (“Too Many Characters,” Rulebook, p.209) during the Combat Phase. In order to do so the model must:",
+        "Be joined to a unit that has a Unit Strength of 10 or more. • Not be part of a Challenge. • Not be subject to “Nowhere to Run” (Rulebook, p.211). • Be able to be placed inside the unit outside of all fighting ranks. • Do so before any attacks are allocated and resolved for the current initiative step of a combat that they are in.",
+        "Should a model ‘retire’ in this way the unit may still use this character's Leadership. All other restrictions for retiring apply.",
+        "In subsequent turns, if this model’s unit remains engaged in combat with the same enemy unit, a model with this rule may move through the ranks and join any fighting rank before challenges are issued during step 1.1 of the “Choose Combat & Fight Phase” (“Characters in Combat,” Rulebook p.209.)",
+        "If at any time there is nowhere to place a ‘retired’ model outside of a fighting rank they must immediately move through the ranks and take a position in the front row of a fighting rank. They may not make any attacks in this round of combat but they may have attacks directed against them.",
+        "Pushed Into Battle A model with this special rule may join a unit of Infantry with unit strength 10 or more despite being a Heavy Chariot. If it does so, it must always be placed in the centre of the front rank, and it no longer has the Lumbering rule (Rulebook p. 195). Only one model with this special rule may join each unit."
+      ],
+      "overrides": "verminous-valour"
+    },
+    "scurrying-masses": {
+      "name_en": "Scurrying Masses",
+      "body": [
+        "Whilst within 3\" of a friendly Skaven unit, this unit may add a positive (+) modifier to its Leadership characteristic equal to that unit’s current Rank Bonus, up to a maximum of Leadership 10.",
+        "Note that this may not be combined with any leadership bonus provided by Warband or the Inspiring Presence special rule."
+      ],
+      "overrides": "scurrying-masses"
     },
     "warlock-optics": {
       "name_en": "Warlock Optics",
@@ -708,6 +560,14 @@
       ],
       "overrides": null
     },
+    "cornered-rats": {
+      "name_en": "Cornered Rats",
+      "body": [
+        "Should a unit of Skaven Dregs ever break and flee from combat, treat the unit as completely destroyed and remove it from play. If the unit contains ten or more models, before removing it, every unit (friend or foe) within 2D6\" of it suffers D3 Strength 3 hits. For every additional five Skaven Dregs the unit contains greater than five, apply a +1 modifier to the D3 to a maximum of +3. Opponents that were engaged in combat with this unit may then attempt to restrain and reform, or 'overrun'.",
+        "Notes: A Packmaster or Master Moulder upgrade for this unit loses the Warband special rule and adds the Levies and Expendable special rule."
+      ],
+      "overrides": null
+    },
     "pavise": {
       "name_en": "Pavise",
       "body": [
@@ -715,6 +575,14 @@
         "A pavise gives its wielder a 4+ armour value against attacks made by enemy models that lie within the wielder’s front arc. However, a pavise offers no protection to its wielder against attacks made by enemy models that lie within the wielder’s flank or rear arcs."
       ],
       "overrides": "pavise"
+    },
+    "leader-of-the-pack": {
+      "name_en": "Leader Of The Pack",
+      "body": [
+        "Models with this special rule can only be taken as part of a unit of Dregs, Rat Ogres, or Giant Rats. Models with this special rule may be positioned behind the front rank of their unit.",
+        "Note that a Master Moulder may “move through the ranks” as if he was a character and may issue and accept challenges even if they are not within the fighting rank."
+      ],
+      "overrides": null
     },
     "plague-disciples": {
       "name_en": "Plague Disciples",
@@ -740,7 +608,7 @@
     "tolling-the-bell-table": {
       "name_en": "Tolling The Bell Table",
       "body": [
-        "2 | Magical Backlash: The Screaming Bell and every unit (friend or foe) that is within 3” suffers D3 wounds, each with an AP of -1 3 and 4 | Emboldened: Until your next Start of Turn sub-phase, all friendly units within this model's Command range may re-roll any Leadership tests including Break tests. 5 and 6 | Unholy Clamour: Any friendly unit that is within this model's Command range during the Declare Charges & Charge Reactions sub-phase of this turn increases its maximum possible charge range by 3\" and, when it makes a Charge roll, may apply a +D3 modifier to the result. 7 | Deafening Peals: All enemy models within 24” of this model with Toughness 6 or more suffer D3 wounds. Armour saves may be taken as normal. 8 and 9 | Resonant Power: Until the end of this turn, all friendly Skaven Wizards within this model's Command range may apply a +1 modifier to any Casting roll they make. 10 and 11 | Rapturous Ringing: Until your next Start of Turn sub-phase, all friendly Skaven units within this model's Command range gain the Extra Attacks (+1) special rule. 12 | Sonorous Knell: Any enemy unit that is within this model's Command range, including units that are fleeing or that are engaged in combat, must make a Leadership test. If this test is failed, the unit suffers D3+3 wounds, with no armour save permitted (Ward and Regeneration saves can be attempted as normal)",
+        "2 | Magical Backlash: The Screaming Bell and every unit (friend or foe) that is within 3” suffers D3 wounds, each with an AP of -1 3 and 4 | Emboldened: Until your next Start of Turn sub-phase, all friendly units within this model's Command range may re-roll any Leadership tests including Break tests. 5 and 6 | Unholy Clamour: Any friendly unit that is within this model's Command range during the Declare Charges & Charge Reactions sub-phase of this turn increases its maximum possible charge range by 3\" and, when it makes a Charge roll, may apply a +D3 modifier to the result. 7 | Deafening Peals: All enemy models within 24” of this model with Toughness 6 or more suffer D3 wounds. Armour saves may be taken as normal. 8 and 9 | Resonant Power: Until the end of this turn, all friendly Skaven Wizards within this model's Command range may apply a +1 modifier to any Casting roll they make. 10 and 11 | Rapturous Ringing: Until your next Start of Turn sub-phase, all friendly Skaven units within this model's Command range gain the Extra Attacks (+1) special rule. 12 | Sonorous Knell: Any enemy unit that is within this model's Command range, including units that are fleeing or that are engaged in combat, suffers D3+3 wounds, with no armour save permitted (Ward and Regeneration saves can be attempted as normal)",
         "Character Mount: A Screaming Bell may only be included in your army as a character’s mount. Its points are added to that of its rider. The rider of a Screaming Bell may not use Verminous Valour. This unit may only use the Pushed into Battle special rule to join a unit of Clanrats or Stormvermin."
       ],
       "overrides": null
@@ -806,42 +674,154 @@
         "A: The Skaven Dreg unit may follow-up or test to restrain. If they choose to follow-up, the combat will happen during the following Combat Phase. These moves do not change the status of the combat IE: chargers from previous phases still count as charging, etc."
       ],
       "overrides": null
+    },
+    "doomrocket": {
+      "name_en": "Doomrocket",
+      "body": [],
+      "weaponProfile": {
+        "range": "36”",
+        "strength": "5(10)",
+        "ap": "-2",
+        "specialRules": "Bombardment, Multiple Wounds (D3+1)"
+      },
+      "overrides": null
+    },
+    "doom-flayer": {
+      "name_en": "Doom-flayer",
+      "body": [],
+      "weaponProfile": {
+        "range": "Combat",
+        "strength": "4",
+        "ap": "-1",
+        "specialRules": "Counter Charge, Extra Attacks (D6),, Impact Hits (D6+1), Swiftstride"
+      },
+      "overrides": "doom-flayer"
+    },
+    "billowing-death": {
+      "name_en": "Billowing Death",
+      "body": [],
+      "weaponProfile": {
+        "range": "N/A",
+        "strength": "N/A",
+        "ap": "N/A",
+        "specialRules": "Breath Weapon, Magical Attacks"
+      },
+      "overrides": "billowing-death"
     }
   },
+  "lores": {},
+  "addedUnits": {
+    "core": [
+      {
+        "id": "skaven-dregs",
+        "name_en": "Skaven Dregs",
+        "points": 2,
+        "minimum": 20,
+        "maximum": 40,
+        "command": [
+          {
+            "name_en": "Packmaster",
+            "points": 5,
+            "minimum": 0,
+            "maximum": 0
+          },
+          {
+            "name_en": "Master Moulder",
+            "points": 20,
+            "minimum": 0,
+            "maximum": 0,
+            "magic": {
+              "types": [
+                "weapon",
+                "armor",
+                "talisman",
+                "enchanted-item"
+              ],
+              "maxPoints": 25
+            }
+          },
+          {
+            "name_en": "Musician",
+            "points": 2
+          }
+        ],
+        "equipment": [
+          {
+            "name_en": "Hand weapons",
+            "points": 0,
+            "perModel": true,
+            "active": true
+          }
+        ],
+        "armor": [],
+        "options": [
+          {
+            "name_en": "Spears",
+            "points": 1,
+            "perModel": true
+          },
+          {
+            "name_en": "Shields",
+            "points": 1,
+            "perModel": true
+          },
+          {
+            "name_en": "Slings",
+            "points": 1,
+            "perModel": true
+          }
+        ],
+        "mounts": [],
+        "items": [],
+        "lores": [],
+        "specialRules": {
+          "name_en": "Close Order, Levies, Horde, Scurry Away, Expendable, Cornered Rats, Loner"
+        }
+      }
+    ]
+  },
   "profiles": {
-    "skaven dregs": {
+    "grey seer": {
       "stats": [
         {
-          "Name": "Dreg-rat",
+          "Name": "Grey Seer",
           "M": "5",
-          "WS": "2",
-          "BS": "2",
+          "WS": "3",
+          "BS": "3",
           "S": "3",
-          "T": "3",
-          "W": "1",
-          "I": "4",
-          "A": "1",
-          "Ld": "2"
+          "T": "4",
+          "W": "3",
+          "I": "5",
+          "A": "2",
+          "Ld": "7"
+        }
+      ]
+    },
+    "warlock engineer": {
+      "notes": [
+        "Notes: One use only. This weapon shoots like a stone thrower, using the Bombardment special rule, a 5\" blast template and the Skaven Misfire table. The Multiple Wounds (D3+1) special rule applies only to a single model whose base lies underneath the central hole of the blast template."
+      ]
+    },
+    "master assassin": {
+      "stats": [
+        {
+          "Name": "Master Assassin",
+          "M": "6",
+          "WS": "8",
+          "BS": "7",
+          "S": "4",
+          "T": "4",
+          "W": "2",
+          "I": "8",
+          "A": "4",
+          "Ld": "7"
         }
       ],
-      "troopType": "Regular infantry",
-      "baseSize": "25 x 25 mm",
       "equipment": [
-        "Hand weapons"
+        "Hand weapon and throwing weapons"
       ],
       "notes": [
-        "Options:",
-        "The entire unit may take any of the following:",
-        "Any unit may:"
-      ],
-      "specialRules": [
-        "Close Order",
-        "Levies",
-        "Horde",
-        "Scurry Away",
-        "Expendable",
-        "Cornered Rats",
-        "Loner"
+        "May purchase magic items up to a total of 75 points"
       ]
     },
     "stormvermin": {
@@ -883,6 +863,197 @@
         "Warband",
         "Warpstone Weapons",
         "Regimental Unit"
+      ]
+    },
+    "clanrats": {
+      "notes": [
+        "0-1 unit per 1,000 points may:"
+      ]
+    },
+    "weapon team": {
+      "notes": [
+        "Notes: This weapon shoots like an organ gun, using the ‘Multi-Barrelled’ special rule and the Skaven Misfire table.",
+        "Notes: This weapon shoots like a fire thrower, using the ‘Column of Fire’ special rule and the Skaven Misfire table. Any unit that suffers one or more unsaved wounds from this weapon must make a Panic test as if it had taken heavy casualties.",
+        "Skaven Dregs"
+      ]
+    },
+    "skaven dregs": {
+      "stats": [
+        {
+          "Name": "Dreg-rat",
+          "M": "5",
+          "WS": "2",
+          "BS": "2",
+          "S": "3",
+          "T": "3",
+          "W": "1",
+          "I": "4",
+          "A": "1",
+          "Ld": "2"
+        }
+      ],
+      "troopType": "Regular infantry",
+      "baseSize": "25 x 25 mm",
+      "equipment": [
+        "Hand weapons"
+      ],
+      "notes": [
+        "Options:",
+        "The entire unit may take any of the following:",
+        "Any unit may:"
+      ],
+      "specialRules": [
+        "Close Order",
+        "Levies",
+        "Horde",
+        "Scurry Away",
+        "Expendable",
+        "Cornered Rats",
+        "Loner"
+      ]
+    },
+    "warplock jezzails": {
+      "stats": [
+        {
+          "Name": "Jezzail Team",
+          "M": "5",
+          "WS": "3",
+          "BS": "3",
+          "S": "3",
+          "T": "3",
+          "W": "2",
+          "I": "3",
+          "A": "2",
+          "Ld": "5"
+        }
+      ],
+      "notes": [
+        "Options:",
+        "0-1 unit per 1,000 points may:",
+        "Have the Reserve Move special rule: 2 points per model"
+      ],
+      "troopType": "Regular infantry",
+      "baseSize": "25 x 50 mm",
+      "equipment": [
+        "Hand weapons, warplock jezzails (see below) and pavise"
+      ],
+      "specialRules": [
+        "Open Order",
+        "Scurry Away",
+        "Warband"
+      ]
+    },
+    "poisoned wind globadiers": {
+      "notes": [
+        "Notes: If the roll To Hit is successful, a Poisoned Wind globe causes D3 hits to the target enemy unit, rather than the usual one. However, if a natural 1 is rolled when making a roll To Hit with this weapon, immediately roll another D6. On a roll of 1, D3 hits are caused on the shooting unit. Life is Cheap Providing the Globadiers are not in base contact with an enemy model, they may target any enemy unit within range and line of sight, even if that unit is engaged in close combat. Resolve all rolls to hit as normal. Then, using all failed to hit rolls, roll to wound on a friendly unit engaged in the combat chosen by your opponent."
+      ]
+    },
+    "packmasters master moulders": {
+      "stats": [
+        {
+          "Name": "Packmaster",
+          "M": "6",
+          "WS": "3",
+          "BS": "3",
+          "S": "3",
+          "T": "3",
+          "W": "1",
+          "I": "4",
+          "A": "1",
+          "Ld": "6"
+        },
+        {
+          "Name": "Master Moulder",
+          "M": "6",
+          "WS": "5",
+          "BS": "3",
+          "S": "4",
+          "T": "4",
+          "W": "2",
+          "I": "5",
+          "A": "2",
+          "Ld": "7"
+        }
+      ],
+      "notes": [
+        "Unit Size: (see Dregs, Rat Ogre, & Giant Rat profiles)",
+        "Any Packmaster or Master Moulder in the unit must take one of the following:"
+      ],
+      "specialRules": [
+        "Close Order",
+        "Horde",
+        "Leader of the Pack",
+        "Motley Crew",
+        "Scurry Away",
+        "Warband",
+        "Verminous Valour (Master Moulder Only)"
+      ],
+      "troopType": "Regular infantry",
+      "baseSize": "25 x 25 mm",
+      "equipment": [
+        "Hand weapons and light armour"
+      ]
+    },
+    "rat ogres": {
+      "stats": [
+        {
+          "Name": "Rat Ogre",
+          "M": "6",
+          "WS": "4",
+          "BS": "1",
+          "S": "5",
+          "T": "4",
+          "W": "3",
+          "I": "4",
+          "A": "3",
+          "Ld": "5"
+        }
+      ],
+      "troopType": "Monstrous infantry",
+      "baseSize": "50mm",
+      "equipment": [
+        "Hand weapons, and mutated hides (counts as heavy armour)"
+      ],
+      "specialRules": [
+        "Close Order",
+        "Armour Bane (2)",
+        "Fear",
+        "Frenzy",
+        "Horde",
+        "Scurry Away",
+        "Warband",
+        "Scurrying Masses",
+        "Warpstone Weapons",
+        "Motley Crew"
+      ]
+    },
+    "giant rats": {
+      "stats": [
+        {
+          "Name": "Giant Rat",
+          "M": "6",
+          "WS": "2",
+          "BS": "0",
+          "S": "3",
+          "T": "3",
+          "W": "1",
+          "I": "4",
+          "A": "1",
+          "Ld": "3"
+        }
+      ],
+      "troopType": "War beasts",
+      "baseSize": "25 x 25 mm",
+      "equipment": [
+        "Claws and teeth (counts as hand weapons)"
+      ],
+      "specialRules": [
+        "Open Order",
+        "Fight in Extra Rank",
+        "Horde",
+        "Scurry Away",
+        "Warband",
+        "Motley Crew"
       ]
     },
     "night runners": {
@@ -969,6 +1140,124 @@
         "Poisoned Attacks"
       ]
     },
+    "plague monks": {
+      "notes": [
+        "A Plague Deacon may purchase magic items up to a total of 25 points • 0-1 unit per 1,000 points may purchase a magic standard worth up to 50 points • 0-1 unit per 1,000 points may select a single Plague Censer Bearer unit as a detachment."
+      ]
+    },
+    "plague censer bearers": {
+      "stats": [
+        {
+          "Name": "Censer Bearer",
+          "M": "5",
+          "WS": "3",
+          "BS": "3",
+          "S": "3",
+          "T": "4",
+          "W": "1",
+          "I": "3",
+          "A": "2",
+          "Ld": "5"
+        }
+      ],
+      "troopType": "Regular infantry",
+      "baseSize": "25 x 25 mm",
+      "equipment": [
+        "Hand weapons and plague censers (see below)"
+      ],
+      "specialRules": [
+        "Frenzy",
+        "Scurry Away",
+        "Skirmishers",
+        "Stubborn",
+        "Warband",
+        "Hatred (all enemies)",
+        "Detachment",
+        "Plague Disciples"
+      ]
+    },
+    "screaming bell": {
+      "stats": [
+        {
+          "Name": "Screaming Bell",
+          "M": "5",
+          "WS": "-",
+          "BS": "-",
+          "S": "5",
+          "T": "6",
+          "W": "5",
+          "I": "-",
+          "A": "-",
+          "Ld": "-"
+        },
+        {
+          "Name": "Rat Ogre Crew (x1)",
+          "M": "-",
+          "WS": "3",
+          "BS": "0",
+          "S": "5",
+          "T": "-",
+          "W": "-",
+          "I": "4",
+          "A": "3",
+          "Ld": "5"
+        }
+      ],
+      "specialRules": [
+        "Armour Bane (2, Rat Ogre only)",
+        "Blessings of the Horned Rat"
+      ],
+      "troopType": "Heavy chariot",
+      "baseSize": "60 x 100 mm min, 75x100 mm max",
+      "armourValue": "4+",
+      "equipment": [],
+      "notes": [
+        "Character Mount: A Screaming Bell may only be included in your army as a character’s mount. Its points are added to that of its rider. The rider of a Screaming Bell may not use Verminous Valour. This unit may only use the Pushed into Battle special rule to join a unit of Clanrats or Stormvermin."
+      ]
+    },
+    "plague furnace": {
+      "stats": [
+        {
+          "Name": "Plague Furnace",
+          "M": "5",
+          "WS": "-",
+          "BS": "-",
+          "S": "5",
+          "T": "6",
+          "W": "5",
+          "I": "-",
+          "A": "-",
+          "Ld": "-"
+        },
+        {
+          "Name": "Plague Monk Crew (x3)",
+          "M": "-",
+          "WS": "3",
+          "BS": "0",
+          "S": "3",
+          "T": "-",
+          "W": "-",
+          "I": "3",
+          "A": "2",
+          "Ld": "5"
+        }
+      ],
+      "specialRules": [
+        "Terror",
+        "Frenzy",
+        "Great Censer",
+        "Impact Hits (D6+1)"
+      ],
+      "notes": [
+        "Large Target, Magic Resistance (-1), Poisoned Attacks, Pushed into Battle, Scurrying Masses, Stomp Attacks (D3+1)",
+        "Notes: Any model whose base lies underneath the template risks being hit. All models that have been hit must take a Toughness test. If this test is failed, the target model suffers a wound. No armour save is permitted against wounds caused by this weapon (Ward and Regeneration saves can be attempted as normal).",
+        "Character Mount: A Plague Furnace may only be included in your army as a character’s mount. Its points are added to that of its rider. The rider of a Plague Furnace may not use Verminous Valour. This model may only use the Pushed Into Battle special rule to join a unit of Plague Monks."
+      ],
+      "troopType": "Heavy chariot",
+      "baseSize": "60 x 100 mm",
+      "armourValue": "4+",
+      "equipment": []
+    },
     "doomwheel": {
       "stats": [
         {
@@ -1024,335 +1313,13 @@
         "Random Movement"
       ]
     },
-    "grey seer": {
-      "stats": [
-        {
-          "Name": "Grey Seer",
-          "M": "5",
-          "WS": "3",
-          "BS": "3",
-          "S": "3",
-          "T": "4",
-          "W": "3",
-          "I": "5",
-          "A": "2",
-          "Ld": "7"
-        }
-      ]
-    },
-    "master assassin": {
-      "stats": [
-        {
-          "Name": "Master Assassin",
-          "M": "6",
-          "WS": "8",
-          "BS": "7",
-          "S": "4",
-          "T": "4",
-          "W": "2",
-          "I": "8",
-          "A": "4",
-          "Ld": "7"
-        }
-      ],
-      "equipment": [
-        "Hand weapon and throwing weapons"
-      ],
-      "notes": [
-        "May purchase magic items up to a total of 75 points"
-      ]
-    },
-    "warplock jezzails": {
-      "stats": [
-        {
-          "Name": "Jezzail Team",
-          "M": "5",
-          "WS": "3",
-          "BS": "3",
-          "S": "3",
-          "T": "3",
-          "W": "2",
-          "I": "3",
-          "A": "2",
-          "Ld": "5"
-        }
-      ],
-      "notes": [
-        "Options:",
-        "0-1 unit per 1,000 points may:",
-        "Have the Reserve Move special rule: 2 points per model"
-      ],
-      "troopType": "Regular infantry",
-      "baseSize": "25 x 50 mm",
-      "equipment": [
-        "Hand weapons, warplock jezzails (see below) and pavise"
-      ],
-      "specialRules": [
-        "Open Order",
-        "Scurry Away",
-        "Warband"
-      ]
-    },
-    "rat ogres": {
-      "stats": [
-        {
-          "Name": "Rat Ogre",
-          "M": "6",
-          "WS": "4",
-          "BS": "1",
-          "S": "5",
-          "T": "4",
-          "W": "3",
-          "I": "4",
-          "A": "3",
-          "Ld": "5"
-        }
-      ],
-      "troopType": "Monstrous infantry",
-      "baseSize": "50mm",
-      "equipment": [
-        "Hand weapons, and mutated hides (counts as heavy armour)"
-      ],
-      "specialRules": [
-        "Close Order",
-        "Armour Bane (2)",
-        "Fear",
-        "Frenzy",
-        "Horde",
-        "Scurry Away",
-        "Warband",
-        "Scurrying Masses",
-        "Warpstone Weapons",
-        "Motley Crew"
-      ]
-    },
-    "giant rats": {
-      "stats": [
-        {
-          "Name": "Giant Rat",
-          "M": "6",
-          "WS": "2",
-          "BS": "0",
-          "S": "3",
-          "T": "3",
-          "W": "1",
-          "I": "4",
-          "A": "1",
-          "Ld": "3"
-        }
-      ],
-      "troopType": "War beasts",
-      "baseSize": "25 x 25 mm",
-      "equipment": [
-        "Claws and teeth (counts as hand weapons)"
-      ],
-      "specialRules": [
-        "Close Order",
-        "Open Order",
-        "Fight in Extra Rank",
-        "Horde",
-        "Scurry Away",
-        "Warband",
-        "Motley Crew"
-      ]
-    },
-    "plague censer bearers": {
-      "stats": [
-        {
-          "Name": "Censer Bearer",
-          "M": "5",
-          "WS": "3",
-          "BS": "3",
-          "S": "3",
-          "T": "4",
-          "W": "1",
-          "I": "3",
-          "A": "2",
-          "Ld": "5"
-        }
-      ],
-      "troopType": "Regular infantry",
-      "baseSize": "25 x 25 mm",
-      "equipment": [
-        "Hand weapons and plague censers (see below)"
-      ],
-      "specialRules": [
-        "Frenzy",
-        "Scurry Away",
-        "Skirmishers",
-        "Stubborn",
-        "Warband",
-        "Hatred (all enemies)",
-        "Detachment",
-        "Plague Disciples"
-      ]
-    },
-    "packmasters master moulders": {
-      "stats": [
-        {
-          "Name": "Packmaster",
-          "M": "6",
-          "WS": "3",
-          "BS": "3",
-          "S": "3",
-          "T": "3",
-          "W": "1",
-          "I": "4",
-          "A": "1",
-          "Ld": "6"
-        },
-        {
-          "Name": "Master Moulder",
-          "M": "6",
-          "WS": "5",
-          "BS": "3",
-          "S": "4",
-          "T": "4",
-          "W": "2",
-          "I": "5",
-          "A": "2",
-          "Ld": "7"
-        }
-      ],
-      "notes": [
-        "Any Packmaster or Master Moulder in the unit must take one of the following:",
-        "Unit Size: (see Dregs, Rat Ogre, & Giant Rat profiles)"
-      ],
-      "specialRules": [
-        "Close Order",
-        "Horde",
-        "Leader of the Pack",
-        "Motley Crew",
-        "Scurry Away",
-        "Warband",
-        "Verminous Valour (Master Moulder Only)"
-      ],
-      "troopType": "Regular infantry",
-      "baseSize": "25 x 25 mm",
-      "equipment": [
-        "Hand weapons and light armour"
-      ]
-    },
-    "screaming bell": {
-      "stats": [
-        {
-          "Name": "Screaming Bell",
-          "M": "5",
-          "WS": "-",
-          "BS": "-",
-          "S": "5",
-          "T": "6",
-          "W": "5",
-          "I": "-",
-          "A": "-",
-          "Ld": "-"
-        },
-        {
-          "Name": "Rat Ogre Crew (x1)",
-          "M": "-",
-          "WS": "3",
-          "BS": "0",
-          "S": "5",
-          "T": "-",
-          "W": "-",
-          "I": "4",
-          "A": "3",
-          "Ld": "5"
-        }
-      ],
-      "notes": [
-        "Dragged Along, Impact Hits (D6+1), Large Target, Magic Resistance (-3), Pushed into Battle, Scurrying Masses, Stubborn, Terror, Tolling the Bell, Warpstone Weapons (Rat Ogre only)",
-        "Character Mount: A Screaming Bell may only be included in your army as a character’s mount. Its points are added to that of its rider. The rider of a Screaming Bell may not use Verminous Valour. This unit may only use the Pushed into Battle special rule to join a unit of Clanrats or Stormvermin."
-      ],
-      "troopType": "Heavy chariot",
-      "baseSize": "60 x 100 mm min, 75x100 mm max",
-      "armourValue": "4+",
-      "equipment": [],
-      "specialRules": [
-        "Armour Bane (2, Rat Ogre only)",
-        "Blessings of the Horned Rat"
-      ]
-    },
-    "plague furnace": {
-      "stats": [
-        {
-          "Name": "Plague Furnace",
-          "M": "5",
-          "WS": "-",
-          "BS": "-",
-          "S": "5",
-          "T": "6",
-          "W": "5",
-          "I": "-",
-          "A": "-",
-          "Ld": "-"
-        },
-        {
-          "Name": "Plague Monk Crew (x3)",
-          "M": "-",
-          "WS": "3",
-          "BS": "0",
-          "S": "3",
-          "T": "-",
-          "W": "-",
-          "I": "3",
-          "A": "2",
-          "Ld": "5"
-        }
-      ],
-      "specialRules": [
-        "Dragged Along",
-        "Terror",
-        "Frenzy",
-        "Great Censer",
-        "Impact Hits (D6+1)"
-      ],
-      "notes": [
-        "Large Target, Magic Resistance (-1), Poisoned Attacks, Pushed into Battle, Scurrying Masses, Stomp Attacks (D3+1)",
-        "Notes: Any model whose base lies underneath the template risks being hit. All models that have been hit must take a Toughness test. If this test is failed, the target model suffers a wound. No armour save is permitted against wounds caused by this weapon (Ward and Regeneration saves can be attempted as normal).",
-        "Character Mount: A Plague Furnace may only be included in your army as a character’s mount. Its points are added to that of its rider. The rider of a Plague Furnace may not use Verminous Valour. This model may only use the Pushed Into Battle special rule to join a unit of Plague Monks."
-      ],
-      "troopType": "Heavy chariot",
-      "baseSize": "60 x 100 mm",
-      "armourValue": "4+",
-      "equipment": []
-    },
-    "warlock engineer": {
-      "notes": [
-        "Notes: One use only. This weapon shoots like a stone thrower, using the Bombardment special rule, a 5\" blast template and the Skaven Misfire table. The Multiple Wounds (D3+1) special rule applies only to a single model whose base lies underneath the central hole of the blast template."
-      ]
-    },
-    "clanrats": {
-      "notes": [
-        "0-1 unit per 1,000 points may:"
-      ]
-    },
-    "weapon team": {
-      "notes": [
-        "Notes: This weapon shoots like an organ gun, using the ‘Multi-Barrelled’ special rule and the Skaven Misfire table.",
-        "Notes: This weapon shoots like a fire thrower, using the ‘Column of Fire’ special rule and the Skaven Misfire table. Any unit that suffers one or more unsaved wounds from this weapon must make a Panic test as if it had taken heavy casualties.",
-        "Skaven Dregs"
-      ]
-    },
-    "poisoned wind globadiers": {
-      "notes": [
-        "Notes: Ignores the penalty for shooting at long range. If the roll To Hit is successful, a Poisoned Wind globe causes D3 hits to the target enemy unit, rather than the usual one. However, if a natural 1 is rolled when making a roll To Hit with this weapon, immediately roll another D6. On a roll of 1, D3 hits are caused on the shooting unit. Life is Cheap Providing the Globadiers are not in base contact with an enemy model, they may target any enemy unit within range and line of sight, even if that unit is engaged in close combat. Resolve all rolls to hit as normal. Then, using all failed to hit rolls, roll to wound on a friendly unit engaged in the combat chosen by your opponent."
-      ]
-    },
-    "plague monks": {
-      "notes": [
-        "A Plague Deacon may purchase magic items up to a total of 25 points • 0-1 unit per 1,000 points may purchase a magic standard worth up to 50 points • 0-1 unit per 1,000 points may select a single Plague Censer Bearer unit as a detachment."
-      ]
-    },
     "hell pit abomination": {
       "equipment": [
         "Warpstone claws (see below) and mutated hide (counts as heavy armour)"
-      ],
-      "notes": [
-        "Too Horrible to Die, Unbreakable, Impact Hits (D3+1), Warpstone Spikes"
       ]
     }
   },
+  "notes": [],
   "magicItemText": {
     "the-fellblade": {
       "body": "| R | S | AP | Special Rules The Fellblade | Combat | S+3 | N/A | Magical Attacks, Multiple Wounds (D3), | | | | Poisoned Attacks\n\nNotes: No Armour, Ward or Regeneration saves are permitted against wounds caused by this weapon. However, during the Command sub-phase of their turn, the wielder of the Fellblade must roll a D6. On a roll of 3+ there is no effect. On a roll of 1-2 the wielder suffers a single wound with no Armour Save allowed. Ward and Regeneration saves may be taken as normal."
@@ -1364,7 +1331,7 @@
       "body": "R S | AP | Special Rules Blade of Nurglitch Combat S+1 | - | Magical Attacks\n\nNotes: Any enemy model that suffers one or more unsaved wounds from the Blade of Nurglitch must immediately make a Toughness test. If this test is failed, they suffer a -1 modifier to their Toughness characteristic (to a minimum of 1) for the remainder of the game."
     },
     "death-globe": {
-      "body": "R S AP Special Rules\n\nDeath Globe 9\" 2 N/A Magical Attacks, Move & Shoot, Quick Shot, Poisoned Wind\n\nNotes: Single use. A model armed with a Death Globe may target a specific model within its target unit, such as a champion or a character. Make a roll To Hit as normal. If successful, centre a small (3\") blast template over the target model. Any model whose base lies underneath the template risks being hit.\n\nMagic Armour"
+      "body": "R S AP Special Rules\n\nDeath Globe 9\" 2 N/A Magical Attacks, Move & Shoot, Quick Shot, Poisoned Wind\n\nNotes: Single use. A model armed with a Death Globe may target a specific model within its target unit, such as a champion or a character. Make a roll To Hit as normal. If successful, centre a small (3\") blast template over the target model. Any model whose base lies underneath the template risks being hit."
     },
     "warpstone-armour": {
       "body": "The Warpstone Armour is a suit of heavy armour which may be purchased and worn even if the character does not have the option to be equipped with armour. A Wizard may wear this armour without penalty."
@@ -1391,11 +1358,9 @@
       "body": "A Wizard may purchase up to three Warpstone Tokens, each of which is single use. Before making a Casting roll, a Wizard may choose to consume a single Warpstone Token. For each Token consumed, they may roll an additional D3 and add its result to their Casting roll. After the casting roll, roll a D6. On a roll of one the Wizard loses a single Wound."
     },
     "a-unit-carrying-the-banner-of-verminous-scurrying-gains-the-swiftstride-special-rule-plague-banner": {
-      "body": "Unit of Plague Monks Only. Single use. The Plague Banner may be activated at the start of any Combat Phase. For the remainder of the phase all Plague Monk models in the unit may re-roll failed To Hit rolls and failed To Wound rolls.\n\nEnchanted Items"
+      "body": "Unit of Plague Monks Only. Single use. The Plague Banner may be activated at the start of any Combat Phase. For the remainder of the phase all Plague Monk models in the unit may re-roll failed To Hit rolls and failed To Wound rolls."
     }
   },
-  "lores": {},
-  "notes": [],
   "composition": {
     "sourceRules": {
       "Characters": [
@@ -1407,6 +1372,7 @@
       "Special": [
         "Warplock Jezzails, • Poisoned Wind Globadiers 0-1 per 1,000 points"
       ]
-    }
+    },
+    "units": {}
   }
 }

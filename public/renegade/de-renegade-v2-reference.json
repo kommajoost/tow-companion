@@ -15,6 +15,8 @@
     "changed": "Differs from the official Legacy PDF (blue in the source)",
     "new": "Changed since the previous Renegade draft (magenta in the source)",
     "todo": "Incomplete or in development (yellow in the source)",
+    "struck": "Segment is struck through in the source: DELETED text. Kept in `segments` for the audit trail; every derived field (text, items, statlineRows, pointsMentions) is built without it",
+    "struckText": "The struck-through text this block dropped, verbatim",
     "headingPath": "Active Google Docs heading hierarchy for this block, from broadest to most specific",
     "unitContext": "Semantic army-list entry propagated from a statline table until the next statline",
     "unitId": "Intentionally null in the lossless reference; catalogue mapping belongs to the compiler manifest",
@@ -44,8 +46,9 @@
     "changedBlocks": 105,
     "armyListChangedBlocks": 98,
     "changedSegments": 3,
-    "newSegments": 151,
+    "newSegments": 162,
     "todoSegments": 8,
+    "struckBlocks": 6,
     "statlineTables": 29,
     "weaponProfileTables": 12
   },
@@ -266,6 +269,18 @@
           "change": null,
           "bold": false,
           "italic": false
+        },
+        {
+          "text": "\n",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "\n",
+          "change": null,
+          "bold": false,
+          "italic": false
         }
       ],
       "changeKinds": [],
@@ -288,7 +303,31 @@
       "text": "Renegade Army List DRAFT V1.5.2.2",
       "segments": [
         {
-          "text": "Renegade Army List \nDRAFT V1.5.2.2",
+          "text": "Renegade Army List ",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "\n",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "DRAFT V1.5.2.2",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "\n",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "\n",
           "change": null,
           "bold": false,
           "italic": false
@@ -428,7 +467,31 @@
       "text": "The rules contained within this document allow players the opportunity to play Warhammer: The Old World using rules that we hope better reflect the legacy, history and feel of the Dark Elves faction as they have appeared in previous editions. These rules are intended to be fair and fun to use wherever Warhammer: The Old World is played and will be maintained in concert with the playing community for as long as it is necessary to do so. These rules are unofficial and in no way endorsed by the authors or publisher of Warhammer: The Old World.",
       "segments": [
         {
-          "text": "The rules contained within this document allow players the opportunity to play Warhammer: The Old World using rules that we hope better reflect the legacy, history and feel of the Dark Elves faction as they have appeared in previous editions. \nThese rules are intended to be fair and fun to use wherever Warhammer: The Old World is played and will be maintained in concert with the playing community for as long as it is necessary to do so.\n\n",
+          "text": "The rules contained within this document allow players the opportunity to play Warhammer: The Old World using rules that we hope better reflect the legacy, history and feel of the Dark Elves faction as they have appeared in previous editions. ",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "\n",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "These rules are intended to be fair and fun to use wherever Warhammer: The Old World is played and will be maintained in concert with the playing community for as long as it is necessary to do so.",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "\n",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "\n",
           "change": null,
           "bold": false,
           "italic": false
@@ -437,6 +500,12 @@
           "text": "These rules are unofficial and in no way endorsed by the authors or publisher of Warhammer: The Old World. ",
           "change": null,
           "bold": true,
+          "italic": false
+        },
+        {
+          "text": " ",
+          "change": null,
+          "bold": false,
           "italic": false
         }
       ],
@@ -468,13 +537,19 @@
       "text": "How to Give Feedback: Please feel free to join the conversation in the comments on any of my posts on Facebook, Reddit or YouTube. Or if you prefer you can send it to me directly by using this form:",
       "segments": [
         {
-          "text": "How to Give Feedback: \n",
+          "text": "How to Give Feedback: ",
           "change": null,
           "bold": true,
           "italic": false
         },
         {
-          "text": "Please feel free to join the conversation in the comments on any of my posts on Facebook, Reddit or YouTube. Or if you prefer you can send it to me directly by using this form:",
+          "text": "\n",
+          "change": null,
+          "bold": true,
+          "italic": false
+        },
+        {
+          "text": "Please feel free to join the conversation in the comments on any of my posts on Facebook, Reddit or YouTube. Or if you prefer you can send it to me directly by using this form: ",
           "change": null,
           "bold": false,
           "italic": false
@@ -546,6 +621,12 @@
           "change": null,
           "bold": true,
           "italic": false
+        },
+        {
+          "text": "\n",
+          "change": null,
+          "bold": false,
+          "italic": false
         }
       ],
       "changeKinds": [],
@@ -582,7 +663,19 @@
       "text": "Where this document differs from the official Legacy PDFs entries will be highlighted in [blue], while any new changes from previous Renegade Legacy Pack entries will be highlighted in [magenta]. This way players can easily spot where this document is different from versions past, as well as any official publications. Sections highlighted in [Yellow] are not yet completed or in development.",
       "segments": [
         {
-          "text": "Where this document differs from the official Legacy PDFs entries will be highlighted in [blue], while any new changes from previous Renegade Legacy Pack entries will be highlighted in ",
+          "text": "Where this document differs from the official Legacy PDFs entries will be highlighted in ",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "[blue]",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": ", while any new changes from previous Renegade Legacy Pack entries will be highlighted in ",
           "change": null,
           "bold": false,
           "italic": false
@@ -606,7 +699,7 @@
           "italic": false
         },
         {
-          "text": " are not yet completed or in development.",
+          "text": " are not yet completed or in development. ",
           "change": null,
           "bold": false,
           "italic": false
@@ -649,7 +742,7 @@
       "text": "Todos:",
       "segments": [
         {
-          "text": "Todos:",
+          "text": "Todos: ",
           "change": null,
           "bold": false,
           "italic": false
@@ -692,7 +785,7 @@
           "text": "Allies (copy the logic of the rules for Grand Army Cathay)",
           "segments": [
             {
-              "text": "Allies (copy the logic of the rules for Grand Army Cathay)",
+              "text": "Allies (copy the logic of the rules for Grand Army Cathay) ",
               "change": null,
               "bold": false,
               "italic": false
@@ -705,7 +798,19 @@
           "text": "Collecting guide (using mix of GW and 3rd party options.)",
           "segments": [
             {
-              "text": "Collecting guide (using mix of GW and 3rd party options.)",
+              "text": "Collecting guide (using mix of GW and 3",
+              "change": null,
+              "bold": false,
+              "italic": false
+            },
+            {
+              "text": "rd",
+              "change": null,
+              "bold": false,
+              "italic": false
+            },
+            {
+              "text": " party options.)",
               "change": null,
               "bold": false,
               "italic": false
@@ -775,9 +880,33 @@
       "text": "Link to all other current Renegade Pack Drafts Change Log:",
       "segments": [
         {
-          "text": "Link to all other current Renegade Pack Drafts\n\nChange Log: ",
+          "text": "Link to all other current Renegade Pack Drafts",
           "change": null,
           "bold": true,
+          "italic": false
+        },
+        {
+          "text": "\n",
+          "change": null,
+          "bold": true,
+          "italic": false
+        },
+        {
+          "text": "\n",
+          "change": null,
+          "bold": true,
+          "italic": false
+        },
+        {
+          "text": "Change Log: ",
+          "change": null,
+          "bold": true,
+          "italic": false
+        },
+        {
+          "text": "\n",
+          "change": null,
+          "bold": false,
           "italic": false
         }
       ],
@@ -815,7 +944,7 @@
       "text": "As community feedback comes in I will update any changes I’ve made below, along with commentary for my reasoning. So far the process has been incredibly rewarding and the insights that I’ve gotten will make this a much stronger document than anything I could have done myself. So thank you very much for your input, and keep the ideas flowing!",
       "segments": [
         {
-          "text": "As community feedback comes in I will update any changes I’ve made below, along with commentary for my reasoning. So far the process has been incredibly rewarding and the insights that I’ve gotten will make this a much stronger document than anything I could have done myself. So thank you very much for your input, and keep the ideas flowing!",
+          "text": "As community feedback comes in I will update any changes I’ve made below, along with commentary for my reasoning. So far the process has been incredibly rewarding and the insights that I’ve gotten will make this a much stronger document than anything I could have done myself. So thank you very much for your input, and keep the ideas flowing! ",
           "change": null,
           "bold": false,
           "italic": false
@@ -855,7 +984,7 @@
       "text": "Each time I make a significant update, I will also change the last number of the version. IE: Renegade Dark Elves 1.5.2.2.",
       "segments": [
         {
-          "text": "Each time I make a significant update, I will also change the last number of the version. IE: Renegade Dark Elves 1.5.2.2.",
+          "text": "Each time I make a significant update, I will also change the last number of the version. IE: Renegade Dark Elves 1.5.2.2. ",
           "change": null,
           "bold": false,
           "italic": false
@@ -895,7 +1024,19 @@
       "text": "When will these be finalized? My goal is to have things finalized as soon as possible. Once I feel like we’ve ironed out the bugs and areas of contention I will begin posting the final docs on www.squarebased.com.",
       "segments": [
         {
-          "text": "When will these be finalized? My goal is to have things finalized as soon as possible. Once I feel like we’ve ironed out the bugs and areas of contention I will begin posting the final docs on www.squarebased.com.",
+          "text": "When will these be finalized? My goal is to have things finalized as soon as possible. Once I feel like we’ve ironed out the bugs and areas of contention I will begin posting the final docs on ",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "www.squarebased.com",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": ". ",
           "change": null,
           "bold": false,
           "italic": false
@@ -935,7 +1076,7 @@
       "text": "Hekarti’s Blessing - Same as High Elves (re-roll to cast 1/turn instead of 1/game.)",
       "segments": [
         {
-          "text": "Hekarti’s Blessing - Same as High Elves (re-roll to cast 1/turn instead of 1/game.)",
+          "text": "Hekarti’s Blessing - Same as High Elves (re-roll to cast 1/turn instead of 1/game.) ",
           "change": null,
           "bold": false,
           "italic": false
@@ -978,7 +1119,7 @@
           "text": "Ultimately the dispel ability does not fit the bill. Given a number of other rules are simply the same in both factions (Sea Dragon Cloak /Lion Cloak, Elven Reflexes, Martial Prowess), it stands to reason that Hekarti and Lileath should give the same blessing too. This feels like the easiest, most defensible, and obvious change and so I humbly submit it as the solution.",
           "segments": [
             {
-              "text": "Ultimately the dispel ability does not fit the bill. Given a number of other rules are simply the same in both factions (Sea Dragon Cloak /Lion Cloak, Elven Reflexes, Martial Prowess), it stands to reason that Hekarti and Lileath should give the same blessing too. This feels like the easiest, most defensible, and obvious change and so I humbly submit it as the solution.",
+              "text": "Ultimately the dispel ability does not fit the bill. Given a number of other rules are simply the same in both factions (Sea Dragon Cloak /Lion Cloak, Elven Reflexes, Martial Prowess), it stands to reason that Hekarti and Lileath should give the same blessing too. This feels like the easiest, most defensible, and obvious change and so I humbly submit it as the solution. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -1022,7 +1163,7 @@
       "text": "Murderous - Actually did change! Had the wrong colour.",
       "segments": [
         {
-          "text": "Murderous - Actually did change! Had the wrong colour.",
+          "text": "Murderous - Actually did change! Had the wrong colour. ",
           "change": null,
           "bold": false,
           "italic": false
@@ -1065,7 +1206,7 @@
           "text": "When I redrafted these rules I kept the original wording for Murderous (which works in all rounds of combat) and added the original Renegade change to the restriction - allowing it to be used on all mundane weapons. Sorry for gas-lighting you.",
           "segments": [
             {
-              "text": "When I redrafted these rules I kept the original wording for Murderous (which works in all rounds of combat) and added the original Renegade change to the restriction - allowing it to be used on all mundane weapons. Sorry for gas-lighting you.",
+              "text": "When I redrafted these rules I kept the original wording for Murderous (which works in all rounds of combat) and added the original Renegade change to the restriction - allowing it to be used on all mundane weapons. Sorry for gas-lighting you. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -1152,7 +1293,7 @@
           "text": "Dragged along being a core rulebook rule always seemed wrong to modify. It’s also a terrible rule. I’ve added back the original rule for the Cauldron and Bloodwrack Shrine from 8th edition to both unit cards. As the Cauldron can only be ridden by a hag and is Loner, it can only ever join a unit of Witches. But if you want to toss a Bloodwrack shrine into another unit, go nuts I guess.",
           "segments": [
             {
-              "text": "Dragged along being a core rulebook rule always seemed wrong to modify. It’s also a terrible rule. I’ve added back the original rule for the Cauldron and Bloodwrack Shrine from 8th edition to both unit cards. As the Cauldron can only be ridden by a hag and is Loner, it can only ever join a unit of Witches. But if you want to toss a Bloodwrack shrine into another unit, go nuts I guess.",
+              "text": "Dragged along being a core rulebook rule always seemed wrong to modify. It’s also a terrible rule. I’ve added back the original rule for the Cauldron and Bloodwrack Shrine from 8th edition to both unit cards. As the Cauldron can only be ridden by a hag and is Loner, it can only ever join a unit of Witches. But if you want to toss a Bloodwrack shrine into another unit, go nuts I guess. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -1239,7 +1380,7 @@
           "text": "Strikes First is redundant on the Whip of Agony as Beastmasters already have it. After researching previous effects for the item, decided the simplest thing to do was to reduce its cost to 20 pts. (Granted the magic whip no longer does either of the things a mundane whip does)",
           "segments": [
             {
-              "text": "Strikes First is redundant on the Whip of Agony as Beastmasters already have it. After researching previous effects for the item, decided the simplest thing to do was to reduce its cost to 20 pts. (Granted the magic whip no longer does either of the things a mundane whip does)",
+              "text": "Strikes First is redundant on the Whip of Agony as Beastmasters already have it. After researching previous effects for the item, decided the simplest thing to do was to reduce its cost to 20 pts. (Granted the magic whip no longer does either of the things a mundane whip does) ",
               "change": null,
               "bold": false,
               "italic": false
@@ -1283,7 +1424,7 @@
       "text": "Tome of Furion - Restrict to one per model.",
       "segments": [
         {
-          "text": "Tome of Furion - Restrict to one per model.",
+          "text": "Tome of Furion - Restrict to one per model. ",
           "change": null,
           "bold": false,
           "italic": false
@@ -1326,7 +1467,7 @@
           "text": "Making this common means it needs to be limited to one instance per model.",
           "segments": [
             {
-              "text": "Making this common means it needs to be limited to one instance per model.",
+              "text": "Making this common means it needs to be limited to one instance per model. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -1370,7 +1511,7 @@
       "text": "Shield of Ghrond - return to original cost.",
       "segments": [
         {
-          "text": "Shield of Ghrond - return to original cost.",
+          "text": "Shield of Ghrond - return to original cost. ",
           "change": null,
           "bold": false,
           "italic": false
@@ -1413,7 +1554,7 @@
           "text": "This was an impulsive change that did not factor its effect on a common combo used with a dragon mount. Some suggested making it cav/infantry only, however, I feel that this would too strongly weaken an important option for the army.",
           "segments": [
             {
-              "text": "This was an impulsive change that did not factor its effect on a common combo used with a dragon mount. Some suggested making it cav/infantry only, however, I feel that this would too strongly weaken an important option for the army.",
+              "text": "This was an impulsive change that did not factor its effect on a common combo used with a dragon mount. Some suggested making it cav/infantry only, however, I feel that this would too strongly weaken an important option for the army. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -1457,7 +1598,7 @@
       "text": "Cold Blooded Banner - improve effect.",
       "segments": [
         {
-          "text": "Cold Blooded Banner - improve effect.",
+          "text": "Cold Blooded Banner - improve effect. ",
           "change": null,
           "bold": false,
           "italic": false
@@ -1500,7 +1641,7 @@
           "text": "Change wording so that it is single use and provides a Leadership re-roll. This essentially gives a single instance of a veteran re-roll, which helps the player mitigate stupidity on Cold One Knights, rather than eliminate it if they were to have Veteran full time. A better balance I think that gives you an option rather than fully eliminating a classic downside to the unit. It also has some utility in another situation if Stupidity is not a concern.",
           "segments": [
             {
-              "text": "Change wording so that it is single use and provides a Leadership re-roll. This essentially gives a single instance of a veteran re-roll, which helps the player mitigate stupidity on Cold One Knights, rather than eliminate it if they were to have Veteran full time. A better balance I think that gives you an option rather than fully eliminating a classic downside to the unit. It also has some utility in another situation if Stupidity is not a concern.",
+              "text": "Change wording so that it is single use and provides a Leadership re-roll. This essentially gives a single instance of a veteran re-roll, which helps the player mitigate stupidity on Cold One Knights, rather than eliminate it if they were to have Veteran full time. A better balance I think that gives you an option rather than fully eliminating a classic downside to the unit. It also has some utility in another situation if Stupidity is not a concern. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -1544,7 +1685,7 @@
       "text": "Focus Familiar - Clarify dispel attempts are measured from the Familiar.",
       "segments": [
         {
-          "text": "Focus Familiar - Clarify dispel attempts are measured from the Familiar.",
+          "text": "Focus Familiar - Clarify dispel attempts are measured from the Familiar. ",
           "change": null,
           "bold": false,
           "italic": false
@@ -1587,7 +1728,7 @@
           "text": "The ability to add 12” of range and 360 LoS to any spell is a strong one. Ruling it this way feels stylistically similar to how the game has moved with regards to casting (Vortexes dispelled from the vortex rather than caster).",
           "segments": [
             {
-              "text": "The ability to add 12” of range and 360 LoS to any spell is a strong one. Ruling it this way feels stylistically similar to how the game has moved with regards to casting (Vortexes dispelled from the vortex rather than caster).",
+              "text": "The ability to add 12” of range and 360 LoS to any spell is a strong one. Ruling it this way feels stylistically similar to how the game has moved with regards to casting (Vortexes dispelled from the vortex rather than caster). ",
               "change": null,
               "bold": false,
               "italic": false
@@ -1631,7 +1772,7 @@
       "text": "Cursing Word - change to -D3 / lasts one turn.",
       "segments": [
         {
-          "text": "Cursing Word - change to -D3 / lasts one turn.",
+          "text": "Cursing Word - change to -D3 / lasts one turn. ",
           "change": null,
           "bold": false,
           "italic": false
@@ -1674,7 +1815,13 @@
           "text": "I think this is a reasonable modification between the shadow nerf of the April Legacy PDF update in 2024, and returning it to full power. Also in-line with other buff/nerf stat abilities we see elsewhere in the game. I was probably a bit impulsive putting it back to full power, so hopefully this makes the spell useful without eliminating it from the game/making it an auto-include. .",
           "segments": [
             {
-              "text": "I think this is a reasonable modification between the shadow nerf of the April Legacy PDF update in 2024, and returning it to full power. Also in-line with other buff/nerf stat abilities we see elsewhere in the game. I was probably a bit impulsive putting it back to full power, so hopefully this makes the spell useful without eliminating it from the game/making it an auto-include. .",
+              "text": "I think this is a reasonable modification between the shadow nerf of the April Legacy PDF update in 2024, and returning it to full power. Also in-line with other buff/nerf stat abilities we see elsewhere in the game. I was probably a bit impulsive putting it back to full power, so hopefully this makes the spell useful without eliminating it from the game/making it an auto-include. . ",
+              "change": null,
+              "bold": false,
+              "italic": false
+            },
+            {
+              "text": "\n",
               "change": null,
               "bold": false,
               "italic": false
@@ -1718,7 +1865,7 @@
       "text": "Assassin - Explicitly allowed to join units with “Loner” and US 5.",
       "segments": [
         {
-          "text": "Assassin - Explicitly allowed to join units with “Loner” and US 5.",
+          "text": "Assassin - Explicitly allowed to join units with “Loner” and US 5. ",
           "change": null,
           "bold": false,
           "italic": false
@@ -1758,7 +1905,7 @@
       "text": "Hydra and Kharibdyss - points increase: Hydra 165, Kharibdyss 145.",
       "segments": [
         {
-          "text": "Hydra and Kharibdyss - points increase: Hydra 165, Kharibdyss 145.",
+          "text": "Hydra and Kharibdyss - points increase: Hydra 165, Kharibdyss 145. ",
           "change": null,
           "bold": false,
           "italic": false
@@ -1814,7 +1961,7 @@
           "text": "Yes they’re still cheap compared to many T6 Behemoths. However these goofballs are T5 Behemoths. The only other example of a T5 Behemoth that I know of is the Mangler Squig who has significantly higher damage output potential and is at 95 points. Given these fellas are both less squishy and definitely more reliable, I feel like a midpoint between the Mangler and most T6 Behemoth’s seems reasonable.",
           "segments": [
             {
-              "text": "Yes they’re still cheap compared to many T6 Behemoths. However these goofballs are T5 Behemoths. The only other example of a T5 Behemoth that I know of is the Mangler Squig who has significantly higher damage output potential and is at 95 points. Given these fellas are both less squishy and definitely more reliable, I feel like a midpoint between the Mangler and most T6 Behemoth’s seems reasonable.",
+              "text": "Yes they’re still cheap compared to many T6 Behemoths. However these goofballs are T5 Behemoths. The only other example of a T5 Behemoth that I know of is the Mangler Squig who has significantly higher damage output potential and is at 95 points. Given these fellas are both less squishy and definitely more reliable, I feel like a midpoint between the Mangler and most T6 Behemoth’s seems reasonable. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -1834,7 +1981,7 @@
           "text": "Yes the AP on the serrated maw has been removed from Renegades 1.0. I did this in 1.5 actually as I didn’t realize serrated maw is common to a number of creatures and always works like that.",
           "segments": [
             {
-              "text": "Yes the AP on the serrated maw has been removed from Renegades 1.0. I did this in 1.5 actually as I didn’t realize serrated maw is common to a number of creatures and always works like that.",
+              "text": "Yes the AP on the serrated maw has been removed from Renegades 1.0. I did this in 1.5 actually as I didn’t realize serrated maw is common to a number of creatures and always works like that. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -1847,7 +1994,7 @@
           "text": "As noted by many, the hydra is the mythological source material for the Regeneration rule, which famously was countered using fire. While I remain broadly annoyed that “Flammable” isn’t built into the regeneration rule in this edition, I think it’s fitting to give this to the Hydra as a niche way to counter one of its saves. I also think given that it’s the O.G regenerator, I am not too fussed that it recovers wounds on a 4+ (yes, better than Orion’s similar ability.)",
           "segments": [
             {
-              "text": "As noted by many, the hydra is the mythological source material for the Regeneration rule, which famously was countered using fire. While I remain broadly annoyed that “Flammable” isn’t built into the regeneration rule in this edition, I think it’s fitting to give this to the Hydra as a niche way to counter one of its saves. I also think given that it’s the O.G regenerator, I am not too fussed that it recovers wounds on a 4+ (yes, better than Orion’s similar ability.)",
+              "text": "As noted by many, the hydra is the mythological source material for the Regeneration rule, which famously was countered using fire. While I remain broadly annoyed that “Flammable” isn’t built into the regeneration rule in this edition, I think it’s fitting to give this to the Hydra as a niche way to counter one of its saves. I also think given that it’s the O.G regenerator, I am not too fussed that it recovers wounds on a 4+ (yes, better than Orion’s similar ability.) ",
               "change": null,
               "bold": false,
               "italic": false
@@ -1898,7 +2045,7 @@
       "text": "Cauldron of Blood - Rework.",
       "segments": [
         {
-          "text": "Cauldron of Blood - Rework.",
+          "text": "Cauldron of Blood - Rework. ",
           "change": null,
           "bold": false,
           "italic": false
@@ -1941,7 +2088,7 @@
           "text": "In refining the Cauldron of Blood I went back to the drawing board a bit. Based on how the Cauldron functioned in 7th edition (and using the War Altar of Sigmar / Priest of Sigmar as a proxy for it in tOW), I’ve given it another kick at the can.",
           "segments": [
             {
-              "text": "In refining the Cauldron of Blood I went back to the drawing board a bit. Based on how the Cauldron functioned in 7th edition (and using the War Altar of Sigmar / Priest of Sigmar as a proxy for it in tOW), I’ve given it another kick at the can.",
+              "text": "In refining the Cauldron of Blood I went back to the drawing board a bit. Based on how the Cauldron functioned in 7th edition (and using the War Altar of Sigmar / Priest of Sigmar as a proxy for it in tOW), I’ve given it another kick at the can. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -1967,7 +2114,7 @@
           "text": "Increased its movement to 5",
           "segments": [
             {
-              "text": "Increased its movement to 5",
+              "text": "Increased its movement to 5 ",
               "change": null,
               "bold": false,
               "italic": false
@@ -1980,7 +2127,7 @@
           "text": "Rather than a bound spell (or automatic ability as it was in 7th and 8th) the effect is triggered on an unmodified LD test.",
           "segments": [
             {
-              "text": "Rather than a bound spell (or automatic ability as it was in 7th and 8th) the effect is triggered on an unmodified LD test.",
+              "text": "Rather than a bound spell (or automatic ability as it was in 7th and 8th) the effect is triggered on an unmodified LD test. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -1993,7 +2140,7 @@
           "text": "Reduced the Cauldron’s LD to 8 (was inexplicably 9).",
           "segments": [
             {
-              "text": "Reduced the Cauldron’s LD to 8 (was inexplicably 9).",
+              "text": "Reduced the Cauldron’s LD to 8 (was inexplicably 9). ",
               "change": null,
               "bold": false,
               "italic": false
@@ -2006,7 +2153,7 @@
           "text": "Blessings affect the Cauldron and a single unit within command range. Sisters of Slaughter cannot be selected, however, Executioners and Assassins may be (these are the other definitely Khaine worshippers in the book).",
           "segments": [
             {
-              "text": "Blessings affect the Cauldron and a single unit within command range. Sisters of Slaughter cannot be selected, however, Executioners and Assassins may be (these are the other definitely Khaine worshippers in the book).",
+              "text": "Blessings affect the Cauldron and a single unit within command range. Sisters of Slaughter cannot be selected, however, Executioners and Assassins may be (these are the other definitely Khaine worshippers in the book). ",
               "change": null,
               "bold": false,
               "italic": false
@@ -2019,7 +2166,7 @@
           "text": "Blessings cannot be combined if you have more than one Cauldron.",
           "segments": [
             {
-              "text": "Blessings cannot be combined if you have more than one Cauldron.",
+              "text": "Blessings cannot be combined if you have more than one Cauldron. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -2045,7 +2192,7 @@
           "text": "Separated the special rules for the crew so that they don’t accidentally apply to other elements of the model.",
           "segments": [
             {
-              "text": "Separated the special rules for the crew so that they don’t accidentally apply to other elements of the model.",
+              "text": "Separated the special rules for the crew so that they don’t accidentally apply to other elements of the model. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -2089,7 +2236,7 @@
       "text": "Black Guard of Naggarond - Exchange Murderous for Hatred (All Enemies)",
       "segments": [
         {
-          "text": "Black Guard of Naggarond - Exchange Murderous for Hatred (All Enemies)",
+          "text": "Black Guard of Naggarond - Exchange Murderous for Hatred (All Enemies) ",
           "change": null,
           "bold": false,
           "italic": false
@@ -2132,7 +2279,7 @@
           "text": "This restores their traditional special rule, while also maintaining consistency with Murderous being a rule for “Khainite” units.",
           "segments": [
             {
-              "text": "This restores their traditional special rule, while also maintaining consistency with Murderous being a rule for “Khainite” units.",
+              "text": "This restores their traditional special rule, while also maintaining consistency with Murderous being a rule for “Khainite” units. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -2145,7 +2292,7 @@
           "text": "Removed the 1.5 version of the halberd. The Phoenix Guard did not have their halberd upgraded to the new rules, and in the spirit of matching the Core army design philosophy, I’ve pulled this back.",
           "segments": [
             {
-              "text": "Removed the 1.5 version of the halberd. The Phoenix Guard did not have their halberd upgraded to the new rules, and in the spirit of matching the Core army design philosophy, I’ve pulled this back.",
+              "text": "Removed the 1.5 version of the halberd. The Phoenix Guard did not have their halberd upgraded to the new rules, and in the spirit of matching the Core army design philosophy, I’ve pulled this back. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -2232,7 +2379,7 @@
           "text": "This puts them on an even points cost with Swordmasters. YMMV as to whether this is fair or not.",
           "segments": [
             {
-              "text": "This puts them on an even points cost with Swordmasters. YMMV as to whether this is fair or not.",
+              "text": "This puts them on an even points cost with Swordmasters. YMMV as to whether this is fair or not. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -2245,7 +2392,7 @@
           "text": "Considered giving them Loner so that they can only be joined by the Hag. This is similar but more restrictive than the “Warriors of the White Tower” restriction from Swordmasters. Idea was to ensure theme but this felt like too much of a nerf despite being flavourful … the tradeoff for the reward of getting some buffs from the Cauldron seemed too much.",
           "segments": [
             {
-              "text": "Considered giving them Loner so that they can only be joined by the Hag. This is similar but more restrictive than the “Warriors of the White Tower” restriction from Swordmasters. Idea was to ensure theme but this felt like too much of a nerf despite being flavourful … the tradeoff for the reward of getting some buffs from the Cauldron seemed too much.",
+              "text": "Considered giving them Loner so that they can only be joined by the Hag. This is similar but more restrictive than the “Warriors of the White Tower” restriction from Swordmasters. Idea was to ensure theme but this felt like too much of a nerf despite being flavourful … the tradeoff for the reward of getting some buffs from the Cauldron seemed too much. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -2289,7 +2436,7 @@
       "text": "Shades - Chilled out a bit.",
       "segments": [
         {
-          "text": "Shades - Chilled out a bit.",
+          "text": "Shades - Chilled out a bit. ",
           "change": null,
           "bold": false,
           "italic": false
@@ -2332,7 +2479,7 @@
           "text": "Removed Veteran from special rules, and added back as an option for 1 pt / model.",
           "segments": [
             {
-              "text": "Removed Veteran from special rules, and added back as an option for 1 pt / model.",
+              "text": "Removed Veteran from special rules, and added back as an option for 1 pt / model. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -2376,7 +2523,7 @@
       "text": "Witch Elves - Removed Elven Reflexes (redundant with Strike First)",
       "segments": [
         {
-          "text": "Witch Elves - Removed Elven Reflexes (redundant with Strike First)",
+          "text": "Witch Elves - Removed Elven Reflexes (redundant with Strike First) ",
           "change": null,
           "bold": false,
           "italic": false
@@ -2459,7 +2606,7 @@
           "text": "Added the special rule from Dwarf Deathseekers to give them the baby version of swiftstride . Overall seem like a more interesting unit than they were, but probably still not setting the world on fire.",
           "segments": [
             {
-              "text": "Added the special rule from Dwarf Deathseekers to give them the baby version of swiftstride . Overall seem like a more interesting unit than they were, but probably still not setting the world on fire.",
+              "text": "Added the special rule from Dwarf Deathseekers to give them the baby version of swiftstride . Overall seem like a more interesting unit than they were, but probably still not setting the world on fire. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -2503,7 +2650,7 @@
       "text": "Cold One Knights - Removed Veteran Option",
       "segments": [
         {
-          "text": "Cold One Knights - Removed Veteran Option",
+          "text": "Cold One Knights - Removed Veteran Option ",
           "change": null,
           "bold": false,
           "italic": false
@@ -2546,7 +2693,7 @@
           "text": "As noted by many - Stupidity is a core part of their identity and is mitigated well by high leadership in the army. Cold One Banner was also upgraded in the event that someone would still like to have a reliable “get out of stupid” card.",
           "segments": [
             {
-              "text": "As noted by many - Stupidity is a core part of their identity and is mitigated well by high leadership in the army. Cold One Banner was also upgraded in the event that someone would still like to have a reliable “get out of stupid” card.",
+              "text": "As noted by many - Stupidity is a core part of their identity and is mitigated well by high leadership in the army. Cold One Banner was also upgraded in the event that someone would still like to have a reliable “get out of stupid” card. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -2590,7 +2737,7 @@
       "text": "Scourge Runner Chariots - Removed ponderous on the Ravager Harpoon.",
       "segments": [
         {
-          "text": "Scourge Runner Chariots - Removed ponderous on the Ravager Harpoon.",
+          "text": "Scourge Runner Chariots - Removed ponderous on the Ravager Harpoon. ",
           "change": null,
           "bold": false,
           "italic": false
@@ -2630,7 +2777,7 @@
       "text": "Cold One Chariots - Small points reduction. (currently pointed equal to Lion Chariot, arguably worse)",
       "segments": [
         {
-          "text": "Cold One Chariots - Small points reduction. (currently pointed equal to Lion Chariot, arguably worse)",
+          "text": "Cold One Chariots - Small points reduction. (currently pointed equal to Lion Chariot, arguably worse) ",
           "change": null,
           "bold": false,
           "italic": false
@@ -2670,7 +2817,7 @@
       "text": "Stoney Stare (Medusae shooting attack) - Added multiple shots D3. In the past this was a multiple shots 4 shooting attack with killing blow, so feels like a reasonable tOW translation. The Shrine also does D3 of a similar attack to each model in base that fails an initiative test so seemed to jive well.",
       "segments": [
         {
-          "text": "Stoney Stare (Medusae shooting attack) - Added multiple shots D3. In the past this was a multiple shots 4 shooting attack with killing blow, so feels like a reasonable tOW translation. The Shrine also does D3 of a similar attack to each model in base that fails an initiative test so seemed to jive well.",
+          "text": "Stoney Stare (Medusae shooting attack) - Added multiple shots D3. In the past this was a multiple shots 4 shooting attack with killing blow, so feels like a reasonable tOW translation. The Shrine also does D3 of a similar attack to each model in base that fails an initiative test so seemed to jive well. ",
           "change": null,
           "bold": false,
           "italic": false
@@ -2710,7 +2857,7 @@
       "text": "Bloodwrack Shrine - It’s a big ol expensive chariot I guess!",
       "segments": [
         {
-          "text": "Bloodwrack Shrine - It’s a big ol expensive chariot I guess!",
+          "text": "Bloodwrack Shrine - It’s a big ol expensive chariot I guess! ",
           "change": null,
           "bold": false,
           "italic": false
@@ -2753,7 +2900,7 @@
           "text": "For lack of better alternatives, mostly just kept it as is except gave it the updated “Will of the Gods” rule. Not every model has to be a winner.",
           "segments": [
             {
-              "text": "For lack of better alternatives, mostly just kept it as is except gave it the updated “Will of the Gods” rule. Not every model has to be a winner.",
+              "text": "For lack of better alternatives, mostly just kept it as is except gave it the updated “Will of the Gods” rule. Not every model has to be a winner. ",
               "change": null,
               "bold": false,
               "italic": false
@@ -2871,7 +3018,7 @@
           "italic": false
         },
         {
-          "text": "A page devoted to the many contributors, past and present, to the creation of this document and some thoughts on the approach from the editor.",
+          "text": "A page devoted to the many contributors, past and present, to the creation of this document and some thoughts on the approach from the editor. ",
           "change": null,
           "bold": false,
           "italic": false
@@ -2911,7 +3058,7 @@
           "italic": false
         },
         {
-          "text": "What it says on the tin.",
+          "text": "What it says on the tin. ",
           "change": null,
           "bold": false,
           "italic": false
@@ -3209,7 +3356,7 @@
           "italic": false
         },
         {
-          "text": " Questions and Answers about any unclear interactions arising from these rules.",
+          "text": " Questions and Answers about any unclear interactions arising from these rules. ",
           "change": null,
           "bold": false,
           "italic": false
@@ -3249,7 +3396,7 @@
           "italic": false
         },
         {
-          "text": " A guide for where to find quality miniatures for use with this army.",
+          "text": " A guide for where to find quality miniatures for use with this army. ",
           "change": null,
           "bold": false,
           "italic": false
@@ -4798,7 +4945,19 @@
       "text": "game of Warhammer: the Old World is packed with fantastic creatures and skilled warriors with abilities so incredible and varied that the basic rules cannot possibly cover them all. For such circumstances we have special rules – uncommon rules to govern uncommon circumstances.",
       "segments": [
         {
-          "text": "game of Warhammer: the Old World is packed with fantastic creatures and skilled warriors with abilities so incredible and varied that the basic rules cannot possibly cover them all. For such circumstances we have special rules – uncommon rules to govern uncommon circumstances.",
+          "text": "game of Warhammer: the Old World is packed with fantastic creatures and skilled warriors with abilities so incredible and varied that the basic rules cannot possibly cover them all. For such circumstances we have special rules –",
+          "change": null,
+          "bold": true,
+          "italic": false
+        },
+        {
+          "text": " ",
+          "change": null,
+          "bold": true,
+          "italic": false
+        },
+        {
+          "text": "uncommon rules to govern uncommon circumstances.",
           "change": null,
           "bold": true,
           "italic": false
@@ -4912,7 +5071,19 @@
       "text": "If a model with this special rule rolls a natural 6 when making a roll To Wound for an attack made in combat, it has struck a ‘Cleaving Blow.’ Enemy models whose troop type is ‘regular infantry,’ ‘heavy infantry,’ ‘light cavalry,’ ‘heavy cavalry’ or ‘war beasts’ are not permitted an armour or Regeneration save against a Cleaving Blow (Ward saves can be attempted as normal).",
       "segments": [
         {
-          "text": "If a model with this special rule rolls a natural 6 when making a roll To Wound for an attack made in combat, it has struck a ‘Cleaving Blow.’ Enemy models whose troop type is ‘regular infantry,’ ‘heavy infantry,’ ‘light cavalry,’ ‘heavy cavalry’ or ‘war beasts’ are not permitted an armour or Regeneration save against a Cleaving Blow (Ward saves can be attempted as normal).",
+          "text": "If a model with this special rule rolls a natural 6 when making a roll To Wound for an attack made in combat, it has struck",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": " ",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "a ‘Cleaving Blow.’ Enemy models whose troop type is ‘regular infantry,’ ‘heavy infantry,’ ‘light cavalry,’ ‘heavy cavalry’ or ‘war beasts’ are not permitted an armour or Regeneration save against a Cleaving Blow (Ward saves can be attempted as normal).",
           "change": null,
           "bold": false,
           "italic": false
@@ -5212,7 +5383,19 @@
           "italic": false
         },
         {
-          "text": " \nA model with this special rule may join a unit of Infantry with unit strength 10 or more despite being a Heavy Chariot. If it does so, it must always be placed in the centre of the front rank, and it no longer has the Lumbering rule (Rulebook p. 195). Only one model with this special rule may join each unit.",
+          "text": " ",
+          "change": "new",
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "\n",
+          "change": "new",
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "A model with this special rule may join a unit of Infantry with unit strength 10 or more despite being a Heavy Chariot. If it does so, it must always be placed in the centre of the front rank, and it no longer has the Lumbering rule (Rulebook p. 195). Only one model with this special rule may join each unit.",
           "change": "new",
           "bold": false,
           "italic": false
@@ -6546,7 +6729,7 @@
     },
     {
       "type": "paragraph",
-      "text": "Whip of Agony Combat S+1 -1 Magical Attacks, Strike First",
+      "text": "Whip of Agony Combat S+1 -1 Magical Attacks",
       "segments": [
         {
           "text": "Whip of Agony Combat S+1 -1 Magical Attacks",
@@ -6558,9 +6741,11 @@
           "text": ", Strike First",
           "change": "new",
           "bold": false,
-          "italic": false
+          "italic": false,
+          "struck": true
         }
       ],
+      "struckText": ", Strike First",
       "changeKinds": [
         "new"
       ],
@@ -7772,7 +7957,19 @@
           "italic": false
         },
         {
-          "text": " the model has a Toughness characteristic of 6 (which cannot be improved further) and gains noxious breath (see page 18).",
+          "text": " the model has a Toughness characteristic of 6",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": " ",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "(which cannot be improved further) and gains noxious breath (see page 18).",
           "change": null,
           "bold": false,
           "italic": false
@@ -8404,7 +8601,19 @@
           "italic": false
         },
         {
-          "text": ") and all effects of the spell, are measured from this marker, rather than from the owner. If the spell requires a line of sight, this is determined from the marker (which has a 360&deg; vision arc).",
+          "text": ") and",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": " ",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "all effects of the spell, are measured from this marker, rather than from the owner. If the spell requires a line of sight, this is determined from the marker (which has a 360&deg; vision arc).",
           "change": null,
           "bold": false,
           "italic": false
@@ -8412,6 +8621,12 @@
         {
           "text": " If the spell remains in play, keep the marker on the board until the spell is dispelled or removed from play.",
           "change": "new",
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": " ",
+          "change": null,
           "bold": false,
           "italic": false
         }
@@ -9319,7 +9534,19 @@
           "italic": false
         },
         {
-          "text": "Remains in play. Place a large (5\") blast template so that its central hole is within 18\" of the caster. Whilst in play, the template is treated as difficult terrain. The template scatters 2D6” during every Start of Turn sub-phase (see page 95). Any enemy unit that moves through the template, or that the template moves over must immediately make D6 Strength Tests. For each test that is failed, the unit loses a single Wound.",
+          "text": "Remains in play. Place a large (5\") blast template so that its central hole is within 18\" of the caster. Whilst in play, the template is treated as difficult terrain. The template scatters 2D6” during every Start of Turn sub-phase (see page 95). Any enemy unit that moves through the template, or that the template moves over must immediately make D6 Strength Tests. For each test that is failed, the unit loses a single Wound. ",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "\n",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "\n",
           "change": null,
           "bold": false,
           "italic": false
@@ -13903,7 +14130,31 @@
             "text": "Regular infantry (character) 25 x 25 mm 1 Two hand weapons",
             "segments": [
               {
-                "text": "Regular infantry (character) 25 x 25 mm\n1\nTwo hand weapons",
+                "text": "Regular infantry (character) 25 x 25 mm",
+                "change": null,
+                "bold": false,
+                "italic": false
+              },
+              {
+                "text": "\n",
+                "change": null,
+                "bold": false,
+                "italic": false
+              },
+              {
+                "text": "1",
+                "change": null,
+                "bold": false,
+                "italic": false
+              },
+              {
+                "text": "\n",
+                "change": null,
+                "bold": false,
+                "italic": false
+              },
+              {
+                "text": "Two hand weapons",
                 "change": null,
                 "bold": false,
                 "italic": false
@@ -14085,7 +14336,13 @@
           "text": "May take one of the following gifts of Khaine:",
           "segments": [
             {
-              "text": "May take one",
+              "text": "May take ",
+              "change": null,
+              "bold": false,
+              "italic": false
+            },
+            {
+              "text": "one",
               "change": null,
               "bold": false,
               "italic": false
@@ -17285,7 +17542,55 @@
             "text": "Light cavalry 30 x 60 mm 1 Hooves (counts as a hand Weapon Fast Cavalry, Swiftstride",
             "segments": [
               {
-                "text": "Light cavalry \n30 x 60 mm\n1\nHooves (counts as a hand Weapon\nFast Cavalry, Swiftstride",
+                "text": "Light cavalry ",
+                "change": null,
+                "bold": false,
+                "italic": false
+              },
+              {
+                "text": "\n",
+                "change": null,
+                "bold": false,
+                "italic": false
+              },
+              {
+                "text": "30 x 60 mm",
+                "change": null,
+                "bold": false,
+                "italic": false
+              },
+              {
+                "text": "\n",
+                "change": null,
+                "bold": false,
+                "italic": false
+              },
+              {
+                "text": "1",
+                "change": null,
+                "bold": false,
+                "italic": false
+              },
+              {
+                "text": "\n",
+                "change": null,
+                "bold": false,
+                "italic": false
+              },
+              {
+                "text": "Hooves (counts as a hand Weapon",
+                "change": null,
+                "bold": false,
+                "italic": false
+              },
+              {
+                "text": "\n",
+                "change": null,
+                "bold": false,
+                "italic": false
+              },
+              {
+                "text": "Fast Cavalry, Swiftstride",
                 "change": null,
                 "bold": false,
                 "italic": false
@@ -17910,7 +18215,13 @@
       "text": "Unit Size: 1",
       "segments": [
         {
-          "text": "Unit Size: 1",
+          "text": "Unit Size: ",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "1",
           "change": null,
           "bold": false,
           "italic": false
@@ -18572,7 +18883,13 @@
       "text": "Unit Size: 1",
       "segments": [
         {
-          "text": "Unit Size: 1",
+          "text": "Unit Size: ",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "1",
           "change": null,
           "bold": false,
           "italic": false
@@ -25793,6 +26110,12 @@
           "change": "new",
           "bold": false,
           "italic": false
+        },
+        {
+          "text": " ",
+          "change": null,
+          "bold": false,
+          "italic": false
         }
       ],
       "changeKinds": [
@@ -27143,7 +27466,13 @@
       "text": "Equipment: Two hand weapons",
       "segments": [
         {
-          "text": "Equipment: ",
+          "text": "Equipment:",
+          "change": null,
+          "bold": true,
+          "italic": false
+        },
+        {
+          "text": " ",
           "change": null,
           "bold": true,
           "italic": false
@@ -27457,10 +27786,22 @@
     {
       "type": "heading",
       "level": 3,
-      "text": "Special Rules: Close Order, Elven Reflexes, Frenzy, Hatred (High Elves), Horde, Loner, Murderous, Poisoned Attacks,",
+      "text": "Special Rules: Close Order, Frenzy, Hatred (High Elves), Horde, Loner, Murderous, Poisoned Attacks,",
       "segments": [
         {
-          "text": "Special Rules: Close Order, ",
+          "text": "Special Rules:",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": " ",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "Close Order, ",
           "change": null,
           "bold": false,
           "italic": false
@@ -27469,7 +27810,8 @@
           "text": "Elven Reflexes, ",
           "change": "new",
           "bold": false,
-          "italic": false
+          "italic": false,
+          "struck": true
         },
         {
           "text": "Frenzy, Hatred (High Elves), Horde, Loner, Murderous, Poisoned Attacks,",
@@ -27478,6 +27820,7 @@
           "italic": false
         }
       ],
+      "struckText": "Elven Reflexes,",
       "changeKinds": [
         "new"
       ],
@@ -27487,7 +27830,7 @@
       "headingPath": [
         "Lore Of Naggaroth",
         "Witch Elves",
-        "Special Rules: Close Order, Elven Reflexes, Frenzy, Hatred (High Elves), Horde, Loner, Murderous, Poisoned Attacks,"
+        "Special Rules: Close Order, Frenzy, Hatred (High Elves), Horde, Loner, Murderous, Poisoned Attacks,"
       ],
       "headingPathDetail": [
         {
@@ -27502,13 +27845,13 @@
         },
         {
           "level": 3,
-          "text": "Special Rules: Close Order, Elven Reflexes, Frenzy, Hatred (High Elves), Horde, Loner, Murderous, Poisoned Attacks,",
+          "text": "Special Rules: Close Order, Frenzy, Hatred (High Elves), Horde, Loner, Murderous, Poisoned Attacks,",
           "source": "docs-heading"
         }
       ],
       "context": {
         "section": "Lore Of Naggaroth",
-        "heading": "Special Rules: Close Order, Elven Reflexes, Frenzy, Hatred (High Elves), Horde, Loner, Murderous, Poisoned Attacks,",
+        "heading": "Special Rules: Close Order, Frenzy, Hatred (High Elves), Horde, Loner, Murderous, Poisoned Attacks,",
         "profile": "Witch Elves"
       },
       "unitContext": {
@@ -27531,7 +27874,19 @@
       "text": "Strike First, Warband",
       "segments": [
         {
-          "text": "Strike First, Warband\n",
+          "text": "St",
+          "change": "new",
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "rike First, Warband",
+          "change": "new",
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "\n",
           "change": "new",
           "bold": false,
           "italic": false
@@ -29396,33 +29751,71 @@
     {
       "type": "heading",
       "level": 3,
-      "text": "Special Rules: Dance of Death, Elven Reflexes, Hatred (High Elves), Murderous, Strike First, Open Order, Skirmishers, Warband, First to the Fray",
+      "text": "Special Rules: Dance of Death, Hatred (High Elves), Murderous, Strike First, Open Order, Skirmishers, Warband, First to the Fray",
       "segments": [
         {
-          "text": "Special Rules: Dance of Death,",
+          "text": "Special Rules: ",
           "change": null,
           "bold": false,
           "italic": false
         },
         {
-          "text": " Elven Reflexes, ",
+          "text": "Dance of Death,",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": " ",
           "change": "new",
           "bold": false,
           "italic": false
         },
         {
-          "text": "Hatred (High Elves), Murderous, ",
+          "text": "Elven Reflexes, ",
+          "change": "new",
+          "bold": false,
+          "italic": false,
+          "struck": true
+        },
+        {
+          "text": "Hatred (High Elves),",
           "change": null,
           "bold": false,
           "italic": false
         },
         {
-          "text": "Strike First, \nOpen Order, Skirmishers, Warband, First to the Fray",
+          "text": " ",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "Murderous, ",
+          "change": null,
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "Strike First, ",
+          "change": "new",
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "\n",
+          "change": "new",
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "Open Order, Skirmishers, Warband, First to the Fray",
           "change": "new",
           "bold": false,
           "italic": false
         }
       ],
+      "struckText": "Elven Reflexes,",
       "changeKinds": [
         "new"
       ],
@@ -29432,7 +29825,7 @@
       "headingPath": [
         "Lore Of Naggaroth",
         "Sisters of Slaughter",
-        "Special Rules: Dance of Death, Elven Reflexes, Hatred (High Elves), Murderous, Strike First, Open Order, Skirmishers, Warband, First to the Fray"
+        "Special Rules: Dance of Death, Hatred (High Elves), Murderous, Strike First, Open Order, Skirmishers, Warband, First to the Fray"
       ],
       "headingPathDetail": [
         {
@@ -29447,13 +29840,13 @@
         },
         {
           "level": 3,
-          "text": "Special Rules: Dance of Death, Elven Reflexes, Hatred (High Elves), Murderous, Strike First, Open Order, Skirmishers, Warband, First to the Fray",
+          "text": "Special Rules: Dance of Death, Hatred (High Elves), Murderous, Strike First, Open Order, Skirmishers, Warband, First to the Fray",
           "source": "docs-heading"
         }
       ],
       "context": {
         "section": "Lore Of Naggaroth",
-        "heading": "Special Rules: Dance of Death, Elven Reflexes, Hatred (High Elves), Murderous, Strike First, Open Order, Skirmishers, Warband, First to the Fray",
+        "heading": "Special Rules: Dance of Death, Hatred (High Elves), Murderous, Strike First, Open Order, Skirmishers, Warband, First to the Fray",
         "profile": "Sisters of Slaughter"
       },
       "unitContext": {
@@ -32133,7 +32526,19 @@
             "text": "Light cavalry 30 x 60 mm 5+",
             "segments": [
               {
-                "text": "Light cavalry 30 x 60 mm\n5+",
+                "text": "Light cavalry 30 x 60 mm",
+                "change": null,
+                "bold": false,
+                "italic": false
+              },
+              {
+                "text": "\n",
+                "change": null,
+                "bold": false,
+                "italic": false
+              },
+              {
+                "text": "5+",
                 "change": null,
                 "bold": false,
                 "italic": false
@@ -35314,7 +35719,13 @@
           "italic": false
         },
         {
-          "text": "Min 60 x 100 mm, max 75x100",
+          "text": "Min ",
+          "change": "new",
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "60 x 100 mm, max 75x100",
           "change": "new",
           "bold": false,
           "italic": false
@@ -35593,7 +36004,7 @@
     },
     {
       "type": "paragraph",
-      "text": "Special Rules: Close Order, Dragged Along, Will of the Gods, Elven Reflexes, Frenzy, Hatred (High Elves), Impact Hits (D6+1), Large Target, Magic Resistance (-1), Terror, Blessings Of Khaine, Altar of Khaine",
+      "text": "Special Rules: Close Order, Will of the Gods, Elven Reflexes, Frenzy, Hatred (High Elves), Impact Hits (D6+1), Large Target, Magic Resistance (-1), Terror, Blessings Of Khaine, Altar of Khaine",
       "segments": [
         {
           "text": "Special Rules: ",
@@ -35608,7 +36019,14 @@
           "italic": false
         },
         {
-          "text": "Dragged Along, Will of the Gods, ",
+          "text": "Dragged Along,",
+          "change": "new",
+          "bold": false,
+          "italic": false,
+          "struck": true
+        },
+        {
+          "text": " Will of the Gods, ",
           "change": "new",
           "bold": false,
           "italic": false
@@ -35638,6 +36056,7 @@
           "italic": false
         }
       ],
+      "struckText": "Dragged Along,",
       "changeKinds": [
         "new"
       ],
@@ -35803,7 +36222,13 @@
       "text": "This model has a 5+ Ward save against any wounds suffered. In addition, any unit joined by this model gains a 6+ Ward save against any wounds suffered.",
       "segments": [
         {
-          "text": "This model has a 5+ Ward save against any wounds suffered. In addition, any unit joined by this model gains a 6+ Ward save against any wounds suffered. \n",
+          "text": "This model has a 5+ Ward save against any wounds suffered. In addition, any unit joined by this model gains a 6+ Ward save against any wounds suffered. ",
+          "change": "new",
+          "bold": false,
+          "italic": false
+        },
+        {
+          "text": "\n",
           "change": "new",
           "bold": false,
           "italic": false
@@ -36141,6 +36566,12 @@
           "change": "new",
           "bold": false,
           "italic": true
+        },
+        {
+          "text": "\n",
+          "change": null,
+          "bold": false,
+          "italic": false
         }
       ],
       "changeKinds": [
@@ -37632,15 +38063,17 @@
             "rowspan": 1
           },
           {
-            "text": "Ponderous",
+            "text": "",
             "segments": [
               {
                 "text": "Ponderous",
                 "change": "new",
                 "bold": false,
-                "italic": false
+                "italic": false,
+                "struck": true
               }
             ],
+            "struckText": "Ponderous",
             "changeKinds": [
               "new"
             ],
@@ -37649,7 +38082,7 @@
           }
         ]
       ],
-      "text": " | R | S | AP | Special Rules\nRavager harpoon | 24\" | 6 | -3 | Cumbersome, Multiple Wounds (D3)\n |  |  |  | Ponderous",
+      "text": " | R | S | AP | Special Rules\nRavager harpoon | 24\" | 6 | -3 | Cumbersome, Multiple Wounds (D3)\n |  |  |  | ",
       "changeKinds": [
         "new"
       ],
@@ -40109,7 +40542,7 @@
     },
     {
       "type": "paragraph",
-      "text": "Special Rules: Close Order, Dragged Along, Will of the Gods, Elven Reflexes, Frenzy, Hatred (High Elves), Impact Hits (D6+1), Large Target, Magic Resistance (-1), Murderous, Poisoned Attacks, Stony Stare, Terror, Impetuous",
+      "text": "Special Rules: Close Order, Will of the Gods, Elven Reflexes, Hatred (High Elves), Impact Hits (D6+1), Large Target, Magic Resistance (-1), Murderous, Poisoned Attacks, Stony Stare, Terror, Impetuous",
       "segments": [
         {
           "text": "Special Rules: ",
@@ -40124,7 +40557,14 @@
           "italic": false
         },
         {
-          "text": "Dragged Along, Will of the Gods, ",
+          "text": "Dragged Along,",
+          "change": "new",
+          "bold": false,
+          "italic": false,
+          "struck": true
+        },
+        {
+          "text": " Will of the Gods, ",
           "change": "new",
           "bold": false,
           "italic": false
@@ -40139,7 +40579,8 @@
           "text": "Frenzy,",
           "change": "new",
           "bold": false,
-          "italic": false
+          "italic": false,
+          "struck": true
         },
         {
           "text": " Hatred (High Elves), Impact Hits (D6+1), Large Target, Magic Resistance (-1), Murderous, Poisoned Attacks, Stony Stare, Terror, ",
@@ -40154,6 +40595,7 @@
           "italic": false
         }
       ],
+      "struckText": "Dragged Along,Frenzy,",
       "changeKinds": [
         "new"
       ],
@@ -41982,7 +42424,13 @@
                 "italic": false
               },
               {
-                "text": " (+4) 5",
+                "text": " ",
+                "change": null,
+                "bold": false,
+                "italic": false
+              },
+              {
+                "text": "(+4) 5",
                 "change": null,
                 "bold": false,
                 "italic": false
@@ -45441,7 +45889,7 @@
     },
     {
       "type": "paragraph",
-      "text": "Special Rules: Close Order, Elven Reflexes, Fear, Frenzy, Hatred (High Elves), Magic Resistance (-1), Murderous, Poisoned Attacks, Stony Stare, Impetuous",
+      "text": "Special Rules: Close Order, Elven Reflexes, Fear, Hatred (High Elves), Magic Resistance (-1), Murderous, Poisoned Attacks, Stony Stare, Impetuous",
       "segments": [
         {
           "text": "Special Rules: ",
@@ -45459,7 +45907,8 @@
           "text": "Frenzy,",
           "change": "new",
           "bold": false,
-          "italic": false
+          "italic": false,
+          "struck": true
         },
         {
           "text": " Hatred (High Elves), Magic Resistance (-1), Murderous, Poisoned Attacks, Stony Stare, ",
@@ -45474,6 +45923,7 @@
           "italic": false
         }
       ],
+      "struckText": "Frenzy,",
       "changeKinds": [
         "new"
       ],

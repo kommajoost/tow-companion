@@ -317,6 +317,8 @@
    ],
    "status": "applied",
    "targets": [
+    "units.supreme-sorceress.points",
+    "units.sorceress.points",
     "profiles.supreme sorceress",
     "profiles.sorceress"
    ]
@@ -461,7 +463,9 @@
    ],
    "status": "applied",
    "targets": [
-    "profiles.dark elf warriors"
+    "units.repeater-crossbowmen.points",
+    "profiles.dark elf warriors",
+    "profiles.repeater crossbowmen"
    ]
   },
   {
@@ -484,7 +488,8 @@
    ],
    "status": "applied",
    "targets": [
-    "units.dark-elf-warriors.minimum"
+    "units.dark-elf-warriors.minimum",
+    "units.repeater-crossbowmen.minimum"
    ]
   },
   {
@@ -652,6 +657,7 @@
    ],
    "status": "applied",
    "targets": [
+    "units.har-ganeth-executioners.points",
     "profiles.har ganeth executioners"
    ]
   },
@@ -906,6 +912,7 @@
    ],
    "status": "applied",
    "targets": [
+    "units.sisters-of-slaughter.points",
     "profiles.sisters of slaughter"
    ]
   },
@@ -1056,7 +1063,7 @@
    "targets": [
     "profiles.sisters of slaughter.notes"
    ],
-   "appliedBy": "hand, 2026-08-11 — zie commit"
+   "reason": "met de hand toegepast: notitie staat geel, maar hoort bij het wapen dat de speler kiest"
   },
   {
    "blockId": "b0387",
@@ -1483,6 +1490,7 @@
    ],
    "status": "applied",
    "targets": [
+    "units.cold-one-chariots.points",
     "profiles.cold one chariot"
    ]
   },
@@ -1505,6 +1513,7 @@
    ],
    "status": "applied",
    "targets": [
+    "units.bloodwrack-shrines.points",
     "profiles.bloodwrack shrines"
    ]
   },
@@ -1632,6 +1641,8 @@
    ],
    "status": "applied",
    "targets": [
+    "units.war-hydra.points",
+    "units.war-hydra.points",
     "profiles.war hydra",
     "profiles.war hydra"
    ]
@@ -1780,6 +1791,7 @@
    ],
    "status": "applied",
    "targets": [
+    "units.bloodwrack-medusas.points",
     "profiles.bloodwrack medusas"
    ]
   },
@@ -1841,6 +1853,8 @@
    ],
    "status": "applied",
    "targets": [
+    "units.kharibdyss.points",
+    "units.kharibdyss.points",
     "profiles.kharibdyss",
     "profiles.kharibdyss"
    ]

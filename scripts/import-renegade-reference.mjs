@@ -181,6 +181,18 @@ function nodeStyle(node, styles) {
   return merged;
 }
 
+// STRUCK-THROUGH TEXT IS DELETED TEXT.
+//
+// The author edits in place: a clause that no longer applies is struck through (and, being an edit,
+// usually turned magenta too) rather than removed. Read as plain text it is indistinguishable from a
+// live rule, and it read as one — Vampire Counts showed "0-3 Corpse Carts" under Core and "0-1
+// Varghulf per 1,000 points" under Special, both of which the draft had crossed out (Joost, 11-08).
+//
+// The segments keep the struck text, so the reference stays lossless and the deletion is auditable.
+// Everything DERIVED from them — a block's text, its list items, its statline and points mentions —
+// is built from the surviving text only.
+const isStruck = (style) => /line-through/.test(`${style['text-decoration'] ?? ''} ${style['text-decoration-line'] ?? ''}`);
+
 function inheritedFormat(node, styles, parent) {
   const style = nodeStyle(node, styles);
   const color = style.color?.replace(/\s*!important$/, '');
@@ -188,10 +200,12 @@ function inheritedFormat(node, styles, parent) {
   const change = CHANGE_COLORS.get(color) ?? TODO_COLORS.get(background) ?? parent.change ?? null;
   const bold = node.tag === 'b' || node.tag === 'strong' || Number.parseInt(style['font-weight'], 10) >= 600 || parent.bold;
   const italic = node.tag === 'i' || node.tag === 'em' || style['font-style'] === 'italic' || parent.italic;
-  return { change, bold: Boolean(bold), italic: Boolean(italic) };
+  // `del`/`s` are the semantic spelling; Docs itself always emits the CSS one.
+  const struck = node.tag === 'del' || node.tag === 's' || node.tag === 'strike' || isStruck(style) || parent.struck;
+  return { change, bold: Boolean(bold), italic: Boolean(italic), struck: Boolean(struck) };
 }
 
-function rawSegments(node, styles, inherited = { change: null, bold: false, italic: false }, result = []) {
+function rawSegments(node, styles, inherited = { change: null, bold: false, italic: false, struck: false }, result = []) {
   if (node.type === 'text') {
     result.push({ text: node.value, ...inherited });
     return result;
@@ -215,10 +229,14 @@ function cleanSegments(input) {
       .replace(/ *\n+ */g, '\n');
     if (!text) continue;
     const previous = output.at(-1);
-    if (previous && previous.change === segment.change && previous.bold === segment.bold && previous.italic === segment.italic) {
+    if (previous && previous.change === segment.change && previous.bold === segment.bold
+      && previous.italic === segment.italic && previous.struck === segment.struck) {
       previous.text += text;
     } else {
-      output.push({ text, change: segment.change, bold: segment.bold, italic: segment.italic });
+      output.push({
+        text, change: segment.change, bold: segment.bold, italic: segment.italic,
+        ...(segment.struck ? { struck: true } : {}),
+      });
     }
   }
   if (!output.length) return [];
@@ -227,7 +245,29 @@ function cleanSegments(input) {
   return output.filter((segment) => segment.text);
 }
 
-const flattenText = (segments) => segments.map((segment) => segment.text).join('').replace(/\s+/g, ' ').trim();
+const live = (segments) => segments.filter((segment) => !segment.struck);
+// Deleting a word from the middle of a list leaves its separator behind: striking "the Newly Dead"
+// out of "…, Regeneration (6+), the Newly Dead, Shambling Horde" would otherwise yield ", ,", and the
+// app renders each comma-separated token as its own rule chip — so an empty chip appears in the unit
+// panel. Collapse only separators that now sit next to each other, and any left dangling at an end.
+//
+// A TRAILING separator is deliberately left alone: the compiler detects a "Special Rules:" line that
+// wraps onto the next block by exactly that trailing comma. Stripping it here would silently stop
+// those continuations from being stitched back on.
+const healSeparators = (text) => text
+  .replace(/([,;])(\s*[,;])+/g, '$1')
+  .replace(/([([])\s*,\s*/g, '$1')
+  .replace(/\s*,\s*([)\]])/g, '$1')
+  // "Special Rules: , Open Order, …" — the first rule was struck out and left its comma behind. The
+  // compiler captures everything after the colon, so this would become an empty leading rule chip.
+  .replace(/([:•])\s*[,;]\s*/g, '$1 ')
+  .replace(/^\s*[,;]\s*/, '')
+  .replace(/\s+/g, ' ')
+  .trim();
+const flattenText = (segments) => healSeparators(live(segments).map((segment) => segment.text).join(''));
+/** What the draft crossed out, kept for the audit trail rather than thrown away silently. */
+const struckText = (segments) => segments.filter((segment) => segment.struck)
+  .map((segment) => segment.text).join('').replace(/\s+/g, ' ').trim();
 const changeKinds = (segments) => [...new Set(segments.map((segment) => segment.change).filter(Boolean))];
 
 function findDescendants(node, tags, result = []) {
@@ -265,7 +305,7 @@ function maximumFontSize(node, styles) {
 
 function visualHeadingLevel(node, styles, segments) {
   if (node.tag !== 'p') return null;
-  const meaningful = segments.filter((segment) => segment.text.trim());
+  const meaningful = live(segments).filter((segment) => segment.text.trim());
   if (!meaningful.length || !meaningful.every((segment) => segment.bold)) return null;
   const text = flattenText(segments);
   if (!text || text.length > 120) return null;
@@ -282,6 +322,11 @@ function visualHeadingLevel(node, styles, segments) {
   return 3;
 }
 
+const struckField = (segments) => {
+  const dropped = struckText(segments);
+  return dropped ? { struckText: dropped } : {};
+};
+
 function makeParagraph(node, styles) {
   const segments = cleanSegments(rawSegments(node, styles));
   const text = flattenText(segments);
@@ -289,6 +334,7 @@ function makeParagraph(node, styles) {
     type: 'paragraph',
     text,
     segments,
+    ...struckField(segments),
     changeKinds: changeKinds(segments),
     pointsMentions: pointsMentions(text),
     visualHeadingLevel: visualHeadingLevel(node, styles, segments),
@@ -303,24 +349,30 @@ function makeHeading(node, styles) {
     level: Number.parseInt(node.tag.slice(1), 10),
     text,
     segments,
+    ...struckField(segments),
     changeKinds: changeKinds(segments),
     pointsMentions: pointsMentions(text),
   };
 }
 
 function makeList(node, styles) {
-  const items = findDescendants(node, new Set(['li'])).map((item) => {
+  const all = findDescendants(node, new Set(['li'])).map((item) => {
     const segments = cleanSegments(rawSegments(item, styles));
     const text = flattenText(segments);
-    return { text, segments, changeKinds: changeKinds(segments), pointsMentions: pointsMentions(text) };
-  }).filter((item) => item.text);
-  const segments = items.flatMap((item) => item.segments);
+    return { text, segments, ...struckField(segments), changeKinds: changeKinds(segments), pointsMentions: pointsMentions(text) };
+  });
+  const items = all.filter((item) => item.text);
+  // changeKinds from ALL items, including the ones struck away entirely: deleting a bullet IS a
+  // change, and the compiler must still reprocess the list it came from. Drop that and a composition
+  // list whose only edit was a removal stops being reprocessed and keeps its stale text.
+  const segments = all.flatMap((item) => item.segments);
   const text = items.map((item) => item.text).join(' • ');
   return {
     type: 'list',
     ordered: node.tag === 'ol',
     items,
     text,
+    ...struckField(segments),
     changeKinds: changeKinds(segments),
     pointsMentions: items.flatMap((item) => item.pointsMentions),
   };
@@ -350,6 +402,7 @@ function makeTable(node, styles) {
       return {
         text: flattenText(segments),
         segments,
+        ...struckField(segments),
         changeKinds: changeKinds(segments),
         colspan: Number.parseInt(cell.attrs.colspan ?? '1', 10),
         rowspan: Number.parseInt(cell.attrs.rowspan ?? '1', 10),
@@ -605,6 +658,8 @@ for (const pack of PACKS) {
       changed: 'Differs from the official Legacy PDF (blue in the source)',
       new: 'Changed since the previous Renegade draft (magenta in the source)',
       todo: 'Incomplete or in development (yellow in the source)',
+      struck: 'Segment is struck through in the source: DELETED text. Kept in `segments` for the audit trail; every derived field (text, items, statlineRows, pointsMentions) is built without it',
+      struckText: 'The struck-through text this block dropped, verbatim',
       headingPath: 'Active Google Docs heading hierarchy for this block, from broadest to most specific',
       unitContext: 'Semantic army-list entry propagated from a statline table until the next statline',
       unitId: 'Intentionally null in the lossless reference; catalogue mapping belongs to the compiler manifest',
@@ -636,6 +691,7 @@ for (const pack of PACKS) {
       changedSegments: segments.changed,
       newSegments: segments.new,
       todoSegments: segments.todo,
+      struckBlocks: blocks.filter((block) => block.struckText).length,
       statlineTables: blocks.filter((block) => block.tableType === 'statline').length,
       weaponProfileTables: blocks.filter((block) => block.tableType === 'weapon-profile').length,
     },
@@ -649,6 +705,7 @@ for (const pack of PACKS) {
   console.error(
     `${pack.label.padEnd(18)} V${version ?? '?'}: ${blocks.length} blocks, ` +
     `${changedBlockIds.length} highlighted (${armyListChangedBlockIds.length} army-list), ` +
-    `${segments.changed} blue / ${segments.new} magenta / ${segments.todo} yellow segments`,
+    `${segments.changed} blue / ${segments.new} magenta / ${segments.todo} yellow segments, ` +
+    `${blocks.filter((block) => block.struckText).length} blocks with struck-through (deleted) text`,
   );
 }

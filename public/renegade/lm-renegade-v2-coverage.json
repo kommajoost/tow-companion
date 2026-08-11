@@ -4,7 +4,7 @@
   "reference": "lm-renegade-v2-reference.json",
   "generatedBy": "scripts/compile-renegade-v2.mjs",
   "counts": {
-    "applied": 133,
+    "applied": 127,
     "captured": 39,
     "unresolved": 0,
     "unsupported": 0,
@@ -127,18 +127,6 @@
       ]
     },
     {
-      "blockId": "b0047",
-      "unitContext": null,
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.arcane-vassal"
-      ]
-    },
-    {
       "blockId": "h0013",
       "unitContext": null,
       "entryKind": "heading",
@@ -151,7 +139,7 @@
       ]
     },
     {
-      "blockId": "b0048",
+      "blockId": "b0047",
       "unitContext": null,
       "entryKind": "paragraph",
       "changeKinds": [
@@ -166,6 +154,18 @@
       "blockId": "h0014",
       "unitContext": null,
       "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.beast-handlers"
+      ]
+    },
+    {
+      "blockId": "b0048",
+      "unitContext": null,
+      "entryKind": "paragraph",
       "changeKinds": [
         "new"
       ],
@@ -211,30 +211,6 @@
       ]
     },
     {
-      "blockId": "b0052",
-      "unitContext": null,
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.beast-handlers"
-      ]
-    },
-    {
-      "blockId": "b0053",
-      "unitContext": null,
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.beast-handlers"
-      ]
-    },
-    {
       "blockId": "h0015",
       "unitContext": null,
       "entryKind": "heading",
@@ -247,7 +223,7 @@
       ]
     },
     {
-      "blockId": "b0054",
+      "blockId": "b0052",
       "unitContext": null,
       "entryKind": "paragraph",
       "changeKinds": [
@@ -259,7 +235,7 @@
       ]
     },
     {
-      "blockId": "b0057",
+      "blockId": "b0055",
       "unitContext": null,
       "entryKind": "paragraph",
       "changeKinds": [
@@ -283,7 +259,7 @@
       ]
     },
     {
-      "blockId": "b0058",
+      "blockId": "b0056",
       "unitContext": null,
       "entryKind": "paragraph",
       "changeKinds": [
@@ -295,31 +271,31 @@
       ]
     },
     {
+      "blockId": "b0059",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.skink-riders"
+      ]
+    },
+    {
+      "blockId": "b0060",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.skink-riders"
+      ]
+    },
+    {
       "blockId": "b0061",
-      "unitContext": null,
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.skink-riders"
-      ]
-    },
-    {
-      "blockId": "b0062",
-      "unitContext": null,
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.skink-riders"
-      ]
-    },
-    {
-      "blockId": "b0063",
       "unitContext": null,
       "entryKind": "paragraph",
       "changeKinds": [
@@ -341,7 +317,7 @@
       "targets": []
     },
     {
-      "blockId": "b0071",
+      "blockId": "b0069",
       "unitContext": null,
       "entryKind": "paragraph",
       "changeKinds": [
@@ -365,7 +341,7 @@
       ]
     },
     {
-      "blockId": "b0075",
+      "blockId": "b0073",
       "unitContext": null,
       "entryKind": "paragraph",
       "changeKinds": [
@@ -389,7 +365,7 @@
       ]
     },
     {
-      "blockId": "b0078",
+      "blockId": "b0076",
       "unitContext": null,
       "entryKind": "paragraph",
       "changeKinds": [
@@ -401,7 +377,7 @@
       ]
     },
     {
-      "blockId": "b0080",
+      "blockId": "b0078",
       "unitContext": null,
       "entryKind": "paragraph",
       "changeKinds": [
@@ -425,7 +401,7 @@
       ]
     },
     {
-      "blockId": "b0084",
+      "blockId": "b0082",
       "unitContext": null,
       "entryKind": "paragraph",
       "changeKinds": [
@@ -447,7 +423,7 @@
       "targets": []
     },
     {
-      "blockId": "b0086",
+      "blockId": "b0084",
       "unitContext": null,
       "entryKind": "paragraph",
       "changeKinds": [
@@ -491,7 +467,7 @@
       ],
       "status": "applied",
       "targets": [
-        "magicItemText.higher-state-of-mind-consciousness"
+        "magicItemText.higher-state-of-consciousness"
       ]
     },
     {
@@ -507,7 +483,7 @@
       ]
     },
     {
-      "blockId": "b0088",
+      "blockId": "b0086",
       "unitContext": null,
       "entryKind": "paragraph",
       "changeKinds": [
@@ -519,7 +495,7 @@
       ]
     },
     {
-      "blockId": "b0089",
+      "blockId": "b0087",
       "unitContext": null,
       "entryKind": "paragraph",
       "changeKinds": [
@@ -543,7 +519,7 @@
       ]
     },
     {
-      "blockId": "b0090",
+      "blockId": "b0088",
       "unitContext": null,
       "entryKind": "paragraph",
       "changeKinds": [
@@ -555,7 +531,7 @@
       ]
     },
     {
-      "blockId": "b0091",
+      "blockId": "b0089",
       "unitContext": null,
       "entryKind": "paragraph",
       "changeKinds": [
@@ -579,7 +555,7 @@
       ]
     },
     {
-      "blockId": "b0095",
+      "blockId": "b0093",
       "unitContext": null,
       "entryKind": "paragraph",
       "changeKinds": [
@@ -603,7 +579,19 @@
       ]
     },
     {
-      "blockId": "b0098",
+      "blockId": "b0096",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "magicItemText.soul-of-stone"
+      ]
+    },
+    {
+      "blockId": "b0097",
       "unitContext": null,
       "entryKind": "paragraph",
       "changeKinds": [
@@ -619,18 +607,6 @@
       "unitContext": null,
       "entryKind": "paragraph",
       "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "magicItemText.soul-of-stone"
-      ]
-    },
-    {
-      "blockId": "b0101",
-      "unitContext": null,
-      "entryKind": "paragraph",
-      "changeKinds": [
         "changed"
       ],
       "status": "applied",
@@ -639,7 +615,7 @@
       ]
     },
     {
-      "blockId": "b0102",
+      "blockId": "b0100",
       "unitContext": null,
       "entryKind": "paragraph",
       "changeKinds": [
@@ -652,11 +628,36 @@
       ]
     },
     {
-      "blockId": "b0105",
+      "blockId": "b0103",
       "unitContext": null,
       "entryKind": "paragraph",
       "changeKinds": [
         "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "lores.lore-of-lustria.spell-monsoon"
+      ]
+    },
+    {
+      "blockId": "b0104",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "lores.lore-of-lustria.spell-monsoon"
+      ]
+    },
+    {
+      "blockId": "b0105",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new",
+        "changed"
       ],
       "status": "applied",
       "targets": [
@@ -677,34 +678,9 @@
     },
     {
       "blockId": "b0107",
-      "unitContext": null,
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new",
-        "changed"
-      ],
-      "status": "applied",
-      "targets": [
-        "lores.lore-of-lustria.spell-monsoon"
-      ]
-    },
-    {
-      "blockId": "b0108",
-      "unitContext": null,
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "lores.lore-of-lustria.spell-monsoon"
-      ]
-    },
-    {
-      "blockId": "b0109",
       "unitContext": {
         "name": "Slann Mage-Priests",
-        "sourceBlockId": "b0109",
+        "sourceBlockId": "b0107",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -721,10 +697,10 @@
       ]
     },
     {
-      "blockId": "b0110",
+      "blockId": "b0108",
       "unitContext": {
         "name": "Slann Mage-Priests",
-        "sourceBlockId": "b0109",
+        "sourceBlockId": "b0107",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -741,10 +717,10 @@
       ]
     },
     {
-      "blockId": "b0111",
+      "blockId": "b0109",
       "unitContext": {
         "name": "Slann Mage-Priests",
-        "sourceBlockId": "b0109",
+        "sourceBlockId": "b0107",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -761,10 +737,10 @@
       ]
     },
     {
-      "blockId": "b0115",
+      "blockId": "b0113",
       "unitContext": {
         "name": "Slann Mage-Priests",
-        "sourceBlockId": "b0109",
+        "sourceBlockId": "b0107",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -781,10 +757,10 @@
       ]
     },
     {
-      "blockId": "b0116",
+      "blockId": "b0114",
       "unitContext": {
         "name": "Slann Mage-Priests",
-        "sourceBlockId": "b0109",
+        "sourceBlockId": "b0107",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -804,7 +780,7 @@
       "blockId": "h0063",
       "unitContext": {
         "name": "Slann Mage-Priests",
-        "sourceBlockId": "b0109",
+        "sourceBlockId": "b0107",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -821,10 +797,10 @@
       ]
     },
     {
-      "blockId": "b0118",
+      "blockId": "b0116",
       "unitContext": {
         "name": "Slann Mage-Priests",
-        "sourceBlockId": "b0109",
+        "sourceBlockId": "b0107",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -844,7 +820,7 @@
       "blockId": "h0064",
       "unitContext": {
         "name": "Slann Mage-Priests",
-        "sourceBlockId": "b0109",
+        "sourceBlockId": "b0107",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -861,10 +837,10 @@
       ]
     },
     {
-      "blockId": "b0119",
+      "blockId": "b0117",
       "unitContext": {
         "name": "Slann Mage-Priests",
-        "sourceBlockId": "b0109",
+        "sourceBlockId": "b0107",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -882,10 +858,10 @@
       ]
     },
     {
-      "blockId": "b0120",
+      "blockId": "b0118",
       "unitContext": {
         "name": "Slann Mage-Priests",
-        "sourceBlockId": "b0109",
+        "sourceBlockId": "b0107",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -902,10 +878,10 @@
       ]
     },
     {
-      "blockId": "b0124",
+      "blockId": "b0122",
       "unitContext": {
         "name": "Saurus Heroes",
-        "sourceBlockId": "b0121",
+        "sourceBlockId": "b0119",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -924,10 +900,10 @@
       ]
     },
     {
-      "blockId": "b0127",
+      "blockId": "b0125",
       "unitContext": {
         "name": "Saurus Heroes",
-        "sourceBlockId": "b0121",
+        "sourceBlockId": "b0119",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -946,10 +922,10 @@
       ]
     },
     {
-      "blockId": "b0129",
+      "blockId": "b0127",
       "unitContext": {
         "name": "Saurus Heroes",
-        "sourceBlockId": "b0121",
+        "sourceBlockId": "b0119",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -968,32 +944,10 @@
       ]
     },
     {
-      "blockId": "b0130",
-      "unitContext": {
-        "name": "Saurus Heroes",
-        "sourceBlockId": "b0121",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Saurus Oldblood",
-          "Saurus Scar-Veteran"
-        ]
-      },
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "captured",
-      "targets": [
-        "profiles.saurus oldblood.notes",
-        "profiles.saurus scar veteran.notes"
-      ]
-    },
-    {
-      "blockId": "b0134",
+      "blockId": "b0131",
       "unitContext": {
         "name": "Skink Heroes",
-        "sourceBlockId": "b0131",
+        "sourceBlockId": "b0128",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1012,10 +966,10 @@
       ]
     },
     {
-      "blockId": "b0140",
+      "blockId": "b0137",
       "unitContext": {
         "name": "Skink Heroes",
-        "sourceBlockId": "b0131",
+        "sourceBlockId": "b0128",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1034,10 +988,10 @@
       ]
     },
     {
-      "blockId": "b0143",
+      "blockId": "b0140",
       "unitContext": {
         "name": "Skink Heroes",
-        "sourceBlockId": "b0131",
+        "sourceBlockId": "b0128",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1056,10 +1010,10 @@
       ]
     },
     {
-      "blockId": "b0145",
+      "blockId": "b0142",
       "unitContext": {
         "name": "Skink Heroes",
-        "sourceBlockId": "b0131",
+        "sourceBlockId": "b0128",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1077,10 +1031,10 @@
       ]
     },
     {
-      "blockId": "b0150",
+      "blockId": "b0147",
       "unitContext": {
         "name": "Cold One",
-        "sourceBlockId": "b0150",
+        "sourceBlockId": "b0147",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1098,10 +1052,10 @@
       ]
     },
     {
-      "blockId": "b0156",
+      "blockId": "b0153",
       "unitContext": {
         "name": "Ripperdactyl",
-        "sourceBlockId": "b0156",
+        "sourceBlockId": "b0153",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1118,10 +1072,10 @@
       ]
     },
     {
-      "blockId": "b0160",
+      "blockId": "b0157",
       "unitContext": {
         "name": "Ripperdactyl",
-        "sourceBlockId": "b0156",
+        "sourceBlockId": "b0153",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1138,10 +1092,10 @@
       ]
     },
     {
-      "blockId": "b0161",
+      "blockId": "b0158",
       "unitContext": {
         "name": "Ripperdactyl",
-        "sourceBlockId": "b0156",
+        "sourceBlockId": "b0153",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1158,10 +1112,10 @@
       ]
     },
     {
-      "blockId": "b0163",
+      "blockId": "b0160",
       "unitContext": {
         "name": "Skink Cohorts",
-        "sourceBlockId": "b0163",
+        "sourceBlockId": "b0160",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1179,10 +1133,10 @@
       ]
     },
     {
-      "blockId": "b0164",
+      "blockId": "b0161",
       "unitContext": {
         "name": "Skink Cohorts",
-        "sourceBlockId": "b0163",
+        "sourceBlockId": "b0160",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1200,10 +1154,10 @@
       ]
     },
     {
-      "blockId": "b0165",
+      "blockId": "b0162",
       "unitContext": {
         "name": "Skink Cohorts",
-        "sourceBlockId": "b0163",
+        "sourceBlockId": "b0160",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1221,10 +1175,10 @@
       ]
     },
     {
-      "blockId": "b0166",
+      "blockId": "b0163",
       "unitContext": {
         "name": "Skink Cohorts",
-        "sourceBlockId": "b0163",
+        "sourceBlockId": "b0160",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1242,10 +1196,10 @@
       ]
     },
     {
-      "blockId": "b0167",
+      "blockId": "b0164",
       "unitContext": {
         "name": "Skink Cohorts",
-        "sourceBlockId": "b0163",
+        "sourceBlockId": "b0160",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1266,7 +1220,7 @@
       "blockId": "h0076",
       "unitContext": {
         "name": "Skink Cohorts",
-        "sourceBlockId": "b0163",
+        "sourceBlockId": "b0160",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1284,73 +1238,73 @@
       ]
     },
     {
+      "blockId": "b0165",
+      "unitContext": {
+        "name": "Skink Cohorts",
+        "sourceBlockId": "b0160",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Skink",
+          "Skink Brave"
+        ]
+      },
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.skink cohorts.notes"
+      ]
+    },
+    {
+      "blockId": "b0166",
+      "unitContext": {
+        "name": "Skink Cohorts",
+        "sourceBlockId": "b0160",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Skink",
+          "Skink Brave"
+        ]
+      },
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.skink cohorts.notes"
+      ]
+    },
+    {
+      "blockId": "b0167",
+      "unitContext": {
+        "name": "Skink Cohorts",
+        "sourceBlockId": "b0160",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Skink",
+          "Skink Brave"
+        ]
+      },
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.skink cohorts.notes"
+      ]
+    },
+    {
       "blockId": "b0168",
       "unitContext": {
         "name": "Skink Cohorts",
-        "sourceBlockId": "b0163",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Skink",
-          "Skink Brave"
-        ]
-      },
-      "entryKind": "list",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "captured",
-      "targets": [
-        "profiles.skink cohorts.notes"
-      ]
-    },
-    {
-      "blockId": "b0169",
-      "unitContext": {
-        "name": "Skink Cohorts",
-        "sourceBlockId": "b0163",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Skink",
-          "Skink Brave"
-        ]
-      },
-      "entryKind": "list",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "captured",
-      "targets": [
-        "profiles.skink cohorts.notes"
-      ]
-    },
-    {
-      "blockId": "b0170",
-      "unitContext": {
-        "name": "Skink Cohorts",
-        "sourceBlockId": "b0163",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Skink",
-          "Skink Brave"
-        ]
-      },
-      "entryKind": "list",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "captured",
-      "targets": [
-        "profiles.skink cohorts.notes"
-      ]
-    },
-    {
-      "blockId": "b0171",
-      "unitContext": {
-        "name": "Skink Cohorts",
-        "sourceBlockId": "b0163",
+        "sourceBlockId": "b0160",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1368,10 +1322,10 @@
       ]
     },
     {
-      "blockId": "b0172",
+      "blockId": "b0169",
       "unitContext": {
         "name": "Skink Cohorts",
-        "sourceBlockId": "b0163",
+        "sourceBlockId": "b0160",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1389,10 +1343,73 @@
       ]
     },
     {
+      "blockId": "b0170",
+      "unitContext": {
+        "name": "Skink Cohorts",
+        "sourceBlockId": "b0160",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Skink",
+          "Skink Brave"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.spawn-kin"
+      ]
+    },
+    {
+      "blockId": "b0171",
+      "unitContext": {
+        "name": "Skink Cohorts",
+        "sourceBlockId": "b0160",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Skink",
+          "Skink Brave"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.spawn-kin"
+      ]
+    },
+    {
+      "blockId": "b0172",
+      "unitContext": {
+        "name": "Skink Cohorts",
+        "sourceBlockId": "b0160",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Skink",
+          "Skink Brave"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.spawn-kin"
+      ]
+    },
+    {
       "blockId": "b0173",
       "unitContext": {
         "name": "Skink Cohorts",
-        "sourceBlockId": "b0163",
+        "sourceBlockId": "b0160",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1413,7 +1430,7 @@
       "blockId": "b0174",
       "unitContext": {
         "name": "Skink Cohorts",
-        "sourceBlockId": "b0163",
+        "sourceBlockId": "b0160",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1433,71 +1450,8 @@
     {
       "blockId": "b0175",
       "unitContext": {
-        "name": "Skink Cohorts",
-        "sourceBlockId": "b0163",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Skink",
-          "Skink Brave"
-        ]
-      },
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.spawn-kin"
-      ]
-    },
-    {
-      "blockId": "b0176",
-      "unitContext": {
-        "name": "Skink Cohorts",
-        "sourceBlockId": "b0163",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Skink",
-          "Skink Brave"
-        ]
-      },
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.spawn-kin"
-      ]
-    },
-    {
-      "blockId": "b0177",
-      "unitContext": {
-        "name": "Skink Cohorts",
-        "sourceBlockId": "b0163",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Skink",
-          "Skink Brave"
-        ]
-      },
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.spawn-kin"
-      ]
-    },
-    {
-      "blockId": "b0178",
-      "unitContext": {
         "name": "Skink Skirmishers",
-        "sourceBlockId": "b0178",
+        "sourceBlockId": "b0175",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1511,14 +1465,15 @@
       ],
       "status": "applied",
       "targets": [
+        "units.skink-skirmishers.points",
         "profiles.skink skirmishers"
       ]
     },
     {
-      "blockId": "b0187",
+      "blockId": "b0184",
       "unitContext": {
         "name": "Skink Skirmishers",
-        "sourceBlockId": "b0178",
+        "sourceBlockId": "b0175",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1536,10 +1491,10 @@
       ]
     },
     {
-      "blockId": "b0194",
+      "blockId": "b0191",
       "unitContext": {
         "name": "Chameleon Skinks",
-        "sourceBlockId": "b0188",
+        "sourceBlockId": "b0185",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1557,10 +1512,10 @@
       ]
     },
     {
-      "blockId": "b0195",
+      "blockId": "b0192",
       "unitContext": {
         "name": "Chameleon Skinks",
-        "sourceBlockId": "b0188",
+        "sourceBlockId": "b0185",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1581,7 +1536,7 @@
       "blockId": "h0079",
       "unitContext": {
         "name": "Chameleon Skinks",
-        "sourceBlockId": "b0188",
+        "sourceBlockId": "b0185",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1599,10 +1554,10 @@
       ]
     },
     {
-      "blockId": "b0196",
+      "blockId": "b0193",
       "unitContext": {
         "name": "Chameleon Skinks",
-        "sourceBlockId": "b0188",
+        "sourceBlockId": "b0185",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1620,10 +1575,10 @@
       ]
     },
     {
-      "blockId": "b0197",
+      "blockId": "b0194",
       "unitContext": {
         "name": "Saurus Warriors",
-        "sourceBlockId": "b0197",
+        "sourceBlockId": "b0194",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1637,14 +1592,15 @@
       ],
       "status": "applied",
       "targets": [
+        "units.saurus-warrior.points",
         "profiles.saurus warriors"
       ]
     },
     {
-      "blockId": "b0201",
+      "blockId": "b0198",
       "unitContext": {
         "name": "Saurus Warriors",
-        "sourceBlockId": "b0197",
+        "sourceBlockId": "b0194",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1662,10 +1618,10 @@
       ]
     },
     {
-      "blockId": "b0205",
+      "blockId": "b0202",
       "unitContext": {
         "name": "Saurus Warriors",
-        "sourceBlockId": "b0197",
+        "sourceBlockId": "b0194",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1683,10 +1639,10 @@
       ]
     },
     {
-      "blockId": "b0206",
+      "blockId": "b0203",
       "unitContext": {
         "name": "Saurus Warriors",
-        "sourceBlockId": "b0197",
+        "sourceBlockId": "b0194",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1704,10 +1660,10 @@
       ]
     },
     {
-      "blockId": "b0207",
+      "blockId": "b0204",
       "unitContext": {
         "name": "Saurus Warriors",
-        "sourceBlockId": "b0197",
+        "sourceBlockId": "b0194",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1725,10 +1681,10 @@
       ]
     },
     {
-      "blockId": "b0208",
+      "blockId": "b0205",
       "unitContext": {
         "name": "Temple Guard",
-        "sourceBlockId": "b0208",
+        "sourceBlockId": "b0205",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1743,15 +1699,17 @@
       ],
       "status": "applied",
       "targets": [
+        "units.temple-guard.points",
+        "units.temple-guard.points",
         "profiles.temple guard",
         "profiles.temple guard"
       ]
     },
     {
-      "blockId": "b0212",
+      "blockId": "b0209",
       "unitContext": {
         "name": "Temple Guard",
-        "sourceBlockId": "b0208",
+        "sourceBlockId": "b0205",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1769,10 +1727,10 @@
       ]
     },
     {
-      "blockId": "b0214",
+      "blockId": "b0211",
       "unitContext": {
         "name": "Temple Guard",
-        "sourceBlockId": "b0208",
+        "sourceBlockId": "b0205",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1791,10 +1749,10 @@
       ]
     },
     {
-      "blockId": "b0216",
+      "blockId": "b0213",
       "unitContext": {
         "name": "Temple Guard",
-        "sourceBlockId": "b0208",
+        "sourceBlockId": "b0205",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1813,10 +1771,10 @@
       ]
     },
     {
-      "blockId": "b0217",
+      "blockId": "b0214",
       "unitContext": {
         "name": "Temple Guard",
-        "sourceBlockId": "b0208",
+        "sourceBlockId": "b0205",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1835,10 +1793,10 @@
       ]
     },
     {
-      "blockId": "b0220",
+      "blockId": "b0217",
       "unitContext": {
         "name": "Kroxigor",
-        "sourceBlockId": "b0218",
+        "sourceBlockId": "b0215",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1856,10 +1814,10 @@
       ]
     },
     {
-      "blockId": "b0222",
+      "blockId": "b0219",
       "unitContext": {
         "name": "Kroxigor",
-        "sourceBlockId": "b0218",
+        "sourceBlockId": "b0215",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1877,10 +1835,10 @@
       ]
     },
     {
-      "blockId": "b0224",
+      "blockId": "b0221",
       "unitContext": {
         "name": "Kroxigor",
-        "sourceBlockId": "b0218",
+        "sourceBlockId": "b0215",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1898,10 +1856,10 @@
       ]
     },
     {
-      "blockId": "b0233",
+      "blockId": "b0230",
       "unitContext": {
         "name": "Salamander Packs",
-        "sourceBlockId": "b0233",
+        "sourceBlockId": "b0230",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1913,16 +1871,18 @@
       "changeKinds": [
         "new"
       ],
-      "status": "applied",
+      "status": "captured",
       "targets": [
-        "profiles.salamander pack"
-      ]
+        "units.salamander-packs.points",
+        "profiles.salamander pack.notes"
+      ],
+      "reason": "non-rectangular statline retained losslessly"
     },
     {
-      "blockId": "b0234",
+      "blockId": "b0231",
       "unitContext": {
         "name": "Salamander Packs",
-        "sourceBlockId": "b0233",
+        "sourceBlockId": "b0230",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1940,10 +1900,10 @@
       ]
     },
     {
-      "blockId": "b0235",
+      "blockId": "b0232",
       "unitContext": {
         "name": "Salamander Packs",
-        "sourceBlockId": "b0233",
+        "sourceBlockId": "b0230",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1961,10 +1921,10 @@
       ]
     },
     {
-      "blockId": "b0236",
+      "blockId": "b0233",
       "unitContext": {
         "name": "Salamander Packs",
-        "sourceBlockId": "b0233",
+        "sourceBlockId": "b0230",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1982,31 +1942,10 @@
       ]
     },
     {
-      "blockId": "b0237",
+      "blockId": "b0234",
       "unitContext": {
         "name": "Salamander Packs",
-        "sourceBlockId": "b0233",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Salamander",
-          "Skink Handler x3"
-        ]
-      },
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "captured",
-      "targets": [
-        "profiles.salamander pack.notes"
-      ]
-    },
-    {
-      "blockId": "b0238",
-      "unitContext": {
-        "name": "Salamander Packs",
-        "sourceBlockId": "b0233",
+        "sourceBlockId": "b0230",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -2025,10 +1964,10 @@
       ]
     },
     {
-      "blockId": "b0239",
+      "blockId": "b0235",
       "unitContext": {
         "name": "Salamander Packs",
-        "sourceBlockId": "b0233",
+        "sourceBlockId": "b0230",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -2047,10 +1986,10 @@
       ]
     },
     {
-      "blockId": "b0240",
+      "blockId": "b0236",
       "unitContext": {
         "name": "Razordon Packs",
-        "sourceBlockId": "b0240",
+        "sourceBlockId": "b0236",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -2062,16 +2001,18 @@
       "changeKinds": [
         "new"
       ],
-      "status": "applied",
+      "status": "captured",
       "targets": [
-        "profiles.razordon pack"
-      ]
+        "units.razordon-packs.points",
+        "profiles.razordon pack.notes"
+      ],
+      "reason": "non-rectangular statline retained losslessly"
     },
     {
-      "blockId": "b0241",
+      "blockId": "b0237",
       "unitContext": {
         "name": "Razordon Packs",
-        "sourceBlockId": "b0240",
+        "sourceBlockId": "b0236",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -2089,10 +2030,10 @@
       ]
     },
     {
-      "blockId": "b0242",
+      "blockId": "b0238",
       "unitContext": {
         "name": "Razordon Packs",
-        "sourceBlockId": "b0240",
+        "sourceBlockId": "b0236",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -2110,31 +2051,10 @@
       ]
     },
     {
-      "blockId": "b0244",
+      "blockId": "b0240",
       "unitContext": {
         "name": "Razordon Packs",
-        "sourceBlockId": "b0240",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Razordon",
-          "Skink Handler x3"
-        ]
-      },
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "captured",
-      "targets": [
-        "profiles.razordon pack.notes"
-      ]
-    },
-    {
-      "blockId": "b0245",
-      "unitContext": {
-        "name": "Razordon Packs",
-        "sourceBlockId": "b0240",
+        "sourceBlockId": "b0236",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -2153,10 +2073,10 @@
       ]
     },
     {
-      "blockId": "b0246",
+      "blockId": "b0241",
       "unitContext": {
         "name": "Razordon Packs",
-        "sourceBlockId": "b0240",
+        "sourceBlockId": "b0236",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -2174,10 +2094,10 @@
       ]
     },
     {
-      "blockId": "b0251",
+      "blockId": "b0246",
       "unitContext": {
         "name": "Cold One Riders",
-        "sourceBlockId": "b0248",
+        "sourceBlockId": "b0243",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2196,10 +2116,10 @@
       ]
     },
     {
-      "blockId": "b0252",
+      "blockId": "b0247",
       "unitContext": {
         "name": "Cold One Riders",
-        "sourceBlockId": "b0248",
+        "sourceBlockId": "b0243",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2218,10 +2138,32 @@
       ]
     },
     {
-      "blockId": "b0253",
+      "blockId": "b0248",
       "unitContext": {
         "name": "Cold One Riders",
-        "sourceBlockId": "b0248",
+        "sourceBlockId": "b0243",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Cold One Rider",
+          "Pack Leader",
+          "Cold One"
+        ]
+      },
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.cold one riders.notes"
+      ]
+    },
+    {
+      "blockId": "b0249",
+      "unitContext": {
+        "name": "Cold One Riders",
+        "sourceBlockId": "b0243",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2240,32 +2182,10 @@
       ]
     },
     {
-      "blockId": "b0254",
+      "blockId": "b0251",
       "unitContext": {
         "name": "Cold One Riders",
-        "sourceBlockId": "b0248",
-        "method": "preceding-heading",
-        "confidence": "medium",
-        "profileNames": [
-          "Cold One Rider",
-          "Pack Leader",
-          "Cold One"
-        ]
-      },
-      "entryKind": "option",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "units.cold-one-riders.options"
-      ]
-    },
-    {
-      "blockId": "b0256",
-      "unitContext": {
-        "name": "Cold One Riders",
-        "sourceBlockId": "b0248",
+        "sourceBlockId": "b0243",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2284,10 +2204,10 @@
       ]
     },
     {
-      "blockId": "b0257",
+      "blockId": "b0252",
       "unitContext": {
         "name": "Terradon Riders",
-        "sourceBlockId": "b0257",
+        "sourceBlockId": "b0252",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -2306,10 +2226,76 @@
       ]
     },
     {
+      "blockId": "b0256",
+      "unitContext": {
+        "name": "Terradon Riders",
+        "sourceBlockId": "b0252",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Terradon Rider",
+          "Sky Leader",
+          "Terradon"
+        ]
+      },
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.terradon riders.notes"
+      ]
+    },
+    {
+      "blockId": "b0257",
+      "unitContext": {
+        "name": "Terradon Riders",
+        "sourceBlockId": "b0252",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Terradon Rider",
+          "Sky Leader",
+          "Terradon"
+        ]
+      },
+      "entryKind": "option",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.terradon-riders.options"
+      ]
+    },
+    {
+      "blockId": "b0258",
+      "unitContext": {
+        "name": "Terradon Riders",
+        "sourceBlockId": "b0252",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Terradon Rider",
+          "Sky Leader",
+          "Terradon"
+        ]
+      },
+      "entryKind": "option",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.terradon-riders.options"
+      ]
+    },
+    {
       "blockId": "b0261",
       "unitContext": {
         "name": "Terradon Riders",
-        "sourceBlockId": "b0257",
+        "sourceBlockId": "b0252",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -2331,73 +2317,7 @@
       "blockId": "b0262",
       "unitContext": {
         "name": "Terradon Riders",
-        "sourceBlockId": "b0257",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Terradon Rider",
-          "Sky Leader",
-          "Terradon"
-        ]
-      },
-      "entryKind": "option",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "units.terradon-riders.options"
-      ]
-    },
-    {
-      "blockId": "b0263",
-      "unitContext": {
-        "name": "Terradon Riders",
-        "sourceBlockId": "b0257",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Terradon Rider",
-          "Sky Leader",
-          "Terradon"
-        ]
-      },
-      "entryKind": "option",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "units.terradon-riders.options"
-      ]
-    },
-    {
-      "blockId": "b0266",
-      "unitContext": {
-        "name": "Terradon Riders",
-        "sourceBlockId": "b0257",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Terradon Rider",
-          "Sky Leader",
-          "Terradon"
-        ]
-      },
-      "entryKind": "list",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "captured",
-      "targets": [
-        "profiles.terradon riders.notes"
-      ]
-    },
-    {
-      "blockId": "b0267",
-      "unitContext": {
-        "name": "Terradon Riders",
-        "sourceBlockId": "b0257",
+        "sourceBlockId": "b0252",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -2416,10 +2336,10 @@
       ]
     },
     {
-      "blockId": "b0268",
+      "blockId": "b0263",
       "unitContext": {
         "name": "Terradon Riders",
-        "sourceBlockId": "b0257",
+        "sourceBlockId": "b0252",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -2438,10 +2358,10 @@
       ]
     },
     {
-      "blockId": "b0269",
+      "blockId": "b0264",
       "unitContext": {
         "name": "Terradon Riders",
-        "sourceBlockId": "b0257",
+        "sourceBlockId": "b0252",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -2460,10 +2380,10 @@
       ]
     },
     {
-      "blockId": "b0270",
+      "blockId": "b0265",
       "unitContext": {
         "name": "Ripperdactyl Riders",
-        "sourceBlockId": "b0270",
+        "sourceBlockId": "b0265",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2482,10 +2402,10 @@
       ]
     },
     {
-      "blockId": "b0274",
+      "blockId": "b0269",
       "unitContext": {
         "name": "Ripperdactyl Riders",
-        "sourceBlockId": "b0270",
+        "sourceBlockId": "b0265",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2504,10 +2424,10 @@
       ]
     },
     {
-      "blockId": "b0275",
+      "blockId": "b0270",
       "unitContext": {
         "name": "Ripperdactyl Riders",
-        "sourceBlockId": "b0270",
+        "sourceBlockId": "b0265",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2526,10 +2446,10 @@
       ]
     },
     {
-      "blockId": "b0276",
+      "blockId": "b0271",
       "unitContext": {
         "name": "Ripperdactyl Riders",
-        "sourceBlockId": "b0270",
+        "sourceBlockId": "b0265",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2548,10 +2468,10 @@
       ]
     },
     {
-      "blockId": "b0277",
+      "blockId": "b0272",
       "unitContext": {
         "name": "Ripperdactyl Riders",
-        "sourceBlockId": "b0270",
+        "sourceBlockId": "b0265",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2570,10 +2490,10 @@
       ]
     },
     {
-      "blockId": "b0279",
+      "blockId": "b0274",
       "unitContext": {
         "name": "Ripperdactyl Riders",
-        "sourceBlockId": "b0270",
+        "sourceBlockId": "b0265",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2592,10 +2512,10 @@
       ]
     },
     {
-      "blockId": "b0280",
+      "blockId": "b0275",
       "unitContext": {
         "name": "Carnosaur",
-        "sourceBlockId": "b0280",
+        "sourceBlockId": "b0275",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -2612,10 +2532,10 @@
       ]
     },
     {
-      "blockId": "b0285",
+      "blockId": "b0280",
       "unitContext": {
         "name": "Carnosaur",
-        "sourceBlockId": "b0280",
+        "sourceBlockId": "b0275",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -2632,30 +2552,10 @@
       ]
     },
     {
-      "blockId": "b0289",
-      "unitContext": {
-        "name": "Carnosaur",
-        "sourceBlockId": "b0280",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Carnosaur"
-        ]
-      },
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.slashing-talons-combat-s-3-multiple-wounds-d3"
-      ]
-    },
-    {
-      "blockId": "b0292",
+      "blockId": "b0286",
       "unitContext": {
         "name": "Stegadons",
-        "sourceBlockId": "b0292",
+        "sourceBlockId": "b0286",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2670,14 +2570,16 @@
       ],
       "status": "applied",
       "targets": [
+        "units.stegadon.points",
+        "units.ancient-stegadon.points",
         "profiles.stegadon"
       ]
     },
     {
-      "blockId": "b0296",
+      "blockId": "b0290",
       "unitContext": {
         "name": "Stegadons",
-        "sourceBlockId": "b0292",
+        "sourceBlockId": "b0286",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2696,10 +2598,10 @@
       ]
     },
     {
-      "blockId": "b0300",
+      "blockId": "b0294",
       "unitContext": {
         "name": "Stegadons",
-        "sourceBlockId": "b0292",
+        "sourceBlockId": "b0286",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2718,10 +2620,10 @@
       ]
     },
     {
-      "blockId": "b0301",
+      "blockId": "b0295",
       "unitContext": {
         "name": "Stegadons",
-        "sourceBlockId": "b0292",
+        "sourceBlockId": "b0286",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2743,7 +2645,7 @@
       "blockId": "h0099",
       "unitContext": {
         "name": "Stegadons",
-        "sourceBlockId": "b0292",
+        "sourceBlockId": "b0286",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2762,10 +2664,10 @@
       ]
     },
     {
-      "blockId": "b0302",
+      "blockId": "b0296",
       "unitContext": {
         "name": "Stegadons",
-        "sourceBlockId": "b0292",
+        "sourceBlockId": "b0286",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2784,10 +2686,10 @@
       ]
     },
     {
-      "blockId": "b0304",
+      "blockId": "b0298",
       "unitContext": {
         "name": "Stegadons",
-        "sourceBlockId": "b0292",
+        "sourceBlockId": "b0286",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2807,10 +2709,10 @@
       ]
     },
     {
-      "blockId": "b0305",
+      "blockId": "b0299",
       "unitContext": {
         "name": "Stegadons",
-        "sourceBlockId": "b0292",
+        "sourceBlockId": "b0286",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2826,35 +2728,101 @@
       "status": "applied",
       "targets": [
         "rules.engine-of-the-gods"
+      ]
+    },
+    {
+      "blockId": "b0302",
+      "unitContext": {
+        "name": "Stegadons",
+        "sourceBlockId": "b0286",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Stegadon",
+          "Ancient Stegadon",
+          "Skink Crew (x5)"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.engine-of-the-gods"
+      ]
+    },
+    {
+      "blockId": "b0305",
+      "unitContext": {
+        "name": "Stegadons",
+        "sourceBlockId": "b0286",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Stegadon",
+          "Ancient Stegadon",
+          "Skink Crew (x5)"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.portent-of-warding"
+      ]
+    },
+    {
+      "blockId": "b0306",
+      "unitContext": {
+        "name": "Stegadons",
+        "sourceBlockId": "b0286",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Stegadon",
+          "Ancient Stegadon",
+          "Skink Crew (x5)"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.portent-of-warding"
+      ]
+    },
+    {
+      "blockId": "b0307",
+      "unitContext": {
+        "name": "Stegadons",
+        "sourceBlockId": "b0286",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Stegadon",
+          "Ancient Stegadon",
+          "Skink Crew (x5)"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.portent-of-warding"
       ]
     },
     {
       "blockId": "b0308",
       "unitContext": {
         "name": "Stegadons",
-        "sourceBlockId": "b0292",
-        "method": "preceding-heading",
-        "confidence": "medium",
-        "profileNames": [
-          "Stegadon",
-          "Ancient Stegadon",
-          "Skink Crew (x5)"
-        ]
-      },
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.engine-of-the-gods"
-      ]
-    },
-    {
-      "blockId": "b0311",
-      "unitContext": {
-        "name": "Stegadons",
-        "sourceBlockId": "b0292",
+        "sourceBlockId": "b0286",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2873,10 +2841,10 @@
       ]
     },
     {
-      "blockId": "b0312",
+      "blockId": "b0309",
       "unitContext": {
         "name": "Stegadons",
-        "sourceBlockId": "b0292",
+        "sourceBlockId": "b0286",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2895,76 +2863,10 @@
       ]
     },
     {
-      "blockId": "b0313",
+      "blockId": "b0310",
       "unitContext": {
         "name": "Stegadons",
-        "sourceBlockId": "b0292",
-        "method": "preceding-heading",
-        "confidence": "medium",
-        "profileNames": [
-          "Stegadon",
-          "Ancient Stegadon",
-          "Skink Crew (x5)"
-        ]
-      },
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.portent-of-warding"
-      ]
-    },
-    {
-      "blockId": "b0314",
-      "unitContext": {
-        "name": "Stegadons",
-        "sourceBlockId": "b0292",
-        "method": "preceding-heading",
-        "confidence": "medium",
-        "profileNames": [
-          "Stegadon",
-          "Ancient Stegadon",
-          "Skink Crew (x5)"
-        ]
-      },
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.portent-of-warding"
-      ]
-    },
-    {
-      "blockId": "b0315",
-      "unitContext": {
-        "name": "Stegadons",
-        "sourceBlockId": "b0292",
-        "method": "preceding-heading",
-        "confidence": "medium",
-        "profileNames": [
-          "Stegadon",
-          "Ancient Stegadon",
-          "Skink Crew (x5)"
-        ]
-      },
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.portent-of-warding"
-      ]
-    },
-    {
-      "blockId": "b0316",
-      "unitContext": {
-        "name": "Stegadons",
-        "sourceBlockId": "b0292",
+        "sourceBlockId": "b0286",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2985,10 +2887,10 @@
       ]
     },
     {
-      "blockId": "b0319",
+      "blockId": "b0313",
       "unitContext": {
         "name": "Bastiladon",
-        "sourceBlockId": "b0319",
+        "sourceBlockId": "b0313",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -3002,14 +2904,15 @@
       ],
       "status": "applied",
       "targets": [
+        "units.bastiladon.points",
         "profiles.bastiladon"
       ]
     },
     {
-      "blockId": "b0327",
+      "blockId": "b0321",
       "unitContext": {
         "name": "Bastiladon",
-        "sourceBlockId": "b0319",
+        "sourceBlockId": "b0313",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -3027,10 +2930,10 @@
       ]
     },
     {
-      "blockId": "b0328",
+      "blockId": "b0322",
       "unitContext": {
         "name": "Bastiladon",
-        "sourceBlockId": "b0319",
+        "sourceBlockId": "b0313",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -3048,10 +2951,10 @@
       ]
     },
     {
-      "blockId": "b0331",
+      "blockId": "b0325",
       "unitContext": {
         "name": "Bastiladon",
-        "sourceBlockId": "b0319",
+        "sourceBlockId": "b0313",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -3069,10 +2972,10 @@
       ]
     },
     {
-      "blockId": "b0340",
+      "blockId": "b0334",
       "unitContext": {
         "name": "Bastiladon",
-        "sourceBlockId": "b0319",
+        "sourceBlockId": "b0313",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -3090,10 +2993,10 @@
       ]
     },
     {
-      "blockId": "b0341",
+      "blockId": "b0335",
       "unitContext": {
         "name": "Troglodon",
-        "sourceBlockId": "b0341",
+        "sourceBlockId": "b0335",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -3107,14 +3010,15 @@
       ],
       "status": "applied",
       "targets": [
+        "units.troglodon.points",
         "profiles.troglodon"
       ]
     },
     {
-      "blockId": "b0345",
+      "blockId": "b0339",
       "unitContext": {
         "name": "Troglodon",
-        "sourceBlockId": "b0341",
+        "sourceBlockId": "b0335",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -3132,10 +3036,10 @@
       ]
     },
     {
-      "blockId": "b0348",
+      "blockId": "b0342",
       "unitContext": {
         "name": "Troglodon",
-        "sourceBlockId": "b0341",
+        "sourceBlockId": "b0335",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -3153,10 +3057,10 @@
       ]
     },
     {
-      "blockId": "b0349",
+      "blockId": "b0343",
       "unitContext": {
         "name": "Troglodon",
-        "sourceBlockId": "b0341",
+        "sourceBlockId": "b0335",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -3174,10 +3078,10 @@
       ]
     },
     {
-      "blockId": "b0350",
+      "blockId": "b0344",
       "unitContext": {
         "name": "Troglodon",
-        "sourceBlockId": "b0341",
+        "sourceBlockId": "b0335",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -3195,10 +3099,10 @@
       ]
     },
     {
-      "blockId": "b0351",
+      "blockId": "b0345",
       "unitContext": {
         "name": "Troglodon",
-        "sourceBlockId": "b0341",
+        "sourceBlockId": "b0335",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -3216,10 +3120,10 @@
       ]
     },
     {
-      "blockId": "b0352",
+      "blockId": "b0346",
       "unitContext": {
         "name": "Troglodon",
-        "sourceBlockId": "b0341",
+        "sourceBlockId": "b0335",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [

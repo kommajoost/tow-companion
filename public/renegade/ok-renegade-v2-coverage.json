@@ -658,6 +658,8 @@
    ],
    "status": "applied",
    "targets": [
+    "units.slaughtermaster.points",
+    "units.butcher.points",
     "profiles.slaughtermaster",
     "profiles.butcher"
    ]
@@ -1201,9 +1203,10 @@
    ],
    "status": "applied",
    "targets": [
+    "units.leadbelchers.points",
     "units.leadbelchers.specialRules"
    ],
-   "appliedBy": "hand, 2026-08-11 — zie commit"
+   "reason": "met de hand toegepast: statline + Special Rules staan geel (in ontwikkeling); de getallen zelf zijn ondubbelzinnig"
   },
   {
    "blockId": "b0231",
@@ -1474,6 +1477,7 @@
    ],
    "status": "applied",
    "targets": [
+    "units.yhetees.points",
     "profiles.yhetees"
    ]
   },
@@ -2008,6 +2012,7 @@
    ],
    "status": "applied",
    "targets": [
+    "units.stonehorn-riders.points",
     "profiles.stonehorns"
    ]
   },

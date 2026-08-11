@@ -187,6 +187,11 @@ const cleanedOptionName = (raw) => raw
   .replace(/^upgrade one model to\s+/i, '')
   .replace(/^include (?:one|an?)\s+/i, '')
   .replace(/^(?:have|take|purchase|be equipped with)\s+(?:the|an?)?\s*/i, '')
+  // "The Ambushers special rule" is how the draft phrases buying a rule; the app shows the option name
+  // on a button, where the wrapper is noise. It only survived until now because a leftover patch from
+  // the old importer already carried the short name and the dedup kept that one.
+  .replace(/^the\s+(.+?)\s+special rules?$/i, '$1')
+  .replace(/\s+special rules?$/i, '')
   .replace(/\s*\(see (?:below|page[^)]*)\)/ig, '')
   .replace(/\s+/g, ' ')
   .trim();
@@ -261,9 +266,17 @@ const variants = (value) => {
   const words = norm(value).split(' ').filter(Boolean);
   const out = new Set([words.join(' ')]);
   const last = words.at(-1) ?? '';
-  if (/ies$/.test(last)) out.add([...words.slice(0, -1), last.replace(/ies$/, 'y')].join(' '));
-  else if (/s$/.test(last)) out.add([...words.slice(0, -1), last.replace(/s$/, '')].join(' '));
-  else if (last) out.add([...words.slice(0, -1), `${last}s`].join(' '));
+  const swap = (form) => out.add([...words.slice(0, -1), form].join(' '));
+  if (/ies$/.test(last)) swap(last.replace(/ies$/, 'y'));
+  else if (/s$/.test(last)) swap(last.replace(/s$/, ''));
+  else if (last) swap(`${last}s`);
+  // -man/-men. A statline row names one model ("Repeater Crossbowman") where the catalogue names the
+  // unit ("Repeater Crossbowmen"), and regular -s plurals never bridge that: the row resolved to
+  // nothing, so its price was never written. It only looked fine because the superseded units importer
+  // had left a patch behind, which a clean rebuild then dropped.
+  if (/man$/.test(last)) swap(last.replace(/man$/, 'men'));
+  else if (/men$/.test(last)) swap(last.replace(/men$/, 'man'));
+  if (/[^aeiou]y$/.test(last)) swap(last.replace(/y$/, 'ies')); // Chaos Fury -> Chaos Furies
   return out;
 };
 
@@ -445,6 +458,76 @@ for (const [key, army] of Object.entries(PACKS)) {
     if (text && !rules.includes(text)) rules.push(text);
     overlay.composition.sourceRules[section] = rules;
     implementedBlocks.set(block.id, { status: 'captured', target: `composition.sourceRules.${section}` });
+  }
+
+  // WHICH LIST A UNIT IS CHOSEN FROM. The composition list was only ever CAPTURED as display text, so
+  // a draft that MOVES a unit between lists changed nothing you could build with: Vampire Counts puts
+  // Corpse Carts in Core and the Varghulf in Special, and the builder still offered them where upstream
+  // OWB had them (Special and Rare). Joost spotted both, 11-08.
+  //
+  // Only a bullet that plainly names units counts. A conditional one ("… may be taken as a Core
+  // choice", "If your General is a Strigoi Ghoul King …") grants an EXTRA place without moving the
+  // unit's home, and OWB already models those as separate `-core` datasheets. A unit named plainly in
+  // two sections is left alone: that is a disagreement to report, not to resolve by picking one.
+  const SECTIONS = { characters: 'characters', core: 'core', special: 'special', rare: 'rare' };
+  const conditional = /may be taken as|if your general|\bper\b[^.]*\btaken\b/i;
+  const byName = [...index].sort((a, b) => b.unit.name_en.length - a.unit.name_en.length);
+  const seenIn = new Map(); // unit id -> Set of sections naming it plainly
+  for (const block of reference.blocks.filter((candidate) =>
+    candidate.scope === 'army-list'
+    && candidate.type === 'list'
+    && SECTIONS[norm(candidate.headingPath?.at(-1))]
+    && (candidate.headingPath ?? []).includes('Grand Army Composition List'))) {
+    const section = SECTIONS[norm(block.headingPath.at(-1))];
+    for (const item of block.items ?? []) {
+      if (conditional.test(item.text)) continue;
+      let rest = ` ${norm(item.text)} `;
+      for (const { unit } of byName) {
+        for (const variant of variants(unit.name_en)) {
+          if (!variant || !rest.includes(` ${variant} `)) continue;
+          rest = rest.replace(` ${variant} `, ' ');
+          if (!seenIn.has(unit.id)) seenIn.set(unit.id, new Set());
+          seenIn.get(unit.id).add(section);
+        }
+      }
+    }
+  }
+  // A bullet names a unit by NAME, so a move is only safe when that name points at exactly one
+  // datasheet in exactly one list. Two situations break that, and both would do real damage:
+  //   - OWB spells "may be taken as a Core choice" as a second datasheet with the same name
+  //     (`grave-guard` + `grave-guard-core`). Moving the -core twin to Special deletes the Core option.
+  //   - Some units are listed under two categories under ONE id (Terrorgheist in Special and Rare).
+  //     A category patch is keyed by id, so it would move both copies and show the unit twice.
+  const entriesById = new Map();
+  const entriesByName = new Map();
+  for (const entry of index) {
+    if (!entriesById.has(entry.unit.id)) entriesById.set(entry.unit.id, []);
+    entriesById.get(entry.unit.id).push(entry);
+    const name = norm(entry.unit.name_en);
+    if (!entriesByName.has(name)) entriesByName.set(name, new Set());
+    entriesByName.get(name).add(entry.unit.id);
+  }
+  overlay.composition.units = overlay.composition.units ?? {};
+  for (const [unitId, sections] of seenIn) {
+    const entries = entriesById.get(unitId) ?? [];
+    if (!entries.length) continue;
+    const where = `${key}: ${unitId}`;
+    if (sections.size !== 1) {
+      console.warn(`${where} named plainly in ${[...sections].join(' and ')} — left in ${entries[0].category}`);
+      continue;
+    }
+    const wanted = [...sections][0];
+    if (entries.every((entry) => entry.category === wanted)) continue;
+    if (entries.length > 1) {
+      console.warn(`${where} sits in ${entries.map((e) => e.category).join(' and ')} under one id — not moved`);
+      continue;
+    }
+    if ((entriesByName.get(norm(entries[0].unit.name_en)) ?? new Set()).size > 1) {
+      console.warn(`${where} shares its name with another datasheet — not moved`);
+      continue;
+    }
+    overlay.composition.units[unitId] = { ...(overlay.composition.units[unitId] ?? {}), category: wanted };
+    console.warn(`${where} ${entries[0].category} -> ${wanted} (composition list)`);
   }
   for (const patch of Object.values(overlay.units)) {
     if (!patch.options?.length) continue;
@@ -769,12 +852,40 @@ for (const [key, army] of Object.entries(PACKS)) {
       //
       // Narrow on purpose: one name, one plain integer, resolving to a single datasheet. A modifier
       // row ("+5" for a champion) is a command upgrade, not a unit price, and is left alone.
-      for (const row of block.statlineRows ?? []) {
-        if (row.points?.value == null || row.points?.modifier) continue;
+      // A statline row names one MODEL; the catalogue names the UNIT. Three signals bridge that, tried
+      // strongest first, and each one only fires when its answer is unambiguous:
+      //   1. the row name itself ("Vampire Thrall");
+      //   2. the table's own unit, when the table prices exactly one primary row — "Executioner" 14 in
+      //      the "Har Ganeth Executioners" table, "Stonehorn" 220 in "Stonehorns". Deliberately keyed on
+      //      the context NAME only, never on its profile names: a summary table listing Vampire Lord and
+      //      Vampire Thrall would otherwise hand the Lord's 185 to the Thrall;
+      //   3. a unique name suffix — "Seneschal" 65 is "Infernal Seneschal", and no other datasheet ends
+      //      that way. Two candidates ("Chariot") means we do not know, so nothing is written.
+      // Without these the prices were simply never derived; they survived only as leftovers from the
+      // superseded units importer, and a clean rebuild dropped them silently.
+      const pricedRows = (block.statlineRows ?? []).filter((row) => row.points?.value != null && !row.points?.modifier);
+      // The FIRST priced row is the unit's own price; later ones are extras bought alongside it (Ogre
+      // Crew 25 next to Stonehorn 220, Skink Handler 1 next to Salamander 65). Role would be the tidier
+      // signal, but the importer labels every row of a single-model entry 'base-model', so position is
+      // the reliable one — and it is exactly how the entry reads on the page.
+      const uniekeDeelnaam = (naam) => {
+        const wanted = [...variants(naam)].filter((v) => v.length >= 4);
+        if (!wanted.length) return [];
+        const hits = index.filter(({ unit }) => {
+          const n = norm(unit.name_en);
+          return wanted.some((v) => n === v || n.endsWith(` ${v}`) || n.startsWith(`${v} `));
+        });
+        return new Set(hits.map(({ unit }) => norm(unit.name_en))).size === 1 ? hits : [];
+      };
+      for (const row of pricedRows) {
         const alias = UNIT_ALIASES[key]?.get(norm(row.name));
         const lookup = alias ?? row.name;
-        const rowHits = resolveUnits(index, { name: lookup, profileNames: [lookup] });
-        for (const { unit } of rowHits) {
+        let hitsForRow = resolveUnits(index, { name: lookup, profileNames: [lookup] });
+        if (!hitsForRow.length && pricedRows[0] === row && block.unitContext?.name) {
+          hitsForRow = resolveUnits(index, { name: block.unitContext.name });
+        }
+        if (!hitsForRow.length) hitsForRow = uniekeDeelnaam(lookup);
+        for (const { unit } of hitsForRow) {
           const patch = (overlay.units[unit.id] ??= {});
           if (alias) {
             // Show the draft's name, not the catalogue's — the player is holding the draft.
@@ -796,7 +907,15 @@ for (const [key, army] of Object.entries(PACKS)) {
           result.status = 'applied';
         }
       }
-      const stats = parseRectangularStats(block) ?? parseEmbeddedStats(block);
+      // A cell the draft struck out and did not replace leaves a HOLE, not a value: the Lizardmen
+      // Skink Handler lost its BS, T, W and Ld mid-edit. Publishing the row would either show blanks
+      // where a characteristic belongs, or — worse — quietly keep the deleted numbers. We do not know
+      // what replaces them, so we publish nothing and the base catalogue statline stands.
+      const gatenDoorSchrapping = (block.rows ?? []).some((row) => row.some((cell) => cell.struckText && !cell.text));
+      if (gatenDoorSchrapping) {
+        console.warn(`${key}: ${block.unitContext?.name ?? block.id} statline has cells the draft struck without replacing — stats not published`);
+      }
+      const stats = gatenDoorSchrapping ? null : (parseRectangularStats(block) ?? parseEmbeddedStats(block));
       if (stats) {
         if (hits.length) {
           for (const { unit } of hits) {
@@ -950,9 +1069,6 @@ for (const [key, army] of Object.entries(PACKS)) {
           if (!next.text || /^(Unit Size|Troop Type|Base Size|Armour Value|Equipment|Options)\s*:/i.test(next.text)) break;
           rulesText = `${rulesText} ${next.text}`.replace(/\s+/g, ' ').trim();
         }
-        // A line wrap in the source currently drops the separator between these two Lizardmen rules.
-        // Preserve both tokens as separate rule chips in the app.
-        rulesText = rulesText.replace(/\bFurious Charge Predatory Fighter\b/g, 'Furious Charge, Predatory Fighter');
         for (const { unit } of hits) {
           const patch = overlay.units[unit.id] ?? {};
           patch.specialRules = rulesText;
@@ -962,7 +1078,10 @@ for (const [key, army] of Object.entries(PACKS)) {
         }
         result.status = 'applied';
       } else if (match && profileKeys.length && !qualified) {
-        const rules = splitRules(match[1].replace(/\bFurious Charge Predatory Fighter\b/g, 'Furious Charge, Predatory Fighter'));
+        // Geen reparatie meer voor "Furious Charge Predatory Fighter": dat leek een ontbrekende komma,
+        // maar het was het DOORGESTREEPTE "Furious Charge" dat tegen de levende tekst aan plakte. Nu de
+        // importer schrappingen respecteert komt de combinatie in geen enkel pack meer voor.
+        const rules = splitRules(match[1]);
         addProfileValues(overlay, profileKeys, 'specialRules', rules);
         result.targets.push(...profileKeys.map((keyName) => `profiles.${keyName}.specialRules`));
         result.status = 'applied';
