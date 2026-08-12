@@ -1,4 +1,4 @@
-import { entryPoints, type BuilderList, type ListEntry, type MagicItemsData, type OwbArmy, type OwbUnit, type Category } from './owbBuilder';
+import { entryPoints, unitCategoryFor, type BuilderList, type ListEntry, type MagicItemsData, type OwbArmy, type OwbUnit, type Category } from './owbBuilder';
 import { deriveList, optionSummary } from './builderDerived';
 import { applyOverlayItems, catalogueFor, hasOverlay, OVERLAY_FILES, type CompositionOverlay } from './overlays';
 import { makeUnitStrengthLookup } from './troopTypes';
@@ -25,7 +25,17 @@ export interface RenderedEntry {
   uid: string;
   unitId: string;
   naam: string;
+  /** De BASIS-categorie: de catalogus-array waar de unit uit komt, en de sleutel waarmee de builder
+   *  hem opzoekt. Zegt wát voor entry dit is (een character blijft een character), NIET in welk
+   *  slot hij deze lijst bezet. */
   cat: string;
+  /** De EFFECTIEVE categorie onder de compositie van deze lijst — het slot dat de unit hier echt
+   *  bezet. Composities kunnen een unit verplaatsen (Renegade V2 zet de Corpse Cart in Core en de
+   *  Varghulf in Special), en dan zijn dit en `cat` verschillend. De campagne toonde tot 12-08-2026
+   *  alleen `cat` en zette zo'n unit dus in het verkeerde vak (Ferry). Groeiplafonds blijven wél op
+   *  `cat` lopen: characters +50, de rest +25 — een character dat een Rare-slot vult is nog steeds
+   *  een character. */
+  catEff: string;
   count: number;
   punten: number | null;
   opties: string[];
@@ -161,6 +171,9 @@ function renderEen(
       unitId: e.unitId,
       naam: (e.customName || unit?.name_en || e.unitId || 'Unit').trim(),
       cat: e.cat,
+      // Zelfde bron als de builder zelf gebruikt om de secties te tellen (deriveList): de compositie
+      // mag een unit verplaatsen. Zonder catalogus valt er niets te bepalen → dan de basis.
+      catEff: unit ? unitCategoryFor(unit, list.composition, e.cat) : e.cat,
       count,
       punten: unit ? entryPoints(unit, e, itemsData ?? undefined) : null,
       opties: unit ? labels(optionSummary(unit, e, itemsData ?? undefined)) : [],
