@@ -5,6 +5,7 @@ import { useGame } from '../../game';
 import { unitTotalStrength } from '../../lib/armyRules';
 import {
   battleByCode, battleQuests, reportBattleResult, officieleUitslag,
+  kroniekMijn, kroniekBattleZet,
   RESULTAAT_NAAM, TP_VAN_RESULTAAT, SPIEGEL,
   type CampaignBattle, type BattleResultaat, type ToernooiResultaat, type BattleQuests,
 } from '../../lib/campaignBattle';
@@ -101,6 +102,13 @@ export function CampaignResultReporter({ embedded = false }: { embedded?: boolea
   // hetzelfde zeggen. null = nog niet opgehaald / oudere server zonder cap.
   const [tpRes, setTpRes] = useState<ToernooiResultaat | null>(null);
   const [notes, setNotes] = useState('');
+  // De chronicler (13-08-2026). PERSOONLIJK verslag van dit gevecht, los van het gedeelde Notes-veld
+  // hierboven: dat hoort bij de battle, dit hoort bij jou. Beide spelers kunnen dus hun eigen versie
+  // schrijven, en het staat los van wie de uitslag indient.
+  const [kroniek, setKroniek] = useState('');
+  const [kroniekOpgeslagen, setKroniekOpgeslagen] = useState('');
+  const [kroniekBezig, setKroniekBezig] = useState(false);
+  const [kroniekMelding, setKroniekMelding] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [done, setDone] = useState(false);
   const [err, setErr] = useState<string | null>(null);
@@ -121,6 +129,40 @@ export function CampaignResultReporter({ embedded = false }: { embedded?: boolea
       .catch(() => { if (alive) setQuests({ aanvaller: null, verdediger: null }); });
     return () => { alive = false; };
   }, [code]);
+
+  // Al eerder iets over DEZE battle geschreven? Dan staat het er bij terugkomst gewoon weer.
+  useEffect(() => {
+    const id = battle?.id;
+    if (!id) return;
+    let alive = true;
+    kroniekMijn()
+      .then((stukken) => {
+        if (!alive) return;
+        const stuk = stukken.find((k) => k.soort === 'battle' && k.battle === id);
+        setKroniek(stuk?.tekst ?? '');
+        setKroniekOpgeslagen(stuk?.tekst ?? '');
+      })
+      .catch(() => { /* geen kroniek is geen fout — het veld blijft gewoon leeg */ });
+    return () => { alive = false; };
+  }, [battle?.id]);
+
+  const bewaarKroniek = async () => {
+    const id = battle?.id;
+    if (!id || kroniekBezig) return;
+    setKroniekBezig(true);
+    setKroniekMelding(null);
+    try {
+      await kroniekBattleZet(kroniek.trim(), battle?.fase ?? null, id);
+      setKroniekOpgeslagen(kroniek.trim());
+      setKroniekMelding(kroniek.trim() ? 'Your chronicler has it.' : 'Entry withdrawn.');
+    } catch (e) {
+      setKroniekMelding((e as Error).message === 'NIET_INGELOGD'
+        ? 'Sign in to the campaign account to write.'
+        : 'Could not save — try again.');
+    } finally {
+      setKroniekBezig(false);
+    }
+  };
 
   // VP via de rules-kritieke engine (kill-VP uit Dead-or-Fled + handmatige bonussen), NIET meer ruw
   // uit tracker.vp. Bonussen defensief gelezen (zie readBonus). Engine verdraagt afwezige velden.
@@ -408,6 +450,43 @@ export function CampaignResultReporter({ embedded = false }: { embedded?: boolea
 
       <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginBottom: 5 }}>Notes (optional)</div>
       <textarea value={notes} onChange={(e) => setNotes(e.target.value)} rows={2} placeholder="Anything the campaign should know…" style={{ width: '100%', borderRadius: 10, border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt, color: TOW.ink, padding: '9px 11px', fontFamily: serif, fontSize: 13, boxSizing: 'border-box', resize: 'vertical', marginBottom: 12 }} />
+
+      {/* De chronicler. Persoonlijk, niet gedeeld: dit stuk hangt aan JOU, niet aan de battle, dus
+          beide kanten kunnen hun eigen versie van hetzelfde gevecht schrijven. Eigen opslaan-knop,
+          want wie de uitslag indient doet er niet toe — en het mag ook nog ná het indienen. */}
+      {battle && (
+        <div style={{ borderRadius: 12, border: `1px solid ${TOW.line}`, padding: '11px 12px', marginBottom: 12 }}>
+          <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginBottom: 5 }}>Your chronicler (optional)</div>
+          <div style={{ fontFamily: serif, fontSize: 12, color: TOW.muted, lineHeight: 1.45, marginBottom: 7 }}>
+            How did your house tell this battle? Write it in your own words — it is yours alone, and it
+            becomes part of the story of Celedon.
+          </div>
+          <textarea
+            value={kroniek}
+            onChange={(e) => setKroniek(e.target.value.slice(0, 8000))}
+            rows={5}
+            placeholder="What your chronicler should remember about this battle…"
+            style={{ width: '100%', borderRadius: 10, border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt, color: TOW.ink, padding: '9px 11px', fontFamily: serif, fontSize: 13, boxSizing: 'border-box', resize: 'vertical', lineHeight: 1.5 }}
+          />
+          <div style={{ display: 'flex', alignItems: 'center', gap: 9, marginTop: 7, flexWrap: 'wrap' }}>
+            <button
+              type="button"
+              onClick={() => void bewaarKroniek()}
+              disabled={kroniekBezig || kroniek.trim() === kroniekOpgeslagen}
+              style={{
+                borderRadius: 9, border: `1px solid ${TOW.goldDeep}`, background: 'transparent',
+                color: TOW.ink, padding: '6px 12px', fontFamily: serif, fontSize: 12.5,
+                cursor: kroniekBezig || kroniek.trim() === kroniekOpgeslagen ? 'default' : 'pointer',
+                opacity: kroniekBezig || kroniek.trim() === kroniekOpgeslagen ? 0.4 : 1,
+              }}
+            >
+              {kroniekBezig ? 'Writing…' : kroniekOpgeslagen ? 'Update the entry' : 'Give it to your chronicler'}
+            </button>
+            <span style={{ fontFamily: serif, fontSize: 11, color: TOW.muted }}>{kroniek.length} characters</span>
+            {kroniekMelding && <span style={{ fontFamily: serif, fontSize: 11, color: TOW.muted }}>{kroniekMelding}</span>}
+          </div>
+        </div>
+      )}
 
       {/* Beide spelers moeten akkoord gaan. Wijzigt iemand daarna nog een cijfer, dan klopt de sig niet
           meer en staan beide vinkjes vanzelf weer uit. Tegen een AI (of solo) is er niemand om het mee

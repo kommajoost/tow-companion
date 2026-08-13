@@ -515,3 +515,42 @@ export const abilityLabel = (t: string): string => ABILITY_LABEL[t] ?? t;
 export const abilityEffect = (t: string): string => ABILITY_EFFECT[t] ?? '';
 /** Scar-badge-tekst: 1 → 'scar', N → 'N scars' (zelfde bewoording als De Grensvorsten). */
 export const scarLabel = (n: number): string => (n === 1 ? 'scar' : `${n} scars`);
+
+// ---- De chronicler (towc_kroniek) ---------------------------------------------------------------
+// Elk leger neemt zijn eigen kroniekschrijver mee naar Celedon. Die schrijft op drie momenten: vóór
+// het uitvaren (campagne-app), elke Act in de You-hub (campagne-app), en hier — na een battle, bij
+// het invullen van de uitslag.
+//
+// Het stuk is PERSOONLIJK: het hangt aan de ingelogde speler, niet aan de battle. Beide kanten
+// kunnen dus hun eigen verslag van hetzelfde gevecht schrijven. Dat staat los van het gedeelde
+// "Notes"-veld in de uitslag, dat de campagne-app bij de battle zelf bewaart.
+//
+// De server leest auth.uid() en zoekt het speler-id op (eerst de voorbereiding, dan het speler-slot),
+// dus we hoeven hier geen id mee te sturen. Eén stuk per battle — opnieuw opslaan werkt bij, lege
+// tekst trekt het in.
+
+export interface KroniekStuk {
+  id: number;
+  soort: 'voorbereiding' | 'act' | 'battle';
+  fase: number | null;
+  battle: number | null;
+  tekst: string;
+  bijgewerkt: string;
+}
+
+/** Alles wat deze speler al schreef. Leeg bij niet-ingelogd of geen verbinding. */
+export async function kroniekMijn(): Promise<KroniekStuk[]> {
+  const { data, error } = await supabase.rpc('towc_kroniek_mijn');
+  if (error || !data) return [];
+  return data as KroniekStuk[];
+}
+
+/** Schrijf of werk het kroniekstuk van één battle bij. Lege tekst wist het. */
+export async function kroniekBattleZet(tekst: string, fase: number | null, battle: number): Promise<void> {
+  const { data, error } = await supabase.rpc('towc_kroniek_zet', {
+    p_soort: 'battle', p_tekst: tekst, p_fase: fase, p_battle: battle,
+  });
+  if (error) throw new Error(error.message);
+  const d = data as { ok?: boolean; fout?: string } | null;
+  if (d && d.ok === false) throw new Error(d.fout ?? 'KRONIEK_MISLUKT');
+}
