@@ -21,7 +21,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { TOW, towFont } from '../../design/tow';
-import { getPersisted, setPersisted } from '../../store';
+import { getPersisted, setPersisted, usePersistentState } from '../../store';
 import {
   CATEGORIES, COMPOSITION_RULES, entryPoints, selectedMagicItems, unitAllowedIn, unitCategoryFor,
   unitBlocks, unitNote,
@@ -280,6 +280,18 @@ export function BuilderFlow({
     return uid;
   }, [update]);
 
+  /** ── De prullenbak (14-08-2026) ────────────────────────────────────────────────────────────────
+   *  Wat je hier weggooit gaat naar een prullenbak in plaats van meteen weg. Reden: in de campagne mag
+   *  droppen meestal niet (alleen in Act 3 en 5), en die melding krijg je pas bij het verlaten van de
+   *  builder — dan is de rij al weg. Terughalen via de campagne-baseline kan wel de UID redden, maar
+   *  niet de naam die je de unit gaf en niet z'n uitrusting: de campagne bewaart opties als leesbare
+   *  namen ("Dark Steed"), niet als de optie-ids die deze builder gebruikt.
+   *
+   *  De prullenbak bewaart de HELE entry, dus terugzetten is exact: dezelfde uid, dezelfde naam,
+   *  dezelfde opties, hetzelfde aantal. Hij hangt aan de lijst-id en staat in localStorage, zodat hij
+   *  de builder verlaten en terugkomen overleeft. */
+  const [prullenbak, setPrullenbak] = usePersistentState<ListEntry[]>(`tow:prullenbak:${list.id}`, []);
+
   /** ── Een verwijderde campagne-unit terugzetten (14-08-2026, Joost) ────────────────────────────
    *
    *  In deze builder kun je elke unit gewoon weggooien. In de campagne mag dat meestal niet — droppen
@@ -295,36 +307,61 @@ export function BuilderFlow({
    *  De OPTIES zetten we bewust NIET terug: de campagne bewaart ze als leesbare namen ("Dark Steed"),
    *  niet als de optie-ids die de builder gebruikt. Ze gokken zou een verkeerde uitrusting stil in je
    *  lijst zetten. Het aantal modellen zetten we wél terug — krimpen mag niet, dus dat is de ondergrens. */
-  const restoreUnit = useCallback((b: { uid: string; unitId: string; cat: string; modellen: number | null }): void => {
+  const restoreUnit = useCallback((b: {
+    uid: string; unitId: string; cat: string; modellen: number | null; entry?: ListEntry;
+  }): void => {
     update((l) => {
       if (l.entries.some((e) => e.uid === b.uid)) return {};   // staat er al — niets te doen
-      const entry: ListEntry = {
-        uid: b.uid,
-        cat: b.cat as Category,
-        unitId: b.unitId,
-        count: Math.max(1, b.modellen ?? 1),
-        opts: [],
-      };
+      // Uit de prullenbak: de hele entry terug, inclusief naam, opties en optie-aantallen.
+      const entry: ListEntry = b.entry
+        ? { ...b.entry, opts: [...b.entry.opts], ...(b.entry.optCounts ? { optCounts: { ...b.entry.optCounts } } : {}) }
+        : { uid: b.uid, cat: b.cat as Category, unitId: b.unitId, count: Math.max(1, b.modellen ?? 1), opts: [] };
       return { entries: [...l.entries, entry] };
     });
-  }, [update]);
+    setPrullenbak((bak) => bak.filter((e) => e.uid !== b.uid));
+  }, [update, setPrullenbak]);
 
-  /** Units die eerder in de campagne stonden maar NIET meer in deze lijst — kandidaten om terug te
-   *  zetten. Zonder `unitId` (oudere server) kunnen we niets herbouwen, dus die vallen af. */
+  /** Wat je kunt terugzetten, in volgorde van hoe volledig het herstel is.
+   *
+   *  1. DE PRULLENBAK — hier ligt de hele entry, dus terugzetten is exact: naam, opties, aantal, uid.
+   *     Dit dekt het echte scenario: je gooit iets weg in de builder en wilt het terug.
+   *  2. DE CAMPAGNE-BASELINE — units uit een eerdere Act die niet in de prullenbak zitten (ander
+   *     apparaat, of de bak is geleegd). Daar redden we de uid en het datasheet; de uitrusting moet je
+   *     opnieuw kiezen, want de campagne bewaart opties als leesbare namen en niet als optie-ids.
+   *
+   *  Zit een uid in allebei, dan wint de prullenbak — die is completer. */
   const terugTeHalen = useMemo(() => {
-    if (!campaignCtx) return [];
     const inLijst = new Set(list.entries.map((e) => e.uid));
-    return campaignCtx.baseline
-      .filter((b) => !inLijst.has(b.uid) && b.unitId)
-      .map((b) => ({
-        uid: b.uid,
-        unitId: b.unitId as string,
-        cat: b.cat,
-        modellen: b.laatsteModellen,
-        label: b.naam || b.datasheet || b.unitId as string,
-        sub: b.datasheet && b.naam && b.datasheet !== b.naam ? b.datasheet : null,
-      }));
-  }, [campaignCtx, list.entries]);
+    const uit: {
+      uid: string; unitId: string; cat: string; modellen: number | null;
+      label: string; sub: string | null; volledig: boolean; entry?: ListEntry;
+    }[] = [];
+
+    for (const e of prullenbak) {
+      if (inLijst.has(e.uid)) continue;
+      const naam = (e as { customName?: string }).customName;
+      const ds = getUnit(e.cat as Category, e.unitId)?.name_en ?? e.unitId;
+      uit.push({
+        uid: e.uid, unitId: e.unitId, cat: e.cat, modellen: e.count,
+        label: naam || ds, sub: naam && ds !== naam ? ds : null,
+        volledig: true, entry: e,
+      });
+    }
+
+    if (campaignCtx) {
+      const al = new Set(uit.map((x) => x.uid));
+      for (const b of campaignCtx.baseline) {
+        if (inLijst.has(b.uid) || al.has(b.uid) || !b.unitId) continue;
+        uit.push({
+          uid: b.uid, unitId: b.unitId, cat: b.cat, modellen: b.laatsteModellen,
+          label: b.naam || b.datasheet || b.unitId,
+          sub: b.datasheet && b.naam && b.datasheet !== b.naam ? b.datasheet : null,
+          volledig: false,
+        });
+      }
+    }
+    return uit;
+  }, [campaignCtx, list.entries, prullenbak, getUnit]);
 
   const duplicateUnit = useCallback((uid: string) => {
     update((l) => {
@@ -344,9 +381,16 @@ export function BuilderFlow({
   }, [update]);
 
   const removeUnit = useCallback((uid: string) => {
-    update((l) => ({ entries: l.entries.filter((e) => e.uid !== uid) }));
+    update((l) => {
+      const weg = l.entries.find((e) => e.uid === uid);
+      if (weg) {
+        // Nieuwste vooraan, en nooit twee keer dezelfde uid in de bak.
+        setPrullenbak((b) => [weg, ...b.filter((x) => x.uid !== uid)].slice(0, 20));
+      }
+      return { entries: l.entries.filter((e) => e.uid !== uid) };
+    });
     setScreen((s) => (s.kind === 'options' && s.uid === uid ? { kind: 'roster' } : s));
-  }, [update]);
+  }, [update, setPrullenbak]);
 
   // ── Navigation ────────────────────────────────────────────────────────────────────────────────
   // NOTE ON BACK: no layer is registered here. `UnitOptions` and `ResolveSheet` register their own

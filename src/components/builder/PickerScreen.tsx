@@ -313,7 +313,7 @@ export function PickerScreen(props: {
   /** Campagne-units die eerder in je lijst stonden en er nu NIET meer in zitten (14-08-2026). Leeg bij
    *  een gewone lijst. Zie `restoreUnit` in BuilderFlow: terugzetten behoudt de oorspronkelijke uid en
    *  daarmee de campagne-identiteit — opnieuw toevoegen zou een ander regiment opleveren. */
-  terugTeHalen?: { uid: string; unitId: string; cat: string; modellen: number | null; label: string; sub: string | null }[];
+  terugTeHalen?: { uid: string; unitId: string; cat: string; modellen: number | null; label: string; sub: string | null; volledig: boolean }[];
   onRestore?: (b: { uid: string; unitId: string; cat: string; modellen: number | null }) => void;
 }): React.JSX.Element {
   const { ctx, entries, initialCategory, onBack, onAdd, onConfigure, terugTeHalen = [], onRestore } = props;
@@ -527,9 +527,8 @@ export function PickerScreen(props: {
           <div style={{ marginTop: 12, marginBottom: 6 }}>
             <div style={{ ...eb, fontSize: 9, color: TOW.goldDeep, marginBottom: 6 }}>Back into the line</div>
             <div style={{ fontFamily: towFont.serif, fontSize: 12, color: TOW.muted, lineHeight: 1.4, marginBottom: 8 }}>
-              These fought for you in an earlier Act and are no longer on the list. Put one back and it
-              keeps its campaign history — adding it fresh from the catalogue below would make it a new
-              regiment. You will need to pick its equipment again.
+              Units you removed, or that fought for you in an earlier Act. Put one back and it keeps its
+              campaign history — adding it fresh from the catalogue below would make it a new regiment.
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
               {terugTeHalen.map((b2) => (
@@ -546,11 +545,16 @@ export function PickerScreen(props: {
                 >
                   <span style={{ minWidth: 0 }}>
                     <span style={{ display: 'block', fontFamily: towFont.serif, fontSize: 14 }}>{b2.label}</span>
-                    {(b2.sub || b2.modellen) && (
-                      <span style={{ display: 'block', fontFamily: towFont.serif, fontSize: 11.5, color: TOW.muted }}>
-                        {[b2.sub, b2.modellen ? `${b2.modellen} model${b2.modellen === 1 ? '' : 's'}` : null].filter(Boolean).join(' · ')}
-                      </span>
-                    )}
+                    <span style={{ display: 'block', fontFamily: towFont.serif, fontSize: 11.5, color: TOW.muted }}>
+                      {[
+                        b2.sub,
+                        b2.modellen ? `${b2.modellen} model${b2.modellen === 1 ? '' : 's'}` : null,
+                        // Eerlijk zijn over wat je terugkrijgt: uit de prullenbak komt alles mee, uit de
+                        // campagne-historie alleen de unit zelf (die bewaart opties als leesbare namen,
+                        // niet als optie-ids, dus die kunnen we niet betrouwbaar terugzetten).
+                        b2.volledig ? 'name and equipment kept' : 'equipment to re-pick',
+                      ].filter(Boolean).join(' · ')}
+                    </span>
                   </span>
                   <span style={{ flexShrink: 0, fontFamily: towFont.display, fontSize: 12, color: TOW.goldDeep }}>Restore</span>
                 </button>
