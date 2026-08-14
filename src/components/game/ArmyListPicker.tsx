@@ -21,7 +21,7 @@ const BASE = import.meta.env.BASE_URL;
 interface SavedList extends BuilderList { id: string; name: string; army: string; createdAt: number; updatedAt: number }
 interface StatRow { Name: string; M: string; WS: string; BS: string; S: string; T: string; W: string; I: string; A: string; Ld: string }
 
-export function ArmyListPicker({ onPick, label = 'Choose one of your saved army lists', lockedListName = null, campaignPlayerId = null, lockedListArmy = null, autoPick = false }: {
+export function ArmyListPicker({ onPick, label, lockedListName = null, campaignPlayerId = null, lockedListArmy = null, autoPick = false, stil = false }: {
   onPick: (a: Army) => void;
   label?: string;
   lockedListName?: string | null;
@@ -33,9 +33,15 @@ export function ArmyListPicker({ onPick, label = 'Choose one of your saved army 
   /** Leger-slug van de gelockte lijst — gebruikt om bij dubbele lijstnamen de juiste te kiezen. */
   lockedListArmy?: string | null;
   /** With a locked campaign list, hand it over as soon as it can be built — no click. There is nothing
-   *  to choose: the campaign already decided which list plays, so asking was busywork. Still SHOWN, so
-   *  you can see which list was loaded. */
+   *  to choose: the campaign already decided which list plays, so asking was busywork. */
   autoPick?: boolean;
+  /** QUIET (14-08-2026, Joost). With `autoPick` the block below was purely informational — and on the
+   *  campaign-battle screen it duplicated the briefing at the top, which already names both lists and
+   *  does so authoritatively (server-side snapshot, not this device's copy). Two blocks both headed
+   *  "Your locked campaign list", one of them the OPPONENT's, on top of the pair already listed above.
+   *  With this on, a found list loads silently; the picker only appears when the list ISN'T on this
+   *  device — which is exactly the case where you do need to act. */
+  stil?: boolean;
 }) {
   // Lists can span different armies, so we keep a per-army catalogue cache + army metadata and
   // convert each list with ITS OWN catalogue/faction/composition.
@@ -132,7 +138,10 @@ export function ArmyListPicker({ onPick, label = 'Choose one of your saved army 
   const locked = opVlag ?? opNaam;
   const solo = !!locked;
   const shown = solo ? [locked] : lists;
-  const heading = solo ? 'Your locked campaign list' : label;
+  // Een expliciet `label` wint ALTIJD. Stond hier `solo ? 'Your locked campaign list' : label`, en
+  // daardoor kreeg ook de picker van de AI-TEGENSTANDER dat kopje — zijn lijst stond dus onder "jouw"
+  // gelockte lijst (Joost 14-08).
+  const heading = label ?? (solo ? 'Your locked campaign list' : 'Choose one of your saved army lists');
 
   // AUTO-PICK. With a locked campaign list there is nothing to choose — the campaign already decided
   // which list plays — so it is handed over as soon as it can actually be built. Guarded by a ref so it
@@ -149,8 +158,11 @@ export function ArmyListPicker({ onPick, label = 'Choose one of your saved army 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [autoPick, locked, catalogues, statIdx, itemsData, overlays, armyNames, itemsByArmy, magicText, mountText]);
 
-  // Every hook has run by here, so this early return is safe.
+  // Every hook has run by here, so these early returns are safe.
   if (lists.length === 0) return null;
+  // STIL: de lijst is gevonden en wordt vanzelf geladen — dan is er niets te kiezen en niets te
+  // melden. Alleen als hij NIET gevonden is blijft het blok staan, want dan moet je zelf iets doen.
+  if (stil && locked) return null;
 
   return (
     <div style={{ marginBottom: 14 }}>

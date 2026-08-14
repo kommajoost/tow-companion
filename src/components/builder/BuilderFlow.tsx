@@ -280,6 +280,52 @@ export function BuilderFlow({
     return uid;
   }, [update]);
 
+  /** ── Een verwijderde campagne-unit terugzetten (14-08-2026, Joost) ────────────────────────────
+   *
+   *  In deze builder kun je elke unit gewoon weggooien. In de campagne mag dat meestal niet — droppen
+   *  kan alleen in Act 3 en 5 — en die melding krijg je ook, maar pas bij het verlaten van de builder.
+   *  Dan is de rij al weg en helpt "opnieuw toevoegen" niet: een nieuwe unit krijgt een nieuwe uid, en
+   *  daarmee is ze voor de campagne een ANDER regiment — nieuwe debuutkosten, geen groeiplafond, geen
+   *  XP en geen veteranen.
+   *
+   *  De uid is dus de identiteit, en die moet terug. De campagne levert per eerder ingediende unit haar
+   *  uid, datasheet en laatste modellenaantal (towc_lijst_baseline); hiermee bouwen we de rij opnieuw op
+   *  met exact díé uid.
+   *
+   *  De OPTIES zetten we bewust NIET terug: de campagne bewaart ze als leesbare namen ("Dark Steed"),
+   *  niet als de optie-ids die de builder gebruikt. Ze gokken zou een verkeerde uitrusting stil in je
+   *  lijst zetten. Het aantal modellen zetten we wél terug — krimpen mag niet, dus dat is de ondergrens. */
+  const restoreUnit = useCallback((b: { uid: string; unitId: string; cat: string; modellen: number | null }): void => {
+    update((l) => {
+      if (l.entries.some((e) => e.uid === b.uid)) return {};   // staat er al — niets te doen
+      const entry: ListEntry = {
+        uid: b.uid,
+        cat: b.cat as Category,
+        unitId: b.unitId,
+        count: Math.max(1, b.modellen ?? 1),
+        opts: [],
+      };
+      return { entries: [...l.entries, entry] };
+    });
+  }, [update]);
+
+  /** Units die eerder in de campagne stonden maar NIET meer in deze lijst — kandidaten om terug te
+   *  zetten. Zonder `unitId` (oudere server) kunnen we niets herbouwen, dus die vallen af. */
+  const terugTeHalen = useMemo(() => {
+    if (!campaignCtx) return [];
+    const inLijst = new Set(list.entries.map((e) => e.uid));
+    return campaignCtx.baseline
+      .filter((b) => !inLijst.has(b.uid) && b.unitId)
+      .map((b) => ({
+        uid: b.uid,
+        unitId: b.unitId as string,
+        cat: b.cat,
+        modellen: b.laatsteModellen,
+        label: b.naam || b.datasheet || b.unitId as string,
+        sub: b.datasheet && b.naam && b.datasheet !== b.naam ? b.datasheet : null,
+      }));
+  }, [campaignCtx, list.entries]);
+
   const duplicateUnit = useCallback((uid: string) => {
     update((l) => {
       const i = l.entries.findIndex((e) => e.uid === uid);
@@ -540,6 +586,8 @@ export function BuilderFlow({
           onBack={() => toRoster()}
           onAdd={onAdded}
           onConfigure={onConfigure}
+          terugTeHalen={terugTeHalen}
+          onRestore={restoreUnit}
         />
       );
     }

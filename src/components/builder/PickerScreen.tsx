@@ -310,8 +310,13 @@ export function PickerScreen(props: {
   onAdd: (unit: OwbUnit, cat: Category) => void;
   /** "Options": configure the unit BEFORE it is added. Also `entry.cat`. */
   onConfigure: (unit: OwbUnit, cat: Category) => void;
+  /** Campagne-units die eerder in je lijst stonden en er nu NIET meer in zitten (14-08-2026). Leeg bij
+   *  een gewone lijst. Zie `restoreUnit` in BuilderFlow: terugzetten behoudt de oorspronkelijke uid en
+   *  daarmee de campagne-identiteit — opnieuw toevoegen zou een ander regiment opleveren. */
+  terugTeHalen?: { uid: string; unitId: string; cat: string; modellen: number | null; label: string; sub: string | null }[];
+  onRestore?: (b: { uid: string; unitId: string; cat: string; modellen: number | null }) => void;
 }): React.JSX.Element {
-  const { ctx, entries, initialCategory, onBack, onAdd, onConfigure } = props;
+  const { ctx, entries, initialCategory, onBack, onAdd, onConfigure, terugTeHalen = [], onRestore } = props;
 
   const [category, setCategory] = useState<PickerCategoryFilter>(initialCategory ?? 'all');
   const [query, setQuery] = useState('');
@@ -514,6 +519,46 @@ export function PickerScreen(props: {
           padding: `0 ${BUILDER.gutter}px 18px`,
         }}
       >
+        {/* ── Terug in de linie (14-08-2026) ────────────────────────────────────────────────────
+            Campagne-units die je hebt verwijderd maar die de campagne nog kent. Ze staan hier BOVEN de
+            catalogus, want ze zijn geen nieuwe aanwinst maar een correctie: gewoon opnieuw toevoegen
+            geeft een nieuwe uid, en dan raakt de unit haar debuutkosten, groeiplafond en XP kwijt. */}
+        {terugTeHalen.length > 0 && onRestore && (
+          <div style={{ marginTop: 12, marginBottom: 6 }}>
+            <div style={{ ...eb, fontSize: 9, color: TOW.goldDeep, marginBottom: 6 }}>Back into the line</div>
+            <div style={{ fontFamily: towFont.serif, fontSize: 12, color: TOW.muted, lineHeight: 1.4, marginBottom: 8 }}>
+              These fought for you in an earlier Act and are no longer on the list. Put one back and it
+              keeps its campaign history — adding it fresh from the catalogue below would make it a new
+              regiment. You will need to pick its equipment again.
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+              {terugTeHalen.map((b2) => (
+                <button
+                  key={b2.uid}
+                  type="button"
+                  onClick={() => { onRestore(b2); onBack(); }}
+                  style={{
+                    display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10,
+                    textAlign: 'left', width: '100%', padding: '9px 11px', cursor: 'pointer',
+                    borderRadius: BUILDER.radius.button, border: `1px solid ${TOW.goldDeep}`,
+                    background: 'transparent', color: TOW.ink,
+                  }}
+                >
+                  <span style={{ minWidth: 0 }}>
+                    <span style={{ display: 'block', fontFamily: towFont.serif, fontSize: 14 }}>{b2.label}</span>
+                    {(b2.sub || b2.modellen) && (
+                      <span style={{ display: 'block', fontFamily: towFont.serif, fontSize: 11.5, color: TOW.muted }}>
+                        {[b2.sub, b2.modellen ? `${b2.modellen} model${b2.modellen === 1 ? '' : 's'}` : null].filter(Boolean).join(' · ')}
+                      </span>
+                    )}
+                  </span>
+                  <span style={{ flexShrink: 0, fontFamily: towFont.display, fontSize: 12, color: TOW.goldDeep }}>Restore</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
         {groups.length === 0 ? emptyState() : groups.map(({ cat, rows }) => {
           // The section meta shows the ROSTER's spend in this category against the category rule,
           // in absolute points. `ok` is validate()'s own verdict, carried through builderDerived.

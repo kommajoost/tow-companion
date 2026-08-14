@@ -39,6 +39,14 @@ export interface CampaignBaseline {
   /** Zoveel modellen had deze unit bij haar LAATSTE inzending — de ondergrens. Een unit mag groeien,
    *  nooit krimpen: anders speel je punten vrij door een regiment uit te kleden. */
   laatsteModellen: number | null; laatsteFase: number | null;
+  /** WAT de unit was, uit de laatste gelockte lijst waarin ze stond (14-08-2026). Alleen hiermee kan de
+   *  builder een per ongeluk verwijderde campagne-unit terugzetten MET haar oorspronkelijke uid — en
+   *  dus met haar debuutkosten, groeiplafond en XP-historie. Een nieuw toegevoegde unit krijgt een
+   *  nieuwe uid en is voor de campagne een ander regiment. */
+  naam: string | null;
+  unitId: string | null;
+  datasheet: string | null;
+  opties: string[];
 }
 export interface CampaignUnit { naam: string; catalogusId: string | null; cat: string | null; xp: number; abilities: number; littekens: number; status: string }
 export interface CampaignContext {
@@ -180,6 +188,11 @@ function parseEen(raw: unknown): CampaignContext {
         acts: num(b.acts),
         laatsteModellen: Number.isFinite(Number(b.laatsteModellen)) ? Number(b.laatsteModellen) : null,
         laatsteFase: Number.isFinite(Number(b.laatsteFase)) ? Number(b.laatsteFase) : null,
+        // Oudere servers sturen deze vier niet mee; dan is terugzetten simpelweg niet aan te bieden.
+        naam: typeof b.naam === 'string' && b.naam.trim() ? b.naam.trim() : null,
+        unitId: typeof b.unitId === 'string' && b.unitId.trim() ? b.unitId.trim() : null,
+        datasheet: typeof b.datasheet === 'string' && b.datasheet.trim() ? b.datasheet.trim() : null,
+        opties: Array.isArray(b.opties) ? (b.opties as unknown[]).filter((o): o is string => typeof o === 'string') : [],
       };
     }).filter((b) => b.uid),
     // Oudere servers sturen dropActs niet mee; DROP_ACTS is de regel, dus dat is de veilige default.

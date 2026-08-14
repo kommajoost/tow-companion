@@ -4,8 +4,6 @@ import { useGame } from '../../game';
 import { getCachedCampaign, getCampaignCode } from '../../lib/campaign';
 import { battleByCode, battleHandZet, battleTypeLabel, battleTypeNote, type CampaignBattle, type BattleSide, type Perk, type FoundItem, type BattleLijstSamenvatting } from '../../lib/campaignBattle';
 import { ArmyListPicker } from './ArmyListPicker';
-import { BattleBoard } from './BattleBoard';
-import type { BattleSetupState } from '../../lib/battle';
 import type { Army } from '../../types';
 
 const eb = engraved as React.CSSProperties;
@@ -275,41 +273,17 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
       };
     }).filter((t): t is { type: string; size: string | null; difficult: boolean; x: number | null; y: number | null; w: number | null; h: number | null } => !!t)
     : [];
-  const tableW = asNum(sheet.tableW);
-  const tableH = asNum(sheet.tableH);
+  // 14-08-2026: de campagne schrijft de scenario-uitleg mee in de sheet, zodat we hier niet z'n
+  // scenario-catalogus hoeven na te bouwen. Ontbreekt hij (oudere battles), dan valt het blok weg.
+  const blurb = asStr(sheet.blurb);
+  const deployNote = asStr(sheet.deployNote);
+  const gameEnd = asStr(sheet.gameEnd);
 
-  /**
-  /**
-   * The battlefield, drawn by the app's OWN board renderer.
-   *
-   * `BattleBoard` is what the Companion's battlefield generator draws with, so reusing it is the only
-   * way the two genuinely LOOK the same — an imitation would drift the moment either changed. It already
-   * works in table inches (viewBox = the table), and its `editable={false}` mode exists for exactly this:
-   * show the board, do not let it be dragged.
-   *
-   * The conversion is nothing: the campaign sends terrain as `{id, type, x, y, w, h, difficult}`, which IS
-   * `TerrainPiece`, and its type ids (building, field, hill, wood, marsh) are the same set the app uses.
-   * Only drawn when the table size is known — without it there is no coordinate space, and the pieces
-   * would land in invented positions.
-   */
-  const boardSetup: BattleSetupState | null = tableW && tableH ? {
-    scenario: asStr(sheet.scenario) ?? '',
-    tableW,
-    tableH,
-    terrain: terrain.filter((t): t is typeof t & { x: number; y: number; w: number; h: number } =>
-      t.x != null && t.y != null && t.w != null && t.h != null)
-      .map((t, i) => ({ id: `c${i}`, type: t.type, x: t.x, y: t.y, w: t.w, h: t.h, difficult: t.difficult })),
-    secondaries: quests,
-  } : null;
-  const battlefieldMap = boardSetup ? (
-    <div style={{ marginTop: 12 }}>
-      <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginBottom: 5 }}>
-        Battlefield · {tableLabel ?? `${tableW}×${tableH}″`}{groundType ? ` · ${pretty(groundType)}` : ''}
-      </div>
-      <BattleBoard setup={boardSetup} onChange={() => {}} selectedId={null} onSelect={() => {}} editable={false} />
-    </div>
-  ) : null;
-
+  // 14-08-2026 — GEEN GETEKENDE PLATTEGROND MEER (Joost). Hier werd het bord op schaal getekend met
+  // de terreinstukken op hun berekende coördinaten. Dat suggereert een precisie die er niet is: aan
+  // tafel zet je de stukken toch naar smaak neer en die millimeters zijn geen regel. Wat je wél nodig
+  // hebt om het bord te bouwen — de maat, de stukken, hun formaat — staat eronder als lijst, precies
+  // zoals de campagne-app het nu ook toont.
   const chip = (text: string, title?: string) => (
     <span
       key={text}
@@ -387,9 +361,30 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
           Waiting for both players to lock their armies in the campaign app…
         </div>
       )}
-      {/* Why this battle is being fought — the campaign's own sentence, not a paraphrase. */}
-      {reason && (
-        <div style={{ fontFamily: serif, fontSize: 13.5, color: TOW.parchDim, marginTop: 10 }}>{reason}</div>
+      {/* DE BATTLE ZELF: naam als kop, de campagne-zin eronder als ondertitel (Joost 14-08). De naam
+          stond alleen nog als staartje in het kleine eyebrow-regeltje bovenaan; als je hier binnenkomt
+          wil je in één oogopslag zien wélk scenario je speelt. `reason` is de zin van de campagne,
+          niet een parafrase. */}
+      {(scenarioName || reason) && (
+        <div style={{ marginTop: 12 }}>
+          {scenarioName && (
+            <div style={{ fontFamily: display, fontSize: 20, color: TOW.gold, lineHeight: 1.15 }}>{scenarioName}</div>
+          )}
+          {reason && (
+            <div style={{ fontFamily: serif, fontSize: 13.5, color: TOW.parchDim, marginTop: 4 }}>{reason}</div>
+          )}
+        </div>
+      )}
+
+      {/* Hoe je opstelt en wanneer het potje eindigt. Die tekst stond tot 14-08 alleen in de
+          scenario-catalogus van de campagne-app; nu schrijft de campagne 'm mee in de battle-sheet,
+          zodat de Companion hem heeft zonder die catalogus na te bouwen. */}
+      {(blurb || deployNote || gameEnd) && (
+        <div style={{ marginTop: 10, border: `1px solid ${TOW.line}`, borderRadius: 10, padding: '10px 12px' }}>
+          {blurb && <div style={{ fontFamily: serif, fontSize: 13, color: TOW.parch, lineHeight: 1.45 }}>{blurb}</div>}
+          {deployNote && <div style={{ fontFamily: serif, fontSize: 12.5, color: TOW.muted, lineHeight: 1.45, marginTop: blurb ? 6 : 0 }}>{deployNote}</div>}
+          {gameEnd && <div style={{ fontFamily: serif, fontSize: 12.5, color: TOW.muted, lineHeight: 1.45, marginTop: 6 }}>Game end: {gameEnd}</div>}
+        </div>
       )}
 
       {/* What the SORT of battle means, where that is not obvious from the rest of the screen. A
@@ -404,9 +399,9 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
           authority on what each one actually requires. */}
       {quests.length > 0 && chipRow('Battle quests', quests.map((q) => chip(pretty(q))))}
 
-      {/* Battlefield. Drawn to scale when the table size is known; otherwise the same facts as chips,
-          because a plan without a coordinate space would put the pieces in invented places. */}
-      {battlefieldMap ?? ((tableLabel || groundType || terrain.length > 0) ? chipRow('Battlefield', (
+      {/* Battlefield als LIJST — de maat, de grond en elk terreinstuk met z'n formaat. Genoeg om het
+          bord te bouwen; de plaatsing doe je aan tafel. */}
+      {(tableLabel || groundType || terrain.length > 0) && chipRow('Battlefield', (
         <>
           {tableLabel && chip(tableLabel)}
           {groundType && chip(pretty(groundType))}
@@ -419,7 +414,7 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
             </span>
           ))}
         </>
-      )) : null)}
+      ))}
 
       {/* Both line-ups. Shown for both sides on purpose: what the opponent is bringing is exactly what
           you want to know before deploying, and the campaign has already locked it. */}
@@ -540,6 +535,7 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
         lockedListArmy={myLijst?.leger ?? null}
         campaignPlayerId={myPlayerId}
         autoPick
+        stil
       />
 
       {/* AI-tegenstander: hun leger komt van deze kant mee, want er is geen tweede device dat 'm gaat
@@ -552,6 +548,7 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
           lockedListName={oppLijst.naam}
           lockedListArmy={oppLijst.leger}
           autoPick
+          stil
         />
       )}
 
