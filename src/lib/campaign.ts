@@ -46,7 +46,14 @@ export interface CampaignBaseline {
   naam: string | null;
   unitId: string | null;
   datasheet: string | null;
+  /** LEESBARE optienamen ("Dark Steed") — om te tonen, niet om mee te herbouwen. */
   opties: string[];
+  /** De echte builder-optie-IDS plus hun aantallen, en de naam die de speler de unit gaf (14-08-2026).
+   *  Hiermee is een terugzetting compleet en — anders dan de lokale prullenbak — ook op een ánder
+   *  apparaat, want dit hangt aan de gelockte momentopname en dus aan het account. */
+  optIds: string[];
+  optCounts: Record<string, number>;
+  customName: string | null;
 }
 export interface CampaignUnit { naam: string; catalogusId: string | null; cat: string | null; xp: number; abilities: number; littekens: number; status: string }
 export interface CampaignContext {
@@ -193,6 +200,18 @@ function parseEen(raw: unknown): CampaignContext {
         unitId: typeof b.unitId === 'string' && b.unitId.trim() ? b.unitId.trim() : null,
         datasheet: typeof b.datasheet === 'string' && b.datasheet.trim() ? b.datasheet.trim() : null,
         opties: Array.isArray(b.opties) ? (b.opties as unknown[]).filter((o): o is string => typeof o === 'string') : [],
+        optIds: Array.isArray(b.optIds) ? (b.optIds as unknown[]).filter((o): o is string => typeof o === 'string') : [],
+        optCounts: (() => {
+          const o = b.optCounts;
+          if (!o || typeof o !== 'object' || Array.isArray(o)) return {};
+          const uit: Record<string, number> = {};
+          for (const [k, v] of Object.entries(o as Record<string, unknown>)) {
+            const n2 = Number(v);
+            if (Number.isFinite(n2)) uit[k] = n2;
+          }
+          return uit;
+        })(),
+        customName: typeof b.customName === 'string' && b.customName.trim() ? b.customName.trim() : null,
       };
     }).filter((b) => b.uid),
     // Oudere servers sturen dropActs niet mee; DROP_ACTS is de regel, dus dat is de veilige default.

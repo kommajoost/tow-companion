@@ -352,11 +352,25 @@ export function BuilderFlow({
       const al = new Set(uit.map((x) => x.uid));
       for (const b of campaignCtx.baseline) {
         if (inLijst.has(b.uid) || al.has(b.uid) || !b.unitId) continue;
+        // Sinds 14-08 draagt de gelockte momentopname ook de echte optie-ids en de eigen naam. Staat
+        // dat erin, dan is een herstel uit de campagne net zo compleet als uit de prullenbak — en dat
+        // werkt óók op een ander apparaat, want dit hangt aan het account. Oudere momentopnamen (van
+        // vóór die wijziging) hebben het niet; dan is het nog steeds alleen de unit zelf.
+        const compleet = b.optIds.length > 0 || !!b.customName;
         uit.push({
           uid: b.uid, unitId: b.unitId, cat: b.cat, modellen: b.laatsteModellen,
-          label: b.naam || b.datasheet || b.unitId,
+          label: b.customName || b.naam || b.datasheet || b.unitId,
           sub: b.datasheet && b.naam && b.datasheet !== b.naam ? b.datasheet : null,
-          volledig: false,
+          volledig: compleet,
+          entry: {
+            uid: b.uid,
+            cat: b.cat as Category,
+            unitId: b.unitId,
+            count: Math.max(1, b.laatsteModellen ?? 1),
+            opts: [...b.optIds],
+            ...(Object.keys(b.optCounts).length ? { optCounts: { ...b.optCounts } } : {}),
+            ...(b.customName ? { customName: b.customName } : {}),
+          } as ListEntry,
         });
       }
     }
