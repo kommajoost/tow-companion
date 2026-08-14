@@ -29,7 +29,7 @@ import {
 } from '../../lib/owbBuilder';
 import { deriveList, optionSummary } from '../../lib/builderDerived';
 import { makeTroopTypeLookup } from '../../lib/troopTypes';
-import { useCampagnes, groeiPlafonds } from '../../lib/campaign';
+import { useCampagnes, groeiPlafonds, KRIMP_CAP } from '../../lib/campaign';
 import { NaamDialoog } from '../game/NaamDialoog';
 import { RosterScreen } from './RosterScreen';
 import { PickerScreen } from './PickerScreen';
@@ -166,6 +166,8 @@ export function BuilderFlow({
       ? {
         pointsCap: campaignCtx.puntenCap,
         groei: groeiPlafonds(campaignCtx, (uid) => list.entries.find((e) => e.uid === uid)?.cat),
+        // Minor adjustments (14-08-2026): het krimp-budget over alle bestaande units samen.
+        krimpCap: KRIMP_CAP,
       }
       : undefined),
     [campaignCtx, list.entries],

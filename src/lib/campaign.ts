@@ -39,6 +39,8 @@ export interface CampaignBaseline {
   /** Zoveel modellen had deze unit bij haar LAATSTE inzending — de ondergrens. Een unit mag groeien,
    *  nooit krimpen: anders speel je punten vrij door een regiment uit te kleden. */
   laatsteModellen: number | null; laatsteFase: number | null;
+  /** Puntenkosten bij de laatste inzending — de meetlat voor minor adjustments. */
+  laatsteKosten: number | null;
   /** WAT de unit was, uit de laatste gelockte lijst waarin ze stond (14-08-2026). Alleen hiermee kan de
    *  builder een per ongeluk verwijderde campagne-unit terugzetten MET haar oorspronkelijke uid — en
    *  dus met haar debuutkosten, groeiplafond en XP-historie. Een nieuw toegevoegde unit krijgt een
@@ -195,6 +197,7 @@ function parseEen(raw: unknown): CampaignContext {
         acts: num(b.acts),
         laatsteModellen: Number.isFinite(Number(b.laatsteModellen)) ? Number(b.laatsteModellen) : null,
         laatsteFase: Number.isFinite(Number(b.laatsteFase)) ? Number(b.laatsteFase) : null,
+        laatsteKosten: Number.isFinite(Number(b.laatsteKosten)) ? Number(b.laatsteKosten) : null,
         // Oudere servers sturen deze vier niet mee; dan is terugzetten simpelweg niet aan te bieden.
         naam: typeof b.naam === 'string' && b.naam.trim() ? b.naam.trim() : null,
         unitId: typeof b.unitId === 'string' && b.unitId.trim() ? b.unitId.trim() : null,
@@ -536,9 +539,17 @@ export const groeiStaffel = (cat: string): number => (cat === 'characters' ? 50 
 
 export interface GroeiPlafond {
   max: number; basis: number; introFase: number; staffel: number;
-  /** Ondergrens in modellen (uit de laatste inzending), of null als die er niet is. */
+  /** Modellenaantal bij de laatste inzending. Was tot 14-08-2026 een harde ONDERGRENS; sindsdien
+   *  alleen nog informatief — krimpen mag, binnen het punten-budget hieronder. */
   minModellen: number | null; laatsteFase: number | null;
+  /** Wat de unit kostte bij haar laatste inzending. Hiertegen meet de minor-adjustments-regel. */
+  laatsteKosten: number | null;
 }
+
+/** Minor adjustments: hoeveel punten je per Act van je bestaande units mag afhalen (Joost 14-08-2026).
+ *  Wat je vrijspeelt mag je herverdelen over andere bestaande units of optellen bij je nieuwe punten.
+ *  De server hanteert hetzelfde getal (towc_lijst_diff, `krimpCap`). */
+export const KRIMP_CAP = 50;
 
 /**
  * Het plafond per unit-uid voor de huidige Act, klaar om als `campaignMods.groei` aan `validate`
@@ -558,6 +569,7 @@ export function groeiPlafonds(
     uit[b.uid] = {
       max: b.eersteKosten + staffel * acts, basis: b.eersteKosten, introFase: b.introFase, staffel,
       minModellen: b.laatsteModellen, laatsteFase: b.laatsteFase,
+      laatsteKosten: b.laatsteKosten,
     };
   }
   return uit;

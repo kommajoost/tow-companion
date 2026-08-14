@@ -720,7 +720,9 @@ export function validate(
     /** Per unit-uid het maximum dat die unit deze Act mag kosten, plus waar dat vandaan komt.
      *  Alleen units die in een eerdere Act zijn ingediend staan erin; nieuwe units kennen geen
      *  plafond (die passen alleen binnen de gewone puntencap). Komt uit de campagne-server. */
-    groei?: Record<string, { max: number; basis: number; introFase: number; staffel: number; minModellen?: number | null; laatsteFase?: number | null }>;
+    groei?: Record<string, { max: number; basis: number; introFase: number; staffel: number; minModellen?: number | null; laatsteFase?: number | null; laatsteKosten?: number | null }>;
+    /** Minor adjustments: hoeveel punten je per Act van bestaande units mag afhalen (14-08-2026). */
+    krimpCap?: number | null;
   },
   /** De 0-X-beperkingen (composition-rules.json). ACHTERAAN op purpose: elke bestaande positionele
    *  aanroep blijft zo werken, en zonder die data wordt er simpelweg niet op getoetst. */
@@ -743,6 +745,9 @@ export function validate(
   // A unit's category for limits depends on the chosen army composition (army-of-infamy lists can
   // move it), so tally by its EFFECTIVE category, not the catalogue array it was added from.
   const rows: { e: ListEntry; unit: OwbUnit; p: number; level: number; cat: Category }[] = [];
+  // Optelsom voor de minor-adjustments-regel: hoeveel punten er in totaal van bestaande units af gaat.
+  let krimpTotaal = 0;
+
   for (const e of list.entries) {
     const unit = getUnit(e.cat, e.unitId);
     if (!unit) continue;
@@ -771,11 +776,23 @@ export function validate(
     if (g && p > g.max) {
       warnEntry(e.uid, `${unit.name_en} is ${p} pts; joined in Act ${g.introFase} at ${g.basis}, so the ceiling here is ${g.max} (+${g.staffel} per Act)`);
     }
-    // Een unit mag groeien maar nooit KRIMPEN — anders speel je punten vrij door een regiment uit te
-    // kleden, en dat omzeilt het plafond hierboven volledig.
-    if (g?.minModellen != null && e.count < g.minModellen) {
-      warnEntry(e.uid, `${unit.name_en} has ${e.count} models; it had ${g.minModellen} in Act ${g.laatsteFase ?? g.introFase} and may never shrink`);
-    }
+    // KRIMP — MINOR ADJUSTMENTS (14-08-2026, Joost). Hier stond een harde ondergrens: een unit mocht
+    // nooit onder haar vorige modellenaantal komen. Dat is vervangen door een BUDGET: per Act mag je
+    // tot 50 punten van je bestaande units afhalen en die elders inzetten — herverdeeld over andere
+    // bestaande units, of opgeteld bij je 250 nieuwe punten. Per unit is er dus geen grens meer; het
+    // gaat om het totaal, en dat tellen we hieronder na de lus op.
+    if (g?.laatsteKosten != null && p < g.laatsteKosten) krimpTotaal += g.laatsteKosten - p;
+  }
+
+  // Het krimp-budget geldt over ALLE bestaande units samen. De server rekent exact hetzelfde na bij
+  // het indienen (towc_lijst_diff, foutcode MINOR_ADJUSTMENTS); dit is de versie die je al tijdens
+  // het bouwen ziet.
+  if (campaignMods?.krimpCap != null && krimpTotaal > campaignMods.krimpCap) {
+    warnings.push(
+      `Minor adjustments: you have taken ${krimpTotaal} pts off existing units — the limit is `
+      + `${campaignMods.krimpCap} pts per Act. Put ${krimpTotaal - campaignMods.krimpCap} pts back, `
+      + 'or spend the freed points on new units instead.',
+    );
   }
 
   for (const c of CATEGORIES) {
