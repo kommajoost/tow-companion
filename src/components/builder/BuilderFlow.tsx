@@ -155,7 +155,8 @@ export function BuilderFlow({
 
   // ── Campagne-regels (Isle of Celedon) ─────────────────────────────────────────────────────────
   // Een campagne-lijst is niet vrij: de fase-cap is de puntenbasis, en een unit die al eerder is
-  // ingediend mag maar een beetje duurder worden per Act (en niet krimpen). Die gaan mee naar
+  // ingediend mag maar een beetje duurder worden per Act, en krimpen mag binnen 50 punten per Act
+  // over alle units samen (minor adjustments, 14-08-2026). Die gaan mee naar
   // `validate()`, zodat ze in de band ÉN
   // op de unit-rij zelf verschijnen — precies zoals een te grote unit dat al doet. Zonder dit zag je
   // ze pas bij het indienen op de campagne-site. De server rekent alles opnieuw na bij het locken.
@@ -308,7 +309,7 @@ export function BuilderFlow({
    *
    *  De OPTIES zetten we bewust NIET terug: de campagne bewaart ze als leesbare namen ("Dark Steed"),
    *  niet als de optie-ids die de builder gebruikt. Ze gokken zou een verkeerde uitrusting stil in je
-   *  lijst zetten. Het aantal modellen zetten we wél terug — krimpen mag niet, dus dat is de ondergrens. */
+   *  lijst zetten. Het aantal modellen zetten we wél terug: dat is de stand waarop de unit stond. */
   const restoreUnit = useCallback((b: {
     uid: string; unitId: string; cat: string; modellen: number | null; entry?: ListEntry;
   }): void => {

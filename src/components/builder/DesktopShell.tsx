@@ -206,7 +206,8 @@ export function DesktopShell(props: {
   onNaam?: (uid: string) => void;
   /** Campagne: het puntenplafond van een unit deze Act, voor de inspector-kop. */
   groeiMaxVan?: (uid: string) => number | undefined;
-  /** Campagne: de model-ondergrens van een unit (krimpen mag niet). */
+  /** Campagne: het modellenaantal bij de vorige inzending. Sinds 14-08-2026 informatief -- krimpen
+   *  mag binnen het 50-punten-budget per Act -- maar de unit-pagina meldt er wel mee dat je eronder zit. */
   groeiMinModellenVan?: (uid: string) => number | undefined;
 }): React.JSX.Element | null {
   const {
