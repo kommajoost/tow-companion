@@ -420,6 +420,80 @@ function makeTable(node, styles) {
   };
 }
 
+// A rule heading that the author left INSIDE a paragraph instead of on its own line.
+//
+// The Dark Elves' "Hekarti's Blessing" sat at the very end of the Will of the Gods paragraph, in bold,
+// with its rule text in the NEXT paragraph. Because the block as a whole was not entirely bold it was
+// not recognised as a heading, so the active heading path stayed on the rule ABOVE it — and both new
+// rules were appended to Eternal Hatred's page while Hekarti's Blessing itself kept the old wording
+// (Joost, 12-08). The same shape hides Grinding Wheels inside Carriage Hauler, Cleaving Blow inside
+// Infernal Favour, Invocation of Nehek inside Necromantic Undead, and two magic-item titles.
+//
+// Split ONLY on a bold run that behaves like a heading: at the start of the paragraph and followed by
+// a real line break, or at the very end. It must read as a title — 4-60 characters, starting with a
+// capital, no sentence punctuation at the end, not one of the field labels, and not opening with a
+// word that starts a sentence ("If firing with a model…" is a bolded lead-in, not a heading). Without
+// those guards the Ogre misfire tables ("1 Kaboom!") and a statline header row split as well.
+const HEADING_FIELD = /^(unit size|troop type|base size|armour value|equipment|options|special rules|notes?|character mount|magic|effect|type|casting value|range)\s*:?$/i;
+const HEADING_OPENER = /^(if|when|whilst|while|note|any|each|for|in|during|unless|after|before|on|roll|this|a|an|the|models?|whenever)\b/i;
+const looksLikeHeading = (raw) => {
+  const text = raw.trim();
+  if (text.length < 4 || text.length > 60) return false;
+  if (/[.:;,!?]$/.test(text)) return false;
+  if (!/^[A-Z]/.test(text)) return false;
+  if (HEADING_FIELD.test(text) || HEADING_OPENER.test(text)) return false;
+  const words = text.split(/\s+/);
+  return words.filter((w) => w.length <= 2).length * 2 <= words.length;
+};
+
+/** Rebuild a block from a slice of its own segments, so change marks and struck text travel with it. */
+function blockFromSegments(segments, headingLevel) {
+  const trimmed = cleanSegments(segments);
+  const text = flattenText(trimmed);
+  if (!text) return null;
+  return {
+    type: 'paragraph',
+    text,
+    segments: trimmed,
+    ...struckField(trimmed),
+    changeKinds: changeKinds(trimmed),
+    pointsMentions: pointsMentions(text),
+    visualHeadingLevel: headingLevel,
+  };
+}
+
+function splitEmbeddedHeadings(block) {
+  if (block.type !== 'paragraph' || block.visualHeadingLevel) return [block];
+  const segments = block.segments ?? [];
+  const visible = segments.filter((s) => s.text.trim());
+  if (visible.length < 2 || visible.every((s) => s.bold)) return [block];
+
+  let from = 0;
+  let to = segments.length;
+  const out = [];
+  const first = visible[0];
+  const firstAt = segments.indexOf(first);
+  // A leading title only counts when a line break separates it from the body — otherwise it is the
+  // bolded opening of a sentence.
+  if (first.bold && looksLikeHeading(first.text)
+    && segments.slice(firstAt + 1).some((s) => s.text.includes('\n'))) {
+    const head = blockFromSegments([first], 3);
+    if (head) { out.push(head); from = firstAt + 1; }
+  }
+  const last = visible.at(-1);
+  const lastAt = segments.lastIndexOf(last);
+  const tail = last !== first && last.bold && looksLikeHeading(last.text)
+    ? blockFromSegments([last], 3)
+    : null;
+  if (tail) to = lastAt;
+
+  if (!out.length && !tail) return [block];
+  const body = blockFromSegments(segments.slice(from, to), null);
+  if (body) out.push(body);
+  if (tail) out.push(tail);
+  return out.length ? out : [block];
+}
+
 function collectBlocks(root, styles) {
   const blocks = [];
   const visit = (node) => {
@@ -432,7 +506,7 @@ function collectBlocks(root, styles) {
           : node.tag === 'ul' || node.tag === 'ol'
             ? makeList(node, styles)
             : makeParagraph(node, styles);
-      if (block.text) blocks.push(block);
+      if (block.text) blocks.push(...splitEmbeddedHeadings(block));
       return;
     }
     for (const child of node.children ?? []) visit(child);

@@ -463,17 +463,14 @@
       ],
       "overrides": "dark-vitality"
     },
-    "necromantic-undead": {
-      "name_en": "Necromantic Undead",
+    "invocation-of-nehek": {
+      "name_en": "Invocation Of Nehek",
       "body": [
-        "Models with this special rule are ‘Undead.’ Undead models cannot march (unless they have the Fly (X) special rule and choose to move by flying). In addition, all Undead models have the following universal special rules:",
-        "Fear • Immune to Psychology • Unbreakable • Unstable",
-        "A character with this special rule cannot join a unit without this special rule, and vice versa Invocation Of Nehek",
         "During the Command sub-phase of their turn, if they are not engaged in combat, this character may attempt to resurrect the fallen (see page 28) by making a Leadership test (using their own Leadership). If this test is passed, a single friendly unit that has the Necromantic Undead special rule and is within 12\" of this character recovers a number of lost Wounds. However, magically repairing great Undead beasts is much harder than",
         "raising Zombies from the dirt. Therefore, how many Wounds are recovered depends upon the unit’s troop type and this character’s Level of Wizardry:",
         "If the unit’s troop type is ‘regular infantry’ or ‘swarms,’ it recovers a number of Wounds equal to this character’s Level of Wizardry +D3. • If the unit’s troop type is ‘light cavalry’ or ‘war beasts,’ it recovers a number of Wounds equal to this character’s Level of Wizardry +1. • If the unit’s troop type is ‘heavy infantry,’ ‘monstrous infantry,’ ‘heavy cavalry,’ ‘monstrous cavalry’ or ‘light chariot,’ it recovers a number of Wounds equal to this character’s Level of Wizardry. • If the unit’s troop type is ‘heavy chariot,’ ‘monstrous creature,’ ‘behemoth’ or ‘war machine,’ it recovers a single Wound. • Models with the Dark Vitality or Ethereal special rules recover half the amount of wounds as described above (including any bonuses), rounding fractions up."
       ],
-      "overrides": "necromantic-undead"
+      "overrides": "invocation-of-nehek"
     },
     "the-newly-dead": {
       "name_en": "The Newly Dead",
@@ -671,6 +668,39 @@
           "number": null,
           "signature": true
         }
+      ]
+    }
+  },
+  "composition": {
+    "units": {
+      "corpse-cart": {
+        "category": "core"
+      },
+      "varghulf": {
+        "category": "special"
+      }
+    },
+    "sourceRules": {
+      "Characters": [
+        "1+ Wizard (see page 4) • 0-1 Vampire Lord, Master Necromancer or Strigoi Ghoul King per 1,000 points • 0-1 Wight King or Banshee per 1,000 points • Vampire Thralls, Necromantic Acolytes, Wight Lords and Cairn Wraiths"
+      ],
+      "Core": [
+        "Skeleton Warriors, Zombies, Crypt Ghouls, Bat Swarms and Dire Wolves • 0-3 Corpse Carts • 0-1 unit of Grave Guard or Black Knights may be taken as a Core choice"
+      ],
+      "Special": [
+        "Grave Guard, Black Knights, Crypt Horrors, Fell bats • 0-1 Varghulf per 1,000 points • 0-1 unit of Spirit Hosts per Cairn Wraith or Tomb Banshee taken • If your General is a Vampire Lord 0-1 Blood Knights may be taken as a Special choice. • If your General is a Strigoi Ghoul King, 0-1 unit of Vargheists or 0-1 Terrorgheist may be taken as a Special choice"
+      ],
+      "Rare": [
+        "Vargheists, Terrorgheist, Blood Knights • 0-1 Black Coaches per 1,000 points • 0-1 unit of Hexwraiths per Cairn Wraith or Tomb Banshee taken"
+      ],
+      "Mercenaries": [
+        "Mercenaries",
+        "Up to 20% of your army’s points value may be spent on the following units taken as mercenaries:",
+        "Free Company Militia and Empire Archers (see the Empire of Man army list on page 59 of Forces of Fantasy)",
+        "Note that mercenary units drawn from another army list gain the Mercenaries special rule and become subject to the ‘Misbehaving Mercenaries’ rules, as described on page 279 of the Warhammer: the Old World rulebook."
+      ],
+      "Allies": [
+        "Vampire Count Allies In addition to the Allies listed in Ravening Hordes, armies made using the Tomb Kings of Khemri Grand Army composition may include an Allied contingent drawn from the Vampire Counts Legacy Army composition."
       ]
     }
   },
@@ -1267,39 +1297,6 @@
     },
     "honour-or-death": {
       "body": "Any enemy model that wishes to issue a challenge whilst engaged in the same combat as a model with this Vampiric Power must first make a Leadership test (using their own Leadership.) Apply a +1 modifier to the dice roll for each point of difference between its Weapon Skill characteristic and that of the model with this Vampiric Power (to a maximum of +2).\n\nIf the test is passed, the challenge is issued as normal. If the test is failed, the challenge is not issued and the enemy model must Retire, following the rules for refusing a challenge. In addition, challenges issued by a model with this Vampiric Power cannot be refused."
-    }
-  },
-  "composition": {
-    "sourceRules": {
-      "Characters": [
-        "1+ Wizard (see page 4) • 0-1 Vampire Lord, Master Necromancer or Strigoi Ghoul King per 1,000 points • 0-1 Wight King or Banshee per 1,000 points • Vampire Thralls, Necromantic Acolytes, Wight Lords and Cairn Wraiths"
-      ],
-      "Core": [
-        "Skeleton Warriors, Zombies, Crypt Ghouls, Bat Swarms and Dire Wolves • 0-3 Corpse Carts • 0-1 unit of Grave Guard or Black Knights may be taken as a Core choice"
-      ],
-      "Special": [
-        "Grave Guard, Black Knights, Crypt Horrors, Fell bats • 0-1 Varghulf per 1,000 points • 0-1 unit of Spirit Hosts per Cairn Wraith or Tomb Banshee taken • If your General is a Vampire Lord 0-1 Blood Knights may be taken as a Special choice. • If your General is a Strigoi Ghoul King, 0-1 unit of Vargheists or 0-1 Terrorgheist may be taken as a Special choice"
-      ],
-      "Rare": [
-        "Vargheists, Terrorgheist, Blood Knights • 0-1 Black Coaches per 1,000 points • 0-1 unit of Hexwraiths per Cairn Wraith or Tomb Banshee taken"
-      ],
-      "Mercenaries": [
-        "Mercenaries",
-        "Up to 20% of your army’s points value may be spent on the following units taken as mercenaries:",
-        "Free Company Militia and Empire Archers (see the Empire of Man army list on page 59 of Forces of Fantasy)",
-        "Note that mercenary units drawn from another army list gain the Mercenaries special rule and become subject to the ‘Misbehaving Mercenaries’ rules, as described on page 279 of the Warhammer: the Old World rulebook."
-      ],
-      "Allies": [
-        "Vampire Count Allies In addition to the Allies listed in Ravening Hordes, armies made using the Tomb Kings of Khemri Grand Army composition may include an Allied contingent drawn from the Vampire Counts Legacy Army composition."
-      ]
-    },
-    "units": {
-      "corpse-cart": {
-        "category": "core"
-      },
-      "varghulf": {
-        "category": "special"
-      }
     }
   }
 }

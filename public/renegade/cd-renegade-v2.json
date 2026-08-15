@@ -535,6 +535,13 @@
       ],
       "overrides": null
     },
+    "carriage-hauler": {
+      "name_en": "Carriage Hauler",
+      "body": [
+        "During the Movement phase, up to two friendly war machines with the ‘Steam Carriage’ upgrade that are completely within this model’s rear arc and within 8\" of its base at the beginning of the phase may replace their Movement characteristic with this model’s. These war machines must finish their movement completely within this model’s rear arc and within 8\" of its base. Unless this model moves using the Lumbering Destruction special rule or makes a charge move, these war machines are not considered to have moved this turn."
+      ],
+      "overrides": "carriage-hauler"
+    },
     "skullcracker": {
       "name_en": "Skullcracker",
       "body": [

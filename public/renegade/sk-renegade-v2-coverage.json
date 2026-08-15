@@ -4,7 +4,7 @@
   "reference": "sk-renegade-v2-reference.json",
   "generatedBy": "scripts/compile-renegade-v2.mjs",
   "counts": {
-    "applied": 121,
+    "applied": 122,
     "captured": 28,
     "unresolved": 0,
     "unsupported": 0,
@@ -254,7 +254,7 @@
       ],
       "status": "applied",
       "targets": [
-        "rules.verminous-valour"
+        "rules.pushed-into-battle"
       ]
     },
     {
@@ -266,7 +266,7 @@
       ],
       "status": "applied",
       "targets": [
-        "rules.scurrying-masses"
+        "rules.pushed-into-battle"
       ]
     },
     {
@@ -294,21 +294,21 @@
       ]
     },
     {
-      "blockId": "h0016",
+      "blockId": "b0106",
       "unitContext": null,
-      "entryKind": "heading",
+      "entryKind": "paragraph",
       "changeKinds": [
         "new"
       ],
       "status": "applied",
       "targets": [
-        "magicItemText.the-fellblade"
+        "rules.scurrying-masses"
       ]
     },
     {
-      "blockId": "b0108",
+      "blockId": "h0016",
       "unitContext": null,
-      "entryKind": "paragraph",
+      "entryKind": "heading",
       "changeKinds": [
         "new"
       ],
@@ -326,11 +326,23 @@
       ],
       "status": "applied",
       "targets": [
+        "magicItemText.the-fellblade"
+      ]
+    },
+    {
+      "blockId": "b0110",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
         "magicItemText.weeping-blade"
       ]
     },
     {
-      "blockId": "b0111",
+      "blockId": "b0112",
       "unitContext": null,
       "entryKind": "paragraph",
       "changeKinds": [
@@ -342,7 +354,7 @@
       ]
     },
     {
-      "blockId": "b0115",
+      "blockId": "b0116",
       "unitContext": null,
       "entryKind": "paragraph",
       "changeKinds": [
@@ -354,7 +366,7 @@
       ]
     },
     {
-      "blockId": "b0116",
+      "blockId": "b0117",
       "unitContext": null,
       "entryKind": "paragraph",
       "changeKinds": [
@@ -378,7 +390,7 @@
       ]
     },
     {
-      "blockId": "b0117",
+      "blockId": "b0118",
       "unitContext": null,
       "entryKind": "paragraph",
       "changeKinds": [
@@ -402,7 +414,7 @@
       ]
     },
     {
-      "blockId": "b0122",
+      "blockId": "b0123",
       "unitContext": null,
       "entryKind": "paragraph",
       "changeKinds": [
@@ -426,31 +438,31 @@
       ]
     },
     {
-      "blockId": "b0125",
-      "unitContext": null,
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "magicItemText.banner-of-verminous-scurrying"
-      ]
-    },
-    {
-      "blockId": "b0126",
-      "unitContext": null,
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "magicItemText.banner-of-verminous-scurrying"
-      ]
-    },
-    {
       "blockId": "b0127",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "magicItemText.plague-banner"
+      ]
+    },
+    {
+      "blockId": "b0128",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "magicItemText.plague-banner"
+      ]
+    },
+    {
+      "blockId": "b0129",
       "unitContext": null,
       "entryKind": "paragraph",
       "changeKinds": [
@@ -462,7 +474,7 @@
       ]
     },
     {
-      "blockId": "b0128",
+      "blockId": "b0130",
       "unitContext": null,
       "entryKind": "paragraph",
       "changeKinds": [
@@ -486,7 +498,7 @@
       ]
     },
     {
-      "blockId": "b0131",
+      "blockId": "b0133",
       "unitContext": null,
       "entryKind": "paragraph",
       "changeKinds": [
@@ -498,7 +510,7 @@
       ]
     },
     {
-      "blockId": "b0132",
+      "blockId": "b0134",
       "unitContext": null,
       "entryKind": "paragraph",
       "changeKinds": [
@@ -510,10 +522,10 @@
       ]
     },
     {
-      "blockId": "b0154",
+      "blockId": "b0156",
       "unitContext": {
         "name": "Grey Seers",
-        "sourceBlockId": "b0154",
+        "sourceBlockId": "b0156",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -531,30 +543,10 @@
       ]
     },
     {
-      "blockId": "b0172",
-      "unitContext": {
-        "name": "Clan Skryre Warlock Engineers",
-        "sourceBlockId": "b0164",
-        "method": "preceding-heading",
-        "confidence": "medium",
-        "profileNames": [
-          "Warlock Engineer"
-        ]
-      },
-      "entryKind": "option",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "units.warlock-engineer.options"
-      ]
-    },
-    {
       "blockId": "b0174",
       "unitContext": {
         "name": "Clan Skryre Warlock Engineers",
-        "sourceBlockId": "b0164",
+        "sourceBlockId": "b0166",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -571,10 +563,30 @@
       ]
     },
     {
-      "blockId": "b0175",
+      "blockId": "b0176",
       "unitContext": {
         "name": "Clan Skryre Warlock Engineers",
-        "sourceBlockId": "b0164",
+        "sourceBlockId": "b0166",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Warlock Engineer"
+        ]
+      },
+      "entryKind": "option",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.warlock-engineer.options"
+      ]
+    },
+    {
+      "blockId": "b0177",
+      "unitContext": {
+        "name": "Clan Skryre Warlock Engineers",
+        "sourceBlockId": "b0166",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -594,7 +606,7 @@
       "blockId": "h0049",
       "unitContext": {
         "name": "Clan Skryre Warlock Engineers",
-        "sourceBlockId": "b0164",
+        "sourceBlockId": "b0166",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -611,10 +623,10 @@
       ]
     },
     {
-      "blockId": "b0177",
+      "blockId": "b0179",
       "unitContext": {
         "name": "Clan Skryre Warlock Engineers",
-        "sourceBlockId": "b0164",
+        "sourceBlockId": "b0166",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -631,10 +643,10 @@
       ]
     },
     {
-      "blockId": "b0182",
+      "blockId": "b0184",
       "unitContext": {
         "name": "Clan Skryre Warlock Engineers",
-        "sourceBlockId": "b0164",
+        "sourceBlockId": "b0166",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -651,10 +663,10 @@
       ]
     },
     {
-      "blockId": "b0183",
+      "blockId": "b0185",
       "unitContext": {
         "name": "Clan Skryre Warlock Engineers",
-        "sourceBlockId": "b0164",
+        "sourceBlockId": "b0166",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -671,10 +683,10 @@
       ]
     },
     {
-      "blockId": "b0184",
+      "blockId": "b0186",
       "unitContext": {
         "name": "Clan Eshin Master Assassins",
-        "sourceBlockId": "b0184",
+        "sourceBlockId": "b0186",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -692,10 +704,10 @@
       ]
     },
     {
-      "blockId": "b0187",
+      "blockId": "b0189",
       "unitContext": {
         "name": "Clan Eshin Master Assassins",
-        "sourceBlockId": "b0184",
+        "sourceBlockId": "b0186",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -712,10 +724,10 @@
       ]
     },
     {
-      "blockId": "b0188",
+      "blockId": "b0190",
       "unitContext": {
         "name": "Clan Eshin Master Assassins",
-        "sourceBlockId": "b0184",
+        "sourceBlockId": "b0186",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -732,10 +744,10 @@
       ]
     },
     {
-      "blockId": "b0189",
+      "blockId": "b0191",
       "unitContext": {
         "name": "Clan Eshin Master Assassins",
-        "sourceBlockId": "b0184",
+        "sourceBlockId": "b0186",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -755,7 +767,7 @@
       "blockId": "h0053",
       "unitContext": {
         "name": "Clan Eshin Master Assassins",
-        "sourceBlockId": "b0184",
+        "sourceBlockId": "b0186",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -772,10 +784,10 @@
       ]
     },
     {
-      "blockId": "b0190",
+      "blockId": "b0192",
       "unitContext": {
         "name": "Clan Eshin Master Assassins",
-        "sourceBlockId": "b0184",
+        "sourceBlockId": "b0186",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -792,10 +804,10 @@
       ]
     },
     {
-      "blockId": "b0191",
+      "blockId": "b0193",
       "unitContext": {
         "name": "Clan Eshin Master Assassins",
-        "sourceBlockId": "b0184",
+        "sourceBlockId": "b0186",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -812,10 +824,10 @@
       ]
     },
     {
-      "blockId": "b0210",
+      "blockId": "b0212",
       "unitContext": {
         "name": "Clan Pestilens Plague Priests",
-        "sourceBlockId": "b0195",
+        "sourceBlockId": "b0197",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -832,10 +844,10 @@
       ]
     },
     {
-      "blockId": "b0211",
+      "blockId": "b0213",
       "unitContext": {
         "name": "Stormvermin",
-        "sourceBlockId": "b0211",
+        "sourceBlockId": "b0213",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -856,10 +868,10 @@
       ]
     },
     {
-      "blockId": "b0212",
+      "blockId": "b0214",
       "unitContext": {
         "name": "Stormvermin",
-        "sourceBlockId": "b0211",
+        "sourceBlockId": "b0213",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -878,10 +890,10 @@
       ]
     },
     {
-      "blockId": "b0228",
+      "blockId": "b0230",
       "unitContext": {
         "name": "Clanrats",
-        "sourceBlockId": "b0219",
+        "sourceBlockId": "b0221",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -899,10 +911,10 @@
       ]
     },
     {
-      "blockId": "b0229",
+      "blockId": "b0231",
       "unitContext": {
         "name": "Clanrats",
-        "sourceBlockId": "b0219",
+        "sourceBlockId": "b0221",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -920,10 +932,10 @@
       ]
     },
     {
-      "blockId": "b0236",
+      "blockId": "b0238",
       "unitContext": {
         "name": "Weapon Teams",
-        "sourceBlockId": "b0231",
+        "sourceBlockId": "b0233",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -940,10 +952,10 @@
       ]
     },
     {
-      "blockId": "b0237",
+      "blockId": "b0239",
       "unitContext": {
         "name": "Weapon Teams",
-        "sourceBlockId": "b0231",
+        "sourceBlockId": "b0233",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -960,10 +972,10 @@
       ]
     },
     {
-      "blockId": "b0240",
+      "blockId": "b0242",
       "unitContext": {
         "name": "Weapon Teams",
-        "sourceBlockId": "b0231",
+        "sourceBlockId": "b0233",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -980,10 +992,10 @@
       ]
     },
     {
-      "blockId": "b0244",
+      "blockId": "b0246",
       "unitContext": {
         "name": "Weapon Teams",
-        "sourceBlockId": "b0231",
+        "sourceBlockId": "b0233",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1000,30 +1012,10 @@
       ]
     },
     {
-      "blockId": "b0246",
-      "unitContext": {
-        "name": "Weapon Teams",
-        "sourceBlockId": "b0231",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Weapon Team Crew"
-        ]
-      },
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "captured",
-      "targets": [
-        "profiles.weapon team.notes"
-      ]
-    },
-    {
       "blockId": "b0248",
       "unitContext": {
         "name": "Weapon Teams",
-        "sourceBlockId": "b0231",
+        "sourceBlockId": "b0233",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1040,10 +1032,10 @@
       ]
     },
     {
-      "blockId": "b0251",
+      "blockId": "b0250",
       "unitContext": {
         "name": "Weapon Teams",
-        "sourceBlockId": "b0231",
+        "sourceBlockId": "b0233",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1060,10 +1052,30 @@
       ]
     },
     {
-      "blockId": "b0252",
+      "blockId": "b0253",
+      "unitContext": {
+        "name": "Weapon Teams",
+        "sourceBlockId": "b0233",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Weapon Team Crew"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.weapon team.notes"
+      ]
+    },
+    {
+      "blockId": "b0254",
       "unitContext": {
         "name": "Skaven Dregs",
-        "sourceBlockId": "b0252",
+        "sourceBlockId": "b0254",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -1080,10 +1092,10 @@
       ]
     },
     {
-      "blockId": "b0253",
+      "blockId": "b0255",
       "unitContext": {
         "name": "Skaven Dregs",
-        "sourceBlockId": "b0252",
+        "sourceBlockId": "b0254",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -1100,10 +1112,10 @@
       ]
     },
     {
-      "blockId": "b0254",
+      "blockId": "b0256",
       "unitContext": {
         "name": "Skaven Dregs",
-        "sourceBlockId": "b0252",
+        "sourceBlockId": "b0254",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -1120,10 +1132,10 @@
       ]
     },
     {
-      "blockId": "b0255",
+      "blockId": "b0257",
       "unitContext": {
         "name": "Skaven Dregs",
-        "sourceBlockId": "b0252",
+        "sourceBlockId": "b0254",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -1140,10 +1152,10 @@
       ]
     },
     {
-      "blockId": "b0256",
+      "blockId": "b0258",
       "unitContext": {
         "name": "Skaven Dregs",
-        "sourceBlockId": "b0252",
+        "sourceBlockId": "b0254",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -1163,7 +1175,7 @@
       "blockId": "h0072",
       "unitContext": {
         "name": "Skaven Dregs",
-        "sourceBlockId": "b0252",
+        "sourceBlockId": "b0254",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -1180,50 +1192,10 @@
       ]
     },
     {
-      "blockId": "b0257",
-      "unitContext": {
-        "name": "Skaven Dregs",
-        "sourceBlockId": "b0252",
-        "method": "preceding-heading",
-        "confidence": "medium",
-        "profileNames": [
-          "Dreg-rat"
-        ]
-      },
-      "entryKind": "list",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "captured",
-      "targets": [
-        "profiles.skaven dregs.notes"
-      ]
-    },
-    {
-      "blockId": "b0258",
-      "unitContext": {
-        "name": "Skaven Dregs",
-        "sourceBlockId": "b0252",
-        "method": "preceding-heading",
-        "confidence": "medium",
-        "profileNames": [
-          "Dreg-rat"
-        ]
-      },
-      "entryKind": "option",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "units.skaven-dregs.options"
-      ]
-    },
-    {
       "blockId": "b0259",
       "unitContext": {
         "name": "Skaven Dregs",
-        "sourceBlockId": "b0252",
+        "sourceBlockId": "b0254",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -1243,7 +1215,7 @@
       "blockId": "b0260",
       "unitContext": {
         "name": "Skaven Dregs",
-        "sourceBlockId": "b0252",
+        "sourceBlockId": "b0254",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -1263,7 +1235,47 @@
       "blockId": "b0261",
       "unitContext": {
         "name": "Skaven Dregs",
-        "sourceBlockId": "b0252",
+        "sourceBlockId": "b0254",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Dreg-rat"
+        ]
+      },
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.skaven dregs.notes"
+      ]
+    },
+    {
+      "blockId": "b0262",
+      "unitContext": {
+        "name": "Skaven Dregs",
+        "sourceBlockId": "b0254",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Dreg-rat"
+        ]
+      },
+      "entryKind": "option",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.skaven-dregs.options"
+      ]
+    },
+    {
+      "blockId": "b0263",
+      "unitContext": {
+        "name": "Skaven Dregs",
+        "sourceBlockId": "b0254",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -1283,7 +1295,7 @@
       "blockId": "h0073",
       "unitContext": {
         "name": "Skaven Dregs",
-        "sourceBlockId": "b0252",
+        "sourceBlockId": "b0254",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -1300,50 +1312,50 @@
       ]
     },
     {
-      "blockId": "b0262",
-      "unitContext": {
-        "name": "Skaven Dregs",
-        "sourceBlockId": "b0252",
-        "method": "preceding-heading",
-        "confidence": "medium",
-        "profileNames": [
-          "Dreg-rat"
-        ]
-      },
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.cornered-rats"
-      ]
-    },
-    {
-      "blockId": "b0263",
-      "unitContext": {
-        "name": "Skaven Dregs",
-        "sourceBlockId": "b0252",
-        "method": "preceding-heading",
-        "confidence": "medium",
-        "profileNames": [
-          "Dreg-rat"
-        ]
-      },
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.cornered-rats"
-      ]
-    },
-    {
       "blockId": "b0264",
       "unitContext": {
+        "name": "Skaven Dregs",
+        "sourceBlockId": "b0254",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Dreg-rat"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.cornered-rats"
+      ]
+    },
+    {
+      "blockId": "b0265",
+      "unitContext": {
+        "name": "Skaven Dregs",
+        "sourceBlockId": "b0254",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Dreg-rat"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.cornered-rats"
+      ]
+    },
+    {
+      "blockId": "b0266",
+      "unitContext": {
         "name": "Warplock Jezzails",
-        "sourceBlockId": "b0264",
+        "sourceBlockId": "b0266",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1364,7 +1376,7 @@
       "blockId": "h0074",
       "unitContext": {
         "name": "Warplock Jezzails",
-        "sourceBlockId": "b0264",
+        "sourceBlockId": "b0266",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1381,30 +1393,10 @@
       ]
     },
     {
-      "blockId": "b0270",
+      "blockId": "b0272",
       "unitContext": {
         "name": "Warplock Jezzails",
-        "sourceBlockId": "b0264",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Jezzail Team"
-        ]
-      },
-      "entryKind": "list",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "captured",
-      "targets": [
-        "profiles.warplock jezzails.notes"
-      ]
-    },
-    {
-      "blockId": "b0271",
-      "unitContext": {
-        "name": "Warplock Jezzails",
-        "sourceBlockId": "b0264",
+        "sourceBlockId": "b0266",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1424,7 +1416,27 @@
       "blockId": "b0273",
       "unitContext": {
         "name": "Warplock Jezzails",
-        "sourceBlockId": "b0264",
+        "sourceBlockId": "b0266",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Jezzail Team"
+        ]
+      },
+      "entryKind": "list",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "captured",
+      "targets": [
+        "profiles.warplock jezzails.notes"
+      ]
+    },
+    {
+      "blockId": "b0275",
+      "unitContext": {
+        "name": "Warplock Jezzails",
+        "sourceBlockId": "b0266",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1441,10 +1453,10 @@
       ]
     },
     {
-      "blockId": "b0281",
+      "blockId": "b0283",
       "unitContext": {
         "name": "Poisoned Wind Globadiers",
-        "sourceBlockId": "b0276",
+        "sourceBlockId": "b0278",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -1461,10 +1473,10 @@
       ]
     },
     {
-      "blockId": "b0283",
+      "blockId": "b0285",
       "unitContext": {
         "name": "Poisoned Wind Globadiers",
-        "sourceBlockId": "b0276",
+        "sourceBlockId": "b0278",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -1481,10 +1493,10 @@
       ]
     },
     {
-      "blockId": "b0290",
+      "blockId": "b0292",
       "unitContext": {
         "name": "Packmasters & Master Moulders",
-        "sourceBlockId": "b0290",
+        "sourceBlockId": "b0292",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -1502,10 +1514,10 @@
       ]
     },
     {
-      "blockId": "b0293",
+      "blockId": "b0295",
       "unitContext": {
         "name": "Packmasters & Master Moulders",
-        "sourceBlockId": "b0290",
+        "sourceBlockId": "b0292",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -1523,10 +1535,10 @@
       ]
     },
     {
-      "blockId": "b0295",
+      "blockId": "b0297",
       "unitContext": {
         "name": "Packmasters & Master Moulders",
-        "sourceBlockId": "b0290",
+        "sourceBlockId": "b0292",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -1544,10 +1556,10 @@
       ]
     },
     {
-      "blockId": "b0298",
+      "blockId": "b0300",
       "unitContext": {
         "name": "Packmasters & Master Moulders",
-        "sourceBlockId": "b0290",
+        "sourceBlockId": "b0292",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -1568,7 +1580,7 @@
       "blockId": "h0079",
       "unitContext": {
         "name": "Packmasters & Master Moulders",
-        "sourceBlockId": "b0290",
+        "sourceBlockId": "b0292",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -1586,31 +1598,10 @@
       ]
     },
     {
-      "blockId": "b0299",
+      "blockId": "b0301",
       "unitContext": {
         "name": "Packmasters & Master Moulders",
-        "sourceBlockId": "b0290",
-        "method": "preceding-heading",
-        "confidence": "medium",
-        "profileNames": [
-          "Packmaster",
-          "Master Moulder"
-        ]
-      },
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.leader-of-the-pack"
-      ]
-    },
-    {
-      "blockId": "b0300",
-      "unitContext": {
-        "name": "Packmasters & Master Moulders",
-        "sourceBlockId": "b0290",
+        "sourceBlockId": "b0292",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -1630,8 +1621,29 @@
     {
       "blockId": "b0302",
       "unitContext": {
+        "name": "Packmasters & Master Moulders",
+        "sourceBlockId": "b0292",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Packmaster",
+          "Master Moulder"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.leader-of-the-pack"
+      ]
+    },
+    {
+      "blockId": "b0304",
+      "unitContext": {
         "name": "Rat Ogres",
-        "sourceBlockId": "b0302",
+        "sourceBlockId": "b0304",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1649,10 +1661,10 @@
       ]
     },
     {
-      "blockId": "b0308",
+      "blockId": "b0310",
       "unitContext": {
         "name": "Rat Ogres",
-        "sourceBlockId": "b0302",
+        "sourceBlockId": "b0304",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1669,10 +1681,10 @@
       ]
     },
     {
-      "blockId": "b0309",
+      "blockId": "b0311",
       "unitContext": {
         "name": "Rat Ogres",
-        "sourceBlockId": "b0302",
+        "sourceBlockId": "b0304",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1689,10 +1701,10 @@
       ]
     },
     {
-      "blockId": "b0310",
+      "blockId": "b0312",
       "unitContext": {
         "name": "Giant Rats",
-        "sourceBlockId": "b0310",
+        "sourceBlockId": "b0312",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1709,10 +1721,10 @@
       ]
     },
     {
-      "blockId": "b0316",
+      "blockId": "b0318",
       "unitContext": {
         "name": "Giant Rats",
-        "sourceBlockId": "b0310",
+        "sourceBlockId": "b0312",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1729,10 +1741,10 @@
       ]
     },
     {
-      "blockId": "b0317",
+      "blockId": "b0319",
       "unitContext": {
         "name": "Giant Rats",
-        "sourceBlockId": "b0310",
+        "sourceBlockId": "b0312",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1749,10 +1761,10 @@
       ]
     },
     {
-      "blockId": "b0318",
+      "blockId": "b0320",
       "unitContext": {
         "name": "Night Runners",
-        "sourceBlockId": "b0318",
+        "sourceBlockId": "b0320",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1770,10 +1782,10 @@
       ]
     },
     {
-      "blockId": "b0322",
+      "blockId": "b0324",
       "unitContext": {
         "name": "Night Runners",
-        "sourceBlockId": "b0318",
+        "sourceBlockId": "b0320",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1791,10 +1803,10 @@
       ]
     },
     {
-      "blockId": "b0325",
+      "blockId": "b0327",
       "unitContext": {
         "name": "Night Runners",
-        "sourceBlockId": "b0318",
+        "sourceBlockId": "b0320",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1812,10 +1824,10 @@
       ]
     },
     {
-      "blockId": "b0326",
+      "blockId": "b0328",
       "unitContext": {
         "name": "Night Runners",
-        "sourceBlockId": "b0318",
+        "sourceBlockId": "b0320",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1833,10 +1845,10 @@
       ]
     },
     {
-      "blockId": "b0327",
+      "blockId": "b0329",
       "unitContext": {
         "name": "Gutter Runners",
-        "sourceBlockId": "b0327",
+        "sourceBlockId": "b0329",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1854,10 +1866,10 @@
       ]
     },
     {
-      "blockId": "b0337",
+      "blockId": "b0339",
       "unitContext": {
         "name": "Gutter Runners",
-        "sourceBlockId": "b0327",
+        "sourceBlockId": "b0329",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1875,10 +1887,10 @@
       ]
     },
     {
-      "blockId": "b0345",
+      "blockId": "b0347",
       "unitContext": {
         "name": "Plague Monks",
-        "sourceBlockId": "b0338",
+        "sourceBlockId": "b0340",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1896,10 +1908,10 @@
       ]
     },
     {
-      "blockId": "b0346",
+      "blockId": "b0348",
       "unitContext": {
         "name": "Plague Monks",
-        "sourceBlockId": "b0338",
+        "sourceBlockId": "b0340",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1918,10 +1930,10 @@
       ]
     },
     {
-      "blockId": "b0347",
+      "blockId": "b0349",
       "unitContext": {
         "name": "Plague Censer Bearers",
-        "sourceBlockId": "b0347",
+        "sourceBlockId": "b0349",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -1939,10 +1951,10 @@
       ]
     },
     {
-      "blockId": "b0350",
+      "blockId": "b0352",
       "unitContext": {
         "name": "Plague Censer Bearers",
-        "sourceBlockId": "b0347",
+        "sourceBlockId": "b0349",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -1959,10 +1971,10 @@
       ]
     },
     {
-      "blockId": "b0352",
+      "blockId": "b0354",
       "unitContext": {
         "name": "Plague Censer Bearers",
-        "sourceBlockId": "b0347",
+        "sourceBlockId": "b0349",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -1979,10 +1991,10 @@
       ]
     },
     {
-      "blockId": "b0353",
+      "blockId": "b0355",
       "unitContext": {
         "name": "Plague Censer Bearers",
-        "sourceBlockId": "b0347",
+        "sourceBlockId": "b0349",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2002,7 +2014,7 @@
       "blockId": "h0087",
       "unitContext": {
         "name": "Plague Censer Bearers",
-        "sourceBlockId": "b0347",
+        "sourceBlockId": "b0349",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2019,10 +2031,10 @@
       ]
     },
     {
-      "blockId": "b0354",
+      "blockId": "b0356",
       "unitContext": {
         "name": "Plague Censer Bearers",
-        "sourceBlockId": "b0347",
+        "sourceBlockId": "b0349",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2039,10 +2051,10 @@
       ]
     },
     {
-      "blockId": "b0355",
+      "blockId": "b0357",
       "unitContext": {
         "name": "Screaming Bell",
-        "sourceBlockId": "b0355",
+        "sourceBlockId": "b0357",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -2060,10 +2072,10 @@
       ]
     },
     {
-      "blockId": "b0363",
+      "blockId": "b0365",
       "unitContext": {
         "name": "Screaming Bell",
-        "sourceBlockId": "b0355",
+        "sourceBlockId": "b0357",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -2082,10 +2094,10 @@
       "reason": "continuation of a Special Rules line, applied via its head block"
     },
     {
-      "blockId": "b0364",
+      "blockId": "b0366",
       "unitContext": {
         "name": "Screaming Bell",
-        "sourceBlockId": "b0355",
+        "sourceBlockId": "b0357",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -2103,10 +2115,10 @@
       ]
     },
     {
-      "blockId": "b0365",
+      "blockId": "b0367",
       "unitContext": {
         "name": "Screaming Bell",
-        "sourceBlockId": "b0355",
+        "sourceBlockId": "b0357",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -2124,10 +2136,10 @@
       ]
     },
     {
-      "blockId": "b0366",
+      "blockId": "b0368",
       "unitContext": {
         "name": "Screaming Bell",
-        "sourceBlockId": "b0355",
+        "sourceBlockId": "b0357",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -2145,10 +2157,10 @@
       ]
     },
     {
-      "blockId": "b0368",
+      "blockId": "b0370",
       "unitContext": {
         "name": "Plague Furnace",
-        "sourceBlockId": "b0368",
+        "sourceBlockId": "b0370",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -2166,10 +2178,10 @@
       ]
     },
     {
-      "blockId": "b0375",
+      "blockId": "b0377",
       "unitContext": {
         "name": "Plague Furnace",
-        "sourceBlockId": "b0368",
+        "sourceBlockId": "b0370",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -2187,10 +2199,10 @@
       ]
     },
     {
-      "blockId": "b0376",
+      "blockId": "b0378",
       "unitContext": {
         "name": "Plague Furnace",
-        "sourceBlockId": "b0368",
+        "sourceBlockId": "b0370",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -2208,10 +2220,10 @@
       ]
     },
     {
-      "blockId": "b0378",
+      "blockId": "b0380",
       "unitContext": {
         "name": "Plague Furnace",
-        "sourceBlockId": "b0368",
+        "sourceBlockId": "b0370",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -2229,10 +2241,10 @@
       ]
     },
     {
-      "blockId": "b0379",
+      "blockId": "b0381",
       "unitContext": {
         "name": "Plague Furnace",
-        "sourceBlockId": "b0368",
+        "sourceBlockId": "b0370",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -2250,10 +2262,10 @@
       ]
     },
     {
-      "blockId": "b0380",
+      "blockId": "b0382",
       "unitContext": {
         "name": "Plague Furnace",
-        "sourceBlockId": "b0368",
+        "sourceBlockId": "b0370",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -2271,10 +2283,10 @@
       ]
     },
     {
-      "blockId": "b0382",
+      "blockId": "b0384",
       "unitContext": {
         "name": "Doomwheel",
-        "sourceBlockId": "b0382",
+        "sourceBlockId": "b0384",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2293,10 +2305,10 @@
       ]
     },
     {
-      "blockId": "b0384",
+      "blockId": "b0386",
       "unitContext": {
         "name": "Doomwheel",
-        "sourceBlockId": "b0382",
+        "sourceBlockId": "b0384",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2315,10 +2327,10 @@
       ]
     },
     {
-      "blockId": "b0386",
+      "blockId": "b0388",
       "unitContext": {
         "name": "Doomwheel",
-        "sourceBlockId": "b0382",
+        "sourceBlockId": "b0384",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2337,10 +2349,10 @@
       ]
     },
     {
-      "blockId": "b0387",
+      "blockId": "b0389",
       "unitContext": {
         "name": "Doomwheel",
-        "sourceBlockId": "b0382",
+        "sourceBlockId": "b0384",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2359,10 +2371,10 @@
       ]
     },
     {
-      "blockId": "b0389",
+      "blockId": "b0391",
       "unitContext": {
         "name": "Doomwheel",
-        "sourceBlockId": "b0382",
+        "sourceBlockId": "b0384",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2384,7 +2396,7 @@
       "blockId": "h0095",
       "unitContext": {
         "name": "Doomwheel",
-        "sourceBlockId": "b0382",
+        "sourceBlockId": "b0384",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2400,57 +2412,13 @@
       "status": "applied",
       "targets": [
         "rules.r-s-ap-special-rules"
-      ]
-    },
-    {
-      "blockId": "b0390",
-      "unitContext": {
-        "name": "Doomwheel",
-        "sourceBlockId": "b0382",
-        "method": "preceding-heading",
-        "confidence": "medium",
-        "profileNames": [
-          "Doomwheel",
-          "Warlock (x1)",
-          "Rats"
-        ]
-      },
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.r-s-ap-special-rules"
-      ]
-    },
-    {
-      "blockId": "b0391",
-      "unitContext": {
-        "name": "Doomwheel",
-        "sourceBlockId": "b0382",
-        "method": "preceding-heading",
-        "confidence": "medium",
-        "profileNames": [
-          "Doomwheel",
-          "Warlock (x1)",
-          "Rats"
-        ]
-      },
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.multiple-wounds-d3"
       ]
     },
     {
       "blockId": "b0392",
       "unitContext": {
         "name": "Doomwheel",
-        "sourceBlockId": "b0382",
+        "sourceBlockId": "b0384",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2465,36 +2433,14 @@
       ],
       "status": "applied",
       "targets": [
-        "rules.multiple-wounds-d3"
-      ]
-    },
-    {
-      "blockId": "h0096",
-      "unitContext": {
-        "name": "Doomwheel",
-        "sourceBlockId": "b0382",
-        "method": "preceding-heading",
-        "confidence": "medium",
-        "profileNames": [
-          "Doomwheel",
-          "Warlock (x1)",
-          "Rats"
-        ]
-      },
-      "entryKind": "heading",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.multiple-wounds-d3"
+        "rules.r-s-ap-special-rules"
       ]
     },
     {
       "blockId": "b0393",
       "unitContext": {
         "name": "Doomwheel",
-        "sourceBlockId": "b0382",
+        "sourceBlockId": "b0384",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2516,7 +2462,73 @@
       "blockId": "b0394",
       "unitContext": {
         "name": "Doomwheel",
-        "sourceBlockId": "b0382",
+        "sourceBlockId": "b0384",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Doomwheel",
+          "Warlock (x1)",
+          "Rats"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.multiple-wounds-d3"
+      ]
+    },
+    {
+      "blockId": "h0096",
+      "unitContext": {
+        "name": "Doomwheel",
+        "sourceBlockId": "b0384",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Doomwheel",
+          "Warlock (x1)",
+          "Rats"
+        ]
+      },
+      "entryKind": "heading",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.multiple-wounds-d3"
+      ]
+    },
+    {
+      "blockId": "b0395",
+      "unitContext": {
+        "name": "Doomwheel",
+        "sourceBlockId": "b0384",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Doomwheel",
+          "Warlock (x1)",
+          "Rats"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.multiple-wounds-d3"
+      ]
+    },
+    {
+      "blockId": "b0396",
+      "unitContext": {
+        "name": "Doomwheel",
+        "sourceBlockId": "b0384",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2538,7 +2550,7 @@
       "blockId": "h0097",
       "unitContext": {
         "name": "Doomwheel",
-        "sourceBlockId": "b0382",
+        "sourceBlockId": "b0384",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2557,10 +2569,10 @@
       ]
     },
     {
-      "blockId": "b0395",
+      "blockId": "b0397",
       "unitContext": {
         "name": "Doomwheel",
-        "sourceBlockId": "b0382",
+        "sourceBlockId": "b0384",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2579,10 +2591,10 @@
       ]
     },
     {
-      "blockId": "b0399",
+      "blockId": "b0401",
       "unitContext": {
         "name": "Hell Pit Abomination",
-        "sourceBlockId": "b0396",
+        "sourceBlockId": "b0398",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2599,10 +2611,10 @@
       ]
     },
     {
-      "blockId": "b0401",
+      "blockId": "b0403",
       "unitContext": {
         "name": "Hell Pit Abomination",
-        "sourceBlockId": "b0396",
+        "sourceBlockId": "b0398",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2623,7 +2635,7 @@
       "blockId": "h0100",
       "unitContext": {
         "name": "Hell Pit Abomination",
-        "sourceBlockId": "b0396",
+        "sourceBlockId": "b0398",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2640,10 +2652,10 @@
       ]
     },
     {
-      "blockId": "b0402",
+      "blockId": "b0404",
       "unitContext": {
         "name": "Hell Pit Abomination",
-        "sourceBlockId": "b0396",
+        "sourceBlockId": "b0398",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2660,10 +2672,10 @@
       ]
     },
     {
-      "blockId": "b0417",
+      "blockId": "b0419",
       "unitContext": {
         "name": "Warp Lightning Cannon",
-        "sourceBlockId": "b0409",
+        "sourceBlockId": "b0411",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2681,10 +2693,10 @@
       ]
     },
     {
-      "blockId": "b0418",
+      "blockId": "b0420",
       "unitContext": {
         "name": "Warp Lightning Cannon",
-        "sourceBlockId": "b0409",
+        "sourceBlockId": "b0411",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2702,10 +2714,10 @@
       ]
     },
     {
-      "blockId": "b0424",
+      "blockId": "b0426",
       "unitContext": {
         "name": "Plagueclaw Catapult",
-        "sourceBlockId": "b0419",
+        "sourceBlockId": "b0421",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2726,7 +2738,7 @@
       "blockId": "h0110",
       "unitContext": {
         "name": "Plagueclaw Catapult",
-        "sourceBlockId": "b0419",
+        "sourceBlockId": "b0421",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2744,10 +2756,10 @@
       ]
     },
     {
-      "blockId": "b0425",
+      "blockId": "b0427",
       "unitContext": {
         "name": "Plagueclaw Catapult",
-        "sourceBlockId": "b0419",
+        "sourceBlockId": "b0421",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2765,10 +2777,10 @@
       ]
     },
     {
-      "blockId": "b0426",
+      "blockId": "b0428",
       "unitContext": {
         "name": "Plagueclaw Catapult",
-        "sourceBlockId": "b0419",
+        "sourceBlockId": "b0421",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [

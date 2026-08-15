@@ -333,15 +333,19 @@
     ]
   },
   "rules": {
-    "eternal-hatred": {
-      "name_en": "Eternal Hatred",
+    "will-of-the-gods": {
+      "name_en": "Will of the Gods",
       "body": [
-        "Against High Elves, this model’s Hatred applies in every round of close combat, not just the first.",
-        "Note that this special rule does not apply to this model’s mount (should it have one).",
-        "Will of the Gods A model with this special rule may join a unit of Infantry with unit strength 10 or more despite being a Heavy Chariot. If it does so, it must always be placed in the centre of the front rank, and it no longer has the Lumbering rule (Rulebook p. 195). Only one model with this special rule may join each unit. Hekarti’s Blessing",
+        "A model with this special rule may join a unit of Infantry with unit strength 10 or more despite being a Heavy Chariot. If it does so, it must always be placed in the centre of the front rank, and it no longer has the Lumbering rule (Rulebook p. 195). Only one model with this special rule may join each unit."
+      ],
+      "overrides": null
+    },
+    "hekarti-s-blessing": {
+      "name_en": "Hekarti’s Blessing",
+      "body": [
         "Once per turn, a model with this special rule may re-roll a single failed Casting roll."
       ],
-      "overrides": "eternal-hatred"
+      "overrides": "hekartis-blessing"
     },
     "murderous": {
       "name_en": "Murderous",

@@ -4,11 +4,11 @@
   "reference": "cd-renegade-v2-reference.json",
   "generatedBy": "scripts/compile-renegade-v2.mjs",
   "counts": {
-    "applied": 73,
+    "applied": 74,
     "captured": 68,
     "unresolved": 0,
     "unsupported": 0,
-    "todo": 1
+    "todo": 0
   },
   "blocks": [
     {
@@ -2091,14 +2091,15 @@
       },
       "entryKind": "paragraph",
       "changeKinds": [
-        "new",
-        "todo"
+        "new"
       ],
-      "status": "todo",
-      "targets": []
+      "status": "applied",
+      "targets": [
+        "rules.carriage-hauler"
+      ]
     },
     {
-      "blockId": "b0328",
+      "blockId": "b0329",
       "unitContext": {
         "name": "Iron Daemon",
         "sourceBlockId": "b0310",
@@ -2119,10 +2120,10 @@
       ]
     },
     {
-      "blockId": "b0331",
+      "blockId": "b0332",
       "unitContext": {
         "name": "The Great Tauruses",
-        "sourceBlockId": "b0329",
+        "sourceBlockId": "b0330",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2140,10 +2141,10 @@
       ]
     },
     {
-      "blockId": "b0332",
+      "blockId": "b0333",
       "unitContext": {
         "name": "The Great Tauruses",
-        "sourceBlockId": "b0329",
+        "sourceBlockId": "b0330",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2161,10 +2162,10 @@
       ]
     },
     {
-      "blockId": "b0348",
+      "blockId": "b0349",
       "unitContext": {
         "name": "Deathshrieker Rocket Launcher",
-        "sourceBlockId": "b0348",
+        "sourceBlockId": "b0349",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2183,10 +2184,10 @@
       ]
     },
     {
-      "blockId": "b0351",
+      "blockId": "b0352",
       "unitContext": {
         "name": "Deathshrieker Rocket Launcher",
-        "sourceBlockId": "b0348",
+        "sourceBlockId": "b0349",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2204,10 +2205,10 @@
       ]
     },
     {
-      "blockId": "b0355",
+      "blockId": "b0356",
       "unitContext": {
         "name": "Deathshrieker Rocket Launcher",
-        "sourceBlockId": "b0348",
+        "sourceBlockId": "b0349",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2225,31 +2226,10 @@
       ]
     },
     {
-      "blockId": "b0356",
+      "blockId": "b0357",
       "unitContext": {
         "name": "Deathshrieker Rocket Launcher",
-        "sourceBlockId": "b0348",
-        "method": "preceding-heading",
-        "confidence": "medium",
-        "profileNames": [
-          "Deathshrieker",
-          "Chaos Dwarf Crew"
-        ]
-      },
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.cumbersome-move-or-shoot-multiple-wounds-d6"
-      ]
-    },
-    {
-      "blockId": "b0358",
-      "unitContext": {
-        "name": "Deathshrieker Rocket Launcher",
-        "sourceBlockId": "b0348",
+        "sourceBlockId": "b0349",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2270,7 +2250,28 @@
       "blockId": "b0359",
       "unitContext": {
         "name": "Deathshrieker Rocket Launcher",
-        "sourceBlockId": "b0348",
+        "sourceBlockId": "b0349",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Deathshrieker",
+          "Chaos Dwarf Crew"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.cumbersome-move-or-shoot-multiple-wounds-d6"
+      ]
+    },
+    {
+      "blockId": "b0360",
+      "unitContext": {
+        "name": "Deathshrieker Rocket Launcher",
+        "sourceBlockId": "b0349",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2288,10 +2289,10 @@
       ]
     },
     {
-      "blockId": "b0364",
+      "blockId": "b0365",
       "unitContext": {
         "name": "Dreadquake Mortar",
-        "sourceBlockId": "b0362",
+        "sourceBlockId": "b0363",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2309,10 +2310,10 @@
       ]
     },
     {
-      "blockId": "b0365",
+      "blockId": "b0366",
       "unitContext": {
         "name": "Dreadquake Mortar",
-        "sourceBlockId": "b0362",
+        "sourceBlockId": "b0363",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2330,10 +2331,10 @@
       ]
     },
     {
-      "blockId": "b0366",
+      "blockId": "b0367",
       "unitContext": {
         "name": "Dreadquake Mortar",
-        "sourceBlockId": "b0362",
+        "sourceBlockId": "b0363",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2351,10 +2352,10 @@
       ]
     },
     {
-      "blockId": "b0368",
+      "blockId": "b0369",
       "unitContext": {
         "name": "Dreadquake Mortar",
-        "sourceBlockId": "b0362",
+        "sourceBlockId": "b0363",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2372,31 +2373,10 @@
       ]
     },
     {
-      "blockId": "b0369",
+      "blockId": "b0370",
       "unitContext": {
         "name": "Dreadquake Mortar",
-        "sourceBlockId": "b0362",
-        "method": "preceding-heading",
-        "confidence": "medium",
-        "profileNames": [
-          "Dreadquake Mortar",
-          "Chaos Dwarf Crew"
-        ]
-      },
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.multiple-wounds-d3-1-quake-s"
-      ]
-    },
-    {
-      "blockId": "b0371",
-      "unitContext": {
-        "name": "Dreadquake Mortar",
-        "sourceBlockId": "b0362",
+        "sourceBlockId": "b0363",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2417,7 +2397,28 @@
       "blockId": "b0372",
       "unitContext": {
         "name": "Dreadquake Mortar",
-        "sourceBlockId": "b0362",
+        "sourceBlockId": "b0363",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Dreadquake Mortar",
+          "Chaos Dwarf Crew"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.multiple-wounds-d3-1-quake-s"
+      ]
+    },
+    {
+      "blockId": "b0373",
+      "unitContext": {
+        "name": "Dreadquake Mortar",
+        "sourceBlockId": "b0363",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2438,7 +2439,7 @@
       "blockId": "h0114",
       "unitContext": {
         "name": "Dreadquake Mortar",
-        "sourceBlockId": "b0362",
+        "sourceBlockId": "b0363",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2456,10 +2457,10 @@
       ]
     },
     {
-      "blockId": "b0373",
+      "blockId": "b0374",
       "unitContext": {
         "name": "Indentured Ogres",
-        "sourceBlockId": "b0373",
+        "sourceBlockId": "b0374",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2476,10 +2477,10 @@
       ]
     },
     {
-      "blockId": "b0374",
+      "blockId": "b0375",
       "unitContext": {
         "name": "Indentured Ogres",
-        "sourceBlockId": "b0373",
+        "sourceBlockId": "b0374",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2496,10 +2497,10 @@
       ]
     },
     {
-      "blockId": "b0375",
+      "blockId": "b0376",
       "unitContext": {
         "name": "Indentured Ogres",
-        "sourceBlockId": "b0373",
+        "sourceBlockId": "b0374",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2516,10 +2517,10 @@
       ]
     },
     {
-      "blockId": "b0376",
+      "blockId": "b0377",
       "unitContext": {
         "name": "Indentured Ogres",
-        "sourceBlockId": "b0373",
+        "sourceBlockId": "b0374",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2536,10 +2537,10 @@
       ]
     },
     {
-      "blockId": "b0377",
+      "blockId": "b0378",
       "unitContext": {
         "name": "Indentured Ogres",
-        "sourceBlockId": "b0373",
+        "sourceBlockId": "b0374",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2556,10 +2557,10 @@
       ]
     },
     {
-      "blockId": "b0378",
+      "blockId": "b0379",
       "unitContext": {
         "name": "Indentured Ogres",
-        "sourceBlockId": "b0373",
+        "sourceBlockId": "b0374",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2579,7 +2580,7 @@
       "blockId": "h0115",
       "unitContext": {
         "name": "Indentured Ogres",
-        "sourceBlockId": "b0373",
+        "sourceBlockId": "b0374",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2596,10 +2597,10 @@
       ]
     },
     {
-      "blockId": "b0379",
+      "blockId": "b0380",
       "unitContext": {
         "name": "Indentured Ogres",
-        "sourceBlockId": "b0373",
+        "sourceBlockId": "b0374",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2616,10 +2617,10 @@
       ]
     },
     {
-      "blockId": "b0380",
+      "blockId": "b0381",
       "unitContext": {
         "name": "Indentured Ogres",
-        "sourceBlockId": "b0373",
+        "sourceBlockId": "b0374",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2639,7 +2640,7 @@
       "blockId": "h0116",
       "unitContext": {
         "name": "Indentured Ogres",
-        "sourceBlockId": "b0373",
+        "sourceBlockId": "b0374",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2656,10 +2657,10 @@
       ]
     },
     {
-      "blockId": "b0381",
+      "blockId": "b0382",
       "unitContext": {
         "name": "Indentured Ogres",
-        "sourceBlockId": "b0373",
+        "sourceBlockId": "b0374",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2679,7 +2680,7 @@
       "blockId": "h0117",
       "unitContext": {
         "name": "Indentured Ogres",
-        "sourceBlockId": "b0373",
+        "sourceBlockId": "b0374",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2696,10 +2697,10 @@
       ]
     },
     {
-      "blockId": "b0382",
+      "blockId": "b0383",
       "unitContext": {
         "name": "Indentured Ogres",
-        "sourceBlockId": "b0373",
+        "sourceBlockId": "b0374",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -2716,10 +2717,10 @@
       ]
     },
     {
-      "blockId": "b0386",
+      "blockId": "b0387",
       "unitContext": {
         "name": "Magma Cannon",
-        "sourceBlockId": "b0383",
+        "sourceBlockId": "b0384",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -2737,10 +2738,10 @@
       ]
     },
     {
-      "blockId": "b0389",
+      "blockId": "b0390",
       "unitContext": {
         "name": "Hobgoblin Bolt Thrower",
-        "sourceBlockId": "b0389",
+        "sourceBlockId": "b0390",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [

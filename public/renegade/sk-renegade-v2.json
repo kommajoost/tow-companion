@@ -407,16 +407,11 @@
         "name": "grand banner of superiority"
       },
       {
-        "name_de": "Banner des Ungezieferhuschens",
-        "name_en": "Banner Of Verminous Scurrying",
-        "name_cn": "灾祸肆虐旗帜",
-        "name_es": "Estandarte de escurrimientos verminosos",
-        "name_fr": "Bannière de Vivacité Vermineuse",
-        "name_it": "Banner of Verminous Scurrying",
-        "points": 35,
+        "name_en": "Plague Banner",
+        "name": "plague banner",
+        "points": 30,
         "type": "banner",
-        "onePerArmy": true,
-        "name": "banner of verminous scurrying"
+        "onePerArmy": true
       },
       {
         "name_de": "Messingkugel",
@@ -504,10 +499,16 @@
         "Be joined to a unit that has a Unit Strength of 10 or more. • Not be part of a Challenge. • Not be subject to “Nowhere to Run” (Rulebook, p.211). • Be able to be placed inside the unit outside of all fighting ranks. • Do so before any attacks are allocated and resolved for the current initiative step of a combat that they are in.",
         "Should a model ‘retire’ in this way the unit may still use this character's Leadership. All other restrictions for retiring apply.",
         "In subsequent turns, if this model’s unit remains engaged in combat with the same enemy unit, a model with this rule may move through the ranks and join any fighting rank before challenges are issued during step 1.1 of the “Choose Combat & Fight Phase” (“Characters in Combat,” Rulebook p.209.)",
-        "If at any time there is nowhere to place a ‘retired’ model outside of a fighting rank they must immediately move through the ranks and take a position in the front row of a fighting rank. They may not make any attacks in this round of combat but they may have attacks directed against them.",
-        "Pushed Into Battle A model with this special rule may join a unit of Infantry with unit strength 10 or more despite being a Heavy Chariot. If it does so, it must always be placed in the centre of the front rank, and it no longer has the Lumbering rule (Rulebook p. 195). Only one model with this special rule may join each unit."
+        "If at any time there is nowhere to place a ‘retired’ model outside of a fighting rank they must immediately move through the ranks and take a position in the front row of a fighting rank. They may not make any attacks in this round of combat but they may have attacks directed against them."
       ],
       "overrides": "verminous-valour"
+    },
+    "pushed-into-battle": {
+      "name_en": "Pushed Into Battle",
+      "body": [
+        "A model with this special rule may join a unit of Infantry with unit strength 10 or more despite being a Heavy Chariot. If it does so, it must always be placed in the centre of the front rank, and it no longer has the Lumbering rule (Rulebook p. 195). Only one model with this special rule may join each unit."
+      ],
+      "overrides": null
     },
     "scurrying-masses": {
       "name_en": "Scurrying Masses",
@@ -1349,8 +1350,8 @@
     "grand-banner-of-superiority": {
       "body": "When calculating its combat result, a unit carrying the Grand Banner of Superiority may claim an additional bonus of +D3 combat result points."
     },
-    "banner-of-verminous-scurrying": {
-      "body": "A unit carrying the Banner of Verminous Scurrying gains the Swiftstride special rule. Plague Banner 30 points\n\nUnit of Plague Monks Only. Single use. The Plague Banner may be activated at the start of any Combat Phase. For the remainder of the phase all Plague Monk models in the unit may re-roll failed To Hit rolls and failed To Wound rolls."
+    "plague-banner": {
+      "body": "Unit of Plague Monks Only. Single use. The Plague Banner may be activated at the start of any Combat Phase. For the remainder of the phase all Plague Monk models in the unit may re-roll failed To Hit rolls and failed To Wound rolls."
     },
     "brass-orb": {
       "body": "Single use. Instead of attacking normally during the Combat phase, the bearer of the Brass Orb can toss it at a single model they are engaged in combat with. Make a single roll To Hit. If successful, the target model must make an Initiative test. If this test is failed, the target model is removed from play as a casualty."

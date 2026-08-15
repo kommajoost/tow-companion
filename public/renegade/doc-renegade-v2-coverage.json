@@ -562,18 +562,6 @@
    ]
   },
   {
-   "blockId": "b0097",
-   "unitContext": null,
-   "entryKind": "paragraph",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "rules.singular-essence"
-   ]
-  },
-  {
    "blockId": "b0098",
    "unitContext": null,
    "entryKind": "paragraph",
@@ -588,7 +576,7 @@
   {
    "blockId": "b0099",
    "unitContext": null,
-   "entryKind": "table",
+   "entryKind": "paragraph",
    "changeKinds": [
     "new"
    ],
@@ -598,15 +586,15 @@
    ]
   },
   {
-   "blockId": "b0102",
+   "blockId": "b0100",
    "unitContext": null,
-   "entryKind": "paragraph",
+   "entryKind": "table",
    "changeKinds": [
     "new"
    ],
    "status": "applied",
    "targets": [
-    "rules.rival-alignments"
+    "rules.singular-essence"
    ]
   },
   {
@@ -624,7 +612,7 @@
   {
    "blockId": "b0104",
    "unitContext": null,
-   "entryKind": "list",
+   "entryKind": "paragraph",
    "changeKinds": [
     "new"
    ],
@@ -636,7 +624,7 @@
   {
    "blockId": "b0105",
    "unitContext": null,
-   "entryKind": "paragraph",
+   "entryKind": "list",
    "changeKinds": [
     "new"
    ],
@@ -666,6 +654,18 @@
    ],
    "status": "applied",
    "targets": [
+    "rules.rival-alignments"
+   ]
+  },
+  {
+   "blockId": "b0108",
+   "unitContext": null,
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
     "rules.daemon-s-of-khorne"
    ]
   },
@@ -680,7 +680,7 @@
    "targets": []
   },
   {
-   "blockId": "b0109",
+   "blockId": "b0110",
    "unitContext": null,
    "entryKind": "paragraph",
    "changeKinds": [
@@ -726,7 +726,7 @@
    ]
   },
   {
-   "blockId": "b0115",
+   "blockId": "b0116",
    "unitContext": null,
    "entryKind": "paragraph",
    "changeKinds": [
@@ -750,7 +750,7 @@
    ]
   },
   {
-   "blockId": "b0117",
+   "blockId": "b0118",
    "unitContext": null,
    "entryKind": "paragraph",
    "changeKinds": [
@@ -774,7 +774,7 @@
    ]
   },
   {
-   "blockId": "b0118",
+   "blockId": "b0119",
    "unitContext": null,
    "entryKind": "paragraph",
    "changeKinds": [
@@ -786,7 +786,7 @@
    ]
   },
   {
-   "blockId": "b0119",
+   "blockId": "b0120",
    "unitContext": null,
    "entryKind": "paragraph",
    "changeKinds": [
@@ -810,7 +810,7 @@
    ]
   },
   {
-   "blockId": "b0121",
+   "blockId": "b0122",
    "unitContext": null,
    "entryKind": "paragraph",
    "changeKinds": [
@@ -822,7 +822,7 @@
    ]
   },
   {
-   "blockId": "b0122",
+   "blockId": "b0123",
    "unitContext": null,
    "entryKind": "paragraph",
    "changeKinds": [
@@ -831,18 +831,6 @@
    "status": "applied",
    "targets": [
     "magicItemText.unholy-victory"
-   ]
-  },
-  {
-   "blockId": "b0125",
-   "unitContext": null,
-   "entryKind": "paragraph",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "magicItemText.chaotic-glory"
    ]
   },
   {
@@ -870,7 +858,19 @@
    ]
   },
   {
-   "blockId": "b0129",
+   "blockId": "b0128",
+   "unitContext": null,
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "magicItemText.chaotic-glory"
+   ]
+  },
+  {
+   "blockId": "b0130",
    "unitContext": null,
    "entryKind": "paragraph",
    "changeKinds": [
@@ -894,7 +894,7 @@
    ]
   },
   {
-   "blockId": "b0130",
+   "blockId": "b0131",
    "unitContext": null,
    "entryKind": "paragraph",
    "changeKinds": [
@@ -930,7 +930,7 @@
    ]
   },
   {
-   "blockId": "b0131",
+   "blockId": "b0132",
    "unitContext": null,
    "entryKind": "paragraph",
    "changeKinds": [
@@ -954,7 +954,7 @@
    ]
   },
   {
-   "blockId": "b0137",
+   "blockId": "b0138",
    "unitContext": null,
    "entryKind": "paragraph",
    "changeKinds": [
@@ -966,7 +966,7 @@
    ]
   },
   {
-   "blockId": "b0139",
+   "blockId": "b0141",
    "unitContext": null,
    "entryKind": "paragraph",
    "changeKinds": [
@@ -990,7 +990,7 @@
    ]
   },
   {
-   "blockId": "b0146",
+   "blockId": "b0148",
    "unitContext": null,
    "entryKind": "paragraph",
    "changeKinds": [
@@ -1012,7 +1012,7 @@
    "targets": []
   },
   {
-   "blockId": "b0148",
+   "blockId": "b0150",
    "unitContext": null,
    "entryKind": "paragraph",
    "changeKinds": [
@@ -1034,7 +1034,7 @@
    ]
   },
   {
-   "blockId": "b0150",
+   "blockId": "b0152",
    "unitContext": null,
    "entryKind": "paragraph",
    "changeKinds": [
@@ -1046,7 +1046,7 @@
    ]
   },
   {
-   "blockId": "b0152",
+   "blockId": "b0154",
    "unitContext": null,
    "entryKind": "paragraph",
    "changeKinds": [
@@ -1058,7 +1058,7 @@
    ]
   },
   {
-   "blockId": "b0153",
+   "blockId": "b0155",
    "unitContext": null,
    "entryKind": "paragraph",
    "changeKinds": [
@@ -1080,7 +1080,7 @@
    "targets": []
   },
   {
-   "blockId": "b0155",
+   "blockId": "b0157",
    "unitContext": null,
    "entryKind": "paragraph",
    "changeKinds": [
@@ -1092,7 +1092,7 @@
    ]
   },
   {
-   "blockId": "b0157",
+   "blockId": "b0159",
    "unitContext": null,
    "entryKind": "paragraph",
    "changeKinds": [
@@ -1128,7 +1128,7 @@
    ]
   },
   {
-   "blockId": "b0161",
+   "blockId": "b0163",
    "unitContext": null,
    "entryKind": "paragraph",
    "changeKinds": [
@@ -1176,7 +1176,7 @@
    ]
   },
   {
-   "blockId": "b0169",
+   "blockId": "b0171",
    "unitContext": null,
    "entryKind": "paragraph",
    "changeKinds": [
@@ -1200,7 +1200,7 @@
    ]
   },
   {
-   "blockId": "b0170",
+   "blockId": "b0172",
    "unitContext": null,
    "entryKind": "paragraph",
    "changeKinds": [
@@ -1236,7 +1236,7 @@
    ]
   },
   {
-   "blockId": "b0174",
+   "blockId": "b0176",
    "unitContext": null,
    "entryKind": "paragraph",
    "changeKinds": [
@@ -1248,7 +1248,7 @@
    ]
   },
   {
-   "blockId": "b0179",
+   "blockId": "b0181",
    "unitContext": null,
    "entryKind": "paragraph",
    "changeKinds": [
@@ -1263,30 +1263,6 @@
    "blockId": "h0106",
    "unitContext": null,
    "entryKind": "heading",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "lores.lore-of-daemons.spell-blue-fire"
-   ]
-  },
-  {
-   "blockId": "b0184",
-   "unitContext": null,
-   "entryKind": "paragraph",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "lores.lore-of-daemons.spell-blue-fire"
-   ]
-  },
-  {
-   "blockId": "b0185",
-   "unitContext": null,
-   "entryKind": "paragraph",
    "changeKinds": [
     "new"
    ],
@@ -1320,7 +1296,31 @@
    ]
   },
   {
-   "blockId": "b0191",
+   "blockId": "b0188",
+   "unitContext": null,
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "lores.lore-of-daemons.spell-blue-fire"
+   ]
+  },
+  {
+   "blockId": "b0189",
+   "unitContext": null,
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "lores.lore-of-daemons.spell-blue-fire"
+   ]
+  },
+  {
+   "blockId": "b0193",
    "unitContext": null,
    "entryKind": "paragraph",
    "changeKinds": [
@@ -1332,7 +1332,7 @@
    ]
   },
   {
-   "blockId": "b0193",
+   "blockId": "b0195",
    "unitContext": null,
    "entryKind": "paragraph",
    "changeKinds": [
@@ -1366,7 +1366,7 @@
    ]
   },
   {
-   "blockId": "b0198",
+   "blockId": "b0200",
    "unitContext": null,
    "entryKind": "paragraph",
    "changeKinds": [
@@ -1378,7 +1378,7 @@
    ]
   },
   {
-   "blockId": "b0205",
+   "blockId": "b0207",
    "unitContext": null,
    "entryKind": "weapon-profile",
    "changeKinds": [
@@ -1390,10 +1390,10 @@
    ]
   },
   {
-   "blockId": "b0208",
+   "blockId": "b0210",
    "unitContext": {
     "name": "Bloodthirster – Greater Daemon Of Khorne",
-    "sourceBlockId": "b0206",
+    "sourceBlockId": "b0208",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -1410,10 +1410,10 @@
    ]
   },
   {
-   "blockId": "b0209",
+   "blockId": "b0211",
    "unitContext": {
     "name": "Bloodthirster – Greater Daemon Of Khorne",
-    "sourceBlockId": "b0206",
+    "sourceBlockId": "b0208",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -1430,30 +1430,10 @@
    ]
   },
   {
-   "blockId": "b0210",
+   "blockId": "b0212",
    "unitContext": {
     "name": "Bloodthirster – Greater Daemon Of Khorne",
-    "sourceBlockId": "b0206",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Bloodthirster"
-    ]
-   },
-   "entryKind": "list",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "captured",
-   "targets": [
-    "profiles.bloodthirster.notes"
-   ]
-  },
-  {
-   "blockId": "b0211",
-   "unitContext": {
-    "name": "Bloodthirster – Greater Daemon Of Khorne",
-    "sourceBlockId": "b0206",
+    "sourceBlockId": "b0208",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -1473,7 +1453,27 @@
    "blockId": "b0213",
    "unitContext": {
     "name": "Bloodthirster – Greater Daemon Of Khorne",
-    "sourceBlockId": "b0206",
+    "sourceBlockId": "b0208",
+    "method": "preceding-heading",
+    "confidence": "medium",
+    "profileNames": [
+     "Bloodthirster"
+    ]
+   },
+   "entryKind": "list",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "captured",
+   "targets": [
+    "profiles.bloodthirster.notes"
+   ]
+  },
+  {
+   "blockId": "b0215",
+   "unitContext": {
+    "name": "Bloodthirster – Greater Daemon Of Khorne",
+    "sourceBlockId": "b0208",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -1491,10 +1491,10 @@
    ]
   },
   {
-   "blockId": "b0214",
+   "blockId": "b0216",
    "unitContext": {
     "name": "Bloodthirster – Greater Daemon Of Khorne",
-    "sourceBlockId": "b0206",
+    "sourceBlockId": "b0208",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -1511,10 +1511,10 @@
    ]
   },
   {
-   "blockId": "b0218",
+   "blockId": "b0220",
    "unitContext": {
     "name": "Daemonic Herald Of Khorne",
-    "sourceBlockId": "b0215",
+    "sourceBlockId": "b0217",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -1531,10 +1531,10 @@
    ]
   },
   {
-   "blockId": "b0222",
+   "blockId": "b0224",
    "unitContext": {
     "name": "Daemonic Herald Of Khorne",
-    "sourceBlockId": "b0215",
+    "sourceBlockId": "b0217",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -1551,50 +1551,50 @@
    ]
   },
   {
-   "blockId": "b0223",
-   "unitContext": {
-    "name": "Daemonic Herald Of Khorne",
-    "sourceBlockId": "b0215",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Herald of Khorne"
-    ]
-   },
-   "entryKind": "paragraph",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "rules.locus-of-wrath"
-   ]
-  },
-  {
-   "blockId": "b0224",
-   "unitContext": {
-    "name": "Daemonic Herald Of Khorne",
-    "sourceBlockId": "b0215",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Herald of Khorne"
-    ]
-   },
-   "entryKind": "paragraph",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "rules.locus-of-wrath"
-   ]
-  },
-  {
    "blockId": "b0225",
    "unitContext": {
+    "name": "Daemonic Herald Of Khorne",
+    "sourceBlockId": "b0217",
+    "method": "preceding-heading",
+    "confidence": "medium",
+    "profileNames": [
+     "Herald of Khorne"
+    ]
+   },
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "rules.locus-of-wrath"
+   ]
+  },
+  {
+   "blockId": "b0226",
+   "unitContext": {
+    "name": "Daemonic Herald Of Khorne",
+    "sourceBlockId": "b0217",
+    "method": "preceding-heading",
+    "confidence": "medium",
+    "profileNames": [
+     "Herald of Khorne"
+    ]
+   },
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "rules.locus-of-wrath"
+   ]
+  },
+  {
+   "blockId": "b0227",
+   "unitContext": {
     "name": "Juggernaut Of Khorne",
-    "sourceBlockId": "b0225",
+    "sourceBlockId": "b0227",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -1609,10 +1609,10 @@
    "targets": []
   },
   {
-   "blockId": "b0230",
+   "blockId": "b0232",
    "unitContext": {
     "name": "Juggernaut Of Khorne",
-    "sourceBlockId": "b0225",
+    "sourceBlockId": "b0227",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -1629,10 +1629,10 @@
    ]
   },
   {
-   "blockId": "b0232",
+   "blockId": "b0234",
    "unitContext": {
     "name": "Bloodletters Of Khorne",
-    "sourceBlockId": "b0232",
+    "sourceBlockId": "b0234",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -1653,10 +1653,10 @@
    ]
   },
   {
-   "blockId": "b0235",
+   "blockId": "b0237",
    "unitContext": {
     "name": "Bloodletters Of Khorne",
-    "sourceBlockId": "b0232",
+    "sourceBlockId": "b0234",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -1675,10 +1675,10 @@
    ]
   },
   {
-   "blockId": "b0236",
+   "blockId": "b0238",
    "unitContext": {
     "name": "Bloodletters Of Khorne",
-    "sourceBlockId": "b0232",
+    "sourceBlockId": "b0234",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -1696,10 +1696,10 @@
    ]
   },
   {
-   "blockId": "b0238",
+   "blockId": "b0240",
    "unitContext": {
     "name": "Bloodletters Of Khorne",
-    "sourceBlockId": "b0232",
+    "sourceBlockId": "b0234",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -1718,10 +1718,10 @@
    ]
   },
   {
-   "blockId": "b0239",
+   "blockId": "b0241",
    "unitContext": {
     "name": "Bloodletters Of Khorne",
-    "sourceBlockId": "b0232",
+    "sourceBlockId": "b0234",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -1739,10 +1739,10 @@
    ]
   },
   {
-   "blockId": "b0241",
+   "blockId": "b0243",
    "unitContext": {
     "name": "Flesh Hounds Of Khorne",
-    "sourceBlockId": "b0241",
+    "sourceBlockId": "b0243",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -1762,10 +1762,10 @@
    ]
   },
   {
-   "blockId": "b0244",
+   "blockId": "b0246",
    "unitContext": {
     "name": "Flesh Hounds Of Khorne",
-    "sourceBlockId": "b0241",
+    "sourceBlockId": "b0243",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -1783,10 +1783,10 @@
    ]
   },
   {
-   "blockId": "b0245",
+   "blockId": "b0247",
    "unitContext": {
     "name": "Flesh Hounds Of Khorne",
-    "sourceBlockId": "b0241",
+    "sourceBlockId": "b0243",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -1803,10 +1803,10 @@
    ]
   },
   {
-   "blockId": "b0248",
+   "blockId": "b0250",
    "unitContext": {
     "name": "Flesh Hounds Of Khorne",
-    "sourceBlockId": "b0241",
+    "sourceBlockId": "b0243",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -1824,10 +1824,10 @@
    ]
   },
   {
-   "blockId": "b0249",
+   "blockId": "b0251",
    "unitContext": {
     "name": "Bloodcrushers Of Khorne",
-    "sourceBlockId": "b0249",
+    "sourceBlockId": "b0251",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -1844,10 +1844,10 @@
    "targets": []
   },
   {
-   "blockId": "b0253",
+   "blockId": "b0255",
    "unitContext": {
     "name": "Bloodcrushers Of Khorne",
-    "sourceBlockId": "b0249",
+    "sourceBlockId": "b0251",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -1866,10 +1866,10 @@
    ]
   },
   {
-   "blockId": "b0256",
+   "blockId": "b0258",
    "unitContext": {
     "name": "Bloodcrushers Of Khorne",
-    "sourceBlockId": "b0249",
+    "sourceBlockId": "b0251",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -1888,10 +1888,10 @@
    ]
   },
   {
-   "blockId": "b0257",
+   "blockId": "b0259",
    "unitContext": {
     "name": "Bloodcrushers Of Khorne",
-    "sourceBlockId": "b0249",
+    "sourceBlockId": "b0251",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -1911,10 +1911,10 @@
    ]
   },
   {
-   "blockId": "b0259",
+   "blockId": "b0261",
    "unitContext": {
     "name": "Blood Throne Of Khorne",
-    "sourceBlockId": "b0259",
+    "sourceBlockId": "b0261",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -1932,10 +1932,10 @@
    ]
   },
   {
-   "blockId": "b0263",
+   "blockId": "b0265",
    "unitContext": {
     "name": "Blood Throne Of Khorne",
-    "sourceBlockId": "b0259",
+    "sourceBlockId": "b0261",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -1953,10 +1953,10 @@
    ]
   },
   {
-   "blockId": "b0274",
+   "blockId": "b0276",
    "unitContext": {
     "name": "Skull Cannon Of Khorne",
-    "sourceBlockId": "b0270",
+    "sourceBlockId": "b0272",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -1974,10 +1974,10 @@
    ]
   },
   {
-   "blockId": "b0278",
+   "blockId": "b0280",
    "unitContext": {
     "name": "Skull Cannon Of Khorne",
-    "sourceBlockId": "b0270",
+    "sourceBlockId": "b0272",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -1996,10 +1996,10 @@
    "reason": "continuation of a Special Rules line, applied via its head block"
   },
   {
-   "blockId": "b0281",
+   "blockId": "b0283",
    "unitContext": {
     "name": "Skull Cannon Of Khorne",
-    "sourceBlockId": "b0270",
+    "sourceBlockId": "b0272",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -2018,10 +2018,10 @@
    ]
   },
   {
-   "blockId": "b0282",
+   "blockId": "b0284",
    "unitContext": {
     "name": "Skull Cannon Of Khorne",
-    "sourceBlockId": "b0270",
+    "sourceBlockId": "b0272",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -2040,10 +2040,10 @@
    ]
   },
   {
-   "blockId": "b0283",
+   "blockId": "b0285",
    "unitContext": {
     "name": "Great Unclean One – Greater Daemon Of Nurgle",
-    "sourceBlockId": "b0283",
+    "sourceBlockId": "b0285",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -2061,10 +2061,10 @@
    ]
   },
   {
-   "blockId": "b0287",
+   "blockId": "b0289",
    "unitContext": {
     "name": "Great Unclean One – Greater Daemon Of Nurgle",
-    "sourceBlockId": "b0283",
+    "sourceBlockId": "b0285",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -2081,10 +2081,10 @@
    ]
   },
   {
-   "blockId": "b0292",
+   "blockId": "b0294",
    "unitContext": {
     "name": "Great Unclean One – Greater Daemon Of Nurgle",
-    "sourceBlockId": "b0283",
+    "sourceBlockId": "b0285",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -2101,10 +2101,10 @@
    ]
   },
   {
-   "blockId": "b0294",
+   "blockId": "b0296",
    "unitContext": {
     "name": "Great Unclean One – Greater Daemon Of Nurgle",
-    "sourceBlockId": "b0283",
+    "sourceBlockId": "b0285",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -2122,10 +2122,10 @@
    ]
   },
   {
-   "blockId": "b0298",
+   "blockId": "b0300",
    "unitContext": {
     "name": "Great Unclean One – Greater Daemon Of Nurgle",
-    "sourceBlockId": "b0283",
+    "sourceBlockId": "b0285",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -2142,10 +2142,10 @@
    ]
   },
   {
-   "blockId": "b0300",
+   "blockId": "b0302",
    "unitContext": {
     "name": "Daemonic Herald Of Nurgle",
-    "sourceBlockId": "b0299",
+    "sourceBlockId": "b0301",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -2162,10 +2162,10 @@
    ]
   },
   {
-   "blockId": "b0303",
+   "blockId": "b0305",
    "unitContext": {
     "name": "Daemonic Herald Of Nurgle",
-    "sourceBlockId": "b0299",
+    "sourceBlockId": "b0301",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -2182,10 +2182,10 @@
    ]
   },
   {
-   "blockId": "b0306",
+   "blockId": "b0308",
    "unitContext": {
     "name": "Daemonic Herald Of Nurgle",
-    "sourceBlockId": "b0299",
+    "sourceBlockId": "b0301",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -2202,10 +2202,10 @@
    ]
   },
   {
-   "blockId": "b0308",
+   "blockId": "b0310",
    "unitContext": {
     "name": "Daemonic Herald Of Nurgle",
-    "sourceBlockId": "b0299",
+    "sourceBlockId": "b0301",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -2222,10 +2222,10 @@
    ]
   },
   {
-   "blockId": "b0309",
+   "blockId": "b0311",
    "unitContext": {
     "name": "Daemonic Herald Of Nurgle",
-    "sourceBlockId": "b0299",
+    "sourceBlockId": "b0301",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -2242,10 +2242,10 @@
    ]
   },
   {
-   "blockId": "b0310",
+   "blockId": "b0312",
    "unitContext": {
     "name": "Daemonic Herald Of Nurgle",
-    "sourceBlockId": "b0299",
+    "sourceBlockId": "b0301",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -2262,10 +2262,10 @@
    ]
   },
   {
-   "blockId": "b0313",
+   "blockId": "b0315",
    "unitContext": {
     "name": "Palanquin Of Nurgle",
-    "sourceBlockId": "b0311",
+    "sourceBlockId": "b0313",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -2282,10 +2282,10 @@
    ]
   },
   {
-   "blockId": "b0314",
+   "blockId": "b0316",
    "unitContext": {
     "name": "Palanquin Of Nurgle",
-    "sourceBlockId": "b0311",
+    "sourceBlockId": "b0313",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -2302,10 +2302,10 @@
    ]
   },
   {
-   "blockId": "b0317",
+   "blockId": "b0319",
    "unitContext": {
     "name": "Plaguebearers Of Nurgle",
-    "sourceBlockId": "b0317",
+    "sourceBlockId": "b0319",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -2326,10 +2326,10 @@
    ]
   },
   {
-   "blockId": "b0318",
+   "blockId": "b0320",
    "unitContext": {
     "name": "Plaguebearers Of Nurgle",
-    "sourceBlockId": "b0317",
+    "sourceBlockId": "b0319",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -2348,10 +2348,10 @@
    ]
   },
   {
-   "blockId": "b0320",
+   "blockId": "b0322",
    "unitContext": {
     "name": "Plaguebearers Of Nurgle",
-    "sourceBlockId": "b0317",
+    "sourceBlockId": "b0319",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -2370,10 +2370,10 @@
    ]
   },
   {
-   "blockId": "b0324",
+   "blockId": "b0326",
    "unitContext": {
     "name": "Plaguebearers Of Nurgle",
-    "sourceBlockId": "b0317",
+    "sourceBlockId": "b0319",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -2391,10 +2391,10 @@
    ]
   },
   {
-   "blockId": "b0329",
+   "blockId": "b0331",
    "unitContext": {
     "name": "Beasts Of Nurgle",
-    "sourceBlockId": "b0326",
+    "sourceBlockId": "b0328",
     "method": "table-title",
     "confidence": "high",
     "profileNames": [
@@ -2412,10 +2412,10 @@
    ]
   },
   {
-   "blockId": "b0331",
+   "blockId": "b0333",
    "unitContext": {
     "name": "Beasts Of Nurgle",
-    "sourceBlockId": "b0326",
+    "sourceBlockId": "b0328",
     "method": "table-title",
     "confidence": "high",
     "profileNames": [
@@ -2433,10 +2433,10 @@
    ]
   },
   {
-   "blockId": "b0340",
+   "blockId": "b0342",
    "unitContext": {
     "name": "Nurglings",
-    "sourceBlockId": "b0335",
+    "sourceBlockId": "b0337",
     "method": "table-title",
     "confidence": "high",
     "profileNames": [
@@ -2454,10 +2454,10 @@
    ]
   },
   {
-   "blockId": "b0349",
+   "blockId": "b0351",
    "unitContext": {
     "name": "Plague Drones Of Nurgle",
-    "sourceBlockId": "b0341",
+    "sourceBlockId": "b0343",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -2477,10 +2477,10 @@
    ]
   },
   {
-   "blockId": "b0350",
+   "blockId": "b0352",
    "unitContext": {
     "name": "Plague Drones Of Nurgle",
-    "sourceBlockId": "b0341",
+    "sourceBlockId": "b0343",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -2499,10 +2499,10 @@
    ]
   },
   {
-   "blockId": "b0351",
+   "blockId": "b0353",
    "unitContext": {
     "name": "Plague Drones Of Nurgle",
-    "sourceBlockId": "b0341",
+    "sourceBlockId": "b0343",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -2523,10 +2523,10 @@
    "reason": "met de hand toegepast: Special Rules staat geel; Regeneration ging van (6+) naar (5+)"
   },
   {
-   "blockId": "b0354",
+   "blockId": "b0356",
    "unitContext": {
     "name": "Keeper Of Secrets – Greater Daemon Of Slaanesh",
-    "sourceBlockId": "b0354",
+    "sourceBlockId": "b0356",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -2543,10 +2543,10 @@
    ]
   },
   {
-   "blockId": "b0357",
+   "blockId": "b0359",
    "unitContext": {
     "name": "Keeper Of Secrets – Greater Daemon Of Slaanesh",
-    "sourceBlockId": "b0354",
+    "sourceBlockId": "b0356",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -2563,10 +2563,10 @@
    ]
   },
   {
-   "blockId": "b0363",
+   "blockId": "b0365",
    "unitContext": {
     "name": "Keeper Of Secrets – Greater Daemon Of Slaanesh",
-    "sourceBlockId": "b0354",
+    "sourceBlockId": "b0356",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -2584,10 +2584,10 @@
    ]
   },
   {
-   "blockId": "b0369",
+   "blockId": "b0371",
    "unitContext": {
     "name": "Daemonic Herald Of Slaanesh",
-    "sourceBlockId": "b0365",
+    "sourceBlockId": "b0367",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -2604,10 +2604,10 @@
    ]
   },
   {
-   "blockId": "b0372",
+   "blockId": "b0374",
    "unitContext": {
     "name": "Daemonic Herald Of Slaanesh",
-    "sourceBlockId": "b0365",
+    "sourceBlockId": "b0367",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -2624,10 +2624,10 @@
    ]
   },
   {
-   "blockId": "b0377",
+   "blockId": "b0379",
    "unitContext": {
     "name": "Daemonic Herald Of Slaanesh",
-    "sourceBlockId": "b0365",
+    "sourceBlockId": "b0367",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -2644,10 +2644,10 @@
    ]
   },
   {
-   "blockId": "b0378",
+   "blockId": "b0380",
    "unitContext": {
     "name": "Daemonic Herald Of Slaanesh",
-    "sourceBlockId": "b0365",
+    "sourceBlockId": "b0367",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -2664,10 +2664,10 @@
    ]
   },
   {
-   "blockId": "b0385",
+   "blockId": "b0387",
    "unitContext": {
     "name": "Daemonettes Of Slaanesh",
-    "sourceBlockId": "b0385",
+    "sourceBlockId": "b0387",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -2684,10 +2684,10 @@
    "targets": []
   },
   {
-   "blockId": "b0388",
+   "blockId": "b0390",
    "unitContext": {
     "name": "Daemonettes Of Slaanesh",
-    "sourceBlockId": "b0385",
+    "sourceBlockId": "b0387",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -2706,10 +2706,10 @@
    ]
   },
   {
-   "blockId": "b0392",
+   "blockId": "b0394",
    "unitContext": {
     "name": "Daemonettes Of Slaanesh",
-    "sourceBlockId": "b0385",
+    "sourceBlockId": "b0387",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -2727,10 +2727,10 @@
    ]
   },
   {
-   "blockId": "b0393",
+   "blockId": "b0395",
    "unitContext": {
     "name": "Daemonettes Of Slaanesh",
-    "sourceBlockId": "b0385",
+    "sourceBlockId": "b0387",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -2749,10 +2749,10 @@
    ]
   },
   {
-   "blockId": "b0394",
+   "blockId": "b0396",
    "unitContext": {
     "name": "Seekers Of Slaanesh",
-    "sourceBlockId": "b0394",
+    "sourceBlockId": "b0396",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -2774,10 +2774,10 @@
    ]
   },
   {
-   "blockId": "b0401",
+   "blockId": "b0403",
    "unitContext": {
     "name": "Seekers Of Slaanesh",
-    "sourceBlockId": "b0394",
+    "sourceBlockId": "b0396",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -2796,10 +2796,10 @@
    ]
   },
   {
-   "blockId": "b0403",
+   "blockId": "b0405",
    "unitContext": {
     "name": "Fiends Of Slaanesh",
-    "sourceBlockId": "b0403",
+    "sourceBlockId": "b0405",
     "method": "table-title",
     "confidence": "high",
     "profileNames": [
@@ -2819,10 +2819,10 @@
    ]
   },
   {
-   "blockId": "b0406",
+   "blockId": "b0408",
    "unitContext": {
     "name": "Fiends Of Slaanesh",
-    "sourceBlockId": "b0403",
+    "sourceBlockId": "b0405",
     "method": "table-title",
     "confidence": "high",
     "profileNames": [
@@ -2840,10 +2840,10 @@
    ]
   },
   {
-   "blockId": "b0411",
+   "blockId": "b0413",
    "unitContext": {
     "name": "Fiends Of Slaanesh",
-    "sourceBlockId": "b0403",
+    "sourceBlockId": "b0405",
     "method": "table-title",
     "confidence": "high",
     "profileNames": [
@@ -2860,10 +2860,10 @@
    ]
   },
   {
-   "blockId": "b0412",
+   "blockId": "b0414",
    "unitContext": {
     "name": "Hellflayer Of Slaanesh",
-    "sourceBlockId": "b0412",
+    "sourceBlockId": "b0414",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -2886,10 +2886,10 @@
    ]
   },
   {
-   "blockId": "b0419",
+   "blockId": "b0421",
    "unitContext": {
     "name": "Hellflayer Of Slaanesh",
-    "sourceBlockId": "b0412",
+    "sourceBlockId": "b0414",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -2910,10 +2910,10 @@
    ]
   },
   {
-   "blockId": "b0420",
+   "blockId": "b0422",
    "unitContext": {
     "name": "Seeker Chariot Of Slaanesh",
-    "sourceBlockId": "b0420",
+    "sourceBlockId": "b0422",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -2935,10 +2935,10 @@
    ]
   },
   {
-   "blockId": "b0426",
+   "blockId": "b0428",
    "unitContext": {
     "name": "Seeker Chariot Of Slaanesh",
-    "sourceBlockId": "b0420",
+    "sourceBlockId": "b0422",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -2958,10 +2958,10 @@
    ]
   },
   {
-   "blockId": "b0428",
+   "blockId": "b0430",
    "unitContext": {
     "name": "Exalted Seeker Chariot Of Slaanesh",
-    "sourceBlockId": "b0428",
+    "sourceBlockId": "b0430",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -2980,10 +2980,10 @@
    ]
   },
   {
-   "blockId": "b0435",
+   "blockId": "b0437",
    "unitContext": {
     "name": "Exalted Seeker Chariot Of Slaanesh",
-    "sourceBlockId": "b0428",
+    "sourceBlockId": "b0430",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -3002,10 +3002,10 @@
    ]
   },
   {
-   "blockId": "b0437",
+   "blockId": "b0439",
    "unitContext": {
     "name": "Lord Of Change – Greater Daemon Of Tzeentch",
-    "sourceBlockId": "b0437",
+    "sourceBlockId": "b0439",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -3023,10 +3023,10 @@
    ]
   },
   {
-   "blockId": "b0441",
+   "blockId": "b0443",
    "unitContext": {
     "name": "Lord Of Change – Greater Daemon Of Tzeentch",
-    "sourceBlockId": "b0437",
+    "sourceBlockId": "b0439",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -3043,30 +3043,10 @@
    ]
   },
   {
-   "blockId": "b0443",
+   "blockId": "b0445",
    "unitContext": {
     "name": "Lord Of Change – Greater Daemon Of Tzeentch",
-    "sourceBlockId": "b0437",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Lord of Change"
-    ]
-   },
-   "entryKind": "option",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "units.lord-of-change.options"
-   ]
-  },
-  {
-   "blockId": "b0444",
-   "unitContext": {
-    "name": "Lord Of Change – Greater Daemon Of Tzeentch",
-    "sourceBlockId": "b0437",
+    "sourceBlockId": "b0439",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -3086,7 +3066,27 @@
    "blockId": "b0446",
    "unitContext": {
     "name": "Lord Of Change – Greater Daemon Of Tzeentch",
-    "sourceBlockId": "b0437",
+    "sourceBlockId": "b0439",
+    "method": "preceding-heading",
+    "confidence": "medium",
+    "profileNames": [
+     "Lord of Change"
+    ]
+   },
+   "entryKind": "option",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "units.lord-of-change.options"
+   ]
+  },
+  {
+   "blockId": "b0448",
+   "unitContext": {
+    "name": "Lord Of Change – Greater Daemon Of Tzeentch",
+    "sourceBlockId": "b0439",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -3104,10 +3104,10 @@
    ]
   },
   {
-   "blockId": "b0448",
+   "blockId": "b0450",
    "unitContext": {
     "name": "Lord Of Change – Greater Daemon Of Tzeentch",
-    "sourceBlockId": "b0437",
+    "sourceBlockId": "b0439",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -3124,10 +3124,10 @@
    ]
   },
   {
-   "blockId": "b0449",
+   "blockId": "b0451",
    "unitContext": {
     "name": "Lord Of Change – Greater Daemon Of Tzeentch",
-    "sourceBlockId": "b0437",
+    "sourceBlockId": "b0439",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -3144,10 +3144,10 @@
    ]
   },
   {
-   "blockId": "b0459",
+   "blockId": "b0461",
    "unitContext": {
     "name": "Daemonic Herald Of Tzeentch",
-    "sourceBlockId": "b0450",
+    "sourceBlockId": "b0452",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -3164,10 +3164,10 @@
    ]
   },
   {
-   "blockId": "b0461",
+   "blockId": "b0463",
    "unitContext": {
     "name": "Daemonic Herald Of Tzeentch",
-    "sourceBlockId": "b0450",
+    "sourceBlockId": "b0452",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -3184,10 +3184,10 @@
    ]
   },
   {
-   "blockId": "b0462",
+   "blockId": "b0464",
    "unitContext": {
     "name": "Daemonic Herald Of Tzeentch",
-    "sourceBlockId": "b0450",
+    "sourceBlockId": "b0452",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -3204,50 +3204,50 @@
    ]
   },
   {
-   "blockId": "b0463",
-   "unitContext": {
-    "name": "Daemonic Herald Of Tzeentch",
-    "sourceBlockId": "b0450",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Herald of Tzeentch"
-    ]
-   },
-   "entryKind": "paragraph",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "rules.locus-of-change"
-   ]
-  },
-  {
-   "blockId": "b0464",
-   "unitContext": {
-    "name": "Daemonic Herald Of Tzeentch",
-    "sourceBlockId": "b0450",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Herald of Tzeentch"
-    ]
-   },
-   "entryKind": "paragraph",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "rules.locus-of-change"
-   ]
-  },
-  {
    "blockId": "b0465",
    "unitContext": {
+    "name": "Daemonic Herald Of Tzeentch",
+    "sourceBlockId": "b0452",
+    "method": "preceding-heading",
+    "confidence": "medium",
+    "profileNames": [
+     "Herald of Tzeentch"
+    ]
+   },
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "rules.locus-of-change"
+   ]
+  },
+  {
+   "blockId": "b0466",
+   "unitContext": {
+    "name": "Daemonic Herald Of Tzeentch",
+    "sourceBlockId": "b0452",
+    "method": "preceding-heading",
+    "confidence": "medium",
+    "profileNames": [
+     "Herald of Tzeentch"
+    ]
+   },
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "rules.locus-of-change"
+   ]
+  },
+  {
+   "blockId": "b0467",
+   "unitContext": {
     "name": "Disc Of Tzeentch",
-    "sourceBlockId": "b0465",
+    "sourceBlockId": "b0467",
     "method": "table-title",
     "confidence": "high",
     "profileNames": [
@@ -3264,10 +3264,10 @@
    ]
   },
   {
-   "blockId": "b0466",
+   "blockId": "b0468",
    "unitContext": {
     "name": "Disc Of Tzeentch",
-    "sourceBlockId": "b0465",
+    "sourceBlockId": "b0467",
     "method": "table-title",
     "confidence": "high",
     "profileNames": [
@@ -3287,7 +3287,7 @@
    "blockId": "h0183",
    "unitContext": {
     "name": "Disc Of Tzeentch",
-    "sourceBlockId": "b0465",
+    "sourceBlockId": "b0467",
     "method": "table-title",
     "confidence": "high",
     "profileNames": [
@@ -3302,10 +3302,10 @@
    "targets": []
   },
   {
-   "blockId": "b0477",
+   "blockId": "b0479",
    "unitContext": {
     "name": "Pink Horrors Of Tzeentch",
-    "sourceBlockId": "b0470",
+    "sourceBlockId": "b0472",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -3323,10 +3323,10 @@
    ]
   },
   {
-   "blockId": "b0478",
+   "blockId": "b0480",
    "unitContext": {
     "name": "Pink Horrors Of Tzeentch",
-    "sourceBlockId": "b0470",
+    "sourceBlockId": "b0472",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -3348,7 +3348,7 @@
    "blockId": "h0185",
    "unitContext": {
     "name": "Pink Horrors Of Tzeentch",
-    "sourceBlockId": "b0470",
+    "sourceBlockId": "b0472",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -3366,10 +3366,10 @@
    ]
   },
   {
-   "blockId": "b0479",
+   "blockId": "b0481",
    "unitContext": {
     "name": "Pink Horrors Of Tzeentch",
-    "sourceBlockId": "b0470",
+    "sourceBlockId": "b0472",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -3387,10 +3387,10 @@
    ]
   },
   {
-   "blockId": "b0480",
+   "blockId": "b0482",
    "unitContext": {
     "name": "Pink Horrors Of Tzeentch",
-    "sourceBlockId": "b0470",
+    "sourceBlockId": "b0472",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -3411,7 +3411,7 @@
    "blockId": "h0186",
    "unitContext": {
     "name": "Pink Horrors Of Tzeentch",
-    "sourceBlockId": "b0470",
+    "sourceBlockId": "b0472",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -3427,10 +3427,10 @@
    "targets": []
   },
   {
-   "blockId": "b0488",
+   "blockId": "b0490",
    "unitContext": {
     "name": "Blue Horrors Of Tzeentch",
-    "sourceBlockId": "b0481",
+    "sourceBlockId": "b0483",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -3449,10 +3449,10 @@
    ]
   },
   {
-   "blockId": "b0489",
+   "blockId": "b0491",
    "unitContext": {
     "name": "Flamers Of Tzeentch",
-    "sourceBlockId": "b0489",
+    "sourceBlockId": "b0491",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -3470,10 +3470,10 @@
    "targets": []
   },
   {
-   "blockId": "b0496",
+   "blockId": "b0498",
    "unitContext": {
     "name": "Flamers Of Tzeentch",
-    "sourceBlockId": "b0489",
+    "sourceBlockId": "b0491",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -3496,7 +3496,7 @@
    "blockId": "h0191",
    "unitContext": {
     "name": "Brimstone Horrors Of Tzeentch",
-    "sourceBlockId": "b0501",
+    "sourceBlockId": "b0503",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -3511,10 +3511,10 @@
    "targets": []
   },
   {
-   "blockId": "b0508",
+   "blockId": "b0510",
    "unitContext": {
     "name": "Screamers Of Tzeentch",
-    "sourceBlockId": "b0507",
+    "sourceBlockId": "b0509",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -3532,10 +3532,10 @@
    ]
   },
   {
-   "blockId": "b0510",
+   "blockId": "b0512",
    "unitContext": {
     "name": "Screamers Of Tzeentch",
-    "sourceBlockId": "b0507",
+    "sourceBlockId": "b0509",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -3553,10 +3553,10 @@
    ]
   },
   {
-   "blockId": "b0512",
+   "blockId": "b0514",
    "unitContext": {
     "name": "Screamers Of Tzeentch",
-    "sourceBlockId": "b0507",
+    "sourceBlockId": "b0509",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -3574,10 +3574,10 @@
    ]
   },
   {
-   "blockId": "b0513",
+   "blockId": "b0515",
    "unitContext": {
     "name": "Screamers Of Tzeentch",
-    "sourceBlockId": "b0507",
+    "sourceBlockId": "b0509",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -3597,7 +3597,7 @@
    "blockId": "h0193",
    "unitContext": {
     "name": "Chariot Of Tzeentch",
-    "sourceBlockId": "b0515",
+    "sourceBlockId": "b0517",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -3613,10 +3613,10 @@
    "targets": []
   },
   {
-   "blockId": "b0524",
+   "blockId": "b0526",
    "unitContext": {
     "name": "Burning Chariot Of Tzeentch",
-    "sourceBlockId": "b0524",
+    "sourceBlockId": "b0526",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -3637,10 +3637,10 @@
    ]
   },
   {
-   "blockId": "b0540",
+   "blockId": "b0542",
    "unitContext": {
     "name": "Daemon Princes",
-    "sourceBlockId": "b0538",
+    "sourceBlockId": "b0540",
     "method": "table-title",
     "confidence": "high",
     "profileNames": [
@@ -3657,10 +3657,10 @@
    ]
   },
   {
-   "blockId": "b0549",
+   "blockId": "b0551",
    "unitContext": {
     "name": "Daemon Princes",
-    "sourceBlockId": "b0538",
+    "sourceBlockId": "b0540",
     "method": "table-title",
     "confidence": "high",
     "profileNames": [
@@ -3678,10 +3678,10 @@
    ]
   },
   {
-   "blockId": "b0552",
+   "blockId": "b0554",
    "unitContext": {
     "name": "Chaos Furies",
-    "sourceBlockId": "b0552",
+    "sourceBlockId": "b0554",
     "method": "table-title",
     "confidence": "high",
     "profileNames": [
@@ -3700,10 +3700,10 @@
    "reason": "met de hand toegepast: statline staat geel; het pack vouwt de vier mark-varianten tot deze ene unit met mark-opties"
   },
   {
-   "blockId": "b0558",
+   "blockId": "b0560",
    "unitContext": {
     "name": "Chaos Furies",
-    "sourceBlockId": "b0552",
+    "sourceBlockId": "b0554",
     "method": "table-title",
     "confidence": "high",
     "profileNames": [
@@ -3720,10 +3720,10 @@
    ]
   },
   {
-   "blockId": "b0559",
+   "blockId": "b0561",
    "unitContext": {
     "name": "Chaos Furies",
-    "sourceBlockId": "b0552",
+    "sourceBlockId": "b0554",
     "method": "table-title",
     "confidence": "high",
     "profileNames": [
@@ -3740,10 +3740,10 @@
    ]
   },
   {
-   "blockId": "b0560",
+   "blockId": "b0562",
    "unitContext": {
     "name": "Soul Grinder",
-    "sourceBlockId": "b0560",
+    "sourceBlockId": "b0562",
     "method": "table-title",
     "confidence": "high",
     "profileNames": [
@@ -3761,10 +3761,10 @@
    ]
   },
   {
-   "blockId": "b0563",
+   "blockId": "b0565",
    "unitContext": {
     "name": "Soul Grinder",
-    "sourceBlockId": "b0560",
+    "sourceBlockId": "b0562",
     "method": "table-title",
     "confidence": "high",
     "profileNames": [
@@ -3781,10 +3781,10 @@
    ]
   },
   {
-   "blockId": "b0566",
+   "blockId": "b0568",
    "unitContext": {
     "name": "Soul Grinder",
-    "sourceBlockId": "b0560",
+    "sourceBlockId": "b0562",
     "method": "table-title",
     "confidence": "high",
     "profileNames": [
@@ -3801,10 +3801,10 @@
    ]
   },
   {
-   "blockId": "b0567",
+   "blockId": "b0569",
    "unitContext": {
     "name": "Soul Grinder",
-    "sourceBlockId": "b0560",
+    "sourceBlockId": "b0562",
     "method": "table-title",
     "confidence": "high",
     "profileNames": [
@@ -3821,10 +3821,10 @@
    ]
   },
   {
-   "blockId": "b0574",
+   "blockId": "b0576",
    "unitContext": {
     "name": "Soul Grinder",
-    "sourceBlockId": "b0560",
+    "sourceBlockId": "b0562",
     "method": "table-title",
     "confidence": "high",
     "profileNames": [
@@ -3841,10 +3841,10 @@
    ]
   },
   {
-   "blockId": "b0575",
+   "blockId": "b0577",
    "unitContext": {
     "name": "Soul Grinder",
-    "sourceBlockId": "b0560",
+    "sourceBlockId": "b0562",
     "method": "table-title",
     "confidence": "high",
     "profileNames": [

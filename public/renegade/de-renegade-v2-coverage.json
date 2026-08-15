@@ -4,7 +4,7 @@
  "reference": "de-renegade-v2-reference.json",
  "generatedBy": "scripts/compile-renegade-v2.mjs",
  "counts": {
-  "applied": 84,
+  "applied": 86,
   "captured": 14,
   "unresolved": 0,
   "unsupported": 0,
@@ -44,7 +44,7 @@
    ],
    "status": "applied",
    "targets": [
-    "rules.eternal-hatred"
+    "rules.will-of-the-gods"
    ]
   },
   {
@@ -56,11 +56,11 @@
    ],
    "status": "applied",
    "targets": [
-    "rules.eternal-hatred"
+    "rules.will-of-the-gods"
    ]
   },
   {
-   "blockId": "b0109",
+   "blockId": "b0107",
    "unitContext": null,
    "entryKind": "paragraph",
    "changeKinds": [
@@ -68,11 +68,11 @@
    ],
    "status": "applied",
    "targets": [
-    "rules.murderous"
+    "rules.hekarti-s-blessing"
    ]
   },
   {
-   "blockId": "b0110",
+   "blockId": "b0108",
    "unitContext": null,
    "entryKind": "paragraph",
    "changeKinds": [
@@ -80,7 +80,7 @@
    ],
    "status": "applied",
    "targets": [
-    "rules.murderous"
+    "rules.hekarti-s-blessing"
    ]
   },
   {
@@ -96,7 +96,7 @@
    ]
   },
   {
-   "blockId": "b0127",
+   "blockId": "b0112",
    "unitContext": null,
    "entryKind": "paragraph",
    "changeKinds": [
@@ -104,7 +104,19 @@
    ],
    "status": "applied",
    "targets": [
-    "magicItemText.whip-of-agony"
+    "rules.murderous"
+   ]
+  },
+  {
+   "blockId": "b0113",
+   "unitContext": null,
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "rules.murderous"
    ]
   },
   {
@@ -120,7 +132,19 @@
    ]
   },
   {
-   "blockId": "b0142",
+   "blockId": "b0131",
+   "unitContext": null,
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "magicItemText.whip-of-agony"
+   ]
+  },
+  {
+   "blockId": "b0144",
    "unitContext": null,
    "entryKind": "paragraph",
    "changeKinds": [
@@ -132,7 +156,7 @@
    ]
   },
   {
-   "blockId": "b0149",
+   "blockId": "b0151",
    "unitContext": null,
    "entryKind": "paragraph",
    "changeKinds": [
@@ -144,7 +168,7 @@
    ]
   },
   {
-   "blockId": "b0150",
+   "blockId": "b0152",
    "unitContext": null,
    "entryKind": "paragraph",
    "changeKinds": [
@@ -156,7 +180,7 @@
    ]
   },
   {
-   "blockId": "b0153",
+   "blockId": "b0155",
    "unitContext": null,
    "entryKind": "paragraph",
    "changeKinds": [
@@ -168,30 +192,6 @@
    ]
   },
   {
-   "blockId": "b0164",
-   "unitContext": null,
-   "entryKind": "paragraph",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "magicItemText.focus-familiar"
-   ]
-  },
-  {
-   "blockId": "b0165",
-   "unitContext": null,
-   "entryKind": "paragraph",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "magicItemText.focus-familiar"
-   ]
-  },
-  {
    "blockId": "b0166",
    "unitContext": null,
    "entryKind": "paragraph",
@@ -200,7 +200,7 @@
    ],
    "status": "applied",
    "targets": [
-    "magicItemText.tome-of-furion"
+    "magicItemText.focus-familiar"
    ]
   },
   {
@@ -212,11 +212,11 @@
    ],
    "status": "applied",
    "targets": [
-    "magicItemText.tome-of-furion"
+    "magicItemText.focus-familiar"
    ]
   },
   {
-   "blockId": "b0172",
+   "blockId": "b0168",
    "unitContext": null,
    "entryKind": "paragraph",
    "changeKinds": [
@@ -224,7 +224,19 @@
    ],
    "status": "applied",
    "targets": [
-    "lores.lore-of-naggaroth.spell-cursing-word"
+    "magicItemText.tome-of-furion"
+   ]
+  },
+  {
+   "blockId": "b0169",
+   "unitContext": null,
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "magicItemText.tome-of-furion"
    ]
   },
   {
@@ -240,18 +252,6 @@
    ]
   },
   {
-   "blockId": "b0175",
-   "unitContext": null,
-   "entryKind": "paragraph",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "lores.lore-of-naggaroth.spell-power-of-darkness-renegade-v2"
-   ]
-  },
-  {
    "blockId": "b0176",
    "unitContext": null,
    "entryKind": "paragraph",
@@ -260,7 +260,7 @@
    ],
    "status": "applied",
    "targets": [
-    "lores.lore-of-naggaroth.spell-power-of-darkness-renegade-v2"
+    "lores.lore-of-naggaroth.spell-cursing-word"
    ]
   },
   {
@@ -300,10 +300,34 @@
    ]
   },
   {
-   "blockId": "b0202",
+   "blockId": "b0180",
+   "unitContext": null,
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "lores.lore-of-naggaroth.spell-power-of-darkness-renegade-v2"
+   ]
+  },
+  {
+   "blockId": "b0181",
+   "unitContext": null,
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "lores.lore-of-naggaroth.spell-power-of-darkness-renegade-v2"
+   ]
+  },
+  {
+   "blockId": "b0204",
    "unitContext": {
     "name": "Dark Elf Sorceresses",
-    "sourceBlockId": "b0202",
+    "sourceBlockId": "b0204",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -324,10 +348,10 @@
    ]
   },
   {
-   "blockId": "b0231",
+   "blockId": "b0233",
    "unitContext": {
     "name": "Death Hags",
-    "sourceBlockId": "b0230",
+    "sourceBlockId": "b0232",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -344,10 +368,10 @@
    ]
   },
   {
-   "blockId": "b0234",
+   "blockId": "b0236",
    "unitContext": {
     "name": "Death Hags",
-    "sourceBlockId": "b0230",
+    "sourceBlockId": "b0232",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -364,10 +388,10 @@
    ]
   },
   {
-   "blockId": "b0251",
+   "blockId": "b0253",
    "unitContext": {
     "name": "Khainite Assassins",
-    "sourceBlockId": "b0240",
+    "sourceBlockId": "b0242",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -384,10 +408,10 @@
    ]
   },
   {
-   "blockId": "b0253",
+   "blockId": "b0255",
    "unitContext": {
     "name": "Khainite Assassins",
-    "sourceBlockId": "b0240",
+    "sourceBlockId": "b0242",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -404,10 +428,10 @@
    ]
   },
   {
-   "blockId": "b0257",
+   "blockId": "b0259",
    "unitContext": {
     "name": "Khainite Assassins",
-    "sourceBlockId": "b0240",
+    "sourceBlockId": "b0242",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -424,10 +448,10 @@
    ]
   },
   {
-   "blockId": "b0275",
+   "blockId": "b0277",
    "unitContext": {
     "name": "Cold One",
-    "sourceBlockId": "b0270",
+    "sourceBlockId": "b0272",
     "method": "table-title",
     "confidence": "high",
     "profileNames": [
@@ -444,10 +468,10 @@
    ]
   },
   {
-   "blockId": "b0284",
+   "blockId": "b0286",
    "unitContext": {
     "name": "Dark Elf City Guard",
-    "sourceBlockId": "b0284",
+    "sourceBlockId": "b0286",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -469,10 +493,10 @@
    ]
   },
   {
-   "blockId": "b0287",
+   "blockId": "b0289",
    "unitContext": {
     "name": "Dark Elf City Guard",
-    "sourceBlockId": "b0284",
+    "sourceBlockId": "b0286",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -493,10 +517,10 @@
    ]
   },
   {
-   "blockId": "b0300",
+   "blockId": "b0302",
    "unitContext": {
     "name": "Black Ark Corsairs",
-    "sourceBlockId": "b0297",
+    "sourceBlockId": "b0299",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -514,52 +538,52 @@
    ]
   },
   {
-   "blockId": "b0306",
-   "unitContext": {
-    "name": "Black Ark Corsairs",
-    "sourceBlockId": "b0297",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Corsair",
-     "Reaver"
-    ]
-   },
-   "entryKind": "option",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "units.black-ark-corsairs.options"
-   ]
-  },
-  {
-   "blockId": "b0307",
-   "unitContext": {
-    "name": "Black Ark Corsairs",
-    "sourceBlockId": "b0297",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Corsair",
-     "Reaver"
-    ]
-   },
-   "entryKind": "option",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "units.black-ark-corsairs.options"
-   ]
-  },
-  {
    "blockId": "b0308",
    "unitContext": {
     "name": "Black Ark Corsairs",
-    "sourceBlockId": "b0297",
+    "sourceBlockId": "b0299",
+    "method": "preceding-heading",
+    "confidence": "medium",
+    "profileNames": [
+     "Corsair",
+     "Reaver"
+    ]
+   },
+   "entryKind": "option",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "units.black-ark-corsairs.options"
+   ]
+  },
+  {
+   "blockId": "b0309",
+   "unitContext": {
+    "name": "Black Ark Corsairs",
+    "sourceBlockId": "b0299",
+    "method": "preceding-heading",
+    "confidence": "medium",
+    "profileNames": [
+     "Corsair",
+     "Reaver"
+    ]
+   },
+   "entryKind": "option",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "units.black-ark-corsairs.options"
+   ]
+  },
+  {
+   "blockId": "b0310",
+   "unitContext": {
+    "name": "Black Ark Corsairs",
+    "sourceBlockId": "b0299",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -577,10 +601,10 @@
    ]
   },
   {
-   "blockId": "b0311",
+   "blockId": "b0313",
    "unitContext": {
     "name": "Black Guard Of Naggarond",
-    "sourceBlockId": "b0310",
+    "sourceBlockId": "b0312",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -598,10 +622,10 @@
    ]
   },
   {
-   "blockId": "b0313",
+   "blockId": "b0315",
    "unitContext": {
     "name": "Black Guard Of Naggarond",
-    "sourceBlockId": "b0310",
+    "sourceBlockId": "b0312",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -619,10 +643,10 @@
    ]
   },
   {
-   "blockId": "b0319",
+   "blockId": "b0321",
    "unitContext": {
     "name": "Black Guard Of Naggarond",
-    "sourceBlockId": "b0310",
+    "sourceBlockId": "b0312",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -640,10 +664,10 @@
    ]
   },
   {
-   "blockId": "b0323",
+   "blockId": "b0325",
    "unitContext": {
     "name": "Har Ganeth Executioners",
-    "sourceBlockId": "b0323",
+    "sourceBlockId": "b0325",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -662,10 +686,10 @@
    ]
   },
   {
-   "blockId": "b0326",
+   "blockId": "b0328",
    "unitContext": {
     "name": "Har Ganeth Executioners",
-    "sourceBlockId": "b0323",
+    "sourceBlockId": "b0325",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -683,10 +707,10 @@
    ]
   },
   {
-   "blockId": "b0330",
+   "blockId": "b0332",
    "unitContext": {
     "name": "Har Ganeth Executioners",
-    "sourceBlockId": "b0323",
+    "sourceBlockId": "b0325",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -704,10 +728,10 @@
    ]
   },
   {
-   "blockId": "b0331",
+   "blockId": "b0333",
    "unitContext": {
     "name": "Har Ganeth Executioners",
-    "sourceBlockId": "b0323",
+    "sourceBlockId": "b0325",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -725,10 +749,10 @@
    ]
   },
   {
-   "blockId": "b0333",
+   "blockId": "b0335",
    "unitContext": {
     "name": "Har Ganeth Executioners",
-    "sourceBlockId": "b0323",
+    "sourceBlockId": "b0325",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -746,10 +770,10 @@
    ]
   },
   {
-   "blockId": "b0338",
+   "blockId": "b0340",
    "unitContext": {
     "name": "Dark Elf Shades",
-    "sourceBlockId": "b0334",
+    "sourceBlockId": "b0336",
     "method": "table-title",
     "confidence": "high",
     "profileNames": [
@@ -767,52 +791,52 @@
    ]
   },
   {
-   "blockId": "b0342",
-   "unitContext": {
-    "name": "Dark Elf Shades",
-    "sourceBlockId": "b0334",
-    "method": "table-title",
-    "confidence": "high",
-    "profileNames": [
-     "Shade",
-     "Bloodshade"
-    ]
-   },
-   "entryKind": "option",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "units.dark-elf-shades.options"
-   ]
-  },
-  {
-   "blockId": "b0343",
-   "unitContext": {
-    "name": "Dark Elf Shades",
-    "sourceBlockId": "b0334",
-    "method": "table-title",
-    "confidence": "high",
-    "profileNames": [
-     "Shade",
-     "Bloodshade"
-    ]
-   },
-   "entryKind": "option",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "units.dark-elf-shades.options"
-   ]
-  },
-  {
    "blockId": "b0344",
    "unitContext": {
     "name": "Dark Elf Shades",
-    "sourceBlockId": "b0334",
+    "sourceBlockId": "b0336",
+    "method": "table-title",
+    "confidence": "high",
+    "profileNames": [
+     "Shade",
+     "Bloodshade"
+    ]
+   },
+   "entryKind": "option",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "units.dark-elf-shades.options"
+   ]
+  },
+  {
+   "blockId": "b0345",
+   "unitContext": {
+    "name": "Dark Elf Shades",
+    "sourceBlockId": "b0336",
+    "method": "table-title",
+    "confidence": "high",
+    "profileNames": [
+     "Shade",
+     "Bloodshade"
+    ]
+   },
+   "entryKind": "option",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "units.dark-elf-shades.options"
+   ]
+  },
+  {
+   "blockId": "b0346",
+   "unitContext": {
+    "name": "Dark Elf Shades",
+    "sourceBlockId": "b0336",
     "method": "table-title",
     "confidence": "high",
     "profileNames": [
@@ -830,10 +854,10 @@
    ]
   },
   {
-   "blockId": "b0349",
+   "blockId": "b0351",
    "unitContext": {
     "name": "Witch Elves",
-    "sourceBlockId": "b0346",
+    "sourceBlockId": "b0348",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -855,7 +879,7 @@
    "blockId": "h0005",
    "unitContext": {
     "name": "Witch Elves",
-    "sourceBlockId": "b0346",
+    "sourceBlockId": "b0348",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -877,7 +901,7 @@
    "blockId": "h0006",
    "unitContext": {
     "name": "Witch Elves",
-    "sourceBlockId": "b0346",
+    "sourceBlockId": "b0348",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -895,10 +919,10 @@
    ]
   },
   {
-   "blockId": "b0361",
+   "blockId": "b0363",
    "unitContext": {
     "name": "Sisters of Slaughter",
-    "sourceBlockId": "b0361",
+    "sourceBlockId": "b0363",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -917,10 +941,10 @@
    ]
   },
   {
-   "blockId": "b0364",
+   "blockId": "b0366",
    "unitContext": {
     "name": "Sisters of Slaughter",
-    "sourceBlockId": "b0361",
+    "sourceBlockId": "b0363",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -938,10 +962,10 @@
    ]
   },
   {
-   "blockId": "b0369",
+   "blockId": "b0371",
    "unitContext": {
     "name": "Sisters of Slaughter",
-    "sourceBlockId": "b0361",
+    "sourceBlockId": "b0363",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -962,7 +986,7 @@
    "blockId": "h0007",
    "unitContext": {
     "name": "Sisters of Slaughter",
-    "sourceBlockId": "b0361",
+    "sourceBlockId": "b0363",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -980,10 +1004,10 @@
    ]
   },
   {
-   "blockId": "b0371",
+   "blockId": "b0373",
    "unitContext": {
     "name": "Sisters of Slaughter",
-    "sourceBlockId": "b0361",
+    "sourceBlockId": "b0363",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -1001,31 +1025,10 @@
    ]
   },
   {
-   "blockId": "b0372",
+   "blockId": "b0374",
    "unitContext": {
     "name": "Sisters of Slaughter",
-    "sourceBlockId": "b0361",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Sister of Slaughter",
-     "Handmaiden of Shards"
-    ]
-   },
-   "entryKind": "paragraph",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "rules.first-to-the-fray"
-   ]
-  },
-  {
-   "blockId": "b0373",
-   "unitContext": {
-    "name": "Sisters of Slaughter",
-    "sourceBlockId": "b0361",
+    "sourceBlockId": "b0363",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -1046,7 +1049,28 @@
    "blockId": "b0375",
    "unitContext": {
     "name": "Sisters of Slaughter",
-    "sourceBlockId": "b0361",
+    "sourceBlockId": "b0363",
+    "method": "preceding-heading",
+    "confidence": "medium",
+    "profileNames": [
+     "Sister of Slaughter",
+     "Handmaiden of Shards"
+    ]
+   },
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "rules.first-to-the-fray"
+   ]
+  },
+  {
+   "blockId": "b0377",
+   "unitContext": {
+    "name": "Sisters of Slaughter",
+    "sourceBlockId": "b0363",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -1066,10 +1090,10 @@
    "reason": "met de hand toegepast: notitie staat geel, maar hoort bij het wapen dat de speler kiest"
   },
   {
-   "blockId": "b0387",
+   "blockId": "b0389",
    "unitContext": {
     "name": "Cold One Knights",
-    "sourceBlockId": "b0377",
+    "sourceBlockId": "b0379",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -1088,54 +1112,54 @@
    ]
   },
   {
-   "blockId": "b0409",
-   "unitContext": {
-    "name": "Doomfire Warlocks",
-    "sourceBlockId": "b0399",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Doomfire Warlock",
-     "Master",
-     "Dark Steed"
-    ]
-   },
-   "entryKind": "paragraph",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "rules.cursed-coven"
-   ]
-  },
-  {
-   "blockId": "b0410",
-   "unitContext": {
-    "name": "Doomfire Warlocks",
-    "sourceBlockId": "b0399",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Doomfire Warlock",
-     "Master",
-     "Dark Steed"
-    ]
-   },
-   "entryKind": "paragraph",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "rules.cursed-coven"
-   ]
-  },
-  {
    "blockId": "b0411",
    "unitContext": {
     "name": "Doomfire Warlocks",
-    "sourceBlockId": "b0399",
+    "sourceBlockId": "b0401",
+    "method": "preceding-heading",
+    "confidence": "medium",
+    "profileNames": [
+     "Doomfire Warlock",
+     "Master",
+     "Dark Steed"
+    ]
+   },
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "rules.cursed-coven"
+   ]
+  },
+  {
+   "blockId": "b0412",
+   "unitContext": {
+    "name": "Doomfire Warlocks",
+    "sourceBlockId": "b0401",
+    "method": "preceding-heading",
+    "confidence": "medium",
+    "profileNames": [
+     "Doomfire Warlock",
+     "Master",
+     "Dark Steed"
+    ]
+   },
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "rules.cursed-coven"
+   ]
+  },
+  {
+   "blockId": "b0413",
+   "unitContext": {
+    "name": "Doomfire Warlocks",
+    "sourceBlockId": "b0401",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -1154,32 +1178,10 @@
    ]
   },
   {
-   "blockId": "b0412",
+   "blockId": "b0414",
    "unitContext": {
     "name": "Doomfire Warlocks",
-    "sourceBlockId": "b0399",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Doomfire Warlock",
-     "Master",
-     "Dark Steed"
-    ]
-   },
-   "entryKind": "paragraph",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "rules.dark-runes"
-   ]
-  },
-  {
-   "blockId": "b0413",
-   "unitContext": {
-    "name": "Doomfire Warlocks",
-    "sourceBlockId": "b0399",
+    "sourceBlockId": "b0401",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -1200,8 +1202,30 @@
   {
    "blockId": "b0415",
    "unitContext": {
+    "name": "Doomfire Warlocks",
+    "sourceBlockId": "b0401",
+    "method": "preceding-heading",
+    "confidence": "medium",
+    "profileNames": [
+     "Doomfire Warlock",
+     "Master",
+     "Dark Steed"
+    ]
+   },
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "rules.dark-runes"
+   ]
+  },
+  {
+   "blockId": "b0417",
+   "unitContext": {
     "name": "Cauldron Of Blood",
-    "sourceBlockId": "b0415",
+    "sourceBlockId": "b0417",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -1219,10 +1243,10 @@
    ]
   },
   {
-   "blockId": "b0417",
+   "blockId": "b0419",
    "unitContext": {
     "name": "Cauldron Of Blood",
-    "sourceBlockId": "b0415",
+    "sourceBlockId": "b0417",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -1240,10 +1264,10 @@
    ]
   },
   {
-   "blockId": "b0422",
+   "blockId": "b0424",
    "unitContext": {
     "name": "Cauldron Of Blood",
-    "sourceBlockId": "b0415",
+    "sourceBlockId": "b0417",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -1261,10 +1285,10 @@
    ]
   },
   {
-   "blockId": "b0423",
+   "blockId": "b0425",
    "unitContext": {
     "name": "Cauldron Of Blood",
-    "sourceBlockId": "b0415",
+    "sourceBlockId": "b0417",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -1282,52 +1306,10 @@
    ]
   },
   {
-   "blockId": "b0424",
-   "unitContext": {
-    "name": "Cauldron Of Blood",
-    "sourceBlockId": "b0415",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Cauldron of Blood",
-     "Witch Elf Crew (x2)"
-    ]
-   },
-   "entryKind": "paragraph",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "rules.altar-of-khaine"
-   ]
-  },
-  {
-   "blockId": "b0425",
-   "unitContext": {
-    "name": "Cauldron Of Blood",
-    "sourceBlockId": "b0415",
-    "method": "preceding-heading",
-    "confidence": "medium",
-    "profileNames": [
-     "Cauldron of Blood",
-     "Witch Elf Crew (x2)"
-    ]
-   },
-   "entryKind": "paragraph",
-   "changeKinds": [
-    "new"
-   ],
-   "status": "applied",
-   "targets": [
-    "rules.altar-of-khaine"
-   ]
-  },
-  {
    "blockId": "b0426",
    "unitContext": {
     "name": "Cauldron Of Blood",
-    "sourceBlockId": "b0415",
+    "sourceBlockId": "b0417",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -1341,14 +1323,14 @@
    ],
    "status": "applied",
    "targets": [
-    "rules.blessings-of-khaine"
+    "rules.altar-of-khaine"
    ]
   },
   {
    "blockId": "b0427",
    "unitContext": {
     "name": "Cauldron Of Blood",
-    "sourceBlockId": "b0415",
+    "sourceBlockId": "b0417",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -1362,14 +1344,14 @@
    ],
    "status": "applied",
    "targets": [
-    "rules.blessings-of-khaine"
+    "rules.altar-of-khaine"
    ]
   },
   {
    "blockId": "b0428",
    "unitContext": {
     "name": "Cauldron Of Blood",
-    "sourceBlockId": "b0415",
+    "sourceBlockId": "b0417",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -1377,7 +1359,7 @@
      "Witch Elf Crew (x2)"
     ]
    },
-   "entryKind": "list",
+   "entryKind": "paragraph",
    "changeKinds": [
     "new"
    ],
@@ -1390,7 +1372,7 @@
    "blockId": "b0429",
    "unitContext": {
     "name": "Cauldron Of Blood",
-    "sourceBlockId": "b0415",
+    "sourceBlockId": "b0417",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -1411,7 +1393,7 @@
    "blockId": "b0430",
    "unitContext": {
     "name": "Cauldron Of Blood",
-    "sourceBlockId": "b0415",
+    "sourceBlockId": "b0417",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -1419,7 +1401,7 @@
      "Witch Elf Crew (x2)"
     ]
    },
-   "entryKind": "paragraph",
+   "entryKind": "list",
    "changeKinds": [
     "new"
    ],
@@ -1432,7 +1414,7 @@
    "blockId": "b0431",
    "unitContext": {
     "name": "Cauldron Of Blood",
-    "sourceBlockId": "b0415",
+    "sourceBlockId": "b0417",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -1450,10 +1432,52 @@
    ]
   },
   {
-   "blockId": "b0441",
+   "blockId": "b0432",
+   "unitContext": {
+    "name": "Cauldron Of Blood",
+    "sourceBlockId": "b0417",
+    "method": "preceding-heading",
+    "confidence": "medium",
+    "profileNames": [
+     "Cauldron of Blood",
+     "Witch Elf Crew (x2)"
+    ]
+   },
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "rules.blessings-of-khaine"
+   ]
+  },
+  {
+   "blockId": "b0433",
+   "unitContext": {
+    "name": "Cauldron Of Blood",
+    "sourceBlockId": "b0417",
+    "method": "preceding-heading",
+    "confidence": "medium",
+    "profileNames": [
+     "Cauldron of Blood",
+     "Witch Elf Crew (x2)"
+    ]
+   },
+   "entryKind": "paragraph",
+   "changeKinds": [
+    "new"
+   ],
+   "status": "applied",
+   "targets": [
+    "rules.blessings-of-khaine"
+   ]
+  },
+  {
+   "blockId": "b0443",
    "unitContext": {
     "name": "Scourgerunner Chariots",
-    "sourceBlockId": "b0433",
+    "sourceBlockId": "b0435",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -1472,10 +1496,10 @@
    ]
   },
   {
-   "blockId": "b0443",
+   "blockId": "b0445",
    "unitContext": {
     "name": "Cold One Chariots",
-    "sourceBlockId": "b0443",
+    "sourceBlockId": "b0445",
     "method": "table-title",
     "confidence": "high",
     "profileNames": [
@@ -1495,10 +1519,10 @@
    ]
   },
   {
-   "blockId": "b0453",
+   "blockId": "b0455",
    "unitContext": {
     "name": "Bloodwrack Shrine",
-    "sourceBlockId": "b0453",
+    "sourceBlockId": "b0455",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -1518,10 +1542,10 @@
    ]
   },
   {
-   "blockId": "b0459",
+   "blockId": "b0461",
    "unitContext": {
     "name": "Bloodwrack Shrine",
-    "sourceBlockId": "b0453",
+    "sourceBlockId": "b0455",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -1540,10 +1564,10 @@
    ]
   },
   {
-   "blockId": "b0460",
+   "blockId": "b0462",
    "unitContext": {
     "name": "Bloodwrack Shrine",
-    "sourceBlockId": "b0453",
+    "sourceBlockId": "b0455",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -1562,10 +1586,10 @@
    ]
   },
   {
-   "blockId": "b0463",
+   "blockId": "b0465",
    "unitContext": {
     "name": "Bloodwrack Shrine",
-    "sourceBlockId": "b0453",
+    "sourceBlockId": "b0455",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -1584,10 +1608,10 @@
    ]
   },
   {
-   "blockId": "b0483",
+   "blockId": "b0485",
    "unitContext": {
     "name": "Manticore",
-    "sourceBlockId": "b0483",
+    "sourceBlockId": "b0485",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -1604,10 +1628,10 @@
    ]
   },
   {
-   "blockId": "b0484",
+   "blockId": "b0486",
    "unitContext": {
     "name": "Manticore",
-    "sourceBlockId": "b0483",
+    "sourceBlockId": "b0485",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -1624,10 +1648,10 @@
    ]
   },
   {
-   "blockId": "b0499",
+   "blockId": "b0501",
    "unitContext": {
     "name": "War Hydra",
-    "sourceBlockId": "b0499",
+    "sourceBlockId": "b0501",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -1648,10 +1672,10 @@
    ]
   },
   {
-   "blockId": "b0503",
+   "blockId": "b0505",
    "unitContext": {
     "name": "War Hydra",
-    "sourceBlockId": "b0499",
+    "sourceBlockId": "b0501",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -1669,10 +1693,10 @@
    ]
   },
   {
-   "blockId": "b0506",
+   "blockId": "b0508",
    "unitContext": {
     "name": "War Hydra",
-    "sourceBlockId": "b0499",
+    "sourceBlockId": "b0501",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -1691,10 +1715,10 @@
    ]
   },
   {
-   "blockId": "b0507",
+   "blockId": "b0509",
    "unitContext": {
     "name": "War Hydra",
-    "sourceBlockId": "b0499",
+    "sourceBlockId": "b0501",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -1712,10 +1736,10 @@
    ]
   },
   {
-   "blockId": "b0508",
+   "blockId": "b0510",
    "unitContext": {
     "name": "War Hydra",
-    "sourceBlockId": "b0499",
+    "sourceBlockId": "b0501",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -1733,10 +1757,10 @@
    ]
   },
   {
-   "blockId": "b0511",
+   "blockId": "b0513",
    "unitContext": {
     "name": "War Hydra",
-    "sourceBlockId": "b0499",
+    "sourceBlockId": "b0501",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -1754,10 +1778,10 @@
    ]
   },
   {
-   "blockId": "b0512",
+   "blockId": "b0514",
    "unitContext": {
     "name": "War Hydra",
-    "sourceBlockId": "b0499",
+    "sourceBlockId": "b0501",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -1775,10 +1799,10 @@
    ]
   },
   {
-   "blockId": "b0516",
+   "blockId": "b0518",
    "unitContext": {
     "name": "Bloodwrack Medusa",
-    "sourceBlockId": "b0516",
+    "sourceBlockId": "b0518",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -1796,10 +1820,10 @@
    ]
   },
   {
-   "blockId": "b0521",
+   "blockId": "b0523",
    "unitContext": {
     "name": "Bloodwrack Medusa",
-    "sourceBlockId": "b0516",
+    "sourceBlockId": "b0518",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -1816,10 +1840,10 @@
    ]
   },
   {
-   "blockId": "b0525",
+   "blockId": "b0527",
    "unitContext": {
     "name": "Bloodwrack Medusa",
-    "sourceBlockId": "b0516",
+    "sourceBlockId": "b0518",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -1836,10 +1860,10 @@
    ]
   },
   {
-   "blockId": "b0528",
+   "blockId": "b0530",
    "unitContext": {
     "name": "Kharibdyss",
-    "sourceBlockId": "b0528",
+    "sourceBlockId": "b0530",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [
@@ -1860,10 +1884,10 @@
    ]
   },
   {
-   "blockId": "b0532",
+   "blockId": "b0534",
    "unitContext": {
     "name": "Kharibdyss",
-    "sourceBlockId": "b0528",
+    "sourceBlockId": "b0530",
     "method": "preceding-heading",
     "confidence": "medium",
     "profileNames": [

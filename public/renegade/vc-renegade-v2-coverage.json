@@ -223,7 +223,7 @@
       ]
     },
     {
-      "blockId": "b0059",
+      "blockId": "b0060",
       "unitContext": null,
       "entryKind": "list",
       "changeKinds": [
@@ -231,11 +231,11 @@
       ],
       "status": "applied",
       "targets": [
-        "rules.necromantic-undead"
+        "rules.invocation-of-nehek"
       ]
     },
     {
-      "blockId": "b0061",
+      "blockId": "b0062",
       "unitContext": null,
       "entryKind": "paragraph",
       "changeKinds": [
@@ -259,7 +259,7 @@
       ]
     },
     {
-      "blockId": "b0067",
+      "blockId": "b0068",
       "unitContext": null,
       "entryKind": "paragraph",
       "changeKinds": [
@@ -283,7 +283,7 @@
       ]
     },
     {
-      "blockId": "b0068",
+      "blockId": "b0069",
       "unitContext": null,
       "entryKind": "paragraph",
       "changeKinds": [
@@ -295,7 +295,7 @@
       ]
     },
     {
-      "blockId": "b0069",
+      "blockId": "b0070",
       "unitContext": null,
       "entryKind": "paragraph",
       "changeKinds": [
@@ -319,24 +319,12 @@
       ]
     },
     {
-      "blockId": "b0070",
+      "blockId": "b0071",
       "unitContext": null,
       "entryKind": "paragraph",
       "changeKinds": [
         "new",
         "changed"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.wailing-dirge-x"
-      ]
-    },
-    {
-      "blockId": "b0071",
-      "unitContext": null,
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
       ],
       "status": "applied",
       "targets": [
@@ -368,6 +356,18 @@
       ]
     },
     {
+      "blockId": "b0074",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.wailing-dirge-x"
+      ]
+    },
+    {
       "blockId": "h0039",
       "unitContext": null,
       "entryKind": "heading",
@@ -380,7 +380,7 @@
       ]
     },
     {
-      "blockId": "b0085",
+      "blockId": "b0086",
       "unitContext": null,
       "entryKind": "paragraph",
       "changeKinds": [
@@ -392,7 +392,7 @@
       ]
     },
     {
-      "blockId": "b0086",
+      "blockId": "b0087",
       "unitContext": null,
       "entryKind": "paragraph",
       "changeKinds": [
@@ -428,7 +428,7 @@
       ]
     },
     {
-      "blockId": "b0089",
+      "blockId": "b0090",
       "unitContext": null,
       "entryKind": "paragraph",
       "changeKinds": [
@@ -464,7 +464,7 @@
       ]
     },
     {
-      "blockId": "b0092",
+      "blockId": "b0093",
       "unitContext": null,
       "entryKind": "paragraph",
       "changeKinds": [
@@ -488,7 +488,7 @@
       ]
     },
     {
-      "blockId": "b0093",
+      "blockId": "b0094",
       "unitContext": null,
       "entryKind": "paragraph",
       "changeKinds": [
@@ -512,7 +512,7 @@
       ]
     },
     {
-      "blockId": "b0100",
+      "blockId": "b0101",
       "unitContext": null,
       "entryKind": "paragraph",
       "changeKinds": [
@@ -596,7 +596,7 @@
       ]
     },
     {
-      "blockId": "b0105",
+      "blockId": "b0106",
       "unitContext": null,
       "entryKind": "paragraph",
       "changeKinds": [
@@ -608,7 +608,7 @@
       ]
     },
     {
-      "blockId": "b0106",
+      "blockId": "b0107",
       "unitContext": null,
       "entryKind": "paragraph",
       "changeKinds": [
@@ -632,7 +632,7 @@
       ]
     },
     {
-      "blockId": "b0107",
+      "blockId": "b0108",
       "unitContext": null,
       "entryKind": "paragraph",
       "changeKinds": [
@@ -644,7 +644,7 @@
       ]
     },
     {
-      "blockId": "b0108",
+      "blockId": "b0109",
       "unitContext": null,
       "entryKind": "paragraph",
       "changeKinds": [
@@ -656,7 +656,7 @@
       ]
     },
     {
-      "blockId": "b0109",
+      "blockId": "b0110",
       "unitContext": null,
       "entryKind": "paragraph",
       "changeKinds": [
@@ -680,18 +680,6 @@
       ]
     },
     {
-      "blockId": "b0110",
-      "unitContext": null,
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "magicItemText.infinite-hatred"
-      ]
-    },
-    {
       "blockId": "b0111",
       "unitContext": null,
       "entryKind": "paragraph",
@@ -700,7 +688,7 @@
       ],
       "status": "applied",
       "targets": [
-        "magicItemText.beguile"
+        "magicItemText.infinite-hatred"
       ]
     },
     {
@@ -716,15 +704,15 @@
       ]
     },
     {
-      "blockId": "b0116",
+      "blockId": "b0113",
       "unitContext": null,
       "entryKind": "paragraph",
       "changeKinds": [
-        "changed"
+        "new"
       ],
       "status": "applied",
       "targets": [
-        "lores.lore-of-undeath.spell-vanhals-danse-macabre"
+        "magicItemText.beguile"
       ]
     },
     {
@@ -752,7 +740,7 @@
       ]
     },
     {
-      "blockId": "b0120",
+      "blockId": "b0119",
       "unitContext": null,
       "entryKind": "paragraph",
       "changeKinds": [
@@ -760,7 +748,7 @@
       ],
       "status": "applied",
       "targets": [
-        "lores.lore-of-undeath.spell-hellish-vigour"
+        "lores.lore-of-undeath.spell-vanhals-danse-macabre"
       ]
     },
     {
@@ -778,6 +766,18 @@
     {
       "blockId": "b0122",
       "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "changed"
+      ],
+      "status": "applied",
+      "targets": [
+        "lores.lore-of-undeath.spell-hellish-vigour"
+      ]
+    },
+    {
+      "blockId": "b0123",
+      "unitContext": null,
       "entryKind": "table",
       "changeKinds": [
         "new"
@@ -788,23 +788,11 @@
       ]
     },
     {
-      "blockId": "b0124",
+      "blockId": "b0125",
       "unitContext": null,
       "entryKind": "paragraph",
       "changeKinds": [
         "changed"
-      ],
-      "status": "applied",
-      "targets": [
-        "lores.lore-of-undeath.spell-raise-dead"
-      ]
-    },
-    {
-      "blockId": "b0126",
-      "unitContext": null,
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
       ],
       "status": "applied",
       "targets": [
@@ -837,9 +825,21 @@
     },
     {
       "blockId": "b0129",
+      "unitContext": null,
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "lores.lore-of-undeath.spell-raise-dead"
+      ]
+    },
+    {
+      "blockId": "b0130",
       "unitContext": {
         "name": "Vampires",
-        "sourceBlockId": "b0129",
+        "sourceBlockId": "b0130",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -861,10 +861,10 @@
       ]
     },
     {
-      "blockId": "b0133",
+      "blockId": "b0134",
       "unitContext": {
         "name": "Vampires",
-        "sourceBlockId": "b0129",
+        "sourceBlockId": "b0130",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -882,10 +882,10 @@
       ]
     },
     {
-      "blockId": "b0138",
+      "blockId": "b0139",
       "unitContext": {
         "name": "Vampires",
-        "sourceBlockId": "b0129",
+        "sourceBlockId": "b0130",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -903,10 +903,10 @@
       ]
     },
     {
-      "blockId": "b0139",
+      "blockId": "b0140",
       "unitContext": {
         "name": "Vampires",
-        "sourceBlockId": "b0129",
+        "sourceBlockId": "b0130",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -924,31 +924,10 @@
       ]
     },
     {
-      "blockId": "b0140",
+      "blockId": "b0141",
       "unitContext": {
         "name": "Vampires",
-        "sourceBlockId": "b0129",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Vampire Lord",
-          "Vampire Thrall"
-        ]
-      },
-      "entryKind": "option",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "units.vampire-thrall.options"
-      ]
-    },
-    {
-      "blockId": "b0142",
-      "unitContext": {
-        "name": "Vampires",
-        "sourceBlockId": "b0129",
+        "sourceBlockId": "b0130",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -969,7 +948,28 @@
       "blockId": "b0143",
       "unitContext": {
         "name": "Vampires",
-        "sourceBlockId": "b0129",
+        "sourceBlockId": "b0130",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Vampire Lord",
+          "Vampire Thrall"
+        ]
+      },
+      "entryKind": "option",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "units.vampire-thrall.options"
+      ]
+    },
+    {
+      "blockId": "b0144",
+      "unitContext": {
+        "name": "Vampires",
+        "sourceBlockId": "b0130",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -987,10 +987,10 @@
       ]
     },
     {
-      "blockId": "b0147",
+      "blockId": "b0148",
       "unitContext": {
         "name": "Necromancers",
-        "sourceBlockId": "b0147",
+        "sourceBlockId": "b0148",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1010,10 +1010,10 @@
       ]
     },
     {
-      "blockId": "b0161",
+      "blockId": "b0162",
       "unitContext": {
         "name": "Strigoi Ghoul Kings",
-        "sourceBlockId": "b0158",
+        "sourceBlockId": "b0159",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -1030,10 +1030,10 @@
       ]
     },
     {
-      "blockId": "b0165",
+      "blockId": "b0166",
       "unitContext": {
         "name": "Strigoi Ghoul Kings",
-        "sourceBlockId": "b0158",
+        "sourceBlockId": "b0159",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -1050,10 +1050,10 @@
       ]
     },
     {
-      "blockId": "b0166",
+      "blockId": "b0167",
       "unitContext": {
         "name": "Strigoi Ghoul Kings",
-        "sourceBlockId": "b0158",
+        "sourceBlockId": "b0159",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -1073,7 +1073,7 @@
       "blockId": "h0079",
       "unitContext": {
         "name": "Strigoi Ghoul Kings",
-        "sourceBlockId": "b0158",
+        "sourceBlockId": "b0159",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -1090,10 +1090,10 @@
       ]
     },
     {
-      "blockId": "b0167",
+      "blockId": "b0168",
       "unitContext": {
         "name": "Strigoi Ghoul Kings",
-        "sourceBlockId": "b0158",
+        "sourceBlockId": "b0159",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -1110,10 +1110,10 @@
       ]
     },
     {
-      "blockId": "b0174",
+      "blockId": "b0175",
       "unitContext": {
         "name": "Wights",
-        "sourceBlockId": "b0174",
+        "sourceBlockId": "b0175",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1133,10 +1133,10 @@
       ]
     },
     {
-      "blockId": "b0187",
+      "blockId": "b0188",
       "unitContext": {
         "name": "Tomb Banshees",
-        "sourceBlockId": "b0183",
+        "sourceBlockId": "b0184",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1153,10 +1153,10 @@
       ]
     },
     {
-      "blockId": "b0190",
+      "blockId": "b0191",
       "unitContext": {
         "name": "Tomb Banshees",
-        "sourceBlockId": "b0183",
+        "sourceBlockId": "b0184",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1173,10 +1173,10 @@
       ]
     },
     {
-      "blockId": "b0193",
+      "blockId": "b0194",
       "unitContext": {
         "name": "Skeletal Steed",
-        "sourceBlockId": "b0193",
+        "sourceBlockId": "b0194",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1193,10 +1193,10 @@
       ]
     },
     {
-      "blockId": "b0197",
+      "blockId": "b0198",
       "unitContext": {
         "name": "Skeletal Steed",
-        "sourceBlockId": "b0193",
+        "sourceBlockId": "b0194",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1213,10 +1213,10 @@
       ]
     },
     {
-      "blockId": "b0206",
+      "blockId": "b0207",
       "unitContext": {
         "name": "Grave Guard",
-        "sourceBlockId": "b0203",
+        "sourceBlockId": "b0204",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1235,10 +1235,10 @@
       ]
     },
     {
-      "blockId": "b0213",
+      "blockId": "b0214",
       "unitContext": {
         "name": "Skeleton Warriors",
-        "sourceBlockId": "b0213",
+        "sourceBlockId": "b0214",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1257,10 +1257,10 @@
       ]
     },
     {
-      "blockId": "b0217",
+      "blockId": "b0218",
       "unitContext": {
         "name": "Skeleton Warriors",
-        "sourceBlockId": "b0213",
+        "sourceBlockId": "b0214",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1278,10 +1278,10 @@
       ]
     },
     {
-      "blockId": "b0219",
+      "blockId": "b0220",
       "unitContext": {
         "name": "Skeleton Warriors",
-        "sourceBlockId": "b0213",
+        "sourceBlockId": "b0214",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1299,10 +1299,10 @@
       ]
     },
     {
-      "blockId": "b0223",
+      "blockId": "b0224",
       "unitContext": {
         "name": "Skeleton Warriors",
-        "sourceBlockId": "b0213",
+        "sourceBlockId": "b0214",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1320,10 +1320,10 @@
       ]
     },
     {
-      "blockId": "b0225",
+      "blockId": "b0226",
       "unitContext": {
         "name": "Zombies",
-        "sourceBlockId": "b0225",
+        "sourceBlockId": "b0226",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1340,10 +1340,10 @@
       ]
     },
     {
-      "blockId": "b0228",
+      "blockId": "b0229",
       "unitContext": {
         "name": "Zombies",
-        "sourceBlockId": "b0225",
+        "sourceBlockId": "b0226",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1363,7 +1363,7 @@
       "blockId": "h0097",
       "unitContext": {
         "name": "Zombies",
-        "sourceBlockId": "b0225",
+        "sourceBlockId": "b0226",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1380,10 +1380,10 @@
       ]
     },
     {
-      "blockId": "b0229",
+      "blockId": "b0230",
       "unitContext": {
         "name": "Zombies",
-        "sourceBlockId": "b0225",
+        "sourceBlockId": "b0226",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1400,10 +1400,10 @@
       ]
     },
     {
-      "blockId": "b0230",
+      "blockId": "b0231",
       "unitContext": {
         "name": "Crypt Ghouls",
-        "sourceBlockId": "b0230",
+        "sourceBlockId": "b0231",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1422,10 +1422,10 @@
       ]
     },
     {
-      "blockId": "b0233",
+      "blockId": "b0234",
       "unitContext": {
         "name": "Crypt Ghouls",
-        "sourceBlockId": "b0230",
+        "sourceBlockId": "b0231",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1443,10 +1443,10 @@
       ]
     },
     {
-      "blockId": "b0234",
+      "blockId": "b0235",
       "unitContext": {
         "name": "Crypt Ghouls",
-        "sourceBlockId": "b0230",
+        "sourceBlockId": "b0231",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1464,10 +1464,10 @@
       ]
     },
     {
-      "blockId": "b0236",
+      "blockId": "b0237",
       "unitContext": {
         "name": "Crypt Ghouls",
-        "sourceBlockId": "b0230",
+        "sourceBlockId": "b0231",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1485,10 +1485,10 @@
       ]
     },
     {
-      "blockId": "b0237",
+      "blockId": "b0238",
       "unitContext": {
         "name": "Crypt Ghouls",
-        "sourceBlockId": "b0230",
+        "sourceBlockId": "b0231",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1506,10 +1506,10 @@
       ]
     },
     {
-      "blockId": "b0242",
+      "blockId": "b0243",
       "unitContext": {
         "name": "Crypt Horrors",
-        "sourceBlockId": "b0238",
+        "sourceBlockId": "b0239",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1527,10 +1527,10 @@
       ]
     },
     {
-      "blockId": "b0244",
+      "blockId": "b0245",
       "unitContext": {
         "name": "Crypt Horrors",
-        "sourceBlockId": "b0238",
+        "sourceBlockId": "b0239",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1548,10 +1548,10 @@
       ]
     },
     {
-      "blockId": "b0249",
+      "blockId": "b0250",
       "unitContext": {
         "name": "Bat Swarms",
-        "sourceBlockId": "b0246",
+        "sourceBlockId": "b0247",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1568,10 +1568,10 @@
       ]
     },
     {
-      "blockId": "b0251",
+      "blockId": "b0252",
       "unitContext": {
         "name": "Bat Swarms",
-        "sourceBlockId": "b0246",
+        "sourceBlockId": "b0247",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1588,30 +1588,10 @@
       ]
     },
     {
-      "blockId": "b0252",
-      "unitContext": {
-        "name": "Bat Swarms",
-        "sourceBlockId": "b0246",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Bat Swarm"
-        ]
-      },
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.cloud-of-horror"
-      ]
-    },
-    {
       "blockId": "b0253",
       "unitContext": {
         "name": "Bat Swarms",
-        "sourceBlockId": "b0246",
+        "sourceBlockId": "b0247",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1628,10 +1608,30 @@
       ]
     },
     {
-      "blockId": "b0257",
+      "blockId": "b0254",
+      "unitContext": {
+        "name": "Bat Swarms",
+        "sourceBlockId": "b0247",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Bat Swarm"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.cloud-of-horror"
+      ]
+    },
+    {
+      "blockId": "b0258",
       "unitContext": {
         "name": "Vargheists",
-        "sourceBlockId": "b0254",
+        "sourceBlockId": "b0255",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1650,10 +1650,10 @@
       ]
     },
     {
-      "blockId": "b0258",
+      "blockId": "b0259",
       "unitContext": {
         "name": "Vargheists",
-        "sourceBlockId": "b0254",
+        "sourceBlockId": "b0255",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1671,10 +1671,10 @@
       ]
     },
     {
-      "blockId": "b0260",
+      "blockId": "b0261",
       "unitContext": {
         "name": "Vargheists",
-        "sourceBlockId": "b0254",
+        "sourceBlockId": "b0255",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1693,10 +1693,10 @@
       ]
     },
     {
-      "blockId": "b0261",
+      "blockId": "b0262",
       "unitContext": {
         "name": "Vargheists",
-        "sourceBlockId": "b0254",
+        "sourceBlockId": "b0255",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1714,10 +1714,10 @@
       ]
     },
     {
-      "blockId": "b0270",
+      "blockId": "b0271",
       "unitContext": {
         "name": "Spirit Hosts",
-        "sourceBlockId": "b0267",
+        "sourceBlockId": "b0268",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1734,10 +1734,10 @@
       ]
     },
     {
-      "blockId": "b0277",
+      "blockId": "b0278",
       "unitContext": {
         "name": "Blood Knights",
-        "sourceBlockId": "b0274",
+        "sourceBlockId": "b0275",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1756,10 +1756,10 @@
       ]
     },
     {
-      "blockId": "b0285",
+      "blockId": "b0286",
       "unitContext": {
         "name": "Black Knights",
-        "sourceBlockId": "b0285",
+        "sourceBlockId": "b0286",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1779,10 +1779,10 @@
       ]
     },
     {
-      "blockId": "b0288",
+      "blockId": "b0289",
       "unitContext": {
         "name": "Black Knights",
-        "sourceBlockId": "b0285",
+        "sourceBlockId": "b0286",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1802,10 +1802,10 @@
       ]
     },
     {
-      "blockId": "b0289",
+      "blockId": "b0290",
       "unitContext": {
         "name": "Black Knights",
-        "sourceBlockId": "b0285",
+        "sourceBlockId": "b0286",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1824,10 +1824,10 @@
       ]
     },
     {
-      "blockId": "b0291",
+      "blockId": "b0292",
       "unitContext": {
         "name": "Black Knights",
-        "sourceBlockId": "b0285",
+        "sourceBlockId": "b0286",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1847,10 +1847,10 @@
       ]
     },
     {
-      "blockId": "b0295",
+      "blockId": "b0296",
       "unitContext": {
         "name": "Black Knights",
-        "sourceBlockId": "b0285",
+        "sourceBlockId": "b0286",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1870,10 +1870,10 @@
       ]
     },
     {
-      "blockId": "b0304",
+      "blockId": "b0305",
       "unitContext": {
         "name": "Hexwraiths",
-        "sourceBlockId": "b0304",
+        "sourceBlockId": "b0305",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1892,10 +1892,10 @@
       ]
     },
     {
-      "blockId": "b0309",
+      "blockId": "b0310",
       "unitContext": {
         "name": "Coven Throne",
-        "sourceBlockId": "b0309",
+        "sourceBlockId": "b0310",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1914,10 +1914,10 @@
       ]
     },
     {
-      "blockId": "b0315",
+      "blockId": "b0316",
       "unitContext": {
         "name": "Coven Throne",
-        "sourceBlockId": "b0309",
+        "sourceBlockId": "b0310",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1936,10 +1936,10 @@
       ]
     },
     {
-      "blockId": "b0316",
+      "blockId": "b0317",
       "unitContext": {
         "name": "Coven Throne",
-        "sourceBlockId": "b0309",
+        "sourceBlockId": "b0310",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1958,10 +1958,10 @@
       ]
     },
     {
-      "blockId": "b0318",
+      "blockId": "b0319",
       "unitContext": {
         "name": "Coven Throne",
-        "sourceBlockId": "b0309",
+        "sourceBlockId": "b0310",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -1980,10 +1980,10 @@
       ]
     },
     {
-      "blockId": "b0319",
+      "blockId": "b0320",
       "unitContext": {
         "name": "Coven Throne",
-        "sourceBlockId": "b0309",
+        "sourceBlockId": "b0310",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -2002,10 +2002,10 @@
       ]
     },
     {
-      "blockId": "b0330",
+      "blockId": "b0331",
       "unitContext": {
         "name": "Mortis Engine",
-        "sourceBlockId": "b0324",
+        "sourceBlockId": "b0325",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -2024,10 +2024,10 @@
       ]
     },
     {
-      "blockId": "b0331",
+      "blockId": "b0332",
       "unitContext": {
         "name": "Mortis Engine",
-        "sourceBlockId": "b0324",
+        "sourceBlockId": "b0325",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -2046,10 +2046,10 @@
       ]
     },
     {
-      "blockId": "b0332",
+      "blockId": "b0333",
       "unitContext": {
         "name": "Mortis Engine",
-        "sourceBlockId": "b0324",
+        "sourceBlockId": "b0325",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -2068,10 +2068,10 @@
       ]
     },
     {
-      "blockId": "b0333",
+      "blockId": "b0334",
       "unitContext": {
         "name": "Mortis Engine",
-        "sourceBlockId": "b0324",
+        "sourceBlockId": "b0325",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -2090,10 +2090,10 @@
       ]
     },
     {
-      "blockId": "b0334",
+      "blockId": "b0335",
       "unitContext": {
         "name": "Mortis Engine",
-        "sourceBlockId": "b0324",
+        "sourceBlockId": "b0325",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -2112,10 +2112,10 @@
       ]
     },
     {
-      "blockId": "b0335",
+      "blockId": "b0336",
       "unitContext": {
         "name": "Mortis Engine",
-        "sourceBlockId": "b0324",
+        "sourceBlockId": "b0325",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -2134,10 +2134,10 @@
       ]
     },
     {
-      "blockId": "b0337",
+      "blockId": "b0338",
       "unitContext": {
         "name": "Corpse Cart",
-        "sourceBlockId": "b0337",
+        "sourceBlockId": "b0338",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -2157,10 +2157,10 @@
       ]
     },
     {
-      "blockId": "b0348",
+      "blockId": "b0349",
       "unitContext": {
         "name": "Corpse Cart",
-        "sourceBlockId": "b0337",
+        "sourceBlockId": "b0338",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -2179,10 +2179,10 @@
       ]
     },
     {
-      "blockId": "b0349",
+      "blockId": "b0350",
       "unitContext": {
         "name": "Corpse Cart",
-        "sourceBlockId": "b0337",
+        "sourceBlockId": "b0338",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -2201,10 +2201,10 @@
       ]
     },
     {
-      "blockId": "b0350",
+      "blockId": "b0351",
       "unitContext": {
         "name": "Corpse Cart",
-        "sourceBlockId": "b0337",
+        "sourceBlockId": "b0338",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -2226,7 +2226,7 @@
       "blockId": "h0118",
       "unitContext": {
         "name": "Corpse Cart",
-        "sourceBlockId": "b0337",
+        "sourceBlockId": "b0338",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -2245,32 +2245,10 @@
       ]
     },
     {
-      "blockId": "b0352",
-      "unitContext": {
-        "name": "Corpse Cart",
-        "sourceBlockId": "b0337",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Corpse Cart",
-          "Corpsemaster (x1)",
-          "The Restless Dead"
-        ]
-      },
-      "entryKind": "paragraph",
-      "changeKinds": [
-        "new"
-      ],
-      "status": "applied",
-      "targets": [
-        "rules.vigor-mortis"
-      ]
-    },
-    {
       "blockId": "b0353",
       "unitContext": {
         "name": "Corpse Cart",
-        "sourceBlockId": "b0337",
+        "sourceBlockId": "b0338",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -2291,8 +2269,30 @@
     {
       "blockId": "b0354",
       "unitContext": {
+        "name": "Corpse Cart",
+        "sourceBlockId": "b0338",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Corpse Cart",
+          "Corpsemaster (x1)",
+          "The Restless Dead"
+        ]
+      },
+      "entryKind": "paragraph",
+      "changeKinds": [
+        "new"
+      ],
+      "status": "applied",
+      "targets": [
+        "rules.vigor-mortis"
+      ]
+    },
+    {
+      "blockId": "b0355",
+      "unitContext": {
         "name": "Black Coach",
-        "sourceBlockId": "b0354",
+        "sourceBlockId": "b0355",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -2313,10 +2313,10 @@
       "reason": "non-rectangular statline retained losslessly"
     },
     {
-      "blockId": "b0369",
+      "blockId": "b0370",
       "unitContext": {
         "name": "Zombie Dragon",
-        "sourceBlockId": "b0362",
+        "sourceBlockId": "b0363",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -2333,10 +2333,10 @@
       ]
     },
     {
-      "blockId": "b0375",
+      "blockId": "b0376",
       "unitContext": {
         "name": "Terrorgheist",
-        "sourceBlockId": "b0372",
+        "sourceBlockId": "b0373",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -2353,10 +2353,10 @@
       ]
     },
     {
-      "blockId": "b0377",
+      "blockId": "b0378",
       "unitContext": {
         "name": "Terrorgheist",
-        "sourceBlockId": "b0372",
+        "sourceBlockId": "b0373",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -2375,10 +2375,10 @@
       "reason": "continuation of a Special Rules line, applied via its head block"
     },
     {
-      "blockId": "b0378",
+      "blockId": "b0379",
       "unitContext": {
         "name": "Terrorgheist",
-        "sourceBlockId": "b0372",
+        "sourceBlockId": "b0373",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -2395,10 +2395,10 @@
       ]
     },
     {
-      "blockId": "b0394",
+      "blockId": "b0395",
       "unitContext": {
         "name": "Varghulf",
-        "sourceBlockId": "b0394",
+        "sourceBlockId": "b0395",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -2416,10 +2416,10 @@
       ]
     },
     {
-      "blockId": "b0397",
+      "blockId": "b0398",
       "unitContext": {
         "name": "Varghulf",
-        "sourceBlockId": "b0394",
+        "sourceBlockId": "b0395",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -2436,10 +2436,10 @@
       ]
     },
     {
-      "blockId": "b0398",
+      "blockId": "b0399",
       "unitContext": {
         "name": "Varghulf",
-        "sourceBlockId": "b0394",
+        "sourceBlockId": "b0395",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -2456,10 +2456,10 @@
       ]
     },
     {
-      "blockId": "b0399",
+      "blockId": "b0400",
       "unitContext": {
         "name": "Varghulf",
-        "sourceBlockId": "b0394",
+        "sourceBlockId": "b0395",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [

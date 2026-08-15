@@ -42,12 +42,12 @@
     }
   },
   "stats": {
-    "totalBlocks": 515,
+    "totalBlocks": 516,
     "changedBlocks": 156,
     "armyListChangedBlocks": 142,
     "changedSegments": 10,
     "newSegments": 375,
-    "todoSegments": 9,
+    "todoSegments": 7,
     "struckBlocks": 12,
     "statlineTables": 23,
     "weaponProfileTables": 7
@@ -177,38 +177,38 @@
     "b0303",
     "b0308",
     "b0319",
-    "b0328",
-    "b0331",
+    "b0329",
     "b0332",
-    "b0348",
-    "b0351",
-    "b0355",
+    "b0333",
+    "b0349",
+    "b0352",
     "b0356",
-    "b0358",
+    "b0357",
     "b0359",
-    "b0364",
+    "b0360",
     "b0365",
     "b0366",
-    "b0368",
+    "b0367",
     "b0369",
-    "b0371",
+    "b0370",
     "b0372",
-    "h0114",
     "b0373",
+    "h0114",
     "b0374",
     "b0375",
     "b0376",
     "b0377",
     "b0378",
-    "h0115",
     "b0379",
+    "h0115",
     "b0380",
-    "h0116",
     "b0381",
-    "h0117",
+    "h0116",
     "b0382",
-    "b0386",
-    "b0389"
+    "h0117",
+    "b0383",
+    "b0387",
+    "b0390"
   ],
   "armyListChangedBlockIds": [
     "b0061",
@@ -321,38 +321,38 @@
     "b0303",
     "b0308",
     "b0319",
-    "b0328",
-    "b0331",
+    "b0329",
     "b0332",
-    "b0348",
-    "b0351",
-    "b0355",
+    "b0333",
+    "b0349",
+    "b0352",
     "b0356",
-    "b0358",
+    "b0357",
     "b0359",
-    "b0364",
+    "b0360",
     "b0365",
     "b0366",
-    "b0368",
+    "b0367",
     "b0369",
-    "b0371",
+    "b0370",
     "b0372",
-    "h0114",
     "b0373",
+    "h0114",
     "b0374",
     "b0375",
     "b0376",
     "b0377",
     "b0378",
-    "h0115",
     "b0379",
+    "h0115",
     "b0380",
-    "h0116",
     "b0381",
-    "h0117",
+    "h0116",
     "b0382",
-    "b0386",
-    "b0389"
+    "h0117",
+    "b0383",
+    "b0387",
+    "b0390"
   ],
   "blocks": [
     {
@@ -34418,7 +34418,7 @@
     },
     {
       "type": "paragraph",
-      "text": "During the Movement phase, up to two friendly war machines with the ‘Steam Carriage’ upgrade that are completely within this model’s rear arc and within 8\" of its base at the beginning of the phase may replace their Movement characteristic with this model’s. These war machines must finish their movement completely within this model’s rear arc and within 8\" of its base. Unless this model moves using the Lumbering Destruction special rule or makes a charge move, these war machines are not considered to have moved this turn. Grinding Wheels",
+      "text": "During the Movement phase, up to two friendly war machines with the ‘Steam Carriage’ upgrade that are completely within this model’s rear arc and within 8\" of its base at the beginning of the phase may replace their Movement characteristic with this model’s. These war machines must finish their movement completely within this model’s rear arc and within 8\" of its base. Unless this model moves using the Lumbering Destruction special rule or makes a charge move, these war machines are not considered to have moved this turn.",
       "segments": [
         {
           "text": "During the Movement phase, up to two friendly war machines with the ‘Steam Carriage’ upgrade that are completely within this model’s rear arc and within 8\" of its base at the beginning of the phase ",
@@ -34444,30 +34444,11 @@
           "change": null,
           "bold": false,
           "italic": false
-        },
-        {
-          "text": "\n",
-          "change": "todo",
-          "bold": false,
-          "italic": false
-        },
-        {
-          "text": "\n",
-          "change": "todo",
-          "bold": false,
-          "italic": false
-        },
-        {
-          "text": "Grinding Wheels",
-          "change": null,
-          "bold": true,
-          "italic": false
         }
       ],
       "struckText": "can be moved when this model moves",
       "changeKinds": [
-        "new",
-        "todo"
+        "new"
       ],
       "pointsMentions": [],
       "visualHeadingLevel": null,
@@ -34516,24 +34497,24 @@
     },
     {
       "type": "paragraph",
-      "text": "Stomp Attacks made by an Iron Daemon have an Armour Piercing characteristic of -2. However, this rule cannot be used against models whose troop type is ‘behemoth’ – they are simply too large to be caught beneath an Iron Daemon’s wheels.",
+      "text": "Grinding Wheels",
       "segments": [
         {
-          "text": "Stomp Attacks made by an Iron Daemon have an Armour Piercing characteristic of -2. However, this rule cannot be used against models whose troop type is ‘behemoth’ – they are simply too large to be caught beneath an Iron Daemon’s wheels.",
+          "text": "Grinding Wheels",
           "change": null,
-          "bold": false,
+          "bold": true,
           "italic": false
         }
       ],
       "changeKinds": [],
       "pointsMentions": [],
-      "visualHeadingLevel": null,
+      "visualHeadingLevel": 3,
       "id": "b0320",
       "scope": "army-list",
       "headingPath": [
         "Weapons Of Zharr-Naggrund",
         "Hobgoblin Wolf Riders",
-        "Carriage Hauler"
+        "Grinding Wheels"
       ],
       "headingPathDetail": [
         {
@@ -34548,13 +34529,70 @@
         },
         {
           "level": 3,
-          "text": "Carriage Hauler",
-          "source": "docs-heading"
+          "text": "Grinding Wheels",
+          "source": "visual-heading"
         }
       ],
       "context": {
         "section": "Weapons Of Zharr-Naggrund",
-        "heading": "Carriage Hauler",
+        "heading": "Grinding Wheels",
+        "profile": "Hobgoblin Wolf Riders"
+      },
+      "unitContext": {
+        "name": "Iron Daemon",
+        "sourceBlockId": "b0310",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Iron Daemon",
+          "Chaos Dwarf Crew (x3)"
+        ]
+      },
+      "unitId": null,
+      "entryKind": "paragraph",
+      "contextConfidence": "high"
+    },
+    {
+      "type": "paragraph",
+      "text": "Stomp Attacks made by an Iron Daemon have an Armour Piercing characteristic of -2. However, this rule cannot be used against models whose troop type is ‘behemoth’ – they are simply too large to be caught beneath an Iron Daemon’s wheels.",
+      "segments": [
+        {
+          "text": "Stomp Attacks made by an Iron Daemon have an Armour Piercing characteristic of -2. However, this rule cannot be used against models whose troop type is ‘behemoth’ – they are simply too large to be caught beneath an Iron Daemon’s wheels.",
+          "change": null,
+          "bold": false,
+          "italic": false
+        }
+      ],
+      "changeKinds": [],
+      "pointsMentions": [],
+      "visualHeadingLevel": null,
+      "id": "b0321",
+      "scope": "army-list",
+      "headingPath": [
+        "Weapons Of Zharr-Naggrund",
+        "Hobgoblin Wolf Riders",
+        "Grinding Wheels"
+      ],
+      "headingPathDetail": [
+        {
+          "level": 1,
+          "text": "Weapons Of Zharr-Naggrund",
+          "source": "docs-heading"
+        },
+        {
+          "level": 2,
+          "text": "Hobgoblin Wolf Riders",
+          "source": "docs-heading"
+        },
+        {
+          "level": 3,
+          "text": "Grinding Wheels",
+          "source": "visual-heading"
+        }
+      ],
+      "context": {
+        "section": "Weapons Of Zharr-Naggrund",
+        "heading": "Grinding Wheels",
         "profile": "Hobgoblin Wolf Riders"
       },
       "unitContext": {
@@ -34585,12 +34623,12 @@
       "changeKinds": [],
       "pointsMentions": [],
       "visualHeadingLevel": null,
-      "id": "b0321",
+      "id": "b0322",
       "scope": "army-list",
       "headingPath": [
         "Weapons Of Zharr-Naggrund",
         "Hobgoblin Wolf Riders",
-        "Carriage Hauler"
+        "Grinding Wheels"
       ],
       "headingPathDetail": [
         {
@@ -34605,13 +34643,13 @@
         },
         {
           "level": 3,
-          "text": "Carriage Hauler",
-          "source": "docs-heading"
+          "text": "Grinding Wheels",
+          "source": "visual-heading"
         }
       ],
       "context": {
         "section": "Weapons Of Zharr-Naggrund",
-        "heading": "Carriage Hauler",
+        "heading": "Grinding Wheels",
         "profile": "Hobgoblin Wolf Riders"
       },
       "unitContext": {
@@ -34699,7 +34737,7 @@
       "changeKinds": [],
       "pointsMentions": [],
       "visualHeadingLevel": null,
-      "id": "b0322",
+      "id": "b0323",
       "scope": "army-list",
       "headingPath": [
         "Weapons Of Zharr-Naggrund",
@@ -34944,7 +34982,7 @@
       "changeKinds": [],
       "tableType": "weapon-profile",
       "headerRowIndex": 0,
-      "id": "b0323",
+      "id": "b0324",
       "scope": "army-list",
       "headingPath": [
         "Weapons Of Zharr-Naggrund",
@@ -35007,7 +35045,7 @@
       "changeKinds": [],
       "pointsMentions": [],
       "visualHeadingLevel": null,
-      "id": "b0324",
+      "id": "b0325",
       "scope": "army-list",
       "headingPath": [
         "Weapons Of Zharr-Naggrund",
@@ -35070,7 +35108,7 @@
       "changeKinds": [],
       "pointsMentions": [],
       "visualHeadingLevel": null,
-      "id": "b0325",
+      "id": "b0326",
       "scope": "army-list",
       "headingPath": [
         "Weapons Of Zharr-Naggrund",
@@ -35147,7 +35185,7 @@
       "text": "If a Misfire is rolled on one of the Artillery dice, all shots fired from the steam cannonade this turn suffer an additional -1 To Hit modifier (instead of rolling on a Misfire table). • If a Misfire is rolled on both of the Artillery dice, no shots are fired and this model loses a single Wound (instead of rolling on a Misfire table).",
       "changeKinds": [],
       "pointsMentions": [],
-      "id": "b0326",
+      "id": "b0327",
       "scope": "army-list",
       "headingPath": [
         "Weapons Of Zharr-Naggrund",
@@ -35204,7 +35242,7 @@
       "changeKinds": [],
       "pointsMentions": [],
       "visualHeadingLevel": null,
-      "id": "b0327",
+      "id": "b0328",
       "scope": "army-list",
       "headingPath": [
         "Weapons Of Zharr-Naggrund",
@@ -35332,7 +35370,7 @@
       ],
       "pointsMentions": [],
       "visualHeadingLevel": null,
-      "id": "b0328",
+      "id": "b0329",
       "scope": "army-list",
       "headingPath": [
         "Weapons Of Zharr-Naggrund",
@@ -35795,7 +35833,7 @@
       "changeKinds": [],
       "tableType": "statline",
       "headerRowIndex": 0,
-      "id": "b0329",
+      "id": "b0330",
       "scope": "army-list",
       "headingPath": [
         "Weapons Of Zharr-Naggrund",
@@ -35850,7 +35888,7 @@
       ],
       "unitContext": {
         "name": "The Great Tauruses",
-        "sourceBlockId": "b0329",
+        "sourceBlockId": "b0330",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -35882,7 +35920,7 @@
       "changeKinds": [],
       "pointsMentions": [],
       "visualHeadingLevel": null,
-      "id": "b0330",
+      "id": "b0331",
       "scope": "army-list",
       "headingPath": [
         "Weapons Of Zharr-Naggrund",
@@ -35907,7 +35945,7 @@
       },
       "unitContext": {
         "name": "The Great Tauruses",
-        "sourceBlockId": "b0329",
+        "sourceBlockId": "b0330",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -35941,7 +35979,7 @@
       ],
       "pointsMentions": [],
       "visualHeadingLevel": null,
-      "id": "b0331",
+      "id": "b0332",
       "scope": "army-list",
       "headingPath": [
         "Weapons Of Zharr-Naggrund",
@@ -35966,7 +36004,7 @@
       },
       "unitContext": {
         "name": "The Great Tauruses",
-        "sourceBlockId": "b0329",
+        "sourceBlockId": "b0330",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -36006,7 +36044,7 @@
       ],
       "pointsMentions": [],
       "visualHeadingLevel": null,
-      "id": "b0332",
+      "id": "b0333",
       "scope": "army-list",
       "headingPath": [
         "Weapons Of Zharr-Naggrund",
@@ -36031,7 +36069,7 @@
       },
       "unitContext": {
         "name": "The Great Tauruses",
-        "sourceBlockId": "b0329",
+        "sourceBlockId": "b0330",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -36094,7 +36132,7 @@
       },
       "unitContext": {
         "name": "The Great Tauruses",
-        "sourceBlockId": "b0329",
+        "sourceBlockId": "b0330",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -36126,7 +36164,7 @@
       "changeKinds": [],
       "pointsMentions": [],
       "visualHeadingLevel": null,
-      "id": "b0333",
+      "id": "b0334",
       "scope": "army-list",
       "headingPath": [
         "Weapons Of Zharr-Naggrund",
@@ -36157,7 +36195,7 @@
       },
       "unitContext": {
         "name": "The Great Tauruses",
-        "sourceBlockId": "b0329",
+        "sourceBlockId": "b0330",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -36214,7 +36252,7 @@
       },
       "unitContext": {
         "name": "The Great Tauruses",
-        "sourceBlockId": "b0329",
+        "sourceBlockId": "b0330",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -36284,7 +36322,7 @@
       "text": "Bale Taurus: Blazing Body, Born of Fire, Close Order, Fly (9), Furious Charge, Large Target, Stomp Attacks (D3+1), Swiftstride, Terror • Great Taurus: Blazing Body, Born of Fire, Close Order, Fly (9), Furious Charge, Large Target, Stomp Attacks (D3), Swiftstride, Terror",
       "changeKinds": [],
       "pointsMentions": [],
-      "id": "b0334",
+      "id": "b0335",
       "scope": "army-list",
       "headingPath": [
         "Weapons Of Zharr-Naggrund",
@@ -36315,7 +36353,7 @@
       },
       "unitContext": {
         "name": "The Great Tauruses",
-        "sourceBlockId": "b0329",
+        "sourceBlockId": "b0330",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -36567,69 +36605,6 @@
       "changeKinds": [],
       "tableType": "weapon-profile",
       "headerRowIndex": 0,
-      "id": "b0335",
-      "scope": "army-list",
-      "headingPath": [
-        "Weapons Of Zharr-Naggrund",
-        "The Great Tauruses",
-        "Special Rules:"
-      ],
-      "headingPathDetail": [
-        {
-          "level": 1,
-          "text": "Weapons Of Zharr-Naggrund",
-          "source": "docs-heading"
-        },
-        {
-          "level": 2,
-          "text": "The Great Tauruses",
-          "source": "docs-heading"
-        },
-        {
-          "level": 4,
-          "text": "Special Rules:",
-          "source": "docs-heading"
-        }
-      ],
-      "context": {
-        "section": "Weapons Of Zharr-Naggrund",
-        "heading": "Special Rules:",
-        "profile": "The Great Tauruses"
-      },
-      "unitContext": {
-        "name": "The Great Tauruses",
-        "sourceBlockId": "b0329",
-        "method": "preceding-heading",
-        "confidence": "medium",
-        "profileNames": [
-          "Bale Taurus",
-          "Great Taurus"
-        ]
-      },
-      "unitId": null,
-      "entryKind": "weapon-profile",
-      "contextConfidence": "medium"
-    },
-    {
-      "type": "paragraph",
-      "text": "Notes: In combat, this model may make one of its attacks each turn with this weapon.",
-      "segments": [
-        {
-          "text": "Notes: ",
-          "change": null,
-          "bold": true,
-          "italic": false
-        },
-        {
-          "text": "In combat, this model may make one of its attacks each turn with this weapon.",
-          "change": null,
-          "bold": false,
-          "italic": true
-        }
-      ],
-      "changeKinds": [],
-      "pointsMentions": [],
-      "visualHeadingLevel": null,
       "id": "b0336",
       "scope": "army-list",
       "headingPath": [
@@ -36661,7 +36636,7 @@
       },
       "unitContext": {
         "name": "The Great Tauruses",
-        "sourceBlockId": "b0329",
+        "sourceBlockId": "b0330",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -36670,24 +36645,24 @@
         ]
       },
       "unitId": null,
-      "entryKind": "paragraph",
+      "entryKind": "weapon-profile",
       "contextConfidence": "medium"
     },
     {
       "type": "paragraph",
-      "text": "Character Mount: A Bale Taurus or Great Taurus may only be included in your army as a character’s mount. Its points are added to that of its rider.",
+      "text": "Notes: In combat, this model may make one of its attacks each turn with this weapon.",
       "segments": [
         {
-          "text": "Character Mount: ",
+          "text": "Notes: ",
           "change": null,
           "bold": true,
           "italic": false
         },
         {
-          "text": "A Bale Taurus or Great Taurus may only be included in your army as a character’s mount. Its points are added to that of its rider.",
+          "text": "In combat, this model may make one of its attacks each turn with this weapon.",
           "change": null,
           "bold": false,
-          "italic": false
+          "italic": true
         }
       ],
       "changeKinds": [],
@@ -36724,7 +36699,70 @@
       },
       "unitContext": {
         "name": "The Great Tauruses",
-        "sourceBlockId": "b0329",
+        "sourceBlockId": "b0330",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Bale Taurus",
+          "Great Taurus"
+        ]
+      },
+      "unitId": null,
+      "entryKind": "paragraph",
+      "contextConfidence": "medium"
+    },
+    {
+      "type": "paragraph",
+      "text": "Character Mount: A Bale Taurus or Great Taurus may only be included in your army as a character’s mount. Its points are added to that of its rider.",
+      "segments": [
+        {
+          "text": "Character Mount: ",
+          "change": null,
+          "bold": true,
+          "italic": false
+        },
+        {
+          "text": "A Bale Taurus or Great Taurus may only be included in your army as a character’s mount. Its points are added to that of its rider.",
+          "change": null,
+          "bold": false,
+          "italic": false
+        }
+      ],
+      "changeKinds": [],
+      "pointsMentions": [],
+      "visualHeadingLevel": null,
+      "id": "b0338",
+      "scope": "army-list",
+      "headingPath": [
+        "Weapons Of Zharr-Naggrund",
+        "The Great Tauruses",
+        "Special Rules:"
+      ],
+      "headingPathDetail": [
+        {
+          "level": 1,
+          "text": "Weapons Of Zharr-Naggrund",
+          "source": "docs-heading"
+        },
+        {
+          "level": 2,
+          "text": "The Great Tauruses",
+          "source": "docs-heading"
+        },
+        {
+          "level": 4,
+          "text": "Special Rules:",
+          "source": "docs-heading"
+        }
+      ],
+      "context": {
+        "section": "Weapons Of Zharr-Naggrund",
+        "heading": "Special Rules:",
+        "profile": "The Great Tauruses"
+      },
+      "unitContext": {
+        "name": "The Great Tauruses",
+        "sourceBlockId": "b0330",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -36960,7 +36998,7 @@
       "changeKinds": [],
       "tableType": "statline",
       "headerRowIndex": 1,
-      "id": "b0338",
+      "id": "b0339",
       "scope": "army-list",
       "headingPath": [
         "Weapons Of Zharr-Naggrund",
@@ -37005,7 +37043,7 @@
       ],
       "unitContext": {
         "name": "Lammasu",
-        "sourceBlockId": "b0338",
+        "sourceBlockId": "b0339",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -37031,68 +37069,6 @@
           "change": null,
           "bold": false,
           "italic": true
-        }
-      ],
-      "changeKinds": [],
-      "pointsMentions": [],
-      "visualHeadingLevel": null,
-      "id": "b0339",
-      "scope": "army-list",
-      "headingPath": [
-        "Weapons Of Zharr-Naggrund",
-        "The Great Tauruses",
-        "Special Rules:"
-      ],
-      "headingPathDetail": [
-        {
-          "level": 1,
-          "text": "Weapons Of Zharr-Naggrund",
-          "source": "docs-heading"
-        },
-        {
-          "level": 2,
-          "text": "The Great Tauruses",
-          "source": "docs-heading"
-        },
-        {
-          "level": 4,
-          "text": "Special Rules:",
-          "source": "docs-heading"
-        }
-      ],
-      "context": {
-        "section": "Weapons Of Zharr-Naggrund",
-        "heading": "Special Rules:",
-        "profile": "The Great Tauruses"
-      },
-      "unitContext": {
-        "name": "Lammasu",
-        "sourceBlockId": "b0338",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Lammasu"
-        ]
-      },
-      "unitId": null,
-      "entryKind": "paragraph",
-      "contextConfidence": "high"
-    },
-    {
-      "type": "paragraph",
-      "text": "Troop Type: Monstrous creature",
-      "segments": [
-        {
-          "text": "Troop Type: ",
-          "change": null,
-          "bold": true,
-          "italic": false
-        },
-        {
-          "text": "Monstrous creature",
-          "change": null,
-          "bold": false,
-          "italic": false
         }
       ],
       "changeKinds": [],
@@ -37129,7 +37105,7 @@
       },
       "unitContext": {
         "name": "Lammasu",
-        "sourceBlockId": "b0338",
+        "sourceBlockId": "b0339",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -37137,21 +37113,21 @@
         ]
       },
       "unitId": null,
-      "entryKind": "troop-type",
+      "entryKind": "paragraph",
       "contextConfidence": "high"
     },
     {
       "type": "paragraph",
-      "text": "Base Size: 50 x 75 mm",
+      "text": "Troop Type: Monstrous creature",
       "segments": [
         {
-          "text": "Base Size: ",
+          "text": "Troop Type: ",
           "change": null,
           "bold": true,
           "italic": false
         },
         {
-          "text": "50 x 75 mm",
+          "text": "Monstrous creature",
           "change": null,
           "bold": false,
           "italic": false
@@ -37191,7 +37167,69 @@
       },
       "unitContext": {
         "name": "Lammasu",
-        "sourceBlockId": "b0338",
+        "sourceBlockId": "b0339",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Lammasu"
+        ]
+      },
+      "unitId": null,
+      "entryKind": "troop-type",
+      "contextConfidence": "high"
+    },
+    {
+      "type": "paragraph",
+      "text": "Base Size: 50 x 75 mm",
+      "segments": [
+        {
+          "text": "Base Size: ",
+          "change": null,
+          "bold": true,
+          "italic": false
+        },
+        {
+          "text": "50 x 75 mm",
+          "change": null,
+          "bold": false,
+          "italic": false
+        }
+      ],
+      "changeKinds": [],
+      "pointsMentions": [],
+      "visualHeadingLevel": null,
+      "id": "b0342",
+      "scope": "army-list",
+      "headingPath": [
+        "Weapons Of Zharr-Naggrund",
+        "The Great Tauruses",
+        "Special Rules:"
+      ],
+      "headingPathDetail": [
+        {
+          "level": 1,
+          "text": "Weapons Of Zharr-Naggrund",
+          "source": "docs-heading"
+        },
+        {
+          "level": 2,
+          "text": "The Great Tauruses",
+          "source": "docs-heading"
+        },
+        {
+          "level": 4,
+          "text": "Special Rules:",
+          "source": "docs-heading"
+        }
+      ],
+      "context": {
+        "section": "Weapons Of Zharr-Naggrund",
+        "heading": "Special Rules:",
+        "profile": "The Great Tauruses"
+      },
+      "unitContext": {
+        "name": "Lammasu",
+        "sourceBlockId": "b0339",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -37253,7 +37291,7 @@
       },
       "unitContext": {
         "name": "Lammasu",
-        "sourceBlockId": "b0338",
+        "sourceBlockId": "b0339",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -37284,7 +37322,7 @@
       "changeKinds": [],
       "pointsMentions": [],
       "visualHeadingLevel": null,
-      "id": "b0342",
+      "id": "b0343",
       "scope": "army-list",
       "headingPath": [
         "Weapons Of Zharr-Naggrund",
@@ -37315,7 +37353,7 @@
       },
       "unitContext": {
         "name": "Lammasu",
-        "sourceBlockId": "b0338",
+        "sourceBlockId": "b0339",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -37371,7 +37409,7 @@
       },
       "unitContext": {
         "name": "Lammasu",
-        "sourceBlockId": "b0338",
+        "sourceBlockId": "b0339",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -37443,7 +37481,7 @@
           "basis": "fixed"
         }
       ],
-      "id": "b0343",
+      "id": "b0344",
       "scope": "army-list",
       "headingPath": [
         "Weapons Of Zharr-Naggrund",
@@ -37474,7 +37512,7 @@
       },
       "unitContext": {
         "name": "Lammasu",
-        "sourceBlockId": "b0338",
+        "sourceBlockId": "b0339",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -37517,7 +37555,7 @@
       "changeKinds": [],
       "pointsMentions": [],
       "visualHeadingLevel": null,
-      "id": "b0344",
+      "id": "b0345",
       "scope": "army-list",
       "headingPath": [
         "Weapons Of Zharr-Naggrund",
@@ -37548,7 +37586,7 @@
       },
       "unitContext": {
         "name": "Lammasu",
-        "sourceBlockId": "b0338",
+        "sourceBlockId": "b0339",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -37604,7 +37642,7 @@
       },
       "unitContext": {
         "name": "Lammasu",
-        "sourceBlockId": "b0338",
+        "sourceBlockId": "b0339",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -37629,7 +37667,7 @@
       "changeKinds": [],
       "pointsMentions": [],
       "visualHeadingLevel": null,
-      "id": "b0345",
+      "id": "b0346",
       "scope": "army-list",
       "headingPath": [
         "Weapons Of Zharr-Naggrund",
@@ -37660,7 +37698,7 @@
       },
       "unitContext": {
         "name": "Lammasu",
-        "sourceBlockId": "b0338",
+        "sourceBlockId": "b0339",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -37965,68 +38003,6 @@
       "changeKinds": [],
       "tableType": "weapon-profile",
       "headerRowIndex": 0,
-      "id": "b0346",
-      "scope": "army-list",
-      "headingPath": [
-        "Weapons Of Zharr-Naggrund",
-        "The Great Tauruses",
-        "Sorcerous Miasma"
-      ],
-      "headingPathDetail": [
-        {
-          "level": 1,
-          "text": "Weapons Of Zharr-Naggrund",
-          "source": "docs-heading"
-        },
-        {
-          "level": 2,
-          "text": "The Great Tauruses",
-          "source": "docs-heading"
-        },
-        {
-          "level": 3,
-          "text": "Sorcerous Miasma",
-          "source": "docs-heading"
-        }
-      ],
-      "context": {
-        "section": "Weapons Of Zharr-Naggrund",
-        "heading": "Sorcerous Miasma",
-        "profile": "The Great Tauruses"
-      },
-      "unitContext": {
-        "name": "Lammasu",
-        "sourceBlockId": "b0338",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Lammasu"
-        ]
-      },
-      "unitId": null,
-      "entryKind": "weapon-profile",
-      "contextConfidence": "high"
-    },
-    {
-      "type": "paragraph",
-      "text": "Character Mount: A Lammasu may only be included in your army as a character’s mount. Its points are added to that of its rider.",
-      "segments": [
-        {
-          "text": "Character Mount: ",
-          "change": null,
-          "bold": true,
-          "italic": false
-        },
-        {
-          "text": "A Lammasu may only be included in your army as a character’s mount. Its points are added to that of its rider.",
-          "change": null,
-          "bold": false,
-          "italic": false
-        }
-      ],
-      "changeKinds": [],
-      "pointsMentions": [],
-      "visualHeadingLevel": null,
       "id": "b0347",
       "scope": "army-list",
       "headingPath": [
@@ -38058,7 +38034,69 @@
       },
       "unitContext": {
         "name": "Lammasu",
-        "sourceBlockId": "b0338",
+        "sourceBlockId": "b0339",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Lammasu"
+        ]
+      },
+      "unitId": null,
+      "entryKind": "weapon-profile",
+      "contextConfidence": "high"
+    },
+    {
+      "type": "paragraph",
+      "text": "Character Mount: A Lammasu may only be included in your army as a character’s mount. Its points are added to that of its rider.",
+      "segments": [
+        {
+          "text": "Character Mount: ",
+          "change": null,
+          "bold": true,
+          "italic": false
+        },
+        {
+          "text": "A Lammasu may only be included in your army as a character’s mount. Its points are added to that of its rider.",
+          "change": null,
+          "bold": false,
+          "italic": false
+        }
+      ],
+      "changeKinds": [],
+      "pointsMentions": [],
+      "visualHeadingLevel": null,
+      "id": "b0348",
+      "scope": "army-list",
+      "headingPath": [
+        "Weapons Of Zharr-Naggrund",
+        "The Great Tauruses",
+        "Sorcerous Miasma"
+      ],
+      "headingPathDetail": [
+        {
+          "level": 1,
+          "text": "Weapons Of Zharr-Naggrund",
+          "source": "docs-heading"
+        },
+        {
+          "level": 2,
+          "text": "The Great Tauruses",
+          "source": "docs-heading"
+        },
+        {
+          "level": 3,
+          "text": "Sorcerous Miasma",
+          "source": "docs-heading"
+        }
+      ],
+      "context": {
+        "section": "Weapons Of Zharr-Naggrund",
+        "heading": "Sorcerous Miasma",
+        "profile": "The Great Tauruses"
+      },
+      "unitContext": {
+        "name": "Lammasu",
+        "sourceBlockId": "b0339",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -38108,7 +38146,7 @@
       },
       "unitContext": {
         "name": "Lammasu",
-        "sourceBlockId": "b0338",
+        "sourceBlockId": "b0339",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -38678,7 +38716,7 @@
       ],
       "tableType": "statline",
       "headerRowIndex": 0,
-      "id": "b0348",
+      "id": "b0349",
       "scope": "army-list",
       "headingPath": [
         "Weapons Of Zharr-Naggrund",
@@ -38733,7 +38771,7 @@
       ],
       "unitContext": {
         "name": "Deathshrieker Rocket Launcher",
-        "sourceBlockId": "b0348",
+        "sourceBlockId": "b0349",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -38757,63 +38795,6 @@
         },
         {
           "text": "War machine",
-          "change": null,
-          "bold": false,
-          "italic": false
-        }
-      ],
-      "changeKinds": [],
-      "pointsMentions": [],
-      "visualHeadingLevel": null,
-      "id": "b0349",
-      "scope": "army-list",
-      "headingPath": [
-        "Weapons Of Zharr-Naggrund",
-        "Deathshrieker Rocket Launcher"
-      ],
-      "headingPathDetail": [
-        {
-          "level": 1,
-          "text": "Weapons Of Zharr-Naggrund",
-          "source": "docs-heading"
-        },
-        {
-          "level": 2,
-          "text": "Deathshrieker Rocket Launcher",
-          "source": "docs-heading"
-        }
-      ],
-      "context": {
-        "section": "Weapons Of Zharr-Naggrund",
-        "heading": "Deathshrieker Rocket Launcher",
-        "profile": "Deathshrieker Rocket Launcher"
-      },
-      "unitContext": {
-        "name": "Deathshrieker Rocket Launcher",
-        "sourceBlockId": "b0348",
-        "method": "preceding-heading",
-        "confidence": "medium",
-        "profileNames": [
-          "Deathshrieker",
-          "Chaos Dwarf Crew"
-        ]
-      },
-      "unitId": null,
-      "entryKind": "troop-type",
-      "contextConfidence": "medium"
-    },
-    {
-      "type": "paragraph",
-      "text": "Base Size: 50 x 75 mm (war machine), 25 x 25 mm (crew)",
-      "segments": [
-        {
-          "text": "Base Size: ",
-          "change": null,
-          "bold": true,
-          "italic": false
-        },
-        {
-          "text": "50 x 75 mm (war machine), 25 x 25 mm (crew)",
           "change": null,
           "bold": false,
           "italic": false
@@ -38847,7 +38828,64 @@
       },
       "unitContext": {
         "name": "Deathshrieker Rocket Launcher",
-        "sourceBlockId": "b0348",
+        "sourceBlockId": "b0349",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Deathshrieker",
+          "Chaos Dwarf Crew"
+        ]
+      },
+      "unitId": null,
+      "entryKind": "troop-type",
+      "contextConfidence": "medium"
+    },
+    {
+      "type": "paragraph",
+      "text": "Base Size: 50 x 75 mm (war machine), 25 x 25 mm (crew)",
+      "segments": [
+        {
+          "text": "Base Size: ",
+          "change": null,
+          "bold": true,
+          "italic": false
+        },
+        {
+          "text": "50 x 75 mm (war machine), 25 x 25 mm (crew)",
+          "change": null,
+          "bold": false,
+          "italic": false
+        }
+      ],
+      "changeKinds": [],
+      "pointsMentions": [],
+      "visualHeadingLevel": null,
+      "id": "b0351",
+      "scope": "army-list",
+      "headingPath": [
+        "Weapons Of Zharr-Naggrund",
+        "Deathshrieker Rocket Launcher"
+      ],
+      "headingPathDetail": [
+        {
+          "level": 1,
+          "text": "Weapons Of Zharr-Naggrund",
+          "source": "docs-heading"
+        },
+        {
+          "level": 2,
+          "text": "Deathshrieker Rocket Launcher",
+          "source": "docs-heading"
+        }
+      ],
+      "context": {
+        "section": "Weapons Of Zharr-Naggrund",
+        "heading": "Deathshrieker Rocket Launcher",
+        "profile": "Deathshrieker Rocket Launcher"
+      },
+      "unitContext": {
+        "name": "Deathshrieker Rocket Launcher",
+        "sourceBlockId": "b0349",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -38910,7 +38948,7 @@
       },
       "unitContext": {
         "name": "Deathshrieker Rocket Launcher",
-        "sourceBlockId": "b0348",
+        "sourceBlockId": "b0349",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -38964,7 +39002,7 @@
       ],
       "pointsMentions": [],
       "visualHeadingLevel": null,
-      "id": "b0351",
+      "id": "b0352",
       "scope": "army-list",
       "headingPath": [
         "Weapons Of Zharr-Naggrund",
@@ -38995,7 +39033,7 @@
       },
       "unitContext": {
         "name": "Deathshrieker Rocket Launcher",
-        "sourceBlockId": "b0348",
+        "sourceBlockId": "b0349",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -39052,7 +39090,7 @@
       },
       "unitContext": {
         "name": "Deathshrieker Rocket Launcher",
-        "sourceBlockId": "b0348",
+        "sourceBlockId": "b0349",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -39125,69 +39163,6 @@
           "basis": "fixed"
         }
       ],
-      "id": "b0352",
-      "scope": "army-list",
-      "headingPath": [
-        "Weapons Of Zharr-Naggrund",
-        "Deathshrieker Rocket Launcher",
-        "Options:"
-      ],
-      "headingPathDetail": [
-        {
-          "level": 1,
-          "text": "Weapons Of Zharr-Naggrund",
-          "source": "docs-heading"
-        },
-        {
-          "level": 2,
-          "text": "Deathshrieker Rocket Launcher",
-          "source": "docs-heading"
-        },
-        {
-          "level": 4,
-          "text": "Options:",
-          "source": "docs-heading"
-        }
-      ],
-      "context": {
-        "section": "Weapons Of Zharr-Naggrund",
-        "heading": "Options:",
-        "profile": "Deathshrieker Rocket Launcher"
-      },
-      "unitContext": {
-        "name": "Deathshrieker Rocket Launcher",
-        "sourceBlockId": "b0348",
-        "method": "preceding-heading",
-        "confidence": "medium",
-        "profileNames": [
-          "Deathshrieker",
-          "Chaos Dwarf Crew"
-        ]
-      },
-      "unitId": null,
-      "entryKind": "option",
-      "contextConfidence": "medium"
-    },
-    {
-      "type": "paragraph",
-      "text": "Special Rules: Blackshard Armour, Skirmishers",
-      "segments": [
-        {
-          "text": "Special Rules: ",
-          "change": null,
-          "bold": true,
-          "italic": false
-        },
-        {
-          "text": "Blackshard Armour, Skirmishers",
-          "change": null,
-          "bold": false,
-          "italic": false
-        }
-      ],
-      "changeKinds": [],
-      "pointsMentions": [],
-      "visualHeadingLevel": null,
       "id": "b0353",
       "scope": "army-list",
       "headingPath": [
@@ -39219,7 +39194,70 @@
       },
       "unitContext": {
         "name": "Deathshrieker Rocket Launcher",
-        "sourceBlockId": "b0348",
+        "sourceBlockId": "b0349",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Deathshrieker",
+          "Chaos Dwarf Crew"
+        ]
+      },
+      "unitId": null,
+      "entryKind": "option",
+      "contextConfidence": "medium"
+    },
+    {
+      "type": "paragraph",
+      "text": "Special Rules: Blackshard Armour, Skirmishers",
+      "segments": [
+        {
+          "text": "Special Rules: ",
+          "change": null,
+          "bold": true,
+          "italic": false
+        },
+        {
+          "text": "Blackshard Armour, Skirmishers",
+          "change": null,
+          "bold": false,
+          "italic": false
+        }
+      ],
+      "changeKinds": [],
+      "pointsMentions": [],
+      "visualHeadingLevel": null,
+      "id": "b0354",
+      "scope": "army-list",
+      "headingPath": [
+        "Weapons Of Zharr-Naggrund",
+        "Deathshrieker Rocket Launcher",
+        "Options:"
+      ],
+      "headingPathDetail": [
+        {
+          "level": 1,
+          "text": "Weapons Of Zharr-Naggrund",
+          "source": "docs-heading"
+        },
+        {
+          "level": 2,
+          "text": "Deathshrieker Rocket Launcher",
+          "source": "docs-heading"
+        },
+        {
+          "level": 4,
+          "text": "Options:",
+          "source": "docs-heading"
+        }
+      ],
+      "context": {
+        "section": "Weapons Of Zharr-Naggrund",
+        "heading": "Options:",
+        "profile": "Deathshrieker Rocket Launcher"
+      },
+      "unitContext": {
+        "name": "Deathshrieker Rocket Launcher",
+        "sourceBlockId": "b0349",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -39276,7 +39314,7 @@
       },
       "unitContext": {
         "name": "Deathshrieker Rocket Launcher",
-        "sourceBlockId": "b0348",
+        "sourceBlockId": "b0349",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -39302,7 +39340,7 @@
       "changeKinds": [],
       "pointsMentions": [],
       "visualHeadingLevel": null,
-      "id": "b0354",
+      "id": "b0355",
       "scope": "army-list",
       "headingPath": [
         "Weapons Of Zharr-Naggrund",
@@ -39333,7 +39371,7 @@
       },
       "unitContext": {
         "name": "Deathshrieker Rocket Launcher",
-        "sourceBlockId": "b0348",
+        "sourceBlockId": "b0349",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -39396,7 +39434,7 @@
       },
       "unitContext": {
         "name": "Deathshrieker Rocket Launcher",
-        "sourceBlockId": "b0348",
+        "sourceBlockId": "b0349",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -39427,77 +39465,6 @@
         {
           "text": " Armour Bane (1), Bombardment,",
           "change": null,
-          "bold": false,
-          "italic": false
-        }
-      ],
-      "changeKinds": [
-        "new"
-      ],
-      "pointsMentions": [],
-      "visualHeadingLevel": null,
-      "id": "b0355",
-      "scope": "army-list",
-      "headingPath": [
-        "Weapons Of Zharr-Naggrund",
-        "Deathshrieker Rocket Launcher",
-        "Demolition Rockets & Infernal Incendiaries",
-        "R S AP Special Rules"
-      ],
-      "headingPathDetail": [
-        {
-          "level": 1,
-          "text": "Weapons Of Zharr-Naggrund",
-          "source": "docs-heading"
-        },
-        {
-          "level": 2,
-          "text": "Deathshrieker Rocket Launcher",
-          "source": "docs-heading"
-        },
-        {
-          "level": 3,
-          "text": "Demolition Rockets & Infernal Incendiaries",
-          "source": "docs-heading"
-        },
-        {
-          "level": 4,
-          "text": "R S AP Special Rules",
-          "source": "docs-heading"
-        }
-      ],
-      "context": {
-        "section": "Weapons Of Zharr-Naggrund",
-        "heading": "R S AP Special Rules",
-        "profile": "Deathshrieker Rocket Launcher"
-      },
-      "unitContext": {
-        "name": "Deathshrieker Rocket Launcher",
-        "sourceBlockId": "b0348",
-        "method": "preceding-heading",
-        "confidence": "medium",
-        "profileNames": [
-          "Deathshrieker",
-          "Chaos Dwarf Crew"
-        ]
-      },
-      "unitId": null,
-      "entryKind": "paragraph",
-      "contextConfidence": "medium"
-    },
-    {
-      "type": "paragraph",
-      "text": "Cumbersome, Move or Shoot, Multiple Wounds (D6)",
-      "segments": [
-        {
-          "text": "Cumbersome, Move or Shoot, Multiple Wounds ",
-          "change": null,
-          "bold": false,
-          "italic": false
-        },
-        {
-          "text": "(D6)",
-          "change": "new",
           "bold": false,
           "italic": false
         }
@@ -39544,7 +39511,7 @@
       },
       "unitContext": {
         "name": "Deathshrieker Rocket Launcher",
-        "sourceBlockId": "b0348",
+        "sourceBlockId": "b0349",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -39558,22 +39525,24 @@
     },
     {
       "type": "paragraph",
-      "text": "Notes: This weapon shoots like a stone thrower, using the ‘Bombardment’ special rule, a 3\" blast",
+      "text": "Cumbersome, Move or Shoot, Multiple Wounds (D6)",
       "segments": [
         {
-          "text": "Notes: ",
+          "text": "Cumbersome, Move or Shoot, Multiple Wounds ",
           "change": null,
-          "bold": true,
+          "bold": false,
           "italic": false
         },
         {
-          "text": "This weapon shoots like a stone thrower, using the ‘Bombardment’ special rule, a 3\" blast",
-          "change": null,
+          "text": "(D6)",
+          "change": "new",
           "bold": false,
-          "italic": true
+          "italic": false
         }
       ],
-      "changeKinds": [],
+      "changeKinds": [
+        "new"
+      ],
       "pointsMentions": [],
       "visualHeadingLevel": null,
       "id": "b0357",
@@ -39613,7 +39582,7 @@
       },
       "unitContext": {
         "name": "Deathshrieker Rocket Launcher",
-        "sourceBlockId": "b0348",
+        "sourceBlockId": "b0349",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -39627,30 +39596,22 @@
     },
     {
       "type": "paragraph",
-      "text": "template and the Black Powder Misfire table. The Multiple Wounds (D6) special rule applies only to a single model whose base lies underneath the central hole of the blast template.",
+      "text": "Notes: This weapon shoots like a stone thrower, using the ‘Bombardment’ special rule, a 3\" blast",
       "segments": [
         {
-          "text": "template and the Black Powder Misfire table. The Multiple Wounds ",
+          "text": "Notes: ",
           "change": null,
-          "bold": false,
-          "italic": true
+          "bold": true,
+          "italic": false
         },
         {
-          "text": "(D6)",
-          "change": "new",
-          "bold": false,
-          "italic": true
-        },
-        {
-          "text": " special rule applies only to a single model whose base lies underneath the central hole of the blast template.",
+          "text": "This weapon shoots like a stone thrower, using the ‘Bombardment’ special rule, a 3\" blast",
           "change": null,
           "bold": false,
           "italic": true
         }
       ],
-      "changeKinds": [
-        "new"
-      ],
+      "changeKinds": [],
       "pointsMentions": [],
       "visualHeadingLevel": null,
       "id": "b0358",
@@ -39690,7 +39651,84 @@
       },
       "unitContext": {
         "name": "Deathshrieker Rocket Launcher",
-        "sourceBlockId": "b0348",
+        "sourceBlockId": "b0349",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Deathshrieker",
+          "Chaos Dwarf Crew"
+        ]
+      },
+      "unitId": null,
+      "entryKind": "paragraph",
+      "contextConfidence": "medium"
+    },
+    {
+      "type": "paragraph",
+      "text": "template and the Black Powder Misfire table. The Multiple Wounds (D6) special rule applies only to a single model whose base lies underneath the central hole of the blast template.",
+      "segments": [
+        {
+          "text": "template and the Black Powder Misfire table. The Multiple Wounds ",
+          "change": null,
+          "bold": false,
+          "italic": true
+        },
+        {
+          "text": "(D6)",
+          "change": "new",
+          "bold": false,
+          "italic": true
+        },
+        {
+          "text": " special rule applies only to a single model whose base lies underneath the central hole of the blast template.",
+          "change": null,
+          "bold": false,
+          "italic": true
+        }
+      ],
+      "changeKinds": [
+        "new"
+      ],
+      "pointsMentions": [],
+      "visualHeadingLevel": null,
+      "id": "b0359",
+      "scope": "army-list",
+      "headingPath": [
+        "Weapons Of Zharr-Naggrund",
+        "Deathshrieker Rocket Launcher",
+        "Demolition Rockets & Infernal Incendiaries",
+        "R S AP Special Rules"
+      ],
+      "headingPathDetail": [
+        {
+          "level": 1,
+          "text": "Weapons Of Zharr-Naggrund",
+          "source": "docs-heading"
+        },
+        {
+          "level": 2,
+          "text": "Deathshrieker Rocket Launcher",
+          "source": "docs-heading"
+        },
+        {
+          "level": 3,
+          "text": "Demolition Rockets & Infernal Incendiaries",
+          "source": "docs-heading"
+        },
+        {
+          "level": 4,
+          "text": "R S AP Special Rules",
+          "source": "docs-heading"
+        }
+      ],
+      "context": {
+        "section": "Weapons Of Zharr-Naggrund",
+        "heading": "R S AP Special Rules",
+        "profile": "Deathshrieker Rocket Launcher"
+      },
+      "unitContext": {
+        "name": "Deathshrieker Rocket Launcher",
+        "sourceBlockId": "b0349",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -39753,7 +39791,7 @@
       },
       "unitContext": {
         "name": "Deathshrieker Rocket Launcher",
-        "sourceBlockId": "b0348",
+        "sourceBlockId": "b0349",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -39793,69 +39831,6 @@
       ],
       "pointsMentions": [],
       "visualHeadingLevel": null,
-      "id": "b0359",
-      "scope": "army-list",
-      "headingPath": [
-        "Weapons Of Zharr-Naggrund",
-        "Deathshrieker Rocket Launcher",
-        "Demolition Rockets & Infernal Incendiaries",
-        "R S AP Special Rules"
-      ],
-      "headingPathDetail": [
-        {
-          "level": 1,
-          "text": "Weapons Of Zharr-Naggrund",
-          "source": "docs-heading"
-        },
-        {
-          "level": 2,
-          "text": "Deathshrieker Rocket Launcher",
-          "source": "docs-heading"
-        },
-        {
-          "level": 3,
-          "text": "Demolition Rockets & Infernal Incendiaries",
-          "source": "docs-heading"
-        },
-        {
-          "level": 4,
-          "text": "R S AP Special Rules",
-          "source": "docs-heading"
-        }
-      ],
-      "context": {
-        "section": "Weapons Of Zharr-Naggrund",
-        "heading": "R S AP Special Rules",
-        "profile": "Deathshrieker Rocket Launcher"
-      },
-      "unitContext": {
-        "name": "Deathshrieker Rocket Launcher",
-        "sourceBlockId": "b0348",
-        "method": "preceding-heading",
-        "confidence": "medium",
-        "profileNames": [
-          "Deathshrieker",
-          "Chaos Dwarf Crew"
-        ]
-      },
-      "unitId": null,
-      "entryKind": "paragraph",
-      "contextConfidence": "medium"
-    },
-    {
-      "type": "paragraph",
-      "text": "incendiaries Flaming Attacks, Move or Shoot",
-      "segments": [
-        {
-          "text": "incendiaries Flaming Attacks, Move or Shoot",
-          "change": null,
-          "bold": false,
-          "italic": false
-        }
-      ],
-      "changeKinds": [],
-      "pointsMentions": [],
-      "visualHeadingLevel": null,
       "id": "b0360",
       "scope": "army-list",
       "headingPath": [
@@ -39893,7 +39868,7 @@
       },
       "unitContext": {
         "name": "Deathshrieker Rocket Launcher",
-        "sourceBlockId": "b0348",
+        "sourceBlockId": "b0349",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -39907,19 +39882,13 @@
     },
     {
       "type": "paragraph",
-      "text": "Notes: This weapon shoots like a stone thrower, using the ‘Bombardment’ special rule, a 5\" blast template and the Black Powder Misfire table. Any unit that suffers one or more unsaved wounds from this weapon must make a Panic test as if it had taken heavy casualties.",
+      "text": "incendiaries Flaming Attacks, Move or Shoot",
       "segments": [
         {
-          "text": "Notes: ",
-          "change": null,
-          "bold": true,
-          "italic": false
-        },
-        {
-          "text": "This weapon shoots like a stone thrower, using the ‘Bombardment’ special rule, a 5\" blast template and the Black Powder Misfire table. Any unit that suffers one or more unsaved wounds from this weapon must make a Panic test as if it had taken heavy casualties.",
+          "text": "incendiaries Flaming Attacks, Move or Shoot",
           "change": null,
           "bold": false,
-          "italic": true
+          "italic": false
         }
       ],
       "changeKinds": [],
@@ -39962,7 +39931,76 @@
       },
       "unitContext": {
         "name": "Deathshrieker Rocket Launcher",
-        "sourceBlockId": "b0348",
+        "sourceBlockId": "b0349",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Deathshrieker",
+          "Chaos Dwarf Crew"
+        ]
+      },
+      "unitId": null,
+      "entryKind": "paragraph",
+      "contextConfidence": "medium"
+    },
+    {
+      "type": "paragraph",
+      "text": "Notes: This weapon shoots like a stone thrower, using the ‘Bombardment’ special rule, a 5\" blast template and the Black Powder Misfire table. Any unit that suffers one or more unsaved wounds from this weapon must make a Panic test as if it had taken heavy casualties.",
+      "segments": [
+        {
+          "text": "Notes: ",
+          "change": null,
+          "bold": true,
+          "italic": false
+        },
+        {
+          "text": "This weapon shoots like a stone thrower, using the ‘Bombardment’ special rule, a 5\" blast template and the Black Powder Misfire table. Any unit that suffers one or more unsaved wounds from this weapon must make a Panic test as if it had taken heavy casualties.",
+          "change": null,
+          "bold": false,
+          "italic": true
+        }
+      ],
+      "changeKinds": [],
+      "pointsMentions": [],
+      "visualHeadingLevel": null,
+      "id": "b0362",
+      "scope": "army-list",
+      "headingPath": [
+        "Weapons Of Zharr-Naggrund",
+        "Deathshrieker Rocket Launcher",
+        "Demolition Rockets & Infernal Incendiaries",
+        "R S AP Special Rules"
+      ],
+      "headingPathDetail": [
+        {
+          "level": 1,
+          "text": "Weapons Of Zharr-Naggrund",
+          "source": "docs-heading"
+        },
+        {
+          "level": 2,
+          "text": "Deathshrieker Rocket Launcher",
+          "source": "docs-heading"
+        },
+        {
+          "level": 3,
+          "text": "Demolition Rockets & Infernal Incendiaries",
+          "source": "docs-heading"
+        },
+        {
+          "level": 4,
+          "text": "R S AP Special Rules",
+          "source": "docs-heading"
+        }
+      ],
+      "context": {
+        "section": "Weapons Of Zharr-Naggrund",
+        "heading": "R S AP Special Rules",
+        "profile": "Deathshrieker Rocket Launcher"
+      },
+      "unitContext": {
+        "name": "Deathshrieker Rocket Launcher",
+        "sourceBlockId": "b0349",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -40013,7 +40051,7 @@
       },
       "unitContext": {
         "name": "Deathshrieker Rocket Launcher",
-        "sourceBlockId": "b0348",
+        "sourceBlockId": "b0349",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -40494,7 +40532,7 @@
       "changeKinds": [],
       "tableType": "statline",
       "headerRowIndex": 0,
-      "id": "b0362",
+      "id": "b0363",
       "scope": "army-list",
       "headingPath": [
         "Weapons Of Zharr-Naggrund",
@@ -40549,7 +40587,7 @@
       ],
       "unitContext": {
         "name": "Dreadquake Mortar",
-        "sourceBlockId": "b0362",
+        "sourceBlockId": "b0363",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -40581,7 +40619,7 @@
       "changeKinds": [],
       "pointsMentions": [],
       "visualHeadingLevel": null,
-      "id": "b0363",
+      "id": "b0364",
       "scope": "army-list",
       "headingPath": [
         "Weapons Of Zharr-Naggrund",
@@ -40606,7 +40644,7 @@
       },
       "unitContext": {
         "name": "Dreadquake Mortar",
-        "sourceBlockId": "b0362",
+        "sourceBlockId": "b0363",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -40646,7 +40684,7 @@
       ],
       "pointsMentions": [],
       "visualHeadingLevel": null,
-      "id": "b0364",
+      "id": "b0365",
       "scope": "army-list",
       "headingPath": [
         "Weapons Of Zharr-Naggrund",
@@ -40671,7 +40709,7 @@
       },
       "unitContext": {
         "name": "Dreadquake Mortar",
-        "sourceBlockId": "b0362",
+        "sourceBlockId": "b0363",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -40734,7 +40772,7 @@
       },
       "unitContext": {
         "name": "Dreadquake Mortar",
-        "sourceBlockId": "b0362",
+        "sourceBlockId": "b0363",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -40782,7 +40820,7 @@
       ],
       "pointsMentions": [],
       "visualHeadingLevel": null,
-      "id": "b0365",
+      "id": "b0366",
       "scope": "army-list",
       "headingPath": [
         "Weapons Of Zharr-Naggrund",
@@ -40813,7 +40851,7 @@
       },
       "unitContext": {
         "name": "Dreadquake Mortar",
-        "sourceBlockId": "b0362",
+        "sourceBlockId": "b0363",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -40870,7 +40908,7 @@
       },
       "unitContext": {
         "name": "Dreadquake Mortar",
-        "sourceBlockId": "b0362",
+        "sourceBlockId": "b0363",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -40979,69 +41017,6 @@
           "basis": "fixed"
         }
       ],
-      "id": "b0366",
-      "scope": "army-list",
-      "headingPath": [
-        "Weapons Of Zharr-Naggrund",
-        "Dreadquake Mortar",
-        "Options:"
-      ],
-      "headingPathDetail": [
-        {
-          "level": 1,
-          "text": "Weapons Of Zharr-Naggrund",
-          "source": "docs-heading"
-        },
-        {
-          "level": 2,
-          "text": "Dreadquake Mortar",
-          "source": "docs-heading"
-        },
-        {
-          "level": 4,
-          "text": "Options:",
-          "source": "docs-heading"
-        }
-      ],
-      "context": {
-        "section": "Weapons Of Zharr-Naggrund",
-        "heading": "Options:",
-        "profile": "Dreadquake Mortar"
-      },
-      "unitContext": {
-        "name": "Dreadquake Mortar",
-        "sourceBlockId": "b0362",
-        "method": "preceding-heading",
-        "confidence": "medium",
-        "profileNames": [
-          "Dreadquake Mortar",
-          "Chaos Dwarf Crew"
-        ]
-      },
-      "unitId": null,
-      "entryKind": "option",
-      "contextConfidence": "medium"
-    },
-    {
-      "type": "paragraph",
-      "text": "Special Rules: Blackshard Armour, Skirmishers",
-      "segments": [
-        {
-          "text": "Special Rules: ",
-          "change": null,
-          "bold": true,
-          "italic": false
-        },
-        {
-          "text": "Blackshard Armour, Skirmishers",
-          "change": null,
-          "bold": false,
-          "italic": false
-        }
-      ],
-      "changeKinds": [],
-      "pointsMentions": [],
-      "visualHeadingLevel": null,
       "id": "b0367",
       "scope": "army-list",
       "headingPath": [
@@ -41073,7 +41048,70 @@
       },
       "unitContext": {
         "name": "Dreadquake Mortar",
-        "sourceBlockId": "b0362",
+        "sourceBlockId": "b0363",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Dreadquake Mortar",
+          "Chaos Dwarf Crew"
+        ]
+      },
+      "unitId": null,
+      "entryKind": "option",
+      "contextConfidence": "medium"
+    },
+    {
+      "type": "paragraph",
+      "text": "Special Rules: Blackshard Armour, Skirmishers",
+      "segments": [
+        {
+          "text": "Special Rules: ",
+          "change": null,
+          "bold": true,
+          "italic": false
+        },
+        {
+          "text": "Blackshard Armour, Skirmishers",
+          "change": null,
+          "bold": false,
+          "italic": false
+        }
+      ],
+      "changeKinds": [],
+      "pointsMentions": [],
+      "visualHeadingLevel": null,
+      "id": "b0368",
+      "scope": "army-list",
+      "headingPath": [
+        "Weapons Of Zharr-Naggrund",
+        "Dreadquake Mortar",
+        "Options:"
+      ],
+      "headingPathDetail": [
+        {
+          "level": 1,
+          "text": "Weapons Of Zharr-Naggrund",
+          "source": "docs-heading"
+        },
+        {
+          "level": 2,
+          "text": "Dreadquake Mortar",
+          "source": "docs-heading"
+        },
+        {
+          "level": 4,
+          "text": "Options:",
+          "source": "docs-heading"
+        }
+      ],
+      "context": {
+        "section": "Weapons Of Zharr-Naggrund",
+        "heading": "Options:",
+        "profile": "Dreadquake Mortar"
+      },
+      "unitContext": {
+        "name": "Dreadquake Mortar",
+        "sourceBlockId": "b0363",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -41130,7 +41168,7 @@
       },
       "unitContext": {
         "name": "Dreadquake Mortar",
-        "sourceBlockId": "b0362",
+        "sourceBlockId": "b0363",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -41170,7 +41208,7 @@
       ],
       "pointsMentions": [],
       "visualHeadingLevel": null,
-      "id": "b0368",
+      "id": "b0369",
       "scope": "army-list",
       "headingPath": [
         "Weapons Of Zharr-Naggrund",
@@ -41201,7 +41239,7 @@
       },
       "unitContext": {
         "name": "Dreadquake Mortar",
-        "sourceBlockId": "b0362",
+        "sourceBlockId": "b0363",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -41255,69 +41293,6 @@
       ],
       "pointsMentions": [],
       "visualHeadingLevel": null,
-      "id": "b0369",
-      "scope": "army-list",
-      "headingPath": [
-        "Weapons Of Zharr-Naggrund",
-        "Dreadquake Mortar",
-        "R S AP Special Rules"
-      ],
-      "headingPathDetail": [
-        {
-          "level": 1,
-          "text": "Weapons Of Zharr-Naggrund",
-          "source": "docs-heading"
-        },
-        {
-          "level": 2,
-          "text": "Dreadquake Mortar",
-          "source": "docs-heading"
-        },
-        {
-          "level": 4,
-          "text": "R S AP Special Rules",
-          "source": "docs-heading"
-        }
-      ],
-      "context": {
-        "section": "Weapons Of Zharr-Naggrund",
-        "heading": "R S AP Special Rules",
-        "profile": "Dreadquake Mortar"
-      },
-      "unitContext": {
-        "name": "Dreadquake Mortar",
-        "sourceBlockId": "b0362",
-        "method": "preceding-heading",
-        "confidence": "medium",
-        "profileNames": [
-          "Dreadquake Mortar",
-          "Chaos Dwarf Crew"
-        ]
-      },
-      "unitId": null,
-      "entryKind": "paragraph",
-      "contextConfidence": "medium"
-    },
-    {
-      "type": "paragraph",
-      "text": "Notes: This weapon shoots like a stone thrower, using the ‘Bombardment’ special rule, a 5\" blast",
-      "segments": [
-        {
-          "text": "Notes: ",
-          "change": null,
-          "bold": true,
-          "italic": false
-        },
-        {
-          "text": "This weapon shoots like a stone thrower, using the ‘Bombardment’ special rule, a 5\" blast",
-          "change": null,
-          "bold": false,
-          "italic": true
-        }
-      ],
-      "changeKinds": [],
-      "pointsMentions": [],
-      "visualHeadingLevel": null,
       "id": "b0370",
       "scope": "army-list",
       "headingPath": [
@@ -41349,7 +41324,70 @@
       },
       "unitContext": {
         "name": "Dreadquake Mortar",
-        "sourceBlockId": "b0362",
+        "sourceBlockId": "b0363",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Dreadquake Mortar",
+          "Chaos Dwarf Crew"
+        ]
+      },
+      "unitId": null,
+      "entryKind": "paragraph",
+      "contextConfidence": "medium"
+    },
+    {
+      "type": "paragraph",
+      "text": "Notes: This weapon shoots like a stone thrower, using the ‘Bombardment’ special rule, a 5\" blast",
+      "segments": [
+        {
+          "text": "Notes: ",
+          "change": null,
+          "bold": true,
+          "italic": false
+        },
+        {
+          "text": "This weapon shoots like a stone thrower, using the ‘Bombardment’ special rule, a 5\" blast",
+          "change": null,
+          "bold": false,
+          "italic": true
+        }
+      ],
+      "changeKinds": [],
+      "pointsMentions": [],
+      "visualHeadingLevel": null,
+      "id": "b0371",
+      "scope": "army-list",
+      "headingPath": [
+        "Weapons Of Zharr-Naggrund",
+        "Dreadquake Mortar",
+        "R S AP Special Rules"
+      ],
+      "headingPathDetail": [
+        {
+          "level": 1,
+          "text": "Weapons Of Zharr-Naggrund",
+          "source": "docs-heading"
+        },
+        {
+          "level": 2,
+          "text": "Dreadquake Mortar",
+          "source": "docs-heading"
+        },
+        {
+          "level": 4,
+          "text": "R S AP Special Rules",
+          "source": "docs-heading"
+        }
+      ],
+      "context": {
+        "section": "Weapons Of Zharr-Naggrund",
+        "heading": "R S AP Special Rules",
+        "profile": "Dreadquake Mortar"
+      },
+      "unitContext": {
+        "name": "Dreadquake Mortar",
+        "sourceBlockId": "b0363",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -41389,7 +41427,7 @@
       ],
       "pointsMentions": [],
       "visualHeadingLevel": null,
-      "id": "b0371",
+      "id": "b0372",
       "scope": "army-list",
       "headingPath": [
         "Weapons Of Zharr-Naggrund",
@@ -41420,7 +41458,7 @@
       },
       "unitContext": {
         "name": "Dreadquake Mortar",
-        "sourceBlockId": "b0362",
+        "sourceBlockId": "b0363",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -41477,7 +41515,7 @@
       },
       "unitContext": {
         "name": "Dreadquake Mortar",
-        "sourceBlockId": "b0362",
+        "sourceBlockId": "b0363",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -41523,7 +41561,7 @@
       ],
       "pointsMentions": [],
       "visualHeadingLevel": null,
-      "id": "b0372",
+      "id": "b0373",
       "scope": "army-list",
       "headingPath": [
         "Weapons Of Zharr-Naggrund",
@@ -41554,7 +41592,7 @@
       },
       "unitContext": {
         "name": "Dreadquake Mortar",
-        "sourceBlockId": "b0362",
+        "sourceBlockId": "b0363",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -41607,7 +41645,7 @@
       },
       "unitContext": {
         "name": "Dreadquake Mortar",
-        "sourceBlockId": "b0362",
+        "sourceBlockId": "b0363",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -41976,7 +42014,7 @@
       ],
       "tableType": "statline",
       "headerRowIndex": 0,
-      "id": "b0373",
+      "id": "b0374",
       "scope": "army-list",
       "headingPath": [
         "Weapons Of Zharr-Naggrund",
@@ -42020,7 +42058,7 @@
       ],
       "unitContext": {
         "name": "Indentured Ogres",
-        "sourceBlockId": "b0373",
+        "sourceBlockId": "b0374",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -42037,64 +42075,6 @@
       "segments": [
         {
           "text": "Note: The crew of a War Machine with an Ogre Loader has +2 Wounds, and can make 2 additional attacks with the Weapon Skill, Strength and Initiative shown above. ",
-          "change": "new",
-          "bold": false,
-          "italic": false
-        }
-      ],
-      "changeKinds": [
-        "new"
-      ],
-      "pointsMentions": [],
-      "visualHeadingLevel": null,
-      "id": "b0374",
-      "scope": "army-list",
-      "headingPath": [
-        "Weapons Of Zharr-Naggrund",
-        "Indentured Ogres"
-      ],
-      "headingPathDetail": [
-        {
-          "level": 1,
-          "text": "Weapons Of Zharr-Naggrund",
-          "source": "docs-heading"
-        },
-        {
-          "level": 2,
-          "text": "Indentured Ogres",
-          "source": "docs-heading"
-        }
-      ],
-      "context": {
-        "section": "Weapons Of Zharr-Naggrund",
-        "heading": "Indentured Ogres",
-        "profile": "Indentured Ogres"
-      },
-      "unitContext": {
-        "name": "Indentured Ogres",
-        "sourceBlockId": "b0373",
-        "method": "preceding-heading",
-        "confidence": "medium",
-        "profileNames": [
-          "Ogre Loader"
-        ]
-      },
-      "unitId": null,
-      "entryKind": "paragraph",
-      "contextConfidence": "medium"
-    },
-    {
-      "type": "paragraph",
-      "text": "Troop Type: War Machine",
-      "segments": [
-        {
-          "text": "Troop Type:",
-          "change": "new",
-          "bold": true,
-          "italic": false
-        },
-        {
-          "text": " War Machine",
           "change": "new",
           "bold": false,
           "italic": false
@@ -42130,7 +42110,7 @@
       },
       "unitContext": {
         "name": "Indentured Ogres",
-        "sourceBlockId": "b0373",
+        "sourceBlockId": "b0374",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -42138,21 +42118,21 @@
         ]
       },
       "unitId": null,
-      "entryKind": "troop-type",
+      "entryKind": "paragraph",
       "contextConfidence": "medium"
     },
     {
       "type": "paragraph",
-      "text": "Base Size: N/A",
+      "text": "Troop Type: War Machine",
       "segments": [
         {
-          "text": "Base Size:",
+          "text": "Troop Type:",
           "change": "new",
           "bold": true,
           "italic": false
         },
         {
-          "text": " N/A",
+          "text": " War Machine",
           "change": "new",
           "bold": false,
           "italic": false
@@ -42188,7 +42168,7 @@
       },
       "unitContext": {
         "name": "Indentured Ogres",
-        "sourceBlockId": "b0373",
+        "sourceBlockId": "b0374",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -42196,21 +42176,21 @@
         ]
       },
       "unitId": null,
-      "entryKind": "base-size",
+      "entryKind": "troop-type",
       "contextConfidence": "medium"
     },
     {
       "type": "paragraph",
-      "text": "Unit Size: 1",
+      "text": "Base Size: N/A",
       "segments": [
         {
-          "text": "Unit Size: ",
+          "text": "Base Size:",
           "change": "new",
           "bold": true,
           "italic": false
         },
         {
-          "text": "1",
+          "text": " N/A",
           "change": "new",
           "bold": false,
           "italic": false
@@ -42246,7 +42226,7 @@
       },
       "unitContext": {
         "name": "Indentured Ogres",
-        "sourceBlockId": "b0373",
+        "sourceBlockId": "b0374",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -42254,21 +42234,21 @@
         ]
       },
       "unitId": null,
-      "entryKind": "unit-size",
+      "entryKind": "base-size",
       "contextConfidence": "medium"
     },
     {
       "type": "paragraph",
-      "text": "Equipment: Hand Weapon",
+      "text": "Unit Size: 1",
       "segments": [
         {
-          "text": "Equipment:",
+          "text": "Unit Size: ",
           "change": "new",
           "bold": true,
           "italic": false
         },
         {
-          "text": " Hand Weapon",
+          "text": "1",
           "change": "new",
           "bold": false,
           "italic": false
@@ -42304,7 +42284,65 @@
       },
       "unitContext": {
         "name": "Indentured Ogres",
-        "sourceBlockId": "b0373",
+        "sourceBlockId": "b0374",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Ogre Loader"
+        ]
+      },
+      "unitId": null,
+      "entryKind": "unit-size",
+      "contextConfidence": "medium"
+    },
+    {
+      "type": "paragraph",
+      "text": "Equipment: Hand Weapon",
+      "segments": [
+        {
+          "text": "Equipment:",
+          "change": "new",
+          "bold": true,
+          "italic": false
+        },
+        {
+          "text": " Hand Weapon",
+          "change": "new",
+          "bold": false,
+          "italic": false
+        }
+      ],
+      "changeKinds": [
+        "new"
+      ],
+      "pointsMentions": [],
+      "visualHeadingLevel": null,
+      "id": "b0379",
+      "scope": "army-list",
+      "headingPath": [
+        "Weapons Of Zharr-Naggrund",
+        "Indentured Ogres"
+      ],
+      "headingPathDetail": [
+        {
+          "level": 1,
+          "text": "Weapons Of Zharr-Naggrund",
+          "source": "docs-heading"
+        },
+        {
+          "level": 2,
+          "text": "Indentured Ogres",
+          "source": "docs-heading"
+        }
+      ],
+      "context": {
+        "section": "Weapons Of Zharr-Naggrund",
+        "heading": "Indentured Ogres",
+        "profile": "Indentured Ogres"
+      },
+      "unitContext": {
+        "name": "Indentured Ogres",
+        "sourceBlockId": "b0374",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -42362,7 +42400,7 @@
       },
       "unitContext": {
         "name": "Indentured Ogres",
-        "sourceBlockId": "b0373",
+        "sourceBlockId": "b0374",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -42418,7 +42456,7 @@
           "basis": "fixed"
         }
       ],
-      "id": "b0379",
+      "id": "b0380",
       "scope": "army-list",
       "headingPath": [
         "Weapons Of Zharr-Naggrund",
@@ -42449,7 +42487,7 @@
       },
       "unitContext": {
         "name": "Indentured Ogres",
-        "sourceBlockId": "b0373",
+        "sourceBlockId": "b0374",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -42482,7 +42520,7 @@
       ],
       "pointsMentions": [],
       "visualHeadingLevel": null,
-      "id": "b0380",
+      "id": "b0381",
       "scope": "army-list",
       "headingPath": [
         "Weapons Of Zharr-Naggrund",
@@ -42513,7 +42551,7 @@
       },
       "unitContext": {
         "name": "Indentured Ogres",
-        "sourceBlockId": "b0373",
+        "sourceBlockId": "b0374",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -42571,7 +42609,7 @@
       },
       "unitContext": {
         "name": "Indentured Ogres",
-        "sourceBlockId": "b0373",
+        "sourceBlockId": "b0374",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -42598,7 +42636,7 @@
       ],
       "pointsMentions": [],
       "visualHeadingLevel": null,
-      "id": "b0381",
+      "id": "b0382",
       "scope": "army-list",
       "headingPath": [
         "Weapons Of Zharr-Naggrund",
@@ -42629,7 +42667,7 @@
       },
       "unitContext": {
         "name": "Indentured Ogres",
-        "sourceBlockId": "b0373",
+        "sourceBlockId": "b0374",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -42687,7 +42725,7 @@
       },
       "unitContext": {
         "name": "Indentured Ogres",
-        "sourceBlockId": "b0373",
+        "sourceBlockId": "b0374",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -42714,7 +42752,7 @@
       ],
       "pointsMentions": [],
       "visualHeadingLevel": null,
-      "id": "b0382",
+      "id": "b0383",
       "scope": "army-list",
       "headingPath": [
         "Weapons Of Zharr-Naggrund",
@@ -42745,7 +42783,7 @@
       },
       "unitContext": {
         "name": "Indentured Ogres",
-        "sourceBlockId": "b0373",
+        "sourceBlockId": "b0374",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -43311,7 +43349,7 @@
       "changeKinds": [],
       "tableType": "statline",
       "headerRowIndex": 1,
-      "id": "b0383",
+      "id": "b0384",
       "scope": "army-list",
       "headingPath": [
         "Weapons Of Zharr-Naggrund",
@@ -43367,7 +43405,7 @@
       ],
       "unitContext": {
         "name": "Magma Cannon",
-        "sourceBlockId": "b0383",
+        "sourceBlockId": "b0384",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -43391,69 +43429,6 @@
         },
         {
           "text": "War machine",
-          "change": null,
-          "bold": false,
-          "italic": false
-        }
-      ],
-      "changeKinds": [],
-      "pointsMentions": [],
-      "visualHeadingLevel": null,
-      "id": "b0384",
-      "scope": "army-list",
-      "headingPath": [
-        "Weapons Of Zharr-Naggrund",
-        "Indentured Ogres",
-        "Indentured Crew"
-      ],
-      "headingPathDetail": [
-        {
-          "level": 1,
-          "text": "Weapons Of Zharr-Naggrund",
-          "source": "docs-heading"
-        },
-        {
-          "level": 2,
-          "text": "Indentured Ogres",
-          "source": "docs-heading"
-        },
-        {
-          "level": 3,
-          "text": "Indentured Crew",
-          "source": "docs-heading"
-        }
-      ],
-      "context": {
-        "section": "Weapons Of Zharr-Naggrund",
-        "heading": "Indentured Crew",
-        "profile": "Indentured Ogres"
-      },
-      "unitContext": {
-        "name": "Magma Cannon",
-        "sourceBlockId": "b0383",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Magma Cannon",
-          "Chaos Dwarf Crew"
-        ]
-      },
-      "unitId": null,
-      "entryKind": "troop-type",
-      "contextConfidence": "high"
-    },
-    {
-      "type": "paragraph",
-      "text": "Base Size: 50 x 100 mm (war machine), 25 x 25 mm (crew)",
-      "segments": [
-        {
-          "text": "Base Size: ",
-          "change": null,
-          "bold": true,
-          "italic": false
-        },
-        {
-          "text": "50 x 100 mm (war machine), 25 x 25 mm (crew)",
           "change": null,
           "bold": false,
           "italic": false
@@ -43493,7 +43468,70 @@
       },
       "unitContext": {
         "name": "Magma Cannon",
-        "sourceBlockId": "b0383",
+        "sourceBlockId": "b0384",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Magma Cannon",
+          "Chaos Dwarf Crew"
+        ]
+      },
+      "unitId": null,
+      "entryKind": "troop-type",
+      "contextConfidence": "high"
+    },
+    {
+      "type": "paragraph",
+      "text": "Base Size: 50 x 100 mm (war machine), 25 x 25 mm (crew)",
+      "segments": [
+        {
+          "text": "Base Size: ",
+          "change": null,
+          "bold": true,
+          "italic": false
+        },
+        {
+          "text": "50 x 100 mm (war machine), 25 x 25 mm (crew)",
+          "change": null,
+          "bold": false,
+          "italic": false
+        }
+      ],
+      "changeKinds": [],
+      "pointsMentions": [],
+      "visualHeadingLevel": null,
+      "id": "b0386",
+      "scope": "army-list",
+      "headingPath": [
+        "Weapons Of Zharr-Naggrund",
+        "Indentured Ogres",
+        "Indentured Crew"
+      ],
+      "headingPathDetail": [
+        {
+          "level": 1,
+          "text": "Weapons Of Zharr-Naggrund",
+          "source": "docs-heading"
+        },
+        {
+          "level": 2,
+          "text": "Indentured Ogres",
+          "source": "docs-heading"
+        },
+        {
+          "level": 3,
+          "text": "Indentured Crew",
+          "source": "docs-heading"
+        }
+      ],
+      "context": {
+        "section": "Weapons Of Zharr-Naggrund",
+        "heading": "Indentured Crew",
+        "profile": "Indentured Ogres"
+      },
+      "unitContext": {
+        "name": "Magma Cannon",
+        "sourceBlockId": "b0384",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -43562,7 +43600,7 @@
       },
       "unitContext": {
         "name": "Magma Cannon",
-        "sourceBlockId": "b0383",
+        "sourceBlockId": "b0384",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -43610,7 +43648,7 @@
       ],
       "pointsMentions": [],
       "visualHeadingLevel": null,
-      "id": "b0386",
+      "id": "b0387",
       "scope": "army-list",
       "headingPath": [
         "Weapons Of Zharr-Naggrund",
@@ -43647,7 +43685,7 @@
       },
       "unitContext": {
         "name": "Magma Cannon",
-        "sourceBlockId": "b0383",
+        "sourceBlockId": "b0384",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -43710,7 +43748,7 @@
       },
       "unitContext": {
         "name": "Magma Cannon",
-        "sourceBlockId": "b0383",
+        "sourceBlockId": "b0384",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -43783,75 +43821,6 @@
           "basis": "fixed"
         }
       ],
-      "id": "b0387",
-      "scope": "army-list",
-      "headingPath": [
-        "Weapons Of Zharr-Naggrund",
-        "Indentured Ogres",
-        "Indentured Crew",
-        "Options:"
-      ],
-      "headingPathDetail": [
-        {
-          "level": 1,
-          "text": "Weapons Of Zharr-Naggrund",
-          "source": "docs-heading"
-        },
-        {
-          "level": 2,
-          "text": "Indentured Ogres",
-          "source": "docs-heading"
-        },
-        {
-          "level": 3,
-          "text": "Indentured Crew",
-          "source": "docs-heading"
-        },
-        {
-          "level": 4,
-          "text": "Options:",
-          "source": "docs-heading"
-        }
-      ],
-      "context": {
-        "section": "Weapons Of Zharr-Naggrund",
-        "heading": "Options:",
-        "profile": "Indentured Ogres"
-      },
-      "unitContext": {
-        "name": "Magma Cannon",
-        "sourceBlockId": "b0383",
-        "method": "table-title",
-        "confidence": "high",
-        "profileNames": [
-          "Magma Cannon",
-          "Chaos Dwarf Crew"
-        ]
-      },
-      "unitId": null,
-      "entryKind": "option",
-      "contextConfidence": "high"
-    },
-    {
-      "type": "paragraph",
-      "text": "Special Rules: Blackshard Armour, Skirmishers",
-      "segments": [
-        {
-          "text": "Special Rules: ",
-          "change": null,
-          "bold": true,
-          "italic": false
-        },
-        {
-          "text": "Blackshard Armour, Skirmishers",
-          "change": null,
-          "bold": false,
-          "italic": false
-        }
-      ],
-      "changeKinds": [],
-      "pointsMentions": [],
-      "visualHeadingLevel": null,
       "id": "b0388",
       "scope": "army-list",
       "headingPath": [
@@ -43889,7 +43858,76 @@
       },
       "unitContext": {
         "name": "Magma Cannon",
-        "sourceBlockId": "b0383",
+        "sourceBlockId": "b0384",
+        "method": "table-title",
+        "confidence": "high",
+        "profileNames": [
+          "Magma Cannon",
+          "Chaos Dwarf Crew"
+        ]
+      },
+      "unitId": null,
+      "entryKind": "option",
+      "contextConfidence": "high"
+    },
+    {
+      "type": "paragraph",
+      "text": "Special Rules: Blackshard Armour, Skirmishers",
+      "segments": [
+        {
+          "text": "Special Rules: ",
+          "change": null,
+          "bold": true,
+          "italic": false
+        },
+        {
+          "text": "Blackshard Armour, Skirmishers",
+          "change": null,
+          "bold": false,
+          "italic": false
+        }
+      ],
+      "changeKinds": [],
+      "pointsMentions": [],
+      "visualHeadingLevel": null,
+      "id": "b0389",
+      "scope": "army-list",
+      "headingPath": [
+        "Weapons Of Zharr-Naggrund",
+        "Indentured Ogres",
+        "Indentured Crew",
+        "Options:"
+      ],
+      "headingPathDetail": [
+        {
+          "level": 1,
+          "text": "Weapons Of Zharr-Naggrund",
+          "source": "docs-heading"
+        },
+        {
+          "level": 2,
+          "text": "Indentured Ogres",
+          "source": "docs-heading"
+        },
+        {
+          "level": 3,
+          "text": "Indentured Crew",
+          "source": "docs-heading"
+        },
+        {
+          "level": 4,
+          "text": "Options:",
+          "source": "docs-heading"
+        }
+      ],
+      "context": {
+        "section": "Weapons Of Zharr-Naggrund",
+        "heading": "Options:",
+        "profile": "Indentured Ogres"
+      },
+      "unitContext": {
+        "name": "Magma Cannon",
+        "sourceBlockId": "b0384",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -43940,7 +43978,7 @@
       },
       "unitContext": {
         "name": "Magma Cannon",
-        "sourceBlockId": "b0383",
+        "sourceBlockId": "b0384",
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
@@ -44425,7 +44463,7 @@
       ],
       "tableType": "statline",
       "headerRowIndex": 0,
-      "id": "b0389",
+      "id": "b0390",
       "scope": "army-list",
       "headingPath": [
         "Weapons Of Zharr-Naggrund",
@@ -44480,7 +44518,7 @@
       ],
       "unitContext": {
         "name": "Hobgoblin Bolt Thrower",
-        "sourceBlockId": "b0389",
+        "sourceBlockId": "b0390",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -44504,63 +44542,6 @@
         },
         {
           "text": "War machine",
-          "change": null,
-          "bold": false,
-          "italic": false
-        }
-      ],
-      "changeKinds": [],
-      "pointsMentions": [],
-      "visualHeadingLevel": null,
-      "id": "b0390",
-      "scope": "army-list",
-      "headingPath": [
-        "Weapons Of Zharr-Naggrund",
-        "Hobgoblin Bolt Thrower"
-      ],
-      "headingPathDetail": [
-        {
-          "level": 1,
-          "text": "Weapons Of Zharr-Naggrund",
-          "source": "docs-heading"
-        },
-        {
-          "level": 2,
-          "text": "Hobgoblin Bolt Thrower",
-          "source": "docs-heading"
-        }
-      ],
-      "context": {
-        "section": "Weapons Of Zharr-Naggrund",
-        "heading": "Hobgoblin Bolt Thrower",
-        "profile": "Hobgoblin Bolt Thrower"
-      },
-      "unitContext": {
-        "name": "Hobgoblin Bolt Thrower",
-        "sourceBlockId": "b0389",
-        "method": "preceding-heading",
-        "confidence": "medium",
-        "profileNames": [
-          "Bolt Thrower",
-          "Hobgoblin Crew"
-        ]
-      },
-      "unitId": null,
-      "entryKind": "troop-type",
-      "contextConfidence": "medium"
-    },
-    {
-      "type": "paragraph",
-      "text": "Base Size: 50 x 50 mm (war machine), 25 x 25 mm (crew)",
-      "segments": [
-        {
-          "text": "Base Size: ",
-          "change": null,
-          "bold": true,
-          "italic": false
-        },
-        {
-          "text": "50 x 50 mm (war machine), 25 x 25 mm (crew)",
           "change": null,
           "bold": false,
           "italic": false
@@ -44594,7 +44575,64 @@
       },
       "unitContext": {
         "name": "Hobgoblin Bolt Thrower",
-        "sourceBlockId": "b0389",
+        "sourceBlockId": "b0390",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Bolt Thrower",
+          "Hobgoblin Crew"
+        ]
+      },
+      "unitId": null,
+      "entryKind": "troop-type",
+      "contextConfidence": "medium"
+    },
+    {
+      "type": "paragraph",
+      "text": "Base Size: 50 x 50 mm (war machine), 25 x 25 mm (crew)",
+      "segments": [
+        {
+          "text": "Base Size: ",
+          "change": null,
+          "bold": true,
+          "italic": false
+        },
+        {
+          "text": "50 x 50 mm (war machine), 25 x 25 mm (crew)",
+          "change": null,
+          "bold": false,
+          "italic": false
+        }
+      ],
+      "changeKinds": [],
+      "pointsMentions": [],
+      "visualHeadingLevel": null,
+      "id": "b0392",
+      "scope": "army-list",
+      "headingPath": [
+        "Weapons Of Zharr-Naggrund",
+        "Hobgoblin Bolt Thrower"
+      ],
+      "headingPathDetail": [
+        {
+          "level": 1,
+          "text": "Weapons Of Zharr-Naggrund",
+          "source": "docs-heading"
+        },
+        {
+          "level": 2,
+          "text": "Hobgoblin Bolt Thrower",
+          "source": "docs-heading"
+        }
+      ],
+      "context": {
+        "section": "Weapons Of Zharr-Naggrund",
+        "heading": "Hobgoblin Bolt Thrower",
+        "profile": "Hobgoblin Bolt Thrower"
+      },
+      "unitContext": {
+        "name": "Hobgoblin Bolt Thrower",
+        "sourceBlockId": "b0390",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -44657,7 +44695,7 @@
       },
       "unitContext": {
         "name": "Hobgoblin Bolt Thrower",
-        "sourceBlockId": "b0389",
+        "sourceBlockId": "b0390",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -44681,69 +44719,6 @@
         },
         {
           "text": "Bolt thrower, hand weapons and light armour",
-          "change": null,
-          "bold": false,
-          "italic": false
-        }
-      ],
-      "changeKinds": [],
-      "pointsMentions": [],
-      "visualHeadingLevel": null,
-      "id": "b0392",
-      "scope": "army-list",
-      "headingPath": [
-        "Weapons Of Zharr-Naggrund",
-        "Hobgoblin Bolt Thrower",
-        "Unit Size: 1"
-      ],
-      "headingPathDetail": [
-        {
-          "level": 1,
-          "text": "Weapons Of Zharr-Naggrund",
-          "source": "docs-heading"
-        },
-        {
-          "level": 2,
-          "text": "Hobgoblin Bolt Thrower",
-          "source": "docs-heading"
-        },
-        {
-          "level": 4,
-          "text": "Unit Size: 1",
-          "source": "docs-heading"
-        }
-      ],
-      "context": {
-        "section": "Weapons Of Zharr-Naggrund",
-        "heading": "Unit Size: 1",
-        "profile": "Hobgoblin Bolt Thrower"
-      },
-      "unitContext": {
-        "name": "Hobgoblin Bolt Thrower",
-        "sourceBlockId": "b0389",
-        "method": "preceding-heading",
-        "confidence": "medium",
-        "profileNames": [
-          "Bolt Thrower",
-          "Hobgoblin Crew"
-        ]
-      },
-      "unitId": null,
-      "entryKind": "equipment",
-      "contextConfidence": "medium"
-    },
-    {
-      "type": "paragraph",
-      "text": "Special Rules: Levies, Skirmishers",
-      "segments": [
-        {
-          "text": "Special Rules: ",
-          "change": null,
-          "bold": true,
-          "italic": false
-        },
-        {
-          "text": "Levies, Skirmishers",
           "change": null,
           "bold": false,
           "italic": false
@@ -44783,7 +44758,70 @@
       },
       "unitContext": {
         "name": "Hobgoblin Bolt Thrower",
-        "sourceBlockId": "b0389",
+        "sourceBlockId": "b0390",
+        "method": "preceding-heading",
+        "confidence": "medium",
+        "profileNames": [
+          "Bolt Thrower",
+          "Hobgoblin Crew"
+        ]
+      },
+      "unitId": null,
+      "entryKind": "equipment",
+      "contextConfidence": "medium"
+    },
+    {
+      "type": "paragraph",
+      "text": "Special Rules: Levies, Skirmishers",
+      "segments": [
+        {
+          "text": "Special Rules: ",
+          "change": null,
+          "bold": true,
+          "italic": false
+        },
+        {
+          "text": "Levies, Skirmishers",
+          "change": null,
+          "bold": false,
+          "italic": false
+        }
+      ],
+      "changeKinds": [],
+      "pointsMentions": [],
+      "visualHeadingLevel": null,
+      "id": "b0394",
+      "scope": "army-list",
+      "headingPath": [
+        "Weapons Of Zharr-Naggrund",
+        "Hobgoblin Bolt Thrower",
+        "Unit Size: 1"
+      ],
+      "headingPathDetail": [
+        {
+          "level": 1,
+          "text": "Weapons Of Zharr-Naggrund",
+          "source": "docs-heading"
+        },
+        {
+          "level": 2,
+          "text": "Hobgoblin Bolt Thrower",
+          "source": "docs-heading"
+        },
+        {
+          "level": 4,
+          "text": "Unit Size: 1",
+          "source": "docs-heading"
+        }
+      ],
+      "context": {
+        "section": "Weapons Of Zharr-Naggrund",
+        "heading": "Unit Size: 1",
+        "profile": "Hobgoblin Bolt Thrower"
+      },
+      "unitContext": {
+        "name": "Hobgoblin Bolt Thrower",
+        "sourceBlockId": "b0390",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
@@ -45056,7 +45094,7 @@
       "changeKinds": [],
       "tableType": "other",
       "headerRowIndex": null,
-      "id": "b0394",
+      "id": "b0395",
       "scope": "army-list",
       "headingPath": [
         "Weapons Of Zharr-Naggrund",
@@ -45087,7 +45125,7 @@
       },
       "unitContext": {
         "name": "Hobgoblin Bolt Thrower",
-        "sourceBlockId": "b0389",
+        "sourceBlockId": "b0390",
         "method": "preceding-heading",
         "confidence": "medium",
         "profileNames": [
