@@ -400,8 +400,34 @@ export function overlayStatsFor(
     ? [...words.slice(0, -1), (words.at(-1) ?? '').replace(/s$/, '')].join(' ')
     : key;
   const patch = overlay?.profiles?.[key] ?? overlay?.profiles?.[singular];
-  if (patch?.stats) return patch.stats;
-  return index[key]?.stats ?? index[singular]?.stats ?? [];
+  const basis = index[key]?.stats ?? index[singular]?.stats ?? [];
+  return mergeStatRows(basis, patch?.stats);
+}
+
+/** Overlay-statregels OVER de basis leggen i.p.v. de basis te vervangen (15-08-2026).
+ *
+ *  Twee dingen gingen hier mis, samen goed voor 81 verdwenen profielregels over de zeven packs:
+ *
+ *  1. LEGE ARRAY WON. Veel overlay-profielen zetten alleen een `troopType` en dragen `stats: []`.
+ *     Een lege array is truthy, dus die won van de basis en de unit hield HELEMAAL geen statline
+ *     over — Tyrant, Bloodthirster, Witch Elves en tientallen andere stonden zonder cijfers.
+ *  2. GEDEELTELIJKE ARRAY WISTE DE REST. De Dark Elves-pack herschrijft van Repeater Crossbowmen
+ *     alleen de gewone schutter; de Lordling-regel eronder viel weg, en juist die champion-regel
+ *     is waar je naar kijkt (Joost 15-08-2026).
+ *
+ *  Regel nu: een overlay-rij vervangt de basis-rij met DEZELFDE naam, rijen die de overlay niet
+ *  noemt blijven staan, en een naam die de basis niet kent komt erachteraan. Een pack dat een rij
+ *  echt wil laten VERVALLEN kan dat hiermee niet — bewust: een regel te veel tonen is hooguit
+ *  verwarrend, een champion stilletjes verbergen is fout, en dat laatste was precies de klacht. */
+function mergeStatRows<T extends { Name: string }>(basis: T[], patch?: T[]): T[] {
+  if (!patch?.length) return basis;
+  if (!basis.length) return patch;
+  const sleutel = (s: string) => (s || '').toLowerCase().replace(/\s+/g, ' ').trim();
+  const perNaam = new Map(patch.map((r) => [sleutel(r.Name), r]));
+  const uit = basis.map((r) => perNaam.get(sleutel(r.Name)) ?? r);
+  const gezien = new Set(basis.map((r) => sleutel(r.Name)));
+  for (const r of patch) if (!gezien.has(sleutel(r.Name))) uit.push(r);
+  return uit;
 }
 
 export function applyOverlayStatIndex<T extends { stats?: OverlayStatRow[]; troopType?: string }>(
@@ -412,9 +438,13 @@ export function applyOverlayStatIndex<T extends { stats?: OverlayStatRow[]; troo
   const out = { ...index };
   for (const [name, patch] of Object.entries(overlay.profiles)) {
     const key = normOpt(name);
+    // Zelfde samenvoeg-regel als overlayStatsFor: nooit de basis-regels wissen met een lege of
+    // gedeeltelijke overlay-array. Deze twee moeten hetzelfde antwoord geven, anders toont het ene
+    // scherm een champion-regel die het andere niet heeft.
+    const samen = mergeStatRows(index[key]?.stats ?? [], patch.stats);
     out[key] = {
       ...(index[key] ?? {}),
-      ...(patch.stats ? { stats: patch.stats } : {}),
+      ...(samen.length ? { stats: samen } : {}),
       ...(patch.troopType ? { troopType: patch.troopType } : {}),
     } as T;
   }
