@@ -601,13 +601,24 @@ export function ListBuilder() {
               const regels = [...(tx?.body ?? '').split(','), ...uitProfiel]
                 .map((r) => r.trim())
                 .filter(Boolean);
+              // TERUGVAL OP DE REGELPAGINA (15-08-2026). Zeven catalogus-items zijn geen echte magic
+              // item maar een FACTIE-UPGRADE — de Forbidden Poisons en Gifts of Khaine van de Dark
+              // Elves — en die hebben upstream geen /magic-item-pagina, dus geen tekst in de
+              // snapshot. Ze staan wél gewoon in rules.json ("Manbane: When this character makes a
+              // roll To Wound, a roll of 4+ is always a success…"). Die tekst pakken we hier, zodat
+              // je niet langer "No description recorded" krijgt voor een regel die we gewoon hebben.
+              const heeftTekst = !!(tx?.description || tx?.body || tx?.profiel?.length);
+              const regelSlug = heeftTekst ? null : (resolveRuleSlug(what.name, ruleIdx) ?? resolveOptionSlug(what.name, ruleIdx));
+              const regelTekst = regelSlug ? String((rules?.[regelSlug] as { bodyIndex?: string } | undefined)?.bodyIndex ?? '').trim() : '';
               setMountInfo({
                 title: what.name,
                 flavour: tx?.description,
                 rules: [...new Set(regels)],
                 wapen: tx?.profiel,
                 // Say so when there is no text at all, instead of opening a blank sheet.
-                details: tx?.description || tx?.body || tx?.profiel?.length ? undefined : ['No description recorded for this item.'],
+                details: heeftTekst ? undefined
+                  : regelTekst ? [regelTekst]
+                    : ['No description recorded for this item.'],
               });
               return;
             }

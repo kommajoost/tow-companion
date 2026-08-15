@@ -157,7 +157,11 @@ export function InfoSheet({ info, onClose }: { info: InfoSheetData | null; onClo
           <p key={i} style={{ margin: '8px 0 0', fontFamily: towFont.serif, fontSize: 13, color: TOW.ink, lineHeight: 1.5 }}>{label}</p>
         ))}
 
-        {chips.length === 0 && prose.length === 0 && !info.profiles?.length && (
+        {/* "Geen special rules" alleen als de sheet verder ECHT leeg is. Stond er ook onder een item
+            dat z'n hele regeltekst via `details` toont (Manbane) of een wapenprofiel heeft — dan is
+            het geen nuttige mededeling maar ruis onder een sheet die juist wél iets vertelt. */}
+        {chips.length === 0 && prose.length === 0 && !info.profiles?.length
+          && !info.wapen?.length && !info.details?.length && !info.flavour && (
           <p style={{ fontFamily: towFont.serif, fontSize: 12.5, color: TOW.muted }}>No special rules listed.</p>
         )}
       </div>
