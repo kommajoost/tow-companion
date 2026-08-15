@@ -69,8 +69,6 @@ const ROSTER_CAP = 900;
 /** The catalogue is exactly 100px wider than the rail it replaces — which is the same statement as
  *  the spec's "de rosterkolom wordt 100px smaller", so one constant expresses both. */
 const CATALOGUE_EXTRA = 100;
-/** The rail's collapsed icon-only width, used at 1180–1440 while the catalogue is open. */
-const ICON_RAIL = 56;
 
 const BUDGET_MAX_W = 620;    // top bar: bar + total together
 
@@ -293,18 +291,20 @@ export function DesktopShell(props: {
   const shortViewport = h > 0 && h < SHORT_H;
 
   const catalogue = catalogueOpen && cataloguePane != null;
-  /** 1180–1440 with the catalogue open: the rail collapses to a 56px icon strip and the catalogue
-   *  OVERLAPS it, so the roster keeps its width. At ≥1440 the catalogue REPLACES the rail instead. */
-  const overlayCatalogue = catalogue && tier === 'compact';
+  // The catalogue ALWAYS takes the left column, at every desktop width.
+  //
+  // Between 1180 and 1440 it used to be drawn as a 336px absolute overlay while the rail collapsed to
+  // a 56px icon strip — on paper "the roster keeps its width", in practice 280 of those 336 pixels lay
+  // on top of the roster and hid the first units of the list you were adding to (Joost, 12-08). An
+  // in-flow column costs the roster width, which is honest and visible, instead of covering rows that
+  // are still there. At 1180 that leaves the roster 504px against its 480 floor, so nothing squeezes.
 
   const layout = useMemo(() => {
     const inspectorTarget = tier === 'compact'
       ? Math.min(inspectorStored, INSPECTOR_COMPACT)
       : inspectorStored;
-    const railTarget = !catalogue ? railStored
-      : overlayCatalogue ? ICON_RAIL
-        : railStored + CATALOGUE_EXTRA;
-    const railFloor = overlayCatalogue ? ICON_RAIL : catalogue ? RAIL_MIN + CATALOGUE_EXTRA : RAIL_MIN;
+    const railTarget = catalogue ? railStored + CATALOGUE_EXTRA : railStored;
+    const railFloor = catalogue ? RAIL_MIN + CATALOGUE_EXTRA : RAIL_MIN;
 
     let rail = railTarget;
     let inspector = inspectorTarget;
@@ -320,7 +320,7 @@ export function DesktopShell(props: {
       roster = w - rail - inspector;
     }
     return { rail, inspector, roster: Math.max(0, roster) };
-  }, [w, tier, catalogue, overlayCatalogue, railStored, inspectorStored]);
+  }, [w, tier, catalogue, railStored, inspectorStored]);
 
   const { rail: railW, inspector: inspectorW, roster: rosterW } = layout;
   /** ≥1600: the surplus is the roster's, but the table itself stops at 900 and centres — a 1 100px
@@ -723,11 +723,9 @@ export function DesktopShell(props: {
             boxShadow: ringOf('rail'), outline: 'none',
           }}
         >
-          {catalogue && !overlayCatalogue
+          {catalogue
             ? cataloguePane
-            : overlayCatalogue
-              ? <IconRail derived={derived} totalFor={totalFor} />
-              : (
+            : (
                 <Rail
                   ctx={ctx}
                   onOpenCatalogue={onOpenCatalogue}
@@ -740,21 +738,6 @@ export function DesktopShell(props: {
                 />
               )}
         </div>
-
-        {/* ── the catalogue as an OVERLAY (1180–1440 only): it covers the 56px icon rail and does
-               not take a millimetre from the roster ── */}
-        {overlayCatalogue ? (
-          <div
-            style={{
-              position: 'absolute', top: 0, bottom: 0, left: 0, zIndex: 4,
-              width: railStored + CATALOGUE_EXTRA, boxSizing: 'border-box',
-              background: TOW.bg, borderRight: `1px solid ${TOW.lineStrong}`,
-              display: 'flex', flexDirection: 'column', overflow: 'hidden',
-            }}
-          >
-            {cataloguePane}
-          </div>
-        ) : null}
 
         {/* ── middle column: the roster — A SCROLL CONTAINER ───────────────────────────────────── */}
         <div
@@ -1094,50 +1077,6 @@ function CompositionRow({ label, total }: {
     </div>
   );
 }
-
-/** The 56px icon rail (1180–1440, catalogue open). Not a menu — the rail's INFORMATION, reduced to
- *  what fits: the app glyph, a violation pip per category and the unit tally. Everything actionable
- *  is a click away in the catalogue that is covering it. */
-function IconRail({ derived, totalFor }: {
-  derived: BuilderCtx['derived']; totalFor: TotalMap;
-}): React.JSX.Element {
-  return (
-    <div
-      style={{
-        height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center',
-        padding: '12px 0', gap: 14, boxSizing: 'border-box', overflow: 'hidden',
-      }}
-    >
-      <span style={{ color: TOW.goldDeep, display: 'flex' }}><ArmyIcon size={22} /></span>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 7, alignItems: 'center' }}>
-        {SPEC_KEYS.map((key) => {
-          const t = totalFor.get(key);
-          return (
-            <span
-              key={key}
-              title={`${CAT_LABEL[key]} ${fmt(t?.points ?? 0)}`}
-              aria-label={`${CAT_LABEL[key]} ${fmt(t?.points ?? 0)}`}
-              style={{
-                width: 6, height: 6, borderRadius: BUILDER.radius.pill,
-                background: t && !t.ok ? TOW.gold : TOW.lineStrong,
-              }}
-            />
-          );
-        })}
-      </div>
-      <span style={{ flex: 1 }} />
-      <span
-        style={{
-          ...eb, fontSize: 7, letterSpacing: '0.1em', color: TOW.faint,
-          writingMode: 'vertical-rl', transform: 'rotate(180deg)', whiteSpace: 'nowrap',
-        }}
-      >
-        {derived.unitCount} units
-      </span>
-    </div>
-  );
-}
-
 // ═══════════════════════════════════════════════════════════════════════════════════════════════
 // inspector — the empty state
 // ═══════════════════════════════════════════════════════════════════════════════════════════════
