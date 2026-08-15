@@ -41,7 +41,11 @@ export function VpPanel({ compact = false, res, hostName, guestName, hideOutcome
 }) {
   const { tracker, setTracker, code } = useGame();
   const [rulesOpen, setRulesOpen] = useState(false);
-  const [bonusOpen, setBonusOpen] = useState(false);
+  // Bonussen staan OPEN by default (Joost 15-08-2026). Dichtgeklapt scheelde ruimte, maar dit is
+  // precies het deel dat je zelf moet aanvinken — de tracker kan een gevallen General of een
+  // scenario-objective niet zien. Wat je moet doen hoort niet achter een klik te zitten; de
+  // regel-referentie eronder (rulesOpen) blijft wél dicht, want dat is naslag.
+  const [bonusOpen, setBonusOpen] = useState(true);
   const [battle, setBattle] = useState<CampaignBattle | null>(null);
 
   // Campagne-battle ophalen (via de game-code) → scenario + secondaries bepalen welke objective-VP-
