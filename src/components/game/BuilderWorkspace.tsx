@@ -35,7 +35,13 @@ const cleanLabel = (s: string) => (s || '').replace(/\{[^}]*\}/g, ' ').replace(/
 const BASE = import.meta.env.BASE_URL;
 // Magic-item flavour + rules text (slug → {description, body}), snapshotted from the rules site by
 // scripts/sync-magic-text.mjs — the OWB catalogue itself carries no item descriptions.
-type MagicText = Record<string, { description?: string; body?: string }>;
+// Zelfde vorm als `MagicText` in lib/builderToArmy.ts — die is de bron. `profiel` is het
+// wapenprofiel van een magic weapon (Range/Strength/AP/Special Rules), sinds 15-08-2026 meegescrapet.
+type MagicText = Record<string, {
+  description?: string;
+  body?: string;
+  profiel?: { naam?: string; range?: string; strength?: string; ap?: string; specialRules?: string }[];
+}>;
 // Mount special rules (normalised mount name → rule names), from scripts/sync-mount-text.mjs — so a
 // mount's eye shows its full info (profile + special rules), not just the stat line.
 type MountText = Record<string, {
@@ -234,7 +240,7 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
   const [tab, setTab] = useState<Category | 'register'>(() => (list.campaign && (campaignCtx?.units ?? []).some((u) => u.naam) ? 'register' : 'characters'));
   const [q, setQ] = useState('');
   const [settings, setSettings] = useState(false);
-  const [info, setInfo] = useState<{ title: string; rows: StatRow[]; note?: string; ruleSlug?: string; flavour?: string; body?: string; ruleChips?: { name: string; slug: string | null }[]; chipsLabel?: string } | null>(null); // mount/unit profile / magic-item / lore popup
+  const [info, setInfo] = useState<{ title: string; rows: StatRow[]; note?: string; ruleSlug?: string; flavour?: string; body?: string; ruleChips?: { name: string; slug: string | null }[]; chipsLabel?: string; wapen?: NonNullable<MagicText[string]['profiel']> } | null>(null); // mount/unit profile / magic-item / lore popup
   const [compInfo, setCompInfo] = useState<string | null>(null); // composition-rule explanation popup
   const [baseMagicText, setBaseMagicText] = useState<MagicText>({});
   const magicText = useMemo(() => ({ ...baseMagicText, ...(magicTextPatch ?? {}) }), [baseMagicText, magicTextPatch]);
@@ -432,8 +438,8 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
             const tx = magicText[magicItemId(item)];
             const typeSlug = RUNE_TYPE_RULE[item.type];
             const note = `${magicTypeLabel(item.type)} · ${item.points ?? 0} pts${item.onePerArmy ? ' · one per army' : ''}`;
-            if (tx && (tx.body || tx.description)) {
-              setInfo({ title: cleanLabel(item.name_en), rows: [], note, flavour: tx.description, body: tx.body, ruleSlug: typeSlug && rules[typeSlug] ? typeSlug : undefined });
+            if (tx && (tx.body || tx.description || tx.profiel?.length)) {
+              setInfo({ title: cleanLabel(item.name_en), rows: [], note, flavour: tx.description, body: tx.body, wapen: tx.profiel, ruleSlug: typeSlug && rules[typeSlug] ? typeSlug : undefined });
               return;
             }
             const slug = resolveRuleSlug(cleanLabel(item.name_en), ruleIdx);
@@ -1120,7 +1126,7 @@ function NaamKnop({ genoemd, onClick }: { genoemd: boolean; onClick: () => void 
 // A small centred popup. Shows a mount/unit stat profile (rows) for options without a rule page, or
 // — when `rows` is empty and a `note` is given — a single muted italic meta line (e.g. magic items,
 // which have no verbatim rule text in our data: name + "Magic item · <category> · <pts> pts").
-function InfoPopup({ info, onClose, onOpenRule }: { info: { title: string; rows: StatRow[]; note?: string; ruleSlug?: string; flavour?: string; body?: string; ruleChips?: { name: string; slug: string | null }[]; chipsLabel?: string }; onClose: () => void; onOpenRule?: (slug: string) => void }) {
+function InfoPopup({ info, onClose, onOpenRule }: { info: { title: string; rows: StatRow[]; note?: string; ruleSlug?: string; flavour?: string; body?: string; ruleChips?: { name: string; slug: string | null }[]; chipsLabel?: string; wapen?: NonNullable<MagicText[string]['profiel']> }; onClose: () => void; onOpenRule?: (slug: string) => void }) {
   const showNote = info.rows.length === 0 && !!info.note;
   return (
     <div onClick={onClose} style={{ position: 'absolute', inset: 0, zIndex: 60, background: 'rgba(30,20,8,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 }}>
@@ -1133,7 +1139,35 @@ function InfoPopup({ info, onClose, onOpenRule }: { info: { title: string; rows:
         {showNote
           ? <div style={{ ...eb, fontSize: 8.5, color: TOW.muted, marginBottom: info.flavour || info.body ? 10 : 0 }}>{info.note}</div>
           : <MiniProfile rows={info.rows} />}
-        {info.flavour && <div style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 13, color: TOW.muted, lineHeight: 1.5, marginBottom: info.body ? 9 : 0 }}>{info.flavour}</div>}
+        {info.flavour && <div style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 13, color: TOW.muted, lineHeight: 1.5, marginBottom: info.body || info.wapen?.length ? 9 : 0 }}>{info.flavour}</div>}
+        {/* Het wapenprofiel — Range/Strength/AP/Special Rules, zoals het op tow.whfb.app staat. Dit
+            ontbrak tot 15-08-2026 volledig: het zit daar in een embedded entry die bij het scrapen
+            wegviel, dus een magic weapon toonde alleen z'n flavour en z'n Notes-regel. */}
+        {info.wapen?.map((p, i) => (
+          <div key={i} style={{ marginBottom: 10, border: `1px solid ${TOW.line}`, borderRadius: 10, overflow: 'hidden' }}>
+            {info.wapen!.length > 1 && p.naam && (
+              <div style={{ ...eb, fontSize: 8, color: TOW.muted, padding: '6px 9px 0' }}>{p.naam}</div>
+            )}
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 0 }}>
+              {[
+                ['Range', p.range],
+                ['Strength', p.strength],
+                ['Armour Piercing', p.ap],
+              ].filter(([, v]) => !!v).map(([k, v]) => (
+                <div key={k} style={{ flex: '1 1 0', minWidth: 78, padding: '7px 9px', borderRight: `1px solid ${TOW.line}` }}>
+                  <div style={{ ...eb, fontSize: 7.5, color: TOW.muted, marginBottom: 2 }}>{k}</div>
+                  <div style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 15, color: TOW.ink }}>{v}</div>
+                </div>
+              ))}
+            </div>
+            {p.specialRules && (
+              <div style={{ padding: '7px 9px', borderTop: `1px solid ${TOW.line}`, background: TOW.cardLt }}>
+                <div style={{ ...eb, fontSize: 7.5, color: TOW.muted, marginBottom: 2 }}>Special rules</div>
+                <div style={{ fontFamily: towFont.serif, fontSize: 12.5, color: TOW.ink, lineHeight: 1.45 }}>{p.specialRules}</div>
+              </div>
+            )}
+          </div>
+        ))}
         {info.body && <div style={{ fontFamily: towFont.serif, fontSize: 13.5, color: TOW.ink, lineHeight: 1.55, whiteSpace: 'pre-wrap' }}>{info.body}</div>}
         {info.ruleChips && info.ruleChips.length > 0 && (
           <>

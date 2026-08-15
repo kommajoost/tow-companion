@@ -8,7 +8,16 @@ import { CATEGORIES, campaignUnitId, entryPoints, loadoutLabels, magicItemId, se
 import { applyMountStatModifiers, mountStatModifiers } from './mountModifiers';
 
 /** Per-item flavour + rules text snapshot (public/owb/magic-item-text.json), keyed by item slug. */
-export type MagicText = Record<string, { description?: string; body?: string }>;
+export type MagicText = Record<string, {
+  description?: string;
+  body?: string;
+  /** Het wapenprofiel van een magic weapon (15-08-2026). Stond wél op tow.whfb.app maar viel bij het
+   *  scrapen stil weg: het zit daar in een `embedded-entry-block`, en die heeft geen tekst-kinderen,
+   *  dus flatte hij naar niets. 125 items misten hierdoor hun Range/Strength/AP én hun special rules
+   *  — Sword of Sorrow hield alleen z'n Notes-regel over. Meestal één profiel; een array omdat een
+   *  item met meerdere standen er meer kan hebben. */
+  profiel?: { naam?: string; range?: string; strength?: string; ap?: string; specialRules?: string }[];
+}>;
 
 /** Per-mount special-rules snapshot (public/owb/mount-text.json), keyed by normalised mount name. */
 export type MountText = Record<string, {

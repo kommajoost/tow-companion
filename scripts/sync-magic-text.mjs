@@ -28,11 +28,49 @@ function flatten(node) {
       return kids.map(flatten).join('') + '\n';
     case 'table-row':
       return kids.map((c) => flatten(c).trim()).filter(Boolean).join(' | ') + '\n';
+    // EMBEDDED ENTRIES (15-08-2026). Een embedded-entry-block heeft GEEN `content`-kinderen, dus met
+    // de default hieronder flatte hij naar een lege string en verdween hij spoorloos. Precies daar zit
+    // bij een magic weapon het wapenprofiel in (contentType `weaponProfile`) én de special rules —
+    // Sword of Sorrow hield zo alleen z'n Notes-alinea over. Het profiel halen we apart op als
+    // STRUCTUUR (zie `profielen` hieronder) zodat de app er een echte tabel van kan maken; hier geven
+    // we 'm dus bewust leeg terug om 'm niet dubbel te tonen. Elk ANDER embedded type valt terug op
+    // zijn `bodyIndex` — Contentfuls eigen platte tekst — zodat er nooit meer stil iets wegvalt.
+    case 'embedded-entry-block':
+    case 'embedded-entry-inline': {
+      const t = node.data?.target;
+      if (!t?.fields) return '';
+      if (t.sys?.contentType?.sys?.id === 'weaponProfile') return '';
+      return t.fields.bodyIndex ? String(t.fields.bodyIndex) + '\n' : '';
+    }
     default:
       return kids.map(flatten).join('');
   }
 }
 const clean = (s) => s.replace(/\n{3,}/g, '\n\n').trim();
+
+/** Elk wapenprofiel uit een rich-text-document, als structuur. Een magic weapon draagt er meestal
+ *  één ("Sword of Sorrow Profile"), maar een item met meerdere standen kan er meer hebben — dus een
+ *  array. `specialRules` is zelf rich text vol entry-hyperlinks; `bodyIndex` is dezelfde regels als
+ *  platte tekst en is hier de betrouwbaarste bron. */
+function profielen(node, uit = []) {
+  if (!node || typeof node !== 'object') return uit;
+  if (node.nodeType === 'embedded-entry-block' || node.nodeType === 'embedded-entry-inline') {
+    const t = node.data?.target;
+    if (t?.fields && t.sys?.contentType?.sys?.id === 'weaponProfile') {
+      const f = t.fields;
+      const regels = f.bodyIndex ? String(f.bodyIndex).trim() : clean(flatten(f.specialRules));
+      uit.push({
+        naam: f.name ? String(f.name).replace(/\s*Profile$/i, '').trim() : '',
+        range: f.range ? String(f.range) : '',
+        strength: f.strength ? String(f.strength) : '',
+        ap: f.armourPiercing != null ? String(f.armourPiercing) : '',
+        specialRules: regels,
+      });
+    }
+  }
+  for (const k of node.content ?? []) profielen(k, uit);
+  return uit;
+}
 
 async function getBuildId() {
   const html = await (await fetch(`${SITE}/`)).text();
@@ -111,7 +149,12 @@ await mapLimit(slugs, 10, async (slug, idx) => {
   // (Contentful's flattened index), which carries those rule names.
   let body = f.body ? clean(flatten(f.body)) : '';
   if (!body && f.bodyIndex) body = clean(String(f.bodyIndex));
-  if (description || body) { result[slug] = { description, body }; ok++; }
+  // Het wapenprofiel als structuur (Range/Strength/AP/Special Rules) — zie `profielen`.
+  const prof = f.body ? profielen(f.body) : [];
+  if (description || body || prof.length) {
+    result[slug] = { description, body, ...(prof.length ? { profiel: prof } : {}) };
+    ok++;
+  }
   if (idx % 50 === 0) process.stdout.write(`. ${idx}\n`);
 });
 
