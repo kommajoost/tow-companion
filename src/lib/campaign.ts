@@ -394,6 +394,8 @@ export interface LijstKeuring {
   dropActs: number[];
   eersteAct: boolean;
   drops: string[];
+  /** Wat de general zelf bij deze lijst schreef (15-08-2026), of null. */
+  notitie: string | null;
 }
 
 function parseKeuring(raw: unknown): LijstKeuring {
@@ -416,7 +418,20 @@ function parseKeuring(raw: unknown): LijstKeuring {
     dropActs: arr(d.dropActs).map((v) => Number(v)).filter((n) => Number.isFinite(n)),
     eersteAct: bool(d.eersteAct),
     drops: strs(d.drops),
+    notitie: typeof d.notitie === 'string' && d.notitie.trim() ? d.notitie : null,
   };
+}
+
+/** Het woord dat de general zelf bij zijn lijst schrijft (15-08-2026) — voor de kroniekschrijver, en
+ *  voor de onafhankelijke veteraan die de lijst beoordeelt. Die laatste krijgt 'm mee in het
+ *  Word-document, zodat hij een rare keuze kan wegen mét de bedoeling erachter.
+ *  Leeg wist 'm. Mag ook nog ná het locken: het is verhaal, geen regel. */
+export async function lijstNotitieZet(speler: string, tekst: string): Promise<string | null> {
+  const { data, error } = await supabase.rpc('towc_lijst_notitie_zet', { p_speler: speler, p_tekst: tekst });
+  if (error) throw error;
+  const d = (data && typeof data === 'object' ? data : {}) as Record<string, unknown>;
+  if (d.ok !== true) throw new Error(str(d.fout, 'CAMPAGNE_FOUT'));
+  return typeof d.notitie === 'string' ? d.notitie : null;
 }
 
 /** Keur de lijst van deze speler zoals de campagne 'm nu in de cloud ziet. */

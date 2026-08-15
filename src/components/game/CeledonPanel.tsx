@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { TOW, towFont, engraved } from '../../design/tow';
 import { COMPOSITION_RULES } from '../../lib/owbBuilder';
-import { useCampagnes, kiesCampagne, keurLijst, dienLijstIn, verversCampagnes, staatOpSlot, type LijstKeuring } from '../../lib/campaign';
+import { useCampagnes, kiesCampagne, keurLijst, dienLijstIn, verversCampagnes, staatOpSlot, lijstNotitieZet, type LijstKeuring } from '../../lib/campaign';
 import { useListSync } from '../../listSync';
 import { useAuth } from '../../lib/auth';
 
@@ -49,6 +49,18 @@ export function CeledonPanel({ lijsten, onOpen, onTour, onHerstel }: {
   const [keuring, setKeuring] = useState<KeuringState>({ stand: 'laden', keuring: null });
   const [indienen, setIndienen] = useState<'rust' | 'bezig'>('rust');
   const [indienFout, setIndienFout] = useState<string | null>(null);
+  // ── Een woord bij je lijst (15-08-2026) ───────────────────────────────────────────────────────
+  // Wat je hier schrijft gaat twee kanten op: naar de kroniekschrijver, die er het verhaal van deze
+  // Act mee kleurt, en naar de onafhankelijke veteraan die de lijst beoordeelt. Die laatste ziet 'm
+  // in zijn Word-document staan — een rare keuze die ergens vóór staat leest heel anders dan
+  // dezelfde keuze zonder uitleg. Mag ook nog ná het indienen: het is verhaal, geen regel.
+  const [notitieOpen, setNotitieOpen] = useState(false);
+  const [notitie, setNotitie] = useState('');
+  const [notitieBezig, setNotitieBezig] = useState(false);
+  const [notitieFout, setNotitieFout] = useState<string | null>(null);
+  // De opgeslagen tekst komt mee in de keuring; die is de waarheid zodra hij binnen is.
+  const bewaardeNotitie = keuring.keuring?.notitie ?? null;
+  useEffect(() => { setNotitie(bewaardeNotitie ?? ''); }, [bewaardeNotitie]);
 
   const haalKeuring = useCallback(async (id: string) => {
     try {
@@ -291,6 +303,79 @@ export function CeledonPanel({ lijsten, onOpen, onTour, onHerstel }: {
                           : blokkades.length > 0 ? 'Fix the problems above first — the campaign will not accept the list.'
                             : 'Your list is legal. Submitting locks it for this Act.'}
                 </span>
+              </div>
+
+              {/* EEN WOORD BIJ JE LIJST (15-08-2026). Staat onder het indienen, want dat is het moment
+                  waarop je weet wat er verandert — en het is geen voorwaarde: dit blokkeert niets. */}
+              <div style={{ marginTop: 11 }}>
+                <button
+                  type="button"
+                  onClick={() => { setNotitieOpen((o) => !o); setNotitieFout(null); }}
+                  style={{
+                    ...knop, padding: '6px 11px', fontSize: 12,
+                    border: `1px solid ${bewaardeNotitie ? TOW.goldDeep : TOW.line}`,
+                    background: 'transparent', color: bewaardeNotitie ? TOW.gold : TOW.muted,
+                  }}
+                >
+                  {bewaardeNotitie ? 'Edit your note for the chronicle' : 'Add a note for the chronicle'}
+                </button>
+                {!notitieOpen && bewaardeNotitie && (
+                  <p style={{ ...tekstDim, marginTop: 6, fontStyle: 'italic' }}>&ldquo;{bewaardeNotitie}&rdquo;</p>
+                )}
+                {notitieOpen && (
+                  <div style={{ marginTop: 8, display: 'flex', flexDirection: 'column', gap: 7 }}>
+                    <p style={{ ...tekstDim, margin: 0 }}>
+                      What is changing in your host this Act — who is marching in, what you finally had the coin
+                      for, what you had to leave behind. Your chronicler uses it, and the veteran who judges the
+                      lists reads it alongside your army.
+                    </p>
+                    <textarea
+                      value={notitie}
+                      maxLength={2000}
+                      rows={4}
+                      onChange={(e) => setNotitie(e.target.value)}
+                      placeholder="Three score fresh Corsairs out of Karond Kar, and the Hydra is finally fed…"
+                      style={{
+                        width: '100%', resize: 'vertical', borderRadius: 8, padding: '8px 10px',
+                        border: `1px solid ${TOW.line}`, background: TOW.cardLt, color: TOW.ink,
+                        fontFamily: towFont.serif, fontSize: 13, lineHeight: 1.5,
+                      }}
+                    />
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 9, flexWrap: 'wrap' }}>
+                      <button
+                        type="button"
+                        disabled={notitieBezig || !spelerId}
+                        onClick={async () => {
+                          if (!spelerId) return;
+                          setNotitieBezig(true);
+                          setNotitieFout(null);
+                          try {
+                            await lijstNotitieZet(spelerId, notitie);
+                            await haalKeuring(spelerId);
+                            setNotitieOpen(false);
+                          } catch (e) {
+                            setNotitieFout(e instanceof Error ? e.message : 'Could not save your note.');
+                          }
+                          setNotitieBezig(false);
+                        }}
+                        style={{
+                          ...knop, padding: '7px 13px', fontSize: 12.5,
+                          border: `1px solid ${TOW.goldDeep}`, background: 'rgba(138,108,48,0.14)', color: TOW.gold,
+                        }}
+                      >
+                        {notitieBezig ? 'Saving…' : 'Save the note'}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => { setNotitie(bewaardeNotitie ?? ''); setNotitieOpen(false); }}
+                        style={{ border: 'none', background: 'transparent', cursor: 'pointer', ...tekstDim, margin: 0, textDecoration: 'underline' }}
+                      >
+                        Cancel
+                      </button>
+                      {notitieFout && <span style={{ ...tekstDim, margin: 0, color: TOW.blood }}>{notitieFout}</span>}
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* The auto-sync still runs on every edit; this only says so, so nobody thinks their
