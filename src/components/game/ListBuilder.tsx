@@ -593,12 +593,21 @@ export function ListBuilder() {
               // comma-separated list of special rules, and InfoSheet turns each into a rule link, so it
               // is split rather than shown as one string.
               const tx = activeMagicText[what.itemId];
+              // De special rules UIT HET WAPENPROFIEL horen bij dezelfde chip-rij als die uit de body
+              // (15-08-2026): Armour Bane, Magical Attacks en Multiple Wounds hebben allemaal hun eigen
+              // regelpagina, dus als losse tekstregel zou je er niet op kunnen tikken. Dubbelen eruit,
+              // want een item kan dezelfde regel in beide velden dragen.
+              const uitProfiel = (tx?.profiel ?? []).flatMap((p) => (p.specialRules ?? '').split(','));
+              const regels = [...(tx?.body ?? '').split(','), ...uitProfiel]
+                .map((r) => r.trim())
+                .filter(Boolean);
               setMountInfo({
                 title: what.name,
                 flavour: tx?.description,
-                rules: (tx?.body ?? '').split(',').map((r) => r.trim()).filter(Boolean),
+                rules: [...new Set(regels)],
+                wapen: tx?.profiel,
                 // Say so when there is no text at all, instead of opening a blank sheet.
-                details: tx?.description || tx?.body ? undefined : ['No description recorded for this item.'],
+                details: tx?.description || tx?.body || tx?.profiel?.length ? undefined : ['No description recorded for this item.'],
               });
               return;
             }

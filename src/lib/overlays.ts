@@ -455,7 +455,15 @@ export function applyOverlayMagicText<T extends Record<string, { description?: s
   overlay?: CompositionOverlay | null,
 ): T {
   if (!overlay?.magicItemText || !Object.keys(overlay.magicItemText).length) return text;
-  return { ...text, ...overlay.magicItemText };
+  // PER SLEUTEL SAMENVOEGEN, niet vervangen (15-08-2026). Een overlay herschrijft de WOORDEN van een
+  // item (description/body); het wapenprofiel (`profiel` — Range/Strength/AP) staat daar niet in en
+  // ging bij een harde vervanging verloren, precies voor de items die de overlay aanraakt. Een
+  // overlay die het profiel wél wil wijzigen zet 'm gewoon zelf en wint alsnog.
+  const uit: Record<string, unknown> = { ...text };
+  for (const [slug, patch] of Object.entries(overlay.magicItemText)) {
+    uit[slug] = { ...(text[slug] ?? {}), ...patch };
+  }
+  return uit as T;
 }
 
 export interface MountProfileText {

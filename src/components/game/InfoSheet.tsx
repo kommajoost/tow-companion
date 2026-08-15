@@ -20,6 +20,10 @@ export interface InfoSheetData {
   rules: string[];
   /** Datasheet context that is neither a stat nor a special rule (base, equipment, mount note). */
   details?: string[];
+  /** Het wapenprofiel van een magic weapon (15-08-2026): Range/Strength/AP + de special rules.
+   *  Stond wél op tow.whfb.app maar viel bij het scrapen weg, dus een magic weapon toonde hier
+   *  alleen z'n flavour en z'n Notes-regel. Zie `profiel` in magic-item-text.json. */
+  wapen?: { naam?: string; range?: string; strength?: string; ap?: string; specialRules?: string }[];
 }
 
 // A modal for things that have no rule page of their own — a magic item (flavour + rules) or a mount
@@ -103,6 +107,32 @@ export function InfoSheet({ info, onClose }: { info: InfoSheetData | null; onClo
 
         {info.details?.map((detail, i) => (
           <p key={i} style={{ margin: '0 0 5px', fontFamily: towFont.serif, fontSize: 12.5, color: TOW.parchDim, lineHeight: 1.45 }}>{detail}</p>
+        ))}
+
+        {/* WAPENPROFIEL — direct onder de flavour, want dit is waar het item mechanisch om draait.
+            Zelfde tabelstijl als de mount-profielen hieronder (th/td), zodat de sheet één taal spreekt. */}
+        {info.wapen?.map((w, wi) => (
+          <div key={wi} className="no-scrollbar" style={{ overflowX: 'auto', marginBottom: 8 }}>
+            {info.wapen!.length > 1 && w.naam && (
+              <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginBottom: 3 }}>{w.naam}</div>
+            )}
+            <table style={{ borderCollapse: 'collapse', width: '100%', fontFamily: towFont.serif, fontSize: 12.5 }}>
+              <thead>
+                <tr>
+                  {w.range && <th style={th}>Range</th>}
+                  {w.strength && <th style={th}>Strength</th>}
+                  {w.ap && <th style={th}>Armour Piercing</th>}
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  {w.range && <td style={td}>{w.range}</td>}
+                  {w.strength && <td style={td}>{w.strength}</td>}
+                  {w.ap && <td style={td}>{w.ap}</td>}
+                </tr>
+              </tbody>
+            </table>
+          </div>
         ))}
 
         {info.profiles?.map((p, pi) => (
