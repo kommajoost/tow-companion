@@ -295,8 +295,17 @@ export function CataloguePane(props: {
   onHoverPreview?: (unit: OwbUnit | null) => void;
   /** Focus het zoekveld bij openen (⌘K). */
   autoFocusSearch?: boolean;
+  /** Campagne-units die je verwijderde en die de campagne nog kent (14-08-2026). Dit stond tot
+   *  15-08-2026 ALLEEN in de telefoon-picker (PickerScreen), waardoor het op desktop — waar de
+   *  meeste lijsten gebouwd worden — onvindbaar was: je gooide een unit weg en kreeg 'm nergens
+   *  meer terug. Zelfde data, zelfde gedrag, nu in beide layouts. */
+  terugTeHalen?: { uid: string; unitId: string; cat: string; modellen: number | null; label: string; sub: string | null; volledig: boolean }[];
+  onRestore?: (b: { uid: string; unitId: string; cat: string; modellen: number | null }) => void;
 }): React.JSX.Element {
-  const { ctx, entries, initialCategory, onClose, onAdd, onHoverPreview, autoFocusSearch } = props;
+  const {
+    ctx, entries, initialCategory, onClose, onAdd, onHoverPreview, autoFocusSearch,
+    terugTeHalen = [], onRestore,
+  } = props;
 
   const [category, setCategory] = useState<PickerCategoryFilter>(initialCategory ?? 'all');
   const [query, setQuery] = useState('');
@@ -572,6 +581,47 @@ export function CataloguePane(props: {
           overscrollBehavior: 'contain', padding: `0 ${BUILDER.gutter}px 16px`,
         }}
       >
+        {/* ── Terug in de linie ─────────────────────────────────────────────────────────────────
+            Zelfde blok als in de telefoon-picker, en om dezelfde reden bovenaan: een verwijderde
+            campagne-unit opnieuw uit de catalogus toevoegen geeft een NIEUWE uid, en daarmee raakt
+            ze haar debuutkosten, groeiplafond en XP kwijt. Dit is dus een correctie, geen aanwinst. */}
+        {terugTeHalen.length > 0 && onRestore && (
+          <div style={{ marginTop: 12, marginBottom: 10 }}>
+            <div style={{ ...eb, fontSize: 9, color: TOW.goldDeep, marginBottom: 6 }}>Back into the line</div>
+            <div style={{ fontFamily: towFont.serif, fontSize: 12, color: TOW.muted, lineHeight: 1.4, marginBottom: 8 }}>
+              Units you removed, or that fought for you in an earlier Act. Put one back and it keeps its
+              campaign history — adding it fresh from the catalogue below would make it a new regiment.
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+              {terugTeHalen.map((b2) => (
+                <button
+                  key={b2.uid}
+                  type="button"
+                  onClick={() => onRestore(b2)}
+                  style={{
+                    display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10,
+                    textAlign: 'left', width: '100%', padding: '9px 11px', cursor: 'pointer',
+                    borderRadius: BUILDER.radius.button, border: `1px solid ${TOW.goldDeep}`,
+                    background: 'transparent', color: TOW.ink,
+                  }}
+                >
+                  <span style={{ minWidth: 0 }}>
+                    <span style={{ display: 'block', fontFamily: towFont.serif, fontSize: 14 }}>{b2.label}</span>
+                    <span style={{ display: 'block', fontFamily: towFont.serif, fontSize: 11.5, color: TOW.muted }}>
+                      {[
+                        b2.sub,
+                        b2.modellen ? `${b2.modellen} model${b2.modellen === 1 ? '' : 's'}` : null,
+                        b2.volledig ? 'name and equipment kept' : 'equipment to re-pick',
+                      ].filter(Boolean).join(' · ')}
+                    </span>
+                  </span>
+                  <span style={{ flexShrink: 0, fontFamily: towFont.display, fontSize: 12, color: TOW.goldDeep }}>Restore</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
         {groups.length === 0 ? emptyState() : groups.map(({ cat, rows }) => (
           // The section header carries NO meta here, unlike the phone picker. On the phone the
           // catalogue is a full screen, so the category's spend against its rule has to be repeated

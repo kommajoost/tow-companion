@@ -612,6 +612,12 @@ export function BuilderFlow({
             setHighlightUid(uid);
           }}
           autoFocusSearch
+          terugTeHalen={terugTeHalen}
+          onRestore={(b) => {
+            restoreUnit(b);
+            setSelectedUids([b.uid]);
+            setHighlightUid(b.uid);
+          }}
         />
       ) : undefined}
       onEditArmyField={onEditArmyField ?? (() => {})}
