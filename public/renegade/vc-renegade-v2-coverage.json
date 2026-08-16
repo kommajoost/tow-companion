@@ -843,7 +843,7 @@
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
-          "Vampire Lord",
+          "vampire count",
           "Vampire Thrall"
         ]
       },
@@ -857,6 +857,7 @@
         "units.vampire-count.name_en",
         "units.vampire-count.points",
         "units.vampire-thrall.points",
+        "profiles.vampire count",
         "profiles.vampire thrall"
       ]
     },
@@ -868,7 +869,7 @@
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
-          "Vampire Lord",
+          "vampire count",
           "Vampire Thrall"
         ]
       },
@@ -878,6 +879,7 @@
       ],
       "status": "captured",
       "targets": [
+        "profiles.vampire count.notes",
         "profiles.vampire thrall.notes"
       ]
     },
@@ -889,7 +891,7 @@
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
-          "Vampire Lord",
+          "vampire count",
           "Vampire Thrall"
         ]
       },
@@ -899,6 +901,7 @@
       ],
       "status": "applied",
       "targets": [
+        "units.vampire-count.options",
         "units.vampire-thrall.options"
       ]
     },
@@ -910,7 +913,7 @@
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
-          "Vampire Lord",
+          "vampire count",
           "Vampire Thrall"
         ]
       },
@@ -920,6 +923,7 @@
       ],
       "status": "captured",
       "targets": [
+        "profiles.vampire count.notes",
         "profiles.vampire thrall.notes"
       ]
     },
@@ -931,7 +935,7 @@
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
-          "Vampire Lord",
+          "vampire count",
           "Vampire Thrall"
         ]
       },
@@ -941,7 +945,7 @@
       ],
       "status": "applied",
       "targets": [
-        "units.vampire-thrall.options"
+        "units.vampire-count.options"
       ]
     },
     {
@@ -952,7 +956,7 @@
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
-          "Vampire Lord",
+          "vampire count",
           "Vampire Thrall"
         ]
       },
@@ -973,7 +977,7 @@
         "method": "table-title",
         "confidence": "high",
         "profileNames": [
-          "Vampire Lord",
+          "vampire count",
           "Vampire Thrall"
         ]
       },
@@ -983,6 +987,7 @@
       ],
       "status": "captured",
       "targets": [
+        "profiles.vampire count.notes",
         "profiles.vampire thrall.notes"
       ]
     },

@@ -233,7 +233,14 @@ const resolveOption = (unit, rawName) => {
   if (exact.length === 1) return exact[0];
   const fuzzy = slots.filter(({ option }) => {
     const existing = norm(option.name_en);
-    return existing.length >= 4 && wanted.length >= 4 && (existing.includes(wanted) || wanted.includes(existing));
+    if (existing.length < 4 || wanted.length < 4) return false;
+    // Richting doet ertoe bij een GRATIS DEFAULT. "Light armour +1" mag de default
+    // "Light armour, Shields" herprijzen (de default OMVAT wat het draft noemt), maar
+    // "Additional Hand Weapon +3" mag niet op de gratis "Hand weapon" landen (het draft noemt
+    // MEER dan de default is — dat is een andere optie, en elke Despot betaalde zo 3 punten
+    // voor z'n eigen basiswapen).
+    if (option.active === true && !(option.points > 0)) return existing.includes(wanted);
+    return existing.includes(wanted) || wanted.includes(existing);
   });
   return fuzzy.length === 1 ? fuzzy[0] : null;
 };
@@ -428,8 +435,21 @@ const parseEmbeddedStats = (block) => {
 // carries exactly two profiles, and the other one (Vampire Thrall) matches by name, so "Vampire Lord"
 // can only be the entry OWB still calls "Vampire Count". Anything less certain belongs in the coverage
 // ledger as unresolved, not here — this table is for facts, not for guesses about intent.
+// A `null` alias means: this draft row is NOT the catalogue unit its name resembles — skip it here,
+// it lives as an addedUnit. Needed because the fallback resolution matches on a unique name SUFFIX,
+// and that is exactly wrong when a draft introduces a NEW unit whose name is a suffix of an existing
+// one: the Chaos Dwarfs draft renames the lord-tier Infernal Castellan to "Despot" and adds a NEW,
+// lighter "Castellan" (75 pts, Infernal Guard Commander). The suffix match put that 75 on the lord —
+// a Taurus-riding lord for 75 points (speler-melding, 16-08).
 const UNIT_ALIASES = {
   vc: new Map([['vampire lord', 'vampire count']]),
+  cd: new Map([
+    ['despot', 'infernal castellan'],
+    ['castellan', null],
+    // Zelfde unit, kortere draft-naam: zonder deze vertaling resolvet de "Chaos Dwarf Lords"-groep
+    // tot alleen de Despot en blijft de Seneschal buiten elke gedeelde optieregel.
+    ['seneschal', 'infernal seneschal'],
+  ]),
 };
 
 const changed = (block) => Array.isArray(block.changeKinds) && block.changeKinds.length > 0;
@@ -455,6 +475,17 @@ for (const [key, army] of Object.entries(PACKS)) {
   const reference = JSON.parse(readFileSync(new URL(`${key}-renegade-v2-reference.json`, REN), 'utf8'));
   const catalogue = JSON.parse(readFileSync(new URL(`${army}.json`, OWB), 'utf8'));
   const overlay = JSON.parse(readFileSync(overlayUrl, 'utf8'));
+  // Draft-namen naar catalogus-namen vertalen vóór elke resolutie. Alleen string-aliassen: een
+  // null-alias betekent "eigen addedUnit" en die naam moet juist blijven staan.
+  for (const block of reference.blocks) {
+    if (!block.unitContext?.profileNames?.length) continue;
+    const vertaald = block.unitContext.profileNames.map((naam) => {
+      const alias = UNIT_ALIASES[key]?.get(norm(naam));
+      return typeof alias === 'string' ? alias : naam;
+    });
+    block.unitContext = { ...block.unitContext, profileNames: vertaald };
+  }
+
   const index = [
     ...catalogueIndex(catalogue),
     ...Object.entries(overlay.addedUnits ?? {}).flatMap(([category, units]) =>
@@ -824,6 +855,51 @@ for (const [key, army] of Object.entries(PACKS)) {
     parts.filter(changed).forEach((p) => stitchedContinuations.set(p.id, head.id));
   }
 
+  // ── Doelwit binnen een groepstabel ─────────────────────────────────────────────────────────────
+  // Een tabel als "Vampires" of "Chaos Dwarf Lords" bundelt meerdere datasheets, en de bron splitst
+  // de opties met een kwalificatie: "A Vampire Lord may:" … "A Vampire Thrall may:" …. Zonder dat
+  // onderscheid landde elk blok op de HELE groep — de Lord kreeg de Thrall-prijs voor Level 2
+  // (+60 waar het draft +30 zegt), de Thrall een Level 3 die hij niet mag, en de Skink Priest de
+  // opties van de Chief (speler-meldingen, 16-08). De kwalificatie kan aan het EIND van een blok
+  // staan ("May take a shield +2 points • A Despot may:"), dus hij geldt segment-voor-segment en
+  // draagt over naar volgende blokken tot de volgende kwalificatie of een nieuwe unit-sectie.
+  const MARKER = /^(?:an?|the)\s+(.{2,40}?)\s+may:?$/i;
+  // PRE-PASS over ALLE blokken, niet alleen de gekleurde: de kwalificatie zelf is vaak ongewijzigd
+  // ("A Vampire Thrall may:" is ongekleurd terwijl de opties eronder nieuw zijn), en een state-machine
+  // in de gefilterde hoofdlus zag die wissel dus nooit — de Thrall-prijzen landden op de Lord.
+  const segmentenPerBlok = new Map();
+  {
+    const st = { bron: null, naam: null };
+    for (const block of reference.blocks) {
+      if (block.scope !== 'army-list' || !block.unitContext) { st.bron = null; st.naam = null; continue; }
+      if (st.bron !== block.unitContext.sourceBlockId) { st.bron = block.unitContext.sourceBlockId; st.naam = null; }
+      if (block.type !== 'list' && block.type !== 'paragraph') continue;
+      const uit = [];
+      for (const ruw of String(block.text ?? '').split(/\s*•\s*/)) {
+        const segment = ruw.trim();
+        if (!segment) continue;
+        const marker = MARKER.exec(segment);
+        if (block.id==='b0140') console.warn('DBGPRE src='+MARKER.source+' codes='+[...segment].map(c=>c.charCodeAt(0)).join(','));
+        if (marker) { st.naam = marker[1]; continue; }
+        uit.push({ segment, doelNaam: st.naam });
+      }
+      segmentenPerBlok.set(block.id, uit);
+    }
+  }
+  const doelUnits = (hits, doelNaam) => {
+    if (!doelNaam) return hits;
+    const alias = UNIT_ALIASES[key]?.get(norm(doelNaam));
+    const wil = norm(typeof alias === 'string' ? alias : doelNaam);
+    const raak = hits.filter(({ unit }) => {
+      const naam = norm(unit.name_en);
+      const getoond = norm(overlay.units[unit.id]?.replace?.name_en ?? '');
+      return naam === wil || naam.endsWith(' ' + wil) || getoond === wil;
+    });
+    // Geen match betekent dat de kwalificatie over iets anders gaat (een optie-naam, een titel) —
+    // dan liever op iedereen dan stilletjes op niemand.
+    return raak.length ? raak : hits;
+  };
+
   for (const block of reference.blocks.filter((candidate) => candidate.scope === 'army-list' && changed(candidate))) {
     const viaHead = stitchedContinuations.get(block.id);
     if (viaHead) {
@@ -863,6 +939,7 @@ for (const [key, army] of Object.entries(PACKS)) {
 
     let hits = resolveUnits(index, block.unitContext);
     if (!hits.length && block.tableType !== 'statline') hits = resolveUnitGroup(index, block.unitContext);
+    const blokSegmenten = segmentenPerBlok.get(block.id) ?? null;
     const profileKeys = hits.length
       ? [...new Set(hits.map(({ unit }) => norm(unit.name_en)))]
       : block.unitContext?.name ? [norm(block.unitContext.name)] : [];
@@ -902,6 +979,7 @@ for (const [key, army] of Object.entries(PACKS)) {
       };
       for (const row of pricedRows) {
         const alias = UNIT_ALIASES[key]?.get(norm(row.name));
+        if (alias === null) continue; // de rij hoort bij een addedUnit; punten staan dáár
         const lookup = alias ?? row.name;
         let hitsForRow = resolveUnits(index, { name: lookup, profileNames: [lookup] });
         if (!hitsForRow.length && pricedRows[0] === row && block.unitContext?.name) {
@@ -945,13 +1023,25 @@ for (const [key, army] of Object.entries(PACKS)) {
             overlay.profiles[norm(unit.name_en)] = { stats };
             result.targets.push(`profiles.${norm(unit.name_en)}`);
           }
+          // Een hernoemde rij wordt in de app onder de DRAFT-naam opgezocht ("Despot"), en dit pad
+          // registreert alleen onder de catalogusnaam. Zet zo'n rij er apart bij, met alléén de
+          // eigen statregel — niet de hele tabel.
+          for (const row of block.statlineRows ?? []) {
+            if (typeof UNIT_ALIASES[key]?.get(norm(row.name)) !== 'string') continue;
+            const eigen = stats.find((statRow) => statRow.Name === row.name);
+            if (eigen) overlay.profiles[norm(row.name)] = { stats: [eigen] };
+          }
         } else {
           // Character summary tables often contain multiple separately selectable catalogue units.
           const pricedRows = (block.statlineRows ?? []).filter((row) => row.points?.value != null && !row.points?.modifier);
-          const separatelyResolved = pricedRows.map((row) => ({
-            row,
-            hits: resolveUnits(index, { name: row.name, profileNames: [row.name] }),
-          }));
+          const separatelyResolved = pricedRows.map((row) => {
+            // Dezelfde alias als in de puntenlus: de rij heet "Despot", de catalogus-unit
+            // "Infernal Castellan" — zonder vertaling resolvet de rij niet en valt het hele blok
+            // terug op één profiel onder de sectienaam ("chaos dwarf lords").
+            const rowAlias = UNIT_ALIASES[key]?.get(norm(row.name));
+            const lookupRow = typeof rowAlias === 'string' ? rowAlias : row.name;
+            return { row, hits: resolveUnits(index, { name: lookupRow, profileNames: [lookupRow] }) };
+          });
           if (separatelyResolved.length && separatelyResolved.every((entry) => entry.hits.length)) {
             for (const entry of separatelyResolved) {
               const stat = stats.find((row) => row.Name === entry.row.name);
@@ -959,6 +1049,11 @@ for (const [key, army] of Object.entries(PACKS)) {
               for (const { unit } of entry.hits) {
                 overlay.profiles[norm(unit.name_en)] = { stats: [stat] };
                 result.targets.push(`profiles.${norm(unit.name_en)}`);
+                // Een hernoemde unit wordt in de app onder de DRAFT-naam getoond en dus ook zo
+                // opgezocht ("Despot", "Vampire Lord") — registreer het profiel onder beide.
+                if (typeof UNIT_ALIASES[key]?.get(norm(entry.row.name)) === 'string') {
+                  overlay.profiles[norm(entry.row.name)] = { stats: [stat] };
+                }
               }
             }
           } else if (block.unitContext?.name) {
@@ -1055,9 +1150,30 @@ for (const [key, army] of Object.entries(PACKS)) {
       addProfileValues(overlay, profileKeys, 'equipment', [block.text.replace(/^Equipment:\s*/i, '').trim()]);
       result.targets.push(...profileKeys.map((keyName) => `profiles.${keyName}.equipment`));
       result.status = 'captured';
-    } else if (block.entryKind === 'option' && hits.length) {
+    } else if (block.type === 'list' && hits.length
+      && (block.items ?? []).length
+      && (block.items ?? []).every((it) => loreSlugByName.has(norm(it.text)))) {
+      // Een lijst waarvan ELKE bullet een bekende Lore of Magic is, is de spreukscholen-keuze van
+      // een Wizard ("Battle Magic • Daemonology • Dark Magic • Elementalism"). Tot nu toe werd die
+      // alleen als tekst bewaard, dus de Sorcerers of Hashut misten Battle Magic — het draft voegt
+      // die toe en de app bleef de drie catalogus-lores tonen (speler-melding, 16-08).
+      const lores = (block.items ?? []).map((it) => loreSlugByName.get(norm(it.text)));
       for (const { unit } of hits) {
-        const parsed = parsePricedOptions(block, unit);
+        const patch = overlay.units[unit.id] ?? {};
+        patch.replace = { ...(patch.replace ?? {}), lores };
+        addChanged(patch, 'lores');
+        overlay.units[unit.id] = patch;
+        result.targets.push(`units.${unit.id}.lores`);
+      }
+      result.status = 'applied';
+    } else if (block.entryKind === 'option' && hits.length) {
+      const segmenten = blokSegmenten ?? [];
+      if (block.id==='b0141'||block.id==='b0143') console.warn('DBG '+block.id+' hits='+hits.map(h=>h.unit.id)+' segs='+JSON.stringify(segmenten.map(x=>[x.doelNaam,x.segment.slice(0,26)])));
+      for (const { unit } of hits) {
+        const eigen = segmenten
+          .filter(({ doelNaam }) => doelUnits(hits, doelNaam).some((h) => h.unit.id === unit.id))
+          .map(({ segment }) => segment);
+        const parsed = eigen.length ? parsePricedOptions({ ...block, text: eigen.join(' • ') }, unit) : [];
         if (!parsed.length) continue;
         const patch = overlay.units[unit.id] ?? {};
         const current = patch.options ?? [];

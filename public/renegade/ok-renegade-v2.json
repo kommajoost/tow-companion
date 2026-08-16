@@ -36,15 +36,8 @@
       "options": [
         {
           "group": "options",
-          "action": "upsert",
-          "name_en": "Be a Level 4 Wizard",
-          "points": 30,
-          "perModel": false
-        },
-        {
-          "group": "options",
           "action": "patch",
-          "name_en": "Wizard",
+          "name_en": "Level 4 Wizard",
           "points": 30,
           "perModel": false
         }
@@ -61,14 +54,7 @@
         {
           "group": "options",
           "action": "patch",
-          "name_en": "Wizard",
-          "points": 30,
-          "perModel": false
-        },
-        {
-          "group": "options",
-          "action": "upsert",
-          "name_en": "Be a Level 2 Wizard",
+          "name_en": "Level 2 Wizard",
           "points": 30,
           "perModel": false
         }
@@ -136,8 +122,8 @@
         },
         {
           "group": "options",
-          "action": "upsert",
-          "name_en": "be a Level 2 Wizard",
+          "action": "patch",
+          "name_en": "Level 2 Wizard",
           "points": 30,
           "perModel": false
         }

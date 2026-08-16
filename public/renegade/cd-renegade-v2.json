@@ -19,8 +19,17 @@
       "_was": 195,
       "_changed": [
         "points",
+        "lores",
         "options"
       ],
+      "replace": {
+        "lores": [
+          "battle-magic",
+          "daemonology",
+          "dark-magic",
+          "elementalism"
+        ]
+      },
       "options": [
         {
           "group": "equipment",
@@ -46,6 +55,18 @@
       ]
     },
     "daemonsmith-sorcerer": {
+      "replace": {
+        "lores": [
+          "battle-magic",
+          "daemonology",
+          "dark-magic",
+          "elementalism"
+        ]
+      },
+      "_changed": [
+        "lores",
+        "options"
+      ],
       "options": [
         {
           "group": "equipment",
@@ -68,24 +89,194 @@
           "points": 10,
           "perModel": false
         }
-      ],
-      "_changed": [
-        "options"
-      ]
-    },
-    "infernal-seneschal": {
-      "points": 65,
-      "_was": 60,
-      "_changed": [
-        "points"
       ]
     },
     "infernal-castellan": {
-      "points": 75,
-      "_was": 125,
+      "replace": {
+        "name_en": "Despot"
+      },
       "_changed": [
-        "points"
-      ]
+        "name",
+        "unit-size",
+        "options",
+        "special-rules"
+      ],
+      "minimum": 1,
+      "maximum": 1,
+      "options": [
+        {
+          "group": "equipment",
+          "action": "patch",
+          "name_en": "Darkforged weapon",
+          "points": 15,
+          "perModel": false
+        },
+        {
+          "group": "equipment",
+          "action": "upsert",
+          "name_en": "Additional Hand Weapon",
+          "points": 3,
+          "perModel": false
+        },
+        {
+          "group": "equipment",
+          "action": "patch",
+          "name_en": "Great weapon",
+          "points": 4,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Hailshot blunderbuss",
+          "points": 10,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Pistol",
+          "points": 5,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Naptha bombs",
+          "points": 10,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Shield",
+          "points": 2,
+          "perModel": false
+        }
+      ],
+      "specialRules": "Blackshard Armour, Ensorcelled Weapons, Rallying Cry, Relentless March, Resolute, Stubborn"
+    },
+    "infernal-seneschal": {
+      "replace": {
+        "name_en": "Seneschal"
+      },
+      "_changed": [
+        "name",
+        "points",
+        "unit-size",
+        "options",
+        "special-rules"
+      ],
+      "points": 65,
+      "_was": 60,
+      "minimum": 1,
+      "maximum": 1,
+      "options": [
+        {
+          "group": "equipment",
+          "action": "patch",
+          "name_en": "Darkforged weapon",
+          "points": 15,
+          "perModel": false
+        },
+        {
+          "group": "equipment",
+          "action": "upsert",
+          "name_en": "Additional Hand Weapon",
+          "points": 3,
+          "perModel": false
+        },
+        {
+          "group": "equipment",
+          "action": "patch",
+          "name_en": "Great weapon",
+          "points": 4,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Hailshot blunderbuss",
+          "points": 10,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Pistol",
+          "points": 5,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Naptha bombs",
+          "points": 10,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Shield",
+          "points": 2,
+          "perModel": false
+        }
+      ],
+      "specialRules": "Blackshard Armour, Ensorcelled Weapons, Rallying Cry, Relentless March, Resolute, Stubborn"
+    },
+    "castellan": {
+      "minimum": 1,
+      "maximum": 1,
+      "_changed": [
+        "unit-size",
+        "options",
+        "special-rules"
+      ],
+      "options": [
+        {
+          "group": "equipment",
+          "action": "patch",
+          "name_en": "Darkforged weapon",
+          "points": 15,
+          "perModel": false
+        },
+        {
+          "group": "equipment",
+          "action": "patch",
+          "name_en": "Great weapon",
+          "points": 4,
+          "perModel": false
+        },
+        {
+          "group": "equipment",
+          "action": "patch",
+          "name_en": "Fireglaive",
+          "points": 3,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Pistol",
+          "points": 5,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Naptha bombs",
+          "points": 10,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Shield",
+          "points": 2,
+          "perModel": false
+        }
+      ],
+      "specialRules": "Blackshard Armour, Ensorcelled Weapons, Rallying Cry, Resolute, Stubborn, Infernal Taskmaster, Quell Panic"
     },
     "bull-centaur-taur'ruk": {
       "options": [
@@ -411,6 +602,13 @@
           "action": "patch",
           "name_en": "Steam Carriage",
           "points": 10,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "Naptha bombs (Ogre Loader)",
+          "points": 8,
           "perModel": false
         },
         {
@@ -831,6 +1029,80 @@
           "name_en": "Open Order, Detachment, Resolute, Hailfire!"
         }
       }
+    ],
+    "characters": [
+      {
+        "id": "castellan",
+        "name_en": "Castellan",
+        "points": 75,
+        "minimum": 1,
+        "maximum": 1,
+        "command": [],
+        "equipment": [
+          {
+            "name_en": "Hand weapon",
+            "points": 0,
+            "active": true
+          },
+          {
+            "name_en": "Darkforged weapon",
+            "points": 15
+          },
+          {
+            "name_en": "Great weapon",
+            "points": 4
+          },
+          {
+            "name_en": "Fireglaive",
+            "points": 3
+          }
+        ],
+        "armor": [
+          {
+            "name_en": "Heavy armour",
+            "points": 0,
+            "active": true
+          }
+        ],
+        "options": [
+          {
+            "name_en": "Pistol",
+            "points": 5,
+            "notes": {
+              "name_en": "if not using Naptha bombs"
+            }
+          },
+          {
+            "name_en": "Naptha bombs",
+            "points": 10,
+            "notes": {
+              "name_en": "if not using Pistol"
+            }
+          },
+          {
+            "name_en": "Shield",
+            "points": 2
+          }
+        ],
+        "mounts": [],
+        "items": [
+          {
+            "name_en": "Magic Items",
+            "types": [
+              "weapon",
+              "armor",
+              "talisman",
+              "enchanted-item"
+            ],
+            "selected": [],
+            "maxPoints": 75
+          }
+        ],
+        "lores": [],
+        "specialRules": {
+          "name_en": "Blackshard Armour, Ensorcelled Weapons, Rallying Cry, Resolute, Stubborn, Infernal Taskmaster, Quell Panic"
+        }
+      }
     ]
   },
   "composition": {
@@ -860,6 +1132,31 @@
     }
   },
   "profiles": {
+    "castellan": {
+      "stats": [
+        {
+          "Name": "Castellan",
+          "M": "3",
+          "WS": "6",
+          "BS": "4",
+          "S": "5",
+          "T": "5",
+          "W": "3",
+          "I": "2",
+          "A": "3",
+          "Ld": "9"
+        }
+      ],
+      "troopType": "Heavy infantry (character)",
+      "baseSize": "25 x 25 mm",
+      "equipment": [
+        "Hand weapon and heavy armour"
+      ],
+      "notes": [
+        "Options:",
+        "May take one of the following:"
+      ]
+    },
     "sorcerer prophet": {
       "stats": [
         {
@@ -876,7 +1173,6 @@
         }
       ],
       "notes": [
-        "Battle Magic • Daemonology • Dark Magic • Elementalism",
         "Chaos Dwarf Lords"
       ]
     },
@@ -896,11 +1192,10 @@
         }
       ],
       "notes": [
-        "Battle Magic • Daemonology • Dark Magic • Elementalism",
         "Chaos Dwarf Lords"
       ]
     },
-    "chaos dwarf lords": {
+    "infernal castellan": {
       "stats": [
         {
           "Name": "Despot",
@@ -913,7 +1208,40 @@
           "I": "4",
           "A": "4",
           "Ld": "10"
-        },
+        }
+      ],
+      "troopType": "Heavy infantry (character)",
+      "baseSize": "25 x 25 mm",
+      "equipment": [
+        "Hand weapon and heavy armour"
+      ],
+      "notes": [
+        "Options:",
+        "May take one of the following:",
+        "Purchase magic items up to a total of 100 points • Be mounted on a Bale Taurus or Great Taurus See page 12",
+        "A Seneschal may:",
+        "Purchase magic items up to a total of 50 points • Be mounted on a Great Taurus See page 12",
+        "Infernal Guard Commanders"
+      ]
+    },
+    "despot": {
+      "stats": [
+        {
+          "Name": "Despot",
+          "M": "3",
+          "WS": "7",
+          "BS": "4",
+          "S": "4",
+          "T": "5",
+          "W": "3",
+          "I": "4",
+          "A": "4",
+          "Ld": "10"
+        }
+      ]
+    },
+    "infernal seneschal": {
+      "stats": [
         {
           "Name": "Seneschal",
           "M": "3",
@@ -929,66 +1257,32 @@
       ],
       "troopType": "Heavy infantry (character)",
       "baseSize": "25 x 25 mm",
+      "equipment": [
+        "Hand weapon and heavy armour"
+      ],
       "notes": [
-        "Unit Size: 1",
         "Options:",
         "May take one of the following:",
-        "Darkforged weapon (see page 22) +15 points • Additional Hand Weapon +3 points • Great weapon +4 points",
-        "Hailshot blunderbuss (see page 22) +10 points • Pistol +5 points • Naptha bombs (see page 22) +10 points",
-        "May take a shield +2 points • A Despot may:",
         "Purchase magic items up to a total of 100 points • Be mounted on a Bale Taurus or Great Taurus See page 12",
         "A Seneschal may:",
         "Purchase magic items up to a total of 50 points • Be mounted on a Great Taurus See page 12",
         "Infernal Guard Commanders"
-      ],
-      "equipment": [
-        "Hand weapon and heavy armour"
-      ],
-      "specialRules": [
-        "Blackshard Armour",
-        "Ensorcelled Weapons",
-        "Rallying Cry",
-        "Relentless March",
-        "Resolute",
-        "Stubborn"
       ]
     },
-    "infernal guard commanders": {
+    "seneschal": {
       "stats": [
         {
-          "Name": "Castellan",
+          "Name": "Seneschal",
           "M": "3",
           "WS": "6",
           "BS": "4",
-          "S": "5",
+          "S": "4",
           "T": "5",
-          "W": "3",
-          "I": "2",
+          "W": "2",
+          "I": "3",
           "A": "3",
           "Ld": "9"
         }
-      ],
-      "troopType": "Heavy infantry (character)",
-      "baseSize": "25 x 25 mm",
-      "notes": [
-        "Unit Size: 1",
-        "Options:",
-        "May take one of the following:",
-        "Darkforged weapon (see page 22) +15 points • Great weapon +4 points • Fireglaive (see page 22) +3 points",
-        "Pistol +5 points • Naptha bombs (see page 22) +10 points",
-        "May take a shield +2 points • A Castellan may purchase magic items up to a total of 75 points"
-      ],
-      "equipment": [
-        "Hand weapon and heavy armour"
-      ],
-      "specialRules": [
-        "Blackshard Armour",
-        "Ensorcelled Weapons",
-        "Rallying Cry",
-        "Resolute",
-        "Stubborn",
-        "Infernal Taskmaster",
-        "Quell Panic"
       ]
     },
     "giant wolf": {

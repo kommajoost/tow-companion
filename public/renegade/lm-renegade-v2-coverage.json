@@ -983,7 +983,6 @@
       ],
       "status": "applied",
       "targets": [
-        "units.skink-priest.options",
         "units.skink-chief.options"
       ]
     },

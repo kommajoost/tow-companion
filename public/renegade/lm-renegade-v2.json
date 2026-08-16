@@ -80,45 +80,6 @@
         "equipment"
       ]
     },
-    "skink-priest": {
-      "options": [
-        {
-          "group": "equipment",
-          "action": "upsert",
-          "name_en": "shield",
-          "points": 2,
-          "perModel": false
-        },
-        {
-          "group": "armor",
-          "action": "patch",
-          "name_en": "Light armour (Calloused hide)*",
-          "points": 3,
-          "perModel": false,
-          "option": {
-            "hidden": true
-          }
-        },
-        {
-          "group": "options",
-          "action": "upsert",
-          "name_en": "Scouts",
-          "points": 10,
-          "perModel": false
-        },
-        {
-          "group": "options",
-          "action": "upsert",
-          "name_en": "Vanguard",
-          "points": 5,
-          "perModel": false
-        }
-      ],
-      "_changed": [
-        "options",
-        "equipment"
-      ]
-    },
     "skink-chief": {
       "options": [
         {
@@ -487,6 +448,21 @@
         }
       ],
       "specialRules": "Arcane Vassal, Armoured Hide (3), Aquatic, Close Order, Cold Blooded, Immune to Psychology, Large Target, Lore of Lustria, Predatory Fighter (Troglodon Only), Primeval Roar, Skink Riders, Stomp Attacks (2), Stubborn, Terror"
+    },
+    "skink-priest": {
+      "options": [
+        {
+          "group": "armor",
+          "action": "patch",
+          "name_en": "Light armour (Calloused hide)*",
+          "option": {
+            "hidden": true
+          }
+        }
+      ],
+      "_changed": [
+        "equipment"
+      ]
     }
   },
   "magicItems": {

@@ -66,6 +66,17 @@ const PATCHES = [
     doelen: ['units.chaos-furies.points'],
   },
   {
+    pack: 'cd',
+    why: 'de bron hangt deze optie onder het crew-profiel "Indentured Ogres", en een crew-profiel is geen datasheet waar de compiler op kan resolven',
+    bron: 'Indentured Ogres — Options: May take Naptha Bombs +8 points (hoort bij de Ogre Loader-upgrade van de Dreadquake Mortar)',
+    unit: 'dreadquake-mortar',
+    patch: {
+      options: [{ group: 'options', action: 'upsert', name_en: 'Naptha bombs (Ogre Loader)', points: 8, perModel: false }],
+    },
+    zoek: /May take Naptha Bombs/,
+    doelen: ['units.dreadquake-mortar.options'],
+  },
+  {
     pack: 'de',
     why: 'notitie staat geel, maar hoort bij het wapen dat de speler kiest',
     bron: 'Notes: A Lash & Buckler counts as both a handweapon and shield and allows the use of the Parry special rule.',
@@ -96,9 +107,16 @@ for (const [pack, lijst] of perPack) {
     if (p.unit) {
       const bestaand = overlay.units[p.unit] ?? {};
       const velden = Object.keys(p.patch).filter((f) => !f.startsWith('_'));
+      // Options MERGEN op naam, nooit de array vervangen: de compiler heeft er dan al in geschreven.
+      const options = p.patch.options
+        ? [...(bestaand.options ?? []).filter((o) =>
+            !p.patch.options.some((n) => n.name_en === o.name_en && n.group === o.group)),
+           ...p.patch.options]
+        : bestaand.options;
       overlay.units[p.unit] = {
         ...bestaand,
         ...p.patch,
+        ...(options ? { options } : {}),
         _changed: [...new Set([...(bestaand._changed ?? []),
           ...velden.map((f) => (f === 'specialRules' ? 'special-rules' : f))])],
       };
@@ -112,11 +130,15 @@ for (const [pack, lijst] of perPack) {
     }
     // Boek het bronblok, zodat een 'todo' in het grootboek niet blijft staan voor iets dat wél is gedaan.
     if (!p.zoek) continue;
-    const blok = coverage.blocks.find((b) => b.status === 'todo' && p.zoek.test(tekstVan.get(b.blockId) ?? ''));
+    // 'todo' (geel) of 'captured' (alleen als tekst bewaard) — beide betekenen: nog niet toegepast.
+    const blok = coverage.blocks.find((b) => (b.status === 'todo' || b.status === 'captured')
+      && p.zoek.test(tekstVan.get(b.blockId) ?? ''));
     if (!blok) { console.warn(`  (geen open coverage-blok gevonden voor ${p.unit ?? p.profiel})`); continue; }
     const status = p.status ?? 'applied';
-    coverage.counts.todo -= 1;
-    coverage.counts[status] = (coverage.counts[status] ?? 0) + 1;
+    if (blok.status !== status) {
+      coverage.counts[blok.status] -= 1;
+      coverage.counts[status] = (coverage.counts[status] ?? 0) + 1;
+    }
     blok.status = status;
     blok.targets = p.doelen;
     blok.reason = `met de hand toegepast: ${p.why}`;

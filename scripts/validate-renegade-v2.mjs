@@ -220,6 +220,31 @@ assert(ok.units.yhetees?.options?.some((option) => norm(option.name_en) === 'amb
 
 const cd = read('cd-renegade-v2.json');
 assert(cd.addedUnits?.core?.some((unit) => unit.id === 'chaos-dwarf-warriors'), 'cd: Chaos Dwarf Warriors missing');
+
+// De Despot/Castellan-scheiding (speler-melding 16-08). Het draft hernoemt OWB's lord-tier Infernal
+// Castellan (125, Taurus-mounts) naar "Despot" en introduceert een NIEUWE, lichtere "Castellan"
+// (75) als Infernal Guard Commander. Vóór deze toets verkocht de app de lord voor 75 punten.
+assert(cd.units['infernal-castellan']?.replace?.name_en === 'Despot', 'cd: lord-tier moet Despot heten');
+assert(cd.units['infernal-castellan']?.points === undefined, 'cd: Despot blijft 125 — een puntpatch hier is de oude verwisseling');
+assert(cd.addedUnits?.characters?.some((u) => u.id === 'castellan' && u.points === 75),
+  'cd: de nieuwe Castellan (75, Infernal Guard Commander) ontbreekt');
+assert(cd.units['sorcerer-prophet']?.points === 175, 'cd: Sorcerer-Prophet moet 175 zijn');
+assert((cd.units['sorcerer-prophet']?.replace?.lores ?? []).includes('battle-magic'),
+  'cd: Sorcerers of Hashut moeten Battle Magic als lore-keuze hebben');
+assert(cd.units['infernal-seneschal']?.points === 65, 'cd: Seneschal moet 65 zijn');
+assert((cd.units['infernal-seneschal']?.options ?? []).some((o) => /darkforged/i.test(o.name_en)),
+  'cd: de gedeelde Lords-opties horen ook op de Seneschal');
+assert(cd.profiles?.despot?.stats?.[0]?.WS === '7', 'cd: Despot-statline (WS7) ontbreekt');
+
+// De doelwit-machine zelf, op het geval dat hem afdwong: de Lord-prijs voor Level 2 is 30, de
+// Thrall-prijs 60, en de Thrall mag geen Level 3.
+const vcDoel = read('vc-renegade-v2.json');
+const lordOpts = vcDoel.units['vampire-count']?.options ?? [];
+const thrallOpts = vcDoel.units['vampire-thrall']?.options ?? [];
+assert(lordOpts.some((o) => /level 2/i.test(o.name_en) && o.points === 30),
+  'vc: Vampire Lord Level 2 moet +30 zijn (niet de Thrall-prijs)');
+assert(!thrallOpts.some((o) => /level 3/i.test(o.name_en)),
+  'vc: een Vampire Thrall mag geen Level 3 Wizard worden');
 assert(cd.addedUnits?.core?.some((unit) => unit.id === 'blunderbuss-decimators'), 'cd: Blunderbuss Decimators missing');
 
 const doc = read('doc-renegade-v2.json');

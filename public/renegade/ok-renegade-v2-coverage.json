@@ -682,8 +682,7 @@
    ],
    "status": "applied",
    "targets": [
-    "units.slaughtermaster.options",
-    "units.butcher.options"
+    "units.slaughtermaster.options"
    ]
   },
   {
@@ -704,7 +703,6 @@
    ],
    "status": "applied",
    "targets": [
-    "units.slaughtermaster.options",
     "units.butcher.options"
    ]
   },
