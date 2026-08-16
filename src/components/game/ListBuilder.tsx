@@ -628,7 +628,10 @@ export function ListBuilder() {
                 setMountInfo({
                   title: lore.name,
                   details: [`${lore.spells.length} spell${lore.spells.length === 1 ? '' : 's'} in this army composition`],
-                  rules: lore.spells.map((spell) => spell.name),
+                  // Mét de slug, niet alleen de naam: "Storm Call" bestaat twee keer — als signature
+                  // spell van Elementalism en als bound spell op een item — en de naam-index koos de
+                  // verkeerde. De lore weet z'n eigen spreukpagina's al, dus geef die door.
+                  rules: lore.spells.map((spell) => ({ label: spell.name, slug: spell.slug })),
                 });
               }
               return;
@@ -662,6 +665,9 @@ export function ListBuilder() {
               });
               return;
             }
+            // Kent de aanroeper de pagina al, gebruik die. Een spreuk deelt z'n naam soms met een
+            // gewone special rule, en dan is opzoeken op naam een gok met een verkeerd antwoord.
+            if (what.kind === 'rule' && what.slug) { openRule(what.slug); return; }
             const slug = resolveRuleSlug(label, ruleIdx) ?? resolveOptionSlug(label, ruleIdx);
             if (slug) { openRule(slug); return; }
 

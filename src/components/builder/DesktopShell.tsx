@@ -199,7 +199,7 @@ export function DesktopShell(props: {
   onExport?: () => void;
   onPrint?: () => void;
   /** Doorgegeven aan <UnitOptions> in de inspector. */
-  onShowInfo?: (what: { kind: 'rule'; name: string } | { kind: 'item'; itemId: string; name: string } | { kind: 'mount'; name: string } | { kind: 'lore'; slug: string }) => void;
+  onShowInfo?: (what: { kind: 'rule'; name: string; slug?: string } | { kind: 'item'; itemId: string; name: string } | { kind: 'mount'; name: string } | { kind: 'lore'; slug: string }) => void;
   /** Campagne: open de naam-dialoog voor de unit in de inspector. Absent -> geen naam-rij. */
   onNaam?: (uid: string) => void;
   /** Campagne: het puntenplafond van een unit deze Act, voor de inspector-kop. */

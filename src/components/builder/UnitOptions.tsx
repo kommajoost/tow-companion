@@ -136,7 +136,7 @@ const ICON_BTN: React.CSSProperties = {
  */
 function TroopTypeLink({ name, onShowInfo }: {
   name: string;
-  onShowInfo?: (what: { kind: 'rule'; name: string } | { kind: 'item'; itemId: string; name: string } | { kind: 'mount'; name: string } | { kind: 'lore'; slug: string }) => void;
+  onShowInfo?: (what: { kind: 'rule'; name: string; slug?: string } | { kind: 'item'; itemId: string; name: string } | { kind: 'mount'; name: string } | { kind: 'lore'; slug: string }) => void;
 }): React.JSX.Element {
   if (!onShowInfo) return <>{name}</>;
   return (
@@ -477,7 +477,7 @@ export function UnitOptions(props: {
   onDuplicate?: () => void;
   /** Opent het regel-/profielpaneel van de app. De container bezit de regeldata en de
    *  slug-resolutie; geef door wat je wilt tonen. */
-  onShowInfo?: (what: { kind: 'rule'; name: string } | { kind: 'item'; itemId: string; name: string } | { kind: 'mount'; name: string } | { kind: 'lore'; slug: string }) => void;
+  onShowInfo?: (what: { kind: 'rule'; name: string; slug?: string } | { kind: 'item'; itemId: string; name: string } | { kind: 'mount'; name: string } | { kind: 'lore'; slug: string }) => void;
   /** Tighter rows and smaller type, for the desktop inspector. The phone flow leaves it off: there this
    *  screen IS the screen and every row is a tap target. */
   dense?: boolean;
@@ -1187,7 +1187,9 @@ export function UnitOptions(props: {
                         <button
                           key={sp.slug}
                           type="button"
-                          onClick={() => onShowInfo?.({ kind: 'rule', name: sp.name })}
+                          // Mét slug: een spreuknaam kan ook een gewone special rule zijn ("Storm
+                          // Call" is allebei), en opzoeken op naam koos dan de verkeerde pagina.
+                          onClick={() => onShowInfo?.({ kind: 'rule', name: sp.name, slug: sp.slug })}
                           style={{
                             ...BTN_RESET, width: '100%', minHeight: 26, cursor: onShowInfo ? 'pointer' : 'default',
                             display: 'flex', alignItems: 'baseline', gap: 9, padding: '3px 0',

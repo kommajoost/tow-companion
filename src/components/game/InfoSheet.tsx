@@ -17,7 +17,11 @@ export interface InfoSheetData {
   troopType?: string;
   flavour?: string;
   profiles?: UnitProfile[];
-  rules: string[];
+  /** Een regel als LABEL (naam → pagina opzoeken) of, waar de bron de pagina al kent, als
+   *  `{ label, slug }`. Dat tweede is nodig omdat een naam twee pagina's kan hebben: "Storm Call" is
+   *  zowel de signature spell van Elementalism als een bound spell op een item, en de naam-index
+   *  koos de eerst geregistreerde — dus de verkeerde (Joost, 12-08). */
+  rules: (string | { label: string; slug: string })[];
   /** Datasheet context that is neither a stat nor a special rule (base, equipment, mount note). */
   details?: string[];
   /** Het wapenprofiel van een magic weapon (15-08-2026): Range/Strength/AP + de special rules.
@@ -56,9 +60,12 @@ export function InfoSheet({ info, onClose }: { info: InfoSheetData | null; onClo
   // with the wargear aliases the rulebook needs — a command role ("Alluress (champion)" → Champions),
   // "General", "Battle Standard Bearer". A hundred of the labels this sheet is now handed resolve ONLY
   // that way, and without it they would print as dead paragraphs beside their tappable neighbours.
-  const slugOf = (r: string) => resolveRuleSlug(r, idx) ?? resolveOptionSlug(r, idx);
+  const labelOf = (r: string | { label: string; slug: string }) => (typeof r === 'string' ? r : r.label);
+  const slugOf = (r: string | { label: string; slug: string }) => (typeof r === 'string'
+    ? resolveRuleSlug(r, idx) ?? resolveOptionSlug(r, idx)
+    : r.slug);
   const chips = info.rules.filter((r) => slugOf(r));
-  const prose = info.rules.filter((r) => !slugOf(r));
+  const prose = info.rules.filter((r) => !slugOf(r)).map(labelOf);
 
   return (
     <div
@@ -147,8 +154,8 @@ export function InfoSheet({ info, onClose }: { info: InfoSheetData | null; onClo
 
         {chips.length > 0 && (
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginTop: 8 }}>
-            {chips.map((label, i) => (
-              <button key={i} onClick={() => openRule(slugOf(label)!)} style={{ ...chip, cursor: 'pointer', border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.10)', color: TOW.goldDeep }}>{label}</button>
+            {chips.map((r, i) => (
+              <button key={i} onClick={() => openRule(slugOf(r)!)} style={{ ...chip, cursor: 'pointer', border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.10)', color: TOW.goldDeep }}>{labelOf(r)}</button>
             ))}
           </div>
         )}
