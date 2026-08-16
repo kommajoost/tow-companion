@@ -266,8 +266,8 @@ export function RosterScreen(props: {
             <button
               type="button"
               onClick={onExport}
-              aria-label="Export list"
-              title="Export list"
+              aria-label="Share list"
+              title="Share list"
               style={{
                 flexShrink: 0, width: 36, height: 36, marginRight: 2, padding: 0,
                 border: 'none', background: 'transparent', color: TOW.faint, cursor: 'pointer',

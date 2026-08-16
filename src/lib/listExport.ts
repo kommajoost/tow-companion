@@ -12,16 +12,16 @@
 
 import type { Category, OwbUnit } from './owbBuilder';
 
-/** De vier vormen. */
-export type ExportFormat =
-  /** Alles: kopregel, per categorie, loadout per unit, punten, totaal. */
-  | 'full'
-  /** Eén regel per unit, geen loadout-detail. Voor een snelle blik of een chatbericht. */
-  | 'compact'
-  /** Zoals `full`, maar met Markdown-opmaak — voor Discord en forums. */
-  | 'markdown'
-  /** Zoals `full` zonder punten: wat je tegenstander mag zien. */
-  | 'opponent';
+/** De drie lijstvormen van Old World Builder, met hun namen.
+ *
+ *  `regular` — elke optie op een eigen regel na de unit.
+ *  `compact` — dezelfde inhoud, maar de opties tussen haakjes achter de unit.
+ *  `simple`  — één regel per unit, alleen de opties die ertoe doen (hand weapons eruit, een compleet
+ *              commando samengevat als "Full Command"), zonder kopregels per categorie.
+ */
+export type ListType = 'regular' | 'compact' | 'simple';
+/** Platte tekst of Markdown — voor Discord en forums. */
+export type Formatting = 'text' | 'markdown';
 
 export interface ExportRow {
   name: string;
@@ -30,7 +30,9 @@ export interface ExportRow {
   category: Category;
   count: number;
   points: number;
-  /** De gekozen opties, al samengevat door de builder (" · "-gescheiden). */
+  /** De VOLLEDIGE loadout, zoals de builder hem kent (base wargear + keuzes + magic items). */
+  loadout: string[];
+  /** De ontruiste samenvatting die de roster onder de unit toont. Dit is wat `simple` gebruikt. */
   whisper: string;
   unit: OwbUnit;
 }
@@ -46,11 +48,16 @@ export interface ExportMeta {
 }
 
 export interface ExportOptions {
-  format: ExportFormat;
+  listType: ListType;
+  formatting: Formatting;
+  /** OWB's `isShowList`: geen punten — de lijst die je je tegenstander geeft. */
+  hidePoints?: boolean;
   /** De special rules van elke unit eronder zetten. */
   specialRules?: boolean;
   /** De statline eronder zetten. Vereist `statsFor`; zonder dat wordt de schakelaar genegeerd. */
   stats?: boolean;
+  /** De eigen naam van een unit meenemen (OWB's custom note). */
+  customNotes?: boolean;
   /** Statlines opzoeken op unitnaam (dezelfde lookup die de builder gebruikt). */
   statsFor?: (unitName: string) => { Name: string; M: string; WS: string; BS: string; S: string; T: string; W: string; I: string; A: string; Ld: string }[];
 }
@@ -72,63 +79,120 @@ const clean = (s: string): string =>
     .replace(/\s+([,;.])/g, '$1')
     .trim();
 
-const STAT_COLS = ['M', 'WS', 'BS', 'S', 'T', 'W', 'I', 'A', 'Ld'] as const;
+/** Twee labels die ALLEEN in onze catalogus bestaan, niet in die van OWB — dus drukt OWB ze ook niet
+ *  af en zou onze tekst zonder deze filter afwijken voor dezelfde lijst:
+ *   • "On foot" is bij ons een echte mount-optie (index 0); bij OWB is geen mount simpelweg géén
+ *     regel in `mounts`, en hun export drukt alleen een mount af die `active` is.
+ *   • "Wizard" is de kale `alwaysActive` kop boven de Level-keuze. OWB neemt een alwaysActive optie
+ *     alleen mee als die aan een compositie hangt, dus zo'n kop valt daar weg. "Level 2 Wizard" is
+ *     wél een echte keuze en blijft staan. */
+const PLAATSHOUDERS = [/^on foot$/i, /^wizard$/i];
 
+const STAT_COLS = ['M', 'WS', 'BS', 'S', 'T', 'W', 'I', 'A', 'Ld'] as const;
+/** OWB zet de statline met NBSP's aan elkaar, zodat een geplakte regel niet halverwege afbreekt. */
+const NB = String.fromCharCode(160); // NBSP, expliciet: onzichtbaar in de bron is onleesbaar
+
+/** Eén unitregel, in OWB's vorm: "10 Dark Elf Warriors [80 pts]".
+ *  De telling staat er alleen als de unit er meer dan één is — precies zoals `unit.strength`. */
+const unitKop = (r: ExportRow, punten: boolean): string =>
+  `${r.count > 1 ? `${r.count} ` : ''}${clean(r.name)}${punten ? ` [${r.points} pts]` : ''}`;
+
+/** De statline-regel van OWB: `[Naam] M(4) WS(3) …`, met NBSP's tussen de velden. */
+function statRegels(r: ExportRow, opts: ExportOptions, md: boolean): string[] {
+  if (!opts.stats || !opts.statsFor) return [];
+  return opts.statsFor(clean(r.name)).map((row) => {
+    const velden = STAT_COLS.map((k) => `${k}(${row[k] ?? NB})`).join(NB);
+    const naam = row.Name ? `[${row.Name.replace(/ /g, NB)}]${NB}` : '';
+    return `${md ? ' - ' : ''}${naam}${velden}`;
+  });
+}
+
+/**
+ * Een army list als tekst, in de opbouw van Old World Builder.
+ *
+ * PUUR. Deze module rekent NIETS uit: hij krijgt de rijen die de builder al op het scherm zet
+ * (punten uit `entryPoints`, loadout uit `loadoutLabels`) en zet die om in tekst. Zou hij zelf
+ * tellen, dan kon de export iets anders zeggen dan de builder — precies de soort stille afwijking
+ * die in dit project al eerder geld heeft gekost.
+ *
+ * WAAROM PRECIES OWB'S VORM. Spelers plakken lijsten tussen apps, forums en Discord heen en weer, en
+ * die vorm is daar de gewoonte geworden: `===`-kop, `++ Categorie [punten] ++`, opties als streepjes,
+ * `---` en een bronregel onderaan. Overgenomen uit hun `get-list-as-text.js` (CC BY 4.0), inclusief
+ * de NBSP's in de statline. Eén ding is bewust anders: de bronregel noemt DEZE app, want de lijst is
+ * hier gemaakt — "Created with Old World Builder" eronder zetten zou simpelweg niet waar zijn.
+ */
 export function listToText(rows: ExportRow[], meta: ExportMeta, opts: ExportOptions): string {
-  const md = opts.format === 'markdown';
-  const puntenTonen = opts.format !== 'opponent';
+  const md = opts.formatting === 'markdown';
+  const compact = opts.listType === 'compact';
+  const punten = !opts.hidePoints;
+  const kopRegel = `${meta.faction}, ${meta.composition}, ${meta.rule}`;
+  const bron = 'Created with "Old World Companion"';
+  const url = 'https://oldworldcompanion.vercel.app';
+
+  // ── SIMPLE: geen categorieën, één regel per unit ──────────────────────────────────────────────
+  if (opts.listType === 'simple') {
+    const regels = rows.map((r) => {
+      const opties = clean(r.whisper).split(' · ').filter(Boolean).join(', ');
+      return `${r.count > 1 ? `${r.count} ` : ''}${clean(r.name)}${opties ? `, ${opties}` : ''}${punten ? ` - ${r.points}` : ''}`;
+    });
+    return [
+      `${meta.listName}${punten ? ` [${meta.total} pts]` : ''}`,
+      kopRegel,
+      '',
+      ...regels,
+      '',
+      '---',
+      bron,
+      '',
+      `[${url}]`,
+    ].join('\n');
+  }
+
   const uit: string[] = [];
 
-  // ── Kop ──────────────────────────────────────────────────────────────────────────────────────
-  uit.push(md ? `## ${meta.listName}` : meta.listName);
-  uit.push(`${meta.faction} · ${meta.composition} · ${meta.rule}`);
-  // Bij 'opponent' staat het totaal er wél: dat is afgesproken vóór het spel en juist wat de ander
-  // wil weten. Alleen de opbouw per unit blijft weg.
-  uit.push(`${meta.total} / ${meta.cap} points`);
-  uit.push('');
+  // ── Kop ───────────────────────────────────────────────────────────────────────────────────────
+  // OWB laat de kop weg bij `compact` in platte tekst, en zet 'm als `##` in Markdown.
+  if (md) {
+    uit.push(`## ${meta.listName}${punten ? ` [${meta.total} pts]` : ''}`, kopRegel, '');
+  } else if (!compact) {
+    uit.push('===', `${meta.listName}${punten ? ` [${meta.total} pts]` : ''}`, kopRegel, '===', '');
+  }
 
   for (const cat of CAT_ORDER) {
     const inCat = rows.filter((r) => r.category === cat);
     if (!inCat.length) continue;
     const catPunten = inCat.reduce((n, r) => n + r.points, 0);
-    const kop = puntenTonen ? `${CAT_LABEL[cat]} — ${catPunten} points` : CAT_LABEL[cat];
-    uit.push(md ? `### ${kop}` : kop.toUpperCase());
+    const kop = `${CAT_LABEL[cat]}${punten ? ` [${catPunten} pts]` : ''}`;
+    uit.push(md ? `### ${kop}` : `++ ${kop} ++`);
+    if (!compact && !md) uit.push('');
 
     for (const r of inCat) {
-      const naam = clean(r.name);
-      const aantal = r.count > 1 ? `${r.count}× ` : '';
-      const prijs = puntenTonen ? ` — ${r.points} pts` : '';
-      const regel = `${aantal}${naam}${prijs}`;
+      uit.push(`${md ? '- ' : ''}${unitKop(r, punten)}`);
 
-      if (opts.format === 'compact') {
-        // Compact: alles op één regel, inclusief de loadout, want dat is nog steeds het meeste van
-        // wat je wil weten — alleen niet uitgevouwen.
-        const opties = r.whisper ? ` (${clean(r.whisper)})` : '';
-        uit.push(`${regel}${opties}`);
-        continue;
+      // De opties: als lijstje eronder (regular) of tussen haakjes (compact/markdown).
+      const loadout = r.loadout.map(clean).filter((o) => o && !PLAATSHOUDERS.some((re) => re.test(o)));
+      if (loadout.length) {
+        if (compact || md) uit.push(`${md ? ' -# ' : ''}(${loadout.join(', ')})`);
+        else uit.push(...loadout.map((o) => `- ${o}`));
       }
-
-      uit.push(md ? `- **${regel}**` : regel);
-      if (r.bijnaam) uit.push(md ? `  - *“${r.bijnaam}”*` : `    “${r.bijnaam}”`);
-      if (r.whisper) uit.push(md ? `  - ${clean(r.whisper)}` : `    ${clean(r.whisper)}`);
-
-      if (opts.stats && opts.statsFor) {
-        for (const row of opts.statsFor(naam)) {
-          const waarden = STAT_COLS.map((k) => `${k} ${row[k] ?? '-'}`).join(' ');
-          const label = row.Name && row.Name !== naam ? `${row.Name}: ` : '';
-          uit.push(md ? `  - \`${label}${waarden}\`` : `    ${label}${waarden}`);
-        }
-      }
-
       if (opts.specialRules) {
         const sr = clean(r.unit.specialRules?.name_en ?? '');
-        if (sr) uit.push(md ? `  - *${sr}*` : `    ${sr}`);
+        if (sr) uit.push(md ? ` - __Special Rules:__ *${sr}*` : `Special Rules: ${sr}`);
       }
+      if (opts.customNotes && r.bijnaam) {
+        uit.push(md ? ` - __Note:__ *${r.bijnaam}*` : `Note: ${r.bijnaam}`);
+      }
+      const stats = statRegels(r, opts, md);
+      if (stats.length) {
+        if (!compact && !md) uit.push('');
+        uit.push(...stats);
+      }
+      if (!md) uit.push('');
     }
-    uit.push('');
   }
 
-  // Eén afsluitende regel, zodat een geplakte lijst niet met een lege regel eindigt.
+  uit.push(md ? `*${bron}* - ${url}` : `---\n${bron}\n\n[${url}]`);
+
   return uit.join('\n').replace(/\n{3,}/g, '\n\n').trim() + '\n';
 }
 
@@ -154,7 +218,7 @@ const escHtml = (s: string): string =>
 
 /** Het volledige, zelfstandige HTML-document voor het printvenster. */
 export function listToPrintHtml(rows: ExportRow[], meta: ExportMeta, opts: ExportOptions): string {
-  const puntenTonen = opts.format !== 'opponent';
+  const puntenTonen = !opts.hidePoints;
   const e = escHtml;
 
   const secties = CAT_ORDER.map((cat) => {

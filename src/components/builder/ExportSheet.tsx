@@ -1,4 +1,4 @@
-// Exporteer een army list: kies een vorm, zie meteen wat eruit komt, en neem hem mee.
+// DEEL een army list: kies een vorm, zie meteen wat eruit komt, en neem hem mee.
 //
 // Drie uitgangen, omdat ze verschillende dingen zijn:
 //   • Klembord — voor een chatbericht of een forumpost. Wat je 95% van de tijd wil.
@@ -14,15 +14,20 @@
 import { useMemo, useState } from 'react';
 import { TOW, towFont, engraved } from '../../design/tow';
 import { useBackClose } from '../../lib/backStack';
-import { exportFilename, listToPrintHtml, listToText, type ExportFormat, type ExportMeta, type ExportOptions, type ExportRow } from '../../lib/listExport';
+import { exportFilename, listToPrintHtml, listToText, type ExportMeta, type ExportOptions, type ExportRow, type Formatting, type ListType } from '../../lib/listExport';
 
 const eb = engraved as React.CSSProperties;
 
-const VORMEN: { id: ExportFormat; label: string; uitleg: string }[] = [
-  { id: 'full', label: 'Full', uitleg: 'Every unit with its loadout and points.' },
-  { id: 'compact', label: 'Compact', uitleg: 'One line per unit — loadout in brackets.' },
-  { id: 'markdown', label: 'Markdown', uitleg: 'Formatted for Discord and forums.' },
-  { id: 'opponent', label: 'For your opponent', uitleg: 'The same list without per-unit points.' },
+// De drie vormen en de twee opmaken van Old World Builder, met dezelfde betekenis — spelers die
+// lijsten tussen apps heen en weer plakken herkennen ze zo terug.
+const VORMEN: { id: ListType; label: string; uitleg: string }[] = [
+  { id: 'regular', label: 'Regular', uitleg: 'Every option on its own line.' },
+  { id: 'compact', label: 'Compact', uitleg: 'Options in brackets behind the unit.' },
+  { id: 'simple', label: 'Simple', uitleg: 'One line per unit, only what matters.' },
+];
+const OPMAAK: { id: Formatting; label: string }[] = [
+  { id: 'text', label: 'Plain text' },
+  { id: 'markdown', label: 'Markdown' },
 ];
 
 export function ExportSheet({
@@ -33,22 +38,30 @@ export function ExportSheet({
   statsFor?: ExportOptions['statsFor'];
   onClose: () => void;
 }): React.JSX.Element {
-  const [format, setFormat] = useState<ExportFormat>('full');
+  const [listType, setListType] = useState<ListType>('regular');
+  const [formatting, setFormatting] = useState<Formatting>('text');
+  const [hidePoints, setHidePoints] = useState(false);
   const [specialRules, setSpecialRules] = useState(false);
   const [stats, setStats] = useState(false);
+  const [customNotes, setCustomNotes] = useState(false);
   const [gekopieerd, setGekopieerd] = useState(false);
 
-  // Compact laat per unit maar één regel toe, dus daar hebben de twee schakelaars geen plek. Ze
+  // `simple` is één regel per unit — daar past geen statline of regelset onder. De schakelaars
   // blijven staan (je keuze wordt onthouden als je terugschakelt) maar doen niets, en dat staat er.
-  const detailKan = format !== 'compact';
+  const detailKan = listType !== 'simple';
+  const opts: ExportOptions = {
+    listType,
+    formatting,
+    hidePoints,
+    specialRules: detailKan && specialRules,
+    stats: detailKan && stats,
+    customNotes: detailKan && customNotes,
+    statsFor,
+  };
   const tekst = useMemo(
-    () => listToText(rows, meta, {
-      format,
-      specialRules: detailKan && specialRules,
-      stats: detailKan && stats,
-      statsFor,
-    }),
-    [rows, meta, format, detailKan, specialRules, stats, statsFor],
+    () => listToText(rows, meta, opts),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [rows, meta, listType, formatting, hidePoints, detailKan, specialRules, stats, customNotes, statsFor],
   );
 
   useBackClose(true, onClose);
@@ -89,9 +102,7 @@ export function ExportSheet({
   const bewaarPdf = () => {
     const w = window.open('', '_blank');
     if (!w) return; // pop-up geblokkeerd — de andere twee uitgangen werken nog
-    w.document.write(listToPrintHtml(rows, meta, {
-      format, specialRules: detailKan && specialRules, stats: detailKan && stats, statsFor,
-    }));
+    w.document.write(listToPrintHtml(rows, meta, opts));
     w.document.close();
     w.focus();
     // Wachten tot de stylesheet is toegepast: print() op een net-geschreven document pakt in Safari
@@ -123,7 +134,7 @@ export function ExportSheet({
       >
         <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, marginBottom: 10 }}>
           <div style={{ flex: 1, minWidth: 0 }}>
-            <div style={{ ...eb, fontSize: 8.5, color: TOW.gold }}>Export</div>
+            <div style={{ ...eb, fontSize: 8.5, color: TOW.gold }}>Share</div>
             <h2 style={{ margin: 0, fontFamily: towFont.display, fontWeight: 700, fontSize: 17, color: TOW.ink }}>{meta.listName}</h2>
           </div>
           <button onClick={onClose} aria-label="Close" style={{ border: 'none', background: 'none', cursor: 'pointer', fontSize: 22, lineHeight: 1, color: TOW.muted, padding: '0 4px' }}>×</button>
@@ -132,10 +143,10 @@ export function ExportSheet({
         {/* Vorm */}
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(126px, 1fr))', gap: 6, marginBottom: 10 }}>
           {VORMEN.map((v) => {
-            const aan = format === v.id;
+            const aan = listType === v.id;
             return (
               <button
-                key={v.id} type="button" onClick={() => setFormat(v.id)} title={v.uitleg}
+                key={v.id} type="button" onClick={() => setListType(v.id)} title={v.uitleg}
                 style={{
                   ...knop, textAlign: 'left', padding: '8px 10px',
                   border: `1px solid ${aan ? TOW.goldDeep : TOW.line}`,
@@ -153,7 +164,8 @@ export function ExportSheet({
         {/* Detail-schakelaars */}
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 14, marginBottom: 10 }}>
           {([['Special rules', specialRules, setSpecialRules, true],
-             ['Statlines', stats, setStats, !!statsFor]] as const).map(([label, aan, zet, kan]) => (
+             ['Statlines', stats, setStats, !!statsFor],
+             ['Unit names', customNotes, setCustomNotes, true]] as const).map(([label, aan, zet, kan]) => (
             <label key={label} style={{
               display: 'inline-flex', alignItems: 'center', gap: 7, cursor: detailKan && kan ? 'pointer' : 'default',
               fontFamily: towFont.serif, fontSize: 13, color: detailKan && kan ? TOW.ink : TOW.faint,
@@ -162,11 +174,30 @@ export function ExportSheet({
               {label}
             </label>
           ))}
+          {/* Los van de detail-schakelaars: dit verandert WAT je deelt, niet hoeveel detail. */}
+          <label style={{ display: 'inline-flex', alignItems: 'center', gap: 7, cursor: 'pointer', fontFamily: towFont.serif, fontSize: 13, color: TOW.ink }}>
+            <input type="checkbox" checked={hidePoints} onChange={(e) => setHidePoints(e.target.checked)} />
+            Hide points
+          </label>
           {!detailKan && (
             <span style={{ fontFamily: towFont.serif, fontSize: 11.5, color: TOW.muted }}>
-              Compact keeps one line per unit, so these are off.
+              Simple keeps one line per unit, so these are off.
             </span>
           )}
+        </div>
+
+        {/* Opmaak — platte tekst of Markdown, net als in Old World Builder. */}
+        <div style={{ display: 'flex', gap: 6, marginBottom: 10 }}>
+          {OPMAAK.map((o) => (
+            <button
+              key={o.id} type="button" onClick={() => setFormatting(o.id)}
+              style={{
+                ...knop, padding: '6px 12px', fontSize: 12.5,
+                border: `1px solid ${formatting === o.id ? TOW.goldDeep : TOW.line}`,
+                background: formatting === o.id ? 'rgba(184,134,47,0.12)' : TOW.panel,
+              }}
+            >{o.label}</button>
+          ))}
         </div>
 
         {/* Wat er precies uit komt — geen verrassingen na het plakken. */}

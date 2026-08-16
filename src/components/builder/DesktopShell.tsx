@@ -656,7 +656,7 @@ export function DesktopShell(props: {
             'import', 'Import OWB', onImportOwb,
             'Importing an OWB file is only available while creating a list — not into an existing one.',
           )}
-          {topButton('export', 'Export', onExport, 'Export is not built yet.')}
+          {topButton('export', 'Share', onExport, 'Sharing is not built yet.')}
           {topButton('print', 'Print', onPrint, 'Print is not built yet.')}
           {topButton('add', 'Add unit', onOpenCatalogue, '', true)}
         </div>

@@ -23,8 +23,8 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { TOW, towFont } from '../../design/tow';
 import { getPersisted, setPersisted, usePersistentState } from '../../store';
 import {
-  CATEGORIES, COMPOSITION_RULES, entryPoints, selectedMagicItems, unitAllowedIn, unitCategoryFor,
-  unitBlocks, unitNote,
+  CATEGORIES, COMPOSITION_RULES, entryPoints, loadoutLabels, selectedMagicItems, unitAllowedIn,
+  unitCategoryFor, unitBlocks, unitNote,
   type BuilderList, type Category, type ListEntry, type MagicItemsData, type OwbArmy, type OwbUnit,
 } from '../../lib/owbBuilder';
 import { deriveList, optionSummary } from '../../lib/builderDerived';
@@ -708,6 +708,9 @@ export function BuilderFlow({
           rows={rows.map((r): ExportRow => ({
             name: r.name, bijnaam: r.bijnaam, category: r.category,
             count: r.count, points: r.points, whisper: r.whisper, unit: r.unit,
+            // De VOLLEDIGE loadout, want de OWB-vormen tonen ook de gratis basisuitrusting; de
+            // `whisper` is juist de ontruiste versie en dient alleen de `simple`-vorm.
+            loadout: loadoutLabels(r.unit, r.entry, itemsData),
           }))}
           meta={{
             listName: name || 'Untitled list',
