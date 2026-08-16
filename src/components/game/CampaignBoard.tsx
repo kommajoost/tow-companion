@@ -1,6 +1,5 @@
 import { useId, useMemo } from 'react';
 import { TOW, towFont } from '../../design/tow';
-import { terrainIconNode } from './terrainIcons';
 
 /**
  * READ-ONLY deployment map for a CAMPAIGN battle (16-08-2026).
@@ -15,7 +14,11 @@ import { terrainIconNode } from './terrainIcons';
  * Two registers on purpose (Joost, 16-08-2026):
  *   • zones, dimension lines and objectives are drawn CRISP — those are rules. Where you may deploy,
  *     how deep your zone is and where the objectives sit is not a matter of taste.
- *   • terrain is drawn MUTED (low opacity, dashed outline) with a caption saying so — at the table
+ *   • terrain is NOT drawn at all (16-08-2026, Joost). It used to sit here muted, but scattered
+ *     woods and hills landed on top of the objective markers, and the plan then claims something it
+ *     does not decide. WHAT goes on the table is the list below the board; WHERE it goes you settle
+ *     at the table by the official rules (tow.whfb.app/battlefield-terrain).
+ *   • (old note) terrain was drawn MUTED (low opacity, dashed outline) with a caption saying so — at the table
  *     you put the pieces down by eye, and those inches are not a rule.
  *
  * Styling follows `BattleBoard` (the planning tool) so both boards read as the same object, but the
@@ -203,12 +206,11 @@ function bandDims(zones: CampaignZone[]): { depthTop: number; depthBottom: numbe
   };
 }
 
-export function CampaignBoard({ layout, secLayout, tableW, tableH, terrain = [], youSide }: {
+export function CampaignBoard({ layout, secLayout, tableW, tableH, youSide }: {
   layout: CampaignLayout;
   secLayout?: CampaignSecLayout | null;
   tableW: number;
   tableH: number;
-  terrain?: CampaignTerrainPiece[];
   /** Which half of the table the viewer deploys on. Only used for a subtle accent — the labels
    *  around the board carry the actual "you / opponent" reading. */
   youSide?: 'top' | 'bottom';
@@ -241,7 +243,6 @@ export function CampaignBoard({ layout, secLayout, tableW, tableH, terrain = [],
     return youSide === 'top' ? cy < H / 2 : cy > H / 2;
   };
 
-  const hasTerrain = terrain.length > 0;
 
   return (
     <div>
@@ -325,41 +326,6 @@ export function CampaignBoard({ layout, secLayout, tableW, tableH, terrain = [],
 
         {grid}
 
-        {/* Terrain — MUTED on purpose. See the caption below the board: the campaign's coordinates
-            are a suggestion for a sensible table, not a placement rule, so they are drawn as a faint
-            footprint with a dashed edge instead of as a hard object. */}
-        {terrain.filter((p) => num(p?.x) !== null && num(p?.y) !== null && num(p?.w) !== null && num(p?.h) !== null).map((p, i) => {
-          const rectShape = p.type === 'field' || p.type === 'building' || p.type === 'obstacle';
-          const iconSize = Math.max(0.8, Math.min(p.w, p.h) * 0.5);
-          return (
-            // Muted, but not invisible: on a phone the board is ~330px wide, so what looks nicely
-            // faint at render size disappears entirely at reading size.
-            <g key={p.id || `t${i}`} opacity={0.62} style={{ pointerEvents: 'none' }}>
-              <rect
-                x={p.x} y={p.y} width={p.w} height={p.h}
-                rx={rectShape ? 0.6 : Math.min(p.w, p.h) / 2}
-                fill="rgba(92,67,38,0.13)"
-                stroke="rgba(92,67,38,0.5)"
-                strokeWidth={0.14}
-                strokeDasharray="0.9 0.7"
-              />
-              <svg
-                x={p.x + (p.w - iconSize) / 2}
-                y={p.y + (p.h - iconSize) / 2}
-                width={iconSize}
-                height={iconSize}
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="rgba(70,52,26,0.75)"
-                strokeWidth={1.8}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                {terrainIconNode(p.type)}
-              </svg>
-            </g>
-          );
-        })}
 
         {/* Central objective (a rule — full strength). */}
         {layout.objective && num(layout.objective.x) !== null && num(layout.objective.y) !== null && (
@@ -435,13 +401,6 @@ export function CampaignBoard({ layout, secLayout, tableW, tableH, terrain = [],
         })()}
       </svg>
 
-      {/* The whole point of the two registers, said out loud. Without this line a drawn board claims
-          a precision it does not have — which is exactly why the old drawn plan was pulled. */}
-      {hasTerrain && (
-        <div style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 11.5, color: TOW.faint, lineHeight: 1.4, marginTop: 5 }}>
-          Terrain is indicative — place to taste at the table. Zones, measurements and objectives are not.
-        </div>
-      )}
     </div>
   );
 }

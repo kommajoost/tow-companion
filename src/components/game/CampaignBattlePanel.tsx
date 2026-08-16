@@ -328,10 +328,6 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
     return `${rol}${wie ? ` — ${wie}` : ''}${side.naam ? ` · ${side.naam}` : ''}`;
   };
   /** Alleen terrein met een volledige positie kan getekend worden; de rest blijft in de chip-lijst. */
-  const boardTerrain = terrain
-    .filter((t): t is typeof t & { x: number; y: number; w: number; h: number } =>
-      t.x != null && t.y != null && t.w != null && t.h != null)
-    .map((t, i) => ({ id: `ct${i}`, type: t.type, x: t.x, y: t.y, w: t.w, h: t.h, difficult: t.difficult }));
 
   const chip = (text: string, title?: string) => (
     <span
@@ -468,7 +464,6 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
             secLayout={secLayout}
             tableW={tableW}
             tableH={tableH}
-            terrain={boardTerrain}
             youSide={youSide}
           />
           <div style={{ fontFamily: serif, fontSize: 12, color: youSide === 'bottom' ? TOW.goldDeep : TOW.muted, marginTop: 4 }}>
