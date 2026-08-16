@@ -4,6 +4,7 @@ import { useGame } from '../../game';
 import { getCachedCampaign, getCampaignCode } from '../../lib/campaign';
 import { battleByCode, battleHandZet, battleTypeLabel, battleTypeNote, type CampaignBattle, type BattleSide, type Perk, type FoundItem, type BattleLijstSamenvatting } from '../../lib/campaignBattle';
 import { ArmyListPicker } from './ArmyListPicker';
+import { CampaignBoard, defenderIsTop, parseSheetLayout, parseSheetSecLayout } from './CampaignBoard';
 import type { Army } from '../../types';
 
 const eb = engraved as React.CSSProperties;
@@ -12,6 +13,14 @@ const serif = towFont.serif;
 
 /** Slug → readable ("empire-of-man" → "Empire of man"). Module scope so the list block can use it too. */
 const pretty = (s: string) => s.replace(/[-_]/g, ' ').replace(/^./, (c) => c.toUpperCase());
+
+// ── BattleSheet v2: de UITGEREKENDE opstelling ───────────────────────────────────────────────────
+// Sinds 16-08-2026 rekent de campagne de deployment zelf uit en schrijft 'm mee in de sheet
+// (`layout`/`secLayout`, in tafel-inches). De Companion rekent hier NIETS na: `src/lib/battle.ts` is
+// een oudere fork van diezelfde scenario-catalogus (kent de drie Battle March-kaarten en de nieuwe
+// attacker/defender-opstellingen niet), dus `deploymentFor` zou stilletjes een ANDERE battle tekenen
+// dan de campagne heeft opgezet. Het lezen van die velden staat in `CampaignBoard` — daar horen ze,
+// want de parser en de tekenaar zijn samen het contract met de campagne.
 
 /**
  * One side's army list, collapsed to a single line and expandable to the FULL line-up: every unit with
@@ -279,11 +288,51 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
   const deployNote = asStr(sheet.deployNote);
   const gameEnd = asStr(sheet.gameEnd);
 
-  // 14-08-2026 — GEEN GETEKENDE PLATTEGROND MEER (Joost). Hier werd het bord op schaal getekend met
-  // de terreinstukken op hun berekende coördinaten. Dat suggereert een precisie die er niet is: aan
-  // tafel zet je de stukken toch naar smaak neer en die millimeters zijn geen regel. Wat je wél nodig
-  // hebt om het bord te bouwen — de maat, de stukken, hun formaat — staat eronder als lijst, precies
-  // zoals de campagne-app het nu ook toont.
+  // ── De deployment-kaart (16-08-2026) ───────────────────────────────────────────────────────────
+  // 14-08 ging de getekende plattegrond eruit: het bord werd op schaal getekend met de terreinstukken
+  // op hun coördinaten, en dat suggereerde een precisie die er niet is — aan tafel zet je de stukken
+  // toch naar smaak neer.
+  //
+  // 16-08 komt de kaart terug, maar in TWEE registers (Joost). Zones, maatlijnen en objectives worden
+  // strak getekend, want dat ZIJN regels: waar je mag opstellen, hoe diep je zone is en waar de
+  // objectives liggen staat niet ter discussie. Het terrein wordt gedempt getekend, met een bijschrift
+  // dat het indicatief is. Wat de kaart toont komt bovendien KANT-EN-KLAAR uit de battle-sheet: de
+  // campagne rekent de opstelling uit, wij tekenen alleen. Zie `CampaignBoard` voor het waarom.
+  const sheetV = asNum(sheet.v) ?? 1;
+  const tableW = asNum(sheet.tableW);
+  const tableH = asNum(sheet.tableH);
+  const layout = parseSheetLayout(sheet.layout);
+  const secLayout = parseSheetSecLayout(sheet.secLayout);
+  // De gerolde D6 achter deze opstelling. Ontbreekt hij op een v2-sheet, dan is het scenario geforceerd
+  // (de campagne legt in `reden` uit waarom) — bij een v1-sheet weten we het simpelweg niet, en dan
+  // zeggen we niets in plaats van 'forced' te beweren.
+  const worp = asNum(sheet.worp);
+  const worpObjectief = asNum(sheet.worpObjectief);
+  const rollLine = worp != null
+    ? `Setup roll: ${worp}${worpObjectief != null ? ` · Objectives roll: ${worpObjectief}` : ''}`
+    : sheetV >= 2 ? 'Setup: forced — no roll' : null;
+
+  // WIE STAAT WAAR. `defenderIsTop` leest het uit de zone-labels met de campagne-afspraak
+  // (zone A = boven = verdediger) als terugval. Mijn eigen kant komt uit `mySeat`, de bestaande
+  // stoel-bepaling van dit scherm: AANVALLER → host, VERDEDIGER → guest.
+  const defenderTop = defenderIsTop(layout, tableH ?? 0, asStr(sheet.verdedigerKant));
+  const ikBenVerdediger = mySeat === 'guest';
+  const youSide: 'top' | 'bottom' | undefined = mySeat
+    ? (ikBenVerdediger === defenderTop ? 'top' : 'bottom')
+    : undefined;
+  /** Bijschrift boven/onder het bord: rol, of jij dat bent, en wiens leger het is. */
+  const kantLabel = (isDefender: boolean): string => {
+    const side = isDefender ? battle.verdediger : battle.aanvaller;
+    const rol = isDefender ? 'Defender' : 'Attacker';
+    const wie = !mySeat ? null : isDefender === ikBenVerdediger ? 'you' : 'opponent';
+    return `${rol}${wie ? ` — ${wie}` : ''}${side.naam ? ` · ${side.naam}` : ''}`;
+  };
+  /** Alleen terrein met een volledige positie kan getekend worden; de rest blijft in de chip-lijst. */
+  const boardTerrain = terrain
+    .filter((t): t is typeof t & { x: number; y: number; w: number; h: number } =>
+      t.x != null && t.y != null && t.w != null && t.h != null)
+    .map((t, i) => ({ id: `ct${i}`, type: t.type, x: t.x, y: t.y, w: t.w, h: t.h, difficult: t.difficult }));
+
   const chip = (text: string, title?: string) => (
     <span
       key={text}
@@ -373,6 +422,12 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
           {reason && (
             <div style={{ fontFamily: serif, fontSize: 13.5, color: TOW.parchDim, marginTop: 4 }}>{reason}</div>
           )}
+          {/* De worp die dit scenario (en bij Battle March ook de objectives) opleverde. Klein, maar
+              het scheelt het verschil tussen "dit is gerold" en "dit is opgelegd" — en `reason`
+              hierboven vertelt in dat tweede geval waarom. */}
+          {rollLine && (
+            <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginTop: 5 }}>{rollLine}</div>
+          )}
         </div>
       )}
 
@@ -398,6 +453,29 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
           they belong on a pre-game screen. Slugs are title-cased for reading — the campaign remains the
           authority on what each one actually requires. */}
       {quests.length > 0 && chipRow('Battle quests', quests.map((q) => chip(pretty(q))))}
+
+      {/* DE DEPLOYMENT-KAART. Alleen als de sheet een uitgerekende `layout` meebrengt — een oudere
+          (v1) battle heeft die niet, en dan blijft dit scherm precies zoals het was. Boven en onder
+          het bord staat wie daar opstelt, zodat je de kaart kunt lezen vanaf jouw kant van de tafel. */}
+      {layout && tableW && tableH && (
+        <div style={{ marginTop: 12 }}>
+          <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginBottom: 5 }}>Deployment</div>
+          <div style={{ fontFamily: serif, fontSize: 12, color: youSide === 'top' ? TOW.goldDeep : TOW.muted, marginBottom: 4 }}>
+            {kantLabel(defenderTop)}
+          </div>
+          <CampaignBoard
+            layout={layout}
+            secLayout={secLayout}
+            tableW={tableW}
+            tableH={tableH}
+            terrain={boardTerrain}
+            youSide={youSide}
+          />
+          <div style={{ fontFamily: serif, fontSize: 12, color: youSide === 'bottom' ? TOW.goldDeep : TOW.muted, marginTop: 4 }}>
+            {kantLabel(!defenderTop)}
+          </div>
+        </div>
+      )}
 
       {/* Battlefield als LIJST — de maat, de grond en elk terreinstuk met z'n formaat. Genoeg om het
           bord te bouwen; de plaatsing doe je aan tafel. */}

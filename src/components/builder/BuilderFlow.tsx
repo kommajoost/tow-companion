@@ -334,6 +334,12 @@ export function BuilderFlow({
    *
    *  Zit een uid in allebei, dan wint de prullenbak — die is completer. */
   const terugTeHalen = useMemo(() => {
+    // Alleen op CAMPAGNE-lijsten (Joost 16-08-2026): daar is de uid de identiteit (XP, veteranen,
+    // groeiplafond) en is terugzetten dus wezenlijk anders dan opnieuw toevoegen. Op een gewone
+    // lijst is "opnieuw toevoegen" hetzelfde resultaat, en dan is een restore-sectie alleen ruis.
+    // Bewust op `list.campaign` en niet op `campaignCtx`: de prullenbak moet ook werken als de
+    // campagne-koppeling even niet geladen is.
+    if (!(list as { campaign?: boolean }).campaign) return [];
     const inLijst = new Set(list.entries.map((e) => e.uid));
     const uit: {
       uid: string; unitId: string; cat: string; modellen: number | null;
@@ -378,7 +384,7 @@ export function BuilderFlow({
       }
     }
     return uit;
-  }, [campaignCtx, list.entries, prullenbak, getUnit]);
+  }, [campaignCtx, list, prullenbak, getUnit]);
 
   const duplicateUnit = useCallback((uid: string) => {
     update((l) => {
