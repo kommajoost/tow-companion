@@ -271,14 +271,15 @@ export function hideForeignOptions(unit: OwbUnit, composition: string, inherits?
  *  er kan niets door verschuiven. Het gebeurt hier, in de ene funnel waar elke lijst doorheen gaat,
  *  zodat roster, picker, inspector, export en validatiemeldingen dezelfde naam tonen. */
 const TAG = /\s*\{[^}]*\}/g;
+const striptag = (naam: unknown): string => String(naam ?? '').replace(TAG, '').trim();
 const zonderTag = (unit: OwbUnit): OwbUnit => {
-  const schoon = { ...unit, name_en: unit.name_en.replace(TAG, '').trim() };
+  const schoon = { ...unit, name_en: striptag(unit.name_en) };
   for (const group of ['command', 'equipment', 'armor', 'options', 'mounts'] as const) {
     const list = schoon[group];
     if (!Array.isArray(list)) continue;
     const mark = (options: OwbOption[]): OwbOption[] => options.map((option) => ({
       ...option,
-      name_en: option.name_en.replace(TAG, '').trim(),
+      name_en: striptag(option.name_en),
       ...(Array.isArray(option.options) ? { options: mark(option.options) } : {}),
     }));
     schoon[group] = mark(list);
@@ -478,9 +479,13 @@ function mergeStatRows<T extends { Name: string }>(basis: T[], patch?: T[]): T[]
  *  Vandaar: match op de leestekenvrije vorm, maar schrijf terug op de sleutel die de index zelf
  *  gebruikt, zodat de lezer hem vindt. Kent de index de naam niet, dan is het een nieuwe unit en
  *  blijft de eigen vorm staan. */
-function indexSleutel(index: Record<string, unknown>, naam: string): string {
+function indexSleutel(index: Record<string, unknown> | null | undefined, naam: string): string {
   const vorm = normOpt(naam);
-  for (const key of Object.keys(index)) if (normOpt(key) === vorm) return key;
+  // `index ?? {}` is geen slordigheid maar het hart van een bug: applyOverlayMountText raakte zijn
+  // index vóór deze koppeling nooit aan, dus een nog-niet-geladen mount-tekst was ongevaarlijk. Met
+  // Object.keys(undefined) werd datzelfde geval een onafgevangen TypeError, en zonder error boundary
+  // betekende dat: inhoud een halve seconde in beeld, dan een zwarte pagina zonder melding.
+  for (const key of Object.keys(index ?? {})) if (normOpt(key) === vorm) return key;
   return vorm;
 }
 
