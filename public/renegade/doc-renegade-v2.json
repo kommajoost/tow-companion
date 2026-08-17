@@ -15,6 +15,7 @@
   "inheritsComposition": "doc-renegade",
   "units": {
     "bloodthirster": {
+      "group": "Bloodthirster – Greater Daemon Of Khorne",
       "minimum": 1,
       "maximum": 1,
       "_changed": [
@@ -51,6 +52,7 @@
       "specialRules": "Brazen Wheels, Close Order, Daemonic, Daemon of Khorne, First Charge, Impact Hits (D3+1), Impetuous, Magic Resistance (-1), Stomp Attacks (D3)"
     },
     "great-unclean-one": {
+      "group": "Great Unclean One – Greater Daemon Of Nurgle",
       "minimum": 1,
       "maximum": 1,
       "_changed": [
@@ -91,16 +93,8 @@
       ],
       "specialRules": "Daemonic, Daemon of Nurgle, Infernal Favour (1), Locus of Fecundity, Lore of Daemons, Poisoned Attacks"
     },
-    "beasts-of-nurgle": {
-      "group": "Beasts Of Nurgle",
-      "minimum": 1,
-      "_changed": [
-        "unit-size",
-        "special-rules"
-      ],
-      "specialRules": "Attention Seeker, Open Order, Daemonic, Daemons of Nurgle, Impetuous, Infernal Favour (1), Loner, Poisoned Attacks, Random Attacks, Regeneration (5+), Slime Trail"
-    },
     "keeper-of-secrets": {
+      "group": "Keeper Of Secrets – Greater Daemon Of Slaanesh",
       "minimum": 1,
       "maximum": 1,
       "_changed": [
@@ -126,16 +120,6 @@
         }
       ]
     },
-    "fiends-of-slaanesh": {
-      "group": "Fiends Of Slaanesh",
-      "points": 46,
-      "_was": 66,
-      "_changed": [
-        "points",
-        "unit-size"
-      ],
-      "minimum": 2
-    },
     "hellflayer-of-slaanesh": {
       "minimum": 1,
       "maximum": 1,
@@ -149,6 +133,7 @@
       "specialRules": "Armour Bane (1, Steed of Slaanesh only), Close Order, Counter Charge, Daemonic, Daemonic Charge (-1), Daemon of Slaanesh, First Charge, Impact Hits (2D6+1), Open Order, Poisoned Attacks (Steed of Slaanesh only), Swiftstride"
     },
     "lord-of-change": {
+      "group": "Lord Of Change – Greater Daemon Of Tzeentch",
       "minimum": 1,
       "maximum": 1,
       "_changed": [
@@ -216,49 +201,7 @@
       ],
       "specialRules": "Chaos Armour, Daemonic, Infernal Favour (2), Lore of Daemons, Regeneration (5+), Singular Essence"
     },
-    "chaos-furies": {
-      "group": "Chaos Furies",
-      "options": [
-        {
-          "group": "options",
-          "action": "upsert",
-          "name_en": "Daemons of Khorne",
-          "points": 2,
-          "perModel": true
-        },
-        {
-          "group": "options",
-          "action": "upsert",
-          "name_en": "Daemons of Nurgle",
-          "points": 1,
-          "perModel": true
-        },
-        {
-          "group": "options",
-          "action": "upsert",
-          "name_en": "Daemons of Slaanesh",
-          "points": 2,
-          "perModel": true
-        },
-        {
-          "group": "options",
-          "action": "upsert",
-          "name_en": "Daemons of Tzeentch",
-          "points": 1,
-          "perModel": true
-        }
-      ],
-      "_changed": [
-        "options",
-        "special-rules",
-        "points"
-      ],
-      "specialRules": "Daemonic, Fly (8), Skirmishers, Swiftstride, Vanguard",
-      "points": 11,
-      "_was": 12
-    },
     "soul-grinder": {
-      "group": "Soul Grinder",
       "minimum": 1,
       "maximum": 1,
       "_changed": [
@@ -362,6 +305,14 @@
       ],
       "minimum": 5
     },
+    "beasts-of-nurgle": {
+      "minimum": 1,
+      "_changed": [
+        "unit-size",
+        "special-rules"
+      ],
+      "specialRules": "Attention Seeker, Open Order, Daemonic, Daemons of Nurgle, Impetuous, Infernal Favour (1), Loner, Poisoned Attacks, Random Attacks, Regeneration (5+), Slime Trail"
+    },
     "nurglings-core": {
       "specialRules": "Daemonic, Daemons of Nurgle, Loner, Poisoned Attacks, Random Attacks, Regeneration (6+), Scouts, Skirmishers",
       "_changed": [
@@ -418,6 +369,15 @@
       "_changed": [
         "points"
       ]
+    },
+    "fiends-of-slaanesh": {
+      "points": 46,
+      "_was": 66,
+      "_changed": [
+        "points",
+        "unit-size"
+      ],
+      "minimum": 2
     },
     "seeker-chariot-of-slaanesh": {
       "points": 85,
@@ -480,6 +440,46 @@
         "special-rules"
       ],
       "specialRules": "Daemonic, Daemons of Tzeentch, Fly (9), Skirmishers, Slashing Attack"
+    },
+    "chaos-furies": {
+      "options": [
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "Daemons of Khorne",
+          "points": 2,
+          "perModel": true
+        },
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "Daemons of Nurgle",
+          "points": 1,
+          "perModel": true
+        },
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "Daemons of Slaanesh",
+          "points": 2,
+          "perModel": true
+        },
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "Daemons of Tzeentch",
+          "points": 1,
+          "perModel": true
+        }
+      ],
+      "_changed": [
+        "options",
+        "special-rules",
+        "points"
+      ],
+      "specialRules": "Daemonic, Fly (8), Skirmishers, Swiftstride, Vanguard",
+      "points": 11,
+      "_was": 12
     }
   },
   "magicItems": {

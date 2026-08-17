@@ -26,6 +26,7 @@
       "_was": 185
     },
     "warlock-engineer": {
+      "group": "Clan Skryre Warlock Engineers",
       "minimum": 1,
       "maximum": 1,
       "_changed": [
@@ -78,6 +79,7 @@
       ]
     },
     "master-assassin": {
+      "group": "Clan Eshin Master Assassins",
       "minimum": 1,
       "maximum": 1,
       "_changed": [
@@ -90,33 +92,11 @@
       "specialRules": "Ambushers, Eshin Infiltration, Evasive, Feigned Flight, Fire & Flee, Hidden, Move through Cover, Poisoned Attacks, Scurry Away, Verminous Valour, Warpstone Weapons, Strikes First, Dodge"
     },
     "plague-priest": {
+      "group": "Clan Pestilens Plague Priests",
       "minimum": 1,
       "maximum": 1,
       "_changed": [
         "unit-size"
-      ]
-    },
-    "stormvermin": {
-      "group": "Stormvermin",
-      "points": 9,
-      "_was": 10,
-      "_changed": [
-        "points"
-      ]
-    },
-    "clanrats": {
-      "group": "Clanrats",
-      "options": [
-        {
-          "group": "options",
-          "action": "upsert",
-          "name_en": "magic standard worth up to",
-          "points": 50,
-          "perModel": false
-        }
-      ],
-      "_changed": [
-        "options"
       ]
     },
     "weapon-team": {
@@ -167,92 +147,6 @@
       ],
       "specialRules": "Loner, Skirmish, Scurry Away, Detachment"
     },
-    "warplock-jezzails": {
-      "group": "Warplock Jezzails",
-      "points": 15,
-      "_was": 19,
-      "_changed": [
-        "points"
-      ]
-    },
-    "rat-swarms": {
-      "group": "Rat Swarms"
-    },
-    "rat-ogres": {
-      "group": "Rat Ogres",
-      "points": 40,
-      "_was": 48,
-      "_changed": [
-        "points",
-        "options",
-        "special-rules"
-      ],
-      "options": [
-        {
-          "group": "options",
-          "action": "upsert",
-          "name_en": "Packmaster for every two Rat Ogres",
-          "points": 5,
-          "perModel": true
-        },
-        {
-          "group": "command",
-          "action": "patch",
-          "name_en": "Master Moulder (champion)",
-          "points": 20,
-          "perModel": false
-        }
-      ],
-      "specialRules": "Close Order, Armour Bane (2), Fear, Frenzy, Horde, Scurry Away, Warband, Scurrying Masses, Warpstone Weapons, Motley Crew"
-    },
-    "giant-rats": {
-      "group": "Giant Rats",
-      "options": [
-        {
-          "group": "options",
-          "action": "upsert",
-          "name_en": "Packmaster for every three Giant Rats",
-          "points": 5,
-          "perModel": true
-        },
-        {
-          "group": "command",
-          "action": "patch",
-          "name_en": "Master Moulder (champion)",
-          "points": 20,
-          "perModel": false
-        }
-      ],
-      "_changed": [
-        "options",
-        "special-rules"
-      ],
-      "specialRules": "Open Order, Fight in Extra Rank, Horde, Scurry Away, Warband, Motley Crew"
-    },
-    "night-runners": {
-      "group": "Night Runners",
-      "options": [
-        {
-          "group": "command",
-          "action": "patch",
-          "name_en": "Nightleader",
-          "points": 6,
-          "perModel": false
-        }
-      ],
-      "_changed": [
-        "options",
-        "special-rules"
-      ],
-      "specialRules": "Evasive, Fire & Flee, Scurry Away, Skirmishers, Vanguard, Regimental Unit"
-    },
-    "gutter-runners": {
-      "group": "Gutter Runners",
-      "specialRules": "Evasive, Feigned Flight, Fire & Flee, Move through Cover, Scouts, Scurry Away, Skirmishers, Poisoned Attacks",
-      "_changed": [
-        "special-rules"
-      ]
-    },
     "hell-pit-abomination": {
       "minimum": 1,
       "maximum": 1,
@@ -274,6 +168,27 @@
       "maximum": 1,
       "_changed": [
         "unit-size"
+      ]
+    },
+    "stormvermin": {
+      "points": 9,
+      "_was": 10,
+      "_changed": [
+        "points"
+      ]
+    },
+    "clanrats": {
+      "options": [
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "magic standard worth up to",
+          "points": 50,
+          "perModel": false
+        }
+      ],
+      "_changed": [
+        "options"
       ]
     },
     "skaven-dregs": {
@@ -330,8 +245,86 @@
       ],
       "specialRules": "Close Order, Levies, Horde, Scurry Away, Expendable, Cornered Rats, Loner"
     },
+    "warplock-jezzails": {
+      "points": 15,
+      "_was": 19,
+      "_changed": [
+        "points"
+      ]
+    },
     "poisoned-wind-globadiers": {
       "specialRules": "Scurry Away, Skirmishers, Warband, Life is Cheap",
+      "_changed": [
+        "special-rules"
+      ]
+    },
+    "rat-ogres": {
+      "points": 40,
+      "_was": 48,
+      "_changed": [
+        "points",
+        "options",
+        "special-rules"
+      ],
+      "options": [
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "Packmaster for every two Rat Ogres",
+          "points": 5,
+          "perModel": true
+        },
+        {
+          "group": "command",
+          "action": "patch",
+          "name_en": "Master Moulder (champion)",
+          "points": 20,
+          "perModel": false
+        }
+      ],
+      "specialRules": "Close Order, Armour Bane (2), Fear, Frenzy, Horde, Scurry Away, Warband, Scurrying Masses, Warpstone Weapons, Motley Crew"
+    },
+    "giant-rats": {
+      "options": [
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "Packmaster for every three Giant Rats",
+          "points": 5,
+          "perModel": true
+        },
+        {
+          "group": "command",
+          "action": "patch",
+          "name_en": "Master Moulder (champion)",
+          "points": 20,
+          "perModel": false
+        }
+      ],
+      "_changed": [
+        "options",
+        "special-rules"
+      ],
+      "specialRules": "Open Order, Fight in Extra Rank, Horde, Scurry Away, Warband, Motley Crew"
+    },
+    "night-runners": {
+      "options": [
+        {
+          "group": "command",
+          "action": "patch",
+          "name_en": "Nightleader",
+          "points": 6,
+          "perModel": false
+        }
+      ],
+      "_changed": [
+        "options",
+        "special-rules"
+      ],
+      "specialRules": "Evasive, Fire & Flee, Scurry Away, Skirmishers, Vanguard, Regimental Unit"
+    },
+    "gutter-runners": {
+      "specialRules": "Evasive, Feigned Flight, Fire & Flee, Move through Cover, Scouts, Scurry Away, Skirmishers, Poisoned Attacks",
       "_changed": [
         "special-rules"
       ]

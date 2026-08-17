@@ -71,7 +71,14 @@ const zoekUnit = (naam) => {
   const w = enkel(naam);
   const raak = alleEffectief.filter((e) => enkel(e.u.name_en) === w
     || enkel(overlay.units[e.unit.id]?.replace?.name_en ?? '') === w);
-  return new Set(raak.map((e) => e.unit.id)).size === 1 ? raak[0] : null;
+  if (!raak.length) return null;
+  if (new Set(raak.map((e) => e.unit.id)).size === 1) return raak[0];
+  // Dezelfde naam op meerdere ids is normaal: OWB zet een unit die in twee categorieën mag staan
+  // twee keer neer (Infernal Ironsworn in Core én Special). Zolang ze het eens zijn over punten en
+  // maat is er niets aan de hand; verschillen ze, dan is dát het probleem en meldt de audit dat.
+  const eens = raak.every((e) => e.u.points === raak[0].u.points
+    && (e.u.minimum ?? 1) === (raak[0].u.minimum ?? 1) && (e.u.maximum ?? 0) === (raak[0].u.maximum ?? 0));
+  return eens ? raak[0] : null;
 };
 /** Alle optielabels van een unit, over alle groepen, genest meegerekend. */
 const labels = (u) => {
@@ -167,7 +174,12 @@ for (const b of reference.blocks) {
       // draft de onderdelen los noemt. Splits het label, anders lijkt elk onderdeel te ontbreken.
       const raak = heeft.filter((o) => {
         const delen = norm(o.naam).split(',').map((x) => x.trim());
-        return delen.includes(kern) || norm(o.naam).includes(kern) || kern.includes(norm(o.naam));
+        if (delen.includes(kern) || norm(o.naam).includes(kern) || kern.includes(norm(o.naam))) return true;
+        // Laatste redmiddel: de bron schrijft de optie als handeling ("May replace its Steam
+        // Cannonade with a Skullcracker"), de catalogus als ding ("Skullcracker (replaces Steam
+        // Cannonade)"). Als het kernwoord van de optie in die zin voorkomt, is het dezelfde keuze.
+        const kop = norm(o.naam).split(/[ (]/)[0];
+        return kop.length >= 5 && kern.includes(kop);
       });
       // Een unit die een ITEMLIJST mag kopen (Forbidden Poisons, Gifts of Khaine) toont die als
       // sectie met een puntenbudget, niet als losse optieregels. De losse namen daaruit zijn dus
@@ -206,8 +218,12 @@ for (const b of reference.blocks) {
   }
 
   // 6 · REGELKOP — een kop buiten een unit hoort een regelpagina te hebben.
-  const SECTIEKOP = /^(characters|core|special|rare|mercenaries|allies|lords|heroes|options|grand army composition list|battle standard bearer|.* special rules|.* army list)$/i;
-  if (!b.unitContext && (b.type === 'heading' || b.visualHeadingLevel) && t.length <= 60 && !SECTIEKOP.test(t)) {
+  // Een kop die de compiler als GROEPSNAAM op een unit heeft gezet is een overkoepelende term
+  // ("Sorcerers Of Hashut", "Dark Elf Nobles"), geen regel. Idem de sectiekoppen en een
+  // "<Regel> Table"-kop, die inmiddels in z'n eigen regel is opgenomen.
+  const groepsNamen = new Set(Object.values(overlay.units).map((u) => norm(u.group ?? '')).filter(Boolean));
+  const SECTIEKOP = /^(characters|core|special|rare|mercenaries|allies|lords|heroes|options|grand army composition list|battle standard bearer|weapons of .*|the daemonic armoury|.* table|.* special rules|.* army list)$/i;
+  if (!b.unitContext && (b.type === 'heading' || b.visualHeadingLevel) && t.length <= 60 && !SECTIEKOP.test(t) && !groepsNamen.has(norm(t))) {
     const sleutel = norm(t).replace(/ /g, '-');
     const heeft = overlay.rules?.[sleutel] || baseRules[sleutel]
       || Object.values(overlay.rules ?? {}).some((r) => norm(r.name_en) === norm(t))

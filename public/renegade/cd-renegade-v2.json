@@ -14,6 +14,61 @@
   "scope": "points-and-rules",
   "inheritsComposition": "cd-renegade",
   "units": {
+    "castellan": {
+      "group": "Infernal Guard Commanders",
+      "minimum": 1,
+      "maximum": 1,
+      "_changed": [
+        "unit-size",
+        "options",
+        "special-rules"
+      ],
+      "options": [
+        {
+          "group": "equipment",
+          "action": "patch",
+          "name_en": "Darkforged weapon",
+          "points": 15,
+          "perModel": false
+        },
+        {
+          "group": "equipment",
+          "action": "patch",
+          "name_en": "Great weapon",
+          "points": 4,
+          "perModel": false
+        },
+        {
+          "group": "equipment",
+          "action": "patch",
+          "name_en": "Fireglaive",
+          "points": 3,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Pistol",
+          "points": 5,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Naptha bombs",
+          "points": 10,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Shield",
+          "points": 2,
+          "perModel": false
+        }
+      ],
+      "specialRules": "Blackshard Armour, Ensorcelled Weapons, Rallying Cry, Resolute, Stubborn, Infernal Taskmaster, Quell Panic"
+    },
     "bull-centaur-taur'ruk": {
       "minimum": 1,
       "maximum": 1,
@@ -46,53 +101,27 @@
       ]
     },
     "hobgoblin-khan": {
-      "group": "Hobgoblin Khan",
       "minimum": 1,
       "maximum": 1,
       "_changed": [
         "unit-size"
       ]
     },
-    "hobgoblin-cutthroats": {
-      "group": "Hobgoblin Cutthroats"
-    },
-    "sneaky-gits": {
-      "group": "Sneaky Gits"
-    },
-    "k'daai-fireborn": {
-      "group": "K’daai Fireborn",
-      "points": 38,
-      "_was": 41,
+    "iron-daemon": {
+      "minimum": 1,
+      "maximum": 1,
       "_changed": [
-        "points",
-        "special-rules"
-      ],
-      "specialRules": "Blazing Body, Born of Fire, Close Order, Ensorcelled Weapons, Fear, Flaming Attacks, Immune to Psychology, Regeneration (5+), Unbreakable, Unstable, Warp-spawned"
-    },
-    "bull-centaur-renders": {
-      "group": "Bull Centaur Renders",
-      "points": 54,
-      "_was": 56,
-      "_changed": [
-        "points",
+        "unit-size",
         "options"
       ],
       "options": [
         {
-          "group": "equipment",
+          "group": "options",
           "action": "upsert",
-          "name_en": "Darkforged weapon",
-          "points": 15,
+          "name_en": "Skullcracker (replaces Steam Cannonade)",
+          "points": 10,
           "perModel": false
         }
-      ]
-    },
-    "iron-daemon": {
-      "group": "Iron Daemon",
-      "minimum": 1,
-      "maximum": 1,
-      "_changed": [
-        "unit-size"
       ]
     },
     "deathshrieker-rocket-launcher": {
@@ -160,7 +189,6 @@
       ]
     },
     "magma-cannon": {
-      "group": "Magma Cannon",
       "minimum": 1,
       "maximum": 1,
       "_changed": [
@@ -393,60 +421,6 @@
       ],
       "specialRules": "Blackshard Armour, Ensorcelled Weapons, Rallying Cry, Relentless March, Resolute, Stubborn"
     },
-    "castellan": {
-      "minimum": 1,
-      "maximum": 1,
-      "_changed": [
-        "unit-size",
-        "options",
-        "special-rules"
-      ],
-      "options": [
-        {
-          "group": "equipment",
-          "action": "patch",
-          "name_en": "Darkforged weapon",
-          "points": 15,
-          "perModel": false
-        },
-        {
-          "group": "equipment",
-          "action": "patch",
-          "name_en": "Great weapon",
-          "points": 4,
-          "perModel": false
-        },
-        {
-          "group": "equipment",
-          "action": "patch",
-          "name_en": "Fireglaive",
-          "points": 3,
-          "perModel": false
-        },
-        {
-          "group": "options",
-          "action": "patch",
-          "name_en": "Pistol",
-          "points": 5,
-          "perModel": false
-        },
-        {
-          "group": "options",
-          "action": "patch",
-          "name_en": "Naptha bombs",
-          "points": 10,
-          "perModel": false
-        },
-        {
-          "group": "options",
-          "action": "patch",
-          "name_en": "Shield",
-          "points": 2,
-          "perModel": false
-        }
-      ],
-      "specialRules": "Blackshard Armour, Ensorcelled Weapons, Rallying Cry, Resolute, Stubborn, Infernal Taskmaster, Quell Panic"
-    },
     "chaos-dwarf-warriors": {
       "minimum": 5,
       "_changed": [
@@ -671,6 +645,32 @@
           "points": 6,
           "perModel": false
         },
+        {
+          "group": "equipment",
+          "action": "upsert",
+          "name_en": "Darkforged weapon",
+          "points": 15,
+          "perModel": false
+        }
+      ]
+    },
+    "k'daai-fireborn": {
+      "points": 38,
+      "_was": 41,
+      "_changed": [
+        "points",
+        "special-rules"
+      ],
+      "specialRules": "Blazing Body, Born of Fire, Close Order, Ensorcelled Weapons, Fear, Flaming Attacks, Immune to Psychology, Regeneration (5+), Unbreakable, Unstable, Warp-spawned"
+    },
+    "bull-centaur-renders": {
+      "points": 54,
+      "_was": 56,
+      "_changed": [
+        "points",
+        "options"
+      ],
+      "options": [
         {
           "group": "equipment",
           "action": "upsert",

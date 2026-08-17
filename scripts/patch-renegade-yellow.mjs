@@ -77,6 +77,15 @@ const PATCHES = [
     doelen: ['units.dreadquake-mortar.options'],
   },
   {
+    pack: 'cd',
+    why: 'het bronblok is ONGEKLEURD — de optie staat al in het basisspel, maar de OWB-catalogus draagt hem niet',
+    bron: 'Iron Daemon — Options: May replace its Steam Cannonade with a Skullcracker (see page 11) +10 points',
+    unit: 'iron-daemon',
+    patch: {
+      options: [{ group: 'options', action: 'upsert', name_en: 'Skullcracker (replaces Steam Cannonade)', points: 10, perModel: false }],
+    },
+  },
+  {
     pack: 'de',
     why: 'notitie staat geel, maar hoort bij het wapen dat de speler kiest',
     bron: 'Notes: A Lash & Buckler counts as both a handweapon and shield and allows the use of the Parry special rule.',

@@ -915,7 +915,9 @@ for (const [key, army] of Object.entries(PACKS)) {
     // (c) GROEPSNAAM. "Dark Elf Nobles" is een overkoepelende kop boven meerdere datasheets. Doet nu
     //     niets in de UI, maar het draft kent hem en later hangen er upgrades aan; achtergronddata
     //     bewaren kost niets en scheelt straks opnieuw uitzoeken.
-    if (block.tableType === 'statline' && block.unitContext.method === 'table-title') {
+    // Ook als de groepsnaam uit de KOP boven de tabel komt in plaats van uit een titelrij: bij
+    // "Sorcerers Of Hashut" en "Chaos Dwarf Lords" is dat precies dezelfde overkoepelende term.
+    if (block.tableType === 'statline' && norm(block.unitContext.name) !== norm(unit.name_en)) {
       const patch = overlay.units[unit.id] ?? {};
       if (!patch.group) { patch.group = block.unitContext.name; overlay.units[unit.id] = patch; }
     }

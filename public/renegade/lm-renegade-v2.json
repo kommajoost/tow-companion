@@ -24,147 +24,6 @@
       ],
       "specialRules": "Arcane Shield, Cold Blooded, Fly (8), Lore of Lustria, Palanquin, Wisdom of the Old Ones"
     },
-    "skink-cohorts": {
-      "group": "Skink Cohorts",
-      "minimum": 10,
-      "_changed": [
-        "unit-size",
-        "options",
-        "special-rules"
-      ],
-      "options": [
-        {
-          "group": "command",
-          "action": "patch",
-          "name_en": "Skink Brave (champion)",
-          "points": 5,
-          "perModel": false
-        },
-        {
-          "group": "command",
-          "action": "patch",
-          "name_en": "Standard bearer",
-          "points": 5,
-          "perModel": false
-        },
-        {
-          "group": "command",
-          "action": "patch",
-          "name_en": "Musician",
-          "points": 5,
-          "perModel": false
-        },
-        {
-          "group": "options",
-          "action": "patch",
-          "name_en": "Kroxigor",
-          "points": 49,
-          "perModel": true
-        }
-      ],
-      "specialRules": "Aquatic, Close Order, Cold Blooded, Move through Cover, Poisoned Attacks (javelins and shortbows only), Spawn-kin"
-    },
-    "skink-skirmishers": {
-      "group": "Skink Skirmishers",
-      "points": 6,
-      "_was": 5,
-      "_changed": [
-        "points",
-        "special-rules"
-      ],
-      "specialRules": "Aquatic, Cold Blooded, Move through Cover, Poisoned Attacks (javelins only), Skirmishers"
-    },
-    "chameleon-skinks": {
-      "group": "Chameleon Skinks",
-      "specialRules": "Aquatic, Ambushers, Chameleon, Cold Blooded, Evasive, Fire & Flee, Loner, Move through Cover, Scouts, Skirmishers",
-      "_changed": [
-        "special-rules"
-      ]
-    },
-    "saurus-warrior": {
-      "group": "Saurus Warriors",
-      "points": 12,
-      "_was": 14,
-      "_changed": [
-        "points",
-        "options",
-        "special-rules",
-        "equipment"
-      ],
-      "options": [
-        {
-          "group": "options",
-          "action": "patch",
-          "name_en": "Shieldwall",
-          "points": 1,
-          "perModel": true
-        },
-        {
-          "group": "options",
-          "action": "upsert",
-          "name_en": "Drilled",
-          "points": 1,
-          "perModel": true
-        },
-        {
-          "group": "armor",
-          "action": "patch",
-          "name_en": "Heavy armour (Scaly skin)",
-          "option": {
-            "hidden": true
-          }
-        }
-      ],
-      "specialRules": "Close Order, Cold Blooded, Obsidian Blades, Predatory Fighter, Armoured Hide (2)"
-    },
-    "temple-guard": {
-      "group": "Temple Guard",
-      "points": 15,
-      "_was": 16,
-      "_changed": [
-        "points",
-        "options",
-        "special-rules",
-        "equipment"
-      ],
-      "options": [
-        {
-          "group": "command",
-          "action": "patch",
-          "name_en": "Revered Guardian (champion)",
-          "points": 7,
-          "perModel": false
-        },
-        {
-          "group": "command",
-          "action": "patch",
-          "name_en": "Standard bearer",
-          "points": 7,
-          "perModel": false
-        },
-        {
-          "group": "command",
-          "action": "patch",
-          "name_en": "Musician",
-          "points": 7,
-          "perModel": false
-        },
-        {
-          "group": "options",
-          "action": "upsert",
-          "name_en": "Drilled",
-          "points": 1,
-          "perModel": true
-        },
-        {
-          "group": "armor",
-          "action": "patch",
-          "name_en": "Heavy armour (Scaly skin)",
-          "renameTo": "Light armour"
-        }
-      ],
-      "specialRules": "Close Order, Cold Blooded, Guardians, Obsidian Blades, Predatory Fighter, Armoured Hide (2), Shieldwall, Stubborn"
-    },
     "kroxigors": {
       "group": "Kroxigor",
       "specialRules": "Aquatic, Close Order, Cold Blooded, Fear, Predatory Fighter, Skirmish Screen",
@@ -180,9 +39,6 @@
           "renameTo": "Full plate armour (Plated carapace)"
         }
       ]
-    },
-    "jungle-swarms": {
-      "group": "Jungle Swarms"
     },
     "salamander-packs": {
       "group": "Salamander Packs",
@@ -202,31 +58,8 @@
         "points"
       ]
     },
-    "terradon-riders": {
-      "group": "Terradon Riders",
-      "options": [
-        {
-          "group": "equipment",
-          "action": "patch",
-          "name_en": "Hand weapons, Fireleech bolas",
-          "points": 2,
-          "perModel": true
-        },
-        {
-          "group": "options",
-          "action": "upsert",
-          "name_en": "shields",
-          "points": 1,
-          "perModel": true
-        }
-      ],
-      "_changed": [
-        "options",
-        "special-rules"
-      ],
-      "specialRules": "Armoured Hide (2), Cold Blooded, Drop Rocks, Fear, Fire & Flee, Fly (10), Poisoned Attacks (javelins only), Skink Riders, Skirmishers, Swiftstride"
-    },
     "stegadon": {
+      "group": "Stegadons",
       "minimum": 1,
       "maximum": 1,
       "_changed": [
@@ -256,7 +89,6 @@
       "specialRules": "Close Order, Cold Blooded, Great Horns, Howdah, Immune to Psychology, Impact Hits (D3+1), Large Target, Poisoned Attacks (javelins only), Skink Riders, Stomp Attacks (D3+2), Stubborn, Terror"
     },
     "bastiladon": {
-      "group": "Bastiladon",
       "minimum": 1,
       "maximum": 1,
       "_changed": [
@@ -286,7 +118,6 @@
       "specialRules": "Close Order, Cold Blooded, Immune to Psychology, Impact Hits (D3), Impervious Defence, Large Target, Poisoned Attacks (javelins only), Stomp Attacks (D3+1), Skink Riders, Stubborn, Terror"
     },
     "troglodon": {
-      "group": "Troglodon",
       "minimum": 1,
       "maximum": 1,
       "_changed": [
@@ -407,6 +238,142 @@
         "equipment"
       ]
     },
+    "skink-cohorts": {
+      "minimum": 10,
+      "_changed": [
+        "unit-size",
+        "options",
+        "special-rules"
+      ],
+      "options": [
+        {
+          "group": "command",
+          "action": "patch",
+          "name_en": "Skink Brave (champion)",
+          "points": 5,
+          "perModel": false
+        },
+        {
+          "group": "command",
+          "action": "patch",
+          "name_en": "Standard bearer",
+          "points": 5,
+          "perModel": false
+        },
+        {
+          "group": "command",
+          "action": "patch",
+          "name_en": "Musician",
+          "points": 5,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Kroxigor",
+          "points": 49,
+          "perModel": true
+        }
+      ],
+      "specialRules": "Aquatic, Close Order, Cold Blooded, Move through Cover, Poisoned Attacks (javelins and shortbows only), Spawn-kin"
+    },
+    "skink-skirmishers": {
+      "points": 6,
+      "_was": 5,
+      "_changed": [
+        "points",
+        "special-rules"
+      ],
+      "specialRules": "Aquatic, Cold Blooded, Move through Cover, Poisoned Attacks (javelins only), Skirmishers"
+    },
+    "chameleon-skinks": {
+      "specialRules": "Aquatic, Ambushers, Chameleon, Cold Blooded, Evasive, Fire & Flee, Loner, Move through Cover, Scouts, Skirmishers",
+      "_changed": [
+        "special-rules"
+      ]
+    },
+    "saurus-warrior": {
+      "points": 12,
+      "_was": 14,
+      "_changed": [
+        "points",
+        "options",
+        "special-rules",
+        "equipment"
+      ],
+      "options": [
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Shieldwall",
+          "points": 1,
+          "perModel": true
+        },
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "Drilled",
+          "points": 1,
+          "perModel": true
+        },
+        {
+          "group": "armor",
+          "action": "patch",
+          "name_en": "Heavy armour (Scaly skin)",
+          "option": {
+            "hidden": true
+          }
+        }
+      ],
+      "specialRules": "Close Order, Cold Blooded, Obsidian Blades, Predatory Fighter, Armoured Hide (2)"
+    },
+    "temple-guard": {
+      "points": 15,
+      "_was": 16,
+      "_changed": [
+        "points",
+        "options",
+        "special-rules",
+        "equipment"
+      ],
+      "options": [
+        {
+          "group": "command",
+          "action": "patch",
+          "name_en": "Revered Guardian (champion)",
+          "points": 7,
+          "perModel": false
+        },
+        {
+          "group": "command",
+          "action": "patch",
+          "name_en": "Standard bearer",
+          "points": 7,
+          "perModel": false
+        },
+        {
+          "group": "command",
+          "action": "patch",
+          "name_en": "Musician",
+          "points": 7,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "Drilled",
+          "points": 1,
+          "perModel": true
+        },
+        {
+          "group": "armor",
+          "action": "patch",
+          "name_en": "Heavy armour (Scaly skin)",
+          "renameTo": "Light armour"
+        }
+      ],
+      "specialRules": "Close Order, Cold Blooded, Guardians, Obsidian Blades, Predatory Fighter, Armoured Hide (2), Shieldwall, Stubborn"
+    },
     "cold-one-riders": {
       "minimum": 4,
       "_changed": [
@@ -452,6 +419,29 @@
         }
       ],
       "specialRules": "Armour Bane (1, Cold One only), Armoured Hide (3), Close Order, Counter Charge, Cold Blooded, Fear, Obsidian Blades, Predatory Fighter (Rider and Pack Leader only), Stupidity, Swiftstride"
+    },
+    "terradon-riders": {
+      "options": [
+        {
+          "group": "equipment",
+          "action": "patch",
+          "name_en": "Hand weapons, Fireleech bolas",
+          "points": 2,
+          "perModel": true
+        },
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "shields",
+          "points": 1,
+          "perModel": true
+        }
+      ],
+      "_changed": [
+        "options",
+        "special-rules"
+      ],
+      "specialRules": "Armoured Hide (2), Cold Blooded, Drop Rocks, Fear, Fire & Flee, Fly (10), Poisoned Attacks (javelins only), Skink Riders, Skirmishers, Swiftstride"
     },
     "ripperdactyl-riders": {
       "options": [

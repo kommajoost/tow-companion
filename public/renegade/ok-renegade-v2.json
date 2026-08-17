@@ -96,103 +96,10 @@
       ],
       "specialRules": "Armour Bane (1), Blessings of the Volcano God, Fear, Flaming Attacks, Impact Hits (1), Ogre Kingdoms Charge"
     },
-    "ogre-bulls": {
-      "group": "Ogre Bulls",
-      "specialRules": "Armour Bane (1), Close Order, Fear, Impact Hits (1), Ogre Kingdoms Charge, Ravenous Hunger, Ogre Club",
-      "_changed": [
-        "special-rules"
-      ]
-    },
-    "ironguts": {
-      "group": "Ironguts",
-      "specialRules": "Close Order, Fear, Impact Hits (1), Ogre Kingdoms Charge, Ravenous Hunger",
-      "_changed": [
-        "special-rules"
-      ]
-    },
-    "leadbelchers": {
-      "group": "Leadbelchers",
-      "points": 39,
-      "_was": 41,
-      "specialRules": "Open Order, Fear, Impact Hits (1), Ogre Kingdoms Charge, Ogre Club, Ravenous Hunger",
-      "_changed": [
-        "points",
-        "special-rules"
-      ]
-    },
-    "gnoblar-trappers": {
-      "group": "Gnoblar Trappers",
-      "specialRules": "Largely Insignificant, Move through Cover, Scouts, Skirmishers, Traps & Snares, Entourage",
-      "_changed": [
-        "special-rules"
-      ]
-    },
-    "maneaters": {
-      "group": "Maneaters",
-      "options": [
-        {
-          "group": "options",
-          "action": "patch",
-          "name_en": "Brace of Ogre pistols",
-          "points": 6,
-          "perModel": true
-        },
-        {
-          "group": "command",
-          "action": "upsert",
-          "name_en": "A standard bearer may have the Look-out Gnoblar",
-          "points": 5,
-          "perModel": false
-        }
-      ],
-      "_changed": [
-        "options",
-        "special-rules"
-      ],
-      "specialRules": "Close Order, Fear, Impact Hits (1), Motley Crew, Ogre Kingdoms Charge, Veteran, Ogre Club"
-    },
-    "gnoblar-fighters": {
-      "group": "Gnoblar Fighters"
-    },
-    "yhetees": {
-      "group": "Yhetees",
-      "points": 43,
-      "_was": 46,
-      "_changed": [
-        "points",
-        "options",
-        "special-rules"
-      ],
-      "options": [
-        {
-          "group": "options",
-          "action": "upsert",
-          "name_en": "Ambushers",
-          "points": 3,
-          "perModel": true
-        },
-        {
-          "group": "options",
-          "action": "patch",
-          "name_en": "Scouts",
-          "points": 2,
-          "perModel": true
-        },
-        {
-          "group": "options",
-          "action": "patch",
-          "name_en": "Vanguard",
-          "points": 1,
-          "perModel": true
-        }
-      ],
-      "specialRules": "Armoured Hide (1), Fear, Flammable, Loner, Move through Cover, Numbing Chill, Open Order, Swiftstride, Ravenous Hunger"
-    },
     "sabretusk-packs": {
       "group": "Sabretusk Packs"
     },
     "ironblaster": {
-      "group": "Ironblaster",
       "minimum": 1,
       "maximum": 1,
       "_changed": [
@@ -270,6 +177,80 @@
         }
       ]
     },
+    "ogre-bulls": {
+      "specialRules": "Armour Bane (1), Close Order, Fear, Impact Hits (1), Ogre Kingdoms Charge, Ravenous Hunger, Ogre Club",
+      "_changed": [
+        "special-rules"
+      ]
+    },
+    "ironguts": {
+      "specialRules": "Close Order, Fear, Impact Hits (1), Ogre Kingdoms Charge, Ravenous Hunger",
+      "_changed": [
+        "special-rules"
+      ]
+    },
+    "gnoblar-trappers": {
+      "specialRules": "Largely Insignificant, Move through Cover, Scouts, Skirmishers, Traps & Snares, Entourage",
+      "_changed": [
+        "special-rules"
+      ]
+    },
+    "maneaters": {
+      "options": [
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Brace of Ogre pistols",
+          "points": 6,
+          "perModel": true
+        },
+        {
+          "group": "command",
+          "action": "upsert",
+          "name_en": "A standard bearer may have the Look-out Gnoblar",
+          "points": 5,
+          "perModel": false
+        }
+      ],
+      "_changed": [
+        "options",
+        "special-rules"
+      ],
+      "specialRules": "Close Order, Fear, Impact Hits (1), Motley Crew, Ogre Kingdoms Charge, Veteran, Ogre Club"
+    },
+    "yhetees": {
+      "points": 43,
+      "_was": 46,
+      "_changed": [
+        "points",
+        "options",
+        "special-rules"
+      ],
+      "options": [
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "Ambushers",
+          "points": 3,
+          "perModel": true
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Scouts",
+          "points": 2,
+          "perModel": true
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Vanguard",
+          "points": 1,
+          "perModel": true
+        }
+      ],
+      "specialRules": "Armoured Hide (1), Fear, Flammable, Loner, Move through Cover, Numbing Chill, Open Order, Swiftstride, Ravenous Hunger"
+    },
     "mournfang-cavalry": {
       "specialRules": "Armoured Hide (1), Close Order, Fear, Impact Hits (D3), Mournfang Charge, Swiftstride, Ogre Club",
       "_changed": [
@@ -283,7 +264,16 @@
         "points"
       ]
     },
-    "thundertusk-riders": {}
+    "thundertusk-riders": {},
+    "leadbelchers": {
+      "points": 39,
+      "_was": 41,
+      "specialRules": "Open Order, Fear, Impact Hits (1), Ogre Kingdoms Charge, Ogre Club, Ravenous Hunger",
+      "_changed": [
+        "points",
+        "special-rules"
+      ]
+    }
   },
   "magicItems": {
     "big-names": [
