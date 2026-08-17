@@ -308,8 +308,19 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
   // zeggen we niets in plaats van 'forced' te beweren.
   const worp = asNum(sheet.worp);
   const worpObjectief = asNum(sheet.worpObjectief);
+  // DISRUPTIVE WEATHER (v3, 17-08-2026): de campagne bakt naam + effect mee, dus we hoeven de officiële
+  // tabel hier niet na te bouwen — precies zoals bij layout/secLayout. Alleen Battle March (Act 1-2)
+  // heeft dit; elke oudere sheet levert undefined en dan tonen we het blok niet.
+  const weerRaw = sheet.weer as unknown;
+  const weer = weerRaw && typeof weerRaw === 'object'
+    ? (() => {
+        const w = weerRaw as Record<string, unknown>;
+        const naam = asStr(w.naam), effect = asStr(w.effect), wworp = asNum(w.worp);
+        return naam ? { naam, effect: effect ?? '', worp: wworp } : null;
+      })()
+    : null;
   const rollLine = worp != null
-    ? `Setup roll: ${worp}${worpObjectief != null ? ` · Objectives roll: ${worpObjectief}` : ''}`
+    ? `Setup roll: ${worp}${worpObjectief != null ? ` · Objectives roll: ${worpObjectief}` : ''}${weer?.worp != null ? ` · Weather roll: ${weer.worp}` : ''}`
     : sheetV >= 2 ? 'Setup: forced — no roll' : null;
 
   // WIE STAAT WAAR. `defenderIsTop` leest het uit de zone-labels met de campagne-afspraak
@@ -424,6 +435,23 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
           {rollLine && (
             <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginTop: 5 }}>{rollLine}</div>
           )}
+        </div>
+      )}
+
+      {/* DISRUPTIVE WEATHER — geldt de hele game, dus dit is de regel die je aan tafel het vaakst
+          terug moet lezen. Vandaar naam + volledig effect en niet alleen de worp. */}
+      {weer && (
+        <div style={{ marginTop: 10, border: `1px solid ${TOW.line}`, borderRadius: 10, padding: '10px 12px' }}>
+          <div style={{ ...eb, fontSize: 8, color: TOW.muted }}>
+            Disruptive weather{weer.worp != null ? ` · roll ${weer.worp}` : ''}
+          </div>
+          <div style={{ fontFamily: display, fontSize: 16, color: TOW.gold, marginTop: 3 }}>{weer.naam}</div>
+          {weer.effect && (
+            <div style={{ fontFamily: serif, fontSize: 12.5, color: TOW.parch, lineHeight: 1.45, marginTop: 4 }}>{weer.effect}</div>
+          )}
+          <div style={{ fontFamily: serif, fontSize: 12, color: TOW.muted, marginTop: 4 }}>
+            Rolled before deployment; in play for the whole game.
+          </div>
         </div>
       )}
 
