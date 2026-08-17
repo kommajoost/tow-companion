@@ -825,8 +825,17 @@
       "name_en": "Singular Essence",
       "body": [
         "Violently bound to a solitary cosmic truth, these entities remain completely insulated from the aetheric shockwaves of the battlefield.",
-        "This character automatically passes any Panic test that they are required to make.",
-        "Reign of ChaosDuring each of their Start of Turn sub-phases, the Daemons of Chaos player rolls a D6 to determine the current ebb and flow of the Winds of Magic, testing whether the local Aethyr is potent enough to sustain the host’s tenuous grip on reality. Note that at the start of the game the Reign of Chaos is always in the ‘Eye of the Storm’ result until the Daemons of Chaos player takes their first turn. On a roll of 1, Chaotic Ebb: The Aethyr dissipates, starving the daemonic host of vital anchoring energy. Until your next Start of Turn sub-phase, all friendly models with the Daemonic special rule have a 5+ Ward save against any wounds suffered that were caused by a non-magical enemy attack and will generate a “Banished” result on a natural roll of 11 or 12 when making a Leadership Test for Daemonic Instability. On a roll of 2-5, Eye of the Storm: The aetheric currents swirl in a volatile equilibrium; the Daemonic host's tether to reality holds steady.Until your next Start of Turn sub-phase, all friendly models with the Daemonic special rule have a 5+ Ward save against any wounds suffered and may make Regeneration saves against wounds caused by Magical attacks despite having the Warp-spawned special rule.On a roll of 6, Chaotic Surge: A violent torrent of raw magical power surges across the battlefield, fiercely invigorating the host.Until your next Start of Turn sub-phase, all friendly models with the Daemonic special rule have a 5+ Ward save against any wounds suffered, a 4+ Ward save against any wounds suffered that were caused by a non-magical enemy attack, and may make Regeneration saves against wounds caused by Magical attacks despite having the Warp-spawned special rule. In addition, friendly Daemonic models gain the Immune to Psychology special rule, and generate a “Reality Blinks” result on a natural roll of 2 or 3 when making a Leadership Test for Daemonic Instability."
+        "This character automatically passes any Panic test that they are required to make."
+      ],
+      "tables": [
+        {
+          "headers": [],
+          "rows": [
+            [
+              "Reign of ChaosDuring each of their Start of Turn sub-phases, the Daemons of Chaos player rolls a D6 to determine the current ebb and flow of the Winds of Magic, testing whether the local Aethyr is potent enough to sustain the host’s tenuous grip on reality. Note that at the start of the game the Reign of Chaos is always in the ‘Eye of the Storm’ result until the Daemons of Chaos player takes their first turn. On a roll of 1, Chaotic Ebb: The Aethyr dissipates, starving the daemonic host of vital anchoring energy. Until your next Start of Turn sub-phase, all friendly models with the Daemonic special rule have a 5+ Ward save against any wounds suffered that were caused by a non-magical enemy attack and will generate a “Banished” result on a natural roll of 11 or 12 when making a Leadership Test for Daemonic Instability. On a roll of 2-5, Eye of the Storm: The aetheric currents swirl in a volatile equilibrium; the Daemonic host's tether to reality holds steady.Until your next Start of Turn sub-phase, all friendly models with the Daemonic special rule have a 5+ Ward save against any wounds suffered and may make Regeneration saves against wounds caused by Magical attacks despite having the Warp-spawned special rule.On a roll of 6, Chaotic Surge: A violent torrent of raw magical power surges across the battlefield, fiercely invigorating the host.Until your next Start of Turn sub-phase, all friendly models with the Daemonic special rule have a 5+ Ward save against any wounds suffered, a 4+ Ward save against any wounds suffered that were caused by a non-magical enemy attack, and may make Regeneration saves against wounds caused by Magical attacks despite having the Warp-spawned special rule. In addition, friendly Daemonic models gain the Immune to Psychology special rule, and generate a “Reality Blinks” result on a natural roll of 2 or 3 when making a Leadership Test for Daemonic Instability."
+            ]
+          ]
+        }
       ],
       "overrides": null
     },
@@ -970,10 +979,35 @@
     },
     "warpflame": {
       "name_en": "Warpflame",
-      "body": [
-        "| R | S | AP | Special Rules Warpflame | 18\" | 4 | -1 | Flaming Attacks, Move & Shoot, | | | | Multiple Shots (D3+1), Quick Shot"
-      ],
-      "overrides": "warpflame"
+      "body": [],
+      "overrides": "warpflame",
+      "tables": [
+        {
+          "headers": [
+            "",
+            "R",
+            "S",
+            "AP",
+            "Special Rules"
+          ],
+          "rows": [
+            [
+              "Warpflame",
+              "18\"",
+              "4",
+              "-1",
+              "Flaming Attacks, Move & Shoot,"
+            ],
+            [
+              "",
+              "",
+              "",
+              "",
+              "Multiple Shots (D3+1), Quick Shot"
+            ]
+          ]
+        }
+      ]
     },
     "solid-shot": {
       "name_en": "Solid shot",

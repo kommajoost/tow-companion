@@ -102,6 +102,14 @@ export interface OverlayComposition {
 export interface OverlayRule {
   name_en: string;
   body: string[];
+  /** Tabellen die bij deze regel horen, als tabel bewaard in plaats van platgeslagen tot tekst.
+   *
+   *  Nodig omdat de bron ze wél als tabel zet maar een blok-tekst er één regel van maakt: de
+   *  Darkforged Weapon zei "roll on the table below" met de D3-tabel als APARTE regelpagina, en het
+   *  wapenprofiel van Naptha Bombs las als "| R | S | AP | Special Rules Naptha Bomb | 9" | 3 | -1 |
+   *  …" (Joost, 17-08). `weaponProfile` hieronder kon er maar één rij; dit veld draagt er zoveel als
+   *  de bron heeft, inclusief resultaattabellen (D3/D6). */
+  tables?: { headers: string[]; rows: string[][] }[];
   /** Optional weapon-profile row. When present the generated rich text contains a real table, so
    *  combat calculations consume the Renegade values instead of only displaying prose. */
   weaponProfile?: { range: string; strength: string; ap: string; specialRules: string };
@@ -543,9 +551,32 @@ const tableCell = (value: string, header = false) => ({
   }],
 });
 
+const richTable = (headers: string[], rows: string[][]) => ({
+  nodeType: 'table',
+  data: {},
+  content: [
+    ...(headers.length ? [{
+      nodeType: 'table-row',
+      data: {},
+      content: headers.map((value) => tableCell(value, true)),
+    }] : []),
+    ...rows.map((row) => ({
+      nodeType: 'table-row',
+      data: {},
+      content: row.map((value) => tableCell(value)),
+    })),
+  ],
+});
+
 const richRuleBody = (rule: OverlayRule, paras: string[]): Rule['body'] => {
   const body = richText(paras);
-  if (!rule.weaponProfile || !body) return body;
+  if (!body) return body;
+  // Tabellen vóór de tekst: bij een wapen is het profiel het eerste dat je wil zien, en bij een
+  // "roll on the table below" staat de tabel al in de zin aangekondigd.
+  if (rule.tables?.length) {
+    body.content = [...rule.tables.map((t) => richTable(t.headers, t.rows)), ...(body.content ?? [])];
+  }
+  if (!rule.weaponProfile) return body;
   body.content = [{
     nodeType: 'table',
     data: {},

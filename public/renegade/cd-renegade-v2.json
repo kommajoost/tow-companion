@@ -814,14 +814,29 @@
       "body": [
         "A Darkforged weapon is a hand weapon with the Flaming Attacks special rule and can be used in conjunction with the Ensorcelled Weapons special rule. In addition, after deployment but before the first turn begins, roll on the table below to determine an attribute for the weapon. The weapon has this attribute for the duration of the battle:"
       ],
-      "overrides": "darkforged-weapon"
-    },
-    "darkforged-weapon-table": {
-      "name_en": "Darkforged Weapon Table",
-      "body": [
-        "D3 | Result 1 | Malignant: The bearer of this weapon gains the Hatred (all enemies) special rule. 2 | Life Bane: This weapon gains the Multiple Wounds (D3) special rule. 3 | Spell-wrought: If the bearer of this weapon is a Wizard, they may apply a +1 modifier to any Casting roll they make. If the bearer of this weapon is not a Wizard, This weapon has a Strength characteristic of S+1."
-      ],
-      "overrides": null
+      "overrides": "darkforged-weapon",
+      "tables": [
+        {
+          "headers": [
+            "D3",
+            "Result"
+          ],
+          "rows": [
+            [
+              "1",
+              "Malignant: The bearer of this weapon gains the Hatred (all enemies) special rule."
+            ],
+            [
+              "2",
+              "Life Bane: This weapon gains the Multiple Wounds (D3) special rule."
+            ],
+            [
+              "3",
+              "Spell-wrought: If the bearer of this weapon is a Wizard, they may apply a +1 modifier to any Casting roll they make. If the bearer of this weapon is not a Wizard, This weapon has a Strength characteristic of S+1."
+            ]
+          ]
+        }
+      ]
     },
     "hailshot-blunderbuss": {
       "name_en": "Hailshot Blunderbuss",
@@ -832,10 +847,28 @@
     },
     "naptha-bombs": {
       "name_en": "Naptha Bombs",
-      "body": [
-        "| R | S | AP | Special Rules Naptha Bomb | 9” | 3 | -1 | Armour Bane (1) Flaming Attacks Move & Shoot Quick Shot"
-      ],
-      "overrides": "naptha-bombs"
+      "body": [],
+      "overrides": "naptha-bombs",
+      "tables": [
+        {
+          "headers": [
+            "",
+            "R",
+            "S",
+            "AP",
+            "Special Rules"
+          ],
+          "rows": [
+            [
+              "Naptha Bomb",
+              "9”",
+              "3",
+              "-1",
+              "Armour Bane (1) Flaming Attacks Move & Shoot Quick Shot"
+            ]
+          ]
+        }
+      ]
     },
     "lore-of-hashut": {
       "name_en": "Lore of Hashut",

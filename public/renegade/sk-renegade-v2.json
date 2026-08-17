@@ -487,8 +487,26 @@
       "body": [
         "A hand weapon carried by a model with this special rule has the Magical Attacks special rule and an Armour Piercing characteristic of -1.",
         "Note that this special rule only applies to a single, ordinary hand weapon. If the model is using two hand weapons or any other sort of weapon, this special rule ceases to apply.",
-        "Skaven Misfire table:",
-        "1 | Whoompff! All of the unit’s ammunition detonates prematurely. All friendly and enemy units within 3” suffer D3 hits using this weapon’s profile. Once resolved, this unit is removed. 2-5 | Wildly off Target. The unit loses control of its weapon. Roll the scatter dice. Resolve the weapon’s attacks against the first unit within range and line of sight (friend or foe) in the direction of the arrow (including a Hit). If a further Misfire is rolled, this unit is removed. 6 | Pppphhtt! The weapon does not fire this turn."
+        "Skaven Misfire table:"
+      ],
+      "tables": [
+        {
+          "headers": [],
+          "rows": [
+            [
+              "1",
+              "Whoompff! All of the unit’s ammunition detonates prematurely. All friendly and enemy units within 3” suffer D3 hits using this weapon’s profile. Once resolved, this unit is removed."
+            ],
+            [
+              "2-5",
+              "Wildly off Target. The unit loses control of its weapon. Roll the scatter dice. Resolve the weapon’s attacks against the first unit within range and line of sight (friend or foe) in the direction of the arrow (including a Hit). If a further Misfire is rolled, this unit is removed."
+            ],
+            [
+              "6",
+              "Pppphhtt! The weapon does not fire this turn."
+            ]
+          ]
+        }
       ],
       "overrides": "warpstone-weapons"
     },
@@ -595,17 +613,45 @@
     "tolling-the-bell": {
       "name_en": "Tolling The Bell",
       "body": [
-        "A Screaming Bell may be rung during the Command sub-phase of your turn. Roll on the table below to determine the effect this has. Any double rolled except for double 1 and double 6 results in a “Magical Backlash” in addition to any other effects."
-      ],
-      "overrides": "tolling-the-bell"
-    },
-    "tolling-the-bell-table": {
-      "name_en": "Tolling The Bell Table",
-      "body": [
-        "2 | Magical Backlash: The Screaming Bell and every unit (friend or foe) that is within 3” suffers D3 wounds, each with an AP of -1 3 and 4 | Emboldened: Until your next Start of Turn sub-phase, all friendly units within this model's Command range may re-roll any Leadership tests including Break tests. 5 and 6 | Unholy Clamour: Any friendly unit that is within this model's Command range during the Declare Charges & Charge Reactions sub-phase of this turn increases its maximum possible charge range by 3\" and, when it makes a Charge roll, may apply a +D3 modifier to the result. 7 | Deafening Peals: All enemy models within 24” of this model with Toughness 6 or more suffer D3 wounds. Armour saves may be taken as normal. 8 and 9 | Resonant Power: Until the end of this turn, all friendly Skaven Wizards within this model's Command range may apply a +1 modifier to any Casting roll they make. 10 and 11 | Rapturous Ringing: Until your next Start of Turn sub-phase, all friendly Skaven units within this model's Command range gain the Extra Attacks (+1) special rule. 12 | Sonorous Knell: Any enemy unit that is within this model's Command range, including units that are fleeing or that are engaged in combat, suffers D3+3 wounds, with no armour save permitted (Ward and Regeneration saves can be attempted as normal)",
+        "A Screaming Bell may be rung during the Command sub-phase of your turn. Roll on the table below to determine the effect this has. Any double rolled except for double 1 and double 6 results in a “Magical Backlash” in addition to any other effects.",
         "Character Mount: A Screaming Bell may only be included in your army as a character’s mount. Its points are added to that of its rider. The rider of a Screaming Bell may not use Verminous Valour. This unit may only use the Pushed into Battle special rule to join a unit of Clanrats or Stormvermin."
       ],
-      "overrides": null
+      "overrides": "tolling-the-bell",
+      "tables": [
+        {
+          "headers": [],
+          "rows": [
+            [
+              "2",
+              "Magical Backlash: The Screaming Bell and every unit (friend or foe) that is within 3” suffers D3 wounds, each with an AP of -1"
+            ],
+            [
+              "3 and 4",
+              "Emboldened: Until your next Start of Turn sub-phase, all friendly units within this model's Command range may re-roll any Leadership tests including Break tests."
+            ],
+            [
+              "5 and 6",
+              "Unholy Clamour: Any friendly unit that is within this model's Command range during the Declare Charges & Charge Reactions sub-phase of this turn increases its maximum possible charge range by 3\" and, when it makes a Charge roll, may apply a +D3 modifier to the result."
+            ],
+            [
+              "7",
+              "Deafening Peals: All enemy models within 24” of this model with Toughness 6 or more suffer D3 wounds. Armour saves may be taken as normal."
+            ],
+            [
+              "8 and 9",
+              "Resonant Power: Until the end of this turn, all friendly Skaven Wizards within this model's Command range may apply a +1 modifier to any Casting roll they make."
+            ],
+            [
+              "10 and 11",
+              "Rapturous Ringing: Until your next Start of Turn sub-phase, all friendly Skaven units within this model's Command range gain the Extra Attacks (+1) special rule."
+            ],
+            [
+              "12",
+              "Sonorous Knell: Any enemy unit that is within this model's Command range, including units that are fleeing or that are engaged in combat, suffers D3+3 wounds, with no armour save permitted (Ward and Regeneration saves can be attempted as normal)"
+            ]
+          ]
+        }
+      ]
     },
     "great-censer": {
       "name_en": "Great Censer",
@@ -635,8 +681,28 @@
     },
     "doomwheel-mishap-chart": {
       "name_en": "Doomwheel Mishap Chart",
-      "body": [
-        "D6 | Result 1-2 | Disaster: The Doomwheel immediately takes D6 Strength 5 hits. In addition, the Doomwheel loses 1 D6 from their Random Movement (X) special rule. If Random Movement (X) is reduced to zero, the Doomwheel is removed as a casualty and counts as destroyed. 3-5 | Out of Control: If the Doomwheel is unengaged in combat, roll the scatter dice. Pivot the model so that it is facing in the direction of the arrow (including a Hit). The Doomwheel immediately moves as far as possible in a straight line using its current Random Movement (X) characteristic. If it makes contact with an enemy unit, the Doomwheel counts as having charged, aligns against the enemy unit and stops moving. If the Doomwheel makes contact with a friendly unit, resolve Impact Hits immediately after contact and then move the Doomwheel directly away 1\". 6 | Burst of Speed: The Doomwheel gains an extra D6 to their Random Movement (X) special rule to a maximum of 4D6."
+      "body": [],
+      "tables": [
+        {
+          "headers": [
+            "D6",
+            "Result"
+          ],
+          "rows": [
+            [
+              "1-2",
+              "Disaster: The Doomwheel immediately takes D6 Strength 5 hits. In addition, the Doomwheel loses 1 D6 from their Random Movement (X) special rule. If Random Movement (X) is reduced to zero, the Doomwheel is removed as a casualty and counts as destroyed."
+            ],
+            [
+              "3-5",
+              "Out of Control: If the Doomwheel is unengaged in combat, roll the scatter dice. Pivot the model so that it is facing in the direction of the arrow (including a Hit). The Doomwheel immediately moves as far as possible in a straight line using its current Random Movement (X) characteristic. If it makes contact with an enemy unit, the Doomwheel counts as having charged, aligns against the enemy unit and stops moving. If the Doomwheel makes contact with a friendly unit, resolve Impact Hits immediately after contact and then move the Doomwheel directly away 1\"."
+            ],
+            [
+              "6",
+              "Burst of Speed: The Doomwheel gains an extra D6 to their Random Movement (X) special rule to a maximum of 4D6."
+            ]
+          ]
+        }
       ],
       "overrides": null
     },

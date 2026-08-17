@@ -269,7 +269,13 @@ export function RosterScreen(props: {
               aria-label="Share list"
               title="Share list"
               style={{
-                flexShrink: 0, width: 36, height: 36, marginRight: 2, padding: 0,
+                // 36px tap target, teruggetrokken tot een 24px layout-voetafdruk met negatieve
+                // marges — dezelfde behandeling als de terugknop hiernaast. Zonder dat rekte deze
+                // knop rij 1 van 24 naar 36px op, liep de header 15px over z'n vaste 74px heen en
+                // sneed `overflow: hidden` de categorie-totalen doormidden: op een smal scherm leek
+                // het alsof de waarschuwingsband eroverheen lag (Joost, 17-08).
+                flexShrink: 0, width: 36, height: 36, padding: 0,
+                margin: '-6px 0 -6px 0',
                 border: 'none', background: 'transparent', color: TOW.faint, cursor: 'pointer',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 WebkitTapHighlightColor: 'transparent',

@@ -553,18 +553,64 @@
     "harpoon-launcher": {
       "name_en": "Harpoon Launcher",
       "body": [
-        "| R | S | AP | Special Rules Harpoon launcher | 36\" | 6 | -2 | Cumbersome, Multiple Wounds (2), Through & Through",
         "Notes: When firing at an enemy with troop type Monster, the user may apply a +1 modifier on their rolls to hit."
       ],
-      "overrides": "harpoon-launcher"
+      "overrides": "harpoon-launcher",
+      "tables": [
+        {
+          "headers": [
+            "",
+            "R",
+            "S",
+            "AP",
+            "Special Rules"
+          ],
+          "rows": [
+            [
+              "Harpoon launcher",
+              "36\"",
+              "6",
+              "-2",
+              "Cumbersome, Multiple Wounds (2), Through & Through"
+            ]
+          ]
+        }
+      ]
     },
     "ogre-kingdoms-ironfist": {
       "name_en": "Ogre Kingdoms Ironfist",
       "body": [
-        "Ogre Kingdoms Ironfist | R | S | AP | Special Rules Stab | Combat | S | -1 | Requires Two Hands Smash | Combat | S | - | Extra Attacks (+1), Requires Two Hands",
         "Notes: The Ironfist has two profiles. You must choose which the wielder will use at the start of each round of combat. An Ironfist is a type of shield. A model that is equipped with an Ironfist can use either profile, while maintaining the benefits that a shield provides. Furthermore, whilst engaged in close combat, a model that is equipped with and chooses to use an Ironfist as a weapon improves its armor value (but not the value of its mount’s save, if any) by an additional 1, to a maximum of 3+"
       ],
-      "overrides": null
+      "overrides": null,
+      "tables": [
+        {
+          "headers": [],
+          "rows": [
+            [
+              "Ogre Kingdoms Ironfist",
+              "R",
+              "S",
+              "AP",
+              "Special Rules"
+            ],
+            [
+              "Stab",
+              "Combat",
+              "S",
+              "-1",
+              "Requires Two Hands"
+            ],
+            [
+              "Smash",
+              "Combat",
+              "S",
+              "-",
+              "Extra Attacks (+1), Requires Two Hands"
+            ]
+          ]
+        }
+      ]
     },
     "chaintrap": {
       "name_en": "Chaintrap",

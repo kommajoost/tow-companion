@@ -139,6 +139,24 @@ const itemTypeFor = (block, existing, listId) => {
   return 'enchanted-item';
 };
 
+// Een tabelblok als TABEL, niet als platgeslagen regel. De bron zet wapenprofielen en
+// resultaattabellen (D3/D6) netjes op, maar `block.text` plakt ze tot één string aan elkaar — zo werd
+// het profiel van Naptha Bombs "| R | S | AP | Special Rules Naptha Bomb | 9" | 3 | -1 | …" en kreeg
+// de Darkforged Weapon-tabel zelfs een eigen regelpagina (Joost, 17-08).
+const tabelUitBlok = (block) => {
+  if (block.type !== 'table' || !(block.rows ?? []).length) return null;
+  const cellen = (rij) => rij.map((cell) => decodeEntities(cell.text ?? '').replace(/\s+/g, ' ').trim());
+  const rijen = block.rows.map(cellen).filter((rij) => rij.some(Boolean));
+  if (!rijen.length) return null;
+  // Kop = de eerste rij als die uit korte labels bestaat (R/S/AP/Special Rules, D3/Result). Een
+  // tabel zonder zo'n rij krijgt geen kop in plaats van een verzonnen kop.
+  const eerste = rijen[0];
+  const isKop = eerste.every((c) => c.length <= 16) && eerste.filter(Boolean).length >= 2;
+  return { headers: isKop ? eerste : [], rows: isKop ? rijen.slice(1) : rijen };
+};
+/** Een kop die in werkelijkheid een tabelkop is, mag nooit een regelpagina worden. */
+const isTabelKop = (naam) => /^\s*(r|d3|d6)\s*\|/i.test(naam) || /^(R \| S|D3 \| Result|D6 \| Result)/i.test(naam);
+
 const parseWeaponProfiles = (block) => {
   const rows = block.rows ?? [];
   if (rows.length < 2) return [];
@@ -739,16 +757,20 @@ for (const [key, army] of Object.entries(PACKS)) {
     }
   }
   for (const group of proseGroups) {
-    const safeBody = group.blocks.slice(1)
-      .filter((block) => !block.changeKinds?.includes('todo'))
+    if (isTabelKop(group.title)) continue; // "R | S | AP | Special Rules" is geen regel
+    const bruikbaar = group.blocks.slice(1).filter((block) => !block.changeKinds?.includes('todo'));
+    const tabellen = bruikbaar.map(tabelUitBlok).filter(Boolean);
+    const safeBody = bruikbaar
+      .filter((block) => block.type !== 'table')
       .map((block) => decodeEntities(block.text).replace(/\s+/g, ' ').trim())
       .filter(Boolean);
-    if (!safeBody.length || !group.blocks.some(actionable)) continue;
+    if ((!safeBody.length && !tabellen.length) || !group.blocks.some(actionable)) continue;
     const ruleKey = slug(group.title);
     if (!overlay.rules[ruleKey]) {
       overlay.rules[ruleKey] = {
         name_en: group.title,
         body: safeBody,
+        ...(tabellen.length ? { tables: tabellen } : {}),
         overrides: ruleSlugByName.get(norm(group.title)) ?? null,
       };
     }
@@ -812,19 +834,40 @@ for (const [key, army] of Object.entries(PACKS)) {
     const name = decodeEntities(block.headingPath?.[1] ?? block.text).replace(/\s+/g, ' ').trim();
     if (!name) continue;
     const ruleKey = slug(name);
+    if (isTabelKop(name)) continue;
     const current = overlay.rules[ruleKey] ?? {
       name_en: name,
       body: [],
       overrides: ruleSlugByName.get(norm(name)) ?? null,
     };
-    const text = decodeEntities(block.text).replace(/\s+/g, ' ').trim();
-    if (text && norm(text) !== norm(name) && !current.body.includes(text)) current.body.push(text);
+    const tabel = tabelUitBlok(block);
+    if (tabel) {
+      current.tables = [...(current.tables ?? []), tabel];
+    } else {
+      const text = decodeEntities(block.text).replace(/\s+/g, ' ').trim();
+      if (text && norm(text) !== norm(name) && !current.body.includes(text)) current.body.push(text);
+    }
     overlay.rules[ruleKey] = current;
     implementedBlocks.set(block.id, {
       status: block.entryKind === 'paragraph' ? 'applied' : 'captured',
       target: `rules.${ruleKey}`,
     });
   }
+
+  // Een sectie die "<Regel> Table" heet hoort BIJ die regel. De Darkforged Weapon zegt "roll on the
+  // table below" en de tabel stond als eigen pagina ernaast, dus de speler las de zin zonder de
+  // tabel (Joost, 17-08). Samenvoegen als de bijbehorende regel bestaat; anders blijft de losse
+  // pagina staan — dan is hij tenminste te vinden.
+  for (const [ruleKey, rule] of Object.entries(overlay.rules)) {
+    const match = /^(.*)-table$/.exec(ruleKey);
+    if (!match || !rule.tables?.length) continue;
+    const doel = overlay.rules[match[1]];
+    if (!doel) continue;
+    doel.tables = [...(doel.tables ?? []), ...rule.tables];
+    if (rule.body?.length) doel.body = [...(doel.body ?? []), ...rule.body];
+    delete overlay.rules[ruleKey];
+  }
+
 
   // A wrapped "Special Rules:" line carries its colour on whichever PART the author touched. The
   // stitcher below walks forward from a changed special-rules block, but the Terrorgheist (vc) has
