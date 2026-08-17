@@ -20,7 +20,30 @@ import { readFileSync } from 'node:fs';
 const REN = new URL('../public/renegade/', import.meta.url);
 const OWB = new URL('../public/owb/', import.meta.url);
 const [pack, ...vlaggen] = process.argv.slice(2);
-if (!pack) { console.error('usage: node scripts/audit-renegade.mjs <pack> [--alles]'); process.exit(1); }
+// Zonder pack: alle zeven achter elkaar. "Alles moet gecheckt worden" (Joost, 17-08) is geen
+// zeven losse commando's; één samenvatting onderaan maakt zichtbaar of het totaal daalt.
+if (!pack || pack === '--alles') {
+  const packs = ['cd', 'de', 'doc', 'lm', 'ok', 'sk', 'vc'];
+  const { spawnSync } = await import('node:child_process');
+  const { fileURLToPath } = await import('node:url');
+  // fileURLToPath, niet .pathname: op Windows levert dat laatste "/D:/CLAUDE%20CODE/..." op en
+  // start elk kind met een onvindbaar pad. De lus draaide dan zeven keer een crash en telde die
+  // exit-codes op als "7 problemen" — een geruststellend ogend getal dat niets betekende.
+  const zelf = fileURLToPath(import.meta.url);
+  let totaal = 0;
+  for (const p of packs) {
+    const r = spawnSync(process.execPath, [zelf, p, ...process.argv.slice(2)], { encoding: 'utf8' });
+    process.stdout.write(r.stdout ?? '');
+    if (r.status === null || r.error) { console.error(`pack ${p} liep vast:`, r.error ?? r.signal); process.exit(2); }
+    if (r.stderr) process.stderr.write(r.stderr);
+    const m = /TOTAAL: (\d+)/.exec(r.stdout ?? '');
+    if (!m) { console.error(`pack ${p} gaf geen totaal terug — audit afgebroken`); process.exit(2); }
+    totaal += Number(m[1]);
+  }
+  console.log(`
+══ ${totaal} punt${totaal === 1 ? '' : 'en'} van aandacht over alle zeven packs ══`);
+  process.exit(totaal ? 1 : 0);
+}
 const toonAlles = vlaggen.includes('--alles');
 
 const norm = (v) => String(v ?? '').toLowerCase().replace(/\{[^}]*\}/g, '')
@@ -33,6 +56,31 @@ const basis = JSON.parse(readFileSync(new URL(`${overlay.baseArmy}.json`, OWB), 
 const magicItems = JSON.parse(readFileSync(new URL('magic-items.json', OWB), 'utf8'));
 const magicText = JSON.parse(readFileSync(new URL('magic-item-text.json', OWB), 'utf8'));
 const baseRules = JSON.parse(readFileSync(new URL('../rules.json', OWB), 'utf8')).rules;
+const statIndex = JSON.parse(readFileSync(new URL('rules-index.json', OWB), 'utf8'));
+
+// ── De statlines zoals de app ze oplevert ───────────────────────────────────────────────────────
+// `rules-index.json` draagt OWB's eigen sleutelvorm MET leestekens ("k'daai fireborn"), de overlay
+// die zonder. Precies dat verschil liet de W3 van K'daai stilletjes vallen (Joost, 17-08). Hier dus
+// dezelfde tolerante koppeling als in src/lib/overlays.ts — anders toetst de audit een andere app
+// dan de speler ziet.
+const kaal = (v) => String(v ?? '').toLowerCase().replace(/\{[^}]*\}/g, '')
+  .replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim();
+const statSleutels = new Map();
+for (const k of Object.keys(statIndex)) if (!statSleutels.has(kaal(k))) statSleutels.set(kaal(k), k);
+const STAT_KOLOMMEN = ['M', 'WS', 'BS', 'S', 'T', 'W', 'I', 'A', 'Ld', 'Sv'];
+/** Basisrijen + overlayrijen, samengevoegd op rijnaam — dezelfde regel als mergeStatRows. */
+const statsVan = (naam) => {
+  const vorm = kaal(naam);
+  const basisRijen = statIndex[statSleutels.get(vorm) ?? '']?.stats ?? [];
+  const patchRijen = overlay.profiles?.[vorm]?.stats ?? [];
+  if (!patchRijen.length) return basisRijen;
+  if (!basisRijen.length) return patchRijen;
+  const perNaam = new Map(patchRijen.map((r) => [kaal(r.Name), r]));
+  const uit = basisRijen.map((r) => perNaam.get(kaal(r.Name)) ?? r);
+  const gezien = new Set(basisRijen.map((r) => kaal(r.Name)));
+  for (const r of patchRijen) if (!gezien.has(kaal(r.Name))) uit.push(r);
+  return uit;
+};
 
 // ── De effectieve catalogus, zoals de app hem samenstelt ────────────────────────────────────────
 const units = [];
@@ -126,6 +174,71 @@ for (const b of reference.blocks) {
       if (u.u.points !== rij.points.value) meld('AFWIJKEND', b.id, `${u.u.name_en} punten`, `doc ${rij.points.value}, app ${u.u.points}`);
       else if (toonAlles) meld('OK', b.id, `${u.u.name_en} ${rij.points.value} pt`, '');
     }
+
+    // 1b · STATCELLEN — elk cijfer in de tabel tegen wat de app toont.
+    //
+    // Dit ontbrak, en daardoor bleef K'daai Fireborn op W2 staan terwijl de Doc W3 zegt: de audit
+    // controleerde precies dezelfde velden als de compiler en bevestigde zo diens blinde vlek.
+    // Er wordt op RIJNAAM gematcht, niet op tabelvolgorde, want de app voegt basisrijen en
+    // overlayrijen samen en de champion-rij kan daarbij van plaats wisselen.
+    const kop = (b.rows ?? [])[b.headerRowIndex ?? -1];
+    if (kop) {
+      // Kolommen tellen op COLSPAN, niet op array-index. De titelrij van een statline heeft één cel
+      // met colspan 10; wie op index telt schuift daarna alles een kolom op en vergelijkt de naam
+      // met de M-waarde. Hier krijgt elke cel dus zijn echte kolompositie.
+      const posities = (rij) => {
+        const uit = []; let x = 0;
+        for (const c of rij) { uit.push({ cel: c, x }); x += Math.max(1, Number(c.colspan) || 1); }
+        return uit;
+      };
+      const kolom = new Map();
+      for (const { cel, x } of posities(kop)) kolom.set(x, String(cel.text ?? '').trim());
+      const appRijen = statsVan(b.unitContext?.name ?? '');
+      for (const rij of b.rows ?? []) {
+        if (rij === kop) continue;
+        // Twee tabelvormen in dezelfde Doc. Meestal staat de naam in een eigen eerste kolom en begint
+        // de kop met een lege cel. Maar soms is de naamkolom met de M-kolom VERSMOLTEN: de kop begint
+        // dan meteen bij "M" en de cel leest "Cutthroat 4". Zonder die splitsing vergelijkt de audit
+        // de naam met een getal en meldt elke unit als afwijkend.
+        const cellen = posities(rij);
+        const eersteIsStat = STAT_KOLOMMEN.includes(kolom.get(0));
+        const ruw = String(cellen[0]?.cel.text ?? '').trim();
+        const gesplitst = eersteIsStat ? /^(.+?)\s+(\d+\+?)$/.exec(ruw) : null;
+        const rijNaam = gesplitst ? gesplitst[1].trim() : ruw;
+        if (gesplitst) cellen[0] = { cel: { text: gesplitst[2] }, x: 0 };
+        else if (eersteIsStat) continue;   // kop zegt stat, cel draagt geen naam: geen profielregel
+        if (!rijNaam) continue;
+        // Een tabel draagt niet altijd één unit. "Chaos Dwarf Lords" zet Sorcerer-Prophet en
+        // Daemonsmith Sorcerer onder één kop, en `unitContext` wijst er maar één aan. Daarom eerst
+        // de rij zelf opzoeken — die heeft in de index zijn eigen ingang — en pas daarna terugvallen
+        // op de rijen van de context. Enkelvoud/meervoud meegenomen: de tabel schrijft "Sneaky Git",
+        // de catalogus "Sneaky Gits".
+        const mv = [rijNaam, `${rijNaam}s`, rijNaam.replace(/s$/, ''), rijNaam.replace(/y$/, 'ies'), rijNaam.replace(/man$/, 'men')];
+        const eigen = mv.map((n) => statsVan(n)).find((rs) => rs.length);
+        const app = (eigen ?? []).find((r) => mv.some((n) => kaal(r.Name) === kaal(n)))
+          ?? appRijen.find((r) => mv.some((n) => kaal(r.Name) === kaal(n)));
+        if (!app) {
+          // Geen appregel is alleen nieuws als de tabel echt cijfers draagt; kop- en tussenregels
+          // vallen hier vanzelf buiten omdat ze geen statwaarden hebben.
+          const heeftCijfers = cellen.some(({ cel, x }) => STAT_KOLOMMEN.includes(kolom.get(x)) && /^\d/.test(String(cel.text ?? '').trim()));
+          if (heeftCijfers) meld('ONTBREEKT', b.id, `statline "${rijNaam}"`, 'de app kent deze profielregel niet');
+          continue;
+        }
+        for (const { cel, x } of cellen) {
+          const kol = kolom.get(x);
+          if (!STAT_KOLOMMEN.includes(kol)) continue;
+          const doc = String(cel.text ?? '').trim();
+          // "-" = neemt de waarde van het rijdier/de machine over. "(+2)" = een modifier daarop, geen
+          // absolute waarde; de Ogre Loader krijgt +2 wounds bovenop de Iron Daemon. Zulke cellen
+          // vergelijken met een absoluut getal levert alleen ruis op.
+          if (!doc || doc === '-' || !/^\d+\+?$/.test(doc)) continue;
+          const nu = String(app[kol] ?? '').trim();
+          if (!nu) meld('ONTBREEKT', b.id, `${rijNaam} ${kol}`, `doc ${doc}, app heeft geen waarde`);
+          else if (nu !== doc) meld('AFWIJKEND', b.id, `${rijNaam} ${kol}`, `doc ${doc}, app ${nu}`);
+          else if (toonAlles) meld('OK', b.id, `${rijNaam} ${kol} ${doc}`, '');
+        }
+      }
+    }
     continue;
   }
 
@@ -140,6 +253,33 @@ for (const b of reference.blocks) {
       if (eMin !== min || eMax !== max) meld('AFWIJKEND', b.id, `${doel.u.name_en} unit size`, `doc ${min}${m[2] ? '-' + m[2] : m[3] ? '+' : ''}, app min ${eMin} max ${eMax || '∞'}`);
       else if (toonAlles) meld('OK', b.id, `${doel.u.name_en} unit size`, '');
     }
+    continue;
+  }
+
+  // 2b · EQUIPMENT — wat de Equipment-regel noemt moet de speler ook ergens zien staan.
+  //
+  // De Doc schrijft basisbewapening als proza ("Rage and hellfire (counts as hand weapons), heavy
+  // armour"); OWB zet het als optie die aanstaat. De vertaling is niet één-op-één, dus er wordt
+  // ruim gezocht: over alle optielabels van de unit én over de equipment-regel in het profiel.
+  // "Counts as X" telt als X, want dat is de spelregel die telt.
+  if (b.entryKind === 'equipment' && doel) {
+    const kaleRegel = t.replace(/^Equipment:\s*/i, '');
+    const profielTekst = norm((overlay.profiles?.[kaal(b.unitContext?.name ?? '')]?.equipment ?? []).join(' '));
+    const hooi = `${labels(doel.u).map((o) => norm(o.naam)).join(' | ')} | ${profielTekst}`;
+    const gemist = [];
+    for (const deel of kaleRegel.split(/,(?![^(]*\))| and (?=[a-z])/i)) {
+      let term = deel.trim();
+      if (!term) continue;
+      // "Rage and hellfire (counts as hand weapons)" → toets op "hand weapons", niet op de fluff.
+      const telt = /\(counts as ([^)]+)\)/i.exec(term);
+      if (telt) term = telt[1];
+      term = norm(term).replace(/^(a|an|the|two|and)\s+/, '').replace(/\s*\([^)]*\)/g, '').trim();
+      if (term.length < 4) continue;
+      const enkelvoud = term.replace(/s$/, '');
+      if (!hooi.includes(term) && !hooi.includes(enkelvoud)) gemist.push(term);
+    }
+    if (gemist.length) meld('ONTBREEKT', b.id, `${doel.u.name_en} equipment`, gemist.join(' · '));
+    else if (toonAlles) meld('OK', b.id, `${doel.u.name_en} equipment`, '');
     continue;
   }
 
