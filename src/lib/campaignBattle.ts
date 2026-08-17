@@ -356,6 +356,10 @@ export interface BattleResultaat {
   kills: unknown[];
   /** Vrije notities of null. */
   notities: string | null;
+  /** Trok een van de twee legers zich terug? (17-08-2026) De campagne-RPC legt dan de trede vast op
+   *  minimaal Resounding voor de andere kant; een Crushing tegen de terugtrekker blijft staan.
+   *  Afwezig/null = niemand trok zich terug, en de VP-telling beslist zoals altijd. */
+  terugtrokken?: Terugtrekker;
   /** 01-08: battle-quest gehaald, per kant. Battle-quests zijn TAFEL-feiten ("vang de standaard",
    *  "versla hun generaal") die de campagne-app nooit zelf kan zien, dus vinken de twee spelers ze
    *  hier samen af. De campagne-RPC roept per `true` towc_spel_quest_voltooi aan; false = geen actie. */
@@ -382,6 +386,13 @@ export interface BattleResultaat {
 /** De zeven officiële uitkomsten (Tournament Points), altijd vanuit de AANVALLER gezien. */
 export type ToernooiResultaat = 'CD' | 'RD' | 'MD' | 'D' | 'MV' | 'RV' | 'CV';
 
+/** Wie zich terugtrok, als iemand dat deed (17-08-2026). Terugtrekken redt je UNITS — geen
+ *  verwondings-worpen, geen Battlefield Losses — maar geeft de battle weg: de tegenstander wint met
+ *  minimaal een Resounding Victory. Een Crushing TEGEN de terugtrekker blijft wel staan, anders zou
+ *  terugtrekken de ontsnapping uit een afstraffing worden. De regel zelf staat in de campagne-DB
+ *  (`towc_vp_resultaat`), niet hier: zo kunnen preview en verwerking niet uit elkaar lopen. */
+export type Terugtrekker = 'aanvaller' | 'verdediger' | null;
+
 export const RESULTAAT_NAAM: Record<ToernooiResultaat, string> = {
   CD: 'Crushing Defeat', RD: 'Resounding Defeat', MD: 'Marginal Defeat', D: 'Draw',
   MV: 'Marginal Victory', RV: 'Resounding Victory', CV: 'Crushing Victory',
@@ -400,11 +411,17 @@ export const SPIEGEL: Record<ToernooiResultaat, ToernooiResultaat> = {
  * Een derde kopie zou onvermijdelijk uit de pas gaan lopen.
  * `cap` = de punten-cap van de Act (bepaalt de legergrootte-kolom); komt mee met `battleByCode`.
  */
-export async function officieleUitslag(vpAanvaller: number, vpVerdediger: number, cap: number): Promise<ToernooiResultaat | null> {
+export async function officieleUitslag(
+  vpAanvaller: number,
+  vpVerdediger: number,
+  cap: number,
+  terugtrokken: Terugtrekker = null,
+): Promise<ToernooiResultaat | null> {
   const { data, error } = await supabase.rpc('towc_vp_resultaat', {
     p_vp_aanv: Math.max(0, Math.round(vpAanvaller)),
     p_vp_verd: Math.max(0, Math.round(vpVerdediger)),
     p_cap: cap,
+    p_terugtrokken: terugtrokken,
   });
   if (error || typeof data !== 'string') return null;
   return data as ToernooiResultaat;

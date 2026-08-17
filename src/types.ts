@@ -286,6 +286,13 @@ export interface GameTracker {
    *  andere speler en meeloopt in de report-`sig` (verandert een vinkje, dan vervallen beide
    *  goedkeuringen — zelfde regel als voor de VP's). */
   quests?: { host?: boolean; guest?: boolean };
+  /** 17-08: welk leger zich TERUGTROK, als een van de twee dat deed. Een terugtrekkend leger redt zijn
+   *  units (geen verwondings-worpen, geen Battlefield Losses) maar geeft de battle weg: de campagne
+   *  legt de trede vast op minimaal Resounding voor de andere kant, en een Crushing tegen de
+   *  terugtrekker blijft staan. Staat om dezelfde reden als `quests` op de tracker: het is een
+   *  tafel-feit dat beide spelers moeten zien én dat in de report-`sig` hoort, zodat de vlag niet
+   *  meer kan omgaan nadat de ander heeft goedgekeurd. */
+  withdrew?: 'host' | 'guest';
 }
 
 /** A shared game row (mirrors the tow_games table). */
