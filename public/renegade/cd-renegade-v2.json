@@ -659,9 +659,21 @@
       "_was": 41,
       "_changed": [
         "points",
-        "special-rules"
+        "special-rules",
+        "equipment"
       ],
-      "specialRules": "Blazing Body, Born of Fire, Close Order, Ensorcelled Weapons, Fear, Flaming Attacks, Immune to Psychology, Regeneration (5+), Unbreakable, Unstable, Warp-spawned"
+      "specialRules": "Blazing Body, Born of Fire, Close Order, Ensorcelled Weapons, Fear, Flaming Attacks, Immune to Psychology, Regeneration (5+), Unbreakable, Unstable, Warp-spawned",
+      "options": [
+        {
+          "group": "armor",
+          "action": "upsert",
+          "name_en": "Heavy armour",
+          "option": {
+            "name_en": "Heavy armour",
+            "active": true
+          }
+        }
+      ]
     },
     "bull-centaur-renders": {
       "points": 54,

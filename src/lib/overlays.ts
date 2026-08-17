@@ -262,16 +262,40 @@ export function hideForeignOptions(unit: OwbUnit, composition: string, inherits?
 /** The catalogue as it stands for ONE chosen composition: the pack's patches when there is an
  *  overlay, and in every case only the options that belong to that composition. Everything that
  *  builds a list goes through here, so an ordinary army gets the same treatment as a Renegade one. */
+/** De catalogus voert boekhouding in de NAAM: "{renegade}" markeert een pack-variant, "{mount}" een
+ *  rijdier-versie, "{vampire counts}" de herkomst. Nuttig bij het synchroniseren, ruis op het scherm —
+ *  een speler leest "Leadbelchers", niet "Leadbelchers {renegade}" (Joost, 17-08).
+ *
+ *  Alleen de WEERGAVE verandert. Bewaarde lijsten verwijzen naar `unit.id`, en elke opzoeking op naam
+ *  (statlines, troop types, regelpagina's, magic-item-teksten) normaliseert de tag toch al weg — dus
+ *  er kan niets door verschuiven. Het gebeurt hier, in de ene funnel waar elke lijst doorheen gaat,
+ *  zodat roster, picker, inspector, export en validatiemeldingen dezelfde naam tonen. */
+const TAG = /\s*\{[^}]*\}/g;
+const zonderTag = (unit: OwbUnit): OwbUnit => {
+  const schoon = { ...unit, name_en: unit.name_en.replace(TAG, '').trim() };
+  for (const group of ['command', 'equipment', 'armor', 'options', 'mounts'] as const) {
+    const list = schoon[group];
+    if (!Array.isArray(list)) continue;
+    const mark = (options: OwbOption[]): OwbOption[] => options.map((option) => ({
+      ...option,
+      name_en: option.name_en.replace(TAG, '').trim(),
+      ...(Array.isArray(option.options) ? { options: mark(option.options) } : {}),
+    }));
+    schoon[group] = mark(list);
+  }
+  return schoon;
+};
+
 export function catalogueFor(
   base: OwbArmy,
   composition: string,
   overlay?: CompositionOverlay | null,
 ): OwbArmy {
-  if (overlay) return applyOverlay(base, overlay);
-  const out = { ...base } as OwbArmy & Record<string, unknown>;
-  for (const [cat, arr] of Object.entries(base as Record<string, unknown>)) {
+  const gepatcht = overlay ? applyOverlay(base, overlay) : null;
+  const out = { ...(gepatcht ?? base) } as OwbArmy & Record<string, unknown>;
+  for (const [cat, arr] of Object.entries(out as Record<string, unknown>)) {
     if (!Array.isArray(arr)) continue;
-    out[cat] = (arr as OwbUnit[]).map((unit) => hideForeignOptions(unit, composition));
+    out[cat] = (arr as OwbUnit[]).map((unit) => zonderTag(gepatcht ? unit : hideForeignOptions(unit, composition)));
   }
   return out as OwbArmy;
 }
@@ -408,7 +432,8 @@ export function overlayStatsFor(
     ? [...words.slice(0, -1), (words.at(-1) ?? '').replace(/s$/, '')].join(' ')
     : key;
   const patch = overlay?.profiles?.[key] ?? overlay?.profiles?.[singular];
-  const basis = index[key]?.stats ?? index[singular]?.stats ?? [];
+  const basis = index[key]?.stats ?? index[singular]?.stats
+    ?? index[indexSleutel(index, name)]?.stats ?? [];
   return mergeStatRows(basis, patch?.stats);
 }
 
@@ -430,12 +455,33 @@ export function overlayStatsFor(
 function mergeStatRows<T extends { Name: string }>(basis: T[], patch?: T[]): T[] {
   if (!patch?.length) return basis;
   if (!basis.length) return patch;
-  const sleutel = (s: string) => (s || '').toLowerCase().replace(/\s+/g, ' ').trim();
+  const sleutel = (s: string) => normOpt(s || '');
   const perNaam = new Map(patch.map((r) => [sleutel(r.Name), r]));
   const uit = basis.map((r) => perNaam.get(sleutel(r.Name)) ?? r);
   const gezien = new Set(basis.map((r) => sleutel(r.Name)));
   for (const r of patch) if (!gezien.has(sleutel(r.Name))) uit.push(r);
   return uit;
+}
+
+/** De statline-index en de overlay-profielen sleutelen NIET hetzelfde.
+ *
+ *  `rules-index.json` draagt OWB's eigen `normalizeRuleName`: die haalt haakjes, accolades en een
+ *  "3x"-voorvoegsel weg maar LAAT leestekens staan — "K'daai Fireborn" blijft `k'daai fireborn`,
+ *  "Sorcerer-Prophet" blijft `sorcerer-prophet`. De compiler sleutelt met `norm`, die elk niet-
+ *  alfanumeriek teken door een spatie vervangt: `k daai fireborn`, `sorcerer prophet`.
+ *
+ *  Die twee vormen matchten nooit, dus schreef de overlay zijn statline onder een sleutel waar geen
+ *  enkel scherm naar keek. Stil: geen fout, geen lege tabel — gewoon de oude cijfers. K'daai Fireborn
+ *  bleef daardoor op W2 staan terwijl de Doc W3 zegt (Joost, 17-08). Elke unit met een apostrof of
+ *  koppelteken in de naam had hetzelfde.
+ *
+ *  Vandaar: match op de leestekenvrije vorm, maar schrijf terug op de sleutel die de index zelf
+ *  gebruikt, zodat de lezer hem vindt. Kent de index de naam niet, dan is het een nieuwe unit en
+ *  blijft de eigen vorm staan. */
+function indexSleutel(index: Record<string, unknown>, naam: string): string {
+  const vorm = normOpt(naam);
+  for (const key of Object.keys(index)) if (normOpt(key) === vorm) return key;
+  return vorm;
 }
 
 export function applyOverlayStatIndex<T extends { stats?: OverlayStatRow[]; troopType?: string }>(
@@ -445,7 +491,7 @@ export function applyOverlayStatIndex<T extends { stats?: OverlayStatRow[]; troo
   if (!overlay?.profiles || !Object.keys(overlay.profiles).length) return index;
   const out = { ...index };
   for (const [name, patch] of Object.entries(overlay.profiles)) {
-    const key = normOpt(name);
+    const key = indexSleutel(index, name);
     // Zelfde samenvoeg-regel als overlayStatsFor: nooit de basis-regels wissen met een lege of
     // gedeeltelijke overlay-array. Deze twee moeten hetzelfde antwoord geven, anders toont het ene
     // scherm een champion-regel die het andere niet heeft.
@@ -521,7 +567,10 @@ export function applyOverlayMountText<T extends Record<string, MountProfileText>
   const additions = Object.fromEntries(Object.entries(overlay.profiles)
     .filter(([, profile]) => profile.specialRules?.length || profile.troopType || profile.baseSize
       || profile.armourValue || profile.equipment?.length || profile.notes?.length)
-    .map(([name, profile]) => [normOpt(name), {
+    // Zelfde sleutelval als bij de statlines: `mount-text.json` draagt OWB's eigen sleutelvorm met
+    // leestekens, de overlay die zonder. Zonder deze koppeling verdween de equipment-regel van elke
+    // unit met een apostrof of koppelteken — K'daai Fireborn kreeg zijn "heavy armour" nooit te zien.
+    .map(([name, profile]) => [indexSleutel(text, name), {
       specialRules: profile.specialRules,
       troopType: profile.troopType,
       baseSize: profile.baseSize,

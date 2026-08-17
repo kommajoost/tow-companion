@@ -14,6 +14,10 @@
 //   rename — the draft still gives the unit armour, but of a different class. The Chaos Dwarf war
 //            machines dropped from heavy to light; the Bloodthirster's daemonic flesh went up to full
 //            plate.
+//   erbij  — de draft ZET armour op de Equipment-regel die de catalogus helemaal niet heeft. OWB
+//            schrijft basisbewapening als een `armor`-entry die aanstaat en niets kost (zie Infernal
+//            Ironsworn: "Full plate armour [aan]"); zonder die entry is er geen enkele plek waar de
+//            speler het ziet staan. Daarom hier een upsert i.p.v. een patch.
 //   hide   — the draft removed the armour from the Equipment line altogether and gave the unit an
 //            Armoured Hide (N) special rule instead (all the Lizardmen scaly-skin entries).
 //
@@ -26,6 +30,10 @@ import { readFileSync, writeFileSync } from 'node:fs';
 const REN = new URL('../public/renegade/', import.meta.url);
 
 const PATCHES = [
+  {
+    pack: 'cd', "unit": "k'daai-fireborn", erbij: 'Heavy armour',
+    bron: "K'daai Fireborn — Equipment: Rage and hellfire (counts as hand weapons), heavy armour (magenta = nieuw)",
+  },
   // ── Chaos Dwarfs: war machine crews went from heavy to light armour ───────────────────────────
   {
     pack: 'cd', unit: 'deathshrieker-rocket-launcher', van: 'Heavy armour', naar: 'Light armour',
@@ -99,23 +107,29 @@ for (const [pack, lijst] of perPack) {
   for (const p of lijst) {
     // De naam die we patchen moet in de catalogus bestaan, anders patchen we niets en weten we dat niet.
     // Een naamswijziging bovenstrooms (npm run sync-owb) moet hier hoorbaar klappen.
-    const doel = p.van ?? p.verberg;
+    const doel = p.van ?? p.verberg ?? p.erbij;
     const unit = units.find((u) => u.id === p.unit);
     if (!unit) throw new Error(`${pack}/${p.unit}: unit staat niet in de catalogus`);
-    if (!(unit.armor ?? []).some((o) => normOpt(o.name_en) === normOpt(doel))) {
+    if (p.erbij && (unit.armor ?? []).some((o) => normOpt(o.name_en) === normOpt(doel))) {
+      throw new Error(`${pack}/${p.unit}: "${doel}" staat er al — deze patch is overbodig geworden`);
+    }
+    if (!p.erbij && !(unit.armor ?? []).some((o) => normOpt(o.name_en) === normOpt(doel))) {
       throw new Error(`${pack}/${p.unit}: armour-optie "${doel}" bestaat niet meer in de catalogus — controleer de bron voor je dit aanpast`);
     }
     const patch = overlay.units[p.unit] ?? {};
     patch.options = patch.options ?? [];
     const bestaand = patch.options.findIndex((o) => o.group === 'armor' && normOpt(o.name_en) === normOpt(doel));
-    const entry = p.naar
-      ? { group: 'armor', action: 'patch', name_en: doel, renameTo: p.naar }
-      : { group: 'armor', action: 'patch', name_en: doel, option: { hidden: true } };
+    const entry = p.erbij
+      ? { group: 'armor', action: 'upsert', name_en: doel, option: { name_en: doel, active: true } }
+      : p.naar
+        ? { group: 'armor', action: 'patch', name_en: doel, renameTo: p.naar }
+        : { group: 'armor', action: 'patch', name_en: doel, option: { hidden: true } };
     if (bestaand >= 0) patch.options[bestaand] = { ...patch.options[bestaand], ...entry };
     else patch.options.push(entry);
     patch._changed = [...new Set([...(patch._changed ?? []), 'equipment'])];
     overlay.units[p.unit] = patch;
-    console.log(`${pack}/${p.unit}: ${p.naar ? `"${doel}" -> "${p.naar}"` : `"${doel}" verborgen`}`);
+    const wat = p.erbij ? `"${doel}" toegevoegd` : p.naar ? `"${doel}" -> "${p.naar}"` : `"${doel}" verborgen`;
+    console.log(`${pack}/${p.unit}: ${wat}`);
     n++;
   }
   writeFileSync(overlayUrl, `${JSON.stringify(overlay, null, 2)}\n`);
