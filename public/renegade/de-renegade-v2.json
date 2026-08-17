@@ -1120,6 +1120,22 @@
         "Stomp Attacks (D3+1)",
         "Terror"
       ]
+    },
+    "bloodwrack shrine": {
+      "stats": [
+        {
+          "A": "-",
+          "I": "-",
+          "M": "7",
+          "S": "5",
+          "T": "5",
+          "W": "5",
+          "BS": "-",
+          "Ld": "-",
+          "WS": "-",
+          "Name": "Bloodwrack Shrine"
+        }
+      ]
     }
   },
   "notes": [],

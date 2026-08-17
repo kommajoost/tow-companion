@@ -1034,6 +1034,22 @@
       "notes": [
         "Note: In combat, this model may make one of its attacks each turn with this weapon"
       ]
+    },
+    "giant": {
+      "stats": [
+        {
+          "A": "*",
+          "I": "2",
+          "M": "6",
+          "S": "6",
+          "T": "6",
+          "W": "6",
+          "BS": "1",
+          "Ld": "10",
+          "WS": "3",
+          "Name": "Giant"
+        }
+      ]
     }
   },
   "notes": [

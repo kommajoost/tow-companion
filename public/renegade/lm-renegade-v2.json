@@ -1292,7 +1292,21 @@
         "Skink Handlers: Hand weapons • Salamanders: Wicked claws (see below), fiery breath (see below) and plated carapace (counts as full plate)",
         "Notes: If the artillery dice result is a misfire, no shots are fired and D3 Skink Handlers are removed until there are none remaining. If no Skink Handlers remain when a misfire is rolled, a Salamander loses a wound instead."
       ],
-      "troopType": "War beasts Base Size: 25 x 25 mm (Skink Handlers), 50 x 75 mm (Salamanders) Unit Size: 1+"
+      "troopType": "War beasts Base Size: 25 x 25 mm (Skink Handlers), 50 x 75 mm (Salamanders) Unit Size: 1+",
+      "stats": [
+        {
+          "A": "2",
+          "I": "4",
+          "M": "6",
+          "S": "5",
+          "T": "4",
+          "W": "3",
+          "BS": "3",
+          "Ld": "5",
+          "WS": "3",
+          "Name": "Salamander"
+        }
+      ]
     },
     "razordon pack": {
       "notes": [
@@ -1300,7 +1314,21 @@
         "Skink Handlers: Hand weapons • Razordons: Wicked claws (see below), razor barbs (see below) andplated carapace (counts as full plate)",
         "Note: If the artillery dice result is a misfire, no shots are fired and D3 Skink Handlers are removed until there are none remaining. If no Skink Handlers remain when a misfire is rolled, a Razordon loses a wound instead."
       ],
-      "troopType": "War beastsBase Size: 25 x 25 mm (Skink Handlers), 50 x 75 mm (Razordons) Unit Size: 1+"
+      "troopType": "War beastsBase Size: 25 x 25 mm (Skink Handlers), 50 x 75 mm (Razordons) Unit Size: 1+",
+      "stats": [
+        {
+          "A": "2",
+          "I": "4",
+          "M": "6",
+          "S": "5",
+          "T": "4",
+          "W": "3",
+          "BS": "3",
+          "Ld": "5",
+          "WS": "3",
+          "Name": "Razordon"
+        }
+      ]
     },
     "cold one riders": {
       "notes": [
@@ -1589,6 +1617,38 @@
         "Aquatic",
         "Close Order",
         "Cold Blooded"
+      ]
+    },
+    "terradon": {
+      "stats": [
+        {
+          "A": "2",
+          "I": "2",
+          "M": "2",
+          "S": "4",
+          "T": "(+1)",
+          "W": "(+1)",
+          "BS": "-",
+          "Ld": "-",
+          "WS": "3",
+          "Name": "Terradon"
+        }
+      ]
+    },
+    "ancient stegadon": {
+      "stats": [
+        {
+          "A": "3",
+          "I": "1",
+          "M": "6",
+          "S": "6",
+          "T": "6",
+          "W": "6",
+          "BS": "-",
+          "Ld": "-",
+          "WS": "4",
+          "Name": "Ancient Stegadon"
+        }
       ]
     }
   },

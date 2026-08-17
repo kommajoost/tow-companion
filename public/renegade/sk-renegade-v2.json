@@ -1431,6 +1431,36 @@
     "hell pit abomination": {
       "equipment": [
         "Warpstone claws (see below) and mutated hide (counts as heavy armour)"
+      ],
+      "stats": [
+        {
+          "A": "D6+1",
+          "I": "4",
+          "M": "3D6",
+          "S": "6",
+          "T": "6",
+          "W": "6",
+          "BS": "1",
+          "Ld": "8",
+          "WS": "3",
+          "Name": "Hell Pit Abomination"
+        }
+      ]
+    },
+    "plagueclaw catapult": {
+      "stats": [
+        {
+          "A": "2",
+          "I": "3",
+          "M": "5",
+          "S": "3",
+          "T": "4",
+          "W": "3",
+          "BS": "0",
+          "Ld": "5",
+          "WS": "3",
+          "Name": "Plague Monk Crew"
+        }
       ]
     }
   },

@@ -970,6 +970,18 @@
           "I": "1",
           "A": "1",
           "Ld": "2"
+        },
+        {
+          "A": "1",
+          "I": "1",
+          "M": "4",
+          "S": "3",
+          "T": "2",
+          "W": "1",
+          "BS": "0",
+          "Ld": "2",
+          "WS": "2",
+          "Name": "Zombies"
         }
       ],
       "specialRules": [
@@ -1329,6 +1341,22 @@
         "Flammable",
         "Indomitable (1)",
         "Necromantic Undead"
+      ]
+    },
+    "nightmare": {
+      "stats": [
+        {
+          "A": "1",
+          "I": "2",
+          "M": "8",
+          "S": "4",
+          "T": "-",
+          "W": "-",
+          "BS": "-",
+          "Ld": "-",
+          "WS": "3",
+          "Name": "Nightmare"
+        }
       ]
     }
   },

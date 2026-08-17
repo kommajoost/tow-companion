@@ -68,6 +68,17 @@ const kaal = (v) => String(v ?? '').toLowerCase().replace(/\{[^}]*\}/g, '')
 const statSleutels = new Map();
 for (const k of Object.keys(statIndex)) if (!statSleutels.has(kaal(k))) statSleutels.set(kaal(k), k);
 const STAT_KOLOMMEN = ['M', 'WS', 'BS', 'S', 'T', 'W', 'I', 'A', 'Ld', 'Sv'];
+
+// Een profielregel staat lang niet altijd onder zijn eigen naam. "Weapon Team Crew" hangt onder de
+// ingang `weapon team`, een mount als Dark Steed onder de ruiter, en crewregels onder de machine.
+// Zoeken op unitnaam alleen meldde daardoor elf bestaande profielen als ontbrekend. Vandaar een
+// index op RIJNAAM over alles heen: de vraag is of de speler die regel ergens ziet, niet waar hij
+// administratief hangt.
+const rijIndex = new Map();
+const zetRij = (r) => { const k = kaal(r?.Name); if (k && !rijIndex.has(k)) rijIndex.set(k, r); };
+for (const ingang of Object.values(statIndex)) for (const r of ingang?.stats ?? []) zetRij(r);
+for (const prof of Object.values(overlay.profiles ?? {})) for (const r of prof?.stats ?? []) zetRij(r);
+
 /** Basisrijen + overlayrijen, samengevoegd op rijnaam — dezelfde regel als mergeStatRows. */
 const statsVan = (naam) => {
   const vorm = kaal(naam);
@@ -213,10 +224,14 @@ for (const b of reference.blocks) {
         // de rij zelf opzoeken — die heeft in de index zijn eigen ingang — en pas daarna terugvallen
         // op de rijen van de context. Enkelvoud/meervoud meegenomen: de tabel schrijft "Sneaky Git",
         // de catalogus "Sneaky Gits".
-        const mv = [rijNaam, `${rijNaam}s`, rijNaam.replace(/s$/, ''), rijNaam.replace(/y$/, 'ies'), rijNaam.replace(/man$/, 'men')];
+        // "(x2)" en "x3" zijn aantallen, geen deel van de naam: de bron schrijft "Dark Steed (x2)"
+        // voor een strijdwagen met twee paarden, de catalogus kent gewoon "Dark Steed".
+        const schoon = rijNaam.replace(/\s*\(x\s*\d+\)\s*$/i, '').replace(/\s+x\s*\d+$/i, '').trim();
+        const mv = [schoon, `${schoon}s`, schoon.replace(/s$/, ''), schoon.replace(/y$/, 'ies'), schoon.replace(/man$/, 'men')];
         const eigen = mv.map((n) => statsVan(n)).find((rs) => rs.length);
         const app = (eigen ?? []).find((r) => mv.some((n) => kaal(r.Name) === kaal(n)))
-          ?? appRijen.find((r) => mv.some((n) => kaal(r.Name) === kaal(n)));
+          ?? appRijen.find((r) => mv.some((n) => kaal(r.Name) === kaal(n)))
+          ?? mv.map((n) => rijIndex.get(kaal(n))).find(Boolean);
         if (!app) {
           // Geen appregel is alleen nieuws als de tabel echt cijfers draagt; kop- en tussenregels
           // vallen hier vanzelf buiten omdat ze geen statwaarden hebben.

@@ -1434,8 +1434,8 @@
       "stats": [
         {
           "Name": "Keeper of Secrets",
-          "M": "10",
-          "WS": "9",
+          "M": "8",
+          "WS": "7",
           "BS": "6",
           "S": "6",
           "T": "6",
@@ -1457,6 +1457,32 @@
     "daemonettes of slaanesh": {
       "notes": [
         "An Alluress may purchase Daemonic Gifts up to a total of 25 points"
+      ],
+      "stats": [
+        {
+          "A": "1",
+          "I": "5",
+          "M": "6",
+          "S": "3",
+          "T": "3",
+          "W": "1",
+          "BS": "3",
+          "Ld": "7",
+          "WS": "4",
+          "Name": "Daemonette"
+        },
+        {
+          "A": "2",
+          "I": "5",
+          "M": "6",
+          "S": "3",
+          "T": "3",
+          "W": "1",
+          "BS": "3",
+          "Ld": "7",
+          "WS": "4",
+          "Name": "Alluress"
+        }
       ]
     },
     "seekers of slaanesh": {
@@ -1890,6 +1916,22 @@
         "Reserve Move",
         "Stomp Attacks (D6+1)",
         "Terror"
+      ]
+    },
+    "flamers of tzeentch": {
+      "stats": [
+        {
+          "A": "2",
+          "I": "4",
+          "M": "6",
+          "S": "4",
+          "T": "4",
+          "W": "2",
+          "BS": "5",
+          "Ld": "7",
+          "WS": "2",
+          "Name": "Exalted Flamer"
+        }
       ]
     }
   },
