@@ -323,6 +323,7 @@ export function unitArmourSave(unit: ArmyUnit): ArmourSave | null {
   let barding = false;
   let ironfist = false;      // ironfist / buckler — a flat +1
   let has2H = false;         // two-handed weapon in the wargear
+  let handWeapon = false;    // an explicit hand weapon — Parry needs one by name
   let armouredHide = 0;      // Armoured Hide (X) → +X
   let seaCloak = false;      // Sea Dragon / Lion Cloak — +1 vs non-magical shooting
   let parry = false;
@@ -343,6 +344,10 @@ export function unitArmourSave(unit: ArmyUnit): ArmourSave | null {
     if (/barding|caparison/.test(o)) barding = true;
     if (/ironfist|buckler/.test(o)) ironfist = true;
     if (TWO_HANDED_WEAPON.test(o)) has2H = true;
+    // "Hand weapons" alleen, niet "additional hand weapon" — twee handwapens is een andere keuze en
+    // die sluit het schild uit. Ook niet meetellen als het onderdeel van een bundel is die met een
+    // ander wapen eindigt; daar beslist has2H.
+    if (/\bhand weapons?\b/.test(o) && !/additional hand weapon|two hand weapons/.test(o)) handWeapon = true;
     // A worn "… armour" we don't recognise (Dragon, Gromril, Chaos, …): surface, don't guess.
     if (!isStdArmour(o) && /armou?r/.test(o) && !/armoured hide/.test(o) && !/ironfist/.test(o)) {
       unvalued = raw.trim();
@@ -355,6 +360,14 @@ export function unitArmourSave(unit: ArmyUnit): ArmourSave | null {
     if (/sea dragon cloak|lion cloak/i.test(raw)) seaCloak = true;
     if (/\bparry\b/i.test(raw)) parry = true;
   }
+
+  // PARRY KOMT VAN HET TROOP TYPE, niet van de datasheet. Van de 1377 units noemen er precies twee
+  // "Parry" in hun special rules (beide Wood Elf, en dat is een andere regel); de rulebook-tekst
+  // hangt onder `troop-types-in-detail` en wordt daar genoemd door Regular Infantry en Heavy
+  // Infantry — niet door Monstrous Infantry of Swarms, die eigen sub-categorieen zijn. Alleen in
+  // specialRules zoeken zou de regel bij 263 units laten liggen en precies nul keer afgaan.
+  const tt = String(unit.troopType ?? '').trim();
+  if (/^(RI|HI)$/i.test(tt) || /^(regular|heavy) infantry$/i.test(tt)) parry = true;
 
   const hasAnything = base != null || shield || towerShield || barding || ironfist || armouredHide > 0 || seaCloak;
   if (!hasAnything && !unvalued) return null;
@@ -393,11 +406,28 @@ export function unitArmourSave(unit: ArmyUnit): ArmourSave | null {
     addCond(clampSave(baseVal - (always + shieldInCombat)), 'to the flank or rear (no tower-shield cover)');
   }
 
-  if (parry) notes.push('Parry: +1 armour in close combat with a hand weapon & shield (max 3+)');
+  // PARRY — "Whilst engaged in close combat, a model with this rule that is equipped with and chooses
+  // to use a hand weapon and shield improves its armour value by 1, to a maximum of 3+" (rulebook
+  // p.190). De algemene save in deze functie IS de close-combat-save, dus daar hoort de +1 in
+  // (Joost, 17-08). Drie grenzen komen letterlijk uit de regel en zijn geen interpretatie:
+  //   · alleen met een handwapen én schild — een tweehandig wapen laat het schild vallen (has2H),
+  //   · het maximum van 3+ , dus vanaf 3+ levert Parry niets meer op,
+  //   · en de bonus mag nooit VERSLECHTEREN: een unit die al op 2+ zit houdt 2+.
+  // Buiten close combat verandert er niets; de conditionele schiet-save wordt los berekend.
+  const parryTelt = parry && handWeapon && shield && !has2H;
+  const naParry = parryTelt ? Math.min(save, Math.max(3, save - 1)) : save;
+  if (parryTelt) {
+    parts.push(naParry < save ? 'Parry (+1, close combat, max 3+)' : 'Parry (geen effect — al op 3+ of beter)');
+    // Buiten close combat geldt de bonus niet. Alleen melden als hij daadwerkelijk iets deed,
+    // anders zijn het twee identieke getallen naast elkaar.
+    if (naParry < save) addCond(save, 'vs shooting (Parry telt alleen in close combat)');
+  } else if (parry) {
+    notes.push('Parry: +1 armour in close combat with a hand weapon & shield (max 3+)');
+  }
   if (unvalued) notes.push(`${unvalued} not auto-valued — check its rule`);
 
   return {
-    save,
+    save: naParry,
     parts,
     capped: rawGeneral < 2,
     conditional: conditional.length ? conditional : undefined,
