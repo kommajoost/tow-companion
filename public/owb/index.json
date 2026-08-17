@@ -5,7 +5,7 @@
     {
       "slug": "beastmen-brayherds",
       "name": "Beastmen Brayherds",
-      "units": 44
+      "units": 45
     },
     {
       "slug": "chaos-dwarfs",
@@ -85,7 +85,7 @@
     {
       "slug": "warriors-of-chaos",
       "name": "Warriors of Chaos",
-      "units": 34
+      "units": 49
     },
     {
       "slug": "wood-elf-realms",
