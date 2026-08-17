@@ -18,6 +18,7 @@
     "patch-renegade-added-units": "node scripts/patch-renegade-added-units.mjs",
     "renegade": "npm run patch-renegade-added-units && npm run compile-renegade-v2 && npm run compile-renegade-lores && npm run patch-renegade-yellow && npm run patch-renegade-equipment && npm run validate-renegade-v2",
     "validate-renegade-v2": "node scripts/validate-renegade-v2.mjs",
+    "audit-renegade": "node scripts/audit-renegade.mjs",
     "validate-renegade-reference": "node scripts/validate-renegade-reference.mjs",
     "sync-owb": "node scripts/sync-owb.mjs",
     "stamp-version": "node scripts/stamp-version.mjs",
