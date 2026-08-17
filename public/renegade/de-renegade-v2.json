@@ -14,6 +14,138 @@
   "scope": "points-and-rules",
   "inheritsComposition": "de-renegade",
   "units": {
+    "high-beastmaster": {
+      "minimum": 1,
+      "maximum": 1,
+      "_changed": [
+        "unit-size"
+      ]
+    },
+    "khainite-assassin": {
+      "minimum": 1,
+      "maximum": 1,
+      "_changed": [
+        "unit-size",
+        "special-rules"
+      ],
+      "specialRules": "Eternal Hatred, Hatred (All Enemies), Hidden, Immune to Psychology, Murderous, Strike First, Poisoned Attacks"
+    },
+    "dark-elf-shades": {
+      "group": "Dark Elf Shades",
+      "options": [
+        {
+          "group": "command",
+          "action": "patch",
+          "name_en": "Bloodshade (champion)",
+          "points": 6,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Ambushers",
+          "points": 1,
+          "perModel": true
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Chariot Runners",
+          "points": 1,
+          "perModel": true
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Veteran",
+          "points": 1,
+          "perModel": true
+        },
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "Feigned Flight",
+          "points": 1,
+          "perModel": true
+        }
+      ],
+      "_changed": [
+        "options",
+        "special-rules"
+      ],
+      "specialRules": "Elven Reflexes, Evasive, Hatred (High Elves), Move through Cover, Scouts, Skirmishers, Fire & Flee"
+    },
+    "harpies": {
+      "group": "Harpies"
+    },
+    "dark-riders": {
+      "group": "Dark Riders"
+    },
+    "cold-one-chariots": {
+      "group": "Cold One Chariots",
+      "minimum": 1,
+      "maximum": 1,
+      "_changed": [
+        "unit-size",
+        "points"
+      ],
+      "points": 110,
+      "_was": 125
+    },
+    "bloodwrack-shrines": {
+      "minimum": 1,
+      "maximum": 1,
+      "_changed": [
+        "unit-size",
+        "points",
+        "special-rules"
+      ],
+      "points": 140,
+      "_was": 175,
+      "specialRules": "Close Order, Will of the Gods, Elven Reflexes, Hatred (High Elves), Impact Hits (D6+1), Large Target, Magic Resistance (-1), Murderous, Poisoned Attacks, Stony Stare, Terror, Impetuous"
+    },
+    "war-hydra": {
+      "minimum": 1,
+      "maximum": 1,
+      "_changed": [
+        "unit-size",
+        "points",
+        "special-rules"
+      ],
+      "points": 165,
+      "_was": 200,
+      "specialRules": "Close Order, Extra Attacks (+remaining Wounds), Immune to Psychology, Large Target, Monster Handlers, Regeneration (5+), Flammable, Stomp Attacks (D3+1), Terror, If One Head is Severed… Another Takes Its Place"
+    },
+    "bloodwrack-medusas": {
+      "minimum": 1,
+      "maximum": 1,
+      "_changed": [
+        "unit-size",
+        "points",
+        "special-rules"
+      ],
+      "points": 70,
+      "_was": 85,
+      "specialRules": "Close Order, Elven Reflexes, Fear, Hatred (High Elves), Magic Resistance (-1), Murderous, Poisoned Attacks, Stony Stare, Impetuous"
+    },
+    "kharibdyss": {
+      "minimum": 1,
+      "maximum": 1,
+      "_changed": [
+        "unit-size",
+        "points"
+      ],
+      "points": 145,
+      "_was": 195
+    },
+    "reaper-bolt-throwers": {
+      "group": "Reaper Bolt Thrower",
+      "minimum": 1,
+      "maximum": 1,
+      "_changed": [
+        "unit-size"
+      ]
+    },
     "supreme-sorceress": {
       "points": 155,
       "_was": 150,
@@ -30,12 +162,6 @@
     },
     "death-hag": {
       "specialRules": "Eternal Hatred, Frenzy, Hatred (all enemies), Loner, Murderous, Poisoned Attacks, Strike First, Warband",
-      "_changed": [
-        "special-rules"
-      ]
-    },
-    "khainite-assassin": {
-      "specialRules": "Eternal Hatred, Hatred (All Enemies), Hidden, Immune to Psychology, Murderous, Strike First, Poisoned Attacks",
       "_changed": [
         "special-rules"
       ]
@@ -149,50 +275,6 @@
         }
       ]
     },
-    "dark-elf-shades": {
-      "options": [
-        {
-          "group": "command",
-          "action": "patch",
-          "name_en": "Bloodshade (champion)",
-          "points": 6,
-          "perModel": false
-        },
-        {
-          "group": "options",
-          "action": "patch",
-          "name_en": "Ambushers",
-          "points": 1,
-          "perModel": true
-        },
-        {
-          "group": "options",
-          "action": "patch",
-          "name_en": "Chariot Runners",
-          "points": 1,
-          "perModel": true
-        },
-        {
-          "group": "options",
-          "action": "patch",
-          "name_en": "Veteran",
-          "points": 1,
-          "perModel": true
-        },
-        {
-          "group": "options",
-          "action": "upsert",
-          "name_en": "Feigned Flight",
-          "points": 1,
-          "perModel": true
-        }
-      ],
-      "_changed": [
-        "options",
-        "special-rules"
-      ],
-      "specialRules": "Elven Reflexes, Evasive, Hatred (High Elves), Move through Cover, Scouts, Skirmishers, Fire & Flee"
-    },
     "witch-elves": {
       "minimum": 5,
       "_changed": [
@@ -216,47 +298,6 @@
       "specialRules": "Armour Bane (1, Cold One only), Armoured Hide (1), Close Order, Elven Reflexes, Fear, First Charge, Hatred (High Elves), Stupidity, Swiftstride, Counter Charge",
       "_changed": [
         "special-rules"
-      ]
-    },
-    "cold-one-chariots": {
-      "points": 110,
-      "_was": 125,
-      "_changed": [
-        "points"
-      ]
-    },
-    "bloodwrack-shrines": {
-      "points": 140,
-      "_was": 175,
-      "_changed": [
-        "points",
-        "special-rules"
-      ],
-      "specialRules": "Close Order, Will of the Gods, Elven Reflexes, Hatred (High Elves), Impact Hits (D6+1), Large Target, Magic Resistance (-1), Murderous, Poisoned Attacks, Stony Stare, Terror, Impetuous"
-    },
-    "war-hydra": {
-      "points": 165,
-      "_was": 200,
-      "_changed": [
-        "points",
-        "special-rules"
-      ],
-      "specialRules": "Close Order, Extra Attacks (+remaining Wounds), Immune to Psychology, Large Target, Monster Handlers, Regeneration (5+), Flammable, Stomp Attacks (D3+1), Terror, If One Head is Severed… Another Takes Its Place"
-    },
-    "bloodwrack-medusas": {
-      "points": 70,
-      "_was": 85,
-      "_changed": [
-        "points",
-        "special-rules"
-      ],
-      "specialRules": "Close Order, Elven Reflexes, Fear, Hatred (High Elves), Magic Resistance (-1), Murderous, Poisoned Attacks, Stony Stare, Impetuous"
-    },
-    "kharibdyss": {
-      "points": 145,
-      "_was": 195,
-      "_changed": [
-        "points"
       ]
     }
   },

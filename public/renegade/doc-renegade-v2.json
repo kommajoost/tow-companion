@@ -15,11 +15,14 @@
   "inheritsComposition": "doc-renegade",
   "units": {
     "bloodthirster": {
-      "specialRules": "Close Order, Daemonic, Daemonic Charge (-2), Daemon of Khorne, Fly (10), Impact Hits (D3+1), Impetuous, Infernal Favour (2), Large Target, Magic Resistance (-2), Terror",
+      "minimum": 1,
+      "maximum": 1,
       "_changed": [
+        "unit-size",
         "special-rules",
         "equipment"
       ],
+      "specialRules": "Close Order, Daemonic, Daemonic Charge (-2), Daemon of Khorne, Fly (10), Impact Hits (D3+1), Impetuous, Infernal Favour (2), Large Target, Magic Resistance (-2), Terror",
       "options": [
         {
           "group": "armor",
@@ -30,9 +33,263 @@
       ]
     },
     "daemonic-herald-of-khorne": {
-      "specialRules": "Daemonic, Daemon of Khorne, Impetuous, Infernal Favour (1), Magic Resistance (-2), Locus of Wrath",
+      "minimum": 1,
+      "maximum": 1,
       "_changed": [
+        "unit-size",
         "special-rules"
+      ],
+      "specialRules": "Daemonic, Daemon of Khorne, Impetuous, Infernal Favour (1), Magic Resistance (-2), Locus of Wrath"
+    },
+    "skull-cannon-of-khorne": {
+      "minimum": 1,
+      "maximum": 1,
+      "_changed": [
+        "unit-size",
+        "special-rules"
+      ],
+      "specialRules": "Brazen Wheels, Close Order, Daemonic, Daemon of Khorne, First Charge, Impact Hits (D3+1), Impetuous, Magic Resistance (-1), Stomp Attacks (D3)"
+    },
+    "great-unclean-one": {
+      "minimum": 1,
+      "maximum": 1,
+      "_changed": [
+        "unit-size",
+        "points",
+        "options",
+        "special-rules"
+      ],
+      "points": 360,
+      "_was": 330,
+      "options": [
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Level 4 Wizard",
+          "points": 30,
+          "perModel": false
+        }
+      ],
+      "specialRules": "Close Order, Daemonic, Daemon of Nurgle, Infernal Favour (2), Large Target, Lore of Daemons, Poisoned Attacks, Regeneration (5+), Singular Essence, Stomp Attacks (D3+1), Terror"
+    },
+    "daemonic-herald-of-nurgle": {
+      "minimum": 1,
+      "maximum": 1,
+      "_changed": [
+        "unit-size",
+        "options",
+        "special-rules"
+      ],
+      "options": [
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Level 2 Wizard",
+          "points": 30,
+          "perModel": false
+        }
+      ],
+      "specialRules": "Daemonic, Daemon of Nurgle, Infernal Favour (1), Locus of Fecundity, Lore of Daemons, Poisoned Attacks"
+    },
+    "beasts-of-nurgle": {
+      "group": "Beasts Of Nurgle",
+      "minimum": 1,
+      "_changed": [
+        "unit-size",
+        "special-rules"
+      ],
+      "specialRules": "Attention Seeker, Open Order, Daemonic, Daemons of Nurgle, Impetuous, Infernal Favour (1), Loner, Poisoned Attacks, Random Attacks, Regeneration (5+), Slime Trail"
+    },
+    "keeper-of-secrets": {
+      "minimum": 1,
+      "maximum": 1,
+      "_changed": [
+        "unit-size",
+        "special-rules"
+      ],
+      "specialRules": "Close Order, Daemonic, Daemon of Slaanesh, Evasive, Infernal Favour (2), Large Target, Lore of Daemons, Reserve Move, Stomp Attacks (D3+1), Swiftstride, Terror"
+    },
+    "daemonic-herald-of-slaanesh": {
+      "minimum": 1,
+      "maximum": 1,
+      "_changed": [
+        "unit-size",
+        "options"
+      ],
+      "options": [
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Level 2 Wizard",
+          "points": 30,
+          "perModel": false
+        }
+      ]
+    },
+    "fiends-of-slaanesh": {
+      "group": "Fiends Of Slaanesh",
+      "points": 46,
+      "_was": 66,
+      "_changed": [
+        "points",
+        "unit-size"
+      ],
+      "minimum": 2
+    },
+    "hellflayer-of-slaanesh": {
+      "minimum": 1,
+      "maximum": 1,
+      "_changed": [
+        "unit-size",
+        "points",
+        "special-rules"
+      ],
+      "points": 125,
+      "_was": 145,
+      "specialRules": "Armour Bane (1, Steed of Slaanesh only), Close Order, Counter Charge, Daemonic, Daemonic Charge (-1), Daemon of Slaanesh, First Charge, Impact Hits (2D6+1), Open Order, Poisoned Attacks (Steed of Slaanesh only), Swiftstride"
+    },
+    "lord-of-change": {
+      "minimum": 1,
+      "maximum": 1,
+      "_changed": [
+        "unit-size",
+        "points",
+        "options",
+        "special-rules"
+      ],
+      "points": 340,
+      "_was": 310,
+      "options": [
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Tzeentchian Wand",
+          "points": 20,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Level 4 Wizard",
+          "points": 30,
+          "perModel": false
+        }
+      ],
+      "specialRules": "Close Order, Daemonic, Daemon of Tzeentch, Flaming Attacks, Fly (9), Infernal Favour (2), Large Target, Lore of Daemons, Stomp Attacks (D3), Singular Essence, Swiftstride, Terror"
+    },
+    "daemonic-herald-of-tzeentch": {
+      "minimum": 1,
+      "maximum": 1,
+      "_changed": [
+        "unit-size",
+        "options",
+        "special-rules"
+      ],
+      "options": [
+        {
+          "group": "mounts",
+          "action": "patch",
+          "name_en": "Disc of Tzeentch",
+          "points": 35,
+          "perModel": false
+        }
+      ],
+      "specialRules": "Daemonic, Daemon of Tzeentch, Infernal Favour (1), Locus of Change, Lore of Daemons"
+    },
+    "burning-chariot-of-tzeentch": {
+      "minimum": 1,
+      "maximum": 1,
+      "_changed": [
+        "unit-size",
+        "points"
+      ],
+      "points": 140,
+      "_was": 190
+    },
+    "daemon-prince": {
+      "group": "Daemon Princes",
+      "minimum": 1,
+      "maximum": 1,
+      "_changed": [
+        "unit-size",
+        "special-rules"
+      ],
+      "specialRules": "Chaos Armour, Daemonic, Infernal Favour (2), Lore of Daemons, Regeneration (5+), Singular Essence"
+    },
+    "chaos-furies": {
+      "group": "Chaos Furies",
+      "options": [
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "Daemons of Khorne",
+          "points": 2,
+          "perModel": true
+        },
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "Daemons of Nurgle",
+          "points": 1,
+          "perModel": true
+        },
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "Daemons of Slaanesh",
+          "points": 2,
+          "perModel": true
+        },
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "Daemons of Tzeentch",
+          "points": 1,
+          "perModel": true
+        }
+      ],
+      "_changed": [
+        "options",
+        "special-rules",
+        "points"
+      ],
+      "specialRules": "Daemonic, Fly (8), Skirmishers, Swiftstride, Vanguard",
+      "points": 11,
+      "_was": 12
+    },
+    "soul-grinder": {
+      "group": "Soul Grinder",
+      "minimum": 1,
+      "maximum": 1,
+      "_changed": [
+        "unit-size",
+        "points",
+        "options",
+        "equipment"
+      ],
+      "points": 240,
+      "_was": 255,
+      "options": [
+        {
+          "group": "equipment",
+          "action": "patch",
+          "name_en": "Hand weapon, Iron claw, Harvester cannon, Warp gaze",
+          "points": 30,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "Phlegm Bombardment",
+          "points": 30,
+          "perModel": false
+        },
+        {
+          "group": "armor",
+          "action": "patch",
+          "name_en": "Heavy armour (Daemonic flesh)",
+          "renameTo": "Full plate armour (Daemonic flesh)"
+        }
       ]
     },
     "bloodletters-of-khorne": {
@@ -96,47 +353,6 @@
         "special-rules"
       ]
     },
-    "skull-cannon-of-khorne": {
-      "specialRules": "Brazen Wheels, Close Order, Daemonic, Daemon of Khorne, First Charge, Impact Hits (D3+1), Impetuous, Magic Resistance (-1), Stomp Attacks (D3)",
-      "_changed": [
-        "special-rules"
-      ]
-    },
-    "great-unclean-one": {
-      "points": 360,
-      "_was": 330,
-      "_changed": [
-        "points",
-        "options",
-        "special-rules"
-      ],
-      "options": [
-        {
-          "group": "options",
-          "action": "patch",
-          "name_en": "Level 4 Wizard",
-          "points": 30,
-          "perModel": false
-        }
-      ],
-      "specialRules": "Close Order, Daemonic, Daemon of Nurgle, Infernal Favour (2), Large Target, Lore of Daemons, Poisoned Attacks, Regeneration (5+), Singular Essence, Stomp Attacks (D3+1), Terror"
-    },
-    "daemonic-herald-of-nurgle": {
-      "options": [
-        {
-          "group": "options",
-          "action": "patch",
-          "name_en": "Level 2 Wizard",
-          "points": 30,
-          "perModel": false
-        }
-      ],
-      "_changed": [
-        "options",
-        "special-rules"
-      ],
-      "specialRules": "Daemonic, Daemon of Nurgle, Infernal Favour (1), Locus of Fecundity, Lore of Daemons, Poisoned Attacks"
-    },
     "plaguebearers-of-nurgle": {
       "points": 12,
       "_was": 13,
@@ -145,14 +361,6 @@
         "unit-size"
       ],
       "minimum": 5
-    },
-    "beasts-of-nurgle": {
-      "minimum": 1,
-      "_changed": [
-        "unit-size",
-        "special-rules"
-      ],
-      "specialRules": "Attention Seeker, Open Order, Daemonic, Daemons of Nurgle, Impetuous, Infernal Favour (1), Loner, Poisoned Attacks, Random Attacks, Regeneration (5+), Slime Trail"
     },
     "nurglings-core": {
       "specialRules": "Daemonic, Daemons of Nurgle, Loner, Poisoned Attacks, Random Attacks, Regeneration (6+), Scouts, Skirmishers",
@@ -189,26 +397,6 @@
       ],
       "specialRules": "Armour Bane (2, Rot Fly only), Daemonic, Daemons of Nurgle, Fly (9), Poisoned Attacks, Regeneration (5+), Skirmishers, Swiftstride"
     },
-    "keeper-of-secrets": {
-      "specialRules": "Close Order, Daemonic, Daemon of Slaanesh, Evasive, Infernal Favour (2), Large Target, Lore of Daemons, Reserve Move, Stomp Attacks (D3+1), Swiftstride, Terror",
-      "_changed": [
-        "special-rules"
-      ]
-    },
-    "daemonic-herald-of-slaanesh": {
-      "options": [
-        {
-          "group": "options",
-          "action": "patch",
-          "name_en": "Level 2 Wizard",
-          "points": 30,
-          "perModel": false
-        }
-      ],
-      "_changed": [
-        "options"
-      ]
-    },
     "daemonettes-of-slaanesh": {
       "minimum": 5,
       "_changed": [
@@ -231,24 +419,6 @@
         "points"
       ]
     },
-    "fiends-of-slaanesh": {
-      "points": 46,
-      "_was": 66,
-      "_changed": [
-        "points",
-        "unit-size"
-      ],
-      "minimum": 2
-    },
-    "hellflayer-of-slaanesh": {
-      "points": 125,
-      "_was": 145,
-      "_changed": [
-        "points",
-        "special-rules"
-      ],
-      "specialRules": "Armour Bane (1, Steed of Slaanesh only), Close Order, Counter Charge, Daemonic, Daemonic Charge (-1), Daemon of Slaanesh, First Charge, Impact Hits (2D6+1), Open Order, Poisoned Attacks (Steed of Slaanesh only), Swiftstride"
-    },
     "seeker-chariot-of-slaanesh": {
       "points": 85,
       "_was": 100,
@@ -257,48 +427,6 @@
         "special-rules"
       ],
       "specialRules": "Armour Bane (1, Steed of Slaanesh only), Counter Charge, Daemonic, Daemonic Charge (-1), Daemon of Slaanesh, First Charge, Impact Hits (D3+1), Open Order, Poisoned Attacks (Steed of Slaanesh only), Swiftstride"
-    },
-    "lord-of-change": {
-      "points": 340,
-      "_was": 310,
-      "_changed": [
-        "points",
-        "options",
-        "special-rules"
-      ],
-      "options": [
-        {
-          "group": "options",
-          "action": "patch",
-          "name_en": "Tzeentchian Wand",
-          "points": 20,
-          "perModel": false
-        },
-        {
-          "group": "options",
-          "action": "patch",
-          "name_en": "Level 4 Wizard",
-          "points": 30,
-          "perModel": false
-        }
-      ],
-      "specialRules": "Close Order, Daemonic, Daemon of Tzeentch, Flaming Attacks, Fly (9), Infernal Favour (2), Large Target, Lore of Daemons, Stomp Attacks (D3), Singular Essence, Swiftstride, Terror"
-    },
-    "daemonic-herald-of-tzeentch": {
-      "options": [
-        {
-          "group": "mounts",
-          "action": "patch",
-          "name_en": "Disc of Tzeentch",
-          "points": 35,
-          "perModel": false
-        }
-      ],
-      "_changed": [
-        "options",
-        "special-rules"
-      ],
-      "specialRules": "Daemonic, Daemon of Tzeentch, Infernal Favour (1), Locus of Change, Lore of Daemons"
     },
     "pink-horrors-of-tzeentch-core": {
       "specialRules": "Daemonic, Daemons of Tzeentch, Open Order, Scintillating Sorcery",
@@ -352,90 +480,6 @@
         "special-rules"
       ],
       "specialRules": "Daemonic, Daemons of Tzeentch, Fly (9), Skirmishers, Slashing Attack"
-    },
-    "burning-chariot-of-tzeentch": {
-      "points": 140,
-      "_was": 190,
-      "_changed": [
-        "points"
-      ]
-    },
-    "daemon-prince": {
-      "specialRules": "Chaos Armour, Daemonic, Infernal Favour (2), Lore of Daemons, Regeneration (5+), Singular Essence",
-      "_changed": [
-        "special-rules"
-      ]
-    },
-    "chaos-furies": {
-      "options": [
-        {
-          "group": "options",
-          "action": "upsert",
-          "name_en": "Daemons of Khorne",
-          "points": 2,
-          "perModel": true
-        },
-        {
-          "group": "options",
-          "action": "upsert",
-          "name_en": "Daemons of Nurgle",
-          "points": 1,
-          "perModel": true
-        },
-        {
-          "group": "options",
-          "action": "upsert",
-          "name_en": "Daemons of Slaanesh",
-          "points": 2,
-          "perModel": true
-        },
-        {
-          "group": "options",
-          "action": "upsert",
-          "name_en": "Daemons of Tzeentch",
-          "points": 1,
-          "perModel": true
-        }
-      ],
-      "_changed": [
-        "options",
-        "special-rules",
-        "points"
-      ],
-      "specialRules": "Daemonic, Fly (8), Skirmishers, Swiftstride, Vanguard",
-      "points": 11,
-      "_was": 12
-    },
-    "soul-grinder": {
-      "points": 240,
-      "_was": 255,
-      "_changed": [
-        "points",
-        "options",
-        "equipment"
-      ],
-      "options": [
-        {
-          "group": "equipment",
-          "action": "patch",
-          "name_en": "Hand weapon, Iron claw, Harvester cannon, Warp gaze",
-          "points": 30,
-          "perModel": false
-        },
-        {
-          "group": "options",
-          "action": "upsert",
-          "name_en": "Phlegm Bombardment",
-          "points": 30,
-          "perModel": false
-        },
-        {
-          "group": "armor",
-          "action": "patch",
-          "name_en": "Heavy armour (Daemonic flesh)",
-          "renameTo": "Full plate armour (Daemonic flesh)"
-        }
-      ]
     }
   },
   "magicItems": {

@@ -14,6 +14,186 @@
   "scope": "points-and-rules",
   "inheritsComposition": "vc-renegade",
   "units": {
+    "strigoi-ghoul-king": {
+      "minimum": 1,
+      "maximum": 1,
+      "_changed": [
+        "unit-size",
+        "special-rules"
+      ],
+      "specialRules": "Dark Vitality, Flammable, Ghoulkin, Hatred (all enemies), Indomitable (1), Lore of Undeath, Necromantic Undead, Poisoned Attacks, Regeneration (5+), The Hunger, Vanguard"
+    },
+    "cairn-wraith": {
+      "group": "Cairn Wraiths",
+      "minimum": 1,
+      "maximum": 1,
+      "_changed": [
+        "unit-size"
+      ]
+    },
+    "tomb-banshee": {
+      "group": "Tomb Banshees",
+      "minimum": 1,
+      "maximum": 1,
+      "_changed": [
+        "unit-size",
+        "special-rules"
+      ],
+      "specialRules": "Ethereal, Indomitable (1), Magical Attacks, Necromantic Undead, Regeneration (6+), Terror, Wailing Dirge (-1)"
+    },
+    "skeleton-warriors": {
+      "group": "Skeleton Warriors",
+      "points": 4,
+      "_was": 5,
+      "_changed": [
+        "points",
+        "options"
+      ],
+      "options": [
+        {
+          "group": "equipment",
+          "action": "patch",
+          "name_en": "Thrusting spears",
+          "points": 1,
+          "perModel": true
+        },
+        {
+          "group": "armor",
+          "action": "patch",
+          "name_en": "Light armour, Shields",
+          "points": 1,
+          "perModel": true
+        },
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "Implacable Defence",
+          "points": 10,
+          "perModel": false
+        }
+      ]
+    },
+    "zombies": {
+      "group": "Zombies",
+      "specialRules": "Close Order, Horde, Necromantic Undead, Regeneration (6+), Shambling Horde.",
+      "_changed": [
+        "special-rules"
+      ]
+    },
+    "crypt-ghouls": {
+      "group": "Crypt Ghouls",
+      "points": 8,
+      "_was": 9,
+      "_changed": [
+        "points",
+        "unit-size",
+        "options",
+        "special-rules"
+      ],
+      "minimum": 5,
+      "options": [
+        {
+          "group": "command",
+          "action": "patch",
+          "name_en": "Crypt Ghast",
+          "points": 6,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "Ambushers",
+          "points": 1,
+          "perModel": true
+        }
+      ],
+      "specialRules": "Armour Bane (1), Dark Vitality, Move through Cover, Necromantic Undead, Open Order, Poisoned Attacks, Regeneration (6+), Reserve Move, Skirmishers, The Hunger"
+    },
+    "crypt-horrors": {
+      "group": "Crypt Horrors",
+      "specialRules": "Dark Vitality, Indomitable (1), Move through Cover, Necromantic Undead, Open Order, Regeneration (5+), Stomp Attacks (1), The Hunger",
+      "_changed": [
+        "special-rules"
+      ]
+    },
+    "bat-swarm": {
+      "group": "Bat Swarms",
+      "minimum": 2,
+      "_changed": [
+        "unit-size",
+        "special-rules"
+      ],
+      "specialRules": "Fly (7), Necromantic Undead, Regeneration (6+), Skirmishers, Cloud of Horror"
+    },
+    "vargheists": {
+      "group": "Vargheists",
+      "minimum": 2,
+      "_changed": [
+        "unit-size",
+        "special-rules"
+      ],
+      "specialRules": "Armour Bane (2), Dark Vitality, Dispersed Formation, Flammable, Fly (9), Furious Charge, Indomitable (1), Impetuous, Necromantic Undead, Regeneration (5+), Skirmishers, The Hunger"
+    },
+    "spirit-hosts": {
+      "group": "Spirit Hosts",
+      "minimum": 2,
+      "maximum": 6,
+      "_changed": [
+        "unit-size"
+      ]
+    },
+    "blood-knights": {
+      "group": "Blood Knights",
+      "minimum": 4,
+      "_changed": [
+        "unit-size"
+      ]
+    },
+    "dire-wolves": {
+      "group": "Dire Wolves"
+    },
+    "hexwraiths": {
+      "group": "Hexwraiths"
+    },
+    "corpse-cart": {
+      "group": "Corpse Cart",
+      "minimum": 1,
+      "maximum": 1,
+      "_changed": [
+        "unit-size",
+        "points",
+        "special-rules"
+      ],
+      "points": 60,
+      "_was": 115,
+      "specialRules": "Close Order, Dark Vitality, First Charge, Impact Hits (D3+1), Indomitable (1), Necromantic Undead, Random Attacks (The Restless Dead only), Regeneration (6+), Vigor Mortis"
+    },
+    "black-coach": {
+      "group": "Black Coach"
+    },
+    "terrorgheist": {
+      "group": "Terrorgheist",
+      "minimum": 1,
+      "maximum": 1,
+      "_changed": [
+        "unit-size",
+        "special-rules"
+      ],
+      "specialRules": "Close Order, Fly (9), Indomitable (1), Infested, Large Target, Necromantic Undead, Regeneration (5+), Stomp Attacks (D6), Swiftstride, Terror, Wailing Dirge (-2)"
+    },
+    "varghulf": {
+      "group": "Varghulf",
+      "minimum": 1,
+      "maximum": 1,
+      "_changed": [
+        "unit-size",
+        "points",
+        "special-rules"
+      ],
+      "points": 110,
+      "_was": 140,
+      "specialRules": "Bestial Fury, Close Order, Counter Charge, Dark Vitality, Flammable, Indomitable (1), Necromantic Undead, Regeneration (5+), Swiftstride, Terror, The Hunger"
+    },
     "vampire-count": {
       "replace": {
         "name_en": "Vampire Lord"
@@ -116,24 +296,12 @@
       ]
     },
     "necromantic-acolyte": {},
-    "strigoi-ghoul-king": {
-      "specialRules": "Dark Vitality, Flammable, Ghoulkin, Hatred (all enemies), Indomitable (1), Lore of Undeath, Necromantic Undead, Poisoned Attacks, Regeneration (5+), The Hunger, Vanguard",
-      "_changed": [
-        "special-rules"
-      ]
-    },
     "wight-king": {},
     "wight-lord": {
       "points": 60,
       "_was": 40,
       "_changed": [
         "points"
-      ]
-    },
-    "tomb-banshee": {
-      "specialRules": "Ethereal, Indomitable (1), Magical Attacks, Necromantic Undead, Regeneration (6+), Terror, Wailing Dirge (-1)",
-      "_changed": [
-        "special-rules"
       ]
     },
     "grave-guard-core": {
@@ -144,106 +312,6 @@
     },
     "grave-guard": {
       "minimum": 5,
-      "_changed": [
-        "unit-size"
-      ]
-    },
-    "skeleton-warriors": {
-      "points": 4,
-      "_was": 5,
-      "_changed": [
-        "points",
-        "options"
-      ],
-      "options": [
-        {
-          "group": "equipment",
-          "action": "patch",
-          "name_en": "Thrusting spears",
-          "points": 1,
-          "perModel": true
-        },
-        {
-          "group": "armor",
-          "action": "patch",
-          "name_en": "Light armour, Shields",
-          "points": 1,
-          "perModel": true
-        },
-        {
-          "group": "options",
-          "action": "upsert",
-          "name_en": "Implacable Defence",
-          "points": 10,
-          "perModel": false
-        }
-      ]
-    },
-    "zombies": {
-      "specialRules": "Close Order, Horde, Necromantic Undead, Regeneration (6+), Shambling Horde.",
-      "_changed": [
-        "special-rules"
-      ]
-    },
-    "crypt-ghouls": {
-      "points": 8,
-      "_was": 9,
-      "_changed": [
-        "points",
-        "unit-size",
-        "options",
-        "special-rules"
-      ],
-      "minimum": 5,
-      "options": [
-        {
-          "group": "command",
-          "action": "patch",
-          "name_en": "Crypt Ghast",
-          "points": 6,
-          "perModel": false
-        },
-        {
-          "group": "options",
-          "action": "upsert",
-          "name_en": "Ambushers",
-          "points": 1,
-          "perModel": true
-        }
-      ],
-      "specialRules": "Armour Bane (1), Dark Vitality, Move through Cover, Necromantic Undead, Open Order, Poisoned Attacks, Regeneration (6+), Reserve Move, Skirmishers, The Hunger"
-    },
-    "crypt-horrors": {
-      "specialRules": "Dark Vitality, Indomitable (1), Move through Cover, Necromantic Undead, Open Order, Regeneration (5+), Stomp Attacks (1), The Hunger",
-      "_changed": [
-        "special-rules"
-      ]
-    },
-    "bat-swarm": {
-      "minimum": 2,
-      "_changed": [
-        "unit-size",
-        "special-rules"
-      ],
-      "specialRules": "Fly (7), Necromantic Undead, Regeneration (6+), Skirmishers, Cloud of Horror"
-    },
-    "vargheists": {
-      "minimum": 2,
-      "_changed": [
-        "unit-size",
-        "special-rules"
-      ],
-      "specialRules": "Armour Bane (2), Dark Vitality, Dispersed Formation, Flammable, Fly (9), Furious Charge, Indomitable (1), Impetuous, Necromantic Undead, Regeneration (5+), Skirmishers, The Hunger"
-    },
-    "spirit-hosts": {
-      "minimum": 2,
-      "maximum": 6,
-      "_changed": [
-        "unit-size"
-      ]
-    },
-    "blood-knights": {
-      "minimum": 4,
       "_changed": [
         "unit-size"
       ]
@@ -283,32 +351,6 @@
         }
       ],
       "specialRules": "Cleaving Blow (Black Knights & Hell Knight only), Close Order, First Charge, Necromantic Undead, Regeneration (6+), Swiftstride, Spectral Steed"
-    },
-    "hexwraiths": {},
-    "corpse-cart": {
-      "points": 60,
-      "_was": 115,
-      "_changed": [
-        "points",
-        "special-rules"
-      ],
-      "specialRules": "Close Order, Dark Vitality, First Charge, Impact Hits (D3+1), Indomitable (1), Necromantic Undead, Random Attacks (The Restless Dead only), Regeneration (6+), Vigor Mortis"
-    },
-    "black-coach": {},
-    "terrorgheist": {
-      "specialRules": "Close Order, Fly (9), Indomitable (1), Infested, Large Target, Necromantic Undead, Regeneration (5+), Stomp Attacks (D6), Swiftstride, Terror, Wailing Dirge (-2)",
-      "_changed": [
-        "special-rules"
-      ]
-    },
-    "varghulf": {
-      "points": 110,
-      "_was": 140,
-      "_changed": [
-        "points",
-        "special-rules"
-      ],
-      "specialRules": "Bestial Fury, Close Order, Counter Charge, Dark Vitality, Flammable, Indomitable (1), Necromantic Undead, Regeneration (5+), Swiftstride, Terror, The Hunger"
     }
   },
   "magicItems": {

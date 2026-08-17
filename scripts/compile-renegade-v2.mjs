@@ -854,6 +854,73 @@ for (const [key, army] of Object.entries(PACKS)) {
     });
   }
 
+  // ── Wat het draft zegt telt, óók als het blok ongekleurd is ─────────────────────────────────────
+  // Joost, 17-08: "bij twijfel: neem de data over van de Renegades list, ook qua naamsveranderingen"
+  // en "unit size max 1 afdwingen — dus geen plusje om meer mee te nemen". De kleurcodering is de
+  // gids voor WAT de auteur veranderde, maar deze twee feiten staan er ondubbelzinnig, gekleurd of
+  // niet, en de app week er zichtbaar van af.
+  for (const block of reference.blocks) {
+    if (block.scope !== 'army-list' || !block.unitContext) continue;
+    const hits = resolveUnits(index, block.unitContext);
+    const ids = new Set(hits.map((h) => h.unit.id));
+    if (ids.size !== 1) continue;
+    const { unit } = hits[0];
+    const tekst = String(block.text ?? '').replace(/\s+/g, ' ').trim();
+
+    // (a) VASTE unit size. Alleen een vaste maat ("Unit Size: 1"), nooit een open ondergrens
+    //     ("5+"): bij Skaven Clanrats zegt het datasheet 20+ terwijl de changelog juist een cap van
+    //     40 toevoegde, en een open maat zou die cap wegpoetsen. En nooit overschrijven wat een
+    //     GEKLEURD blok al bepaalde — de Vargheists gingen van 3+ naar 2+.
+    const maat = /^Unit Size:\s*(\d+)\s*$/i.exec(tekst);
+    if (maat && block.entryKind === 'unit-size') {
+      const patch = overlay.units[unit.id] ?? {};
+      if (patch.minimum == null && patch.maximum == null) {
+        const n = Number(maat[1]);
+        if ((unit.minimum ?? 1) !== n || (unit.maximum ?? 0) !== n) {
+          patch.minimum = n;
+          patch.maximum = n;
+          addChanged(patch, 'unit-size');
+          overlay.units[unit.id] = patch;
+        }
+      }
+    }
+
+    // (b) HERNOEMDE command-rol. Een champion/standard bearer/musician is één rol per unit; het
+    //     draft geeft hem soms een eigen naam ("Handmaiden of Shards" i.p.v. "Hag"). Hernoemen, niet
+    //     een tweede exemplaar toevoegen — anders staan er twee champions in de lijst.
+    for (const segment of tekst.split(/\s*•\s*/)) {
+      const rol = /(champion|standard bearer|musician)/i.exec(segment);
+      if (!rol || !/\+\s*\d+\s*points?/i.test(segment)) continue;
+      const naam = segment
+        .replace(/^.*?upgrade one model to(?:\s+(?:an?|the))?\s+/i, '')
+        .replace(/\s*\+\s*\d+\s*points?.*$/i, '')
+        .replace(/\s*\(see[^)]*\)/ig, '')
+        .trim();
+      if (!naam || naam.length > 48) continue;
+      const groep = unit.command ?? [];
+      const zelfdeRol = groep.filter((o) => new RegExp(`\b${rol[1]}\b`, 'i').test(o.name_en));
+      if (zelfdeRol.length !== 1) continue;
+      const huidig = zelfdeRol[0].name_en;
+      if (norm(huidig) === norm(naam)) continue;
+      const patch = overlay.units[unit.id] ?? {};
+      patch.options = patch.options ?? [];
+      const at = patch.options.findIndex((o) => o.group === 'command' && norm(o.name_en) === norm(huidig));
+      const entry = { group: 'command', action: 'patch', name_en: huidig, renameTo: naam };
+      if (at >= 0) patch.options[at] = { ...patch.options[at], ...entry };
+      else patch.options.push(entry);
+      addChanged(patch, 'command');
+      overlay.units[unit.id] = patch;
+    }
+
+    // (c) GROEPSNAAM. "Dark Elf Nobles" is een overkoepelende kop boven meerdere datasheets. Doet nu
+    //     niets in de UI, maar het draft kent hem en later hangen er upgrades aan; achtergronddata
+    //     bewaren kost niets en scheelt straks opnieuw uitzoeken.
+    if (block.tableType === 'statline' && block.unitContext.method === 'table-title') {
+      const patch = overlay.units[unit.id] ?? {};
+      if (!patch.group) { patch.group = block.unitContext.name; overlay.units[unit.id] = patch; }
+    }
+  }
+
   // Een sectie die "<Regel> Table" heet hoort BIJ die regel. De Darkforged Weapon zegt "roll on the
   // table below" en de tabel stond als eigen pagina ernaast, dus de speler las de zin zonder de
   // tabel (Joost, 17-08). Samenvoegen als de bijbehorende regel bestaat; anders blijft de losse
