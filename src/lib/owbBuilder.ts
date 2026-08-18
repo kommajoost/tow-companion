@@ -11,6 +11,13 @@ export interface OwbOption {
   hidden?: boolean;
   /** An option variant that belongs only to one OWB army composition. */
   armyComposition?: string;
+  /** OWB's marker for the unit's FREE BASE equipment -- the "Equipment: Hand weapons and light armour"
+   *  line of the army list, as opposed to a chooseable variant. Its presence in a group is how the
+   *  data tells "may take ANY of the following" (base + stacking upgrades) apart from "may replace X
+   *  with Y" (bundled alternatives): see `isRadioGroup`. It was in the JSON all along but not in this
+   *  type, so nothing could read it -- which is why great weapons and shields were mutually
+   *  exclusive for a Bull Centaur Render until 18-08-2026. */
+  equippedDefault?: boolean;
   // `alwaysActive` — the option is always on and cannot be toggled off (a free base, e.g. the
   // "Wizard" header on a Sorceress). `exclusive` — the option is one-of among its SIBLINGS in the
   // same nested list (a radio choice, e.g. "Level 3 Wizard" vs "Level 4 Wizard").
@@ -234,16 +241,55 @@ export const OPTION_GROUPS: { key: keyof OwbUnit; label: string; radio?: boolean
   { key: 'mounts', label: 'Mounts', radio: true },
 ];
 
+/**
+ * Is een groep voor DEZE unit single-choice? Het antwoord hangt van de unit af, niet van de groep —
+ * dat was 18-08-2026 de bron van twee bugs die een speler meldde (Chaos Dwarfs, Renegades v2).
+ *
+ * `equipment` en `armor` stonden hard op radio, met de aanname "je draagt een loadout, je draagt een
+ * armour". Maar het boek kent twee vormen naast elkaar, en OWB codeert ze verschillend:
+ *
+ *  1. "may REPLACE shields with shortbows" -> ALTERNATIEVEN. OWB schrijft elke variant als een
+ *     complete, gebundelde entry ("Hand weapons, Shields" / "Hand weapons, Shortbows"). Radio. Blijft.
+ *  2. "may take ANY of the following: great weapons, shields" -> LOSSE UPGRADES op een vaste basis.
+ *     OWB markeert die basis met `equippedDefault` en zet elke upgrade als eigen entry. Dat MOETEN
+ *     toggles zijn: officieel draag je meerdere wapens en kies je per combat welke je gebruikt
+ *     (tow.whfb.app/weapons-of-war/more-than-one-combat-weapon). Een Bull Centaur Render mag dus
+ *     great weapons EN shields, en een Dwarf King een great weapon EN een handgun.
+ *  3. "may take light armour, +1 point per model" -> een ENKELE optionele upgrade, zonder gratis
+ *     alternatief in de groep. Als radio was die niet uit te zetten: `radioSelected` viel bij gebrek
+ *     aan een `active`-default terug op de eerste optie, dus de speler betaalde verplicht voor
+ *     armour die het boek optioneel noemt. Ook een toggle. Raakt 22 units over 7 legers -- Empire
+ *     State Missile Troops betaalden zo 20 punten die ze niet konden weigeren.
+ *
+ * Voor (3) eist deze functie bewust PRECIES EEN optie. Bij twee of meer betaalde armour-opties
+ * zonder gratis default zou toggelen twee armour-types laten stapelen; dat komt in de huidige data
+ * niet voor (gemeten: 0 van de 22), en liever hier conservatief dan een nieuwe bug erbij.
+ */
+export function isRadioGroup(unit: OwbUnit, key: keyof OwbUnit): boolean {
+  if (OPTION_GROUPS.find((g) => g.key === key)?.radio !== true) return false;
+  const list = (Array.isArray(unit[key]) ? (unit[key] as OwbOption[]) : []).filter((o) => o && !o.hidden);
+  if (key === 'equipment' && list.some((o) => o.equippedDefault)) return false;   // (2)
+  if (list.length === 1 && !list.some((o) => o.active && (o.points ?? 0) === 0)) return false;  // (3)
+  return true;
+}
+
 // An option block ready for the editor: the group's items with their index + whether it's radio.
 export interface OptionBlock { key: keyof OwbUnit; label: string; radio: boolean; items: { i: number; opt: OwbOption }[] }
 export function unitBlocks(unit: OwbUnit): OptionBlock[] {
-  return OPTION_GROUPS.map(({ key, label, radio }) => {
+  return OPTION_GROUPS.map(({ key, label }) => {
     const list = Array.isArray(unit[key]) ? (unit[key] as OwbOption[]) : [];
+    const radio = isRadioGroup(unit, key);
     return {
       key,
       label,
-      radio: !!radio,
-      items: list.map((opt, i) => ({ i, opt })).filter(({ opt }) => opt && opt.name_en && !opt.hidden),
+      radio,
+      items: list.map((opt, i) => ({
+        i,
+        // In een toggle-groep is de `equippedDefault`-basis geen keuze maar een gegeven: je kunt
+        // "Hand weapons" niet weglaten. `alwaysActive` laat de editor hem als kopje tonen in plaats
+        // van als uitzetbaar vinkje -- anders zou hij als UIT lezen terwijl hij wel meetelt.
+        opt: !radio && opt?.equippedDefault && !opt.alwaysActive ? { ...opt, alwaysActive: true } : opt,
+      })).filter(({ opt }) => opt && opt.name_en && !opt.hidden),
     };
   }).filter((b) => b.items.length > 0);
 }
@@ -299,8 +345,9 @@ const hasSubOpt = (entry: ListEntry, group: keyof OwbUnit, parentIndex: number, 
 
 // Is the parent option at `parentIndex` in `group` currently active (so its nested options apply)?
 function parentActive(unit: OwbUnit, entry: ListEntry, group: keyof OwbUnit, parent: OwbOption, parentIndex: number): boolean {
-  const isRadio = OPTION_GROUPS.find((g) => g.key === group)?.radio;
-  if (isRadio) return radioSelected(unit, entry, group) === `${String(group)}/${parentIndex}`;
+  // Per UNIT, niet per groep (18-08-2026): een equipment-groep met een `equippedDefault`-basis is
+  // een toggle-set, en dan hangt de actieve staat aan de opgeslagen key, niet aan de radio-keuze.
+  if (isRadioGroup(unit, group)) return radioSelected(unit, entry, group) === `${String(group)}/${parentIndex}`;
   return parent.alwaysActive === true || entry.opts.includes(`${String(group)}/${parentIndex}`);
 }
 
@@ -609,7 +656,7 @@ export function selectedOptions(unit: OwbUnit, entry: ListEntry): { group: keyof
     const [g, iStr] = key.split('/');
     const list = groupItems(unit, g as keyof OwbUnit);
     let opt = list[Number(iStr)];
-    if (opt?.hidden && OPTION_GROUPS.some((group) => group.key === g && group.radio)) {
+    if (opt?.hidden && isRadioGroup(unit, g as keyof OwbUnit)) {
       const effective = Number(radioSelected(unit, entry, g as keyof OwbUnit).split('/')[1]);
       opt = list[effective];
     }

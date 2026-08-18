@@ -6,14 +6,16 @@
 // option lines are silently dropped (the user can fix them in the editor).
 
 import { parseArmyList } from './armyParser';
-import { CATEGORIES, COMPOSITION_RULES, OPTION_GROUPS, isCharacter, magicCategories, magicItemId, type Category, type OwbArmy, type OwbUnit, type OwbOption, type ListEntry, type MagicItemsData } from './owbBuilder';
+import { CATEGORIES, COMPOSITION_RULES, isCharacter, isRadioGroup, magicCategories, magicItemId, type Category, type OwbArmy, type OwbUnit, type OwbOption, type ListEntry, type MagicItemsData } from './owbBuilder';
 
 // Strip OWB footnote markers ("{dark elves}", trailing "*") and collapse to a comparable key.
 const clean = (s: string) => (s || '').replace(/\{[^}]*\}/g, ' ').replace(/\*/g, '').replace(/\s+/g, ' ').trim();
 const norm = (s: string) => clean(s).toLowerCase().replace(/\([^)]*\)/g, ' ').replace(/\[[^\]]*\]/g, ' ').replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim();
 
 const OPTION_GROUP_KEYS: (keyof OwbUnit)[] = ['command', 'equipment', 'armor', 'options', 'mounts'];
-const RADIO_GROUPS = new Set(OPTION_GROUPS.filter((g) => g.radio).map((g) => String(g.key)));
+// Radio-of-toggle hangt van de UNIT af (18-08-2026), niet van de groep: een equipment-groep met een
+// `equippedDefault`-basis is een toggle-set, en een enkele optionele upgrade zonder gratis default
+// ook. Zie `isRadioGroup` in owbBuilder voor de drie vormen en waarom.
 const groupItems = (unit: OwbUnit, key: keyof OwbUnit): OwbOption[] =>
   (Array.isArray(unit[key]) ? (unit[key] as OwbOption[]) : []).filter((o) => o && o.name_en);
 
@@ -83,7 +85,7 @@ export function importOwbText(text: string, army: OwbArmy, itemsData?: MagicItem
       consumed.add(idx);
       const [gk, iStr] = k.split('/');
       const opt = groupItems(unit, gk as keyof OwbUnit)[Number(iStr)];
-      if (RADIO_GROUPS.has(gk)) {
+      if (isRadioGroup(unit, gk as keyof OwbUnit)) {
         if (opt && !opt.active) radioChoice.set(gk, k);
       } else if (!toggles.includes(k)) {
         toggles.push(k);
