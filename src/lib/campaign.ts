@@ -23,6 +23,11 @@ const CODE_KEY = 'tow:campaignCode';
 const CTX_KEY = 'tow:campaignCtx';
 const ACTIEF_KEY = 'tow:campaignActief';
 
+/** Welke van de twee campagne-lijsten je bedoelt (19-08-2026). De campagne bewaart ze onder een eigen
+ *  Act-nummer -- de voorbereiding op Act 0, de game op de lopende Act -- dus elke lijst-call moet
+ *  zeggen wélke hij bedoelt. Laat je het weg, dan doet de server wat hij altijd deed (het game-slot). */
+export type CampagneBron = 'voorbereiding' | 'game';
+
 export interface CampaignRosterOptie { id: string; naam: string; level: number; effect: string }
 export interface CampaignSpeler {
   id: string; naam: string; kleur: string; factie: string; alliantie: string;
@@ -61,7 +66,7 @@ export interface CampaignUnit { naam: string; catalogusId: string | null; cat: s
 export interface CampaignContext {
   ok: true;
   /** Waar deze campagne uit komt: een voorbereiding (de echte campagne) of een game-slot. */
-  bron: 'voorbereiding' | 'game';
+  bron: CampagneBron;
   /** Stabiele sleutel van deze campagne = het speler-id ('c1' / 'p0'). Onthouden we als keuze. */
   key: string;
   /** Naam zoals de speler hem ziet: "Isle of Celedon" of "Playtest". */
@@ -426,8 +431,8 @@ function parseKeuring(raw: unknown): LijstKeuring {
  *  voor de onafhankelijke veteraan die de lijst beoordeelt. Die laatste krijgt 'm mee in het
  *  Word-document, zodat hij een rare keuze kan wegen mét de bedoeling erachter.
  *  Leeg wist 'm. Mag ook nog ná het locken: het is verhaal, geen regel. */
-export async function lijstNotitieZet(speler: string, tekst: string): Promise<string | null> {
-  const { data, error } = await supabase.rpc('towc_lijst_notitie_zet', { p_speler: speler, p_tekst: tekst });
+export async function lijstNotitieZet(speler: string, tekst: string, bron?: CampagneBron): Promise<string | null> {
+  const { data, error } = await supabase.rpc('towc_lijst_notitie_zet', { p_speler: speler, p_tekst: tekst, p_bron: bron ?? null });
   if (error) throw error;
   const d = (data && typeof data === 'object' ? data : {}) as Record<string, unknown>;
   if (d.ok !== true) throw new Error(str(d.fout, 'CAMPAGNE_FOUT'));
@@ -435,16 +440,16 @@ export async function lijstNotitieZet(speler: string, tekst: string): Promise<st
 }
 
 /** Keur de lijst van deze speler zoals de campagne 'm nu in de cloud ziet. */
-export async function keurLijst(speler: string): Promise<LijstKeuring> {
-  const { data, error } = await supabase.rpc('towc_lijst_diff', { p_speler: speler });
+export async function keurLijst(speler: string, bron?: CampagneBron): Promise<LijstKeuring> {
+  const { data, error } = await supabase.rpc('towc_lijst_diff', { p_speler: speler, p_bron: bron ?? null });
   if (error) throw error;
   return parseKeuring(data);
 }
 
 /** Dien de lijst in voor de huidige Act. De server keurt zelf opnieuw en weigert een lijst met
  *  fouten — deze knop kan dus niets forceren wat de campagne niet toestaat. */
-export async function dienLijstIn(speler: string): Promise<LijstKeuring> {
-  const { data, error } = await supabase.rpc('towc_lijst_lock', { p_speler: speler });
+export async function dienLijstIn(speler: string, bron?: CampagneBron): Promise<LijstKeuring> {
+  const { data, error } = await supabase.rpc('towc_lijst_lock', { p_speler: speler, p_bron: bron ?? null });
   if (error) throw error;
   const d = (data && typeof data === 'object' ? data : {}) as Record<string, unknown>;
   // Weigering komt terug als { ok:false, fout:'LIJST_ONGELDIG', fouten:[…] } — geen volledige keuring.

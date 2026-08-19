@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { TOW, towFont, engraved } from '../../design/tow';
 import { COMPOSITION_RULES } from '../../lib/owbBuilder';
-import { useCampagnes, kiesCampagne, keurLijst, dienLijstIn, verversCampagnes, staatOpSlot, lijstNotitieZet, type LijstKeuring } from '../../lib/campaign';
+import { useCampagnes, kiesCampagne, keurLijst, dienLijstIn, verversCampagnes, staatOpSlot, lijstNotitieZet, type LijstKeuring, type CampagneBron } from '../../lib/campaign';
 import { useListSync } from '../../listSync';
 import { useAuth } from '../../lib/auth';
 
@@ -62,10 +62,12 @@ export function CeledonPanel({ lijsten, onOpen, onTour, onHerstel }: {
   const bewaardeNotitie = keuring.keuring?.notitie ?? null;
   useEffect(() => { setNotitie(bewaardeNotitie ?? ''); }, [bewaardeNotitie]);
 
-  const haalKeuring = useCallback(async (id: string) => {
+  const haalKeuring = useCallback(async (id: string, bron?: CampagneBron) => {
     try {
       setKeuring((k) => ({ stand: k.keuring ? 'klaar' : 'laden', keuring: k.keuring }));
-      const k = await keurLijst(id);
+      // 19-08: de bron MOET mee. De voorbereiding leeft op Act 0 en de playtest op de lopende Act;
+      // zonder bron keurt de server je voorbereidingslijst tegen de cap van de game.
+      const k = await keurLijst(id, bron);
       setKeuring({ stand: 'klaar', keuring: k });
     } catch {
       setKeuring((k) => ({ stand: k.keuring ? 'klaar' : 'onbekend', keuring: k.keuring }));
@@ -74,8 +76,8 @@ export function CeledonPanel({ lijsten, onOpen, onTour, onHerstel }: {
 
   useEffect(() => {
     if (!spelerId) { setKeuring({ stand: 'onbekend', keuring: null }); return; }
-    void haalKeuring(spelerId);
-  }, [spelerId, lastSyncedAt, haalKeuring]);
+    void haalKeuring(spelerId, actief?.bron);
+  }, [spelerId, actief?.bron, lastSyncedAt, haalKeuring]);
 
   // Signed out and no campaign in sight → this is a plain builder session; show nothing.
   // The one exception is a failed hand-off from the campaign app: then the player IS expecting to be
@@ -160,7 +162,7 @@ export function CeledonPanel({ lijsten, onOpen, onTour, onHerstel }: {
 
       {/* The three rules that are not yours to choose. Stated once, plainly. */}
       <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, margin: '10px 0 0' }}>
-        <Chip label={`Act ${actief.fase}`} />
+        <Chip label={actief.bron === 'voorbereiding' ? 'Preparation' : `Act ${actief.fase}`} />
         <Chip label={`${actief.puntenCap} pts`} sterk />
         {actief.speler.factie && <Chip label={actief.speler.factie} />}
         {regels && <Chip label={regels} />}
@@ -272,14 +274,14 @@ export function CeledonPanel({ lijsten, onOpen, onTour, onHerstel }: {
                       // Push FIRST: the campaign locks whatever version it has in the cloud, and the
                       // debounced auto-sync may not have carried the last keystroke yet.
                       await pushNow();
-                      const k = await dienLijstIn(spelerId);
+                      const k = await dienLijstIn(spelerId, actief.bron);
                       setKeuring({ stand: 'klaar', keuring: k });
                       // The lock flips `gelockt` in the context too, which is what puts this panel
                       // (and the builder) into read-only.
                       await verversCampagnes();
                     } catch (e) {
                       setIndienFout(e instanceof Error ? e.message : 'Could not submit the list.');
-                      if (spelerId) void haalKeuring(spelerId);
+                      if (spelerId) void haalKeuring(spelerId, actief.bron);
                     } finally {
                       setIndienen('rust');
                     }
@@ -350,8 +352,8 @@ export function CeledonPanel({ lijsten, onOpen, onTour, onHerstel }: {
                           setNotitieBezig(true);
                           setNotitieFout(null);
                           try {
-                            await lijstNotitieZet(spelerId, notitie);
-                            await haalKeuring(spelerId);
+                            await lijstNotitieZet(spelerId, notitie, actief.bron);
+                            await haalKeuring(spelerId, actief.bron);
                             setNotitieOpen(false);
                           } catch (e) {
                             setNotitieFout(e instanceof Error ? e.message : 'Could not save your note.');
@@ -387,7 +389,7 @@ export function CeledonPanel({ lijsten, onOpen, onTour, onHerstel }: {
                     try {
                       await pushNow();
                       setStuur('klaar');
-                      if (spelerId) await haalKeuring(spelerId);
+                      if (spelerId) await haalKeuring(spelerId, actief.bron);
                     } catch { setStuur('fout'); }
                   }}
                   disabled={!syncKey || stuur === 'bezig'}
