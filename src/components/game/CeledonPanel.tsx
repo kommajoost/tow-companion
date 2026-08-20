@@ -110,13 +110,16 @@ export function CeledonPanel({ lijsten, onOpen, onTour, onHerstel }: {
   // te herstellen zijn, want de factie zelf is (terecht) niet in de builder te wijzigen.
   // Staat de INGEDIENDE lijst er nog? Die krijgt voorrang, zodat het slot-label altijd op de lijst
   // zit die de campagne echt vast heeft (11-08). Anders de eerste lijst van de huidige factie.
-  const lijst = eigen.find((l) => staatOpSlot(actief, l))
+  // `eigen` gaat mee als derde argument: is de ingediende lijst lokaal verdwenen (factie-herstel,
+  // opnieuw aangemaakt, verse install), dan herkent staatOpSlot hem alsnog op naam+leger in plaats van
+  // de speler in de tegenstrijdige "wel ingediend, maar niet deze lijst"-tak te laten vallen.
+  const lijst = eigen.find((l) => staatOpSlot(actief, l, eigen))
     ?? eigen.find((l) => !slug || l.army === slug)
     ?? null;
   const oudLeger = !lijst ? eigen[0] ?? null : null;
   // Is DEZE lijst de gelockte? `actief.gelockt` alleen zegt dat er érgens een inzending ligt —
   // dat als "deze lijst is op slot" tonen was precies de verwarring van 10/11-08.
-  const lijstOpSlot = staatOpSlot(actief, lijst);
+  const lijstOpSlot = staatOpSlot(actief, lijst, eigen);
   const punten = lijst?.computed ?? null;
   const over = punten != null && punten > actief.puntenCap;
   const regels = actief.compositie.map(ruleName).join(' or ');
@@ -231,13 +234,16 @@ export function CeledonPanel({ lijsten, onOpen, onTour, onHerstel }: {
               when Act {actief.fase + 1} does.
             </p>
           ) : actief.gelockt ? (
-            // Er ligt een inzending voor deze Act, maar niet DEZE lijst — bijvoorbeeld omdat de
-            // ingediende lijst hernoemd of opnieuw gebouwd is. Bewerken mag, maar Celedon speelt
-            // deze Act met wat er al ligt; het slot gaat pas open bij de volgende Act.
+            // Er ligt een inzending voor deze Act, maar niet DEZE lijst — bijvoorbeeld omdat er een
+            // tweede campagne-lijst naast staat. Sinds 20-08 vangt staatOpSlot het geval "ingediende
+            // lijst lokaal verdwenen" al af, dus wie hier belandt heeft écht een andere lijst open.
+            // De tekst moet dat ondubbelzinnig zeggen: eerder stond er "already submitted" én "you can
+            // keep working", en dat las als "mijn leger is zowel op slot als niet" (Jasper, 20-08).
             <p style={{ ...tekstDim, marginTop: 8 }}>
-              Your Act {actief.fase} list is already submitted, and it is not this one. You can keep working on this
-              list, but Celedon plays Act {actief.fase} with the list it received — you can submit again from Act{' '}
-              {actief.fase + 1}.
+              This is not the list Celedon has for Act {actief.fase}
+              {actief.lijstNaam ? <> — that one is called “{actief.lijstNaam}”</> : null}. This one is a spare: edit it
+              freely, but it does not go to the table. Act {actief.fase} is played with the list that was submitted,
+              and the next submission opens in Act {actief.fase + 1}.
             </p>
           ) : (
             <>

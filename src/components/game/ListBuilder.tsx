@@ -504,7 +504,15 @@ export function ListBuilder() {
   //
   // Welke lijst de campagne op slot heeft, beslist `staatOpSlot` in lib/campaign.ts — dezelfde
   // helper die het Celedon-paneel gebruikt, zodat er nooit meer twee verschillende antwoorden zijn.
-  const opSlot = staatOpSlot(campagne ?? null, active);
+  //
+  // 20-08-2026: die belofte gold alleen zolang beide kanten dezelfde argumenten meegaven. Het paneel
+  // geeft sinds vandaag óók de campagne-lijsten mee (zodat een opnieuw opgebouwde lijst met een nieuw
+  // builder-id alsnog als de inzending telt); zonder dat hier zou de editor "bewerkbaar" concluderen
+  // waar het paneel "op slot" zegt — exact de dubbele staat die Jasper meldde, maar omgekeerd.
+  const eigenCampagneLijsten = campagne
+    ? lists.filter((l) => l.campaign && l.campaignSpeler === campagne.speler.id)
+    : [];
+  const opSlot = staatOpSlot(campagne ?? null, active, eigenCampagneLijsten);
 
   // ── open list → the responsive builder (wait for that army's catalogue to load) ──
   if (active) {

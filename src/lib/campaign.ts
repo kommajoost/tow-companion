@@ -477,10 +477,29 @@ export interface LijstIdentiteit {
  *  dan is het antwoord NEE. Die kant is bewust gekozen: onterecht bewerkbaar is hooguit verwarrend —
  *  de server keurt bij het indienen opnieuw en weigert een tweede lock (AL_GELOCKT) — terwijl
  *  onterecht op slot de speler volledig blokkeert. Precies dát overkwam Jasper (10/11-08). */
-export function isIngediendeLijst(ctx: CampaignContext | null, lijst: LijstIdentiteit | null): boolean {
+export function isIngediendeLijst(
+  ctx: CampaignContext | null,
+  lijst: LijstIdentiteit | null,
+  alle?: LijstIdentiteit[] | null,
+): boolean {
   if (!ctx || !lijst) return false;
   if (!lijst.campaign || lijst.campaignSpeler !== ctx.speler.id) return false;
-  if (ctx.lijstId) return lijst.id === ctx.lijstId;
+  // 20-08-2026 — JASPER, DERDE RONDE. De id-vergelijking hieronder is exact, en dat is goed zolang de
+  // ingediende lijst óók lokaal bestaat. Maar het builder-id is LOKAAL: een factie-herstel
+  // (herstelCampagneLijst), een opnieuw aangemaakte campagne-lijst of een verse install geven de lijst
+  // een NIEUW id, terwijl de cloud nog het oude als ingediend heeft. Dan matchte niets meer en viel de
+  // speler in de tak "al ingediend, maar niet DEZE lijst" — die zegt tegelijk "ingediend" en "je mag
+  // doorwerken". Precies het "zowel gelockt als niet" dat Jasper meldt.
+  //
+  // Daarom: het id blijft leidend zolang de ingediende lijst herkenbaar aanwezig is. Is die lokaal
+  // verdwenen, dan valt hij terug op de naam+leger-momentopname van de server — dat is dan de enige
+  // identiteit die we nog hebben, en een lijst met dezelfde naam én hetzelfde leger is vrijwel zeker
+  // dezelfde inzending. `alle` moet daarvoor meekomen; zonder die lijst blijft het oude gedrag staan.
+  if (ctx.lijstId) {
+    if (lijst.id === ctx.lijstId) return true;
+    const ingediendeBestaatNog = (alle ?? []).some((l) => l.id === ctx.lijstId);
+    if (ingediendeBestaatNog || !alle) return false;
+  }
   const leger = ctx.lijstLeger ?? null;
   const naam = ctx.lijstNaam ?? null;
   if (!leger && !naam) return false;
@@ -488,9 +507,15 @@ export function isIngediendeLijst(ctx: CampaignContext | null, lijst: LijstIdent
   return !!naam && lijst.name.trim() === naam.trim();
 }
 
-/** Staat deze lijst op slot? = de campagne is gelockt EN het is de ingediende lijst. */
-export function staatOpSlot(ctx: CampaignContext | null, lijst: LijstIdentiteit | null): boolean {
-  return !!ctx?.gelockt && isIngediendeLijst(ctx, lijst);
+/** Staat deze lijst op slot? = de campagne is gelockt EN het is de ingediende lijst.
+ *  Geef `alle` mee (alle campagne-lijsten van deze speler) zodat een opnieuw opgebouwde lijst met een
+ *  nieuw builder-id alsnog als de inzending wordt herkend — zie isIngediendeLijst. */
+export function staatOpSlot(
+  ctx: CampaignContext | null,
+  lijst: LijstIdentiteit | null,
+  alle?: LijstIdentiteit[] | null,
+): boolean {
+  return !!ctx?.gelockt && isIngediendeLijst(ctx, lijst, alle);
 }
 
 /** De naam-slug zoals de campagne 'm als unit-identiteit gebruikt (zelfde regex als server-side). */
