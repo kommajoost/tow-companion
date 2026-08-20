@@ -204,9 +204,11 @@ export interface ArmyUnit {
    *  op de juiste campagne-unit landt en een hernoeming de koppeling niet breekt. */
   campaignId?: string;
   /** Campagne-veteraan-info (De Grensvorsten), aangebracht bij het openen van een campagne-battle: de
-   *  unit z'n gewonnen veteran-abilities + battle-scars. Rijdt via `tow_games` mee naar beide spelers,
-   *  zodat de UnitCard ze read-only toont. Optioneel: alleen aanwezig voor gematchte veteraan-units. */
-  veteraan?: { abilities: { t: string; keuze: string | null }[]; littekens: number };
+   *  unit z'n campagne-XP, gewonnen veteran-abilities + battle-scars. Rijdt via `tow_games` mee naar
+   *  beide spelers, zodat de UnitCard ze read-only toont. Optioneel: alleen aanwezig voor gematchte
+   *  veteraan-units. `xp` is optioneel omdat een leger dat vóór 20-08-2026 gestempeld werd het veld
+   *  niet heeft — dan tonen we geen XP in plaats van 0 te beweren. */
+  veteraan?: { xp?: number; abilities: { t: string; keuze: string | null }[]; littekens: number };
   /** De naam die op het scherm hoort: de eigen naam van de speler als die er is, anders het
    *  datasheet. Blijft de sleutel voor alles wat op naam matcht (statlines van een geplakte lijst). */
   name: string;

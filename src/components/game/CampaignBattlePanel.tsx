@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { TOW, towFont, engraved } from '../../design/tow';
 import { useGame } from '../../game';
 import { getCachedCampaign, getCampaignCode } from '../../lib/campaign';
-import { battleByCode, battleHandZet, battleTypeLabel, battleTypeNote, type CampaignBattle, type BattleSide, type Perk, type FoundItem, type BattleLijstSamenvatting } from '../../lib/campaignBattle';
+import { battleByCode, battleHandZet, battleTypeLabel, battleTypeNote, abilityLabel, abilityEffect, scarLabel, type CampaignBattle, type BattleSide, type Perk, type FoundItem, type BattleLijstSamenvatting, type VetUnit } from '../../lib/campaignBattle';
 import { ArmyListPicker } from './ArmyListPicker';
 import { CampaignBoard, defenderIsTop, parseSheetLayout, parseSheetSecLayout } from './CampaignBoard';
 import type { Army } from '../../types';
@@ -30,8 +30,11 @@ const pretty = (s: string) => s.replace(/[-_]/g, ' ').replace(/^./, (c) => c.toU
  * and why the opponent's army could not be loaded at all. It now carries the whole thing, worked out by
  * this app's own `entryPoints`/`optionSummary` and passed through, so both sides read the same numbers.
  * A unit whose points the campaign does not know shows a dash: an unknown cost is not 0.
+ *
+ * Sinds 20-08-2026 staat het blok standaard OPEN: bij een battle wil je de line-ups meteen zien in
+ * plaats van er eerst op te moeten klikken.
  */
-function LijstBlok({ lijst, heading, open: openInit = false }: {
+function LijstBlok({ lijst, heading, open: openInit = true }: {
   lijst: BattleLijstSamenvatting | null;
   heading: string;
   open?: boolean;
@@ -363,6 +366,61 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
     <LijstBlok lijst={lijst} heading={heading} />
   );
 
+  /** Campagne-veteranen van één kant (20-08-2026). `battle.veteranen` werd al gefetcht en geparsed maar
+   *  nergens getekend: het reisde alleen door naar `openCampaignBattle` om op de units gestempeld te
+   *  worden, dus je zag het pas ná het openen van de tracker — precies te laat voor een briefing.
+   *
+   *  Per unit: naam, XP en de gewonnen abilities (effect als tooltip) + scars. Units zonder XP,
+   *  abilities én scars laten we weg: dat is een verse unit en die heeft hier niets te melden.
+   *  De server vult dit veld alleen als beide legers gelockt zijn, dus beide kanten mogen. */
+  const renderVets = (vets: VetUnit[] | undefined, heading: string) => {
+    const rijen = (vets ?? []).filter((v) => v.xp > 0 || v.abilities.length > 0 || v.littekens > 0);
+    if (rijen.length === 0) return null;
+    return (
+      <div style={{ marginTop: 12 }}>
+        <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginBottom: 5 }}>{heading}</div>
+        <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: 6 }}>
+          {rijen.map((v) => (
+            <li key={v.unitId} style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 6, padding: '0 3px' }}>
+              <span style={{ fontFamily: serif, fontSize: 12.5, color: TOW.parchDim }}>
+                {v.naam}
+                {v.cat ? <span style={{ color: TOW.faint }}> · {pretty(v.cat)}</span> : null}
+              </span>
+              {v.xp > 0 && (
+                <span
+                  title={`${v.xp} campaign XP — rolls D6+${v.xp} on the veteran table after the battle`}
+                  style={{ fontFamily: serif, fontSize: 11.5, padding: '2px 8px', borderRadius: 999, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.18)', color: TOW.gold, fontVariantNumeric: 'tabular-nums', cursor: 'help' }}
+                >
+                  {v.xp} XP
+                </span>
+              )}
+              {v.abilities.map((a, i) => {
+                const eff = abilityEffect(a.t);
+                return (
+                  <span
+                    key={i}
+                    title={eff || undefined}
+                    style={{ fontFamily: serif, fontSize: 11.5, padding: '2px 8px', borderRadius: 999, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.10)', color: TOW.goldDeep, cursor: eff ? 'help' : 'default' }}
+                  >
+                    {abilityLabel(a.t)}{a.keuze ? ` · ${a.keuze.toUpperCase()}` : ''}
+                  </span>
+                );
+              })}
+              {v.littekens > 0 && (
+                <span
+                  title="Battle scars carried from earlier Acts"
+                  style={{ fontFamily: serif, fontSize: 11.5, padding: '2px 8px', borderRadius: 999, border: `1px solid ${TOW.blood}`, background: 'transparent', color: TOW.blood, cursor: 'help' }}
+                >
+                  {scarLabel(v.littekens)}
+                </span>
+              )}
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
+  };
+
   // Active building perks (from the campaign) shown read-only. Label as a chip, effect as tooltip.
   const renderPerks = (perks: Perk[], heading: string) =>
     perks.length > 0 ? (
@@ -521,6 +579,15 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
           you want to know before deploying, and the campaign has already locked it. */}
       {renderLijst(battle.aanvLijst, `${battle.aanvaller.naam || 'Attacker'} · list`)}
       {renderLijst(battle.verdLijst, `${battle.verdediger.naam || 'Defender'} · list`)}
+
+      {/* Campagne-veteranen voor BEIDE kanten, direct onder de line-ups: welke units al XP hebben en
+          wat ze aan abilities meebrengen is deel van wat er tegenover je staat. */}
+      {battle.veteranen && (
+        <>
+          {renderVets(battle.veteranen.aanvaller, `${battle.aanvaller.naam || 'Attacker'} · campaign veterans`)}
+          {renderVets(battle.veteranen.verdediger, `${battle.verdediger.naam || 'Defender'} · campaign veterans`)}
+        </>
+      )}
 
       {/* Perks and found items for BOTH sides. This used to show only your own when you were playing,
           which is backwards for a pre-game briefing: your opponent's perks are the half you cannot look

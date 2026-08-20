@@ -231,13 +231,23 @@ export function UnitCard({
         </div>
       )}
 
-      {/* Campagne-veteraan (De Grensvorsten): gewonnen veteran-abilities + battle-scars, read-only.
-          Alleen getoond als de unit gematcht is en er iets te tonen valt (ability of scar). Effect
-          hangt als tooltip aan de chip; scars zijn een bloedkleurige badge. */}
-      {unit.veteraan && (unit.veteraan.abilities.length > 0 || unit.veteraan.littekens > 0) && (
+      {/* Campagne-veteraan (De Grensvorsten): campagne-XP, gewonnen veteran-abilities + battle-scars,
+          read-only. Alleen getoond als de unit gematcht is en er iets te tonen valt (XP, ability of
+          scar). Effect hangt als tooltip aan de chip; scars zijn een bloedkleurige badge.
+          XP staat vooraan (20-08-2026): het is het getal waarmee deze unit ná het potje op de
+          veteran-tabel rolt, dus aan tafel wil je het naast de abilities zien staan. */}
+      {unit.veteraan && ((unit.veteraan.xp ?? 0) > 0 || unit.veteraan.abilities.length > 0 || unit.veteraan.littekens > 0) && (
         <div style={{ marginTop: 10 }}>
-          <div style={{ ...eb, fontSize: 8.5, color: TOW.muted, marginBottom: 5 }}>Veteran abilities</div>
+          <div style={{ ...eb, fontSize: 8.5, color: TOW.muted, marginBottom: 5 }}>Campaign veteran</div>
           <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, alignItems: 'center' }}>
+            {(unit.veteraan.xp ?? 0) > 0 && (
+              <span
+                title={`${unit.veteraan.xp} campaign XP — this unit rolls D6+${unit.veteraan.xp} on the veteran table after the battle`}
+                style={{ fontFamily: towFont.serif, fontSize: 12.5, padding: '4px 10px', borderRadius: 999, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.18)', color: TOW.gold, fontVariantNumeric: 'tabular-nums', cursor: 'help' }}
+              >
+                {unit.veteraan.xp} XP
+              </span>
+            )}
             {unit.veteraan.abilities.map((a, i) => {
               const eff = abilityEffect(a.t);
               return (

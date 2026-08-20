@@ -95,9 +95,13 @@ function withTimeout<T>(p: PromiseLike<T>, ms: number, msg: string): Promise<T> 
 }
 
 // Campagne-veteranen (De Grensvorsten) op het te openen leger stempelen: elke unit met een
-// `campaignId` die matcht op een `VetUnit.unitId` van MIJN kant krijgt z'n abilities + scars mee.
+// `campaignId` die matcht op een `VetUnit.unitId` van MIJN kant krijgt z'n XP, abilities + scars mee.
 // Zo reist de veteraan-info via `tow_games` (host_army/guest_army) mee naar beide spelers en toont
 // de UnitCard ze read-only. Puur additief + immutable (nieuwe army/units — de bron blijft ongemoeid).
+//
+// XP GING HIER VERLOREN (20-08-2026): `towc_battle_by_code` levert per veteraan-unit óók `xp` (zie
+// VetUnit in lib/campaignBattle.ts), maar dit stempel kopieerde alleen abilities + littekens. Aan tafel
+// is de XP juist het getal dat zegt hoe hard deze unit ná het potje op de veteran-tabel rolt.
 function annotateArmyWithVets(army: Army | null, vets: VetUnit[] | undefined): Army | null {
   if (!army || !vets || vets.length === 0) return army;
   const byId = new Map(vets.map((v) => [v.unitId, v]));
@@ -105,7 +109,7 @@ function annotateArmyWithVets(army: Army | null, vets: VetUnit[] | undefined): A
     ...army,
     units: army.units.map((u) => {
       const v = u.campaignId ? byId.get(u.campaignId) : undefined;
-      return v ? { ...u, veteraan: { abilities: v.abilities, littekens: v.littekens } } : u;
+      return v ? { ...u, veteraan: { xp: v.xp, abilities: v.abilities, littekens: v.littekens } } : u;
     }),
   };
 }
