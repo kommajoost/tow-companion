@@ -322,9 +322,21 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
         return naam ? { naam, effect: effect ?? '', worp: wworp } : null;
       })()
     : null;
+  // DE SETUP-POOL (sheet v4, 20-08-2026). De campagne rolt niet meer per battle een eigen D6: de server
+  // VERDEELT de zes setups over de battles van de Act (bij 14 generals zijn dat 7 battles, dus speelt
+  // geen enkele tafel op één avond dezelfde setup). Er is dan geen worp, dus "Setup roll: 4" zou hier
+  // een getal tonen dat nooit gegooid is — we noemen het uitgedeelde slot. Een echte worp blijft staan
+  // voor battles buiten die verdeling (claim-duels, challenges) en voor oudere sheets. Zoals altijd
+  // bouwen we de tabel hier NIET na: we tonen wat de sheet zegt.
+  const setupSlot = asNum(sheet.setupSlot);
+  const setupTotaal = asNum(sheet.setupTotaal);
+  const setupGeforceerd = sheet.setupGeforceerd === true;
+  const weerDeel = weer?.worp != null ? ` · Weather roll: ${weer.worp}` : '';
   const rollLine = worp != null
-    ? `Setup roll: ${worp}${worpObjectief != null ? ` · Objectives roll: ${worpObjectief}` : ''}${weer?.worp != null ? ` · Weather roll: ${weer.worp}` : ''}`
-    : sheetV >= 2 ? 'Setup: forced — no roll' : null;
+    ? `Setup roll: ${worp}${worpObjectief != null ? ` · Objectives roll: ${worpObjectief}` : ''}${weerDeel}`
+    : setupSlot != null
+      ? `${setupGeforceerd ? 'Setup forced — took ' : 'Setup '}${setupSlot}${setupTotaal != null ? ` of ${setupTotaal}` : ''} this Act${weerDeel}`
+      : sheetV >= 2 ? `Setup: forced — no roll${weerDeel}` : null;
 
   // WIE STAAT WAAR. `defenderIsTop` leest het uit de zone-labels met de campagne-afspraak
   // (zone A = boven = verdediger) als terugval. Mijn eigen kant komt uit `mySeat`, de bestaande
