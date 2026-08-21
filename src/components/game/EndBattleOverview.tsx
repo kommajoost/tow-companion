@@ -5,6 +5,7 @@ import { useBackClose } from '../../lib/backStack';
 import { unitTotalStrength } from '../../lib/armyRules';
 import { CampaignResultReporter } from './CampaignResultReporter';
 import { VpPanel } from './VpPanel';
+import { useCampagneUitslag } from './useCampagneUitslag';
 import type { Army, GameTracker } from '../../types';
 import type { VpResultaat } from '../../lib/victoryPoints';
 
@@ -44,10 +45,19 @@ export function EndBattleOverview({
   // Hardware Back / Escape-nav sluit de modal (parent unmount 'm bij close, dus altijd active).
   useBackClose(true, onClose);
 
-  const winnerName = res.winnaar === 'host' ? hostName : res.winnaar === 'guest' ? guestName : null;
-  const uitslagLabel = UITSLAG_LABEL[res.uitslag];
-  // Headline-kleur spiegelt de reporter: crushing = goldBright, andere winst = goldDeep, draw = muted.
-  const headlineColor = res.uitslag === 'crushing' ? TOW.goldBright : res.winnaar ? TOW.goldDeep : TOW.muted;
+  // DE HEADLINE VOLGT DE CAMPAGNE-TABEL bij een campagne-battle (21-08-2026). Hier stond de kale
+  // rulebook-uitslag, en die is schaalloos: op een Battle March-tafel van 500 punten riep hij
+  // "Crushing Victory" bij 150 tegen 50, terwijl de campagne dezelfde battle als Draw afrekende. Twee
+  // verdicts op een scherm. Los potje = geen campagne-battle = de rulebook-regel blijft, want dan is
+  // die juist. Zie useCampagneUitslag.
+  const camp = useCampagneUitslag(res);
+  const winnaarKant = camp ? camp.winnaar : res.winnaar;
+  const winnerName = winnaarKant === 'host' ? hostName : winnaarKant === 'guest' ? guestName : null;
+  const uitslagLabel = camp ? camp.label : UITSLAG_LABEL[res.uitslag];
+  // Headline-kleur spiegelt de reporter: zwaarste trede = goldBright, andere winst = goldDeep, draw = muted.
+  const headlineColor = (camp ? camp.zwaar : res.uitslag === 'crushing')
+    ? TOW.goldBright
+    : winnaarKant ? TOW.goldDeep : TOW.muted;
 
   const card: React.CSSProperties = {
     width: '100%',
@@ -82,7 +92,10 @@ export function EndBattleOverview({
           {winnerName ? `${winnerName} — ${uitslagLabel}` : 'Draw'}
         </div>
         {res.verschil > 0 && (
-          <div style={{ fontFamily: serif, fontSize: 13.5, color: TOW.parchDim, marginTop: 3 }}>+{res.verschil} VP</div>
+          <div style={{ fontFamily: serif, fontSize: 13.5, color: TOW.parchDim, marginTop: 3 }}>
+            +{res.verschil} VP
+            {camp && ` · ${camp.cap} pt bracket · Fame ${camp.tpHost}-${camp.tpGuest}`}
+          </div>
         )}
 
         {/* 2 — Prominente VP-stand: twee grote score-blokken (ScoreCell-look uit VpPanel) */}

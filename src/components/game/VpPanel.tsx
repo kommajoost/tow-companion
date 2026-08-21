@@ -4,6 +4,7 @@ import { useGame } from '../../game';
 import { vpSchaal, type VpBonus, type VpResultaat, type VpSchaal } from '../../lib/victoryPoints';
 import { battleByCode, type CampaignBattle } from '../../lib/campaignBattle';
 import { objectivesVoor, type ObjectiveDef } from '../../lib/objectiveVp';
+import { useCampagneUitslag } from './useCampagneUitslag';
 
 const eb = engraved as React.CSSProperties;
 const display = towFont.display;
@@ -59,7 +60,9 @@ export function VpPanel({ compact = false, res, hostName, guestName, hideOutcome
   const sc = battle?.scenario as Record<string, unknown> | null | undefined;
   const scenarioId = typeof sc?.scenario === 'string' ? sc.scenario : null;
   const secondaries = Array.isArray(sc?.secondaries) ? (sc.secondaries as unknown[]).filter((x): x is string => typeof x === 'string') : [];
-  const objDefs = objectivesVoor(scenarioId, secondaries);
+  // De derde parameter zet de Battle March-terugval aan: weet de sheet niet welk objectief er ligt,
+  // dan tonen we treasure troves EN strategic landmark bij naam in plaats van een anoniem veld.
+  const objDefs = objectivesVoor(scenarioId, secondaries, tracker.battleMarch === true);
   // De ACTIEVE VP-schaal. Battle March halveert General/BSB/standaard, dus de labels moeten die
   // bedragen tonen: een vast "(+100)" op een Battle March-tafel zou de speler voorliegen over wat de
   // engine erachter optelt.
@@ -74,8 +77,13 @@ export function VpPanel({ compact = false, res, hostName, guestName, hideOutcome
   };
 
   // Uitslag-tekst: "Victory · +180 VP" (winnaar-naam ervoor), of gewoon "Draw" bij gelijkspel.
-  const winnerName = res.winnaar === 'host' ? hostName : res.winnaar === 'guest' ? guestName : null;
-  const uitslagLabel = UITSLAG_LABEL[res.uitslag];
+  // BIJ EEN CAMPAGNE-BATTLE WINT DE CAMPAGNE-TABEL (21-08-2026): de kale rulebook-regel is schaalloos
+  // en riep op een 500-punts tafel al "Crushing Victory" bij 150-50. Zie useCampagneUitslag.
+  const camp = useCampagneUitslag(res);
+  const winnaarKant = camp ? camp.winnaar : res.winnaar;
+  const winnerName = winnaarKant === 'host' ? hostName : winnaarKant === 'guest' ? guestName : null;
+  const uitslagLabel = camp ? camp.label : UITSLAG_LABEL[res.uitslag];
+  const isGelijk = camp ? camp.tp === 'D' : res.uitslag === 'draw';
 
   const box: React.CSSProperties = { border: `1px solid ${TOW.goldDeep}`, borderRadius: 12, background: 'rgba(184,134,47,0.08)', padding: compact ? '12px 13px' : '14px 15px' };
 
@@ -85,8 +93,8 @@ export function VpPanel({ compact = false, res, hostName, guestName, hideOutcome
 
       {/* Uitslag-badge — headline van de banner. In het End-battle-overzicht verborgen (hideOutcome). */}
       {!hideOutcome && (
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, padding: '8px 10px', borderRadius: 9, background: res.uitslag === 'draw' ? 'transparent' : 'rgba(184,134,47,0.12)', border: `1px solid ${res.uitslag === 'draw' ? TOW.line : TOW.goldDeep}`, marginBottom: 12 }}>
-          <span style={{ fontFamily: display, fontWeight: 700, fontSize: compact ? 14 : 15, color: res.uitslag === 'draw' ? TOW.muted : TOW.goldDeep, textAlign: 'center' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, padding: '8px 10px', borderRadius: 9, background: isGelijk ? 'transparent' : 'rgba(184,134,47,0.12)', border: `1px solid ${isGelijk ? TOW.line : TOW.goldDeep}`, marginBottom: 12 }}>
+          <span style={{ fontFamily: display, fontWeight: 700, fontSize: compact ? 14 : 15, color: isGelijk ? TOW.muted : TOW.goldDeep, textAlign: 'center' }}>
             {winnerName ? `${winnerName} — ${uitslagLabel}` : uitslagLabel}
           </span>
           {res.verschil > 0 && (
@@ -206,9 +214,19 @@ function BonusEditor({
           );
         })}
 
-        {/* Vrij veld voor overige/onbekende objective-VP (catch-all naast de bovenstaande) */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '2px 1px' }}>
-          <span style={{ flex: 1, minWidth: 0, fontFamily: serif, fontSize: 12.5, color: TOW.parchDim }}>Other objective VP (+)</span>
+        {/* Vrij veld voor overige/onbekende objective-VP (catch-all naast de bovenstaande). Het heette
+            "Other objective VP" en dat was onduidelijk (Joost 21-08-2026): je zag niet WELK objectief er
+            op je tafel lag, dus typte je het totaal hier maar in. De objectives hierboven staan nu bij
+            naam; dit veld is expliciet het restje. */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '2px 1px', marginTop: 2 }}>
+          <span style={{ flex: 1, minWidth: 0, fontFamily: serif, fontSize: 12.5, color: TOW.parchDim }}>
+            Anything else (+)
+            <span style={{ display: 'block', fontStyle: 'italic', fontSize: 10.5, color: TOW.muted, lineHeight: 1.35 }}>
+              {objectives.length
+                ? 'Only for VP not covered by the objectives listed above.'
+                : 'Free field — use it for scenario VP this game does not list.'}
+            </span>
+          </span>
           <input
             type="number"
             inputMode="numeric"
