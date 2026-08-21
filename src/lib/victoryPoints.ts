@@ -13,14 +13,24 @@
 //     handmatig `objectiveVp` (de app verzint hier niks, de speler vult het gescoorde in).
 //   Uitslag  https://tow.whfb.app/warhammer-battles/victory-points-warhammer-battles
 //     - VP-verschil < 100 → Draw ; ≥100 meer → Victory ; winnaar ≥ 2× de verliezer → Crushing Victory.
+//
+// BATTLE MARCH (21-08-2026) — het kleine-spel-format, General's Companion p.27:
+//   https://tow.whfb.app/battle-march/victory-points-battle-march
+//     - The King is Dead → +50 (i.p.v. 100) ; Trophies of War → +25 per standaard EN +25 voor de BSB
+//       (i.p.v. 50/50) ; Dead or Fled ONGEWIJZIGD.
+//     - Twee eigen posten die het gewone formaat niet heeft: Treasure Troves (+10 VP per trove, aan het
+//       eind van elke speler-turn) en Strategic Landmarks (+25 VP per speler-turn) → die lopen via
+//       `objectives` (zie objectiveVp.ts, sleutels bm-troves/bm-landmark).
+//     - De WIN-DREMPELS zijn NIET anders: /battle-march heeft geen eigen marge-pagina en linkt terug
+//       naar de gewone uitslag-regel. 100 meer = victory, 2× = crushing, in beide formaten.
 import type { Army, ArmyUnit, GameTracker } from '../types';
 import { unitTotalStrength } from './armyRules';
 
 /** Per-kant handmatige bonussen — de categorieën die de app niet uit de casualty-tracker kan afleiden. */
 export interface VpBonus {
-  generalDown?: boolean; // vijandelijke General dood/gevlucht/vluchtend → +100
-  bsbDown?: boolean;     // vijandelijke Battle Standard Bearer idem → +50
-  standaards?: number;   // aantal buitgemaakte vijandelijke standaards → +50 elk
+  generalDown?: boolean; // vijandelijke General dood/gevlucht/vluchtend → +100 (Battle March: +50)
+  bsbDown?: boolean;     // vijandelijke Battle Standard Bearer idem → +50 (Battle March: +25)
+  standaards?: number;   // aantal buitgemaakte vijandelijke standaards → +50 elk (Battle March: +25)
   objectiveVp?: number;  // handmatig vrij veld: overige/onbekende objective-VP
   /** Gestructureerde objective-VP per scenario/secondary (optie B): sleutel → gescoorde VP.
    *  Sleutels + bedragen komen uit OBJECTIVE_VP (objectiveVp.ts, letterlijk van tow.whfb.app). */
@@ -65,24 +75,51 @@ export function killVp(leger: Army | null, seat: string, tracker: GameTracker | 
   return vp;
 }
 
-const bonusVp = (b: VpBonus): number =>
-  (b.generalDown ? 100 : 0) +
-  (b.bsbDown ? 50 : 0) +
-  Math.max(0, b.standaards ?? 0) * 50 +
+/** De bedragen van de drie handmatige kill-bonussen. Battle March halveert ze (zie VP_SCHAAL_*), dus
+ *  ze staan hier als tabel in plaats van hard in de formule — anders liegt de app zodra er in een
+ *  ander formaat gespeeld wordt. `Dead or Fled` (unitVp) is in BEIDE formaten gelijk. */
+export interface VpSchaal {
+  general: number;   // The King is Dead — vijandelijke General dood/gevlucht/vluchtend
+  bsb: number;       // vijandelijke Battle Standard Bearer idem
+  standaard: number; // per buitgemaakte vijandelijke standaard
+}
+
+/** Warhammer Battles (het gewone formaat) — kernrulebook p.286 / tow.whfb.app/warhammer-battles. */
+export const VP_SCHAAL_STANDAARD: VpSchaal = { general: 100, bsb: 50, standaard: 50 };
+/** Battle March (klein formaat) — General's Companion p.27 / tow.whfb.app/battle-march/victory-points-
+ *  battle-march: "Battle March armies are seldom led by mighty heroes", dus alle drie de bonussen zijn
+ *  gehalveerd. De WIN-DREMPELS zijn NIET anders (zie berekenVictory). */
+export const VP_SCHAAL_BATTLE_MARCH: VpSchaal = { general: 50, bsb: 25, standaard: 25 };
+
+/** De actieve schaal bij deze game-modus. */
+export const vpSchaal = (battleMarch?: boolean | null): VpSchaal =>
+  (battleMarch ? VP_SCHAAL_BATTLE_MARCH : VP_SCHAAL_STANDAARD);
+
+export const bonusVp = (b: VpBonus, schaal: VpSchaal = VP_SCHAAL_STANDAARD): number =>
+  (b.generalDown ? schaal.general : 0) +
+  (b.bsbDown ? schaal.bsb : 0) +
+  Math.max(0, b.standaards ?? 0) * schaal.standaard +
   Math.max(0, Math.round(b.objectiveVp ?? 0)) +
   Object.values(b.objectives ?? {}).reduce((a, c) => a + Math.max(0, Math.round(c || 0)), 0);
 
 /** Volledige VP-stand + uitslag. host-VP = kill-VP tegen het guest-leger + host-bonussen (wat host
- *  scoort), en vice versa. */
+ *  scoort), en vice versa.
+ *
+ *  `battleMarch` kiest de VP-schaal; standaard leest 'ie de vlag van de tracker, zodat elke bestaande
+ *  aanroep automatisch het juiste formaat rekent. De DREMPELS (100 meer = victory, 2× = crushing)
+ *  blijven in beide formaten identiek: de Battle March-pagina definieert geen eigen marge en linkt
+ *  voor de uitslag terug naar /warhammer-battles/victory-points-warhammer-battles. */
 export function berekenVictory(
   hostArmy: Army | null,
   guestArmy: Army | null,
   tracker: GameTracker | null,
   hostBonus: VpBonus = {},
   guestBonus: VpBonus = {},
+  battleMarch: boolean = tracker?.battleMarch === true,
 ): VpResultaat {
-  const hostVp = killVp(guestArmy, 'guest', tracker) + bonusVp(hostBonus);
-  const guestVp = killVp(hostArmy, 'host', tracker) + bonusVp(guestBonus);
+  const schaal = vpSchaal(battleMarch);
+  const hostVp = killVp(guestArmy, 'guest', tracker) + bonusVp(hostBonus, schaal);
+  const guestVp = killVp(hostArmy, 'host', tracker) + bonusVp(guestBonus, schaal);
   const verschil = Math.abs(hostVp - guestVp);
   let winnaar: 'host' | 'guest' | null = null;
   let uitslag: Uitslag = 'draw';

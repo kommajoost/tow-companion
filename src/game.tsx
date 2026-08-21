@@ -11,9 +11,18 @@ import {
 import { supabase, TOW_GAMES } from './lib/supabase';
 import { usePersistentState } from './store';
 import type { BattleVeteranen, VetUnit } from './lib/campaignBattle';
-import type { Army, GameRow, GameSummary, GameTracker } from './types';
+import type { Army, GameRow, GameSummary, GameTracker, GameWeer } from './types';
 
 type Seat = 'host' | 'guest' | 'solo';
+
+/** De gedeelde GAME-REGELS van een potje: welk formaat, en welk weer. Ze horen bij de game en niet bij
+ *  een speler, dus ze leven in de tracker (zie GameTracker.battleMarch/weer) — `tow_games` heeft geen
+ *  kolom voor game-instellingen. Bij een campagne-battle komen ze van de server; buiten de campagne
+ *  zet je ze zelf aan bij het opzetten. */
+export interface GameRegels {
+  battleMarch?: boolean;
+  weer?: GameWeer | null;
+}
 
 interface GameContextValue {
   seat: Seat | null;
@@ -25,16 +34,16 @@ interface GameContextValue {
   opponentName: string | null;
   busy: boolean;
   error: string | null;
-  createGame: (name: string, army: Army | null) => Promise<string | null>;
+  createGame: (name: string, army: Army | null, regels?: GameRegels) => Promise<string | null>;
   joinGame: (code: string, name: string, army: Army | null) => Promise<boolean>;
   /** Open a campaign battle in this app's realtime game mode, keyed by the campaign's sync CODE
    *  (not a freshly-generated one). Seats the user as host (attacker) or guest (defender): if no
    *  tow_games row exists for that code yet it's created with the user in their seat, otherwise the
    *  user joins their seat. Both players thus land in the same realtime game. Returns true on success. */
-  openCampaignBattle: (code: string, seat: 'host' | 'guest', name: string, army: Army | null, veteranen?: BattleVeteranen, opponentName?: string, opponentArmy?: Army | null) => Promise<boolean>;
+  openCampaignBattle: (code: string, seat: 'host' | 'guest', name: string, army: Army | null, veteranen?: BattleVeteranen, opponentName?: string, opponentArmy?: Army | null, regels?: GameRegels) => Promise<boolean>;
   /** Recent games (newest first) for the join lobby. */
   listGames: () => Promise<GameSummary[]>;
-  startSolo: (army?: Army | null) => void;
+  startSolo: (army?: Army | null, regels?: GameRegels) => void;
   setMyArmy: (army: Army) => void;
   setOpponentArmy: (army: Army) => void;
   /** Shared battle state (round, VP, per-unit casualties). */
@@ -140,6 +149,53 @@ function normTracker(t: GameTracker | null | undefined): GameTracker {
   // `bonus` mag geen rommel zijn: de VP-engine leest 'm defensief, maar een string i.p.v. een object
   // hier doorlaten zou een fout verplaatsen naar de plek waar 'ie moeilijker te vinden is.
   if (uit.bonus && typeof uit.bonus !== 'object') delete uit.bonus;
+  // 21-08: de game-regels (Battle March + weer). Zelfde redenering als bij `bonus` — alleen de juiste
+  // VORM mag door, anders zou een halve `weer` verderop een leeg kaartje of een crash geven. Een oude
+  // game zonder deze velden houdt ze simpelweg niet: `battleMarch` afwezig = gewone Warhammer Battles,
+  // `weer` afwezig = geen weer-regel tonen.
+  if (typeof uit.battleMarch !== 'boolean') delete uit.battleMarch;
+  uit.weer = normWeer(uit.weer);
+  if (uit.weer === null && !('weer' in t)) delete uit.weer;
+  return uit;
+}
+
+/** Alleen een volledig weer-object overleeft; al de rest wordt null (= geen weer). */
+function normWeer(w: unknown): GameWeer | null {
+  if (!w || typeof w !== 'object') return null;
+  const o = w as Record<string, unknown>;
+  const naam = typeof o.naam === 'string' ? o.naam : '';
+  if (!naam) return null;
+  return {
+    worp: typeof o.worp === 'number' && Number.isFinite(o.worp) ? o.worp : 0,
+    naam,
+    effect: typeof o.effect === 'string' ? o.effect : '',
+  };
+}
+
+/** Zijn dit twee keer hetzelfde weer? (Voor "alleen schrijven als het afwijkt".) */
+const zelfdeWeer = (a: GameWeer | null | undefined, b: GameWeer | null | undefined): boolean =>
+  (!a && !b) || (!!a && !!b && a.worp === b.worp && a.naam === b.naam && a.effect === b.effect);
+
+/**
+ * Stempel de game-regels op een BESTAANDE tracker zonder ooit voortgang weg te gooien.
+ *
+ * Waarom dit een aparte functie is: `openCampaignBattle` wordt door BEIDE spelers aangeroepen, en ook
+ * opnieuw als iemand halverwege de battle de app herlaadt of z'n leger bijwerkt. Een tracker die
+ * gewoon overschreven wordt zou dan de round, de casualties, de VP-bonussen en de goedkeuringen van
+ * het lopende potje wissen. Daarom: spreiden bovenop wat er staat, en `null` teruggeven als er niets
+ * te veranderen is — dan slaat de aanroeper de schrijfactie helemaal over.
+ */
+function metRegels(huidig: GameTracker, regels: GameRegels | undefined): GameTracker | null {
+  if (!regels) return null;
+  const wilBm = regels.battleMarch;
+  const wilWeer = regels.weer;
+  const bmNodig = typeof wilBm === 'boolean' && huidig.battleMarch !== wilBm;
+  // `undefined` (de server weet het niet) laat het bestaande weer staan; een expliciete null wist het.
+  const weerNodig = wilWeer !== undefined && !zelfdeWeer(huidig.weer, normWeer(wilWeer));
+  if (!bmNodig && !weerNodig) return null;
+  const uit: GameTracker = { ...huidig };
+  if (bmNodig) uit.battleMarch = wilBm;
+  if (weerNodig) uit.weer = normWeer(wilWeer);
   return uit;
 }
 
@@ -207,16 +263,19 @@ export function GameProvider({ children }: { children: ReactNode }) {
   }, [code]);
 
   const createGame = useCallback(
-    async (name: string, army: Army | null): Promise<string | null> => {
+    async (name: string, army: Army | null, regels?: GameRegels): Promise<string | null> => {
       setBusy(true);
       setError(null);
+      // De game-regels leven in de tracker (zie GameRegels): bij een NIEUWE game is er nog geen
+      // voortgang, dus hier mag de tracker gewoon in één keer geschreven worden.
+      const startTracker = metRegels(EMPTY_TRACKER, regels) ?? EMPTY_TRACKER;
       try {
         for (let attempt = 0; attempt < 5; attempt++) {
           const c = makeCode();
           const { data, error: err } = await withTimeout(
             supabase
               .from(TOW_GAMES)
-              .insert({ code: c, host_name: name || 'Host', host_army: army ?? null })
+              .insert({ code: c, host_name: name || 'Host', host_army: army ?? null, tracker: startTracker })
               .select()
               .single(),
             15000,
@@ -282,7 +341,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
   // code; unlike joinGame it creates the row on first open. Both participants call this with their
   // own seat, so they meet in the same realtime game. Writes only the user's own seat columns.
   const openCampaignBattle = useCallback(
-    async (battleCode: string, mySeat: 'host' | 'guest', name: string, army: Army | null, veteranen?: BattleVeteranen, opponentName?: string, opponentArmy?: Army | null): Promise<boolean> => {
+    async (battleCode: string, mySeat: 'host' | 'guest', name: string, army: Army | null, veteranen?: BattleVeteranen, opponentName?: string, opponentArmy?: Army | null, regels?: GameRegels): Promise<boolean> => {
       setBusy(true);
       setError(null);
       const c = battleCode.trim().toUpperCase();
@@ -322,7 +381,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
           const { data: created, error: insErr } = await withTimeout(
             supabase
               .from(TOW_GAMES)
-              .insert({ code: c, [nameCol]: name || fallbackName, [armyCol]: army2 ?? null, ...seedOpp(null), ...seedOppArmy(null) })
+              .insert({ code: c, [nameCol]: name || fallbackName, [armyCol]: army2 ?? null, ...seedOpp(null), ...seedOppArmy(null), tracker: metRegels(EMPTY_TRACKER, regels) ?? EMPTY_TRACKER })
               .select()
               .single(),
             15000,
@@ -350,8 +409,29 @@ export function GameProvider({ children }: { children: ReactNode }) {
           'Opening the battle timed out. Please reload the app and try again.',
         );
         if (updErr) throw updErr;
-        setGame(updated as GameRow);
+        const row = updated as GameRow;
+        setGame(row);
         setPersisted({ seat: mySeat, code: c });
+        // GAME-REGELS OP EEN BESTAANDE RIJ (21-08-2026). Battle March + het weer horen in de tracker,
+        // maar die tracker kan de VOORTGANG van een lopend potje bevatten — en dit pad wordt ook
+        // gelopen als je halverwege herlaadt of je leger bijwerkt. Daarom drie voorzorgen:
+        //   1. we merken op de VERSE tracker uit de update-respons hierboven, niet op de `existing` van
+        //      vóór de write (die kan verouderd zijn als de tegenstander er net iets in zette, en bij
+        //      een verloren create-race is 'ie zelfs null);
+        //   2. `metRegels` spreidt bovenop wat er staat, dus round/casualties/bonus/report/quests
+        //      blijven per definitie staan;
+        //   3. staat het er al goed in, dan geeft `metRegels` null en schrijven we NIETS — geen
+        //      overbodige write die met de andere speler kan botsen.
+        const gemerged = metRegels(normTracker(row.tracker), regels);
+        if (gemerged) {
+          const { data: metTracker, error: trErr } = await withTimeout(
+            supabase.from(TOW_GAMES).update({ tracker: gemerged }).eq('code', c).select().single(),
+            15000,
+            'Opening the battle timed out. Please reload the app and try again.',
+          );
+          if (trErr) throw trErr;
+          if (metTracker) setGame(metTracker as GameRow);
+        }
         return true;
       } catch (e) {
         setError(supaErr(e));
@@ -363,9 +443,11 @@ export function GameProvider({ children }: { children: ReactNode }) {
     [setPersisted],
   );
 
-  const startSolo = useCallback((army?: Army | null) => {
+  const startSolo = useCallback((army?: Army | null, regels?: GameRegels) => {
     setError(null);
     if (army) setSoloMine(army); // seed "my army" when a saved/pasted list was chosen at setup
+    // Solo speelt lokaal, dus de regels gaan in de lokale tracker (zelfde vorm als online).
+    setSoloTracker((t) => metRegels(t, regels) ?? t);
     setPersisted({ seat: 'solo', code: null });
   }, [setPersisted]);
 

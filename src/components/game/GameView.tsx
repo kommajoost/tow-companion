@@ -118,7 +118,12 @@ export function GameView() {
     const prev = tracker.units[key] ?? { lost: 0, fleeing: false };
     setTracker({ ...tracker, units: { ...tracker.units, [key]: { ...prev, fleeing: !prev.fleeing } } });
   };
-  const adjRound = (dir: number) => setTracker({ ...tracker, round: Math.min(6, Math.max(1, tracker.round + dir)) });
+  // GAME-LENGTE. Warhammer Battles duurt zes rounds, BATTLE MARCH vijf — "All games of Battle March
+  // last for five rounds" (General's Companion p.27, tow.whfb.app/battle-march/game-length-battle-march).
+  // De vlag staat op de tracker en synct dus naar beide spelers; geen game-over-check, de teller is
+  // een hulpmiddel aan tafel en niet de scheidsrechter.
+  const maxRound = tracker.battleMarch ? 5 : 6;
+  const adjRound = (dir: number) => setTracker({ ...tracker, round: Math.min(maxRound, Math.max(1, tracker.round + dir)) });
 
   // ── Centrale VP-uitslag (engine, absoluut host/guest) — één bron voor de bar, de banner én het
   // einde-battle-overzicht. De handmatige VP-teller is vervangen door deze auto-stand. ──
@@ -161,7 +166,7 @@ export function GameView() {
   );
 
   const battleBar = army && (
-    <BattleBar round={tracker.round} onRound={adjRound} vpMe={vpMe} vpOpp={vpOpp} leader={leader} myName={myName || 'You'} opponentName={opponentName || 'Opponent'} editable={editable} vertical={wide} />
+    <BattleBar round={tracker.round} maxRound={maxRound} onRound={adjRound} vpMe={vpMe} vpOpp={vpOpp} leader={leader} myName={myName || 'You'} opponentName={opponentName || 'Opponent'} editable={editable} vertical={wide} weer={tracker.weer ?? null} />
   );
   const endModal = endOpen && (
     <EndBattleOverview res={res} hostName={hostName} guestName={guestName} hostArmy={hostArmy} guestArmy={guestArmy} onClose={() => setEndOpen(false)} />

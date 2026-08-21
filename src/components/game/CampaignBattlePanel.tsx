@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { TOW, towFont, engraved } from '../../design/tow';
 import { useGame } from '../../game';
 import { getCachedCampaign, getCampaignCode } from '../../lib/campaign';
-import { battleByCode, battleHandZet, battleTypeLabel, battleTypeNote, abilityLabel, abilityEffect, scarLabel, type CampaignBattle, type BattleSide, type Perk, type FoundItem, type BattleLijstSamenvatting, type VetUnit } from '../../lib/campaignBattle';
+import { battleByCode, battleHandZet, battleTypeLabel, battleTypeNote, abilityLabel, abilityEffect, scarLabel, weerVanBattle, type CampaignBattle, type BattleSide, type Perk, type FoundItem, type BattleLijstSamenvatting, type VetUnit } from '../../lib/campaignBattle';
 import { ArmyListPicker } from './ArmyListPicker';
 import { CampaignBoard, defenderIsTop, parseSheetLayout, parseSheetSecLayout } from './CampaignBoard';
 import type { Army } from '../../types';
@@ -192,7 +192,14 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
     if (!battle || !mySeat) return;
     const mijn = mySeat === 'host' ? battle.aanvaller : battle.verdediger;
     const tegen = mySeat === 'host' ? battle.verdediger : battle.aanvaller;
-    const ok = await openCampaignBattle(code, mySeat, mijn.naam || name, army, battle.veteranen, tegen.naam || undefined, tegenLeger);
+    // De GAME-REGELS van deze Act mee naar de tracker (21-08-2026): Battle March (5 rounds + de
+    // halve VP-schaal) en het Disruptive Weather van de Act. Beide komen van de server, zodat de
+    // twee spelers gegarandeerd onder dezelfde regels spelen; `openCampaignBattle` merget ze in de
+    // tracker zonder een lopend potje te wissen.
+    const ok = await openCampaignBattle(code, mySeat, mijn.naam || name, army, battle.veteranen, tegen.naam || undefined, tegenLeger, {
+      battleMarch: battle.battleMarch,
+      weer: weerVanBattle(battle),
+    });
     if (ok) onDismiss(); // GameProvider heeft nu een seat → GameMode wisselt naar GameView
   }, [battle, mySeat, code, name, openCampaignBattle, onDismiss]);
 
@@ -314,14 +321,9 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
   // DISRUPTIVE WEATHER (v3, 17-08-2026): de campagne bakt naam + effect mee, dus we hoeven de officiële
   // tabel hier niet na te bouwen — precies zoals bij layout/secLayout. Alleen Battle March (Act 1-2)
   // heeft dit; elke oudere sheet levert undefined en dan tonen we het blok niet.
-  const weerRaw = sheet.weer as unknown;
-  const weer = weerRaw && typeof weerRaw === 'object'
-    ? (() => {
-        const w = weerRaw as Record<string, unknown>;
-        const naam = asStr(w.naam), effect = asStr(w.effect), wworp = asNum(w.worp);
-        return naam ? { naam, effect: effect ?? '', worp: wworp } : null;
-      })()
-    : null;
+  // Sinds 21-08 levert de server het weer ook als LOS veld (één worp per Act voor het hele eiland);
+  // `weerVanBattle` kiest dat veld en valt terug op de sheet-versie van oudere battles.
+  const weer = weerVanBattle(battle);
   // DE SETUP-POOL (sheet v4, 20-08-2026). De campagne rolt niet meer per battle een eigen D6: de server
   // VERDEELT de zes setups over de battles van de Act (bij 14 generals zijn dat 7 battles, dus speelt
   // geen enkele tafel op één avond dezelfde setup). Er is dan geen worp, dus "Setup roll: 4" zou hier
@@ -331,7 +333,7 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
   const setupSlot = asNum(sheet.setupSlot);
   const setupTotaal = asNum(sheet.setupTotaal);
   const setupGeforceerd = sheet.setupGeforceerd === true;
-  const weerDeel = weer?.worp != null ? ` · Weather roll: ${weer.worp}` : '';
+  const weerDeel = weer?.worp ? ` · Weather roll: ${weer.worp}` : '';
   const rollLine = worp != null
     ? `Setup roll: ${worp}${worpObjectief != null ? ` · Objectives roll: ${worpObjectief}` : ''}${weerDeel}`
     : setupSlot != null
@@ -513,7 +515,7 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
       {weer && (
         <div style={{ marginTop: 10, border: `1px solid ${TOW.line}`, borderRadius: 10, padding: '10px 12px' }}>
           <div style={{ ...eb, fontSize: 8, color: TOW.muted }}>
-            Disruptive weather{weer.worp != null ? ` · roll ${weer.worp}` : ''}
+            Disruptive weather{weer.worp ? ` · roll ${weer.worp}` : ''}
           </div>
           <div style={{ fontFamily: display, fontSize: 16, color: TOW.gold, marginTop: 3 }}>{weer.naam}</div>
           {weer.effect && (

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { TOW, towFont, engraved } from '../../design/tow';
 import { useGame } from '../../game';
-import { type VpBonus, type VpResultaat } from '../../lib/victoryPoints';
+import { vpSchaal, type VpBonus, type VpResultaat, type VpSchaal } from '../../lib/victoryPoints';
 import { battleByCode, type CampaignBattle } from '../../lib/campaignBattle';
 import { objectivesVoor, type ObjectiveDef } from '../../lib/objectiveVp';
 
@@ -60,6 +60,10 @@ export function VpPanel({ compact = false, res, hostName, guestName, hideOutcome
   const scenarioId = typeof sc?.scenario === 'string' ? sc.scenario : null;
   const secondaries = Array.isArray(sc?.secondaries) ? (sc.secondaries as unknown[]).filter((x): x is string => typeof x === 'string') : [];
   const objDefs = objectivesVoor(scenarioId, secondaries);
+  // De ACTIEVE VP-schaal. Battle March halveert General/BSB/standaard, dus de labels moeten die
+  // bedragen tonen: een vast "(+100)" op een Battle March-tafel zou de speler voorliegen over wat de
+  // engine erachter optelt.
+  const schaal = vpSchaal(tracker.battleMarch);
 
   // Muteer één bonus-kant en sync via setTracker (last-write-wins, net als de rest van de tracker).
   const setBonus = (side: 'host' | 'guest', patch: Partial<VpBonus>) => {
@@ -102,9 +106,9 @@ export function VpPanel({ compact = false, res, hostName, guestName, hideOutcome
       </button>
       {bonusOpen && (
         <div style={{ marginTop: 8 }}>
-          <BonusEditor name={hostName} bonus={tracker.bonus?.host} onSet={(p) => setBonus('host', p)} compact={compact} objectives={objDefs} />
+          <BonusEditor name={hostName} bonus={tracker.bonus?.host} onSet={(p) => setBonus('host', p)} compact={compact} objectives={objDefs} schaal={schaal} />
           <div style={{ height: 10 }} />
-          <BonusEditor name={guestName} bonus={tracker.bonus?.guest} onSet={(p) => setBonus('guest', p)} compact={compact} objectives={objDefs} />
+          <BonusEditor name={guestName} bonus={tracker.bonus?.guest} onSet={(p) => setBonus('guest', p)} compact={compact} objectives={objDefs} schaal={schaal} />
         </div>
       )}
 
@@ -116,7 +120,7 @@ export function VpPanel({ compact = false, res, hostName, guestName, hideOutcome
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={TOW.muted} strokeWidth="2.6" style={{ flexShrink: 0, transform: rulesOpen ? 'rotate(90deg)' : 'none', transition: 'transform .18s ease' }} aria-hidden><path d="M9 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" /></svg>
         <span style={{ ...eb, fontSize: 8.5, color: TOW.muted }}>Victory Points — how scoring works</span>
       </button>
-      {rulesOpen && <RuleReference />}
+      {rulesOpen && <RuleReference schaal={schaal} battleMarch={tracker.battleMarch === true} />}
     </div>
   );
 }
@@ -129,12 +133,15 @@ function BonusEditor({
   onSet,
   compact,
   objectives,
+  schaal,
 }: {
   name: string;
   bonus: VpBonus | undefined;
   onSet: (patch: Partial<VpBonus>) => void;
   compact: boolean;
   objectives: ObjectiveDef[];
+  /** De actieve VP-schaal (Warhammer Battles of Battle March) — bepaalt de bedragen in de labels. */
+  schaal: VpSchaal;
 }) {
   const generalDown = bonus?.generalDown ?? false;
   const bsbDown = bonus?.bsbDown ?? false;
@@ -159,12 +166,12 @@ function BonusEditor({
     <div style={{ border: `1px solid ${TOW.line}`, borderRadius: 10, padding: compact ? '9px 10px' : '10px 12px', background: 'rgba(0,0,0,0.02)' }}>
       <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginBottom: 7, overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>{name} scores</div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-        {toggle(generalDown, 'Enemy General down (+100)', () => onSet({ generalDown: !generalDown }))}
-        {toggle(bsbDown, 'Enemy BSB down (+50)', () => onSet({ bsbDown: !bsbDown }))}
+        {toggle(generalDown, `Enemy General down (+${schaal.general})`, () => onSet({ generalDown: !generalDown }))}
+        {toggle(bsbDown, `Enemy BSB down (+${schaal.bsb})`, () => onSet({ bsbDown: !bsbDown }))}
 
         {/* Buitgemaakte standaards (×50) */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '2px 1px' }}>
-          <span style={{ flex: 1, minWidth: 0, fontFamily: serif, fontSize: 12.5, color: TOW.parchDim }}>Enemy standards captured (×50)</span>
+          <span style={{ flex: 1, minWidth: 0, fontFamily: serif, fontSize: 12.5, color: TOW.parchDim }}>Enemy standards captured (×{schaal.standaard})</span>
           <button onClick={() => onSet({ standaards: Math.max(0, standaards - 1) })} disabled={standaards <= 0} aria-label="Fewer standards" style={{ ...stepBtn, cursor: standaards <= 0 ? 'default' : 'pointer', opacity: standaards <= 0 ? 0.4 : 1 }}><Minus c="currentColor" /></button>
           <span style={{ fontFamily: display, fontWeight: 700, fontSize: 15, color: TOW.ink, minWidth: 16, textAlign: 'center' }}>{standaards}</span>
           <button onClick={() => onSet({ standaards: standaards + 1 })} aria-label="More standards" style={stepBtn}><Plus c="currentColor" /></button>
@@ -221,7 +228,7 @@ function BonusEditor({
 
 // De TOW-VP-regels, letterlijk uit de engine-comments / tow.whfb.app. Ingeklapt tot de gebruiker 'm
 // opent. Bron-URL's als klein grijs onderschrift.
-function RuleReference() {
+function RuleReference({ schaal, battleMarch }: { schaal: VpSchaal; battleMarch: boolean }) {
   const item = (title: string, body: string) => (
     <div style={{ marginBottom: 9 }}>
       <div style={{ fontFamily: display, fontWeight: 700, fontSize: 12.5, color: TOW.ink, marginBottom: 2 }}>{title}</div>
@@ -231,11 +238,12 @@ function RuleReference() {
   return (
     <div style={{ marginTop: 9, paddingTop: 10, borderTop: `1px solid ${TOW.line}` }}>
       {item('Dead or Fled', 'An enemy unit destroyed or fled off the table is worth 100% of its points. A unit still fleeing at game end, or reduced to 25% or less of its starting Unit Strength (or Wounds), is worth 50% (rounded up).')}
-      {item('The King is Dead', 'The enemy General slain or fled scores an extra +100 VP.')}
-      {item('Trophies of War', 'Each captured enemy standard scores +50 VP. The enemy Battle Standard Bearer slain or fled scores +50 VP.')}
+      {item('The King is Dead', `The enemy General slain or fled scores an extra +${schaal.general} VP.`)}
+      {item('Trophies of War', `Each captured enemy standard scores +${schaal.standaard} VP. The enemy Battle Standard Bearer slain or fled scores +${schaal.bsb} VP.`)}
+      {battleMarch && item('Treasure Troves / Strategic Landmarks', 'At the end of each player’s turn you score +10 VP for each treasure trove you control, and +25 VP if you control the strategic landmark. Count the turns in the objective control above.')}
       {item('Scenario Objectives / Special Features', 'Defined per scenario — enter any objective VP scored manually.')}
       {item('Result', 'A VP difference below 100 is a Draw. 100 or more is a Victory. If the winner has at least twice the loser’s VP, it is a Crushing Victory.')}
-      <div style={{ fontFamily: serif, fontStyle: 'italic', fontSize: 10.5, color: TOW.muted, marginTop: 4 }}>Source: tow.whfb.app · Warhammer Battles</div>
+      <div style={{ fontFamily: serif, fontStyle: 'italic', fontSize: 10.5, color: TOW.muted, marginTop: 4 }}>Source: tow.whfb.app · {battleMarch ? 'Battle March (General’s Companion p.27) — Dead or Fled and the win thresholds are the same as in Warhammer Battles' : 'Warhammer Battles'}</div>
     </div>
   );
 }

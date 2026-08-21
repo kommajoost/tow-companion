@@ -269,9 +269,19 @@ export interface UnitTrack {
   kills?: number;
 }
 
+/** Het Disruptive Weather van deze battle (Battle March, General's Companion p. 39). De campagne rolt
+ *  het ÉÉN keer per Act voor het hele eiland, dus elke battle van die avond speelt onder dezelfde
+ *  hemel. Naam + effect komen kant-en-klaar van de server (`towc_weer_get`); we bouwen de tabel hier
+ *  niet na. Zie `GameTracker.weer`. */
+export interface GameWeer {
+  worp: number;
+  naam: string;
+  effect: string;
+}
+
 /** Shared battle-tracking state for a game (round, VP per side, per-unit casualties). */
 export interface GameTracker {
-  round: number; // 1–6
+  round: number; // 1–6, of 1–5 bij Battle March (zie `battleMarch`)
   /** Victory points keyed by seat (host/guest, or me/opp in solo). */
   vp: Record<string, number>;
   /** Per-unit state keyed `<seat>:<unitId>`. */
@@ -295,6 +305,19 @@ export interface GameTracker {
    *  tafel-feit dat beide spelers moeten zien én dat in de report-`sig` hoort, zodat de vlag niet
    *  meer kan omgaan nadat de ander heeft goedgekeurd. */
   withdrew?: 'host' | 'guest';
+  /** 21-08: speelt dit potje onder de BATTLE MARCH-regels? Battle March is het kleine-spel-format van
+   *  The Old World (General's Companion p. 27) en wijkt op twee punten af die de app moet weten:
+   *  het duurt VIJF rounds i.p.v. zes, en de VP-schaal is halveerd (General 50, BSB 25, standaard 25).
+   *  In de campagne zijn dat Act 1-2; de server zegt het via `towc_battle_by_code.battleMarch` en
+   *  `openCampaignBattle` stempelt het hier. Buiten de campagne zet je het zelf aan bij het opzetten.
+   *  Staat op de TRACKER omdat `tow_games` geen kolom voor game-instellingen heeft — zo synct het
+   *  realtime naar beide spelers en zien ze gegarandeerd dezelfde regels. Ontbreekt het veld (oude
+   *  game), dan is het false: gewone Warhammer Battles. */
+  battleMarch?: boolean;
+  /** 21-08: het Disruptive Weather van deze battle, of null als er geen weer geldt (vanaf Act 3, of
+   *  een potje buiten de campagne). Staat op de tracker om dezelfde reden als `battleMarch`: het is
+   *  gedeelde, hele-game-lange informatie die beide spelers aan tafel moeten kunnen teruglezen. */
+  weer?: GameWeer | null;
 }
 
 /** A shared game row (mirrors the tow_games table). */

@@ -1,4 +1,5 @@
 import { supabase } from './supabase';
+import type { GameWeer } from '../types';
 
 // Client-laag voor de campagne-BATTLE-brug ("De Grensvorsten", zelfde Supabase-project). Waar
 // campaign.ts de speler-identiteit/lijstbouw-context levert, opent deze module een concrete
@@ -157,6 +158,16 @@ export interface CampaignBattle {
   warFase?: boolean;
   /** Ruwe act_status uit de campagne ('initiatief' | 'beurten' | 'battles' | 'afronding'). */
   actStatus?: string | null;
+  /** 21-08-2026: speelt deze battle onder de BATTLE MARCH-regels? De server zet dit op true voor de
+   *  Battle March-Acts (1-2). Bepaalt in OWC de game-lengte (5 rounds) en de VP-schaal (General 50,
+   *  BSB/standaard 25). Optioneel: een oudere server stuurt het niet mee → undefined, en dan blijft
+   *  het gewone Warhammer Battles-formaat gelden. */
+  battleMarch?: boolean;
+  /** 21-08-2026: het Disruptive Weather van deze Act — één worp voor het hele eiland, dus elke battle
+   *  van die avond speelt onder dezelfde hemel. Naam + effect komen kant-en-klaar van de server
+   *  (`towc_weer_get`); we bouwen de D6-tabel hier niet na. null vanaf Act 3 (geen weer) of als de
+   *  worp nog niet gedaan is; undefined bij een oudere server. */
+  weer?: GameWeer | null;
 }
 
 // ---- Battle-soort ----------------------------------------------------------------------------
@@ -221,6 +232,16 @@ function parseLijst(raw: unknown): BattleLijstSamenvatting | null {
     leger: str(l.leger),
     units: arr(l.units).map(parseLijstUnit).filter((u) => !!u.naam),
   };
+}
+
+/** Het weer van de Act: null als er geen weer geldt (vanaf Act 3, of nog niet gerold) én als de
+ *  server iets stuurt zonder naam — een weer-effect zonder naam is niets om aan tafel te tonen. */
+function parseWeer(raw: unknown): GameWeer | null {
+  if (!raw || typeof raw !== 'object') return null;
+  const w = raw as Record<string, unknown>;
+  const naam = str(w.naam);
+  if (!naam) return null;
+  return { worp: num(w.worp), naam, effect: str(w.effect) };
 }
 
 /** Undefined als het veld ontbreekt (oude server). */
@@ -294,6 +315,12 @@ function parseBattle(data: unknown): CampaignBattle {
   return {
     ok: true,
     id: num(d.id),
+    // FASE + CAP (21-08-2026): stonden wel in de interface en kwamen wel uit towc_battle_by_code, maar
+    // werden hier niet overgenomen. Gevolg: CampaignResultReporter bewaakt met `if (!battle || !cap)`,
+    // dus `cap` was altijd undefined -> de officiele CV/RV/MV-tabel (towc_vp_resultaat) werd NOOIT
+    // bereikt en de kroniek kreeg altijd fase null. Zonder deze twee regels is de campagne-uitslag stuk.
+    fase: typeof d.fase === 'number' ? d.fase : undefined,
+    cap: typeof d.cap === 'number' ? d.cap : undefined,
     code: str(d.code),
     status: str(d.status),
     type: str(d.type),
@@ -310,7 +337,24 @@ function parseBattle(data: unknown): CampaignBattle {
     handen: parseHanden(d.handen),
     warFase: typeof d.warFase === 'boolean' ? d.warFase : undefined,
     actStatus: typeof d.actStatus === 'string' ? d.actStatus : null,
+    battleMarch: typeof d.battleMarch === 'boolean' ? d.battleMarch : undefined,
+    weer: 'weer' in d ? parseWeer(d.weer) : undefined,
   };
+}
+
+/**
+ * Het weer dat voor DEZE battle geldt, of null als er geen weer is.
+ *
+ * Twee bronnen, in deze volgorde: het TOP-LEVEL `weer`-veld (21-08-2026, één worp per Act voor het
+ * hele eiland — de autoriteit), en anders het weer dat de campagne in de battle-sheet meebakte
+ * (v3-sheets, 17-08). Die tweede blijft nodig voor battles/servers van vóór het losse veld; ontbreken
+ * ze beide, dan is er geen weer en tonen we er niets over.
+ */
+export function weerVanBattle(battle: CampaignBattle | null | undefined): GameWeer | null {
+  if (!battle) return null;
+  if (battle.weer !== undefined) return battle.weer;
+  const sheet = battle.scenario as Record<string, unknown> | null;
+  return parseWeer(sheet?.weer);
 }
 
 /** Trim + upper-case de sync-code voor de wire (codes zijn hoofdletter-ongevoelig ingevoerd, net

@@ -34,6 +34,13 @@ export function GameSetup() {
   const [paste, setPaste] = useState('');
   const [joinCode, setJoinCode] = useState('');
   const [mode, setMode] = useState<'host' | 'join'>('host');
+  // GAME-REGELS voor een potje BUITEN de campagne (21-08-2026). Battle March is het kleine-spel-
+  // format: vijf rounds i.p.v. zes en een halve bonus-VP-schaal. De vlag hoort bij de GAME, dus
+  // alleen wie de game opzet kiest 'm; de tegenstander erft hem via de tracker (die realtime synct).
+  // Daarom staat de schakelaar bij "Host a game" en niet bij "Join a game" — daar zou hij suggereren
+  // dat je de regels van iemand anders potje kunt omzetten. Een CAMPAGNE-battle komt nooit hier
+  // langs (dat is CampaignBattlePanel) en krijgt de vlag van de server, dus ze kunnen niet botsen.
+  const [battleMarch, setBattleMarch] = useState(false);
   const [games, setGames] = useState<GameSummary[] | null>(null);
   const [loadingGames, setLoadingGames] = useState(false);
   const [showBattle, setShowBattle] = useState(false);
@@ -242,9 +249,26 @@ export function GameSetup() {
         </div>
 
         {mode === 'host' ? (
-          <button onClick={() => createGame(name, army)} disabled={busy} style={{ ...goldBtn, opacity: busy ? 0.5 : 1 }}>
+          <>
+          <button
+            onClick={() => setBattleMarch((v) => !v)}
+            aria-pressed={battleMarch}
+            style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 9, cursor: 'pointer', padding: '10px 12px', marginBottom: 12, borderRadius: 11, textAlign: 'left', border: `1px solid ${battleMarch ? TOW.goldDeep : TOW.line}`, background: battleMarch ? TOW.cardLt : 'transparent' }}
+          >
+            <span style={{ width: 16, height: 16, borderRadius: 4, flexShrink: 0, border: `1px solid ${battleMarch ? TOW.goldDeep : TOW.lineStrong}`, background: battleMarch ? TOW.goldDeep : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              {battleMarch && <svg width="10" height="10" viewBox="0 0 12 12" fill="none"><path d="M2.5 6.2l2.2 2.3 4.8-5" stroke={TOW.onGrad} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>}
+            </span>
+            <span style={{ flex: 1, minWidth: 0 }}>
+              <span style={{ display: 'block', fontFamily: towFont.display, fontWeight: 600, fontSize: 14, color: battleMarch ? TOW.ink : TOW.parchDim }}>Battle March (5 rounds, small-game VP)</span>
+              <span style={{ display: 'block', fontFamily: towFont.serif, fontSize: 12, color: TOW.muted, lineHeight: 1.35, marginTop: 2 }}>
+                Five battle rounds instead of six, and the halved bonuses: enemy General +50, BSB +25, each captured standard +25.
+              </span>
+            </span>
+          </button>
+          <button onClick={() => createGame(name, army, { battleMarch })} disabled={busy} style={{ ...goldBtn, opacity: busy ? 0.5 : 1 }}>
             {busy ? 'Creating…' : 'Create game & get code'}
           </button>
+          </>
         ) : (
           <div>
             <label style={labelStyle}>Game code</label>
@@ -322,7 +346,7 @@ export function GameSetup() {
         {error && <div style={{ fontFamily: towFont.serif, fontSize: 13.5, color: TOW.blood, marginTop: 12 }}>{error}</div>}
 
         <div style={{ textAlign: 'center', marginTop: 18 }}>
-          <button onClick={() => startSolo(army)} style={{ background: 'none', border: 'none', cursor: 'pointer', fontFamily: towFont.serif, fontSize: 13.5, color: TOW.muted, textDecoration: 'underline' }}>
+          <button onClick={() => startSolo(army, { battleMarch })} style={{ background: 'none', border: 'none', cursor: 'pointer', fontFamily: towFont.serif, fontSize: 13.5, color: TOW.muted, textDecoration: 'underline' }}>
             or set up both armies on this device (offline)
           </button>
         </div>
