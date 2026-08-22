@@ -345,7 +345,7 @@ export function CampaignResultReporter({ embedded = false }: { embedded?: boolea
       <button onClick={() => setOpen(true)} style={{ ...box, width: '100%', textAlign: 'left', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 10 }}>
         <span style={{ flex: 1, minWidth: 0 }}>
           <span style={{ display: 'block', fontFamily: display, fontWeight: 700, fontSize: 14, color: TOW.goldDeep }}>Report result to campaign</span>
-          <span style={{ display: 'block', fontFamily: serif, fontSize: 12, color: TOW.muted }}>Send winner, VP and casualties back to De Grensvorsten</span>
+          <span style={{ display: 'block', fontFamily: serif, fontSize: 12, color: TOW.muted }}>Send winner, VP and casualties back to De Grensvorsten — fill in the roster first: losses, Fleeing, Removed and Kills all count</span>
         </span>
         <span aria-hidden style={{ color: TOW.goldDeep, fontSize: 18, flexShrink: 0 }}>›</span>
       </button>
@@ -355,6 +355,21 @@ export function CampaignResultReporter({ embedded = false }: { embedded?: boolea
   return (
     <div style={formWrap}>
       <div style={{ ...eb, fontSize: 8.5, color: TOW.goldDeep, marginBottom: 8 }}>Report result · {code}</div>
+
+      <div style={{ border: `1px solid ${TOW.goldDeep}`, borderRadius: 9, background: 'rgba(184,134,47,0.08)', padding: '8px 10px', marginBottom: 12 }}>
+        <div style={{ ...eb, fontSize: 8, color: TOW.goldDeep, marginBottom: 3 }}>Before you send</div>
+        <div style={{ fontFamily: serif, fontSize: 12.5, color: TOW.parchDim, lineHeight: 1.5 }}>
+          The numbers below are calculated from what you filled in on the roster, so fill it in
+          completely: <strong style={{ color: TOW.ink }}>models and wounds lost</strong>,
+          {' '}<strong style={{ color: TOW.ink }}>Fleeing</strong> and{' '}
+          <strong style={{ color: TOW.ink }}>Removed</strong>, the{' '}
+          <strong style={{ color: TOW.ink }}>General / BSB / standards</strong> boxes and any{' '}
+          <strong style={{ color: TOW.ink }}>objective VP</strong>. Those decide the Victory Points and
+          therefore the result and the Fame. And <strong style={{ color: TOW.ink }}>Kills</strong> per unit
+          decide the Veteran XP your units take home — an empty counter is a unit that learned nothing.
+          Once the result is in, none of it can be corrected.
+        </div>
+      </div>
 
       <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginBottom: 5 }}>Victory points (calculated)</div>
       <div style={{ fontFamily: serif, fontSize: 13.5, color: TOW.ink, marginBottom: 4 }}>

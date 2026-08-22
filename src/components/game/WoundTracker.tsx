@@ -1,6 +1,7 @@
 import { TOW, towFont, engraved } from '../../design/tow';
 import { unitSize, woundsPerModel, unitTotalStrength } from '../../lib/armyRules';
-import type { ArmyUnit } from '../../types';
+import { unitToonRegel } from '../../lib/unitNaam';
+import type { ArmyUnit, KillDetail } from '../../types';
 
 const eb = engraved as React.CSSProperties;
 
@@ -19,19 +20,29 @@ const Skull = ({ c }: { c: string }) => (
 
 // Per-unit strength / casualty tracker.
 //
-// Joost wil per unit twee dingen los kunnen zetten i.p.v. één ruwe `lost`-teller:
-//   • aantal modellen dood            → elke stap = ±W wonden (W = woundsPerModel)
-//   • wonden op het huidige (voorste) model → ±1 wond, binnen [0, W-1]
-// Beide tellers zijn ONAFHANKELIJK; ze reduceren samen naar de canonieke totale `lost`:
+// ALLE TELLERS TELLEN AF (Joost 21-08-2026: "de woundscounter gaat verkeerd om, je moet juist aftellen
+// voor wound i.p.v. op"). Dat was inconsistent: de Models-rij toonde wat er nog LEEFT en telde dus af,
+// maar de wonden-rij toonde de OPGELOPEN wonden en liep op. Een W4-held begon op 0/4 en was dood bij
+// 4/4, terwijl de regiment-rij ernaast van 10/10 naar 0/10 liep. Aan tafel kijk je naar wat er nog
+// staat, dus nu tellen ze allemaal dezelfde kant op: [-] is schade, [+] is genezen, en 0 is dood.
+//
+// Per unit twee dingen los te zetten:
+//   • modellen nog in leven                → elke stap = ±W wonden (W = woundsPerModel)
+//   • wonden over op het voorste model     → ±1 wond
+// Canoniek blijft de totale `lost` (dat is wat de VP-engine leest):
 //   lost = modellenDood × W + wondenOpVoorste
-// en worden voor weergave terug afgeleid uit `lost`:
-//   modellenDood    = clamp(floor(lost / W), 0..start)
-//   wondenOpVoorste = lost % W
+// en de weergave wordt daar uit afgeleid:
+//   modellen levend        = start − clamp(floor(lost / W), 0..start)
+//   wonden over op voorste = W − (lost mod W)
+//
+// DE WONDEN-RIJ CASCADEERT (nieuw): hij zet `lost` met ±1, dus valt de laatste wond van het voorste
+// model, dan rolt dat automatisch door naar een dood model en staat de volgende weer vol. Daarvoor was
+// die rij hard begrensd op W−1 en moest je zelf naar de Models-rij om het model af te maken — precies
+// het soort boekhouden dat je aan tafel niet wil doen.
 //
 // Randgevallen / keuzes (gedocumenteerd):
 //   • single-model units (start === 1): de "Models"-rij vervalt; alleen de wonden-rij telt.
-//   • W === 1: de "Wounds on front model"-rij vervalt (elke wond = een heel model); alleen "Models".
-//     Bij een single-model 1W-unit (start===1 && W===1) blijft alleen een simpele 0/1-wonden-rij over.
+//   • W === 1: de wonden-rij vervalt (elke wond is een heel model); alleen "Models".
 //   • De som `lost` wordt altijd geclampt in [0, totaal]; geen teller kan die grens doorbreken.
 //
 // Verder: een gekleurde strength-bar + "Destroyed" bij 0, en twee toggles: Fleeing (bestaand) en
@@ -46,6 +57,10 @@ export function WoundTracker({
   onRemoved,
   kills,
   onSetKills,
+  killDetails = [],
+  onSetKillDetail = () => {},
+  vijandUnits = [],
+  maxRound = 6,
   editable = true,
 }: {
   unit: ArmyUnit;
@@ -62,6 +77,13 @@ export function WoundTracker({
   kills: number;
   /** Absolute setter voor de kill-teller. */
   onSetKills: (kills: number) => void;
+  /** Per kill: welke vijandelijke unit en in welke beurt. Index-gelijk aan de kill-teller. */
+  killDetails?: KillDetail[];
+  onSetKillDetail?: (i: number, patch: KillDetail) => void;
+  /** Het leger aan de andere kant van de tafel — de keuzelijst bij een kill. */
+  vijandUnits?: ArmyUnit[];
+  /** Laatste game-round (6, of 5 bij Battle March). */
+  maxRound?: number;
   editable?: boolean;
 }) {
   const start = unitSize(unit); // aantal modellen bij aanvang (single = 1)
@@ -84,6 +106,9 @@ export function WoundTracker({
   // "volgend model" waar de wonden op vallen. Bij een single model (character/monster) telt de
   // hele-unit-wonden-rij hieronder (0..W). Dat was de bug: een W3-held toonde eerder cap W-1 = 2.
   const showFrontWounds = start > 1 && wpm > 1;
+  // Wonden die het voorste model nog OVER heeft. Bij een verse unit (lost mod W === 0) is dat W; bij
+  // een volledig weggevaagde unit 0 -- anders zou een dode unit een gaaf voorste model tonen.
+  const frontOver = remaining <= 0 ? 0 : wpm - wondenOpVoorste;
   // Single-model unit (óók multi-wound) → één wonden-rij van 0..total (= W).
   const showSingleWound = start === 1;
 
@@ -97,13 +122,10 @@ export function WoundTracker({
     const front = d >= start ? 0 : wondenOpVoorste;
     onSetLost(Math.min(total, Math.max(0, d * wpm + front)));
   };
-  // Zet de wonden op het voorste model (±1, binnen [0, wpm-1]); dode modellen blijven ongemoeid.
-  const setFront = (nieuwFront: number) => {
-    const f = Math.min(wpm - 1, Math.max(0, nieuwFront));
-    onSetLost(Math.min(total, Math.max(0, modellenDood * wpm + f)));
-  };
-  // Single-model 1W-unit: 0/1 wond ⇒ lost 0 of 1.
-  const setSingleWound = (v: number) => onSetLost(Math.min(total, Math.max(0, v)));
+  // Eén wond toebrengen of terugnemen op de UNIT als geheel. Rolt door de modellen heen: is het
+  // voorste model op, dan sneuvelt het en staat het volgende weer vol. Dit is wat beide wonden-rijen
+  // gebruiken, dus een held en een regiment gedragen zich identiek.
+  const wond = (delta: number) => onSetLost(Math.min(total, Math.max(0, clampedLost + delta)));
 
   const StepBtn = ({ dir, onClick, disabled }: { dir: number; onClick: () => void; disabled: boolean }) => (
     <button
@@ -162,7 +184,7 @@ export function WoundTracker({
       <div style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
         {showModels && (
           <CounterRow
-            label="Models"
+            label="Models left"
             value={modellenLevend}
             cap={start}
             onDec={() => setDood(modellenDood + 1)}
@@ -173,24 +195,24 @@ export function WoundTracker({
         )}
         {showFrontWounds && (
           <CounterRow
-            label={showModels ? 'Wounds on front model' : 'Wounds'}
-            value={wondenOpVoorste}
-            cap={wpm - 1}
-            onDec={() => setFront(wondenOpVoorste - 1)}
-            onInc={() => setFront(wondenOpVoorste + 1)}
-            decDisabled={wondenOpVoorste <= 0}
-            incDisabled={wondenOpVoorste >= wpm - 1}
+            label={showModels ? 'Wounds left on front model' : 'Wounds left'}
+            value={frontOver}
+            cap={wpm}
+            onDec={() => wond(1)}
+            onInc={() => wond(-1)}
+            decDisabled={clampedLost >= total}
+            incDisabled={clampedLost <= 0}
           />
         )}
         {showSingleWound && (
           <CounterRow
-            label="Wounds"
-            value={clampedLost}
+            label="Wounds left"
+            value={remaining}
             cap={total}
-            onDec={() => setSingleWound(clampedLost - 1)}
-            onInc={() => setSingleWound(clampedLost + 1)}
-            decDisabled={clampedLost <= 0}
-            incDisabled={clampedLost >= total}
+            onDec={() => wond(1)}
+            onInc={() => wond(-1)}
+            decDisabled={clampedLost >= total}
+            incDisabled={clampedLost <= 0}
           />
         )}
       </div>
@@ -222,6 +244,57 @@ export function WoundTracker({
         </div>
         <StepBtn dir={1} onClick={() => onSetKills(clampedKills + 1)} disabled={!editable} />
       </div>
+
+      {/* WAT WAREN DIE KILLS (Joost 21-08-2026): per kill een regel met wie het was en in welke beurt.
+          Zet je de teller een omhoog, dan verschijnt hier een lege regel. Bewust NIET verplicht: aan
+          tafel tik je eerst het aantal en vul je daarna in wie het was, en een half ingevulde regel
+          mag de VP-telling nooit blokkeren (die leest alleen het AANTAL).
+          De unit-keuze is een echte <select> — met tien units in een leger is een lijst met knoppen
+          onwerkbaar, en een select is op mobiel de nette native picker. De beurt is wél een rij
+          knopjes: dat zijn er maar vijf of zes en je wil er met een duim bij. */}
+      {clampedKills > 0 && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 9 }}>
+          {Array.from({ length: clampedKills }, (_, i) => {
+            const d = killDetails[i] ?? {};
+            return (
+              <div key={i} style={{ border: `1px solid ${TOW.line}`, borderRadius: 9, padding: '7px 8px', background: 'rgba(0,0,0,0.02)' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
+                  <span style={{ ...eb, fontSize: 7.5, color: TOW.muted, flexShrink: 0, minWidth: 30 }}>#{i + 1}</span>
+                  <select
+                    value={d.unit ?? ''}
+                    disabled={!editable || !vijandUnits.length}
+                    onChange={(e) => onSetKillDetail(i, { unit: e.target.value || undefined })}
+                    style={{ flex: 1, minWidth: 0, borderRadius: 7, border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt, color: d.unit ? TOW.ink : TOW.muted, padding: '5px 7px', fontFamily: towFont.serif, fontSize: 12.5, boxSizing: 'border-box' }}
+                  >
+                    <option value="">{vijandUnits.length ? 'Which enemy unit?' : 'No enemy army yet'}</option>
+                    {vijandUnits.map((v) => (
+                      <option key={v.id} value={v.id}>{unitToonRegel(v)}</option>
+                    ))}
+                  </select>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 5, marginTop: 6 }}>
+                  <span style={{ ...eb, fontSize: 7.5, color: TOW.muted, flexShrink: 0, minWidth: 30 }}>Turn</span>
+                  {Array.from({ length: maxRound }, (_, k) => {
+                    const beurt = k + 1;
+                    const aan = d.turn === beurt;
+                    return (
+                      <button
+                        key={beurt}
+                        onClick={() => onSetKillDetail(i, { turn: aan ? undefined : beurt })}
+                        disabled={!editable}
+                        aria-pressed={aan}
+                        style={{ width: 26, height: 26, flexShrink: 0, borderRadius: 7, cursor: editable ? 'pointer' : 'default', border: `1px solid ${aan ? TOW.goldDeep : TOW.lineStrong}`, background: aan ? 'rgba(184,134,47,0.18)' : 'transparent', color: aan ? TOW.ink : TOW.muted, fontFamily: towFont.display, fontWeight: aan ? 700 : 400, fontSize: 12.5 }}
+                      >
+                        {beurt}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }

@@ -10,7 +10,7 @@ import { CombatStats } from './CombatStats';
 import { InfoSheet, type InfoSheetData } from './InfoSheet';
 import { WizardSpells } from './WizardSpells';
 import { WoundTracker } from './WoundTracker';
-import type { ArmyUnit, UnitProfile } from '../../types';
+import type { ArmyUnit, KillDetail, UnitProfile } from '../../types';
 
 const eb = engraved as React.CSSProperties;
 
@@ -30,6 +30,10 @@ export function UnitCard({
   onRemoved,
   onFlee,
   onSetKills,
+  killDetails,
+  onSetKillDetail,
+  vijandUnits,
+  maxRound,
   collapsed = false,
   onToggleCollapse,
 }: {
@@ -54,6 +58,13 @@ export function UnitCard({
   onFlee?: () => void;
   /** Absolute setter for the unit's kill count (min 0). */
   onSetKills?: (kills: number) => void;
+  /** Per kill: welke vijandelijke unit en in welke beurt (index-gelijk aan de kill-teller). */
+  killDetails?: KillDetail[];
+  onSetKillDetail?: (i: number, patch: KillDetail) => void;
+  /** Het leger aan de andere kant van de tafel — de keuzelijst bij een kill. */
+  vijandUnits?: ArmyUnit[];
+  /** Laatste game-round (6, of 5 bij Battle March) — bepaalt de beurt-knopjes. */
+  maxRound?: number;
   /** In the game roster, units are collapsed by default; the header toggles open to show the card. */
   collapsed?: boolean;
   onToggleCollapse?: () => void;
@@ -287,6 +298,10 @@ export function UnitCard({
           onRemoved={onRemoved ?? (() => {})}
           kills={kills ?? 0}
           onSetKills={onSetKills ?? (() => {})}
+          killDetails={killDetails ?? []}
+          onSetKillDetail={onSetKillDetail ?? (() => {})}
+          vijandUnits={vijandUnits ?? []}
+          maxRound={maxRound ?? 6}
           editable={editable}
         />
       )}

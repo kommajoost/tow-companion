@@ -40,7 +40,7 @@ export interface ObjectiveDef {
 const TROVES = (aantal: number): ObjectiveDef[] => [
   {
     key: 'bm-troves',
-    label: 'Trove-turns controlled',
+    label: 'Treasure troves — trove-turns held',
     kind: 'count',
     vp: 10,
     countLabel: 'trove-turns',
@@ -76,7 +76,7 @@ export const OBJECTIVE_VP: Record<string, ObjectiveDef[]> = {
   'bm-troves-2': TROVES(2),
   'bm-troves-3': TROVES(3),
   'bm-landmark': [
-    { key: 'bm-landmark', label: 'Landmark-turns controlled', kind: 'count', vp: 25, countLabel: 'turns', rule: '+25 VP if you control the strategic landmark at the end of each player’s turn (count the total turns you held it).' },
+    { key: 'bm-landmark', label: 'Strategic landmark — turns held', kind: 'count', vp: 25, countLabel: 'turns', rule: '+25 VP if you control the strategic landmark at the end of each player’s turn (count the total turns you held it).' },
   ],
   'baggage-trains': [
     { key: 'bag-hold', label: 'Held your own baggage train', kind: 'toggle', vp: 100, rule: '+100 VP per baggage train you control at the end of the battle.' },
@@ -85,7 +85,37 @@ export const OBJECTIVE_VP: Record<string, ObjectiveDef[]> = {
 };
 
 /** Verzamel de objectives voor een battle (scenario-id + secondary-ids), ontdubbeld op key. */
-export function objectivesVoor(scenarioId: string | null | undefined, secondaries: string[] | null | undefined): ObjectiveDef[] {
+/** Terugval voor een Battle March-tafel waarvan we niet WETEN welk objectief er ligt (geen sheet, of
+ *  een oudere sheet zonder secondary). Joost 21-08-2026: "er staat in owc other objective, dat is
+ *  onduidelijk — noem hier de objectives die speelt: treasure throve of strategic landmark." Dus in
+ *  plaats van een anoniem invulveld staan hier BEIDE mogelijkheden bij naam; je vult die van jouw tafel
+ *  in. Battle March deelt altijd het een OF het ander uit, dus er is er hoogstens een van toepassing. */
+const BM_TERUGVAL: ObjectiveDef[] = [
+  {
+    key: 'bm-troves',
+    label: 'Treasure troves — trove-turns held',
+    kind: 'count',
+    vp: 10,
+    countLabel: 'trove-turns',
+    rule: '+10 VP for each treasure trove you control at the end of each player’s turn — count the total trove-turns you held (only if your table has troves).',
+  },
+  {
+    key: 'bm-landmark',
+    label: 'Strategic landmark — turns held',
+    kind: 'count',
+    vp: 25,
+    countLabel: 'turns',
+    rule: '+25 VP if you control the strategic landmark at the end of each player’s turn (only if your table has a landmark).',
+  },
+];
+
+/** Welke objective-controls horen bij deze tafel? `battleMarch` zet de terugval hierboven aan wanneer
+ *  de sheet geen objectief noemt — anders zag de speler alleen het naamloze "other objective"-veld. */
+export function objectivesVoor(
+  scenarioId: string | null | undefined,
+  secondaries: string[] | null | undefined,
+  battleMarch = false,
+): ObjectiveDef[] {
   const uit: ObjectiveDef[] = [];
   const gezien = new Set<string>();
   for (const id of [scenarioId, ...(secondaries ?? [])]) {
@@ -96,5 +126,6 @@ export function objectivesVoor(scenarioId: string | null | undefined, secondarie
       uit.push(def);
     }
   }
+  if (!uit.length && battleMarch) return BM_TERUGVAL;
   return uit;
 }

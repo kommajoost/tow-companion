@@ -267,6 +267,17 @@ export interface UnitTrack {
    *  campagne-XP van "De Grensvorsten" (veteraan-berekening). Optioneel: oude trackers missen dit
    *  veld → behandeld als 0. */
   kills?: number;
+  /** WAT die kills waren (Joost 21-08-2026): per kill welke vijandelijke unit het was en in welke
+   *  beurt. Index-gelijk aan de teller: `kills` blijft het aantal, dit is de toelichting. Allebei de
+   *  velden zijn optioneel, want de teller mag vooruitlopen op het invullen — je tikt aan tafel eerst
+   *  het aantal en vult daarna in wie het was. Oude trackers hebben dit veld niet. */
+  killDetails?: KillDetail[];
+}
+
+/** Eén kill: welke vijandelijke unit (id uit het leger van de tegenstander) en in welke game-round. */
+export interface KillDetail {
+  unit?: string;
+  turn?: number;
 }
 
 /** Het Disruptive Weather van deze battle (Battle March, General's Companion p. 39). De campagne rolt

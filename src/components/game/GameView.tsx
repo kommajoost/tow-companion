@@ -14,7 +14,7 @@ import { EndBattleOverview } from './EndBattleOverview';
 import { berekenVictory } from '../../lib/victoryPoints';
 import { useData } from '../../data';
 import { inferOverlayId, isOverlay, OVERLAY_FILES } from '../../lib/overlays';
-import type { Army, ArmyUnit } from '../../types';
+import type { KillDetail, Army, ArmyUnit } from '../../types';
 
 const eb = engraved as React.CSSProperties;
 const display = towFont.display;
@@ -52,6 +52,9 @@ export function GameView() {
   const wide = w >= 700; // pane is window−76 when the global rail is shown
 
   const army: Army | null = side === 'me' ? myArmy : opponentArmy;
+  // Wie kon deze kant killen? Het leger AAN DE ANDERE KANT van de tafel. Wordt de dropdown-inhoud bij
+  // de kills, dus het moet meebewegen met de zijde die je bekijkt.
+  const vijandLeger: Army | null = side === 'me' ? opponentArmy : myArmy;
 
   // The rule sheet lives outside the builder, so the selected pack must travel with the Army and be
   // restored here. This also switches correctly when both players use different community packs.
@@ -111,7 +114,25 @@ export function GameView() {
   const setKills = (unitId: string, kills: number) => {
     const key = unitKey(side, unitId);
     const prev = tracker.units[key] ?? { lost: 0, fleeing: false };
-    setTracker({ ...tracker, units: { ...tracker.units, [key]: { ...prev, kills: Math.max(0, Math.round(kills)) } } });
+    const n = Math.max(0, Math.round(kills));
+    // De toelichting-rijen lopen mee met de teller: eén erbij geeft een lege rij, eraf gooit de
+    // LAATSTE rij weg (niet de eerste — anders verlies je de kill die je al had ingevuld).
+    const vorige = prev.killDetails ?? [];
+    const details = n > vorige.length
+      ? [...vorige, ...Array.from({ length: n - vorige.length }, () => ({}) as KillDetail)]
+      : vorige.slice(0, n);
+    setTracker({ ...tracker, units: { ...tracker.units, [key]: { ...prev, kills: n, killDetails: details } } });
+  };
+  /** Zet wie/wanneer bij één kill. `i` is de index in de kill-lijst van deze unit. */
+  const setKillDetail = (unitId: string, i: number, patch: KillDetail) => {
+    const key = unitKey(side, unitId);
+    const prev = tracker.units[key] ?? { lost: 0, fleeing: false };
+    const aantal = Math.max(0, Math.round(prev.kills ?? 0));
+    const details = [...(prev.killDetails ?? [])];
+    while (details.length < aantal) details.push({});
+    if (i < 0 || i >= details.length) return;
+    details[i] = { ...details[i], ...patch };
+    setTracker({ ...tracker, units: { ...tracker.units, [key]: { ...prev, killDetails: details } } });
   };
   const toggleFleeing = (unitId: string) => {
     const key = unitKey(side, unitId);
@@ -179,7 +200,7 @@ export function GameView() {
         {g.units.map((u) => {
           const t = tracker.units[unitKey(side, u.id)];
           return (
-            <UnitCard key={u.id} unit={u} faction={army.faction} editable={editable} onChange={(patch) => onUnitChange(u.id, patch)} lost={t?.lost ?? 0} weg={t?.weg ?? false} fleeing={t?.fleeing ?? false} kills={t?.kills ?? 0} onSetLost={(lost) => setCasualty(u.id, lost)} onRemoved={() => setRemoved(u.id, !(t?.weg ?? false))} onFlee={() => toggleFleeing(u.id)} onSetKills={(k) => setKills(u.id, k)} collapsed={!expanded.has(u.id)} onToggleCollapse={() => toggleExpand(u.id)} />
+            <UnitCard key={u.id} unit={u} faction={army.faction} editable={editable} onChange={(patch) => onUnitChange(u.id, patch)} lost={t?.lost ?? 0} weg={t?.weg ?? false} fleeing={t?.fleeing ?? false} kills={t?.kills ?? 0} onSetLost={(lost) => setCasualty(u.id, lost)} onRemoved={() => setRemoved(u.id, !(t?.weg ?? false))} onFlee={() => toggleFleeing(u.id)} onSetKills={(k) => setKills(u.id, k)} killDetails={t?.killDetails ?? []} onSetKillDetail={(i, patch) => setKillDetail(u.id, i, patch)} vijandUnits={vijandLeger?.units ?? []} maxRound={maxRound} collapsed={!expanded.has(u.id)} onToggleCollapse={() => toggleExpand(u.id)} />
           );
         })}
       </div>
