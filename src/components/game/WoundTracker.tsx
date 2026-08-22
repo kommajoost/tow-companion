@@ -1,6 +1,7 @@
 import { TOW, towFont, engraved } from '../../design/tow';
 import { unitSize, woundsPerModel, unitTotalStrength } from '../../lib/armyRules';
-import type { ArmyUnit } from '../../types';
+import { unitToonRegel } from '../../lib/unitNaam';
+import type { ArmyUnit, KillDetail } from '../../types';
 
 const eb = engraved as React.CSSProperties;
 
@@ -56,6 +57,10 @@ export function WoundTracker({
   onRemoved,
   kills,
   onSetKills,
+  killDetails = [],
+  onSetKillDetail = () => {},
+  vijandUnits = [],
+  maxRound = 6,
   editable = true,
 }: {
   unit: ArmyUnit;
@@ -72,6 +77,13 @@ export function WoundTracker({
   kills: number;
   /** Absolute setter voor de kill-teller. */
   onSetKills: (kills: number) => void;
+  /** Per kill: welke vijandelijke unit en in welke beurt. Index-gelijk aan de kill-teller. */
+  killDetails?: KillDetail[];
+  onSetKillDetail?: (i: number, patch: KillDetail) => void;
+  /** Het leger aan de andere kant van de tafel — de keuzelijst bij een kill. */
+  vijandUnits?: ArmyUnit[];
+  /** Laatste game-round (6, of 5 bij Battle March). */
+  maxRound?: number;
   editable?: boolean;
 }) {
   const start = unitSize(unit); // aantal modellen bij aanvang (single = 1)
@@ -232,6 +244,57 @@ export function WoundTracker({
         </div>
         <StepBtn dir={1} onClick={() => onSetKills(clampedKills + 1)} disabled={!editable} />
       </div>
+
+      {/* WAT WAREN DIE KILLS (Joost 21-08-2026): per kill een regel met wie het was en in welke beurt.
+          Zet je de teller een omhoog, dan verschijnt hier een lege regel. Bewust NIET verplicht: aan
+          tafel tik je eerst het aantal en vul je daarna in wie het was, en een half ingevulde regel
+          mag de VP-telling nooit blokkeren (die leest alleen het AANTAL).
+          De unit-keuze is een echte <select> — met tien units in een leger is een lijst met knoppen
+          onwerkbaar, en een select is op mobiel de nette native picker. De beurt is wél een rij
+          knopjes: dat zijn er maar vijf of zes en je wil er met een duim bij. */}
+      {clampedKills > 0 && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 9 }}>
+          {Array.from({ length: clampedKills }, (_, i) => {
+            const d = killDetails[i] ?? {};
+            return (
+              <div key={i} style={{ border: `1px solid ${TOW.line}`, borderRadius: 9, padding: '7px 8px', background: 'rgba(0,0,0,0.02)' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
+                  <span style={{ ...eb, fontSize: 7.5, color: TOW.muted, flexShrink: 0, minWidth: 30 }}>#{i + 1}</span>
+                  <select
+                    value={d.unit ?? ''}
+                    disabled={!editable || !vijandUnits.length}
+                    onChange={(e) => onSetKillDetail(i, { unit: e.target.value || undefined })}
+                    style={{ flex: 1, minWidth: 0, borderRadius: 7, border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt, color: d.unit ? TOW.ink : TOW.muted, padding: '5px 7px', fontFamily: towFont.serif, fontSize: 12.5, boxSizing: 'border-box' }}
+                  >
+                    <option value="">{vijandUnits.length ? 'Which enemy unit?' : 'No enemy army yet'}</option>
+                    {vijandUnits.map((v) => (
+                      <option key={v.id} value={v.id}>{unitToonRegel(v)}</option>
+                    ))}
+                  </select>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 5, marginTop: 6 }}>
+                  <span style={{ ...eb, fontSize: 7.5, color: TOW.muted, flexShrink: 0, minWidth: 30 }}>Turn</span>
+                  {Array.from({ length: maxRound }, (_, k) => {
+                    const beurt = k + 1;
+                    const aan = d.turn === beurt;
+                    return (
+                      <button
+                        key={beurt}
+                        onClick={() => onSetKillDetail(i, { turn: aan ? undefined : beurt })}
+                        disabled={!editable}
+                        aria-pressed={aan}
+                        style={{ width: 26, height: 26, flexShrink: 0, borderRadius: 7, cursor: editable ? 'pointer' : 'default', border: `1px solid ${aan ? TOW.goldDeep : TOW.lineStrong}`, background: aan ? 'rgba(184,134,47,0.18)' : 'transparent', color: aan ? TOW.ink : TOW.muted, fontFamily: towFont.display, fontWeight: aan ? 700 : 400, fontSize: 12.5 }}
+                      >
+                        {beurt}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }
