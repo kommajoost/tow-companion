@@ -71,6 +71,8 @@ const BASE = (import.meta as unknown as { env?: { BASE_URL?: string } }).env?.BA
 // zou onnodig netwerkverkeer zijn voor data die binnen een sessie niet verandert.
 const armyCache: Record<string, OwbArmy | null> = {};
 let itemsByArmy: Record<string, string[]> | null = null;
+/** Het hele magic-items-bestand, een keer opgehaald (24-08-2026). Zelfde bron als de builder. */
+let alleItems: Record<string, unknown> | null = null;
 const itemsCache: Record<string, MagicItemsData | null> = {};
 
 async function haalArmy(slug: string): Promise<OwbArmy | null> {
@@ -84,26 +86,42 @@ async function haalArmy(slug: string): Promise<OwbArmy | null> {
   return armyCache[slug];
 }
 
-/** Magic-items-data per leger. Zonder deze data blijven item-punten buiten het totaal, dus we halen
- *  'm op dezelfde manier op als de builder/picker dat doen. */
+/** Magic-items-data. Zonder deze data blijven item-punten en item-labels buiten de opsplitsing die
+ *  naar de campagne gaat -- en dat gebeurde tot 24-08-2026 ALTIJD.
+ *
+ *  DE BUG. Deze functie las het manifest (the-old-world.json -> armies[].items = ['general',
+ *  'wood-elf-realms', ...]) en fetchte die namen als LOSSE BESTANDEN: `owb/general`, zonder .json en
+ *  zonder dat die bestanden bestaan. Elke fetch faalde, dus itemsCache werd null, dus optionSummary
+ *  en entryPoints kregen geen itemsData mee. Gevolg in de campagne: Pieters Waystalker toonde alleen
+ *  "General" terwijl er `magic/weapon/sword-of-sorrow` in zijn lijst stond, en zijn punten lagen 30
+ *  te laag. Elk magic item van elke speler viel zo weg.
+ *
+ *  DE FIX. Precies doen wat de builder, de picker en GameSetup doen: EEN bestand,
+ *  `owb/magic-items.json`, met per leger-sleutel de itemlijst. Daar zit `general` ook in, dus de
+ *  sleutels uit het manifest zijn alleen nog de SELECTIE van welke groepen dit leger mag gebruiken. */
 async function haalItems(slug: string): Promise<MagicItemsData | null> {
   if (slug in itemsCache) return itemsCache[slug];
   try {
+    if (!alleItems) {
+      const r = await fetch(`${BASE}owb/magic-items.json`);
+      alleItems = r.ok ? ((await r.json()) as Record<string, unknown>) : {};
+    }
     if (!itemsByArmy) {
       const r = await fetch(`${BASE}owb/the-old-world.json`);
       const m = r.ok ? await r.json() : null;
       itemsByArmy = {};
       for (const a of (m?.armies ?? [])) itemsByArmy[a.id] = Array.isArray(a.items) ? a.items : [];
     }
-    const files = itemsByArmy[slug] ?? [];
-    if (!files.length) { itemsCache[slug] = null; return null; }
-    const delen = await Promise.all(files.map((f: string) =>
-      fetch(`${BASE}owb/${f}`).then((r) => (r.ok ? r.json() : null)).catch(() => null)));
-    // De picker voegt de item-bestanden samen tot één set; hetzelfde hier.
-    const samen = delen.filter(Boolean).reduce<MagicItemsData>((acc, deel) => {
-      const d = deel as MagicItemsData;
-      return { ...acc, ...d, items: [...((acc as { items?: unknown[] }).items ?? []), ...((d as { items?: unknown[] }).items ?? [])] } as MagicItemsData;
-    }, {} as MagicItemsData);
+    // Zonder manifest-regel valt hij terug op 'general': de universele items gelden voor iedereen,
+    // en een leger zonder eigen boek hoort niet ineens ZONDER magic items te renderen.
+    const groepen = itemsByArmy[slug]?.length ? itemsByArmy[slug] : ['general'];
+    const samen: MagicItemsData = { ...(alleItems as MagicItemsData) };
+    // De picker geeft het hele bestand door; wij ook -- maar we zetten de voor dit leger geldige
+    // groepen samen in `items`, zodat een consument die alleen dat veld leest hetzelfde ziet.
+    (samen as { items?: unknown[] }).items = groepen.flatMap((g) => {
+      const deel = (alleItems as Record<string, unknown>)[g];
+      return Array.isArray(deel) ? deel : [];
+    });
     itemsCache[slug] = samen;
   } catch {
     itemsCache[slug] = null;
