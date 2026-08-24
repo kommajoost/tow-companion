@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { TOW, towFont, engraved } from '../../design/tow';
 import { COMPOSITION_RULES } from '../../lib/owbBuilder';
-import { useCampagnes, kiesCampagne, keurLijst, dienLijstIn, verversCampagnes, staatOpSlot, lijstNotitieZet, type LijstKeuring, type CampagneBron } from '../../lib/campaign';
+import { useCampagnes, kiesCampagne, keurLijst, dienLijstIn, verversCampagnes, staatOpSlot, lijstNotitieZet, hoortBijCampagne, type LijstKeuring, type CampagneBron } from '../../lib/campaign';
 import { useListSync } from '../../listSync';
 import { useAuth } from '../../lib/auth';
 
@@ -103,7 +103,8 @@ export function CeledonPanel({ lijsten, onOpen, onTour, onHerstel }: {
     return null;
   }
 
-  const eigen = lijsten.filter((l) => l.campaign && l.campaignSpeler === actief.speler.id);
+  // Op de context-KEY, niet op speler-id: dat id is niet uniek over de bronnen (zie hoortBijCampagne).
+  const eigen = lijsten.filter((l) => hoortBijCampagne(l, actief, campagnes));
   const slug = actief.speler.factieSlug;
   // De lijst die bij de huidige factie hoort. Staat er alleen een lijst voor een ANDER leger, dan is de
   // factie verschoven nadat die lijst gemaakt was; dat is geen fout van de speler en moet met één klik

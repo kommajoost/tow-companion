@@ -583,11 +583,31 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
               key={`${t.type}-${i}`}
               style={{ fontFamily: serif, fontSize: 12, padding: '3px 10px', borderRadius: 999, border: `1px solid ${TOW.line}`, background: TOW.panel2, color: TOW.parchDim }}
             >
-              {pretty(t.type)}{t.size ? ` ${t.size}` : ''}{t.difficult ? ' · difficult' : ''}
+              {/* GEEN AFMETINGEN (Joost 21-08-2026: "niet de afmetingen van de terrainpieces erbij").
+                  Een gegenereerde 8x5" suggereerde een precisie die er niet is -- aan tafel pak je het
+                  stuk dat je hebt. Het TYPE is de regel (hill/wood/marsh bepaalt de terreinregels), de
+                  maat was decoratie. De coordinaten blijven bestaan voor de getekende kaart. */}
+              {pretty(t.type)}{t.difficult ? ' · difficult' : ''}
             </span>
           ))}
         </>
       ))}
+
+      {/* HOE JE HET TERREIN NEERZET (Joost 21-08-2026: "Terrain placement -- uitleggen hoe het werkt").
+          De campagne kiest WELKE stukken er op tafel komen; wie ze WAAR neerzet is een regel uit het
+          rulebook en die stond nergens in de app, dus deden mensen het op gevoel. In eigen woorden
+          samengevat, met de bron erbij -- de exacte tekst hoort in het boek te blijven staan. */}
+      {terrain.length > 0 && (
+        <div style={{ marginTop: 10, border: `1px solid ${TOW.line}`, borderRadius: 9, padding: '8px 10px', background: TOW.panel2 }}>
+          <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginBottom: 3 }}>Placing the terrain</div>
+          <div style={{ fontFamily: serif, fontSize: 12, color: TOW.parchDim, lineHeight: 1.5 }}>
+            Roll off. The winner sets up the whole battlefield and puts every piece where they like.
+            Then the loser picks D3 of those pieces and, for each one, rolls 2D6 plus a Scatter dice: an
+            arrow shifts that piece that many inches in the direction shown — stopping the moment it
+            touches another feature or the table edge — and a Hit! leaves it where it stands.
+          </div>
+        </div>
+      )}
 
       {/* Both line-ups. Shown for both sides on purpose: what the opponent is bringing is exactly what
           you want to know before deploying, and the campaign has already locked it. */}

@@ -10,7 +10,7 @@ import { NewListSetup, type NewListValues } from './NewListSetup';
 import { CeledonPanel } from './CeledonPanel';
 import { LockedListView } from './LockedListView';
 import { ListSettings } from './ListSettings';
-import { useCampagnes, staatOpSlot } from '../../lib/campaign';
+import { useCampagnes, staatOpSlot, hoortBijCampagne } from '../../lib/campaign';
 import { useListSync } from '../../listSync';
 import { setPersisted } from '../../store';
 import { COMPOSITION_RULES } from '../../lib/owbBuilder';
@@ -38,6 +38,9 @@ interface SavedList extends BuilderList {
   // Campagne-koppeling (De Grensvorsten) — optioneel, zodat bestaande opgeslagen lijsten geldig blijven
   // en de list-sync (jsonb) deze velden vanzelf meeneemt.
   campaign?: boolean; campaignSpeler?: string; campaignNaam?: string; campaignFase?: number;
+  /** De unieke context-key ('voorbereiding:c1' of het game-slot). Sinds 24-08-2026 de ECHTE
+   *  koppeling; campaignSpeler bleek niet uniek over de bronnen heen (zie hoortBijCampagne). */
+  campaignKey?: string;
   /** Campagne: de BEREKENDE puntensom van deze lijst (incl. magic items). `points` is alleen het
    *  DOEL (de fase-cap waarop de lijst is aangemaakt); de campagne heeft de echte som nodig om te
    *  toetsen of de lijst binnen 500 + 250×(Act−1) blijft. Alleen gezet voor campagne-lijsten, en
@@ -101,7 +104,7 @@ export function ListBuilder() {
   /** Open het instellingen-blad van de open lijst (naam + army composition). */
   const [instellingenOpen, setInstellingenOpen] = useState(false);
   // De campagne(s) van het ingelogde account — bepaalt de band bovenaan en of een lijst op slot staat.
-  const { actief: campagne } = useCampagnes();
+  const { actief: campagne, campagnes } = useCampagnes();
   const sync = useListSync();
   const [dragOver, setDragOver] = useState<string | null>(null); // section id being hovered (group id, or '__ungrouped__')
   const [dragOverCard, setDragOverCard] = useState<{ id: string; before: boolean } | null>(null); // card hovered during a reorder drag (+ which edge)
@@ -227,7 +230,21 @@ export function ListBuilder() {
   // grensmaster laat terugzetten, houdt anders een lijst voor het verkeerde leger — en de factie is
   // (terecht) niet in de builder te wijzigen, dus dan zit je vast.
   const factieSlug = campagne?.speler.factieSlug ?? null;
-  const campagneLijsten = campagne ? lists.filter((l) => l.campaign && l.campaignSpeler === campagne.speler.id) : [];
+  const campagneLijsten = campagne ? lists.filter((l) => hoortBijCampagne(l, campagne, campagnes)) : [];
+
+  // MIGRATIE (24-08-2026): key-loze campagne-lijsten krijgen eenmalig de key van hun beste match —
+  // de eerste context met hun speler-id (voorbereiding vóór game). Zonder dit deelden twee campagnes
+  // met hetzelfde speler-id ('c1') dezelfde fysieke lijst.
+  useEffect(() => {
+    if (campagnes.length === 0) return;
+    const raak = lists.filter((l) => l.campaign && !l.campaignKey && typeof l.campaignSpeler === 'string');
+    if (raak.length === 0) return;
+    const keyVoor = (spelerId: string) => campagnes.find((c) => c.speler.id === spelerId)?.key;
+    const ids = new Map(raak.map((l) => [l.id, keyVoor(l.campaignSpeler as string)]).filter(([, k]) => !!k) as [string, string][]);
+    if (ids.size === 0) return;
+    setLists((ls) => ls.map((l) => (ids.has(l.id) ? { ...l, campaignKey: ids.get(l.id) } : l)));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [campagnes, lists.length]);
   const verkeerdLeger = factieSlug ? campagneLijsten.filter((l) => l.army !== factieSlug) : [];
 
   const autoGedaan = useRef<string | null>(null);
@@ -250,6 +267,7 @@ export function ListBuilder() {
       createdAt: Date.now(),
       updatedAt: Date.now(),
       campaign: true,
+      campaignKey: campagne.key,
       campaignSpeler: campagne.speler.id,
       campaignNaam: campagne.speler.naam,
       campaignFase: campagne.fase,
@@ -280,7 +298,7 @@ export function ListBuilder() {
     if (!campagne || !factieSlug) return;
     const oud = new Set(verkeerdLeger.map((l) => l.id));
     setLists((ls) => ls.map((l) => (oud.has(l.id)
-      ? { ...l, campaign: undefined, campaignSpeler: undefined, campaignNaam: undefined, campaignFase: undefined, computedPoints: undefined, updatedAt: Date.now() }
+      ? { ...l, campaign: undefined, campaignKey: undefined, campaignSpeler: undefined, campaignNaam: undefined, campaignFase: undefined, computedPoints: undefined, updatedAt: Date.now() }
       : l)));
     autoGedaan.current = null; // het effect hierboven maakt de juiste lijst aan
   };
@@ -294,7 +312,7 @@ export function ListBuilder() {
   // een andere cap en wordt hier dus met rust gelaten.
   useEffect(() => {
     if (!campagne) return;
-    const raak = lists.filter((l) => l.campaign && l.campaignSpeler === campagne.speler.id && l.points !== campagne.puntenCap);
+    const raak = lists.filter((l) => hoortBijCampagne(l, campagne, campagnes) && l.points !== campagne.puntenCap);
     if (raak.length === 0) return;
     const ids = new Set(raak.map((l) => l.id));
     setLists((ls) => ls.map((l) => (ids.has(l.id) ? { ...l, points: campagne.puntenCap } : l)));
@@ -439,7 +457,7 @@ export function ListBuilder() {
 
   const createListWith = (v: NewListValues) => {
     const id = newId('l');
-    setLists((ls) => [{ id, name: v.name, army: v.army, composition: v.composition, rule: v.rule, points: v.points, entries: v.entries, createdAt: Date.now(), updatedAt: Date.now(), campaign: v.campaign, campaignSpeler: v.campaignSpeler, campaignNaam: v.campaignNaam, campaignFase: v.campaignFase }, ...ls]);
+    setLists((ls) => [{ id, name: v.name, army: v.army, composition: v.composition, rule: v.rule, points: v.points, entries: v.entries, createdAt: Date.now(), updatedAt: Date.now(), campaign: v.campaign, campaignKey: v.campaign ? campagne?.key : undefined, campaignSpeler: v.campaignSpeler, campaignNaam: v.campaignNaam, campaignFase: v.campaignFase }, ...ls]);
     setSetupOpen(false);
     setActiveId(id);
   };

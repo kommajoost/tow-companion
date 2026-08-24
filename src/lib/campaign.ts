@@ -269,6 +269,27 @@ const listeners = new Set<() => void>();
 function emit() { for (const fn of listeners) fn(); }
 function setState(next: CampagneState) { state = next; emit(); }
 
+/** Hoort deze lokale lijst bij deze campagne-context?
+ *
+ *  Sinds 24-08-2026 draagt een campagne-lijst de unieke context-KEY (`campaignKey`). Nodig omdat het
+ *  speler-id NIET uniek is over de bronnen heen: Joosts voorbereiding én zijn game-slot heten allebei
+ *  'c1', dus filteren op speler-id liet twee campagnes dezelfde fysieke lijst delen — bewerken bij de
+ *  een veranderde de ander. Lijsten van vóór die datum hebben alleen `campaignSpeler`; die vallen
+ *  terug op het speler-id, maar alléén voor de EERSTE context met dat id (voorbereiding vóór game,
+ *  precies de volgorde van de server) — zo claimt het Playtest-slot een oude lijst nooit meer mee.
+ *  `alle` is de volledige contexten-lijst; ontbreekt die, dan geldt de kale id-fallback. */
+export function hoortBijCampagne(
+  l: { campaign?: boolean; campaignKey?: string; campaignSpeler?: string },
+  ctx: CampaignContext,
+  alle?: CampaignContext[],
+): boolean {
+  if (!l.campaign) return false;
+  if (typeof l.campaignKey === 'string' && l.campaignKey !== '') return l.campaignKey === ctx.key;
+  if (l.campaignSpeler !== ctx.speler.id) return false;
+  const eerste = (alle ?? state.campagnes).find((c) => c.speler.id === ctx.speler.id);
+  return !eerste || eerste.key === ctx.key;
+}
+
 /** Kies uit een lijst de campagne die actief moet zijn: de onthouden keuze als die er nog is, anders
  *  de eerste (de voorbereiding staat vooraan — dat is de echte campagne). */
 function bepaalActief(lijst: CampaignContext[]): CampaignContext | null {
