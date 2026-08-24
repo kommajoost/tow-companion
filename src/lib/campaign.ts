@@ -9,7 +9,9 @@ import { getPersisted, setPersisted } from '../store';
 // invullen in Settings) is weg: je logt hier in met hetzelfde account als op de campagne-site en de
 // koppeling is er dan meteen. Eén account kan aan MEER dan één campagne hangen:
 //   • "Isle of Celedon" — je voorbereiding vóór de campagnestart (altijd Act 1, cap 500);
-//   • "Playtest"        — een slot in de test-game van de grensmaster.
+//   • game-slot         — een slot in de lopende game (heette t/m 24-08-2026 "Playtest"; sinds die
+//     dag is er nog maar EEN campagne per account: heb je een game-slot, dan stuurt de server de
+//     voorbereiding niet meer mee als tweede keuze).
 // De server (towc_account_campagnes) geeft ze allemaal terug; is er meer dan één, dan kiest de speler.
 // Bij precies één campagne — de situatie van elke gewone speler — gebeurt dat stil.
 
@@ -69,7 +71,7 @@ export interface CampaignContext {
   bron: CampagneBron;
   /** Stabiele sleutel van deze campagne = het speler-id ('c1' / 'p0'). Onthouden we als keuze. */
   key: string;
-  /** Naam zoals de speler hem ziet: "Isle of Celedon" of "Playtest". */
+  /** Naam zoals de speler hem ziet — sinds 24-08-2026 gewoon "Isle of Celedon". */
   label: string;
   /** Staat de factie vast? (Voorbereiding: pas na 'Confirm faction'. Game-slot: altijd.) */
   factieVast: boolean;
@@ -161,7 +163,7 @@ function parseEen(raw: unknown): CampaignContext {
     ok: true,
     bron,
     key: str(d.key) || speler.id,
-    label: str(d.label) || (bron === 'voorbereiding' ? 'Isle of Celedon' : 'Playtest'),
+    label: str(d.label) || 'Isle of Celedon',
     factieVast: bron === 'game' ? true : bool(d.factieVast),
     gelockt: bool(d.gelockt),
     lijstId: typeof d.lijstId === 'string' && d.lijstId.trim() !== '' ? d.lijstId : null,
