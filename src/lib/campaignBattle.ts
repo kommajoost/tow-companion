@@ -606,6 +606,76 @@ export async function kroniekMijn(): Promise<KroniekStuk[]> {
   return data as KroniekStuk[];
 }
 
+// ---- Battle-foto's (24-08-2026) -------------------------------------------------------------------
+// Max 3 foto's per uploader per battle -- "de beste, meest karakteristieke of epische momenten" --
+// als voer voor de chronicles. De beelden staan op de publieke bucket `towc-fotos`; de koppeling
+// battle<->foto zit achter dezelfde code-gated RPC's als de rest van de battle-brug.
+
+export interface BattleFoto { speler: string; url: string }
+
+function parseFotos(data: unknown): BattleFoto[] {
+  const d = data as { fotos?: unknown } | null;
+  return arr(d?.fotos)
+    .map((f) => { const o = (f ?? {}) as Record<string, unknown>; return { speler: str(o.speler), url: str(o.url) }; })
+    .filter((f) => f.url !== '');
+}
+
+/** Alle foto's die al aan deze battle hangen (beide kanten). */
+export async function battleFotos(code: string): Promise<BattleFoto[]> {
+  const { data, error } = await supabase.rpc('towc_battle_fotos_van', { p_code: cleanBattleCode(code) });
+  if (error) throw new Error(error.message);
+  return parseFotos(data);
+}
+
+/** Vervang MIJN foto-set op deze battle (max 3). Geeft de volledige lijst van de battle terug. */
+export async function battleFotosZet(code: string, speler: string, urls: string[]): Promise<BattleFoto[]> {
+  const { data, error } = await supabase.rpc('towc_battle_fotos_zet', {
+    p_code: cleanBattleCode(code), p_speler: speler, p_urls: urls,
+  });
+  if (error) throw new Error(error.message);
+  return parseFotos(data);
+}
+
+/** Telefoonfoto (3-8 MB) -> webp van max 1600 px (~200-500 kB). De bucket weigert >6 MB en de
+ *  Battle Log laadt straks een hele Act aan foto's tegelijk, dus verkleinen is geen luxe. */
+async function verkleinFoto(file: File): Promise<Blob> {
+  const bmp = await createImageBitmap(file);
+  const f = Math.min(1, 1600 / Math.max(bmp.width, bmp.height));
+  const canvas = document.createElement('canvas');
+  canvas.width = Math.max(1, Math.round(bmp.width * f));
+  canvas.height = Math.max(1, Math.round(bmp.height * f));
+  const ctx = canvas.getContext('2d');
+  if (!ctx) throw new Error('Could not read the photo.');
+  ctx.drawImage(bmp, 0, 0, canvas.width, canvas.height);
+  bmp.close();
+  const blob = await new Promise<Blob | null>((r) => canvas.toBlob(r, 'image/webp', 0.82));
+  // Geen webp-encoder (oudere Safari): dan jpeg -- de bucket accepteert beide.
+  if (blob) return blob;
+  const jpeg = await new Promise<Blob | null>((r) => canvas.toBlob(r, 'image/jpeg', 0.85));
+  if (!jpeg) throw new Error('Could not encode the photo.');
+  return jpeg;
+}
+
+/** Upload een foto naar de bucket en geef de publieke URL terug. Unieke bestandsnaam -- nooit een
+ *  beeld over dezelfde URL heen vervangen (de cache-les van de kaart-overlays). */
+export async function battleFotoUpload(battleId: number, speler: string, file: File): Promise<string> {
+  const blob = await verkleinFoto(file);
+  const ext = blob.type === 'image/jpeg' ? 'jpg' : 'webp';
+  const pad = `battle-${battleId}/${speler}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 6)}.${ext}`;
+  const { error } = await supabase.storage.from('towc-fotos')
+    .upload(pad, blob, { contentType: blob.type, cacheControl: '31536000' });
+  if (error) throw new Error(error.message);
+  return supabase.storage.from('towc-fotos').getPublicUrl(pad).data.publicUrl;
+}
+
+/** Best-effort: het bestand van een verwijderde foto ook van de bucket halen. Mislukt dit stil, dan
+ *  blijft er hooguit een wees-bestand staan -- de battle-koppeling is dan al weg. */
+export async function battleFotoWis(url: string): Promise<void> {
+  const i = url.indexOf('/towc-fotos/');
+  if (i < 0) return;
+  try { await supabase.storage.from('towc-fotos').remove([url.slice(i + '/towc-fotos/'.length)]); } catch { /* wees-bestand */ }
+}
+
 /** Schrijf of werk het kroniekstuk van één battle bij. Lege tekst wist het. */
 export async function kroniekBattleZet(tekst: string, fase: number | null, battle: number): Promise<void> {
   const { data, error } = await supabase.rpc('towc_kroniek_zet', {

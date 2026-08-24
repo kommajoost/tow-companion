@@ -754,6 +754,14 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
         />
       )}
 
+      {/* Foto-herinnering (24-08-2026, Joost: "vraag de spelers voordat ze de battle starten om niet
+          te vergeten dat ze foto's moeten maken"). Bij results wordt om de drie beste momenten
+          gevraagd; wie dat pas daar hoort heeft niets om te uploaden. */}
+      <div style={{ fontFamily: serif, fontSize: 13, color: TOW.gold, marginTop: 14, padding: '9px 12px', borderRadius: 10, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.08)', lineHeight: 1.5 }}>
+        Take photos during the battle — at the end you will be asked to upload the three best moments
+        (the most characteristic or the most epic) for the campaign chronicle.
+      </div>
+
       {/* ── Twee handen op de knop, in twee stappen (Joost 30-07) ──────────────────────────────────
           1. "Start battle" zet JOUW stempel op de battle. Eén speler kon eerder alleen beginnen — en
              zelfs afsluiten — terwijl de ander nog niets gedaan had.

@@ -6,6 +6,7 @@ import { unitTotalStrength } from '../../lib/armyRules';
 import {
   battleByCode, battleQuests, reportBattleResult, officieleUitslag,
   kroniekMijn, kroniekBattleZet,
+  battleFotos, battleFotosZet, battleFotoUpload, battleFotoWis, type BattleFoto,
   RESULTAAT_NAAM, TP_VAN_RESULTAAT, SPIEGEL,
   type CampaignBattle, type BattleResultaat, type ToernooiResultaat, type BattleQuests,
   type Terugtrekker,
@@ -113,6 +114,11 @@ export function CampaignResultReporter({ embedded = false }: { embedded?: boolea
   const [busy, setBusy] = useState(false);
   const [done, setDone] = useState(false);
   const [err, setErr] = useState<string | null>(null);
+  // Battle-foto's (24-08-2026): max 3 per kant, voer voor de chronicles. `fotos` is de HELE lijst
+  // van de battle (beide kanten); wat van mij is filtert op mijn campagne-speler-id.
+  const [fotos, setFotos] = useState<BattleFoto[]>([]);
+  const [fotoBezig, setFotoBezig] = useState(false);
+  const [fotoFout, setFotoFout] = useState<string | null>(null);
 
   // De openstaande battle-quest van BEIDE kanten (01-08). Battle-quests zijn tafel-feiten, dus de
   // twee spelers vinken ze hier samen af; de campagne-app kan ze niet zelf verifiëren.
@@ -128,6 +134,9 @@ export function CampaignResultReporter({ embedded = false }: { embedded?: boolea
     battleQuests(code)
       .then((q) => { if (alive) setQuests(q); })
       .catch(() => { if (alive) setQuests({ aanvaller: null, verdediger: null }); });
+    battleFotos(code)
+      .then((f) => { if (alive) setFotos(f); })
+      .catch(() => { /* geen foto's is geen fout */ });
     return () => { alive = false; };
   }, [code]);
 
@@ -518,6 +527,89 @@ export function CampaignResultReporter({ embedded = false }: { embedded?: boolea
 
       <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginBottom: 5 }}>Notes (optional)</div>
       <textarea value={notes} onChange={(e) => setNotes(e.target.value)} rows={2} placeholder="Anything the campaign should know…" style={{ width: '100%', borderRadius: 10, border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt, color: TOW.ink, padding: '9px 11px', fontFamily: serif, fontSize: 13, boxSizing: 'border-box', resize: 'vertical', marginBottom: 12 }} />
+
+      {/* Battle-foto's (24-08-2026, Joost): max 3 per kant, aan de battle gekoppeld. Ze verschijnen
+          in de Battle Log van de campagne en zijn het beeldmateriaal voor de chronicles. Uploaden mag
+          vóór en ná het indienen van de uitslag; verwijderen kan alleen je eigen foto's. */}
+      {battle && (() => {
+        const mijnSpelerId = ownSeat === 'host' ? battle.aanvaller.id : battle.verdediger.id;
+        const mijnFotos = fotos.filter((f) => f.speler === mijnSpelerId);
+        const hunFotos = fotos.filter((f) => f.speler !== mijnSpelerId);
+        const kiesFotos = async (files: FileList | null) => {
+          if (!files || fotoBezig) return;
+          setFotoBezig(true);
+          setFotoFout(null);
+          try {
+            const ruimte = 3 - mijnFotos.length;
+            const nieuw2: string[] = [];
+            for (const f of Array.from(files).slice(0, Math.max(0, ruimte))) {
+              nieuw2.push(await battleFotoUpload(battle.id, mijnSpelerId, f));
+            }
+            if (nieuw2.length === 0) { setFotoFout('Three photos is the limit — remove one first.'); return; }
+            setFotos(await battleFotosZet(code!, mijnSpelerId, [...mijnFotos.map((f) => f.url), ...nieuw2]));
+          } catch (e) {
+            setFotoFout(e instanceof Error ? e.message : String(e));
+          } finally {
+            setFotoBezig(false);
+          }
+        };
+        const wisFoto = async (url: string) => {
+          if (fotoBezig) return;
+          setFotoBezig(true);
+          setFotoFout(null);
+          try {
+            setFotos(await battleFotosZet(code!, mijnSpelerId, mijnFotos.map((f) => f.url).filter((u) => u !== url)));
+            void battleFotoWis(url);
+          } catch (e) {
+            setFotoFout(e instanceof Error ? e.message : String(e));
+          } finally {
+            setFotoBezig(false);
+          }
+        };
+        const thumb = (f: BattleFoto, vanMij: boolean) => (
+          <div key={f.url} style={{ position: 'relative', width: 74, height: 74, borderRadius: 9, overflow: 'hidden', border: `1px solid ${TOW.lineStrong}` }}>
+            <a href={f.url} target="_blank" rel="noreferrer">
+              <img src={f.url} alt="Battle photo" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+            </a>
+            {vanMij && (
+              <button
+                type="button"
+                onClick={() => void wisFoto(f.url)}
+                aria-label="Remove photo"
+                style={{ position: 'absolute', top: 3, right: 3, width: 20, height: 20, borderRadius: 10, border: 'none', background: 'rgba(20,14,8,0.75)', color: '#e8dcc4', fontSize: 12, lineHeight: '20px', padding: 0, cursor: 'pointer' }}
+              >
+                ×
+              </button>
+            )}
+          </div>
+        );
+        return (
+          <div style={{ borderRadius: 12, border: `1px solid ${TOW.line}`, padding: '11px 12px', marginBottom: 12 }}>
+            <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginBottom: 5 }}>Battle photos (up to 3)</div>
+            <div style={{ fontFamily: serif, fontSize: 12, color: TOW.muted, lineHeight: 1.45, marginBottom: 8 }}>
+              Upload the three best moments of this battle — the most characteristic or the most epic.
+              They are kept with the battle in the campaign's Battle Log, and the chronicles are written
+              from them.
+            </div>
+            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', alignItems: 'center' }}>
+              {mijnFotos.map((f) => thumb(f, true))}
+              {mijnFotos.length < 3 && (
+                <label style={{ width: 74, height: 74, borderRadius: 9, border: `1px dashed ${TOW.goldDeep}`, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: fotoBezig ? 'default' : 'pointer', color: TOW.gold, fontFamily: serif, fontSize: 11.5, textAlign: 'center', opacity: fotoBezig ? 0.5 : 1 }}>
+                  {fotoBezig ? 'Uploading…' : 'Add photo'}
+                  <input type="file" accept="image/*" multiple disabled={fotoBezig} style={{ display: 'none' }} onChange={(e) => { void kiesFotos(e.target.files); e.target.value = ''; }} />
+                </label>
+              )}
+            </div>
+            {hunFotos.length > 0 && (
+              <div style={{ marginTop: 9 }}>
+                <div style={{ fontFamily: serif, fontSize: 11, color: TOW.muted, marginBottom: 5 }}>From the other side of the table:</div>
+                <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>{hunFotos.map((f) => thumb(f, false))}</div>
+              </div>
+            )}
+            {fotoFout && <div style={{ fontFamily: serif, fontSize: 12, color: TOW.blood, marginTop: 7 }}>{fotoFout}</div>}
+          </div>
+        );
+      })()}
 
       {/* De chronicler. Persoonlijk, niet gedeeld: dit stuk hangt aan JOU, niet aan de battle, dus
           beide kanten kunnen hun eigen versie van hetzelfde gevecht schrijven. Eigen opslaan-knop,
