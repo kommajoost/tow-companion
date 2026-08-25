@@ -2,7 +2,7 @@ import { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useData } from '../../data';
 import { useUI } from '../../state';
 import { TOW, towFont, engraved } from '../../design/tow';
-import { getRuleIndex, resolveRuleSlug, resolveOptionSlug } from '../../lib/armyRules';
+import { getRuleIndex, resolveRuleSlug, resolveOptionSlug, allowedLores as resolveLores } from '../../lib/armyRules';
 import { useBackClose } from '../../lib/backStack';
 import { NaamDialoog } from './NaamDialoog';
 import {
@@ -579,7 +579,8 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
             pick is stored on entry.lores and carried into the game by builderToArmy (where spells are
             then rolled/ticked). Each lore has an eye that previews its spells. */}
         {(() => {
-          const allowed = (u.lores ?? []).filter((s) => lores[s]);
+          // 25-08-2026: resolveLores lost het prefix-verschil tussen catalogus en lore-data op.
+          const allowed = resolveLores(u, lores);
           if (allowed.length === 0) return null;
           const chosen = entry.lores ?? [];
           const setLore = (slug: string, on: boolean) =>

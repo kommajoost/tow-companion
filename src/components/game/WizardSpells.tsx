@@ -3,7 +3,7 @@ import { useMemo, useState } from 'react';
 import { useData } from '../../data';
 import { useUI } from '../../state';
 import { TOW, towFont, engraved } from '../../design/tow';
-import { suggestedLores, wizardInfo } from '../../lib/armyRules';
+import { suggestedLores, wizardInfo, allowedLores as resolveLores } from '../../lib/armyRules';
 import { useBackClose } from '../../lib/backStack';
 import { useSwipeToDismiss, DragHandle } from '../../lib/useSwipeToDismiss';
 import type { ArmyUnit, Lore } from '../../types';
@@ -33,7 +33,8 @@ export function WizardSpells({
   const { level } = wizardInfo(unit);
 
   const activeLores = useMemo(
-    () => (unit.lores ?? suggestedLores(unit, lores)).filter((s) => lores[s]),
+    // 25-08-2026: resolveLores i.p.v. een kale filter -- zie loreSlug in armyRules.
+    () => (unit.lores?.length ? resolveLores(unit, lores) : suggestedLores(unit, lores)),
     [unit.lores, lores], // eslint-disable-line react-hooks/exhaustive-deps
   );
   const selected = unit.spells ?? [];

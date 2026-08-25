@@ -478,6 +478,35 @@ function loreNameIndex(lores: Record<string, Lore>): Map<string, string> {
   return idx;
 }
 
+/**
+ * Resolve a lore slug from the ARMY CATALOGUE against the LORE DATA (25-08-2026).
+ *
+ * The two sources disagree on the prefix: the catalogue writes `troll-magic`, `primal-magic` and
+ * `shadowlands`, while rules.json calls those `lore-of-troll-magic`, `lore-of-primal-magic` and
+ * `lore-of-the-shadowlands`. Every wizard picker filters its options with `lores[slug]`, so those
+ * three lores silently vanished from the list -- Tim could not pick the Lore of Troll Magic that his
+ * Troll Horde shamans are entitled to (Troll Tongue).
+ *
+ * Returns the key as it exists in the lore data, or null if it genuinely is not there.
+ */
+export function loreSlug(slug: string, lores: Record<string, Lore>): string | null {
+  if (!slug) return null;
+  for (const kandidaat of [slug, `lore-of-${slug}`, `lore-of-the-${slug}`]) {
+    if (lores[kandidaat]) return kandidaat;
+  }
+  return null;
+}
+
+/** De toegestane lores van een unit, opgelost tegen de lore-data en zonder dubbelingen. */
+export function allowedLores(unit: { lores?: string[] }, lores: Record<string, Lore>): string[] {
+  const uit: string[] = [];
+  for (const s of unit.lores ?? []) {
+    const k = loreSlug(s, lores);
+    if (k && !uit.includes(k)) uit.push(k);
+  }
+  return uit;
+}
+
 // Lores a Wizard unit references directly in its special rules (e.g. "Lore of Naggaroth",
 // "Dark Magic"). These are pre-selected as a starting point; the player can add more.
 export function suggestedLores(unit: ArmyUnit, lores: Record<string, Lore>): string[] {

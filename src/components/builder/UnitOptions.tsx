@@ -29,6 +29,7 @@
 // `BUILDER.gutter` itself and all text shares one left edge.
 
 import { useEffect, useMemo, useRef, useState } from 'react';
+import { allowedLores as resolveLores } from '../../lib/armyRules';
 import { useData } from '../../data';
 import { TOW, towFont, engraved } from '../../design/tow';
 import { useBackClose } from '../../lib/backStack';
@@ -658,7 +659,9 @@ export function UnitOptions(props: {
     if (!grp) { grp = { budgetGroup: c.budgetGroup, groupLabel: c.groupLabel, cats: [] }; magicGroups.push(grp); }
     grp.cats.push(c);
   }
-  const allowedLores = (unit.lores ?? []).filter((s) => lores[s]);
+  // 25-08-2026: via allowedLores, want de catalogus-slug wijkt bij drie lores af van de
+  // lore-data ('troll-magic' vs 'lore-of-troll-magic') en die vielen hier stil weg.
+  const allowedLores = resolveLores(unit, lores);
   const specialRules = (unit.specialRules?.name_en || '').split(',').map((s) => s.trim()).filter(Boolean);
 
   // ── option rows ────────────────────────────────────────────────────────────────────────────────
