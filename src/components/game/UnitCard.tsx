@@ -73,6 +73,12 @@ export function UnitCard({
   const { rules } = useData();
   const { openRule } = useUI();
   const idx = useMemo(() => buildRuleIndex(rules), [rules]);
+  // "Heavy Infantry" heeft een eigen rulebook-pagina, net als de andere dertien troop types.
+  // resolveRuleSlug vangt de meervoudstitels op ("Behemoth" -> Behemoths). Geen pagina, geen link.
+  const ttSlug = useMemo(
+    () => (unit.troopType ? resolveRuleSlug(unit.troopType, idx) : null),
+    [unit.troopType, idx],
+  );
   const isWizard = wizardInfo(unit).isWizard;
   const armour = useMemo(() => unitArmourSave(unit), [unit]);
   const weapons = useMemo(() => unitWeapons(unit, rules), [unit, rules]);
@@ -115,7 +121,25 @@ export function UnitCard({
             <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginTop: 2 }}>
               {toon.secundair ? <span style={{ color: TOW.gold }}>{toon.secundair}</span> : null}
               {toon.secundair && unit.troopType ? ' · ' : ''}
-              {unit.troopType}
+              {/* Het troop type is een BUNDEL regels — hoe het ding beweegt, hoe het vecht, wat het mag
+                  joinen — en stond hier als dood label. De InfoSheet linkt het al door voor mounts;
+                  aan tafel wil je dat ook op de unit zelf (Joost, 17-08). stopPropagation is nodig
+                  omdat deze hele kopregel de kaart in- en uitklapt: zonder dat klap je hem dicht op
+                  het moment dat je de regel opent. */}
+              {unit.troopType && ttSlug ? (
+                <button
+                  type="button"
+                  onClick={(e) => { e.stopPropagation(); openRule(ttSlug); }}
+                  title={`What ${unit.troopType} means`}
+                  style={{
+                    border: 'none', background: 'none', padding: 0, margin: 0, font: 'inherit',
+                    letterSpacing: 'inherit', textTransform: 'inherit',
+                    color: TOW.goldDeep, cursor: 'pointer', borderBottom: `1px dotted ${TOW.goldDeep}`,
+                  }}
+                >
+                  {unit.troopType}
+                </button>
+              ) : unit.troopType}
             </div>
           )}
         </div>

@@ -272,20 +272,16 @@ export function hideForeignOptions(unit: OwbUnit, composition: string, inherits?
  *  zodat roster, picker, inspector, export en validatiemeldingen dezelfde naam tonen. */
 const TAG = /\s*\{[^}]*\}/g;
 const striptag = (naam: unknown): string => String(naam ?? '').replace(TAG, '').trim();
-const zonderTag = (unit: OwbUnit): OwbUnit => {
-  const schoon = { ...unit, name_en: striptag(unit.name_en) };
-  for (const group of ['command', 'equipment', 'armor', 'options', 'mounts'] as const) {
-    const list = schoon[group];
-    if (!Array.isArray(list)) continue;
-    const mark = (options: OwbOption[]): OwbOption[] => options.map((option) => ({
-      ...option,
-      name_en: striptag(option.name_en),
-      ...(Array.isArray(option.options) ? { options: mark(option.options) } : {}),
-    }));
-    schoon[group] = mark(list);
-  }
-  return schoon;
-};
+/** ALLEEN DE UNITNAAM. Opties houden hun tag, en dat is geen inconsistentie maar een correctie:
+ *  `keepLoadout` (builderToArmy) leest juist die tag om andermans wapenvariant van een GEDEELDE unit
+ *  weg te filteren — de Gigantic Spawn of Chaos staat in Beastmen en in Warriors of Chaos en draagt
+ *  "Slashing talons {warriors of chaos}". Toen ik hier ook de opties strafte werd dat filter stil
+ *  inert en lekte die variant de Beastmen-loadout in.
+ *
+ *  Opties hebben het hier ook niet nodig: elke plek die ze TOONT maakt ze zelf al schoon —
+ *  cleanLabel in UnitOptions, de inline replace in UnitCard, clean in listExport. De unitnaam was de
+ *  enige die ongefilterd op het scherm kwam, en dat was precies de klacht. */
+const zonderTag = (unit: OwbUnit): OwbUnit => ({ ...unit, name_en: striptag(unit.name_en) });
 
 export function catalogueFor(
   base: OwbArmy,
