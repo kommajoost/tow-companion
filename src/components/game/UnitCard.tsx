@@ -117,16 +117,20 @@ export function UnitCard({
           {/* De eigen campagne-naam ("Dreth's Thunder") staat ONDER het datasheet, niet erboven: aan
               tafel moet de kop zeggen wat er staat. De naam blijft wel zichtbaar — het is de
               veteraan-identiteit en de speler noemt de unit zo. */}
-          {(toon.secundair || unit.troopType) && (
+          {/* Het troop type verdwijnt zodra de kaart dichtklapt: het is naslag, geen kenmerk dat je in
+              een opgeklapte rij hoeft te herkennen. In een lijst van tien units eist het de aandacht
+              op naast de naam, terwijl je er tijdens het spelen zelden naar kijkt (Joost, 17-08). De
+              campagne-eigennaam blijft wél staan — dat is hoe de speler de unit noemt. */}
+          {(toon.secundair || (unit.troopType && !collapsed)) && (
             <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginTop: 2 }}>
               {toon.secundair ? <span style={{ color: TOW.gold }}>{toon.secundair}</span> : null}
-              {toon.secundair && unit.troopType ? ' · ' : ''}
+              {toon.secundair && unit.troopType && !collapsed ? ' · ' : ''}
               {/* Het troop type is een BUNDEL regels — hoe het ding beweegt, hoe het vecht, wat het mag
                   joinen — en stond hier als dood label. De InfoSheet linkt het al door voor mounts;
                   aan tafel wil je dat ook op de unit zelf (Joost, 17-08). stopPropagation is nodig
                   omdat deze hele kopregel de kaart in- en uitklapt: zonder dat klap je hem dicht op
                   het moment dat je de regel opent. */}
-              {unit.troopType && ttSlug ? (
+              {collapsed ? null : unit.troopType && ttSlug ? (
                 <button
                   type="button"
                   onClick={(e) => { e.stopPropagation(); openRule(ttSlug); }}
