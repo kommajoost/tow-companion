@@ -100,8 +100,31 @@ export function builderListToArmy(
       .filter((r) => !droppedChampions.includes((r.Name || '').toLowerCase()));
     const effectiveRows = applyMountStatModifiers(baseRows, mountModifiers);
     const mountName = mOpt?.name_en?.replace(/\s*\{[^}]*\}/g, '').trim();
+    // mount-text sleutelt de factie plat in de sleutel ("cold one dark elves"), omdat dezelfde
+    // mount per leger andere regels heeft. Een ingebakken profielrij heet kaal "Cold One" en vindt
+    // zichzelf dus alleen mét die factienaam als extra kandidaat.
+    const facKey = normMountProfile(opts.faction ?? '');
+    const rijInfo = (naam: string): UnitProfile['info'] => {
+      // "(x2)" is een AANTAL, geen deel van de naam: een strijdwagen noteert zijn twee trekdieren
+      // als "Cold One (x2)" en dat vindt zichzelf nergens terug. Eraf voor het opzoeken.
+      const basis = normMountProfile(naam.replace(/s*(xs*d+)s*$/i, ''));
+      if (!basis) return undefined;
+      const sleutels = [basis, `${basis} ${facKey}`, `${basis} renegade`];
+      const tx = sleutels.map((k) => opts.mountText?.[k]).find(Boolean);
+      const tt = tx?.troopType ?? sleutels.map((k) => opts.troopTypeFor?.(k)).find(Boolean);
+      const det = [
+        tx?.baseSize ? `Base size: ${tx.baseSize}` : null,
+        tx?.armourValue ? `Armour value: ${tx.armourValue}` : null,
+        ...(tx?.equipment ?? []).map((value) => `Equipment: ${value}`),
+        ...(tx?.notes ?? []),
+      ].filter((value): value is string => !!value);
+      const regels = tx?.specialRules ?? [];
+      // Niets eigens te tonen -> geen info, dus straks ook geen oogje.
+      return (regels.length || tt || det.length) ? { specialRules: regels, troopType: tt, details: det } : undefined;
+    };
     const profiles: UnitProfile[] = effectiveRows.map((r, rowIndex) => ({
       label: r.Name,
+      ...(rowIndex > 0 ? { info: rijInfo(r.Name) } : {}),
       stats: STAT_COLS.map((k) => {
         const base = baseRows[rowIndex]?.[k] ?? '-';
         const value = r[k] ?? '-';

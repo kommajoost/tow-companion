@@ -11,6 +11,7 @@ import { InfoSheet, type InfoSheetData } from './InfoSheet';
 import { WizardSpells } from './WizardSpells';
 import { WoundTracker } from './WoundTracker';
 import type { ArmyUnit, KillDetail, UnitProfile } from '../../types';
+import { Eye } from './Eye';
 
 const eb = engraved as React.CSSProperties;
 
@@ -75,6 +76,18 @@ export function UnitCard({
   const idx = useMemo(() => buildRuleIndex(rules), [rules]);
   // "Heavy Infantry" heeft een eigen rulebook-pagina, net als de andere dertien troop types.
   // resolveRuleSlug vangt de meervoudstitels op ("Behemoth" -> Behemoths). Geen pagina, geen link.
+  // Een extra profielrij (de Cold One onder zijn ruiter, de crew van een strijdwagen) is een EIGEN
+  // model met eigen regels. Die zaten in de data maar hadden geen weg naar het scherm: bij een
+  // character kon je de mount als optie openen, maar zit hij in de unit ingebakken dan bestond hij
+  // hier alleen als naam boven een tabelletje (Joost, 17-08).
+  const toonProfiel = (p: UnitProfile) => setInfo({
+    title: p.label,
+    profiles: [p],
+    troopType: p.info?.troopType,
+    rules: p.info?.specialRules ?? [],
+    details: p.info?.details,
+  });
+
   const ttSlug = useMemo(
     () => (unit.troopType ? resolveRuleSlug(unit.troopType, idx) : null),
     [unit.troopType, idx],
@@ -157,11 +170,14 @@ export function UnitCard({
           CombatStats owns the profile display + a small "Loadout" toggle for effective stats;
           otherwise we just show the base profile table(s). */}
       {hasWeapons ? (
-        <CombatStats unit={unit} />
+        <CombatStats unit={unit} onProfileInfo={toonProfiel} />
       ) : (
         unit.profiles.map((p, pi) => (
           <div key={pi} className="no-scrollbar" style={{ overflowX: 'auto', marginBottom: 8 }}>
-            <div style={{ fontFamily: towFont.serif, fontSize: 12.5, color: TOW.parchDim, marginBottom: 3 }}>{p.label}</div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 3 }}>
+              <span style={{ fontFamily: towFont.serif, fontSize: 12.5, color: TOW.parchDim }}>{p.label}</span>
+              {p.info ? <Eye onClick={() => toonProfiel(p)} title={`Rules for ${p.label}`} /> : null}
+            </div>
             <table style={{ borderCollapse: 'collapse', tableLayout: 'fixed', width: '100%', minWidth: 280, fontSize: 12.5, fontFamily: towFont.serif }}>
               <thead>
                 <tr>

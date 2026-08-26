@@ -10,7 +10,8 @@ import {
   statValue,
   SHOOTING_MODS,
 } from '../../lib/weaponStats';
-import type { ArmyUnit } from '../../types';
+import type { ArmyUnit, UnitProfile } from '../../types';
+import { Eye } from './Eye';
 
 const eb = engraved as React.CSSProperties;
 const goldGrad = `linear-gradient(180deg, ${TOW.goldBright} 0%, ${TOW.gold} 55%, ${TOW.goldDeep} 100%)`;
@@ -20,7 +21,7 @@ const fmtAP = (ap: number) => (ap === 0 ? '–' : String(ap));
 // and the EFFECTIVE stats for the chosen weapons (effective Strength + an AP column, +1 Attacks
 // from an extra hand weapon) and a shooting line whose To Hit comes from the model's Ballistic
 // Skill, with the shooting modifiers picked from a compact dropdown.
-export function CombatStats({ unit }: { unit: ArmyUnit }) {
+export function CombatStats({ unit, onProfileInfo }: { unit: ArmyUnit; onProfileInfo?: (p: UnitProfile) => void }) {
   const { rules } = useData();
   const { openRule } = useUI();
   const idx = useMemo(() => getRuleIndex(rules), [rules]);
@@ -141,7 +142,10 @@ export function CombatStats({ unit }: { unit: ArmyUnit }) {
 
       {unit.profiles.map((p, pi) => (
         <div key={pi} className="no-scrollbar" style={{ overflowX: 'auto', marginBottom: 8 }}>
-          <div style={{ fontFamily: towFont.serif, fontSize: 12.5, color: TOW.parchDim, marginBottom: 3 }}>{p.label}</div>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 3 }}>
+            <span style={{ fontFamily: towFont.serif, fontSize: 12.5, color: TOW.parchDim }}>{p.label}</span>
+            {p.info && onProfileInfo ? <Eye onClick={() => onProfileInfo(p)} title={`Rules for ${p.label}`} /> : null}
+          </div>
           {profileTable(p.stats)}
         </div>
       ))}

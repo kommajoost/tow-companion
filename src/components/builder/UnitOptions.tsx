@@ -513,6 +513,27 @@ export function UnitOptions(props: {
     return e?.stats ?? [];
   }, [statIdx]);
   const troopTypeFor = useMemo(() => makeTroopTypeLookup(statIdx), [statIdx]);
+
+  // Een unit bestaat vaak uit MEER dan één model: een ruiter én zijn Cold One, een strijdwagen met
+  // crew en twee Dark Steeds. Die extra modellen hebben eigen regels, en tot nu toe was daar geen
+  // weg naartoe — bij een character kon je de mount als OPTIE openen, maar zit de mount in de unit
+  // ingebakken dan is het alleen een profielrij (Joost, 17-08).
+  //
+  // Niet elke extra rij verdient een oogje: van de 434 extra profielrijen in de catalogus zijn er
+  // 358 champions ("Foe-render", "True-horn") die de regels van de unit delen en dus niets eigens
+  // te tonen hebben. De 76 die WEL een eigen ingang in de statline-index hebben zijn precies de
+  // mounts en losse modellen — Cold One, Dark Steed, Steed of Slaanesh, Juggernaut of Khorne.
+  //
+  // Factie-bewust, want dezelfde mount heeft per leger andere regels en de index sleutelt dat plat
+  // in de naam ("cold one dark elves"). Een ingebakken profielrij heet kaal "Cold One" en zou zonder
+  // die kandidaat niets vinden.
+  const profielHeeftPagina = useMemo(() => (naam: string): boolean => {
+    if (!statIdx) return false;
+    const kaal = cleanLabel(naam).toLowerCase().replace(/ *([^)]*) */g, '').trim();
+    if (!kaal) return false;
+    const fac = (ctx.labels?.faction ?? '').toLowerCase().replace(/[^a-z0-9 ]/g, ' ').replace(/s+/g, ' ').trim();
+    return [kaal, `${kaal} ${fac}`, `${kaal} renegade`].some((k) => !!statIdx[k]);
+  }, [statIdx, ctx.labels?.faction]);
   /** Which of a multi-row profile (rank-and-file, champion, mount, crew…) the single strip shows. */
   const [profileIdx, setProfileIdx] = useState(0);
   /** Expanded magic categories, by `<uid>/<catId>` — same key shape as the old editor. */
@@ -1089,6 +1110,16 @@ export function UnitOptions(props: {
                     >{cleanLabel(r.Name)}</button>
                   );
                 })}
+                {/* Het oogje hoort bij de GEKOZEN rij, niet bij de strip: welke regels je te zien
+                    krijgt hangt af van welk model je hebt aangetikt. Het verschijnt alleen als die
+                    rij een eigen pagina heeft — bij een champion die de regels van de unit deelt
+                    zou het een lege lade opentrekken. */}
+                {onShowInfo && profile && profielHeeftPagina(profile.Name) ? (
+                  <Eye
+                    onClick={() => onShowInfo({ kind: 'mount', name: cleanLabel(profile.Name) })}
+                    title={`Rules for ${cleanLabel(profile.Name)}`}
+                  />
+                ) : null}
               </div>
             ) : null}
             <StatStrip

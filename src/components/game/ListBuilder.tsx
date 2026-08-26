@@ -666,8 +666,16 @@ export function ListBuilder() {
             if (what.kind === 'mount') {
               const profileKey = normMountProfile(label);
               const taggedKey = normMountTag(label);
-              const rows = statsFor(label);
-              const text = activeMountText[profileKey] ?? activeMountText[taggedKey] ?? {};
+              // FACTIE-BEWUST OPZOEKEN. mount-text sleutelt de factie plat in de sleutel — "cold one
+              // dark elves", "manticore renegade", "warhorse bretonnia" — omdat dezelfde mount per
+              // leger andere regels heeft. Een gekozen mount-OPTIE draagt die tag nog in z'n naam en
+              // vindt zichzelf dus. Maar een mount die in de unit is INGEBAKKEN staat alleen als
+              // profielrij ("Cold One" in Cold One Knights) en heeft geen tag; die miste alles.
+              // Daarom hier de factienaam als extra kandidaat, plus "renegade" voor de packs.
+              const fac = normMountProfile(armyName(active.army));
+              const sleutels = [profileKey, taggedKey, `${profileKey} ${fac}`, `${profileKey} renegade`];
+              const rows = sleutels.map((k) => statsFor(k)).find((r) => r.length) ?? statsFor(label);
+              const text = sleutels.map((k) => activeMountText[k]).find(Boolean) ?? {};
               const profiles: UnitProfile[] = rows.map((row) => ({
                 label: row.Name,
                 stats: ['M', 'WS', 'BS', 'S', 'T', 'W', 'I', 'A', 'Ld']
@@ -683,8 +691,8 @@ export function ListBuilder() {
                 title: label.replace(/\s*\{[^}]*\}/g, '').trim(),
                 // rules-index stores troop-type CODES ("MCa"), so this showed a raw "MCA" — unreadable,
                 // and never resolvable to the rule page it names. Mapped to the rulebook's own wording.
-                troopType: troopTypeName(text.troopType ?? activeStatIdx?.[profileKey]?.troopType
-                  ?? activeStatIdx?.[taggedKey]?.troopType),
+                troopType: troopTypeName(text.troopType
+                  ?? sleutels.map((k) => activeStatIdx?.[k]?.troopType).find(Boolean)),
                 profiles,
                 rules: text.specialRules ?? [],
                 details,

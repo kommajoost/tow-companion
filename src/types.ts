@@ -194,6 +194,12 @@ export interface UnitProfile {
   label: string;
   /** Ordered stat cells, e.g. [{k:'M',v:'9'}, {k:'WS',v:'3'}, …]. */
   stats: { k: string; v: string; modified?: boolean; base?: string; source?: string }[];
+  /** De eigen regels van DIT model, als het er eigen heeft. Een unit is vaak meer dan één model —
+   *  een ruiter en zijn Cold One, een strijdwagen met crew en twee Dark Steeds — en die extra
+   *  modellen hebben eigen special rules en een eigen troop type. Alleen gevuld voor rijen waarvoor
+   *  de bron dat echt levert; een champion die de regels van de unit deelt blijft leeg, zodat het
+   *  scherm geen oogje toont dat een lege lade opentrekt. */
+  info?: { specialRules?: string[]; troopType?: string; details?: string[] };
 }
 
 export interface ArmyUnit {

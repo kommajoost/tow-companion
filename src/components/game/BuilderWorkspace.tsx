@@ -19,6 +19,7 @@ import { CompositionInfo } from './CompositionInfo';
 import { CompositionRulePicker } from './CompositionRulePicker';
 import { useSwipeToDismiss } from '../../lib/useSwipeToDismiss';
 import { useCampagnes, groeiPlafonds, type CampaignContext, type CampaignUnit } from '../../lib/campaign';
+import { Eye } from './Eye';
 
 // Responsive Army Builder workspace (Claude Design "Army Builder" PC + mobile, ported onto our
 // real OWB data). Wide screens get a three-column builder (catalogue · muster · unit detail);
@@ -135,11 +136,6 @@ function CompBar({ c, compact }: { c: ComplianceRow; compact?: boolean }) {
   );
 }
 
-const Eye = ({ onClick, title = 'Show rule' }: { onClick: () => void; title?: string }) => (
-  <button onClick={(e) => { e.stopPropagation(); onClick(); }} aria-label={title} title={title} style={{ flexShrink: 0, width: 24, height: 24, borderRadius: 7, border: `1px solid ${TOW.line}`, background: 'transparent', cursor: 'pointer', color: TOW.muted, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 0 }}>
-    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" /><circle cx="12" cy="12" r="2.6" /></svg>
-  </button>
-);
 
 // A thin decorative rule with a centred diamond + two flanking dots — used above empty states.
 const Ornament = ({ width = 110 }: { width?: number }) => (
