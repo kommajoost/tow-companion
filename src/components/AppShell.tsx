@@ -1,4 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { IS_TEST_DB } from '../lib/supabase';
+import { koppelViaCodeTestOnly } from '../lib/campaign';
 import { usePersistentState, setPersisted } from '../store';
 import { TOW } from '../design/tow';
 import { useAuth } from '../lib/auth';
@@ -60,6 +62,26 @@ export function AppShell() {
   const celedonTourStarted = useRef(false);
   const wide = useWide();
 
+  // Deep-link: /?koppel=<code> — ALLEEN op een testbuild (26-08-2026). Zet de campagne-context uit
+  // een koppelcode in de cache, zodat de battle-brug weet welke kant je speelt. Op de echte app
+  // gebeurt dat door in te loggen; daar is deze parameter dood (koppelViaCodeTestOnly weigert).
+  // Moet VOOR de ?battle=-hook staan in leesorde, maar de battle-panel leest de cache pas bij het
+  // renderen, dus de volgorde van de effecten zelf maakt niet uit.
+  useEffect(() => {
+    if (typeof window === 'undefined' || !IS_TEST_DB) return;
+    const url = new URL(window.location.href);
+    const code = (url.searchParams.get('koppel') || '').trim().toUpperCase();
+    if (!code) return;
+    void koppelViaCodeTestOnly(code).finally(() => {
+      url.searchParams.delete('koppel');
+      window.history.replaceState(null, '', `${url.pathname}${url.search}${url.hash}`);
+      // De battle-brug leest de cache synchroon bij het renderen, dus één nudge is nodig zodra de
+      // context binnen is. setScreen zet 'app' toch al; dit dwingt een re-render af.
+      setScreen('app');
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   // Deep-link: /?battle=<code> opens a campaign battle (mirrors the campaign app's ?campaign=<code>).
   // Stash the code for the Game tab's campaign-battle flow, jump straight into the app on the Game
   // tab, then strip the query so a reload doesn't re-trigger it. Runs once at mount; flows WITHOUT
@@ -72,7 +94,11 @@ export function AppShell() {
     setPersisted('tow:campaign-battle', code);
     setScreen('app');
     setTab('game');
-    window.history.replaceState(null, '', window.location.pathname);
+    // Alleen de battle-parameter weghalen: ?koppel= wordt door de hook hierboven zelf opgeruimd, en
+    // die kan nog aan het werk zijn. window.location.pathname zou hem stilletjes wissen.
+    const url = new URL(window.location.href);
+    url.searchParams.delete('battle');
+    window.history.replaceState(null, '', `${url.pathname}${url.search}${url.hash}`);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -164,6 +190,22 @@ export function AppShell() {
   // it's allowed to leave the app. Rendered alongside the content in both layouts.
   const tabBackLayers = tabHistory.map((_, i) => <TabBackLayer key={i} onBack={goBackTab} />);
 
+  // TESTBUILD-MARKERING (26-08-2026): een bundel die op de TESTdatabase praat mag er nooit uitzien
+  // als de echte app -- dan rapporteer je een potje in de verkeerde wereld. Op een productiebundel
+  // is IS_TEST_DB false en rendert dit niets.
+  const testMerk = IS_TEST_DB ? (
+    <div
+      aria-hidden
+      style={{
+        position: 'fixed', top: 0, left: 0, zIndex: 9999, pointerEvents: 'none',
+        background: '#7f1d1d', color: '#fff', font: '700 10px/1 system-ui, sans-serif',
+        letterSpacing: '.12em', padding: '4px 8px', borderBottomRightRadius: 6,
+      }}
+    >
+      TESTDATABASE
+    </div>
+  ) : null;
+
   const content = (
     <main className="relative min-h-0 flex-1 overflow-hidden">
       {/* Play is the full-width responsive companion; other tabs are centred + readable. */}
@@ -187,6 +229,7 @@ export function AppShell() {
   if (wide) {
     return (
       <div className="flex h-full" style={{ flexDirection: 'row' }}>
+        {testMerk}
         {tabBackLayers}
         <NavRail tab={tab} onTab={navTab} onHome={() => setScreen('home')} />
         {content}
@@ -202,6 +245,7 @@ export function AppShell() {
   // ── Phone: content + bottom tab bar ──
   return (
     <div className="flex h-full flex-col">
+      {testMerk}
       {tabBackLayers}
       {content}
       <nav

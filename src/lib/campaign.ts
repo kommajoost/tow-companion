@@ -1,5 +1,5 @@
 import { useSyncExternalStore } from 'react';
-import { supabase } from './supabase';
+import { supabase, IS_TEST_DB } from './supabase';
 import { cleanKey } from './listSync';
 import { getPersisted, setPersisted } from '../store';
 
@@ -547,6 +547,29 @@ export const regimentSlug = (naam: string): string => naam.toLowerCase().replace
 // ---- Cache --------------------------------------------------------------------------------------
 
 export interface CachedCampaign { context: CampaignContext; fetchedAt: number }
+
+/** ALLEEN TESTBUILD (26-08-2026): koppel op een KOPPELCODE in plaats van op een account.
+ *
+ *  Sinds 28-07 is de koppeling account-gebaseerd: je logt in met je campagne-account en de context
+ *  komt mee. Dat werkt niet op de TESTdatabase -- daar bestaat dat auth-account niet, en een
+ *  testrig mag geen registratie-omweg nodig hebben om één battle te kunnen bekijken.
+ *
+ *  Deze functie zet de context rechtstreeks uit `towc_companion_context(code)` in de cache, precies
+ *  zoals de oude code-koppeling deed. Hij is bewust GEPOORT op IS_TEST_DB: op een productiebundel
+ *  weigert hij, zodat er nooit een tweede, zwakkere koppelweg naast de accountkoppeling ontstaat.
+ */
+export async function koppelViaCodeTestOnly(code: string): Promise<CampaignContext | null> {
+  if (!IS_TEST_DB) return null;
+  const { data, error } = await supabase.rpc('towc_companion_context', { p_code: code.trim().toUpperCase() });
+  if (error || !data || (data as { ok?: unknown }).ok !== true) return null;
+  const ctx = parseEen(data);
+  cacheCampaignContext(ctx);
+  // OOK de losse code vastleggen. getCampaignCode() leest `state.actief` (gevuld door
+  // laadCampagnes(), en dat gebeurt hier niet) of anders CODE_KEY -- zonder deze regel blijft de
+  // battle-brug `linked === false` zien terwijl de context wel gecachet staat.
+  if (ctx.koppelcode) setPersisted<string | null>(CODE_KEY, ctx.koppelcode);
+  return ctx;
+}
 
 /** Cache de laatst opgehaalde context met een tijdstempel; de UI beslist wanneer dit gebeurt. */
 export function cacheCampaignContext(context: CampaignContext): void {

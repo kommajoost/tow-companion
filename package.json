@@ -22,7 +22,9 @@
     "validate-renegade-reference": "node scripts/validate-renegade-reference.mjs",
     "sync-owb": "node scripts/sync-owb.mjs && node scripts/patch-owb-magic-items.mjs",
     "stamp-version": "node scripts/stamp-version.mjs",
-    "render-brand": "node scripts/render-brand.mjs"
+    "render-brand": "node scripts/render-brand.mjs",
+    "dev:test": "vite --mode test",
+    "build:test": "vite build --mode test"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.106.2",
