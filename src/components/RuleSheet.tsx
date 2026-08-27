@@ -49,7 +49,16 @@ export function RuleSheet() {
   if (!depth) return null;
 
   return (
-    <div className={`fixed inset-0 z-50 flex ${wide ? 'items-center justify-center p-4' : 'flex-col justify-end'}`}>
+    // DE REGELPAGINA HOORT BOVENOP, altijd. Hij stond op z-50 terwijl alles wat hem kan openen
+    // hoger ligt: de InfoSheet op 80, de spreukenkiezer op 80, de compositieregels op 95. Tik je
+    // in zo'n venster een regel aan, dan opende die eronder en zag je niets veranderen — je moest
+    // eerst het venster wegklikken waar je net in zat (Joost, 17-08, screenshot Goblin-hewer ->
+    // Hand Weapon). 210 ligt ook boven het eindoverzicht van een battle (200), zodat een regel die
+    // je daar aantikt evengoed bovenkomt.
+    //
+    // Het onderliggende venster blijft BEWUST open: sluit je de regel, dan sta je weer in de
+    // wapenlijst waar je vandaan kwam in plaats van op een leeg scherm.
+    <div className={`fixed inset-0 flex ${wide ? 'items-center justify-center p-4' : 'flex-col justify-end'}`} style={{ zIndex: 210 }}>
       {/* One Back-trap per stacked rule: a hardware Back closes the top rule (one level). */}
       {sheetStack.map((slug, i) => (
         <RuleBackLayer key={`${slug}-${i}`} onClose={closeTopRule} />
