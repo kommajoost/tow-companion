@@ -1,1825 +1,1902 @@
 {
- "id": "cd-renegade-v2",
- "label": "Renegade V2",
- "baseArmy": "chaos-dwarfs",
- "packVersion": "1.5.2.2",
- "source": {
-  "name": "Renegade Legacy Pack",
-  "author": "Square Based",
-  "url": "https://squarebased.com/",
-  "official": false,
-  "terms": "Free to use in whole or in part (squarebased.com)"
- },
- "status": "draft",
- "scope": "points-and-rules",
- "inheritsComposition": "cd-renegade",
- "units": {
-  "castellan": {
-   "group": "Infernal Guard Commanders",
-   "minimum": 1,
-   "maximum": 1,
-   "_changed": [
-    "unit-size",
-    "options",
-    "special-rules"
-   ],
-   "options": [
-    {
-     "group": "equipment",
-     "action": "patch",
-     "name_en": "Darkforged weapon",
-     "points": 15,
-     "perModel": false
-    },
-    {
-     "group": "equipment",
-     "action": "patch",
-     "name_en": "Great weapon",
-     "points": 4,
-     "perModel": false
-    },
-    {
-     "group": "equipment",
-     "action": "patch",
-     "name_en": "Fireglaive",
-     "points": 3,
-     "perModel": false
-    },
-    {
-     "group": "options",
-     "action": "patch",
-     "name_en": "Pistol",
-     "points": 5,
-     "perModel": false
-    },
-    {
-     "group": "options",
-     "action": "patch",
-     "name_en": "Naptha bombs",
-     "points": 10,
-     "perModel": false
-    },
-    {
-     "group": "options",
-     "action": "patch",
-     "name_en": "Shield",
-     "points": 2,
-     "perModel": false
-    }
-   ],
-   "specialRules": "Blackshard Armour, Ensorcelled Weapons, Rallying Cry, Resolute, Stubborn, Infernal Taskmaster, Quell Panic"
+  "id": "cd-renegade-v2",
+  "label": "Renegade V2",
+  "baseArmy": "chaos-dwarfs",
+  "packVersion": "1.5.2.2",
+  "source": {
+    "name": "Renegade Legacy Pack",
+    "author": "Square Based",
+    "url": "https://squarebased.com/",
+    "official": false,
+    "terms": "Free to use in whole or in part (squarebased.com)"
   },
-  "bull-centaur-taur'ruk": {
-   "minimum": 1,
-   "maximum": 1,
-   "_changed": [
-    "unit-size",
-    "options"
-   ],
-   "options": [
-    {
-     "group": "equipment",
-     "action": "patch",
-     "name_en": "Darkforged weapon",
-     "points": 15,
-     "perModel": false
-    },
-    {
-     "group": "equipment",
-     "action": "patch",
-     "name_en": "Additional hand weapon",
-     "points": 3,
-     "perModel": false
-    },
-    {
-     "group": "equipment",
-     "action": "patch",
-     "name_en": "Great weapon",
-     "points": 4,
-     "perModel": false
-    }
-   ]
-  },
-  "hobgoblin-khan": {
-   "minimum": 1,
-   "maximum": 1,
-   "_changed": [
-    "unit-size"
-   ]
-  },
-  "iron-daemon": {
-   "minimum": 1,
-   "maximum": 1,
-   "_changed": [
-    "unit-size",
-    "options"
-   ],
-   "options": [
-    {
-     "group": "options",
-     "action": "upsert",
-     "name_en": "Skullcracker (replaces Steam Cannonade)",
-     "points": 10,
-     "perModel": false
-    }
-   ]
-  },
-  "deathshrieker-rocket-launcher": {
-   "minimum": 1,
-   "maximum": 1,
-   "_changed": [
-    "unit-size",
-    "points",
-    "equipment"
-   ],
-   "points": 110,
-   "_was": 120,
-   "options": [
-    {
-     "group": "armor",
-     "action": "patch",
-     "name_en": "Heavy armour",
-     "renameTo": "Light armour"
-    }
-   ]
-  },
-  "dreadquake-mortar": {
-   "minimum": 1,
-   "maximum": 1,
-   "_changed": [
-    "unit-size",
-    "options",
-    "equipment"
-   ],
-   "options": [
-    {
-     "group": "options",
-     "action": "patch",
-     "name_en": "Ogre Loader",
-     "points": 35,
-     "perModel": false
-    },
-    {
-     "group": "options",
-     "action": "patch",
-     "name_en": "Hellbound",
-     "points": 30,
-     "perModel": false
-    },
-    {
-     "group": "options",
-     "action": "patch",
-     "name_en": "Steam Carriage",
-     "points": 10,
-     "perModel": false
-    },
-    {
-     "group": "options",
-     "action": "upsert",
-     "name_en": "Naptha bombs (Ogre Loader)",
-     "points": 8,
-     "perModel": false
-    },
-    {
-     "group": "armor",
-     "action": "patch",
-     "name_en": "Heavy armour",
-     "renameTo": "Light armour"
-    }
-   ]
-  },
-  "magma-cannon": {
-   "minimum": 1,
-   "maximum": 1,
-   "_changed": [
-    "unit-size",
-    "equipment"
-   ],
-   "options": [
-    {
-     "group": "armor",
-     "action": "patch",
-     "name_en": "Heavy armour",
-     "renameTo": "Light armour"
-    }
-   ]
-  },
-  "hobgoblin-bolt-thrower": {
-   "minimum": 1,
-   "maximum": 1,
-   "_changed": [
-    "unit-size"
-   ]
-  },
-  "sorcerer-prophet": {
-   "points": 175,
-   "_was": 195,
-   "_changed": [
-    "points",
-    "lores",
-    "options"
-   ],
-   "replace": {
-    "lores": [
-     "battle-magic",
-     "daemonology",
-     "dark-magic",
-     "elementalism"
-    ]
-   },
-   "options": [
-    {
-     "group": "equipment",
-     "action": "patch",
-     "name_en": "Darkforged weapon",
-     "points": 15,
-     "perModel": false
-    },
-    {
-     "group": "options",
-     "action": "patch",
-     "name_en": "Naptha bombs",
-     "points": 10,
-     "perModel": false
-    },
-    {
-     "group": "options",
-     "action": "patch",
-     "name_en": "Blood of Hashut",
-     "points": 10,
-     "perModel": false
-    }
-   ]
-  },
-  "daemonsmith-sorcerer": {
-   "replace": {
-    "lores": [
-     "battle-magic",
-     "daemonology",
-     "dark-magic",
-     "elementalism"
-    ]
-   },
-   "_changed": [
-    "lores",
-    "options"
-   ],
-   "options": [
-    {
-     "group": "equipment",
-     "action": "patch",
-     "name_en": "Darkforged weapon",
-     "points": 15,
-     "perModel": false
-    },
-    {
-     "group": "options",
-     "action": "patch",
-     "name_en": "Naptha bombs",
-     "points": 10,
-     "perModel": false
-    },
-    {
-     "group": "options",
-     "action": "patch",
-     "name_en": "Blood of Hashut",
-     "points": 10,
-     "perModel": false
-    }
-   ]
-  },
-  "infernal-castellan": {
-   "replace": {
-    "name_en": "Despot"
-   },
-   "_changed": [
-    "name",
-    "unit-size",
-    "options",
-    "special-rules"
-   ],
-   "minimum": 1,
-   "maximum": 1,
-   "options": [
-    {
-     "group": "equipment",
-     "action": "patch",
-     "name_en": "Darkforged weapon",
-     "points": 15,
-     "perModel": false
-    },
-    {
-     "group": "equipment",
-     "action": "upsert",
-     "name_en": "Additional Hand Weapon",
-     "points": 3,
-     "perModel": false
-    },
-    {
-     "group": "equipment",
-     "action": "patch",
-     "name_en": "Great weapon",
-     "points": 4,
-     "perModel": false
-    },
-    {
-     "group": "options",
-     "action": "patch",
-     "name_en": "Hailshot blunderbuss",
-     "points": 10,
-     "perModel": false
-    },
-    {
-     "group": "options",
-     "action": "patch",
-     "name_en": "Pistol",
-     "points": 5,
-     "perModel": false
-    },
-    {
-     "group": "options",
-     "action": "patch",
-     "name_en": "Naptha bombs",
-     "points": 10,
-     "perModel": false
-    },
-    {
-     "group": "options",
-     "action": "patch",
-     "name_en": "Shield",
-     "points": 2,
-     "perModel": false
-    }
-   ],
-   "specialRules": "Blackshard Armour, Ensorcelled Weapons, Rallying Cry, Relentless March, Resolute, Stubborn"
-  },
-  "infernal-seneschal": {
-   "replace": {
-    "name_en": "Seneschal"
-   },
-   "_changed": [
-    "name",
-    "points",
-    "unit-size",
-    "options",
-    "special-rules"
-   ],
-   "points": 65,
-   "_was": 60,
-   "minimum": 1,
-   "maximum": 1,
-   "options": [
-    {
-     "group": "equipment",
-     "action": "patch",
-     "name_en": "Darkforged weapon",
-     "points": 15,
-     "perModel": false
-    },
-    {
-     "group": "equipment",
-     "action": "upsert",
-     "name_en": "Additional Hand Weapon",
-     "points": 3,
-     "perModel": false
-    },
-    {
-     "group": "equipment",
-     "action": "patch",
-     "name_en": "Great weapon",
-     "points": 4,
-     "perModel": false
-    },
-    {
-     "group": "options",
-     "action": "patch",
-     "name_en": "Hailshot blunderbuss",
-     "points": 10,
-     "perModel": false
-    },
-    {
-     "group": "options",
-     "action": "patch",
-     "name_en": "Pistol",
-     "points": 5,
-     "perModel": false
-    },
-    {
-     "group": "options",
-     "action": "patch",
-     "name_en": "Naptha bombs",
-     "points": 10,
-     "perModel": false
-    },
-    {
-     "group": "options",
-     "action": "patch",
-     "name_en": "Shield",
-     "points": 2,
-     "perModel": false
-    }
-   ],
-   "specialRules": "Blackshard Armour, Ensorcelled Weapons, Rallying Cry, Relentless March, Resolute, Stubborn"
-  },
-  "chaos-dwarf-warriors": {
-   "minimum": 5,
-   "_changed": [
-    "unit-size",
-    "options",
-    "special-rules"
-   ],
-   "options": [
-    {
-     "group": "options",
-     "action": "patch",
-     "name_en": "Great weapons",
-     "points": 1,
-     "perModel": true
-    },
-    {
-     "group": "options",
-     "action": "patch",
-     "name_en": "Shields",
-     "points": 1,
-     "perModel": true
-    },
-    {
-     "group": "command",
-     "action": "patch",
-     "name_en": "Veteran Warrior (champion)",
-     "points": 5,
-     "perModel": false
-    },
-    {
-     "group": "command",
-     "action": "patch",
-     "name_en": "Standard bearer",
-     "points": 5,
-     "perModel": false
-    },
-    {
-     "group": "command",
-     "action": "patch",
-     "name_en": "Musician",
-     "points": 5,
-     "perModel": false
-    },
-    {
-     "group": "options",
-     "action": "patch",
-     "name_en": "Drilled",
-     "points": 1,
-     "perModel": true
-    },
-    {
-     "group": "options",
-     "action": "patch",
-     "name_en": "Veteran",
-     "points": 1,
-     "perModel": true
-    }
-   ],
-   "specialRules": "Close Order, Detachment, Regimental Unit, Resolute, Shieldwall"
-  },
-  "blunderbuss-decimators": {
-   "minimum": 5,
-   "_changed": [
-    "unit-size",
-    "options",
-    "special-rules"
-   ],
-   "options": [
-    {
-     "group": "options",
-     "action": "patch",
-     "name_en": "Great weapons",
-     "points": 2,
-     "perModel": true
-    },
-    {
-     "group": "options",
-     "action": "patch",
-     "name_en": "Shields",
-     "points": 1,
-     "perModel": true
-    },
-    {
-     "group": "command",
-     "action": "patch",
-     "name_en": "Veteran Warrior (champion)",
-     "points": 5,
-     "perModel": false
-    },
-    {
-     "group": "command",
-     "action": "patch",
-     "name_en": "Standard bearer",
-     "points": 5,
-     "perModel": false
-    },
-    {
-     "group": "command",
-     "action": "patch",
-     "name_en": "Musician",
-     "points": 5,
-     "perModel": false
-    },
-    {
-     "group": "options",
-     "action": "patch",
-     "name_en": "Pistol (Veteran Warrior only)",
-     "points": 3,
-     "perModel": false
-    },
-    {
-     "group": "options",
-     "action": "patch",
-     "name_en": "Naptha bombs (Veteran Warrior only)",
-     "points": 6,
-     "perModel": false
-    },
-    {
-     "group": "options",
-     "action": "patch",
-     "name_en": "Drilled",
-     "points": 1,
-     "perModel": true
-    }
-   ],
-   "specialRules": "Open Order, Detachment, Resolute, Hailfire!"
-  },
-  "infernal-guard": {
-   "points": 10,
-   "_was": 11,
-   "_changed": [
-    "points",
-    "unit-size",
-    "options"
-   ],
-   "minimum": 5,
-   "options": [
-    {
-     "group": "equipment",
-     "action": "patch",
-     "name_en": "Great weapons",
-     "points": 2,
-     "perModel": true
-    },
-    {
-     "group": "equipment",
-     "action": "upsert",
-     "name_en": "Fireglaives and Blackshard Armour",
-     "points": 2,
-     "perModel": true
-    },
-    {
-     "group": "options",
-     "action": "patch",
-     "name_en": "Drilled",
-     "points": 1,
-     "perModel": true
-    },
-    {
-     "group": "options",
-     "action": "upsert",
-     "name_en": "Veteran",
-     "points": 1,
-     "perModel": true
-    }
-   ]
-  },
-  "infernal-ironsworn-core": {
-   "points": 16,
-   "_was": 19,
-   "_changed": [
-    "points",
-    "unit-size",
-    "options"
-   ],
-   "minimum": 5,
-   "options": [
-    {
-     "group": "command",
-     "action": "patch",
-     "name_en": "Pistol",
-     "points": 3,
-     "perModel": false
-    },
-    {
-     "group": "command",
-     "action": "patch",
-     "name_en": "Naptha bombs",
-     "points": 6,
-     "perModel": false
-    },
-    {
-     "group": "equipment",
-     "action": "upsert",
-     "name_en": "Darkforged weapon",
-     "points": 15,
-     "perModel": false
-    }
-   ]
-  },
-  "infernal-ironsworn": {
-   "points": 16,
-   "_was": 19,
-   "_changed": [
-    "points",
-    "unit-size",
-    "options"
-   ],
-   "minimum": 5,
-   "options": [
-    {
-     "group": "command",
-     "action": "patch",
-     "name_en": "Pistol",
-     "points": 3,
-     "perModel": false
-    },
-    {
-     "group": "command",
-     "action": "patch",
-     "name_en": "Naptha bombs",
-     "points": 6,
-     "perModel": false
-    },
-    {
-     "group": "equipment",
-     "action": "upsert",
-     "name_en": "Darkforged weapon",
-     "points": 15,
-     "perModel": false
-    }
-   ]
-  },
-  "k'daai-fireborn": {
-   "points": 38,
-   "_was": 41,
-   "_changed": [
-    "points",
-    "special-rules",
-    "equipment"
-   ],
-   "specialRules": "Blazing Body, Born of Fire, Close Order, Ensorcelled Weapons, Fear, Flaming Attacks, Immune to Psychology, Regeneration (5+), Unbreakable, Unstable, Warp-spawned",
-   "options": [
-    {
-     "group": "armor",
-     "action": "upsert",
-     "name_en": "Heavy armour",
-     "option": {
-      "name_en": "Heavy armour",
-      "active": true
-     }
-    }
-   ]
-  },
-  "bull-centaur-renders": {
-   "points": 54,
-   "_was": 56,
-   "_changed": [
-    "points",
-    "options"
-   ],
-   "options": [
-    {
-     "group": "equipment",
-     "action": "upsert",
-     "name_en": "Darkforged weapon",
-     "points": 15,
-     "perModel": false
-    }
-   ]
-  }
- },
- "magicItems": {
-  "chaos-dwarfs": [
-   {
-    "name_de": "Armour of Bazherak the Cruel",
-    "name_en": "Armour Of Bazherak The Cruel",
-    "name_cn": "残酷者巴泽拉克之甲",
-    "name_fr": "Armure de Bazherak le Cruel",
-    "name_it": "Armour of Bazherak the Cruel",
-    "nonExclusive": true,
-    "points": 40,
-    "type": "armor",
-    "onePerArmy": true,
-    "name": "armour of bazherak the cruel"
-   },
-   {
-    "name_de": "Mantle of Stone*",
-    "name_en": "Mantle of Stone",
-    "name_cn": "岩石斗篷*",
-    "name_fr": "Manteau de Pierre*",
-    "name_it": "Mantle of Stone",
-    "points": 30,
-    "stackable": true,
-    "type": "talisman",
-    "onePerArmy": false,
-    "name": "mantle of stone"
-   },
-   {
-    "name_de": "Ashen Banner",
-    "name_en": "Ashen Banner",
-    "name_cn": "苍白之旗",
-    "name_fr": "Bannière Cendrée",
-    "name_it": "Ashen Banner",
-    "points": 30,
-    "type": "banner",
-    "onePerArmy": true,
-    "name": "ashen banner"
-   },
-   {
-    "name_de": "Daemonic Familiar",
-    "name_en": "Daemonic Familiar",
-    "name_cn": "恶魔魔宠",
-    "name_fr": "Familier Démoniaque",
-    "name_it": "Daemonic Familiar",
-    "points": 30,
-    "type": "enchanted-item",
-    "onePerArmy": true,
-    "name": "daemonic familiar"
-   }
-  ]
- },
- "rules": {
-  "blackshard-armour": {
-   "name_en": "Blackshard Armour",
-   "body": [
-    "A model with this special rule improves their armour value by 1 and has a 5+ Ward save against any wounds suffered that were caused by an attack that has the Flaming Attacks special rule. In addition, a Wizard with this special rule may wear armour without penalty."
-   ],
-   "overrides": "blackshard-armour"
-  },
-  "blazing-body": {
-   "name_en": "Blazing Body",
-   "body": [
-    "Each combat phase, during Step 1.1 of the Choose Combat",
-    "& Fight sub-phase, before issuing challenges, any model (friend or foe) that is in base contact with this model and that does not also have this special rule suffers a single Strength 4 hit with an AP of -1. This hit has the Flaming Attacks special rule."
-   ],
-   "overrides": "blazing-body"
-  },
-  "hellbound": {
-   "name_en": "Hellbound",
-   "body": [
-    "A Hellbound model has a 6+ Ward save against any wounds suffered and gains both the Fear and Magical Attacks special rules. If the model already has the Fear special rule, it instead gains the Terror special rule. Additionally, once per game, a Hellbound model may re-roll one Scatter dice or one Artillery dice.",
-    "Note that any Hellcannon taken as a Rare choice in a Chaos Dwarf Grand Army gains this special rule."
-   ],
-   "overrides": "hellbound"
-  },
-  "infernal-engineer": {
-   "name_en": "Infernal Engineer",
-   "body": [
-    "Unless this model is fleeing or engaged in combat, once per turn a friendly model that is within its Command range may re-roll one Scatter dice or one Artillery dice."
-   ],
-   "overrides": "infernal-engineer"
-  },
-  "relentless-march": {
-   "name_en": "Relentless March",
-   "body": [
-    "During the Command sub-phase of their turn, this character may attempt to urge those around them into battle with a lash of their whip by making a Leadership test. If passed, a single friendly Infantry or Cavalry unit within their command range gains a +D3 modifier to their Movement characteristic (to a maximum of 10). Note that this special rule is not cumulative. In other words, using it more than once on the same unit during the same turn has no further effect."
-   ],
-   "overrides": null
-  },
-  "infernal-taskmaster": {
-   "name_en": "Infernal Taskmaster",
-   "body": [
-    "Once per game during the Command sub-phase of their turn, this character may attempt to drive a unit they have joined to greater efforts by making a Leadership test (using their own Leadership). If this test is passed, until your next Start of Turn sub-phase this character and any unit they have joined gains the Extra Attacks (+1) and Hatred (all enemies) special rules."
-   ],
-   "overrides": null
-  },
-  "carriage-hauler": {
-   "name_en": "Carriage Hauler",
-   "body": [
-    "During the Movement phase, up to two friendly war machines with the ‘Steam Carriage’ upgrade that are completely within this model’s rear arc and within 8\" of its base at the beginning of the phase may replace their Movement characteristic with this model’s. These war machines must finish their movement completely within this model’s rear arc and within 8\" of its base. Unless this model moves using the Lumbering Destruction special rule or makes a charge move, these war machines are not considered to have moved this turn."
-   ],
-   "overrides": "carriage-hauler"
-  },
-  "skullcracker": {
-   "name_en": "Skullcracker",
-   "body": [
-    "An Iron Daemon equipped with a Skullcracker replaces the Impact Hits (D6+1) special rule with the Impact Hits (2D6+2) special rule and the Stomp Attacks (D3+1) with the Stomp Attacks (D6+1) special rule and gains the Armour Bane (1) special rule."
-   ],
-   "overrides": "skullcracker"
-  },
-  "r-s-ap-special-rules": {
-   "name_en": "R S AP Special Rules",
-   "body": [
-    "Demolition rockets 12-48\" 4 (8) -1(-3) Armour Bane (1), Bombardment,"
-   ],
-   "overrides": null
-  },
-  "cumbersome-move-or-shoot-multiple-wounds-d6": {
-   "name_en": "Cumbersome, Move or Shoot, Multiple Wounds (D6)",
-   "body": [
-    "Notes: This weapon shoots like a stone thrower, using the ‘Bombardment’ special rule, a 3\" blast",
-    "template and the Black Powder Misfire table. The Multiple Wounds (D6) special rule applies only to a single model whose base lies underneath the central hole of the blast template."
-   ],
-   "overrides": null
-  },
-  "multiple-wounds-d3-1-quake-s": {
-   "name_en": "Multiple Wounds (D3+1), Quake S",
-   "body": [
-    "Notes: This weapon shoots like a stone thrower, using the ‘Bombardment’ special rule, a 5\" blast",
-    "template and the Black Powder Misfire table. The Multiple Wounds (D3+1) special rule applies only to a single model whose base lies underneath the central hole of the blast template."
-   ],
-   "overrides": null
-  },
-  "dreadquake-mortar-special-rules": {
-   "name_en": "Dreadquake Mortar Special Rules",
-   "body": [
-    "Quake: Until your next Start of Turn sub-phase, any unit (friend or foe) that was within 2D6\" of the central hole of a blast template after scattering fired from one or more Dreadquake mortars, suffers a -1 modifier to its Movement characteristic and cannot use the Swiftstride special rule."
-   ],
-   "overrides": null
-  },
-  "enough-for-everyone": {
-   "name_en": "Enough for Everyone",
-   "body": [
-    "If an Ogre Loader is equipped with Naptha bombs, the crew of the war machine that the Ogre Loader is joined with is also equipped with Naptha bombs."
-   ],
-   "overrides": "enough-for-everyone"
-  },
-  "indentured-crew": {
-   "name_en": "Indentured Crew",
-   "body": [
-    "The crew of a war machine joined by an Ogre Loader gains a +1 modifier to its Movement characteristic and the Stubborn special rule. In addition, once per game, a war machine that includes an Ogre Loader may fire twice during the Shooting phase, or re-roll a single artillery dice."
-   ],
-   "overrides": null
-  },
-  "spell-storm-of-ash": {
-   "name_en": "Storm Of Ash",
-   "body": [
-    "Type: Hex",
-    "Casting Value: 9+",
-    "Range: Self",
-    "Effect: Until your next Start of Turn sub-phase, all enemy units suffer a -1 modifier to any rolls To Hit made whilst within 9\" of the caster’s model (rolls of a natural 6 are unaffected)."
-   ],
-   "overrides": "spell-storm-of-ash"
-  },
-  "spell-flames-of-hashut": {
-   "name_en": "Flames Of Hashut",
-   "body": [
-    "Type: Assailment Casting Value: 8+ Range: Combat",
-    "Effect: A single enemy unit the caster is engaged in combat with suffers D3+1 Strength 4 hits, each with an AP of -1. These hits have the Flaming Attacks special rule."
-   ],
-   "overrides": "spell-flames-of-hashut"
-  },
-  "darkforged-weapon": {
-   "name_en": "Darkforged Weapon",
-   "body": [
-    "A Darkforged weapon is a hand weapon with the Flaming Attacks special rule and can be used in conjunction with the Ensorcelled Weapons special rule. In addition, after deployment but before the first turn begins, roll on the table below to determine an attribute for the weapon. The weapon has this attribute for the duration of the battle:"
-   ],
-   "overrides": "darkforged-weapon",
-   "tables": [
-    {
-     "headers": [
-      "D3",
-      "Result"
-     ],
-     "rows": [
-      [
-       "1",
-       "Malignant: The bearer of this weapon gains the Hatred (all enemies) special rule."
-      ],
-      [
-       "2",
-       "Life Bane: This weapon gains the Multiple Wounds (D3) special rule."
-      ],
-      [
-       "3",
-       "Spell-wrought: If the bearer of this weapon is a Wizard, they may apply a +1 modifier to any Casting roll they make. If the bearer of this weapon is not a Wizard, This weapon has a Strength characteristic of S+1."
-      ]
-     ]
-    }
-   ]
-  },
-  "hailshot-blunderbuss": {
-   "name_en": "Hailshot Blunderbuss",
-   "body": [
-    "Notes: A model armed with a Hailshot blunderbuss suffers no negative modifiers for firing at long range, for using the Multiple Shots (D3) special rule, or whilst making a Stand & Shoot charge reaction. In addition, if 10 or more models belonging to the same unit shoot at the same target with Hailshot blunderbusses, they may re-roll any rolls of a natural 1 when rolling To Wound."
-   ],
-   "overrides": "hailshot-blunderbuss"
-  },
-  "naptha-bombs": {
-   "name_en": "Naptha Bombs",
-   "body": [],
-   "overrides": "naptha-bombs",
-   "tables": [
-    {
-     "headers": [
-      "",
-      "R",
-      "S",
-      "AP",
-      "Special Rules"
-     ],
-     "rows": [
-      [
-       "Naptha Bomb",
-       "9”",
-       "3",
-       "-1",
-       "Armour Bane (1) Flaming Attacks Move & Shoot Quick Shot"
-      ]
-     ]
-    }
-   ]
-  },
-  "lore-of-hashut": {
-   "name_en": "Lore of Hashut",
-   "body": [
-    "A Wizard with the ‘Lore of Hashut’ special rule may discard one of their randomly generated spells as normal. When they do so, they may select instead either the signature spell of their chosen Lore of Magic, or one of the spells listed below.",
-    "Curse Of Hashut",
-    "Type: Magic Missile",
-    "Casting Value: 9+",
-    "Range: 18\"",
-    "Effect: This spell can only target enemy characters. However, it may target any enemy character that is within range and that the caster can draw a line of sight to, regardless of the usual rules for targeting characters, and may even target an enemy character that has joined a unit or that is engaged in combat.",
-    "The target enemy character must immediately make a Toughness test. If this test is passed, it suffers D3 Strength 2 hits, each with an AP of -. If, however, this test is",
-    "failed, it suffers D3+2 Strength 5 hits, with no armour or Regeneration saves permitted (Ward saves can be attempted as normal).",
-    "Storm Of Ash",
-    "Type: Hex",
-    "Casting Value: 9+",
-    "Range: Self",
-    "Effect: Until your next Start of Turn sub-phase, all enemy units suffer a -1 modifier to any rolls To Hit made whilst within 9\" of the caster’s model (rolls of a natural 6 are unaffected).",
-    "Flames Of Hashut",
-    "Type: Assailment Casting Value: 8+ Range: Combat",
-    "Effect: A single enemy unit the caster is engaged in combat with suffers D3+1 Strength 4 hits, each with an AP of -1. These hits have the Flaming Attacks special rule."
-   ],
-   "overrides": "lore-of-hashut-renegade"
-  }
- },
- "lores": {
-  "lore-of-hashut": {
-   "name": "Lore of Hashut",
-   "spells": [
-    {
-     "slug": "spell-storm-of-ash",
-     "name": "Storm of Ash",
-     "number": null,
-     "signature": true
-    },
-    {
-     "slug": "spell-flames-of-hashut",
-     "name": "Flames of Hashut",
-     "number": null,
-     "signature": true
-    }
-   ]
-  }
- },
- "addedUnits": {
-  "core": [
-   {
-    "id": "chaos-dwarf-warriors",
-    "name_en": "Chaos Dwarf Warriors",
-    "points": 7,
-    "minimum": 5,
-    "maximum": 0,
-    "command": [
-     {
-      "name_en": "Veteran Warrior (champion)",
-      "points": 5,
-      "magic": {
-       "types": [
-        "weapon",
-        "armor",
-        "talisman",
-        "enchanted-item"
-       ],
-       "maxPoints": 25
-      }
-     },
-     {
-      "name_en": "Standard bearer",
-      "points": 5,
-      "magic": {
-       "types": [
-        "banner"
-       ],
-       "maxPoints": 50
-      }
-     },
-     {
-      "name_en": "Musician",
-      "points": 5
-     }
-    ],
-    "equipment": [
-     {
-      "name_en": "Hand weapons",
-      "points": 0,
-      "perModel": true,
-      "active": true
-     }
-    ],
-    "armor": [
-     {
-      "name_en": "Heavy armour",
-      "points": 0,
-      "perModel": true,
-      "active": true
-     }
-    ],
-    "options": [
-     {
-      "name_en": "Great weapons",
-      "points": 1,
-      "perModel": true
-     },
-     {
-      "name_en": "Shields",
-      "points": 1,
-      "perModel": true
-     },
-     {
-      "name_en": "Drilled",
-      "points": 1,
-      "perModel": true
-     },
-     {
-      "name_en": "Veteran",
-      "points": 1,
-      "perModel": true
-     }
-    ],
-    "mounts": [],
-    "items": [],
-    "lores": [],
-    "specialRules": {
-     "name_en": "Close Order, Detachment, Regimental Unit, Resolute, Shieldwall"
-    }
-   },
-   {
-    "id": "blunderbuss-decimators",
-    "name_en": "Blunderbuss Decimators",
-    "points": 10,
-    "minimum": 5,
-    "maximum": 0,
-    "command": [
-     {
-      "name_en": "Veteran Warrior (champion)",
-      "points": 5
-     },
-     {
-      "name_en": "Standard bearer",
-      "points": 5
-     },
-     {
-      "name_en": "Musician",
-      "points": 5
-     }
-    ],
-    "equipment": [
-     {
-      "name_en": "Hand weapons, Hailshot blunderbusses",
-      "points": 0,
-      "perModel": true,
-      "active": true
-     }
-    ],
-    "armor": [
-     {
-      "name_en": "Heavy armour",
-      "points": 0,
-      "perModel": true,
-      "active": true
-     }
-    ],
-    "options": [
-     {
-      "name_en": "Great weapons",
-      "points": 2,
-      "perModel": true
-     },
-     {
-      "name_en": "Shields",
-      "points": 1,
-      "perModel": true
-     },
-     {
-      "name_en": "Pistol (Veteran Warrior only)",
-      "points": 3
-     },
-     {
-      "name_en": "Naptha bombs (Veteran Warrior only)",
-      "points": 6
-     },
-     {
-      "name_en": "Drilled",
-      "points": 1,
-      "perModel": true
-     }
-    ],
-    "mounts": [],
-    "items": [],
-    "lores": [],
-    "specialRules": {
-     "name_en": "Open Order, Detachment, Resolute, Hailfire!"
-    }
-   }
-  ],
-  "characters": [
-   {
-    "id": "castellan",
-    "name_en": "Castellan",
-    "points": 75,
-    "minimum": 1,
-    "maximum": 1,
-    "command": [],
-    "equipment": [
-     {
-      "name_en": "Hand weapon",
-      "points": 0,
-      "active": true
-     },
-     {
-      "name_en": "Darkforged weapon",
-      "points": 15
-     },
-     {
-      "name_en": "Great weapon",
-      "points": 4
-     },
-     {
-      "name_en": "Fireglaive",
-      "points": 3
-     }
-    ],
-    "armor": [
-     {
-      "name_en": "Heavy armour",
-      "points": 0,
-      "active": true
-     }
-    ],
-    "options": [
-     {
-      "name_en": "Pistol",
-      "points": 5,
-      "notes": {
-       "name_en": "if not using Naptha bombs"
-      }
-     },
-     {
-      "name_en": "Naptha bombs",
-      "points": 10,
-      "notes": {
-       "name_en": "if not using Pistol"
-      }
-     },
-     {
-      "name_en": "Shield",
-      "points": 2
-     }
-    ],
-    "mounts": [],
-    "items": [
-     {
-      "name_en": "Magic Items",
-      "types": [
-       "weapon",
-       "armor",
-       "talisman",
-       "enchanted-item"
-      ],
-      "selected": [],
-      "maxPoints": 75
-     }
-    ],
-    "lores": [],
-    "specialRules": {
-     "name_en": "Blackshard Armour, Ensorcelled Weapons, Rallying Cry, Resolute, Stubborn, Infernal Taskmaster, Quell Panic"
-    }
-   }
-  ]
- },
- "composition": {
+  "status": "draft",
+  "scope": "points-and-rules",
+  "inheritsComposition": "cd-renegade",
   "units": {
-   "bull-centaur-taur'ruk": {
-    "category": "characters",
-    "notes": "0-1 per 1,000 points"
-   }
+    "castellan": {
+      "group": "Infernal Guard Commanders",
+      "minimum": 1,
+      "maximum": 1,
+      "_changed": [
+        "unit-size",
+        "options",
+        "special-rules"
+      ],
+      "options": [
+        {
+          "group": "equipment",
+          "action": "patch",
+          "name_en": "Darkforged weapon",
+          "points": 15,
+          "perModel": false
+        },
+        {
+          "group": "equipment",
+          "action": "patch",
+          "name_en": "Great weapon",
+          "points": 4,
+          "perModel": false
+        },
+        {
+          "group": "equipment",
+          "action": "patch",
+          "name_en": "Fireglaive",
+          "points": 3,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Pistol",
+          "points": 5,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Naptha bombs",
+          "points": 10,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Shield",
+          "points": 2,
+          "perModel": false
+        }
+      ],
+      "specialRules": "Blackshard Armour, Ensorcelled Weapons, Rallying Cry, Resolute, Stubborn, Infernal Taskmaster, Quell Panic"
+    },
+    "bull-centaur-taur'ruk": {
+      "minimum": 1,
+      "maximum": 1,
+      "_changed": [
+        "unit-size",
+        "options"
+      ],
+      "options": [
+        {
+          "group": "equipment",
+          "action": "patch",
+          "name_en": "Darkforged weapon",
+          "points": 15,
+          "perModel": false
+        },
+        {
+          "group": "equipment",
+          "action": "patch",
+          "name_en": "Additional hand weapon",
+          "points": 3,
+          "perModel": false
+        },
+        {
+          "group": "equipment",
+          "action": "patch",
+          "name_en": "Great weapon",
+          "points": 4,
+          "perModel": false
+        }
+      ]
+    },
+    "hobgoblin-khan": {
+      "minimum": 1,
+      "maximum": 1,
+      "_changed": [
+        "unit-size"
+      ]
+    },
+    "iron-daemon": {
+      "minimum": 1,
+      "maximum": 1,
+      "_changed": [
+        "unit-size",
+        "options"
+      ],
+      "options": [
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "Skullcracker (replaces Steam Cannonade)",
+          "points": 10,
+          "perModel": false
+        }
+      ]
+    },
+    "deathshrieker-rocket-launcher": {
+      "minimum": 1,
+      "maximum": 1,
+      "_changed": [
+        "unit-size",
+        "points",
+        "equipment"
+      ],
+      "points": 110,
+      "_was": 120,
+      "options": [
+        {
+          "group": "armor",
+          "action": "patch",
+          "name_en": "Heavy armour",
+          "renameTo": "Light armour"
+        }
+      ]
+    },
+    "dreadquake-mortar": {
+      "minimum": 1,
+      "maximum": 1,
+      "_changed": [
+        "unit-size",
+        "options",
+        "equipment"
+      ],
+      "options": [
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Ogre Loader",
+          "points": 35,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Hellbound",
+          "points": 30,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Steam Carriage",
+          "points": 10,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "Naptha bombs (Ogre Loader)",
+          "points": 8,
+          "perModel": false
+        },
+        {
+          "group": "armor",
+          "action": "patch",
+          "name_en": "Heavy armour",
+          "renameTo": "Light armour"
+        }
+      ]
+    },
+    "magma-cannon": {
+      "minimum": 1,
+      "maximum": 1,
+      "_changed": [
+        "unit-size",
+        "equipment"
+      ],
+      "options": [
+        {
+          "group": "armor",
+          "action": "patch",
+          "name_en": "Heavy armour",
+          "renameTo": "Light armour"
+        }
+      ]
+    },
+    "hobgoblin-bolt-thrower": {
+      "minimum": 1,
+      "maximum": 1,
+      "_changed": [
+        "unit-size"
+      ]
+    },
+    "sorcerer-prophet": {
+      "points": 175,
+      "_was": 195,
+      "_changed": [
+        "points",
+        "lores",
+        "options"
+      ],
+      "replace": {
+        "lores": [
+          "battle-magic",
+          "daemonology",
+          "dark-magic",
+          "elementalism"
+        ]
+      },
+      "options": [
+        {
+          "group": "equipment",
+          "action": "patch",
+          "name_en": "Darkforged weapon",
+          "points": 15,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Naptha bombs",
+          "points": 10,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Blood of Hashut",
+          "points": 10,
+          "perModel": false
+        }
+      ]
+    },
+    "daemonsmith-sorcerer": {
+      "replace": {
+        "lores": [
+          "battle-magic",
+          "daemonology",
+          "dark-magic",
+          "elementalism"
+        ]
+      },
+      "_changed": [
+        "lores",
+        "options"
+      ],
+      "options": [
+        {
+          "group": "equipment",
+          "action": "patch",
+          "name_en": "Darkforged weapon",
+          "points": 15,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Naptha bombs",
+          "points": 10,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Blood of Hashut",
+          "points": 10,
+          "perModel": false
+        }
+      ]
+    },
+    "infernal-castellan": {
+      "replace": {
+        "name_en": "Despot"
+      },
+      "_changed": [
+        "name",
+        "unit-size",
+        "options",
+        "special-rules"
+      ],
+      "minimum": 1,
+      "maximum": 1,
+      "options": [
+        {
+          "group": "equipment",
+          "action": "patch",
+          "name_en": "Darkforged weapon",
+          "points": 15,
+          "perModel": false
+        },
+        {
+          "group": "equipment",
+          "action": "upsert",
+          "name_en": "Additional Hand Weapon",
+          "points": 3,
+          "perModel": false
+        },
+        {
+          "group": "equipment",
+          "action": "patch",
+          "name_en": "Great weapon",
+          "points": 4,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Hailshot blunderbuss",
+          "points": 10,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Pistol",
+          "points": 5,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Naptha bombs",
+          "points": 10,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Shield",
+          "points": 2,
+          "perModel": false
+        }
+      ],
+      "specialRules": "Blackshard Armour, Ensorcelled Weapons, Rallying Cry, Relentless March, Resolute, Stubborn"
+    },
+    "infernal-seneschal": {
+      "replace": {
+        "name_en": "Seneschal"
+      },
+      "_changed": [
+        "name",
+        "points",
+        "unit-size",
+        "options",
+        "special-rules"
+      ],
+      "points": 65,
+      "_was": 60,
+      "minimum": 1,
+      "maximum": 1,
+      "options": [
+        {
+          "group": "equipment",
+          "action": "patch",
+          "name_en": "Darkforged weapon",
+          "points": 15,
+          "perModel": false
+        },
+        {
+          "group": "equipment",
+          "action": "upsert",
+          "name_en": "Additional Hand Weapon",
+          "points": 3,
+          "perModel": false
+        },
+        {
+          "group": "equipment",
+          "action": "patch",
+          "name_en": "Great weapon",
+          "points": 4,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Hailshot blunderbuss",
+          "points": 10,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Pistol",
+          "points": 5,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Naptha bombs",
+          "points": 10,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Shield",
+          "points": 2,
+          "perModel": false
+        }
+      ],
+      "specialRules": "Blackshard Armour, Ensorcelled Weapons, Rallying Cry, Relentless March, Resolute, Stubborn"
+    },
+    "chaos-dwarf-warriors": {
+      "minimum": 5,
+      "_changed": [
+        "unit-size",
+        "options",
+        "special-rules"
+      ],
+      "options": [
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Great weapons",
+          "points": 1,
+          "perModel": true
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Shields",
+          "points": 1,
+          "perModel": true
+        },
+        {
+          "group": "command",
+          "action": "patch",
+          "name_en": "Veteran Warrior (champion)",
+          "points": 5,
+          "perModel": false
+        },
+        {
+          "group": "command",
+          "action": "patch",
+          "name_en": "Standard bearer",
+          "points": 5,
+          "perModel": false
+        },
+        {
+          "group": "command",
+          "action": "patch",
+          "name_en": "Musician",
+          "points": 5,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Drilled",
+          "points": 1,
+          "perModel": true
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Veteran",
+          "points": 1,
+          "perModel": true
+        }
+      ],
+      "specialRules": "Close Order, Detachment, Regimental Unit, Resolute, Shieldwall"
+    },
+    "blunderbuss-decimators": {
+      "minimum": 5,
+      "_changed": [
+        "unit-size",
+        "options",
+        "special-rules"
+      ],
+      "options": [
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Great weapons",
+          "points": 2,
+          "perModel": true
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Shields",
+          "points": 1,
+          "perModel": true
+        },
+        {
+          "group": "command",
+          "action": "patch",
+          "name_en": "Veteran Warrior (champion)",
+          "points": 5,
+          "perModel": false
+        },
+        {
+          "group": "command",
+          "action": "patch",
+          "name_en": "Standard bearer",
+          "points": 5,
+          "perModel": false
+        },
+        {
+          "group": "command",
+          "action": "patch",
+          "name_en": "Musician",
+          "points": 5,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Pistol (Veteran Warrior only)",
+          "points": 3,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Naptha bombs (Veteran Warrior only)",
+          "points": 6,
+          "perModel": false
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Drilled",
+          "points": 1,
+          "perModel": true
+        }
+      ],
+      "specialRules": "Open Order, Detachment, Resolute, Hailfire!"
+    },
+    "infernal-guard": {
+      "points": 10,
+      "_was": 11,
+      "_changed": [
+        "points",
+        "unit-size",
+        "options"
+      ],
+      "minimum": 5,
+      "options": [
+        {
+          "group": "equipment",
+          "action": "patch",
+          "name_en": "Great weapons",
+          "points": 2,
+          "perModel": true
+        },
+        {
+          "group": "equipment",
+          "action": "upsert",
+          "name_en": "Fireglaives and Blackshard Armour",
+          "points": 2,
+          "perModel": true
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Drilled",
+          "points": 1,
+          "perModel": true
+        },
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "Veteran",
+          "points": 1,
+          "perModel": true
+        }
+      ]
+    },
+    "infernal-ironsworn-core": {
+      "points": 16,
+      "_was": 19,
+      "_changed": [
+        "points",
+        "unit-size",
+        "options"
+      ],
+      "minimum": 5,
+      "options": [
+        {
+          "group": "command",
+          "action": "patch",
+          "name_en": "Pistol",
+          "points": 3,
+          "perModel": false
+        },
+        {
+          "group": "command",
+          "action": "patch",
+          "name_en": "Naptha bombs",
+          "points": 6,
+          "perModel": false
+        },
+        {
+          "group": "equipment",
+          "action": "upsert",
+          "name_en": "Darkforged weapon",
+          "points": 15,
+          "perModel": false
+        }
+      ]
+    },
+    "infernal-ironsworn": {
+      "points": 16,
+      "_was": 19,
+      "_changed": [
+        "points",
+        "unit-size",
+        "options"
+      ],
+      "minimum": 5,
+      "options": [
+        {
+          "group": "command",
+          "action": "patch",
+          "name_en": "Pistol",
+          "points": 3,
+          "perModel": false
+        },
+        {
+          "group": "command",
+          "action": "patch",
+          "name_en": "Naptha bombs",
+          "points": 6,
+          "perModel": false
+        },
+        {
+          "group": "equipment",
+          "action": "upsert",
+          "name_en": "Darkforged weapon",
+          "points": 15,
+          "perModel": false
+        }
+      ]
+    },
+    "k'daai-fireborn": {
+      "points": 38,
+      "_was": 41,
+      "_changed": [
+        "points",
+        "special-rules",
+        "equipment"
+      ],
+      "specialRules": "Blazing Body, Born of Fire, Close Order, Ensorcelled Weapons, Fear, Flaming Attacks, Immune to Psychology, Regeneration (5+), Unbreakable, Unstable, Warp-spawned",
+      "options": [
+        {
+          "group": "armor",
+          "action": "upsert",
+          "name_en": "Heavy armour",
+          "option": {
+            "name_en": "Heavy armour",
+            "active": true
+          }
+        }
+      ]
+    },
+    "bull-centaur-renders": {
+      "points": 54,
+      "_was": 56,
+      "_changed": [
+        "points",
+        "options"
+      ],
+      "options": [
+        {
+          "group": "equipment",
+          "action": "upsert",
+          "name_en": "Darkforged weapon",
+          "points": 15,
+          "perModel": false
+        }
+      ]
+    }
   },
-  "sourceRules": {
-   "Characters": [
-    "0-1 Sorcerer-Prophet or Despot per 1,000 points • 0-1 Bull Centaur Taur’ruk per 1,000 points • Daemonsmith Sorcerers, Seneschals, Castellans, and Hobgoblin Khans • 0-1 Black Orc Boss (see Orc & Goblin Tribes army list)"
-   ],
-   "Core": [
-    "Chaos Dwarf Warriors, Blunderbus Decimators, Infernal Guard, Hobgoblin Cutthroats • 0-1 Hobgoblin Wolf Riders • 0-1 Black Orc Mob (see Orc & Goblin Tribes army list) • 0-1 Infernal Ironsworn (If no Black Orcs taken and your army includes a Castellan)"
-   ],
-   "Special": [
-    "Infernal Ironsworn, Sneaky Gits, K’daai Fireborn, Bull Centaur Renders, Magma Cannons • 0-1 Iron Daemon per 1,000 points",
-    "0-2 Deathshrieker Rocket Launcher per 1,000 points • 0-3 Hobgoblin Bolt Throwers per 1,000 points"
-   ],
-   "Rare": [
-    "Hobgoblin Wolf Riders , Dreadquake Mortars • Hellcannon (see Warriors of Chaos army list) • Chaos Giants (see Beastmen Brayherds army list)"
-   ],
-   "“Mercenaries”": [
-    "“Mercenaries”",
-    "0-1 Bonegrinder Giant (see Arcane Journal Orc & Goblin Tribes) • Orc Mobs, Goblin Mobs (see Orc & Goblin Tribes army list.)"
-   ],
-   "Allies": [
-    "Warriors of Chaos • Ogre Kingdoms • Orc & Goblin Tribes (suspicious)",
-    "Chaos Dwarf Allies In addition to the Allies listed in Ravening Hordes, armies made using the Warriors of Chaos Grand Army composition may include an Allied contingent drawn from the Chaos Dwarfs Legacy Army composition. Armies made using the Orc & Goblin Tribes Grand Army composition may include an Allied Contingent drawn from the Chaos Dwarfs Legacy Army composition list as ‘Suspicious’ allies."
-   ]
+  "magicItems": {
+    "chaos-dwarfs": [
+      {
+        "name_de": "Armour of Bazherak the Cruel",
+        "name_en": "Armour Of Bazherak The Cruel",
+        "name_cn": "残酷者巴泽拉克之甲",
+        "name_fr": "Armure de Bazherak le Cruel",
+        "name_it": "Armour of Bazherak the Cruel",
+        "nonExclusive": true,
+        "points": 40,
+        "type": "armor",
+        "onePerArmy": true,
+        "name": "armour of bazherak the cruel"
+      },
+      {
+        "name_de": "Mantle of Stone*",
+        "name_en": "Mantle of Stone",
+        "name_cn": "岩石斗篷*",
+        "name_fr": "Manteau de Pierre*",
+        "name_it": "Mantle of Stone",
+        "points": 30,
+        "stackable": true,
+        "type": "talisman",
+        "onePerArmy": false,
+        "name": "mantle of stone"
+      },
+      {
+        "name_de": "Ashen Banner",
+        "name_en": "Ashen Banner",
+        "name_cn": "苍白之旗",
+        "name_fr": "Bannière Cendrée",
+        "name_it": "Ashen Banner",
+        "points": 30,
+        "type": "banner",
+        "onePerArmy": true,
+        "name": "ashen banner"
+      },
+      {
+        "name_de": "Daemonic Familiar",
+        "name_en": "Daemonic Familiar",
+        "name_cn": "恶魔魔宠",
+        "name_fr": "Familier Démoniaque",
+        "name_it": "Daemonic Familiar",
+        "points": 30,
+        "type": "enchanted-item",
+        "onePerArmy": true,
+        "name": "daemonic familiar"
+      }
+    ]
+  },
+  "rules": {
+    "blackshard-armour": {
+      "name_en": "Blackshard Armour",
+      "body": [
+        "A model with this special rule improves their armour value by 1 and has a 5+ Ward save against any wounds suffered that were caused by an attack that has the Flaming Attacks special rule. In addition, a Wizard with this special rule may wear armour without penalty."
+      ],
+      "overrides": "blackshard-armour"
+    },
+    "blazing-body": {
+      "name_en": "Blazing Body",
+      "body": [
+        "Each combat phase, during Step 1.1 of the Choose Combat",
+        "& Fight sub-phase, before issuing challenges, any model (friend or foe) that is in base contact with this model and that does not also have this special rule suffers a single Strength 4 hit with an AP of -1. This hit has the Flaming Attacks special rule."
+      ],
+      "overrides": "blazing-body"
+    },
+    "hellbound": {
+      "name_en": "Hellbound",
+      "body": [
+        "A Hellbound model has a 6+ Ward save against any wounds suffered and gains both the Fear and Magical Attacks special rules. If the model already has the Fear special rule, it instead gains the Terror special rule. Additionally, once per game, a Hellbound model may re-roll one Scatter dice or one Artillery dice.",
+        "Note that any Hellcannon taken as a Rare choice in a Chaos Dwarf Grand Army gains this special rule."
+      ],
+      "overrides": "hellbound"
+    },
+    "infernal-engineer": {
+      "name_en": "Infernal Engineer",
+      "body": [
+        "Unless this model is fleeing or engaged in combat, once per turn a friendly model that is within its Command range may re-roll one Scatter dice or one Artillery dice."
+      ],
+      "overrides": "infernal-engineer"
+    },
+    "relentless-march": {
+      "name_en": "Relentless March",
+      "body": [
+        "During the Command sub-phase of their turn, this character may attempt to urge those around them into battle with a lash of their whip by making a Leadership test. If passed, a single friendly Infantry or Cavalry unit within their command range gains a +D3 modifier to their Movement characteristic (to a maximum of 10). Note that this special rule is not cumulative. In other words, using it more than once on the same unit during the same turn has no further effect."
+      ],
+      "overrides": null
+    },
+    "infernal-taskmaster": {
+      "name_en": "Infernal Taskmaster",
+      "body": [
+        "Once per game during the Command sub-phase of their turn, this character may attempt to drive a unit they have joined to greater efforts by making a Leadership test (using their own Leadership). If this test is passed, until your next Start of Turn sub-phase this character and any unit they have joined gains the Extra Attacks (+1) and Hatred (all enemies) special rules."
+      ],
+      "overrides": null
+    },
+    "carriage-hauler": {
+      "name_en": "Carriage Hauler",
+      "body": [
+        "During the Movement phase, up to two friendly war machines with the ‘Steam Carriage’ upgrade that are completely within this model’s rear arc and within 8\" of its base at the beginning of the phase may replace their Movement characteristic with this model’s. These war machines must finish their movement completely within this model’s rear arc and within 8\" of its base. Unless this model moves using the Lumbering Destruction special rule or makes a charge move, these war machines are not considered to have moved this turn."
+      ],
+      "overrides": "carriage-hauler"
+    },
+    "skullcracker": {
+      "name_en": "Skullcracker",
+      "body": [
+        "An Iron Daemon equipped with a Skullcracker replaces the Impact Hits (D6+1) special rule with the Impact Hits (2D6+2) special rule and the Stomp Attacks (D3+1) with the Stomp Attacks (D6+1) special rule and gains the Armour Bane (1) special rule."
+      ],
+      "overrides": "skullcracker"
+    },
+    "r-s-ap-special-rules": {
+      "name_en": "R S AP Special Rules",
+      "body": [
+        "Demolition rockets 12-48\" 4 (8) -1(-3) Armour Bane (1), Bombardment,"
+      ],
+      "overrides": null
+    },
+    "cumbersome-move-or-shoot-multiple-wounds-d6": {
+      "name_en": "Cumbersome, Move or Shoot, Multiple Wounds (D6)",
+      "body": [
+        "Notes: This weapon shoots like a stone thrower, using the ‘Bombardment’ special rule, a 3\" blast",
+        "template and the Black Powder Misfire table. The Multiple Wounds (D6) special rule applies only to a single model whose base lies underneath the central hole of the blast template."
+      ],
+      "overrides": null
+    },
+    "multiple-wounds-d3-1-quake-s": {
+      "name_en": "Multiple Wounds (D3+1), Quake S",
+      "body": [
+        "Notes: This weapon shoots like a stone thrower, using the ‘Bombardment’ special rule, a 5\" blast",
+        "template and the Black Powder Misfire table. The Multiple Wounds (D3+1) special rule applies only to a single model whose base lies underneath the central hole of the blast template."
+      ],
+      "overrides": null
+    },
+    "dreadquake-mortar-special-rules": {
+      "name_en": "Dreadquake Mortar Special Rules",
+      "body": [
+        "Quake: Until your next Start of Turn sub-phase, any unit (friend or foe) that was within 2D6\" of the central hole of a blast template after scattering fired from one or more Dreadquake mortars, suffers a -1 modifier to its Movement characteristic and cannot use the Swiftstride special rule."
+      ],
+      "overrides": null
+    },
+    "enough-for-everyone": {
+      "name_en": "Enough for Everyone",
+      "body": [
+        "If an Ogre Loader is equipped with Naptha bombs, the crew of the war machine that the Ogre Loader is joined with is also equipped with Naptha bombs."
+      ],
+      "overrides": "enough-for-everyone"
+    },
+    "indentured-crew": {
+      "name_en": "Indentured Crew",
+      "body": [
+        "The crew of a war machine joined by an Ogre Loader gains a +1 modifier to its Movement characteristic and the Stubborn special rule. In addition, once per game, a war machine that includes an Ogre Loader may fire twice during the Shooting phase, or re-roll a single artillery dice."
+      ],
+      "overrides": null
+    },
+    "spell-storm-of-ash": {
+      "name_en": "Storm Of Ash",
+      "body": [
+        "Type: Hex",
+        "Casting Value: 9+",
+        "Range: Self",
+        "Effect: Until your next Start of Turn sub-phase, all enemy units suffer a -1 modifier to any rolls To Hit made whilst within 9\" of the caster’s model (rolls of a natural 6 are unaffected)."
+      ],
+      "overrides": "spell-storm-of-ash"
+    },
+    "spell-flames-of-hashut": {
+      "name_en": "Flames Of Hashut",
+      "body": [
+        "Type: Assailment Casting Value: 8+ Range: Combat",
+        "Effect: A single enemy unit the caster is engaged in combat with suffers D3+1 Strength 4 hits, each with an AP of -1. These hits have the Flaming Attacks special rule."
+      ],
+      "overrides": "spell-flames-of-hashut"
+    },
+    "darkforged-weapon": {
+      "name_en": "Darkforged Weapon",
+      "body": [
+        "A Darkforged weapon is a hand weapon with the Flaming Attacks special rule and can be used in conjunction with the Ensorcelled Weapons special rule. In addition, after deployment but before the first turn begins, roll on the table below to determine an attribute for the weapon. The weapon has this attribute for the duration of the battle:"
+      ],
+      "overrides": "darkforged-weapon",
+      "tables": [
+        {
+          "headers": [
+            "D3",
+            "Result"
+          ],
+          "rows": [
+            [
+              "1",
+              "Malignant: The bearer of this weapon gains the Hatred (all enemies) special rule."
+            ],
+            [
+              "2",
+              "Life Bane: This weapon gains the Multiple Wounds (D3) special rule."
+            ],
+            [
+              "3",
+              "Spell-wrought: If the bearer of this weapon is a Wizard, they may apply a +1 modifier to any Casting roll they make. If the bearer of this weapon is not a Wizard, This weapon has a Strength characteristic of S+1."
+            ]
+          ]
+        }
+      ]
+    },
+    "hailshot-blunderbuss": {
+      "name_en": "Hailshot Blunderbuss",
+      "body": [
+        "Notes: A model armed with a Hailshot blunderbuss suffers no negative modifiers for firing at long range, for using the Multiple Shots (D3) special rule, or whilst making a Stand & Shoot charge reaction. In addition, if 10 or more models belonging to the same unit shoot at the same target with Hailshot blunderbusses, they may re-roll any rolls of a natural 1 when rolling To Wound."
+      ],
+      "overrides": "hailshot-blunderbuss"
+    },
+    "naptha-bombs": {
+      "name_en": "Naptha Bombs",
+      "body": [],
+      "overrides": "naptha-bombs",
+      "tables": [
+        {
+          "headers": [
+            "",
+            "R",
+            "S",
+            "AP",
+            "Special Rules"
+          ],
+          "rows": [
+            [
+              "Naptha Bomb",
+              "9”",
+              "3",
+              "-1",
+              "Armour Bane (1) Flaming Attacks Move & Shoot Quick Shot"
+            ]
+          ]
+        }
+      ]
+    },
+    "lore-of-hashut": {
+      "name_en": "Lore of Hashut",
+      "body": [
+        "A Wizard with the ‘Lore of Hashut’ special rule may discard one of their randomly generated spells as normal. When they do so, they may select instead either the signature spell of their chosen Lore of Magic, or one of the spells listed below.",
+        "Curse Of Hashut",
+        "Type: Magic Missile",
+        "Casting Value: 9+",
+        "Range: 18\"",
+        "Effect: This spell can only target enemy characters. However, it may target any enemy character that is within range and that the caster can draw a line of sight to, regardless of the usual rules for targeting characters, and may even target an enemy character that has joined a unit or that is engaged in combat.",
+        "The target enemy character must immediately make a Toughness test. If this test is passed, it suffers D3 Strength 2 hits, each with an AP of -. If, however, this test is",
+        "failed, it suffers D3+2 Strength 5 hits, with no armour or Regeneration saves permitted (Ward saves can be attempted as normal).",
+        "Storm Of Ash",
+        "Type: Hex",
+        "Casting Value: 9+",
+        "Range: Self",
+        "Effect: Until your next Start of Turn sub-phase, all enemy units suffer a -1 modifier to any rolls To Hit made whilst within 9\" of the caster’s model (rolls of a natural 6 are unaffected).",
+        "Flames Of Hashut",
+        "Type: Assailment Casting Value: 8+ Range: Combat",
+        "Effect: A single enemy unit the caster is engaged in combat with suffers D3+1 Strength 4 hits, each with an AP of -1. These hits have the Flaming Attacks special rule."
+      ],
+      "overrides": "lore-of-hashut-renegade"
+    }
+  },
+  "lores": {
+    "lore-of-hashut": {
+      "name": "Lore of Hashut",
+      "spells": [
+        {
+          "slug": "spell-storm-of-ash",
+          "name": "Storm of Ash",
+          "number": null,
+          "signature": true
+        },
+        {
+          "slug": "spell-flames-of-hashut",
+          "name": "Flames of Hashut",
+          "number": null,
+          "signature": true
+        }
+      ]
+    }
+  },
+  "addedUnits": {
+    "core": [
+      {
+        "id": "chaos-dwarf-warriors",
+        "name_en": "Chaos Dwarf Warriors",
+        "points": 7,
+        "minimum": 5,
+        "maximum": 0,
+        "command": [
+          {
+            "name_en": "Veteran Warrior (champion)",
+            "points": 5,
+            "magic": {
+              "types": [
+                "weapon",
+                "armor",
+                "talisman",
+                "enchanted-item"
+              ],
+              "maxPoints": 25
+            }
+          },
+          {
+            "name_en": "Standard bearer",
+            "points": 5,
+            "magic": {
+              "types": [
+                "banner"
+              ],
+              "maxPoints": 50
+            }
+          },
+          {
+            "name_en": "Musician",
+            "points": 5
+          }
+        ],
+        "equipment": [
+          {
+            "name_en": "Hand weapons",
+            "points": 0,
+            "perModel": true,
+            "active": true
+          }
+        ],
+        "armor": [
+          {
+            "name_en": "Heavy armour",
+            "points": 0,
+            "perModel": true,
+            "active": true
+          }
+        ],
+        "options": [
+          {
+            "name_en": "Great weapons",
+            "points": 1,
+            "perModel": true
+          },
+          {
+            "name_en": "Shields",
+            "points": 1,
+            "perModel": true
+          },
+          {
+            "name_en": "Drilled",
+            "points": 1,
+            "perModel": true
+          },
+          {
+            "name_en": "Veteran",
+            "points": 1,
+            "perModel": true
+          }
+        ],
+        "mounts": [],
+        "items": [],
+        "lores": [],
+        "specialRules": {
+          "name_en": "Close Order, Detachment, Regimental Unit, Resolute, Shieldwall"
+        }
+      },
+      {
+        "id": "blunderbuss-decimators",
+        "name_en": "Blunderbuss Decimators",
+        "points": 10,
+        "minimum": 5,
+        "maximum": 0,
+        "command": [
+          {
+            "name_en": "Veteran Warrior (champion)",
+            "points": 5
+          },
+          {
+            "name_en": "Standard bearer",
+            "points": 5
+          },
+          {
+            "name_en": "Musician",
+            "points": 5
+          }
+        ],
+        "equipment": [
+          {
+            "name_en": "Hand weapons, Hailshot blunderbusses",
+            "points": 0,
+            "perModel": true,
+            "active": true
+          }
+        ],
+        "armor": [
+          {
+            "name_en": "Heavy armour",
+            "points": 0,
+            "perModel": true,
+            "active": true
+          }
+        ],
+        "options": [
+          {
+            "name_en": "Great weapons",
+            "points": 2,
+            "perModel": true
+          },
+          {
+            "name_en": "Shields",
+            "points": 1,
+            "perModel": true
+          },
+          {
+            "name_en": "Pistol (Veteran Warrior only)",
+            "points": 3
+          },
+          {
+            "name_en": "Naptha bombs (Veteran Warrior only)",
+            "points": 6
+          },
+          {
+            "name_en": "Drilled",
+            "points": 1,
+            "perModel": true
+          }
+        ],
+        "mounts": [],
+        "items": [],
+        "lores": [],
+        "specialRules": {
+          "name_en": "Open Order, Detachment, Resolute, Hailfire!"
+        }
+      },
+      {
+        "id": "hobgoblin-wolf-riders-core",
+        "name_en": "Hobgoblin Wolf Riders",
+        "points": 12,
+        "minimum": 5,
+        "maximum": 0,
+        "command": [
+          {
+            "name_en": "Boss (champion)",
+            "points": 8
+          },
+          {
+            "name_en": "Standard bearer",
+            "points": 6
+          },
+          {
+            "name_en": "Musician",
+            "points": 6
+          }
+        ],
+        "equipment": [
+          {
+            "name_en": "Hand weapons",
+            "points": 0,
+            "perModel": true,
+            "active": true,
+            "equippedDefault": true
+          }
+        ],
+        "armor": [
+          {
+            "name_en": "Light armour, Shields",
+            "points": 0,
+            "perModel": true,
+            "active": true
+          }
+        ],
+        "options": [
+          {
+            "name_en": "Cavalry spears",
+            "points": 0,
+            "perModel": true
+          },
+          {
+            "name_en": "Shortbow",
+            "points": 1,
+            "perModel": true,
+            "minimum": 0,
+            "maximum": 0
+          },
+          {
+            "name_en": "Feigned Flight",
+            "points": 2,
+            "perModel": true,
+            "notes": {
+              "name_en": "0-1 per 1000 points"
+            }
+          },
+          {
+            "name_en": "Reserve Move",
+            "points": 1,
+            "perModel": true,
+            "notes": {
+              "name_en": "0-1 per 1000 points"
+            }
+          }
+        ],
+        "mounts": [],
+        "items": [],
+        "lores": [],
+        "specialRules": {
+          "name_en": "Backstab, Evasive, Fast Cavalry, Fire & Flee, Levies, Open Order, Skirmishers, Swiftstride"
+        },
+        "notes": {
+          "name_en": "0-1"
+        }
+      }
+    ],
+    "characters": [
+      {
+        "id": "castellan",
+        "name_en": "Castellan",
+        "points": 75,
+        "minimum": 1,
+        "maximum": 1,
+        "command": [],
+        "equipment": [
+          {
+            "name_en": "Hand weapon",
+            "points": 0,
+            "active": true
+          },
+          {
+            "name_en": "Darkforged weapon",
+            "points": 15
+          },
+          {
+            "name_en": "Great weapon",
+            "points": 4
+          },
+          {
+            "name_en": "Fireglaive",
+            "points": 3
+          }
+        ],
+        "armor": [
+          {
+            "name_en": "Heavy armour",
+            "points": 0,
+            "active": true
+          }
+        ],
+        "options": [
+          {
+            "name_en": "Pistol",
+            "points": 5,
+            "notes": {
+              "name_en": "if not using Naptha bombs"
+            }
+          },
+          {
+            "name_en": "Naptha bombs",
+            "points": 10,
+            "notes": {
+              "name_en": "if not using Pistol"
+            }
+          },
+          {
+            "name_en": "Shield",
+            "points": 2
+          }
+        ],
+        "mounts": [],
+        "items": [
+          {
+            "name_en": "Magic Items",
+            "types": [
+              "weapon",
+              "armor",
+              "talisman",
+              "enchanted-item"
+            ],
+            "selected": [],
+            "maxPoints": 75
+          }
+        ],
+        "lores": [],
+        "specialRules": {
+          "name_en": "Blackshard Armour, Ensorcelled Weapons, Rallying Cry, Resolute, Stubborn, Infernal Taskmaster, Quell Panic"
+        }
+      }
+    ]
+  },
+  "composition": {
+    "units": {
+      "bull-centaur-taur'ruk": {
+        "category": "characters",
+        "notes": "0-1 per 1,000 points"
+      }
+    },
+    "sourceRules": {
+      "Characters": [
+        "0-1 Sorcerer-Prophet or Despot per 1,000 points • 0-1 Bull Centaur Taur’ruk per 1,000 points • Daemonsmith Sorcerers, Seneschals, Castellans, and Hobgoblin Khans • 0-1 Black Orc Boss (see Orc & Goblin Tribes army list)"
+      ],
+      "Core": [
+        "Chaos Dwarf Warriors, Blunderbus Decimators, Infernal Guard, Hobgoblin Cutthroats • 0-1 Hobgoblin Wolf Riders • 0-1 Black Orc Mob (see Orc & Goblin Tribes army list) • 0-1 Infernal Ironsworn (If no Black Orcs taken and your army includes a Castellan)"
+      ],
+      "Special": [
+        "Infernal Ironsworn, Sneaky Gits, K’daai Fireborn, Bull Centaur Renders, Magma Cannons • 0-1 Iron Daemon per 1,000 points",
+        "0-2 Deathshrieker Rocket Launcher per 1,000 points • 0-3 Hobgoblin Bolt Throwers per 1,000 points"
+      ],
+      "Rare": [
+        "Hobgoblin Wolf Riders , Dreadquake Mortars • Hellcannon (see Warriors of Chaos army list) • Chaos Giants (see Beastmen Brayherds army list)"
+      ],
+      "“Mercenaries”": [
+        "“Mercenaries”",
+        "0-1 Bonegrinder Giant (see Arcane Journal Orc & Goblin Tribes) • Orc Mobs, Goblin Mobs (see Orc & Goblin Tribes army list.)"
+      ],
+      "Allies": [
+        "Warriors of Chaos • Ogre Kingdoms • Orc & Goblin Tribes (suspicious)",
+        "Chaos Dwarf Allies In addition to the Allies listed in Ravening Hordes, armies made using the Warriors of Chaos Grand Army composition may include an Allied contingent drawn from the Chaos Dwarfs Legacy Army composition. Armies made using the Orc & Goblin Tribes Grand Army composition may include an Allied Contingent drawn from the Chaos Dwarfs Legacy Army composition list as ‘Suspicious’ allies."
+      ]
+    }
+  },
+  "profiles": {
+    "castellan": {
+      "stats": [
+        {
+          "Name": "Castellan",
+          "M": "3",
+          "WS": "6",
+          "BS": "4",
+          "S": "5",
+          "T": "5",
+          "W": "3",
+          "I": "2",
+          "A": "3",
+          "Ld": "9"
+        }
+      ],
+      "troopType": "Heavy infantry (character)",
+      "baseSize": "25 x 25 mm",
+      "equipment": [
+        "Hand weapon and heavy armour"
+      ],
+      "notes": [
+        "Options:",
+        "May take one of the following:"
+      ]
+    },
+    "sorcerer prophet": {
+      "stats": [
+        {
+          "Name": "Sorcerer-Prophet",
+          "M": "3",
+          "WS": "5",
+          "BS": "4",
+          "S": "4",
+          "T": "5",
+          "W": "3",
+          "I": "2",
+          "A": "3",
+          "Ld": "10"
+        }
+      ],
+      "notes": [
+        "Chaos Dwarf Lords"
+      ]
+    },
+    "daemonsmith sorcerer": {
+      "stats": [
+        {
+          "Name": "Daemonsmith Sorcerer",
+          "M": "3",
+          "WS": "4",
+          "BS": "4",
+          "S": "4",
+          "T": "4",
+          "W": "2",
+          "I": "2",
+          "A": "2",
+          "Ld": "9"
+        }
+      ],
+      "notes": [
+        "Chaos Dwarf Lords"
+      ]
+    },
+    "infernal castellan": {
+      "stats": [
+        {
+          "Name": "Despot",
+          "M": "3",
+          "WS": "7",
+          "BS": "4",
+          "S": "4",
+          "T": "5",
+          "W": "3",
+          "I": "4",
+          "A": "4",
+          "Ld": "10"
+        }
+      ],
+      "troopType": "Heavy infantry (character)",
+      "baseSize": "25 x 25 mm",
+      "equipment": [
+        "Hand weapon and heavy armour"
+      ],
+      "notes": [
+        "Options:",
+        "May take one of the following:",
+        "Purchase magic items up to a total of 100 points • Be mounted on a Bale Taurus or Great Taurus See page 12",
+        "A Seneschal may:",
+        "Purchase magic items up to a total of 50 points • Be mounted on a Great Taurus See page 12",
+        "Infernal Guard Commanders"
+      ]
+    },
+    "despot": {
+      "stats": [
+        {
+          "Name": "Despot",
+          "M": "3",
+          "WS": "7",
+          "BS": "4",
+          "S": "4",
+          "T": "5",
+          "W": "3",
+          "I": "4",
+          "A": "4",
+          "Ld": "10"
+        }
+      ]
+    },
+    "infernal seneschal": {
+      "stats": [
+        {
+          "Name": "Seneschal",
+          "M": "3",
+          "WS": "6",
+          "BS": "4",
+          "S": "4",
+          "T": "5",
+          "W": "2",
+          "I": "3",
+          "A": "3",
+          "Ld": "9"
+        }
+      ],
+      "troopType": "Heavy infantry (character)",
+      "baseSize": "25 x 25 mm",
+      "equipment": [
+        "Hand weapon and heavy armour"
+      ],
+      "notes": [
+        "Options:",
+        "May take one of the following:",
+        "Purchase magic items up to a total of 100 points • Be mounted on a Bale Taurus or Great Taurus See page 12",
+        "A Seneschal may:",
+        "Purchase magic items up to a total of 50 points • Be mounted on a Great Taurus See page 12",
+        "Infernal Guard Commanders"
+      ]
+    },
+    "seneschal": {
+      "stats": [
+        {
+          "Name": "Seneschal",
+          "M": "3",
+          "WS": "6",
+          "BS": "4",
+          "S": "4",
+          "T": "5",
+          "W": "2",
+          "I": "3",
+          "A": "3",
+          "Ld": "9"
+        }
+      ]
+    },
+    "giant wolf": {
+      "notes": [
+        "Chaos Dwarf Warriors"
+      ]
+    },
+    "chaos dwarf warriors": {
+      "stats": [
+        {
+          "Name": "Chaos Dwarf Warrior",
+          "M": "3",
+          "WS": "4",
+          "BS": "3",
+          "S": "3",
+          "T": "4",
+          "W": "1",
+          "I": "2",
+          "A": "1",
+          "Ld": "9"
+        },
+        {
+          "Name": "Veteran Warrior",
+          "M": "3",
+          "WS": "4",
+          "BS": "3",
+          "S": "3",
+          "T": "4",
+          "W": "1",
+          "I": "2",
+          "A": "2",
+          "Ld": "9"
+        }
+      ],
+      "troopType": "Heavy infantry",
+      "baseSize": "25 x 25 mm",
+      "equipment": [
+        "Hand weapons and heavy armour"
+      ],
+      "notes": [
+        "Options:",
+        "The entire unit may take any of the following:",
+        "Any unit may:",
+        "A Veteran Warrior may purchase magic items up to a total of 25 points • 0-1 unit per 1,000 points may:",
+        "Blunderbuss Decimators"
+      ],
+      "specialRules": [
+        "Close Order",
+        "Detachment",
+        "Regimental Unit",
+        "Resolute",
+        "Shieldwall"
+      ]
+    },
+    "blunderbuss decimators": {
+      "stats": [
+        {
+          "Name": "Blunderbuss Decimator",
+          "M": "3",
+          "WS": "3",
+          "BS": "3",
+          "S": "3",
+          "T": "4",
+          "W": "1",
+          "I": "2",
+          "A": "1",
+          "Ld": "9"
+        },
+        {
+          "Name": "Veteran Warrior",
+          "M": "3",
+          "WS": "3",
+          "BS": "4",
+          "S": "3",
+          "T": "4",
+          "W": "1",
+          "I": "2",
+          "A": "1",
+          "Ld": "9"
+        }
+      ],
+      "troopType": "Heavy infantry",
+      "baseSize": "25 x 25 mm",
+      "equipment": [
+        "Hand weapons, heavy armour and Hailshot blunderbuss"
+      ],
+      "notes": [
+        "Options:",
+        "The entire unit may take",
+        "Any unit may:",
+        "A Veteran Warrior may take one of the following:",
+        "0-1 unit per 1,000 points may:",
+        "Hailfire!",
+        "A unit with this special rule can Volley Fire during a turn in which it moved, or whilst performing a Stand & Shoot charge reaction."
+      ],
+      "specialRules": [
+        "Open Order",
+        "Detachment",
+        "Resolute",
+        "Hailfire!"
+      ]
+    },
+    "infernal guard": {
+      "stats": [
+        {
+          "Name": "Infernal Guard",
+          "M": "3",
+          "WS": "4",
+          "BS": "3",
+          "S": "4",
+          "T": "4",
+          "W": "1",
+          "I": "2",
+          "A": "1",
+          "Ld": "9"
+        },
+        {
+          "Name": "Deathmask",
+          "M": "3",
+          "WS": "4",
+          "BS": "3",
+          "S": "4",
+          "T": "4",
+          "W": "1",
+          "I": "2",
+          "A": "2",
+          "Ld": "9"
+        }
+      ],
+      "troopType": "Heavy infantry",
+      "baseSize": "25 x 25 mm",
+      "equipment": [
+        "Hand weapons and heavy armour"
+      ],
+      "specialRules": [
+        "Close Order",
+        "Detachment",
+        "Regimental Unit",
+        "Resolute",
+        "Shieldwall",
+        "Stubborn"
+      ]
+    },
+    "infernal ironsworn": {
+      "stats": [
+        {
+          "Name": "Infernal Ironsworn",
+          "M": "3",
+          "WS": "5",
+          "BS": "3",
+          "S": "4",
+          "T": "4",
+          "W": "1",
+          "I": "2",
+          "A": "2",
+          "Ld": "9"
+        },
+        {
+          "Name": "Overseer",
+          "M": "3",
+          "WS": "5",
+          "BS": "3",
+          "S": "4",
+          "T": "4",
+          "W": "1",
+          "I": "2",
+          "A": "3",
+          "Ld": "9"
+        }
+      ],
+      "equipment": [
+        "Hand weapons and heavy armour"
+      ],
+      "troopType": "Heavy infantry",
+      "baseSize": "25 x 25 mm",
+      "specialRules": [
+        "Blackshard Armour",
+        "Close Order",
+        "Drilled",
+        "Ensorcelled Weapons",
+        "Quell Panic",
+        "Regimental Unit",
+        "Resolute",
+        "Shieldwall",
+        "Stubborn",
+        "Veteran"
+      ]
+    },
+    "k daai fireborn": {
+      "stats": [
+        {
+          "Name": "K’daai Fireborn",
+          "M": "6",
+          "WS": "4",
+          "BS": "2",
+          "S": "5",
+          "T": "4",
+          "W": "3",
+          "I": "4",
+          "A": "3",
+          "Ld": "7"
+        },
+        {
+          "Name": "Manburner",
+          "M": "6",
+          "WS": "4",
+          "BS": "2",
+          "S": "5",
+          "T": "4",
+          "W": "3",
+          "I": "4",
+          "A": "4",
+          "Ld": "8"
+        }
+      ],
+      "equipment": [
+        "Rage and hellfire (counts as hand weapons), heavy armour"
+      ],
+      "troopType": "Monstrous infantry",
+      "baseSize": "40 x 40 mm",
+      "specialRules": [
+        "Blazing Body",
+        "Born of Fire",
+        "Close Order",
+        "Ensorcelled Weapons",
+        "Fear",
+        "Flaming Attacks",
+        "Immune to Psychology",
+        "Regeneration (5+)",
+        "Unbreakable",
+        "Unstable",
+        "Warp-spawned"
+      ]
+    },
+    "bull centaur renders": {
+      "stats": [
+        {
+          "Name": "Bull Centaur Render 7",
+          "M": "Bull Centaur Render 7",
+          "WS": "4",
+          "BS": "2",
+          "S": "4",
+          "T": "5",
+          "W": "3",
+          "I": "3",
+          "A": "3",
+          "Ld": "8"
+        },
+        {
+          "Name": "Bull Centaur Ba’hal 7",
+          "M": "Bull Centaur Ba’hal 7",
+          "WS": "4",
+          "BS": "2",
+          "S": "4",
+          "T": "5",
+          "W": "3",
+          "I": "3",
+          "A": "4",
+          "Ld": "8"
+        },
+        {
+          "A": "3",
+          "I": "3",
+          "M": "7",
+          "S": "4",
+          "T": "5",
+          "W": "3",
+          "BS": "2",
+          "Ld": "8",
+          "WS": "4",
+          "Name": "Bull Centaur Render"
+        },
+        {
+          "A": "4",
+          "I": "3",
+          "M": "7",
+          "S": "4",
+          "T": "5",
+          "W": "3",
+          "BS": "2",
+          "Ld": "8",
+          "WS": "4",
+          "Name": "Bull Centaur Ba'hal"
+        }
+      ],
+      "notes": [
+        "The entire unit may take any of the following:"
+      ],
+      "troopType": "Monstrous cavalry",
+      "baseSize": "50 x 75 mm",
+      "equipment": [
+        "Hand weapons and light armour"
+      ],
+      "specialRules": [
+        "Armoured Hide (1)",
+        "Blackshard Armour",
+        "Close Order",
+        "Ensorcelled Weapons",
+        "Fear",
+        "First Charge",
+        "Impact Hits (D3)",
+        "Loner",
+        "Stampede",
+        "Stubborn",
+        "Swiftstride"
+      ]
+    },
+    "the great tauruses": {
+      "troopType": "Behemoth (Bale Taurus), Monstrous Creature (Great Taurus)",
+      "baseSize": "60 x 100 mm (Bale Taurus) 50 x 75mm to 60 x 100mm (Great Taurus)"
+    },
+    "deathshrieker rocket launcher": {
+      "stats": [
+        {
+          "Name": "Deathshrieker",
+          "M": "-",
+          "WS": "-",
+          "BS": "-",
+          "S": "-",
+          "T": "6",
+          "W": "3",
+          "I": "-",
+          "A": "-",
+          "Ld": "-"
+        },
+        {
+          "Name": "Chaos Dwarf Crew",
+          "M": "3",
+          "WS": "3",
+          "BS": "3",
+          "S": "3",
+          "T": "4",
+          "W": "3",
+          "I": "2",
+          "A": "3",
+          "Ld": "9"
+        }
+      ],
+      "equipment": [
+        "Demolition Rockets (see below), Infernal Incendiaries (see below), hand weapons and light armour"
+      ],
+      "troopType": "War machine",
+      "baseSize": "50 x 75 mm (war machine), 25 x 25 mm (crew)",
+      "specialRules": [
+        "Blackshard Armour",
+        "Skirmishers"
+      ]
+    },
+    "dreadquake mortar": {
+      "baseSize": "No base or 200 mm x 60 mm",
+      "equipment": [
+        "Dreadquake Mortar (see below), hand weapons and light armour."
+      ],
+      "notes": [
+        "Indentured Ogres"
+      ]
+    },
+    "indentured ogres": {
+      "stats": [
+        {
+          "Name": "Ogre Loader",
+          "M": "-",
+          "WS": "3",
+          "BS": "3",
+          "S": "4",
+          "T": "-",
+          "W": "(+2)",
+          "I": "2",
+          "A": "2",
+          "Ld": "8"
+        }
+      ],
+      "notes": [
+        "Note: The crew of a War Machine with an Ogre Loader has +2 Wounds, and can make 2 additional attacks with the Weapon Skill, Strength and Initiative shown above.",
+        "Unit Size: 1",
+        "Options:",
+        "May take Naptha Bombs +8 points"
+      ],
+      "troopType": "War Machine",
+      "baseSize": "N/A",
+      "equipment": [
+        "Hand Weapon"
+      ],
+      "specialRules": [
+        "Enough for Everyone",
+        "Indentured Crew"
+      ]
+    },
+    "magma cannon": {
+      "equipment": [
+        "Fire thrower, hand weapons and light armour"
+      ]
+    },
+    "hobgoblin bolt thrower": {
+      "stats": [
+        {
+          "Name": "Bolt Thrower",
+          "M": "-",
+          "WS": "-",
+          "BS": "-",
+          "S": "-",
+          "T": "5",
+          "W": "3",
+          "I": "-",
+          "A": "-",
+          "Ld": "-"
+        },
+        {
+          "Name": "Hobgoblin Crew",
+          "M": "4",
+          "WS": "3",
+          "BS": "3",
+          "S": "3",
+          "T": "3",
+          "W": "2",
+          "I": "3",
+          "A": "2",
+          "Ld": "6"
+        }
+      ],
+      "troopType": "War machine",
+      "baseSize": "50 x 50 mm (war machine), 25 x 25 mm (crew)",
+      "equipment": [
+        "Bolt thrower, hand weapons and light armour"
+      ],
+      "specialRules": [
+        "Levies",
+        "Skirmishers"
+      ]
+    }
+  },
+  "notes": [],
+  "magicItemText": {
+    "armour-of-bazherak-the-cruel": {
+      "body": "The Armour of Bazherak the Cruel is a suit of full plate armour. In addition, its wearer has the Immune to Psychology and Magic Resistance (-2) special rules."
+    },
+    "mantle-of-stone": {
+      "body": "0-1 per model. The wearer of a Mantle of Stone has a +1 modifier to their Toughness characteristic, but a -1 modifier to their Initiative characteristic."
+    },
+    "ashen-banner": {
+      "body": "Any enemy model that shoots at a unit carrying the Ashen Banner suffers an additional -1 To Hit modifier."
+    },
+    "daemonic-familiar": {
+      "body": "Enemy models engaged in combat with the owner of a Daemonic Familiar must reduce the Ward or Regeneration value of any Ward or Regeneration save they have by 1, to a minimum of 6+."
+    }
   }
- },
- "profiles": {
-  "castellan": {
-   "stats": [
-    {
-     "Name": "Castellan",
-     "M": "3",
-     "WS": "6",
-     "BS": "4",
-     "S": "5",
-     "T": "5",
-     "W": "3",
-     "I": "2",
-     "A": "3",
-     "Ld": "9"
-    }
-   ],
-   "troopType": "Heavy infantry (character)",
-   "baseSize": "25 x 25 mm",
-   "equipment": [
-    "Hand weapon and heavy armour"
-   ],
-   "notes": [
-    "Options:",
-    "May take one of the following:"
-   ]
-  },
-  "sorcerer prophet": {
-   "stats": [
-    {
-     "Name": "Sorcerer-Prophet",
-     "M": "3",
-     "WS": "5",
-     "BS": "4",
-     "S": "4",
-     "T": "5",
-     "W": "3",
-     "I": "2",
-     "A": "3",
-     "Ld": "10"
-    }
-   ],
-   "notes": [
-    "Chaos Dwarf Lords"
-   ]
-  },
-  "daemonsmith sorcerer": {
-   "stats": [
-    {
-     "Name": "Daemonsmith Sorcerer",
-     "M": "3",
-     "WS": "4",
-     "BS": "4",
-     "S": "4",
-     "T": "4",
-     "W": "2",
-     "I": "2",
-     "A": "2",
-     "Ld": "9"
-    }
-   ],
-   "notes": [
-    "Chaos Dwarf Lords"
-   ]
-  },
-  "infernal castellan": {
-   "stats": [
-    {
-     "Name": "Despot",
-     "M": "3",
-     "WS": "7",
-     "BS": "4",
-     "S": "4",
-     "T": "5",
-     "W": "3",
-     "I": "4",
-     "A": "4",
-     "Ld": "10"
-    }
-   ],
-   "troopType": "Heavy infantry (character)",
-   "baseSize": "25 x 25 mm",
-   "equipment": [
-    "Hand weapon and heavy armour"
-   ],
-   "notes": [
-    "Options:",
-    "May take one of the following:",
-    "Purchase magic items up to a total of 100 points • Be mounted on a Bale Taurus or Great Taurus See page 12",
-    "A Seneschal may:",
-    "Purchase magic items up to a total of 50 points • Be mounted on a Great Taurus See page 12",
-    "Infernal Guard Commanders"
-   ]
-  },
-  "despot": {
-   "stats": [
-    {
-     "Name": "Despot",
-     "M": "3",
-     "WS": "7",
-     "BS": "4",
-     "S": "4",
-     "T": "5",
-     "W": "3",
-     "I": "4",
-     "A": "4",
-     "Ld": "10"
-    }
-   ]
-  },
-  "infernal seneschal": {
-   "stats": [
-    {
-     "Name": "Seneschal",
-     "M": "3",
-     "WS": "6",
-     "BS": "4",
-     "S": "4",
-     "T": "5",
-     "W": "2",
-     "I": "3",
-     "A": "3",
-     "Ld": "9"
-    }
-   ],
-   "troopType": "Heavy infantry (character)",
-   "baseSize": "25 x 25 mm",
-   "equipment": [
-    "Hand weapon and heavy armour"
-   ],
-   "notes": [
-    "Options:",
-    "May take one of the following:",
-    "Purchase magic items up to a total of 100 points • Be mounted on a Bale Taurus or Great Taurus See page 12",
-    "A Seneschal may:",
-    "Purchase magic items up to a total of 50 points • Be mounted on a Great Taurus See page 12",
-    "Infernal Guard Commanders"
-   ]
-  },
-  "seneschal": {
-   "stats": [
-    {
-     "Name": "Seneschal",
-     "M": "3",
-     "WS": "6",
-     "BS": "4",
-     "S": "4",
-     "T": "5",
-     "W": "2",
-     "I": "3",
-     "A": "3",
-     "Ld": "9"
-    }
-   ]
-  },
-  "giant wolf": {
-   "notes": [
-    "Chaos Dwarf Warriors"
-   ]
-  },
-  "chaos dwarf warriors": {
-   "stats": [
-    {
-     "Name": "Chaos Dwarf Warrior",
-     "M": "3",
-     "WS": "4",
-     "BS": "3",
-     "S": "3",
-     "T": "4",
-     "W": "1",
-     "I": "2",
-     "A": "1",
-     "Ld": "9"
-    },
-    {
-     "Name": "Veteran Warrior",
-     "M": "3",
-     "WS": "4",
-     "BS": "3",
-     "S": "3",
-     "T": "4",
-     "W": "1",
-     "I": "2",
-     "A": "2",
-     "Ld": "9"
-    }
-   ],
-   "troopType": "Heavy infantry",
-   "baseSize": "25 x 25 mm",
-   "equipment": [
-    "Hand weapons and heavy armour"
-   ],
-   "notes": [
-    "Options:",
-    "The entire unit may take any of the following:",
-    "Any unit may:",
-    "A Veteran Warrior may purchase magic items up to a total of 25 points • 0-1 unit per 1,000 points may:",
-    "Blunderbuss Decimators"
-   ],
-   "specialRules": [
-    "Close Order",
-    "Detachment",
-    "Regimental Unit",
-    "Resolute",
-    "Shieldwall"
-   ]
-  },
-  "blunderbuss decimators": {
-   "stats": [
-    {
-     "Name": "Blunderbuss Decimator",
-     "M": "3",
-     "WS": "3",
-     "BS": "3",
-     "S": "3",
-     "T": "4",
-     "W": "1",
-     "I": "2",
-     "A": "1",
-     "Ld": "9"
-    },
-    {
-     "Name": "Veteran Warrior",
-     "M": "3",
-     "WS": "3",
-     "BS": "4",
-     "S": "3",
-     "T": "4",
-     "W": "1",
-     "I": "2",
-     "A": "1",
-     "Ld": "9"
-    }
-   ],
-   "troopType": "Heavy infantry",
-   "baseSize": "25 x 25 mm",
-   "equipment": [
-    "Hand weapons, heavy armour and Hailshot blunderbuss"
-   ],
-   "notes": [
-    "Options:",
-    "The entire unit may take",
-    "Any unit may:",
-    "A Veteran Warrior may take one of the following:",
-    "0-1 unit per 1,000 points may:",
-    "Hailfire!",
-    "A unit with this special rule can Volley Fire during a turn in which it moved, or whilst performing a Stand & Shoot charge reaction."
-   ],
-   "specialRules": [
-    "Open Order",
-    "Detachment",
-    "Resolute",
-    "Hailfire!"
-   ]
-  },
-  "infernal guard": {
-   "stats": [
-    {
-     "Name": "Infernal Guard",
-     "M": "3",
-     "WS": "4",
-     "BS": "3",
-     "S": "4",
-     "T": "4",
-     "W": "1",
-     "I": "2",
-     "A": "1",
-     "Ld": "9"
-    },
-    {
-     "Name": "Deathmask",
-     "M": "3",
-     "WS": "4",
-     "BS": "3",
-     "S": "4",
-     "T": "4",
-     "W": "1",
-     "I": "2",
-     "A": "2",
-     "Ld": "9"
-    }
-   ],
-   "troopType": "Heavy infantry",
-   "baseSize": "25 x 25 mm",
-   "equipment": [
-    "Hand weapons and heavy armour"
-   ],
-   "specialRules": [
-    "Close Order",
-    "Detachment",
-    "Regimental Unit",
-    "Resolute",
-    "Shieldwall",
-    "Stubborn"
-   ]
-  },
-  "infernal ironsworn": {
-   "stats": [
-    {
-     "Name": "Infernal Ironsworn",
-     "M": "3",
-     "WS": "5",
-     "BS": "3",
-     "S": "4",
-     "T": "4",
-     "W": "1",
-     "I": "2",
-     "A": "2",
-     "Ld": "9"
-    },
-    {
-     "Name": "Overseer",
-     "M": "3",
-     "WS": "5",
-     "BS": "3",
-     "S": "4",
-     "T": "4",
-     "W": "1",
-     "I": "2",
-     "A": "3",
-     "Ld": "9"
-    }
-   ],
-   "equipment": [
-    "Hand weapons and heavy armour"
-   ],
-   "troopType": "Heavy infantry",
-   "baseSize": "25 x 25 mm",
-   "specialRules": [
-    "Blackshard Armour",
-    "Close Order",
-    "Drilled",
-    "Ensorcelled Weapons",
-    "Quell Panic",
-    "Regimental Unit",
-    "Resolute",
-    "Shieldwall",
-    "Stubborn",
-    "Veteran"
-   ]
-  },
-  "k daai fireborn": {
-   "stats": [
-    {
-     "Name": "K’daai Fireborn",
-     "M": "6",
-     "WS": "4",
-     "BS": "2",
-     "S": "5",
-     "T": "4",
-     "W": "3",
-     "I": "4",
-     "A": "3",
-     "Ld": "7"
-    },
-    {
-     "Name": "Manburner",
-     "M": "6",
-     "WS": "4",
-     "BS": "2",
-     "S": "5",
-     "T": "4",
-     "W": "3",
-     "I": "4",
-     "A": "4",
-     "Ld": "8"
-    }
-   ],
-   "equipment": [
-    "Rage and hellfire (counts as hand weapons), heavy armour"
-   ],
-   "troopType": "Monstrous infantry",
-   "baseSize": "40 x 40 mm",
-   "specialRules": [
-    "Blazing Body",
-    "Born of Fire",
-    "Close Order",
-    "Ensorcelled Weapons",
-    "Fear",
-    "Flaming Attacks",
-    "Immune to Psychology",
-    "Regeneration (5+)",
-    "Unbreakable",
-    "Unstable",
-    "Warp-spawned"
-   ]
-  },
-  "bull centaur renders": {
-   "stats": [
-    {
-     "Name": "Bull Centaur Render 7",
-     "M": "Bull Centaur Render 7",
-     "WS": "4",
-     "BS": "2",
-     "S": "4",
-     "T": "5",
-     "W": "3",
-     "I": "3",
-     "A": "3",
-     "Ld": "8"
-    },
-    {
-     "Name": "Bull Centaur Ba’hal 7",
-     "M": "Bull Centaur Ba’hal 7",
-     "WS": "4",
-     "BS": "2",
-     "S": "4",
-     "T": "5",
-     "W": "3",
-     "I": "3",
-     "A": "4",
-     "Ld": "8"
-    },
-    {
-     "A": "3",
-     "I": "3",
-     "M": "7",
-     "S": "4",
-     "T": "5",
-     "W": "3",
-     "BS": "2",
-     "Ld": "8",
-     "WS": "4",
-     "Name": "Bull Centaur Render"
-    },
-    {
-     "A": "4",
-     "I": "3",
-     "M": "7",
-     "S": "4",
-     "T": "5",
-     "W": "3",
-     "BS": "2",
-     "Ld": "8",
-     "WS": "4",
-     "Name": "Bull Centaur Ba'hal"
-    }
-   ],
-   "notes": [
-    "The entire unit may take any of the following:"
-   ],
-   "troopType": "Monstrous cavalry",
-   "baseSize": "50 x 75 mm",
-   "equipment": [
-    "Hand weapons and light armour"
-   ],
-   "specialRules": [
-    "Armoured Hide (1)",
-    "Blackshard Armour",
-    "Close Order",
-    "Ensorcelled Weapons",
-    "Fear",
-    "First Charge",
-    "Impact Hits (D3)",
-    "Loner",
-    "Stampede",
-    "Stubborn",
-    "Swiftstride"
-   ]
-  },
-  "the great tauruses": {
-   "troopType": "Behemoth (Bale Taurus), Monstrous Creature (Great Taurus)",
-   "baseSize": "60 x 100 mm (Bale Taurus) 50 x 75mm to 60 x 100mm (Great Taurus)"
-  },
-  "deathshrieker rocket launcher": {
-   "stats": [
-    {
-     "Name": "Deathshrieker",
-     "M": "-",
-     "WS": "-",
-     "BS": "-",
-     "S": "-",
-     "T": "6",
-     "W": "3",
-     "I": "-",
-     "A": "-",
-     "Ld": "-"
-    },
-    {
-     "Name": "Chaos Dwarf Crew",
-     "M": "3",
-     "WS": "3",
-     "BS": "3",
-     "S": "3",
-     "T": "4",
-     "W": "3",
-     "I": "2",
-     "A": "3",
-     "Ld": "9"
-    }
-   ],
-   "equipment": [
-    "Demolition Rockets (see below), Infernal Incendiaries (see below), hand weapons and light armour"
-   ],
-   "troopType": "War machine",
-   "baseSize": "50 x 75 mm (war machine), 25 x 25 mm (crew)",
-   "specialRules": [
-    "Blackshard Armour",
-    "Skirmishers"
-   ]
-  },
-  "dreadquake mortar": {
-   "baseSize": "No base or 200 mm x 60 mm",
-   "equipment": [
-    "Dreadquake Mortar (see below), hand weapons and light armour."
-   ],
-   "notes": [
-    "Indentured Ogres"
-   ]
-  },
-  "indentured ogres": {
-   "stats": [
-    {
-     "Name": "Ogre Loader",
-     "M": "-",
-     "WS": "3",
-     "BS": "3",
-     "S": "4",
-     "T": "-",
-     "W": "(+2)",
-     "I": "2",
-     "A": "2",
-     "Ld": "8"
-    }
-   ],
-   "notes": [
-    "Note: The crew of a War Machine with an Ogre Loader has +2 Wounds, and can make 2 additional attacks with the Weapon Skill, Strength and Initiative shown above.",
-    "Unit Size: 1",
-    "Options:",
-    "May take Naptha Bombs +8 points"
-   ],
-   "troopType": "War Machine",
-   "baseSize": "N/A",
-   "equipment": [
-    "Hand Weapon"
-   ],
-   "specialRules": [
-    "Enough for Everyone",
-    "Indentured Crew"
-   ]
-  },
-  "magma cannon": {
-   "equipment": [
-    "Fire thrower, hand weapons and light armour"
-   ]
-  },
-  "hobgoblin bolt thrower": {
-   "stats": [
-    {
-     "Name": "Bolt Thrower",
-     "M": "-",
-     "WS": "-",
-     "BS": "-",
-     "S": "-",
-     "T": "5",
-     "W": "3",
-     "I": "-",
-     "A": "-",
-     "Ld": "-"
-    },
-    {
-     "Name": "Hobgoblin Crew",
-     "M": "4",
-     "WS": "3",
-     "BS": "3",
-     "S": "3",
-     "T": "3",
-     "W": "2",
-     "I": "3",
-     "A": "2",
-     "Ld": "6"
-    }
-   ],
-   "troopType": "War machine",
-   "baseSize": "50 x 50 mm (war machine), 25 x 25 mm (crew)",
-   "equipment": [
-    "Bolt thrower, hand weapons and light armour"
-   ],
-   "specialRules": [
-    "Levies",
-    "Skirmishers"
-   ]
-  }
- },
- "notes": [],
- "magicItemText": {
-  "armour-of-bazherak-the-cruel": {
-   "body": "The Armour of Bazherak the Cruel is a suit of full plate armour. In addition, its wearer has the Immune to Psychology and Magic Resistance (-2) special rules."
-  },
-  "mantle-of-stone": {
-   "body": "0-1 per model. The wearer of a Mantle of Stone has a +1 modifier to their Toughness characteristic, but a -1 modifier to their Initiative characteristic."
-  },
-  "ashen-banner": {
-   "body": "Any enemy model that shoots at a unit carrying the Ashen Banner suffers an additional -1 To Hit modifier."
-  },
-  "daemonic-familiar": {
-   "body": "Enemy models engaged in combat with the owner of a Daemonic Familiar must reduce the Ward or Regeneration value of any Ward or Regeneration save they have by 1, to a minimum of 6+."
-  }
- }
 }

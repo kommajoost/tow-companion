@@ -72,6 +72,62 @@ const ADDED = [
       baseSize: '25 x 25 mm',
     },
   },
+  {
+    pack: 'cd',
+    category: 'core',
+    // Bron: het Renegade V2-document, Chaos Dwarfs Grand Army Composition List. De Core-clausule
+    // luidt letterlijk: "Chaos Dwarf Warriors, Blunderbus Decimators, Infernal Guard, Hobgoblin
+    // Cutthroats | 0-1 Hobgoblin Wolf Riders | 0-1 Black Orc Mob | 0-1 Infernal Ironsworn (...)".
+    // De Rare-clausule noemt ze OOK: "Hobgoblin Wolf Riders per Hobgoblin Khan taken, Dreadquake
+    // Mortars". Beide gelden dus, en de bron laat je ze naast elkaar nemen (Joost 28-08-2026).
+    //
+    // WAAROM EEN DUPLICAAT-ID. Een unit staat in de catalogus in precies EEN categorie-array, dus
+    // een id kan niet tegelijk core en rare zijn. Dezelfde catalogus lost dat al zo op voor de
+    // Infernal Ironsworn: `infernal-ironsworn` (special) naast `infernal-ironsworn-core` (core).
+    // Dit is hetzelfde patroon. De compiler kon het niet zelf: hij ziet de unit in twee secties
+    // onder een id staan en laat hem dan bewust staan waar hij stond ("named plainly in Core and
+    // Rare -- left in rare") in plaats van te gokken. Vandaar hier, met de hand en met de bron erbij.
+    //
+    // Het profiel is een letterlijke kopie van `hobgoblin-wolf-raiders` uit chaos-dwarfs.json
+    // (12 pt, min 5, Feigned Flight/Reserve Move met hun eigen 0-1-per-1000-noten). Alleen het id
+    // verschilt, plus de 0-1-noot op de unit zelf.
+    //
+    // DE 0-1 IS EEN NOOT, GEEN SLOT. De harde 0-X-grenzen staan in composition-rules.json, en die
+    // wordt opgezocht op `list.composition` -- daar bestaat geen `cd-renegade-v2`-sleutel. Voor de
+    // hele V2-pack worden die caps vandaag dus nergens afgedwongen; ze staan als tekst bij de unit.
+    // Deze regel gedraagt zich daarmee precies als elke andere 0-X in dit pack.
+    unit: {
+      id: 'hobgoblin-wolf-riders-core',
+      name_en: 'Hobgoblin Wolf Riders',
+      points: 12,
+      minimum: 5,
+      maximum: 0,
+      command: [
+        { name_en: 'Boss (champion)', points: 8 },
+        { name_en: 'Standard bearer', points: 6 },
+        { name_en: 'Musician', points: 6 },
+      ],
+      equipment: [
+        { name_en: 'Hand weapons', points: 0, perModel: true, active: true, equippedDefault: true },
+      ],
+      armor: [
+        { name_en: 'Light armour, Shields', points: 0, perModel: true, active: true },
+      ],
+      options: [
+        { name_en: 'Cavalry spears', points: 0, perModel: true },
+        { name_en: 'Shortbow', points: 1, perModel: true, minimum: 0, maximum: 0 },
+        { name_en: 'Feigned Flight', points: 2, perModel: true, notes: { name_en: '0-1 per 1000 points' } },
+        { name_en: 'Reserve Move', points: 1, perModel: true, notes: { name_en: '0-1 per 1000 points' } },
+      ],
+      mounts: [],
+      items: [],
+      lores: [],
+      specialRules: {
+        name_en: 'Backstab, Evasive, Fast Cavalry, Fire & Flee, Levies, Open Order, Skirmishers, Swiftstride',
+      },
+      notes: { name_en: '0-1' },
+    },
+  },
 ];
 
 for (const spec of ADDED) {
