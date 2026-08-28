@@ -240,6 +240,17 @@ export function resolveOptionSlug(label: string, idx: Map<string, string>, facti
   //    een goed antwoord overrulen — het vult alleen een gat. Gemeten over de hele catalogus lost
   //    het 13 van de 61 onopgeloste wargear-labels op, en alle dertien wijzen naar de juiste
   //    pagina; niets ging naar de verkeerde.
+  // EEN BUNDEL BLIJFT EEN BUNDEL. Een label kan meerdere stukken wargear noemen ("Repeater bolt
+  // thrower, Hand weapons"), en de aanroeper splitst zo'n bundel zelf in losse chips — maar alleen
+  // als het GEHELE label geen pagina vindt. Zonder deze poort loste stap 5 de bundel op naar zijn
+  // laatste onderdeel en toonde de popup alleen nog "Hand weapons" in plaats van beide wapens
+  // (Joost, 17-08). Dat trof elke unit met gebundelde wargear.
+  //
+  // Een per-woord-grens volstond niet: de bron schrijft de komma soms als los teken ("Slashing
+  // talons , Gnashing maws"), en dan zit hij niet in het weggelaten deel maar vooraan de rest.
+  // Overslaan is bovendien geen verlies — na het splitsen heeft elk onderdeel geen komma meer en
+  // krijgt het deze stap alsnog.
+  if (noBracket.includes(',')) return null;
   for (let start = 1; start < words.length; start++) {
     const rest = words.slice(start).join(' ');
     if (rest.length < 3) break;
