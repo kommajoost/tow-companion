@@ -251,13 +251,20 @@ export function resolveOptionSlug(label: string, idx: Map<string, string>, facti
   // Overslaan is bovendien geen verlies — na het splitsen heeft elk onderdeel geen komma meer en
   // krijgt het deze stap alsnog.
   if (noBracket.includes(',')) return null;
+  // ...en al helemaal geen ZIN. Deze stap is een terugval voor wargear-NAMEN; laat je hem los op
+  // een alinea, dan vindt hij ergens achteraan wel een woord dat toevallig een pagina heeft en
+  // wordt een halve regeltekst als chip getoond. Dezelfde prozatest als magicItemRules: een punt
+  // gevolgd door witruimte. Plus een woordgrens — de langste echte naam die deze stap oplost is
+  // "Lashing tails and venomous fangs (Hand weapons)", zeven woorden.
+  if (/\.\s/.test(noBracket) || words.length > 8) return null;
   for (let start = 1; start < words.length; start++) {
     const rest = words.slice(start).join(' ');
     if (rest.length < 3) break;
-    for (const kandidaat of [rest, `${rest}s`, rest.replace(/s$/, '')]) {
-      const k = normalize(kandidaat);
-      if (k && idx.has(k)) return idx.get(k)!;
-    }
+    // Via resolveRuleSlug, niet via een kale index-lookup: die functie pelt de haakjes eraf en doet
+    // zelf enkelvoud/meervoud. Zonder dat bleef "(Hand weapons)" op de sluithaak steken — de
+    // meervoud-s stond niet aan het eind van de string, dus werd hij nooit weggehaald.
+    const raak = resolveRuleSlug(rest, idx, faction);
+    if (raak) return raak;
   }
   return null;
 }

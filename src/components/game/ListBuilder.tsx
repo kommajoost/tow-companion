@@ -21,6 +21,7 @@ import { useUI } from '../../state';
 import { applyOverlayItems, catalogueFor, applyOverlayMagicText, applyOverlayMountText, applyOverlayStatIndex, hasOverlay, isOverlay, overlayCompsFor, overlayStatsFor, OVERLAY_FILES, type CompositionOverlay, type MountProfileText } from '../../lib/overlays';
 import { InfoSheet, type InfoSheetData } from './InfoSheet';
 import type { MagicText } from '../../lib/builderToArmy';
+import { magicItemRules } from '../../lib/builderToArmy';
 import type { UnitProfile } from '../../types';
 
 const BASE = import.meta.env.BASE_URL;
@@ -624,7 +625,14 @@ export function ListBuilder() {
               // regelpagina, dus als losse tekstregel zou je er niet op kunnen tikken. Dubbelen eruit,
               // want een item kan dezelfde regel in beide velden dragen.
               const uitProfiel = (tx?.profiel ?? []).flatMap((p) => (p.specialRules ?? '').split(','));
-              const regels = [...(tx?.body ?? '').split(','), ...uitProfiel]
+              // PROZA IS GEEN REGELLIJST. De body van een item is meestal "Armour Bane (1), Magical
+              // Attacks" — een opsomming die je op komma's splitst tot losse chips. Maar hij kan ook
+              // een zin zijn, en dan levert splitsen zinsfragmenten op die als chip worden getoond:
+              // de Cold-Blooded Banner werd één gouden pil van een halve alinea die het scherm uit
+              // liep, met de rest eronder als losse regels (Joost, 17-08). magicItemRules maakt dat
+              // onderscheid al voor het spel-scherm — een punt gevolgd door een spatie betekent
+              // proza — en die toets hoort hier net zo goed.
+              const regels = [...magicItemRules(tx?.body), ...uitProfiel]
                 .map((r) => r.trim())
                 .filter(Boolean);
               // TERUGVAL OP DE REGELPAGINA (15-08-2026). Zeven catalogus-items zijn geen echte magic

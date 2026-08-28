@@ -34,7 +34,7 @@ const normMountProfile = (s: string) => (s || '').toLowerCase().replace(/\{[^}]*
 // "Armour Bane (1), Magical Attacks", a rune's effects). Prose ("Notes: …" or full sentences) is kept
 // as a single line rather than chopped into fake rule chips.
 const RANGED_WEAPON = /\bbow\b|crossbow|handbow|pistol|\bsling\b|throwing|thrown|shooting|\brange\b/i;
-function magicItemRules(body?: string): string[] {
+export function magicItemRules(body?: string): string[] {
   const t = (body || '').replace(/\s+/g, ' ').trim();
   if (!t) return [];
   if (/^notes\b/i.test(t) || /\.\s/.test(t)) return [t];
