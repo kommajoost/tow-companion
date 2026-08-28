@@ -651,7 +651,17 @@
     "spell-vanhal-s-danse-macabre": {
       "name_en": "Vanhal’s Danse Macabre",
       "body": [
-        "Type: Enchantment Casting Value: 7+/11+ Range: 12\"",
+        {
+          "tabel": {
+            "headers": [],
+            "rows": [
+              [
+                "Type",
+                "Enchantment Casting Value: 7+/11+ Range: 12\""
+              ]
+            ]
+          }
+        },
         "Effect: If this spell is cast with a casting result of 7 or more, the target friendly unit gains a +D3 modifier to one of the following characteristics (to a maximum of 10). If this",
         "spell is cast with a casting result of 11 or more, the target friendly unit gains a +D3 modifier to two of the following characteristics (to a maximum of 10). This spell lasts until your next Start of Turn sub-phase.",
         "Movement • Weapon Skill • Initiative"
@@ -661,7 +671,17 @@
     "spell-hellish-vigour": {
       "name_en": "Hellish Vigour",
       "body": [
-        "Type: Enchantment Casting Value: 6+/10+ Range: Self",
+        {
+          "tabel": {
+            "headers": [],
+            "rows": [
+              [
+                "Type",
+                "Enchantment Casting Value: 6+/10+ Range: Self"
+              ]
+            ]
+          }
+        },
         "Effect: If this spell is cast with a casting result of 6 or more, a single friendly unit that has the Necromantic Undead special rule and is within the caster’s Command range gains the Reserve Move special rule. If this spell is cast with a casting result of 10 or more, every friendly unit that has the Necromantic Undead special rule and is within the caster’s Command range gains the Reserve Move special rule. This spell lasts until the end of this turn.",
         "| | | | | | | | | | | | |"
       ],
@@ -670,9 +690,25 @@
     "spell-raise-dead": {
       "name_en": "Raise Dead",
       "body": [
-        "Type: Enchantment",
-        "Casting Value: 9+",
-        "Range: 12\"",
+        {
+          "tabel": {
+            "headers": [],
+            "rows": [
+              [
+                "Type",
+                "Enchantment"
+              ],
+              [
+                "Casting Value",
+                "9+"
+              ],
+              [
+                "Range",
+                "12\""
+              ]
+            ]
+          }
+        },
         "Effect: Place a unit of 2D3 Zombies on the battlefield anywhere completely within 12\" of this model, but not within 1\" of any enemy models. This unit cannot declare a charge during the turn in which it was raised:",
         "Note that units of Zombies that are created in this way are not worth any Victory Points, do not count as Core, and are considered to have a starting unit size of 10 models for the purposes of the Invocation of Nehek special rule.",
         "."
@@ -683,18 +719,60 @@
       "name_en": "Lore of Undeath",
       "body": [
         "A Wizard with the ‘Lore of Undeath’ special rule may discard one of their randomly generated spells as normal. When they do so, they may select instead either the signature spell of their chosen Lore of Magic, or one of the spells listed below.",
-        "Vanhal’s Danse Macabre",
-        "Type: Enchantment Casting Value: 7+/11+ Range: 12\"",
+        {
+          "kop": "Vanhal’s Danse Macabre"
+        },
+        {
+          "tabel": {
+            "headers": [],
+            "rows": [
+              [
+                "Type",
+                "Enchantment Casting Value: 7+/11+ Range: 12\""
+              ]
+            ]
+          }
+        },
         "Effect: If this spell is cast with a casting result of 7 or more, the target friendly unit gains a +D3 modifier to one of the following characteristics (to a maximum of 10). If this",
         "spell is cast with a casting result of 11 or more, the target friendly unit gains a +D3 modifier to two of the following characteristics (to a maximum of 10). This spell lasts until your next Start of Turn sub-phase.",
         "Movement • Weapon Skill • Initiative",
-        "Hellish Vigour",
-        "Type: Enchantment Casting Value: 6+/10+ Range: Self",
+        {
+          "kop": "Hellish Vigour"
+        },
+        {
+          "tabel": {
+            "headers": [],
+            "rows": [
+              [
+                "Type",
+                "Enchantment Casting Value: 6+/10+ Range: Self"
+              ]
+            ]
+          }
+        },
         "Effect: If this spell is cast with a casting result of 6 or more, a single friendly unit that has the Necromantic Undead special rule and is within the caster’s Command range gains the Reserve Move special rule. If this spell is cast with a casting result of 10 or more, every friendly unit that has the Necromantic Undead special rule and is within the caster’s Command range gains the Reserve Move special rule. This spell lasts until the end of this turn.",
-        "Raise Dead",
-        "Type: Enchantment",
-        "Casting Value: 9+",
-        "Range: 12\"",
+        {
+          "kop": "Raise Dead"
+        },
+        {
+          "tabel": {
+            "headers": [],
+            "rows": [
+              [
+                "Type",
+                "Enchantment"
+              ],
+              [
+                "Casting Value",
+                "9+"
+              ],
+              [
+                "Range",
+                "12\""
+              ]
+            ]
+          }
+        },
         "Effect: Place a unit of 2D3 Zombies on the battlefield anywhere completely within 12\" of this model, but not within 1\" of any enemy models. This unit cannot declare a charge during the turn in which it was raised:",
         "Note that units of Zombies that are created in this way are not worth any Victory Points, do not count as Core, and are considered to have a starting unit size of 10 models for the purposes of the Invocation of Nehek special rule.",
         "."

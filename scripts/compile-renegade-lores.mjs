@@ -74,10 +74,28 @@ for (const key of PACKS) {
     }
     const body = [...intro];
     const spreuken = [];
+    // Een spreuk is geen alinea maar een blokje: naam, dan Type / Casting Value / Range, dan pas
+    // het effect. Als platte tekst achter elkaar werd dat een muur waarin je de spreuken niet meer
+    // uit elkaar houdt (Joost, 17-08). Het rulebook zet die velden in een tabel; hier ook.
+    //
+    // Alleen de AANEENGESLOTEN kop-velden gaan de tabel in. Duikt zo'n label later nog eens op —
+    // ergens in een effect-zin — dan blijft het staan waar het staat; anders verplaatst dit script
+    // stilletjes tekst binnen een regel, en dat is precies wat het niet mag doen.
+    const VELD = /^(Type|Casting Value|Range|Arcane Configuration)s*:s*(.+)$/i;
     for (const [spreuk, lijnen] of groepen) {
       if (!/Casting Value/i.test(lijnen.join(' '))) continue;
       spreuken.push(spreuk);
-      body.push(spreuk, ...lijnen);
+      body.push({ kop: spreuk });
+      let i = 0;
+      const rijen = [];
+      while (i < lijnen.length) {
+        const m = VELD.exec(lijnen[i].trim());
+        if (!m) break;
+        rijen.push([m[1], m[2].trim()]);
+        i++;
+      }
+      if (rijen.length) body.push({ tabel: { headers: [], rows: rijen } });
+      body.push(...lijnen.slice(i));
     }
     if (!spreuken.length) {
       console.warn(`${key}/${loreSlug}: geen spreuk met een Casting Value gevonden — overgeslagen`);

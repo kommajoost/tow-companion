@@ -726,12 +726,38 @@
       "name_en": "Engine Of The Gods",
       "body": [
         "An Ancient Stegadon equipped with an Engine of the Gods gains the following special rules:",
-        "Arcane Configuration: Friendly models that cast a Bound spell whilst within 12\" of one or more Engine of the Gods may apply a +1 modifier to the Casting roll.",
+        {
+          "tabel": {
+            "headers": [],
+            "rows": [
+              [
+                "Arcane Configuration",
+                "Friendly models that cast a Bound spell whilst within 12\" of one or more Engine of the Gods may apply a +1 modifier to the Casting roll."
+              ]
+            ]
+          }
+        },
         "An Engine of the Gods can cast the following Bound spells, with a Power Level of 2:",
         "Burning Alignment:",
-        "Type: Magic Missile",
-        "Casting Value: 9+",
-        "Range: 15\"",
+        {
+          "tabel": {
+            "headers": [],
+            "rows": [
+              [
+                "Type",
+                "Magic Missile"
+              ],
+              [
+                "Casting Value",
+                "9+"
+              ],
+              [
+                "Range",
+                "15\""
+              ]
+            ]
+          }
+        },
         "Effect: The target enemy unit suffers 2D6 Strength 4 hits, each with an AP of -. This Bound spell has the Flaming Attacks special rule."
       ],
       "overrides": "engine-of-the-gods"
@@ -739,9 +765,25 @@
     "portent-of-warding": {
       "name_en": "Portent of Warding",
       "body": [
-        "Type: Enchantment",
-        "Casting Value: 8+",
-        "Range: Self",
+        {
+          "tabel": {
+            "headers": [],
+            "rows": [
+              [
+                "Type",
+                "Enchantment"
+              ],
+              [
+                "Casting Value",
+                "8+"
+              ],
+              [
+                "Range",
+                "Self"
+              ]
+            ]
+          }
+        },
         "Effect: Remains in Play. Whilst this Bound spell is in play, this model and any friendly unit within 12\" of this model gains a 6+ Ward save against any wounds suffered. However, if this model casts the Burning Alignment Bound spell, this Bound spell will immediately expire."
       ],
       "overrides": null
@@ -765,7 +807,17 @@
     "spell-apotheosis": {
       "name_en": "Apotheosis",
       "body": [
-        "Type: Enchantment Casting Value: 8+/10+ Range: 24\"",
+        {
+          "tabel": {
+            "headers": [],
+            "rows": [
+              [
+                "Type",
+                "Enchantment Casting Value: 8+/10+ Range: 24\""
+              ]
+            ]
+          }
+        },
         "Effect: This spell can only target friendly characters but may target characters engaged in combat. If this spell is cast with a casting result of 8 or more, the target friendly model immediately regains 1 lost Wound. If this spell is cast with a casting result of 10 or more, the target friendly model immediately regains D3 lost Wounds.",
         "In addition, the target friendly character gains the Fear special rule. If they already have the Fear special rule, they instead gain the Terror special rule."
       ],
@@ -774,9 +826,25 @@
     "spell-monsoon": {
       "name_en": "Monsoon",
       "body": [
-        "Type: Magical Vortex",
-        "Casting Value: 10+",
-        "Range: 18\"",
+        {
+          "tabel": {
+            "headers": [],
+            "rows": [
+              [
+                "Type",
+                "Magical Vortex"
+              ],
+              [
+                "Casting Value",
+                "10+"
+              ],
+              [
+                "Range",
+                "18\""
+              ]
+            ]
+          }
+        },
         "Effect: Remains in play. Place a large (5\") blast template so that its central hole is within 18\" of the caster. Whilst in play, the template is treated as a ‘water feature’ that is dangerous terrain over which no line of sight can be drawn. During every Start of Turn sub-phase (see page 95) the template may move D6\" in a direction of the caster’s choosing. Any enemy unit that moves through the template, or that the template moves over becomes 'drenched' for as long as this spell remains in play .",
         "A drenched unit suffers a -1 To Hit modifier during the Shooting phase. A drenched model whose troop type is ‘war machine’ must roll a D6 before shooting. On a roll of 3 or less the model fails to shoot this turn."
       ],
@@ -874,14 +942,44 @@
       "name_en": "Lore of Lustria",
       "body": [
         "A Wizard with the ‘Lore of Lustria’ special rule may discard one of their randomly generated spells as normal. When they do so, they may select instead either the signature spell of their chosen Lore of Magic, or one of the spells listed below.",
-        "Apotheosis",
-        "Type: Enchantment Casting Value: 8+/10+ Range: 24\"",
+        {
+          "kop": "Apotheosis"
+        },
+        {
+          "tabel": {
+            "headers": [],
+            "rows": [
+              [
+                "Type",
+                "Enchantment Casting Value: 8+/10+ Range: 24\""
+              ]
+            ]
+          }
+        },
         "Effect: This spell can only target friendly characters but may target characters engaged in combat. If this spell is cast with a casting result of 8 or more, the target friendly model immediately regains 1 lost Wound. If this spell is cast with a casting result of 10 or more, the target friendly model immediately regains D3 lost Wounds.",
         "In addition, the target friendly character gains the Fear special rule. If they already have the Fear special rule, they instead gain the Terror special rule.",
-        "Monsoon",
-        "Type: Magical Vortex",
-        "Casting Value: 10+",
-        "Range: 18\"",
+        {
+          "kop": "Monsoon"
+        },
+        {
+          "tabel": {
+            "headers": [],
+            "rows": [
+              [
+                "Type",
+                "Magical Vortex"
+              ],
+              [
+                "Casting Value",
+                "10+"
+              ],
+              [
+                "Range",
+                "18\""
+              ]
+            ]
+          }
+        },
         "Effect: Remains in play. Place a large (5\") blast template so that its central hole is within 18\" of the caster. Whilst in play, the template is treated as a ‘water feature’ that is dangerous terrain over which no line of sight can be drawn. During every Start of Turn sub-phase (see page 95) the template may move D6\" in a direction of the caster’s choosing. Any enemy unit that moves through the template, or that the template moves over becomes 'drenched' for as long as this spell remains in play .",
         "A drenched unit suffers a -1 To Hit modifier during the Shooting phase. A drenched model whose troop type is ‘war machine’ must roll a D6 before shooting. On a roll of 3 or less the model fails to shoot this turn."
       ],

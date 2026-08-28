@@ -9,6 +9,15 @@ const PACKS = ['de', 'sk', 'ok', 'cd', 'doc', 'lm', 'vc'];
 const fail = (message) => { throw new Error(message); };
 const read = (name) => JSON.parse(readFileSync(new URL(name, REN), 'utf8'));
 const assert = (condition, message) => { if (!condition) fail(message); };
+
+/** De tekst van één body-deel. Een regelpagina bestaat uit alinea's (string), spreukkoppen ({kop})
+ *  en veldtabellen ({tabel: {headers, rows}}); alle drie dragen tekst die deze controles moeten
+ *  kunnen lezen. Zonder dit zou een spreuk als "ontbrekend" gelden precies OMDAT hij netjes is
+ *  opgemaakt — dan straft de controle de opmaak (Joost, 17-08). */
+const tekstVanDeel = (deel) => (typeof deel === 'string' ? deel
+  : 'kop' in deel ? deel.kop
+    : [...(deel.tabel?.headers ?? []), ...(deel.tabel?.rows ?? []).flat()].join(': '));
+const bodyTekst = (body) => (body ?? []).map(tekstVanDeel).join(' ');
 const norm = (value) => String(value ?? '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim();
 
 for (const key of PACKS) {
@@ -130,7 +139,7 @@ for (const key of PACKS) {
     // ("Vanhal’s"), de spreukenlijst krijgt via de compiler een rechte. Beide horen zo, en de
     // pagina verbatim laten weegt zwaarder dan een vergelijking die daarover struikelt.
     const plat = (value) => String(value).toLowerCase().replace(/[‘’ʼ]/g, "'");
-    const body = plat((rule.body ?? []).join(' '));
+    const body = plat(bodyTekst(rule.body));
     for (const spell of patch.spells ?? []) {
       assert(body.includes(plat(spell.name)),
         `${key}/${loreSlug}: "${spell.name}" staat niet op de lore-pagina van het pack`);
@@ -207,8 +216,8 @@ for (const spell of naggarothPatch) {
 assert(['Black Horror', 'Cursing Word', 'Power of Darkness'].every((name) =>
   naggarothMerged.some((spell) => spell.name === name)),
   'de: Lore of Naggaroth popup does not contain the complete V2 spell list');
-assert(de.rules['spell-cursing-word']?.body?.some((line) => /Casting Value: 9\+/.test(line))
-  && de.rules['spell-power-of-darkness']?.body?.some((line) => /Casting Value: 7\+/.test(line)),
+assert(/Casting Value: 9+/.test(bodyTekst(de.rules['spell-cursing-word']?.body))
+  && /Casting Value: 7+/.test(bodyTekst(de.rules['spell-power-of-darkness']?.body)),
   'de: Lore of Naggaroth V2 spell text missing');
 
 const sk = read('sk-renegade-v2.json');

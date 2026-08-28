@@ -101,7 +101,17 @@ export interface OverlayComposition {
 /** One special rule as the pack words it. `body` is paragraphs, in order. */
 export interface OverlayRule {
   name_en: string;
-  body: string[];
+  /** De inhoud van de regelpagina, op volgorde.
+   *
+   *  Een kale string is een alinea. Dat volstond zolang een regel proza was, maar een LORE is dat
+   *  niet: die bestaat uit spreuken, en elke spreuk heeft een naam, een blokje Type / Casting Value
+   *  / Range en dan pas het effect. Als platte alinea's achter elkaar werd dat een muur waarin je
+   *  de spreuken niet meer uit elkaar houdt (Joost, 17-08, Lore of Naggaroth). Het rulebook zelf zet
+   *  die velden in een tabel; deze vorm kan dat ook.
+   *
+   *  `tables` hierónder blijft bestaan voor het andere geval — tabellen die vóór de tekst horen,
+   *  zoals een wapenprofiel. Deze inline vorm is voor tabellen die ergens MIDDENIN staan. */
+  body: (string | { kop: string } | { tabel: { headers: string[]; rows: string[][] } })[];
   /** Tabellen die bij deze regel horen, als tabel bewaard in plaats van platgeslagen tot tekst.
    *
    *  Nodig omdat de bron ze wél als tabel zet maar een blok-tekst er één regel van maakt: de
@@ -583,12 +593,20 @@ export function applyOverlayMountText<T extends Record<string, MountProfileText>
 }
 
 /** Plain paragraphs as the Contentful-shaped rich text the rule sheet already renders. */
-const richText = (paras: string[]): Rule['body'] => ({
+const richText = (paras: OverlayRule['body']): Rule['body'] => ({
   nodeType: 'document',
-  content: paras.map((p) => ({
-    nodeType: 'paragraph',
-    content: [{ nodeType: 'text', value: p, marks: [] }],
-  })),
+  content: paras.map((p) => {
+    if (typeof p !== 'string' && 'tabel' in p) return richTable(p.tabel.headers, p.tabel.rows);
+    if (typeof p !== 'string' && 'kop' in p) return {
+      nodeType: 'heading-3',
+      data: {},
+      content: [{ nodeType: 'text', value: p.kop, marks: [], data: {} }],
+    };
+    return {
+      nodeType: 'paragraph',
+      content: [{ nodeType: 'text', value: p as string, marks: [] }],
+    };
+  }),
 });
 
 const tableCell = (value: string, header = false) => ({
@@ -618,7 +636,7 @@ const richTable = (headers: string[], rows: string[][]) => ({
   ],
 });
 
-const richRuleBody = (rule: OverlayRule, paras: string[]): Rule['body'] => {
+const richRuleBody = (rule: OverlayRule, paras: OverlayRule['body']): Rule['body'] => {
   const body = richText(paras);
   if (!body) return body;
   // Tabellen vóór de tekst: bij een wapen is het profiel het eerste dat je wil zien, en bij een
@@ -681,7 +699,11 @@ export function applyOverlayRules(rules: Record<string, Rule>, overlay: Composit
       pageReference: null,
       parentSlug: base?.parentSlug ?? 'special-rules',
       body: richRuleBody(r, paras),
-      bodyIndex: r.body.join(' '),
+      // De zoekindex moet ALLE tekst dragen, ook die uit koppen en tabelcellen — een spreuk is
+      // anders niet meer op naam te vinden zodra hij netjes is opgemaakt.
+      bodyIndex: r.body.map((deel) => (typeof deel === 'string' ? deel
+        : 'kop' in deel ? deel.kop
+          : [...deel.tabel.headers, ...deel.tabel.rows.flat()].join(' '))).join(' '),
       childSlugs: [],
       prevSlug: null,
       nextSlug: null,
