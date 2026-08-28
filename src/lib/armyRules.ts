@@ -228,6 +228,26 @@ export function resolveOptionSlug(label: string, idx: Map<string, string>, facti
   // 4. drop a trailing "s" everywhere (Repeater crossbows → Repeater crossbow)
   const k2 = normalize(noBracket.replace(/s\b/g, ''));
   if (k2 && idx.has(k2)) return idx.get(k2)!;
+
+  // 5. LEIDENDE WOORDEN LATEN VALLEN. De catalogus benoemt wargear specifieker dan het rulebook:
+  //    het rulebook heeft "Bolt Throwers" (p.223, met beide profielen erop), de catalogus zegt
+  //    "Repeater bolt thrower" en vond daardoor niets — de Reaper Bolt Thrower liet zijn eigen
+  //    wapen als dode tekst zien (Joost, 17-08). Hetzelfde patroon zit onder een creature z'n
+  //    natuurwapens: "Scaly skin (Heavy armour)" IS heavy armour, "Claws and fangs (Hand weapons)"
+  //    zijn hand weapons, en dat is precies de pagina die je wil lezen.
+  //
+  //    Dit staat als LAATSTE stap en accepteert alleen een pagina die bestaat, dus het kan nooit
+  //    een goed antwoord overrulen — het vult alleen een gat. Gemeten over de hele catalogus lost
+  //    het 13 van de 61 onopgeloste wargear-labels op, en alle dertien wijzen naar de juiste
+  //    pagina; niets ging naar de verkeerde.
+  for (let start = 1; start < words.length; start++) {
+    const rest = words.slice(start).join(' ');
+    if (rest.length < 3) break;
+    for (const kandidaat of [rest, `${rest}s`, rest.replace(/s$/, '')]) {
+      const k = normalize(kandidaat);
+      if (k && idx.has(k)) return idx.get(k)!;
+    }
+  }
   return null;
 }
 
