@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { TOW, towFont, engraved } from '../../design/tow';
 import { useGame } from '../../game';
 import { vpSchaal, type VpBonus, type VpResultaat, type VpSchaal } from '../../lib/victoryPoints';
-import { battleByCode, type CampaignBattle } from '../../lib/campaignBattle';
-import { objectivesVoor, type ObjectiveDef } from '../../lib/objectiveVp';
+import { type ObjectiveDef } from '../../lib/objectiveVp';
 import { useCampagneUitslag } from './useCampagneUitslag';
+import { useObjectives } from './useObjectives';
 
 const eb = engraved as React.CSSProperties;
 const display = towFont.display;
@@ -40,29 +40,18 @@ export function VpPanel({ compact = false, res, hostName, guestName, hideOutcome
   /** Verberg de uitslag-badge (bv. in het End-battle-overzicht, waar de headline de uitslag al toont). */
   hideOutcome?: boolean;
 }) {
-  const { tracker, setTracker, code } = useGame();
+  const { tracker, setTracker } = useGame();
   const [rulesOpen, setRulesOpen] = useState(false);
   // Bonussen staan OPEN by default (Joost 15-08-2026). Dichtgeklapt scheelde ruimte, maar dit is
   // precies het deel dat je zelf moet aanvinken — de tracker kan een gevallen General of een
   // scenario-objective niet zien. Wat je moet doen hoort niet achter een klik te zitten; de
   // regel-referentie eronder (rulesOpen) blijft wél dicht, want dat is naslag.
   const [bonusOpen, setBonusOpen] = useState(true);
-  const [battle, setBattle] = useState<CampaignBattle | null>(null);
-
-  // Campagne-battle ophalen (via de game-code) → scenario + secondaries bepalen welke objective-VP-
-  // controls we tonen. Voor gewone (niet-campagne) potjes blijft dit leeg.
-  useEffect(() => {
-    if (!code) { setBattle(null); return; }
-    let alive = true;
-    battleByCode(code).then((b) => { if (alive) setBattle(b); }).catch(() => { if (alive) setBattle(null); });
-    return () => { alive = false; };
-  }, [code]);
-  const sc = battle?.scenario as Record<string, unknown> | null | undefined;
-  const scenarioId = typeof sc?.scenario === 'string' ? sc.scenario : null;
-  const secondaries = Array.isArray(sc?.secondaries) ? (sc.secondaries as unknown[]).filter((x): x is string => typeof x === 'string') : [];
-  // De derde parameter zet de Battle March-terugval aan: weet de sheet niet welk objectief er ligt,
-  // dan tonen we treasure troves EN strategic landmark bij naam in plaats van een anoniem veld.
-  const objDefs = objectivesVoor(scenarioId, secondaries, tracker.battleMarch === true);
+  // Welke objective-VP-posten gelden, komt uit useObjectives: die haalt de campagne-battle op en
+  // leidt scenario + secondaries af. Gedeeld met het paneel dat tijdens de rondes meetelt, want
+  // twee kopieën van deze afleiding is precies hoe twee schermen het oneens worden over WELKE
+  // objectives er gelden (29-08).
+  const objDefs = useObjectives();
   // De ACTIEVE VP-schaal. Battle March halveert General/BSB/standaard, dus de labels moeten die
   // bedragen tonen: een vast "(+100)" op een Battle March-tafel zou de speler voorliegen over wat de
   // engine erachter optelt.

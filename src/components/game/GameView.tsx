@@ -8,6 +8,7 @@ import { makeTroopTypeLookup, enrichArmyTroopTypes } from '../../lib/troopTypes'
 import { unitTotalStrength } from '../../lib/armyRules';
 import { UnitCard } from './UnitCard';
 import { BattleBar } from './BattleBar';
+import { ObjectivesTracker } from './ObjectivesTracker';
 import { OwbInstructions } from './OwbInstructions';
 import { ArmyListPicker } from './ArmyListPicker';
 import { EndBattleOverview } from './EndBattleOverview';
@@ -189,6 +190,19 @@ export function GameView() {
   const battleBar = army && (
     <BattleBar round={tracker.round} maxRound={maxRound} onRound={adjRound} vpMe={vpMe} vpOpp={vpOpp} leader={leader} myName={myName || 'You'} opponentName={opponentName || 'Opponent'} editable={editable} vertical={wide} weer={tracker.weer ?? null} />
   );
+  // Objective-VP hoort bij de RONDE, niet bij het eindscherm: troves en landmarks scoren per
+  // speler-turn, dus je tikt ze aan zodra die turn voorbij is. Stond dit alleen achter "End
+  // battle", dan moest je aan het eind reconstrueren hoeveel beurten je wat vasthield (Joost,
+  // 29-08). Het volgt de kant-schakelaar hierboven, net als het roster eronder — je scoort voor
+  // wie je op dat moment bijhoudt. Buiten een campagne (geen objectives) rendert het niets.
+  const objectivesPaneel = army && (
+    <ObjectivesTracker
+      zijde={absSeat(side) === 'guest' ? 'guest' : 'host'}
+      naam={side === 'me' ? (myName || 'You') : (opponentName || 'Opponent')}
+      editable={editable}
+      round={tracker.round}
+    />
+  );
   const endModal = endOpen && (
     <EndBattleOverview res={res} hostName={hostName} guestName={guestName} hostArmy={hostArmy} guestArmy={guestArmy} onClose={() => setEndOpen(false)} />
   );
@@ -237,6 +251,7 @@ export function GameView() {
             <CodeBadge code={code} onLeave={leaveGame} waiting={!!(code && seat === 'host' && !opponentArmy)} />
             {sideToggle}
             {battleBar}
+            {objectivesPaneel}
             {(myArmy || opponentArmy) && (
               <button onClick={() => setEndOpen(true)} style={{ width: '100%', border: 'none', borderRadius: 11, cursor: 'pointer', padding: '12px 16px', background: `linear-gradient(180deg, ${TOW.goldBright}, ${TOW.gold} 55%, ${TOW.goldDeep})`, color: TOW.onGrad, fontFamily: display, fontWeight: 700, fontSize: 14 }}>End battle</button>
             )}
@@ -286,6 +301,7 @@ export function GameView() {
       )}
 
       <div style={{ flex: 1, minHeight: 0, overflowY: 'auto', padding: '4px 12px 28px', maxWidth: 620, width: '100%', margin: '0 auto' }}>
+        {objectivesPaneel}
         {army && (
           <div style={{ fontFamily: serif, fontStyle: 'italic', fontSize: 14, color: TOW.parchDim, margin: '4px 2px 12px' }}>
             {side === 'me' ? myName || 'You' : opponentName || 'Opponent'} — {army.faction || army.name}{army.points != null ? ` · ${army.points} pts` : ''} · {afield}/{army.units.length} afield
