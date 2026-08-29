@@ -68,7 +68,12 @@ function collectKills(
 
 type Veteraan = NonNullable<BattleResultaat['veteraan']>[number];
 
-// Campagne-relevante per-unit feiten voor de MELDENDE speler z'n EIGEN leger. `ownSeat` is de
+// Campagne-relevante per-unit feiten voor ÉÉN leger. De aanroeper doet dit voor BEIDE kanten:
+// wie indient, dient voor de hele tafel in (Joost, 29-08). Deed alleen de melder z'n eigen leger,
+// dan kreeg de tegenstander geen XP en zelfs geen gespeelde battle — Ferry's zes units stonden na
+// battle #2022 nog op nul terwijl er vijf XP openstond. De serverkant kon dit altijd al aan: de
+// trigger towc_battle_veteraan_verwerk loopt de hele array langs en matcht unit_id binnen
+// (aanvaller, verdediger, proxy), dus hij verwerkt beide legers zodra ze erin staan.
 // absolute seat-key ('host'/'guest') waarop de eigen units in de tracker staan — solo mapt naar
 // 'host' (zoals GameView's absSeat('me')). De drempels spiegelen de VP-engine (unitVp):
 //   remaining = unitTotalStrength − lost.
@@ -221,20 +226,24 @@ export function CampaignResultReporter({ embedded = false }: { embedded?: boolea
     [battle, tracker, game?.host_army, game?.guest_army],
   );
 
-  // Per-unit veteraan-feiten voor de MELDENDE speler z'n EIGEN leger (myArmy dekt host/guest/solo).
   // Eigen seat-key: host/guest direct; solo → 'host' (zoals GameView's absSeat('me')).
   const ownSeat: 'host' | 'guest' = seat === 'guest' ? 'guest' : 'host';
-  const veteraan = useMemo(
-    () => (battle ? collectVeteraan(tracker, myArmy, ownSeat) : []),
-    [battle, tracker, myArmy, ownSeat],
-  );
+  // In solo is er geen game-rij; dan is het eigen leger de enige kant die bestaat.
+  const hostArmy = game?.host_army ?? (ownSeat === 'host' ? myArmy : null);
+  const guestArmy = game?.guest_army ?? (ownSeat === 'guest' ? myArmy : null);
+  const veteraanPerZijde = useMemo(() => (battle ? [
+    { seat: 'host' as const, naam: game?.host_name || 'Host', items: collectVeteraan(tracker, hostArmy, 'host') },
+    { seat: 'guest' as const, naam: game?.guest_name || 'Guest', items: collectVeteraan(tracker, guestArmy, 'guest') },
+  ].filter((z) => z.items.length) : []),
+  [battle, tracker, hostArmy, guestArmy, game?.host_name, game?.guest_name]);
+  const veteraan = useMemo(() => veteraanPerZijde.flatMap((z) => z.items), [veteraanPerZijde]);
   // Weergave-namen per gemelde unitId. collectVeteraan sleutelt op `campaignId ?? id`, dus hier ook —
   // anders vindt de lookup niets zodra een unit een campagne-sleutel heeft.
   const toonPerUnit = useMemo(() => {
     const m = new Map<string, ReturnType<typeof unitToon>>();
-    for (const u of myArmy?.units ?? []) m.set(u.campaignId ?? u.id, unitToon(u));
+    for (const u of [...(hostArmy?.units ?? []), ...(guestArmy?.units ?? [])]) m.set(u.campaignId ?? u.id, unitToon(u));
     return m;
-  }, [myArmy]);
+  }, [hostArmy, guestArmy]);
   const toonVan = (id: string) => toonPerUnit.get(id) ?? { primair: '', secundair: null };
 
   // ── Dubbele goedkeuring (30-07) ──────────────────────────────────────────────────────────────
@@ -440,31 +449,38 @@ export function CampaignResultReporter({ embedded = false }: { embedded?: boolea
         </div>
       )}
 
-      {veteraan.length > 0 && (
+      {veteraanPerZijde.length > 0 && (
         <>
-          <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginBottom: 5 }}>Your veterans · XP earned</div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 3, marginBottom: 4 }}>
-            {veteraan.map((v, i) => {
-              const xp = (v.overleefd_50 ? 1 : 0) + v.kills;
-              return (
-                <div key={i} style={{ display: 'flex', alignItems: 'baseline', gap: 8, fontFamily: serif, fontSize: 13, color: TOW.ink }}>
-                  <span style={{ flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                    {/* Datasheet primair, de eigen naam erachter: bij een leger vol eigennamen zie je
-                        anders niet meer welke unit welke XP pakt. */}
-                    {toonVan(v.unitId).primair || v.naam || v.unitId}
-                    {toonVan(v.unitId).secundair ? (
-                      <span style={{ color: TOW.muted, fontStyle: 'italic' }}> · {toonVan(v.unitId).secundair}</span>
-                    ) : null}
-                  </span>
-                  <span style={{ flexShrink: 0, fontFamily: display, fontWeight: 600, fontSize: 12, color: xp > 0 ? TOW.goldDeep : TOW.muted }}>
-                    {xp > 0 ? `+${xp} XP` : '—'}{v.scar_trigger ? ' · scar risk' : ''}
-                  </span>
-                </div>
-              );
-            })}
-          </div>
+          {/* BEIDE legers, niet alleen dat van de melder. Wie indient, dient in voor de tafel —
+              anders loopt de tegenstander zijn XP mis zonder dat iemand het merkt. */}
+          <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginBottom: 5 }}>Veterans · XP earned</div>
+          {veteraanPerZijde.map((zijde) => (
+            <div key={zijde.seat} style={{ marginBottom: 8 }}>
+              <div style={{ fontFamily: display, fontWeight: 600, fontSize: 12, color: TOW.goldDeep, marginBottom: 3 }}>{zijde.naam}</div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+                {zijde.items.map((v, i) => {
+                  const xp = (v.overleefd_50 ? 1 : 0) + v.kills;
+                  return (
+                    <div key={i} style={{ display: 'flex', alignItems: 'baseline', gap: 8, fontFamily: serif, fontSize: 13, color: TOW.ink }}>
+                      <span style={{ flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                        {/* Datasheet primair, de eigen naam erachter: bij een leger vol eigennamen zie je
+                            anders niet meer welke unit welke XP pakt. */}
+                        {toonVan(v.unitId).primair || v.naam || v.unitId}
+                        {toonVan(v.unitId).secundair ? (
+                          <span style={{ color: TOW.muted, fontStyle: 'italic' }}> · {toonVan(v.unitId).secundair}</span>
+                        ) : null}
+                      </span>
+                      <span style={{ flexShrink: 0, fontFamily: display, fontWeight: 600, fontSize: 12, color: xp > 0 ? TOW.goldDeep : TOW.muted }}>
+                        {xp > 0 ? `+${xp} XP` : '—'}{v.scar_trigger ? ' · scar risk' : ''}
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
           <div style={{ fontFamily: serif, fontStyle: 'italic', fontSize: 11.5, color: TOW.muted, marginBottom: 12 }}>
-            +1 XP for surviving above 50% strength, +1 per kill/trophy — applied to your campaign veterans once the grensmaster approves.
+            +1 XP for surviving above 50% strength, +1 per kill/trophy — applied to both armies’ campaign veterans once the grensmaster approves.
           </div>
         </>
       )}
