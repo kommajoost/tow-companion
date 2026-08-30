@@ -16,6 +16,7 @@ import { CeledonLoginDialog } from './CeledonLoginDialog';
 import { TestAccountSwitcher } from './TestAccountSwitcher';
 import { TowIcon, type IconId } from '../design/icons';
 import { useBackClose } from '../lib/backStack';
+import { TEST_TOOLS_KEY } from '../lib/testBattle';
 
 type Tab = 'play' | 'browse' | 'game' | 'army' | 'settings';
 type Screen = 'home' | 'app';
@@ -83,6 +84,20 @@ export function AppShell() {
   }, []);
 
   // Deep-link: /?battle=<code> opens a campaign battle (mirrors the campaign app's ?campaign=<code>).
+  // Deep-link: /?testtools=1 zet het testgereedschap AAN op dit apparaat, /?testtools=0 weer uit.
+  // Daarmee staat de testbattle alleen op het scherm van wie hem zelf heeft aangezet, in plaats van
+  // bij elke speler in de campagne. Zelfde vorm als ?battle= hieronder: lezen, opslaan, opruimen.
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const raw = new URLSearchParams(window.location.search).get('testtools');
+    if (raw === null) return;
+    setPersisted(TEST_TOOLS_KEY, raw !== '0' && raw.toLowerCase() !== 'false');
+    const url = new URL(window.location.href);
+    url.searchParams.delete('testtools');
+    window.history.replaceState(null, '', `${url.pathname}${url.search}${url.hash}`);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   // Stash the code for the Game tab's campaign-battle flow, jump straight into the app on the Game
   // tab, then strip the query so a reload doesn't re-trigger it. Runs once at mount; flows WITHOUT
   // ?battle= are untouched (the effect no-ops), so existing behaviour is unchanged.

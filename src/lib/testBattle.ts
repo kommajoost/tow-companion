@@ -25,6 +25,17 @@ import type {
 export const TEST_BATTLE_CODE = 'TEST00';
 const CONFIG_KEY = 'tow:test-battle';
 
+/** Staat het testgereedschap AAN op dit apparaat? Uit tenzij je het zelf hebt aangezet met
+ *  `?testtools=1` in de URL. Zo staat de testbattle niet op het scherm van iedere speler in de
+ *  campagne (Joost, 30-08) — die hoeven geen knop te zien die niets met hun potje te maken heeft.
+ *
+ *  Bewust een LOKALE schakelaar en geen identiteitscontrole: die zou een hardgecodeerd speler-id
+ *  of e-mailadres in de bundel betekenen, en zou stuk gaan zodra je op een apparaat werkt dat nog
+ *  niet aan de campagne gekoppeld is. Dit is geen beveiliging — het houdt het scherm opgeruimd. */
+const TOOLS_KEY = 'tow:test-tools';
+export const TEST_TOOLS_KEY = TOOLS_KEY;
+export const testToolsAan = (): boolean => getPersisted<boolean>(TOOLS_KEY, false) === true;
+
 export const isTestBattleCode = (code: string): boolean =>
   (code || '').trim().toUpperCase() === TEST_BATTLE_CODE;
 

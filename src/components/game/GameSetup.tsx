@@ -16,7 +16,7 @@ import { BattleSetup } from './BattleSetup';
 import type { Army, GameSummary } from '../../types';
 import { getCachedCampaign, getCampaignCode } from '../../lib/campaign';
 import { myCampaignBattles, type CampaignBattleSummary } from '../../lib/campaignBattle';
-import { TEST_BATTLE_CODE, TEST_BATTLE_CONFIG_KEY, testBattleLijsten } from '../../lib/testBattle';
+import { TEST_BATTLE_CODE, TEST_BATTLE_CONFIG_KEY, testBattleLijsten, testToolsAan } from '../../lib/testBattle';
 
 const eb = engraved as React.CSSProperties;
 const BASE = import.meta.env.BASE_URL;
@@ -198,7 +198,7 @@ export function GameSetup() {
         {/* TESTBATTLE — een nep campagne-battle uit twee eigen lijsten. Staat bewust hier, direct
             onder de echte campagne-battles: het is dezelfde soort ingang, en zo zie je meteen dat
             het er een naast je eigen battle is en niet in de plaats van. */}
-        {testLijsten.length >= 1 && (
+        {testToolsAan() && testLijsten.length >= 1 && (
           <div style={{ marginBottom: 18 }}>
             <button
               onClick={() => setTestOpen((v) => !v)}
