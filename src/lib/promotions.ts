@@ -13,6 +13,11 @@
 // growth ceiling — which is exactly the loophole the ceiling exists to close. So `planPromotion`
 // rewrites the entry IN PLACE, and nothing here ever mints a uid.
 //
+// WAT DE PROMOTIE ZELF KOST (30-08-2026): "when a character is promoted in this way, they lose all
+// of their Veteran Abilities and any unspent XP" (p.25). De campagne wist die twee bij het locken
+// (towc_lijst_lock). Het uid blijft dus bestaan — daar gaat de alinea hierboven over — maar de
+// opgebouwde kunde gaat eraf. Alleen de littekens blijven: daar zegt het rulebook niets over.
+//
 // SOURCE OF THE TABLE: docs/research/character_upgradepaden.md in the campaign repo (Isle of Celedon),
 // §3. That document grades every pair `zeker` / `waarschijnlijk` / `twijfel`; the first two are here
 // as 'certain' / 'likely'. The `twijfel` pairs are deliberately ABSENT — they are the ones where the
