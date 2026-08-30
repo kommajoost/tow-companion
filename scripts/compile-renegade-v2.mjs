@@ -889,7 +889,7 @@ for (const [key, army] of Object.entries(PACKS)) {
     //     draft geeft hem soms een eigen naam ("Handmaiden of Shards" i.p.v. "Hag"). Hernoemen, niet
     //     een tweede exemplaar toevoegen — anders staan er twee champions in de lijst.
     for (const segment of tekst.split(/\s*•\s*/)) {
-      const rol = /(champion|standard bearer|musician)/i.exec(segment);
+      const rol = /\b(champion|standard bearer|musician)\b/i.exec(segment);
       if (!rol || !/\+\s*\d+\s*points?/i.test(segment)) continue;
       const naam = segment
         .replace(/^.*?upgrade one model to(?:\s+(?:an?|the))?\s+/i, '')

@@ -90,7 +90,7 @@ type Veteraan = NonNullable<BattleResultaat['veteraan']>[number];
 const XP_WAARDIG = /^(regular|heavy|monstrous) infantry$|^(light|heavy|monstrous) cavalry$/i;
 const isCharacter = (u: ArmyUnit) => /^characters$/i.test(u.category ?? '');
 /** De General is in de catalogus een gewone optie op een character (161 keer over alle legers). */
-const isGeneral = (u: ArmyUnit) => (u.options ?? []).some((o) => /^general/i.test(o.replace(/{[^}]*}/g, '').trim()));
+const isGeneral = (u: ArmyUnit) => (u.options ?? []).some((o) => /^general\b/i.test(o.replace(/{[^}]*}/g, '').trim()));
 
 // Campagne-relevante per-unit feiten voor ÉÉN leger. De aanroeper doet dit voor BEIDE kanten.
 //
@@ -107,13 +107,26 @@ const isGeneral = (u: ArmyUnit) => (u.options ?? []).some((o) => /^general/i.te
 // SCARS lopen ook uiteen. Battlefield Losses (p.24) geldt voor een unit onder 25%, vernietigd of
 // vluchtend. Death & Dishonour (p.25) geldt alleen als een character IS GESNEUVELD OF VLUCHT — geen
 // 25%-clausule, die deden wij wel, waardoor een gewonde held onterecht op de dodentabel rolde.
+/** Eén veteraan-regel: wat er naar de campagne gaat, PLUS waaruit die XP is opgebouwd.
+ *
+ *  Beide komen uit dezelfde functie, met opzet. "+2 XP" zegt niet waarvóór, en bij een kill niet
+ *  op wie (Joost, 30-08). Zou de uitleg apart berekend worden, dan kan hij van de som afwijken —
+ *  en een verklaring die niet klopt is erger dan geen verklaring. */
+interface VetRegel { vet: Veteraan; redenen: string[] }
+
 function collectVeteraan(
   tracker: GameTracker,
   ownArmy: Army | null,
   ownSeat: 'host' | 'guest',
   gewonnen: boolean,
-): Veteraan[] {
-  const out: Veteraan[] = [];
+  vijand: Army | null,
+): VetRegel[] {
+  // Slachtoffers op naam. `killDetails[].unit` draagt de id van de vijandelijke unit; die staat in
+  // het leger van de tegenpartij.
+  const vijandNaam = new Map<string, string>();
+  for (const u of vijand?.units ?? []) vijandNaam.set(u.id, unitToon(u).primair || u.name);
+
+  const out: VetRegel[] = [];
   for (const u of ownArmy?.units ?? []) {
     const t = tracker.units[`${ownSeat}:${u.id}`];
     const ts = unitTotalStrength(u);
@@ -124,16 +137,39 @@ function collectVeteraan(
     const dood = weg || remaining <= 0;
     const unitId = u.campaignId ?? u.id;
     const kills = Math.max(0, t?.kills ?? 0);
+    const redenen: string[] = [];
+
+    // De kills op naam, zover ze zijn vastgelegd. Wie wel een kill aantikte maar geen slachtoffer
+    // koos, krijgt de kale telling — de XP klopt dan nog steeds, alleen de naam ontbreekt.
+    const genoemd = (t?.killDetails ?? [])
+      .map((d) => (d.unit ? vijandNaam.get(d.unit) : null))
+      .filter((n): n is string => !!n);
+    const killReden = (n: number): string[] => {
+      if (n <= 0) return [];
+      if (genoemd.length >= n) return genoemd.slice(0, n).map((naam) => `+1 destroyed ${naam}`);
+      const rest = n - genoemd.length;
+      return [
+        ...genoemd.map((naam) => `+1 destroyed ${naam}`),
+        `+${rest} kill${rest === 1 ? '' : 's'}/troph${rest === 1 ? 'y' : 'ies'}`,
+      ];
+    };
 
     if (isCharacter(u)) {
       const leeft = !dood && !fleeing;
+      const generaal = leeft && gewonnen && isGeneral(u);
+      if (leeft) redenen.push('+1 survived');
+      redenen.push(...killReden(kills));
+      if (generaal) redenen.push('+1 General, army won');
       out.push({
-        unitId,
-        naam: u.name,
-        overleefd_50: leeft,
-        kills,
-        bonusXp: leeft && gewonnen && isGeneral(u) ? 1 : 0,
-        scar_trigger: dood || fleeing,
+        vet: {
+          unitId,
+          naam: u.name,
+          overleefd_50: leeft,
+          kills,
+          bonusXp: generaal ? 1 : 0,
+          scar_trigger: dood || fleeing,
+        },
+        redenen,
       });
       continue;
     }
@@ -141,13 +177,20 @@ function collectVeteraan(
     // Verdient deze unit überhaupt XP? Zo niet, dan melden we hem WEL — hij speelde de battle mee en
     // kan nog steeds een scar oplopen — maar met nul te verdienen.
     const verdient = XP_WAARDIG.test(u.troopType ?? '');
+    const overleefd = verdient && remaining >= ts * 0.5 && !fleeing && !weg;
+    if (!verdient) redenen.push(`no XP — ${u.troopType || 'this troop type'} is not infantry or cavalry`);
+    else if (overleefd) redenen.push('+1 survived above half strength');
+    if (verdient) redenen.push(...killReden(kills));
     out.push({
-      unitId,
-      naam: u.name,
-      overleefd_50: verdient && remaining >= ts * 0.5 && !fleeing && !weg,
-      kills: verdient ? kills : 0,
-      bonusXp: 0,
-      scar_trigger: remaining < ts * 0.25 || weg || fleeing,
+      vet: {
+        unitId,
+        naam: u.name,
+        overleefd_50: overleefd,
+        kills: verdient ? kills : 0,
+        bonusXp: 0,
+        scar_trigger: remaining < ts * 0.25 || weg || fleeing,
+      },
+      redenen,
     });
   }
   return out;
@@ -294,11 +337,11 @@ export function CampaignResultReporter({ embedded = false }: { embedded?: boolea
       : tpRes === 'CV' || tpRes === 'RV' || tpRes === 'MV' ? 'host' : 'guest';
 
   const veteraanPerZijde = useMemo(() => (battle ? [
-    { seat: 'host' as const, naam: game?.host_name || 'Host', items: collectVeteraan(tracker, hostArmy, 'host', tpWinnaar === 'host') },
-    { seat: 'guest' as const, naam: game?.guest_name || 'Guest', items: collectVeteraan(tracker, guestArmy, 'guest', tpWinnaar === 'guest') },
+    { seat: 'host' as const, naam: game?.host_name || 'Host', items: collectVeteraan(tracker, hostArmy, 'host', tpWinnaar === 'host', guestArmy) },
+    { seat: 'guest' as const, naam: game?.guest_name || 'Guest', items: collectVeteraan(tracker, guestArmy, 'guest', tpWinnaar === 'guest', hostArmy) },
   ].filter((z) => z.items.length) : []),
   [battle, tracker, hostArmy, guestArmy, game?.host_name, game?.guest_name, tpWinnaar]);
-  const veteraan = useMemo(() => veteraanPerZijde.flatMap((z) => z.items), [veteraanPerZijde]);
+  const veteraan = useMemo(() => veteraanPerZijde.flatMap((z) => z.items.map((r) => r.vet)), [veteraanPerZijde]);
   // Weergave-namen per gemelde unitId. collectVeteraan sleutelt op `campaignId ?? id`, dus hier ook —
   // anders vindt de lookup niets zodra een unit een campagne-sleutel heeft.
   const toonPerUnit = useMemo(() => {
@@ -514,20 +557,28 @@ export function CampaignResultReporter({ embedded = false }: { embedded?: boolea
               <div style={{ fontFamily: display, fontWeight: 600, fontSize: 12, color: TOW.goldDeep, marginBottom: 3 }}>{zijde.naam}</div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
                 {zijde.items.map((v, i) => {
-                  const xp = (v.overleefd_50 ? 1 : 0) + v.kills + (v.bonusXp ?? 0);
+                  const xp = (v.vet.overleefd_50 ? 1 : 0) + v.vet.kills + (v.vet.bonusXp ?? 0);
                   return (
-                    <div key={i} style={{ display: 'flex', alignItems: 'baseline', gap: 8, fontFamily: serif, fontSize: 13, color: TOW.ink }}>
-                      <span style={{ flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                        {/* Datasheet primair, de eigen naam erachter: bij een leger vol eigennamen zie je
-                            anders niet meer welke unit welke XP pakt. */}
-                        {toonVan(v.unitId).primair || v.naam || v.unitId}
-                        {toonVan(v.unitId).secundair ? (
-                          <span style={{ color: TOW.muted, fontStyle: 'italic' }}> · {toonVan(v.unitId).secundair}</span>
-                        ) : null}
-                      </span>
-                      <span style={{ flexShrink: 0, fontFamily: display, fontWeight: 600, fontSize: 12, color: xp > 0 ? TOW.goldDeep : TOW.muted }}>
-                        {xp > 0 ? `+${xp} XP` : '—'}{v.scar_trigger ? ' · scar risk' : ''}
-                      </span>
+                    <div key={i}>
+                      <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, fontFamily: serif, fontSize: 13, color: TOW.ink }}>
+                        <span style={{ flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                          {/* Datasheet primair, de eigen naam erachter: bij een leger vol eigennamen zie je
+                              anders niet meer welke unit welke XP pakt. */}
+                          {toonVan(v.vet.unitId).primair || v.vet.naam || v.vet.unitId}
+                          {toonVan(v.vet.unitId).secundair ? (
+                            <span style={{ color: TOW.muted, fontStyle: 'italic' }}> · {toonVan(v.vet.unitId).secundair}</span>
+                          ) : null}
+                        </span>
+                        <span style={{ flexShrink: 0, fontFamily: display, fontWeight: 600, fontSize: 12, color: xp > 0 ? TOW.goldDeep : TOW.muted }}>
+                          {xp > 0 ? `+${xp} XP` : '—'}{v.vet.scar_trigger ? ' · scar risk' : ''}
+                        </span>
+                      </div>
+                      {/* Waaruit die XP bestaat, en bij een kill op wie. */}
+                      {v.redenen.length > 0 && (
+                        <div style={{ fontFamily: serif, fontStyle: 'italic', fontSize: 11, color: TOW.muted, margin: '0 0 3px 2px' }}>
+                          {v.redenen.join(' · ')}
+                        </div>
+                      )}
                     </div>
                   );
                 })}
