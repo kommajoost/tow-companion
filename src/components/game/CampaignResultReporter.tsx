@@ -12,7 +12,7 @@ import {
   type Terugtrekker,
 } from '../../lib/campaignBattle';
 import { berekenVictory, type VpBonus, type Uitslag } from '../../lib/victoryPoints';
-import type { Army, GameTracker } from '../../types';
+import type { Army, ArmyUnit, GameTracker } from '../../types';
 
 const eb = engraved as React.CSSProperties;
 const display = towFont.display;
@@ -83,7 +83,36 @@ type Veteraan = NonNullable<BattleResultaat['veteraan']>[number];
 // De gemelde `unitId` is `u.campaignId` — de gedeelde campagne-sleutel (campaignUnitId in
 // owbBuilder.ts, gezet door builderListToArmy). Een geplakt OWB-leger heeft geen campaignId; dan
 // valt 'ie terug op de eigen unit-id, zodat de melding altijd een sleutel heeft.
-function collectVeteraan(tracker: GameTracker, ownArmy: Army | null, ownSeat: 'host' | 'guest'): Veteraan[] {
+/** Troop types die XP verdienen. Veteran Abilities (p.24) is expliciet: "Any unit whose troop type
+ *  is infantry or cavalry (but not swarms or war beasts)". Monstrous Infantry en Monstrous Cavalry
+ *  vallen daar gewoon onder — het zijn sub-categorieën van infanterie en cavalerie. Strijdwagens,
+ *  monsters, behemoths en war machines niet, en die kregen bij ons tot 30-08 wél XP. */
+const XP_WAARDIG = /^(regular|heavy|monstrous) infantry$|^(light|heavy|monstrous) cavalry$/i;
+const isCharacter = (u: ArmyUnit) => /^characters$/i.test(u.category ?? '');
+/** De General is in de catalogus een gewone optie op een character (161 keer over alle legers). */
+const isGeneral = (u: ArmyUnit) => (u.options ?? []).some((o) => /^general/i.test(o.replace(/{[^}]*}/g, '').trim()));
+
+// Campagne-relevante per-unit feiten voor ÉÉN leger. De aanroeper doet dit voor BEIDE kanten.
+//
+// TWEE REGELSETS, en dat was tot 30-08 het grootste gat: characters volgden de unit-regel.
+//
+//   UNITS — Veteran Abilities (p.24): +1 als het overleefde op ≥50% start-Unit-Strength, +1 per
+//   vernietigde vijandelijke unit of trofee. Alleen infanterie en cavalerie.
+//
+//   CHARACTERS — Seasoned Commanders (p.25): +1 voor OVERLEVEN — "any character that was not
+//   removed from play as a casualty and is not fleeing" — dus zonder 50%-drempel, want een
+//   character is één model. Een zwaargewonde held verdient gewoon. Plus +1 per kill, en de
+//   General van het winnende leger krijgt er nog 1 bij.
+//
+// SCARS lopen ook uiteen. Battlefield Losses (p.24) geldt voor een unit onder 25%, vernietigd of
+// vluchtend. Death & Dishonour (p.25) geldt alleen als een character IS GESNEUVELD OF VLUCHT — geen
+// 25%-clausule, die deden wij wel, waardoor een gewonde held onterecht op de dodentabel rolde.
+function collectVeteraan(
+  tracker: GameTracker,
+  ownArmy: Army | null,
+  ownSeat: 'host' | 'guest',
+  gewonnen: boolean,
+): Veteraan[] {
   const out: Veteraan[] = [];
   for (const u of ownArmy?.units ?? []) {
     const t = tracker.units[`${ownSeat}:${u.id}`];
@@ -92,9 +121,34 @@ function collectVeteraan(tracker: GameTracker, ownArmy: Army | null, ownSeat: 'h
     const remaining = ts - lost;
     const fleeing = t?.fleeing ?? false;
     const weg = t?.weg ?? false;
-    const overleefd_50 = remaining >= ts * 0.5 && !fleeing && !weg;
-    const scar_trigger = remaining < ts * 0.25 || weg || fleeing;
-    out.push({ unitId: u.campaignId ?? u.id, naam: u.name, overleefd_50, kills: Math.max(0, t?.kills ?? 0), scar_trigger });
+    const dood = weg || remaining <= 0;
+    const unitId = u.campaignId ?? u.id;
+    const kills = Math.max(0, t?.kills ?? 0);
+
+    if (isCharacter(u)) {
+      const leeft = !dood && !fleeing;
+      out.push({
+        unitId,
+        naam: u.name,
+        overleefd_50: leeft,
+        kills,
+        bonusXp: leeft && gewonnen && isGeneral(u) ? 1 : 0,
+        scar_trigger: dood || fleeing,
+      });
+      continue;
+    }
+
+    // Verdient deze unit überhaupt XP? Zo niet, dan melden we hem WEL — hij speelde de battle mee en
+    // kan nog steeds een scar oplopen — maar met nul te verdienen.
+    const verdient = XP_WAARDIG.test(u.troopType ?? '');
+    out.push({
+      unitId,
+      naam: u.name,
+      overleefd_50: verdient && remaining >= ts * 0.5 && !fleeing && !weg,
+      kills: verdient ? kills : 0,
+      bonusXp: 0,
+      scar_trigger: remaining < ts * 0.25 || weg || fleeing,
+    });
   }
   return out;
 }
@@ -231,11 +285,19 @@ export function CampaignResultReporter({ embedded = false }: { embedded?: boolea
   // In solo is er geen game-rij; dan is het eigen leger de enige kant die bestaat.
   const hostArmy = game?.host_army ?? (ownSeat === 'host' ? myArmy : null);
   const guestArmy = game?.guest_army ?? (ownSeat === 'guest' ? myArmy : null);
+  // dat dit NIET dubbel gebeurt bij "Report again" (we bouwen 'm elke submit vers uit `notes`).
+  // Wie won volgens de officiële tabel? CV/RV/MV = de aanvaller (host), MD/RD/CD = de verdediger,
+  // D = niemand. Zonder tpRes vallen we terug op de VP-engine, zodat melden altijd mogelijk blijft.
+  const tpWinnaar: 'host' | 'guest' | null =
+    tpRes === null ? res.winnaar
+      : tpRes === 'D' ? null
+      : tpRes === 'CV' || tpRes === 'RV' || tpRes === 'MV' ? 'host' : 'guest';
+
   const veteraanPerZijde = useMemo(() => (battle ? [
-    { seat: 'host' as const, naam: game?.host_name || 'Host', items: collectVeteraan(tracker, hostArmy, 'host') },
-    { seat: 'guest' as const, naam: game?.guest_name || 'Guest', items: collectVeteraan(tracker, guestArmy, 'guest') },
+    { seat: 'host' as const, naam: game?.host_name || 'Host', items: collectVeteraan(tracker, hostArmy, 'host', tpWinnaar === 'host') },
+    { seat: 'guest' as const, naam: game?.guest_name || 'Guest', items: collectVeteraan(tracker, guestArmy, 'guest', tpWinnaar === 'guest') },
   ].filter((z) => z.items.length) : []),
-  [battle, tracker, hostArmy, guestArmy, game?.host_name, game?.guest_name]);
+  [battle, tracker, hostArmy, guestArmy, game?.host_name, game?.guest_name, tpWinnaar]);
   const veteraan = useMemo(() => veteraanPerZijde.flatMap((z) => z.items), [veteraanPerZijde]);
   // Weergave-namen per gemelde unitId. collectVeteraan sleutelt op `campaignId ?? id`, dus hier ook —
   // anders vindt de lookup niets zodra een unit een campagne-sleutel heeft.
@@ -293,13 +355,6 @@ export function CampaignResultReporter({ embedded = false }: { embedded?: boolea
   // Marge-regel voor de campagne: er is geen apart marge-veld, dus we hangen één nette Engelse regel
   // aan de notes zodat de grensmaster minor (Victory) vs major (Crushing Victory) ziet. Bij een draw
   // vermelden we de VP-swing (verschil). We appenden aan de door de speler getypte notes en zorgen
-  // dat dit NIET dubbel gebeurt bij "Report again" (we bouwen 'm elke submit vers uit `notes`).
-  // Wie won volgens de officiële tabel? CV/RV/MV = de aanvaller (host), MD/RD/CD = de verdediger,
-  // D = niemand. Zonder tpRes vallen we terug op de VP-engine, zodat melden altijd mogelijk blijft.
-  const tpWinnaar: 'host' | 'guest' | null =
-    tpRes === null ? res.winnaar
-      : tpRes === 'D' ? null
-      : tpRes === 'CV' || tpRes === 'RV' || tpRes === 'MV' ? 'host' : 'guest';
 
   const marginLine = (): string => {
     if (!tpRes) {
@@ -459,7 +514,7 @@ export function CampaignResultReporter({ embedded = false }: { embedded?: boolea
               <div style={{ fontFamily: display, fontWeight: 600, fontSize: 12, color: TOW.goldDeep, marginBottom: 3 }}>{zijde.naam}</div>
               <div style={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
                 {zijde.items.map((v, i) => {
-                  const xp = (v.overleefd_50 ? 1 : 0) + v.kills;
+                  const xp = (v.overleefd_50 ? 1 : 0) + v.kills + (v.bonusXp ?? 0);
                   return (
                     <div key={i} style={{ display: 'flex', alignItems: 'baseline', gap: 8, fontFamily: serif, fontSize: 13, color: TOW.ink }}>
                       <span style={{ flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>

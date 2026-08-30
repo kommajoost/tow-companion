@@ -422,6 +422,11 @@ export interface BattleResultaat {
     overleefd_50: boolean;
     /** Aantal kills + trofeeën door deze unit (0 als niet bijgehouden). */
     kills: number;
+    /** XP die niet uit overleven of kills komt. Vandaag één bron: de General van het leger dat
+     *  WON krijgt +1 (Seasoned Commanders, p.25: "In addition, an army's General earns 1XP if
+     *  their army won the game"). Apart veld en niet stiekem opgeteld bij `kills`, want dan zou de
+     *  campagne een kill zien die niemand gemaakt heeft. */
+    bonusXp?: number;
     /** Battle-scar-trigger: unit onder 25% start-US, of removed, of vluchtend bij einde spel. */
     scar_trigger: boolean;
   }[];
