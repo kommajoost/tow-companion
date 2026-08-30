@@ -16,6 +16,7 @@ import { BattleSetup } from './BattleSetup';
 import type { Army, GameSummary } from '../../types';
 import { getCachedCampaign, getCampaignCode } from '../../lib/campaign';
 import { myCampaignBattles, type CampaignBattleSummary } from '../../lib/campaignBattle';
+import { TEST_BATTLE_CODE, TEST_BATTLE_CONFIG_KEY, testBattleLijsten } from '../../lib/testBattle';
 
 const eb = engraved as React.CSSProperties;
 const BASE = import.meta.env.BASE_URL;
@@ -44,6 +45,12 @@ export function GameSetup() {
   const [games, setGames] = useState<GameSummary[] | null>(null);
   const [loadingGames, setLoadingGames] = useState(false);
   const [showBattle, setShowBattle] = useState(false);
+  // TESTBATTLE (30-08): twee eigen lijsten tegen elkaar, met nep-battlefield/items/perks, om de
+  // campagne-flow te kunnen uitproberen zonder een echte battle aan te maken.
+  const [testOpen, setTestOpen] = useState(false);
+  const testLijsten = testBattleLijsten();
+  const [testAanv, setTestAanv] = useState('');
+  const [testVerd, setTestVerd] = useState('');
   const [campBattles, setCampBattles] = useState<CampaignBattleSummary[]>([]);
   const myPlayerId = getCachedCampaign()?.context?.speler?.id ?? null;
 
@@ -185,6 +192,51 @@ export function GameSetup() {
                 );
               })}
             </div>
+          </div>
+        )}
+
+        {/* TESTBATTLE — een nep campagne-battle uit twee eigen lijsten. Staat bewust hier, direct
+            onder de echte campagne-battles: het is dezelfde soort ingang, en zo zie je meteen dat
+            het er een naast je eigen battle is en niet in de plaats van. */}
+        {testLijsten.length >= 1 && (
+          <div style={{ marginBottom: 18 }}>
+            <button
+              onClick={() => setTestOpen((v) => !v)}
+              style={{ display: 'flex', alignItems: 'center', gap: 11, width: '100%', textAlign: 'left', padding: '13px 15px', borderRadius: 12, cursor: 'pointer', border: `1px dashed ${TOW.lineStrong}`, background: 'transparent' }}
+            >
+              <span aria-hidden style={{ fontSize: 20, lineHeight: 1 }}>🧪</span>
+              <span style={{ flex: 1, minWidth: 0 }}>
+                <span style={{ display: 'block', fontFamily: towFont.display, fontWeight: 700, fontSize: 15, color: TOW.ink }}>Test campaign battle</span>
+                <span style={{ display: 'block', fontFamily: towFont.serif, fontSize: 12.5, color: TOW.muted }}>Two of your own lists, mock battlefield, items and perks — nothing is written to the campaign</span>
+              </span>
+              <span aria-hidden style={{ color: TOW.muted, fontSize: 18, flexShrink: 0 }}>{testOpen ? '⌄' : '›'}</span>
+            </button>
+            {testOpen && (
+              <div style={{ padding: '12px 4px 0' }}>
+                <label style={labelStyle}>Attacker — your list</label>
+                <select value={testAanv} onChange={(e) => setTestAanv(e.target.value)} style={{ width: '100%', boxSizing: 'border-box', padding: '9px 11px', borderRadius: 9, border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt, color: TOW.ink, fontFamily: towFont.serif, fontSize: 13.5, marginBottom: 8 }}>
+                  <option value="">Choose a list…</option>
+                  {testLijsten.map((tl) => <option key={tl.id} value={tl.id}>{tl.name}</option>)}
+                </select>
+                <label style={labelStyle}>Defender — the opposing list</label>
+                <select value={testVerd} onChange={(e) => setTestVerd(e.target.value)} style={{ width: '100%', boxSizing: 'border-box', padding: '9px 11px', borderRadius: 9, border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt, color: TOW.ink, fontFamily: towFont.serif, fontSize: 13.5, marginBottom: 8 }}>
+                  <option value="">Choose a list…</option>
+                  {testLijsten.map((tl) => <option key={tl.id} value={tl.id}>{tl.name}</option>)}
+                </select>
+                <button
+                  disabled={!testAanv || !testVerd}
+                  onClick={() => {
+                    setPersisted(TEST_BATTLE_CONFIG_KEY, { aanvId: testAanv, verdId: testVerd });
+                    setPersisted('tow:campaign-battle', TEST_BATTLE_CODE);
+                  }}
+                  style={{ ...goldBtn, opacity: (!testAanv || !testVerd) ? 0.45 : 1, cursor: (!testAanv || !testVerd) ? 'default' : 'pointer' }}
+                >Open test battle</button>
+                <div style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 11.5, color: TOW.muted, margin: '8px 2px 0' }}>
+                  Both sides may be the same list — handy for trying the flow on your own. Reporting the
+                  result does nothing: the campaign does not know this battle.
+                </div>
+              </div>
+            )}
           </div>
         )}
 

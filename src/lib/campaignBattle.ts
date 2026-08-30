@@ -1,5 +1,6 @@
 import { supabase } from './supabase';
 import type { GameWeer } from '../types';
+import { buildTestBattle, isTestBattleCode } from './testBattle';
 
 // Client-laag voor de campagne-BATTLE-brug ("De Grensvorsten", zelfde Supabase-project). Waar
 // campaign.ts de speler-identiteit/lijstbouw-context levert, opent deze module een concrete
@@ -367,6 +368,15 @@ export const cleanBattleCode = (code: string): string => (code || '').trim().toU
  *  gelockt zijn). Gooit 'ONBEKENDE_CODE' als er geen battle met die code is. De lijst-samenvattingen
  *  (`aanvLijst`/`verdLijst`) zijn alleen gevuld als beide kanten gelockt zijn. */
 export async function battleByCode(code: string): Promise<CampaignBattle> {
+  // De TESTBATTLE komt niet van de server maar uit localStorage. Hier onderscheppen en niet in het
+  // scherm, zodat alles erachter — het battle-paneel, de objectives-teller, de veteranen-weergave,
+  // de reporter — op dezelfde code draait als bij een echte battle. Een testpad met een eigen route
+  // test niet wat je wilde testen (Joost, 30-08).
+  if (isTestBattleCode(code)) {
+    const nep = buildTestBattle();
+    if (!nep) throw new Error('TESTBATTLE_ONVOLLEDIG');
+    return nep;
+  }
   const { data, error } = await supabase.rpc('towc_battle_by_code', { p_code: cleanBattleCode(code) });
   if (error) throw error;
   return parseBattle(data);

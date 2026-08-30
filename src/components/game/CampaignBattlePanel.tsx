@@ -6,6 +6,7 @@ import { battleByCode, battleHandZet, battleTypeLabel, battleTypeNote, abilityLa
 import { ArmyListPicker } from './ArmyListPicker';
 import { CampaignBoard, defenderIsTop, parseSheetLayout, parseSheetSecLayout } from './CampaignBoard';
 import type { Army } from '../../types';
+import { isTestBattleCode } from '../../lib/testBattle';
 
 const eb = engraved as React.CSSProperties;
 const display = towFont.display;
@@ -133,8 +134,15 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
 
   // The linked campaign player id (attacker/defender ids are campaign-player ids). Read the cached
   // context the same way Settings/BuilderWorkspace do; no fetch here — the link is a prerequisite.
-  const myPlayerId = getCachedCampaign()?.context?.speler.id ?? null;
-  const linked = !!getCampaignCode() && !!myPlayerId;
+  // De TESTBATTLE hoeft geen gekoppeld campagneprofiel: hij bestaat alleen op dit apparaat en er is
+  // geen kant om aan toegewezen te worden. Zonder deze uitzondering strandt hij op "link this app
+  // to your campaign profile first" en valt er niets te testen — precies waar hij voor bedoeld is.
+  // Je speelt er altijd de AANVALLER; de tegenstander is de tweede lijst die je koos.
+  const testBattle = isTestBattleCode(code);
+  const myPlayerId = testBattle
+    ? (battle?.aanvaller.id ?? 'test-a')
+    : getCachedCampaign()?.context?.speler.id ?? null;
+  const linked = testBattle || (!!getCampaignCode() && !!myPlayerId);
 
   const load = useCallback(async () => {
     setLoading(true);
