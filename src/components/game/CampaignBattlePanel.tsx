@@ -15,6 +15,19 @@ const serif = towFont.serif;
 /** Slug → readable ("empire-of-man" → "Empire of man"). Module scope so the list block can use it too. */
 const pretty = (s: string) => s.replace(/[-_]/g, ' ').replace(/^./, (c) => c.toUpperCase());
 
+/** Het GRONDTYPE van de hex waarop gevochten wordt. De campagne bewaart dat in het Nederlands
+ *  ('woud', 'vlakte'), en het stond als kale chip tussen de Engelse terreinstukken — dan lijkt
+ *  "Woud" nog een stuk terrein naast "Wood · difficult" (Joost, 30-08). Vertaald, en met "region"
+ *  erachter zodat meteen duidelijk is dat dit de streek is en niet iets wat je op tafel legt.
+ *
+ *  De acht waarden komen uit de kaart zelf (towc_map.types), plus bergpas die alleen op battles
+ *  voorkomt. Een onbekende waarde valt terug op `pretty` — beter een Nederlands woord dan niets. */
+const GROND: Record<string, string> = {
+  zee: 'Sea', woud: 'Forest', vlakte: 'Plains', bergen: 'Mountains', heuvels: 'Hills',
+  moeras: 'Marsh', kust: 'Coast', meer: 'Lake', bergpas: 'Mountain pass',
+};
+const grondLabel = (s: string): string => (GROND[s.toLowerCase().trim()] ? `${GROND[s.toLowerCase().trim()]} region` : pretty(s));
+
 // ── BattleSheet v2: de UITGEREKENDE opstelling ───────────────────────────────────────────────────
 // Sinds 16-08-2026 rekent de campagne de deployment zelf uit en schrijft 'm mee in de sheet
 // (`layout`/`secLayout`, in tafel-inches). De Companion rekent hier NIETS na: `src/lib/battle.ts` is
@@ -585,7 +598,7 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
       {(tableLabel || groundType || terrain.length > 0) && chipRow('Battlefield', (
         <>
           {tableLabel && chip(tableLabel)}
-          {groundType && chip(pretty(groundType))}
+          {groundType && chip(grondLabel(groundType))}
           {terrain.map((t, i) => (
             <span
               key={`${t.type}-${i}`}
