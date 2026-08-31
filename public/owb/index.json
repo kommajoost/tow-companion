@@ -50,12 +50,12 @@
     {
       "slug": "lizardmen",
       "name": "Lizardmen",
-      "units": 21
+      "units": 33
     },
     {
       "slug": "ogre-kingdoms",
       "name": "Ogre Kingdoms",
-      "units": 21
+      "units": 27
     },
     {
       "slug": "orc-and-goblin-tribes",
