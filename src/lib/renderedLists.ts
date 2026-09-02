@@ -1,7 +1,7 @@
 import { entryPoints, unitCategoryFor, type BuilderList, type ListEntry, type MagicItemsData, type OwbArmy, type OwbUnit, type Category } from './owbBuilder';
 import { deriveList, optionSummary } from './builderDerived';
 import { applyOverlayItems, catalogueFor, hasOverlay, OVERLAY_FILES, type CompositionOverlay } from './overlays';
-import { makeUnitStrengthLookup } from './troopTypes';
+import { makeUnitStrengthLookup, makeTroopTypeLookup, TROOP_TYPE_NAMES } from './troopTypes';
 
 /* ── Uitgerekende lijst-opsplitsing voor de campagne (30-07-2026) ───────────────────────────────
    De campagne-app (Isle of Celedon) kan geen punten of optie-labels berekenen: de catalogus met
@@ -19,6 +19,13 @@ import { makeUnitStrengthLookup } from './troopTypes';
    (null) in plaats van een gok. */
 
 const SEP = ' · '; // hetzelfde scheidingsteken als optionSummary gebruikt
+
+/** "Monstrous Infantry" -> "MI". De lookup levert de volle naam; de campagne bewaart de code. */
+function codeVoorTroopType(naam: string | undefined): string | undefined {
+  if (!naam) return undefined;
+  for (const [code, volle] of Object.entries(TROOP_TYPE_NAMES)) if (volle === naam) return code;
+  return naam; // al een code, of iets onbekends: ongewijzigd doorgeven
+}
 
 /** Eén unit-regel zoals de campagne 'm toont. `punten` mag null zijn: onbekend is beter dan verzonnen. */
 export interface RenderedEntry {
@@ -47,6 +54,11 @@ export interface RenderedEntry {
    *  al US 6. `null` = niet te bepalen (onbekend troop type, of een "As Starting Wounds"-type zonder
    *  bruikbare statline); de campagne valt dan terug op het aantal modellen. */
   us: number | null;
+  /** De TROOP TYPE-code uit de rules-index ("RI", "MI", "HCh", "WM", ...), 02-09-2026. De campagne
+   *  beslist hierop of een unit veteraan-XP en battle scars kan krijgen: alleen infanterie en
+   *  cavalerie (incl. hun monstrous-subtypes, swarms en war beasts) plus karakters. Chariots,
+   *  monsters en war machines niet. `null` = niet in de index (bv. een Renegade-unit). */
+  troopType: string | null;
 }
 export interface RenderedList {
   id: string;
@@ -168,6 +180,7 @@ function renderEen(
   army: OwbArmy | null,
   itemsData: MagicItemsData | null,
   usVoor: (naam: string, models: number) => number | null,
+  troopVoor: (naam: string) => string | undefined,
 ): RenderedList {
   // Validatie via deriveList: `warnings` is volgens de eigen documentatie de AUTORITATIEVE, complete
   // set — precies wat de builder in z'n "N to fix"-paneel zet. Zonder catalogus valt er niets te
@@ -199,6 +212,9 @@ function renderEen(
       // Op de CATALOGUS-naam, niet op de custom naam: "The Bleeding Hand" staat niet in de
       // rules-index, "Witch Elves" wel.
       us: unit ? usVoor(unit.name_en, count) : null,
+      // Zelfde bron als de US: de rules-index op catalogusnaam. makeTroopTypeLookup geeft de VOLLE
+      // naam terug ("Monstrous Infantry"); de campagne wil de code, dus terugvertalen.
+      troopType: unit ? (codeVoorTroopType(troopVoor(unit.name_en)) ?? null) : null,
     };
   });
   const bekend = entries.every((x) => x.punten != null);
@@ -234,15 +250,17 @@ export async function renderLists(lists: unknown[]): Promise<RenderedList[]> {
   const overlays = new Map<string, CompositionOverlay | null>(
     await Promise.all(comps.map(async (c) => [c, await haalOverlay(c)] as const)),
   );
-  const usVoor = makeUnitStrengthLookup(await haalRuleIndex());
+  const ruleIdx = await haalRuleIndex();
+  const usVoor = makeUnitStrengthLookup(ruleIdx);
+  const troopVoor = makeTroopTypeLookup(ruleIdx);
   return kandidaten.map((l) => {
     const bron = perSlug.get(l.army ?? '') ?? { a: null, i: null };
     const nodig = !!l.composition && hasOverlay(l.composition);
     const ov = nodig ? overlays.get(l.composition) ?? null : null;
     // Overlay nodig maar niet geladen → geen catalogus doorgeven, dan blijft `fouten` null (onbekend).
-    if (nodig && !ov) return renderEen(l, null, null, usVoor);
+    if (nodig && !ov) return renderEen(l, null, null, usVoor, troopVoor);
     const cat = bron.a ? catalogueFor(bron.a, l.composition, ov) : bron.a;
     const items = ov && bron.i ? applyOverlayItems(bron.i, ov) : bron.i;
-    return renderEen(l, cat, items, usVoor);
+    return renderEen(l, cat, items, usVoor, troopVoor);
   });
 }
