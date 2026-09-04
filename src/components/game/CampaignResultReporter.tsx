@@ -124,7 +124,14 @@ function collectVeteraan(
   // Slachtoffers op naam. `killDetails[].unit` draagt de id van de vijandelijke unit; die staat in
   // het leger van de tegenpartij.
   const vijandNaam = new Map<string, string>();
-  for (const u of vijand?.units ?? []) vijandNaam.set(u.id, unitToon(u).primair || u.name);
+  // ...en op CAMPAGNE-sleutel: de campagne kent een unit als `campaignId ?? id` (zie campaignUnitId
+  // in owbBuilder.ts), dus een kill-regel moet naar diezelfde sleutel wijzen — anders kan de
+  // campagne het slachtoffer niet terugvinden in `towc_spel_unit`.
+  const vijandSleutel = new Map<string, string>();
+  for (const u of vijand?.units ?? []) {
+    vijandNaam.set(u.id, unitToon(u).primair || u.name);
+    vijandSleutel.set(u.id, u.campaignId ?? u.id);
+  }
 
   const out: VetRegel[] = [];
   for (const u of ownArmy?.units ?? []) {
@@ -154,6 +161,17 @@ function collectVeteraan(
       ];
     };
 
+    // Dezelfde kills, maar als DATA voor de campagne: beurt + de campagne-sleutel van het
+    // slachtoffer + zijn naam. Regels zonder aangewezen slachtoffer laten we weg — een kill-regel
+    // zonder doel is geen feit; `kills` houdt het aantal, dus de XP blijft kloppen.
+    const killDetails = (t?.killDetails ?? [])
+      .filter((d): d is { unit: string; turn?: number } => typeof d.unit === 'string' && !!d.unit)
+      .map((d) => ({
+        turn: typeof d.turn === 'number' ? d.turn : null,
+        unitId: vijandSleutel.get(d.unit) ?? d.unit,
+        naam: vijandNaam.get(d.unit) ?? null,
+      }));
+
     if (isCharacter(u)) {
       const leeft = !dood && !fleeing;
       const generaal = leeft && gewonnen && isGeneral(u);
@@ -168,6 +186,11 @@ function collectVeteraan(
           kills,
           bonusXp: generaal ? 1 : 0,
           scar_trigger: dood || fleeing,
+          troopType: u.troopType ?? null,
+          character: true,
+          general: isGeneral(u),
+          killDetails,
+          redenen,
         },
         redenen,
       });
@@ -189,6 +212,13 @@ function collectVeteraan(
         kills: verdient ? kills : 0,
         bonusXp: 0,
         scar_trigger: remaining < ts * 0.25 || weg || fleeing,
+        troopType: u.troopType ?? null,
+        character: false,
+        // Een niet-character kan de General-optie niet dragen, maar we leiden het af i.p.v. het te
+        // beweren — dan blijft het veld één betekenis houden over alle regels heen.
+        general: isGeneral(u),
+        killDetails,
+        redenen,
       },
       redenen,
     });

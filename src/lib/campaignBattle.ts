@@ -439,6 +439,27 @@ export interface BattleResultaat {
     bonusXp?: number;
     /** Battle-scar-trigger: unit onder 25% start-US, of removed, of vluchtend bij einde spel. */
     scar_trigger: boolean;
+    // ---- Toelichting bij de XP (04-09-2026) ----------------------------------------------------
+    // Tot nu stuurde OWC alleen de KALE som mee: overleefd, hoeveel kills, wel/geen scar. De
+    // campagne kon daardoor in het battle-rapport niet tonen WIE wat deed en WAAROM een unit XP
+    // krijgt. Deze vijf velden zijn puur toelichting — de campagne rekent nog steeds met
+    // overleefd_50/kills/bonusXp — en zijn allemaal optioneel, zodat een oudere OWC-client die ze
+    // niet stuurt precies zo blijft werken als voorheen.
+    /** Troop type van de unit zoals de rules-index hem kent ("Heavy Infantry", "War Machine", ...);
+     *  null als onbekend. Verklaart waarom een unit geen XP verdient (alleen infanterie/cavalerie). */
+    troopType?: string | null;
+    /** Character (categorie characters)? Characters volgen Seasoned Commanders i.p.v. de unit-regel. */
+    character?: boolean;
+    /** Draagt de General-optie? De General van het winnende leger krijgt +1 bonus-XP. */
+    general?: boolean;
+    /** Per kill: in welke beurt, welke vijandelijke unit (campagne-unit-id van de vijand) en zijn
+     *  naam. Alleen kills waarbij aan tafel een slachtoffer is aangewezen staan erin — een kale
+     *  teller zonder gekozen doel levert geen regel, terwijl `kills` het aantal wél houdt. */
+    killDetails?: { turn: number | null; unitId: string; naam: string | null }[];
+    /** Leesbare opbouw van de XP, exact wat de reporter zelf toont ("+1 survived",
+     *  "+1 destroyed Doomseeker", "+1 General, army won", "no XP — ..."). Eén bron: dit is dezelfde
+     *  array die in OWC onder de unit staat, dus de campagne kan niet iets anders vertellen. */
+    redenen?: string[];
   }[];
 }
 
