@@ -460,6 +460,14 @@ export interface BattleResultaat {
      *  "+1 destroyed Doomseeker", "+1 General, army won", "no XP — ..."). Eén bron: dit is dezelfde
      *  array die in OWC onder de unit staat, dus de campagne kan niet iets anders vertellen. */
     redenen?: string[];
+    /** 03-09-2026: verliezen in WONDEN (de tracker telt Unit Strength = modellen x wonden per model),
+     *  met de start-sterkte erbij, zodat de campagne "lost 4 of 4 wounds" kan zeggen i.p.v. "4 of 1". */
+    verloren?: number;
+    sterkte?: number;
+    /** Van tafel (removed) of alle sterkte weg. */
+    dood?: boolean;
+    /** Vluchtend bij het einde. */
+    gevlucht?: boolean;
   }[];
 }
 
