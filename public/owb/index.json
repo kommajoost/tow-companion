@@ -10,12 +10,12 @@
     {
       "slug": "chaos-dwarfs",
       "name": "Chaos Dwarfs",
-      "units": 24
+      "units": 45
     },
     {
       "slug": "daemons-of-chaos",
       "name": "Daemons of Chaos",
-      "units": 51
+      "units": 75
     },
     {
       "slug": "dark-elves",
