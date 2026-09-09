@@ -91,6 +91,77 @@ function InlineEntry({ slug, name, text, label }: { slug?: string; name?: string
 }
 
 // A chart (e.g. the Miscast Table) embedded inline as a table.
+/** De platte tekst van een node-boom — genoeg om een tabelcel te lezen. */
+const nodeTekst = (n: RichNode | null | undefined): string => (!n ? ''
+  : typeof n.value === 'string' ? n.value
+    : (n.content ?? []).map(nodeTekst).join(''));
+
+/** De special rules van een WAPENPROFIEL, uit de tabel in zijn body.
+ *
+ *  Op een wapenpagina staan die als PLATTE TEKST in de Special Rules-kolom ("Armour Bane (1),
+ *  Multiple Shots (2)"), en de pagina linkt alleen naar zijn eigen profiel. Er was dus geen weg van
+ *  de Repeater Crossbow naar wat Multiple Shots DOET (Joost, 09-09) — precies de uitleg waar je op
+ *  dat moment naar zoekt.
+ *
+ *  Een wapenprofiel is te herkennen aan R, S en AP in de kop. Die eis staat er met opzet: zonder
+ *  hem pakt dit ook de troop-type-tabellen, die eveneens een Special Rules-kolom hebben maar de
+ *  regels per nieuwe regel zetten in plaats van door komma's gescheiden.
+ *
+ *  Gemeten over de hele regelset: 236 wapenprofielen, 553 regelnamen, alle 553 vinden een pagina. */
+function wapenSpecialRules(body: RichNode | null | undefined): string[] {
+  const tabellen: RichNode[] = [];
+  const loop = (n: RichNode | null | undefined) => {
+    if (!n) return;
+    if (n.nodeType === 'table') tabellen.push(n);
+    (n.content ?? []).forEach(loop);
+  };
+  loop(body);
+  for (const t of tabellen) {
+    const rijen = (t.content ?? []).filter((rij) => rij.nodeType === 'table-row');
+    if (rijen.length < 2) continue;
+    const kop = (rijen[0].content ?? []).map((c) => nodeTekst(c).trim().toLowerCase());
+    if (!(kop.includes('r') && kop.includes('s') && kop.includes('ap'))) continue;
+    const kolom = kop.findIndex((h) => /^special rules?$/.test(h));
+    if (kolom < 0) continue;
+    for (const rij of rijen.slice(1)) {
+      const cel = nodeTekst((rij.content ?? [])[kolom]).trim();
+      if (!cel || /^[-–—]$/.test(cel)) continue;
+      // Splitsen op regeleinde en komma, zonder escape-reeks in de bron: een regex-literal met een
+      // escaped newline belandde hier tweemaal als ECHTE regelovergang en brak de literal.
+      return cel.split(String.fromCharCode(10)).flatMap((deel) => deel.split(","))
+        .map((s) => s.trim()).filter(Boolean);
+    }
+  }
+  return [];
+}
+
+/** De special rules van een wapen als aantikbare chips. Zelfde gebaar als de regel-chips op een
+ *  unitkaart: tikken opent de regel. Lost een naam niet op, dan blijft hij als tekst staan — beter
+ *  dan een knop die doodloopt. */
+function WapenRegels({ body }: { body: RichNode | null | undefined }) {
+  const { rules } = useData();
+  const { openRule } = useUI();
+  const namen = wapenSpecialRules(body);
+  if (!namen.length) return null;
+  const idx = getRuleIndex(rules);
+  return (
+    <div className="mt-2 flex flex-wrap gap-1.5 border-t border-border-soft pt-2">
+      {namen.map((naam, n) => {
+        const slug = resolveRuleSlug(naam, idx);
+        return slug ? (
+          <button
+            key={n}
+            onClick={() => openRule(slug)}
+            className="rounded-full border border-accent-2 px-2.5 py-0.5 text-xs text-accent active:bg-surface-3"
+          >{naam}</button>
+        ) : (
+          <span key={n} className="rounded-full border border-border px-2.5 py-0.5 text-xs text-ink-faint">{naam}</span>
+        );
+      })}
+    </div>
+  );
+}
+
 function ChartBlock({ slug, name }: { slug: string; name?: string }) {
   const { getRule } = useData();
   const rule = getRule(slug);
@@ -104,6 +175,7 @@ function ChartBlock({ slug, name }: { slug: string; name?: string }) {
         </figcaption>
       )}
       <Node node={rule.body} />
+      <WapenRegels body={rule.body} />
     </figure>
   );
 }
