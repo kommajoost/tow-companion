@@ -58,22 +58,21 @@ try {
 }
 
 // ── Renderen ────────────────────────────────────────────────────────────────────────────────────
-// Dezelfde vijf bestanden als in de browser, maar als LOKAAL PAD: in Node hoeft pdfmake ze niet via
-// de URL-resolver op te halen. Cinzel vult alle vier de sleuven — het heeft geen cursief, en pdfmake
-// breekt af op een ontbrekende sleuf in plaats van terug te vallen.
+// Dezelfde acht bestanden als in de browser, maar als LOKAAL PAD: in Node hoeft pdfmake ze niet via
+// de URL-resolver op te halen. Zie pdfDownload.ts voor waarom SemiBold (600) de `bold`-sleuf vult.
 const font = (bestand) => resolve(WORTEL, 'public/pdf-fonts', bestand);
 pdfMake.setFonts({
-  Garamond: {
-    normal: font('EBGaramond-Regular.ttf'),
-    bold: font('EBGaramond-SemiBold.ttf'),
-    italics: font('EBGaramond-RegularItalic.ttf'),
-    bolditalics: font('EBGaramond-SemiBoldItalic.ttf'),
+  Alegreya: {
+    normal: font('Alegreya-Regular.ttf'),
+    bold: font('Alegreya-Bold.ttf'),
+    italics: font('Alegreya-RegularItalic.ttf'),
+    bolditalics: font('Alegreya-BoldItalic.ttf'),
   },
-  Cinzel: {
-    normal: font('Cinzel-SemiBold.ttf'),
-    bold: font('Cinzel-SemiBold.ttf'),
-    italics: font('Cinzel-SemiBold.ttf'),
-    bolditalics: font('Cinzel-SemiBold.ttf'),
+  SourceSans: {
+    normal: font('SourceSans3-Regular.ttf'),
+    bold: font('SourceSans3-SemiBold.ttf'),
+    italics: font('SourceSans3-RegularItalic.ttf'),
+    bolditalics: font('SourceSans3-SemiBoldItalic.ttf'),
   },
 });
 // Zonder deze twee waarschuwt pdfmake 0.3 bij elke run over ontbrekend toegangsbeleid. Dit script

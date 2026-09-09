@@ -1,4 +1,4 @@
-// Hetzelfde printblad als `armyToPrintHtml`, maar als PDF-documentdefinitie (pdfmake).
+// De army-list-PDF: een raster van UNIT-KAARTEN, plus een naslagpagina met lore en special rules.
 //
 // WAAROM NAAST printArmy.ts. Het printvenster van de browser is geen PDF: je krijgt de dialoog van
 // het besturingssysteem, op mobiel soms helemaal niets, en het blad ziet er per browser anders uit
@@ -10,22 +10,29 @@
 // dat er ~1 MB bundel meelift in de app-chunk. De echte pdfmake-import gebeurt pas in
 // `pdfDownload.ts`, dynamisch, op het moment dat iemand op de knop drukt.
 //
-// SPIEGEL VAN printArmy.ts, met opzet regel voor regel. Dezelfde opties, dezelfde categorie-volgorde,
-// dezelfde regelresolutie, dezelfde appendix- en lore-verzameling. Zou dit bestand zijn eigen
-// interpretatie hebben, dan zeggen het printvenster en de PDF iets anders over dezelfde lijst —
-// precies de stille afwijking die dit project eerder al geld heeft gekost.
+// DEZELFDE INHOUD ALS printArmy.ts, EEN ANDERE OPMAAK. Alle inhoudelijke keuzes zijn ongewijzigd
+// overgenomen: dezelfde opties, dezelfde categorie-volgorde, dezelfde regelresolutie via
+// resolveRuleSlug/resolveOptionSlug, dezelfde appendix- en lore-verzameling, dezelfde
+// magic-weapon-profielen uit magicText. Alleen de LAYOUT is nieuw (ontwerp Joost, 09-09): niet meer
+// een doorlopende kolom met hoofdstukken, maar zes gelijke unit-kaarten per A4 en achterin één
+// naslagpagina. Wijzigt er iets aan de inhoudelijke logica in printArmy.ts, dan hoort het hier mee
+// te wijzigen.
 //
 // DE KLEINE PRIVATE HELPERS UIT printArmy.ts (clean, PLAATSHOUDERS, MARKERING, schoonEffect,
 // groepeer, wapenS, wapenExtras, CAT_ORDER) zijn hier GEDUPLICEERD, niet geïmporteerd. printArmy.ts
 // is niet van deze module om te verbouwen, en er iets extra's uit exporteren zou dat bestand
-// veranderen. De duplicaten staan hieronder met een verwijzing naar hun origineel; wijzigt daar iets,
-// dan hoort het hier mee te wijzigen.
+// veranderen.
 //
-// TYPOGRAFIE. Broodtekst EB Garamond (de serif van de app), koppen Cinzel (alleen hoofdletters, dus
-// alleen voor de lijstnaam en de hoofdstukkoppen, in uppercase). EB Garamond heeft OLDSTYLE-cijfers
-// als standaard — een "3" die onder de regel duikt en een "1" ter grootte van een x-hoogte. In een
-// statlinetabel is dat onleesbaar, dus staat `fontFeatures: ['lnum','tnum']` (lining + tabular) in de
-// `defaultStyle`; pdfmake erft die via de style-stack door naar elke tekstnode.
+// MATEN. Het ontwerp is een HTML-mock van 794 × 1123 px — dat is A4 op 96 dpi. Eén px is dus exact
+// 0,75 pt, en `p()` hieronder rekent elke maat uit de mock om. Overal waar je een getal ziet staat
+// het aantal PIXELS uit het ontwerp, zodat een wijziging in de mock hier één-op-één te volgen is.
+//
+// TYPOGRAFIE. Twee families: `Alegreya` (serif) voor titels, unitnamen, punten en spreuknamen, en
+// `SourceSans` voor al het overige. Het ontwerp gebruikt gewicht 600 én 700 voor sans-vet; wij
+// registreren alleen de SemiBold (600) als `bold` — bij 6,4 pt kleinkapitaal is het verschil met 700
+// onzichtbaar en het scheelt een fontbestand over de lijn. Source Sans heeft lining-cijfers als
+// standaard, maar `fontFeatures: ['lnum','tnum']` blijft staan: het maakt de statline-kolommen
+// gegarandeerd tabulair en kan geen kwaad.
 
 import type { ArmyUnit, Lore, RichNode, Rule, UnitProfile } from '../types';
 import type { Column, Content, ContentTable, CustomTableLayout, Style, TDocumentDefinitions } from 'pdfmake/interfaces';
@@ -37,63 +44,106 @@ import { magicItemIdFromName } from './owbBuilder';
 import { richToPlain } from './richHtml';
 
 // ══════════════════════════════════════════════════════════════════════════════════════════════
-// Maten, kleuren, lagen
+// Maten en kleuren
 // ══════════════════════════════════════════════════════════════════════════════════════════════
 
-/** PDF rekent in punten; het blad is in millimeters ontworpen (net als de @page-regels in de HTML). */
-const mm = (n: number): number => n * 2.835;
-
-/** A4 staand, in punten. Nodig om te schatten of een unit-blok nog op één pagina past. */
+/** A4 staand, in punten. */
 const A4 = { breedte: 595.28, hoogte: 841.89 };
 
-// Exact de kleuren van het HTML-blad.
-const INK = '#14100a';
-const GEDEMPT = '#5c5342';
-const LABEL = '#6b5c3a';
-const TEKST = '#3d372c';
-const TEKST2 = '#241f16';
-const LIJN = '#cfc6b0';
-const STIP = '#ddd6c4';
+/** Eén ontwerp-pixel in punten (de mock is A4 op 96 dpi). */
+const PX = 0.75;
 
-/** De inspringing van een regel- of itemblok: even breed als het LABEL-kolommetje ernaast, zodat
- *  namen en teksten onder elkaar uitkomen (`.rl { min-width: 21mm }` in de HTML).
- *
- *  BREDER DAN DE 21 mm VAN DE HTML, en dat moet: in HTML is `min-width` een ONDERgrens waar een lang
- *  label ("SPECIAL RULES") gewoon overheen loopt, terwijl een pdfmake-kolom een VASTE breedte heeft
- *  en de tekst er binnen afbreekt. 21 mm gaf dus een label van twee regels naast een tekst van een. */
-const LABELKOL = mm(26);
-/** Letterspatiëring van die labels (0.1em bij 7.6 pt). */
-const LABELSPATIE = 0.6;
+// Exact de kleuren van het ontwerp.
+const INK = '#1c1916';
+const GRIJS = '#6b6152';
+const TEKST = '#4a443c';
+const GOUD = '#8a6d3b';
+const GOUDLIJN = '#c9b58a';
+const HAARLIJN = '#ece7dd';
+
+/** Alle afgeleide maten van één blad. `compact` krimpt ze allemaal met 10% — inclusief de
+ *  paginamarges, zodat de verhoudingen kloppen en er simpelweg meer op past. */
+interface Maten {
+  /** Ontwerp-px → punten. */
+  p(n: number): number;
+  marge: number;
+  voet: number;
+  bladBreedte: number;
+  bladHoogte: number;
+  gap: number;
+  kopHoogte: number;
+  kaartBreedte: number;
+  /** Binnenwerk van een kaart: buitenbreedte min de rand en de 12 px zijpadding. */
+  kaartBinnen: number;
+  /** Minimale kaarthoogte, zó gekozen dat er op pagina 1 precies drie rijen naast de kop passen. */
+  kaartHoogte: number;
+  /** Binnenwerk van een kaart over de VOLLE bladbreedte (naslag zonder lore-kaart). */
+  breedBinnen: number;
+}
+
+function maten(compact: boolean): Maten {
+  const f = compact ? 0.9 : 1;
+  const p = (n: number): number => n * PX * f;
+  const marge = p(38);
+  // Voethoogte = de goudlijn + 8 px lucht + één regel van 11,5 px op regelafstand 1,35.
+  const voet = p(1 + 8 + 11.5 * 1.35);
+  const bladBreedte = A4.breedte - 2 * marge;
+  const bladHoogte = A4.hoogte - marge - (marge + voet);
+  const gap = p(12);
+  // Kop van pagina 1: labelregel (9 px × 1,35) + 5 px + titel (35 px, regelafstand 1) + 12 px lucht.
+  const kopHoogte = p(9) * 1.35 + p(5) + p(35) + p(12);
+  const kaartBreedte = (bladBreedte - gap) / 2;
+  const rand = p(1);
+  return {
+    p,
+    marge,
+    voet,
+    bladBreedte,
+    bladHoogte,
+    gap,
+    kopHoogte,
+    kaartBreedte,
+    kaartBinnen: kaartBreedte - 2 * rand - 2 * p(12),
+    // 2 pt speling: pdfmake rondt de kophoogte een fractie anders af, en één punt te veel kost een
+    // hele rij (dan passen er nog maar twee kaarten op pagina 1).
+    kaartHoogte: (bladHoogte - kopHoogte - 2 * gap - 2) / 3,
+    breedBinnen: bladBreedte - 2 * rand - 2 * p(12),
+  };
+}
 
 const marge = (l: number, t: number, r: number, b: number): [number, number, number, number] => [l, t, r, b];
 
-/** Dunne tabellijnen (.25 pt, #cfc6b0) met de krappe cel-padding van het printblad. */
-const TABEL_LAGEN: CustomTableLayout = {
-  hLineWidth: () => 0.25,
-  vLineWidth: () => 0.25,
-  hLineColor: () => LIJN,
-  vLineColor: () => LIJN,
-  paddingLeft: () => mm(1.5),
-  paddingRight: () => mm(1.5),
-  paddingTop: () => mm(0.3),
-  paddingBottom: () => mm(0.3),
-};
+/** CSS `line-height` → pdfmake `lineHeight`.
+ *
+ *  WAAROM DEZE OMREKENING. In CSS is `line-height: 1.35` exact 1,35 × de lettergrootte. pdfmake
+ *  vermenigvuldigt zijn `lineHeight` met de NATUURLIJKE regelhoogte van het font (ascender −
+ *  descender + lineGap). Voor Alegreya is dat 1,361 em en voor Source Sans 3 zelfs 1,424 em, dus
+ *  `lineHeight: 1` levert daar een regel van 1,36 respectievelijk 1,42 keer de lettergrootte op.
+ *  Zonder deze deling wordt elke kaart een centimeter te hoog en passen er geen zes op een A4.
+ *  (Gemeten met fontkit op de bestanden in `public/pdf-fonts/`.) */
+const EM_SERIF = 1.361;
+const EM_SANS = 1.424;
+const lhSerif = (css: number): number => css / EM_SERIF;
+const lhSans = (css: number): number => css / EM_SANS;
 
-/** Dezelfde lijnen, maar voor een tabel BINNEN een regeltekst (een To Hit-chart in een regelbody). */
-const RICH_TABEL_LAGEN: CustomTableLayout = {
-  ...TABEL_LAGEN,
-  paddingLeft: () => mm(1.4),
-  paddingRight: () => mm(1.4),
-};
+/** De ascender van beide families, in em. pdfmake zet de basislijn van een regel exact `ascender ×
+ *  lettergrootte` onder de bovenkant van het blok — óók als `lineHeight` de regel korter maakt.
+ *  Daarmee is het verschil tussen twee basislijnen naast elkaar exact uit te rekenen; nodig omdat
+ *  pdfmake kolommen op hun BOVENkant uitlijnt en het ontwerp op de basislijn. (GEMETEN 09-09 tegen de
+ *  gerenderde PDF.) */
+const ASC_SERIF = 1.016;
+const ASC_SANS = 1.024;
 
 /** Een horizontale lijn over de volle beschikbare breedte.
  *
  *  WAAROM GEEN `canvas`. Een canvas-lijn eist een expliciete lengte in punten, en die is hier
- *  onbekend: hetzelfde blokje staat zowel over de volle bladbreedte als binnen een halve kolom.
+ *  onbekend: hetzelfde lijntje staat zowel over de volle bladbreedte als binnen een kaartkolom.
  *  Een tabel met één lege rij en alleen een bovenrand rekt wél mee met zijn kolom. */
-function lijn(dikte: number, kleur = INK, boven = 0, onder = 0): Content {
+function lijn(dikte: number, kleur: string, boven = 0, onder = 0): Content {
   return {
-    table: { widths: ['*'], body: [[{ text: '' }]] },
+    // De cel is leeg maar zou als tekstnode een VOLLE regel hoog worden; met lettergrootte 1 blijft er
+    // een streep van een punt over in plaats van tien punten lucht onder elke lijn.
+    table: { widths: ['*'], body: [[{ text: '', fontSize: 1, lineHeight: 1 }]] },
     layout: {
       hLineWidth: (i: number) => (i === 0 ? dikte : 0),
       vLineWidth: () => 0,
@@ -184,6 +234,47 @@ function wapenExtras(w: WeaponProfile): string[] {
   return uit;
 }
 
+/** Zie `isGeneral` in CampaignResultReporter.tsx — de generaal is een OPTIE die met "General" begint. */
+const isGeneral = (u: ArmyUnit): boolean =>
+  (u.options ?? []).some((o) => /^general\b/i.test(o.replace(/\{[^}]*\}/g, '').trim()));
+
+/** Waar een regel vandaan komt als er geen paginanummer is ("Renegade V2", "Ravening Hordes"). */
+const bronLabel = (r: Rule): string =>
+  r.pageReference ? `p.${r.pageReference}` : strip(r.association?.[r.association.length - 1] ?? '');
+
+// ══════════════════════════════════════════════════════════════════════════════════════════════
+// Tekstbreedte — nodig omdat pdfmake geen wrappende rij omkaderde "chips" kent
+// ══════════════════════════════════════════════════════════════════════════════════════════════
+
+/** De advance widths van SourceSans3-SemiBold voor teken 32…126, in duizendsten van een em
+ *  (uitgelezen met fontkit uit `public/pdf-fonts/SourceSans3-SemiBold.ttf`).
+ *
+ *  WAAROM EEN TABEL EN GEEN METING. De chips onderaan een kaart zijn omkaderde blokjes die moeten
+ *  WRAPPEN binnen de kaartbreedte. pdfmake heeft geen inline-block met rand, dus we verdelen ze zelf
+ *  over regels — en daarvoor moet dit bestand weten hoe breed een label wordt. Meten kan hier niet:
+ *  de module is puur en heeft geen font geladen. Vandaar deze constante; wijzigt het chip-font, dan
+ *  hoort deze tabel mee te wijzigen. */
+const CHAR_W = [
+  200, 315, 482, 513, 513, 841, 639, 275, 324, 324, 438, 513, 275, 322, 275, 344,
+  513, 513, 513, 513, 513, 513, 513, 513, 513, 513, 275, 275, 513, 513, 513, 444,
+  875, 558, 597, 576, 625, 538, 510, 628, 663, 282, 494, 597, 502, 745, 657, 674,
+  582, 674, 592, 545, 546, 655, 536, 800, 541, 501, 540, 324, 344, 324, 513, 500,
+  549, 516, 563, 462, 564, 507, 317, 520, 558, 262, 263, 522, 271, 843, 560, 549,
+  564, 564, 373, 431, 361, 556, 495, 748, 481, 495, 443, 324, 255, 324, 513,
+];
+
+/** Breedte van een stukje tekst in SourceSans SemiBold, in punten. Onbekende tekens (accenten,
+ *  gedachtestreepjes) krijgen een ruime schatting: overschatten kost hooguit een chip minder op een
+ *  regel, onderschatten laat een chip over de kaartrand lopen. */
+function tekstBreedte(s: string, grootte: number): number {
+  let n = 0;
+  for (const teken of s) {
+    const c = teken.codePointAt(0) ?? 32;
+    n += c >= 32 && c <= 126 ? CHAR_W[c - 32] : 560;
+  }
+  return (n / 1000) * grootte;
+}
+
 // ══════════════════════════════════════════════════════════════════════════════════════════════
 // Rich text → pdfmake
 // ══════════════════════════════════════════════════════════════════════════════════════════════
@@ -205,8 +296,8 @@ function inlineNode(node: RichNode): Content[] {
         if (m.type === 'bold') run.bold = true;
         else if (m.type === 'italic') run.italics = true;
         else if (m.type === 'underline') run.decoration = 'underline';
-        // `code` wordt gewone tekst: een monospace-run in een serif-alinea leest als een fout,
-        // en er is in dit blad geen derde font ingesloten.
+        // `code` wordt gewone tekst: een monospace-run in een alinea leest als een fout, en er is in
+        // dit blad geen derde font ingesloten.
       }
       return [run];
     }
@@ -235,8 +326,10 @@ const blokken = (nodes: RichNode[] | undefined): Content[] =>
  *
  *  Zelfde vertaalkeuzes als `richToHtml`: links worden platte tekst, een `embedded-entry-block`
  *  wordt alleen de naam (een Miscast-tabel hoort in het rulebook, niet vier keer in je legerlijst),
- *  en alle kopniveaus worden één klein kopje — een wiki-`h2` is op een A4 vol units net zo groot als
- *  de lijstnaam. */
+ *  en alle kopniveaus worden één klein kopje.
+ *
+ *  De maten hier zijn NIET geschaald met `compact`: deze functie is ook los geëxporteerd en heeft
+ *  geen blad-context. Het verschil is een fractie van een punt op een regelafstand. */
 export function richToPdf(node: RichNode | null | undefined): Content[] {
   if (!node) return [];
   switch (node.nodeType) {
@@ -245,7 +338,7 @@ export function richToPdf(node: RichNode | null | undefined): Content[] {
 
     case 'paragraph': {
       const runs = inlineRuns(node.content);
-      return runs.length ? [{ text: runs, margin: marge(0, mm(0.4), 0, mm(0.4)) }] : [];
+      return runs.length ? [{ text: runs, margin: marge(0, 1, 0, 1) }] : [];
     }
 
     case 'heading-1':
@@ -258,17 +351,18 @@ export function richToPdf(node: RichNode | null | undefined): Content[] {
       if (!tekst) return [];
       return [{
         text: tekst.toUpperCase(),
-        fontSize: 8.4,
-        characterSpacing: 0.67,
-        color: LABEL,
-        margin: marge(0, mm(0.8), 0, mm(0.2)),
+        fontSize: 6.4,
+        characterSpacing: 0.5,
+        bold: true,
+        color: GRIJS,
+        margin: marge(0, 2.5, 0, 0.8),
       }];
     }
 
     case 'unordered-list':
-      return [{ ul: lijstItems(node), margin: marge(mm(2), mm(0.4), 0, mm(0.4)) }];
+      return [{ ul: lijstItems(node), margin: marge(6, 1, 0, 1) }];
     case 'ordered-list':
-      return [{ ol: lijstItems(node), margin: marge(mm(2), mm(0.4), 0, mm(0.4)) }];
+      return [{ ol: lijstItems(node), margin: marge(6, 1, 0, 1) }];
     case 'list-item':
       return blokken(node.content);
 
@@ -276,12 +370,12 @@ export function richToPdf(node: RichNode | null | undefined): Content[] {
       return [{
         stack: blokken(node.content),
         italics: true,
-        color: GEDEMPT,
-        margin: marge(mm(3), mm(0.6), 0, mm(0.6)),
+        color: GRIJS,
+        margin: marge(8, 2, 0, 2),
       }];
 
     case 'hr':
-      return [lijn(0.25, LIJN, mm(1), mm(1))];
+      return [lijn(0.5, HAARLIJN, 3, 3)];
 
     // Een tabel in een regeltekst (een To Hit-chart, een Miscast-worp) IS de regel. Platgeslagen tot
     // een reeks woorden wordt hij onbruikbaar, dus komt hij als echte tabel op het blad.
@@ -291,7 +385,7 @@ export function richToPdf(node: RichNode | null | undefined): Content[] {
     case 'embedded-entry-block': {
       const naam = node.data?.target?.fields?.name ?? node.data?.target?.fields?.slug;
       if (!naam) return [];
-      return [{ text: strip(naam), italics: true, color: GEDEMPT, margin: marge(0, mm(0.4), 0, mm(0.4)) }];
+      return [{ text: strip(naam), italics: true, color: GRIJS, margin: marge(0, 1, 0, 1) }];
     }
 
     case 'text':
@@ -315,6 +409,18 @@ function lijstItems(node: RichNode): Content[] {
   });
 }
 
+/** Dunne haarlijnen voor een tabel BINNEN een regeltekst. */
+const RICH_TABEL_LAGEN: CustomTableLayout = {
+  hLineWidth: () => 0.5,
+  vLineWidth: () => 0.5,
+  hLineColor: () => GOUDLIJN,
+  vLineColor: () => GOUDLIJN,
+  paddingLeft: () => 3,
+  paddingRight: () => 3,
+  paddingTop: () => 1,
+  paddingBottom: () => 1,
+};
+
 /** Een rich-text-tabel als pdfmake-tabel. pdfmake eist dat elke rij ÉVEN VEEL cellen heeft — de wiki
  *  levert soms een rij met een samengevoegde cel minder — dus worden korte rijen aangevuld. */
 function richTabel(node: RichNode): Content {
@@ -327,7 +433,7 @@ function richTabel(node: RichNode): Content {
         if (c.nodeType === 'table-cell' || c.nodeType === 'table-header-cell') {
           const inhoud = blokken(c.content);
           const kop = c.nodeType === 'table-header-cell';
-          cellen.push(inhoud.length ? { stack: inhoud, ...(kop ? { color: LABEL } : {}) } : { text: '' });
+          cellen.push(inhoud.length ? { stack: inhoud, ...(kop ? { color: GRIJS } : {}) } : { text: '' });
         }
       }
       rijen.push(cellen);
@@ -344,8 +450,8 @@ function richTabel(node: RichNode): Content {
   return {
     table: { widths: Array.from({ length: kolommen }, () => '*'), body: rijen },
     layout: RICH_TABEL_LAGEN,
-    fontSize: 7.8,
-    margin: marge(0, mm(0.8), 0, mm(0.8)),
+    fontSize: 6.6,
+    margin: marge(0, 2, 0, 2),
   } as ContentTable;
 }
 
@@ -370,7 +476,11 @@ interface Ctx {
   faction: string;
   appendix: Map<string, Rule>;
   lores: Map<string, { lore: Lore; gekozen: Set<string>; wizards: string[] }>;
+  /** Magic items die ergens in het leger voorkomen, ontdubbeld op naam — hun tekst staat alleen op de
+   *  naslagpagina (op de kaart staat de naam in de loadout-regel). */
+  items: Map<string, { naam: string; flavour?: string; effect: string; profiel: string[] }>;
   opts: PrintOptions;
+  m: Maten;
   /** Basis-lettergrootte van het blad; bepaalt ook de schatting van de blokhoogtes. */
   basis: number;
 }
@@ -387,6 +497,8 @@ function resolveer(labels: (string | undefined)[], ctx: Ctx): RegelRef[] {
       const k = label.toLowerCase();
       if (gezien.has(k)) continue;
       gezien.add(k);
+      // Eerst als regelNAAM, dan pas als wargear-label: die tweede route kent aliassen en mag nooit
+      // een goed antwoord van de eerste overrulen.
       const slug = resolveRuleSlug(label, ctx.idx, ctx.faction) ?? resolveOptionSlug(label, ctx.idx, ctx.faction);
       const rule = slug ? ctx.rules[slug] : undefined;
       uit.push({ label, rule });
@@ -395,125 +507,256 @@ function resolveer(labels: (string | undefined)[], ctx: Ctx): RegelRef[] {
   return uit;
 }
 
+/** Onthoud een regel voor de naslagpagina. Wapenprofiel-pagina's slaan we over: de profieltabel die
+ *  al op de kaart staat IS die regel, en de pagina zelf bevat niets anders. */
 function onthoud(ref: RegelRef, ctx: Ctx): void {
   const r = ref.rule;
   if (!r || r.slug.endsWith('-profile')) return;
   if (!ctx.appendix.has(r.slug)) ctx.appendix.set(r.slug, r);
 }
 
-/** Een rij "LABEL   naam · naam", met het label in een vaste kolom zodat alle rijen uitlijnen. */
-function regelRij(titel: string, namen: string): Content {
+/** Labels resolveren, onthouden voor de naslag, en de schoongemaakte namen teruggeven — dat is wat er
+ *  als chip op de kaart komt.
+ *
+ *  `rulesMode: 'inline'` bestaat in deze layout NIET meer als aparte weergave. Een kaart heeft geen
+ *  ruimte voor volledige regelteksten (zes stuks op een A4), dus staan de teksten altijd één keer op
+ *  de naslagpagina en op de kaart alleen de naam. De optie blijft in `PrintOptions` staan omdat
+ *  printArmy.ts hem wél honoreert. */
+function chipLabels(labels: (string | undefined)[], ctx: Ctx): string[] {
+  const refs = resolveer(labels, ctx);
+  refs.forEach((r) => onthoud(r, ctx));
+  return refs.map((r) => r.label);
+}
+
+// ══════════════════════════════════════════════════════════════════════════════════════════════
+// Bouwstenen van een kaart
+// ══════════════════════════════════════════════════════════════════════════════════════════════
+
+/** De rand van een kaart: 1 px inkt rondom, geen padding (de inhoud draagt zijn eigen marges, zodat
+ *  de scheidingslijn onder de kop over de VOLLE kaartbreedte kan lopen). */
+function kaartRand(m: Maten): CustomTableLayout {
+  const d = m.p(1);
   return {
-    columns: [
-      { text: titel.toUpperCase(), width: LABELKOL, fontSize: 7.6, characterSpacing: LABELSPATIE, color: LABEL },
-      { text: namen, color: TEKST },
-    ],
-    fontSize: 8.8,
-    margin: marge(0, mm(0.8), 0, 0),
+    hLineWidth: () => d,
+    vLineWidth: () => d,
+    hLineColor: () => INK,
+    vLineColor: () => INK,
+    paddingLeft: () => 0,
+    paddingRight: () => 0,
+    paddingTop: () => 0,
+    paddingBottom: () => 0,
   };
 }
 
-/** Een groepje regels onder een unit: altijd de namen, in `inline`-modus ook de teksten; in
- *  `appendix`-modus worden de gevonden regels onthouden voor achterin. */
-function regelBlok(titel: string, refs: RegelRef[], ctx: Ctx): Content[] {
-  if (!refs.length) return [];
-  const kop = regelRij(titel, refs.map((r) => r.label).join(' · '));
-  if (ctx.opts.rulesMode === 'appendix') {
-    refs.forEach((r) => onthoud(r, ctx));
-    return [kop];
-  }
-  const teksten: Content[] = refs
-    .filter((r) => r.rule)
-    .map((r) => ({
-      stack: [regelKop(r.label, (r.rule as Rule).pageReference), ...regelBody(r.rule as Rule)],
-      margin: marge(LABELKOL, mm(1), 0, 0),
-      unbreakable: true,
-    }));
-  return [kop, ...teksten];
-}
-
-/** De vetgedrukte naam van een regel, met de paginaverwijzing er gedempt achter. */
-function regelKop(naam: string, pagina: number | null | undefined): Content {
-  const runs: Content[] = [{ text: strip(naam), bold: true }];
-  if (pagina) runs.push({ text: `   p. ${pagina}`, bold: false, fontSize: 7.4, color: LABEL });
-  return { text: runs, fontSize: 8.8 };
-}
-
-// ══════════════════════════════════════════════════════════════════════════════════════════════
-// Tabellen
-// ══════════════════════════════════════════════════════════════════════════════════════════════
-
-function statTabel(profiel: UnitProfile, caption?: string): Content[] {
-  if (!profiel.stats?.length) return [];
-  const uit: Content[] = [];
-  if (caption) {
-    uit.push({
-      text: clean(caption),
-      fontSize: 8.2,
-      italics: true,
-      color: GEDEMPT,
-      margin: marge(0, mm(1), 0, mm(0.4)),
-    });
-  }
-  uit.push({
-    table: {
-      widths: profiel.stats.map(() => '*'),
-      body: [
-        profiel.stats.map((s) => ({ text: strip(s.k), color: LABEL, characterSpacing: 0.47 })),
-        profiel.stats.map((s) => ({ text: strip(s.v || '-') })),
-      ],
-    },
-    layout: TABEL_LAGEN,
-    fontSize: 7.8,
-    alignment: 'center',
-    margin: marge(0, caption ? 0 : mm(1), 0, mm(0.5)),
-  } as ContentTable);
-  return uit;
-}
-
-const WAPEN_KOPPEN = ['Weapon', 'Range', 'S', 'AP', 'Special rules'];
-
-/** Eén rij van de wapentabel. Naam en special rules links, de getallen gecentreerd. */
-function wapenRij(naam: string, range: string, s: string, ap: string, regels: string): Content[] {
-  return [
-    { text: strip(naam), alignment: 'left' },
-    { text: strip(range || '-') },
-    { text: strip(s || '-') },
-    { text: strip(ap || '-') },
-    { text: strip(regels || '-'), alignment: 'left', color: TEKST },
+/** Een omkaderde kaart: kop, 2 px scheidingslijn, body. `minHoogte` dwingt (via pdfmake's
+ *  `table.heights`, die als ONDERgrens werkt) alle kaarten op een pagina even hoog te zijn; groeit de
+ *  inhoud er overheen, dan groeit de kaart mee. */
+function kaart(kop: Content[], body: Content[], m: Maten, minHoogte?: number): Content {
+  const zij = m.p(12);
+  const inhoud: Content[] = [
+    { stack: kop, margin: marge(zij, m.p(9), zij, m.p(9)) },
+    lijn(m.p(2), INK),
+    { stack: body, margin: marge(zij, m.p(8), zij, m.p(8)) },
   ];
-}
-
-function wapenTabel(rijen: Content[][]): Content {
   return {
     table: {
-      widths: ['*', 'auto', 'auto', 'auto', '*'],
-      body: [
-        WAPEN_KOPPEN.map((k, i) => ({
-          text: k.toUpperCase(),
-          color: LABEL,
-          fontSize: 7.4,
-          characterSpacing: 0.44,
-          alignment: (i === 0 || i === 4 ? 'left' : 'center') as 'left' | 'center',
-        })),
-        ...rijen,
-      ],
+      widths: ['*'],
+      // `heights` slaat op de INHOUD van de rij; de twee randen komen er nog bij. Zonder die aftrek is
+      // elke kaart 1,5 pt te hoog en valt de derde rij van de pagina.
+      ...(minHoogte != null ? { heights: [minHoogte - 2 * m.p(1)] } : {}),
+      body: [[{ stack: inhoud }]],
     },
-    layout: TABEL_LAGEN,
-    fontSize: 7.9,
-    alignment: 'center',
-    margin: marge(0, mm(1), 0, mm(0.5)),
+    layout: kaartRand(m),
   } as ContentTable;
 }
 
-/** Het wapenprofiel van een magic item (magic-item-text.json), als het er een heeft. */
-function itemProfielTabel(profiel: NonNullable<MagicText[string]['profiel']>): Content[] {
-  const rijen = profiel.map((p) => wapenRij(p.naam || '', p.range || '', p.strength || '', p.ap || '', p.specialRules || ''));
-  return rijen.length ? [wapenTabel(rijen)] : [];
+/** Het kleine gouden/grijze kapitaalregeltje boven een kaarttitel. */
+function labelRegel(tekst: string, kleur: string, m: Maten): Content {
+  return {
+    text: strip(tekst).toUpperCase(),
+    fontSize: m.p(9),
+    characterSpacing: m.p(9) * 0.16,
+    bold: true,
+    color: kleur,
+  };
+}
+
+/** De kop van een kaart: klein label + serif-titel, met optioneel een getal rechts. */
+function kaartKop(label: string, titel: Content[], rechts: Column | null, m: Maten): Content[] {
+  const links: Content = {
+    stack: [
+      labelRegel(label, GRIJS, m),
+      { text: titel, font: 'Alegreya', fontSize: m.p(22), lineHeight: lhSerif(1), margin: marge(0, m.p(2), 0, 0) },
+    ],
+  };
+  if (!rechts) return [links];
+  return [{ columns: [links, rechts], columnGap: m.p(8) }];
+}
+
+// ── Statlines ────────────────────────────────────────────────────────────────────────────────
+
+/** De statline-tabel: geen celranden, alleen een gouden bovenlijn per profielrij. Alle profielen van
+ *  de unit ÉN van zijn mounts staan in DEZELFDE tabel — zo lees je "Cold One Knight / Dread Knight /
+ *  Cold One" als één blok, precies zoals het ontwerp het toont. */
+function statTabel(profielen: UnitProfile[], breedte: number, m: Maten): Content[] {
+  const rijen = profielen.filter((p) => p.stats?.length);
+  if (!rijen.length) return [];
+  const kolommen = rijen[0].stats.map((s) => strip(s.k));
+  const eerste = breedte * 0.38;
+  const rest = (breedte - eerste) / kolommen.length;
+
+  const kop: Content[] = [
+    { text: '' },
+    ...kolommen.map((k) => ({
+      text: k,
+      fontSize: m.p(8.5),
+      characterSpacing: m.p(8.5) * 0.06,
+      bold: true,
+      color: GRIJS,
+      alignment: 'center' as const,
+    })),
+  ];
+  const body: Content[][] = [kop];
+  for (const p of rijen) {
+    const cel = new Map(p.stats.map((s) => [strip(s.k), strip(s.v || '')]));
+    body.push([
+      { text: clean(p.label || ''), fontSize: m.p(10.5), color: TEKST, noWrap: true },
+      ...kolommen.map((k) => ({
+        text: cel.get(k) || '–',
+        fontSize: m.p(10.5),
+        bold: true,
+        color: INK,
+        alignment: 'center' as const,
+      })),
+    ]);
+  }
+
+  return [{
+    table: { widths: [eerste, ...kolommen.map(() => rest)], body },
+    layout: {
+      // Rij 0 is de kop; die heeft geen bovenlijn. Elke profielrij krijgt er wél een, in goud.
+      hLineWidth: (i: number) => (i === 0 || i > body.length - 1 ? 0 : m.p(1)),
+      vLineWidth: () => 0,
+      hLineColor: () => GOUDLIJN,
+      paddingLeft: () => 0,
+      paddingRight: () => 0,
+      paddingTop: (i: number) => (i === 0 ? 0 : m.p(3)),
+      paddingBottom: (i: number) => (i === 0 ? m.p(2) : m.p(3)),
+    },
+  } as ContentTable];
+}
+
+// ── Wapens ───────────────────────────────────────────────────────────────────────────────────
+
+const WAPEN_KOPPEN = ['Weapon', 'Range', 'S', 'AP', 'Rules'];
+
+/** Eén rij van de wapentabel. Naam en rules links, de getallen gecentreerd. */
+function wapenRij(naam: string, range: string, s: string, ap: string, regels: string, m: Maten): Content[] {
+  const g = m.p(10);
+  return [
+    { text: strip(naam), fontSize: g, color: INK, noWrap: true },
+    { text: strip(range || '–'), fontSize: g, color: TEKST, alignment: 'center', noWrap: true },
+    { text: strip(s || '–'), fontSize: g, color: TEKST, alignment: 'center', noWrap: true },
+    { text: strip(ap || '–'), fontSize: g, color: TEKST, alignment: 'center', noWrap: true },
+    { text: strip(regels || '–'), fontSize: g, color: TEKST },
+  ];
+}
+
+function wapenTabel(rijen: Content[][], m: Maten): Content {
+  const kop: Content[] = WAPEN_KOPPEN.map((k, i) => ({
+    text: k,
+    fontSize: m.p(8),
+    characterSpacing: m.p(8) * 0.06,
+    bold: true,
+    color: GRIJS,
+    alignment: (i === 0 || i === 4 ? 'left' : 'center') as 'left' | 'center',
+  }));
+  const body = [kop, ...rijen];
+  return {
+    table: { widths: ['*', 'auto', 'auto', 'auto', '*'], body },
+    layout: {
+      hLineWidth: (i: number) => (i === 0 || i > body.length - 1 ? 0 : m.p(1)),
+      vLineWidth: () => 0,
+      hLineColor: () => GOUDLIJN,
+      paddingLeft: () => 0,
+      paddingRight: (i: number, node: unknown) => {
+        const kolommen = (node as { table: { widths: unknown[] } }).table.widths.length;
+        return i === kolommen - 1 ? 0 : m.p(4);
+      },
+      paddingTop: (i: number) => (i === 0 ? 0 : m.p(2)),
+      paddingBottom: (i: number) => (i === 0 ? m.p(2) : m.p(2)),
+    },
+  } as ContentTable;
+}
+
+/** Het wapenprofiel van een magic item als één regel tekst, voor de naslagpagina. */
+function itemProfielRegel(profiel: NonNullable<MagicText[string]['profiel']>): string[] {
+  return profiel.map((p) => [p.range, p.strength ? (/^S/i.test(p.strength) ? p.strength : `S ${p.strength}`) : '', p.ap ? `AP ${p.ap}` : '', p.specialRules]
+    .map((x) => clean(x || ''))
+    .filter(Boolean)
+    .join(' · '));
+}
+
+// ── Chips ────────────────────────────────────────────────────────────────────────────────────
+
+/** De special rules onderaan een kaart, als omkaderde blokjes die over meerdere regels wrappen.
+ *
+ *  WAAROM ZELF METEN. pdfmake kent geen inline-block met een rand: `columns` legt naast elkaar en
+ *  wrapt niet, `text` wrapt maar kan geen kader per woordgroep. Dus schatten we de breedte van elk
+ *  label (zie `tekstBreedte`), verdelen ze zelf over regels die binnen de kaart passen, en zetten
+ *  elke regel als `columns` van kleine één-cels-tabellen met eigen rand.
+ *
+ *  IN HET ONTWERP STAAN ZE ONDERAAN DE KAART (`margin-top:auto`). Dat kan pdfmake niet: er is geen
+ *  manier om content naar de onderkant van een geforceerde rijhoogte te duwen. Ze staan hier dus
+ *  direct onder de loadout-regel. */
+function chips(labels: string[], breedte: number, m: Maten): Content[] {
+  if (!labels.length) return [];
+  const g = m.p(10);
+  const padH = m.p(5);
+  const rand = m.p(1);
+  const gap = m.p(4);
+
+  const blokje = (label: string): Content => ({
+    table: { widths: ['auto'], body: [[{ text: label, fontSize: g, bold: true, color: INK, lineHeight: lhSans(1.15), noWrap: true }]] },
+    layout: {
+      hLineWidth: () => rand,
+      vLineWidth: () => rand,
+      hLineColor: () => INK,
+      vLineColor: () => INK,
+      paddingLeft: () => padH,
+      paddingRight: () => padH,
+      paddingTop: () => m.p(1),
+      paddingBottom: () => m.p(1),
+    },
+    width: 'auto',
+  } as unknown as Content);
+
+  const regels: Content[] = [];
+  let huidig: string[] = [];
+  let op = 0;
+  const spoel = (): void => {
+    if (!huidig.length) return;
+    regels.push({
+      columns: [...huidig.map(blokje), { text: '', width: '*' }],
+      columnGap: gap,
+      margin: marge(0, 0, 0, m.p(3)),
+    });
+    huidig = [];
+    op = 0;
+  };
+  for (const label of labels) {
+    // +1 pt speling: de randen en de afronding van pdfmake's eigen meting.
+    const w = tekstBreedte(label, g) + 2 * padH + 2 * rand + 1;
+    if (huidig.length && op + gap + w > breedte) spoel();
+    op += (huidig.length ? gap : 0) + w;
+    huidig.push(label);
+  }
+  spoel();
+  return regels;
 }
 
 // ══════════════════════════════════════════════════════════════════════════════════════════════
-// Hoogteschatting — zie `unitBlok`
+// Hoogteschatting — voor de tweekoloms-verdeling van de naslag
 // ══════════════════════════════════════════════════════════════════════════════════════════════
 
 /** De platte lengte van een inline-tekstwaarde, om er regels van te kunnen schatten. */
@@ -526,278 +769,58 @@ function tekstLengte(c: Content | undefined): number {
   return o.text != null ? tekstLengte(o.text as Content) : 0;
 }
 
-/** Een RUWE hoogteschatting van een stuk content, in punten.
+/** Een RUWE hoogteschatting van een stuk content, in punten. Bewust grof: hij dient alleen om de
+ *  naslag in pagina-grote brokken te knippen en die over twee kolommen te verdelen.
  *
- *  Bewust grof: hij dient alleen om te beslissen of een unit-blok `unbreakable` mag zijn (zie daar).
- *  Overschatten is veilig — dan valt de unit terug op breekbaar en verlies je hooguit de belofte dat
- *  hij bij elkaar blijft; onderschatten kost je inhoud. */
-/* Geëxporteerd voor ijking (zie SCHATFACTOR); de app zelf gebruikt hem alleen hier. */
+ *  HIJ ERFT DE LETTERGROOTTE DOOR (`fontSize` op een node overschrijft `basis` voor alles eronder).
+ *  Zonder dat telde elke haarlijn — een tabel met één lege cel — voor een volle tekstregel mee, en
+ *  schatte de naslag zich anderhalf keer te hoog. */
+/* Geëxporteerd voor ijking; de app zelf gebruikt hem alleen hier. */
 export function schatHoogte(c: Content | undefined, breedte: number, basis: number): number {
   if (c == null) return 0;
-  const regelH = basis * 1.42;
-  const perRegel = Math.max(8, breedte / (basis * 0.47));
-  if (typeof c === 'string' || typeof c === 'number') {
-    return regelH * Math.max(1, Math.ceil(String(c).length / perRegel));
-  }
+  const regels = (len: number, grootte: number): number =>
+    grootte * 1.42 * Math.max(1, Math.ceil(len / Math.max(8, breedte / (grootte * 0.47))));
+  if (typeof c === 'string' || typeof c === 'number') return regels(String(c).length, basis);
   if (Array.isArray(c)) return c.reduce((n: number, x) => n + schatHoogte(x, breedte, basis), 0);
   const o = c as unknown as Record<string, unknown>;
+  const eigen = typeof o.fontSize === 'number' && o.fontSize > 0 ? o.fontSize : basis;
   const m = Array.isArray(o.margin) ? ((o.margin[1] as number) ?? 0) + ((o.margin[3] as number) ?? 0) : 0;
-  if (o.stack) return m + schatHoogte(o.stack as Content, breedte, basis);
+  if (o.stack) return m + schatHoogte(o.stack as Content, breedte, eigen);
   if (o.columns) {
     const kols = o.columns as Content[];
     const deel = breedte / Math.max(1, kols.length);
-    return m + kols.reduce((n: number, k) => Math.max(n, schatHoogte(k, deel, basis)), 0);
+    return m + kols.reduce((n: number, k) => Math.max(n, schatHoogte(k, deel, eigen)), 0);
   }
   if (o.table) {
-    const body = (o.table as { body: unknown[] }).body ?? [];
-    return m + body.length * (regelH + mm(0.6));
+    const t = o.table as { body?: Content[][]; widths?: unknown[] };
+    const rijen = t.body ?? [];
+    const deel = breedte / Math.max(1, t.widths?.length ?? rijen[0]?.length ?? 1);
+    return m + rijen.reduce(
+      (n, rij) => n + Math.max(2, ...rij.map((cel) => schatHoogte(cel as Content, deel, eigen))) + 1.7,
+      0,
+    );
   }
-  if (o.ul || o.ol) return m + schatHoogte((o.ul ?? o.ol) as Content, breedte, basis);
-  if (o.text != null) return m + regelH * Math.max(1, Math.ceil(tekstLengte(o.text as Content) / perRegel));
-  return m + regelH;
+  if (o.ul || o.ol) return m + schatHoogte((o.ul ?? o.ol) as Content, breedte, eigen);
+  if (o.text != null) return m + regels(tekstLengte(o.text as Content), eigen);
+  return m + eigen * 1.42;
 }
 
-// ══════════════════════════════════════════════════════════════════════════════════════════════
-// De unit
-// ══════════════════════════════════════════════════════════════════════════════════════════════
-
-/** Eén unit als blok content. Volgt `unitBlok` in printArmy.ts stap voor stap: tabellen links
- *  (statlines, wapens, mounts), tekst rechts (loadout, regels, items, lore-verwijzing). */
-function unitBlok(unit: ArmyUnit, input: PrintInput, ctx: Ctx, breedte: number): Content {
-  const o = ctx.opts;
-  const datasheet = clean(unit.datasheet || unit.name);
-  const eigen = clean(unit.name);
-  const kop: Content[] = [];
-  const links: Content[] = [];
-  const rechts: Content[] = [];
-
-  // ── Kop ─────────────────────────────────────────────────────────────────────────────────────
-  const naamRuns: Content[] = [];
-  if (unit.count && unit.count > 1) naamRuns.push({ text: `${unit.count}× `, bold: false, color: GEDEMPT });
-  naamRuns.push({ text: datasheet, bold: true });
-  if (o.unitNames && eigen && eigen !== datasheet) {
-    naamRuns.push({ text: ` “${eigen}”`, bold: false, italics: true, color: GEDEMPT });
-  }
-  const kolommen: Column[] = [{ text: naamRuns }];
-  if (o.points && unit.points != null) {
-    kolommen.push({ text: String(unit.points), width: 'auto', alignment: 'right', bold: false });
-  }
-  kop.push({ columns: kolommen, columnGap: mm(3), fontSize: 11 });
-  if (unit.troopType) {
-    kop.push({ text: strip(unit.troopType).toUpperCase(), fontSize: 7.8, characterSpacing: 0.78, color: LABEL });
-  }
-
-  // ── Loadout ─────────────────────────────────────────────────────────────────────────────────
-  if (o.loadout) {
-    const opties = (unit.options ?? []).map(clean).filter((x) => x && !PLAATSHOUDERS.some((re) => re.test(x)));
-    if (opties.length) {
-      rechts.push({ text: opties.join(' · '), color: TEKST, fontSize: 8.8, margin: marge(0, mm(0.6), 0, 0) });
-    }
-  }
-
-  // ── Statlines ───────────────────────────────────────────────────────────────────────────────
-  if (o.statlines) {
-    const profielen = unit.profiles ?? [];
-    const meerdere = profielen.length > 1;
-    for (const p of profielen) {
-      const caption = meerdere || (p.label && clean(p.label) !== datasheet) ? p.label : undefined;
-      links.push(...statTabel(p, caption));
-    }
-  }
-
-  // ── Special rules van de unit (+ van losse profielrijen die eigen regels dragen) ─────────────
-  if (o.unitRules) {
-    rechts.push(...regelBlok('Special rules', resolveer(unit.specialRules ?? [], ctx), ctx));
-    for (const p of unit.profiles ?? []) {
-      const eigenRegels = p.info?.specialRules ?? [];
-      if (!eigenRegels.length) continue;
-      rechts.push(...regelBlok(clean(p.label || 'Profile'), resolveer(eigenRegels, ctx), ctx));
-    }
-  }
-
-  // ── Wapens ──────────────────────────────────────────────────────────────────────────────────
-  if (o.weapons) {
-    const { melee, ranged } = unitWeapons(unit, input.rules);
-    const alle = [...melee, ...ranged];
-    if (alle.length) {
-      const rijen: Content[][] = [];
-      const regelLabels: string[] = [];
-      for (const w of alle) {
-        // Een MAGIC WEAPON komt uit `unitWeapons` als kaal basisprofiel; het echte profiel (S+1,
-        // AP −1, Magical Attacks) staat in magic-item-text.json. Zie printArmy.ts.
-        const magisch = w.slug.startsWith('magic-weapon:')
-          ? input.magicText?.[magicItemIdFromName(clean(w.name))]?.profiel
-          : undefined;
-        if (magisch?.length) {
-          for (const p of magisch) {
-            const naam = clean(p.naam || w.name).replace(/\s*\(profile\)\s*$/i, '') || clean(w.name);
-            rijen.push(wapenRij(naam, p.range || w.range || '', p.strength || '', p.ap || '', p.specialRules || ''));
-            if (p.specialRules) regelLabels.push(...p.specialRules.split(',').map((s) => s.trim()));
-          }
-          continue;
-        }
-        rijen.push(wapenRij(clean(w.name), w.range, wapenS(w), w.ap ? String(w.ap) : '', wapenExtras(w).join(', ')));
-        regelLabels.push(...w.specialRules);
-        if (w.multiProfile) {
-          const mp = w.multiProfile;
-          rijen.push(wapenRij(`${clean(w.name)} (rapid fire)`, mp.range, wapenS(mp), mp.ap ? String(mp.ap) : '', wapenExtras(mp).join(', ')));
-          regelLabels.push(...mp.specialRules);
-        }
-      }
-      links.push(wapenTabel(rijen));
-      if (o.weaponRules) rechts.push(...regelBlok('Weapon rules', resolveer(regelLabels, ctx), ctx));
-    }
-  }
-
-  // ── Mounts ──────────────────────────────────────────────────────────────────────────────────
-  if (o.mounts) {
-    for (const m of unit.mounts ?? []) {
-      const mkop: Content[] = [{ text: `Mount: ${clean(m.name)}`, bold: true }];
-      if (m.troopType) {
-        mkop.push({ text: `   ${strip(m.troopType).toUpperCase()}`, bold: false, fontSize: 7.8, characterSpacing: 0.78, color: LABEL });
-      }
-      links.push({ text: mkop, fontSize: 8.8, margin: marge(0, mm(1.2), 0, 0) });
-      if (o.statlines) for (const p of m.profiles ?? []) links.push(...statTabel(p));
-      if ((m.details ?? []).length) {
-        links.push({ text: (m.details ?? []).map(strip).join(' · '), color: TEKST, fontSize: 8.8, margin: marge(0, mm(0.6), 0, 0) });
-      }
-      rechts.push(...regelBlok('Mount rules', resolveer(m.specialRules ?? [], ctx), ctx));
-    }
-  }
-
-  // ── Magic items ─────────────────────────────────────────────────────────────────────────────
-  if (o.magicItems && (unit.magicItems ?? []).length) {
-    const items: Content[] = [regelRij('Magic items', '')];
-    for (const item of unit.magicItems ?? []) {
-      const tekst = input.magicText?.[magicItemIdFromName(clean(item.name))];
-      const flavour = tekst?.description ?? item.flavour;
-      const effect = schoonEffect(tekst?.body) || (item.specialRules ?? []).filter((r) => !isMarkering(r)).join(', ');
-      const profiel = tekst?.profiel?.length && !o.weapons ? itemProfielTabel(tekst.profiel) : [];
-      const blok: Content[] = [{ text: clean(item.name), bold: true, fontSize: 8.8 }];
-      if (flavour) blok.push({ text: strip(flavour), italics: true, color: GEDEMPT, fontSize: 8.2 });
-      if (effect) blok.push({ text: effect, color: TEKST2, fontSize: 8.6 });
-      blok.push(...profiel);
-      items.push({ stack: blok, margin: marge(LABELKOL, mm(0.6), 0, 0), unbreakable: true });
-    }
-    rechts.push({ stack: items, margin: marge(0, mm(1), 0, 0) });
-    // De special rules die een item verleent hebben elk hun eigen pagina — die horen in de appendix.
-    if (o.rulesMode === 'appendix') {
-      const labels = (unit.magicItems ?? []).flatMap((i) => i.specialRules ?? []);
-      resolveer(labels, ctx).forEach((r) => onthoud(r, ctx));
-    }
-  }
-
-  // ── Lores & spreuken ────────────────────────────────────────────────────────────────────────
-  if (o.lores) rechts.push(...loreVerwijzing(unit, input, ctx));
-
-  // ── Twee kolommen, of de volle breedte als er maar één kant gevuld is ────────────────────────
-  const body: Content = links.length && rechts.length
-    ? { columns: [{ stack: links }, { stack: rechts }], columnGap: mm(6), margin: marge(0, mm(0.6), 0, 0) }
-    : { stack: [...links, ...rechts], margin: marge(0, mm(0.6), 0, 0) };
-
-  const inhoud: Content[] = [...kop, body];
-
-  // BIJ ELKAAR HOUDEN, MAAR NIET TEN KOSTE VAN INHOUD. pdfmake kan een `unbreakable` blok dat langer
-  // is dan één pagina NIET splitsen — het houdt alleen de eerste pagina-fragment over en gooit de
-  // rest weg (PageElementWriter.commitUnbreakableBlock: "no support for multi-page
-  // unbreakableBlocks"). Een War Hydra met dertig regels zou dus stilletjes halveren. Vandaar de
-  // ruwe hoogteschatting: past het blok ruim binnen een pagina, dan blijft het bij elkaar; is het
-  // groter dan ~60% van de pagina, dan mag het breken. Een unit die over de paginarand valt is
-  // vervelend; een unit waarvan de helft ontbreekt is een bug.
-  // Met dezelfde veiligheidsmarge als in `tweeKolommen`; hier is de prijs van een misser het hoogst
-  // (een unit die stilletjes halveert), maar 0,6 pagina laat daarbovenop nog ruim lucht.
-  const hoogte = schatHoogte({ stack: inhoud }, breedte, ctx.basis) * SCHATFACTOR;
-  const pagina = A4.hoogte - (ctx.opts.compact ? mm(22) : mm(30));
-  return {
-    stack: inhoud,
-    ...(hoogte < pagina * 0.6 ? { unbreakable: true } : {}),
-    margin: marge(0, ctx.opts.compact ? mm(1) : mm(1.6), 0, ctx.opts.compact ? mm(1) : mm(1.6)),
-  };
-}
-
-/** Noteer de lores van deze wizard voor het eigen hoofdstuk, en geef terug wat er BIJ DE WIZARD hoort
- *  te staan: welke lore hij speelt, en waar de spreuken staan. Zie `loreVerwijzing` in printArmy.ts. */
-function loreVerwijzing(unit: ArmyUnit, input: PrintInput, ctx: Ctx): Content[] {
-  const slugs = allowedLores(unit, input.lores);
-  if (!slugs.length) return [];
-  const gekozenVanDezeWizard = new Set(unit.spells ?? []);
-  const namen: string[] = [];
-  for (const slug of slugs) {
-    const lore = input.lores[slug];
-    if (!lore?.spells?.length) continue;
-    namen.push(lore.name);
-    const bestaand = ctx.lores.get(slug);
-    const bak = bestaand ?? { lore, gekozen: new Set<string>(), wizards: [] };
-    for (const sp of gekozenVanDezeWizard) bak.gekozen.add(sp);
-    const wie = clean(unit.name) || clean(unit.datasheet || '');
-    if (wie && !bak.wizards.includes(wie)) bak.wizards.push(wie);
-    ctx.lores.set(slug, bak);
-  }
-  if (!namen.length) return [];
-  return [{
-    columns: [
-      { text: 'MAGIC', width: LABELKOL, fontSize: 7.6, characterSpacing: LABELSPATIE, color: LABEL },
-      {
-        text: [
-          { text: namen.map(strip).join(', '), color: TEKST },
-          { text: '   see Magic lores', fontSize: 7.4, color: LABEL },
-        ],
-      },
-    ],
-    fontSize: 8.8,
-    margin: marge(0, mm(0.8), 0, 0),
-  }];
-}
-
-// ══════════════════════════════════════════════════════════════════════════════════════════════
-// Hoofdstukken
-// ══════════════════════════════════════════════════════════════════════════════════════════════
-
-/** Een hoofdstukkop: Cinzel in kapitalen met letterspatiëring, subtotaal rechts, lijn eronder.
- *  `nieuwePagina` zet er een paginabreuk vóór (elk hoofdstuk op een eigen blad). */
-function hoofdstukKop(label: string, rechtsTekst: string | null, compact: boolean, nieuwePagina: boolean): Content[] {
-  const kolommen: Column[] = [{ text: strip(label).toUpperCase(), font: 'Cinzel', characterSpacing: 1.6 }];
-  if (rechtsTekst) kolommen.push({ text: rechtsTekst, width: 'auto', alignment: 'right' });
-  return [
-    {
-      columns: kolommen,
-      columnGap: mm(4),
-      fontSize: 10,
-      color: INK,
-      margin: marge(0, compact ? mm(2) : mm(3), 0, mm(1.2)),
-      ...(nieuwePagina ? { pageBreak: 'before' as const } : {}),
-    },
-    lijn(1, INK, 0, mm(2)),
-  ];
-}
-
-/** Een naslagblok in twee kolommen — met twee verschillende technieken, en dat is geen luxe.
- *
- *  pdfmake 0.3 kent `snakingColumns`: de linkerkolom loopt vol en gaat dan bovenaan de rechter
- *  verder, net als een krant. Dat is precies goed voor een appendix die MEER dan een pagina beslaat.
- *  Maar het overloopmoment is de PAGINARAND, niet het midden: past het hele blok op één pagina, dan
- *  blijft alles in de linkerkolom staan en blijft de halve bladzij leeg — precies de verspilling die
- *  de tweekolomsopmaak moest voorkomen (te zien bij een lore met drie spreuken).
- *
- *  Vandaar de splitsing: past het blok binnen één kolomhoogte, dan verdelen we de regels ZELF over
- *  twee stapels op geschatte hoogte; is het langer, dan doet `snakingColumns` zijn werk. */
-/** Veiligheidsmarge op `schatHoogte`. GEMETEN (09-09, spreuken en appendixregels van een echte lijst
- *  apart gerenderd en met pdfjs nagemeten): echt/geschat ligt tussen 0,77 en 1,12, gemiddeld 0,94.
- *  Vijftien procent marge dekt de bovenkant daarvan; meer zou de tweekoloms-verdeling onnodig vaak
- *  naar `snakingColumns` sturen (een lore van drie spreuken kreeg dan een lege rechterkolom). */
+/** Veiligheidsmarge op `schatHoogte`. GEMETEN (09-09): echt/geschat ligt tussen 0,77 en 1,12. */
 const SCHATFACTOR = 1.15;
 
-function tweeKolommen(items: Content[], gap: number, breedte: number, basis: number, ruimte: number): Content {
+/** Een reeks blokjes over twee EVEN LANGE kolommen, verdeeld op geschatte hoogte.
+ *
+ *  WAAROM NIET `snakingColumns` (dat pdfmake 0.3 wél kent). Snaking laat de linkerkolom vollopen tot
+ *  de PAGINARAND en gaat dan bovenaan de rechter verder — prima voor een doorlopend blad, maar hier
+ *  staan de kolommen in een tabelcel (de kaartrand), en dáár klapt snaking de cel in tot de halve
+ *  breedte en loopt de tekst onder de rand door. GEMETEN 09-09. De naslag wordt daarom hierbóven al
+ *  in pagina-grote brokken geknipt (zie `referentieKaarten`), zodat elke kaart op één pagina past en
+ *  deze functie alleen nog hoeft te balanceren. */
+function tweeKolommen(items: Content[], gap: number, breedte: number, basis: number): Content {
   if (items.length < 2) return { columns: [{ stack: items }, { text: '' }], columnGap: gap };
   const kolBreedte = (breedte - gap) / 2;
-  const hoogtes = items.map((i) => schatHoogte(i, kolBreedte, basis));
+  const hoogtes = items.map((i) => schatHoogte(i, kolBreedte, basis) * SCHATFACTOR);
   const totaal = hoogtes.reduce((a, b) => a + b, 0);
-  // De twee fouten zijn niet gelijkwaardig: ten onrechte snaken kost een halflege rechterkolom, ten
-  // onrechte verdelen kost een overloop naar een nieuwe pagina met een zwevend restje. Dus verdelen
-  // alléén als het met marge past — en de hoofdstukkop (~25 mm) boven dit blok telt mee.
-  if (totaal * SCHATFACTOR > ruimte - mm(25)) {
-    return { columns: [{ stack: items }, { text: '' }], snakingColumns: true, columnGap: gap };
-  }
   // Knip waar de opgetelde hoogte over de helft gaat; het item dat de grens overschrijdt gaat naar de
   // kolom waar het het minste uitsteekt (vandaar de halve hoogte in de vergelijking).
   let op = 0;
@@ -814,6 +837,360 @@ function tweeKolommen(items: Content[], gap: number, breedte: number, basis: num
 }
 
 // ══════════════════════════════════════════════════════════════════════════════════════════════
+// De unit-kaart
+// ══════════════════════════════════════════════════════════════════════════════════════════════
+
+/** Eén unit als kaart. Volgt het ontwerp: kop (categorie · troop type · mount, naam, punten),
+ *  scheidingslijn, statlines, wapens, loadout, chips. */
+function unitKaart(unit: ArmyUnit, categorie: string, input: PrintInput, ctx: Ctx): Content {
+  const o = ctx.opts;
+  const m = ctx.m;
+  const b = m.kaartBinnen;
+  const datasheet = clean(unit.datasheet || unit.name);
+  const eigen = clean(unit.name);
+
+  // ── Kop ─────────────────────────────────────────────────────────────────────────────────────
+  const labelDelen = [categorie, clean(unit.troopType || '')].filter(Boolean);
+  for (const mount of unit.mounts ?? []) {
+    if (o.mounts) labelDelen.push(`on ${clean(mount.name)}`);
+  }
+  const titelRuns: Content[] = [
+    { text: unit.count && unit.count > 1 ? `${unit.count}× ${datasheet}` : datasheet },
+  ];
+  if (isGeneral(unit)) {
+    titelRuns.push({
+      text: '  GENERAL',
+      font: 'SourceSans',
+      fontSize: m.p(11.5),
+      characterSpacing: m.p(11.5) * 0.1,
+      color: INK,
+    });
+  }
+  const rechts: Column | null = o.points && unit.points != null
+    ? {
+        text: String(unit.points),
+        width: 'auto',
+        alignment: 'right',
+        font: 'Alegreya',
+        fontSize: m.p(17),
+        lineHeight: lhSerif(1),
+        color: GRIJS,
+        // pdfmake lijnt kolommen op hun BOVENkant uit, het ontwerp op de BASISLIJN van de labelregel
+        // ernaast. Het verschil tussen de twee basislijnen is precies deze (negatieve) bovenmarge.
+        margin: marge(0, m.p(9) * ASC_SANS - m.p(17) * ASC_SERIF, 0, 0),
+      }
+    : null;
+
+  const kop = kaartKop(labelDelen.join(' · '), titelRuns, rechts, m);
+  if (o.unitNames && eigen && eigen !== datasheet) {
+    kop.push({
+      text: `“${eigen}”`,
+      italics: true,
+      fontSize: m.p(11.5),
+      color: GRIJS,
+      margin: marge(0, m.p(2), 0, 0),
+    });
+  }
+
+  // ── Body ────────────────────────────────────────────────────────────────────────────────────
+  const body: Content[] = [];
+  const naGap = (c: Content[]): void => {
+    for (const [i, item] of c.entries()) {
+      if (i === 0 && body.length) {
+        const rec = item as unknown as Record<string, unknown>;
+        rec.margin = marge(0, m.p(6), 0, 0);
+      }
+      body.push(item);
+    }
+  };
+
+  // Statlines: unit-profielen én mount-profielen in één tabel.
+  if (o.statlines) {
+    const profielen: UnitProfile[] = [...(unit.profiles ?? [])];
+    if (o.mounts) for (const mount of unit.mounts ?? []) profielen.push(...(mount.profiles ?? []));
+    naGap(statTabel(profielen, b, m));
+  }
+
+  // Wapens.
+  const wapenRegels: string[] = [];
+  if (o.weapons) {
+    const { melee, ranged } = unitWeapons(unit, input.rules);
+    const alle = [...melee, ...ranged];
+    const rijen: Content[][] = [];
+    for (const w of alle) {
+      // Een MAGIC WEAPON komt uit `unitWeapons` als kaal basisprofiel; het echte profiel (S+1,
+      // AP −1, Magical Attacks) staat in magic-item-text.json. Zie printArmy.ts.
+      const magisch = w.slug.startsWith('magic-weapon:')
+        ? input.magicText?.[magicItemIdFromName(clean(w.name))]?.profiel
+        : undefined;
+      if (magisch?.length) {
+        for (const p of magisch) {
+          const naam = clean(p.naam || w.name).replace(/\s*\(profile\)\s*$/i, '') || clean(w.name);
+          rijen.push(wapenRij(naam, p.range || w.range || '', p.strength || '', p.ap || '', p.specialRules || '', m));
+          if (p.specialRules) wapenRegels.push(...p.specialRules.split(',').map((s) => s.trim()));
+        }
+        continue;
+      }
+      rijen.push(wapenRij(clean(w.name), w.range, wapenS(w), w.ap ? String(w.ap) : '', wapenExtras(w).join(', '), m));
+      wapenRegels.push(...w.specialRules);
+      // Een Rapid Fire-wapen schiet in zijn meervoudige stand een ANDER, zwakker profiel.
+      if (w.multiProfile) {
+        const mp = w.multiProfile;
+        rijen.push(wapenRij(`${clean(w.name)} (rapid fire)`, mp.range, wapenS(mp), mp.ap ? String(mp.ap) : '', wapenExtras(mp).join(', '), m));
+        wapenRegels.push(...mp.specialRules);
+      }
+    }
+    if (rijen.length) naGap([wapenTabel(rijen, m)]);
+  }
+
+  // Magic items: op de kaart alleen de naam (die staat al in `options`); de tekst gaat naar de naslag.
+  if (o.magicItems) {
+    for (const item of unit.magicItems ?? []) {
+      const naam = clean(item.name);
+      if (!naam || ctx.items.has(naam.toLowerCase())) continue;
+      const tekst = input.magicText?.[magicItemIdFromName(naam)];
+      const effect = schoonEffect(tekst?.body) || (item.specialRules ?? []).filter((r) => !isMarkering(r)).join(', ');
+      ctx.items.set(naam.toLowerCase(), {
+        naam,
+        flavour: clean(tekst?.description ?? item.flavour ?? '') || undefined,
+        effect,
+        profiel: tekst?.profiel?.length ? itemProfielRegel(tekst.profiel) : [],
+      });
+    }
+    // De special rules die een item verleent hebben elk hun eigen pagina — die horen in de naslag.
+    resolveer((unit.magicItems ?? []).flatMap((i) => i.specialRules ?? []), ctx).forEach((r) => onthoud(r, ctx));
+  }
+
+  // Loadout: opties gescheiden door " · ", met bij een wizard het level en de lore VET erachter.
+  if (o.loadout) {
+    const opties = (unit.options ?? []).map(clean).filter((x) => x && !PLAATSHOUDERS.some((re) => re.test(x)));
+    // "Level 2 Wizard" hoort niet twee keer op de regel: hij verhuist naar het vette staartje.
+    const niveauIdx = opties.findIndex((x) => /^level\s+\d/i.test(x));
+    const niveau = niveauIdx >= 0 ? (opties[niveauIdx].match(/^level\s+\d+/i)?.[0] ?? '') : '';
+    if (niveauIdx >= 0) opties.splice(niveauIdx, 1);
+    const loreNamen = o.lores ? loreVerwijzing(unit, input, ctx) : [];
+    const staart = [niveau, ...loreNamen].filter(Boolean).join(' · ');
+    if (opties.length || staart) {
+      const runs: Content[] = [];
+      if (opties.length) runs.push({ text: opties.join(' · '), color: TEKST });
+      if (staart) runs.push({ text: `${opties.length ? ' · ' : ''}${staart}`, bold: true, color: INK });
+      naGap([{ text: runs, fontSize: m.p(10.5) }]);
+    }
+  } else if (o.lores) {
+    loreVerwijzing(unit, input, ctx);
+  }
+
+  // Chips: alle special rules van de unit, zijn profielen, zijn mounts en zijn wapens.
+  const chipInvoer: string[] = [];
+  if (o.unitRules) {
+    chipInvoer.push(...chipLabels(unit.specialRules ?? [], ctx));
+    for (const p of unit.profiles ?? []) chipInvoer.push(...chipLabels(p.info?.specialRules ?? [], ctx));
+  }
+  if (o.mounts) for (const mount of unit.mounts ?? []) chipInvoer.push(...chipLabels(mount.specialRules ?? [], ctx));
+  if (o.weapons && o.weaponRules) chipInvoer.push(...chipLabels(wapenRegels, ctx));
+  const gezien = new Set<string>();
+  const chipLijst = chipInvoer
+    .filter((l) => l && !gezien.has(l.toLowerCase()) && gezien.add(l.toLowerCase()))
+    .sort((a, b) => a.localeCompare(b));
+  const chipRegels = chips(chipLijst, b, m);
+  if (chipRegels.length) {
+    (chipRegels[0] as unknown as Record<string, unknown>).margin = marge(0, m.p(8), 0, m.p(3));
+    body.push(...chipRegels);
+  }
+
+  return kaart(kop, body, m, m.kaartHoogte);
+}
+
+/** Noteer de lores van deze wizard voor de naslagpagina en geef de namen terug voor de loadout-regel.
+ *  Zie `loreVerwijzing` in printArmy.ts. */
+function loreVerwijzing(unit: ArmyUnit, input: PrintInput, ctx: Ctx): string[] {
+  const slugs = allowedLores(unit, input.lores);
+  if (!slugs.length) return [];
+  const gekozenVanDezeWizard = new Set(unit.spells ?? []);
+  const namen: string[] = [];
+  for (const slug of slugs) {
+    const lore = input.lores[slug];
+    if (!lore?.spells?.length) continue;
+    namen.push(strip(lore.name));
+    const bestaand = ctx.lores.get(slug);
+    const bak = bestaand ?? { lore, gekozen: new Set<string>(), wizards: [] };
+    for (const sp of gekozenVanDezeWizard) bak.gekozen.add(sp);
+    const wie = clean(unit.datasheet || '') || clean(unit.name);
+    if (wie && !bak.wizards.includes(wie)) bak.wizards.push(wie);
+    ctx.lores.set(slug, bak);
+  }
+  return namen;
+}
+
+// ══════════════════════════════════════════════════════════════════════════════════════════════
+// De naslagpagina
+// ══════════════════════════════════════════════════════════════════════════════════════════════
+
+/** Type / Casting Value / Range van een spreuk staan in de wiki als TABEL in de body. Op de kaart
+ *  horen ze als één grijze regel rechts naast de spreuknaam, dus halen we ze eruit en laten we de
+ *  tabel uit de body weg. Vindt hij niets, dan blijft de body ongewijzigd en is er geen rechterregel. */
+function spreukSplits(body: RichNode | null): { meta: string[]; rest: RichNode } {
+  const leeg = { meta: [] as string[], rest: (body ?? { nodeType: 'document', content: [] }) as RichNode };
+  if (!body?.content?.length) return leeg;
+  const idx = body.content.findIndex((n) => n.nodeType === 'table'
+    && (n.content ?? []).some((rij) => /^(type|casting value|range)$/i.test(richToPlain(rij.content?.[0]).trim())));
+  if (idx < 0) return leeg;
+
+  const waarden = new Map<string, string>();
+  for (const rij of body.content[idx].content ?? []) {
+    const cellen = rij.content ?? [];
+    if (cellen.length < 2) continue;
+    waarden.set(richToPlain(cellen[0]).trim().toLowerCase(), clean(richToPlain(cellen[1])));
+  }
+  const meta = ['type', 'casting value', 'range'].map((k) => waarden.get(k) ?? '').filter(Boolean);
+  return {
+    meta,
+    rest: { nodeType: 'document', content: body.content.filter((_, i) => i !== idx) },
+  };
+}
+
+/** De lore-kaart: alle (of alleen de gekozen) spreuken van één lore. */
+function loreKaart(
+  lore: Lore,
+  gekozen: Set<string>,
+  wizards: string[],
+  input: PrintInput,
+  ctx: Ctx,
+): Content | null {
+  const m = ctx.m;
+  const filteren = ctx.opts.spellsOnlyChosen && gekozen.size > 0;
+  const spreuken = [...lore.spells]
+    .sort((a, b) => (a.signature === b.signature ? (a.number ?? 0) - (b.number ?? 0) : a.signature ? -1 : 1))
+    .filter((s) => !filteren || gekozen.has(s.slug));
+  if (!spreuken.length) return null;
+
+  const body: Content[] = spreuken.map((s, i) => {
+    const rule = input.rules[s.slug];
+    const { meta, rest } = spreukSplits(rule?.body ?? null);
+    const merk = s.signature ? 'Sig' : String(s.number ?? '');
+    const naamRuns: Content[] = [
+      { text: `${merk}  `, font: 'SourceSans', fontSize: m.p(11.5), color: INK },
+      { text: strip(s.name) },
+    ];
+    const regel: Column[] = [{ text: naamRuns, font: 'Alegreya', fontSize: m.p(15), lineHeight: lhSerif(1.15) }];
+    if (meta.length) {
+      regel.push({
+        text: meta.join(' · '),
+        width: 'auto',
+        alignment: 'right',
+        font: 'SourceSans',
+        fontSize: m.p(10.5),
+        bold: true,
+        color: GRIJS,
+        noWrap: true,
+        margin: marge(0, m.p(2), 0, 0),
+      });
+    }
+    const tekst = rule
+      ? (richToPlain(rest).trim() ? richToPdf(rest) : regelBody(rule))
+      : [];
+    return {
+      stack: [
+        lijn(m.p(1), GOUDLIJN, 0, m.p(5)),
+        { columns: regel, columnGap: m.p(6) },
+        ...(tekst.length
+          ? [{ stack: tekst, fontSize: m.p(10.5), color: TEKST, margin: marge(0, m.p(2), 0, 0) } as Content]
+          : []),
+      ],
+      margin: marge(0, i === 0 ? 0 : m.p(8), 0, 0),
+      unbreakable: true,
+    } as Content;
+  });
+
+  const wie = wizards.length ? ` · ${wizards.join(', ')}` : '';
+  return kaart(
+    kaartKop(`Lore of magic${wie}`, [{ text: strip(lore.name) }], null, m),
+    body,
+    m,
+  );
+}
+
+/** De naslag: elke special rule uit dit leger één keer, plus de magic items, in twee kolommen.
+ *
+ *  GEEFT MEERDERE KAARTEN TERUG. Een kaart is een tabelcel met een rand, en pdfmake tekent die rand
+ *  op een vervolgpagina niet netjes om de inhoud heen: de kolommen breken los van elkaar en de laatste
+ *  alinea valt buiten het kader (GEMETEN 09-09). Daarom knippen we de naslag hier zelf in brokken die
+ *  elk op één pagina passen; elke brok wordt een eigen kaart en de volgende begint op een nieuw blad.
+ *  `eersteBreedte` is smaller dan de rest wanneer de eerste kaart naast de lore-kaart staat. */
+function referentieKaarten(ctx: Ctx, eersteBreedte: number, ruimte: number): Content[] {
+  const m = ctx.m;
+  type Item = { naam: string; bron: string; inhoud: Content[] };
+  const items: Item[] = [];
+
+  for (const r of ctx.appendix.values()) {
+    items.push({ naam: strip(r.name), bron: bronLabel(r), inhoud: regelBody(r) });
+  }
+  for (const it of ctx.items.values()) {
+    const inhoud: Content[] = [];
+    if (it.flavour) inhoud.push({ text: it.flavour, italics: true, color: GRIJS });
+    if (it.effect) inhoud.push({ text: it.effect });
+    for (const p of it.profiel) inhoud.push({ text: p });
+    if (!inhoud.length) continue;
+    items.push({ naam: it.naam, bron: 'magic item', inhoud });
+  }
+  if (!items.length) return [];
+  items.sort((a, b) => a.naam.localeCompare(b.naam));
+
+  const blokjes: Content[] = items.map((it) => ({
+    stack: [
+      {
+        stack: [
+          {
+            text: [
+              { text: it.naam, bold: true, color: INK },
+              ...(it.bron ? [{ text: `  ${it.bron}`, fontSize: m.p(9), color: GRIJS } as Content] : []),
+            ],
+            fontSize: m.p(10.5),
+          },
+          { stack: it.inhoud, fontSize: m.p(10.5), color: TEKST },
+        ],
+        margin: marge(0, m.p(4), 0, m.p(4)),
+      },
+      lijn(m.p(1), HAARLIJN),
+    ],
+    unbreakable: true,
+  } as Content));
+
+  const gap = m.p(14);
+  const uit: Content[] = [];
+  let rest = blokjes;
+  let breedte = eersteBreedte;
+  while (rest.length) {
+    const kolBreedte = (breedte - gap) / 2;
+    // 1,15: `schatHoogte` overschat een naslagblokje structureel met ruim tien procent (GEMETEN
+    // 09-09 tegen de gerenderde pagina), dus mag het budget daar iets overheen. Wat overblijft is
+    // ongeveer een tiende pagina lucht — goedkoper dan een kaart die over de paginarand valt.
+    const budget = ruimte * 2 * 1.15;
+    let op = 0;
+    let n = 0;
+    while (n < rest.length) {
+      const h = schatHoogte(rest[n], kolBreedte, ctx.basis) * SCHATFACTOR;
+      if (n > 0 && op + h > budget) break;
+      op += h;
+      n++;
+    }
+    uit.push(kaart(
+      kaartKop(
+        uit.length ? 'Special rules in this army · continued' : 'Special rules in this army',
+        [{ text: 'Rules reference' }],
+        null,
+        m,
+      ),
+      [tweeKolommen(rest.slice(0, n), gap, breedte, ctx.basis)],
+      m,
+    ));
+    rest = rest.slice(n);
+    breedte = m.breedBinnen;
+  }
+  return uit;
+}
+
+// ══════════════════════════════════════════════════════════════════════════════════════════════
 // Het document
 // ══════════════════════════════════════════════════════════════════════════════════════════════
 
@@ -822,159 +1199,215 @@ function tweeKolommen(items: Content[], gap: number, breedte: number, basis: num
  *  PUUR: geen pdfmake-runtime, geen DOM, geen fetch. Wie deze functie aanroept levert zelf de data en
  *  rendert zelf (in de browser `pdfDownload.ts`, in Node `scripts/pdf-preview.mjs`). */
 export function armyToPdfDoc(input: PrintInput, opts: PrintOptions): TDocumentDefinitions {
-  const basis = opts.compact ? 8.6 : 10;
+  const m = maten(opts.compact);
+  const basis = m.p(10.5);
   const ctx: Ctx = {
     rules: input.rules,
     idx: getRuleIndex(input.rules),
     faction: input.faction,
     appendix: new Map(),
     lores: new Map(),
+    items: new Map(),
     opts,
+    m,
     basis,
   };
 
-  const marges: [number, number, number, number] = opts.compact
-    ? [mm(10), mm(11), mm(10), mm(11)]
-    : [mm(14), mm(15), mm(14), mm(15)];
-  const bladbreedte = A4.breedte - marges[0] - marges[2];
-  const bladhoogte = A4.hoogte - marges[1] - marges[3];
-
-  // ── Kop van het blad ─────────────────────────────────────────────────────────────────────────
-  const titelKolom: Column[] = [{
+  // ── Kop van pagina 1 ─────────────────────────────────────────────────────────────────────────
+  const groepen = groepeer(input.army.units);
+  const titel: Content = {
     stack: [
-      { text: strip(input.meta.listName), font: 'Cinzel', fontSize: opts.compact ? 16 : 20, lineHeight: 1.15 },
+      labelRegel(`${input.meta.faction} · ${input.meta.composition} · ${input.meta.rule}`, GOUD, m),
       {
-        text: strip(`${input.meta.faction} · ${input.meta.composition} · ${input.meta.rule}`),
-        fontSize: 8.5,
-        color: GEDEMPT,
-        margin: marge(0, mm(1.5), 0, 0),
+        text: strip(input.meta.listName),
+        font: 'Alegreya',
+        fontSize: m.p(35),
+        lineHeight: lhSerif(1),
+        color: INK,
+        margin: marge(0, m.p(5), 0, 0),
       },
     ],
-  }];
-  if (opts.points) {
-    titelKolom.push({
-      width: 'auto',
-      alignment: 'right',
-      stack: [
-        { text: String(input.meta.total), fontSize: opts.compact ? 13 : 15 },
-        { text: `OF ${input.meta.cap} PTS`, fontSize: 7.5, color: GEDEMPT, characterSpacing: 0.9 },
-      ],
-    });
-  }
-  const content: Content[] = [
-    { columns: titelKolom, columnGap: mm(4) },
-    lijn(1.5, INK, mm(3), mm(5)),
-  ];
-
-  // ── Hoofdstukken met units ───────────────────────────────────────────────────────────────────
-  // De eerste krijgt nooit een paginabreuk: dan begin je met een lege bladzij.
-  let eersteHoofdstuk = true;
-  const breek = () => {
-    const nieuw = opts.chapterPages && !eersteHoofdstuk;
-    eersteHoofdstuk = false;
-    return nieuw;
   };
 
-  for (const { label, units } of groepeer(input.army.units)) {
-    const subtotaal = units.reduce((n, u) => n + (u.points ?? 0), 0);
-    content.push(...hoofdstukKop(label, opts.points ? `${subtotaal} pts` : null, opts.compact, breek()));
-    units.forEach((u, i) => {
-      content.push(unitBlok(u, input, ctx, bladbreedte));
-      if (i < units.length - 1) content.push(lijn(0.25, STIP, 0, 0));
-    });
+  const kopKolommen: Column[] = [titel];
+  if (opts.points) {
+    // De cijferkolommen worden BODEM-uitgelijnd in het ontwerp; pdfmake lijnt bovenaan uit, dus krijgt
+    // elke kolom een berekende bovenmarge die hem op dezelfde onderlijn zet als de lijstnaam.
+    const linksHoogte = m.p(9) * 1.35 + m.p(5) + m.p(35);
+    const subHoogte = m.p(9) * 1.35 + m.p(18);
+    const totHoogte = m.p(9) * 1.35 + m.p(28);
+    for (const g of groepen) {
+      const subtotaal = g.units.reduce((n, u) => n + (u.points ?? 0), 0);
+      kopKolommen.push({
+        width: 'auto',
+        alignment: 'right',
+        margin: marge(0, linksHoogte - subHoogte, 0, 0),
+        stack: [
+          labelRegel(g.label, GRIJS, m),
+          { text: String(subtotaal), font: 'Alegreya', fontSize: m.p(18), lineHeight: lhSerif(1), color: INK },
+        ],
+      });
+    }
+    kopKolommen.push({
+      width: 'auto',
+      margin: marge(0, linksHoogte - totHoogte, 0, 0),
+      table: {
+        widths: ['auto'],
+        body: [[{
+          alignment: 'right',
+          stack: [
+            labelRegel('Total', GOUD, m),
+            {
+              text: [
+                { text: String(input.meta.total) },
+                { text: `/${input.meta.cap}`, fontSize: m.p(13), color: GRIJS },
+              ],
+              font: 'Alegreya',
+              fontSize: m.p(28),
+              lineHeight: lhSerif(1),
+              color: INK,
+            },
+          ],
+        }]],
+      },
+      layout: {
+        hLineWidth: () => 0,
+        vLineWidth: (i: number) => (i === 0 ? m.p(1) : 0),
+        vLineColor: () => GOUDLIJN,
+        paddingLeft: () => m.p(16),
+        paddingRight: () => 0,
+        paddingTop: () => 0,
+        paddingBottom: () => 0,
+      },
+    } as unknown as Column);
   }
 
-  // ── Magic lores ──────────────────────────────────────────────────────────────────────────────
-  // Eén keer, op een eigen hoofdstuk, in plaats van onder elke wizard: een lore van tien spreuken
-  // tweemaal afdrukken kost een halve A4 en levert niets op (zie printArmy.ts).
-  if (opts.lores && ctx.lores.size) {
-    content.push(...hoofdstukKop('Magic lores', null, opts.compact, breek()));
-    for (const { lore, gekozen, wizards } of [...ctx.lores.values()].sort((a, b) => a.lore.name.localeCompare(b.lore.name))) {
-      const filteren = opts.spellsOnlyChosen && gekozen.size > 0;
-      const spreuken = [...lore.spells]
-        .sort((a, b) => (a.signature === b.signature ? (a.number ?? 0) - (b.number ?? 0) : a.signature ? -1 : 1))
-        .filter((s) => !filteren || gekozen.has(s.slug));
-      if (!spreuken.length) continue;
+  const content: Content[] = [{ columns: kopKolommen, columnGap: m.p(16), margin: marge(0, 0, 0, m.p(12)) }];
 
-      const loreKop: Column[] = [{ text: strip(lore.name).toUpperCase(), fontSize: 9, characterSpacing: 1.08, color: INK }];
-      if (wizards.length) {
-        loreKop.push({ text: wizards.map(strip).join(', '), width: 'auto', alignment: 'right', fontSize: 7.4, color: GEDEMPT });
-      }
-      content.push({ columns: loreKop, columnGap: mm(4), margin: marge(0, mm(2), 0, mm(0.6)) });
-      content.push(lijn(0.5, LIJN, 0, mm(1)));
+  // ── Het raster van unit-kaarten ──────────────────────────────────────────────────────────────
+  // `opts.chapterPages` heeft in deze layout GEEN betekenis: er zijn geen hoofdstukkoppen meer (de
+  // categorie staat op de kaart zelf), dus valt er ook niets per hoofdstuk af te breken. De optie
+  // blijft in `PrintOptions` omdat printArmy.ts hem wél gebruikt.
+  const kaarten: Content[] = [];
+  for (const { label, units } of groepen) {
+    for (const u of units) kaarten.push(unitKaart(u, label, input, ctx));
+  }
 
-      const rijen: Content[] = spreuken.map((s) => {
-        const rule = input.rules[s.slug];
-        const merk = s.signature ? 'SIGNATURE' : String(s.number ?? '');
-        const kopRuns: Content[] = [
-          { text: merk, bold: false, fontSize: 7.4, characterSpacing: 0.59, color: LABEL },
-          { text: `   ${strip(s.name)}`, bold: true },
-        ];
-        if (rule?.pageReference) kopRuns.push({ text: `   p. ${rule.pageReference}`, bold: false, fontSize: 7.4, color: LABEL });
-        return {
-          stack: [{ text: kopRuns, fontSize: 8.8 }, ...(rule ? regelBody(rule) : [])],
-          fontSize: 8.6,
-          color: TEKST2,
-          margin: marge(0, 0, 0, mm(1.6)),
-          unbreakable: true,
-        };
-      });
-      content.push(tweeKolommen(rijen, mm(6), bladbreedte, basis, bladhoogte));
+  if (kaarten.length) {
+    const rijen: Content[][] = [];
+    for (let i = 0; i < kaarten.length; i += 2) {
+      rijen.push([kaarten[i], kaarten[i + 1] ?? { text: '' }]);
+    }
+    content.push({
+      table: { widths: ['*', '*'], body: rijen, dontBreakRows: true },
+      layout: rasterLagen(m),
+      // De halve gap boven de eerste en onder de laatste rij hoort er niet: het raster begint direct
+      // onder de kop en eindigt op de voetlijn.
+      margin: marge(0, -m.p(6), 0, -m.p(6)),
+    } as ContentTable);
+  }
+
+  // ── Naslagpagina: lore links, rules reference rechts ─────────────────────────────────────────
+  const loreKaarten: Content[] = [];
+  if (opts.lores) {
+    const gesorteerd = [...ctx.lores.values()].sort((a, b) => a.lore.name.localeCompare(b.lore.name));
+    for (const { lore, gekozen, wizards } of gesorteerd) {
+      const k = loreKaart(lore, gekozen, wizards, input, ctx);
+      if (k) loreKaarten.push(loreKaarten.length ? { ...(k as object), margin: marge(0, m.p(12), 0, 0) } as Content : k);
     }
   }
+  // De naslagkaarten PAS hier bouwen: `ctx.appendix` en `ctx.items` zijn gevuld door de unit-kaarten
+  // hierboven, en `loreKaart` voegt daar niets meer aan toe.
+  // `ruimte` = wat er van een verse pagina overblijft onder de kaartkop, per kolom.
+  const ruimte = m.bladHoogte - (m.p(9) * 1.35 + m.p(22) + m.p(9) * 2 + m.p(8) * 2 + m.p(2));
+  const naslag = referentieKaarten(ctx, loreKaarten.length ? m.kaartBinnen : m.breedBinnen, ruimte);
 
-  // ── Rules reference ──────────────────────────────────────────────────────────────────────────
-  // Pas hier opgebouwd: de appendix is gevuld door het renderen van de units hierboven.
-  if (opts.rulesMode === 'appendix' && ctx.appendix.size) {
-    content.push(...hoofdstukKop('Rules reference', null, opts.compact, breek()));
-    const rijen: Content[] = [...ctx.appendix.values()]
-      .sort((a, b) => a.name.localeCompare(b.name))
-      .map((r) => ({
-        stack: [regelKop(r.name, r.pageReference), ...regelBody(r)],
-        fontSize: 8.6,
-        color: TEKST2,
-        margin: marge(0, 0, 0, mm(1.2)),
-        unbreakable: true,
-      }));
-    content.push(tweeKolommen(rijen, mm(7), bladbreedte, basis, bladhoogte));
+  if (loreKaarten.length && naslag.length) {
+    content.push({
+      table: { widths: ['*', '*'], body: [[{ stack: loreKaarten }, naslag[0]]] },
+      layout: rasterLagen(m),
+      margin: marge(0, -m.p(6), 0, -m.p(6)),
+      pageBreak: 'before',
+    } as ContentTable);
+    // Elke vervolgbrok krijgt de VOLLE bladbreedte op een eigen pagina.
+    for (const extra of naslag.slice(1)) content.push({ ...(extra as object), pageBreak: 'before' } as Content);
+  } else {
+    // Geen wizard (of geen regels): de overgebleven kaarten krijgen de volle bladbreedte — de naslag
+    // heeft daarbinnen zelf al twee kolommen, dus er gaat geen leesbaarheid verloren.
+    const alles = [...loreKaarten, ...naslag];
+    for (const k of alles) content.push({ ...(k as object), pageBreak: 'before' } as Content);
   }
 
-  const gedrukt = new Date().toLocaleDateString('en-GB', { year: 'numeric', month: 'short', day: 'numeric' });
+  const voetLinks = opts.points
+    ? `${strip(input.meta.listName)} · ${input.meta.total} / ${input.meta.cap} pts`
+    : strip(input.meta.listName);
 
   return {
     pageSize: 'A4',
     pageOrientation: 'portrait',
-    pageMargins: marges,
+    pageMargins: [m.marge, m.marge, m.marge, m.marge + m.voet],
     info: { title: strip(input.meta.listName), creator: 'Old World Companion' },
     defaultStyle: {
-      font: 'Garamond',
+      font: 'SourceSans',
       fontSize: basis,
-      lineHeight: opts.compact ? 1.32 : 1.42,
+      lineHeight: lhSans(1.35),
       color: INK,
-      // EB Garamond zet standaard oldstyle-cijfers; in tabellen en puntentotalen wil je lining +
-      // tabular. Erft door naar elke tekstnode via de style-stack.
+      // Lining + tabular cijfers: in de statline-kolommen moeten de getallen onder elkaar staan.
       fontFeatures: ['lnum', 'tnum'],
     },
     content,
     footer: (huidige: number, totaal: number): Content => ({
-      margin: marge(marges[0], mm(3), marges[2], 0),
+      margin: marge(m.marge, 0, m.marge, 0),
       stack: [
-        lijn(0.5, LIJN, 0, mm(1.4)),
+        lijn(m.p(1), GOUDLIJN, 0, m.p(8)),
         {
           columns: [
-            { text: `Old World Companion · Printed ${gedrukt}`, width: 'auto' },
-            { text: `page ${huidige} / ${totaal}`, alignment: 'center' },
             {
-              text: 'Catalogue from Old World Builder (CC BY 4.0) · Warhammer: The Old World © Games Workshop',
+              text: voetLinks.toUpperCase(),
+              width: 'auto',
+              fontSize: m.p(10),
+              characterSpacing: m.p(10) * 0.08,
+              bold: true,
+              color: GRIJS,
+              noWrap: true,
+            },
+            {
+              text: 'Old World Companion',
+              alignment: 'center',
+              font: 'Alegreya',
+              fontSize: m.p(11.5),
+              lineHeight: lhSerif(1.35),
+              characterSpacing: m.p(11.5) * 0.22,
+              color: GOUD,
+            },
+            {
+              text: `${huidige} / ${totaal}`,
               width: 'auto',
               alignment: 'right',
+              fontSize: m.p(10),
+              characterSpacing: m.p(10) * 0.08,
+              bold: true,
+              color: GRIJS,
+              noWrap: true,
             },
           ],
-          columnGap: mm(4),
+          columnGap: m.p(12),
         },
       ],
-      fontSize: 7.2,
-      color: LABEL,
     }),
+  };
+}
+
+/** Het raster zelf tekent GEEN randen: elke kaart draagt zijn eigen rand. De cel-padding van 6 px
+ *  levert de 12 px tussenruimte van het ontwerp op. */
+function rasterLagen(m: Maten): CustomTableLayout {
+  const halve = m.p(6);
+  return {
+    hLineWidth: () => 0,
+    vLineWidth: () => 0,
+    paddingLeft: () => halve,
+    paddingRight: () => halve,
+    paddingTop: () => halve,
+    paddingBottom: () => halve,
   };
 }

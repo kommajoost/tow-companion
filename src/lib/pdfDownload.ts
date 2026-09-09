@@ -12,7 +12,7 @@
 // als deze functie voor het eerst wordt aangeroepen.
 //
 // FONTS VIA EEN URL, NIET VIA vfs_fonts. pdfmake levert een `vfs_fonts.js` met Roboto erin —
-// nog eens ~850 kB base64 die we niet gebruiken (het blad is Garamond + Cinzel). pdfmake 0.3 kan een
+// nog eens ~850 kB base64 die we niet gebruiken (het blad is Alegreya + Source Sans). pdfmake 0.3 kan een
 // font ook van een URL halen: `URLResolver.resolve()` doet dat voor elke fontverwijzing die met
 // `http://` of `https://` begint. Een pad als `/pdf-fonts/x.ttf` valt daar dus BUITEN en wordt
 // stilzwijgend niet opgehaald — vandaar dat elk pad hieronder met `new URL(pad, location.href)`
@@ -29,21 +29,25 @@ import { armyToPdfDoc } from './armyPdf';
 import { exportFilename } from './listExport';
 import { armyToPrintHtml, DEFAULT_PRINT_OPTIONS, type PrintInput, type PrintOptions } from './printArmy';
 
-/** De vier snitten van de broodtekst + de kapitalen-snit voor de koppen. Cinzel heeft geen cursief en
- *  geen aparte regular: dezelfde SemiBold staat in alle vier de sleuven, omdat pdfmake bij een
- *  ontbrekende sleuf hard afbreekt in plaats van terug te vallen. */
+/** De twee families van het blad: Alegreya (serif — titels, unitnamen, punten, spreuknamen) en
+ *  Source Sans (al het overige). Alle vier de sleuven zijn gevuld: pdfmake breekt hard af op een
+ *  ontbrekende sleuf in plaats van terug te vallen.
+ *
+ *  SEMIBOLD ALS `bold`, geen 700. Het ontwerp gebruikt gewicht 600 voor vet en 700 alleen voor de
+ *  kleine kapitaal-labels; bij 6,4 pt is dat verschil onzichtbaar, dus scheelt het een fontbestand
+ *  over de lijn (`SourceSans3-Bold.ttf` is daarom uit `public/pdf-fonts/` verwijderd). */
 const FONTBESTANDEN = {
-  Garamond: {
-    normal: 'EBGaramond-Regular.ttf',
-    bold: 'EBGaramond-SemiBold.ttf',
-    italics: 'EBGaramond-RegularItalic.ttf',
-    bolditalics: 'EBGaramond-SemiBoldItalic.ttf',
+  Alegreya: {
+    normal: 'Alegreya-Regular.ttf',
+    bold: 'Alegreya-Bold.ttf',
+    italics: 'Alegreya-RegularItalic.ttf',
+    bolditalics: 'Alegreya-BoldItalic.ttf',
   },
-  Cinzel: {
-    normal: 'Cinzel-SemiBold.ttf',
-    bold: 'Cinzel-SemiBold.ttf',
-    italics: 'Cinzel-SemiBold.ttf',
-    bolditalics: 'Cinzel-SemiBold.ttf',
+  SourceSans: {
+    normal: 'SourceSans3-Regular.ttf',
+    bold: 'SourceSans3-SemiBold.ttf',
+    italics: 'SourceSans3-RegularItalic.ttf',
+    bolditalics: 'SourceSans3-SemiBoldItalic.ttf',
   },
 } as const;
 
@@ -68,8 +72,8 @@ function laadPdfMake(): Promise<PdfMakeRuntime> {
     .then((mod) => {
       const pdfMake = ((mod as { default?: unknown }).default ?? mod) as PdfMakeRuntime;
       pdfMake.setFonts({
-        Garamond: Object.fromEntries(Object.entries(FONTBESTANDEN.Garamond).map(([k, v]) => [k, fontUrl(v)])),
-        Cinzel: Object.fromEntries(Object.entries(FONTBESTANDEN.Cinzel).map(([k, v]) => [k, fontUrl(v)])),
+        Alegreya: Object.fromEntries(Object.entries(FONTBESTANDEN.Alegreya).map(([k, v]) => [k, fontUrl(v)])),
+        SourceSans: Object.fromEntries(Object.entries(FONTBESTANDEN.SourceSans).map(([k, v]) => [k, fontUrl(v)])),
       });
       return pdfMake;
     })
