@@ -48,6 +48,7 @@ const PRINT_GROEPEN: { titel: string; items: { key: keyof PrintOptions; label: s
       { key: 'unitNames', label: 'Unit names' },
       { key: 'loadout', label: 'Loadout' },
       { key: 'statlines', label: 'Statlines' },
+      { key: 'chapterPages', label: 'Chapter per page' },
     ],
   },
   {

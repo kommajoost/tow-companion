@@ -65,6 +65,10 @@ export interface PrintOptions {
   /** `appendix` = regelnamen onder de unit, alle teksten één keer achterin. `inline` = alles direct
    *  onder de unit. Zie de kop van dit bestand. */
   rulesMode: 'inline' | 'appendix';
+  /** Elk hoofdstuk (Characters, Core, …, Magic lores, Rules reference) op een eigen pagina.
+   *  Aan by default: je bladert naar een hoofdstuk, niet naar het midden van een bladzij. Uit
+   *  zetten scheelt papier bij een korte lijst. */
+  chapterPages: boolean;
   /** Kleinere letter en krappere marges. */
   compact: boolean;
 }
@@ -82,6 +86,7 @@ export const DEFAULT_PRINT_OPTIONS: PrintOptions = {
   lores: true,
   spellsOnlyChosen: true,
   rulesMode: 'appendix',
+  chapterPages: true,
   compact: false,
 };
 
@@ -172,6 +177,13 @@ interface Ctx {
   faction: string;
   /** Alles wat de appendix moet bevatten, ontdubbeld op slug. */
   appendix: Map<string, Rule>;
+  /** De lores die in dit leger voorkomen, ontdubbeld op slug. Ze worden NIET meer onder elke
+   *  wizard uitgeschreven maar één keer, op een eigen hoofdstuk — een lore van tien spreuken
+   *  tweemaal afdrukken kost een halve A4 en levert niets op (Joost, 09-09).
+   *
+   *  `gekozen` is de VERENIGING over alle wizards die de lore spelen: twee wizards met dezelfde
+   *  lore kiezen zelden dezelfde spreuken, en de pagina moet ze allebei bedienen. */
+  lores: Map<string, { lore: Lore; gekozen: Set<string>; wizards: string[] }>;
   opts: PrintOptions;
 }
 
@@ -291,21 +303,23 @@ function unitBlok(unit: ArmyUnit, input: PrintInput, ctx: Ctx): string {
   const o = ctx.opts;
   const datasheet = clean(unit.datasheet || unit.name);
   const eigen = clean(unit.name);
-  const stukken: string[] = [];
+  const kop: string[] = [];
+  const links: string[] = [];   // tabellen: statlines, wapens, mounts
+  const rechts: string[] = []; // tekst: loadout, regels, items, lore-verwijzing
 
   // ── Kop ─────────────────────────────────────────────────────────────────────────────────────
   const aantal = unit.count && unit.count > 1 ? `<span class="n">${unit.count}×</span> ` : '';
   const bijnaam = o.unitNames && eigen && eigen !== datasheet ? ` <em class="bij">“${esc(eigen)}”</em>` : '';
   const prijs = o.points && unit.points != null ? `<div class="pts">${unit.points}</div>` : '';
-  stukken.push(`<div class="uk"><div class="un">${aantal}${esc(datasheet)}${bijnaam}</div>${prijs}</div>`);
-  if (unit.troopType) stukken.push(`<div class="tt">${esc(unit.troopType)}</div>`);
+  kop.push(`<div class="uk"><div class="un">${aantal}${esc(datasheet)}${bijnaam}</div>${prijs}</div>`);
+  if (unit.troopType) kop.push(`<div class="tt">${esc(unit.troopType)}</div>`);
 
   // ── Loadout ─────────────────────────────────────────────────────────────────────────────────
   if (o.loadout) {
     const opties = (unit.options ?? [])
       .map(clean)
       .filter((x) => x && !PLAATSHOUDERS.some((re) => re.test(x)));
-    if (opties.length) stukken.push(`<div class="load">${esc(opties.join(' · '))}</div>`);
+    if (opties.length) rechts.push(`<div class="load">${esc(opties.join(' · '))}</div>`);
   }
 
   // ── Statlines ───────────────────────────────────────────────────────────────────────────────
@@ -314,17 +328,17 @@ function unitBlok(unit: ArmyUnit, input: PrintInput, ctx: Ctx): string {
     const meerdere = profielen.length > 1;
     for (const p of profielen) {
       const caption = meerdere || (p.label && clean(p.label) !== datasheet) ? p.label : undefined;
-      stukken.push(statTabel(p, caption));
+      links.push(statTabel(p, caption));
     }
   }
 
   // ── Special rules van de unit (+ van losse profielrijen die eigen regels dragen) ─────────────
   if (o.unitRules) {
-    stukken.push(regelBlok('Special rules', resolveer(unit.specialRules ?? [], ctx), ctx));
+    rechts.push(regelBlok('Special rules', resolveer(unit.specialRules ?? [], ctx), ctx));
     for (const p of unit.profiles ?? []) {
       const eigenRegels = p.info?.specialRules ?? [];
       if (!eigenRegels.length) continue;
-      stukken.push(regelBlok(clean(p.label || 'Profile'), resolveer(eigenRegels, ctx), ctx));
+      rechts.push(regelBlok(clean(p.label || 'Profile'), resolveer(eigenRegels, ctx), ctx));
     }
   }
 
@@ -361,18 +375,18 @@ function unitBlok(unit: ArmyUnit, input: PrintInput, ctx: Ctx): string {
           regelLabels.push(...w.multiProfile.specialRules);
         }
       }
-      stukken.push(`<table class="wpn">${WAPEN_KOP}<tbody>${rijen.join('')}</tbody></table>`);
-      if (o.weaponRules) stukken.push(regelBlok('Weapon rules', resolveer(regelLabels, ctx), ctx));
+      links.push(`<table class="wpn">${WAPEN_KOP}<tbody>${rijen.join('')}</tbody></table>`);
+      if (o.weaponRules) rechts.push(regelBlok('Weapon rules', resolveer(regelLabels, ctx), ctx));
     }
   }
 
   // ── Mounts ──────────────────────────────────────────────────────────────────────────────────
   if (o.mounts) {
     for (const m of unit.mounts ?? []) {
-      stukken.push(`<div class="mk">Mount: ${esc(clean(m.name))}${m.troopType ? ` <span class="tt">${esc(m.troopType)}</span>` : ''}</div>`);
-      if (o.statlines) for (const p of m.profiles ?? []) stukken.push(statTabel(p));
-      if ((m.details ?? []).length) stukken.push(`<div class="load">${esc((m.details ?? []).join(' · '))}</div>`);
-      stukken.push(regelBlok('Mount rules', resolveer(m.specialRules ?? [], ctx), ctx));
+      links.push(`<div class="mk">Mount: ${esc(clean(m.name))}${m.troopType ? ` <span class="tt">${esc(m.troopType)}</span>` : ''}</div>`);
+      if (o.statlines) for (const p of m.profiles ?? []) links.push(statTabel(p));
+      if ((m.details ?? []).length) links.push(`<div class="load">${esc((m.details ?? []).join(' · '))}</div>`);
+      rechts.push(regelBlok('Mount rules', resolveer(m.specialRules ?? [], ctx), ctx));
     }
   }
 
@@ -392,7 +406,7 @@ function unitBlok(unit: ArmyUnit, input: PrintInput, ctx: Ctx): string {
         + profiel
         + '</div>';
     });
-    stukken.push(`<div class="items"><div class="rl">Magic items</div>${blokken.join('')}</div>`);
+    rechts.push(`<div class="items"><div class="rl">Magic items</div>${blokken.join('')}</div>`);
     // De special rules die een item verleent hebben elk hun eigen pagina — die horen in de appendix.
     if (o.rulesMode === 'appendix') {
       const labels = (unit.magicItems ?? []).flatMap((i) => i.specialRules ?? []);
@@ -401,39 +415,40 @@ function unitBlok(unit: ArmyUnit, input: PrintInput, ctx: Ctx): string {
   }
 
   // ── Lores & spreuken ────────────────────────────────────────────────────────────────────────
-  if (o.lores) stukken.push(loreBlok(unit, input, ctx));
+  if (o.lores) rechts.push(loreVerwijzing(unit, input, ctx));
 
-  return `<div class="unit">${stukken.filter(Boolean).join('')}</div>`;
+  const L = links.filter(Boolean).join("");
+    const R = rechts.filter(Boolean).join("");
+    const body = L && R
+      ? `<div class="body"><div class="cl">${L}</div><div class="cr">${R}</div></div>`
+      : `<div class="body een">${L}${R}</div>`;
+    return `<div class="unit">${kop.join("")}${body}</div>`;
 }
 
 /** De lores van een wizard, met de VOLLEDIGE tekst van elke spreuk. Dit is het stuk waarvoor je
  *  anders je telefoon aan tafel nodig had. */
-function loreBlok(unit: ArmyUnit, input: PrintInput, ctx: Ctx): string {
+/** Noteer de lores van deze wizard voor het eigen hoofdstuk, en geef terug wat er BIJ DE WIZARD
+ *  hoort te staan: welke lore hij speelt, en waar de spreuken staan. Niet meer dan dat — de
+ *  volledige tekst staat verderop, één keer. */
+function loreVerwijzing(unit: ArmyUnit, input: PrintInput, ctx: Ctx): string {
   const slugs = allowedLores(unit, input.lores);
-  if (!slugs.length) return '';
-  const gekozen = new Set(unit.spells ?? []);
-  const filteren = ctx.opts.spellsOnlyChosen && gekozen.size > 0;
-  const delen: string[] = [];
+  if (!slugs.length) return "";
+  const gekozenVanDezeWizard = new Set(unit.spells ?? []);
+  const namen: string[] = [];
   for (const slug of slugs) {
     const lore = input.lores[slug];
     if (!lore?.spells?.length) continue;
-    // Signature eerst, daarna op nummer — de volgorde waarin het rulebook ze zet.
-    const spreuken = [...lore.spells]
-      .sort((a, b) => (a.signature === b.signature ? (a.number ?? 0) - (b.number ?? 0) : a.signature ? -1 : 1))
-      .filter((s) => !filteren || gekozen.has(s.slug));
-    // Filteren en niets over? Dan speelt deze lore niet mee; een leeg kopje zegt niets.
-    if (!spreuken.length) continue;
-    const rijen = spreuken.map((s) => {
-      const rule = input.rules[s.slug];
-      const merk = s.signature ? 'Signature' : String(s.number ?? '');
-      const body = rule ? regelBody(rule) : '';
-      const pag = rule?.pageReference ? `<span class="pg">p. ${rule.pageReference}</span>` : '';
-      return `<div class="spell"><div class="sk"><span class="sn">${esc(merk)}</span>${esc(s.name)}${pag}</div>`
-        + (body ? `<div class="rt">${body}</div>` : '') + '</div>';
-    }).join('');
-    delen.push(`<div class="lore"><div class="lk">${esc(lore.name)}${filteren ? ' <span class="pg">chosen spells</span>' : ''}</div>${rijen}</div>`);
+    namen.push(lore.name);
+    const bestaand = ctx.lores.get(slug);
+    const bak = bestaand ?? { lore, gekozen: new Set<string>(), wizards: [] };
+    for (const sp of gekozenVanDezeWizard) bak.gekozen.add(sp);
+    const wie = clean(unit.name) || clean(unit.datasheet || "");
+    if (wie && !bak.wizards.includes(wie)) bak.wizards.push(wie);
+    ctx.lores.set(slug, bak);
   }
-  return delen.length ? `<div class="lores">${delen.join('')}</div>` : '';
+  if (!namen.length) return "";
+  return `<div class="rij"><span class="rl">Magic</span><span class="rv">${esc(namen.join(", "))}`
+    + ` <span class="pg">see Magic lores</span></span></div>`;
 }
 
 // ══════════════════════════════════════════════════════════════════════════════════════════════
@@ -446,6 +461,7 @@ export function armyToPrintHtml(input: PrintInput, opts: PrintOptions): string {
     idx: getRuleIndex(input.rules),
     faction: input.faction,
     appendix: new Map(),
+    lores: new Map(),
     opts,
   };
 
@@ -456,6 +472,31 @@ export function armyToPrintHtml(input: PrintInput, opts: PrintOptions): string {
       : `<h2>${esc(label)}</h2>`;
     return `<section>${kop}${units.map((u) => unitBlok(u, input, ctx)).join('')}</section>`;
   }).join('');
+
+  // MAGIC LORES als eigen hoofdstuk. Ze zijn tijdens het renderen van de units verzameld, en staan
+  // hier één keer in plaats van onder elke wizard. Bij de wizard staat alleen nog welke lore hij
+  // speelt; de spreuken zelf lees je hier.
+  const loreSectie = opts.lores && ctx.lores.size
+    ? `<section class="lores-h"><h2>Magic lores</h2>${[...ctx.lores.values()]
+        .sort((a, b) => a.lore.name.localeCompare(b.lore.name))
+        .map(({ lore, gekozen, wizards }) => {
+          const filteren = opts.spellsOnlyChosen && gekozen.size > 0;
+          const spreuken = [...lore.spells]
+            .sort((a, b) => (a.signature === b.signature ? (a.number ?? 0) - (b.number ?? 0) : a.signature ? -1 : 1))
+            .filter((s) => !filteren || gekozen.has(s.slug));
+          if (!spreuken.length) return "";
+          const wie = wizards.length ? `<span class="lw">${esc(wizards.join(", "))}</span>` : "";
+          const rijen = spreuken.map((s) => {
+            const rule = input.rules[s.slug];
+            const merk = s.signature ? "Signature" : String(s.number ?? "");
+            const pag = rule?.pageReference ? `<span class="pg">p. ${rule.pageReference}</span>` : "";
+            const body = rule ? regelBody(rule) : "";
+            return `<div class="spell"><div class="sk"><span class="sn">${esc(merk)}</span>${esc(s.name)}${pag}</div>`
+              + (body ? `<div class="rt">${body}</div>` : "") + "</div>";
+          }).join("");
+          return `<div class="lore"><div class="lk">${esc(lore.name)}${wie}</div><div class="spells">${rijen}</div></div>`;
+        }).join("")}</section>`
+    : "";
 
   // De appendix wordt PAS hier opgebouwd: hij is gevuld door het renderen van de units hierboven.
   const appendix = opts.rulesMode === 'appendix' && ctx.appendix.size
@@ -486,9 +527,13 @@ export function armyToPrintHtml(input: PrintInput, opts: PrintOptions): string {
   .totaal { float: right; text-align: right; font-size: ${opts.compact ? '13pt' : '15pt'}; font-variant-numeric: tabular-nums; }
   .totaal small { display: block; font-size: 7.5pt; color: #5c5342; letter-spacing: .12em; text-transform: uppercase; }
 
-  section { margin-bottom: 4mm; break-inside: auto; }
-  h2 { font-size: 8.5pt; letter-spacing: .18em; text-transform: uppercase; color: #6b5c3a;
-       margin: 0 0 1.5mm; padding-bottom: 1mm; border-bottom: .5pt solid #cfc6b0;
+  /* ELK HOOFDSTUK OP EEN EIGEN PAGINA (Joost, 09-09). De eerste niet: dan begin je met een
+     lege bladzij. Kost papier bij een korte lijst, maar dat is precies de ruil die gevraagd is —
+     je bladert naar Characters, niet naar "ergens halverwege pagina 2". */
+  section { margin-bottom: 4mm; break-inside: auto; break-before: ${opts.chapterPages ? "page" : "auto"}; }
+  section:first-of-type { break-before: auto; }
+  h2 { font-size: 10pt; letter-spacing: .16em; text-transform: uppercase; color: #14100a;
+       margin: 0 0 2mm; padding-bottom: 1.2mm; border-bottom: 1pt solid #14100a;
        display: flex; justify-content: space-between; break-after: avoid; }
   h2 .sub { font-variant-numeric: tabular-nums; letter-spacing: 0; }
 
@@ -496,6 +541,13 @@ export function armyToPrintHtml(input: PrintInput, opts: PrintOptions): string {
   .unit { break-inside: avoid; padding: ${opts.compact ? '1mm 0 1.6mm' : '1.6mm 0 2.4mm'};
           border-bottom: .25pt dotted #ddd6c4; }
   .unit:last-child { border-bottom: 0; }
+  /* TABELLEN LINKS, TEKST RECHTS (Joost, 09-09: "rules naast de stats"). Een A4 is 182mm breed;
+     een statline is 60mm. Alles onder elkaar zetten liet de halve bladzij leeg staan.
+     Heeft een unit maar één van beide, dan krijgt die de volle breedte — "body een". */
+  .body { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 0 6mm;
+          align-items: start; margin-top: .6mm; }
+  .body.een { display: block; }
+  .cl > table, .cr > table { width: 100%; }
   .uk { display: flex; align-items: baseline; gap: 3mm; }
   .un { flex: 1; font-weight: 700; font-size: ${opts.compact ? '9.6pt' : '11pt'}; }
   .un .n { font-weight: 400; color: #5c5342; }
@@ -513,7 +565,10 @@ export function armyToPrintHtml(input: PrintInput, opts: PrintOptions): string {
 
   /* Regeltekst: inline onder de unit, of één keer in de appendix. */
   .regel { break-inside: avoid; margin: 1mm 0 0 21mm; }
-  .app .regel { margin-left: 0; padding-bottom: 1mm; }
+  /* De naslag leest als een woordenboek: twee kolommen scheelt papier en je oog hoeft minder ver. */
+  .app { column-count: 2; column-gap: 7mm; }
+  .app h2 { column-span: all; }
+  .app .regel { margin-left: 0; padding-bottom: 1.2mm; break-inside: avoid; }
   .rk { font-weight: 700; font-size: 8.8pt; }
   .pg { margin-left: 2mm; font-weight: 400; font-size: 7.4pt; color: #6b5c3a; }
   .rt { font-size: 8.6pt; color: #241f16; }
@@ -526,7 +581,7 @@ export function armyToPrintHtml(input: PrintInput, opts: PrintOptions): string {
   .rt table.rh-tab { border-collapse: collapse; margin: .8mm 0; font-size: 7.8pt; width: 100%; }
   .rt table.rh-tab th, .rt table.rh-tab td { border: .25pt solid #cfc6b0; padding: .3mm 1.4mm; text-align: left; }
 
-  table.stat { border-collapse: collapse; margin: 1mm 0 .5mm; font-size: 7.8pt;
+  table.stat { border-collapse: collapse; margin: 1mm 0 .5mm; font-size: 7.8pt; width: 100%;
                font-family: ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace; }
   table.stat caption { caption-side: top; text-align: left; font-family: Georgia, serif;
                        font-size: 8.2pt; font-style: italic; color: #5c5342; padding-bottom: .4mm; }
@@ -547,10 +602,15 @@ export function armyToPrintHtml(input: PrintInput, opts: PrintOptions): string {
   .ie { font-size: 8.6pt; color: #241f16; }
 
   .lores { margin-top: 1.2mm; }
-  .lore { break-inside: auto; margin-top: 1mm; }
-  .lk { font-size: 7.8pt; letter-spacing: .12em; text-transform: uppercase; color: #6b5c3a;
-        border-bottom: .25pt solid #e3dcc9; padding-bottom: .4mm; }
-  .spell { break-inside: avoid; margin: .8mm 0 0 4mm; }
+  /* Een lore krijgt zijn eigen blok met de spreuken in twee kolommen. De kop blijft bij zijn
+     eerste spreuk staan; een lore-naam onderaan een pagina met de spreuken op de volgende is
+     precies de bladwijzer die je kwijtraakt. */
+  .lore { break-inside: auto; margin-top: 2mm; }
+  .spells { column-count: 2; column-gap: 6mm; margin-top: 1mm; }
+  .lw { float: right; font-size: 7.4pt; letter-spacing: 0; text-transform: none; color: #5c5342; }
+  .lk { font-size: 9pt; letter-spacing: .12em; text-transform: uppercase; color: #14100a;
+        border-bottom: .5pt solid #cfc6b0; padding-bottom: .6mm; break-after: avoid; }
+  .spell { break-inside: avoid; margin: 0 0 1.6mm; }
   .sk { font-weight: 700; font-size: 8.8pt; }
   .sn { display: inline-block; min-width: 12mm; font-weight: 400; font-size: 7.4pt;
         letter-spacing: .08em; text-transform: uppercase; color: #6b5c3a; }
@@ -564,6 +624,7 @@ export function armyToPrintHtml(input: PrintInput, opts: PrintOptions): string {
   <div class="meta">${esc(`${input.meta.faction} · ${input.meta.composition} · ${input.meta.rule}`)}</div>
 </header>
 ${secties}
+${loreSectie}
 ${appendix}
 <footer>
   <span>Old World Companion · Printed ${esc(gedrukt)}</span>
