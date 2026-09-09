@@ -41,6 +41,7 @@ import { ExportSheet } from './ExportSheet';
 import type { ExportMeta, ExportRow } from '../../lib/listExport';
 import { builderListToArmy, type MagicText, type MountText } from '../../lib/builderToArmy';
 import type { PrintInput } from '../../lib/printArmy';
+import { downloadArmyPdf } from '../../lib/pdfDownload';
 import { useData } from '../../data';
 import type { BuilderCtx, BuilderScreen, PickerEntry, RosterRow, SavedListLike } from './types';
 
@@ -75,19 +76,20 @@ export interface BuilderFlowProps {
   // are in the middle of building, where it crowded out the catalogue.
   /** Edit one field of the army summary inline (opens the owner's list-settings UI). */
   onEditArmyField?: (field: 'faction' | 'composition' | 'rule' | 'points' | 'items') => void;
-  /** Top-bar actions. Absent → the shell renders them disabled with an explanatory title, which is
-   *  honest: Export and Print do not exist in this app yet, and Import OWB only exists at creation. */
+  /** Top-bar actions. Absent → this component supplies its own (share-sheet / PDF-download); only
+   *  Import OWB has no fallback, because it only exists while a list is being CREATED. */
   onImportOwb?: () => void;
   onExport?: () => void;
-  onPrint?: () => void;
+  /** Overschrijft de ingebouwde PDF-download. Normaal leeg: dit component regelt het zelf. */
+  onPdf?: () => void;
 
-  // ── Print / PDF ──────────────────────────────────────────────────────────────────────────────
-  // Vier gegevens die de builder zelf niet nodig heeft maar die het PRINTBLAD wel wil, omdat het op
+  // ── PDF ──────────────────────────────────────────────────────────────────────────────────────
+  // Vier gegevens die de builder zelf niet nodig heeft maar die het PDF-BLAD wel wil, omdat het op
   // het SPELMODEL werkt (`builderListToArmy`) in plaats van op de roster-rijen. Ze staan hier als
   // losse props in plaats van dat dit component ze zelf ophaalt: `ListBuilder` heeft ze allemaal al
   // binnen (inclusief de overlay-patch van een Renegade-lijst), en ze hier nog eens fetchen zou een
-  // tweede, mogelijk afwijkende kopie opleveren. Allemaal optioneel — ontbreekt er één, dan valt de
-  // Share-sheet terug op het oude, sobere printblad.
+  // tweede, mogelijk afwijkende kopie opleveren. Allemaal optioneel — ontbreken ze, dan is het blad
+  // soberder, maar de PDF komt er.
   /** Flavour + effecttekst per magic item (`magic-item-text.json`), MET overlay-patch. */
   magicText?: MagicText;
   /** Special rules + profielgegevens per mount (`mount-text.json`), MET overlay-patch. */
@@ -116,12 +118,21 @@ const ruleLabel = (slug: string): string =>
 export function BuilderFlow({
   list, name, onUpdate, onBack, army, armyName, compName, itemsData, armyItemLists, compRules,
   statsFor, statIdx, onShowInfo,
-  onEditArmyField, onImportOwb, onExport, onPrint,
+  onEditArmyField, onImportOwb, onExport, onPdf,
   magicText, mountText, overlayId, factionNames,
 }: BuilderFlowProps): React.JSX.Element {
   const [screen, setScreen] = useState<BuilderScreen>({ kind: 'roster' });
-  /** Staat het export-venster open? Leeft hier: het hangt aan de hele lijst, niet aan één scherm. */
+  /** Staat het deel-venster open? Leeft hier: het hangt aan de hele lijst, niet aan één scherm. */
   const [exportOpen, setExportOpen] = useState(false);
+  /** Wordt er op dit moment een PDF gebouwd? Houdt de knop uit, zodat een dubbelklik geen tweede
+   *  download start.
+   *  DE REF IS DE ECHTE SLOTBOOM, de state alleen de zichtbaarheid ervan: `pdfBezig` is in de
+   *  handler de waarde van de render waarin hij gemaakt is, dus twee klikken vóór de volgende render
+   *  zien allebei `false`. Een ref is meteen bijgewerkt en kent dat gat niet. */
+  const [pdfBezig, setPdfBezig] = useState(false);
+  const pdfBezigRef = useRef(false);
+  /** De laatste PDF-fout, of `null`. Zie `maakPdf` voor waarom dit een eigen balkje is. */
+  const [pdfFout, setPdfFout] = useState<string | null>(null);
   /** The row to flash after an edit returns to the roster — the spec's "briefly highlighted". */
   const [highlightUid, setHighlightUid] = useState<string | undefined>(undefined);
 
@@ -292,19 +303,20 @@ export function BuilderFlow({
     return out;
   }, [army, list.composition, itemsData, rows, derived.remainingPoints, troopTypeFor]);
 
-  // ── Print / PDF: het SPELMODEL van deze lijst ─────────────────────────────────────────────────
-  // `ExportSheet` kan twee bladen maken. Het oude heeft genoeg aan de roster-rijen; het VOLLEDIGE
-  // blad (regelteksten, wapenprofielen, mount-regels, magic-item-teksten, spreuken) heeft hetzelfde
-  // `Army`-object nodig dat het spel gebruikt, want dat is de enige vorm waarin al die verbanden
-  // gelegd zijn. Dus bouwen we hem hier, met EXACT dezelfde opties als `ArmyListPicker` — anders zou
-  // het printblad iets anders kunnen zeggen dan de unit-kaart in-game, en dat is precies het soort
-  // stille afwijking dat dit project al eerder geld heeft gekost.
+  // ── PDF: het SPELMODEL van deze lijst ─────────────────────────────────────────────────────────
+  // Het PDF-blad (regelteksten, wapenprofielen, mount-regels, magic-item-teksten, spreuken) heeft
+  // hetzelfde `Army`-object nodig dat het spel gebruikt, want dat is de enige vorm waarin al die
+  // verbanden gelegd zijn. Dus bouwen we hem hier, met EXACT dezelfde opties als `ArmyListPicker` —
+  // anders zou het blad iets anders kunnen zeggen dan de unit-kaart in-game, en dat is precies het
+  // soort stille afwijking dat dit project al eerder geld heeft gekost.
   //
-  // ALLEEN ALS DE SHEET OPENSTAAT. Een `Army` bouwen loopt over elke entry, elke optie en elk magic
-  // item; dat hoeft niet bij elke toetsaanslag in de builder te gebeuren.
+  // GEEN useMemo (meer). Dit stond in een memo achter `exportOpen`, omdat de sheet het bij het
+  // openen al in handen moest hebben. Nu er één knop is die de PDF maakt, is er precies één moment
+  // waarop dit nodig is: die klik. Een `Army` bouwen loopt over elke entry, elke optie en elk magic
+  // item — dat werk hoort bij de klik, niet bij elke render.
   const { rules, lores } = useData();
-  const printInput = useMemo<PrintInput | null>(() => {
-    if (!exportOpen || !army) return null;
+  const bouwPrintInput = (): PrintInput | null => {
+    if (!army) return null;
     const composition = compName(list.composition);
     const armyModel = builderListToArmy(
       { ...list, name: name || 'Untitled list' },
@@ -338,11 +350,38 @@ export function BuilderFlow({
       mountText,
       faction: armyName,
     };
-    // `compName` en `statsFor` zijn bij elke render een nieuwe identiteit; ze hangen af van dezelfde
-    // gegevens die hieronder wél in de lijst staan, dus opnemen zou de memo waardeloos maken.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [exportOpen, list, name, army, armyName, overlayId, itemsData, armyItemLists, magicText, mountText,
-      troopTypeFor, factionNames, rules, lores, derived.totalPoints]);
+  };
+
+  /** PDF-knop: bouw het blad en start de download. Geen printvenster meer — "als je op PDF drukt wil
+   *  ik dat je gelijk de PDF download ipv een pagina die je dan nog moet pdf printen" (Joost,
+   *  09-09). Het echte maken zit in `downloadArmyPdf`; hier staat alleen de volgorde en wat er
+   *  gebeurt als het misgaat.
+   *
+   *  WAAROM EEN EIGEN FOUTBALKJE en geen toast: die heeft de app niet (alleen `UpdatePrompt` heeft
+   *  z'n eigen banner, en dat is een service-worker-ding, geen algemene meldingslaag). Een
+   *  `window.alert` blokkeert de hele pagina en ziet er in een PWA uit als een browserfout, terwijl
+   *  dit een gewone mislukking van één handeling is. Dus een smalle balk onderin, die je weg kunt
+   *  tikken en die bij een volgende poging vanzelf verdwijnt. Een hele toast-infrastructuur bouwen
+   *  voor één melding is de kosten niet waard. */
+  const maakPdf = async (): Promise<void> => {
+    if (pdfBezigRef.current) return; // dubbelklik → één download
+    const input = bouwPrintInput();
+    if (!input) {
+      setPdfFout('The catalogue is still loading — try again in a moment.');
+      return;
+    }
+    pdfBezigRef.current = true;
+    setPdfBezig(true);
+    setPdfFout(null);
+    try {
+      await downloadArmyPdf(input);
+    } catch (e) {
+      setPdfFout(e instanceof Error && e.message ? e.message : 'Could not make the PDF.');
+    } finally {
+      pdfBezigRef.current = false;
+      setPdfBezig(false);
+    }
+  };
 
   // ── Mutations ─────────────────────────────────────────────────────────────────────────────────
   // Every one of these is a functional update that spreads the list. Adding is the only place a uid
@@ -710,11 +749,13 @@ export function BuilderFlow({
       onDuplicate={() => { if (currentUid) duplicateUnit(currentUid); }}
       onRemove={() => { if (currentUid) { removeUnit(currentUid); setSelectedUids([]); } }}
       onImportOwb={onImportOwb}
-      // Export én Print openen hetzelfde venster: "Save as PDF" ís het printvenster van de browser,
-      // dus twee ingangen naar één ding. Daarmee verdwijnen ook twee "not built yet"-knoppen. De
-      // props van de container blijven bestaan voor het geval die ooit z'n eigen route wil.
+      // Twee knoppen, twee dingen. Share opent de deel-sheet (klembord/.txt); PDF maakt en downloadt
+      // meteen het bestand. Ze deelden tot 09-09 één venster, waardoor de meest gevraagde uitgang
+      // achter de minst gevraagde lag. De props van de container blijven bestaan voor het geval die
+      // ooit z'n eigen route wil.
       onExport={onExport ?? (() => setExportOpen(true))}
-      onPrint={onPrint ?? (() => setExportOpen(true))}
+      onPdf={onPdf ?? maakPdf}
+      pdfBezig={pdfBezig}
       onShowInfo={onShowInfo}
       onNaam={openNaam}
       groeiMaxVan={(uid) => campaignMods?.groei?.[uid]?.max}
@@ -763,6 +804,8 @@ export function BuilderFlow({
         onBack={onBack}
         onEditList={onEditArmyField ? () => onEditArmyField('composition') : undefined}
         onExport={() => setExportOpen(true)}
+        onPdf={onPdf ?? maakPdf}
+        pdfBezig={pdfBezig}
         onAddUnit={(category) => setScreen({ kind: 'picker', category })}
         onSelectUnit={(uid) => setScreen({ kind: 'options', uid })}
         onDuplicate={duplicateUnit}
@@ -800,9 +843,41 @@ export function BuilderFlow({
             total: derived.totalPoints,
           } satisfies ExportMeta}
           statsFor={statsFor}
-          printInput={printInput}
           onClose={() => setExportOpen(false)}
         />
+      )}
+      {/* PDF-fout — zie `maakPdf` voor waarom dit een balkje is en geen toast of alert. Onderin en
+          `position: fixed`, zodat hij in beide shells (telefoon én desktop) op dezelfde plek staat
+          zonder ergens een vaste hoogte te verstoren: de telefoon-header is precies 74px en de
+          desktop-topbar heeft z'n eigen meting. */}
+      {pdfFout && (
+        <div
+          role="alert"
+          style={{
+            // Links/rechts 12 mét `margin: 0 auto` en een maximum: op een telefoon vult hij de
+            // breedte, op een breed scherm wordt hij niet een meter lange regel van vier woorden.
+            position: 'fixed', left: 12, right: 12, bottom: 12, zIndex: 90,
+            maxWidth: 520, margin: '0 auto',
+            display: 'flex', alignItems: 'center', gap: 10,
+            padding: '10px 12px', borderRadius: 10,
+            background: TOW.panel2, border: `1px solid ${TOW.goldDeep}`,
+            fontFamily: towFont.serif, fontSize: 13, lineHeight: 1.4, color: TOW.ink,
+            boxShadow: '0 6px 20px rgba(0,0,0,0.28)',
+          }}
+        >
+          <span style={{ flex: 1, minWidth: 0 }}>{pdfFout}</span>
+          <button
+            type="button"
+            onClick={() => setPdfFout(null)}
+            aria-label="Dismiss"
+            style={{
+              flexShrink: 0, border: 'none', background: 'none', cursor: 'pointer',
+              fontSize: 20, lineHeight: 1, color: TOW.muted, padding: '0 2px',
+            }}
+          >
+            ×
+          </button>
+        </div>
       )}
       {naamEntry && naamUnit && campaignCtx ? (
         <NaamDialoog

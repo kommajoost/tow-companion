@@ -1,0 +1,630 @@
+{
+  "army": {
+    "name": "The Black Ark of Karond Kar",
+    "points": 730,
+    "system": "Warhammer: The Old World",
+    "faction": "Dark Elves",
+    "composition": "Grand Army",
+    "units": [
+      {
+        "id": "u1",
+        "name": "Maelith of the Shadowed Veil",
+        "datasheet": "Sorceress",
+        "count": null,
+        "points": 165,
+        "category": "Characters",
+        "troopType": "Regular Infantry",
+        "options": [
+          "Hand weapon",
+          "Level 2 Wizard",
+          "Sword of Might",
+          "Dispel Scroll"
+        ],
+        "specialRules": [
+          "Elven Reflexes",
+          "Eternal Hatred",
+          "Hatred (High Elves)",
+          "Hekarti's Blessing"
+        ],
+        "profiles": [
+          {
+            "label": "Sorceress",
+            "stats": [
+              {
+                "k": "M",
+                "v": "5"
+              },
+              {
+                "k": "WS",
+                "v": "4"
+              },
+              {
+                "k": "BS",
+                "v": "4"
+              },
+              {
+                "k": "S",
+                "v": "3"
+              },
+              {
+                "k": "T",
+                "v": "3"
+              },
+              {
+                "k": "W",
+                "v": "2"
+              },
+              {
+                "k": "I",
+                "v": "4"
+              },
+              {
+                "k": "A",
+                "v": "1"
+              },
+              {
+                "k": "Ld",
+                "v": "8"
+              }
+            ]
+          }
+        ],
+        "lores": [
+          "lore-of-the-shadowlands"
+        ],
+        "spells": [
+          "spell-maelstrom-of-chaos",
+          "spell-veil-of-gloom",
+          "spell-chains-of-darkness"
+        ],
+        "magicWeapons": [
+          {
+            "name": "Sword of Might",
+            "kind": "melee",
+            "specialRules": [
+              "*Extremely Common"
+            ]
+          }
+        ],
+        "magicItems": [
+          {
+            "name": "Sword of Might",
+            "specialRules": [
+              "*Extremely Common"
+            ]
+          },
+          {
+            "name": "Dispel Scroll",
+            "specialRules": []
+          }
+        ]
+      },
+      {
+        "id": "u2",
+        "name": "Dark Elf Warriors",
+        "datasheet": "Dark Elf Warriors",
+        "count": 20,
+        "points": 200,
+        "category": "Core",
+        "troopType": "Regular Infantry",
+        "options": [
+          "Hand weapons",
+          "Thrusting spears",
+          "Light armour",
+          "Shields",
+          "Standard bearer",
+          "Musician"
+        ],
+        "specialRules": [
+          "Close Order",
+          "Elven Reflexes",
+          "Hatred (High Elves)",
+          "Martial Prowess"
+        ],
+        "profiles": [
+          {
+            "label": "Dark Elf Warrior",
+            "stats": [
+              {
+                "k": "M",
+                "v": "5"
+              },
+              {
+                "k": "WS",
+                "v": "4"
+              },
+              {
+                "k": "BS",
+                "v": "4"
+              },
+              {
+                "k": "S",
+                "v": "3"
+              },
+              {
+                "k": "T",
+                "v": "3"
+              },
+              {
+                "k": "W",
+                "v": "1"
+              },
+              {
+                "k": "I",
+                "v": "4"
+              },
+              {
+                "k": "A",
+                "v": "1"
+              },
+              {
+                "k": "Ld",
+                "v": "8"
+              }
+            ]
+          },
+          {
+            "label": "Lordling",
+            "stats": [
+              {
+                "k": "M",
+                "v": "5"
+              },
+              {
+                "k": "WS",
+                "v": "4"
+              },
+              {
+                "k": "BS",
+                "v": "4"
+              },
+              {
+                "k": "S",
+                "v": "3"
+              },
+              {
+                "k": "T",
+                "v": "3"
+              },
+              {
+                "k": "W",
+                "v": "1"
+              },
+              {
+                "k": "I",
+                "v": "4"
+              },
+              {
+                "k": "A",
+                "v": "2"
+              },
+              {
+                "k": "Ld",
+                "v": "8"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "u3",
+        "name": "Repeater Crossbowmen",
+        "datasheet": "Repeater Crossbowmen",
+        "count": 10,
+        "points": 110,
+        "category": "Core",
+        "troopType": "Regular Infantry",
+        "options": [
+          "Hand weapons",
+          "Repeater crossbows",
+          "Light armour",
+          "Musician"
+        ],
+        "specialRules": [
+          "Close Order",
+          "Elven Reflexes",
+          "Hatred (High Elves)",
+          "Martial Prowess"
+        ],
+        "profiles": [
+          {
+            "label": "Repeater Crossbowman",
+            "stats": [
+              {
+                "k": "M",
+                "v": "5"
+              },
+              {
+                "k": "WS",
+                "v": "4"
+              },
+              {
+                "k": "BS",
+                "v": "4"
+              },
+              {
+                "k": "S",
+                "v": "3"
+              },
+              {
+                "k": "T",
+                "v": "3"
+              },
+              {
+                "k": "W",
+                "v": "1"
+              },
+              {
+                "k": "I",
+                "v": "4"
+              },
+              {
+                "k": "A",
+                "v": "1"
+              },
+              {
+                "k": "Ld",
+                "v": "8"
+              }
+            ]
+          },
+          {
+            "label": "Lordling",
+            "stats": [
+              {
+                "k": "M",
+                "v": "5"
+              },
+              {
+                "k": "WS",
+                "v": "4"
+              },
+              {
+                "k": "BS",
+                "v": "5"
+              },
+              {
+                "k": "S",
+                "v": "3"
+              },
+              {
+                "k": "T",
+                "v": "3"
+              },
+              {
+                "k": "W",
+                "v": "1"
+              },
+              {
+                "k": "I",
+                "v": "4"
+              },
+              {
+                "k": "A",
+                "v": "1"
+              },
+              {
+                "k": "Ld",
+                "v": "8"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "id": "u4",
+        "name": "Cold One Knights",
+        "datasheet": "Cold One Knights",
+        "count": 5,
+        "points": 175,
+        "category": "Special",
+        "troopType": "Heavy Cavalry",
+        "options": [
+          "Hand weapons",
+          "Lances",
+          "Shields",
+          "Heavy armour",
+          "Dread Knight",
+          "Standard bearer"
+        ],
+        "specialRules": [
+          "Armour Bane (1 - Cold One only)",
+          "Armoured Hide (1)",
+          "Close Order",
+          "Elven Reflexes",
+          "Fear",
+          "First Charge",
+          "Hatred (High Elves)",
+          "Stupidity",
+          "Swiftstride"
+        ],
+        "profiles": [
+          {
+            "label": "Cold One Knight",
+            "stats": [
+              {
+                "k": "M",
+                "v": "-"
+              },
+              {
+                "k": "WS",
+                "v": "5"
+              },
+              {
+                "k": "BS",
+                "v": "4"
+              },
+              {
+                "k": "S",
+                "v": "4"
+              },
+              {
+                "k": "T",
+                "v": "4"
+              },
+              {
+                "k": "W",
+                "v": "1"
+              },
+              {
+                "k": "I",
+                "v": "5"
+              },
+              {
+                "k": "A",
+                "v": "1"
+              },
+              {
+                "k": "Ld",
+                "v": "9"
+              }
+            ]
+          },
+          {
+            "label": "Dread Knight",
+            "stats": [
+              {
+                "k": "M",
+                "v": "-"
+              },
+              {
+                "k": "WS",
+                "v": "5"
+              },
+              {
+                "k": "BS",
+                "v": "4"
+              },
+              {
+                "k": "S",
+                "v": "4"
+              },
+              {
+                "k": "T",
+                "v": "4"
+              },
+              {
+                "k": "W",
+                "v": "1"
+              },
+              {
+                "k": "I",
+                "v": "5"
+              },
+              {
+                "k": "A",
+                "v": "2"
+              },
+              {
+                "k": "Ld",
+                "v": "9"
+              }
+            ]
+          }
+        ],
+        "mounts": [
+          {
+            "name": "Cold One",
+            "troopType": "Heavy Cavalry",
+            "profiles": [
+              {
+                "label": "Cold One",
+                "stats": [
+                  {
+                    "k": "M",
+                    "v": "7"
+                  },
+                  {
+                    "k": "WS",
+                    "v": "3"
+                  },
+                  {
+                    "k": "BS",
+                    "v": "-"
+                  },
+                  {
+                    "k": "S",
+                    "v": "4"
+                  },
+                  {
+                    "k": "T",
+                    "v": "(+1)"
+                  },
+                  {
+                    "k": "W",
+                    "v": "-"
+                  },
+                  {
+                    "k": "I",
+                    "v": "2"
+                  },
+                  {
+                    "k": "A",
+                    "v": "2"
+                  },
+                  {
+                    "k": "Ld",
+                    "v": "-"
+                  }
+                ]
+              }
+            ],
+            "specialRules": [
+              "Armour Bane (1)",
+              "Armoured Hide (1)",
+              "Fear",
+              "First Charge",
+              "Stupidity",
+              "Swiftstride"
+            ],
+            "details": []
+          }
+        ]
+      },
+      {
+        "id": "u5",
+        "name": "Reaper Bolt Thrower",
+        "datasheet": "Reaper Bolt Thrower",
+        "count": null,
+        "points": 80,
+        "category": "Rare",
+        "troopType": "War Machine",
+        "options": [
+          "Repeater bolt thrower",
+          "Hand weapons",
+          "Light armour"
+        ],
+        "specialRules": [
+          "Elven Reflexes",
+          "Hatred (High Elves)",
+          "Skirmishers"
+        ],
+        "profiles": [
+          {
+            "label": "Reaper Bolt Thrower",
+            "stats": [
+              {
+                "k": "M",
+                "v": "-"
+              },
+              {
+                "k": "WS",
+                "v": "-"
+              },
+              {
+                "k": "BS",
+                "v": "-"
+              },
+              {
+                "k": "S",
+                "v": "-"
+              },
+              {
+                "k": "T",
+                "v": "6"
+              },
+              {
+                "k": "W",
+                "v": "2"
+              },
+              {
+                "k": "I",
+                "v": "-"
+              },
+              {
+                "k": "A",
+                "v": "-"
+              },
+              {
+                "k": "Ld",
+                "v": "-"
+              }
+            ]
+          },
+          {
+            "label": "Dark Elf Crew",
+            "stats": [
+              {
+                "k": "M",
+                "v": "5"
+              },
+              {
+                "k": "WS",
+                "v": "4"
+              },
+              {
+                "k": "BS",
+                "v": "4"
+              },
+              {
+                "k": "S",
+                "v": "3"
+              },
+              {
+                "k": "T",
+                "v": "3"
+              },
+              {
+                "k": "W",
+                "v": "2"
+              },
+              {
+                "k": "I",
+                "v": "4"
+              },
+              {
+                "k": "A",
+                "v": "2"
+              },
+              {
+                "k": "Ld",
+                "v": "8"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "raw": ""
+  },
+  "meta": {
+    "listName": "The Black Ark of Karond Kar",
+    "faction": "Dark Elves",
+    "composition": "Grand Army",
+    "rule": "Combined Arms",
+    "cap": 750,
+    "total": 730
+  },
+  "faction": "Dark Elves",
+  "magicText": {
+    "sword-of-might": {
+      "description": "Bound around with powerful runes that increase its power and enhance the strength of its bearer.",
+      "body": "*Extremely Common",
+      "profiel": [
+        {
+          "naam": "Sword of Might (Profile)",
+          "range": "Combat",
+          "strength": "S+1",
+          "ap": "-1",
+          "specialRules": "Magical Attacks"
+        }
+      ]
+    },
+    "dispel-scroll": {
+      "description": "The Wizard reads aloud a charm of unbinding from an enchanted scroll.",
+      "body": "Single use. A Wizard may use this scroll when attempting a Wizardly dispel. If they do so, roll an extra D6 when making the Dispel roll and discard the lowest result. However, if a double 1 is rolled on any two of the dice rolled, the Wizard is outclassed in the art.\n*Extremely Common"
+    }
+  },
+  "mountText": {
+    "cold one dark elves": {
+      "specialRules": [
+        "Armour Bane (1)",
+        "Armoured Hide (1)",
+        "Fear",
+        "First Charge",
+        "Stupidity",
+        "Swiftstride"
+      ]
+    }
+  }
+}

@@ -72,6 +72,20 @@ export default defineConfig({
             handler: 'NetworkOnly',
           },
           {
+            // De PDF-fonts (public/pdf-fonts/*.ttf, ~1,5 MB samen). Ze zitten NIET in de precache:
+            // dat zou de installatie van de service worker onnodig zwaar maken voor iedereen, terwijl
+            // alleen wie op PDF drukt ze nodig heeft. Wél cachen zodra ze één keer opgehaald zijn,
+            // want zonder de fontbestanden valt de PDF-knop offline terug op het printvenster.
+            // CacheFirst met een ruime houdbaarheid: een fontbestand verandert niet.
+            urlPattern: ({ url }) => /\.ttf$/.test(url.pathname),
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'tow-fonts',
+              expiration: { maxEntries: 10, maxAgeSeconds: 60 * 60 * 24 * 365 },
+              cacheableResponse: { statuses: [0, 200] },
+            },
+          },
+          {
             urlPattern: ({ url }) => /\.(?:json)$/.test(url.pathname),
             handler: 'StaleWhileRevalidate',
             options: {

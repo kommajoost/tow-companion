@@ -1,26 +1,22 @@
 // DEEL een army list: kies een vorm, zie meteen wat eruit komt, en neem hem mee.
 //
-// Drie uitgangen, omdat ze verschillende dingen zijn:
+// Twee uitgangen, omdat ze verschillende dingen zijn:
 //   • Klembord — voor een chatbericht of een forumpost. Wat je 95% van de tijd wil.
 //   • .txt      — als je hem wilt bewaren of mailen.
-//   • Print/PDF — via het printvenster van de browser ("Bestemming: Opslaan als PDF"). Geen
-//                 PDF-bibliotheek: die weegt honderden kB in een app die offline moet werken, en het
-//                 printvenster kan het al — inclusief papierformaat en marges, die per printer
-//                 verschillen en die ik dus beter niet namaak.
+//
+// GEEN PDF MEER HIER. De PDF heeft z'n eigen knop in de app (topbar op desktop, header op de
+// telefoon) en dóet ook meteen wat hij belooft: het bestand downloadt, in plaats van dat er een
+// printvenster opent dat je zelf nog naar PDF moet sturen (Joost, 09-09). Delen en een PDF maken
+// zijn twee verschillende handelingen; ze achter één knop verstoppen maakte de belangrijkste van de
+// twee het moeilijkst te vinden.
 //
 // De tekst komt volledig uit `listToText`. Dit component rekent niets uit en kent geen regels; het
 // kiest alleen wát er geëxporteerd wordt en waarheen.
-//
-// TWEE WEERGAVEN. De sheet begint op DEEL (klembord/txt) en schakelt om naar PRINT zodra je een blad
-// wilt maken. Ze staan niet naast elkaar in één scherm omdat het twee verschillende vragen zijn:
-// delen gaat over de VORM van de tekst, printen over WELKE REGELS er mee moeten. Samen in één paneel
-// werd het een muur van vijftien vinkjes waarvan de helft niets deed voor wat je aan het doen was.
 
 import { useMemo, useState } from 'react';
 import { TOW, towFont, engraved } from '../../design/tow';
 import { useBackClose } from '../../lib/backStack';
-import { exportFilename, listToPrintHtml, listToText, type ExportMeta, type ExportOptions, type ExportRow, type Formatting, type ListType } from '../../lib/listExport';
-import { armyToPrintHtml, DEFAULT_PRINT_OPTIONS, type PrintInput } from '../../lib/printArmy';
+import { exportFilename, listToText, type ExportMeta, type ExportOptions, type ExportRow, type Formatting, type ListType } from '../../lib/listExport';
 
 const eb = engraved as React.CSSProperties;
 
@@ -37,15 +33,11 @@ const OPMAAK: { id: Formatting; label: string }[] = [
 ];
 
 export function ExportSheet({
-  rows, meta, statsFor, printInput = null, onClose,
+  rows, meta, statsFor, onClose,
 }: {
   rows: ExportRow[];
   meta: ExportMeta;
   statsFor?: ExportOptions['statsFor'];
-  /** Het spelmodel van deze lijst, als de aanroeper het kan bouwen. `null` = niet beschikbaar; dan
-   *  blijft de knop het OUDE printblad maken (`listToPrintHtml`), dat alleen de roster-rijen nodig
-   *  heeft. Liever een soberder blad dan een knop die niets doet. */
-  printInput?: PrintInput | null;
   onClose: () => void;
 }): React.JSX.Element {
   const [listType, setListType] = useState<ListType>('regular');
@@ -75,8 +67,7 @@ export function ExportSheet({
   );
 
 
-  // Back sluit de sheet. Er is nog maar één laag: het print-tussenscherm is weg, PDF opent
-  // meteen het printvenster.
+  // Back sluit de sheet. Er is maar één laag: de sheet heeft geen tussenschermen meer.
   useBackClose(true, onClose);
 
   const kopieer = async () => {
@@ -100,31 +91,6 @@ export function ExportSheet({
     a.download = exportFilename(meta.listName, 'txt');
     a.click();
     URL.revokeObjectURL(url);
-  };
-
-  /** Het printblad, in de vorm die bij de beschikbare gegevens hoort. Met een spelmodel is dat het
-   *  volledige blad (statlines, wapens, regelteksten, spreuken); zonder is het het oude, sobere. */
-  const printHtml = useMemo(
-    () => (printInput ? armyToPrintHtml(printInput, DEFAULT_PRINT_OPTIONS) : listToPrintHtml(rows, meta, opts)),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [printInput, rows, meta, listType, formatting, hidePoints, detailKan, specialRules, stats, customNotes, statsFor],
-  );
-
-  /** PDF = het printvenster van de browser, met een OPGEMAAKT blad erin.
-   *
-   *  In een nieuw venster, niet met een print-stylesheet over de app heen: die heeft een vaste dock en
-   *  scrollende panelen, en één vergeten `position: fixed` levert een half afgesneden blad. Geen
-   *  PDF-bibliotheek: het printvenster kent papierformaat en marges al, en die verschillen per
-   *  printer — dus beter niet namaken. */
-  const openPrintVenster = () => {
-    const w = window.open('', '_blank');
-    if (!w) return; // pop-up geblokkeerd — de andere twee uitgangen werken nog
-    w.document.write(printHtml);
-    w.document.close();
-    w.focus();
-    // Wachten tot de stylesheet is toegepast: print() op een net-geschreven document pakt in Safari
-    // en oudere webviews soms nog de ongestileerde staat.
-    w.setTimeout(() => w.print(), 150);
   };
 
   const knop: React.CSSProperties = {
@@ -236,25 +202,6 @@ export function ExportSheet({
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
               <button type="button" onClick={kopieer} style={knopPrimair}>{gekopieerd ? 'Copied' : 'Copy to clipboard'}</button>
               <button type="button" onClick={bewaarTxt} style={knop}>Save .txt</button>
-              {/* DE PDF-KNOP IS DE HOOFDUITGANG. Voor Joost is exporteren = een PDF; de andere twee
-                  zijn de uitzondering. Dus deze gevuld goud, met het download-pijltje, en zonder
-                  tussenscherm: hij opent meteen het printvenster met de standaardinstellingen
-                  ("laat dat extra menu maar achterwege", 09-09). */}
-              <button
-                type="button"
-                onClick={openPrintVenster}
-                style={{
-                  ...knop, border: "none", color: TOW.onGrad, fontWeight: 700,
-                  background: `linear-gradient(180deg, ${TOW.goldBright}, ${TOW.gold} 55%, ${TOW.goldDeep})`,
-                  display: "inline-flex", alignItems: "center", gap: 7,
-                }}
-              >
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-                  <path d="M12 4v12m0 0l-4-4m4 4l4-4" strokeLinecap="round" strokeLinejoin="round" />
-                  <path d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2" strokeLinecap="round" />
-                </svg>
-                Save as PDF / print
-              </button>
             </div>
           </>
       </div>

@@ -56,6 +56,27 @@ const SHORT_LABEL: Record<BudgetSegment['key'], string> = {
   characters: 'Chr', core: 'Core', special: 'Spec', rare: 'Rare',
 };
 
+/** De twee actieknoppen in rij 1 van de header (Share en PDF), in één stijl zodat ze als paar lezen.
+ *
+ *  36px raakvlak, teruggetrokken tot een 24px layout-voetafdruk met negatieve marges — dezelfde
+ *  behandeling als de terugknop ernaast. Zonder dat rekt zo'n knop rij 1 van 24 naar 36px op, loopt
+ *  de header 15px over z'n vaste 74px heen en snijdt `overflow: hidden` de categorie-totalen
+ *  doormidden: op een smal scherm lijkt het dan alsof de waarschuwingsband eroverheen ligt (Joost,
+ *  17-08). Er staan er nu TWEE naast elkaar, dus ook horizontaal een beetje negatief (-3px): de
+ *  rij heeft een gap van 10px, dus tussen de twee knoppen blijft 4px licht over — bij -6px zouden
+ *  de randen elkaar 2px overlappen. Samen kosten ze zo 60px in plaats van 82px.
+ *
+ *  Goud met een rand, want een kaal pijltje in `TOW.faint` las niet als knop (Joost, 09-09). De
+ *  MAAT blijft gelijk aan de oude enkele knop, dus de 74px staat nog. */
+const KOP_KNOP: React.CSSProperties = {
+  flexShrink: 0, width: 36, height: 36, padding: 0,
+  margin: '-6px -3px',
+  border: `1px solid ${TOW.lineStrong}`, borderRadius: 9,
+  background: TOW.panel2, color: TOW.goldDeep, cursor: 'pointer',
+  display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 1,
+  WebkitTapHighlightColor: 'transparent',
+};
+
 // ─── numbers ───
 // The canonical points formatter lives in primitives.tsx (thin space, per the spec's "1 998" and
 // "of 2 000") and is now shared by every builder screen AND by UnitRow’s own points cell, so the
@@ -96,14 +117,20 @@ export function RosterScreen(props: {
   onRemove: (uid: string) => void;
   onResolve?: () => void;
   highlightUid?: string;
-  /** Opent het export-venster. Op een telefoon was er geen enkele ingang: de Export-knop bestaat
-   *  alleen in de desktop-topbar, terwijl je je lijst juist op je telefoon bij je hebt. */
+  /** Opent de deel-sheet (klembord / .txt). Op een telefoon was er geen enkele ingang: de knop
+   *  bestond alleen in de desktop-topbar, terwijl je je lijst juist op je telefoon bij je hebt. */
   onExport?: () => void;
+  /** Maakt de PDF en start de download. Eigen knop naast Share, want het is een andere handeling:
+   *  delen levert tekst op, dit levert een bestand op (Joost, 09-09). */
+  onPdf?: () => void;
+  /** Staat de PDF nog te bouwen? Dan is de knop uit en half doorzichtig, zodat een tweede tik geen
+   *  tweede download start. */
+  pdfBezig?: boolean;
   /** Opens the container's list-settings sheet (rename, army composition). Without it the header
    *  title is inert text, exactly as it was before. */
   onEditList?: () => void;
 }): React.JSX.Element {
-  const { ctx, rows, onBack, onAddUnit, onSelectUnit, onDuplicate, onRemove, onResolve, highlightUid, onEditList, onExport } = props;
+  const { ctx, rows, onBack, onAddUnit, onSelectUnit, onDuplicate, onRemove, onResolve, highlightUid, onEditList, onExport, onPdf, pdfBezig } = props;
   const { derived, labels, list } = ctx;
 
   // LONG-PRESS ACTIONS — chosen shape and why.
@@ -260,37 +287,50 @@ export function RosterScreen(props: {
             </span>
           </span>
 
-          {/* Export — een glyph naast de punten, want de titel is al de weg naar de instellingen en een
-              tweede tekstknop past niet in een 74px-header. */}
+          {/* Share en PDF — twee glyphs naast de punten, want de titel is al de weg naar de
+              instellingen en tekstknoppen passen niet in een 74px-header.
+              APART, niet één knop met een menu: delen levert TEKST op (klembord/.txt), PDF levert
+              een BESTAND op. Dat zijn twee handelingen, en de PDF is de handeling die het vaakst
+              gevraagd wordt — die hoort niet twee tikken diep te liggen (Joost, 09-09).
+              Verschillende pijlen dus ook: omhoog-uit-een-bakje = delen, omlaag-in-een-bakje =
+              downloaden. Twee dezelfde pijltjes naast elkaar zeggen niets. */}
           {onExport && (
             <button
               type="button"
               onClick={onExport}
-              aria-label="Share, export or print this list"
-              title="Share, export or print this list"
-              style={{
-                // 36px tap target, teruggetrokken tot een 24px layout-voetafdruk met negatieve
-                // marges — dezelfde behandeling als de terugknop hiernaast. Zonder dat rekte deze
-                // knop rij 1 van 24 naar 36px op, liep de header 15px over z'n vaste 74px heen en
-                // sneed `overflow: hidden` de categorie-totalen doormidden: op een smal scherm leek
-                // het alsof de waarschuwingsband eroverheen lag (Joost, 17-08).
-                flexShrink: 0, width: 36, height: 36, padding: 0,
-                margin: '-6px 0 -6px 0',
-                // WEL ZICHTBAAR NU (Joost, 09-09: "knopje van export/download mag ook wel
-                // duidelijker"). Het was een kaal pijltje in TOW.faint — de zwakste inkt die we
-                // hebben, zonder omlijsting, niet te onderscheiden van decoratie. Nu goud met een
-                // rand zodat het als knop leest. De MAAT blijft gelijk, dus de header blijft op
-                // zijn vaste 74px en de negatieve marges hierboven doen hun werk nog.
-                border: `1px solid ${TOW.lineStrong}`, borderRadius: 9,
-                background: TOW.panel2, color: TOW.goldDeep, cursor: 'pointer',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                WebkitTapHighlightColor: 'transparent',
-              }}
+              aria-label="Share this list"
+              title="Share this list"
+              style={KOP_KNOP}
             >
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" aria-hidden="true">
-                <path d="M12 16V4m0 0L8 8m4-4l4 4" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M12 15V3m0 0L8 7m4-4l4 4" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M4 14v4a2 2 0 002 2h12a2 2 0 002-2v-4" strokeLinecap="round" />
+              </svg>
+            </button>
+          )}
+
+          {onPdf && (
+            <button
+              type="button"
+              onClick={onPdf}
+              disabled={pdfBezig}
+              aria-label={pdfBezig ? 'Building the PDF' : 'Save as PDF'}
+              aria-busy={pdfBezig || undefined}
+              title={pdfBezig ? 'Building the PDF…' : 'Save as PDF'}
+              style={{
+                ...KOP_KNOP,
+                cursor: pdfBezig ? 'default' : 'pointer',
+                opacity: pdfBezig ? 0.5 : 1,
+              }}
+            >
+              {/* Pijl + het woord eronder. De letters zijn klein (6.5px) maar ze passen binnen de
+                  36px en ze zijn het waard: "PDF" is precies wat je zoekt, en een pijl alleen laat
+                  je gokken welke van de twee knoppen het is. */}
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" aria-hidden="true">
+                <path d="M12 3v12m0 0l-4-4m4 4l4-4" strokeLinecap="round" strokeLinejoin="round" />
                 <path d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2" strokeLinecap="round" />
               </svg>
+              <span aria-hidden style={{ ...eb, fontSize: 6.5, letterSpacing: '0.1em', lineHeight: 1 }}>PDF</span>
             </button>
           )}
 

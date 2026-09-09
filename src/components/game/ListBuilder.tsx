@@ -602,8 +602,8 @@ export function ListBuilder() {
           armyItemLists={meta?.items ?? []}
         compRules={compRules ?? undefined}
           statIdx={activeStatIdx}
-          // Print / PDF: vier gegevens die het printblad nodig heeft om het SPELMODEL van deze lijst
-          // te bouwen (zie `printInput` in BuilderFlow). Ze komen hiervandaan omdat dit scherm ze al
+          // PDF: vier gegevens die het PDF-blad nodig heeft om het SPELMODEL van deze lijst
+          // te bouwen (zie `bouwPrintInput` in BuilderFlow). Ze komen hiervandaan omdat dit scherm ze al
           // heeft, MET de overlay-patch van een Renegade-lijst erop — nog een keer laden zou een
           // tweede kopie opleveren die stilletjes uit de pas kan lopen.
           magicText={activeMagicText}

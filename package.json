@@ -1,7 +1,7 @@
 {
   "name": "tow-companion",
   "private": true,
-  "version": "0.1.363",
+  "version": "0.1.364",
   "type": "module",
   "description": "Warhammer: The Old World turn companion - mobile PWA",
   "scripts": {
@@ -25,16 +25,19 @@
     "stamp-version": "node scripts/stamp-version.mjs",
     "render-brand": "node scripts/render-brand.mjs",
     "dev:test": "vite --mode test",
-    "build:test": "vite build --mode test"
+    "build:test": "vite build --mode test",
+    "pdf-preview": "node scripts/pdf-preview.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.106.2",
+    "pdfmake": "^0.3.11",
     "react": "^19.2.6",
     "react-dom": "^19.2.6"
   },
   "devDependencies": {
     "@tailwindcss/vite": "^4.3.0",
     "@types/node": "^25.9.3",
+    "@types/pdfmake": "^0.3.3",
     "@types/react": "^19.2.15",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^6.0.2",

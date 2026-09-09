@@ -196,8 +196,13 @@ export function DesktopShell(props: {
   /** Absent -> the violation band shows the problem without offering a fix. */
   onResolve?: () => void;
   onImportOwb?: () => void;
+  /** Opent de deel-sheet (klembord / .txt). */
   onExport?: () => void;
-  onPrint?: () => void;
+  /** Maakt de PDF en start de download. Geen printvenster meer (Joost, 09-09). */
+  onPdf?: () => void;
+  /** Staat de PDF nog te bouwen? Dan is de knop uit en zegt hij dat, zodat een tweede klik geen
+   *  tweede download start. */
+  pdfBezig?: boolean;
   /** Doorgegeven aan <UnitOptions> in de inspector. */
   onShowInfo?: (what: { kind: 'rule'; name: string; slug?: string } | { kind: 'item'; itemId: string; name: string } | { kind: 'mount'; name: string } | { kind: 'lore'; slug: string }) => void;
   /** Campagne: open de naam-dialoog voor de unit in de inspector. Absent -> geen naam-rij. */
@@ -212,7 +217,7 @@ export function DesktopShell(props: {
     ctx, rows, rosterTable, cataloguePane, catalogueOpen, selectedUid,
     autosavedAt, onBack, onEditArmyField, onOpenCatalogue, onEscape,
     onMoveSelection, onReorder, onChangeCount, onDuplicate, onRemove, onResolve, onImportOwb,
-    onExport, onPrint, onShowInfo, onNaam, groeiMaxVan, groeiMinModellenVan,
+    onExport, onPdf, pdfBezig, onShowInfo, onNaam, groeiMaxVan, groeiMinModellenVan,
   } = props;
   const { derived, labels, list } = ctx;
 
@@ -488,22 +493,29 @@ export function DesktopShell(props: {
   // mid-drag drops the pointer capture and the drag dies on the first `setPanes`.
 
   /** A 32px top-bar button. `onClick` absent → really disabled, with a title that says why, because
-   *  Export and Print do not exist in this app yet and Import OWB exists only while a list is being
-   *  CREATED (REBUILD-CONSTRAINTS §"Wat de spec 'nieuw' noemt"). A button that looks live and does
-   *  nothing is worse than one that is visibly unavailable. */
+   *  Import OWB exists only while a list is being CREATED (REBUILD-CONSTRAINTS §"Wat de spec 'nieuw'
+   *  noemt") and the PDF button switches itself off while it is building one. A button that looks
+   *  live and does nothing is worse than one that is visibly unavailable. */
   // Een pictogram naast het woord. "Share" stond als vlakke tekstknop tussen Import OWB en Print,
-  // en dan moet je zoeken (Joost, 09-09). Het pijltje-naar-beneden is het gebaar dat iedereen van
-  // downloaden kent; het woord blijft ernaast staan, zodat het ook zonder icoonkennis leesbaar is.
+  // en dan moet je zoeken (Joost, 09-09). Het woord blijft ernaast staan, zodat het ook zonder
+  // icoonkennis leesbaar is.
+  //
+  // TWEE VERSCHILLENDE PIJLEN, en dat is de hele reden dat ze hier los staan. Tot 09-09 droeg Share
+  // een pijl die naar BOVEN wees — een deel-gebaar, terwijl de knop "download" heette. Nu PDF een
+  // eigen knop heeft zouden dat twee identieke pijltjes naast elkaar zijn geweest, en dan zegt het
+  // pictogram niets meer. Dus: PDF = pijl naar BENEDEN in een bakje (er komt een bestand op je
+  // schijf), Share = pijl naar BOVEN uit een bakje (de tekst gaat de deur uit). Zelfde 13px en
+  // zelfde streekdikte, zodat ze in de rij één familie blijven.
   const IC_DOWNLOAD = (
     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-      <path d="M12 16V4m0 0L8 8m4-4l4 4" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M12 3v12m0 0l-4-4m4 4l4-4" strokeLinecap="round" strokeLinejoin="round" />
       <path d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2" strokeLinecap="round" />
     </svg>
   );
-  const IC_PRINT = (
+  const IC_SHARE = (
     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-      <path d="M6 9V3h12v6M6 18H4v-6h16v6h-2" strokeLinecap="round" strokeLinejoin="round" />
-      <rect x="7" y="14" width="10" height="7" rx="1" />
+      <path d="M12 15V3m0 0L8 7m4-4l4 4" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M4 14v4a2 2 0 002 2h12a2 2 0 002-2v-4" strokeLinecap="round" />
     </svg>
   );
 
@@ -674,8 +686,15 @@ export function DesktopShell(props: {
             'import', 'Import OWB', onImportOwb,
             'Importing an OWB file is only available while creating a list — not into an existing one.',
           )}
-          {topButton('export', 'Share', onExport, 'Sharing is not built yet.', false, IC_DOWNLOAD, true)}
-          {topButton('print', 'Print', onPrint, 'Print is not built yet.', false, IC_PRINT)}
+          {topButton('export', 'Share', onExport, 'Sharing is not available for this list.', false, IC_SHARE)}
+          {/* PDF is de hoofduitgang (Joost, 09-09) — daarom de gouden rand, en Share niet meer. Eén
+              klik = één download; zolang hij bezig is staat de knop uit, zodat een dubbelklik geen
+              tweede bestand oplevert. */}
+          {topButton(
+            'pdf', pdfBezig ? 'Making PDF…' : 'PDF', pdfBezig ? undefined : onPdf,
+            pdfBezig ? 'Building the PDF…' : 'The PDF is not available for this list.',
+            false, IC_DOWNLOAD, true,
+          )}
           {topButton('add', 'Add unit', onOpenCatalogue, '', true)}
         </div>
       </div>
