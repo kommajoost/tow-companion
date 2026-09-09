@@ -597,6 +597,14 @@ export function ListBuilder() {
           armyItemLists={meta?.items ?? []}
         compRules={compRules ?? undefined}
           statIdx={activeStatIdx}
+          // Print / PDF: vier gegevens die het printblad nodig heeft om het SPELMODEL van deze lijst
+          // te bouwen (zie `printInput` in BuilderFlow). Ze komen hiervandaan omdat dit scherm ze al
+          // heeft, MET de overlay-patch van een Renegade-lijst erop — nog een keer laden zou een
+          // tweede kopie opleveren die stilletjes uit de pas kan lopen.
+          magicText={activeMagicText}
+          mountText={activeMountText}
+          overlayId={activeOverlay?.baseArmy === active.army ? activeOverlay?.id : undefined}
+          factionNames={armies.map((a) => a.name)}
           // The desktop rail no longer carries a list-switcher: switching or creating a list belongs on
           // the lists overview (reachable via "‹ LISTS" in the builder header), not in the left column
           // of a list being built, where it crowded out the unit catalogue.

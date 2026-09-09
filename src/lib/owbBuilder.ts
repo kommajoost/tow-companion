@@ -1060,6 +1060,15 @@ const MAGIC_PREFIX = 'magic';
 // Stable id for an item within its category: prefer OWB's `name` slug, else slugify name_en.
 const slug = (s: string) => (s || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
 export const magicItemId = (item: MagicItem): string => slug(item.name || item.name_en);
+/** Dezelfde slug, maar vanaf een KALE ITEMNAAM.
+ *
+ *  De print-engine werkt op het spelmodel (`Army`), en daar is van een magic item alleen de NAAM
+ *  overgebleven (`ArmyUnit.magicItems[].name` = `item.name_en`). Om de tekst in
+ *  `magic-item-text.json` terug te vinden heeft hij dezelfde sleutel nodig als `magicItemId`, dus
+ *  wordt hier exact dezelfde slugify hergebruikt in plaats van een tweede na te bouwen die stilletjes
+ *  uit de pas kan lopen. LET OP: OWB draagt soms een eigen `name` naast `name_en`; voor die paar
+ *  items wijkt deze sleutel af en valt de aanroeper terug op de special rules van het item zelf. */
+export const magicItemIdFromName = (name: string): string => slug(name);
 const magicKey = (categoryId: string, itemId: string) => `${MAGIC_PREFIX}/${categoryId}/${itemId}`;
 
 /** Only characters carry magic items (keep it simple, per the spec). */

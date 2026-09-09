@@ -39,6 +39,9 @@ import { RosterTable, rosterTableOrder } from './RosterTable';
 import { CataloguePane } from './CataloguePane';
 import { ExportSheet } from './ExportSheet';
 import type { ExportMeta, ExportRow } from '../../lib/listExport';
+import { builderListToArmy, type MagicText, type MountText } from '../../lib/builderToArmy';
+import type { PrintInput } from '../../lib/printArmy';
+import { useData } from '../../data';
 import type { BuilderCtx, BuilderScreen, PickerEntry, RosterRow, SavedListLike } from './types';
 
 /** Same shape `ListBuilder` already passes to `BuilderWorkspace`, so this is a drop-in swap. */
@@ -77,6 +80,23 @@ export interface BuilderFlowProps {
   onImportOwb?: () => void;
   onExport?: () => void;
   onPrint?: () => void;
+
+  // ── Print / PDF ──────────────────────────────────────────────────────────────────────────────
+  // Vier gegevens die de builder zelf niet nodig heeft maar die het PRINTBLAD wel wil, omdat het op
+  // het SPELMODEL werkt (`builderListToArmy`) in plaats van op de roster-rijen. Ze staan hier als
+  // losse props in plaats van dat dit component ze zelf ophaalt: `ListBuilder` heeft ze allemaal al
+  // binnen (inclusief de overlay-patch van een Renegade-lijst), en ze hier nog eens fetchen zou een
+  // tweede, mogelijk afwijkende kopie opleveren. Allemaal optioneel — ontbreekt er één, dan valt de
+  // Share-sheet terug op het oude, sobere printblad.
+  /** Flavour + effecttekst per magic item (`magic-item-text.json`), MET overlay-patch. */
+  magicText?: MagicText;
+  /** Special rules + profielgegevens per mount (`mount-text.json`), MET overlay-patch. */
+  mountText?: MountText;
+  /** Het id van de actieve compositie-overlay, als er een geldt. */
+  overlayId?: string;
+  /** Alle legernamen — waarmee `builderListToArmy` een gedeeld datasheet ({dark elves} / {renegade})
+   *  op de juiste factie snijdt. */
+  factionNames?: string[];
 }
 
 const newUid = () => `u${Date.now().toString(36)}${Math.floor(Math.random() * 1e6).toString(36)}`;
@@ -97,6 +117,7 @@ export function BuilderFlow({
   list, name, onUpdate, onBack, army, armyName, compName, itemsData, armyItemLists, compRules,
   statsFor, statIdx, onShowInfo,
   onEditArmyField, onImportOwb, onExport, onPrint,
+  magicText, mountText, overlayId, factionNames,
 }: BuilderFlowProps): React.JSX.Element {
   const [screen, setScreen] = useState<BuilderScreen>({ kind: 'roster' });
   /** Staat het export-venster open? Leeft hier: het hangt aan de hele lijst, niet aan één scherm. */
@@ -270,6 +291,58 @@ export function BuilderFlow({
     }
     return out;
   }, [army, list.composition, itemsData, rows, derived.remainingPoints, troopTypeFor]);
+
+  // ── Print / PDF: het SPELMODEL van deze lijst ─────────────────────────────────────────────────
+  // `ExportSheet` kan twee bladen maken. Het oude heeft genoeg aan de roster-rijen; het VOLLEDIGE
+  // blad (regelteksten, wapenprofielen, mount-regels, magic-item-teksten, spreuken) heeft hetzelfde
+  // `Army`-object nodig dat het spel gebruikt, want dat is de enige vorm waarin al die verbanden
+  // gelegd zijn. Dus bouwen we hem hier, met EXACT dezelfde opties als `ArmyListPicker` — anders zou
+  // het printblad iets anders kunnen zeggen dan de unit-kaart in-game, en dat is precies het soort
+  // stille afwijking dat dit project al eerder geld heeft gekost.
+  //
+  // ALLEEN ALS DE SHEET OPENSTAAT. Een `Army` bouwen loopt over elke entry, elke optie en elk magic
+  // item; dat hoeft niet bij elke toetsaanslag in de builder te gebeuren.
+  const { rules, lores } = useData();
+  const printInput = useMemo<PrintInput | null>(() => {
+    if (!exportOpen || !army) return null;
+    const composition = compName(list.composition);
+    const armyModel = builderListToArmy(
+      { ...list, name: name || 'Untitled list' },
+      army,
+      statsFor,
+      {
+        faction: armyName,
+        composition,
+        overlayId,
+        itemsData,
+        armyItemLists,
+        magicText,
+        mountText,
+        troopTypeFor,
+        factionNames,
+      },
+    );
+    return {
+      army: armyModel,
+      meta: {
+        listName: name || 'Untitled list',
+        faction: armyName,
+        composition,
+        rule: ruleLabel(list.rule),
+        cap: list.points ?? 0,
+        total: derived.totalPoints,
+      },
+      rules,
+      lores,
+      magicText,
+      mountText,
+      faction: armyName,
+    };
+    // `compName` en `statsFor` zijn bij elke render een nieuwe identiteit; ze hangen af van dezelfde
+    // gegevens die hieronder wél in de lijst staan, dus opnemen zou de memo waardeloos maken.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [exportOpen, list, name, army, armyName, overlayId, itemsData, armyItemLists, magicText, mountText,
+      troopTypeFor, factionNames, rules, lores, derived.totalPoints]);
 
   // ── Mutations ─────────────────────────────────────────────────────────────────────────────────
   // Every one of these is a functional update that spreads the list. Adding is the only place a uid
@@ -727,6 +800,7 @@ export function BuilderFlow({
             total: derived.totalPoints,
           } satisfies ExportMeta}
           statsFor={statsFor}
+          printInput={printInput}
           onClose={() => setExportOpen(false)}
         />
       )}
