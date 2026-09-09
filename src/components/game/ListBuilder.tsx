@@ -7,6 +7,7 @@ import { troopTypeName } from '../../lib/troopTypes';
 import { BuilderWorkspace } from './BuilderWorkspace';
 import { BuilderFlow } from '../builder/BuilderFlow';
 import { NewListSetup, type NewListValues } from './NewListSetup';
+import { fmt } from '../builder/primitives';
 import { CeledonPanel } from './CeledonPanel';
 import { LockedListView } from './LockedListView';
 import { ListSettings } from './ListSettings';
@@ -110,6 +111,10 @@ export function ListBuilder() {
   const [dragOver, setDragOver] = useState<string | null>(null); // section id being hovered (group id, or '__ungrouped__')
   const [dragOverCard, setDragOverCard] = useState<{ id: string; before: boolean } | null>(null); // card hovered during a reorder drag (+ which edge)
   const [collapsed, setCollapsed] = usePersistentState<string[]>('tow:list-groups-collapsed', []); // collapsed section ids
+  type Ordening = 'groups' | 'faction' | 'points';
+  // Hoe het overzicht is ingedeeld. Mappen zijn de standaard en de enige met slepen; factie en
+  // punten zijn afgeleid uit de lijsten zelf en veranderen niets aan de mappen eronder.
+  const [ordening, setOrdening] = usePersistentState<Ordening>('tow:list-organise', 'groups');
   const toggleCollapse = (id: string) => setCollapsed((c) => (c.includes(id) ? c.filter((x) => x !== id) : [...c, id]));
 
   // In-app Back: each navigable layer owns one history entry (deepest registers last → handled first).
@@ -774,7 +779,7 @@ export function ListBuilder() {
   const ungrouped = lists.filter((l) => !l.groupId || !groupIds.has(l.groupId));
 
   // One saved-list card. `sectionId` is the section it currently sits in (so a drop adopts that group).
-  const renderCard = (l: SavedList, sectionId: string) => {
+  const renderCard = (l: SavedList, sectionId: string, sleepbaar = true) => {
     // Same sum as the builder — via `puntenVan`, so a Renegade composition is counted at ITS prices.
     // Counting off the raw catalogue here showed Legacy points for a repriced list: the card and the
     // builder disagreed about the very same list. `null` renders as '…' rather than a wrong number.
@@ -785,17 +790,19 @@ export function ListBuilder() {
     return (
       <div
         key={l.id}
-        draggable
-        onDragStart={(e) => { e.dataTransfer.setData('text/plain', l.id); e.dataTransfer.effectAllowed = 'move'; }}
+        draggable={sleepbaar}
+        onDragStart={(e) => { if (!sleepbaar) return; e.dataTransfer.setData('text/plain', l.id); e.dataTransfer.effectAllowed = 'move'; }}
         onDragOver={(e) => {
+          if (!sleepbaar) return;
           e.preventDefault();
           e.dataTransfer.dropEffect = 'move';
           const r = e.currentTarget.getBoundingClientRect();
           const before = e.clientY < r.top + r.height / 2;
           setDragOverCard({ id: l.id, before });
         }}
-        onDragLeave={() => setDragOverCard((d) => (d?.id === l.id ? null : d))}
+        onDragLeave={() => { if (!sleepbaar) return; setDragOverCard((d) => (d?.id === l.id ? null : d)); }}
         onDrop={(e) => {
+          if (!sleepbaar) return;
           e.preventDefault();
           e.stopPropagation(); // don't also fire the section's append-to-end drop
           const dragged = e.dataTransfer.getData('text/plain');
@@ -804,7 +811,7 @@ export function ListBuilder() {
           if (dragged && dragged !== l.id) reorderList(dragged, l.id, before, cardGroup);
           setDragOverCard(null);
         }}
-        style={{ ...card, position: 'relative', display: 'flex', alignItems: 'center', gap: 10, padding: '8px 0', cursor: 'grab' }}
+        style={{ ...card, position: 'relative', display: 'flex', alignItems: 'center', gap: 10, padding: '8px 0', cursor: sleepbaar ? 'grab' : 'default' }}
       >
         {dropLine != null && <div style={{ position: 'absolute', left: 0, right: 0, [dropLine ? 'top' : 'bottom']: -1, height: 2, background: TOW.goldDeep, borderRadius: 2, pointerEvents: 'none' }} />}
         {/* Same anatomy as the roster's UnitRow: name on one line, a faint whisper beneath, and the
@@ -876,6 +883,31 @@ export function ListBuilder() {
     );
   };
 
+  // Een AFGELEIDE sectie: ingedeeld op factie of puntencap, niet op een map van de speler. Geen
+  // drop-target en geen sleepbare kaarten. Het inklappen werkt wel, met een eigen sleutel zodat het
+  // niet botst met de map-ids.
+  const renderAfgeleideSectie = (key: string, title: string, sectionLists: SavedList[]) => {
+    const isCol = collapsed.includes(key);
+    return (
+      <div key={key} style={{ padding: '0 6px' }}>
+        {sectionHeader(key, title, sectionLists.length)}
+        {!isCol && <div style={{ display: 'flex', flexDirection: 'column' }}>{sectionLists.map((l) => renderCard(l, key, false))}</div>}
+      </div>
+    );
+  };
+  const perFactie = () => {
+    const m = new Map<string, SavedList[]>();
+    for (const l of lists) { const k = l.army || '?'; if (!m.has(k)) m.set(k, []); m.get(k)!.push(l); }
+    return [...m.entries()].map(([slug, ls]) => ({ key: 'faction:' + slug, title: armyName(slug), ls }))
+      .sort((a, b) => a.title.localeCompare(b.title));
+  };
+  const perPunten = () => {
+    const m = new Map<number, SavedList[]>();
+    for (const l of lists) { const k = Number(l.points) || 0; if (!m.has(k)) m.set(k, []); m.get(k)!.push(l); }
+    return [...m.entries()].sort((a, b) => a[0] - b[0])
+      .map(([cap, ls]) => ({ key: 'points:' + cap, title: cap ? fmt(cap) + ' pts' : 'No points cap', ls }));
+  };
+
   // Folder actions as quiet glyphs, not outlined buttons. Two bordered "Rename"/"Delete" pills sat in
   // every section header and out-shouted the folder name they belonged to — a divider should not be the
   // loudest thing between two lists.
@@ -904,11 +936,37 @@ export function ListBuilder() {
         />
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12, flexWrap: 'wrap' }}>
           <h1 style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 22, color: TOW.ink, margin: 0 }}>My lists</h1>
-          <button onClick={addGroup} style={{ marginLeft: 'auto', fontFamily: towFont.display, fontWeight: 700, fontSize: 13, padding: '7px 13px', borderRadius: 9, cursor: 'pointer', border: `1px solid ${TOW.line}`, background: 'transparent', color: TOW.ink }}>＋ New group</button>
+          {/* ORDENING (Joost, 09-09). Mappen zijn handig als je ze bijhoudt, maar "alle Dark Elves-
+              lijsten" of "alles op 2 000 punten" is een vraag die je vaker hebt dan een map ervoor
+              maakt. Die twee komen uit de lijst zelf, dus ze kloppen altijd. */}
+          <div role="tablist" aria-label="Organise lists by"
+            style={{ marginLeft: 'auto', display: 'inline-flex', border: `1px solid ${TOW.line}`, borderRadius: 9, overflow: 'hidden' }}>
+            {([['groups', 'Groups'], ['faction', 'Faction'], ['points', 'Points']] as [Ordening, string][]).map(([id, label]) => {
+              const aan = ordening === id;
+              return (
+                <button key={id} role="tab" aria-selected={aan} onClick={() => setOrdening(id)}
+                  style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 12, padding: '7px 11px', border: 'none', cursor: 'pointer',
+                    background: aan ? 'rgba(184,134,47,0.16)' : 'transparent', color: aan ? TOW.goldDeep : TOW.muted }}>
+                  {label}
+                </button>
+              );
+            })}
+          </div>
+          {ordening === 'groups' && (
+            <button onClick={addGroup} style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 13, padding: '7px 13px', borderRadius: 9, cursor: 'pointer', border: `1px solid ${TOW.line}`, background: 'transparent', color: TOW.ink }}>＋ New group</button>
+          )}
           <button onClick={() => setSetupOpen(true)} style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 13, padding: '7px 14px', borderRadius: 9, cursor: 'pointer', border: 'none', background: goldGrad, color: TOW.onGrad }}>＋ New list</button>
         </div>
-        {lists.length === 0 && groups.length === 0 ? (
+        {lists.length === 0 && (groups.length === 0 || ordening !== 'groups') ? (
           <p style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 14, color: TOW.muted }}>No saved lists yet — tap “New list” to start building.</p>
+        ) : ordening === 'faction' ? (
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            {perFactie().map((s) => renderAfgeleideSectie(s.key, s.title, s.ls))}
+          </div>
+        ) : ordening === 'points' ? (
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            {perPunten().map((s) => renderAfgeleideSectie(s.key, s.title, s.ls))}
+          </div>
         ) : groups.length === 0 ? (
           // No folders yet — keep the original flat look.
           <div style={{ display: 'flex', flexDirection: 'column' }}>
