@@ -266,8 +266,8 @@ export function RosterScreen(props: {
             <button
               type="button"
               onClick={onExport}
-              aria-label="Share list"
-              title="Share list"
+              aria-label="Share, export or print this list"
+              title="Share, export or print this list"
               style={{
                 // 36px tap target, teruggetrokken tot een 24px layout-voetafdruk met negatieve
                 // marges — dezelfde behandeling als de terugknop hiernaast. Zonder dat rekte deze
@@ -276,7 +276,13 @@ export function RosterScreen(props: {
                 // het alsof de waarschuwingsband eroverheen lag (Joost, 17-08).
                 flexShrink: 0, width: 36, height: 36, padding: 0,
                 margin: '-6px 0 -6px 0',
-                border: 'none', background: 'transparent', color: TOW.faint, cursor: 'pointer',
+                // WEL ZICHTBAAR NU (Joost, 09-09: "knopje van export/download mag ook wel
+                // duidelijker"). Het was een kaal pijltje in TOW.faint — de zwakste inkt die we
+                // hebben, zonder omlijsting, niet te onderscheiden van decoratie. Nu goud met een
+                // rand zodat het als knop leest. De MAAT blijft gelijk, dus de header blijft op
+                // zijn vaste 74px en de negatieve marges hierboven doen hun werk nog.
+                border: `1px solid ${TOW.lineStrong}`, borderRadius: 9,
+                background: TOW.panel2, color: TOW.goldDeep, cursor: 'pointer',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 WebkitTapHighlightColor: 'transparent',
               }}

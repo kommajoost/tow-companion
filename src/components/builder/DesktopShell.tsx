@@ -491,8 +491,25 @@ export function DesktopShell(props: {
    *  Export and Print do not exist in this app yet and Import OWB exists only while a list is being
    *  CREATED (REBUILD-CONSTRAINTS §"Wat de spec 'nieuw' noemt"). A button that looks live and does
    *  nothing is worse than one that is visibly unavailable. */
+  // Een pictogram naast het woord. "Share" stond als vlakke tekstknop tussen Import OWB en Print,
+  // en dan moet je zoeken (Joost, 09-09). Het pijltje-naar-beneden is het gebaar dat iedereen van
+  // downloaden kent; het woord blijft ernaast staan, zodat het ook zonder icoonkennis leesbaar is.
+  const IC_DOWNLOAD = (
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+      <path d="M12 16V4m0 0L8 8m4-4l4 4" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M4 16v2a2 2 0 002 2h12a2 2 0 002-2v-2" strokeLinecap="round" />
+    </svg>
+  );
+  const IC_PRINT = (
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+      <path d="M6 9V3h12v6M6 18H4v-6h16v6h-2" strokeLinecap="round" strokeLinejoin="round" />
+      <rect x="7" y="14" width="10" height="7" rx="1" />
+    </svg>
+  );
+
   const topButton = (
     key: string, label: string, onClick: (() => void) | undefined, unavailable: string, primary?: boolean,
+    icon?: React.ReactNode, accent?: boolean,
   ): React.JSX.Element => {
     const off = !onClick;
     return (
@@ -506,7 +523,7 @@ export function DesktopShell(props: {
           height: 32, padding: primary ? '0 13px' : '0 11px', flexShrink: 0,
           display: 'flex', alignItems: 'center', gap: 5,
           boxSizing: 'border-box', borderRadius: BUILDER.radius.button,
-          border: primary ? 'none' : `1px solid ${TOW.lineStrong}`,
+          border: primary ? 'none' : `1px solid ${accent ? TOW.goldDeep : TOW.lineStrong}`,
           background: primary
             ? `linear-gradient(180deg, ${TOW.goldBright}, ${TOW.gold} 55%, ${TOW.goldDeep})`
             : TOW.panel2,
@@ -517,6 +534,7 @@ export function DesktopShell(props: {
           WebkitTapHighlightColor: 'transparent',
         }}
       >
+        {icon ?? null}
         {primary ? (
           // The spec prints a fullwidth "＋" (U+FF0B); Cinzel and its fallbacks have no such glyph
           // and a tofu box in the primary action is not a trade worth making — same resolution as
@@ -656,8 +674,8 @@ export function DesktopShell(props: {
             'import', 'Import OWB', onImportOwb,
             'Importing an OWB file is only available while creating a list — not into an existing one.',
           )}
-          {topButton('export', 'Share', onExport, 'Sharing is not built yet.')}
-          {topButton('print', 'Print', onPrint, 'Print is not built yet.')}
+          {topButton('export', 'Share', onExport, 'Sharing is not built yet.', false, IC_DOWNLOAD, true)}
+          {topButton('print', 'Print', onPrint, 'Print is not built yet.', false, IC_PRINT)}
           {topButton('add', 'Add unit', onOpenCatalogue, '', true)}
         </div>
       </div>
