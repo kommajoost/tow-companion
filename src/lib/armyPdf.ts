@@ -53,13 +53,20 @@ const A4 = { breedte: 595.28, hoogte: 841.89 };
 /** Eén ontwerp-pixel in punten (de mock is A4 op 96 dpi). */
 const PX = 0.75;
 
-// Exact de kleuren van het ontwerp.
-const INK = '#1c1916';
-const GRIJS = '#6b6152';
-const TEKST = '#4a443c';
-const GOUD = '#8a6d3b';
-const GOUDLIJN = '#c9b58a';
-const HAARLIJN = '#ece7dd';
+// De kleuren van het ontwerp, ONTDAAN VAN HUN WARME TINT. Het ontwerp werkt met een warm grijs
+// (#1c1916 / #6b6152) en een goudaccent (#8a6d3b, lijnen #c9b58a); op papier las dat als "er zit
+// kleur in" (Joost, 10-09: "er zitten nog gekleurde lijnen in, maak het gewoon zwart wit/grijs").
+// Dit is dezelfde toonladder — inkt, grijs, tekst, lijn, haarlijn — maar volledig neutraal, zodat
+// het blad ook op een zwart-witprinter en in grijstinten precies zo overkomt als op het scherm.
+const INK = '#1a1a1a';
+const GRIJS = '#6e6e6e';
+const TEKST = '#454545';
+/** Waar het ontwerp goud gebruikt (het kopregeltje, "Total", de voettekst). Neutraal is dat gewoon
+ *  de inkt zelf: kleiner en met letterspatiëring gezet blijft de hiërarchie overeind. */
+const ACCENT = INK;
+/** De lijn die in het ontwerp goud is: onder de kop, boven elke statline-rij, boven de voettekst. */
+const LIJN = '#c2c2c2';
+const HAARLIJN = '#e4e4e4';
 
 /** Alle afgeleide maten van één blad. `compact` krimpt ze allemaal met 10% — inclusief de
  *  paginamarges, zodat de verhoudingen kloppen en er simpelweg meer op past. */
@@ -75,8 +82,6 @@ interface Maten {
   kaartBreedte: number;
   /** Binnenwerk van een kaart: buitenbreedte min de rand en de 12 px zijpadding. */
   kaartBinnen: number;
-  /** Minimale kaarthoogte, zó gekozen dat er op pagina 1 precies drie rijen naast de kop passen. */
-  kaartHoogte: number;
   /** Binnenwerk van een kaart over de VOLLE bladbreedte (naslag zonder lore-kaart). */
   breedBinnen: number;
 }
@@ -104,9 +109,6 @@ function maten(compact: boolean): Maten {
     kopHoogte,
     kaartBreedte,
     kaartBinnen: kaartBreedte - 2 * rand - 2 * p(12),
-    // 2 pt speling: pdfmake rondt de kophoogte een fractie anders af, en één punt te veel kost een
-    // hele rij (dan passen er nog maar twee kaarten op pagina 1).
-    kaartHoogte: (bladHoogte - kopHoogte - 2 * gap - 2) / 3,
     breedBinnen: bladBreedte - 2 * rand - 2 * p(12),
   };
 }
@@ -413,8 +415,8 @@ function lijstItems(node: RichNode): Content[] {
 const RICH_TABEL_LAGEN: CustomTableLayout = {
   hLineWidth: () => 0.5,
   vLineWidth: () => 0.5,
-  hLineColor: () => GOUDLIJN,
-  vLineColor: () => GOUDLIJN,
+  hLineColor: () => LIJN,
+  vLineColor: () => LIJN,
   paddingLeft: () => 3,
   paddingRight: () => 3,
   paddingTop: () => 1,
@@ -548,25 +550,57 @@ function kaartRand(m: Maten): CustomTableLayout {
   };
 }
 
-/** Een omkaderde kaart: kop, 2 px scheidingslijn, body. `minHoogte` dwingt (via pdfmake's
- *  `table.heights`, die als ONDERgrens werkt) alle kaarten op een pagina even hoog te zijn; groeit de
- *  inhoud er overheen, dan groeit de kaart mee. */
-function kaart(kop: Content[], body: Content[], m: Maten, minHoogte?: number): Content {
+/** De INHOUD van een kaart — kop, 2 px scheidingslijn, body — zonder rand eromheen.
+ *
+ *  De rand hoort bij de CEL waar de kaart in staat, niet bij de kaart zelf; zie `kaartRij`. */
+function kaartInhoud(kop: Content[], body: Content[], m: Maten): Content {
   const zij = m.p(12);
-  const inhoud: Content[] = [
-    { stack: kop, margin: marge(zij, m.p(9), zij, m.p(9)) },
-    lijn(m.p(2), INK),
-    { stack: body, margin: marge(zij, m.p(8), zij, m.p(8)) },
-  ];
+  return {
+    stack: [
+      { stack: kop, margin: marge(zij, m.p(9), zij, m.p(9)) },
+      lijn(m.p(2), INK),
+      { stack: body, margin: marge(zij, m.p(8), zij, m.p(8)) },
+    ],
+  };
+}
+
+/** Een kaart die alléén staat (volle bladbreedte): dan tekent hij zijn rand zelf. */
+function omrand(inhoud: Content, m: Maten): Content {
+  return {
+    table: { widths: ['*'], body: [[inhoud]] },
+    layout: kaartRand(m),
+  } as ContentTable;
+}
+
+const RAND: [boolean, boolean, boolean, boolean] = [true, true, true, true];
+const GEEN_RAND: [boolean, boolean, boolean, boolean] = [false, false, false, false];
+
+/** Twee kaarten naast elkaar, met de rand op de CEL in plaats van op de kaart.
+ *
+ *  WAAROM ZO. Een kaart die zijn eigen rand tekent is precies zo hoog als zijn inhoud, dus stonden
+ *  twee kaarten naast elkaar bijna nooit even hoog (Joost, 10-09: "Dark Riders is net groter dan
+ *  Warriors"). Dat was eerder opgevangen met een opgelegde minimumhoogte van een derde pagina, maar
+ *  dat liet onder een korte kaart juist een berg wit achter ("de sorceresses hebben nu wel veel
+ *  witruimte") én kostte een hele rij zodra één kaart erover groeide.
+ *
+ *  Een tabelCEL is per definitie zo hoog als de hoogste cel van zijn rij. Ligt de rand daar, dan
+ *  lijnen twee kaarten vanzelf uit op hun eigen, natuurlijke hoogte — geen wit, geen misgelopen rij.
+ *  De middelste kolom is een lege cel zonder rand: dat is de 12 px tussenruimte van het ontwerp. */
+function kaartRij(links: Content, rechts: Content | null, m: Maten, ondermarge = true): Content {
+  // `border` is een CEL-eigenschap, geen content-eigenschap; de typings van pdfmake kennen hem
+  // alleen op tabelcellen, vandaar de omweg via `unknown`.
+  const cel = (c: Content | null): Content =>
+    (c ? { ...(c as object), border: RAND } : { text: '', border: GEEN_RAND }) as unknown as Content;
   return {
     table: {
-      widths: ['*'],
-      // `heights` slaat op de INHOUD van de rij; de twee randen komen er nog bij. Zonder die aftrek is
-      // elke kaart 1,5 pt te hoog en valt de derde rij van de pagina.
-      ...(minHoogte != null ? { heights: [minHoogte - 2 * m.p(1)] } : {}),
-      body: [[{ stack: inhoud }]],
+      widths: [m.kaartBreedte, m.gap, m.kaartBreedte],
+      body: [[cel(links), { text: '', border: GEEN_RAND }, cel(rechts)]],
+      dontBreakRows: true,
     },
     layout: kaartRand(m),
+    // De tussenruimte hangt ONDER elke rij behalve de laatste. Met een marge onder de laatste rij
+    // loopt die marge over de onderrand van de pagina heen en zet pdfmake er een lege bladzij achter.
+    margin: marge(0, 0, 0, ondermarge ? m.gap : 0),
   } as ContentTable;
 }
 
@@ -637,7 +671,7 @@ function statTabel(profielen: UnitProfile[], breedte: number, m: Maten): Content
       // Rij 0 is de kop; die heeft geen bovenlijn. Elke profielrij krijgt er wél een, in goud.
       hLineWidth: (i: number) => (i === 0 || i > body.length - 1 ? 0 : m.p(1)),
       vLineWidth: () => 0,
-      hLineColor: () => GOUDLIJN,
+      hLineColor: () => LIJN,
       paddingLeft: () => 0,
       paddingRight: () => 0,
       paddingTop: (i: number) => (i === 0 ? 0 : m.p(3)),
@@ -677,7 +711,7 @@ function wapenTabel(rijen: Content[][], m: Maten): Content {
     layout: {
       hLineWidth: (i: number) => (i === 0 || i > body.length - 1 ? 0 : m.p(1)),
       vLineWidth: () => 0,
-      hLineColor: () => GOUDLIJN,
+      hLineColor: () => LIJN,
       paddingLeft: () => 0,
       paddingRight: (i: number, node: unknown) => {
         const kolommen = (node as { table: { widths: unknown[] } }).table.widths.length;
@@ -713,16 +747,21 @@ function chips(labels: string[], breedte: number, m: Maten): Content[] {
   if (!labels.length) return [];
   const g = m.p(10);
   const padH = m.p(5);
-  const rand = m.p(1);
+  // ZACHTER DAN HET ONTWERP. Daar staat elke chip in een zwarte kader van een hele pixel met vette
+  // letters; op een kaart met tien regels wordt dat een blok streepjescode dat harder roept dan de
+  // statline erboven ("ik vind de vormgeving van de rules wat te heftig" — Joost, 10-09). Dus een
+  // dunnere lijn in het lichte grijs en gewone letters: de kaders ordenen nog steeds, maar ze
+  // schreeuwen niet meer.
+  const rand = m.p(0.6);
   const gap = m.p(4);
 
   const blokje = (label: string): Content => ({
-    table: { widths: ['auto'], body: [[{ text: label, fontSize: g, bold: true, color: INK, lineHeight: lhSans(1.15), noWrap: true }]] },
+    table: { widths: ['auto'], body: [[{ text: label, fontSize: g, color: INK, lineHeight: lhSans(1.15), noWrap: true }]] },
     layout: {
       hLineWidth: () => rand,
       vLineWidth: () => rand,
-      hLineColor: () => INK,
-      vLineColor: () => INK,
+      hLineColor: () => LIJN,
+      vLineColor: () => LIJN,
       paddingLeft: () => padH,
       paddingRight: () => padH,
       paddingTop: () => m.p(1),
@@ -998,7 +1037,7 @@ function unitKaart(unit: ArmyUnit, categorie: string, input: PrintInput, ctx: Ct
     body.push(...chipRegels);
   }
 
-  return kaart(kop, body, m, m.kaartHoogte);
+  return kaartInhoud(kop, body, m);
 }
 
 /** Noteer de lores van deze wizard voor de naslagpagina en geef de namen terug voor de loadout-regel.
@@ -1091,7 +1130,7 @@ function loreKaart(
       : [];
     return {
       stack: [
-        lijn(m.p(1), GOUDLIJN, 0, m.p(5)),
+        lijn(m.p(1), LIJN, 0, m.p(5)),
         { columns: regel, columnGap: m.p(6) },
         ...(tekst.length
           ? [{ stack: tekst, fontSize: m.p(10.5), color: TEKST, margin: marge(0, m.p(2), 0, 0) } as Content]
@@ -1103,7 +1142,7 @@ function loreKaart(
   });
 
   const wie = wizards.length ? ` · ${wizards.join(', ')}` : '';
-  return kaart(
+  return kaartInhoud(
     kaartKop(`Lore of magic${wie}`, [{ text: strip(lore.name) }], null, m),
     body,
     m,
@@ -1174,7 +1213,7 @@ function referentieKaarten(ctx: Ctx, eersteBreedte: number, ruimte: number): Con
       op += h;
       n++;
     }
-    uit.push(kaart(
+    uit.push(kaartInhoud(
       kaartKop(
         uit.length ? 'Special rules in this army · continued' : 'Special rules in this army',
         [{ text: 'Rules reference' }],
@@ -1217,7 +1256,7 @@ export function armyToPdfDoc(input: PrintInput, opts: PrintOptions): TDocumentDe
   const groepen = groepeer(input.army.units);
   const titel: Content = {
     stack: [
-      labelRegel(`${input.meta.faction} · ${input.meta.composition} · ${input.meta.rule}`, GOUD, m),
+      labelRegel(`${input.meta.faction} · ${input.meta.composition} · ${input.meta.rule}`, ACCENT, m),
       {
         text: strip(input.meta.listName),
         font: 'Alegreya',
@@ -1256,7 +1295,7 @@ export function armyToPdfDoc(input: PrintInput, opts: PrintOptions): TDocumentDe
         body: [[{
           alignment: 'right',
           stack: [
-            labelRegel('Total', GOUD, m),
+            labelRegel('Total', ACCENT, m),
             {
               text: [
                 { text: String(input.meta.total) },
@@ -1273,7 +1312,7 @@ export function armyToPdfDoc(input: PrintInput, opts: PrintOptions): TDocumentDe
       layout: {
         hLineWidth: () => 0,
         vLineWidth: (i: number) => (i === 0 ? m.p(1) : 0),
-        vLineColor: () => GOUDLIJN,
+        vLineColor: () => LIJN,
         paddingLeft: () => m.p(16),
         paddingRight: () => 0,
         paddingTop: () => 0,
@@ -1293,18 +1332,11 @@ export function armyToPdfDoc(input: PrintInput, opts: PrintOptions): TDocumentDe
     for (const u of units) kaarten.push(unitKaart(u, label, input, ctx));
   }
 
-  if (kaarten.length) {
-    const rijen: Content[][] = [];
-    for (let i = 0; i < kaarten.length; i += 2) {
-      rijen.push([kaarten[i], kaarten[i + 1] ?? { text: '' }]);
-    }
-    content.push({
-      table: { widths: ['*', '*'], body: rijen, dontBreakRows: true },
-      layout: rasterLagen(m),
-      // De halve gap boven de eerste en onder de laatste rij hoort er niet: het raster begint direct
-      // onder de kop en eindigt op de voetlijn.
-      margin: marge(0, -m.p(6), 0, -m.p(6)),
-    } as ContentTable);
+  // ÉÉN TABEL PER RIJ, niet één tabel voor het hele raster. Zo bepaalt elke rij zijn eigen hoogte
+  // (twee kaarten naast elkaar zijn even hoog, maar de rij eronder mag korter zijn) en verhuist een
+  // rij die niet meer past in zijn geheel naar de volgende pagina.
+  for (let i = 0; i < kaarten.length; i += 2) {
+    content.push(kaartRij(kaarten[i], kaarten[i + 1] ?? null, m, i + 2 < kaarten.length));
   }
 
   // ── Naslagpagina: lore links, rules reference rechts ─────────────────────────────────────────
@@ -1323,19 +1355,32 @@ export function armyToPdfDoc(input: PrintInput, opts: PrintOptions): TDocumentDe
   const naslag = referentieKaarten(ctx, loreKaarten.length ? m.kaartBinnen : m.breedBinnen, ruimte);
 
   if (loreKaarten.length && naslag.length) {
-    content.push({
-      table: { widths: ['*', '*'], body: [[{ stack: loreKaarten }, naslag[0]]] },
-      layout: rasterLagen(m),
-      margin: marge(0, -m.p(6), 0, -m.p(6)),
-      pageBreak: 'before',
-    } as ContentTable);
+    // Eén lore → hij vult de linkerkolom en krijgt de rand van de cel, dus even hoog als de naslag
+    // ernaast. Meer lores → ze worden een stapeltje losse kaarten in die kolom, elk met een eigen
+    // rand; ze zijn dan niet meer even hoog als de naslag, maar wél als los blok te lezen.
+    const links: Content = loreKaarten.length === 1
+      ? loreKaarten[0]
+      : {
+        stack: loreKaarten.map((k, i) => ({
+          ...(omrand(k, m) as object),
+          ...(i ? { margin: marge(0, m.gap, 0, 0) } : {}),
+        }) as Content),
+      };
+    const rij = kaartRij(links, naslag[0], m) as ContentTable & { table: { dontBreakRows?: boolean } };
+    // Deze rij MAG breken: de naslagbrok is op een volle pagina gemeten, dus hem in zijn geheel naar
+    // de volgende pagina duwen zou een lege bladzij opleveren.
+    rij.table.dontBreakRows = false;
+    if (loreKaarten.length > 1) (rij.table.body[0][0] as { border?: unknown }).border = GEEN_RAND;
+    content.push({ ...(rij as object), pageBreak: 'before' } as Content);
     // Elke vervolgbrok krijgt de VOLLE bladbreedte op een eigen pagina.
-    for (const extra of naslag.slice(1)) content.push({ ...(extra as object), pageBreak: 'before' } as Content);
+    for (const extra of naslag.slice(1)) {
+      content.push({ ...(omrand(extra, m) as object), pageBreak: 'before' } as Content);
+    }
   } else {
     // Geen wizard (of geen regels): de overgebleven kaarten krijgen de volle bladbreedte — de naslag
     // heeft daarbinnen zelf al twee kolommen, dus er gaat geen leesbaarheid verloren.
     const alles = [...loreKaarten, ...naslag];
-    for (const k of alles) content.push({ ...(k as object), pageBreak: 'before' } as Content);
+    for (const k of alles) content.push({ ...(omrand(k, m) as object), pageBreak: 'before' } as Content);
   }
 
   const voetLinks = opts.points
@@ -1359,7 +1404,7 @@ export function armyToPdfDoc(input: PrintInput, opts: PrintOptions): TDocumentDe
     footer: (huidige: number, totaal: number): Content => ({
       margin: marge(m.marge, 0, m.marge, 0),
       stack: [
-        lijn(m.p(1), GOUDLIJN, 0, m.p(8)),
+        lijn(m.p(1), LIJN, 0, m.p(8)),
         {
           columns: [
             {
@@ -1378,7 +1423,9 @@ export function armyToPdfDoc(input: PrintInput, opts: PrintOptions): TDocumentDe
               fontSize: m.p(11.5),
               lineHeight: lhSerif(1.35),
               characterSpacing: m.p(11.5) * 0.22,
-              color: GOUD,
+              // Zacht: in het ontwerp is dit het goudaccent, dus neutraal hoort het grijs te zijn
+              // en niet zwart — anders trekt de voettekst meer aandacht dan de lijst erboven.
+              color: GRIJS,
             },
             {
               text: `${huidige} / ${totaal}`,
@@ -1398,16 +1445,4 @@ export function armyToPdfDoc(input: PrintInput, opts: PrintOptions): TDocumentDe
   };
 }
 
-/** Het raster zelf tekent GEEN randen: elke kaart draagt zijn eigen rand. De cel-padding van 6 px
- *  levert de 12 px tussenruimte van het ontwerp op. */
-function rasterLagen(m: Maten): CustomTableLayout {
-  const halve = m.p(6);
-  return {
-    hLineWidth: () => 0,
-    vLineWidth: () => 0,
-    paddingLeft: () => halve,
-    paddingRight: () => halve,
-    paddingTop: () => halve,
-    paddingBottom: () => halve,
-  };
-}
+
