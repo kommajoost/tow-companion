@@ -839,13 +839,69 @@ export function schatHoogte(c: Content | undefined, breedte: number, basis: numb
       0,
     );
   }
-  if (o.ul || o.ol) return m + schatHoogte((o.ul ?? o.ol) as Content, breedte, eigen);
+  if (o.ul || o.ol) {
+    // Een opsomming is SMALLER dan zijn omgeving: pdfmake springt in voor het bolletje en `richToPdf`
+    // zet er nog 6 pt marge voor. Zonder die aftrek kreeg elk bolletje te veel tekens per regel
+    // toebedeeld en schatte een regel als Fly (X) — twee lange bolletjes — precies zijn echte hoogte
+    // in plaats van erboven (GEMETEN 10-09: ratio 1,00, terwijl al het andere onder 0,95 zit). En
+    // deze schatting moet een BOVENgrens blijven, want de kolomindeling leunt erop.
+    const items = (o.ul ?? o.ol) as Content;
+    const smal = Math.max(24, breedte - eigen * 1.4 - 6);
+    return m + schatHoogte(items, smal, eigen);
+  }
   if (o.text != null) return m + regels(tekstLengte(o.text as Content), eigen);
   return m + eigen * 1.42;
 }
 
-/** Veiligheidsmarge op `schatHoogte`. GEMETEN (09-09): echt/geschat ligt tussen 0,77 en 1,12. */
-const SCHATFACTOR = 1.15;
+/* `schatHoogte` OVERSCHAT een naslagblokje altijd. GEMETEN (10-09: elk blokje van een echte lijst
+ *  apart gerenderd op kolombreedte en met pdfjs nagemeten, 42 regels uit twee lijsten): echt/geschat
+ *  ligt tussen 0,78 en 0,94, gemiddeld 0,88 — mét de inspringing van opsommingen erin verwerkt, zie
+ *  de `ul`-tak van `schatHoogte`; zonder die correctie haalde Fly (X) precies 1,00 en was het geen
+ *  bovengrens meer. Dat maakt de schatting bruikbaar als HARDE bovengrens — een kolom waarvan de
+ *  geschatte hoogte binnen de paginahoogte past, past er echt in. Vandaar geen opslagfactor meer:
+ *  die hoort bij een schatting die er ook ONDER kan zitten, en dan zou hij hier juist ruimte weggeven.
+ *
+ *  De prijs is een centimeter of twee wit onderaan een naslagpagina. Dat is de goede ruil: de vorige
+ *  versie balanceerde de twee kolommen op de schatting zonder bovengrens, en omdat de ene kolom
+ *  sterker overschat werd dan de andere (0,78 tegen 0,95) liep de rechter over de paginarand —
+ *  waarna er één losse regel op een eigen bladzij belandde (Joost, 10-09). */
+
+/** Hoeveel blokjes passen er in twee kolommen van `cap` hoog, en waar ligt de kolomgrens?
+ *
+ *  Past ALLES wat er nog is, dan komt de grens op de helft te liggen — dat leest het mooiste. Past
+ *  het niet, dan wordt de linkerkolom volgemaakt tot de cap en gaat de rest naar de volgende brok;
+ *  een volle linkerkolom naast een halve rechter is op een vervolgpagina precies goed.
+ *
+ *  Het eerste blokje van een kolom mag de cap overschrijden: een regel die hoger is dan een pagina
+ *  moet érgens beginnen, en hem overslaan zou hem laten verdwijnen. */
+function verdeel(hoogtes: number[], cap: number): { n: number; knip: number } {
+  const som = (van: number, tot: number): number =>
+    hoogtes.slice(van, tot).reduce((a, b) => a + b, 0);
+
+  // 1. HOEVEEL PAST ER. Kolom A vollopen tot de cap, dan kolom B; wat daarna nog rest gaat naar de
+  //    volgende brok. Het eerste blokje van een kolom mag de cap overschrijden — een regel die
+  //    hoger is dan een pagina moet érgens beginnen, en overslaan zou hem laten verdwijnen.
+  let grens = 0;
+  let op = 0;
+  while (grens < hoogtes.length && (grens === 0 || op + hoogtes[grens] <= cap)) { op += hoogtes[grens]; grens++; }
+  let n = grens;
+  op = 0;
+  while (n < hoogtes.length && (n === grens || op + hoogtes[n] <= cap)) { op += hoogtes[n]; n++; }
+  if (n < 2) return { n: Math.max(1, n), knip: 1 };
+
+  // 2. WAAR DE GRENS KOMT. Niet op `grens` (kolom A tot de nok, kolom B wat overblijft) maar op de
+  //    helft van wat er in deze brok zit: twee kolommen van gelijke lengte lezen als een opzet, een
+  //    volle naast een halve als een afgekapte pagina. De twee clamps houden beide kolommen daarna
+  //    alsnog onder de cap; dat kan, want samen passen ze er per stap 1 in.
+  const totaal = som(0, n);
+  let half = 0;
+  let k = 0;
+  while (k < n - 1 && half + hoogtes[k] / 2 < totaal / 2) { half += hoogtes[k]; k++; }
+  k = Math.max(1, k);
+  while (k > 1 && som(0, k) > cap) k--;
+  while (k < n - 1 && som(k, n) > cap) k++;
+  return { n, knip: k };
+}
 
 /** Een reeks blokjes over twee EVEN LANGE kolommen, verdeeld op geschatte hoogte.
  *
@@ -855,22 +911,11 @@ const SCHATFACTOR = 1.15;
  *  breedte en loopt de tekst onder de rand door. GEMETEN 09-09. De naslag wordt daarom hierbóven al
  *  in pagina-grote brokken geknipt (zie `referentieKaarten`), zodat elke kaart op één pagina past en
  *  deze functie alleen nog hoeft te balanceren. */
-function tweeKolommen(items: Content[], gap: number, breedte: number, basis: number): Content {
+function tweeKolommen(items: Content[], knip: number, gap: number): Content {
   if (items.length < 2) return { columns: [{ stack: items }, { text: '' }], columnGap: gap };
-  const kolBreedte = (breedte - gap) / 2;
-  const hoogtes = items.map((i) => schatHoogte(i, kolBreedte, basis) * SCHATFACTOR);
-  const totaal = hoogtes.reduce((a, b) => a + b, 0);
-  // Knip waar de opgetelde hoogte over de helft gaat; het item dat de grens overschrijdt gaat naar de
-  // kolom waar het het minste uitsteekt (vandaar de halve hoogte in de vergelijking).
-  let op = 0;
-  let knip = items.length - 1;
-  for (let i = 0; i < items.length; i++) {
-    if (op + hoogtes[i] / 2 >= totaal / 2) { knip = i; break; }
-    op += hoogtes[i];
-  }
-  knip = Math.min(Math.max(knip, 1), items.length - 1);
+  const k = Math.min(Math.max(knip, 1), items.length - 1);
   return {
-    columns: [{ stack: items.slice(0, knip) }, { stack: items.slice(knip) }],
+    columns: [{ stack: items.slice(0, k) }, { stack: items.slice(k) }],
     columnGap: gap,
   };
 }
@@ -1201,18 +1246,11 @@ function referentieKaarten(ctx: Ctx, eersteBreedte: number, ruimte: number): Con
   let breedte = eersteBreedte;
   while (rest.length) {
     const kolBreedte = (breedte - gap) / 2;
-    // 1,15: `schatHoogte` overschat een naslagblokje structureel met ruim tien procent (GEMETEN
-    // 09-09 tegen de gerenderde pagina), dus mag het budget daar iets overheen. Wat overblijft is
-    // ongeveer een tiende pagina lucht — goedkoper dan een kaart die over de paginarand valt.
-    const budget = ruimte * 2 * 1.15;
-    let op = 0;
-    let n = 0;
-    while (n < rest.length) {
-      const h = schatHoogte(rest[n], kolBreedte, ctx.basis) * SCHATFACTOR;
-      if (n > 0 && op + h > budget) break;
-      op += h;
-      n++;
-    }
+    // Elke KOLOM krijgt de paginahoogte als bovengrens (zie de meting boven `verdeel`), niet de twee
+    // kolommen samen. Alleen zo kan geen van beide over de onderrand lopen, ook niet als de ene
+    // kolom sterker overschat wordt dan de andere.
+    const hoogtes = rest.map((b) => schatHoogte(b, kolBreedte, ctx.basis));
+    const { n, knip } = verdeel(hoogtes, ruimte);
     uit.push(kaartInhoud(
       kaartKop(
         uit.length ? 'Special rules in this army · continued' : 'Special rules in this army',
@@ -1220,7 +1258,7 @@ function referentieKaarten(ctx: Ctx, eersteBreedte: number, ruimte: number): Con
         null,
         m,
       ),
-      [tweeKolommen(rest.slice(0, n), gap, breedte, ctx.basis)],
+      [tweeKolommen(rest.slice(0, n), knip, gap)],
       m,
     ));
     rest = rest.slice(n);
