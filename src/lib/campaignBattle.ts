@@ -556,6 +556,44 @@ export async function battleQuests(code: string): Promise<BattleQuests> {
   return { aanvaller: parseQuest(d.aanvaller), verdediger: parseQuest(d.verdediger) };
 }
 
+/** De twee goedkeuringen van een battle-rapport, zoals ze op de gedeelde tracker staan. */
+export interface RapportAkkoord {
+  sig: string;
+  host?: boolean;
+  guest?: boolean;
+}
+
+/**
+ * Zet MIJN goedkeuring op het rapport, botsvrij.
+ *
+ * Waarom niet gewoon via setTracker: die schrijft de HELE tracker en de laatste schrijver wint. Een
+ * client die even weg was, schreef zo de goedkeuring van de ander eroverheen -- precies wat Joost en
+ * Ferry op 11-09-2026 overkwam. De RPC raakt alleen `tracker->report` aan, leest de huidige stand in
+ * dezelfde transactie en houdt de goedkeuring van de ander vast zolang die op DEZELFDE cijfers sloeg.
+ *
+ * Geeft de nieuwe stand terug, of null als de server niets zinnigs teruggaf (dan blijft het scherm
+ * staan op wat de realtime-sync straks binnenhaalt).
+ */
+export async function setReportApproval(
+  code: string,
+  sig: string,
+  seat: 'host' | 'guest',
+  akkoord: boolean,
+): Promise<RapportAkkoord | null> {
+  const { data, error } = await supabase.rpc('tow_game_report_akkoord', {
+    p_code: cleanBattleCode(code),
+    p_sig: sig,
+    p_seat: seat,
+    p_akkoord: akkoord,
+  });
+  if (error) throw error;
+  const d = (data && typeof data === 'object' ? data : {}) as Record<string, unknown>;
+  if (d.ok === false) throw new Error(str(d.fout, 'RAPPORT_AKKOORD_FOUT'));
+  const r = d.report as Record<string, unknown> | undefined;
+  if (!r || typeof r.sig !== 'string') return null;
+  return { sig: r.sig, host: r.host === true || undefined, guest: r.guest === true || undefined };
+}
+
 export async function reportBattleResult(code: string, resultaat: BattleResultaat): Promise<void> {
   const { data, error } = await supabase.rpc('towc_battle_resultaat', {
     p_code: cleanBattleCode(code),

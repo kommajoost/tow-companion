@@ -4,12 +4,12 @@ import { TOW, towFont, engraved } from '../../design/tow';
 import { useGame } from '../../game';
 import { unitTotalStrength } from '../../lib/armyRules';
 import {
-  battleByCode, battleQuests, reportBattleResult, officieleUitslag,
+  battleByCode, battleQuests, reportBattleResult, officieleUitslag, setReportApproval,
   kroniekMijn, kroniekBattleZet,
   battleFotos, battleFotosZet, battleFotoUpload, battleFotoWis, type BattleFoto,
   RESULTAAT_NAAM, TP_VAN_RESULTAAT, SPIEGEL,
   type CampaignBattle, type BattleResultaat, type ToernooiResultaat, type BattleQuests,
-  type Terugtrekker,
+  type Terugtrekker, type RapportAkkoord,
 } from '../../lib/campaignBattle';
 import { berekenVictory, type VpBonus, type Uitslag } from '../../lib/victoryPoints';
 import type { Army, ArmyUnit, GameTracker } from '../../types';
@@ -49,16 +49,33 @@ function reportFoutTekst(msg: string): string {
 // Collapse the tracker's per-unit casualties into a compact kills list. We only know lost/fleeing
 // per seat:unitId here (no kill-attribution yet), so we report each side's own losses, tagged with
 // the unit name so the campaign can read it. side = 'attacker' | 'defender' (host = attacker).
+/**
+ * Hoeveel deze unit verloor, met VAN TAFEL als volledig verlies (Joost 11-09-2026: "van tafel is ook
+ * gewoon dood, zelfde als alle wounds of models weg").
+ *
+ * Zonder deze gelijkschakeling viel een vernietigde unit die met de Removed-knop van tafel ging maar
+ * waarvan niemand de wonden bijhield, met `lost: 0` uit de verliezenlijst. Dat gebeurde echt: in
+ * battle 9B3F76 stonden Vaelira the Veil-seeker en Vareth the Veil-breaker als Destroyed in het
+ * End-Battle-overzicht en telden ze voor 100% mee in de VP, maar ontbraken ze in het rapport dat naar
+ * de campagne ging. De VP-motor (victoryPoints.ts) deed het altijd al goed: `weg || remaining <= 0`.
+ */
+function verliesVan(unit: ArmyUnit, t: { lost: number; weg?: boolean } | undefined): number {
+  if (!t) return 0;
+  return t.weg ? unitTotalStrength(unit) : Math.max(0, t.lost);
+}
+
 function collectKills(
   tracker: GameTracker,
-  hostArmyUnits: { id: string; name: string }[] | undefined,
-  guestArmyUnits: { id: string; name: string }[] | undefined,
+  hostArmyUnits: ArmyUnit[] | undefined,
+  guestArmyUnits: ArmyUnit[] | undefined,
 ): { side: 'attacker' | 'defender'; unitId: string; unit: string; lost: number; fleeing: boolean }[] {
   const out: { side: 'attacker' | 'defender'; unitId: string; unit: string; lost: number; fleeing: boolean }[] = [];
-  const push = (seat: 'host' | 'guest', side: 'attacker' | 'defender', units?: { id: string; name: string }[]) => {
+  const push = (seat: 'host' | 'guest', side: 'attacker' | 'defender', units?: ArmyUnit[]) => {
     for (const u of units ?? []) {
       const t = tracker.units[`${seat}:${u.id}`];
-      if (t && (t.lost > 0 || t.fleeing)) out.push({ side, unitId: u.id, unit: unitToonRegel(u), lost: t.lost, fleeing: t.fleeing });
+      if (!t) continue;
+      const lost = verliesVan(u, t);
+      if (lost > 0 || t.fleeing) out.push({ side, unitId: u.id, unit: unitToonRegel(u), lost, fleeing: t.fleeing });
     }
   };
   push('host', 'attacker', hostArmyUnits);
@@ -137,10 +154,12 @@ function collectVeteraan(
   for (const u of ownArmy?.units ?? []) {
     const t = tracker.units[`${ownSeat}:${u.id}`];
     const ts = unitTotalStrength(u);
-    const lost = Math.max(0, t?.lost ?? 0);
-    const remaining = ts - lost;
     const fleeing = t?.fleeing ?? false;
     const weg = t?.weg ?? false;
+    // Van tafel = alles kwijt (zie verliesVan). Zo klopt ook `verloren` in het veteranen-rapport:
+    // een vernietigd karakter meldde anders "dood, 0 verloren" en dat las de campagne als "lost 0 of 3".
+    const lost = verliesVan(u, t);
+    const remaining = ts - lost;
     const dood = weg || remaining <= 0;
     const unitId = u.campaignId ?? u.id;
     const kills = Math.max(0, t?.kills ?? 0);
@@ -408,8 +427,31 @@ export function CampaignResultReporter({ embedded = false }: { embedded?: boolea
     () => JSON.stringify([vpHost, vpGuest, kills.map((k) => [k.side, k.unitId, k.lost, k.fleeing]), questAanvOk, questVerdOk, withdrew]),
     [vpHost, vpGuest, kills, questAanvOk, questVerdOk, withdrew],
   );
-  const rapport = tracker.report;
+  // ── HET RAPPORT: server-stand + mijn laatste actie ──────────────────────────────────────────
+  // `eigenAkkoord` is wat de RPC net terugggaf. De gedeelde tracker loopt daar milliseconden tot
+  // seconden op achter (realtime-refetch), dus tot die binnen is tonen we mijn eigen zijde uit de
+  // RPC-respons en de zijde van de ANDER uit de tracker (die is over hem autoritatief). Zodra de sig
+  // verandert, vervalt allebei vanzelf -- precies de bedoeling.
+  const [eigenAkkoord, setEigenAkkoord] = useState<RapportAkkoord | null>(null);
+  const opServer = tracker.report;
+  const rapport = useMemo(() => {
+    const server = opServer && opServer.sig === sig ? opServer : null;
+    const eigen = eigenAkkoord && eigenAkkoord.sig === sig ? eigenAkkoord : null;
+    if (!server && !eigen) return opServer;
+    const ander = ownSeat === 'host' ? 'guest' : 'host';
+    const uit: RapportAkkoord = { sig };
+    const anderOk = server?.[ander] ?? eigen?.[ander];
+    const mijnOk = eigen ? eigen[ownSeat] : server?.[ownSeat];
+    if (anderOk) uit[ander] = true;
+    if (mijnOk) uit[ownSeat] = true;
+    return uit;
+  }, [opServer, eigenAkkoord, sig, ownSeat]);
   const sigGeldig = !!rapport && rapport.sig === sig;
+  // Stond er een goedkeuring op OUDE cijfers? Dan is die vervallen doordat er daarna nog iets is
+  // veranderd. Dat moet je zien: eerder verdween een vinkje zonder enige melding (Joost 11-09-2026).
+  const vervallenDoor = !sigGeldig && opServer
+    ? [opServer.host ? 'host' : null, opServer.guest ? 'guest' : null].filter((s): s is 'host' | 'guest' => !!s)
+    : [];
   const hostOk = sigGeldig && !!rapport?.host;
   const guestOk = sigGeldig && !!rapport?.guest;
   const ikOk = ownSeat === 'host' ? hostOk : guestOk;
@@ -420,12 +462,17 @@ export function CampaignResultReporter({ embedded = false }: { embedded?: boolea
 
   /** Mijn goedkeuring aan/uit zetten. Bij een gewijzigde sig beginnen we schoon (de ander moet dan
    *  opnieuw kijken — dat is precies de bedoeling). */
-  const zetAkkoord = (akkoord: boolean) => {
-    const basis = sigGeldig ? rapport : undefined;
-    setTracker({
-      ...tracker,
-      report: { sig, host: basis?.host, guest: basis?.guest, [ownSeat]: akkoord || undefined },
-    });
+  const zetAkkoord = async (akkoord: boolean) => {
+    if (!code) return;
+    setErr(null);
+    try {
+      // Via de RPC, NIET via setTracker: die schrijft de hele tracker en zou de goedkeuring van de
+      // ander kunnen overschrijven met een verouderde kopie (zie setReportApproval).
+      const nieuw = await setReportApproval(code, sig, ownSeat, akkoord);
+      if (nieuw) setEigenAkkoord(nieuw);
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : 'Could not save your approval. Try again.');
+    }
   };
 
   if (!code || !battle) return null; // not a campaign battle → nothing to report
@@ -842,6 +889,14 @@ export function CampaignResultReporter({ embedded = false }: { embedded?: boolea
           >
             {ikOk ? 'Withdraw my approval' : 'I agree with this result'}
           </button>
+          {vervallenDoor.length > 0 && (
+            <div style={{ fontFamily: serif, fontSize: 12.5, color: TOW.blood, marginBottom: 10 }}>
+              The numbers changed after{' '}
+              {vervallenDoor.map((s) => (s === 'host' ? hostName : guestName)).join(' and ')}{' '}
+              approved, so {vervallenDoor.length > 1 ? 'those approvals' : 'that approval'} lapsed. Everyone has to
+              agree on the same result, so look at the numbers together and approve again.
+            </div>
+          )}
           <div style={{ fontFamily: serif, fontSize: 12, color: TOW.muted, marginBottom: 12 }}>
             {beidenAkkoord
               ? 'Both approved — either player can send it to the campaign now.'
