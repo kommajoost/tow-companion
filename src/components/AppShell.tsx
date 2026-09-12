@@ -17,9 +17,23 @@ import { TestAccountSwitcher } from './TestAccountSwitcher';
 import { TowIcon, type IconId } from '../design/icons';
 import { useBackClose } from '../lib/backStack';
 import { TEST_TOOLS_KEY } from '../lib/testBattle';
+import { gedeeldeCodeUitUrl } from '../lib/listShare';
 
-type Tab = 'play' | 'browse' | 'game' | 'army' | 'settings';
+type Tab = 'browse' | 'game' | 'army' | 'settings';
 type Screen = 'home' | 'app';
+
+// MIGRATIE (Joost, 12-09): de Turns-tab is weg — de companion is een modus bovenop de Rulebook
+// geworden. Bij iedereen die de app al gebruikte staat `tow:tab` nog op 'play' opgeslagen, en dat
+// is nu een dode waarde: zonder deze omzetting matcht geen enkele tak in `content` en land je op
+// een leeg scherm. Draait op module-niveau, dus VÓÓR de eerste usePersistentState('tow:tab') de
+// waarde uit localStorage in de store leest.
+function migreerDodeTurnsTab() {
+  if (typeof window === 'undefined') return;
+  try {
+    if (localStorage.getItem('tow:tab') === '"play"') setPersisted('tow:tab', 'browse');
+  } catch { /* storage geblokkeerd: de fallback 'browse' vangt het alsnog op */ }
+}
+migreerDodeTurnsTab();
 
 // One back-stack registrant per visited tab in the in-memory tab history, so a hardware Back
 // returns to the previously-viewed tab (one level at a time) instead of leaving the app. Uses the
@@ -30,8 +44,20 @@ function TabBackLayer({ onBack }: { onBack: () => void }) {
   return null;
 }
 
+// De turn-companion als volledige laag over de Rulebook-inhoud (Joost, 12-09). Eigen component,
+// zodat `useBackClose` pas registreert als de modus daadwerkelijk open is en hij bij het sluiten
+// zijn history-entry netjes opruimt — dezelfde vorm als ExportSheet/BattleSetup. Hij wordt NA de
+// tab-lagen gemount en staat dus bovenop de LIFO-stack: één Back sluit eerst de modus.
+function TurnsLayer({ onClose }: { onClose: () => void }) {
+  useBackClose(true, onClose);
+  return (
+    <div style={{ position: 'absolute', inset: 0, zIndex: 30 }}>
+      <CompanionView onClose={onClose} />
+    </div>
+  );
+}
+
 const TABS: { id: Tab; label: string; icon: IconId }[] = [
-  { id: 'play', label: 'Turns', icon: 'turns' },
   { id: 'browse', label: 'Rulebook', icon: 'rulebook' },
   { id: 'game', label: 'Game', icon: 'game' },
   { id: 'army', label: 'Army', icon: 'army' },
@@ -54,7 +80,11 @@ function useWide(threshold = 800) {
 
 export function AppShell() {
   const [screen, setScreen] = usePersistentState<Screen>('tow:screen', 'home');
-  const [tab, setTab] = usePersistentState<Tab>('tow:tab', 'play');
+  const [tab, setTab] = usePersistentState<Tab>('tow:tab', 'browse');
+  // De turn-companion is een MODUS, geen tab: hij leeft alleen deze sessie (niet persistent), want
+  // de companion onthoudt zijn fase zelf al in `tow:c:phase`/`tow:c:sub`. Opnieuw openen zet je dus
+  // terug op precies dezelfde sub-fase.
+  const [turnsOpen, setTurnsOpen] = useState(false);
   const { session, loading: authLoading } = useAuth();
   const [celedonEntry, setCeledonEntry] = useState(() => {
     if (typeof window === 'undefined') return false;
@@ -133,6 +163,20 @@ export function AppShell() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Deep-link: /?lijst=<code> — iemand stuurde je een gedeelde army list (Joost, 12-09).
+  //
+  // Hier wordt alleen geROUTEERD naar de Army-tab; de lijst zelf haalt `ListBuilder` op. Dat zijn
+  // dus twee lezers van dezelfde parameter, en wie het eerst kijkt haalt hem uit de adresbalk —
+  // vandaar dat beide kanten `listShare` gebruiken en niet zelf `searchParams.get('lijst')`: die
+  // module onthoudt wat hij vond, zodat de volgorde van de effecten niet uitmaakt. Deze kant leest
+  // alleen; de lijstbouwer VERBRUIKT de code (`neemGedeeldeCode`).
+  useEffect(() => {
+    if (!gedeeldeCodeUitUrl()) return;
+    setScreen('app');
+    setTab('army');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   // Deep-link: /?celedon=1 — arriving from the campaign app's "Open Old World Companion" button.
   // Land straight on Army, then wait for OWC's own auth session. Signed out players see the account
   // dialog first; signed in players go straight into the guided Army-list tour.
@@ -175,6 +219,11 @@ export function AppShell() {
       setTabHistory((h) => [...h, cur]);
       return t;
     });
+    // Een andere tab kiezen SLUIT de turns-modus (Joost, 12-09). Hij hoort bij de Rulebook-tab, en
+    // een modus die onzichtbaar open blijft staan achter een andere tab kost je later een extra
+    // Back-druk om iets weg te klikken dat je niet ziet. Je verliest er niets mee: de companion
+    // bewaart zijn fase, dus opnieuw openen landt op dezelfde sub-fase.
+    setTurnsOpen(false);
   }, [setTab]);
 
   // Back: drop the most recent history entry and return to it. Each TabBackLayer below maps to one
@@ -190,11 +239,14 @@ export function AppShell() {
 
   // The ceremonial cover is the entry point; it has no navigation. Leaving to / returning from the
   // cover resets tab history — the shell unmounts its content, so there's no "back" across it.
-  const enterApp = (t: Tab) => { setTabHistory([]); setTab(t); setScreen('app'); };
+  // `turns` opent de companion-modus meteen mee. Alle setState's zitten in één event-handler, dus
+  // React verwerkt ze in één render: je ziet de Rulebook er niet eerst even doorheen flitsen.
+  const enterApp = (t: Tab, turns = false) => { setTabHistory([]); setTab(t); setTurnsOpen(turns); setScreen('app'); };
   if (screen === 'home') {
     return (
       <HomeCover
-        onBegin={() => enterApp('play')}
+        // "Begin a Battle" blijft de hoofdingang naar de companion: Rulebook-tab MET de modus open.
+        onBegin={() => enterApp('browse', true)}
         onArmy={() => enterApp('army')}
         onRulebook={() => enterApp('browse')}
       />
@@ -223,19 +275,23 @@ export function AppShell() {
 
   const content = (
     <main className="relative min-h-0 flex-1 overflow-hidden">
-      {/* Play is the full-width responsive companion; other tabs are centred + readable. */}
-      {tab === 'play' ? (
-        <CompanionView onHome={() => setScreen('home')} />
-      ) : tab === 'game' ? (
+      {tab === 'game' ? (
         <GameMode />
       ) : tab === 'army' ? (
         <ListBuilder />
       ) : tab === 'settings' ? (
         <SettingsMode />
       ) : (
-        <div className="h-full pt-safe">
-          <BrowseMode />
-        </div>
+        <>
+          <div className="h-full pt-safe">
+            <BrowseMode onTurns={() => setTurnsOpen(true)} />
+          </div>
+          {/* De companion legt zich OVER de Rulebook heen, binnen dit <main> — de tabbalk (telefoon)
+              en de NavRail (breed) blijven dus gewoon bereikbaar, precies zoals toen Turns nog een
+              eigen tab was. De Rulebook eronder blijft gemount, dus na sluiten sta je nog op
+              dezelfde sectie/zoekopdracht. */}
+          {turnsOpen && <TurnsLayer onClose={() => setTurnsOpen(false)} />}
+        </>
       )}
     </main>
   );

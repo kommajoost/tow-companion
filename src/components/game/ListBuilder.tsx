@@ -10,6 +10,7 @@ import { NewListSetup, type NewListValues } from './NewListSetup';
 import { fmt } from '../builder/primitives';
 import { CeledonPanel } from './CeledonPanel';
 import { LockedListView } from './LockedListView';
+import { codeUitInvoer, neemGedeeldeCode, openGedeeldeLijst, type GedeeldeLijst } from '../../lib/listShare';
 import { ListSettings } from './ListSettings';
 import { useCampagnes, staatOpSlot, hoortBijCampagne } from '../../lib/campaign';
 import { useListSync } from '../../listSync';
@@ -28,6 +29,13 @@ import type { UnitProfile } from '../../types';
 const BASE = import.meta.env.BASE_URL;
 const eb = engraved as React.CSSProperties;
 const goldGrad = `linear-gradient(180deg, ${TOW.goldBright} 0%, ${TOW.gold} 55%, ${TOW.goldDeep} 100%)`;
+
+/** "12 Sep" — kort genoeg voor een bandje. Een lege of onleesbare stempel levert '' op, en dan laat
+ *  de aanroeper die helft van de zin gewoon weg in plaats van "Invalid Date" te tonen. */
+const kortDatum = (iso: string): string => {
+  const d = new Date(iso || '');
+  return Number.isNaN(d.getTime()) ? '' : d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short' });
+};
 
 // Multi-army list builder. This file owns the army registry (index.json), each army's composition +
 // item-list metadata (the-old-world.json), an on-demand per-army catalogue cache, and the "My lists"
@@ -102,6 +110,28 @@ export function ListBuilder() {
   const [lists, setLists] = usePersistentState<SavedList[]>('tow:lists', []);
   const [groups, setGroups] = usePersistentState<{ id: string; name: string }[]>('tow:list-groups', []);
   const [activeId, setActiveId] = usePersistentState<string | null>('tow:builder-active', null);
+
+  // ── EEN GEDEELDE LIJST BEKIJKEN ────────────────────────────────────────────────────────────────
+  // "alleen bekijken, niet aanpassen" (Joost, 12-09). Daarom staat dit ALLEEN in het geheugen: geen
+  // usePersistentState, niets in `tow:lists`, niets in welke andere opgeslagen gebruikersdata dan
+  // ook. Wie de app herlaadt is de gedeelde lijst kwijt en opent hem opnieuw met de code — precies
+  // goed, want het is de lijst van iemand anders en hij hoort niet stilletjes in jouw kast te
+  // belanden.
+  //
+  // Hij opent HIER en niet in een eigen schermpje omdat dit bestand de catalogus, de
+  // compositie-overlays en de magic-item-data bezit. Een gedeelde Renegade V2-lijst moet bij de
+  // ontvanger op exact dezelfde punten uitkomen als bij de eigenaar, en dat lukt alleen als hij door
+  // dezelfde molen gaat als een eigen lijst.
+  const [gedeeld, setGedeeld] = useState<GedeeldeLijst | null>(null);
+  const [gedeeldLaden, setGedeeldLaden] = useState(false);
+  const [gedeeldFout, setGedeeldFout] = useState<string | null>(null);
+  /** Dezelfde fout, maar van een DEEP-LINK. Die verdient een eigen scherm: de inline melding hangt
+   *  onder de "My lists"-kop, en wie een dode deel-link opent terwijl hij zelf een lijst openstaan
+   *  heeft, ziet gewoon zijn builder en zou nooit te weten komen dat er iets mis ging (gemeten in de
+   *  browser, 12-09). */
+  const [gedeeldLinkFout, setGedeeldLinkFout] = useState<string | null>(null);
+  const [codeVeld, setCodeVeld] = useState<string | null>(null); // null = het invoerveldje staat dicht
+
   const [setupOpen, setSetupOpen] = useState(false);
   /** Open het instellingen-blad van de open lijst (naam + army composition). */
   const [instellingenOpen, setInstellingenOpen] = useState(false);
@@ -120,6 +150,8 @@ export function ListBuilder() {
   // In-app Back: each navigable layer owns one history entry (deepest registers last → handled first).
   useBackClose(!!activeId, () => setActiveId(null)); // open builder → back to My lists
   useBackClose(setupOpen, () => setSetupOpen(false)); // new-list dialog
+  useBackClose(!!gedeeld, () => setGedeeld(null)); // gedeelde lijst → terug naar My lists
+  useBackClose(!!gedeeldLinkFout, () => setGedeeldLinkFout(null)); // dode deel-link → weg met de melding
 
   // Army registry + per-army comps/items + the army-agnostic stat index + magic-items data.
   useEffect(() => {
@@ -141,6 +173,32 @@ export function ListBuilder() {
     fetch(`${BASE}owb/magic-item-text.json`).then((r) => r.json()).then(setBaseMagicText).catch(() => {});
     if (statIndexCache) setStatIdx(statIndexCache);
     else fetch(`${BASE}owb/rules-index.json`).then((r) => r.json()).then((idx) => { statIndexCache = idx; setStatIdx(idx); }).catch(() => {});
+  }, []);
+
+  /** Haal een gedeelde lijst op en zet hem in beeld. Faalt hij, dan komt de melding uit
+   *  `openGedeeldeLijst` zelf — die is al in leesbaar Engels geschreven. */
+  const haalGedeeld = (code: string, uitUrl = false) => {
+    setGedeeldLaden(true);
+    setGedeeldFout(null);
+    setGedeeldLinkFout(null);
+    openGedeeldeLijst(code)
+      .then((g) => { setGedeeld(g); setCodeVeld(null); })
+      .catch((e: unknown) => {
+        const m = e instanceof Error ? e.message : 'Could not open that shared list.';
+        if (uitUrl) setGedeeldLinkFout(m); else setGedeeldFout(m);
+      })
+      .finally(() => setGedeeldLaden(false));
+  };
+
+  // Binnenkomen via een deel-link: /?lijst=<code>. De parameter wordt door `gedeeldeCodeUitUrl` uit
+  // de adresbalk gehaald (zelfde vorm als ?army= en ?battle= in AppShell), zodat een herlaadbeurt
+  // hem niet opnieuw afvuurt en er geen code van een ander in je adresbalk blijft staan.
+  useEffect(() => {
+    // VERBRUIKEND lezen: dit scherm mount opnieuw bij elke tabwissel, en anders zou dezelfde
+    // gedeelde lijst bij elke terugkeer naar Army opnieuw openklappen.
+    const code = neemGedeeldeCode();
+    if (code) haalGedeeld(code, true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // One-time migration: fold an earlier single saved list (`tow:builder-de`) into the collection.
@@ -166,7 +224,11 @@ export function ListBuilder() {
   // iemand zijn lijst kan blokkeren.
   const [overlays, setOverlays] = useState<Record<string, CompositionOverlay>>({});
   useEffect(() => {
-    const nodig = Array.from(new Set(lists.map((l) => l.composition).filter((c) => c && hasOverlay(c) && !overlays[c])));
+    // Ook de compositie van een GEDEELDE lijst. Zonder zijn overlay rekent een Renegade V2-lijst met
+    // de legacy-prijzen van het basisleger door, en dan ziet de ontvanger stilletjes andere punten
+    // dan de eigenaar — precies de stille afwijking die dit bestand overal probeert te vermijden.
+    const composities = gedeeld ? [...lists.map((l) => l.composition), gedeeld.lijst.composition] : lists.map((l) => l.composition);
+    const nodig = Array.from(new Set(composities.filter((c) => c && hasOverlay(c) && !overlays[c])));
     if (nodig.length === 0) return;
     let cancelled = false;
     Promise.all(nodig.map((comp) => fetch(`${BASE}renegade/${OVERLAY_FILES[comp]}`)
@@ -180,7 +242,7 @@ export function ListBuilder() {
         if (Object.keys(add).length) setOverlays((m) => ({ ...m, ...add }));
       });
     return () => { cancelled = true; };
-  }, [lists, overlays]);
+  }, [lists, overlays, gedeeld]);
 
   /** De puntensom van een lijst zoals de BUILDER hem berekent — inclusief de herprijzing van een
    *  Renegade-compositie. `null` = nog niet te bepalen (catalogus of overlay nog niet binnen); dan
@@ -326,8 +388,14 @@ export function ListBuilder() {
 
   const active = lists.find((l) => l.id === activeId) || null;
 
-  // Load the ACTIVE list's army catalogue on demand (cache by slug) before opening the workspace.
-  const activeArmySlug = active?.army ?? null;
+  /** DE LIJST DIE IN BEELD IS. Alles hieronder — welke catalogus geladen wordt, welke overlay erop
+   *  gaat, welke statlines en magic-item-teksten gelden — hing aan de ACTIEVE lijst. Een gedeelde
+   *  lijst hoort door exact dezelfde molen, anders krijgt de ontvanger de verkeerde prijzen te zien.
+   *  De gedeelde lijst wint als hij openstaat: dat is dan ook wat er gerenderd wordt. */
+  const zichtbaar: { army: string; composition: string } | null = gedeeld ? gedeeld.lijst : active;
+
+  // Load the VISIBLE list's army catalogue on demand (cache by slug) before opening the workspace.
+  const activeArmySlug = zichtbaar?.army ?? null;
   useEffect(() => {
     if (!activeArmySlug || catalogues[activeArmySlug]) return;
     let cancelled = false;
@@ -340,10 +408,10 @@ export function ListBuilder() {
   // inhuren, per compositie. Dus eerst die bron-legers binnenhalen, en daarna de units erbij zoeken.
   /** De bron-legers die de compositie van de open lijst nodig heeft. */
   const mercBronnen = useMemo<MercBron[]>(() => {
-    if (!active) return [];
-    const perComp = metaByArmy[active.army]?.mercenaries;
-    return perComp?.[active.composition] ?? [];
-  }, [active, metaByArmy]);
+    if (!zichtbaar) return [];
+    const perComp = metaByArmy[zichtbaar.army]?.mercenaries;
+    return perComp?.[zichtbaar.composition] ?? [];
+  }, [zichtbaar, metaByArmy]);
 
   useEffect(() => {
     const need = Array.from(new Set(mercBronnen.map((b) => b.army))).filter((s) => s && !catalogues[s]);
@@ -394,7 +462,7 @@ export function ListBuilder() {
   // A pack is a POINTS patch on top of the OWB catalogue, keyed by composition id. Fetched on demand
   // and cached by id; a missing or malformed file degrades to "no overlay" so a bad deploy can never
   // leave someone unable to open their list.
-  const activeComp = active?.composition ?? null;
+  const activeComp = zichtbaar?.composition ?? null;
 
   const activeOverlay = activeComp ? overlays[activeComp] ?? null : null;
   // Only patch when the overlay actually belongs to this army — a composition id is unique, but a
@@ -538,6 +606,77 @@ export function ListBuilder() {
     : [];
   const opSlot = staatOpSlot(campagne ?? null, active, eigenCampagneLijsten);
 
+  // Een DEEL-LINK die niet meer werkt. Eigen scherm, vóór alles: de inline melding op het
+  // lijsten-overzicht ziet niemand die met een open lijst binnenkomt.
+  if (gedeeldLinkFout) {
+    return (
+      <div className="tow-field" style={{ height: '100%', overflowY: 'auto', color: TOW.ink }}>
+        <div style={{ maxWidth: 680, margin: '0 auto', padding: '24px 14px 48px' }}>
+          <div style={{ ...eb, fontSize: 8.5, color: TOW.goldDeep }}>Shared list</div>
+          <p style={{ fontFamily: towFont.serif, fontSize: 14, lineHeight: 1.6, color: TOW.inkDim, margin: '8px 0 14px' }}>{gedeeldLinkFout}</p>
+          <button onClick={() => setGedeeldLinkFout(null)} style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 13, padding: '7px 14px', borderRadius: 9, cursor: 'pointer', border: `1px solid ${TOW.line}`, background: 'transparent', color: TOW.ink }}>Close</button>
+        </div>
+      </div>
+    );
+  }
+
+  // ── een GEDEELDE lijst in beeld ────────────────────────────────────────────────────────────────
+  // Gaat VOOR de eigen open lijst: staat er een gedeelde lijst open, dan is dat wat je bekijkt. Het
+  // scherm is `LockedListView` — hetzelfde leesscherm als een campagne-lijst op slot, met een eigen
+  // band bovenaan. Geen bewerk-knoppen, en ook geen "Duplicate": dat is niet gevraagd, en het zou
+  // betekenen dat de lijst van iemand anders alsnog in `tow:lists` belandt.
+  if (gedeeld) {
+    const g = gedeeld.lijst;
+    const sluit = () => { setGedeeld(null); setGedeeldFout(null); };
+    const gedeeldOp = kortDatum(gedeeld.gedeeldOp);
+    // Het leger van de deler kan er een zijn dat deze build niet kent (oudere app, of een pack dat
+    // hier nog niet is uitgerold). Dan liever dit zeggen dan eindeloos "Loading the catalogue…".
+    if (armies.length > 0 && !armies.some((a) => a.slug === g.army)) {
+      return (
+        <div className="tow-field" style={{ height: '100%', overflowY: 'auto', color: TOW.ink }}>
+          <div style={{ maxWidth: 680, margin: '0 auto', padding: '24px 14px 48px' }}>
+            <div style={{ ...eb, fontSize: 8.5, color: TOW.goldDeep }}>Shared list</div>
+            <p style={{ fontFamily: towFont.serif, fontSize: 14, lineHeight: 1.6, color: TOW.inkDim, margin: '8px 0 14px' }}>
+              This list is built from an army this version of Companion does not know ({g.army}). Try again after the
+              next update.
+            </p>
+            <button onClick={sluit} style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 13, padding: '7px 14px', borderRadius: 9, cursor: 'pointer', border: `1px solid ${TOW.line}`, background: 'transparent', color: TOW.ink }}>Close</button>
+          </div>
+        </div>
+      );
+    }
+    // WACHTEN OP DE OVERLAY, niet alleen op de catalogus. Zonder de Renegade-patch rekent
+    // `catalogueFor` met de legacy-prijzen van het basisleger door: geen foutmelding, gewoon een
+    // ander getal dan de eigenaar ziet. Dat is precies het soort stille afwijking dat hier niet mag,
+    // dus tonen we liever nog even niets.
+    const overlayKlaar = !hasOverlay(g.composition) || (!!activeOverlay && activeOverlay.baseArmy === g.army);
+    if (!activeCatalogue || !overlayKlaar) {
+      return <div style={{ padding: 24, fontFamily: towFont.serif, color: TOW.muted }}>Loading the catalogue…</div>;
+    }
+    return (
+      <LockedListView
+        list={{ name: g.name, army: g.army, composition: g.composition, rule: g.rule, points: g.points, entries: g.entries }}
+        army={activeCatalogue}
+        armyName={armyName(g.army)}
+        compName={(c) => compName(c, g.army)}
+        itemsData={activeItemsData ?? undefined}
+        cap={g.points}
+        onBack={sluit}
+        backLabel="Close"
+        banner={{
+          eyebrow: 'Shared list · view only',
+          body: (
+            <>
+              “{g.name}” was shared with you with code <strong style={{ letterSpacing: '0.12em' }}>{gedeeld.code}</strong>
+              {gedeeldOp ? <> · Shared on {gedeeldOp}</> : null}. You can read this army, but not change it, and it is
+              not saved to your own lists.
+            </>
+          ),
+        }}
+      />
+    );
+  }
+
   // ── open list → the responsive builder (wait for that army's catalogue to load) ──
   if (active) {
     if (!activeCatalogue) return <div style={{ padding: 24, fontFamily: towFont.serif, color: TOW.muted }}>Loading the catalogue…</div>;
@@ -600,6 +739,9 @@ export function ListBuilder() {
           compName={(c) => compName(c, active.army)}
           itemsData={activeItemsData ?? undefined}
           armyItemLists={meta?.items ?? []}
+          // Delen: het OPGESLAGEN lijst-object, want `id` is de sleutel waarop een share hangt. De
+          // share-sheet knipt er zelf de velden uit die de ontvanger niet aangaan (zie listShare).
+          deelLijst={active}
         compRules={compRules ?? undefined}
           statIdx={activeStatIdx}
           // PDF: vier gegevens die het PDF-blad nodig heeft om het SPELMODEL van deze lijst
@@ -956,6 +1098,57 @@ export function ListBuilder() {
             <button onClick={addGroup} style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 13, padding: '7px 13px', borderRadius: 9, cursor: 'pointer', border: `1px solid ${TOW.line}`, background: 'transparent', color: TOW.ink }}>＋ New group</button>
           )}
           <button onClick={() => setSetupOpen(true)} style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 13, padding: '7px 14px', borderRadius: 9, cursor: 'pointer', border: 'none', background: goldGrad, color: TOW.onGrad }}>＋ New list</button>
+        </div>
+
+        {/* IEMAND ANDERS ZIJN LIJST OPENEN (Joost, 12-09). Klein en dicht bij "My lists", want het is
+            de tegenhanger van de deel-code in de share-sheet: daar krijg je zes tekens, hier plak je
+            ze. Bewust geen dialoog — de app heeft geen prompt-component, en één veldje met één knop
+            is minder dan een dialoog toch al zou kosten. Een geplakte LINK werkt ook: `codeUitInvoer`
+            vist de code er zelf uit. */}
+        <div style={{ marginBottom: 12 }}>
+          {codeVeld === null ? (
+            <button
+              onClick={() => { setCodeVeld(''); setGedeeldFout(null); }}
+              style={{ fontFamily: towFont.serif, fontSize: 12.5, padding: 0, border: 'none', background: 'none', cursor: 'pointer', color: TOW.muted, textDecoration: 'underline', textUnderlineOffset: 3 }}
+            >Open a shared list</button>
+          ) : (
+            <form
+              onSubmit={(e) => { e.preventDefault(); const c = codeUitInvoer(codeVeld); if (c) haalGedeeld(c); }}
+              style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}
+            >
+              <input
+                value={codeVeld}
+                onChange={(e) => setCodeVeld(e.target.value)}
+                placeholder="Share code"
+                aria-label="Share code"
+                autoFocus
+                autoCapitalize="characters"
+                autoCorrect="off"
+                spellCheck={false}
+                style={{
+                  width: 150, padding: '7px 10px', borderRadius: 9, textTransform: 'uppercase',
+                  fontFamily: towFont.display, fontWeight: 700, fontSize: 13, letterSpacing: '0.14em',
+                  border: `1px solid ${TOW.line}`, background: TOW.panel, color: TOW.ink,
+                }}
+              />
+              <button
+                type="submit" disabled={gedeeldLaden || !codeUitInvoer(codeVeld)}
+                style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 13, padding: '7px 14px', borderRadius: 9, cursor: 'pointer', border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.12)', color: TOW.ink, opacity: gedeeldLaden || !codeUitInvoer(codeVeld) ? 0.55 : 1 }}
+              >{gedeeldLaden ? 'Opening…' : 'Open'}</button>
+              <button
+                type="button" onClick={() => { setCodeVeld(null); setGedeeldFout(null); }}
+                style={{ fontFamily: towFont.serif, fontSize: 12.5, padding: '7px 6px', border: 'none', background: 'none', cursor: 'pointer', color: TOW.muted }}
+              >Cancel</button>
+            </form>
+          )}
+          {/* De melding staat BUITEN de wissel hierboven: een deel-link die niet meer werkt komt via
+              de URL binnen, en dan staat het veldje dicht. */}
+          {codeVeld === null && gedeeldLaden && (
+            <p style={{ fontFamily: towFont.serif, fontSize: 12, color: TOW.muted, margin: '6px 0 0' }}>Opening the shared list…</p>
+          )}
+          {gedeeldFout && (
+            <p style={{ fontFamily: towFont.serif, fontSize: 12, lineHeight: 1.5, color: TOW.blood, margin: '6px 0 0' }}>{gedeeldFout}</p>
+          )}
         </div>
         {lists.length === 0 && (groups.length === 0 || ordening !== 'groups') ? (
           <p style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 14, color: TOW.muted }}>No saved lists yet — tap “New list” to start building.</p>

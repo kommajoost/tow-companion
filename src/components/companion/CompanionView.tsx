@@ -11,8 +11,14 @@ const eb = engraved as React.CSSProperties;
 // The responsive turn companion (Claude Design v2 — light parchment).
 //   compact (< 720px)  → single column: slim header + label-free stepper + bottom bar
 //   wide    (>= 720px) → two panes: sub-phase nav rail | parchment content
-export function CompanionView({ onHome }: { onHome?: () => void } = {}) {
+export function CompanionView({ onHome, onClose }: { onHome?: () => void; onClose?: () => void } = {}) {
   const { companion } = useData();
+  // De knop linksboven (Joost, 12-09). De companion is geen eigen tab meer maar een modus bovenop
+  // de Rulebook; "terug" betekent daar: de modus sluiten en verder waar je was. Doorschieten naar
+  // het startscherm zou je uit de app-navigatie gooien terwijl je er niet om vroeg. Krijgt hij geen
+  // `onClose` (de oude, losstaande context), dan blijft het gewoon de Home-knop.
+  const terugActie = onClose ?? onHome;
+  const terugLabel = onClose ? 'Back to the Rulebook' : 'Home';
   const phases = companion?.phases ?? [];
 
   const [phaseIdx, setPhaseIdx] = usePersistentState('tow:c:phase', 0);
@@ -268,12 +274,14 @@ export function CompanionView({ onHome }: { onHome?: () => void } = {}) {
       <div ref={rootRef} style={{ width: '100%', height: '100%', boxSizing: 'border-box', background: TOW.bg, color: TOW.parch, display: 'flex', overflow: 'hidden', paddingTop: 'env(safe-area-inset-top)' }}>
         <div style={{ width: 300, flexShrink: 0, borderRight: `1px solid ${TOW.line}`, display: 'flex', flexDirection: 'column', background: TOW.panel }}>
           <button
-            onClick={onHome}
-            aria-label="Home"
-            style={{ display: 'flex', alignItems: 'center', gap: 9, padding: '20px 22px 0', width: '100%', background: 'none', border: 'none', cursor: onHome ? 'pointer' : 'default', textAlign: 'left' }}
+            onClick={terugActie}
+            aria-label={terugLabel}
+            style={{ display: 'flex', alignItems: 'center', gap: 9, padding: '20px 22px 0', width: '100%', background: 'none', border: 'none', cursor: terugActie ? 'pointer' : 'default', textAlign: 'left' }}
           >
+            {/* Chevron: maakt van de merkregel een zichtbare TERUG-knop zodra dit een modus is. */}
+            {onClose && <span aria-hidden style={{ fontSize: 17, lineHeight: 1, color: TOW.goldDeep }}>‹</span>}
             <LogoMark size={26} radius={6} />
-            <div style={{ ...eb, fontSize: 9.5, color: TOW.muted, flex: 1 }}>Old&nbsp;World · Companion</div>
+            <div style={{ ...eb, fontSize: 9.5, color: TOW.muted, flex: 1 }}>{onClose ? 'Rulebook' : <>Old&nbsp;World · Companion</>}</div>
           </button>
           <div style={{ padding: '16px 22px 6px' }}>
             <div style={{ ...eb, fontSize: 9.5, color: TOW.muted, marginBottom: 8 }}>{companion?.round ?? 'Round III'} · Your&nbsp;Turn</div>
@@ -335,12 +343,13 @@ export function CompanionView({ onHome }: { onHome?: () => void } = {}) {
       {/* slim app bar */}
       <div style={{ display: 'flex', alignItems: 'center', gap: 9, padding: '11px 16px 10px', flexShrink: 0, background: TOW.panel, borderBottom: `1px solid ${TOW.line}` }}>
         <button
-          onClick={onHome}
-          aria-label="Home"
-          style={{ display: 'flex', alignItems: 'center', gap: 9, flex: 1, minWidth: 0, background: 'none', border: 'none', padding: 0, cursor: onHome ? 'pointer' : 'default', textAlign: 'left' }}
+          onClick={terugActie}
+          aria-label={terugLabel}
+          style={{ display: 'flex', alignItems: 'center', gap: 9, flex: 1, minWidth: 0, background: 'none', border: 'none', padding: 0, cursor: terugActie ? 'pointer' : 'default', textAlign: 'left' }}
         >
+          {onClose && <span aria-hidden style={{ fontSize: 17, lineHeight: 1, color: TOW.goldDeep }}>‹</span>}
           <LogoMark size={24} radius={6} />
-          <div style={{ ...eb, fontSize: 9, color: TOW.muted }}>Old&nbsp;World · Companion</div>
+          <div style={{ ...eb, fontSize: 9, color: TOW.muted }}>{onClose ? 'Rulebook' : <>Old&nbsp;World · Companion</>}</div>
         </button>
         <div style={{ ...eb, fontSize: 9, color: TOW.goldDeep }}>{companion?.round ?? 'Round III'}</div>
       </div>

@@ -39,6 +39,7 @@ import { RosterTable, rosterTableOrder } from './RosterTable';
 import { CataloguePane } from './CataloguePane';
 import { ExportSheet } from './ExportSheet';
 import type { ExportMeta, ExportRow } from '../../lib/listExport';
+import type { DeelbareLijst } from '../../lib/listShare';
 import { builderListToArmy, type MagicText, type MountText } from '../../lib/builderToArmy';
 import type { PrintInput } from '../../lib/printArmy';
 import { downloadArmyPdf } from '../../lib/pdfDownload';
@@ -99,6 +100,13 @@ export interface BuilderFlowProps {
   /** Alle legernamen — waarmee `builderListToArmy` een gedeeld datasheet ({dark elves} / {renegade})
    *  op de juiste factie snijdt. */
   factionNames?: string[];
+
+  // ── Delen ────────────────────────────────────────────────────────────────────────────────────
+  /** De OPGESLAGEN lijst zoals hij in `tow:lists` staat, voor de deel-code in de share-sheet. Een
+   *  eigen prop naast `list`, omdat delen op het OPGESLAGEN object werkt (`id` is de sleutel van de
+   *  share) terwijl `list` de bouw-vorm is die de builder bewerkt. Ontbreekt hij, dan laat de sheet
+   *  het deel-blok simpelweg weg — klembord en .txt werken gewoon door. */
+  deelLijst?: DeelbareLijst;
 }
 
 const newUid = () => `u${Date.now().toString(36)}${Math.floor(Math.random() * 1e6).toString(36)}`;
@@ -119,7 +127,7 @@ export function BuilderFlow({
   list, name, onUpdate, onBack, army, armyName, compName, itemsData, armyItemLists, compRules,
   statsFor, statIdx, onShowInfo,
   onEditArmyField, onImportOwb, onExport, onPdf,
-  magicText, mountText, overlayId, factionNames,
+  magicText, mountText, overlayId, factionNames, deelLijst,
 }: BuilderFlowProps): React.JSX.Element {
   const [screen, setScreen] = useState<BuilderScreen>({ kind: 'roster' });
   /** Staat het deel-venster open? Leeft hier: het hangt aan de hele lijst, niet aan één scherm. */
@@ -843,6 +851,7 @@ export function BuilderFlow({
             total: derived.totalPoints,
           } satisfies ExportMeta}
           statsFor={statsFor}
+          lijst={deelLijst}
           onClose={() => setExportOpen(false)}
         />
       )}

@@ -1,12 +1,50 @@
 import { useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { useData } from '../data';
 import { useUI } from '../state';
-import { TOW } from '../design/tow';
+import { TOW, towFont } from '../design/tow';
+import { TurnsIcon } from '../design/icons';
 import type { ErrataItem, NavSection } from '../types';
 import { RichText } from '../lib/RichText';
 import { QuickRollButton, QuickRollSheet } from './CombatCalc';
 
 const MAX_RESULTS = 60;
+
+// De ingang naar de turn-companion, in dezelfde familie als QuickRollButton hiernaast: een compacte
+// pil in de Rulebook-kop. (Joost, 12-09) Turns was een hele eigen tab voor iets dat vrijwel niemand
+// aantikte; de companion hoort thuis náást de regels die je er tijdens een potje bij opzoekt.
+// `compact` laat het woord "Turns" weg waar de kop-rij daar geen plek voor heeft (de smalle
+// zijbalk op breed); het aria-label blijft dan de naam dragen. Zie `kopKnoppen` hieronder.
+function TurnsButton({ onClick, compact }: { onClick: () => void; compact: boolean }) {
+  return (
+    <button
+      onClick={onClick}
+      data-tour="turns-mode"
+      aria-label="Turn companion"
+      // `title` = muis-tooltip; op breed is dit alleen een icoon, dus die wil je erbij
+      title="Turn companion"
+      style={{
+        display: 'inline-flex',
+        alignItems: 'center',
+        gap: 7,
+        flexShrink: 0,
+        padding: compact ? '7px 10px' : '7px 12px 7px 10px',
+        borderRadius: 11,
+        cursor: 'pointer',
+        border: `1px solid ${TOW.lineStrong}`,
+        background: TOW.cardLt,
+        color: TOW.goldDeep,
+        fontFamily: towFont.display,
+        fontWeight: 600,
+        fontSize: 12.5,
+        letterSpacing: '0.02em',
+        lineHeight: 1,
+      }}
+    >
+      <TurnsIcon size={18} color={TOW.goldDeep} />
+      {!compact && 'Turns'}
+    </button>
+  );
+}
 
 // Pinned rules — a dropdown at the top of the Rulebook (replaces the old "Pinned" nav tab).
 // Tapping a rule opens it in the stacked pop-up; the ★ unpins it.
@@ -52,7 +90,7 @@ function PinnedMenu() {
 // The Rulebook: search across every rule + browse the wiki sections. Phone is a single
 // column; wide screens get a TOC + search sidebar beside a reading pane (the design's
 // two-pane reference). Rules open in the stacked pop-up sheet.
-export function BrowseMode() {
+export function BrowseMode({ onTurns }: { onTurns?: () => void } = {}) {
   const { nav, rules, getRule, errata, faq } = useData();
   const { openRule } = useUI();
   const [section, setSection] = useState<NavSection | null>(null);
@@ -65,8 +103,6 @@ export function BrowseMode() {
   const [filter, setFilter] = useState('');
   const [quickOpen, setQuickOpen] = useState(false);
 
-  const headerControls = <div className="flex items-center gap-2"><PinnedMenu /><QuickRollButton onClick={() => setQuickOpen(true)} /></div>;
-
   const rootRef = useRef<HTMLDivElement>(null);
   const [w, setW] = useState(420);
   useLayoutEffect(() => {
@@ -78,6 +114,28 @@ export function BrowseMode() {
     return () => ro.disconnect();
   }, []);
   const wide = w >= 700;
+
+  // Kop-knoppen in drie maten (Joost, 12-09), want de rij is krap: ★-menu + Quick roll + Turns
+  // naast een titel past lang niet overal. Gemeten op een 375px-telefoon:
+  //   'label'   — de twee ROOT-koppen (titel "Rulebook"): de rij mag daar wrappen, dus het woord
+  //               "Turns" past er gewoon bij. Dit is de plek waar je binnenkomt, dus hier hoort de
+  //               duidelijkste ingang.
+  //   'compact' — de 280px-zijbalk op breed: de knoppen staan er al op een eigen regel onder de
+  //               titel en het label erbij zou hem een regel verder duwen. Alleen icoon + aria-label.
+  //   'geen'    — de sub-koppen met "‹ All" + sectienaam: daar bleef van de titel nog "SPECI…"
+  //               over. De sectienaam is daar de context van je scherm; die weegt zwaarder dan een
+  //               derde knop. Turns ligt één tik verderop via "‹ All".
+  // Zonder `onTurns` (BrowseMode los gebruikt) verdwijnt de knop overal.
+  const kopKnoppen = (turns: 'geen' | 'compact' | 'label') => (
+    <div className="flex items-center gap-2">
+      <PinnedMenu />
+      <QuickRollButton onClick={() => setQuickOpen(true)} />
+      {onTurns && turns !== 'geen' && <TurnsButton onClick={onTurns} compact={turns === 'compact'} />}
+    </div>
+  );
+  const headerControlsRuim = kopKnoppen('label');
+  const headerControlsZijbalk = kopKnoppen('compact');
+  const headerControls = kopKnoppen('geen');
 
   // Lower-cased search index over every rule, built once.
   const index = useMemo(
@@ -294,9 +352,13 @@ export function BrowseMode() {
       <div ref={rootRef} className="flex h-full">
         <div style={{ width: 280, flexShrink: 0, borderRight: `1px solid ${TOW.lineStrong}`, background: TOW.panel }} className="flex flex-col">
           <div className="px-4 pt-5">
-            <div className="mb-3 flex items-center justify-between gap-2">
+            {/* flex-wrap: de zijbalk is maar 280px breed en de titel + knoppen pasten daar samen al
+                niet in (ze liepen over de kolomrand het leespaneel in); met de Turns-knop erbij is
+                het zeker te veel. Nu zakken de knoppen netjes naar een eigen regel zodra het niet
+                past. (Joost, 12-09) */}
+            <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
               <h1 className="font-display text-2xl text-gold">Rulebook</h1>
-              {headerControls}
+              {headerControlsZijbalk}
             </div>
             {SearchBox}
           </div>
@@ -374,9 +436,13 @@ export function BrowseMode() {
     body = (
       <div ref={rootRef} className="flex h-full flex-col">
         <div className="border-b border-border-soft px-3 py-2.5">
-          <div className="mb-2 flex items-center justify-between gap-2">
+          {/* flex-wrap: titel + drie knoppen passen op 375px niet op een regel (de Turns-knop liep
+              er rechts uit), dus de knoppen zakken naar een eigen regel eronder. Alleen hier, in de
+              root-koppen waar verticale ruimte is; de koppen met "< All" houden een regel en laten
+              het Turns-label weg. (Joost, 12-09) */}
+          <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
             <h1 className="font-display text-2xl text-gold">Rulebook</h1>
-            {headerControls}
+            {headerControlsRuim}
           </div>
           {SearchBox}
         </div>
@@ -387,9 +453,13 @@ export function BrowseMode() {
     body = (
       <div ref={rootRef} className="flex h-full flex-col">
         <div className="border-b border-border-soft px-3 py-2.5">
-          <div className="mb-2 flex items-center justify-between gap-2">
+          {/* flex-wrap: titel + drie knoppen passen op 375px niet op een regel (de Turns-knop liep
+              er rechts uit), dus de knoppen zakken naar een eigen regel eronder. Alleen hier, in de
+              root-koppen waar verticale ruimte is; de koppen met "< All" houden een regel en laten
+              het Turns-label weg. (Joost, 12-09) */}
+          <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
             <h1 className="font-display text-2xl text-gold">Rulebook</h1>
-            {headerControls}
+            {headerControlsRuim}
           </div>
           {SearchBox}
         </div>

@@ -2,7 +2,10 @@ import { TOW, towFont, engraved } from '../../design/tow';
 import { validate, type Category, type OwbArmy, type OwbUnit, type MagicItemsData, type ListEntry } from '../../lib/owbBuilder';
 import { COMPOSITION_RULES } from '../../lib/owbBuilder';
 
-// A campaign list that has been locked for the current Act: look, don't touch.
+// EEN LIJST DIE JE ALLEEN MAG LEZEN. Twee gebruikers:
+//   1. een campagne-lijst die op slot staat voor de huidige Act (de oorspronkelijke reden), en
+//   2. sinds 12-09 een GEDEELDE lijst van iemand anders ("alleen bekijken, niet aanpassen" —
+//      Joost, 12-09).
 //
 // Deliberately NOT the real builder in a read-only mode. Every control in the builder mutates, so a
 // read-only variant would mean auditing dozens of them and trusting that none slipped through; this
@@ -12,6 +15,12 @@ import { COMPOSITION_RULES } from '../../lib/owbBuilder';
 // The lock is also enforced server-side — locking snapshots the list into towc_spel_lijst, so the Act
 // that was played is fixed no matter what happens here afterwards. This screen is about being clear,
 // not about being the guard.
+//
+// DE TWEEDE GEBRUIKER KOSTTE PRECIES DRIE PROPS. Alles wat verschilt zit in de BAND bovenaan: het
+// kleine label, de uitleg en de knop eronder. De rest — het roster, de puntenregel, de terugknop —
+// is voor beide gevallen hetzelfde, en juist dát moest hergebruikt worden. `banner` en `backLabel`
+// zijn optioneel, dus de bestaande campagne-aanroep blijft ongewijzigd werken: zonder `banner`
+// bouwt dit bestand de vertrouwde "Locked for Act N"-band uit `fase` en `onDuplicate`.
 
 const eb = engraved as React.CSSProperties;
 const ruleName = (id: string): string => COMPOSITION_RULES.find((r) => r.id === id)?.name ?? id;
@@ -21,20 +30,53 @@ interface Lijst {
   entries: ListEntry[];
 }
 
-export function LockedListView({ list, army, armyName, compName, itemsData, fase, cap, onBack, onDuplicate }: {
+/** De band bovenaan het scherm: waarom mag je deze lijst niet bewerken? */
+export interface LeesBanner {
+  /** Het kleine kapitaal-label ("Locked for Act 2", "Shared list · view only"). */
+  eyebrow: string;
+  /** De uitleg eronder. Vrije inhoud, want de gedeelde variant zet er ook de code in. */
+  body?: React.ReactNode;
+  /** Eén knop in de band. Weglaten = geen knop (de gedeelde lijst heeft er geen: kopiëren naar je
+   *  eigen lijsten is niet gevraagd). */
+  actie?: { label: string; onClick: () => void };
+}
+
+export function LockedListView({
+  list, army, armyName, compName, itemsData, fase, cap, onBack, onDuplicate,
+  banner, backLabel = 'My lists',
+}: {
   list: Lijst;
   army: OwbArmy;
   armyName: string;
   compName: (comp: string) => string;
   itemsData?: MagicItemsData;
-  /** The Act this list is locked for, and that Act's points cap. */
-  fase: number;
+  /** The Act this list is locked for. Alleen nodig voor de ingebouwde campagne-band. */
+  fase?: number;
+  /** Waar de punten tegen afgezet worden (de fase-cap, of de puntenlimiet van de lijst zelf). */
   cap: number;
   onBack: () => void;
-  onDuplicate: () => void;
+  /** Alleen de campagne-band: "Copy to a normal list". */
+  onDuplicate?: () => void;
+  /** Overschrijft de ingebouwde campagne-band. */
+  banner?: LeesBanner;
+  /** Het opschrift van de terugknop linksboven. */
+  backLabel?: string;
 }) {
   const getUnit = (c: Category, id: string): OwbUnit | undefined => army?.[c]?.find((u) => u.id === id);
   const v = validate(list, getUnit, itemsData);
+
+  // De campagne-band als er geen eigen band is meegegeven — woord voor woord dezelfde tekst als
+  // hiervoor, zodat de campagne-kant niets merkt van deze generalisatie.
+  const band: LeesBanner = banner ?? {
+    eyebrow: `Locked for Act ${fase ?? 1}`,
+    body: (
+      <>
+        This is the army you submitted. It cannot change until Act {(fase ?? 1) + 1} opens — then you add your next 250
+        points on top of it. Want to try something out in the meantime? Make a copy and play with that.
+      </>
+    ),
+    actie: onDuplicate ? { label: 'Copy to a normal list', onClick: onDuplicate } : undefined,
+  };
 
   // Group the entries by category so the list reads like a roster rather than a flat dump.
   const cats = Array.from(new Set(list.entries.map((e) => e.cat)));
@@ -50,23 +92,26 @@ export function LockedListView({ list, army, armyName, compName, itemsData, fase
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" aria-hidden="true">
             <path d="M15 19l-7-7 7-7" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
-          My lists
+          {backLabel}
         </button>
 
         <div style={{
           border: `1px solid ${TOW.goldDeep}`, borderRadius: 12, padding: '12px 14px',
           background: 'rgba(138,108,48,0.06)', marginBottom: 18,
         }}>
-          <div style={{ ...eb, fontSize: 8.5, color: TOW.goldDeep }}>Locked for Act {fase}</div>
-          <p style={{ fontFamily: towFont.serif, fontSize: 13.5, lineHeight: 1.6, color: TOW.inkDim, margin: '7px 0 0' }}>
-            This is the army you submitted. It cannot change until Act {fase + 1} opens — then you add your next 250
-            points on top of it. Want to try something out in the meantime? Make a copy and play with that.
-          </p>
-          <button onClick={onDuplicate} style={{
-            marginTop: 10, padding: '8px 14px', borderRadius: 9, cursor: 'pointer',
-            border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt, color: TOW.inkDim,
-            fontFamily: towFont.display, fontWeight: 700, fontSize: 12.5,
-          }}>Copy to a normal list</button>
+          <div style={{ ...eb, fontSize: 8.5, color: TOW.goldDeep }}>{band.eyebrow}</div>
+          {band.body && (
+            <div style={{ fontFamily: towFont.serif, fontSize: 13.5, lineHeight: 1.6, color: TOW.inkDim, margin: '7px 0 0' }}>
+              {band.body}
+            </div>
+          )}
+          {band.actie && (
+            <button onClick={band.actie.onClick} style={{
+              marginTop: 10, padding: '8px 14px', borderRadius: 9, cursor: 'pointer',
+              border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt, color: TOW.inkDim,
+              fontFamily: towFont.display, fontWeight: 700, fontSize: 12.5,
+            }}>{band.actie.label}</button>
+          )}
         </div>
 
         <h1 style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 22, color: TOW.ink, margin: '0 0 2px' }}>{list.name}</h1>

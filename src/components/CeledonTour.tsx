@@ -92,12 +92,16 @@ function stappen(label: string, cap: number, fase: number, voorbeeldNaam?: strin
         'campaign, and a copy is the safe place to try something out.',
     },
     {
-      doel: '[data-tour="tab-play"],[data-tour="rail-play"]',
-      titel: 'Turns and Rulebook',
+      // Wees hier op de Rulebook-TAB, niet op de Turns-knop zelf (Joost, 12-09): die knop bestaat
+      // alleen terwijl je op de Rulebook staat, en de tour loopt op de Army-tab. De tabknop staat
+      // altijd in de DOM, dus deze stap blijft aanwijzen in plaats van terug te vallen op een kale
+      // kaart — en de tekst vertelt waar de turn-companion nu zit.
+      doel: '[data-tour="tab-browse"],[data-tour="rail-browse"]',
+      titel: 'Rulebook and Turns',
       tekst:
-        'Turns walks you through a battle phase by phase — movement, magic, shooting, combat — with the rule text ' +
-        'one tap away. Rulebook next to it has the lot, searchable, quoted straight from tow.whfb.app. Both are ' +
-        'there to look things up, at the table or at home.',
+        'Rulebook has the lot, searchable, quoted straight from tow.whfb.app. The Turns button at the top of it ' +
+        'walks you through a battle phase by phase — movement, magic, shooting, combat — with the rule text one tap ' +
+        'away. Both are there to look things up, at the table or at home.',
     },
     {
       doel: '[data-tour="tab-game"],[data-tour="rail-game"]',
