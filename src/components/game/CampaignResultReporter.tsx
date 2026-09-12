@@ -159,7 +159,8 @@ function collectVeteraan(
    *
    * Dat gebeurde echt: in battle 2027 haalden Arnolds Kroxigors in beurt 4 Arjens General Bragtar
    * neer (het staat in hun killDetails), maar Bragtars eigen regel meldde `dood: false`,
-   * `overleefd_50: true` en kreeg zelfs de +1 voor "General, army won". Twee XP die niet bestonden.
+   * `overleefd_50: true`. Dat leverde hem een XP op die niet bestond (de +1 voor overleven). De +1
+   * voor "General, army won" hield hij terecht: die hangt aan de winst, niet aan overleven.
    * Over de hele campagne stonden negen units in vijf battles zo verkeerd.
    *
    * De kill-log van de tegenpartij is hier de betrouwbaarste bron: die wijst een slachtoffer AAN, en
@@ -219,7 +220,12 @@ function collectVeteraan(
 
     if (isCharacter(u)) {
       const leeft = !dood && !fleeing;
-      const generaal = leeft && gewonnen && isGeneral(u);
+      // De General-bonus hangt aan de WINST, niet aan overleven. Letterlijk (Seasoned Commanders,
+      // tow.whfb.app/campaign-battles/seasoned-commanders): "An army's General earns 1XP if their army
+      // won the game." Er staat geen overlevingsvoorwaarde bij -- die geldt alleen voor de aparte
+      // "1XP for surviving the game". Hier stond `leeft &&`, waardoor een General die viel terwijl
+      // zijn leger won zijn punt misliep (Joost, 13-09-2026: "hoezo hij heeft wel gewonnen toch").
+      const generaal = gewonnen && isGeneral(u);
       if (leeft) redenen.push('+1 survived');
       redenen.push(...killReden(kills));
       if (generaal) redenen.push('+1 General, army won');
