@@ -150,6 +150,30 @@ function collectVeteraan(
     vijandSleutel.set(u.id, u.campaignId ?? u.id);
   }
 
+  /**
+   * WIE DE TEGENSTANDER HEEFT NEERGEHAALD (12-09-2026).
+   *
+   * `dood` kwam tot nu toe uitsluitend uit MIJN eigen tracker: `weg || remaining <= 0`. Dat gaat mis
+   * zodra de tegenstander wel een kill op mijn unit aantikt maar ik die unit zelf nooit van tafel heb
+   * gehaald of zijn wonden niet heb bijgehouden -- dan staat hij bij mij doodleuk als overlevend.
+   *
+   * Dat gebeurde echt: in battle 2027 haalden Arnolds Kroxigors in beurt 4 Arjens General Bragtar
+   * neer (het staat in hun killDetails), maar Bragtars eigen regel meldde `dood: false`,
+   * `overleefd_50: true` en kreeg zelfs de +1 voor "General, army won". Twee XP die niet bestonden.
+   * Over de hele campagne stonden negen units in vijf battles zo verkeerd.
+   *
+   * De kill-log van de tegenpartij is hier de betrouwbaarste bron: die wijst een slachtoffer AAN, en
+   * dat is een positieve bewering. Een lege eigen tracker is dat niet -- dat is net zo goed "vergeten
+   * in te vullen". Dus: staat mijn unit in iemands killDetails, dan is hij dood.
+   */
+  const vijandSeat = ownSeat === 'host' ? 'guest' : 'host';
+  const neergehaald = new Set<string>();
+  for (const vu of vijand?.units ?? []) {
+    for (const d of tracker.units[`${vijandSeat}:${vu.id}`]?.killDetails ?? []) {
+      if (d.unit) neergehaald.add(d.unit);
+    }
+  }
+
   const out: VetRegel[] = [];
   for (const u of ownArmy?.units ?? []) {
     const t = tracker.units[`${ownSeat}:${u.id}`];
@@ -160,7 +184,9 @@ function collectVeteraan(
     // een vernietigd karakter meldde anders "dood, 0 verloren" en dat las de campagne als "lost 0 of 3".
     const lost = verliesVan(u, t);
     const remaining = ts - lost;
-    const dood = weg || remaining <= 0;
+    // Zie `neergehaald` hierboven: de kill-log van de tegenstander telt net zo hard als mijn eigen
+    // tracker. Wie daar als slachtoffer in staat, is dood -- ook als ik hem zelf nooit weggehaald heb.
+    const dood = weg || remaining <= 0 || neergehaald.has(u.id);
     const unitId = u.campaignId ?? u.id;
     const kills = Math.max(0, t?.kills ?? 0);
     const redenen: string[] = [];
