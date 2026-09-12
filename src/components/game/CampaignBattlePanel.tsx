@@ -569,7 +569,11 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
       {/* Battle quests. The campaign calls them `secondaries`; they decide what you are playing FOR, so
           they belong on a pre-game screen. Slugs are title-cased for reading — the campaign remains the
           authority on what each one actually requires. */}
-      {quests.length > 0 && chipRow('Battle quests', quests.map((q) => chip(pretty(q))))}
+      {/* Geen battle quests bij een CHALLENGE (12-09-2026, Joost): een challenge staat buiten de
+          campagne en levert geen quest-voortgang op. Ze hier tonen wekt de indruk dat je ze kunt
+          halen. */}
+      {battle.type !== 'challenge' && quests.length > 0
+        && chipRow('Battle quests', quests.map((q) => chip(pretty(q))))}
 
       {/* DE DEPLOYMENT-KAART. Alleen als de sheet een uitgerekende `layout` meebrengt — een oudere
           (v1) battle heeft die niet, en dan blijft dit scherm precies zoals het was. Boven en onder

@@ -706,8 +706,15 @@ export function CampaignResultReporter({ embedded = false }: { embedded?: boolea
           spelers ze hier samen af — beiden zien beide quests en beiden mogen ze zetten. De vinkjes
           staan op de tracker (realtime gedeeld) en zitten in de report-sig, dus een wijziging laat de
           goedkeuringen vervallen. Alleen battle-quests komen hier binnen; realm-quests worden
-          server-side geverifieerd bij het afsluiten van de Act. */}
-      {(quests.aanvaller || quests.verdediger) && (
+          server-side geverifieerd bij het afsluiten van de Act.
+
+          NIET BIJ EEN CHALLENGE (12-09-2026, Joost). Een challenge staat buiten de campagne — geen
+          hex, geen buit, geen diefstal-trede én geen quest-voortgang. Toch stonden de vinkjes hier
+          gewoon, dus je kon een quest afvinken op wat er in een eer-duel gebeurde; Arjen kreeg ze in
+          één Act zowel bij zijn raid als bij zijn challenge te zien. De server weigert het inmiddels
+          ook (towc_battle_resultaat negeert de quest-vlaggen bij type 'challenge'), maar een knop
+          tonen die niets doet is net zo verwarrend als een knop die te veel doet. */}
+      {battle?.type !== 'challenge' && (quests.aanvaller || quests.verdediger) && (
         <>
           <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginBottom: 5 }}>Battle quests — did they pull it off?</div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginBottom: 12 }}>
