@@ -54,14 +54,22 @@ export interface VpResultaat {
   uitslag: Uitslag;
 }
 
-/** De VP die de VIJAND scoort voor één unit, o.b.v. z'n Dead-or-Fled-toestand. */
-export function unitVp(u: ArmyUnit, track: VpUnitTrack | undefined): number {
+/**
+ * De VP die de VIJAND scoort voor één unit, o.b.v. z'n Dead-or-Fled-toestand.
+ *
+ * `gedood` (12-09-2026, Joost: "kill log is dan leidend. veel mensen vergeten de unit deaths in te
+ * vullen") — de tegenstander heeft deze unit in z'n kill-log aangewezen. Dat telt net zo hard als de
+ * eigen tracker: het is een positieve bewering dat hij gevallen is, terwijl een lege eigen tracker
+ * net zo goed "vergeten in te vullen" betekent. Zonder dit miste de winnaar VP voor een unit die hij
+ * wél had neergehaald, puur omdat de eigenaar 'm niet had afgevinkt.
+ */
+export function unitVp(u: ArmyUnit, track: VpUnitTrack | undefined, gedood = false): number {
   const punten = u.points ?? 0;
   if (punten <= 0) return 0;
   const ts = unitTotalStrength(u); // = modellen × wounds-per-model
   const lost = Math.max(0, track?.lost ?? 0);
   const remaining = ts - lost;
-  if (track?.weg || remaining <= 0) return punten;         // vernietigd / van tafel → 100%
+  if (gedood || track?.weg || remaining <= 0) return punten; // vernietigd / van tafel → 100%
   if (track?.fleeing) return Math.ceil(punten / 2);        // vluchtend bij einde → 50% (naar boven)
   if (remaining <= ts * 0.25) return Math.ceil(punten / 2); // ≤25% van start-strength → 50% (naar boven)
   return 0;
@@ -70,8 +78,20 @@ export function unitVp(u: ArmyUnit, track: VpUnitTrack | undefined): number {
 /** Totale kill-VP die de vijand scoort tegen `leger`. seat = wiens units dit zijn ('host'/'guest'). */
 export function killVp(leger: Army | null, seat: string, tracker: GameTracker | null): number {
   if (!leger) return 0;
+  // Wie de TEGENSTANDER heeft aangewezen in z'n kill-log. De sleutels in de tracker zijn
+  // `seat:unitId`, dus alles wat niet van dit leger is, is van de ander — daarmee hoeven we het
+  // vijandelijke leger hier niet te kennen.
+  const gedood = new Set<string>();
+  for (const [sleutel, track] of Object.entries(tracker?.units ?? {})) {
+    if (sleutel.startsWith(`${seat}:`)) continue;
+    for (const d of (track as { killDetails?: { unit?: string }[] })?.killDetails ?? []) {
+      if (d?.unit) gedood.add(d.unit);
+    }
+  }
   let vp = 0;
-  for (const u of leger.units) vp += unitVp(u, tracker?.units?.[`${seat}:${u.id}`] as VpUnitTrack | undefined);
+  for (const u of leger.units) {
+    vp += unitVp(u, tracker?.units?.[`${seat}:${u.id}`] as VpUnitTrack | undefined, gedood.has(u.id));
+  }
   return vp;
 }
 
