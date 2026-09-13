@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useGame } from '../../game';
 import { usePersistentState } from '../../store';
 import { DEFAULT_BATTLE, scenarioById, type BattleSetupState } from '../../lib/battle';
+import { formatDef, normSheet } from '../../lib/battleSheet';
 import { battleByCode } from '../../lib/campaignBattle';
 import { objectivesVoor, type ObjectiveDef } from '../../lib/objectiveVp';
 
@@ -18,10 +19,18 @@ import { objectivesVoor, type ObjectiveDef } from '../../lib/objectiveVp';
  *  is wél een echte keuze, met echte objectives. Zonder deze terugval bleef het paneel daar leeg en
  *  had je bij Domination of Strategic Locations niets om aan te tikken (Joost, 29-08).
  *
- *  De campagne wint als die er is: dat scenario is door beide spelers gedeeld, de lokale keuze is
- *  per apparaat. In een online potje BUITEN een campagne kiest ieder dus zijn eigen scenario; wijken
- *  die af, dan ziet ieder zijn eigen objectives. Dat is geen nieuw probleem — het setup-scherm was al
- *  per apparaat — maar het is wel de grens van wat dit paneel kan garanderen. */
+ *  DE BATTLE SHEET WINT VAN ALLEBEI (Joost, 13-09). Sinds de nieuwe wizard staat het scenario op de
+ *  TRACKER (`tracker.sheet`), en die synct realtime naar beide spelers. Dat dicht precies het gat dat
+ *  hierboven beschreven stond: in een online potje buiten een campagne koos ieder zijn eigen scenario
+ *  en zag ieder zijn eigen objectives. Voor elk potje dat via de wizard is opgezet kan dat niet meer
+ *  — beiden lezen dezelfde sheet. Alleen een potje dat nog via het oude setup-scherm is opgezet valt
+ *  terug op het per-apparaat kladblok, en houdt dus die oude beperking.
+ *
+ *  Volgorde: sheet → campagne → lokaal `tow:battle`. Is er een sheet, dan is die het HELE verhaal en
+ *  vallen we NIET door naar het kladblok als er toevallig geen objectives uit komen — bij een Open
+ *  Battle zonder secondaries hóren er nul te zijn, en dan alsnog de Domination-tellers van een vorig
+ *  potje uit `tow:battle` opdiepen is precies de bug die deze volgorde moet wegnemen. De campagne
+ *  blijft vóór het lokale kladblok staan, om dezelfde reden als altijd: die is gedeeld. */
 export function useObjectives(): ObjectiveDef[] {
   const { tracker, code } = useGame();
   const [scenario, setScenario] = useState<{ scenario: string | null; secondaries: string[] }>(
@@ -48,6 +57,13 @@ export function useObjectives(): ObjectiveDef[] {
 
   // Het lokaal gekozen scenario, voor potjes zonder campagne-rij.
   const [lokaal] = usePersistentState<BattleSetupState>('tow:battle', DEFAULT_BATTLE);
+
+  // De gedeelde sheet op de tracker. De Battle March-vlag komt hier uit het FORMAT van de sheet en
+  // niet uit `tracker.battleMarch`: die laatste wordt door de campagne gezet, terwijl de sheet zelf
+  // zegt welk formaat er gespeeld wordt — en de sheet is de bron van waarheid over dit potje.
+  const sheet = normSheet(tracker.sheet);
+  if (sheet) return objectivesVoor(sheet.scenario, sheet.secondaries, formatDef(sheet.format).battleMarch);
+
   const uitCampagne = objectivesVoor(scenario.scenario, scenario.secondaries, tracker.battleMarch === true);
   if (uitCampagne.length) return uitCampagne;
   // tracker.battleMarch wordt door de CAMPAGNE gezet. Kies je in een gewoon potje zelf een Battle

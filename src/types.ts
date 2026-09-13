@@ -6,6 +6,8 @@
 import type { VpBonus } from './lib/victoryPoints';
 
 /** A Contentful rich-text node (paragraph, heading, list, table, text, link, ...). */
+import type { BattleSheet } from './lib/battleSheet';
+
 export interface RichNode {
   nodeType: string;
   value?: string;
@@ -335,6 +337,20 @@ export interface GameTracker {
    *  een potje buiten de campagne). Staat op de tracker om dezelfde reden als `battleMarch`: het is
    *  gedeelde, hele-game-lange informatie die beide spelers aan tafel moeten kunnen teruglezen. */
   weer?: GameWeer | null;
+  /** 13-09: DE GEDEELDE BATTLE SHEET van een potje buiten de campagne — formaat, scenario, tafel,
+   *  terrein, secondaries en weer. Staat hier om dezelfde reden als `battleMarch` en `weer`: het is
+   *  informatie die BEIDE spelers moeten zien, en de tracker is het enige veld van `tow_games` dat
+   *  realtime meesynct. Zie lib/battleSheet.ts. Ontbreekt hij, dan is dit een potje van vóór de
+   *  wizard (of een campagne-battle, die zijn sheet van de server krijgt). */
+  sheet?: BattleSheet;
+  /** 13-09: is het potje daadwerkelijk BEGONNEN? Tussen "code aangemaakt" en "we spelen" zit nu een
+   *  lobby waarin de host de sheet nog bijstelt en beide spelers hun leger kiezen; de host drukt op
+   *  Start en dan gaat dit op true, waarna beide kanten in de game landen.
+   *
+   *  ONTBREEKT = GESTART. Elke game van vóór vandaag heeft dit veld niet, en die mensen horen niet
+   *  ineens in een lobby te belanden voor een potje dat al loopt. Alleen wat de wizard aanmaakt
+   *  begint expliciet op `false`. */
+  gestart?: boolean;
 }
 
 /** A shared game row (mirrors the tow_games table). */

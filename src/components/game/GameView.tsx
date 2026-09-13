@@ -11,11 +11,14 @@ import { BattleBar } from './BattleBar';
 import { ObjectivesTracker } from './ObjectivesTracker';
 import { OwbInstructions } from './OwbInstructions';
 import { ArmyListPicker } from './ArmyListPicker';
+import { BattleSheetView } from './BattleSheetView';
 import { EndBattleOverview } from './EndBattleOverview';
+import { normSheet } from '../../lib/battleSheet';
 import { berekenVictory } from '../../lib/victoryPoints';
 import { useData } from '../../data';
 import { inferOverlayId, isOverlay, OVERLAY_FILES } from '../../lib/overlays';
 import type { KillDetail, Army, ArmyUnit } from '../../types';
+import type { BattleSheet } from '../../lib/battleSheet';
 
 const eb = engraved as React.CSSProperties;
 const display = towFont.display;
@@ -36,6 +39,7 @@ export function GameView() {
   useBackClose(true, leaveGame);
   const [side, setSide] = useState<'me' | 'opp'>('me');
   const [endOpen, setEndOpen] = useState(false); // einde-battle-overzicht open?
+  const [sheetOpen, setSheetOpen] = useState(false); // battle sheet als overlay open?
   // Roster units are collapsed by default; tapping a unit's header expands just that one (keeps the
   // list scannable). Tracked by unit id (ids are unique per army, so no clash between the two sides).
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
@@ -203,6 +207,29 @@ export function GameView() {
       round={tracker.round}
     />
   );
+  // DE BATTLE SHEET AAN TAFEL (13-09). Halverwege een potje wil je terug kunnen lezen wat er ook
+  // alweer gold: welk scenario, waar de zones liggen, welke secondaries meetellen, welk weer er
+  // staat. Dat blad stond tot nu toe alleen vóór het potje, dus tijdens het spelen was het weg.
+  // Als OVERLAY en niet als vierde kolom: het is iets wat je even opslaat en weer wegklapt, en dit
+  // scherm is het drukst gebruikte van de app — daar hoort niets permanents bij.
+  //
+  // De sheet gaat hier door `normSheet` omdat dit een LEESPLEK is: de rij kan van een andere
+  // appversie of van de tegenstander komen. Geen sheet = geen knop; een campagne-battle en elk
+  // potje van vóór de wizard hebben er geen, en een knop die een leeg paneel opent is erger dan
+  // geen knop.
+  const sheet = normSheet(tracker.sheet);
+  const sheetKnop = sheet && (
+    <button
+      onClick={() => setSheetOpen(true)}
+      style={{ width: '100%', padding: '10px 14px', borderRadius: 10, cursor: 'pointer', border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt, color: TOW.ink, fontFamily: display, fontWeight: 600, fontSize: 13.5 }}
+    >
+      Battlefield
+    </button>
+  );
+  const sheetModal = sheet && sheetOpen && (
+    <BattlefieldOverlay sheet={sheet} onClose={() => setSheetOpen(false)} />
+  );
+
   const endModal = endOpen && (
     <EndBattleOverview res={res} hostName={hostName} guestName={guestName} hostArmy={hostArmy} guestArmy={guestArmy} onClose={() => setEndOpen(false)} />
   );
@@ -251,6 +278,7 @@ export function GameView() {
             <CodeBadge code={code} onLeave={leaveGame} waiting={!!(code && seat === 'host' && !opponentArmy)} />
             {sideToggle}
             {battleBar}
+            {sheetKnop}
             {objectivesPaneel}
             {(myArmy || opponentArmy) && (
               <button onClick={() => setEndOpen(true)} style={{ width: '100%', border: 'none', borderRadius: 11, cursor: 'pointer', padding: '12px 16px', background: `linear-gradient(180deg, ${TOW.goldBright}, ${TOW.gold} 55%, ${TOW.goldDeep})`, color: TOW.onGrad, fontFamily: display, fontWeight: 700, fontSize: 14 }}>End battle</button>
@@ -271,6 +299,7 @@ export function GameView() {
             {rosterBody}
           </div>
         </div>
+        {sheetModal}
         {endModal}
       </div>
     );
@@ -290,6 +319,9 @@ export function GameView() {
         </div>
         {code && seat === 'host' && !opponentArmy && (
           <span style={{ fontFamily: serif, fontStyle: 'italic', fontSize: 12.5, color: TOW.muted }}>waiting for opponent…</span>
+        )}
+        {sheet && (
+          <button onClick={() => setSheetOpen(true)} style={{ border: `1px solid ${TOW.lineStrong}`, borderRadius: 9, background: TOW.cardLt, color: TOW.ink, cursor: 'pointer', padding: '6px 12px', fontFamily: display, fontSize: 12 }}>Battlefield</button>
         )}
         <button onClick={leaveGame} style={{ border: `1px solid ${TOW.lineStrong}`, borderRadius: 9, background: 'transparent', color: TOW.muted, cursor: 'pointer', padding: '6px 12px', fontFamily: display, fontSize: 12 }}>Leave</button>
       </div>
@@ -314,7 +346,34 @@ export function GameView() {
           </div>
         )}
       </div>
+      {sheetModal}
       {endModal}
+    </div>
+  );
+}
+
+/** De battle sheet als weglegbaar paneel. Eigen component zodat `useBackClose` alleen leeft zolang
+ *  de overlay open staat — precies zoals ExportSheet het doet: de hardware-terugknop sluit dan de
+ *  bovenste laag en verlaat niet het potje eronder. */
+function BattlefieldOverlay({ sheet, onClose }: { sheet: BattleSheet; onClose: () => void }): React.JSX.Element {
+  useBackClose(true, onClose);
+  return (
+    <div
+      onClick={onClose}
+      style={{ position: 'fixed', inset: 0, zIndex: 85, background: 'rgba(30,20,8,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 14 }}
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        style={{ width: '100%', maxWidth: 560, maxHeight: '88vh', display: 'flex', flexDirection: 'column', overflowY: 'auto', background: TOW.panel2, border: `1px solid ${TOW.lineStrong}`, borderRadius: 16, padding: 16 }}
+      >
+        <BattleSheetView
+          sheet={sheet}
+          titel="Battlefield"
+          rechts={(
+            <button onClick={onClose} aria-label="Close" style={{ border: 'none', background: 'none', cursor: 'pointer', fontSize: 22, lineHeight: 1, color: TOW.muted, padding: '0 4px' }}>×</button>
+          )}
+        />
+      </div>
     </div>
   );
 }

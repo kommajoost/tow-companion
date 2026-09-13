@@ -11,6 +11,7 @@ import {
 import { supabase, TOW_GAMES } from './lib/supabase';
 import { usePersistentState } from './store';
 import type { BattleVeteranen, VetUnit } from './lib/campaignBattle';
+import { formatDef, type BattleSheet } from './lib/battleSheet';
 import type { Army, GameRow, GameSummary, GameTracker, GameWeer } from './types';
 
 type Seat = 'host' | 'guest' | 'solo';
@@ -22,6 +23,12 @@ type Seat = 'host' | 'guest' | 'solo';
 export interface GameRegels {
   battleMarch?: boolean;
   weer?: GameWeer | null;
+  /** 13-09: DE BATTLE SHEET waarmee dit potje begint (scenario, tafel, terrein, secondaries, weer).
+   *  Hij hoort hier omdat dit object al precies bestaat voor "de gedeelde regels van deze game", en
+   *  omdat de sheet het FORMAT bevat waaruit `battleMarch` en `weer` volgen — die hoeft de aanroeper
+   *  dus niet los mee te sturen (zie `metSheet`). De campagne stuurt geen sheet: die krijgt haar
+   *  briefing van de server en blijft die losse velden gebruiken. */
+  sheet?: BattleSheet;
 }
 
 interface GameContextValue {
@@ -49,6 +56,11 @@ interface GameContextValue {
   /** Shared battle state (round, VP, per-unit casualties). */
   tracker: GameTracker;
   setTracker: (t: GameTracker) => void;
+  /** Schrijf/vervang de gedeelde battle sheet. Stempelt meteen `battleMarch` en `weer` op de tracker,
+   *  want die twee velden worden door de rondeteller, de VP-engine en de BattleBar al gelezen. */
+  setSheet: (sheet: BattleSheet) => void;
+  /** De host drukt op Start: het potje begint voor beide spelers. */
+  startBattle: () => void;
   leaveGame: () => void;
 }
 
@@ -187,24 +199,58 @@ const zelfdeWeer = (a: GameWeer | null | undefined, b: GameWeer | null | undefin
  */
 function metRegels(huidig: GameTracker, regels: GameRegels | undefined): GameTracker | null {
   if (!regels) return null;
+  // DE SHEET EERST. Hij bevat het format én het weer, dus daaruit volgen `battleMarch` en `weer`
+  // vanzelf (zie `metSheet`). Losse velden mogen dat daarna nog overrulen — de campagne stuurt
+  // namelijk wél losse velden en geen sheet, en die twee paden mogen elkaar niet in de weg zitten.
+  const basis = regels.sheet ? metSheet(huidig, regels.sheet) : huidig;
   const wilBm = regels.battleMarch;
   const wilWeer = regels.weer;
-  const bmNodig = typeof wilBm === 'boolean' && huidig.battleMarch !== wilBm;
+  const bmNodig = typeof wilBm === 'boolean' && basis.battleMarch !== wilBm;
   // `undefined` (de server weet het niet) laat het bestaande weer staan; een expliciete null wist het.
-  const weerNodig = wilWeer !== undefined && !zelfdeWeer(huidig.weer, normWeer(wilWeer));
-  if (!bmNodig && !weerNodig) return null;
-  const uit: GameTracker = { ...huidig };
+  const weerNodig = wilWeer !== undefined && !zelfdeWeer(basis.weer, normWeer(wilWeer));
+  if (basis === huidig && !bmNodig && !weerNodig) return null;
+  const uit: GameTracker = { ...basis };
   if (bmNodig) uit.battleMarch = wilBm;
   if (weerNodig) uit.weer = normWeer(wilWeer);
   return uit;
 }
 
+/**
+ * Stempel een BATTLE SHEET op een bestaande tracker — bovenop, nooit in plaats van.
+ *
+ * Twee dingen gebeuren hier tegelijk, en dat is met opzet. De sheet is voor MENSEN (wat ligt er op
+ * tafel), maar drie plekken in de app lezen al lang twee afgeleide velden: de rondeteller leest
+ * `battleMarch` (vijf rounds i.p.v. zes), de VP-engine leest hem voor de halve bonusschaal, en de
+ * BattleBar leest `weer`. Die uit elkaar laten lopen — een sheet met Battle March, maar een tracker
+ * die nog zes rounds telt — levert een potje op waarin de app en het blad iets anders beweren.
+ * Daarom schrijft niemand de sheet zonder dat deze twee meegaan.
+ *
+ * Wat er NIET gebeurt: round, casualties, kills, VP-bonussen, quests en goedkeuringen blijven staan.
+ * De host mag de sheet ook halverwege nog bijstellen (een terreinstuk verschuiven, weer aanzetten)
+ * en dat mag het lopende potje niet raken. Zelfde houding als `metRegels`.
+ */
+function metSheet(huidig: GameTracker, sheet: BattleSheet): GameTracker {
+  return {
+    ...huidig,
+    sheet,
+    battleMarch: formatDef(sheet.format).battleMarch,
+    weer: sheet.weer ?? null,
+  };
+}
+
 export function GameProvider({ children }: { children: ReactNode }) {
   const [persisted, setPersisted] = usePersistentState<Persisted | null>('tow:game', null);
   const [game, setGame] = useState<GameRow | null>(null);
-  const [soloOpponent, setSoloOpponent] = useState<Army | null>(null);
-  const [soloMine, setSoloMine] = useState<Army | null>(null);
-  const [soloTracker, setSoloTracker] = useState<GameTracker>(EMPTY_TRACKER);
+  // SOLO OVERLEEFT EEN HERLAADBEURT (13-09). Een online potje staat in `tow_games` en wordt na een
+  // refresh gewoon opnieuw opgehaald met de bewaarde code; een SOLO potje leefde alleen in
+  // useState — dus een F5, een app-switch op de telefoon of een crash wiste beide legers, de
+  // casualties én (sinds vandaag) de battle sheet. Dat is precies het potje waar niemand een code
+  // van heeft om terug te komen. Nu dus dezelfde localStorage-laag als de rest van de app, met een
+  // eigen sleutel per stuk. `tow:lists` en de andere gebruikersdata worden hier niet aangeraakt;
+  // `leaveGame` maakt alléén deze drie weer leeg.
+  const [soloOpponent, setSoloOpponent] = usePersistentState<Army | null>('tow:solo-opp', null);
+  const [soloMine, setSoloMine] = usePersistentState<Army | null>('tow:solo-mine', null);
+  const [soloTracker, setSoloTracker] = usePersistentState<GameTracker>('tow:solo-tracker', EMPTY_TRACKER);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const channelRef = useRef<ReturnType<typeof supabase.channel> | null>(null);
@@ -268,7 +314,15 @@ export function GameProvider({ children }: { children: ReactNode }) {
       setError(null);
       // De game-regels leven in de tracker (zie GameRegels): bij een NIEUWE game is er nog geen
       // voortgang, dus hier mag de tracker gewoon in één keer geschreven worden.
-      const startTracker = metRegels(EMPTY_TRACKER, regels) ?? EMPTY_TRACKER;
+      //
+      // GESTART: FALSE — maar alleen als er een sheet meekomt (13-09). Een game die via de wizard
+      // wordt gehost gaat eerst naar de LOBBY: de host stelt de sheet nog bij, beide spelers kiezen
+      // hun leger, en pas op Start begint het potje. Komt er GEEN sheet mee, dan is dit het oude
+      // "host een game"-pad zonder lobby — en dan laten we het veld weg, want ontbrekend betekent
+      // gestart (zie GameTracker.gestart) en niemand hoort in een wachtkamer te belanden voor een
+      // scherm dat hij niet gevraagd heeft.
+      const basisTracker = metRegels(EMPTY_TRACKER, regels) ?? EMPTY_TRACKER;
+      const startTracker: GameTracker = regels?.sheet ? { ...basisTracker, gestart: false } : basisTracker;
       try {
         for (let attempt = 0; attempt < 5; attempt++) {
           const c = makeCode();
@@ -446,10 +500,15 @@ export function GameProvider({ children }: { children: ReactNode }) {
   const startSolo = useCallback((army?: Army | null, regels?: GameRegels) => {
     setError(null);
     if (army) setSoloMine(army); // seed "my army" when a saved/pasted list was chosen at setup
-    // Solo speelt lokaal, dus de regels gaan in de lokale tracker (zelfde vorm als online).
-    setSoloTracker((t) => metRegels(t, regels) ?? t);
+    // Solo speelt lokaal, dus de regels gaan in de lokale tracker (zelfde vorm als online) — inclusief
+    // een meegegeven battle sheet. `gestart: true` meteen: in solo zit er niemand aan de andere kant
+    // van de tafel om op te wachten, dus een lobby met een "waiting"-regel zou een lege handeling zijn.
+    setSoloTracker((t) => {
+      const basis = metRegels(t, regels) ?? t;
+      return basis.gestart === true ? basis : { ...basis, gestart: true };
+    });
     setPersisted({ seat: 'solo', code: null });
-  }, [setPersisted]);
+  }, [setPersisted, setSoloMine, setSoloTracker]);
 
   // List recent games (last 2 days) for the join lobby. Only lightweight columns — never the
   // army payloads — so it stays small and fast.
@@ -482,7 +541,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
           if (err) setError(supaErr(err));
         });
     },
-    [seat, code],
+    [seat, code, setSoloMine],
   );
 
   // Edit the opponent's army. Solo: local state. Online: write the opponent's column so
@@ -504,7 +563,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
           if (err) setError(supaErr(err));
         });
     },
-    [seat, code],
+    [seat, code, setSoloOpponent],
   );
 
   // Update the shared battle tracker (round, VP, casualties). Solo: local state.
@@ -525,8 +584,33 @@ export function GameProvider({ children }: { children: ReactNode }) {
           if (err) setError(supaErr(err));
         });
     },
-    [seat, code],
+    [seat, code, setSoloTracker],
   );
+
+  /** De tracker zoals hij NU is, solo of online. Bestaat omdat `setSheet` en `startBattle` een VELD
+   *  bijzetten en dus eerst moeten weten wat er staat — anders zou je met een half object schrijven
+   *  en de voortgang van het potje wissen. Zelfde uitdrukking als de `tracker` in de context-waarde. */
+  const huidigeTracker = useCallback(
+    (): GameTracker => (seat === 'solo' ? normTracker(soloTracker) : normTracker(game?.tracker)),
+    [seat, soloTracker, game],
+  );
+
+  // DE SHEET SCHRIJVEN. Loopt bewust via `setTracker`, zodat solo/online, de optimistische update en
+  // de foutafhandeling op één plek blijven. `metSheet` doet het echte werk (en legt uit waarom
+  // `battleMarch` en `weer` meegaan).
+  const setSheet = useCallback(
+    (sheet: BattleSheet) => setTracker(metSheet(huidigeTracker(), sheet)),
+    [setTracker, huidigeTracker],
+  );
+
+  // START. Eén vlag, maar wel de vlag die beide spelers uit de lobby naar het potje stuurt — hij
+  // synct via de tracker, dus de gast hoeft niets te doen. Staat 'ie al aan, dan schrijven we niets:
+  // een tweede keer op Start drukken (of een dubbele tik) mag geen overbodige write veroorzaken.
+  const startBattle = useCallback(() => {
+    const t = huidigeTracker();
+    if (t.gestart === true) return;
+    setTracker({ ...t, gestart: true });
+  }, [setTracker, huidigeTracker]);
 
   const leaveGame = useCallback(() => {
     if (channelRef.current) {
@@ -534,11 +618,13 @@ export function GameProvider({ children }: { children: ReactNode }) {
       channelRef.current = null;
     }
     setGame(null);
+    // Deze drie staan sinds 13-09 in localStorage, dus ze leegmaken is nu ook écht opruimen: zonder
+    // dit zou het volgende solo-potje met de legers en de casualties van het vorige beginnen.
     setSoloMine(null);
     setSoloOpponent(null);
     setSoloTracker(EMPTY_TRACKER);
     setPersisted(null);
-  }, [setPersisted]);
+  }, [setPersisted, setSoloMine, setSoloOpponent, setSoloTracker]);
 
   const value = useMemo<GameContextValue>(() => {
     let myArmy: Army | null = null;
@@ -580,8 +666,12 @@ export function GameProvider({ children }: { children: ReactNode }) {
       startSolo,
       setMyArmy,
       setOpponentArmy,
-      tracker: seat === 'solo' ? soloTracker : normTracker(game?.tracker),
+      // Ook de SOLO-tracker gaat door `normTracker`: sinds 13-09 komt hij uit localStorage, en dat
+      // is net zo goed opgeslagen data van buiten deze sessie als een rij uit de cloud.
+      tracker: seat === 'solo' ? normTracker(soloTracker) : normTracker(game?.tracker),
       setTracker,
+      setSheet,
+      startBattle,
       leaveGame,
     };
   }, [
@@ -601,6 +691,8 @@ export function GameProvider({ children }: { children: ReactNode }) {
     setMyArmy,
     setOpponentArmy,
     setTracker,
+    setSheet,
+    startBattle,
     leaveGame,
   ]);
 

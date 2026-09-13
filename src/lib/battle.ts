@@ -55,6 +55,13 @@ export const SCENARIOS: ScenarioDef[] = [
 
 export const scenarioById = (id: string): ScenarioDef | undefined => SCENARIOS.find((s) => s.id === id);
 
+/** De scenario's van één groep, in tabelvolgorde. Een format kiest zijn scenario's uit precies één
+ *  groep (zie `formatDef(...).groep` in battleSheet.ts), dus zowel de generator als de schermen
+ *  hebben deze filter nodig — en `SCENARIOS.filter(...)` op vier plekken herhalen is hoe de default
+ *  ('pitched' als `group` ontbreekt) op één van die plekken vergeten wordt. */
+export const scenariosInGroep = (groep: 'pitched' | 'matched-play' | 'battle-march'): ScenarioDef[] =>
+  SCENARIOS.filter((s) => (s.group ?? 'pitched') === groep);
+
 /** A deployment zone (inches). Normally a rectangle (x,y,w,h); for diagonal maps it carries a
  *  polygon `poly` of [x,y] points instead. `kind` styles it: main = gold, flank = blue. */
 export interface DeployZone { x: number; y: number; w: number; h: number; label: string; kind: 'main' | 'flank'; poly?: [number, number][] }
