@@ -15,12 +15,12 @@
     {
       "slug": "daemons-of-chaos",
       "name": "Daemons of Chaos",
-      "units": 75
+      "units": 76
     },
     {
       "slug": "dark-elves",
       "name": "Dark Elves",
-      "units": 29
+      "units": 47
     },
     {
       "slug": "dwarfen-mountain-holds",
@@ -70,7 +70,7 @@
     {
       "slug": "skaven",
       "name": "Skaven",
-      "units": 24
+      "units": 40
     },
     {
       "slug": "tomb-kings-of-khemri",
@@ -80,7 +80,7 @@
     {
       "slug": "vampire-counts",
       "name": "Vampire Counts",
-      "units": 30
+      "units": 61
     },
     {
       "slug": "warriors-of-chaos",
