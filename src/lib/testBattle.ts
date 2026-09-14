@@ -126,7 +126,7 @@ const SCENARIO: Record<string, unknown> = {
   scenario: 'bm-opposed-flanks',
   scenarioNaam: 'Opposed Flanks (test)',
   blurb: 'Battle March — slanted, opposed flank deployment.',
-  reden: 'Test battle — niets hiervan wordt naar de campagne geschreven.',
+  reden: 'Test battle — nothing here is written back to the campaign.',
   deployNote: 'Slanted opposed zones, 18″ deep at the outer edge — A top-left, B bottom-right.',
   bordLabel: '44×30″',
   tableW: 44,

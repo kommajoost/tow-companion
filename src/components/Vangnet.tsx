@@ -50,10 +50,10 @@ export class Vangnet extends Component<Props, State> {
         font: '15px/1.5 ui-sans-serif, system-ui, sans-serif', color: '#e8e2d4', background: '#14120f',
       }}>
         <h1 style={{ font: '600 20px/1.3 ui-serif, Georgia, serif', margin: 0 }}>
-          Er ging iets mis bij het laden
+          Something went wrong while loading
         </h1>
         <p style={{ margin: 0, maxWidth: 460, opacity: 0.8 }}>
-          Je lijsten staan er nog. Meestal is dit een half bijgewerkte cache — opnieuw ophalen lost het op.
+          Your lists are still there. This is usually a half-updated cache — fetching again fixes it.
         </p>
         <button
           type="button"
@@ -63,7 +63,7 @@ export class Vangnet extends Component<Props, State> {
             background: '#c8b183', color: '#1b1710', font: 'inherit', fontWeight: 600, cursor: 'pointer',
           }}
         >
-          Cache wissen en opnieuw laden
+          Clear the cache and reload
         </button>
         <pre style={{
           margin: 0, maxWidth: 'min(680px, 92vw)', overflowX: 'auto', textAlign: 'left',
