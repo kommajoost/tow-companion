@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { TOW, towFont, engraved } from '../../design/tow';
+import { TurnsIcon, MapIcon, FlaskIcon } from '../../design/icons';
 import { setPersisted } from '../../store';
 import { getCachedCampaign, getCampaignCode } from '../../lib/campaign';
 import { myCampaignBattles, type CampaignBattleSummary } from '../../lib/campaignBattle';
@@ -73,7 +74,7 @@ export function GameStart({ onNewBattle }: { onNewBattle: () => void }) {
         {heeftCampagne && (
           <div style={{ marginBottom: 14, padding: '14px 15px', borderRadius: 14, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.09)' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 9, marginBottom: campBattles.length ? 10 : 6 }}>
-              <span aria-hidden style={{ fontSize: 20, lineHeight: 1 }}>⚔️</span>
+              <span aria-hidden style={{ flexShrink: 0, color: TOW.goldDeep }}><TurnsIcon size={20} /></span>
               <span style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 17, color: TOW.goldDeep }}>Open campaign battle</span>
             </div>
 
@@ -129,7 +130,7 @@ export function GameStart({ onNewBattle }: { onNewBattle: () => void }) {
           onClick={onNewBattle}
           style={{ display: 'flex', alignItems: 'center', gap: 12, width: '100%', textAlign: 'left', padding: '18px 16px', borderRadius: 14, cursor: 'pointer', border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.14)' }}
         >
-          <span aria-hidden style={{ fontSize: 26, lineHeight: 1, flexShrink: 0 }}>🗺️</span>
+          <span aria-hidden style={{ flexShrink: 0, color: TOW.goldDeep }}><MapIcon size={26} /></span>
           <span style={{ flex: 1, minWidth: 0 }}>
             <span style={{ display: 'block', fontFamily: towFont.display, fontWeight: 700, fontSize: 18, color: TOW.goldDeep }}>New battle</span>
             <span style={{ display: 'block', fontFamily: towFont.serif, fontSize: 13, color: TOW.muted, lineHeight: 1.35 }}>
@@ -146,7 +147,7 @@ export function GameStart({ onNewBattle }: { onNewBattle: () => void }) {
               onClick={() => setTestOpen((v) => !v)}
               style={{ display: 'flex', alignItems: 'center', gap: 9, width: '100%', textAlign: 'left', padding: '9px 11px', borderRadius: 10, cursor: 'pointer', border: `1px dashed ${TOW.lineStrong}`, background: 'transparent' }}
             >
-              <span aria-hidden style={{ fontSize: 15, lineHeight: 1 }}>🧪</span>
+              <span aria-hidden style={{ flexShrink: 0, color: TOW.muted }}><FlaskIcon size={16} /></span>
               <span style={{ flex: 1, minWidth: 0 }}>
                 <span style={{ display: 'block', fontFamily: towFont.display, fontWeight: 600, fontSize: 13, color: TOW.muted }}>Test campaign battle</span>
               </span>

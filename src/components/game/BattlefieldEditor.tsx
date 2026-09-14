@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useUI } from '../../state';
 import { TOW, towFont, engraved } from '../../design/tow';
+import { DiceIcon, PinIcon } from '../../design/icons';
 import {
   scenariosInGroep, scenarioById, TERRAIN_TYPES, TABLE_PRESETS, TRAIT_RULE, SECONDARY_OBJECTIVES,
   recommendedTerrainCount, scatterTerrain, shufflePlacement, addPieceBalanced, terrainType,
@@ -351,8 +352,8 @@ export function BattlefieldEditor({ sheet, onChange, stap, onStap }: {
             <span style={{ minWidth: 30, textAlign: 'center', fontFamily: towFont.display, fontWeight: 700, fontSize: 14, color: TOW.ink }}>{count}</span>
             <button onClick={() => setRandomCount(clampN(count + 1, 1, 40))} aria-label="Raise total" style={{ width: 30, height: 32, border: 'none', borderLeft: `1px solid ${TOW.line}`, background: 'transparent', color: TOW.ink, cursor: 'pointer', fontSize: 17, fontFamily: towFont.display }}>+</button>
           </div>
-          <button onClick={() => { setTerrain(scatterTerrain(sheet.tableW, sheet.tableH, count, [...enabledTypes])); setSelectedId(null); }} disabled={enabledTypes.size === 0} title="Spread the total across the ticked types" style={{ padding: '8px 12px', borderRadius: 8, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.12)', color: TOW.goldDeep, cursor: enabledTypes.size === 0 ? 'default' : 'pointer', opacity: enabledTypes.size === 0 ? 0.5 : 1, fontFamily: towFont.display, fontWeight: 600, fontSize: 12.5 }}>🎲 Randomise mix</button>
-          {sheet.terrain.length > 0 && <button onClick={() => { setTerrain(shufflePlacement(sheet.terrain, sheet.tableW, sheet.tableH)); setSelectedId(null); }} title="Re-place the current features at random" style={{ padding: '8px 12px', borderRadius: 8, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.12)', color: TOW.goldDeep, cursor: 'pointer', fontFamily: towFont.display, fontWeight: 600, fontSize: 12.5 }}>📍 Randomise locations</button>}
+          <button onClick={() => { setTerrain(scatterTerrain(sheet.tableW, sheet.tableH, count, [...enabledTypes])); setSelectedId(null); }} disabled={enabledTypes.size === 0} title="Spread the total across the ticked types" style={{ padding: '8px 12px', borderRadius: 8, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.12)', color: TOW.goldDeep, cursor: enabledTypes.size === 0 ? 'default' : 'pointer', opacity: enabledTypes.size === 0 ? 0.5 : 1, fontFamily: towFont.display, fontWeight: 600, fontSize: 12.5, display: 'inline-flex', alignItems: 'center', gap: 6 }}><DiceIcon size={15} />Randomise mix</button>
+          {sheet.terrain.length > 0 && <button onClick={() => { setTerrain(shufflePlacement(sheet.terrain, sheet.tableW, sheet.tableH)); setSelectedId(null); }} title="Re-place the current features at random" style={{ padding: '8px 12px', borderRadius: 8, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.12)', color: TOW.goldDeep, cursor: 'pointer', fontFamily: towFont.display, fontWeight: 600, fontSize: 12.5, display: 'inline-flex', alignItems: 'center', gap: 6 }}><PinIcon size={15} />Randomise locations</button>}
           {sheet.terrain.length > 0 && <button onClick={() => { setTerrain([]); setSelectedId(null); }} style={{ padding: '8px 12px', borderRadius: 8, border: `1px solid ${TOW.line}`, background: 'transparent', color: TOW.muted, cursor: 'pointer', fontFamily: towFont.display, fontWeight: 600, fontSize: 12.5 }}>Clear</button>}
         </div>
         <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', alignItems: 'center', marginTop: 4, fontFamily: towFont.serif, fontSize: 10.5, color: TOW.muted }}>

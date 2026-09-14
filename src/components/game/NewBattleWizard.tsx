@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { TOW, towFont, engraved } from '../../design/tow';
+import { DiceIcon, SoloIcon, HostIcon, JoinIcon, MapIcon } from '../../design/icons';
 import { usePersistentState, setPersisted } from '../../store';
 import { useBackClose } from '../../lib/backStack';
 import { useGame } from '../../game';
@@ -243,7 +244,7 @@ function TweakRij({ label, waarde, onHerrol, onEdit, onUit }: {
         <span style={{ ...eb, fontSize: 8, color: TOW.muted, display: 'block' }}>{label}</span>
         <span style={{ display: 'block', fontFamily: towFont.serif, fontSize: 13, color: TOW.ink, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{waarde}</span>
       </span>
-      {onHerrol && <button onClick={onHerrol} title={`Re-roll ${label.toLowerCase()}`} aria-label={`Re-roll ${label.toLowerCase()}`} style={knop}>🎲</button>}
+      {onHerrol && <button onClick={onHerrol} title={`Re-roll ${label.toLowerCase()}`} aria-label={`Re-roll ${label.toLowerCase()}`} style={knop}><DiceIcon size={16} /></button>}
       {onEdit && <button onClick={onEdit} title={`Edit ${label.toLowerCase()}`} aria-label={`Edit ${label.toLowerCase()}`} style={knop}>✎</button>}
       {onUit && <button onClick={onUit} title={`Remove ${label.toLowerCase()}`} aria-label={`Remove ${label.toLowerCase()}`} style={{ ...knop, border: `1px solid ${TOW.line}`, background: 'transparent', color: TOW.muted }}>✕</button>}
     </div>
@@ -405,7 +406,7 @@ export function NewBattleWizard({ onBack }: { onBack: () => void }) {
     if (ok) setDraft(LEEG_DRAFT);
   };
 
-  const startLabel = d.modus === 'solo' ? '⚔ Start battle' : d.modus === 'host' ? 'Create game & get code' : 'Join battle';
+  const startLabel = d.modus === 'solo' ? 'Start battle' : d.modus === 'host' ? 'Create game & get code' : 'Join battle';
 
   return (
     <div className="tow-field" style={{ height: '100%', overflowY: 'auto', color: TOW.ink }}>
@@ -441,14 +442,14 @@ export function NewBattleWizard({ onBack }: { onBack: () => void }) {
           <div style={{ ...eb, fontSize: 9, color: TOW.muted, marginBottom: 8 }}>Who is playing?</div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 18 }}>
             {([
-              ['solo', '🎲', 'Solo', 'Both armies on this device — no code, no opponent to wait for.'],
-              ['host', '📣', 'Host a game', 'You set up the battlefield and get a code to share.'],
-              ['join', '🔗', 'Join a game', 'Your opponent hosts; you enter their code.'],
-            ] as const).map(([m, icon, titel, uitleg]) => {
+              ['solo', SoloIcon, 'Solo', 'Both armies on this device — no code, no opponent to wait for.'],
+              ['host', HostIcon, 'Host a game', 'You set up the battlefield and get a code to share.'],
+              ['join', JoinIcon, 'Join a game', 'Your opponent hosts; you enter their code.'],
+            ] as const).map(([m, Icon, titel, uitleg]) => {
               const on = d.modus === m;
               return (
                 <button key={m} onClick={() => zet({ modus: m })} style={{ display: 'flex', alignItems: 'flex-start', gap: 11, width: '100%', textAlign: 'left', padding: '13px 15px', borderRadius: 12, cursor: 'pointer', border: `1px solid ${on ? TOW.goldDeep : TOW.line}`, background: on ? 'rgba(184,134,47,0.12)' : TOW.panel2 }}>
-                  <span aria-hidden style={{ fontSize: 20, lineHeight: 1.2, flexShrink: 0 }}>{icon}</span>
+                  <span aria-hidden style={{ flexShrink: 0, marginTop: 1, color: on ? TOW.goldDeep : TOW.inkDim }}><Icon size={21} /></span>
                   <span style={{ flex: 1, minWidth: 0 }}>
                     <span style={{ display: 'block', fontFamily: towFont.display, fontWeight: 700, fontSize: 15, color: on ? TOW.goldDeep : TOW.ink }}>{titel}</span>
                     <span style={{ display: 'block', fontFamily: towFont.serif, fontSize: 12.5, color: TOW.muted, lineHeight: 1.35 }}>{uitleg}</span>
@@ -483,14 +484,14 @@ export function NewBattleWizard({ onBack }: { onBack: () => void }) {
             <div style={{ ...eb, fontSize: 9, color: TOW.muted, marginBottom: 8 }}>How do you want the battlefield?</div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
               <button onClick={() => zet({ tak: 'generate', viaGenerate: false })} style={{ display: 'flex', alignItems: 'flex-start', gap: 11, textAlign: 'left', padding: '15px 16px', borderRadius: 12, cursor: 'pointer', border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.12)' }}>
-                <span aria-hidden style={{ fontSize: 22, lineHeight: 1.1, flexShrink: 0 }}>🎲</span>
+                <span aria-hidden style={{ flexShrink: 0, marginTop: 1, color: TOW.goldDeep }}><DiceIcon size={23} /></span>
                 <span style={{ flex: 1, minWidth: 0 }}>
                   <span style={{ display: 'block', fontFamily: towFont.display, fontWeight: 700, fontSize: 16, color: TOW.goldDeep }}>Generate</span>
                   <span style={{ display: 'block', fontFamily: towFont.serif, fontSize: 12.5, color: TOW.muted, lineHeight: 1.35 }}>Roll the scenario, scatter the terrain and lay it all out. Tweak anything afterwards.</span>
                 </span>
               </button>
               <button onClick={() => zet({ tak: 'step', bfStap: 0, viaGenerate: false })} style={{ display: 'flex', alignItems: 'flex-start', gap: 11, textAlign: 'left', padding: '15px 16px', borderRadius: 12, cursor: 'pointer', border: `1px solid ${TOW.line}`, background: TOW.panel2 }}>
-                <span aria-hidden style={{ fontSize: 22, lineHeight: 1.1, flexShrink: 0 }}>🗺️</span>
+                <span aria-hidden style={{ flexShrink: 0, marginTop: 1, color: TOW.inkDim }}><MapIcon size={23} /></span>
                 <span style={{ flex: 1, minWidth: 0 }}>
                   <span style={{ display: 'block', fontFamily: towFont.display, fontWeight: 700, fontSize: 16, color: TOW.ink }}>Step by step</span>
                   <span style={{ display: 'block', fontFamily: towFont.serif, fontSize: 12.5, color: TOW.muted, lineHeight: 1.35 }}>Format, map size, scenario, secondaries and terrain — one choice at a time.</span>
@@ -526,14 +527,14 @@ export function NewBattleWizard({ onBack }: { onBack: () => void }) {
                 sheet: genereerSheet({ format: d.sheet.format, weer: d.genWeer, secondaries: d.genSecondaries, tableW: d.sheet.tableW, tableH: d.sheet.tableH }),
                 gegenereerd: true,
               })}
-              style={{ width: '100%', border: 'none', borderRadius: 11, cursor: 'pointer', padding: '13px 18px', background: goldGrad, color: TOW.onGrad, fontFamily: towFont.display, fontWeight: 700, fontSize: 15 }}
-            >{d.gegenereerd ? '🎲 Generate again' : '🎲 Generate battlefield'}</button>
+              style={{ width: '100%', border: 'none', borderRadius: 11, cursor: 'pointer', padding: '13px 18px', background: goldGrad, color: TOW.onGrad, fontFamily: towFont.display, fontWeight: 700, fontSize: 15, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 8 }}
+            ><DiceIcon size={18} />{d.gegenereerd ? 'Generate again' : 'Generate battlefield'}</button>
 
             {d.gegenereerd && (<>
               <div style={{ marginTop: 16 }}>
                 <BattleSheetView sheet={d.sheet} titel="Your battlefield" />
               </div>
-              {/* Bijstellen zonder opnieuw te beginnen: 🎲 rolt ALLEEN dit onderdeel opnieuw (de
+              {/* Bijstellen zonder opnieuw te beginnen: de dobbelsteen rolt ALLEEN dit onderdeel opnieuw (de
                   herrol*-functies laten de rest letterlijk staan), ✎ brengt je naar de bijbehorende
                   stap van de step-by-step-editor. Weer heeft geen ✎: er valt niets te kiezen, het is
                   een D6-tabel — je rolt hem opnieuw of je speelt zonder. */}

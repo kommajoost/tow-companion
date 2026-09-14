@@ -177,6 +177,108 @@ export function SwitchIcon({ size, color = 'currentColor', sw = 1.7, style, titl
   );
 }
 
+// ─────────────────────────────────────────────────────────────────────────────
+// De Game-set (13-09). De nieuwe battle-flow stond vol met kleuren-emoji — 🎲 📣
+// 🔗 🗺️ ⚔️ 🧪 📍 — en die vallen in een app van perkament en gravures op als
+// plaksels van een ander systeem: ze negeren de inkt-kleur, ze verschillen per
+// besturingssysteem en ze zijn het enige in beeld met kleur. Joost (14-09): "haal
+// die lelijke AI icons weg." Dus dezelfde regels als hierboven: 24-grid, 1.7px
+// stroke, currentColor, kleine massieve accenten.
+// ─────────────────────────────────────────────────────────────────────────────
+
+// Een dobbelsteen op z'n punt, drie pips op de diagonaal — "rollen". Bewust ANDERS
+// dan GameIcon (die staat recht en toont vijf), zodat "het spel" en "gooi opnieuw"
+// naast elkaar niet hetzelfde plaatje zijn.
+export function DiceIcon({ size, color = 'currentColor', sw = 1.7, style, title }: IconProps) {
+  return (
+    <Svg size={size} style={style} title={title}>
+      <rect x="4.6" y="4.6" width="14.8" height="14.8" rx="3.2" transform="rotate(12 12 12)" stroke={color} strokeWidth={sw} strokeLinejoin="round" />
+      <g fill={color}>
+        <circle cx="8.7" cy="9.4" r="1.05" />
+        <circle cx="12" cy="12" r="1.05" />
+        <circle cx="15.3" cy="14.6" r="1.05" />
+      </g>
+    </Svg>
+  );
+}
+
+// Eén krijger achter zijn schild — solo: beide legers op dit ene apparaat.
+export function SoloIcon({ size, color = 'currentColor', sw = 1.7, style, title }: IconProps) {
+  return (
+    <Svg size={size} style={style} title={title}>
+      <g stroke={color} strokeWidth={sw} strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="7.2" r="3.1" />
+        <path d="M5.6 19.4c0-3.4 2.9-5.8 6.4-5.8s6.4 2.4 6.4 5.8" />
+      </g>
+    </Svg>
+  );
+}
+
+// Een geplante standaard met wapperende vaan — hosten: jij zet de banier neer en
+// de rest komt naar je toe.
+export function HostIcon({ size, color = 'currentColor', sw = 1.7, style, title }: IconProps) {
+  return (
+    <Svg size={size} style={style} title={title}>
+      <g stroke={color} strokeWidth={sw} strokeLinecap="round" strokeLinejoin="round">
+        <path d="M7 3.6V20.4" />
+        <path d="M7 4.6h10.2l-2.4 3.5 2.4 3.5H7" />
+      </g>
+      <circle cx="7" cy="3.6" r="1.1" fill={color} />
+    </Svg>
+  );
+}
+
+// Twee schakels in elkaar — meedoen met het potje van een ander.
+export function JoinIcon({ size, color = 'currentColor', sw = 1.7, style, title }: IconProps) {
+  return (
+    <Svg size={size} style={style} title={title}>
+      <g stroke={color} strokeWidth={sw} strokeLinecap="round" strokeLinejoin="round">
+        <path d="M10.2 13.8a3.6 3.6 0 0 1 0-5.1l2.6-2.6a3.6 3.6 0 0 1 5.1 5.1l-1.3 1.3" />
+        <path d="M13.8 10.2a3.6 3.6 0 0 1 0 5.1l-2.6 2.6a3.6 3.6 0 0 1-5.1-5.1l1.3-1.3" />
+      </g>
+    </Svg>
+  );
+}
+
+// Een opgevouwen veldkaart — het slagveld zelf.
+export function MapIcon({ size, color = 'currentColor', sw = 1.7, style, title }: IconProps) {
+  return (
+    <Svg size={size} style={style} title={title}>
+      <g stroke={color} strokeWidth={sw} strokeLinecap="round" strokeLinejoin="round">
+        <path d="M3.6 6.4 9 4.4l6 2.2 5.4-2v14.6l-5.4 2-6-2.2-5.4 2z" />
+        <path d="M9 4.4v14.4" />
+        <path d="M15 6.6V21" />
+      </g>
+    </Svg>
+  );
+}
+
+// Speld op de kaart — een plaatsing, geen worp.
+export function PinIcon({ size, color = 'currentColor', sw = 1.7, style, title }: IconProps) {
+  return (
+    <Svg size={size} style={style} title={title}>
+      <g stroke={color} strokeWidth={sw} strokeLinecap="round" strokeLinejoin="round">
+        <path d="M12 21c4.2-4.6 6.3-7.9 6.3-10.6A6.3 6.3 0 0 0 5.7 10.4C5.7 13.1 7.8 16.4 12 21z" />
+      </g>
+      <circle cx="12" cy="10.3" r="2.1" fill={color} />
+    </Svg>
+  );
+}
+
+// Kolf met een belletje — het testgereedschap, en niets wat je aan tafel gebruikt.
+export function FlaskIcon({ size, color = 'currentColor', sw = 1.7, style, title }: IconProps) {
+  return (
+    <Svg size={size} style={style} title={title}>
+      <g stroke={color} strokeWidth={sw} strokeLinecap="round" strokeLinejoin="round">
+        <path d="M9.6 3.4h4.8" />
+        <path d="M10.6 3.4v5.3L5.9 17.2a2.3 2.3 0 0 0 2 3.4h8.2a2.3 2.3 0 0 0 2-3.4l-4.7-8.5V3.4" />
+        <path d="M8 14.2h8" />
+      </g>
+      <circle cx="13.4" cy="17.2" r="1" fill={color} />
+    </Svg>
+  );
+}
+
 export const ICONS: Record<IconId, (p: IconProps) => React.ReactElement> = {
   turns: TurnsIcon,
   rulebook: RulebookIcon,
