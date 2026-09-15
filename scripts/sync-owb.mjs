@@ -7,6 +7,28 @@
 //
 // NOTE: the underlying Warhammer: The Old World data is © Games Workshop; this is an unofficial,
 // personal-use aid, on the same fan-use footing as our wiki scrape.
+//
+// ── DIT SCRIPT DRAAIT NIET MEER VANZELF (15-09-2026) ─────────────────────────────────────────────
+// Er stond een wekelijkse GitHub Action op (.github/workflows/sync-owb.yml, elke maandag 06:17 UTC)
+// die dit draaide, committe en liet uitrollen. Die is weggehaald.
+//
+// WAAROM. Op 7 en 14 september herstructureerde OWB zijn data: elke unit kreeg een tweede regel met
+// een eigen `…-renegade`-id en een eigen prijs, in plaats van één regel met een lijstje composities.
+// De sync nam dat ongezien over. Gevolg: elke unit stond dubbel in de kiezer, en 126 units in zeven
+// legers vielen buiten hun eigen compositie ("not allowed in this army composition") omdat onze
+// Renegade V2-packs hun toegang van de oude compositiesleutel erven. Zeven prijspatches uit die
+// packs vonden hun unit niet meer en lieten stilletjes de basisprijs staan.
+//
+// De diepere reden om te stoppen: voor de zeven Renegade-legers is onze eigen data inmiddels beter
+// dan de bron. Wij compileren die packs uit de Renegade-documenten zelf — inclusief units die OWB
+// niet kende (Blunderbuss Decimators, Chaos Dwarf Warriors, Castellan, Skink Cohorts, Skaven Dregs)
+// en inclusief een naamsverwarring die OWB nu ook maakt (hun "Infernal Castellan" is de lord van 125
+// punten, niet de Castellan van 75 die het document bedoelt). Een automaat die daar wekelijks
+// overheen schrijft, kost meer dan hij oplevert.
+//
+// `public/owb/` is dus vanaf nu ONZE snapshot. Wil je hem alsnog bijwerken, draai dit script met de
+// hand (`npm run sync-owb`) en loop de diff na — vooral op nieuwe id's en op units die van compositie
+// wisselen. De bronvermelding blijft staan: de basis blijft van OWB afgeleid, dat is de licentie.
 
 import { mkdir, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';

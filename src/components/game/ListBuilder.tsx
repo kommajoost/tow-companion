@@ -11,6 +11,7 @@ import { fmt } from '../builder/primitives';
 import { CeledonPanel } from './CeledonPanel';
 import { LockedListView } from './LockedListView';
 import { codeUitInvoer, neemGedeeldeCode, openGedeeldeLijst, type GedeeldeLijst } from '../../lib/listShare';
+import { herstelUnitId } from '../../lib/legacyUnitIds';
 import { ListSettings } from './ListSettings';
 import { useCampagnes, staatOpSlot, hoortBijCampagne } from '../../lib/campaign';
 import { useListSync } from '../../listSync';
@@ -243,6 +244,46 @@ export function ListBuilder() {
       });
     return () => { cancelled = true; };
   }, [lists, overlays, gedeeld]);
+
+  // ── REPARATIE: unit-id's uit de teruggedraaide OWB-sync (15-09) ──────────────────────────────
+  // Tussen 7 en 15 september stond er een herstructurering van Old World Builder in de catalogus,
+  // waarin elke unit een tweede regel kreeg met een `…-renegade`-id. Wie in die week een unit uit
+  // die tweede regel koos, heeft nu een id dat nergens meer bestaat — en zo'n entry valt stil uit
+  // zijn lijst, inclusief punten en campagne-XP. Zie lib/legacyUnitIds.ts voor het hele verhaal.
+  //
+  // Draait pas als de catalogus van dát leger binnen is (anders zou "bestaat niet" alleen maar
+  // betekenen "nog niet geladen"), verandert alleen entries die echt kapot zijn, en raakt
+  // `updatedAt` niet aan: dit is een reparatie, geen bewerking van de speler.
+  useEffect(() => {
+    const raak = new Map<string, Record<string, string>>();
+    for (const l of lists) {
+      const cat = catalogues[l.army];
+      if (!cat) continue;
+      const ids = new Set<string>();
+      for (const arr of Object.values(cat as Record<string, unknown>)) {
+        if (Array.isArray(arr)) for (const u of arr as { id?: string }[]) if (u?.id) ids.add(u.id);
+      }
+      const overlay = hasOverlay(l.composition) ? overlays[l.composition] : null;
+      for (const arr of Object.values(overlay?.addedUnits ?? {})) {
+        if (Array.isArray(arr)) for (const u of arr as { id?: string }[]) if (u?.id) ids.add(u.id);
+      }
+      if (ids.size === 0) continue;
+      const perEntry: Record<string, string> = {};
+      for (const e of l.entries) {
+        const nieuwId = herstelUnitId(e.unitId, (k) => ids.has(k));
+        if (nieuwId) perEntry[e.uid] = nieuwId;
+      }
+      if (Object.keys(perEntry).length) raak.set(l.id, perEntry);
+    }
+    if (raak.size === 0) return;
+    setLists((ls) => ls.map((l) => {
+      const perEntry = raak.get(l.id);
+      if (!perEntry) return l;
+      return { ...l, entries: l.entries.map((e) => (perEntry[e.uid] ? { ...e, unitId: perEntry[e.uid] } : e)) };
+    }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [lists, catalogues, overlays]);
+
 
   /** De puntensom van een lijst zoals de BUILDER hem berekent — inclusief de herprijzing van een
    *  Renegade-compositie. `null` = nog niet te bepalen (catalogus of overlay nog niet binnen); dan
