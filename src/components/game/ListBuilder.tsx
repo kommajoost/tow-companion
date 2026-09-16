@@ -385,7 +385,23 @@ export function ListBuilder() {
 
   useEffect(() => {
     if (!campagne || !factieSlug) return;
-    if (sync.status === 'syncing') return;
+    // ── NIET AANMAKEN ZOLANG WE DE LIJSTEN VAN DEZE SPELER NIET KENNEN (16-09-2026) ──────────────
+    // Dit blok stond alleen stil bij status 'syncing'. Maar de status begint op 'off' zolang er nog
+    // geen sync-sleutel in localStorage staat -- en op een vers apparaat (of na het legen van de
+    // opslag) wordt die sleutel pas in een effect gezet nadat het account bekend is. De
+    // campagne-context komt uit de URL en is er meteen. In dat gat is `lists` nog leeg, ziet deze
+    // hook geen campagne-lijst, en maakt hij er een NIEUWE, LEGE aan: "<campagne> army".
+    //
+    // Dat is precies wat Yannick en Tim overkwam. En het is niet onschuldig: towc_campagne_lijst
+    // pakt server-side de MEEST RECENT BIJGEWERKTE campagne-lijst, dus die verse lege lijst wordt
+    // meteen de lijst waar de campagne mee rekent -- towc_speler_units_sync zet dan de echte units
+    // op 'uit-lijst' en de Army-hub toont units die de speler nooit gekocht heeft.
+    //
+    // Alleen aanmaken vanuit een BESLISTE toestand: sync uit (dan is lokaal alles wat er is), of een
+    // geslaagde sync die ook echt een keer opgehaald heeft. 'error' en 'conflict' tellen niet mee --
+    // daar weten we juist níét wat er in de cloud staat.
+    if (sync.status !== 'off' && sync.status !== 'synced') return;
+    if (sync.key && !sync.lastSyncedAt) return;
     if (armies.length === 0 || Object.keys(metaByArmy).length === 0) return;
     if (!campagne.factieVast || !armies.some((a) => a.slug === factieSlug)) return;
     // Sleutel op campagne + factie: verschuift de factie, dan mag dit opnieuw draaien.
@@ -399,7 +415,7 @@ export function ListBuilder() {
     autoGedaan.current = sleutel;
     maakCampagneLijst(new Set(verkeerdLeger.map((l) => l.id)));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [campagne, factieSlug, sync.status, armies, metaByArmy, lists]);
+  }, [campagne, factieSlug, sync.status, sync.key, sync.lastSyncedAt, armies, metaByArmy, lists]);
 
   /** Herstel na een factie-wissel waar wél werk in de oude lijst zit: de oude lijst blijft bestaan
    *  als GEWONE lijst (niets weg) en er komt een nieuwe campagne-lijst voor het juiste leger. */
