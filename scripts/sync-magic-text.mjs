@@ -13,7 +13,14 @@ import { dirname, join } from 'node:path';
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const SITE = 'https://tow.whfb.app';
 
-const slugify = (s) => (s || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+// DE BOEKHOUD-TAG ERAF VOOR DE SLEUTEL (20-09-2026). De catalogus zet soms een tag achter een naam
+// ("Dark Acolyte {renegade}", "Har Ganeth Executioners {renegade}"). De APP zoekt de tekst op met de
+// tag eraf (zie `magicItemIdFromName` + `clean` in builderToArmy/printArmy), maar dit script bakte de
+// tag mee in de sleutel — dus kwam de tekst onder `dark-acolyte-renegade` te staan, waar niemand
+// keek, en had dat item in de app geen beschrijving meer. En de URL van de wiki kent die tag al
+// helemaal niet, dus de fetch liep sowieso op niets uit.
+const zonderTag = (s) => (s || '').replace(/\{[^}]*\}/g, ' ');
+const slugify = (s) => zonderTag(s).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
 
 // Flatten Contentful rich-text to plain text. Paragraphs/headings → lines; tables → " | "-joined rows.
 function flatten(node) {
@@ -99,7 +106,7 @@ async function fetchEntry(canonicalSlug, name, buildId) {
   // The upstream URL slug strips apostrophes/accents and spells out "&" ("Duellist's Blades" →
   // "duellists-blades", "Banner of Châlons" → "banner-of-chalons", "Crook & Flail" → "crook-and-flail")
   // while our canonical id just hyphenates. Try the variants; the snapshot KEY stays canonical.
-  const n = name || '';
+  const n = zonderTag(name || '').replace(/\s+/g, ' ').trim();
   const cands = [
     canonicalSlug,
     slugify(n.replace(/['’]/g, '')),
