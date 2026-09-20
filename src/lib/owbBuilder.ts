@@ -752,6 +752,10 @@ export interface CompUnitRule {
 }
 export type CompositionRules = Record<string, Partial<Record<string, { units?: CompUnitRule[] }>>>;
 
+/** De naam van een item zonder de boekhoudtekens die de catalogus erin zet ("*", "{renegade}"). */
+const schoneItemNaam = (item: { name_en?: string; name?: string }): string =>
+  (item.name_en || item.name || '').replace(/\{[^}]*\}/g, ' ').replace(/\*/g, '').replace(/\s+/g, ' ').trim();
+
 /** The display name behind a stored item id, searched across every list in `magic-items.json` — the
  *  army's own item lists are not in scope here, and an id is unique enough that a wider search cannot
  *  pick the wrong one. Returns undefined when the data is absent, so the caller can fall back. */
@@ -837,6 +841,18 @@ export function validate(
     const g = campaignMods?.groei?.[e.uid];
     if (g && p > g.max) {
       warnEntry(e.uid, `${unit.name_en} is ${p} pts; joined in Act ${g.introFase} at ${g.basis}, so the ceiling here is ${g.max} (+${g.staffel} per Act)`);
+    }
+    // Een item dat bij een ANDERE samenstellingsregel hoort (de twintig uit de Battle March:
+    // General's Companion). De kiezer biedt ze niet meer aan, maar een lijst van vóór dat filter kan
+    // er eentje dragen, en een geplakte OWB-lijst ook. Melden, niet weghalen: de punten blijven
+    // gewoon meetellen, zodat het totaal op het scherm niet stiekem iets anders wordt dan wat er in
+    // de lijst staat. Wat ermee gebeurt is aan de speler.
+    if (itemsData) {
+      for (const { item } of selectedMagicItems(unit, e, itemsData)) {
+        if (itemAllowedInRule(item, list.rule)) continue;
+        const regelNaam = COMPOSITION_RULES.find((r) => r.id === item.compositionRule)?.name ?? item.compositionRule;
+        warnEntry(e.uid, `${schoneItemNaam(item)}: only available in ${regelNaam}`);
+      }
     }
     // KRIMP — MINOR ADJUSTMENTS (14-08-2026, Joost). Hier stond een harde ondergrens: een unit mocht
     // nooit onder haar vorige modellenaantal komen. Dat is vervangen door een BUDGET: per Act mag je
@@ -1079,6 +1095,13 @@ const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 export interface MagicItem {
   name_en: string; name?: string; points?: number; type: string;
   onePerArmy?: boolean; stackable?: boolean; maximum?: number;
+  /** De samenstellingsregel waar dit item bij HOORT — of undefined als het overal mag.
+   *
+   *  Op dit moment staat er precies één waarde in de catalogus: 'battle-march', op de twintig items
+   *  uit de Battle March: General's Companion. Die twintig zijn langs twee kanten nagelopen en ze
+   *  komen allebei op dezelfde twintig uit: elk item met dit veld heeft "Battle March: General's
+   *  Companion" als bron in `magic-item-text.json`, en elk item met die bron heeft dit veld. */
+  compositionRule?: string;
   /** "Common" = a MULTI-TAKEABLE item: one that more than one model may carry (OWB prints these with
    *  a '*'; in the data they carry `stackable: true`). Any number of common items may be taken in a
    *  category, alongside one unique (one-per-army) item. NOT "from the general list" — most general
@@ -1324,6 +1347,32 @@ export function toggleMagicItem(entry: ListEntry, categoryId: string, item: Magi
   // Single-select: drop any existing pick in this category, then add the new one unless it was selected.
   const rest = entry.opts.filter((k) => !k.startsWith(`${MAGIC_PREFIX}/${categoryId}/`));
   return already === key ? rest : [...rest, key];
+}
+
+/** Hoort dit item thuis in een lijst met deze samenstellingsregel?
+ *
+ *  Items zonder `compositionRule` mogen overal — dat is verreweg het gewone geval. */
+export const itemAllowedInRule = (item: MagicItem, rule: string | undefined): boolean =>
+  !item.compositionRule || item.compositionRule === (rule || '');
+
+/** De categorieën zoals de KIEZER ze moet tonen, met de items eruit die deze lijst niet mag hebben.
+ *
+ *  BEWUST NIET IN `magicCategories` ZELF. Die pool is ook wat `selectedMagicItems` gebruikt om een
+ *  opgeslagen keuze terug te vinden en te beprijzen. Zou een item daar verdwijnen, dan zou een
+ *  bestaande lijst met zo'n item stilletjes goedkoper worden en zou de speler nooit te horen krijgen
+ *  dat er iets aan mankeert — precies de soort stille afwijking die dit project al eerder duur is
+ *  komen te staan. De rekenkant blijft dus compleet; alleen het KIEZEN is beperkt, en `validate()`
+ *  zegt het hardop als een lijst er toch eentje draagt.
+ *
+ *  Een item dat dit model AL draagt blijft staan, ook als het niet mag: anders zie je de regel niet
+ *  meer waarmee je hem zou kunnen uitzetten. */
+export function magicCategoriesInRule(cats: MagicCategory[], entry: ListEntry, rule?: string): MagicCategory[] {
+  return cats
+    .map((c) => ({
+      ...c,
+      items: c.items.filter((it) => itemAllowedInRule(it, rule) || entry.opts.includes(magicKey(c.id, magicItemId(it)))),
+    }))
+    .filter((c) => c.items.length > 0);
 }
 
 /** Does ANOTHER entry in this army already hold this exact pick? For the categories whose only

@@ -35,7 +35,7 @@ import { TOW, towFont, engraved } from '../../design/tow';
 import { useBackClose } from '../../lib/backStack';
 import { makeTroopTypeLookup } from '../../lib/troopTypes';
 import {
-  DEFAULT_MAGIC_BUDGET, entryPoints, magicCategories, magicGroupSpent, magicItemId, magicItemTakenElsewhere,
+  DEFAULT_MAGIC_BUDGET, entryPoints, magicCategories, magicCategoriesInRule, magicGroupSpent, magicItemId, magicItemTakenElsewhere,
   magicWouldExceed, radioSelected, selectedMagicKeys, selectedMountIndex, setExclusiveSubOption,
   setStackCount, stackMax, stackTaken, subOptionGroups,
   toggleMagicItem, toggleSubOption, unitBlocks, unitCategoryFor, validate,
@@ -671,7 +671,8 @@ export function UnitOptions(props: {
   // Magic items need `itemsData`; while it is undefined we simply render no magic section and touch
   // nothing in `opts`.
   const magicCats = itemsData
-    ? magicCategories(unit, ctx.armyItemLists ?? [], itemsData, entry).filter((c) => c.items.length > 0)
+    ? magicCategoriesInRule(magicCategories(unit, ctx.armyItemLists ?? [], itemsData, entry), entry, ctx.list.rule)
+      .filter((c) => c.items.length > 0)
     : [];
   /** One entry per shared points budget: all per-type categories of one section pool into it. */
   const magicGroups: { budgetGroup: string; groupLabel: string; cats: MagicCategory[] }[] = [];

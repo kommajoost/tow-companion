@@ -9,7 +9,7 @@ import {
   CATEGORIES, COMPOSITION_RULES, validate, entryPoints, unitBlocks, radioSelected, summaryLabels,
   unitCategoryFor, unitAllowedIn, unitNote,
   subOptionGroups, toggleSubOption, setExclusiveSubOption,
-  magicCategories, selectedMagicKeys, selectedMagicItems, toggleMagicItem, magicGroupSpent, magicWouldExceed, magicItemId,
+  magicCategories, magicCategoriesInRule, selectedMagicKeys, selectedMagicItems, toggleMagicItem, magicGroupSpent, magicWouldExceed, magicItemId,
   loadoutLabels, magicTypeLabel, selectedMountIndex, DEFAULT_MAGIC_BUDGET,
   type Category, type OwbArmy, type OwbUnit, type BuilderList, type ListEntry, type Validation,
   type MagicItemsData, type MagicCategory, type MagicItem,
@@ -397,7 +397,10 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
   const optionEditor = (entry: ListEntry, u: OwbUnit) => {
     const blocks = unitBlocks(u);
     const subGroups = subOptionGroups(u, entry);
-    const cats = itemsData ? magicCategories(u, armyItemLists ?? [], itemsData, entry) : [];
+    // De items die bij een andere samenstellingsregel horen eruit — zie `magicCategoriesInRule`.
+    const cats = itemsData
+      ? magicCategoriesInRule(magicCategories(u, armyItemLists ?? [], itemsData, entry), entry, list.rule)
+      : [];
     const magicCats = cats.filter((c) => c.items.length > 0);
     const loadout = loadoutLabels(u, entry, itemsData); // base weapons/armour + chosen kit
     const noUpgrades = !blocks.length && subGroups.length === 0 && magicCats.length === 0;
