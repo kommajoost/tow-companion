@@ -35,7 +35,7 @@ import { TOW, towFont, engraved } from '../../design/tow';
 import { useBackClose } from '../../lib/backStack';
 import { makeTroopTypeLookup } from '../../lib/troopTypes';
 import {
-  DEFAULT_MAGIC_BUDGET, entryPoints, magicCategories, magicGroupSpent, magicItemId,
+  DEFAULT_MAGIC_BUDGET, entryPoints, magicCategories, magicGroupSpent, magicItemId, magicItemTakenElsewhere,
   magicWouldExceed, radioSelected, selectedMagicKeys, selectedMountIndex, setExclusiveSubOption,
   setStackCount, stackMax, stackTaken, subOptionGroups,
   toggleMagicItem, toggleSubOption, unitBlocks, unitCategoryFor, validate,
@@ -810,14 +810,16 @@ export function UnitOptions(props: {
 
   // ── magic items ────────────────────────────────────────────────────────────────────────────────
   /** WORDING ONLY for an already-blocked row: `magicWouldExceed()` owns the verdict, this just says
-   *  which of its three limits is the nearest explanation, in its order (item cap → one unique per
-   *  category → shared points budget). Never used to decide whether something is blocked. */
+   *  which of its limits is the nearest explanation, in its order (item cap → the category's
+   *  uniqueness rule → shared points budget). Never used to decide whether something is blocked. */
   const blockReason = (cat: MagicCategory, item: MagicItem, budget: number): string => {
     const selected = selectedMagicKeys(entry, cat.id);
     if (isFinite(cat.maxItems)) {
       if (selected.length >= cat.maxItems) {
         return cat.maxItems === 1 ? 'Only one in this section' : `Only ${cat.maxItems} in this section`;
       }
+    } else if (cat.uniqueness === 'per-army') {
+      if (magicItemTakenElsewhere(ctx.list.entries, entry.uid, cat.id, magicItemId(item))) return 'Already taken elsewhere in this army';
     } else if (!item.common) {
       const uniqueTaken = selected.some((k) => {
         const id = k.split('/')[2];
@@ -834,7 +836,7 @@ export function UnitOptions(props: {
     const on = entry.opts.includes(key);
     // The ONLY blocking rule on this screen, and it is the engine's: points budget, item cap and the
     // one-unique-plus-any-commons gate all live inside magicWouldExceed.
-    const blocked = !on && magicWouldExceed(unit, entry, cat.id, item, itemsData!, { armyItemLists: ctx.armyItemLists });
+    const blocked = !on && magicWouldExceed(unit, entry, cat.id, item, itemsData!, { armyItemLists: ctx.armyItemLists, entries: ctx.list.entries });
     const pts = item.points ?? 0;
     // A single-pick category (Big Name, a magic standard) is mutually exclusive → radio. A
     // multi-pick one (normal magic items: one unique + any number of commons; Dwarf runes) → toggle.
@@ -848,7 +850,9 @@ export function UnitOptions(props: {
         label={cleanLabel(item.name_en)}
         // Only the rare state earns a second line: `common` (multi-takeable) is the exception, while
         // "one per army" is true of nearly every item and would be noise on every row.
-        sub={item.common ? 'Common — more than one model may carry it' : undefined}
+        sub={item.common ? 'Common — more than one model may carry it'
+          : cat.uniqueness === 'per-army' ? 'One per army — no limit on how many this model takes'
+            : undefined}
         delta={pts ? `+${fmt(pts)}` : on ? 'included' : 'free'}
         deltaMuted={!pts}
         blocked={blocked}

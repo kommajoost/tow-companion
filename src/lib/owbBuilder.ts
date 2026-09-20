@@ -752,6 +752,21 @@ export interface CompUnitRule {
 }
 export type CompositionRules = Record<string, Partial<Record<string, { units?: CompUnitRule[] }>>>;
 
+/** The display name behind a stored item id, searched across every list in `magic-items.json` — the
+ *  army's own item lists are not in scope here, and an id is unique enough that a wider search cannot
+ *  pick the wrong one. Returns undefined when the data is absent, so the caller can fall back. */
+function itemNameFor(itemId: string, itemsData?: MagicItemsData): string | undefined {
+  if (!itemsData) return undefined;
+  for (const arr of Object.values(itemsData)) {
+    for (const it of arr ?? []) {
+      if (it && it.type && magicItemId(it) === itemId) {
+        return (it.name_en || it.name || '').replace(/\{[^}]*\}/g, ' ').replace(/\*/g, '').replace(/\s+/g, ' ').trim();
+      }
+    }
+  }
+  return undefined;
+}
+
 export function validate(
   list: BuilderList,
   getUnit: (cat: Category, id: string) => OwbUnit | undefined,
@@ -829,6 +844,28 @@ export function validate(
     // bestaande units, of opgeteld bij je 250 nieuwe punten. Per unit is er dus geen grens meer; het
     // gaat om het totaal, en dat tellen we hieronder na de lus op.
     if (g?.laatsteKosten != null && p < g.laatsteKosten) krimpTotaal += g.laatsteKosten - p;
+  }
+
+  // "Each Vampiric Power may only be chosen once per army" — the builder blocks a second copy while
+  // you pick, but a list built BEFORE that check existed can already hold one, and so can an import.
+  // Silently dropping a pick would change someone's army behind their back, so it is flagged instead.
+  {
+    const perArmy = new Map<string, { uids: string[]; itemId: string }>();
+    for (const e of list.entries) {
+      for (const key of e.opts) {
+        const [prefix, categoryId, itemId] = key.split('/');
+        if (prefix !== MAGIC_PREFIX || !categoryId || !itemId) continue;
+        if (!TYPES_LIMITED_PER_ARMY.has(categoryId)) continue;
+        const bucket = perArmy.get(key) ?? { uids: [], itemId };
+        bucket.uids.push(e.uid);
+        perArmy.set(key, bucket);
+      }
+    }
+    for (const [, { uids, itemId }] of perArmy) {
+      if (uids.length < 2) continue;
+      const naam = itemNameFor(itemId, itemsData) ?? itemId.replace(/-/g, ' ');
+      for (const uid of uids) warnEntry(uid, `${naam}: taken by ${uids.length} models — each may only be chosen once per army`);
+    }
   }
 
   // Het krimp-budget geldt over ALLE bestaande units samen. De server rekent exact hetzelfde na bij
@@ -1099,8 +1136,30 @@ export interface MagicCategory {
   types: string[];       // item `type`s this category accepts
   maxPoints: number | null; // the shared budget for this category's `budgetGroup`
   maxItems: number;      // how many items this category may hold (Infinity = points-limited multi-pick; Dwarf Runes = 3; a BSB banner = 1)
+  /** WHICH uniqueness rule caps this category once `maxItems` is Infinity — two different rules from
+   *  two different pages, so two values rather than one "unique" flag.
+   *
+   *  'per-category' — Limitations & Uniqueness (rulebook p. 337): "only one of each magic item can be
+   *    included in your army. In addition, a model can only purchase one magic item from each
+   *    category." That second sentence is the one that bites here: one unique item per category per
+   *    model, with any number of 'extremely common' ones alongside it.
+   *
+   *  'per-army' — no per-model limit at all; the only restriction is that the army may not take the
+   *    same entry twice. Vampiric Powers work this way. */
+  uniqueness: 'per-category' | 'per-army';
   items: MagicItem[];    // the items selectable in this category
 }
+
+/** Item types the p. 337 per-category limit does NOT govern, because they are not magic items and
+ *  carry their own rule instead.
+ *
+ *  Vampiric Powers are the case in hand. Their rule (Vampire Counts p. 23) reads in full: "To
+ *  represent their varying attributes, some models may be given Vampiric Powers. A Vampiric Power
+ *  does not affect a model's mount (should it have one). Each Vampiric Power may only be chosen once
+ *  per army." That is ONE restriction, and it is army-wide — nothing there limits how many Powers a
+ *  single Vampire may take, so the section's points allowance (100 for a Vampire Count, 75 for a
+ *  Strigoi Ghoul King, 50 for a Vampire Thrall) is the only ceiling on one model. */
+const TYPES_LIMITED_PER_ARMY = new Set(['vampiric-power']);
 
 // Flatten every item-list this army may use into a single pool (army.items → magic-items.json).
 // `armyItemLists` is the army metadata's `items` array (e.g. ["general","dark-elves",…]).
@@ -1140,7 +1199,7 @@ export function magicCategories(unit: OwbUnit, armyItemLists: string[], itemsDat
     if (capped) {
       // Runes etc. — one category, multi-pick up to the section cap, items across all its types.
       const items = pool.filter((it) => types.includes(it.type));
-      if (items.length) out.push({ id: types[0] ?? slug(sec.name_en), label: sec.name_en, groupLabel: sec.name_en, budgetGroup: group, types, maxPoints, maxItems: sec.maxItemsPerCategory!, items });
+      if (items.length) out.push({ id: types[0] ?? slug(sec.name_en), label: sec.name_en, groupLabel: sec.name_en, budgetGroup: group, types, maxPoints, maxItems: sec.maxItemsPerCategory!, uniqueness: 'per-category', items });
       return;
     }
     // Normal magic items — one category per type, sharing the section's points budget. Each category
@@ -1154,7 +1213,8 @@ export function magicCategories(unit: OwbUnit, armyItemLists: string[], itemsDat
       // it single-select (radio). Normal magic-item types stay multi-pick (one unique + any commons),
       // limited only by the shared points budget — see magicWouldExceed.
       const maxItems = type === 'big-name' ? 1 : Infinity;
-      out.push({ id: type, label: magicTypeLabel(type), groupLabel: sec.name_en, budgetGroup: group, types: [type], maxPoints, maxItems, items });
+      const uniqueness = TYPES_LIMITED_PER_ARMY.has(type) ? 'per-army' as const : 'per-category' as const;
+      out.push({ id: type, label: magicTypeLabel(type), groupLabel: sec.name_en, budgetGroup: group, types: [type], maxPoints, maxItems, uniqueness, items });
     }
   });
   // Option-unlocked allowances (magic standards from a Standard bearer, …) — active options only.
@@ -1180,7 +1240,7 @@ export function magicCategories(unit: OwbUnit, armyItemLists: string[], itemsDat
         // — treat that as unlimited (Infinity), not a 0 budget that would disable every option.
         const mp = magic.maxPoints;
         const cap = magic.maxItemsPerCategory; // e.g. a Dwarf BSB standard may bear up to 3 runes
-        out.push({ id: magic.types[0], label: magicTypeLabel(magic.types[0]), groupLabel: magicTypeLabel(magic.types[0]), budgetGroup: `opt:${String(g)}:${idx}`, types: magic.types, maxPoints: typeof mp === 'number' && mp > 0 ? mp : Infinity, maxItems: typeof cap === 'number' && cap > 0 ? cap : 1, items });
+        out.push({ id: magic.types[0], label: magicTypeLabel(magic.types[0]), groupLabel: magicTypeLabel(magic.types[0]), budgetGroup: `opt:${String(g)}:${idx}`, types: magic.types, maxPoints: typeof mp === 'number' && mp > 0 ? mp : Infinity, maxItems: typeof cap === 'number' && cap > 0 ? cap : 1, uniqueness: 'per-category', items });
       });
     }
   }
@@ -1266,6 +1326,22 @@ export function toggleMagicItem(entry: ListEntry, categoryId: string, item: Magi
   return already === key ? rest : [...rest, key];
 }
 
+/** Does ANOTHER entry in this army already hold this exact pick? For the categories whose only
+ *  restriction is army-wide ("Each Vampiric Power may only be chosen once per army").
+ *
+ *  It compares stored option keys and nothing else — no catalogue lookup, so it cannot disagree with
+ *  what is actually on the other model. `entryUid` is the entry being edited and is skipped, because
+ *  a model re-picking its own choice is a deselect, not a second copy.
+ *
+ *  Note this is the SAME sentence that p. 337 applies to ordinary magic items ("only one of each
+ *  magic item can be included in your army"), which the builder does not yet check across entries.
+ *  That is a separate, wider change; this one stays on the categories that have no other limit at
+ *  all, where skipping it would mean no limit whatsoever. */
+export function magicItemTakenElsewhere(entries: ListEntry[], entryUid: string, categoryId: string, itemId: string): boolean {
+  const key = magicKey(categoryId, itemId);
+  return entries.some((e) => e.uid !== entryUid && e.opts.includes(key));
+}
+
 /** Would picking `item` in `categoryId` exceed the category's allowance? (For disabling options in
  *  the UI.) Returns true when adding the item would blow EITHER the points budget OR the per-category
  *  item-count cap (`maxItems`). Budget precedence: explicit `budget` arg → the category's data
@@ -1273,7 +1349,7 @@ export function toggleMagicItem(entry: ListEntry, categoryId: string, item: Magi
  *  no-op / deselect). For single-item categories `maxItems` is 1, matching the prior single-select. */
 export function magicWouldExceed(
   unit: OwbUnit, entry: ListEntry, categoryId: string, item: MagicItem, itemsData: MagicItemsData,
-  opts?: { budget?: number; armyItemLists?: string[] },
+  opts?: { budget?: number; armyItemLists?: string[]; entries?: ListEntry[] },
 ): boolean {
   const armyItemLists = opts?.armyItemLists;
   const cats = magicCategories(unit, armyItemLists ?? Object.keys(itemsData), itemsData, entry);
@@ -1289,6 +1365,11 @@ export function magicWouldExceed(
   // is already chosen; common items are limited only by the shared points budget below.
   if (isFinite(maxItems)) {
     if (selected.length >= maxItems) return true;
+  } else if (category?.uniqueness === 'per-army') {
+    // No per-model limit — a Vampire may take as many Powers as the allowance pays for. The one
+    // restriction is army-wide, and it can only be checked when the caller hands over the other
+    // entries; without them we do not invent a limit that the book does not have.
+    if (opts?.entries && magicItemTakenElsewhere(opts.entries, entry.uid, categoryId, magicItemId(item))) return true;
   } else if (!item.common) {
     const hasArmyItem = selected.some((k) => {
       const id = k.split('/')[2];

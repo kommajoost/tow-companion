@@ -413,7 +413,7 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
     const magicItemRow = (cat: MagicCategory, item: MagicItem) => {
       const key = `magic/${cat.id}/${magicItemId(item)}`;
       const on = entry.opts.includes(key);
-      const disabled = !on && magicWouldExceed(u, entry, cat.id, item, itemsData!, { armyItemLists });
+      const disabled = !on && magicWouldExceed(u, entry, cat.id, item, itemsData!, { armyItemLists, entries: list.entries });
       const cost = item.points ? `+${item.points}` : 'free';
       return (
         <div key={key} style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 6, opacity: disabled ? 0.5 : 1 }}>
