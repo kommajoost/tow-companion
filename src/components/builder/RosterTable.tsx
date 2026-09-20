@@ -392,8 +392,8 @@ export function RosterTable(props: {
                     {fmt(row.count)}×
                   </span>
 
-                  {/* Unit — name (600 when selected) + the ✦ magic glyph, which sits OUTSIDE the
-                      ellipsising name so a very long name truncates instead of eating the glyph. */}
+                  {/* Unit — name (600 when selected). Tot 20-09 stond hier ook een ✦ achter elke unit
+                      die magic items droeg; eruit op verzoek (Joost), zie UnitRow voor het waarom. */}
                   <span style={{ display: 'flex', alignItems: 'baseline', minWidth: 0 }}>
                     <span style={{ ...NAME_CELL, fontWeight: isSel ? 600 : 400 }}>{row.name}</span>
                     {/* De eigen naam van de speler (campagne) staat NAAST het datasheet, niet ervoor:
@@ -402,17 +402,6 @@ export function RosterTable(props: {
                     {row.bijnaam ? (
                       <span style={{ ...NAME_CELL, flexShrink: 1, paddingLeft: 6, fontSize: 11.5, fontStyle: 'italic', color: TOW.muted }}>
                         {row.bijnaam}
-                      </span>
-                    ) : null}
-                    {row.magic ? (
-                      <span
-                        aria-hidden
-                        style={{
-                          flex: '0 0 auto', paddingLeft: 4, color: TOW.gold,
-                          fontFamily: towFont.serif, fontSize: 14.5, lineHeight: 1.25,
-                        }}
-                      >
-                        ✦
                       </span>
                     ) : null}
                   </span>

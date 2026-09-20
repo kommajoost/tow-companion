@@ -81,7 +81,8 @@ export interface RosterRow {
   points: number;
   /** Model count (the entry's count). */
   count: number;
-  /** This unit carries magic items → the ✦ glyph after the name. */
+  /** This unit carries magic items. Stond tot 20-09 ook als ✦ achter de naam in de roster; dat is
+   *  eruit (zie UnitRow). Blijft staan voor de teller "Units carrying items" in het zijpaneel. */
   magic: boolean;
   /** Everything the engine finds wrong with THIS entry, verbatim — empty when it is fine.
    *

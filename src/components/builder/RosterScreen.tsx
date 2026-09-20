@@ -485,7 +485,6 @@ export function RosterScreen(props: {
                       whisper={row.whisper}
                       points={row.points}
                       groeiMax={row.groeiMax}
-                      magic={row.magic}
                       issues={row.issues}
                       // The row that caused the last change keeps the white background + 3px inset
                       // accent rail until the next interaction; the row whose actions are showing gets

@@ -67,7 +67,7 @@ const ROW_NAME: React.CSSProperties = {
   // enough for text-overflow to kick in.
   flex: 1, minWidth: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
 };
-// The fixed-width bits of the name line (the count prefix, the ✦ glyph): the same type scale as the
+// The fixed-width bits of the name line (the count prefix): the same type scale as the
 // name, but they never shrink and never ellipsise, so they survive however long the name is.
 const ROW_FIXED: React.CSSProperties = {
   fontFamily: towFont.serif, fontSize: 14.5, lineHeight: 1.25, flex: '0 0 auto',
@@ -224,12 +224,17 @@ export function SectionHeader({ label, meta, violated, dense }: {
 /**
  * The phone roster row: exactly 44px tall (hairline included), two lines, 7px vertical padding.
  *
- * The count prefix and the ✦ magic glyph sit OUTSIDE the ellipsising name span (both `flexShrink: 0`)
- * so a very long unit name truncates in the middle of the row instead of eating the count or the
- * glyph — the two bits of information you most need when scanning a roster.
+ * The count prefix sits OUTSIDE the ellipsising name span (`flexShrink: 0`) so a very long unit name
+ * truncates in the middle of the row instead of eating the count — the thing you most need when
+ * scanning a roster.
+ *
+ * Hier stond tot 20-09 een ✦ achter de naam van elke unit die magic items droeg. Eruit op verzoek
+ * (Joost): een gouden sterretje achter een character zegt niet uit zichzelf WAT het betekent, en bij
+ * characters — die vrijwel altijd items dragen — markeerde het eerder de regel dan de uitzondering.
+ * Wie het wil weten leest de loadout eronder; het aantal dragers staat nog gewoon in het zijpaneel.
  */
 export function UnitRow({
-  count, name, bijnaam, whisper, points, groeiMax, magic, selected, issues, onClick, onLongPress,
+  count, name, bijnaam, whisper, points, groeiMax, selected, issues, onClick, onLongPress,
 }: {
   count?: number; name: string;
   /** Campagne: het puntenplafond van deze unit deze Act. Staat er altijd bij, niet pas bij overschrijding. */
@@ -239,7 +244,7 @@ export function UnitRow({
    *  het datasheet herken je zo altijd, ook als twee regimenten dezelfde eigennaam-stijl hebben. */
   bijnaam?: string;
   whisper?: string; points: number;
-  magic?: boolean; selected?: boolean; issues?: string[];
+  selected?: boolean; issues?: string[];
   onClick?: () => void; onLongPress?: () => void;
 }): React.JSX.Element {
   const { handlers, consumeLongPress } = useLongPress(onLongPress);
@@ -277,9 +282,6 @@ export function UnitRow({
             </span>
           ) : null}
           <span style={ROW_NAME}>{name}</span>
-          {magic ? (
-            <span style={{ ...ROW_FIXED, color: TOW.gold, paddingLeft: 4 }}>✦</span>
-          ) : null}
         </span>
         {/* A problem REPLACES the loadout whisper rather than being added under it: the row is a fixed
             44px and a third line would break that rhythm for every row in the list. The loadout is
