@@ -158,8 +158,25 @@ await mapLimit(slugs, 10, async (slug, idx) => {
   if (!body && f.bodyIndex) body = clean(String(f.bodyIndex));
   // Het wapenprofiel als structuur (Range/Strength/AP/Special Rules) — zie `profielen`.
   const prof = f.body ? profielen(f.body) : [];
+  // WAAR KOMT DIT ITEM VANDAAN (20-09-2026). De wiki hangt aan elk item een `association` — het boek
+  // waarin het staat — en een `pageReference`. Op de site lees je dat als "Arcane Journal: The March
+  // of Chaos, p. 46". Wij legden het niet vast, en daardoor was een simpele vraag als "welke items
+  // kwamen uit het Chaos-journal?" alleen te beantwoorden door in de git-historie te graven naar
+  // welke sync ze had binnengebracht. Nu staat het bij het item zelf. Regelpagina's dragen dit al
+  // (zie `Rule.source` + `pageReference`), dus dit trekt de items gelijk.
+  const bronVeld = Array.isArray(f.association) ? f.association[0]?.fields : null;
+  const bron = bronVeld?.name ? String(bronVeld.name) : '';
+  const bronKort = bronVeld?.abbreviation ? String(bronVeld.abbreviation) : '';
+  const pagina = typeof f.pageReference === 'number' ? f.pageReference : null;
   if (description || body || prof.length) {
-    result[slug] = { description, body, ...(prof.length ? { profiel: prof } : {}) };
+    result[slug] = {
+      description,
+      body,
+      ...(prof.length ? { profiel: prof } : {}),
+      ...(bron ? { bron } : {}),
+      ...(bronKort ? { bronKort } : {}),
+      ...(pagina != null ? { pagina } : {}),
+    };
     ok++;
   }
   if (idx % 50 === 0) process.stdout.write(`. ${idx}\n`);
