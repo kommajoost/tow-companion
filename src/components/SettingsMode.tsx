@@ -5,7 +5,7 @@ import { usePwa } from '../pwa';
 import { supabase, TOW_FEEDBACK } from '../lib/supabase';
 import { useAuth, authSignIn, authSignUp, authSignOut, authResetPassword } from '../lib/auth';
 import { useListSync } from '../listSync';
-import { deriveKey, type CloudLists } from '../lib/listSync';
+import { deriveKey, type CloudLists, type CloudVersie } from '../lib/listSync';
 import {
   useCampagnes, kiesCampagne, verversCampagnes, hernoemRegiment, regimentSlug,
 } from '../lib/campaign';
@@ -194,6 +194,103 @@ export function SettingsMode() {
   );
 }
 
+/**
+ * "Earlier versions" — de bewaarde cloud-kopieën, en de knop om er een terug te zetten.
+ *
+ * WAAROM DIT ER MOET ZIJN. De server bewaart al sinds 02-08 de laatste tien versies per sleutel, en
+ * de botsings-dialoog beloofde met zoveel woorden dat de niet-gekozen kopie terug te halen was. Maar
+ * er was geen enkele weg ernaartoe: "Fetch now" haalt de HUIDIGE rij op, en die had je met "Keep this
+ * device" net zelf overschreven. De belofte klopte op de server en nergens anders (Joost 20-09).
+ *
+ * Standaard ingeklapt: dit is een noodgreep, geen dagelijks gereedschap, en tien tijdstempels boven
+ * de gewone knoppen maken het scherm alleen maar drukker.
+ *
+ * Terugzetten VRAAGT een bevestiging, anders dan "Fetch now". Daar haal je op wat er nú staat; hier
+ * draai je de tijd terug op alle apparaten tegelijk, en dat is niet iets wat je per ongeluk doet.
+ */
+function EerdereVersies({ body, ghostBtn }: { body: React.CSSProperties; ghostBtn: React.CSSProperties }) {
+  const sync = useListSync();
+  const [open, setOpen] = useState(false);
+  const [rijen, setRijen] = useState<CloudVersie[] | null>(null);
+  const [bezig, setBezig] = useState(false);
+  const [fout, setFout] = useState<string | null>(null);
+  const [bevestig, setBevestig] = useState<number | null>(null);
+
+  const laad = async () => {
+    setBezig(true); setFout(null);
+    try { setRijen(await sync.versies()); }
+    catch (e) { setFout(e instanceof Error ? e.message : 'Could not load earlier versions.'); }
+    finally { setBezig(false); }
+  };
+
+  if (!open) {
+    return (
+      <button
+        style={{ ...ghostBtn, marginTop: 8, color: TOW.muted, borderColor: TOW.line }}
+        onClick={() => { setOpen(true); if (!rijen) void laad(); }}
+      >
+        Earlier versions…
+      </button>
+    );
+  }
+
+  const wanneer = (iso: string) => new Date(iso).toLocaleString([], { dateStyle: 'short', timeStyle: 'short' });
+
+  return (
+    <div style={{ marginTop: 10, border: `1px solid ${TOW.line}`, borderRadius: 10, padding: '10px 12px', background: TOW.panel }}>
+      <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 8, marginBottom: 8 }}>
+        <div style={{ ...eb, fontSize: 8.5, color: TOW.gold }}>Earlier versions</div>
+        <button style={{ ...ghostBtn, padding: '4px 8px', fontSize: 12, borderColor: TOW.line, color: TOW.muted }} onClick={() => setOpen(false)}>Close</button>
+      </div>
+      <div style={{ ...body, marginBottom: 10 }}>
+        The last ten saved copies of this key, newest first. Taking one puts it back on this device
+        <b> and</b> in the cloud, so your other devices get it too.
+      </div>
+      {bezig && <div style={{ ...body, fontStyle: 'italic' }}>Loading…</div>}
+      {fout && <div style={{ ...body, color: TOW.blood }}>{fout}</div>}
+      {rijen && rijen.length === 0 && !bezig && (
+        <div style={{ ...body, fontStyle: 'italic', color: TOW.muted }}>
+          Nothing saved yet — a version is kept each time the cloud copy is replaced.
+        </div>
+      )}
+      {rijen && rijen.length > 0 && (
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+          {rijen.map((v) => (
+            <div key={v.id} style={{ border: `1px solid ${TOW.line}`, borderRadius: 9, padding: '8px 10px', background: TOW.cardLt }}>
+              <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 8 }}>
+                <span style={{ fontFamily: towFont.display, fontWeight: 600, fontSize: 13.5, color: TOW.ink }}>
+                  {v.aantal} list{v.aantal === 1 ? '' : 's'}
+                </span>
+                <span style={{ fontFamily: towFont.serif, fontSize: 11.5, color: TOW.muted }}>until {wanneer(v.vervangenOp)}</span>
+              </div>
+              {/* De NAMEN, niet alleen een aantal: "5 lists" zegt niet of dit de kopie is die je zoekt. */}
+              {v.namen.length > 0 && (
+                <div style={{ fontFamily: towFont.serif, fontSize: 12, color: TOW.inkDim, lineHeight: 1.45, marginTop: 2 }}>
+                  {v.namen.slice(0, 6).join(', ')}{v.namen.length > 6 ? `, and ${v.namen.length - 6} more` : ''}
+                </div>
+              )}
+              {bevestig === v.id ? (
+                <div style={{ display: 'flex', gap: 6, marginTop: 8, flexWrap: 'wrap' }}>
+                  <button
+                    style={{ ...ghostBtn, padding: '6px 10px', fontSize: 12.5, borderColor: TOW.goldDeep, color: TOW.ink, opacity: sync.status === 'syncing' ? 0.6 : 1 }}
+                    disabled={sync.status === 'syncing'}
+                    onClick={async () => { await sync.herstelVersie(v.id); setBevestig(null); void laad(); }}
+                  >
+                    Yes, replace everything with this
+                  </button>
+                  <button style={{ ...ghostBtn, padding: '6px 10px', fontSize: 12.5, borderColor: TOW.line, color: TOW.muted }} onClick={() => setBevestig(null)}>Cancel</button>
+                </div>
+              ) : (
+                <button style={{ ...ghostBtn, padding: '6px 10px', fontSize: 12.5, marginTop: 8 }} onClick={() => setBevestig(v.id)}>Restore this</button>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 // Sync your saved army lists + groups across devices with a self-chosen password (no login). The
 // password is hashed into the actual sync key (see deriveKey); same password → same syncs.
 function ListSyncSection({
@@ -269,6 +366,7 @@ function ListSyncSection({
             <button style={{ ...ghostBtn, opacity: sync.status === 'syncing' ? 0.6 : 1 }} disabled={sync.status === 'syncing'} onClick={() => sync.pushNow()}>Upload now</button>
             <button style={{ ...ghostBtn, opacity: sync.status === 'syncing' ? 0.6 : 1 }} disabled={sync.status === 'syncing'} onClick={() => sync.pullNow()}>Fetch now</button>
           </div>
+          <EerdereVersies body={body} ghostBtn={ghostBtn} />
         </>
       ) : sync.key ? (
         // ── Connected with a self-chosen password (the no-login route) ──
@@ -307,6 +405,7 @@ function ListSyncSection({
             <button style={{ ...ghostBtn, opacity: sync.status === 'syncing' ? 0.6 : 1 }} disabled={sync.status === 'syncing'} onClick={() => sync.pullNow()}>Fetch now</button>
             <button style={{ ...ghostBtn, color: TOW.muted, borderColor: TOW.line }} onClick={stop}>Stop syncing</button>
           </div>
+          <EerdereVersies body={body} ghostBtn={ghostBtn} />
         </>
       ) : choice ? (
         // ── Conflict on connect: both this device and the password already have lists ──

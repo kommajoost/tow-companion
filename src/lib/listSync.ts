@@ -58,6 +58,52 @@ export async function pullLists(key: string): Promise<CloudLists | null> {
   };
 }
 
+// ── EERDERE VERSIES ─────────────────────────────────────────────────────────────────────────────
+// De server bewaart al sinds 02-08 de laatste 10 versies per sleutel (trigger
+// `tow_lists_bewaar_versie`), en de botsings-dialoog belooft ook "the previous version stays
+// recoverable". Alleen kon de app daar niet bij: `pullLists` geeft uitsluitend de huidige rij. Wie
+// bij een botsing "Keep this device" koos, overschreef de cloud dus voorgoed — de andere kopie stond
+// er nog, onbereikbaar. Vandaar deze twee: een index om te kiezen, en één om op te halen.
+
+export interface CloudVersie {
+  id: number;
+  /** Wanneer deze versie is VERVANGEN — dus tot dat moment was dit de cloud-inhoud. */
+  vervangenOp: string;
+  /** De `updated_at` die de rij zelf had toen hij nog actueel was. */
+  wasUpdatedAt: string | null;
+  aantal: number;
+  /** De namen van de lijsten in deze versie: een aantal alleen zegt niet of je ze mist. */
+  namen: string[];
+}
+
+/** De bewaarde versies van een sleutel, nieuwste eerst. Leeg als er nooit iets overschreven is. */
+export async function pullVersions(key: string): Promise<CloudVersie[]> {
+  const { data, error } = await supabase.rpc('tow_lists_versies', { p_key: cleanKey(key) });
+  if (error) throw error;
+  const rijen = (Array.isArray(data) ? data : []) as {
+    id: number; vervangen_op: string; was_updated_at: string | null; aantal: number; namen: string[] | null;
+  }[];
+  return rijen.map((r) => ({
+    id: r.id,
+    vervangenOp: r.vervangen_op,
+    wasUpdatedAt: r.was_updated_at,
+    aantal: typeof r.aantal === 'number' ? r.aantal : 0,
+    namen: Array.isArray(r.namen) ? r.namen : [],
+  }));
+}
+
+/** De volledige inhoud van één bewaarde versie (null als hij inmiddels weggesnoeid is). */
+export async function pullVersion(key: string, id: number): Promise<{ lists: unknown[]; groups: unknown[] } | null> {
+  const { data, error } = await supabase.rpc('tow_lists_versie', { p_key: cleanKey(key), p_id: id });
+  if (error) throw error;
+  const row = (Array.isArray(data) ? data[0] : data) as { lists?: unknown; groups?: unknown } | undefined;
+  if (!row) return null;
+  return {
+    lists: Array.isArray(row.lists) ? row.lists : [],
+    groups: Array.isArray(row.groups) ? row.groups : [],
+  };
+}
+
 /** Upload lists + groups for a key (last write wins); returns the new server timestamp.
  *
  *  Sends the CAMPAIGN lists' resolved breakdown along (`p_rendered`): unit, count, points and option

@@ -1,6 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { usePersistentState } from './store';
-import { accountSyncKey, makeSyncKey, pullLists, pushLists, type CloudLists } from './lib/listSync';
+import { accountSyncKey, makeSyncKey, pullLists, pullVersion, pullVersions, pushLists, type CloudLists, type CloudVersie } from './lib/listSync';
 import { useAuth } from './lib/auth';
 import { testSwitchBezig } from './lib/testAccounts';
 
@@ -68,6 +68,10 @@ interface ListSyncValue {
   pullNow: () => Promise<void>;
   pushNow: () => Promise<void>;
   disconnect: () => void;
+  /** De bewaarde eerdere versies van deze sleutel, nieuwste eerst. */
+  versies: () => Promise<CloudVersie[]>;
+  /** Zet een bewaarde versie terug — hier én in de cloud, zodat je andere apparaten hem ook krijgen. */
+  herstelVersie: (id: number) => Promise<void>;
   /** Stap over op de sleutel van het ingelogde account. Null als er niemand is ingelogd. */
   useAccountKey: (() => void) | null;
   /** Open botsing: de cloud zou lijsten wegnemen die hier staan. Niets synct tot dit beantwoord is. */
@@ -249,12 +253,51 @@ export function ListSyncProvider({ children }: { children: ReactNode }) {
     } catch (e) { setStatus('error'); setError(msg(e)); throw e; }
   }, [lists, groups, setSyncAt, setKey, setViaAccount]);
 
+  /** "Fetch now" — de cloud winnen laten, met opzet en op eigen verzoek.
+   *
+   *  Dit is de HANDMATIGE tegenhanger van de botsings-dialoog: die vraagt omdat de app zelf begon,
+   *  hier drukt de speler zelf. Dus geen tweede vraag.
+   *
+   *  Wel moest de GRENDEL eraf (20-09). Stond er een botsing open, dan haalde deze knop de cloud wel
+   *  binnen maar bleef `geblokkeerd` staan — waarna dit apparaat de rest van de sessie niets meer
+   *  pushte en het vraagvenster bleef hangen. De knop leek te werken en hing de sync juist op. */
   const pullNow = useCallback(async () => {
     if (!key) return;
     setStatus('syncing');
     try {
       const cloud = await pullLists(key);
       if (cloud) { lastPushed.current = snap(cloud.lists, cloud.groups); setLists(cloud.lists); setGroups(cloud.groups); setSyncAt(cloud.updatedAt); }
+      setConflict(null);
+      geblokkeerd.current = false;
+      ready.current = true;
+      setStatus('synced'); setError(null);
+    } catch (e) { setStatus('error'); setError(msg(e)); }
+  }, [key, setLists, setGroups, setSyncAt]);
+
+  const versies = useCallback(async (): Promise<CloudVersie[]> => {
+    if (!key) return [];
+    return pullVersions(key);
+  }, [key]);
+
+  /** Een bewaarde versie terugzetten.
+   *
+   *  Hij gaat NIET alleen lokaal terug: hij wordt ook meteen gepusht. Anders zou het volgende apparaat
+   *  dat synct de huidige cloud weer over dit apparaat heen leggen en was het herstel zo weer weg.
+   *  Daarmee is "Keep this device" ook echt terug te draaien in plaats van alleen op papier. */
+  const herstelVersie = useCallback(async (id: number) => {
+    if (!key) return;
+    setStatus('syncing');
+    try {
+      const v = await pullVersion(key, id);
+      if (!v) { setStatus('error'); setError('That version is no longer available.'); return; }
+      const ts = await pushLists(key, v.lists, v.groups);
+      lastPushed.current = snap(v.lists, v.groups);
+      setLists(v.lists);
+      setGroups(v.groups);
+      setSyncAt(ts);
+      setConflict(null);
+      geblokkeerd.current = false;
+      ready.current = true;
       setStatus('synced'); setError(null);
     } catch (e) { setStatus('error'); setError(msg(e)); }
   }, [key, setLists, setGroups, setSyncAt]);
@@ -321,9 +364,10 @@ export function ListSyncProvider({ children }: { children: ReactNode }) {
     key, viaAccount: viaAccount && !!key, status, lastSyncedAt: syncAt, error,
     listCount: Array.isArray(lists) ? lists.length : 0,
     createKey, peek, adoptCloud, pushMine, pullNow, pushNow, disconnect,
+    versies, herstelVersie,
     useAccountKey: user ? useAccountKey : null,
     conflict, resolveConflict,
-  }), [key, viaAccount, status, syncAt, error, lists, createKey, peek, adoptCloud, pushMine, pullNow, pushNow, disconnect, user, useAccountKey, conflict, resolveConflict]);
+  }), [key, viaAccount, status, syncAt, error, lists, createKey, peek, adoptCloud, pushMine, pullNow, pushNow, disconnect, versies, herstelVersie, user, useAccountKey, conflict, resolveConflict]);
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
 }

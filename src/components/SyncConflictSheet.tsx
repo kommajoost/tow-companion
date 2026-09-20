@@ -92,7 +92,8 @@ export function SyncConflictSheet(): React.JSX.Element | null {
         </div>
 
         <p style={{ margin: '12px 0 0', fontFamily: towFont.serif, fontSize: 11.5, lineHeight: 1.5, color: TOW.muted }}>
-          Either way the previous version stays recoverable — the last few are kept.
+          Either way the other copy stays recoverable: the last ten are kept, under
+          {' '}<b>Settings → Sync army lists → Earlier versions</b>.
         </p>
       </div>
     </div>
