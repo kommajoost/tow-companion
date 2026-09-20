@@ -68,6 +68,19 @@ const CAT_LABEL: Record<Category, string> = {
 };
 const CAT_ORDER: Category[] = ['characters', 'core', 'special', 'rare', 'mercenaries', 'allies'];
 
+/** De rijen in de volgorde waarin een army list hoort te staan: Characters, Core, Special, Rare, en
+ *  daarbinnen de volgorde van de roster zelf.
+ *
+ *  De `regular`- en `compact`-vormen kwamen hier al vanzelf aan, omdat die per categorie een kop
+ *  zetten en dus over CAT_ORDER lopen. `simple` heeft geen koppen en liep de rijen af zoals ze binnen-
+ *  kwamen — dat is de volgorde waarin je de units toevallig hebt toegevoegd, en die leest als een
+ *  willekeurige stapel: een War Hydra tussen de characters, Dark Riders onderaan. Sorteren doen we
+ *  daarom hier, voor alle vormen tegelijk, zodat de drie exports niet uiteen kunnen lopen.
+ *
+ *  `sort` is stabiel, dus binnen één categorie blijft staan wat de speler zelf heeft geordend. */
+const opCategorie = (rows: ExportRow[]): ExportRow[] =>
+  [...rows].sort((a, b) => CAT_ORDER.indexOf(a.category) - CAT_ORDER.indexOf(b.category));
+
 /** De catalogus zet bookkeeping-tekens in namen ("{renegade}", "*"); die horen niet in een export.
  *  De laatste stap ruimt de spatie op die overblijft waar een tag vóór een komma stond — anders leest
  *  een special-rules-regel als "Murderous , Strike First". */
@@ -121,7 +134,8 @@ function statRegels(r: ExportRow, opts: ExportOptions, md: boolean): string[] {
  * de NBSP's in de statline. Eén ding is bewust anders: de bronregel noemt DEZE app, want de lijst is
  * hier gemaakt — "Created with Old World Builder" eronder zetten zou simpelweg niet waar zijn.
  */
-export function listToText(rows: ExportRow[], meta: ExportMeta, opts: ExportOptions): string {
+export function listToText(ruweRijen: ExportRow[], meta: ExportMeta, opts: ExportOptions): string {
+  const rows = opCategorie(ruweRijen);
   const md = opts.formatting === 'markdown';
   const compact = opts.listType === 'compact';
   const punten = !opts.hidePoints;
