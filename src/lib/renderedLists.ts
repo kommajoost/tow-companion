@@ -193,7 +193,32 @@ function renderEen(
       fouten = null;
     }
   }
-  const getUnit = (cat: Category, id: string): OwbUnit | undefined => army?.[cat]?.find((u) => u.id === id);
+  // ZOEK OVER ALLE CATEGORIEEN, niet alleen in `e.cat` (21-09-2026).
+  //
+  // Dit was een echte bug. De `cat` van een entry is waar de unit in de LIJST staat; de catalogus
+  // ordent hem op zijn EIGEN basiscategorie, en die twee hoeven niet gelijk te zijn -- een compositie
+  // mag een unit verplaatsen, en een tweede exemplaar kan in een andere sectie belanden. Vonden we
+  // hem niet, dan bleven `punten`, `datasheet` en `us` op null staan; de campagne-app liet dan het
+  // ruwe id met streepjes zien ("river-troll-mob") en telde die punten niet mee.
+  //
+  // Gevonden bij Tim (c8): twee keer River Troll Mob, de ene als `core` en de andere als `special`,
+  // terwijl orc-and-goblin-tribes.json hem alleen onder `core` kent. De eerste rekende netjes uit,
+  // de tweede werd een lege regel en zijn 101 punten verdwenen -- zijn lijst las 399 van de 500.
+  // Joost zag het aan de kleine letters en de streepjes: "Misschien dat het hier ergens mis gaat."
+  //
+  // Eerst de eigen categorie (verreweg het gewone geval, en het goedkoopst), daarna pas de rest.
+  // `unitCategoryFor` hieronder bepaalt vervolgens ALSNOG de effectieve sectie, dus de weergave klopt
+  // ook als de basiscategorie een andere is dan waar hij in de lijst staat.
+  const CATEGORIEEN: Category[] = ['characters', 'core', 'special', 'rare', 'mercenaries', 'allies'];
+  const getUnit = (cat: Category, id: string): OwbUnit | undefined => {
+    const eigen = army?.[cat]?.find((u) => u.id === id);
+    if (eigen || !army) return eigen;
+    for (const c of CATEGORIEEN) {
+      const gevonden = army[c]?.find((u) => u.id === id);
+      if (gevonden) return gevonden;
+    }
+    return undefined;
+  };
   const entries: RenderedEntry[] = (list.entries ?? []).map((e: ListEntry) => {
     const unit = getUnit(e.cat, e.unitId);
     const count = Math.max(1, e.count || 1);
