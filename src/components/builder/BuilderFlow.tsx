@@ -26,6 +26,7 @@ import {
   CATEGORIES, COMPOSITION_RULES, entryPoints, loadoutLabels, selectedMagicItems, unitAllowedIn,
   unitCategoryFor, unitBlocks, unitNote,
   type BuilderList, type Category, type ListEntry, type MagicItemsData, type OwbArmy, type OwbUnit,
+  findUnit,
 } from '../../lib/owbBuilder';
 import { deriveList, optionSummary } from '../../lib/builderDerived';
 import { makeTroopTypeLookup } from '../../lib/troopTypes';
@@ -189,7 +190,9 @@ export function BuilderFlow({
   const [catalogueOpen, setCatalogueOpen] = useState(false);
 
   const getUnit = useCallback(
-    (cat: Category, unitId: string): OwbUnit | undefined => army?.[cat]?.find((u) => u.id === unitId),
+    // Over alle categorieën (22-09-2026, zie findUnit): anders verdwijnt een entry uit de roster zodra
+    // de catalogus hem verplaatst, en kan de speler hem niet eens meer weghalen.
+    (cat: Category, unitId: string): OwbUnit | undefined => findUnit(army, cat, unitId),
     [army],
   );
 

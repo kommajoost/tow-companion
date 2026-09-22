@@ -13,6 +13,7 @@ import {
   loadoutLabels, magicTypeLabel, selectedMountIndex, DEFAULT_MAGIC_BUDGET,
   type Category, type OwbArmy, type OwbUnit, type BuilderList, type ListEntry, type Validation,
   type MagicItemsData, type MagicCategory, type MagicItem,
+  findUnit,
 } from '../../lib/owbBuilder';
 import { applyMountStatModifiers, mountStatModifiers } from '../../lib/mountModifiers';
 import { CompositionInfo } from './CompositionInfo';
@@ -182,7 +183,7 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
   const { rules, lores } = useData();
   const { openRule } = useUI();
   const ruleIdx = useMemo(() => getRuleIndex(rules), [rules]);
-  const getUnit = (cat: Category, id: string): OwbUnit | undefined => army[cat]?.find((u) => u.id === id);
+  const getUnit = (cat: Category, id: string): OwbUnit | undefined => findUnit(army, cat, id); // alle categorieën, 22-09-2026
 
   // ── Campagne-context (Isle of Celedon), alleen voor een campagne-lijst ──────────────────────────
   // Sinds de account-koppeling leeft de context in een module-store die zichzelf bij elke auth-

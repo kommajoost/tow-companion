@@ -1,4 +1,4 @@
-import { entryPoints, unitCategoryFor, type BuilderList, type ListEntry, type MagicItemsData, type OwbArmy, type OwbUnit, type Category } from './owbBuilder';
+import { entryPoints, findUnit, unitCategoryFor, type BuilderList, type ListEntry, type MagicItemsData, type OwbArmy, type OwbUnit, type Category } from './owbBuilder';
 import { deriveList, optionSummary } from './builderDerived';
 import { applyOverlayItems, catalogueFor, hasOverlay, OVERLAY_FILES, type CompositionOverlay } from './overlays';
 import { makeUnitStrengthLookup, makeTroopTypeLookup, TROOP_TYPE_NAMES } from './troopTypes';
@@ -72,12 +72,20 @@ export interface RenderedList {
    *  `null` = niet te bepalen (catalogus/overlay ontbrak) — dan blokkeert de campagne NIET op iets
    *  wat we niet weten. */
   fouten: string[] | null;
+  /** De app-versie die deze opsplitsing uitrekende (22-09-2026). `fouten` is een uitspraak van de
+   *  VALIDATOR van dat moment; verandert die (een regel erbij, een bug eruit), dan is wat in de cloud
+   *  staat verouderd tot iemand opnieuw pusht -- en de sync pushte alleen als de lijsten zelf
+   *  veranderden. Tim zat zo een dag vast op een afkeuring die de app al niet meer gaf. De sync
+   *  vergelijkt dit stempel met zijn eigen versie en pusht één keer opnieuw als het afwijkt. */
+  versie: string;
 }
 
 /** Minimale vorm van een opgeslagen lijst die we hier nodig hebben. */
 type SavedLike = BuilderList & { id?: string; name?: string; army?: string; computedPoints?: number };
 
 const BASE = (import.meta as unknown as { env?: { BASE_URL?: string } }).env?.BASE_URL ?? '/';
+/** Build-constante uit vite.config; buiten Vite (tests) bestaat hij niet. */
+export const APP_VERSIE: string = typeof __APP_VERSION__ !== 'undefined' ? __APP_VERSION__ : 'dev';
 
 // Catalogus-cache per army-slug. De sync pusht gedebounced maar wel váák; opnieuw fetchen per push
 // zou onnodig netwerkverkeer zijn voor data die binnen een sessie niet verandert.
@@ -209,16 +217,9 @@ function renderEen(
   // Eerst de eigen categorie (verreweg het gewone geval, en het goedkoopst), daarna pas de rest.
   // `unitCategoryFor` hieronder bepaalt vervolgens ALSNOG de effectieve sectie, dus de weergave klopt
   // ook als de basiscategorie een andere is dan waar hij in de lijst staat.
-  const CATEGORIEEN: Category[] = ['characters', 'core', 'special', 'rare', 'mercenaries', 'allies'];
-  const getUnit = (cat: Category, id: string): OwbUnit | undefined => {
-    const eigen = army?.[cat]?.find((u) => u.id === id);
-    if (eigen || !army) return eigen;
-    for (const c of CATEGORIEEN) {
-      const gevonden = army[c]?.find((u) => u.id === id);
-      if (gevonden) return gevonden;
-    }
-    return undefined;
-  };
+  // Sinds 22-09-2026 de gedeelde findUnit: dezelfde zoekregel als de builder zelf, zodat de
+  // campagne en de roster nooit meer een verschillend aantal units zien.
+  const getUnit = (cat: Category, id: string): OwbUnit | undefined => findUnit(army, cat, id);
   const entries: RenderedEntry[] = (list.entries ?? []).map((e: ListEntry) => {
     const unit = getUnit(e.cat, e.unitId);
     const count = Math.max(1, e.count || 1);
@@ -249,6 +250,7 @@ function renderEen(
     punten: bekend ? entries.reduce((s, x) => s + (x.punten ?? 0), 0) : (list.computedPoints ?? null),
     entries,
     fouten,
+    versie: APP_VERSIE,
   };
 }
 

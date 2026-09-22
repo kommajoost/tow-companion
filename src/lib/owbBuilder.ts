@@ -70,6 +70,34 @@ export interface OwbUnit {
 }
 export type OwbArmy = Record<Category, OwbUnit[]>;
 
+/** Zoek een unit op id: eerst in de categorie waar de entry in de LIJST staat, daarna in alle andere.
+ *
+ *  DE ENIGE MANIER om een entry aan zijn catalogusregel te koppelen (22-09-2026). Tot vandaag deed
+ *  elke plek `army[e.cat].find(id)`, en dat leek veilig: een entry krijgt zijn `cat` op het moment
+ *  dat je hem uit die sectie van de picker kiest. Maar de catalogus is niet bevroren -- de wekelijkse
+ *  OWB-sync kan een unit verplaatsen of splitsen (River Troll Mob werd `river-troll-mob` in core plus
+ *  `river-troll-mob-special` in special). Een entry die vóór zo'n wijziging is opgeslagen wijst dan
+ *  naar een categorie waar zijn id niet meer staat, en `find` gaf undefined terug. Wat er dan gebeurde
+ *  was erger dan een foutmelding: deriveList sloeg hem over (`if (!unit) continue`), de roster
+ *  toonde hem niet, de punten telden niet mee -- en de speler kon hem niet eens verwijderen, want hij
+ *  zag hem niet. Tim (Isle of Celedon, c8) liep daar drie Acts lang tegenaan: een onzichtbare River
+ *  Troll Mob van 101 punten die de campagne wél zag ("3 troll units") en de builder niet (750 vs 851).
+ *
+ *  Een unit-id is binnen een leger uniek, dus ruimer zoeken kan nooit de verkeerde unit opleveren;
+ *  hooguit vind je er een die je anders gemist had. `unitCategoryFor` bepaalt daarna ALSNOG de
+ *  effectieve sectie voor de telling, dus die klopt ook als de basiscategorie is opgeschoven. */
+export function findUnit(army: Partial<OwbArmy> | null | undefined, cat: Category, id: string): OwbUnit | undefined {
+  if (!army) return undefined;
+  const eigen = army[cat]?.find((u) => u.id === id);
+  if (eigen) return eigen;
+  for (const c of CATEGORIES) {
+    if (c === cat) continue;
+    const gevonden = army[c]?.find((u) => u.id === id);
+    if (gevonden) return gevonden;
+  }
+  return undefined;
+}
+
 // ---- Army-composition (army-of-infamy) helpers -------------------------------------------------
 // The chosen composition (list.composition) can move a unit to a different list category and can drop
 // units entirely. These read the unit's `armyComposition` map; a unit without that map is treated as

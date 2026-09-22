@@ -14,7 +14,7 @@
 // Points always come from `entryPoints()` — the same function the rest of the app totals with — by
 // pricing a hypothetical edited entry and diffing. Nothing here re-derives a points rule.
 
-import { entryPoints, unitCategoryFor, type BuilderList, type Category, type ListEntry, type MagicItemsData, type OwbUnit } from './owbBuilder';
+import { entryPoints, findUnit, unitCategoryFor, type BuilderList, type Category, type ListEntry, type MagicItemsData, type OwbUnit } from './owbBuilder';
 import type { DerivedList } from './builderDerived';
 import type { ResolveFix, SavedListLike } from '../components/builder/types';
 
@@ -42,7 +42,7 @@ export function resolveFixes(
   derived: DerivedList,
   itemsData?: MagicItemsData,
 ): ResolveFix[] {
-  const getUnit = (cat: Category, id: string) => army?.[cat]?.find((u) => u.id === id);
+  const getUnit = (cat: Category, id: string) => findUnit(army, cat, id); // alle categorieën, 22-09-2026
   const fixes: ResolveFix[] = [];
 
   // WHAT CAN A REDUCTION ACTUALLY FIX? Only two things: the points cap, and a category maximum. It

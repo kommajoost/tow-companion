@@ -14,6 +14,7 @@
 import {
   CATEGORIES, loadoutLabels, selectedMagicItems, validate,
   type BuilderList, type Category, type ListEntry, type MagicItemsData, type OwbArmy, type OwbUnit,
+  findUnit,
 } from './owbBuilder';
 
 export interface Violation {
@@ -103,7 +104,8 @@ export function deriveList(
   /** De 0-X-beperkingen; zonder deze wordt er niet op getoetst (zie validate). */
   compRules?: Parameters<typeof validate>[4],
 ): DerivedList {
-  const getUnit = (cat: Category, id: string): OwbUnit | undefined => army?.[cat]?.find((u) => u.id === id);
+  // Over alle categorieën (22-09-2026, zie findUnit): een entry mag nooit stil uit de telling vallen.
+  const getUnit = (cat: Category, id: string): OwbUnit | undefined => findUnit(army, cat, id);
 
   // ── the one and only points/limits computation ────────────────────────────────────────────────
   const v = validate(list, getUnit, itemsData, campaignMods, compRules);

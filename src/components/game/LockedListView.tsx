@@ -1,5 +1,5 @@
 import { TOW, towFont, engraved } from '../../design/tow';
-import { validate, type Category, type OwbArmy, type OwbUnit, type MagicItemsData, type ListEntry } from '../../lib/owbBuilder';
+import { findUnit, validate, type Category, type OwbArmy, type OwbUnit, type MagicItemsData, type ListEntry } from '../../lib/owbBuilder';
 import { COMPOSITION_RULES } from '../../lib/owbBuilder';
 
 // EEN LIJST DIE JE ALLEEN MAG LEZEN. Twee gebruikers:
@@ -62,7 +62,7 @@ export function LockedListView({
   /** Het opschrift van de terugknop linksboven. */
   backLabel?: string;
 }) {
-  const getUnit = (c: Category, id: string): OwbUnit | undefined => army?.[c]?.find((u) => u.id === id);
+  const getUnit = (c: Category, id: string): OwbUnit | undefined => findUnit(army, c, id); // alle categorieën, 22-09-2026
   const v = validate(list, getUnit, itemsData);
 
   // De campagne-band als er geen eigen band is meegegeven — woord voor woord dezelfde tekst als

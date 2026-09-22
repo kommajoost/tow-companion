@@ -4,7 +4,7 @@
 // profiles) directly from the builder entries + the OWB catalogue.
 
 import type { Army, ArmyUnit, UnitProfile } from '../types';
-import { CATEGORIES, campaignUnitId, entryPoints, loadoutLabels, magicItemId, selectedMagicItems, selectedMountIndex, selectedOptions, validate, type BuilderList, type Category, type OwbArmy, type OwbUnit, type MagicItemsData } from './owbBuilder';
+import { CATEGORIES, campaignUnitId, findUnit, entryPoints, loadoutLabels, magicItemId, selectedMagicItems, selectedMountIndex, selectedOptions, validate, type BuilderList, type Category, type OwbArmy, type OwbUnit, type MagicItemsData } from './owbBuilder';
 import { applyMountStatModifiers, mountStatModifiers } from './mountModifiers';
 
 /** Per-item flavour + rules text snapshot (public/owb/magic-item-text.json), keyed by item slug. */
@@ -51,7 +51,7 @@ export type StatRow = { Name: string } & Record<(typeof STAT_COLS)[number], stri
 export interface NamedBuilderList extends BuilderList { name: string; army?: string }
 
 const getUnitFrom = (catalogue: OwbArmy) => (cat: Category, id: string): OwbUnit | undefined =>
-  catalogue[cat]?.find((u) => u.id === id);
+  findUnit(catalogue, cat, id); // alle categorieën, 22-09-2026
 
 /** Total points of a saved list (for the picker chips). */
 export function listTotal(list: BuilderList, catalogue: OwbArmy, itemsData?: MagicItemsData): number {

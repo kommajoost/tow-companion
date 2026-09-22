@@ -186,7 +186,12 @@ export function ListSyncProvider({ children }: { children: ReactNode }) {
         if (cloud && !cancelled) {
           // Minder opsplitsingen dan lijsten → een oudere build vulde deze rij (of hij is nooit gevuld).
           // Eén keer opnieuw pushen; de lijsten zelf veranderen daarbij niet.
-          if ((cloud.lists ?? []).length > cloud.renderedCount) {
+          // Of (22-09-2026): de opsplitsing komt van een ANDERE app-versie. De `fouten` erin zijn het
+          // oordeel van de validator van toen; is die intussen gerepareerd of aangescherpt, dan
+          // blokkeert de campagne op iets wat deze app niet meer (of juist wel) zegt. Eén push per
+          // apparaat per versie; de lijsten zelf veranderen niet, dus de geschiedenis groeit er niet van.
+          const verouderd = (cloud.lists ?? []).length > 0 && cloud.renderedVersie !== __APP_VERSION__;
+          if ((cloud.lists ?? []).length > cloud.renderedCount || verouderd) {
             try {
               const ts = await pushLists(key, cloud.lists, cloud.groups);
               if (!cancelled) { lastPushed.current = snap(cloud.lists, cloud.groups); setSyncAt(ts); }

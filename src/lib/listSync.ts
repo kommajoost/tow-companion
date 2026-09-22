@@ -42,6 +42,10 @@ export interface CloudLists {
    *  campagne-lijsten door) en pushen we één keer opnieuw. Een simpele "heeft-ie-iets"-vlag was te
    *  grof — die blokkeerde precies die inhaal-slag (30-07). */
   renderedCount: number;
+  /** Het versiestempel van de opsplitsing in de cloud (RenderedList.versie), of null als er geen
+   *  is of hij van vóór het stempel dateert. Wijkt hij af van deze build, dan is de keuring die de
+   *  campagne leest van een oudere validator en pushen we één keer opnieuw (22-09-2026). */
+  renderedVersie: string | null;
 }
 
 /** Fetch the lists + groups stored for a key (null if the key has never been pushed). */
@@ -55,6 +59,9 @@ export async function pullLists(key: string): Promise<CloudLists | null> {
     groups: Array.isArray(row.groups) ? row.groups : [],
     updatedAt: row.updated_at,
     renderedCount: Array.isArray(row.rendered) ? row.rendered.length : 0,
+    renderedVersie: Array.isArray(row.rendered) && row.rendered.length
+      ? (String((row.rendered[0] as { versie?: unknown })?.versie ?? '') || null)
+      : null,
   };
 }
 
