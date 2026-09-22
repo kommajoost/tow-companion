@@ -267,7 +267,9 @@ export function BuilderFlow({
         category: unitCategoryFor(unit, list.composition, entry.cat),
         name: unit.name_en,
         bijnaam: (entry.customName ?? '').trim() || undefined,
-        groeiMax: campaignMods?.groei?.[entry.uid]?.max,
+        // `?? undefined`: het plafond is sinds 22-09-2026 null (vervallen) en de kaart verwacht
+        // number | undefined. Null en undefined betekenen hier hetzelfde -- geen plafond tonen.
+        groeiMax: campaignMods?.groei?.[entry.uid]?.max ?? undefined,
         whisper: optionSummary(unit, entry, itemsData),
         points: entryPoints(unit, entry, itemsData),
         count: entry.count,
@@ -766,7 +768,7 @@ export function BuilderFlow({
       pdfBezig={pdfBezig}
       onShowInfo={onShowInfo}
       onNaam={openNaam}
-      groeiMaxVan={(uid) => campaignMods?.groei?.[uid]?.max}
+      groeiMaxVan={(uid) => campaignMods?.groei?.[uid]?.max ?? undefined}
       groeiMinModellenVan={(uid) => campaignMods?.groei?.[uid]?.minModellen ?? undefined}
     />
   ) : null;
@@ -800,7 +802,7 @@ export function BuilderFlow({
           onDuplicate={() => duplicateUnit(screen.uid)}
           onShowInfo={onShowInfo}
           onNaam={openNaam ? () => openNaam(screen.uid) : undefined}
-          groeiMax={campaignMods?.groei?.[screen.uid]?.max}
+          groeiMax={campaignMods?.groei?.[screen.uid]?.max ?? undefined}
           groeiMinModellen={campaignMods?.groei?.[screen.uid]?.minModellen ?? undefined}
         />
       );

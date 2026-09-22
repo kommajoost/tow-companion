@@ -786,7 +786,7 @@ export function validate(
     /** Per unit-uid het maximum dat die unit deze Act mag kosten, plus waar dat vandaan komt.
      *  Alleen units die in een eerdere Act zijn ingediend staan erin; nieuwe units kennen geen
      *  plafond (die passen alleen binnen de gewone puntencap). Komt uit de campagne-server. */
-    groei?: Record<string, { max: number; basis: number; introFase: number; staffel: number; minModellen?: number | null; laatsteFase?: number | null; laatsteKosten?: number | null }>;
+    groei?: Record<string, { max: number | null; basis: number; introFase: number; staffel: number; minModellen?: number | null; laatsteFase?: number | null; laatsteKosten?: number | null }>;
     /** Minor adjustments: hoeveel punten je per Act van bestaande units mag afhalen (14-08-2026). */
     krimpCap?: number | null;
   },
@@ -839,7 +839,10 @@ export function validate(
     // punten per Act naar NIEUWE units in plaats van naar het oppompen van één blok. De server
     // rekent exact hetzelfde na bij het indienen; dit is de versie die je tijdens het bouwen ziet.
     const g = campaignMods?.groei?.[e.uid];
-    if (g && p > g.max) {
+    // `max` is sinds 22-09-2026 null: het groeiplafond per unit is vervallen (Joost: "die 25pts
+    // punten limiet wil ik niet meer"). De check blijft staan met een null-test, zodat hij met een
+    // regel terug is; de server doet precies hetzelfde via v_max in towc_lijst_diff.
+    if (g && g.max != null && p > g.max) {
       warnEntry(e.uid, `${unit.name_en} is ${p} pts; joined in Act ${g.introFase} at ${g.basis}, so the ceiling here is ${g.max} (+${g.staffel} per Act)`);
     }
     // Een item dat bij een ANDERE samenstellingsregel hoort (de twintig uit de Battle March:
@@ -1027,7 +1030,12 @@ export function validate(
         if (seen.has(key)) continue;
         seen.add(key);
         const involved = rows.filter((x) => ids.includes(x.unit.id));
-        const taken = involved.reduce((n, x) => n + x.e.count, 0);
+        // TELT UNITS, NIET MODELLEN (22-09-2026). Hier stond `reduce((n, x) => n + x.e.count, 0)`,
+        // en `count` is het aantal MODELLEN in een regiment. Voor een character maakt dat niets uit
+        // (count 1), maar Tims twee River Troll Mobs van elk 2 modellen werden geteld als VIER, en
+        // "0-1 Orc Boar Boy Mob per 1000 points" leest een mob van 5 modellen als vijf keuzes. Een
+        // 0-X-beperking gaat over het aantal KEUZES dat je maakt, niet over de grootte ervan.
+        const taken = involved.length;
         if (taken <= allowed) continue;
         const names = [...new Set(involved.map((x) => plainName(x.unit.name_en)))];
         const label = names.length > 1 ? `${names.slice(0, -1).join(', ')} or ${names[names.length - 1]}` : names[0];
@@ -1052,6 +1060,10 @@ export function validate(
     const comp = compRules[list.composition];
     const isBattleMarch = rule === 'battle-march';
     let nul_x_gebruikt = 0;
+    // Welke regels die melding veroorzaken. Joost 22-09-2026: "ik wil ook dat als je zo'n melding
+    // krijgt dat er dan ook een melding komt bij de unit waar het mis gaat." Tim kreeg "teveel 0-1
+    // choices" als losse regel bovenaan en kon nergens zien welke unit het was.
+    const nul_x_rijen: typeof rows = [];
     for (const [, blok] of Object.entries(comp ?? {})) {
       for (const r of blok?.units ?? []) {
         if (r.max == null || !Array.isArray(r.ids) || !r.ids.length) continue;
@@ -1059,7 +1071,7 @@ export function validate(
         const inLijst = rows.filter((x) => r.ids.includes(x.e.unitId));
         if (!inLijst.length) continue;
         const max = r.points ? Math.floor(target / r.points) * r.max : r.max;
-        if (isBattleMarch && r.points) { nul_x_gebruikt += 1; continue; }
+        if (isBattleMarch && r.points) { nul_x_gebruikt += 1; nul_x_rijen.push(...inLijst); continue; }
         if (inLijst.length > max) {
           const namen = [...new Set(inLijst.map((x) => x.unit.name_en))].join(', ');
           const perPt = r.points ? ` (0-${r.max} per ${r.points} pts)` : '';
@@ -1069,7 +1081,12 @@ export function validate(
       }
     }
     if (isBattleMarch && nul_x_gebruikt > 1) {
-      warnings.push(`Battle March allows a single "0-X per 1,000 points" option — you have ${nul_x_gebruikt}`);
+      const namen = [...new Set(nul_x_rijen.map((x) => x.unit.name_en))];
+      const message = `Battle March allows a single "0-X per 1,000 points" option — you have ${nul_x_gebruikt}: ${namen.join(', ')}`;
+      warnings.push(message);
+      // Ook OP de units zelf, zodat je ziet welke je moet laten vallen in plaats van je hele lijst
+      // af te moeten zoeken.
+      for (const x of nul_x_rijen) warnEntry(x.e.uid, `One of your "0-X per 1,000 points" options — Battle March allows only one`);
     }
   }
 

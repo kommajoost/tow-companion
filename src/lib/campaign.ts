@@ -629,7 +629,12 @@ export function campaignPointsCap(ctx: CampaignContext): number {
 export const groeiStaffel = (cat: string): number => (cat === 'characters' ? 50 : 25);
 
 export interface GroeiPlafond {
-  max: number; basis: number; introFase: number; staffel: number;
+  /** GEEN PLAFOND MEER sinds 22-09-2026 (Joost: "die 25pts punten limiet wil ik niet meer, haal hem
+   *  weg"). `max` is daarom null; de server doet exact hetzelfde (`v_max := null` in towc_lijst_diff)
+   *  en alles wat het plafond leest test eerst op null. Het veld blijft staan zodat de limiet met een
+   *  regel terug is als Joost zich bedenkt, en omdat de rest van dit record wél in gebruik is:
+   *  `laatsteKosten` draagt het krimp-budget. */
+  max: number | null; basis: number; introFase: number; staffel: number;
   /** Modellenaantal bij de laatste inzending. Was tot 14-08-2026 een harde ONDERGRENS; sindsdien
    *  alleen nog informatief — krimpen mag, binnen het punten-budget hieronder. */
   minModellen: number | null; laatsteFase: number | null;
@@ -656,9 +661,9 @@ export function groeiPlafonds(
   for (const b of ctx.baseline) {
     if (b.eersteKosten == null) continue;
     const staffel = groeiStaffel(catVan(b.uid) ?? b.cat);
-    const acts = Math.max(0, ctx.fase - b.introFase);
     uit[b.uid] = {
-      max: b.eersteKosten + staffel * acts, basis: b.eersteKosten, introFase: b.introFase, staffel,
+      // Was: b.eersteKosten + staffel * acts. Zie de toelichting bij GroeiPlafond.max.
+      max: null, basis: b.eersteKosten, introFase: b.introFase, staffel,
       minModellen: b.laatsteModellen, laatsteFase: b.laatsteFase,
       laatsteKosten: b.laatsteKosten,
     };
