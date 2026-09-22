@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { usePersistentState } from '../../store';
 import { TOW, towFont, engraved } from '../../design/tow';
-import { validate, type OwbArmy, type OwbUnit, type BuilderList, type MagicItemsData, type CompositionRules } from '../../lib/owbBuilder';
+import { findUnit, validate, type OwbArmy, type OwbUnit, type BuilderList, type MagicItemsData, type CompositionRules } from '../../lib/owbBuilder';
 import { compName } from '../../lib/armies';
 import { troopTypeName } from '../../lib/troopTypes';
 import { BuilderWorkspace } from './BuilderWorkspace';
@@ -300,7 +300,13 @@ export function ListBuilder() {
       items = applyOverlayItems(itemsData, ov);
     }
     c = catalogueFor(cat, l.composition, ov);
-    return validate(l, (k, id) => c[k]?.find((u) => u.id === id), items).total;
+    // findUnit, niet c[k].find (22-09-2026). Dit was de ACHTSTE lookup, en de gevaarlijkste: hij
+    // schrijft `computedPoints`, en dat veld is wat de CAMPAGNE-server als puntensom leest
+    // (towc_lijst_diff: v_punten := computedPoints). Stond een entry-id niet in zijn eigen categorie
+    // -- na een catalogus-verschuiving, zie findUnit -- dan viel die unit hier stil weg en schreef dit
+    // scherm een te laag totaal naar de cloud, terwijl de builder zelf al het juiste getal toonde.
+    // Tim zag 648/750 in het overzicht en 750/750 in de lijst; de server geloofde de 648.
+    return validate(l, (k, id) => findUnit(c, k, id), items).total;
   };
 
   // ── Campagne: de ECHTE puntensom meeschrijven (`computedPoints`) ────────────────────────────────
