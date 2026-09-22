@@ -915,6 +915,13 @@ export function validate(
   const hasGrandMelee = rule === 'grand-melee' || rule === 'combined-arms-grand-melee';
   const hasCombinedArms = rule === 'combined-arms' || rule === 'combined-arms-grand-melee';
   const isBattleMarch = rule === 'battle-march';
+  // Battle March mag onder de 1.000 punten precies EEN "0-X per 1.000 points"-keuze hebben. Twee
+  // checks tellen daaraan mee -- de tekst-gebaseerde (unitNote) en de gestructureerde
+  // (composition-rules) -- dus de teller en de betrokken rijen staan hier, boven allebei.
+  // 22-09-2026: hiervoor telde alleen de gestructureerde check, en de tekst-check rekende bij
+  // 750 punten domweg 0 toegestaan. Zie Tims Orc Boar Boy Mob.
+  let nul_x_gebruikt = 0;
+  const nul_x_rijen: typeof rows = [];
 
   // Grand Melee: a single character or unit may not exceed 25% of the army's points.
   if (hasGrandMelee && target > 0) {
@@ -1020,6 +1027,17 @@ export function validate(
           ? [...new Set(lim.names.map(resolveName).filter((id): id is string => !!id))]
           : [r.unit.id];
         if (ids.length === 0) continue;
+        // BATTLE MARCH (22-09-2026): onder de 1.000 punten mag je in deze samenstelling juist WEL een
+        // "0-X per 1.000 points"-keuze hebben, precies een. De gestructureerde check hieronder wist dat
+        // al; deze tekst-gebaseerde check niet, en rekende bij 750 punten floor(750/1000) = 0 toegestaan.
+        // Tim liep daarop vast met "Orc Boar Boy Mob: 0 allowed". Per-punten-limieten tellen hier
+        // daarom mee in dezelfde Battle March-telling als de gestructureerde regels, en de gewone
+        // vlakke maxima (zonder "per N points") blijven gewoon gelden.
+        if (isBattleMarch && lim.perPoints != null) {
+          nul_x_gebruikt += 1;
+          nul_x_rijen.push(...rows.filter((x) => ids.includes(x.unit.id)));
+          continue;
+        }
         const allowed = lim.perPoints != null ? lim.max * Math.floor(target / lim.perPoints) : lim.max;
         // Entries that share one slot carry the SAME note (all three Orc bosses say "0-1 Black Orc
         // Warboss, Orc Warboss or Orc Weirdnob per 1000 points"), so the rule is checked once.
@@ -1058,12 +1076,6 @@ export function validate(
   //     punten juist één zo'n optie hebben. In plaats daarvan mag je er maar ÉÉN in je hele lijst.
   if (compRules && target > 0) {
     const comp = compRules[list.composition];
-    const isBattleMarch = rule === 'battle-march';
-    let nul_x_gebruikt = 0;
-    // Welke regels die melding veroorzaken. Joost 22-09-2026: "ik wil ook dat als je zo'n melding
-    // krijgt dat er dan ook een melding komt bij de unit waar het mis gaat." Tim kreeg "teveel 0-1
-    // choices" als losse regel bovenaan en kon nergens zien welke unit het was.
-    const nul_x_rijen: typeof rows = [];
     for (const [, blok] of Object.entries(comp ?? {})) {
       for (const r of blok?.units ?? []) {
         if (r.max == null || !Array.isArray(r.ids) || !r.ids.length) continue;
@@ -1080,14 +1092,16 @@ export function validate(
         }
       }
     }
-    if (isBattleMarch && nul_x_gebruikt > 1) {
-      const namen = [...new Set(nul_x_rijen.map((x) => x.unit.name_en))];
-      const message = `Battle March allows a single "0-X per 1,000 points" option — you have ${nul_x_gebruikt}: ${namen.join(', ')}`;
-      warnings.push(message);
-      // Ook OP de units zelf, zodat je ziet welke je moet laten vallen in plaats van je hele lijst
-      // af te moeten zoeken.
-      for (const x of nul_x_rijen) warnEntry(x.e.uid, `One of your "0-X per 1,000 points" options — Battle March allows only one`);
-    }
+  }
+  // De Battle March-telling afronden, BUITEN het compRules-blok: ook zonder composition-rules kan de
+  // tekst-check twee per-punten-keuzes hebben geteld. Joost 22-09-2026: "ik wil ook dat als je zo'n
+  // melding krijgt dat er dan ook een melding komt bij de unit waar het mis gaat." Tim kreeg "teveel
+  // 0-1 choices" als losse regel bovenaan en kon nergens zien welke unit het was.
+  if (isBattleMarch && nul_x_gebruikt > 1) {
+    const namen = [...new Set(nul_x_rijen.map((x) => x.unit.name_en))];
+    const message = `Battle March allows a single "0-X per 1,000 points" option — you have ${nul_x_gebruikt}: ${namen.join(', ')}`;
+    warnings.push(message);
+    for (const x of nul_x_rijen) warnEntry(x.e.uid, `One of your "0-X per 1,000 points" options — Battle March allows only one`);
   }
 
   if (total > target) warnings.push(`Over the points limit by ${total - target}`);
