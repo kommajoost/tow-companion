@@ -8,6 +8,7 @@
 // Ambiguous text remains in the per-pack coverage ledger. Points, option prices and prose rules that
 // already live in the overlay are preserved.
 import { readFileSync, writeFileSync } from 'node:fs';
+import { correctDarkElvesV2 } from './patch-dark-elves-v2.mjs';
 
 const REN = new URL('../public/renegade/', import.meta.url);
 const OWB = new URL('../public/owb/', import.meta.url);
@@ -1380,6 +1381,7 @@ for (const [key, army] of Object.entries(PACKS)) {
     }
   }
 
+  if (key === 'de') correctDarkElvesV2(overlay);
   writeFileSync(overlayUrl, `${JSON.stringify(overlay, null, 2)}\n`);
   const counts = Object.fromEntries(['applied', 'captured', 'unresolved', 'unsupported', 'todo'].map((status) => [
     status,

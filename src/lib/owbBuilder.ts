@@ -22,6 +22,10 @@ export interface OwbOption {
   // "Wizard" header on a Sorceress). `exclusive` — the option is one-of among its SIBLINGS in the
   // same nested list (a radio choice, e.g. "Level 3 Wizard" vs "Level 4 Wizard").
   alwaysActive?: boolean; exclusive?: boolean; minimum?: number; maximum?: number;
+  /** Optional one-of group among top-level toggles; indices stay stable for saved lists. */
+  exclusiveGroup?: string;
+  /** Cap the number of UNITS taking any upgrade in this shared group. */
+  unitLimit?: { group: string; max: number; perPoints: number };
   // `stackable` — NOT a toggle: a COUNT of how many models in the unit take it, each paying `points`.
   // The army lists word it "Any model in the unit may take one of the following: Additional hand
   // weapon +3 points per model", so a unit can mix — two models with great weapons, one with an
@@ -38,7 +42,7 @@ export interface OwbOption {
   // Some options unlock a magic-item allowance when taken — e.g. a "Standard bearer" command option
   // lets the unit buy a magic standard (`{ types: ["banner"], maxPoints: 50 }`). Surfaced as an extra
   // magic category (gated on the option being active) by `magicCategories`.
-  magic?: { types: string[]; maxPoints?: number; maxItemsPerCategory?: number };
+  magic?: { types: string[]; maxPoints?: number; maxItemsPerCategory?: number; multipleItems?: boolean };
 }
 // A unit's magic-item "section" (from the catalogue's per-unit `items[]`). Each section permits a
 // set of item `types` (mapping to the `type` field in magic-items.json) and carries its own
@@ -49,6 +53,14 @@ export interface OwbItemSection {
   name_en: string; name_cn?: string; name_de?: string; name_es?: string; name_fr?: string;
   types: string[]; maxPoints?: number; maxItemsPerCategory?: number; selected?: unknown[];
 }
+export interface CompositionPlacement {
+  category?: Category;
+  notes?: { name_en?: string };
+  requiresUnitIds?: string[];
+  maxUnits?: number;
+  limitGroup?: string;
+}
+
 export interface OwbUnit {
   id: string; name_en: string; points?: number; minimum?: number; maximum?: number;
   command?: OwbOption[]; equipment?: OwbOption[]; armor?: OwbOption[]; options?: OwbOption[];
@@ -66,7 +78,7 @@ export interface OwbUnit {
   /** Per army-composition placement (from OWB): { <compId>: { category, notes } }. A unit's list
    *  category can differ per composition (e.g. State Troops are Core normally, Special for a knightly
    *  order), and a unit is only available in the compositions it lists. */
-  armyComposition?: Record<string, { category?: Category; notes?: { name_en?: string } }>;
+  armyComposition?: Record<string, CompositionPlacement>;
 }
 export type OwbArmy = Record<Category, OwbUnit[]>;
 
@@ -149,7 +161,9 @@ export function unitCompNote(unit: OwbUnit, composition: string): string | undef
  *  notes — including "0-1 Supreme Sorceress per 1000 points" — resolved to `undefined` and was neither
  *  shown nor checked. */
 export function unitNote(unit: OwbUnit, composition: string): string | undefined {
-  return unitCompNote(unit, composition) || unit.notes?.name_en?.trim() || undefined;
+  // An explicitly empty overlay note clears obsolete base restrictions; absence still falls back.
+  const own = unit.armyComposition?.[composition]?.notes?.name_en;
+  return own != null ? own.trim() || undefined : unit.notes?.name_en?.trim() || undefined;
 }
 
 // ---- Restriction notes, PARSED ----------------------------------------------------------------
@@ -320,6 +334,18 @@ export function unitBlocks(unit: OwbUnit): OptionBlock[] {
       })).filter(({ opt }) => opt && opt.name_en && !opt.hidden),
     };
   }).filter((b) => b.items.length > 0);
+}
+
+/** Toggle one optional choice, removing only siblings in its declared one-of group. */
+export function toggleOption(unit: OwbUnit, entry: ListEntry, key: string): string[] {
+  if (entry.opts.includes(key)) return entry.opts.filter((k) => k !== key);
+  const [group, index] = key.split('/');
+  const list = groupItems(unit, group as keyof OwbUnit);
+  const exclusiveGroup = list[Number(index)]?.exclusiveGroup;
+  const siblings = new Set(exclusiveGroup
+    ? list.flatMap((opt, i) => opt.exclusiveGroup === exclusiveGroup ? [`${group}/${i}`] : [])
+    : []);
+  return [...entry.opts.filter((k) => !siblings.has(k)), key];
 }
 
 // The currently-selected option key in a radio group (the stored choice, else the `active` default).
@@ -1003,6 +1029,46 @@ export function validate(
     }
   }
 
+  // Explicit overlay constraints. No fields = no change for ordinary catalogues/compositions.
+  // A conditional category is a real picker choice, but is illegal without its required character.
+  const placementGroups = new Map<string, { max: number; uids: string[] }>();
+  const upgradeGroups = new Map<string, { max: number; uids: Set<string> }>();
+  for (const { e, unit } of rows) {
+    const placement = unit.armyComposition?.[list.composition];
+    if (placement?.requiresUnitIds?.length && !rows.some((r) => placement.requiresUnitIds!.includes(r.unit.id))) {
+      warnEntry(e.uid, `${unit.name_en}: ${placement.notes?.name_en ?? 'required character missing'}`);
+    }
+    if (placement?.maxUnits != null) {
+      const key = placement.limitGroup ?? `${unit.id}:${placement.category}`;
+      const group = placementGroups.get(key) ?? { max: placement.maxUnits, uids: [] };
+      group.uids.push(e.uid);
+      placementGroups.set(key, group);
+    }
+    const exclusive = new Map<string, string[]>();
+    for (const { opt } of selectedOptions(unit, e)) {
+      if (opt.exclusiveGroup) {
+        const names = exclusive.get(opt.exclusiveGroup) ?? [];
+        names.push(opt.name_en);
+        exclusive.set(opt.exclusiveGroup, names);
+      }
+      if (opt.unitLimit && target > 0) {
+        const { group: key, max, perPoints } = opt.unitLimit;
+        const group = upgradeGroups.get(key) ?? { max: max * Math.floor(target / perPoints), uids: new Set<string>() };
+        group.uids.add(e.uid);
+        upgradeGroups.set(key, group);
+      }
+    }
+    for (const names of exclusive.values()) if (names.length > 1) {
+      warnEntry(e.uid, `${unit.name_en}: choose only one of ${names.join(', ')}`);
+    }
+  }
+  for (const group of [...placementGroups.values(), ...upgradeGroups.values()]) {
+    const uids = [...group.uids];
+    if (uids.length > group.max) for (const uid of uids) {
+      warnEntry(uid, `Shared choice limit: ${uids.length} units taken, ${group.max} allowed`);
+    }
+  }
+
   // ---- Restriction notes: het RESTANT dat de gestructureerde regels niet dekken ----------------
   // De hoofdmoot zit in het blok hieronder: OWB's rules.js, 312 max-regels, gestructureerd.
   //
@@ -1228,7 +1294,7 @@ export interface MagicCategory {
    *
    *  'per-army' — no per-model limit at all; the only restriction is that the army may not take the
    *    same entry twice. Vampiric Powers work this way. */
-  uniqueness: 'per-category' | 'per-army';
+  uniqueness: 'per-category' | 'per-army' | 'per-item-type';
   items: MagicItem[];    // the items selectable in this category
 }
 
@@ -1322,6 +1388,12 @@ export function magicCategories(unit: OwbUnit, armyItemLists: string[], itemsDat
         // — treat that as unlimited (Infinity), not a 0 budget that would disable every option.
         const mp = magic.maxPoints;
         const cap = magic.maxItemsPerCategory; // e.g. a Dwarf BSB standard may bear up to 3 runes
+        if (magic.multipleItems) {
+          // Champion's plural "magic items up to N points", not a single magic standard.
+          // Keep the existing category id so old saved selections remain selected and removable.
+          out.push({ id: magic.types[0], label: 'Magic Items', groupLabel: 'Magic Items', budgetGroup: `opt:${String(g)}:${idx}`, types: magic.types, maxPoints: typeof mp === 'number' && mp > 0 ? mp : Infinity, maxItems: Infinity, uniqueness: 'per-item-type', items });
+          return;
+        }
         out.push({ id: magic.types[0], label: magicTypeLabel(magic.types[0]), groupLabel: magicTypeLabel(magic.types[0]), budgetGroup: `opt:${String(g)}:${idx}`, types: magic.types, maxPoints: typeof mp === 'number' && mp > 0 ? mp : Infinity, maxItems: typeof cap === 'number' && cap > 0 ? cap : 1, uniqueness: 'per-category', items });
       });
     }
@@ -1482,7 +1554,7 @@ export function magicWouldExceed(
     const hasArmyItem = selected.some((k) => {
       const id = k.split('/')[2];
       const it = category?.items.find((x) => magicItemId(x) === id);
-      return !!it && !it.common;
+      return !!it && !it.common && (category?.uniqueness !== 'per-item-type' || it.type === item.type);
     });
     if (hasArmyItem) return true;
   }

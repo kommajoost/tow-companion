@@ -16,6 +16,10 @@ export interface WeaponProfile {
   sAbs: number | null;
   /** Armour Piercing as a number (0 = none, -1, -2 …). */
   ap: number;
+  /** Preserve a non-numeric source value such as N/A; it must not display as AP 0. */
+  apLabel?: string;
+  /** Explicit Notes carried by a compiled profile, e.g. Initiative instead of Toughness. */
+  notes?: string;
   /** Single-shot count (the "fire normally" mode) — almost always 1. */
   shots: number;
   /** The multiple-shots count when the weapon can fire more — the "X" of "Multiple Shots (X)"
@@ -114,6 +118,8 @@ export function parseWeaponProfile(rule: Rule, baseRule?: Rule): WeaponProfile |
     sMod,
     sAbs,
     ap: apNum ? parseInt(apNum[0], 10) : 0,
+    ...(/^N\/A$/i.test(ap.trim()) ? { apLabel: ap.trim() } : {}),
+    ...(/^Notes:/i.test(rule.bodyIndex) ? { notes: rule.bodyIndex } : {}),
     shots: 1,
     multiShots: msExpr ?? (rapidFire ? 'D3+3' : null),
     multiProfile: null, // resolved in unitWeapons (Rapid Fire → the separate rapid-fire-profile)

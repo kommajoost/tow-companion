@@ -38,7 +38,7 @@ import {
   DEFAULT_MAGIC_BUDGET, entryPoints, magicCategories, magicCategoriesInRule, magicGroupSpent, magicItemId, magicItemTakenElsewhere,
   magicWouldExceed, radioSelected, selectedMagicKeys, selectedMountIndex, setExclusiveSubOption,
   setStackCount, stackMax, stackTaken, subOptionGroups,
-  toggleMagicItem, toggleSubOption, unitBlocks, unitCategoryFor, validate,
+  toggleMagicItem, toggleOption, toggleSubOption, unitBlocks, unitCategoryFor, validate,
   type Category, type ListEntry, type MagicCategory, type MagicItem, type OwbOption, type OwbUnit,
 } from '../../lib/owbBuilder';
 import { planPromotion, promotionTargets, type PromotionTarget } from '../../lib/promotions';
@@ -587,7 +587,7 @@ export function UnitOptions(props: {
   }));
   /** Plain toggle of a `<group>/<i>` key. */
   const toggleOpt = (key: string) =>
-    patch((e) => ({ ...e, opts: e.opts.includes(key) ? e.opts.filter((k) => k !== key) : [...e.opts, key] }));
+    patch((e) => ({ ...e, opts: unit ? toggleOption(unit, e, key) : e.opts }));
   /** Radio set within one group: drop this group's stored pick, store the new index. Deliberately
    *  only touches `<group>/…` keys — stale `subopt/<group>/…` of a no-longer-selected parent are
    *  ignored by the engine (it only looks at ACTIVE parents), exactly as before. */

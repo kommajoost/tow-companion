@@ -233,6 +233,7 @@ function wapenExtras(w: WeaponProfile): string[] {
     uit.push(`Multiple Shots (${w.multiShots})`);
   }
   if (w.shots > 1) uit.push(`${w.shots} shots`);
+  if (w.notes) uit.push(w.notes);
   return uit;
 }
 
@@ -1015,7 +1016,7 @@ function unitKaart(unit: ArmyUnit, categorie: string, input: PrintInput, ctx: Ct
         }
         continue;
       }
-      rijen.push(wapenRij(clean(w.name), w.range, wapenS(w), w.ap ? String(w.ap) : '', wapenExtras(w).join(', '), m));
+      rijen.push(wapenRij(clean(w.name), w.range, wapenS(w), w.apLabel ?? (w.ap ? String(w.ap) : ''), wapenExtras(w).join(', '), m));
       wapenRegels.push(...w.specialRules);
       // Een Rapid Fire-wapen schiet in zijn meervoudige stand een ANDER, zwakker profiel.
       if (w.multiProfile) {
@@ -1482,5 +1483,4 @@ export function armyToPdfDoc(input: PrintInput, opts: PrintOptions): TDocumentDe
     }),
   };
 }
-
 

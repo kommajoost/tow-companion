@@ -169,7 +169,7 @@ export function CombatStats({ unit, onProfileInfo }: { unit: ArmyUnit; onProfile
                     <td style={td(false)}>{eff?.range}</td>
                     <td style={td(multiActive)}>{shotsShown}</td>
                     <td style={td(false)}>{rangedS ?? '—'}</td>
-                    <td style={td((eff?.ap ?? 0) !== 0)}>{fmtAP(eff?.ap ?? 0)}</td>
+                    <td style={td((eff?.ap ?? 0) !== 0)}>{eff?.apLabel ?? fmtAP(eff?.ap ?? 0)}</td>
                     <td style={{ ...td(true), fontFamily: towFont.display }}>{!hit ? '—' : hit.impossible ? '—' : `${hit.value}+`}</td>
                   </tr></tbody>
                 </table>
@@ -234,6 +234,7 @@ export function CombatStats({ unit, onProfileInfo }: { unit: ArmyUnit; onProfile
               </div>
               <span style={{ fontFamily: towFont.serif, fontSize: 11.5, color: TOW.muted, marginLeft: 8 }}>BS {bs > 0 ? bs : '—'}</span>
               {ruleChips(eff?.specialRules ?? [])}
+              {eff?.notes && <p style={{ fontFamily: towFont.serif, fontSize: 12, color: TOW.ink, margin: '8px 0 0' }}>{eff.notes}</p>}
             </>
           )}
         </div>

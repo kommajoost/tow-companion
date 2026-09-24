@@ -8,7 +8,7 @@ import { NaamDialoog } from './NaamDialoog';
 import {
   CATEGORIES, COMPOSITION_RULES, validate, entryPoints, unitBlocks, radioSelected, summaryLabels,
   unitCategoryFor, unitAllowedIn, unitNote,
-  subOptionGroups, toggleSubOption, setExclusiveSubOption,
+  subOptionGroups, toggleOption, toggleSubOption, setExclusiveSubOption,
   magicCategories, magicCategoriesInRule, selectedMagicKeys, selectedMagicItems, toggleMagicItem, magicGroupSpent, magicWouldExceed, magicItemId,
   loadoutLabels, magicTypeLabel, selectedMountIndex, DEFAULT_MAGIC_BUDGET,
   type Category, type OwbArmy, type OwbUnit, type BuilderList, type ListEntry, type Validation,
@@ -285,7 +285,11 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
     if (e.uid !== uid) return e; const u = getUnit(e.cat, e.unitId); const min = u?.minimum ?? 1; const max = (u?.maximum ?? 0) === 0 ? 9999 : (u?.maximum ?? 1);
     return { ...e, count: Math.max(min, Math.min(max, c)) };
   }) }));
-  const toggleOpt = (uid: string, key: string) => onUpdate((l) => ({ entries: l.entries.map((e) => (e.uid !== uid ? e : { ...e, opts: e.opts.includes(key) ? e.opts.filter((k) => k !== key) : [...e.opts, key] })) }));
+  const toggleOpt = (uid: string, key: string) => onUpdate((l) => ({ entries: l.entries.map((e) => {
+    if (e.uid !== uid) return e;
+    const unit = getUnit(e.cat, e.unitId);
+    return unit ? { ...e, opts: toggleOption(unit, e, key) } : e;
+  }) }));
   const setRadio = (uid: string, group: string, i: number) => onUpdate((l) => ({ entries: l.entries.map((e) => {
     if (e.uid !== uid) return e; const kept = e.opts.filter((k) => !k.startsWith(group + '/')); return { ...e, opts: [...kept, `${group}/${i}`] };
   }) }));

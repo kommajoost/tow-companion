@@ -61,7 +61,15 @@
       ],
       "points": 140,
       "_was": 175,
-      "specialRules": "Close Order, Will of the Gods, Elven Reflexes, Hatred (High Elves), Impact Hits (D6+1), Large Target, Magic Resistance (-1), Murderous, Poisoned Attacks, Stony Stare, Terror, Impetuous"
+      "specialRules": "Close Order, Will of the Gods, Elven Reflexes, Hatred (High Elves), Impact Hits (D6+1), Large Target, Magic Resistance (-1), Murderous, Poisoned Attacks, Stony Stare, Terror, Impetuous",
+      "options": [
+        {
+          "group": "equipment",
+          "action": "patch",
+          "name_en": "Cavalry spears, Petrifying gaze",
+          "renameTo": "Cavalry spears, Halberd, Petrifying gaze"
+        }
+      ]
     },
     "war-hydra": {
       "minimum": 1,
@@ -73,7 +81,21 @@
       ],
       "points": 165,
       "_was": 200,
-      "specialRules": "Close Order, Extra Attacks (+remaining Wounds), Immune to Psychology, Large Target, Monster Handlers, Regeneration (5+), Flammable, Stomp Attacks (D3+1), Terror, If One Head is Severed… Another Takes Its Place"
+      "specialRules": "Close Order, Extra Attacks (+remaining Wounds), Immune to Psychology, Large Target, Monster Handlers, Regeneration (5+), Flammable, Stomp Attacks (D3+1), Terror, If One Head is Severed… Another Takes Its Place",
+      "options": [
+        {
+          "group": "armor",
+          "action": "patch",
+          "name_en": "5+",
+          "renameTo": "4+"
+        },
+        {
+          "group": "equipment",
+          "action": "patch",
+          "name_en": "Wicked claws, Serrated maws {renegade}, Fiery breath {dark elves}, Hand weapons, Whips",
+          "renameTo": "Wicked claws, Serrated maws, Fiery breath {dark elves}, Hand weapons, Whips"
+        }
+      ]
     },
     "bloodwrack-medusas": {
       "group": "Bloodwrack Medusa",
@@ -86,7 +108,15 @@
       ],
       "points": 70,
       "_was": 85,
-      "specialRules": "Close Order, Elven Reflexes, Fear, Hatred (High Elves), Magic Resistance (-1), Murderous, Poisoned Attacks, Stony Stare, Impetuous"
+      "specialRules": "Close Order, Elven Reflexes, Fear, Hatred (High Elves), Magic Resistance (-1), Murderous, Poisoned Attacks, Stony Stare, Impetuous",
+      "options": [
+        {
+          "group": "equipment",
+          "action": "patch",
+          "name_en": "Hand weapon, Petrifying gaze",
+          "renameTo": "Hand weapon, Halberd, Petrifying gaze"
+        }
+      ]
     },
     "kharibdyss": {
       "minimum": 1,
@@ -96,7 +126,15 @@
         "points"
       ],
       "points": 145,
-      "_was": 195
+      "_was": 195,
+      "options": [
+        {
+          "group": "armor",
+          "action": "patch",
+          "name_en": "5+",
+          "renameTo": "4+"
+        }
+      ]
     },
     "reaper-bolt-throwers": {
       "minimum": 1,
@@ -203,7 +241,19 @@
           "action": "patch",
           "name_en": "Draich Master (champion)",
           "points": 6,
-          "perModel": false
+          "perModel": false,
+          "option": {
+            "magic": {
+              "types": [
+                "weapon",
+                "armor",
+                "talisman",
+                "enchanted-item"
+              ],
+              "maxPoints": 50,
+              "multipleItems": true
+            }
+          }
         },
         {
           "group": "command",
@@ -242,28 +292,77 @@
           "action": "patch",
           "name_en": "Ambushers",
           "points": 1,
-          "perModel": true
+          "perModel": true,
+          "option": {
+            "notes": {
+              "name_en": "0-1 unit per 1,000 points may take these upgrades"
+            },
+            "unitLimit": {
+              "group": "de-v2-shades-upgrades",
+              "max": 1,
+              "perPoints": 1000
+            }
+          }
         },
         {
           "group": "options",
           "action": "patch",
           "name_en": "Chariot Runners",
           "points": 1,
-          "perModel": true
+          "perModel": true,
+          "option": {
+            "notes": {
+              "name_en": "0-1 unit per 1,000 points may take these upgrades"
+            },
+            "unitLimit": {
+              "group": "de-v2-shades-upgrades",
+              "max": 1,
+              "perPoints": 1000
+            }
+          }
         },
         {
           "group": "options",
           "action": "patch",
           "name_en": "Veteran",
           "points": 1,
-          "perModel": true
+          "perModel": true,
+          "option": {
+            "notes": {
+              "name_en": "0-1 unit per 1,000 points may take these upgrades"
+            },
+            "unitLimit": {
+              "group": "de-v2-shades-upgrades",
+              "max": 1,
+              "perPoints": 1000
+            }
+          }
         },
         {
           "group": "options",
           "action": "upsert",
           "name_en": "Feigned Flight",
           "points": 1,
-          "perModel": true
+          "perModel": true,
+          "option": {
+            "notes": {
+              "name_en": "0-1 unit per 1,000 points may take these upgrades"
+            },
+            "unitLimit": {
+              "group": "de-v2-shades-upgrades",
+              "max": 1,
+              "perPoints": 1000
+            }
+          }
+        },
+        {
+          "group": "armor",
+          "action": "patch",
+          "name_en": "Light armour",
+          "points": 0,
+          "option": {
+            "active": true
+          }
         }
       ],
       "_changed": [
@@ -289,12 +388,101 @@
         "special-rules"
       ],
       "minimum": 5,
-      "specialRules": "Dance of Death, Hatred (High Elves), Murderous, Strike First, Open Order, Skirmishers, Warband, First to the Fray"
+      "specialRules": "Dance of Death, Hatred (High Elves), Murderous, Strike First, Open Order, Skirmishers, Warband, First to the Fray",
+      "options": [
+        {
+          "group": "command",
+          "action": "patch",
+          "name_en": "Hag (champion)",
+          "renameTo": "Handmaiden of Shards (champion)",
+          "points": 7,
+          "option": {
+            "magic": {
+              "types": [
+                "weapon",
+                "armor",
+                "talisman",
+                "enchanted-item"
+              ],
+              "maxPoints": 25,
+              "multipleItems": true
+            }
+          }
+        }
+      ]
     },
     "cold-one-knights": {
       "specialRules": "Armour Bane (1, Cold One only), Armoured Hide (1), Close Order, Elven Reflexes, Fear, First Charge, Hatred (High Elves), Stupidity, Swiftstride, Counter Charge",
       "_changed": [
         "special-rules"
+      ]
+    },
+    "dark-elf-dreadlord": {
+      "options": [
+        {
+          "group": "mounts",
+          "action": "patch",
+          "name_en": "Cold One Chariot",
+          "points": 110
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Repeater crossbow",
+          "option": {
+            "exclusiveGroup": "noble-missile-weapon"
+          }
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Repeater handbow",
+          "option": {
+            "exclusiveGroup": "noble-missile-weapon"
+          }
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Brace of Repeater handbows",
+          "option": {
+            "exclusiveGroup": "noble-missile-weapon"
+          }
+        }
+      ]
+    },
+    "dark-elf-master": {
+      "options": [
+        {
+          "group": "mounts",
+          "action": "patch",
+          "name_en": "Cold One Chariot",
+          "points": 110
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Repeater crossbow",
+          "option": {
+            "exclusiveGroup": "noble-missile-weapon"
+          }
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Repeater handbow",
+          "option": {
+            "exclusiveGroup": "noble-missile-weapon"
+          }
+        },
+        {
+          "group": "options",
+          "action": "patch",
+          "name_en": "Brace of Repeater handbows",
+          "option": {
+            "exclusiveGroup": "noble-missile-weapon"
+          }
+        }
       ]
     }
   },
@@ -546,7 +734,9 @@
     },
     "petrifying-gaze": {
       "name_en": "Petrifying gaze",
-      "body": [],
+      "body": [
+        "Notes: When making a roll To Wound for an attack made with this weapon, substitute the target’s Toughness with its Initiative. No armour save is permitted against wounds caused by this weapon (Ward and Regeneration saves can be attempted as normal)."
+      ],
       "weaponProfile": {
         "range": "18\"",
         "strength": "2",
@@ -630,6 +820,72 @@
         "Effect: Remains in play. Place a large (5\") blast template so that its central hole is within 18\" of the caster. Whilst in play, the template is treated as difficult terrain. The template scatters 2D6” during every Start of Turn sub-phase (see page 95). Any enemy unit that moves through the template, or that the template moves over must immediately make D6 Strength Tests. For each test that is failed, the unit loses a single Wound."
       ],
       "overrides": "lore-of-naggaroth-renegade"
+    },
+    "lash-and-buckler": {
+      "name_en": "Lash & Buckler",
+      "overrides": "lash-and-buckler",
+      "body": [
+        "Notes: A Lash & Buckler counts as both a handweapon and shield and allows the use of the Parry special rule."
+      ],
+      "weaponProfile": {
+        "range": "Combat",
+        "strength": "S",
+        "ap": "-1",
+        "specialRules": "Armour Bane (1), Fight in Extra Rank, Requires Two Hands"
+      }
+    },
+    "murderous-renegade": {
+      "name_en": "Murderous",
+      "body": [
+        "When engaged in combat, a model with this special rule may re-roll any rolls To Wound of a natural 1.",
+        "Note that this special rule only applies to mundane weapons and does not apply to a model’s mount (should it have one). If the model is using a magic weapon this special rule ceases to apply."
+      ],
+      "overrides": "murderous-renegade"
+    },
+    "petrifying-gaze-profile": {
+      "name_en": "Petrifying gaze (Profile)",
+      "body": [
+        "Notes: When making a roll To Wound for an attack made with this weapon, substitute the target’s Toughness with its Initiative. No armour save is permitted against wounds caused by this weapon (Ward and Regeneration saves can be attempted as normal)."
+      ],
+      "weaponProfile": {
+        "range": "18\"",
+        "strength": "2",
+        "ap": "N/A",
+        "specialRules": "Magical Attacks, Multiple Wounds (D3), Multiple Shots (D3)"
+      },
+      "overrides": "petrifying-gaze-profile"
+    },
+    "ravager-harpoon-profile": {
+      "name_en": "Ravager harpoon (Profile)",
+      "body": [],
+      "weaponProfile": {
+        "range": "24\"",
+        "strength": "6",
+        "ap": "-3",
+        "specialRules": "Cumbersome, Multiple Wounds (D3)"
+      },
+      "overrides": "ravager-harpoon-profile"
+    },
+    "lash-and-buckler-profile": {
+      "name_en": "Lash & Buckler (Profile)",
+      "overrides": "lash-and-buckler-profile",
+      "body": [
+        "Notes: A Lash & Buckler counts as both a handweapon and shield and allows the use of the Parry special rule."
+      ],
+      "weaponProfile": {
+        "range": "Combat",
+        "strength": "S",
+        "ap": "-1",
+        "specialRules": "Armour Bane (1), Fight in Extra Rank, Requires Two Hands"
+      }
+    },
+    "hidden-dark-elves": {
+      "name_en": "Hidden",
+      "body": [
+        "Khainite Assassins are not placed on the battlefield at the start of the game. Instead, they are ‘hidden’ within a friendly Dark Elf unit whose troop type is ‘infantry’ and that has a Unit Strength of five or more (excluding Harpies, including units with the Loner special rule). Make a note of which unit each Assassin is hiding within. A hidden Assassin may be revealed during any Start of Turn sub-phase or at the start of any Combat phase. Position the revealed Assassin as you would a character that has joined the unit.",
+        "If a unit in which a Khainite Assassin is hiding is destroyed or flees the battlefield before the Assassin is revealed, the Assassin is removed as a casualty. A Khainite Assassin cannot be your army General."
+      ],
+      "overrides": "hidden-dark-elves"
     }
   },
   "lores": {
@@ -694,10 +950,22 @@
       },
       "witch-elves": {
         "category": "special",
-        "notes": "0-1 unit may be taken as Core if the army includes one or more Death Hags"
+        "notes": "",
+        "byCategory": {
+          "core": {
+            "category": "core",
+            "requiresUnitIds": [
+              "death-hag"
+            ],
+            "maxUnits": 1,
+            "limitGroup": "de-v2-core-witches",
+            "notes": "0-1 unit of Witch Elves may be taken as Core if the army includes one or more Death Hags"
+          }
+        }
       },
       "dark-elf-shades": {
-        "category": "special"
+        "category": "special",
+        "notes": "0-1 unit per 1,000 points may take Ambushers, Chariot Runners, Veteran and/or Feigned Flight (+1 point per model each)."
       },
       "harpies": {
         "category": "special"
@@ -719,18 +987,41 @@
         "notes": "0-2 Scourgerunner Chariots or Cold One Chariots per 1,000 points"
       },
       "sisters-of-slaughter": {
-        "category": "rare"
+        "category": "rare",
+        "notes": "Dance of Death: Models with this rule have a 6+ Ward save against any wounds suffered. In addition, enemy units engaged in combat with a model with this rule suffer a -1 modifier to its Maximum Rank Bonus. Notes: A Lash & Buckler counts as both a handweapon and shield and allows the use of the Parry special rule."
       },
       "bloodwrack-shrines": {
         "category": "rare"
       },
       "war-hydra": {
         "category": "rare",
-        "notes": "0-1 War Hydra or Kharibdyss may be taken as Special if the army includes a High Beastmaster"
+        "notes": "",
+        "byCategory": {
+          "special": {
+            "category": "special",
+            "requiresUnitIds": [
+              "high-beastmaster"
+            ],
+            "maxUnits": 1,
+            "limitGroup": "de-v2-special-monster",
+            "notes": "0-1 War Hydra or Kharibdyss may be taken as Special if the army includes a High Beastmaster"
+          }
+        }
       },
       "kharibdyss": {
         "category": "rare",
-        "notes": "0-1 War Hydra or Kharibdyss may be taken as Special if the army includes a High Beastmaster"
+        "notes": "",
+        "byCategory": {
+          "special": {
+            "category": "special",
+            "requiresUnitIds": [
+              "high-beastmaster"
+            ],
+            "maxUnits": 1,
+            "limitGroup": "de-v2-special-monster",
+            "notes": "0-1 War Hydra or Kharibdyss may be taken as Special if the army includes a High Beastmaster"
+          }
+        }
       },
       "bloodwrack-medusas": {
         "category": "rare"
@@ -800,6 +1091,28 @@
         "Stupidity",
         "Swiftstride",
         "Counter Charge"
+      ],
+      "stats": [
+        {
+          "Name": "Cold One",
+          "M": "7",
+          "WS": "3",
+          "BS": "-",
+          "S": "4",
+          "T": "(+1)",
+          "W": "-",
+          "I": "2",
+          "A": "2",
+          "Ld": "-"
+        }
+      ],
+      "troopType": "Heavy cavalry",
+      "baseSize": "30 x 60 mm",
+      "equipment": [
+        "Claws and teeth (counts as a hand weapon)"
+      ],
+      "notes": [
+        "A character mounted on a Cold One has +1 Toughness."
       ]
     },
     "dark elf warriors": {
@@ -935,7 +1248,8 @@
         "Skirmishers",
         "Warband",
         "First to the Fray"
-      ]
+      ],
+      "replaceStats": true
     },
     "cauldron of blood": {
       "stats": [
@@ -1244,5 +1558,60 @@
     "tome-of-furion": {
       "body": "0-1 per model. The bearer of the Tome of Furion knows one more spell (chosen in the usual way) than is normal for their Level of Wizardry."
     }
+  },
+  "addedUnits": {
+    "rare": [
+      {
+        "name_en": "Merwyrm",
+        "name_cn": "海龙兽",
+        "name_it": "Merwyrm",
+        "name_de": "Merwyrm",
+        "name_fr": "Wyrm des Mers",
+        "name_es": "Merwyrm",
+        "id": "merwyrms",
+        "points": 200,
+        "armyComposition": {
+          "de-renegade-v2": {
+            "category": "rare"
+          }
+        },
+        "command": [],
+        "equipment": [
+          {
+            "name_en": "Lashing talons, Serpentine tail, Briny breath",
+            "name_cn": "尖锐利爪, 蛇形尾击, 咸涩吐息",
+            "name_de": "Peitschende Krallen, Schlangenschwanz, Salziger Atem",
+            "name_es": "Garras Lacerantes, Cola Serpentina, Aliento Salino",
+            "name_fr": "Serres cinglantes, Queue de serpent, Souffle saumâtre",
+            "points": 0,
+            "active": true
+          }
+        ],
+        "armor": [
+          {
+            "name_en": "Heavy armour (Iridescent scales)",
+            "name_cn": "重甲(Iridescent scales)",
+            "name_de": "Schwere Rüstung (Schimmernde Schuppen)",
+            "name_es": "Armadura pesada (Escamas iridiscentes)",
+            "name_fr": "Armure lourde (Écailles irisées)",
+            "points": 0,
+            "active": true
+          }
+        ],
+        "options": [],
+        "mounts": [],
+        "specialRules": {
+          "name_en": "Abyssal Cloak, Close Order, Enfeebling Cold, Impact Hits (D3), Large Target, Stomp Attacks (D3+1), Terror",
+          "name_cn": "深渊暗影, 紧密阵型, 极度深寒, 撞击(D3), 大型目标, 践踏攻击(D3+1), 惊骇",
+          "name_it": "Abyssal Cloak, Close Order, Enfeebling Cold, Impact Hits (D3), Large Target, Stomp Attacks (D3+1), Terror",
+          "name_fr": "Cape Abyssale, Ordre Serré, Froid Engourdissant, Touches d’Impact (D3), Grande Cible, Attaques de Piétinement (D3+1), Terreur",
+          "name_es": "Capa Abisal, Formación Cerrada, Frío Debilitante, Impactos por Carga (D3), Objetivo Grande, Golpetazo (D3+1), Terror",
+          "name_de": "Mantel des Abgrunds, Geschlossene Ränge, Entkräftende Kälte, Aufpralltreffer (W3), Großes Ziel, Stampfattacken (W3+1), Entsetzen"
+        },
+        "notes": {},
+        "minimum": 1,
+        "maximum": 1
+      }
+    ]
   }
 }

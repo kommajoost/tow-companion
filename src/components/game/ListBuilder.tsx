@@ -979,9 +979,17 @@ export function ListBuilder() {
   const UNGROUPED = '__ungrouped__'; // synthetic section id for the Ungrouped drop target
   const groupIds = new Set(groups.map((g) => g.id));
   // MANUAL order = the `lists` array order (drag to reorder; new lists prepend via createListWith).
-  const listsInGroup = (gid: string) => lists.filter((l) => l.groupId === gid);
+  // DE CAMPAGNE-LIJST STAAT AL BOVENAAN (24-09-2026). CeledonPanel toont hem in zijn eigen kader --
+  // met dezelfde filter (hoortBijCampagne op de ACTIEVE campagne) -- dus hem hieronder nog eens in
+  // "My lists" zetten is één lijst op twee plekken op hetzelfde scherm. Joost: "Laat de campaign list
+  // alleen bovenaan zien in het kader. niet ook nog eens in de lijst." Lijsten van een ANDERE campagne
+  // (wie er twee heeft) blijven gewoon staan: het kader laat die niet zien.
+  const inKader = new Set(campagneLijsten.map((l) => l.id));
+  const overzicht = lists.filter((l) => !inKader.has(l.id));
+
+  const listsInGroup = (gid: string) => overzicht.filter((l) => l.groupId === gid);
   // Ungrouped = no/null groupId OR a groupId that no longer maps to an existing group.
-  const ungrouped = lists.filter((l) => !l.groupId || !groupIds.has(l.groupId));
+  const ungrouped = overzicht.filter((l) => !l.groupId || !groupIds.has(l.groupId));
 
   // One saved-list card. `sectionId` is the section it currently sits in (so a drop adopts that group).
   const renderCard = (l: SavedList, sectionId: string, sleepbaar = true) => {
@@ -1102,13 +1110,13 @@ export function ListBuilder() {
   };
   const perFactie = () => {
     const m = new Map<string, SavedList[]>();
-    for (const l of lists) { const k = l.army || '?'; if (!m.has(k)) m.set(k, []); m.get(k)!.push(l); }
+    for (const l of overzicht) { const k = l.army || '?'; if (!m.has(k)) m.set(k, []); m.get(k)!.push(l); }
     return [...m.entries()].map(([slug, ls]) => ({ key: 'faction:' + slug, title: armyName(slug), ls }))
       .sort((a, b) => a.title.localeCompare(b.title));
   };
   const perPunten = () => {
     const m = new Map<number, SavedList[]>();
-    for (const l of lists) { const k = Number(l.points) || 0; if (!m.has(k)) m.set(k, []); m.get(k)!.push(l); }
+    for (const l of overzicht) { const k = Number(l.points) || 0; if (!m.has(k)) m.set(k, []); m.get(k)!.push(l); }
     return [...m.entries()].sort((a, b) => a[0] - b[0])
       .map(([cap, ls]) => ({ key: 'points:' + cap, title: cap ? fmt(cap) + ' pts' : 'No points cap', ls }));
   };
@@ -1213,8 +1221,13 @@ export function ListBuilder() {
             <p style={{ fontFamily: towFont.serif, fontSize: 12, lineHeight: 1.5, color: TOW.blood, margin: '6px 0 0' }}>{gedeeldFout}</p>
           )}
         </div>
-        {lists.length === 0 && (groups.length === 0 || ordening !== 'groups') ? (
-          <p style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 14, color: TOW.muted }}>No saved lists yet — tap “New list” to start building.</p>
+        {overzicht.length === 0 && (groups.length === 0 || ordening !== 'groups') ? (
+          <p style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 14, color: TOW.muted }}>
+            {/* Met alleen een campagne-lijst is "geen lijsten" niet waar: die staat hierboven. */}
+            {campagneLijsten.length > 0
+              ? 'Nothing else yet — your campaign army is at the top. Tap “New list” for a list of your own.'
+              : 'No saved lists yet — tap “New list” to start building.'}
+          </p>
         ) : ordening === 'faction' ? (
           <div style={{ display: 'flex', flexDirection: 'column' }}>
             {perFactie().map((s) => renderAfgeleideSectie(s.key, s.title, s.ls))}

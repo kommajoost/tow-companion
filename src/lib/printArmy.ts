@@ -276,12 +276,13 @@ function wapenExtras(w: WeaponProfile): string[] {
     uit.push(`Multiple Shots (${w.multiShots})`);
   }
   if (w.shots > 1) uit.push(`${w.shots} shots`);
+  if (w.notes) uit.push(w.notes);
   return uit;
 }
 
 function wapenRij(w: WeaponProfile, naam: string): string {
   return `<tr><td class="wn">${esc(naam)}</td><td>${esc(w.range || '-')}</td><td>${esc(wapenS(w))}</td>`
-    + `<td>${esc(w.ap ? String(w.ap) : '-')}</td><td class="wr">${esc(wapenExtras(w).join(', ') || '-')}</td></tr>`;
+    + `<td>${esc(w.apLabel ?? (w.ap ? String(w.ap) : '-'))}</td><td class="wr">${esc(wapenExtras(w).join(', ') || '-')}</td></tr>`;
 }
 
 const WAPEN_KOP = '<thead><tr><th>Weapon</th><th>Range</th><th>S</th><th>AP</th><th>Special rules</th></tr></thead>';

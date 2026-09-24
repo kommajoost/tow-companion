@@ -75,6 +75,8 @@ export interface OverlayStatRow {
 
 export interface OverlayProfilePatch {
   stats?: OverlayStatRow[];
+  /** Explicit complete table, e.g. a renamed champion whose old row must not survive. */
+  replaceStats?: boolean;
   troopType?: string;
   baseSize?: string;
   armourValue?: string;
@@ -87,6 +89,11 @@ export interface OverlayCompositionUnit {
   allowed?: boolean;
   category?: Category;
   notes?: string;
+  requiresUnitIds?: string[];
+  maxUnits?: number;
+  limitGroup?: string;
+  /** Same unit id can be offered in two source categories, each with its own conditions. */
+  byCategory?: Partial<Record<Category, Omit<OverlayCompositionUnit, 'byCategory'>>>;
 }
 
 export interface OverlayComposition {
@@ -314,7 +321,8 @@ export function applyOverlay(base: OwbArmy, overlay: CompositionOverlay): OwbArm
     out[cat] = (arr as OwbUnit[]).map((u): OwbUnit | null => {
       const patch = overlay.units[u.id];
       const baseComp = u.armyComposition ?? {};
-      const explicit = overlay.composition?.units?.[u.id];
+      const placement = overlay.composition?.units?.[u.id];
+      const explicit = placement?.byCategory?.[cat as Category] ?? placement;
       const inherited = overlay.inheritsComposition ? baseComp[overlay.inheritsComposition] : undefined;
       const mappedCatalogue = Object.keys(baseComp).length > 0;
       const allowed = explicit?.allowed !== false
@@ -325,7 +333,10 @@ export function applyOverlay(base: OwbArmy, overlay: CompositionOverlay): OwbArm
       if (allowed) {
         comp[overlay.id] = {
           category: explicit?.category ?? inherited?.category ?? cat as Category,
-          notes: explicit?.notes ? { name_en: explicit.notes } : inherited?.notes,
+          notes: explicit?.notes != null ? { name_en: explicit.notes } : inherited?.notes,
+          ...(explicit?.requiresUnitIds ? { requiresUnitIds: explicit.requiresUnitIds } : {}),
+          ...(explicit?.maxUnits != null ? { maxUnits: explicit.maxUnits } : {}),
+          ...(explicit?.limitGroup ? { limitGroup: explicit.limitGroup } : {}),
         };
       } else if (mappedCatalogue) {
         delete comp[overlay.id];
@@ -441,7 +452,7 @@ export function overlayStatsFor(
   const patch = overlay?.profiles?.[key] ?? overlay?.profiles?.[singular];
   const basis = index[key]?.stats ?? index[singular]?.stats
     ?? index[indexSleutel(index, name)]?.stats ?? [];
-  return mergeStatRows(basis, patch?.stats);
+  return mergeStatRows(patch?.replaceStats ? [] : basis, patch?.stats);
 }
 
 /** Overlay-statregels OVER de basis leggen i.p.v. de basis te vervangen (15-08-2026).
@@ -506,7 +517,7 @@ export function applyOverlayStatIndex<T extends { stats?: OverlayStatRow[]; troo
     // Zelfde samenvoeg-regel als overlayStatsFor: nooit de basis-regels wissen met een lege of
     // gedeeltelijke overlay-array. Deze twee moeten hetzelfde antwoord geven, anders toont het ene
     // scherm een champion-regel die het andere niet heeft.
-    const samen = mergeStatRows(index[key]?.stats ?? [], patch.stats);
+    const samen = mergeStatRows(patch.replaceStats ? [] : index[key]?.stats ?? [], patch.stats);
     out[key] = {
       ...(index[key] ?? {}),
       ...(samen.length ? { stats: samen } : {}),
