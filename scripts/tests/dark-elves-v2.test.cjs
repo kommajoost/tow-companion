@@ -211,6 +211,7 @@ test('A real compiler rerun retains the reviewed corrections (isolated copy)', (
   try {
     for (const file of [
       'scripts/compile-renegade-v2.mjs', 'scripts/patch-dark-elves-v2.mjs',
+      'scripts/patch-vampire-counts-v2.mjs',
       'public/rules.json', 'public/owb/magic-items.json', 'public/owb/dark-elves.json', 'public/owb/high-elf-realms.json',
       'public/renegade/de-renegade-v2.json', 'public/renegade/de-renegade-v2-reference.json',
     ]) {

@@ -35,7 +35,7 @@ import { TOW, towFont, engraved } from '../../design/tow';
 import { useBackClose } from '../../lib/backStack';
 import { makeTroopTypeLookup } from '../../lib/troopTypes';
 import {
-  DEFAULT_MAGIC_BUDGET, entryPoints, magicCategories, magicCategoriesInRule, magicGroupSpent, magicItemId, magicItemTakenElsewhere,
+  DEFAULT_MAGIC_BUDGET, canonicalMagicOptions, entryPoints, magicCategories, magicCategoriesInRule, magicGroupSpent, magicItemId, magicItemTakenElsewhere,
   magicWouldExceed, radioSelected, selectedMagicKeys, selectedMountIndex, setExclusiveSubOption,
   setStackCount, stackMax, stackTaken, subOptionGroups,
   toggleMagicItem, toggleOption, toggleSubOption, unitBlocks, unitCategoryFor, validate,
@@ -504,7 +504,9 @@ export function UnitOptions(props: {
   const statsFor = useMemo(() => (unitName: string): StatRow[] => {
     if (!statIdx) return [];
     const key = normRule(unitName);
-    let e = statIdx[key];
+    // A qualified overlay profile can differ from the standalone unit (Acolyte's Corpse Cart).
+    const qualified = unitName.toLowerCase().replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim();
+    let e = statIdx[qualified] ?? statIdx[key];
     if (!e?.stats?.length) {
       const w = key.split(' ');
       const last = w[w.length - 1];
@@ -549,6 +551,16 @@ export function UnitOptions(props: {
 
   const entry = ctx.list.entries.find((e) => e.uid === uid) ?? null;
   const unit = entry ? ctx.getUnit(entry.cat, entry.unitId) ?? null : null;
+
+  // Historical Kastellan powers lived under magic/weapon. Keep them selected and removable
+  // in their separate allowance, without discarding unknown keys or touching other entries.
+  useEffect(() => {
+    if (!entry || !unit || !itemsData) return;
+    const next = canonicalMagicOptions(unit, entry, itemsData, ctx.armyItemLists);
+    if (next.every((k, i) => k === entry.opts[i])) return;
+    ctx.update((l) => ({ entries: l.entries.map((e) => e.uid === uid
+      ? { ...e, opts: canonicalMagicOptions(unit, e, itemsData, ctx.armyItemLists) } : e) }));
+  }, [entry, unit, itemsData, ctx.armyItemLists, ctx.update, uid]);
 
   // ── Promotion ──────────────────────────────────────────────────────────────────────────────────
   // CAMPAIGN LISTS ONLY (Joost, 11-08-2026). Promotion is the campaign's "Promotion or Death" move:

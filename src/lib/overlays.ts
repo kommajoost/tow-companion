@@ -92,6 +92,9 @@ export interface OverlayCompositionUnit {
   requiresUnitIds?: string[];
   maxUnits?: number;
   limitGroup?: string;
+  perPoints?: number;
+  perUnitIds?: string[];
+  requiresGeneralIds?: string[];
   /** Same unit id can be offered in two source categories, each with its own conditions. */
   byCategory?: Partial<Record<Category, Omit<OverlayCompositionUnit, 'byCategory'>>>;
 }
@@ -337,6 +340,9 @@ export function applyOverlay(base: OwbArmy, overlay: CompositionOverlay): OwbArm
           ...(explicit?.requiresUnitIds ? { requiresUnitIds: explicit.requiresUnitIds } : {}),
           ...(explicit?.maxUnits != null ? { maxUnits: explicit.maxUnits } : {}),
           ...(explicit?.limitGroup ? { limitGroup: explicit.limitGroup } : {}),
+          ...(explicit?.perPoints ? { perPoints: explicit.perPoints } : {}),
+          ...(explicit?.perUnitIds ? { perUnitIds: explicit.perUnitIds } : {}),
+          ...(explicit?.requiresGeneralIds ? { requiresGeneralIds: explicit.requiresGeneralIds } : {}),
         };
       } else if (mappedCatalogue) {
         delete comp[overlay.id];

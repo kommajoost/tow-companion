@@ -22,7 +22,41 @@
         "unit-size",
         "special-rules"
       ],
-      "specialRules": "Dark Vitality, Flammable, Ghoulkin, Hatred (all enemies), Indomitable (1), Lore of Undeath, Necromantic Undead, Poisoned Attacks, Regeneration (5+), The Hunger, Vanguard"
+      "specialRules": "Dark Vitality, Flammable, Ghoulkin, Hatred (all enemies), Indomitable (1), Lore of Undeath, Necromantic Undead, Poisoned Attacks, Regeneration (5+), The Hunger, Vanguard",
+      "options": [
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "Level 1 Wizard",
+          "option": {
+            "exclusiveGroup": "vampire-wizard-level"
+          }
+        },
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "Level 2 Wizard",
+          "option": {
+            "exclusiveGroup": "vampire-wizard-level"
+          }
+        },
+        {
+          "group": "equipment",
+          "action": "upsert",
+          "name_en": "Hand weapon",
+          "renameTo": "Hand weapon, Wicked claws"
+        }
+      ],
+      "replace": {
+        "armor": [
+          {
+            "name_en": "Scaly skin (heavy armour)",
+            "points": 0,
+            "active": true,
+            "perModel": true
+          }
+        ]
+      }
     },
     "cairn-wraith": {
       "group": "Cairn Wraiths",
@@ -61,7 +95,17 @@
         "unit-size",
         "special-rules"
       ],
-      "specialRules": "Close Order, Fly (9), Indomitable (1), Infested, Large Target, Necromantic Undead, Regeneration (5+), Stomp Attacks (D6), Swiftstride, Terror, Wailing Dirge (-2)"
+      "specialRules": "Close Order, Fly (9), Indomitable (1), Infested, Large Target, Necromantic Undead, Regeneration (5+), Stomp Attacks (D6), Swiftstride, Terror, Wailing Dirge (-2)",
+      "replace": {
+        "armor": [
+          {
+            "name_en": "Scaly skin (heavy armour)",
+            "points": 0,
+            "active": true,
+            "perModel": true
+          }
+        ]
+      }
     },
     "varghulf": {
       "minimum": 1,
@@ -73,7 +117,17 @@
       ],
       "points": 110,
       "_was": 140,
-      "specialRules": "Bestial Fury, Close Order, Counter Charge, Dark Vitality, Flammable, Indomitable (1), Necromantic Undead, Regeneration (5+), Swiftstride, Terror, The Hunger"
+      "specialRules": "Bestial Fury, Close Order, Counter Charge, Dark Vitality, Flammable, Indomitable (1), Necromantic Undead, Regeneration (5+), Swiftstride, Terror, The Hunger",
+      "replace": {
+        "armor": [
+          {
+            "name_en": "Scaly skin (heavy armour)",
+            "points": 0,
+            "active": true,
+            "perModel": true
+          }
+        ]
+      }
     },
     "vampire-count": {
       "replace": {
@@ -113,16 +167,39 @@
           "action": "patch",
           "name_en": "Level 2 Wizard",
           "points": 30,
-          "perModel": false
+          "perModel": false,
+          "option": {
+            "exclusiveGroup": "vampire-wizard-level"
+          }
         },
         {
           "group": "options",
           "action": "upsert",
           "name_en": "Be a Level 3 Wizard",
           "points": 60,
-          "perModel": false
+          "perModel": false,
+          "option": {
+            "exclusiveGroup": "vampire-wizard-level"
+          }
+        },
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "Level 1 Wizard",
+          "points": 0,
+          "option": {
+            "active": true,
+            "alwaysActive": true
+          }
+        },
+        {
+          "group": "mounts",
+          "action": "upsert",
+          "name_en": "Coven Throne",
+          "points": 165
         }
-      ]
+      ],
+      "specialRules": "Accursed Weapons, Dark Vitality {renegade}, Flammable, Indomitable (2), Lore of Undeath {renegade}, Necromantic Undead, Regeneration (5+)"
     },
     "vampire-thrall": {
       "points": 70,
@@ -158,16 +235,29 @@
           "action": "patch",
           "name_en": "Level 1 Wizard",
           "points": 30,
-          "perModel": false
+          "perModel": false,
+          "option": {
+            "exclusiveGroup": "vampire-wizard-level"
+          }
         },
         {
           "group": "options",
           "action": "upsert",
           "name_en": "Be a Level 2 Wizard",
           "points": 60,
-          "perModel": false
+          "perModel": false,
+          "option": {
+            "exclusiveGroup": "vampire-wizard-level"
+          }
+        },
+        {
+          "group": "mounts",
+          "action": "upsert",
+          "name_en": "Coven Throne",
+          "points": 165
         }
-      ]
+      ],
+      "specialRules": "Accursed Weapons, Banner of the Count, Dark Vitality {renegade}, Flammable, Indomitable (1), Lore of Undeath {renegade}, Necromantic Undead, Regeneration (5+)"
     },
     "master-necromancer": {
       "points": 145,
@@ -176,7 +266,39 @@
         "points"
       ]
     },
-    "necromantic-acolyte": {},
+    "necromantic-acolyte": {
+      "options": [
+        {
+          "group": "mounts",
+          "action": "upsert",
+          "name_en": "Mortis Engine",
+          "option": {
+            "hidden": true,
+            "unavailableReason": "Mortis Engine is only available to a Master Necromancer; choose a legal mount."
+          }
+        },
+        {
+          "group": "mounts",
+          "action": "upsert",
+          "name_en": "Corpse Cart (Acolyte mount)",
+          "points": 60,
+          "option": {
+            "options": [
+              {
+                "name_en": "Balefire Brazier",
+                "points": 10,
+                "exclusive": true
+              },
+              {
+                "name_en": "Warped Tintinnabulation",
+                "points": 15,
+                "exclusive": true
+              }
+            ]
+          }
+        }
+      ]
+    },
     "wight-king": {},
     "wight-lord": {
       "points": 60,
@@ -217,7 +339,10 @@
           "action": "patch",
           "name_en": "Light armour, Shields",
           "points": 1,
-          "perModel": true
+          "perModel": true,
+          "option": {
+            "active": false
+          }
         },
         {
           "group": "options",
@@ -225,6 +350,16 @@
           "name_en": "Implacable Defence",
           "points": 10,
           "perModel": false
+        },
+        {
+          "group": "armor",
+          "action": "upsert",
+          "name_en": "Shields",
+          "points": 0,
+          "perModel": true,
+          "option": {
+            "active": true
+          }
         }
       ]
     },
@@ -232,7 +367,8 @@
       "specialRules": "Close Order, Horde, Necromantic Undead, Regeneration (6+), Shambling Horde.",
       "_changed": [
         "special-rules"
-      ]
+      ],
+      "maximum": 0
     },
     "crypt-ghouls": {
       "points": 8,
@@ -260,13 +396,33 @@
           "perModel": true
         }
       ],
-      "specialRules": "Armour Bane (1), Dark Vitality, Move through Cover, Necromantic Undead, Open Order, Poisoned Attacks, Regeneration (6+), Reserve Move, Skirmishers, The Hunger"
+      "specialRules": "Armour Bane (1), Dark Vitality, Move through Cover, Necromantic Undead, Open Order, Poisoned Attacks, Regeneration (6+), Reserve Move, Skirmishers, The Hunger",
+      "replace": {
+        "armor": [
+          {
+            "name_en": "Calloused hide (light armour)",
+            "points": 0,
+            "active": true,
+            "perModel": true
+          }
+        ]
+      }
     },
     "crypt-horrors": {
       "specialRules": "Dark Vitality, Indomitable (1), Move through Cover, Necromantic Undead, Open Order, Regeneration (5+), Stomp Attacks (1), The Hunger",
       "_changed": [
         "special-rules"
-      ]
+      ],
+      "replace": {
+        "armor": [
+          {
+            "name_en": "Scaly skin (heavy armour)",
+            "points": 0,
+            "active": true,
+            "perModel": true
+          }
+        ]
+      }
     },
     "bat-swarm": {
       "minimum": 2,
@@ -282,7 +438,17 @@
         "unit-size",
         "special-rules"
       ],
-      "specialRules": "Armour Bane (2), Dark Vitality, Dispersed Formation, Flammable, Fly (9), Furious Charge, Indomitable (1), Impetuous, Necromantic Undead, Regeneration (5+), Skirmishers, The Hunger"
+      "specialRules": "Armour Bane (2), Dark Vitality, Dispersed Formation, Flammable, Fly (9), Furious Charge, Indomitable (1), Impetuous, Necromantic Undead, Regeneration (5+), Skirmishers, The Hunger",
+      "replace": {
+        "armor": [
+          {
+            "name_en": "Calloused hide (light armour)",
+            "points": 0,
+            "active": true,
+            "perModel": true
+          }
+        ]
+      }
     },
     "spirit-hosts": {
       "minimum": 2,
@@ -295,7 +461,67 @@
       "minimum": 4,
       "_changed": [
         "unit-size"
-      ]
+      ],
+      "replace": {
+        "command": [
+          {
+            "name_en": "Kastellan (champion)",
+            "name_cn": "堡主",
+            "name_de": "Kastellan",
+            "name_es": "Kastellan",
+            "name_fr": "Kasztellan",
+            "points": 7,
+            "magic": {
+              "types": [
+                "weapon",
+                "armor",
+                "talisman",
+                "arcane-item",
+                "enchanted-item"
+              ],
+              "maxPoints": 25,
+              "multipleItems": true
+            },
+            "notes": {
+              "name_en": "Up to 25 points of magic items and 25 points of vampiric powers",
+              "name_de": "Up to 25 points of magic items and 25 points of vampiric powers",
+              "name_cn": "Up to 25 points of magic items and 25 points of vampiric powers",
+              "name_fr": "Up to 25 points of magic items and 25 points of vampiric powers"
+            },
+            "magicAllowances": [
+              {
+                "types": [
+                  "vampiric-power"
+                ],
+                "maxPoints": 25,
+                "multipleItems": true
+              }
+            ]
+          },
+          {
+            "name_en": "Standard bearer",
+            "name_cn": "旗手",
+            "name_de": "Standartenträger",
+            "name_es": "Standard bearer",
+            "name_fr": "Porte-étendard",
+            "points": 7,
+            "magic": {
+              "types": [
+                "banner"
+              ],
+              "maxPoints": 50
+            }
+          },
+          {
+            "name_en": "Musician",
+            "name_cn": "乐手",
+            "name_de": "Musiker",
+            "name_es": "Musician",
+            "name_fr": "Musicien",
+            "points": 7
+          }
+        ]
+      }
     },
     "black-knights-core": {
       "minimum": 4,
@@ -311,6 +537,16 @@
           "name_en": "Lances, Skeletal hooves",
           "points": 2,
           "perModel": true
+        },
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "Barding",
+          "points": 0,
+          "option": {
+            "active": true,
+            "alwaysActive": true
+          }
         }
       ],
       "specialRules": "Cleaving Blow (Black Knights & Hell Knight only), Close Order, First Charge, Necromantic Undead, Regeneration (6+), Swiftstride, Spectral Steed"
@@ -329,6 +565,16 @@
           "name_en": "Lances, Skeletal hooves",
           "points": 2,
           "perModel": true
+        },
+        {
+          "group": "options",
+          "action": "upsert",
+          "name_en": "Barding",
+          "points": 0,
+          "option": {
+            "active": true,
+            "alwaysActive": true
+          }
         }
       ],
       "specialRules": "Cleaving Blow (Black Knights & Hell Knight only), Close Order, First Charge, Necromantic Undead, Regeneration (6+), Swiftstride, Spectral Steed"
@@ -651,17 +897,7 @@
     "spell-vanhal-s-danse-macabre": {
       "name_en": "Vanhal’s Danse Macabre",
       "body": [
-        {
-          "tabel": {
-            "headers": [],
-            "rows": [
-              [
-                "Type",
-                "Enchantment Casting Value: 7+/11+ Range: 12\""
-              ]
-            ]
-          }
-        },
+        "Type: Enchantment Casting Value: 7+/11+ Range: 12\"",
         "Effect: If this spell is cast with a casting result of 7 or more, the target friendly unit gains a +D3 modifier to one of the following characteristics (to a maximum of 10). If this",
         "spell is cast with a casting result of 11 or more, the target friendly unit gains a +D3 modifier to two of the following characteristics (to a maximum of 10). This spell lasts until your next Start of Turn sub-phase.",
         "Movement • Weapon Skill • Initiative"
@@ -671,17 +907,7 @@
     "spell-hellish-vigour": {
       "name_en": "Hellish Vigour",
       "body": [
-        {
-          "tabel": {
-            "headers": [],
-            "rows": [
-              [
-                "Type",
-                "Enchantment Casting Value: 6+/10+ Range: Self"
-              ]
-            ]
-          }
-        },
+        "Type: Enchantment Casting Value: 6+/10+ Range: Self",
         "Effect: If this spell is cast with a casting result of 6 or more, a single friendly unit that has the Necromantic Undead special rule and is within the caster’s Command range gains the Reserve Move special rule. If this spell is cast with a casting result of 10 or more, every friendly unit that has the Necromantic Undead special rule and is within the caster’s Command range gains the Reserve Move special rule. This spell lasts until the end of this turn.",
         "| | | | | | | | | | | | |"
       ],
@@ -690,25 +916,9 @@
     "spell-raise-dead": {
       "name_en": "Raise Dead",
       "body": [
-        {
-          "tabel": {
-            "headers": [],
-            "rows": [
-              [
-                "Type",
-                "Enchantment"
-              ],
-              [
-                "Casting Value",
-                "9+"
-              ],
-              [
-                "Range",
-                "12\""
-              ]
-            ]
-          }
-        },
+        "Type: Enchantment",
+        "Casting Value: 9+",
+        "Range: 12\"",
         "Effect: Place a unit of 2D3 Zombies on the battlefield anywhere completely within 12\" of this model, but not within 1\" of any enemy models. This unit cannot declare a charge during the turn in which it was raised:",
         "Note that units of Zombies that are created in this way are not worth any Victory Points, do not count as Core, and are considered to have a starting unit size of 10 models for the purposes of the Invocation of Nehek special rule.",
         "."
@@ -778,6 +988,55 @@
         "."
       ],
       "overrides": "lore-of-undeath-renegade"
+    },
+    "wicked-claws": {
+      "name_en": "Wicked claws",
+      "overrides": "wicked-claws",
+      "body": [],
+      "weaponProfile": {
+        "range": "Combat",
+        "strength": "S",
+        "ap": "-2",
+        "specialRules": "-"
+      }
+    },
+    "wicked-claws-profile": {
+      "name_en": "Wicked claws",
+      "overrides": "wicked-claws-profile",
+      "body": [],
+      "weaponProfile": {
+        "range": "Combat",
+        "strength": "S",
+        "ap": "-2",
+        "specialRules": "-"
+      }
+    },
+    "dark-vitality-renegade": {
+      "name_en": "Dark Vitality",
+      "body": [
+        "Models with this special rule are not affected if the Master of the Dead for your army is slain. Furthermore, unless they have joined a unit that does not have this special rule they (and their mounts) can march as normal. In addition, A Vampire Count or Vampire Thrall Wizard with this special rule may wear armour or carry a shield without penalty. IE: They may Cast and Dispel as Normal."
+      ],
+      "overrides": "dark-vitality-renegade"
+    },
+    "wailing-dirge": {
+      "name_en": "Wailing Dirge (X)",
+      "body": [
+        "A model with this special rule may make a ‘Wailing Dirge’ attack. A Wailing Dirge attack is a Shooting attack with the Magical Attacks special rule and a range of 8”. A Wailing Dirge attack can target an enemy Lone character regardless of the usual rules for targeting Lone characters. If this model is engaged in combat during the Shooting phase, it may target a unit in base contact with a Wailing Dirge attack and may do so even if it charged this turn.",
+        "A Wailing Dirge attack does not roll to hit and wound as normal. Instead, the target must make a Leadership test with a negative modifier to its Leadership characteristic shown in the brackets after the name of this special rule (shown here as ‘X’). If this test is failed, the target suffers a number of wounds equal to the amount by which it failed the test, with no armour or Regeneration saves permitted (Ward saves can be attempted as normal).",
+        "Note that a Wailing Dirge attack may reduce the target's Leadership characteristic to a minimum of 2",
+        "."
+      ],
+      "overrides": "wailing-dirge"
+    },
+    "wailing-dirge-renegade": {
+      "name_en": "Wailing Dirge (X)",
+      "body": [
+        "A model with this special rule may make a ‘Wailing Dirge’ attack. A Wailing Dirge attack is a Shooting attack with the Magical Attacks special rule and a range of 8”. A Wailing Dirge attack can target an enemy Lone character regardless of the usual rules for targeting Lone characters. If this model is engaged in combat during the Shooting phase, it may target a unit in base contact with a Wailing Dirge attack and may do so even if it charged this turn.",
+        "A Wailing Dirge attack does not roll to hit and wound as normal. Instead, the target must make a Leadership test with a negative modifier to its Leadership characteristic shown in the brackets after the name of this special rule (shown here as ‘X’). If this test is failed, the target suffers a number of wounds equal to the amount by which it failed the test, with no armour or Regeneration saves permitted (Ward saves can be attempted as normal).",
+        "Note that a Wailing Dirge attack may reduce the target's Leadership characteristic to a minimum of 2",
+        "."
+      ],
+      "overrides": "wailing-dirge-renegade"
     }
   },
   "lores": {
@@ -808,10 +1067,136 @@
   "composition": {
     "units": {
       "corpse-cart": {
-        "category": "core"
+        "category": "core",
+        "maxUnits": 3,
+        "notes": "0-3 Corpse Carts"
       },
       "varghulf": {
-        "category": "special"
+        "category": "special",
+        "maxUnits": 1,
+        "perPoints": 1000,
+        "notes": "0-1 Varghulf per 1,000 points"
+      },
+      "vampire-count": {
+        "category": "characters",
+        "maxUnits": 1,
+        "perPoints": 1000,
+        "limitGroup": "vc-v2-senior-character",
+        "notes": "0-1 Vampire Lord, Master Necromancer or Strigoi Ghoul King per 1,000 points"
+      },
+      "master-necromancer": {
+        "category": "characters",
+        "maxUnits": 1,
+        "perPoints": 1000,
+        "limitGroup": "vc-v2-senior-character",
+        "notes": "0-1 Vampire Lord, Master Necromancer or Strigoi Ghoul King per 1,000 points"
+      },
+      "strigoi-ghoul-king": {
+        "category": "characters",
+        "maxUnits": 1,
+        "perPoints": 1000,
+        "limitGroup": "vc-v2-senior-character",
+        "notes": "0-1 Vampire Lord, Master Necromancer or Strigoi Ghoul King per 1,000 points"
+      },
+      "wight-king": {
+        "category": "characters",
+        "maxUnits": 1,
+        "perPoints": 1000,
+        "limitGroup": "vc-v2-wight-banshee",
+        "notes": "0-1 Wight King or Banshee per 1,000 points"
+      },
+      "tomb-banshee": {
+        "category": "characters",
+        "maxUnits": 1,
+        "perPoints": 1000,
+        "limitGroup": "vc-v2-wight-banshee",
+        "notes": "0-1 Wight King or Banshee per 1,000 points"
+      },
+      "grave-guard-core": {
+        "category": "core",
+        "maxUnits": 1,
+        "limitGroup": "vc-v2-core-wights",
+        "notes": "0-1 unit of Grave Guard or Black Knights may be taken as a Core choice"
+      },
+      "black-knights-core": {
+        "category": "core",
+        "maxUnits": 1,
+        "limitGroup": "vc-v2-core-wights",
+        "notes": "0-1 unit of Grave Guard or Black Knights may be taken as a Core choice"
+      },
+      "grave-guard": {
+        "category": "special",
+        "notes": ""
+      },
+      "black-knights": {
+        "category": "special",
+        "notes": ""
+      },
+      "crypt-horrors": {
+        "category": "special",
+        "notes": ""
+      },
+      "fell-bats": {
+        "category": "special",
+        "notes": ""
+      },
+      "black-coach": {
+        "category": "rare",
+        "maxUnits": 1,
+        "perPoints": 1000,
+        "notes": "0-1 Black Coaches per 1,000 points"
+      },
+      "spirit-hosts": {
+        "category": "special",
+        "maxUnits": 1,
+        "perUnitIds": [
+          "cairn-wraith",
+          "tomb-banshee"
+        ],
+        "notes": "0-1 unit per Cairn Wraith or Tomb Banshee taken"
+      },
+      "hexwraiths": {
+        "category": "rare",
+        "maxUnits": 1,
+        "perUnitIds": [
+          "cairn-wraith",
+          "tomb-banshee"
+        ],
+        "notes": "0-1 unit per Cairn Wraith or Tomb Banshee taken"
+      },
+      "vargheists": {
+        "category": "rare",
+        "notes": "",
+        "byCategory": {
+          "special": {
+            "category": "special",
+            "maxUnits": 1,
+            "limitGroup": "vc-v2-strigoi-special",
+            "requiresGeneralIds": [
+              "strigoi-ghoul-king"
+            ],
+            "notes": "If your General is a Strigoi Ghoul King, 0-1 unit of Vargheists or 0-1 Terrorgheist may be taken as a Special choice"
+          }
+        }
+      },
+      "terrorgheist": {
+        "category": "rare",
+        "notes": "",
+        "byCategory": {
+          "special": {
+            "category": "special",
+            "maxUnits": 1,
+            "limitGroup": "vc-v2-strigoi-special",
+            "requiresGeneralIds": [
+              "strigoi-ghoul-king"
+            ],
+            "notes": "If your General is a Strigoi Ghoul King, 0-1 unit of Vargheists or 0-1 Terrorgheist may be taken as a Special choice"
+          }
+        }
+      },
+      "blood-knights": {
+        "category": "rare",
+        "notes": ""
       }
     },
     "sourceRules": {
@@ -1048,18 +1433,6 @@
           "I": "1",
           "A": "1",
           "Ld": "2"
-        },
-        {
-          "A": "1",
-          "I": "1",
-          "M": "4",
-          "S": "3",
-          "T": "2",
-          "W": "1",
-          "BS": "0",
-          "Ld": "2",
-          "WS": "2",
-          "Name": "Zombies"
         }
       ],
       "specialRules": [
@@ -1068,7 +1441,8 @@
         "Necromantic Undead",
         "Regeneration (6+)",
         "Shambling Horde."
-      ]
+      ],
+      "replaceStats": true
     },
     "crypt ghouls": {
       "stats": [
@@ -1426,7 +1800,7 @@
         {
           "A": "1",
           "I": "2",
-          "M": "8",
+          "M": "7",
           "S": "4",
           "T": "-",
           "W": "-",
@@ -1435,7 +1809,67 @@
           "WS": "3",
           "Name": "Nightmare"
         }
+      ],
+      "troopType": "Heavy cavalry",
+      "baseSize": "30 x 60 mm",
+      "equipment": [
+        "Iron-shod hooves (counts as a hand weapon) and barding"
+      ],
+      "specialRules": [
+        "Counter Charge",
+        "First Charge",
+        "Necromantic Undead",
+        "Swiftstride"
       ]
+    },
+    "corpse cart acolyte mount": {
+      "stats": [
+        {
+          "Name": "Corpse Cart",
+          "M": "-",
+          "WS": "-",
+          "BS": "-",
+          "S": "4",
+          "T": "4",
+          "W": "4",
+          "I": "-",
+          "A": "-",
+          "Ld": "-"
+        },
+        {
+          "Name": "The Restless Dead",
+          "M": "4",
+          "WS": "1",
+          "BS": "0",
+          "S": "3",
+          "T": "-",
+          "W": "-",
+          "I": "1",
+          "A": "2D6",
+          "Ld": "-"
+        }
+      ],
+      "troopType": "Heavy chariot",
+      "baseSize": "50 x 100 mm",
+      "armourValue": "4+",
+      "equipment": [
+        "The Restless Dead: Hand weapons"
+      ],
+      "specialRules": [
+        "Close Order",
+        "Dark Vitality",
+        "First Charge",
+        "Impact Hits (D3+1)",
+        "Indomitable (1)",
+        "Necromantic Undead",
+        "Random Attacks (The Restless Dead only)",
+        "Regeneration (6+)",
+        "Vigor Mortis"
+      ],
+      "notes": [
+        "Character Mount: A Corpse Cart may be included in your army as a character's mount. If so, the Necromantic Acolyte replaces the Corpsemaster and the Corpse Cart’s points are added to that of its rider."
+      ],
+      "replaceStats": true
     }
   },
   "notes": [],
@@ -1485,5 +1919,147 @@
     "honour-or-death": {
       "body": "Any enemy model that wishes to issue a challenge whilst engaged in the same combat as a model with this Vampiric Power must first make a Leadership test (using their own Leadership.) Apply a +1 modifier to the dice roll for each point of difference between its Weapon Skill characteristic and that of the model with this Vampiric Power (to a maximum of +2).\n\nIf the test is passed, the challenge is issued as normal. If the test is failed, the challenge is not issued and the enemy model must Retire, following the rules for refusing a challenge. In addition, challenges issued by a model with this Vampiric Power cannot be refused."
     }
+  },
+  "addedUnits": {
+    "special": [
+      {
+        "name_en": "Blood Knights",
+        "name_cn": "血骑士",
+        "name_de": "Blutritter",
+        "name_es": "Blood Knights",
+        "name_fr": "Chevaliers de Sang",
+        "id": "blood-knights",
+        "points": 39,
+        "minimum": 4,
+        "maximum": 0,
+        "command": [
+          {
+            "name_en": "Kastellan (champion)",
+            "name_cn": "堡主",
+            "name_de": "Kastellan",
+            "name_es": "Kastellan",
+            "name_fr": "Kasztellan",
+            "points": 7,
+            "magic": {
+              "types": [
+                "weapon",
+                "armor",
+                "talisman",
+                "arcane-item",
+                "enchanted-item"
+              ],
+              "maxPoints": 25,
+              "multipleItems": true
+            },
+            "notes": {
+              "name_en": "Up to 25 points of magic items and 25 points of vampiric powers",
+              "name_de": "Up to 25 points of magic items and 25 points of vampiric powers",
+              "name_cn": "Up to 25 points of magic items and 25 points of vampiric powers",
+              "name_fr": "Up to 25 points of magic items and 25 points of vampiric powers"
+            },
+            "magicAllowances": [
+              {
+                "types": [
+                  "vampiric-power"
+                ],
+                "maxPoints": 25,
+                "multipleItems": true
+              }
+            ]
+          },
+          {
+            "name_en": "Standard bearer",
+            "name_cn": "旗手",
+            "name_de": "Standartenträger",
+            "name_es": "Standard bearer",
+            "name_fr": "Porte-étendard",
+            "points": 7,
+            "magic": {
+              "types": [
+                "banner"
+              ],
+              "maxPoints": 50
+            }
+          },
+          {
+            "name_en": "Musician",
+            "name_cn": "乐手",
+            "name_de": "Musiker",
+            "name_es": "Musician",
+            "name_fr": "Musicien",
+            "points": 7
+          }
+        ],
+        "equipment": [
+          {
+            "name_en": "Hand weapons, Lances, Iron-shod hooves",
+            "name_cn": "单手武器, 长枪, 铁蹄",
+            "name_de": "Handwaffen, Lanzen, Eisenbeschlagene Hufe",
+            "name_es": "Hand weapons, Lances, Iron-shod hooves",
+            "name_fr": "Armes de base, Lances de joute, Sabots ferrés",
+            "points": 0,
+            "perModel": true,
+            "active": true
+          }
+        ],
+        "armor": [
+          {
+            "name_en": "Heavy armour, Shields, Barding",
+            "name_cn": "重甲, 盾牌, 马铠",
+            "name_de": "Schwere Rüstung, Schilde, Rossharnisch",
+            "name_es": "Heavy armour, Shields, Barding",
+            "name_fr": "Armure lourde, Boucliers, Caparaçon",
+            "points": 0,
+            "perModel": true,
+            "active": true
+          },
+          {
+            "name_en": "Full plate armour, Shields, Barding",
+            "name_cn": "全身甲, 盾牌, 马铠",
+            "name_de": "Plattenrüstung, Schilde, Rossharnisch",
+            "name_es": "Full plate armour, Shields, Barding",
+            "name_fr": "Armure de plate complète, Boucliers, Caparaçon",
+            "points": 5,
+            "perModel": true
+          }
+        ],
+        "options": [
+          {
+            "name_en": "Drilled",
+            "name_cn": "受训",
+            "name_de": "Gut ausgebildet",
+            "name_es": "Drilled",
+            "name_fr": "Bien Entraînés",
+            "points": 3,
+            "perModel": true,
+            "minimum": 0,
+            "maximum": 0
+          }
+        ],
+        "mounts": [],
+        "items": [],
+        "lores": [],
+        "specialRules": {
+          "name_en": "Accursed Weapons, Close Order, Counter Charge, Dark Vitality {renegade}, First Charge, Flammable, Indomitable (1), Martial Pride, Necromantic Undead, Regeneration (6+), Swiftstride",
+          "name_cn": "受诅武器, 紧密阵型, 反制冲锋, 黑暗活力, 先行冲锋, 易燃, 顽强不屈(1), 傲人武艺, 不死亡灵, 重生(6+), 快速行进",
+          "name_de": "Verfluchte Waffen, Geschlossene Ränge, Gegenangriff, Dunkle Vitalität, Erster Angriff, Brennbar, Unverwüstlich (1), Kriegerstolz, Nekromantische Untote, Regeneration (6+), Schnelle Bewegung",
+          "name_es": "Accursed Weapons, Close Order, Counter Charge, Dark Vitality, First Charge, Flammable, Indomitable (1), Martial Pride, Necromantic Undead, Regeneration (6+), Swiftstride",
+          "name_fr": "Armes Maudites, Ordre Serré, Contre-charge, Sombre Vitalité, Première Charge, Inflammable, Indomptable (1), Fierté Martiale, Mort-vivant Nécromantique, Régénération (6+), Rapide"
+        },
+        "notes": {},
+        "armyComposition": {
+          "vc-renegade-v2": {
+            "category": "special",
+            "maxUnits": 1,
+            "requiresGeneralIds": [
+              "vampire-count"
+            ],
+            "notes": {
+              "name_en": "If your General is a Vampire Lord 0-1 Blood Knights may be taken as a Special choice."
+            }
+          }
+        }
+      }
+    ]
   }
 }

@@ -9,6 +9,7 @@ export interface OwbOption {
   name_en: string; points?: number; perModel?: boolean; active?: boolean;
   /** Hidden by a composition overlay while retaining its catalogue index for saved-list stability. */
   hidden?: boolean;
+  unavailableReason?: string;
   /** An option variant that belongs only to one OWB army composition. */
   armyComposition?: string;
   /** OWB's marker for the unit's FREE BASE equipment -- the "Equipment: Hand weapons and light armour"
@@ -43,6 +44,8 @@ export interface OwbOption {
   // lets the unit buy a magic standard (`{ types: ["banner"], maxPoints: 50 }`). Surfaced as an extra
   // magic category (gated on the option being active) by `magicCategories`.
   magic?: { types: string[]; maxPoints?: number; maxItemsPerCategory?: number; multipleItems?: boolean };
+  /** Additional, separate budgets unlocked by this option (e.g. Kastellan powers). */
+  magicAllowances?: NonNullable<OwbOption['magic']>[];
 }
 // A unit's magic-item "section" (from the catalogue's per-unit `items[]`). Each section permits a
 // set of item `types` (mapping to the `type` field in magic-items.json) and carries its own
@@ -59,6 +62,9 @@ export interface CompositionPlacement {
   requiresUnitIds?: string[];
   maxUnits?: number;
   limitGroup?: string;
+  perPoints?: number;
+  perUnitIds?: string[];
+  requiresGeneralIds?: string[];
 }
 
 export interface OwbUnit {
@@ -905,6 +911,14 @@ export function validate(
     // gewoon meetellen, zodat het totaal op het scherm niet stiekem iets anders wordt dan wat er in
     // de lijst staat. Wat ermee gebeurt is aan de speler.
     if (itemsData) {
+      // Separate option allowances must also report older/imported over-budget selections.
+      if (OPTION_GROUPS.some(({ key }) => groupItems(unit, key).some((o) => o.magicAllowances?.length))) {
+        const groups = new Map(magicCategories(unit, Object.keys(itemsData), itemsData, e).map((c) => [c.budgetGroup, c]));
+        for (const [group, c] of groups) {
+          const spent = magicGroupSpent(unit, e, group, itemsData);
+          if (c.maxPoints != null && spent > c.maxPoints) warnEntry(e.uid, `${unit.name_en}: ${c.groupLabel} over its ${c.maxPoints} pt allowance (${spent} pts)`);
+        }
+      }
       for (const { item } of selectedMagicItems(unit, e, itemsData)) {
         if (itemAllowedInRule(item, list.rule)) continue;
         const regelNaam = COMPOSITION_RULES.find((r) => r.id === item.compositionRule)?.name ?? item.compositionRule;
@@ -925,7 +939,9 @@ export function validate(
   {
     const perArmy = new Map<string, { uids: string[]; itemId: string }>();
     for (const e of list.entries) {
-      for (const key of e.opts) {
+      const unit = getUnit(e.cat, e.unitId);
+      const keys = unit && itemsData ? canonicalMagicOptions(unit, e, itemsData) : e.opts;
+      for (const key of keys) {
         const [prefix, categoryId, itemId] = key.split('/');
         if (prefix !== MAGIC_PREFIX || !categoryId || !itemId) continue;
         if (!TYPES_LIMITED_PER_ARMY.has(categoryId)) continue;
@@ -939,6 +955,11 @@ export function validate(
       const naam = itemNameFor(itemId, itemsData) ?? itemId.replace(/-/g, ' ');
       for (const uid of uids) warnEntry(uid, `${naam}: taken by ${uids.length} models — each may only be chosen once per army`);
     }
+  }
+
+  // Vampire Counts DOCX 1.5.3.1 P0063/P0113: at least one Wizard (Master of the Dead).
+  if (list.composition === 'vc-renegade-v2' && !rows.some((r) => r.level > 0)) {
+    warnings.push('Vampire Counts require at least one Wizard to be Master of the Dead');
   }
 
   // Het krimp-budget geldt over ALLE bestaande units samen. De server rekent exact hetzelfde na bij
@@ -1038,11 +1059,28 @@ export function validate(
     if (placement?.requiresUnitIds?.length && !rows.some((r) => placement.requiresUnitIds!.includes(r.unit.id))) {
       warnEntry(e.uid, `${unit.name_en}: ${placement.notes?.name_en ?? 'required character missing'}`);
     }
+    if (placement?.requiresGeneralIds?.length && !rows.some((r) => placement.requiresGeneralIds!.includes(r.unit.id)
+      && selectedOptions(r.unit, r.e).some(({ opt }) => /^General$/i.test(opt.name_en)))) {
+      warnEntry(e.uid, `${unit.name_en}: ${placement.notes?.name_en ?? 'required General missing'}`);
+    }
     if (placement?.maxUnits != null) {
       const key = placement.limitGroup ?? `${unit.id}:${placement.category}`;
-      const group = placementGroups.get(key) ?? { max: placement.maxUnits, uids: [] };
+      const battleMarchChoice = isBattleMarch && placement.perPoints != null;
+      if (battleMarchChoice) {
+        // Same optional composition-rule exception as the existing OWB/note limits below.
+        nul_x_gebruikt += 1;
+        nul_x_rijen.push(rows.find((r) => r.e.uid === e.uid)!);
+      }
+      const multiplier = battleMarchChoice ? Infinity : placement.perUnitIds ? rows.filter((r) => placement.perUnitIds!.includes(r.unit.id)).length
+        : placement.perPoints ? (target > 0 ? Math.floor(target / placement.perPoints) : Infinity) : 1;
+      const group = placementGroups.get(key) ?? { max: placement.maxUnits * multiplier, uids: [] };
       group.uids.push(e.uid);
       placementGroups.set(key, group);
+    }
+    for (const key of e.opts) {
+      const [g, i] = key.split('/');
+      const opt = OPTION_GROUPS.some((x) => x.key === g) ? groupItems(unit, g as keyof OwbUnit)[Number(i)] : undefined;
+      if (opt?.hidden && opt.unavailableReason) warnEntry(e.uid, `${unit.name_en}: ${opt.unavailableReason}`);
     }
     const exclusive = new Map<string, string[]>();
     for (const { opt } of selectedOptions(unit, e)) {
@@ -1113,6 +1151,7 @@ export function validate(
     const seen = new Set<string>();
     for (const r of rows) {
       if (structGedekt.has(r.unit.id)) continue;
+      if (r.unit.armyComposition?.[list.composition]?.maxUnits != null) continue;
       for (const lim of parseCompNote(unitNote(r.unit, list.composition)).limits) {
         // A "per N points" limit says nothing without a points target — and floor(0 / 1000) = 0 would
         // otherwise flag every restricted entry in a list that has no target set.
@@ -1380,21 +1419,24 @@ export function magicCategories(unit: OwbUnit, armyItemLists: string[], itemsDat
         if ((!magic || !magic.types?.length) && /battle standard bearer/i.test(opt.name_en || '') && bannerTypes.length) {
           magic = { types: bannerTypes, maxPoints: 0 }; // 0 = no points limit
         }
-        if (!magic || !Array.isArray(magic.types) || !magic.types.length) return;
         if (!parentActive(unit, entry, g, opt, idx)) return;
-        const items = pool.filter((it) => magic!.types.includes(it.type));
-        if (!items.length) return;
-        // OWB encodes "no points limit" as maxPoints 0 (a BSB may take a magic standard of ANY value)
-        // — treat that as unlimited (Infinity), not a 0 budget that would disable every option.
-        const mp = magic.maxPoints;
-        const cap = magic.maxItemsPerCategory; // e.g. a Dwarf BSB standard may bear up to 3 runes
-        if (magic.multipleItems) {
-          // Champion's plural "magic items up to N points", not a single magic standard.
-          // Keep the existing category id so old saved selections remain selected and removable.
-          out.push({ id: magic.types[0], label: 'Magic Items', groupLabel: 'Magic Items', budgetGroup: `opt:${String(g)}:${idx}`, types: magic.types, maxPoints: typeof mp === 'number' && mp > 0 ? mp : Infinity, maxItems: Infinity, uniqueness: 'per-item-type', items });
-          return;
-        }
-        out.push({ id: magic.types[0], label: magicTypeLabel(magic.types[0]), groupLabel: magicTypeLabel(magic.types[0]), budgetGroup: `opt:${String(g)}:${idx}`, types: magic.types, maxPoints: typeof mp === 'number' && mp > 0 ? mp : Infinity, maxItems: typeof cap === 'number' && cap > 0 ? cap : 1, uniqueness: 'per-category', items });
+        [magic, ...(opt.magicAllowances ?? [])].forEach((magic, allowanceIndex) => {
+          if (!magic || !Array.isArray(magic.types) || !magic.types.length) return;
+          const items = pool.filter((it) => magic.types.includes(it.type));
+          if (!items.length) return;
+          // OWB's maxPoints 0 means unlimited, not a zero-point budget.
+          const mp = magic.maxPoints;
+          const cap = magic.maxItemsPerCategory;
+          const budgetGroup = `opt:${String(g)}:${idx}${allowanceIndex ? `:${allowanceIndex}` : ''}`;
+          if (magic.multipleItems) {
+            // Preserve the existing first-type category id for saved champion item selections.
+            const powers = magic.types.length === 1 && TYPES_LIMITED_PER_ARMY.has(magic.types[0]);
+            const label = powers ? magicTypeLabel(magic.types[0]) : 'Magic Items';
+            out.push({ id: magic.types[0], label, groupLabel: label, budgetGroup, types: magic.types, maxPoints: typeof mp === 'number' && mp > 0 ? mp : Infinity, maxItems: Infinity, uniqueness: powers ? 'per-army' : 'per-item-type', items });
+            return;
+          }
+          out.push({ id: magic.types[0], label: magicTypeLabel(magic.types[0]), groupLabel: magicTypeLabel(magic.types[0]), budgetGroup, types: magic.types, maxPoints: typeof mp === 'number' && mp > 0 ? mp : Infinity, maxItems: typeof cap === 'number' && cap > 0 ? cap : 1, uniqueness: 'per-category', items });
+        });
       });
     }
   }
@@ -1432,6 +1474,13 @@ export function selectedMagicItems(unit: OwbUnit, entry: ListEntry, itemsData: M
     out.push({ category, item, key });
   }
   return out;
+}
+
+/** Preserve all picks, mapping only known historical mixed-category keys to their current section. */
+export function canonicalMagicOptions(unit: OwbUnit, entry: ListEntry, itemsData: MagicItemsData, armyItemLists?: string[]): string[] {
+  const known = new Map(selectedMagicItems(unit, entry, itemsData, armyItemLists)
+    .map(({ key, category, item }) => [key, magicKey(category.id, magicItemId(item))]));
+  return entry.opts.map((key) => known.get(key) ?? key);
 }
 
 /** Points spent within a category's shared budget group — all per-type categories of one section
@@ -1519,7 +1568,8 @@ export function magicCategoriesInRule(cats: MagicCategory[], entry: ListEntry, r
  *  all, where skipping it would mean no limit whatsoever. */
 export function magicItemTakenElsewhere(entries: ListEntry[], entryUid: string, categoryId: string, itemId: string): boolean {
   const key = magicKey(categoryId, itemId);
-  return entries.some((e) => e.uid !== entryUid && e.opts.includes(key));
+  return entries.some((e) => e.uid !== entryUid && e.opts.some((k) => k === key
+    || (TYPES_LIMITED_PER_ARMY.has(categoryId) && k.startsWith(`${MAGIC_PREFIX}/`) && k.split('/')[2] === itemId)));
 }
 
 /** Would picking `item` in `categoryId` exceed the category's allowance? (For disabling options in
@@ -1537,7 +1587,7 @@ export function magicWouldExceed(
   const budget = opts?.budget ?? category?.maxPoints ?? DEFAULT_MAGIC_BUDGET;
   const maxItems = category?.maxItems ?? 1;
   const key = magicKey(categoryId, magicItemId(item));
-  const selected = selectedMagicKeys(entry, categoryId);
+  const selected = selectedMagicKeys({ ...entry, opts: canonicalMagicOptions(unit, entry, itemsData, armyItemLists) }, categoryId);
   if (selected.includes(key)) return false; // re-pick = deselect (always allowed)
   // Per-category limit. Runes/banners use a plain count cap (finite maxItems). The normal magic-item
   // categories (maxItems Infinity) allow only ONE unique (one-per-army) item — but ANY number of

@@ -1,7 +1,7 @@
 {
   "name": "tow-companion",
   "private": true,
-  "version": "0.1.396",
+  "version": "0.1.397",
   "type": "module",
   "description": "Warhammer: The Old World turn companion - mobile PWA",
   "scripts": {
@@ -17,9 +17,11 @@
     "patch-renegade-yellow": "node scripts/patch-renegade-yellow.mjs",
     "patch-renegade-equipment": "node scripts/patch-renegade-equipment.mjs",
     "patch-renegade-added-units": "node scripts/patch-renegade-added-units.mjs",
-    "renegade": "npm run patch-renegade-added-units && npm run compile-renegade-v2 && npm run compile-renegade-lores && npm run patch-renegade-spell-layout && npm run patch-renegade-yellow && npm run patch-renegade-equipment && npm run patch-dark-elves-v2 && npm run validate-renegade-v2 && npm run test:dark-elves-v2",
+    "renegade": "npm run patch-renegade-added-units && npm run compile-renegade-v2 && npm run compile-renegade-lores && npm run patch-renegade-spell-layout && npm run patch-renegade-yellow && npm run patch-renegade-equipment && npm run patch-dark-elves-v2 && npm run patch-vampire-counts-v2 && npm run validate-renegade-v2 && npm run test:dark-elves-v2 && npm run test:vampire-counts-v2",
     "patch-dark-elves-v2": "node scripts/patch-dark-elves-v2.mjs",
     "test:dark-elves-v2": "node --test scripts/tests/dark-elves-v2.test.cjs",
+    "patch-vampire-counts-v2": "node scripts/patch-vampire-counts-v2.mjs",
+    "test:vampire-counts-v2": "node --test scripts/tests/vampire-counts-v2.test.cjs",
     "validate-renegade-v2": "node scripts/validate-renegade-v2.mjs",
     "audit-renegade": "node scripts/audit-renegade.mjs",
     "validate-renegade-reference": "node scripts/validate-renegade-reference.mjs",
