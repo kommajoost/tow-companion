@@ -93,6 +93,14 @@ const LEEG_DRAFT: WizardDraft = {
   mijnLeger: null, oppLeger: null,
 };
 
+/** Zet de wizard klaar op "Join battle" met deze code (29-09-2026). Voor het "Battle code"-veld op het
+ *  startscherm: een code van vier tekens is een VRIJ potje (makeCode in game.tsx), geen campagne-
+ *  battle -- Joost' tegenstander typte er zo een in en kreeg "Could not load this battle". Naam en
+ *  leger vult de speler daarna zelf in; de rest van de draft begint schoon. */
+export function zetJoinDraft(code: string): void {
+  setPersisted('tow:battle-draft', { ...LEEG_DRAFT, modus: 'join', joinCode: code.trim().toUpperCase() });
+}
+
 /** Een opgeslagen draft opschonen. Hij komt uit localStorage en kan van een oudere appversie zijn;
  *  zelfde houding als `normSheet`: alleen de vorm afdwingen, nooit iets verzinnen. */
 function normDraft(raw: unknown): WizardDraft {

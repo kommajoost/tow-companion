@@ -4,6 +4,8 @@ import { TurnsIcon, MapIcon, FlaskIcon } from '../../design/icons';
 import { setPersisted } from '../../store';
 import { getCachedCampaign, getCampaignCode } from '../../lib/campaign';
 import { myCampaignBattles, type CampaignBattleSummary } from '../../lib/campaignBattle';
+import { zetJoinDraft } from './NewBattleWizard';
+import { isVrijPotjeCode } from '../../lib/battleCode';
 import { TEST_BATTLE_CODE, TEST_BATTLE_CONFIG_KEY, testBattleLijsten, testToolsAan } from '../../lib/testBattle';
 
 // HET STARTSCHERM VAN DE GAME-TAB — en verder zo leeg mogelijk.
@@ -59,7 +61,11 @@ export function GameStart({ onNewBattle }: { onNewBattle: () => void }) {
 
   const openCode = () => {
     const c = battleCode.trim().toUpperCase();
-    if (c) setPersisted('tow:campaign-battle', c);
+    if (!c) return;
+    // Vier tekens = de code van een VRIJ potje (New battle > Create game), geen campagne-battle. Die
+    // hoort in "Join battle"; hier zou hij stranden op "No campaign battle found" (29-09-2026).
+    if (isVrijPotjeCode(c)) { zetJoinDraft(c); setBattleCode(''); onNewBattle(); return; }
+    setPersisted('tow:campaign-battle', c);
   };
 
   return (
@@ -113,6 +119,8 @@ export function GameStart({ onNewBattle }: { onNewBattle: () => void }) {
                 onKeyDown={(e) => { if (e.key === 'Enter') openCode(); }}
                 placeholder="e.g. 4FQ7KP"
                 maxLength={12}
+                title="A campaign battle code has six characters. A four-character code is a friendly game and opens Join battle."
+
                 aria-label="Campaign battle code"
                 style={inputStyle}
               />

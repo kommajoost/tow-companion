@@ -7,6 +7,7 @@ import { ArmyListPicker } from './ArmyListPicker';
 import { CampaignBoard, defenderIsTop, parseSheetLayout, parseSheetSecLayout } from './CampaignBoard';
 import type { Army } from '../../types';
 import { isTestBattleCode } from '../../lib/testBattle';
+import { isVrijPotjeCode } from '../../lib/battleCode';
 
 const eb = engraved as React.CSSProperties;
 const display = towFont.display;
@@ -164,7 +165,12 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
       const b = await battleByCode(code);
       setBattle(b);
     } catch (e) {
-      setLoadErr(e instanceof Error ? e.message : 'Could not load this battle.');
+      // Een PostgREST-fout is een gewoon object, geen Error: zonder dit werd ONBEKENDE_CODE altijd
+      // "Could not load this battle" en zag de speler nooit wat er echt mis was (29-09-2026).
+      const msg = e instanceof Error ? e.message
+        : e && typeof e === 'object' && typeof (e as { message?: unknown }).message === 'string' ? (e as { message: string }).message
+        : '';
+      setLoadErr(msg || 'Could not load this battle.');
     } finally {
       setLoading(false);
     }
@@ -246,7 +252,11 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
       <>
         <h1 style={{ fontFamily: display, fontWeight: 700, fontSize: 24, color: TOW.ink, margin: '4px 0 8px' }}>Campaign battle</h1>
         <p style={{ fontFamily: serif, fontSize: 15, color: TOW.blood, margin: '0 0 16px' }}>
-          {loadErr === 'ONBEKENDE_CODE' ? `No campaign battle found for code ${code}.` : (loadErr || 'Could not load this battle.')}
+          {loadErr === 'ONBEKENDE_CODE'
+            ? isVrijPotjeCode(code)
+              ? `${code} is a friendly game code, not a campaign battle. Go back and use New battle › Join battle.`
+              : `No campaign battle found for code ${code}.`
+            : (loadErr || 'Could not load this battle.')}
         </p>
         {loadErr === 'ONBEKENDE_CODE' && (
           <p style={{ fontFamily: serif, fontSize: 13, color: TOW.muted, margin: '-8px 0 16px' }}>
