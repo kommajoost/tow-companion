@@ -71,10 +71,15 @@ export function builderListToArmy(
   const normF = (s: string) => (s || '').toLowerCase().replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim();
   const myFaction = normF(opts.faction || '');
   const factionSet = new Set([...(opts.factionNames || []).map(normF), 'renegade']);
+  // RENEGADE (29-09-2026): in een Renegade-compositie is de "{renegade}"-variant juist de MIJNE. Zonder
+  // dit viel Joost' "Manticore {renegade}" (High Beastmaster, DE Renegade v2) uit de loadout-regel, en
+  // de UnitCard maakt een mount alleen vanuit die regel aantikbaar -- dus geen profiel, geen regels.
+  const isRenegade = /renegade/i.test(opts.overlayId || opts.composition || '');
   const keepLoadout = (label: string): boolean => {
     const m = label.match(/\{([^}]+)\}/);
     if (!m) return true;
     const tag = normF(m[1]);
+    if (tag === 'renegade') return isRenegade;
     if (!tag || tag === myFaction || !factionSet.has(tag)) return true; // mine, or not a faction tag
     return false; // a different army's variant of a shared weapon → drop
   };
