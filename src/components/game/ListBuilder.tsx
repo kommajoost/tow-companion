@@ -598,14 +598,18 @@ export function ListBuilder() {
     setSetupOpen(false);
     setActiveId(id);
   };
-  const duplicateList = (l: SavedList) => { const id = newId('l'); setLists((ls) => [{ ...l, id, name: `${l.name} (copy)`, createdAt: Date.now(), updatedAt: Date.now() }, ...ls]); };
+  /** Duplicate (de ⧉-knop in het overzicht) is ALTIJD een gewone kopie: zonder campagne-markering.
+   *  29-09-2026: Joris dupliceerde zijn campagnelijst om zijn Act 3-lijst voor te bereiden; de kopie
+   *  droeg `campaign`/`campaignSpeler` mee, was de nieuwste, en werd zo stilletjes DE campagnelijst
+   *  (997 pts in de Act 2-hub). De campagnelijst is er één, en die staat in het kader. */
+  const duplicateList = (l: SavedList) => duplicateAsPlain(l);
   /** Copy a campaign list to a PLAIN one: same army and units, but no campaign tag, so the campaign
    *  keeps reading the submitted list while the player is free to tinker with the copy. */
   const duplicateAsPlain = (l: SavedList) => {
     const id = newId('l');
     setLists((ls) => [{
       ...l, id, name: `${l.name} (copy)`, createdAt: Date.now(), updatedAt: Date.now(),
-      campaign: undefined, campaignSpeler: undefined, campaignNaam: undefined, campaignFase: undefined,
+      campaign: undefined, campaignKey: undefined, campaignSpeler: undefined, campaignNaam: undefined, campaignFase: undefined,
       computedPoints: undefined,
     }, ...ls]);
     setActiveId(id);
