@@ -8,6 +8,7 @@ import { CampaignBoard, defenderIsTop, parseSheetLayout, parseSheetSecLayout } f
 import type { Army } from '../../types';
 import { isTestBattleCode } from '../../lib/testBattle';
 import { isVrijPotjeCode } from '../../lib/battleCode';
+import { TERRAIN_PLACEMENT_SHORT, TERRAIN_PLACEMENT_STEPS } from '../../lib/terrainPlacement';
 
 const eb = engraved as React.CSSProperties;
 const display = towFont.display;
@@ -628,19 +629,25 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
         </>
       ))}
 
-      {/* HOE JE HET TERREIN NEERZET (Joost 21-08-2026: "Terrain placement -- uitleggen hoe het werkt").
-          De campagne kiest WELKE stukken er op tafel komen; wie ze WAAR neerzet is een regel uit het
-          rulebook en die stond nergens in de app, dus deden mensen het op gevoel. In eigen woorden
-          samengevat, met de bron erbij -- de exacte tekst hoort in het boek te blijven staan. */}
+      {/* HOE JE HET TERREIN NEERZET. Sinds 29-09-2026 de HUISREGEL van Celedon (lib/terrainPlacement.ts),
+          niet meer de rulebook-regel: om de beurt een stuk op het midden van een kwart, de tegenstander
+          gooit scatter + 2D6 en beslist. Samenvatting altijd zichtbaar, de stappen uitklapbaar. */}
       {terrain.length > 0 && (
         <div style={{ marginTop: 10, border: `1px solid ${TOW.line}`, borderRadius: 9, padding: '8px 10px', background: TOW.panel2 }}>
           <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginBottom: 3 }}>Placing the terrain</div>
-          <div style={{ fontFamily: serif, fontSize: 12, color: TOW.parchDim, lineHeight: 1.5 }}>
-            Roll off. The winner sets up the whole battlefield and puts every piece where they like.
-            Then the loser picks D3 of those pieces and, for each one, rolls 2D6 plus a Scatter dice: an
-            arrow shifts that piece that many inches in the direction shown — stopping the moment it
-            touches another feature or the table edge — and a Hit! leaves it where it stands.
-          </div>
+          <div style={{ fontFamily: serif, fontSize: 12, color: TOW.parchDim, lineHeight: 1.5 }}>{TERRAIN_PLACEMENT_SHORT}</div>
+          <details style={{ marginTop: 6 }}>
+            <summary style={{ cursor: 'pointer', fontFamily: towFont.display, fontWeight: 600, fontSize: 11.5, color: TOW.goldDeep, listStyle: 'none' }}>
+              How placement works, step by step ›
+            </summary>
+            <ol style={{ margin: '6px 0 0', paddingLeft: 18, display: 'flex', flexDirection: 'column', gap: 5 }}>
+              {TERRAIN_PLACEMENT_STEPS.map((st) => (
+                <li key={st.title} style={{ fontFamily: serif, fontSize: 12, color: TOW.parchDim, lineHeight: 1.45 }}>
+                  <span style={{ fontWeight: 700, color: TOW.parch }}>{st.title}. </span>{st.text}
+                </li>
+              ))}
+            </ol>
+          </details>
         </div>
       )}
 
