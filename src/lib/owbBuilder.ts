@@ -322,8 +322,37 @@ export function isRadioGroup(unit: OwbUnit, key: keyof OwbUnit): boolean {
 }
 
 // An option block ready for the editor: the group's items with their index + whether it's radio.
-export interface OptionBlock { key: keyof OwbUnit; label: string; radio: boolean; items: { i: number; opt: OwbOption }[] }
+// `oneOf` (01-10-2026): a set of ONE-OF choices that sits loose among ordinary toggles in the same
+// group -- the Wood Elf enchanted arrows next to Fire & Flee and Vanguard, the Wizard levels on a
+// Doombull next to his shield. Pick one or none; picking another replaces it.
+export interface OptionBlock { key: keyof OwbUnit; label: string; radio: boolean; oneOf?: boolean; items: { i: number; opt: OwbOption }[] }
+
+/** A top-level option that is one-of among the other loose `exclusive` options of its group.
+ *  OWB marks these with `exclusive: true`; an option with an explicit `exclusiveGroup` has its own
+ *  set and is handled there. Only meaningful in a TOGGLE group (a radio group is one-of anyway). */
+export const isLosseEenVan = (opt: OwbOption | undefined): boolean => !!opt && !!opt.exclusive && !opt.exclusiveGroup;
 export function unitBlocks(unit: OwbUnit): OptionBlock[] {
+  return unitBlocksBasis(unit).flatMap((b) => {
+    if (b.radio) return [b];
+    const eenVan = b.items.filter(({ opt }) => isLosseEenVan(opt));
+    if (eenVan.length < 2) return [b];
+    // Zelfde indexen, dus opgeslagen keuzes ('options/3') blijven geldig; alleen de weergave splitst.
+    const rest = { ...b, items: b.items.filter(({ opt }) => !isLosseEenVan(opt)) };
+    const set: OptionBlock = { key: b.key, label: eenVanLabel(eenVan.map(({ opt }) => opt.name_en)), radio: false, oneOf: true, items: eenVan };
+    return rest.items.length ? [rest, set] : [set];
+  });
+}
+
+/** Kop boven een één-van-set: de pijlen heten wat ze zijn, anders een algemene kop. */
+function eenVanLabel(namen: string[]): string {
+  const n = namen.join(' ').toLowerCase();
+  if (/bodkins|hagbane|trueflight|moonfire|swiftshiver/.test(n)) return 'Enchanted arrows';
+  if (/level \d wizard/.test(n)) return 'Wizard level';
+  if (/mark of/.test(n)) return 'Mark of Chaos';
+  return 'Choose one';
+}
+
+function unitBlocksBasis(unit: OwbUnit): OptionBlock[] {
   return OPTION_GROUPS.map(({ key, label }) => {
     const list = Array.isArray(unit[key]) ? (unit[key] as OwbOption[]) : [];
     const radio = isRadioGroup(unit, key);
@@ -348,9 +377,14 @@ export function toggleOption(unit: OwbUnit, entry: ListEntry, key: string): stri
   const [group, index] = key.split('/');
   const list = groupItems(unit, group as keyof OwbUnit);
   const exclusiveGroup = list[Number(index)]?.exclusiveGroup;
+  // Een losse `exclusive`-optie (01-10-2026) is één-van met de andere losse exclusives van de groep:
+  // Arcane Bodkins kiezen haalt Trueflight Arrows weg, net als bij een keuzerondje.
+  const losse = isLosseEenVan(list[Number(index)]);
   const siblings = new Set(exclusiveGroup
     ? list.flatMap((opt, i) => opt.exclusiveGroup === exclusiveGroup ? [`${group}/${i}`] : [])
-    : []);
+    : losse
+      ? list.flatMap((opt, i) => isLosseEenVan(opt) ? [`${group}/${i}`] : [])
+      : []);
   return [...entry.opts.filter((k) => !siblings.has(k)), key];
 }
 
@@ -889,6 +923,12 @@ export function validate(
     // Two different reasons, two different messages. A list saved before detachments were filtered out
     // still has the entry, and "not allowed in this army composition" would send you looking in the
     // wrong place — the unit is fine, it just is not something you take on its own.
+    // EÉN-VAN (01-10-2026): een lijst van vóór de fix kan er twee hebben (Marieke: Bodkins + Trueflight).
+    for (const b of unitBlocks(unit)) {
+      if (!b.oneOf) continue;
+      const gekozen = b.items.filter(({ i }) => e.opts.includes(`${String(b.key)}/${i}`)).map(({ opt }) => opt.name_en);
+      if (gekozen.length > 1) warnEntry(e.uid, `${unit.name_en}: ${gekozen.join(' and ')} -- choose only one ${b.label === 'Choose one' ? 'of these' : `(${b.label.toLowerCase()})`}`);
+    }
     if (isStubDetachment(unit)) {
       warnEntry(e.uid, `${unit.name_en}: a detachment, taken as part of its parent regiment rather than as its own entry`);
     } else if (!unitAllowedIn(unit, list.composition)) {

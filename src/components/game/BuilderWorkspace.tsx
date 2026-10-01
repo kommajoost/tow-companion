@@ -527,8 +527,8 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
         {blocks.map((b) => {
           const radioKey = b.radio ? radioSelected(u, entry, b.key) : '';
           return (
-            <div key={String(b.key)} style={{ marginBottom: 12 }}>
-              <div style={{ ...eb, fontSize: 8.5, color: TOW.muted, marginBottom: 7 }}>{b.label}</div>
+            <div key={`${String(b.key)}-${b.oneOf ? 'eenvan' : 'basis'}`} style={{ marginBottom: 12 }}>
+              <div style={{ ...eb, fontSize: 8.5, color: TOW.muted, marginBottom: 7 }}>{b.label}{b.oneOf ? ' · choose 1' : ''}</div>
               {b.items.map(({ i, opt }) => {
                 const key = `${String(b.key)}/${i}`;
                 const on = b.radio ? radioKey === key : entry.opts.includes(key);
@@ -546,7 +546,7 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
                 }
                 return (
                   <div key={key}>
-                    {optionRow(key, opt, on, !!b.radio, () => (b.radio ? setRadio(entry.uid, String(b.key), i) : toggleOpt(entry.uid, key)))}
+                    {optionRow(key, opt, on, !!b.radio || !!b.oneOf, () => (b.radio ? setRadio(entry.uid, String(b.key), i) : toggleOpt(entry.uid, key)))}
                     {nested.map((g) => subGroupBlock(u, entry, g))}
                   </div>
                 );

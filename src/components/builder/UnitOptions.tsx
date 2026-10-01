@@ -807,6 +807,7 @@ export function UnitOptions(props: {
    *  engine: the authoritative unit total above and in the footer is `entryPoints()`. */
   const groupMeta = (b: typeof blocks[number]): string | undefined => {
     if (b.radio) return 'choose 1';
+    if (b.oneOf) return 'choose 1 · optional';
     const toggles = b.items.filter(({ opt }) => !opt.alwaysActive);
     if (!toggles.length) return undefined;
     const chosen = toggles.filter(({ i }) => entry.opts.includes(`${String(b.key)}/${i}`));
@@ -1162,7 +1163,7 @@ export function UnitOptions(props: {
         {blocks.map((b) => {
           const radioKey = b.radio ? radioSelected(unit, entry, b.key) : '';
           return (
-            <div key={String(b.key)}>
+            <div key={`${String(b.key)}-${b.oneOf ? 'eenvan' : 'basis'}`}>
               <SectionHeader label={b.label} meta={groupMeta(b)} dense />
               {b.items.map(({ i, opt }) => {
                 const key = `${String(b.key)}/${i}`;
@@ -1180,7 +1181,7 @@ export function UnitOptions(props: {
                 }
                 return (
                   <div key={key}>
-                    {optionRow(String(b.key), i, opt, on, b.radio ? 'radio' : 'toggle',
+                    {optionRow(String(b.key), i, opt, on, b.radio || b.oneOf ? 'radio' : 'toggle',
                       () => (b.radio ? setRadio(String(b.key), i) : toggleOpt(key)))}
                     {nested.map(subGroupBlock)}
                   </div>
