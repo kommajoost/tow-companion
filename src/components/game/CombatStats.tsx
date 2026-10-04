@@ -58,7 +58,8 @@ export function CombatStats({ unit, onProfileInfo }: { unit: ArmyUnit; onProfile
   const multiActive = !!(rw && rw.multiShots && multiOn);
   const penalty = activeMods.reduce((n, m) => n + m.penalty, 0) - custom + (multiActive ? 1 : 0);
   const modCount = activeMods.length + (custom !== 0 ? 1 : 0);
-  const hit = bs > 0 ? rangedToHit(bs, penalty) : null;
+  // Bombardment en Cannon Fire gebruiken geen BS: geen To Hit tonen (04-10-2026, Empire Mortar).
+  const hit = bs > 0 && !rw?.noToHit ? rangedToHit(bs, penalty) : null;
   const shotsShown = rw ? (rw.multiShots && multiOn ? rw.multiShots : String(rw.shots)) : '';
   // In rapid-fire mode the weapon switches to its OWN (weaker) profile; ordinary Multiple Shots
   // weapons keep this same profile (only the To Hit penalty applies). `eff` is the profile to show.
@@ -168,9 +169,9 @@ export function CombatStats({ unit, onProfileInfo }: { unit: ArmyUnit; onProfile
                   <tbody><tr>
                     <td style={td(false)}>{eff?.range}</td>
                     <td style={td(multiActive)}>{shotsShown}</td>
-                    <td style={td(false)}>{rangedS ?? '—'}</td>
+                    <td style={td(false)}>{eff?.sLabel ?? rangedS ?? '—'}</td>
                     <td style={td((eff?.ap ?? 0) !== 0)}>{eff?.apLabel ?? fmtAP(eff?.ap ?? 0)}</td>
-                    <td style={{ ...td(true), fontFamily: towFont.display }}>{!hit ? '—' : hit.impossible ? '—' : `${hit.value}+`}</td>
+                    <td style={{ ...td(true), fontFamily: towFont.display }}>{rw.noToHit ? 'Template' : !hit ? '—' : hit.impossible ? '—' : `${hit.value}+`}</td>
                   </tr></tbody>
                 </table>
               </div>
@@ -191,48 +192,54 @@ export function CombatStats({ unit, onProfileInfo }: { unit: ArmyUnit; onProfile
               )}
 
               {/* Compact modifiers dropdown (check on/off) — keeps the card tidy. */}
-              <div style={{ position: 'relative', display: 'inline-block', marginTop: 8 }}>
-                <button
-                  onClick={() => setModsOpen((o) => !o)}
-                  style={{ display: 'inline-flex', alignItems: 'center', gap: 7, fontFamily: towFont.serif, fontSize: 12.5, padding: '5px 11px', borderRadius: 9, cursor: 'pointer', border: `1px solid ${modCount ? TOW.goldDeep : TOW.lineStrong}`, background: modCount ? 'rgba(184,134,47,0.10)' : TOW.cardLt, color: modCount ? TOW.goldDeep : TOW.parchDim }}
-                >
-                  To Hit modifiers{modCount ? ` (${modCount})` : ''}
-                  <span style={{ fontSize: 9, opacity: 0.8 }}>{modsOpen ? '▲' : '▼'}</span>
-                </button>
-                {modsOpen && (
-                  <>
-                    <div onClick={() => setModsOpen(false)} style={{ position: 'fixed', inset: 0, zIndex: 40 }} />
-                    <div style={{ position: 'absolute', top: 'calc(100% + 4px)', left: 0, zIndex: 41, width: 232, maxWidth: '78vw', background: TOW.panel2, border: `1px solid ${TOW.lineStrong}`, borderRadius: 12, boxShadow: '0 10px 30px rgba(40,24,8,0.22)', padding: 7 }}>
-                      <div style={{ ...eb, fontSize: 8, color: TOW.muted, padding: '2px 8px 6px', display: 'flex', justifyContent: 'space-between' }}>
-                        <span>To Hit modifiers</span>
-                        <span style={{ color: TOW.goldDeep }}>{hit && !hit.impossible ? `${hit.value}+` : '—'}</span>
+              {rw.noToHit ? (
+                <p style={{ fontFamily: towFont.serif, fontSize: 12, color: TOW.parchDim, margin: '8px 0 0' }}>No To Hit roll: this weapon places a template and uses its own firing procedure (tap the rule below).</p>
+              ) : (
+                <>
+                <div style={{ position: 'relative', display: 'inline-block', marginTop: 8 }}>
+                  <button
+                    onClick={() => setModsOpen((o) => !o)}
+                    style={{ display: 'inline-flex', alignItems: 'center', gap: 7, fontFamily: towFont.serif, fontSize: 12.5, padding: '5px 11px', borderRadius: 9, cursor: 'pointer', border: `1px solid ${modCount ? TOW.goldDeep : TOW.lineStrong}`, background: modCount ? 'rgba(184,134,47,0.10)' : TOW.cardLt, color: modCount ? TOW.goldDeep : TOW.parchDim }}
+                  >
+                    To Hit modifiers{modCount ? ` (${modCount})` : ''}
+                    <span style={{ fontSize: 9, opacity: 0.8 }}>{modsOpen ? '▲' : '▼'}</span>
+                  </button>
+                  {modsOpen && (
+                    <>
+                      <div onClick={() => setModsOpen(false)} style={{ position: 'fixed', inset: 0, zIndex: 40 }} />
+                      <div style={{ position: 'absolute', top: 'calc(100% + 4px)', left: 0, zIndex: 41, width: 232, maxWidth: '78vw', background: TOW.panel2, border: `1px solid ${TOW.lineStrong}`, borderRadius: 12, boxShadow: '0 10px 30px rgba(40,24,8,0.22)', padding: 7 }}>
+                        <div style={{ ...eb, fontSize: 8, color: TOW.muted, padding: '2px 8px 6px', display: 'flex', justifyContent: 'space-between' }}>
+                          <span>To Hit modifiers</span>
+                          <span style={{ color: TOW.goldDeep }}>{hit && !hit.impossible ? `${hit.value}+` : '—'}</span>
+                        </div>
+                        {SHOOTING_MODS.map((m) => {
+                          const checked = !!mods[m.key];
+                          return (
+                            <button key={m.key} onClick={() => setMods((p) => ({ ...p, [m.key]: !p[m.key] }))} style={{ display: 'flex', alignItems: 'center', gap: 9, width: '100%', padding: '6px 8px', borderRadius: 8, border: 'none', background: 'transparent', cursor: 'pointer', textAlign: 'left' }}>
+                              <span style={{ width: 16, height: 16, flexShrink: 0, borderRadius: 4, border: `1px solid ${checked ? TOW.goldDeep : TOW.muted}`, background: checked ? TOW.goldDeep : 'transparent', color: '#fff', fontSize: 11, lineHeight: '15px', textAlign: 'center' }}>{checked ? '✓' : ''}</span>
+                              <span style={{ flex: 1, fontFamily: towFont.serif, fontSize: 13, color: TOW.ink }}>{m.label}</span>
+                              <span style={{ fontFamily: towFont.serif, fontSize: 12, color: TOW.muted }}>−{m.penalty}</span>
+                            </button>
+                          );
+                        })}
+                        <div style={{ borderTop: `1px solid ${TOW.line}`, margin: '5px 0' }} />
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '2px 8px' }}>
+                          <span style={{ flex: 1, fontFamily: towFont.serif, fontSize: 13, color: TOW.ink }}>
+                            Custom{custom !== 0 ? ` ${custom > 0 ? `+${custom}` : custom}` : ''}
+                          </span>
+                          <button onClick={() => setCustom((c) => c - 1)} aria-label="harder to hit" style={stepBtn}>–</button>
+                          <button onClick={() => setCustom((c) => c + 1)} aria-label="easier to hit" style={stepBtn}>+</button>
+                        </div>
+                        <div style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 10.5, color: TOW.faint, padding: '4px 8px 2px' }}>
+                          Custom: + easier · − harder (magic item, army rule)
+                        </div>
                       </div>
-                      {SHOOTING_MODS.map((m) => {
-                        const checked = !!mods[m.key];
-                        return (
-                          <button key={m.key} onClick={() => setMods((p) => ({ ...p, [m.key]: !p[m.key] }))} style={{ display: 'flex', alignItems: 'center', gap: 9, width: '100%', padding: '6px 8px', borderRadius: 8, border: 'none', background: 'transparent', cursor: 'pointer', textAlign: 'left' }}>
-                            <span style={{ width: 16, height: 16, flexShrink: 0, borderRadius: 4, border: `1px solid ${checked ? TOW.goldDeep : TOW.muted}`, background: checked ? TOW.goldDeep : 'transparent', color: '#fff', fontSize: 11, lineHeight: '15px', textAlign: 'center' }}>{checked ? '✓' : ''}</span>
-                            <span style={{ flex: 1, fontFamily: towFont.serif, fontSize: 13, color: TOW.ink }}>{m.label}</span>
-                            <span style={{ fontFamily: towFont.serif, fontSize: 12, color: TOW.muted }}>−{m.penalty}</span>
-                          </button>
-                        );
-                      })}
-                      <div style={{ borderTop: `1px solid ${TOW.line}`, margin: '5px 0' }} />
-                      <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '2px 8px' }}>
-                        <span style={{ flex: 1, fontFamily: towFont.serif, fontSize: 13, color: TOW.ink }}>
-                          Custom{custom !== 0 ? ` ${custom > 0 ? `+${custom}` : custom}` : ''}
-                        </span>
-                        <button onClick={() => setCustom((c) => c - 1)} aria-label="harder to hit" style={stepBtn}>–</button>
-                        <button onClick={() => setCustom((c) => c + 1)} aria-label="easier to hit" style={stepBtn}>+</button>
-                      </div>
-                      <div style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 10.5, color: TOW.faint, padding: '4px 8px 2px' }}>
-                        Custom: + easier · − harder (magic item, army rule)
-                      </div>
-                    </div>
-                  </>
-                )}
-              </div>
-              <span style={{ fontFamily: towFont.serif, fontSize: 11.5, color: TOW.muted, marginLeft: 8 }}>BS {bs > 0 ? bs : '—'}</span>
+                    </>
+                  )}
+                </div>
+                <span style={{ fontFamily: towFont.serif, fontSize: 11.5, color: TOW.muted, marginLeft: 8 }}>BS {bs > 0 ? bs : '—'}</span>
+                </>
+              )}
               {ruleChips(eff?.specialRules ?? [])}
               {eff?.notes && <p style={{ fontFamily: towFont.serif, fontSize: 12, color: TOW.ink, margin: '8px 0 0' }}>{eff.notes}</p>}
             </>

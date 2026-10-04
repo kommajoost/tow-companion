@@ -223,7 +223,7 @@ function groepeer(units: ArmyUnit[]): { label: string; units: ArmyUnit[] }[] {
 
 /** Zie `wapenS` in printArmy.ts. */
 const wapenS = (w: WeaponProfile): string =>
-  w.sAbs != null ? String(w.sAbs) : (w.sMod ? `S${w.sMod > 0 ? '+' : ''}${w.sMod}` : 'S');
+  w.sLabel ?? (w.sAbs != null ? String(w.sAbs) : (w.sMod ? `S${w.sMod > 0 ? '+' : ''}${w.sMod}` : 'S'));
 
 /** Zie `wapenExtras` in printArmy.ts. */
 function wapenExtras(w: WeaponProfile): string[] {

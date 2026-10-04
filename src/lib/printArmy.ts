@@ -264,7 +264,7 @@ function statTabel(profiel: UnitProfile, caption?: string): string {
 /** De Strength-kolom van een wapen: een absoluut getal (schietwapens) of een modifier op de S van
  *  het model (nabijgevecht) — "S", "S+1". */
 const wapenS = (w: WeaponProfile): string =>
-  w.sAbs != null ? String(w.sAbs) : (w.sMod ? `S${w.sMod > 0 ? '+' : ''}${w.sMod}` : 'S');
+  w.sLabel ?? (w.sAbs != null ? String(w.sAbs) : (w.sMod ? `S${w.sMod > 0 ? '+' : ''}${w.sMod}` : 'S'));
 
 /** De special-rules-kolom van een wapen. Het aantal schoten en de extra aanval staan niet in de
  *  regels van het profiel maar zijn wel precies wat je aan tafel opzoekt, dus die worden erbij

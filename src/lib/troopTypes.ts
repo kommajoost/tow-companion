@@ -3,6 +3,7 @@
 // them to the rulebook's full names and resolves a code from a unit/mount name.
 
 import type { Army } from '../types';
+import { statSleutels } from './statSleutel';
 
 export const TROOP_TYPE_NAMES: Record<string, string> = {
   RI: 'Regular Infantry',
@@ -39,6 +40,11 @@ function makeEntryLookup<T extends object>(statIdx: Record<string, T> | null, he
       const w = key.split(' ');
       const last = w[w.length - 1];
       if (/s$/.test(last)) e = statIdx[[...w.slice(0, -1), last.replace(/s$/, '')].join(' ')] ?? e;
+    }
+    // 04-10-2026: dezelfde aliassen als de statline (ridderorden, "Steam Tank", titels).
+    if (!e || !heeft(e)) {
+      const k = statSleutels(name, statIdx).find((x) => statIdx[x] && heeft(statIdx[x]));
+      if (k) e = statIdx[k];
     }
     return e;
   };

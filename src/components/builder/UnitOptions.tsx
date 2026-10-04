@@ -28,6 +28,7 @@
 // Gutter contract: the primitives carry no horizontal padding, so every band here supplies
 // `BUILDER.gutter` itself and all text shares one left edge.
 
+import { statSleutels } from '../../lib/statSleutel';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { allowedLores as resolveLores } from '../../lib/armyRules';
 import { useData } from '../../data';
@@ -515,6 +516,11 @@ export function UnitOptions(props: {
       const w = key.split(' ');
       const last = w[w.length - 1];
       if (/s$/.test(last)) e = statIdx[[...w.slice(0, -1), last.replace(/s$/, '')].join(' ')];
+    }
+    // 04-10-2026: dezelfde aliassen als in het spel (ridderorden, "Steam Tank", titels).
+    if (!e?.stats?.length) {
+      const k = statSleutels(unitName, statIdx).find((x) => statIdx[x]?.stats?.length);
+      if (k) e = statIdx[k];
     }
     return e?.stats ?? [];
   }, [statIdx]);

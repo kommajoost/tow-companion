@@ -17,6 +17,7 @@
 
 import type { Lore, Rule } from '../types';
 import { CATEGORIES, type Category, type MagicItem, type MagicItemsData, type OwbArmy, type OwbOption, type OwbUnit } from './owbBuilder';
+import { statSleutels } from './statSleutel';
 
 /** Where a pack came from, so the UI can credit it and link out. */
 export interface OverlaySource {
@@ -456,7 +457,10 @@ export function overlayStatsFor(
     ? [...words.slice(0, -1), (words.at(-1) ?? '').replace(/s$/, '')].join(' ')
     : key;
   const patch = overlay?.profiles?.[key] ?? overlay?.profiles?.[singular];
-  const basis = index[key]?.stats ?? index[singular]?.stats
+  // 04-10-2026: de sleutel komt uit statSleutels (gedeelde datasheets met een tag, ridderorden,
+  // andere namen). Zonder dat vond het spel bij o.a. de Empire-Mortar geen statline (Joost).
+  const sleutel = statSleutels(name, index).find((k) => index[k]?.stats?.length);
+  const basis = (sleutel ? index[sleutel]?.stats : undefined)
     ?? index[indexSleutel(index, name)]?.stats ?? [];
   return mergeStatRows(patch?.replaceStats ? [] : basis, patch?.stats);
 }

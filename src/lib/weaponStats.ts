@@ -16,8 +16,14 @@ export interface WeaponProfile {
   sAbs: number | null;
   /** Armour Piercing as a number (0 = none, -1, -2 …). */
   ap: number;
-  /** Preserve a non-numeric source value such as N/A; it must not display as AP 0. */
+  /** Preserve a non-numeric source value such as N/A; it must not display as AP 0. Also a split value
+   *  like "-2 (-3)" (mortar/stone thrower: the second number is for the model under the central hole). */
   apLabel?: string;
+  /** Strength as printed when it is not a single number, e.g. "2 (6)" for a mortar. */
+  sLabel?: string;
+  /** True when the weapon does not roll To Hit with the crew's Ballistic Skill (Bombardment,
+   *  Cannon Fire, or a Notes line that says so). The card then shows no To Hit value. */
+  noToHit?: boolean;
   /** Explicit Notes carried by a compiled profile, e.g. Initiative instead of Toughness. */
   notes?: string;
   /** Single-shot count (the "fire normally" mode) — almost always 1. */
@@ -102,6 +108,15 @@ export function parseWeaponProfile(rule: Rule, baseRule?: Rule): WeaponProfile |
 
   const apNum = ap.match(/-?\d+/);
   const specialRules = splitRules(sr);
+  // 04-10-2026 (Joost, Empire Mortar): "2(6)" / "-2(-3)" is TWEE waarden: de tweede geldt voor het model
+  // onder het gat van de template. Alleen het eerste getal tonen verzweeg de helft van het profiel.
+  const gesplitst = (v: string) => /\(/.test(v) ? v.replace(/\s*\(\s*/, ' (').replace(/\s*\)\s*$/, ')').trim() : undefined;
+  const sLabel = gesplitst(s);
+  const apSplit = gesplitst(ap);
+  // De Notes staan in de algemene wapenregel ("mortars", "stone-throwers"), niet in de profieltabel.
+  const notesText = /Notes:/i.test(baseRule?.bodyIndex || '') ? (baseRule!.bodyIndex.split(/Notes:/i)[1] || '').trim() : '';
+  const noToHit = specialRules.some((x) => /^(bombardment|cannon fire)$/i.test(x))
+    || /does not use its crew.s Ballistic Skill/i.test(notesText);
   // Multiple Shots (X) → the player may fire X shots instead of 1 (at −1 To Hit). A Rapid Fire
   // bolt thrower is the same idea (its rule fires Multiple Shots (D3+3)).
   const msExpr = specialRules.find((x) => /multiple shots/i.test(x))?.match(/\(([^)]+)\)/)?.[1]?.trim();
@@ -118,8 +133,10 @@ export function parseWeaponProfile(rule: Rule, baseRule?: Rule): WeaponProfile |
     sMod,
     sAbs,
     ap: apNum ? parseInt(apNum[0], 10) : 0,
-    ...(/^N\/A$/i.test(ap.trim()) ? { apLabel: ap.trim() } : {}),
-    ...(/^Notes:/i.test(rule.bodyIndex) ? { notes: rule.bodyIndex } : {}),
+    ...(/^N\/A$/i.test(ap.trim()) ? { apLabel: ap.trim() } : apSplit ? { apLabel: apSplit } : {}),
+    ...(sLabel ? { sLabel } : {}),
+    ...(/^Notes:/i.test(rule.bodyIndex) ? { notes: rule.bodyIndex } : notesText ? { notes: notesText } : {}),
+    ...(noToHit ? { noToHit: true } : {}),
     shots: 1,
     multiShots: msExpr ?? (rapidFire ? 'D3+3' : null),
     multiProfile: null, // resolved in unitWeapons (Rapid Fire → the separate rapid-fire-profile)
@@ -195,7 +212,9 @@ export function unitWeapons(unit: ArmyUnit, rules: Record<string, Rule>): {
     // combat profile); add each in turn.
     for (const slug of weaponProfileSlugs(opt, rules)) {
       if (seen.has(slug)) continue;
-      const w = parseWeaponProfile(rules[slug], rules[slug.replace(/(-ranged|-combat)?-profile$/, '')]);
+      const basisSlug = slug.replace(/(-ranged|-combat)?-profile$/, '');
+      // De algemene regel van een war machine staat vaak in het meervoud ("mortars", "stone-throwers").
+      const w = parseWeaponProfile(rules[slug], rules[basisSlug] ?? rules[`${basisSlug}s`]);
       if (!w) continue;
       seen.add(slug);
       // Rapid Fire weapons (the repeater bolt thrower) don't reuse this profile at −1 To Hit — they
