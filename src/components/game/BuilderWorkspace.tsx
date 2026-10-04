@@ -19,7 +19,7 @@ import { applyMountStatModifiers, mountStatModifiers } from '../../lib/mountModi
 import { CompositionInfo } from './CompositionInfo';
 import { CompositionRulePicker } from './CompositionRulePicker';
 import { useSwipeToDismiss } from '../../lib/useSwipeToDismiss';
-import { useCampagnes, groeiPlafonds, type CampaignContext, type CampaignUnit } from '../../lib/campaign';
+import { useCampagnes, groeiPlafonds, isCampagneLijst, type CampaignContext, type CampaignUnit } from '../../lib/campaign';
 import { Eye } from './Eye';
 
 // Responsive Army Builder workspace (Claude Design "Army Builder" PC + mobile, ported onto our
@@ -189,7 +189,9 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
   // Sinds de account-koppeling leeft de context in een module-store die zichzelf bij elke auth-
   // wijziging verst; dit scherm leest hem alleen. Een niet-campagne-lijst houdt `campaignCtx` op null.
   const { actief: campagneActief } = useCampagnes();
-  const campaignCtx: CampaignContext | null = list.campaign ? campagneActief : null;
+  // 04-10-2026: alleen DE campagnelijst (de server-wijzer), niet meer de markering op de lijst.
+  const isCampagne = isCampagneLijst(list, campagneActief);
+  const campaignCtx: CampaignContext | null = isCampagne ? campagneActief : null;
   const [capBumped, setCapBumped] = useState(false); // fase schoof op ⇒ we hebben de cap net bijgewerkt
   const [unlocksOpen, setUnlocksOpen] = useState(false); // "Campaign unlocks"-paneel open/dicht
 
@@ -234,7 +236,7 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
   const [sheet, setSheet] = useState<'pick' | { edit: string } | null>(null);
   // 'register' = het "My regiments"-tabblad: je gesavede/benoemde campagne-units (uit het register).
   // Campagne-lijst mét register → daar openen, zodat veteranen vóór de catalogus staan.
-  const [tab, setTab] = useState<Category | 'register'>(() => (list.campaign && (campaignCtx?.units ?? []).some((u) => u.naam) ? 'register' : 'characters'));
+  const [tab, setTab] = useState<Category | 'register'>(() => (isCampagne && (campaignCtx?.units ?? []).some((u) => u.naam) ? 'register' : 'characters'));
   const [q, setQ] = useState('');
   const [settings, setSettings] = useState(false);
   const [info, setInfo] = useState<{ title: string; rows: StatRow[]; note?: string; ruleSlug?: string; flavour?: string; body?: string; ruleChips?: { name: string; slug: string | null }[]; chipsLabel?: string; wapen?: NonNullable<MagicText[string]['profiel']> } | null>(null); // mount/unit profile / magic-item / lore popup
@@ -667,7 +669,7 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
 
   // Register: je benoemde campagne-units (veteranen), opgelost naar hun catalogus-unit in dít leger.
   // Voedt het "My regiments"-tabblad in de picker; kiezen = unit toevoegen mét de naam er al op.
-  const registerUnits = (list.campaign ? (campaignCtx?.units ?? []) : [])
+  const registerUnits = (isCampagne ? (campaignCtx?.units ?? []) : [])
     .filter((r) => r.naam && r.catalogusId)
     .map((r) => {
       const u = (r.cat ? getUnit(r.cat as Category, r.catalogusId!) : undefined)
@@ -852,7 +854,7 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
 
   // ════════════════════ NAAM-DIALOOG (campagne) — gedeeld door wide + narrow ════════════════════
   const naamDialoog = (() => {
-    if (!naamUid || !list.campaign) return null;
+    if (!naamUid || !isCampagne) return null;
     const e = list.entries.find((x) => x.uid === naamUid);
     const u = e ? getUnit(e.cat, e.unitId) : null;
     if (!e || !u) return null;
@@ -963,7 +965,7 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
                       <div style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 17, color: TOW.ink, lineHeight: 1.1 }}>{selEntry.customName || selUnit.name_en}</div>
                       <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginTop: 3 }}>{selEntry.customName ? `${selUnit.name_en} · ` : ''}{fmt(entryPoints(selUnit, selEntry, itemsData))} pts · {CAT_LABEL[effCatOf(selUnit)]}</div>
                     </div>
-                    {list.campaign && (
+                    {isCampagne && (
                       <NaamKnop genoemd={!!(selEntry.customName ?? '').trim()} onClick={() => openNaamDialoog(selEntry.uid)} />
                     )}
                   </div>
@@ -1070,7 +1072,7 @@ export function BuilderWorkspace({ list, name, onUpdate, onSetName, onBack, army
       {/* editor sheet */}
       {editEntry && editUnit && (
         <Sheet title={editEntry.customName || editUnit.name_en} sub={`${editEntry.customName ? `${editUnit.name_en} · ` : ''}${fmt(entryPoints(editUnit, editEntry, itemsData))} pts · ${CAT_LABEL[effCatOf(editUnit)]}`} onClose={() => setSheet(null)}
-          headerExtra={list.campaign ? <NaamKnop genoemd={!!(editEntry.customName ?? '').trim()} onClick={() => openNaamDialoog(editEntry.uid)} /> : undefined}
+          headerExtra={isCampagne ? <NaamKnop genoemd={!!(editEntry.customName ?? '').trim()} onClick={() => openNaamDialoog(editEntry.uid)} /> : undefined}
           foot={<button onClick={() => { removeE(editEntry.uid); setSheet(null); }} style={{ width: '100%', padding: 12, borderRadius: 10, border: `1px solid rgba(124,43,34,0.4)`, background: 'transparent', color: TOW.blood, cursor: 'pointer', fontFamily: towFont.display, fontWeight: 600, fontSize: 13, letterSpacing: '0.04em' }}>Remove from list</button>}>
           <div style={{ marginBottom: 14 }}>
             {(() => {

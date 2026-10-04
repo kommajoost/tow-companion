@@ -7,7 +7,7 @@ import { useAuth, authSignIn, authSignUp, authSignOut, authResetPassword } from 
 import { useListSync } from '../listSync';
 import { deriveKey, type CloudLists, type CloudVersie } from '../lib/listSync';
 import {
-  useCampagnes, kiesCampagne, verversCampagnes, hernoemRegiment, regimentSlug,
+  useCampagnes, kiesCampagne, verversCampagnes, hernoemRegiment, regimentSlug, isCampagneLijst,
 } from '../lib/campaign';
 import { usePersistentState, setPersisted } from '../store';
 import {
@@ -645,8 +645,9 @@ function CampaignSection({
     try {
       const res = await hernoemRegiment(code, unitId, naam);
       setListsRaw((ls) => (Array.isArray(ls) ? ls : []).map((raw) => {
-        const l = raw as { campaign?: boolean; entries?: { uid?: string; customName?: string; unitId?: string }[] };
-        if (!l || typeof l !== 'object' || !l.campaign || !Array.isArray(l.entries)) return raw;
+        const l = raw as { id?: string; campaign?: boolean; campaignKey?: string; campaignSpeler?: string; entries?: { uid?: string; customName?: string; unitId?: string }[] };
+        // 04-10-2026: alleen DE campagnelijst (de server-wijzer), zoals de server hem ook hernoemt.
+        if (!l || typeof l !== 'object' || !isCampagneLijst(l, ctx) || !Array.isArray(l.entries)) return raw;
         // Dezelfde sleutel als de campagne (campaignUnitId: uid, anders de oude naam-slug). Matchen op
         // de naam-slug vond nooit iets meer sinds de entries een uid dragen.
         const sleutel = res.unitId || unitId;
@@ -663,12 +664,11 @@ function CampaignSection({
     }
   };
 
-  // Je campagne-lijsten uit tow:lists, gefilterd op DEZE campagne-speler (lijsten zonder speler-tag
-  // laten we staan — die komen uit een oudere versie). Oplopend op fase.
-  type CampLijst = { id?: string; name?: string; points?: number; entries?: unknown[]; campaign?: boolean; campaignSpeler?: string; campaignFase?: number };
+  // DE campagnelijst uit tow:lists (04-10-2026): de lijst waar de server-wijzer naar wijst. Er is er
+  // hooguit één; was: alles met de markering van deze speler, gesorteerd op fase.
+  type CampLijst = { id?: string; name?: string; points?: number; entries?: unknown[]; campaign?: boolean; campaignKey?: string; campaignSpeler?: string };
   const campaignLists = (Array.isArray(listsRaw) ? (listsRaw as CampLijst[]) : [])
-    .filter((l) => l && l.campaign && l.id && (!ctx?.speler.id || !l.campaignSpeler || l.campaignSpeler === ctx.speler.id))
-    .sort((a, b) => (a.campaignFase ?? 0) - (b.campaignFase ?? 0));
+    .filter((l) => l && l.id && isCampagneLijst(l, ctx));
 
   return (
     <div style={card}>
@@ -801,8 +801,8 @@ function CampaignSection({
               </>
             ) : (
               <div style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 11.5, color: TOW.muted }}>
-                No campaign list yet. Open the <b>Army</b> tab — the campaign panel at the top starts it for you, with
-                the right points cap and faction already set.
+                No campaign list on this device yet. Open the <b>Army</b> tab: the campaign panel at the top sets it up for
+                you, with the right points cap and faction already set.
               </div>
             )}
           </div>

@@ -10,6 +10,7 @@ import {
 } from '../../lib/overlays';
 import type { BuilderList, OwbArmy, MagicItemsData } from '../../lib/owbBuilder';
 import type { Army } from '../../types';
+import { useCampagnes, isCampagneLijst } from '../../lib/campaign';
 
 // Reusable picker over the player's saved builder lists (tow:lists). Loads each list's army
 // catalogue plus the stat + magic-item data, converts the chosen list into a game Army and hands
@@ -25,8 +26,8 @@ export function ArmyListPicker({ onPick, label, lockedListName = null, campaignP
   onPick: (a: Army) => void;
   label?: string;
   lockedListName?: string | null;
-  /** Campagne-speler-id waarvoor dit een campagne-battle is. Hiermee vinden we de campagne-lijst op de
-   *  VLAG die de builder zelf zet (`campaign` + `campaignSpeler`) in plaats van op naam. Naam-matching
+  /** Campagne-speler-id waarvoor dit een campagne-battle is. Hiermee vinden we de campagne-lijst op zijn
+   *  ID (de gelockte lijst, dan de server-wijzer; sinds 04-10-2026) in plaats van op naam. Naam-matching
    *  brak zodra de lijst hernoemd was ná het locken, of als een ander device 'm anders had staan — en
    *  dan kreeg je de gewone "kies een lijst"-picker, alsof het geen campagne-battle was (Joost 30-07). */
   campaignPlayerId?: string | null;
@@ -46,6 +47,7 @@ export function ArmyListPicker({ onPick, label, lockedListName = null, campaignP
   // Lists can span different armies, so we keep a per-army catalogue cache + army metadata and
   // convert each list with ITS OWN catalogue/faction/composition.
   const [lists] = usePersistentState<SavedList[]>('tow:lists', []);
+  const { actief: campagne } = useCampagnes();
   const [catalogues, setCatalogues] = useState<Record<string, OwbArmy>>({}); // slug → catalogue
   const [armyNames, setArmyNames] = useState<Record<string, string>>({}); // slug → display name
   const [itemsByArmy, setItemsByArmy] = useState<Record<string, string[]>>({}); // slug → magic-item lists
@@ -117,15 +119,25 @@ export function ArmyListPicker({ onPick, label, lockedListName = null, campaignP
   // locked list to show, and it falls back to the full picker with the original label; that is the
   // honest failure, rather than offering a swap that would disagree with the campaign.
   const normName = (s: string) => (s || '').trim().toLowerCase();
-  // Eerst op de campagne-VLAG (de builder zet die zelf op de lijst die voor deze speler meedoet), dan
-  // pas op naam. De naam is de zwakste schakel: die verandert zodra je je lijst hernoemt, terwijl de
-  // battle de naam bewaart die hij bij het locken zag.
-  const opVlag = campaignPlayerId
-    ? lists.find((l) => {
-        const x = l as unknown as { campaign?: unknown; campaignSpeler?: unknown };
-        return x.campaign === true && x.campaignSpeler === campaignPlayerId;
-      }) ?? null
-    : null;
+  // Eerst op ID, dan pas op naam (04-10-2026). De naam is de zwakste schakel: die verandert zodra je je
+  // lijst hernoemt, terwijl de battle de naam bewaart die hij bij het locken zag. Volgorde:
+  //   1. de GELOCKTE lijst van deze Act (`lijstId` = towc_spel_lijst.lijst_uid), want die speelt;
+  //   2. DE campagnelijst (de server-wijzer, isCampagneLijst);
+  // allebei alleen als dit de battle van de ingelogde speler zelf is. Was: de eerste lijst met de
+  // markering `campaign` + `campaignSpeler`, en dat kon een gemarkeerde kopie zijn. De markering telt
+  // alleen nog op een server zonder wijzers (isCampagneLijst valt dan zelf terug).
+  const eigenCampagne = !!campaignPlayerId && !!campagne && campagne.speler.id === campaignPlayerId ? campagne : null;
+  const opVlag = eigenCampagne
+    ? (eigenCampagne.lijstId ? lists.find((l) => l.id === eigenCampagne.lijstId) : undefined)
+      ?? lists.find((l) => isCampagneLijst(l, eigenCampagne))
+      ?? null
+    : campaignPlayerId
+      // Geen (passende) context geladen: de oude markering, alleen lezen.
+      ? lists.find((l) => {
+          const x = l as unknown as { campaign?: boolean; campaignSpeler?: string };
+          return x.campaign === true && x.campaignSpeler === campaignPlayerId;
+        }) ?? null
+      : null;
   // Naam-terugval: namen zijn NIET uniek (twee lijsten "Playtest army", één dark-elves en één
   // wood-elf-realms). Daarom eerst een naam+leger-match, en alleen als dat niets geeft naam alleen —
   // anders laadt hij het verkeerde leger onder de juiste naam.

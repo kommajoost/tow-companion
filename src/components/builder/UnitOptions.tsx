@@ -45,6 +45,7 @@ import { planPromotion, promotionTargets, type PromotionTarget } from '../../lib
 import { applyMountStatModifiers, mountStatModifiers } from '../../lib/mountModifiers';
 import { BUILDER, BudgetBar, fmt, HAIRLINE, SectionHeader, StatStrip, type BudgetSegment } from './primitives';
 import type { BuilderCtx } from './types';
+import { useCampagnes, isCampagneLijst } from '../../lib/campaign';
 
 const eb = engraved as React.CSSProperties;
 /** Strip the catalogue's bookkeeping marks — `{faction}` tags and the `*` multi-takeable marker.
@@ -496,6 +497,9 @@ export function UnitOptions(props: {
 }): React.JSX.Element {
   const { ctx, uid, onBack, onRemove, onDuplicate, onShowInfo, dense, onNaam, groeiMax, groeiMinModellen } = props;
   const { itemsData } = ctx;
+  // 04-10-2026: promotie alleen op DE campagnelijst (de server-wijzer), niet op de markering.
+  const { actief: campagneActief } = useCampagnes();
+  const isCampagne = isCampagneLijst(ctx.list, campagneActief);
 
   // ── hooks: all unconditional, before any early return ──────────────────────────────────────────
   const { lores } = useData();
@@ -569,10 +573,10 @@ export function UnitOptions(props: {
   // where the rule does. The entry keeps its `uid` — which `planPromotion` guarantees and the write
   // below preserves, because it maps the entries in place instead of removing and re-adding.
   const promotions: PromotionTarget[] = useMemo(
-    () => (unit && entry?.cat === 'characters' && ctx.list.campaign
+    () => (unit && entry?.cat === 'characters' && isCampagne
       ? promotionTargets(ctx.list.army, unit, ctx.army?.characters ?? [])
       : []),
-    [unit, entry?.cat, ctx.list.army, ctx.list.campaign, ctx.army],
+    [unit, entry?.cat, ctx.list.army, isCampagne, ctx.army],
   );
   const promoteTo = promotions.find((p) => p.unit.id === promoteToId)?.unit ?? null;
   /** Rewrite the entry IN PLACE. Same uid, same position — the campaign server reads this as the

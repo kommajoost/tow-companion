@@ -13,7 +13,7 @@ import { LockedListView } from './LockedListView';
 import { codeUitInvoer, neemGedeeldeCode, openGedeeldeLijst, type GedeeldeLijst } from '../../lib/listShare';
 import { herstelUnitId } from '../../lib/legacyUnitIds';
 import { ListSettings } from './ListSettings';
-import { useCampagnes, staatOpSlot, hoortBijCampagne } from '../../lib/campaign';
+import { useCampagnes, staatOpSlot, isCampagneLijst, hoortBijCampagneOud, zetEersteCampagneLijst, verversCampagnes } from '../../lib/campaign';
 import { useListSync } from '../../listSync';
 import { setPersisted } from '../../store';
 import { COMPOSITION_RULES } from '../../lib/owbBuilder';
@@ -46,11 +46,11 @@ const FALLBACK_ARMY = 'dark-elves';
 
 interface SavedList extends BuilderList {
   id: string; name: string; army: string; createdAt: number; updatedAt: number; groupId?: string | null;
-  // Campagne-koppeling (De Grensvorsten) — optioneel, zodat bestaande opgeslagen lijsten geldig blijven
-  // en de list-sync (jsonb) deze velden vanzelf meeneemt.
+  // OUDE campagnevelden (t/m 03-10-2026). Sinds 04-10 schrijft de Companion ze niet meer: welke lijst
+  // de campagnelijst is, bepaalt de server-wijzer (isCampagneLijst in lib/campaign.ts). Ze blijven in
+  // het type omdat oude lijsten ze nog dragen; ze worden alleen nog gelezen (terugval op een server
+  // zonder wijzers, en het voorstel voor de eerste wijzer hieronder) en bij een kopie weggehaald.
   campaign?: boolean; campaignSpeler?: string; campaignNaam?: string; campaignFase?: number;
-  /** De unieke context-key ('voorbereiding:c1' of het game-slot). Sinds 24-08-2026 de ECHTE
-   *  koppeling; campaignSpeler bleek niet uniek over de bronnen heen (zie hoortBijCampagne). */
   campaignKey?: string;
   /** Campagne: de BEREKENDE puntensom van deze lijst (incl. magic items). `points` is alleen het
    *  DOEL (de fase-cap waarop de lijst is aangemaakt); de campagne heeft de echte som nodig om te
@@ -137,7 +137,7 @@ export function ListBuilder() {
   /** Open het instellingen-blad van de open lijst (naam + army composition). */
   const [instellingenOpen, setInstellingenOpen] = useState(false);
   // De campagne(s) van het ingelogde account — bepaalt de band bovenaan en of een lijst op slot staat.
-  const { actief: campagne, campagnes } = useCampagnes();
+  const { actief: campagne } = useCampagnes();
   const sync = useListSync();
   const [dragOver, setDragOver] = useState<string | null>(null); // section id being hovered (group id, or '__ungrouped__')
   const [dragOverCard, setDragOverCard] = useState<{ id: string; before: boolean } | null>(null); // card hovered during a reorder drag (+ which edge)
@@ -319,7 +319,8 @@ export function ListBuilder() {
   useEffect(() => {
     const sommen = new Map<string, number>();
     for (const l of lists) {
-      if (!l.campaign) continue;
+      // 04-10-2026: alleen DE campagnelijst (de server-wijzer); dit getal leest towc_lijst_diff.
+      if (!isCampagneLijst(l, campagne)) continue;
       const t2 = puntenVan(l);
       if (t2 != null && l.computedPoints !== t2) sommen.set(l.id, t2);
     }
@@ -329,109 +330,105 @@ export function ListBuilder() {
       return t2 === undefined ? l : { ...l, computedPoints: t2 };
     }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [lists, catalogues, itemsData, overlays, setLists]);
+  }, [lists, catalogues, itemsData, overlays, setLists, campagne]);
 
-  // ── Campagne: de lijst wordt AUTOMATISCH aangemaakt ─────────────────────────────────────────────
-  // Er is niets te kiezen — factie, puntencap en compositie komen alle drie van de campagne — dus een
-  // knop "start mijn lijst" vroeg alleen een klik zonder inhoud. De naam is achteraf te wijzigen via
-  // het instellingen-blad. Voorwaarden voordat we schrijven:
-  //   * de factie staat VAST (anders zou een speler die zijn keuze nog wijzigt een lijst voor het
-  //     verkeerde leger krijgen) en bestaat in de catalogus;
-  //   * de catalogus-metadata is binnen (we hebben de composities van dat leger nodig);
-  //   * de list-sync is uitgereconcilieerd — anders maakt een tweede apparaat een dubbele lijst
-  //     voordat het de bestaande uit de cloud heeft gezien.
-  // De campagne-lijsten van de ACTIEVE campagne, en of hun leger nog klopt met de campagne-factie.
-  // Dat laatste kan verschuiven: wie zich vergist bij het kiezen van zijn factie en het door de
-  // grensmaster laat terugzetten, houdt anders een lijst voor het verkeerde leger — en de factie is
-  // (terecht) niet in de builder te wijzigen, dus dan zit je vast.
+  // ── Campagne: DE campagnelijst (04-10-2026) ─────────────────────────────────────────────────────
+  // Besluit Joost: "Er is altijd maar 1 campagnelijst en dat is die in het gele vak." Welke dat is,
+  // bepaalt de SERVER (de wijzer towc_campagne_slot, als `slotLijstId` in de context). Geen markering
+  // meer op de lijst, dus een kopie, een import of een nieuwe lijst kan er nooit vanzelf in belanden.
+  // De speler kan hem niet wisselen of leegmaken; alleen de campaign master zet hem om.
   const factieSlug = campagne?.speler.factieSlug ?? null;
-  const campagneLijsten = campagne ? lists.filter((l) => hoortBijCampagne(l, campagne, campagnes)) : [];
+  const campagneLijsten = campagne ? lists.filter((l) => isCampagneLijst(l, campagne)) : [];
 
-  // MIGRATIE (24-08-2026): key-loze campagne-lijsten krijgen eenmalig de key van hun beste match —
-  // de eerste context met hun speler-id (voorbereiding vóór game). Zonder dit deelden twee campagnes
-  // met hetzelfde speler-id ('c1') dezelfde fysieke lijst.
+  // ── De EERSTE campagnelijst, voor een speler die nog geen wijzer heeft ─────────────────────────
+  // Er is niets te kiezen (factie, cap en regel komen van de campagne), dus dit gebeurt vanzelf:
+  //   1. lokaal: een oude gemarkeerde lijst van zijn eigen factie als die er is (van vóór 04-10; niet-
+  //      leeg eerst, dan de laatst bewerkte, zoals de oude server koos), anders een nieuwe lege lijst;
+  //   2. server: zodra die in de cloud staat, towc_campagne_slot_eerste. De server zet de wijzer maar
+  //      één keer. Was een ander apparaat net eerder (SLOT_BEZET), dan gaat onze verse, nog lege lijst
+  //      weer weg; daarmee is de race van 16-09 (Yannick, Tim) in de kern dicht.
+  // Het lopende voorstel staat in localStorage, zodat een tabwissel halverwege geen tweede lijst maakt.
+  // Voorwaarden voor stap 1: sync aan en een keer opgehaald (anders kennen we de lijsten van deze
+  // speler niet, en zonder cloud kan de server de lijst nooit zien), de catalogus-metadata binnen, en
+  // een vaste factie die in de catalogus bestaat.
+  const geenWijzer = !!campagne && campagne.slotBekend && !campagne.slotLijstId;
+  const [eersteLijst, setEersteLijst] = usePersistentState<{ id: string; nieuw: boolean; key: string } | null>('tow:campagne-eerste', null);
+  const [eersteFout, setEersteFout] = useState<string | null>(null);
+  const eersteBezig = useRef(false);
+  const eerstePogingen = useRef(0);
+
   useEffect(() => {
-    if (campagnes.length === 0) return;
-    const raak = lists.filter((l) => l.campaign && !l.campaignKey && typeof l.campaignSpeler === 'string');
-    if (raak.length === 0) return;
-    const keyVoor = (spelerId: string) => campagnes.find((c) => c.speler.id === spelerId)?.key;
-    const ids = new Map(raak.map((l) => [l.id, keyVoor(l.campaignSpeler as string)]).filter(([, k]) => !!k) as [string, string][]);
-    if (ids.size === 0) return;
-    setLists((ls) => ls.map((l) => (ids.has(l.id) ? { ...l, campaignKey: ids.get(l.id) } : l)));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [campagnes, lists.length]);
-  const verkeerdLeger = factieSlug ? campagneLijsten.filter((l) => l.army !== factieSlug) : [];
-
-  const autoGedaan = useRef<string | null>(null);
-  /** Maak de campagne-lijst aan (en gooi eventueel meegegeven verouderde lijsten weg). */
-  const maakCampagneLijst = (weg: Set<string> = new Set()) => {
-    if (!campagne || !factieSlug) return;
+    if (!campagne || !factieSlug || !geenWijzer) return;
+    if (eersteLijst && eersteLijst.key === campagne.key && lists.some((l) => l.id === eersteLijst.id)) return;
+    if (!sync.key || sync.status !== 'synced' || !sync.lastSyncedAt) return;
+    if (armies.length === 0 || Object.keys(metaByArmy).length === 0) return;
+    if (!campagne.factieVast || !armies.some((a) => a.slug === factieSlug)) return;
+    eerstePogingen.current = 0;
+    setEersteFout(null);
+    const oud = lists
+      .filter((l) => l.army === factieSlug && hoortBijCampagneOud(l, campagne))
+      .sort((a, b) => Number((b.entries?.length ?? 0) > 0) - Number((a.entries?.length ?? 0) > 0)
+        || (b.updatedAt ?? 0) - (a.updatedAt ?? 0))[0];
+    if (oud) { setEersteLijst({ id: oud.id, nieuw: false, key: campagne.key }); return; }
     // Bewust metaByArmy en niet compsByArmy: die laatste wordt hieronder pas berekend, en de
     // overlay-composities (Renegade-pack) zijn hier toch niet wat je als campagne-default wilt.
     const comps = metaByArmy[factieSlug]?.comps ?? [factieSlug];
     const regels = campagne.compositie.filter((id) => COMPOSITION_RULES.some((r) => r.id === id));
     const id = newId('l');
     setLists((ls) => [{
-      id,
-      name: `${campagne.label} army`,
-      army: factieSlug,
-      composition: comps[0] ?? factieSlug,
-      rule: regels[0] ?? 'open-war',
-      points: campagne.puntenCap,
-      entries: [],
-      createdAt: Date.now(),
-      updatedAt: Date.now(),
-      campaign: true,
-      campaignKey: campagne.key,
-      campaignSpeler: campagne.speler.id,
-      campaignNaam: campagne.speler.naam,
-      campaignFase: campagne.fase,
-    }, ...ls.filter((l) => !weg.has(l.id))]);
-  };
+      id, name: `${campagne.label} army`, army: factieSlug, composition: comps[0] ?? factieSlug,
+      rule: regels[0] ?? 'open-war', points: campagne.puntenCap, entries: [],
+      createdAt: Date.now(), updatedAt: Date.now(),
+    }, ...ls]);
+    setEersteLijst({ id, nieuw: true, key: campagne.key });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [campagne, factieSlug, geenWijzer, sync.key, sync.status, sync.lastSyncedAt, armies, metaByArmy, lists, eersteLijst]);
 
   useEffect(() => {
-    if (!campagne || !factieSlug) return;
-    // ── NIET AANMAKEN ZOLANG WE DE LIJSTEN VAN DEZE SPELER NIET KENNEN (16-09-2026) ──────────────
-    // Dit blok stond alleen stil bij status 'syncing'. Maar de status begint op 'off' zolang er nog
-    // geen sync-sleutel in localStorage staat -- en op een vers apparaat (of na het legen van de
-    // opslag) wordt die sleutel pas in een effect gezet nadat het account bekend is. De
-    // campagne-context komt uit de URL en is er meteen. In dat gat is `lists` nog leeg, ziet deze
-    // hook geen campagne-lijst, en maakt hij er een NIEUWE, LEGE aan: "<campagne> army".
-    //
-    // Dat is precies wat Yannick en Tim overkwam. En het is niet onschuldig: towc_campagne_lijst
-    // pakt server-side de MEEST RECENT BIJGEWERKTE campagne-lijst, dus die verse lege lijst wordt
-    // meteen de lijst waar de campagne mee rekent -- towc_speler_units_sync zet dan de echte units
-    // op 'uit-lijst' en de Army-hub toont units die de speler nooit gekocht heeft.
-    //
-    // Alleen aanmaken vanuit een BESLISTE toestand: sync uit (dan is lokaal alles wat er is), of een
-    // geslaagde sync die ook echt een keer opgehaald heeft. 'error' en 'conflict' tellen niet mee --
-    // daar weten we juist níét wat er in de cloud staat.
-    if (sync.status !== 'off' && sync.status !== 'synced') return;
-    if (sync.key && !sync.lastSyncedAt) return;
-    if (armies.length === 0 || Object.keys(metaByArmy).length === 0) return;
-    if (!campagne.factieVast || !armies.some((a) => a.slug === factieSlug)) return;
-    // Sleutel op campagne + factie: verschuift de factie, dan mag dit opnieuw draaien.
-    const sleutel = `${campagne.key}:${factieSlug}`;
-    if (autoGedaan.current === sleutel) return;
-
-    if (campagneLijsten.some((l) => l.army === factieSlug)) { autoGedaan.current = sleutel; return; }
-    // Een LEGE lijst voor het verkeerde leger is niets waard: vervang 'm stil. Zit er werk in, dan
-    // blijft hij staan en biedt het paneel de keuze — iemands units gooien we niet ongevraagd weg.
-    if (verkeerdLeger.some((l) => (l.entries?.length ?? 0) > 0)) return;
-    autoGedaan.current = sleutel;
-    maakCampagneLijst(new Set(verkeerdLeger.map((l) => l.id)));
+    if (!campagne || !eersteLijst || eersteLijst.key !== campagne.key) return;
+    // De wijzer staat er al (een ander apparaat, of de campaign master): niets meer te doen.
+    if (!geenWijzer) { setEersteLijst(null); return; }
+    if (!lists.some((l) => l.id === eersteLijst.id)) { setEersteLijst(null); return; }
+    if (sync.status !== 'synced' || eersteBezig.current) return;
+    if (eerstePogingen.current >= 3) return;
+    eersteBezig.current = true;
+    eerstePogingen.current += 1;
+    const voorstel = eersteLijst;
+    void (async () => {
+      try {
+        // De server wijst alleen een lijst aan die al in de cloud van dit account staat.
+        await sync.pushNow();
+        const r = await zetEersteCampagneLijst(voorstel.id);
+        if (r.ok || r.fout === 'SLOT_BEZET') {
+          // Een ander apparaat was eerder: onze verse lijst is overbodig, zolang er niets in zit.
+          if (!r.ok && voorstel.nieuw) {
+            setLists((ls) => ls.filter((l) => !(l.id === voorstel.id && (l.entries?.length ?? 0) === 0)));
+          }
+          setEersteFout(null);
+          // Eerst de context verversen: met de wijzer erin wist het effect hierboven het voorstel zelf.
+          // Zelf eerst op null zetten gaf een gat waarin `geenWijzer` nog waar was en stap 1 een
+          // tweede lijst aanmaakte.
+          await verversCampagnes();
+        } else if (r.fout === 'LIJST_NIET_GEVONDEN') {
+          // Nog niet in de cloud: de volgende sync probeert het opnieuw (hooguit drie keer).
+          if (eerstePogingen.current >= 3) setEersteFout('LIJST_NIET_GEVONDEN');
+        } else {
+          setEersteFout(r.fout ?? 'CAMPAGNE_FOUT');
+        }
+      } catch {
+        if (eerstePogingen.current >= 3) setEersteFout('VERBINDING');
+      } finally {
+        eersteBezig.current = false;
+      }
+    })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [campagne, factieSlug, sync.status, sync.key, sync.lastSyncedAt, armies, metaByArmy, lists]);
+  }, [campagne, eersteLijst, geenWijzer, lists, sync.status, sync.lastSyncedAt]);
 
-  /** Herstel na een factie-wissel waar wél werk in de oude lijst zit: de oude lijst blijft bestaan
-   *  als GEWONE lijst (niets weg) en er komt een nieuwe campagne-lijst voor het juiste leger. */
-  const herstelCampagneLijst = () => {
-    if (!campagne || !factieSlug) return;
-    const oud = new Set(verkeerdLeger.map((l) => l.id));
-    setLists((ls) => ls.map((l) => (oud.has(l.id)
-      ? { ...l, campaign: undefined, campaignKey: undefined, campaignSpeler: undefined, campaignNaam: undefined, campaignFase: undefined, computedPoints: undefined, updatedAt: Date.now() }
-      : l)));
-    autoGedaan.current = null; // het effect hierboven maakt de juiste lijst aan
+  /** Opnieuw proberen na een mislukte eerste wijzer (knop in het gele vak). */
+  const probeerEersteOpnieuw = () => {
+    eerstePogingen.current = 0;
+    setEersteFout(null);
+    if (eersteLijst) setEersteLijst({ ...eersteLijst });
   };
 
   // ── Campagne: de puntenlimiet van een campagne-lijst volgt de Act ───────────────────────────────
@@ -443,7 +440,7 @@ export function ListBuilder() {
   // een andere cap en wordt hier dus met rust gelaten.
   useEffect(() => {
     if (!campagne) return;
-    const raak = lists.filter((l) => hoortBijCampagne(l, campagne, campagnes) && l.points !== campagne.puntenCap);
+    const raak = lists.filter((l) => isCampagneLijst(l, campagne) && l.points !== campagne.puntenCap);
     if (raak.length === 0) return;
     const ids = new Set(raak.map((l) => l.id));
     setLists((ls) => ls.map((l) => (ids.has(l.id) ? { ...l, points: campagne.puntenCap } : l)));
@@ -594,7 +591,8 @@ export function ListBuilder() {
 
   const createListWith = (v: NewListValues) => {
     const id = newId('l');
-    setLists((ls) => [{ id, name: v.name, army: v.army, composition: v.composition, rule: v.rule, points: v.points, entries: v.entries, createdAt: Date.now(), updatedAt: Date.now(), campaign: v.campaign, campaignKey: v.campaign ? campagne?.key : undefined, campaignSpeler: v.campaignSpeler, campaignNaam: v.campaignNaam, campaignFase: v.campaignFase }, ...ls]);
+    // 04-10-2026: een nieuwe lijst is ALTIJD een gewone lijst; de campagnelijst wijst de server aan.
+    setLists((ls) => [{ id, name: v.name, army: v.army, composition: v.composition, rule: v.rule, points: v.points, entries: v.entries, createdAt: Date.now(), updatedAt: Date.now() }, ...ls]);
     setSetupOpen(false);
     setActiveId(id);
   };
@@ -603,8 +601,10 @@ export function ListBuilder() {
    *  droeg `campaign`/`campaignSpeler` mee, was de nieuwste, en werd zo stilletjes DE campagnelijst
    *  (997 pts in de Act 2-hub). De campagnelijst is er één, en die staat in het kader. */
   const duplicateList = (l: SavedList) => duplicateAsPlain(l);
-  /** Copy a campaign list to a PLAIN one: same army and units, but no campaign tag, so the campaign
-   *  keeps reading the submitted list while the player is free to tinker with the copy. */
+  /** Copy a campaign list to a PLAIN one: same army and units, a new id, so the campaign keeps reading
+   *  its own list while the player is free to tinker with the copy. De oude campagnevelden worden
+   *  weggehaald (niet gezet): een kopie van een oude gemarkeerde lijst mag nergens meer voor de
+   *  campagnelijst doorgaan, ook niet bij een oudere Companion op een ander apparaat. */
   const duplicateAsPlain = (l: SavedList) => {
     const id = newId('l');
     setLists((ls) => [{
@@ -668,10 +668,7 @@ export function ListBuilder() {
   // geeft sinds vandaag óók de campagne-lijsten mee (zodat een opnieuw opgebouwde lijst met een nieuw
   // builder-id alsnog als de inzending telt); zonder dat hier zou de editor "bewerkbaar" concluderen
   // waar het paneel "op slot" zegt — exact de dubbele staat die Jasper meldde, maar omgekeerd.
-  const eigenCampagneLijsten = campagne
-    ? lists.filter((l) => l.campaign && l.campaignSpeler === campagne.speler.id)
-    : [];
-  const opSlot = staatOpSlot(campagne ?? null, active, eigenCampagneLijsten);
+  const opSlot = staatOpSlot(campagne ?? null, active, campagneLijsten);
 
   // Een DEEL-LINK die niet meer werkt. Eigen scherm, vóór alles: de inline melding op het
   // lijsten-overzicht ziet niemand die met een open lijst binnenkomt.
@@ -777,8 +774,8 @@ export function ListBuilder() {
         compName={(c) => compName(c, active.army)}
         rule={active.rule}
         points={active.points}
-        campagneLabel={active.campaign && campagne ? campagne.label : null}
-        campagneAct={active.campaign && campagne ? campagne.fase : null}
+        campagneLabel={isCampagneLijst(active, campagne) && campagne ? campagne.label : null}
+        campagneAct={isCampagneLijst(active, campagne) && campagne ? campagne.fase : null}
         onClose={() => setInstellingenOpen(false)}
         onOpslaan={(v) => {
           setLists((ls) => ls.map((l) => (l.id === active.id
@@ -984,11 +981,13 @@ export function ListBuilder() {
   const groupIds = new Set(groups.map((g) => g.id));
   // MANUAL order = the `lists` array order (drag to reorder; new lists prepend via createListWith).
   // DE CAMPAGNE-LIJST STAAT AL BOVENAAN (24-09-2026). CeledonPanel toont hem in zijn eigen kader --
-  // met dezelfde filter (hoortBijCampagne op de ACTIEVE campagne) -- dus hem hieronder nog eens in
+  // met dezelfde filter (isCampagneLijst op de ACTIEVE campagne) -- dus hem hieronder nog eens in
   // "My lists" zetten is één lijst op twee plekken op hetzelfde scherm. Joost: "Laat de campaign list
   // alleen bovenaan zien in het kader. niet ook nog eens in de lijst." Lijsten van een ANDERE campagne
   // (wie er twee heeft) blijven gewoon staan: het kader laat die niet zien.
   const inKader = new Set(campagneLijsten.map((l) => l.id));
+  // Ook de lijst die net als eerste campagnelijst is voorgesteld: die hoort al bij het kader.
+  if (eersteLijst && campagne && eersteLijst.key === campagne.key) inKader.add(eersteLijst.id);
   const overzicht = lists.filter((l) => !inKader.has(l.id));
 
   const listsInGroup = (gid: string) => overzicht.filter((l) => l.groupId === gid);
@@ -1145,11 +1144,12 @@ export function ListBuilder() {
           lijsten={lists.map((l) => ({
             id: l.id, name: l.name, army: l.army, units: l.entries?.length ?? 0, points: l.points,
             computed: puntenVan(l) ?? l.computedPoints ?? null,
-            campaign: l.campaign, campaignSpeler: l.campaignSpeler,
+            campaign: l.campaign, campaignKey: l.campaignKey, campaignSpeler: l.campaignSpeler,
           }))}
           onOpen={(id) => setActiveId(id)}
           onTour={() => setPersisted('tow:celedon-tour', 'pending')}
-          onHerstel={herstelCampagneLijst}
+          eersteFout={eersteFout}
+          onEersteOpnieuw={probeerEersteOpnieuw}
         />
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12, flexWrap: 'wrap' }}>
           <h1 style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 22, color: TOW.ink, margin: 0 }}>My lists</h1>

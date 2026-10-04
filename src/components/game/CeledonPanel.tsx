@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { TOW, towFont, engraved } from '../../design/tow';
 import { COMPOSITION_RULES } from '../../lib/owbBuilder';
-import { useCampagnes, kiesCampagne, keurLijst, dienLijstIn, verversCampagnes, staatOpSlot, lijstNotitieZet, hoortBijCampagne, type LijstKeuring, type CampagneBron } from '../../lib/campaign';
+import { useCampagnes, kiesCampagne, keurLijst, dienLijstIn, verversCampagnes, staatOpSlot, lijstNotitieZet, isCampagneLijst, type LijstKeuring, type CampagneBron, type OudeCampagneVelden } from '../../lib/campaign';
 import { useListSync } from '../../listSync';
 import { useAuth } from '../../lib/auth';
 
@@ -21,18 +21,32 @@ const ruleName = (id: string): string => COMPOSITION_RULES.find((r) => r.id === 
  *  campaign; that must read differently from "the list is fine", so it never enables submitting. */
 interface KeuringState { stand: 'laden' | 'klaar' | 'onbekend'; keuring: LijstKeuring | null }
 
-/** One saved list as this panel needs it (kept minimal so ListBuilder stays the owner of the data). */
-export interface PanelLijst {
+/** One saved list as this panel needs it (kept minimal so ListBuilder stays the owner of the data).
+ *  De oude campagnevelden komen alleen mee voor de terugval op een server zonder wijzers. */
+export interface PanelLijst extends OudeCampagneVelden {
   id: string; name: string; army: string; units: number; points: number; computed: number | null;
-  campaign?: boolean; campaignSpeler?: string;
 }
 
-export function CeledonPanel({ lijsten, onOpen, onTour, onHerstel }: {
+/** Waarom de eerste campagnelijst niet gezet kon worden, in spelerstaal. */
+const eersteFoutTekst = (fout: string): string => {
+  switch (fout) {
+    case 'VERKEERD_LEGER': return 'Celedon only accepts a campaign list of your own faction.';
+    case 'LIJST_NIET_GEVONDEN': return 'Your list has not reached the campaign yet. Check that sync is on in Settings, then try again.';
+    case 'GEEN_CAMPAGNE': return 'This account has no place in the campaign yet.';
+    case 'NIET_INGELOGD': return 'Sign in on Settings first.';
+    case 'VERBINDING': return 'Could not reach the campaign. Check your connection, then try again.';
+    default: return 'Could not set up your campaign list. Try again, or ask the campaign master.';
+  }
+};
+
+export function CeledonPanel({ lijsten, onOpen, onTour, eersteFout = null, onEersteOpnieuw }: {
   lijsten: PanelLijst[];
   onOpen: (id: string) => void;
   onTour: () => void;
-  /** Maak een nieuwe campagne-lijst voor de huidige factie; de oude blijft als gewone lijst staan. */
-  onHerstel: () => void;
+  /** De eerste campagnelijst kon niet gezet worden (foutcode van de server), of null. */
+  eersteFout?: string | null;
+  /** Probeer de eerste campagnelijst opnieuw te zetten. */
+  onEersteOpnieuw?: () => void;
 }) {
   const { campagnes, actief, laden, fout } = useCampagnes();
   // The list SYNC is what actually carries a list to the campaign; the send button only triggers it.
@@ -103,24 +117,20 @@ export function CeledonPanel({ lijsten, onOpen, onTour, onHerstel }: {
     return null;
   }
 
-  // Op de context-KEY, niet op speler-id: dat id is niet uniek over de bronnen (zie hoortBijCampagne).
-  const eigen = lijsten.filter((l) => hoortBijCampagne(l, actief, campagnes));
+  // DE campagnelijst (04-10-2026): de lijst waar de server-wijzer naar wijst. Er is er hooguit één,
+  // en de speler kan hem hier niet wisselen of leegmaken; dat doet alleen de campaign master.
+  const eigen = lijsten.filter((l) => isCampagneLijst(l, actief));
   const slug = actief.speler.factieSlug;
-  // De lijst die bij de huidige factie hoort. Staat er alleen een lijst voor een ANDER leger, dan is de
-  // factie verschoven nadat die lijst gemaakt was; dat is geen fout van de speler en moet met één klik
-  // te herstellen zijn, want de factie zelf is (terecht) niet in de builder te wijzigen.
-  // Staat de INGEDIENDE lijst er nog? Die krijgt voorrang, zodat het slot-label altijd op de lijst
-  // zit die de campagne echt vast heeft (11-08). Anders de eerste lijst van de huidige factie.
-  // `eigen` gaat mee als derde argument: is de ingediende lijst lokaal verdwenen (factie-herstel,
-  // opnieuw aangemaakt, verse install), dan herkent staatOpSlot hem alsnog op naam+leger in plaats van
-  // de speler in de tegenstrijdige "wel ingediend, maar niet deze lijst"-tak te laten vallen.
-  const lijst = eigen.find((l) => staatOpSlot(actief, l, eigen))
-    ?? eigen.find((l) => !slug || l.army === slug)
-    ?? null;
-  const oudLeger = !lijst ? eigen[0] ?? null : null;
+  const lijst = eigen[0] ?? null;
+  // De wijzer staat er, maar de lijst staat niet op dit apparaat (een andere sync-sleutel, of hij is
+  // hier weggehaald). De campagne leest hem gewoon uit de cloud; hier valt er alleen niets te bewerken.
+  const nietHier = !lijst && !!actief.slotLijstId;
+  // De campagnelijst is van een ander leger dan de campagne nu zegt (de factie is verschoven nadat
+  // de wijzer gezet werd). Dat kan alleen de campaign master rechtzetten.
+  const verkeerdLeger = !!lijst && !!slug && lijst.army !== slug;
   // Is DEZE lijst de gelockte? `actief.gelockt` alleen zegt dat er érgens een inzending ligt —
   // dat als "deze lijst is op slot" tonen was precies de verwarring van 10/11-08.
-  const lijstOpSlot = staatOpSlot(actief, lijst, eigen);
+  const lijstOpSlot = !!lijst && staatOpSlot(actief, lijst, eigen);
   const punten = lijst?.computed ?? null;
   const over = punten != null && punten > actief.puntenCap;
   const regels = actief.compositie.map(ruleName).join(' or ');
@@ -131,7 +141,7 @@ export function CeledonPanel({ lijsten, onOpen, onTour, onHerstel }: {
   const blokkades = oordeel
     ? oordeel.fouten
     : keuring.keuring && keuring.keuring.fout === 'GEEN_CAMPAGNE_LIJST'
-      ? ['The campaign has not received this list yet — press "Re-check now" once.']
+      ? ['The campaign has not received this list yet. Press "Re-check now" once.']
       : [];
   const kanIndienen = !!syncKey && !!spelerId && !!oordeel && oordeel.mag && !oordeel.gelockt;
 
@@ -172,34 +182,50 @@ export function CeledonPanel({ lijsten, onOpen, onTour, onHerstel }: {
         {regels && <Chip label={regels} />}
       </div>
 
-      {oudLeger ? (
-        // Er is wél een campagne-lijst, maar voor een ander leger dan de campagne nu zegt — en er zit
-        // werk in (anders had de app hem al vervangen). Zijn keuze: die units zijn van hem.
+      {verkeerdLeger && lijst ? (
+        // De campagnelijst is van een ander leger dan de campagne nu zegt. De speler kan zijn
+        // campagnelijst niet zelf wisselen (04-10-2026), dus: zeggen wat er is en wie het oplost.
         <>
           <p style={{ ...tekst, marginTop: 10 }}>
-            Your campaign list <b style={{ color: TOW.ink }}>{oudLeger.name}</b> is a{' '}
-            <b style={{ color: TOW.ink }}>{oudLeger.army.replace(/-/g, ' ')}</b> army, but the campaign now says{' '}
-            <b style={{ color: TOW.ink }}>{actief.speler.factie}</b>. Start the right one — the old list stays, as a
-            normal list you can keep or delete.
+            Your campaign list <b style={{ color: TOW.ink }}>{lijst.name}</b> is a{' '}
+            <b style={{ color: TOW.ink }}>{lijst.army.replace(/-/g, ' ')}</b> army, but the campaign now says{' '}
+            <b style={{ color: TOW.ink }}>{actief.speler.factie}</b>. Only the campaign master can change your campaign
+            list. Ask them to set it to a {actief.speler.factie} list.
           </p>
           <div style={{ display: 'flex', gap: 8, marginTop: 12, flexWrap: 'wrap' }}>
-            <button onClick={onHerstel} style={{ ...knop, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(138,108,48,0.14)', color: TOW.gold }}>
-              Start a {actief.speler.factie} list
-            </button>
-            <button onClick={() => onOpen(oudLeger.id)} style={{ ...knop, border: `1px solid ${TOW.line}`, background: 'transparent', color: TOW.inkDim }}>
-              Look at the old one
+            <button onClick={() => onOpen(lijst.id)} style={{ ...knop, border: `1px solid ${TOW.line}`, background: 'transparent', color: TOW.inkDim }}>
+              Look at it
             </button>
           </div>
         </>
-      ) : !lijst ? (
-        // Geen lijst betekent hier NIET "druk op de knop" — die is er niet meer, de lijst maakt
-        // zichzelf aan (ListBuilder). Het enige dat dit tegenhoudt is een factie die nog niet vastligt.
+      ) : nietHier ? (
+        // De wijzer staat, maar de lijst is niet op dit apparaat. Niet stil een nieuwe maken: dan zou
+        // er naast de echte campagnelijst een tweede ontstaan.
         <>
           <p style={{ ...tekst, marginTop: 10 }}>
-            {actief.factieVast
-              ? 'Setting up your campaign list…'
-              : 'Confirm your faction on Isle of Celedon first — then your list appears here by itself, with the right points limit and composition already set.'}
+            Your campaign list{actief.lijstNaam ? <> <b style={{ color: TOW.ink }}>{actief.lijstNaam}</b></> : null} is not on
+            this device. Celedon still reads it from your account. If it does not show up after a sync (Settings), ask the
+            campaign master.
           </p>
+        </>
+      ) : !lijst ? (
+        // Geen wijzer: de Companion zet de eerste campagnelijst zelf neer (ListBuilder). Het enige dat
+        // dit tegenhoudt is een factie die nog niet vastligt, of een fout van de server.
+        <>
+          <p style={{ ...tekst, marginTop: 10 }}>
+            {eersteFout
+              ? eersteFoutTekst(eersteFout)
+              : actief.factieVast
+                ? 'Setting up your campaign list…'
+                : 'Confirm your faction on Isle of Celedon first. Then your list appears here by itself, with the right points limit and composition already set.'}
+          </p>
+          {eersteFout && onEersteOpnieuw && (
+            <div style={{ display: 'flex', gap: 8, marginTop: 12, flexWrap: 'wrap' }}>
+              <button onClick={onEersteOpnieuw} style={{ ...knop, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(138,108,48,0.14)', color: TOW.gold }}>
+                Try again
+              </button>
+            </div>
+          )}
         </>
       ) : (
         <>
@@ -226,25 +252,22 @@ export function CeledonPanel({ lijsten, onOpen, onTour, onHerstel }: {
           </button>
           {over && (
             <p style={{ ...tekst, color: TOW.blood, marginTop: 8 }}>
-              Over the Act {actief.fase} cap — Celedon will not accept the list until it fits.
+              Over the Act {actief.fase} cap. Celedon will not accept the list until it fits.
             </p>
           )}
           {lijstOpSlot ? (
             <p style={{ ...tekstDim, marginTop: 8 }}>
-              You submitted this list for Act {actief.fase}. You can look at it, but not change it — it opens up again
+              You submitted this list for Act {actief.fase}. You can look at it, but not change it. It opens up again
               when Act {actief.fase + 1} does.
             </p>
           ) : actief.gelockt ? (
-            // Er ligt een inzending voor deze Act, maar niet DEZE lijst — bijvoorbeeld omdat er een
-            // tweede campagne-lijst naast staat. Sinds 20-08 vangt staatOpSlot het geval "ingediende
-            // lijst lokaal verdwenen" al af, dus wie hier belandt heeft écht een andere lijst open.
-            // De tekst moet dat ondubbelzinnig zeggen: eerder stond er "already submitted" én "you can
-            // keep working", en dat las als "mijn leger is zowel op slot als niet" (Jasper, 20-08).
+            // Er ligt een inzending voor deze Act, maar niet DEZE lijst. Sinds 04-10-2026 kan dat nog maar
+            // op één manier: de campaign master heeft de campagnelijst omgezet nadat deze Act al was
+            // ingediend. De lock blijft de momentopname van toen; deze lijst telt vanaf de volgende Act.
             <p style={{ ...tekstDim, marginTop: 8 }}>
-              This is not the list Celedon has for Act {actief.fase}
-              {actief.lijstNaam ? <> — that one is called “{actief.lijstNaam}”</> : null}. This one is a spare: edit it
-              freely, but it does not go to the table. Act {actief.fase} is played with the list that was submitted,
-              and the next submission opens in Act {actief.fase + 1}.
+              Act {actief.fase} was submitted with another list
+              {actief.lijstNaam ? <> (“{actief.lijstNaam}”)</> : null}, and that is the one that goes to the table this Act.
+              This is your campaign list from now on: edit it freely, and submit it when Act {actief.fase + 1} opens.
             </p>
           ) : (
             <>
@@ -306,10 +329,10 @@ export function CeledonPanel({ lijsten, onOpen, onTour, onHerstel }: {
                 </button>
                 <span style={{ ...tekstDim, margin: 0 }}>
                   {indienFout ? indienFout
-                    : !syncKey ? 'Sign in on Settings first — without sync there is nothing to submit.'
+                    : !syncKey ? 'Sign in on Settings first. Without sync there is nothing to submit.'
                       : keuring.stand === 'laden' ? 'Checking your list against the campaign…'
                         : keuring.stand === 'onbekend' ? 'Could not reach the campaign to check your list.'
-                          : blokkades.length > 0 ? 'Fix the problems above first — the campaign will not accept the list.'
+                          : blokkades.length > 0 ? 'Fix the problems above first. The campaign will not accept the list.'
                             : 'Your list is legal. Submitting locks it for this Act.'}
                 </span>
               </div>
@@ -334,7 +357,7 @@ export function CeledonPanel({ lijsten, onOpen, onTour, onHerstel }: {
                 {notitieOpen && (
                   <div style={{ marginTop: 8, display: 'flex', flexDirection: 'column', gap: 7 }}>
                     <p style={{ ...tekstDim, margin: 0 }}>
-                      What is changing in your host this Act — who is marching in, what you finally had the coin
+                      What is changing in your host this Act: who is marching in, what you finally had the coin
                       for, what you had to leave behind. Your chronicler uses it, and the veteran who judges the
                       lists reads it alongside your army.
                     </p>
@@ -411,7 +434,7 @@ export function CeledonPanel({ lijsten, onOpen, onTour, onHerstel }: {
                 </button>
                 <span style={{ ...tekstDim, margin: 0, fontSize: 11.5 }}>
                   {stuur === 'fout'
-                    ? 'Could not reach the campaign — check your connection.'
+                    ? 'Could not reach the campaign. Check your connection.'
                     : 'Changes save and re-check on their own; this does it straight away.'}
                 </span>
               </div>
@@ -425,11 +448,6 @@ export function CeledonPanel({ lijsten, onOpen, onTour, onHerstel }: {
         marginTop: 10, padding: 0, border: 'none', background: 'transparent', cursor: 'pointer',
         fontFamily: towFont.serif, fontSize: 12, color: TOW.muted, textDecoration: 'underline',
       }}>Show me around</button>
-      {eigen.length > 1 && (
-        <p style={{ ...tekstDim, marginTop: 8 }}>
-          You have {eigen.length} lists marked for this campaign; Celedon reads the most recently changed one.
-        </p>
-      )}
     </div>
   );
 }

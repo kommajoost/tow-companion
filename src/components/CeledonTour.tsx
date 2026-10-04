@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { TOW, towFont, engraved } from '../design/tow';
 import { getPersisted, setPersisted, usePersistentState } from '../store';
-import { useCampagnes } from '../lib/campaign';
+import { useCampagnes, isCampagneLijst, type CampaignContext } from '../lib/campaign';
 
 // A guided walk-through for players arriving from Isle of Celedon who have never seen this app.
 // It runs when `tow:celedon-tour` is 'pending' — set by the ?celedon=1 deep link on first arrival, or
@@ -128,15 +128,16 @@ function stappen(label: string, cap: number, fase: number, voorbeeldNaam?: strin
   ];
 }
 
-/** Het id van de campagne-lijst van de actieve campagne, uit `tow:lists`. De tour heeft dat nodig om
- *  de builder te kunnen openen; de lijsten zelf blijven van ListBuilder. */
-function campagneLijstId(spelerId: string | undefined): string | null {
-  if (!spelerId) return null;
+/** Het id van DE campagnelijst van de actieve campagne, als hij in `tow:lists` staat. De tour heeft
+ *  dat nodig om de builder te kunnen openen; de lijsten zelf blijven van ListBuilder. Sinds 04-10-2026
+ *  op de server-wijzer (isCampagneLijst), niet meer op de markering. */
+function campagneLijstId(ctx: CampaignContext | null): string | null {
+  if (!ctx) return null;
   const lijsten = getPersisted<unknown[]>('tow:lists', []);
   if (!Array.isArray(lijsten)) return null;
   for (const raw of lijsten) {
-    const l = raw as { id?: string; campaign?: boolean; campaignSpeler?: string };
-    if (l && l.campaign && l.id && l.campaignSpeler === spelerId) return l.id;
+    const l = raw as { id?: string; campaign?: boolean; campaignKey?: string; campaignSpeler?: string };
+    if (l && l.id && isCampagneLijst(l, ctx)) return l.id;
   }
   return null;
 }
@@ -182,7 +183,7 @@ export function CeledonTour() {
       window.dispatchEvent(new CustomEvent('tow:celedon-show-roster'));
       return;
     }
-    const id = campagneLijstId(actief?.speler.id);
+    const id = campagneLijstId(actief);
     if (id) setPersisted('tow:builder-active', id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loopt, i, stap?.actie, actief?.speler.id]);

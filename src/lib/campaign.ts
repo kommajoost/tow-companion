@@ -90,6 +90,14 @@ export interface CampaignContext {
    *  die dan meteen "Locked for Act 1" toonde (Jasper, 10-08). */
   lijstNaam?: string | null;
   lijstLeger?: string | null;
+  /** DE campagnelijst (04-10-2026): het builder-id waar de server-wijzer (towc_campagne_slot) naar
+   *  wijst. Er is er precies één per speler, en dat is de lijst in het gele vak. Null = er is nog geen
+   *  wijzer; dan maakt de Companion de eerste campagnelijst aan en zet de server hem één keer. Daarna
+   *  verandert alleen de campaign master hem. */
+  slotLijstId: string | null;
+  /** Stuurt de server `slotLijstId` mee? False bij een server van vóór 04-10-2026, of een oude cache:
+   *  dan vallen we terug op de oude markering in de lijst (alleen lezen, zie isCampagneLijst). */
+  slotBekend: boolean;
   /** Voorbereiding: is de speler al uitgevaren? Game-slot: altijd true. */
   setSail: boolean;
   /** De koppelcode van het game-slot — nog gebruikt door de battle-brug. Null bij een voorbereiding. */
@@ -172,6 +180,8 @@ function parseEen(raw: unknown): CampaignContext {
     lijstId: typeof d.lijstId === 'string' && d.lijstId.trim() !== '' ? d.lijstId : null,
     lijstNaam: typeof d.lijstNaam === 'string' ? d.lijstNaam : null,
     lijstLeger: typeof d.lijstLeger === 'string' ? d.lijstLeger : null,
+    slotLijstId: typeof d.slotLijstId === 'string' && d.slotLijstId.trim() !== '' ? d.slotLijstId : null,
+    slotBekend: 'slotLijstId' in d,
     setSail: bron === 'game' ? true : bool(d.setSail),
     koppelcode: typeof d.koppelcode === 'string' ? d.koppelcode : undefined,
     fase: num(d.fase, 1),
@@ -275,25 +285,60 @@ const listeners = new Set<() => void>();
 function emit() { for (const fn of listeners) fn(); }
 function setState(next: CampagneState) { state = next; emit(); }
 
-/** Hoort deze lokale lijst bij deze campagne-context?
+/** Velden van een lijst uit een OUDERE Companion (vóór 04-10-2026). Ze worden niet meer geschreven,
+ *  alleen nog gelezen: door de terugval hieronder, en om een oude campagnelijst als eerste wijzer voor
+ *  te stellen (ListBuilder). */
+export interface OudeCampagneVelden { campaign?: boolean; campaignKey?: string; campaignSpeler?: string }
+
+/** IS DIT DE CAMPAGNELIJST? (04-10-2026, besluit Joost: "Er is altijd maar 1 campagnelijst en dat is
+ *  die in het gele vak.")
  *
- *  Sinds 24-08-2026 draagt een campagne-lijst de unieke context-KEY (`campaignKey`). Nodig omdat het
- *  speler-id NIET uniek is over de bronnen heen: Joosts voorbereiding én zijn game-slot heten allebei
- *  'c1', dus filteren op speler-id liet twee campagnes dezelfde fysieke lijst delen — bewerken bij de
- *  een veranderde de ander. Lijsten van vóór die datum hebben alleen `campaignSpeler`; die vallen
- *  terug op het speler-id, maar alléén voor de EERSTE context met dat id (voorbereiding vóór game,
- *  precies de volgorde van de server) — zo claimt het Playtest-slot een oude lijst nooit meer mee.
- *  `alle` is de volledige contexten-lijst; ontbreekt die, dan geldt de kale id-fallback. */
-export function hoortBijCampagne(
-  l: { campaign?: boolean; campaignKey?: string; campaignSpeler?: string },
-  ctx: CampaignContext,
-  alle?: CampaignContext[],
+ *  Het antwoord komt van de SERVER: de lijst waar de wijzer `slotLijstId` naar wijst, op id. Geen
+ *  markering, geen key, geen "de nieuwste": een kopie, een import of een nieuwe lijst kan er dus nooit
+ *  vanzelf in belanden, en de Companion en de campagne lezen per definitie dezelfde lijst.
+ *
+ *  Alleen als de server nog geen wijzers kent (`slotBekend` false: een oude server of een oude cache)
+ *  valt dit terug op de oude markering, en dan alleen om te LEZEN. */
+export function isCampagneLijst(
+  l: ({ id?: string } & OudeCampagneVelden) | null | undefined,
+  ctx: CampaignContext | null | undefined,
 ): boolean {
+  if (!l || !ctx) return false;
+  if (ctx.slotBekend) return !!ctx.slotLijstId && l.id === ctx.slotLijstId;
+  return hoortBijCampagneOud(l, ctx);
+}
+
+/** De OUDE definitie (24-08-2026 t/m 03-10-2026): de markering `campaign` plus de context-key, met een
+ *  terugval op het speler-id voor lijsten zonder key. Alleen nog voor oude lijsten en oude servers. */
+export function hoortBijCampagneOud(l: OudeCampagneVelden, ctx: CampaignContext): boolean {
   if (!l.campaign) return false;
   if (typeof l.campaignKey === 'string' && l.campaignKey !== '') return l.campaignKey === ctx.key;
   if (l.campaignSpeler !== ctx.speler.id) return false;
-  const eerste = (alle ?? state.campagnes).find((c) => c.speler.id === ctx.speler.id);
+  const eerste = state.campagnes.find((c) => c.speler.id === ctx.speler.id);
   return !eerste || eerste.key === ctx.key;
+}
+
+/** Antwoord van de server op "maak dit mijn eerste campagnelijst". */
+export interface EersteLijstAntwoord {
+  ok: boolean;
+  /** NIET_INGELOGD · GEEN_CAMPAGNE · SLOT_BEZET · LIJST_NIET_GEVONDEN · VERKEERD_LEGER */
+  fout?: string;
+  /** Bij ok: de lijst die het nu is. Bij SLOT_BEZET: de lijst die het AL was (een ander apparaat won). */
+  listId?: string;
+}
+
+/** Zet de wijzer voor een speler die er nog GEEN heeft (04-10-2026). De server doet dit precies één
+ *  keer, alleen voor een lijst die al in de cloud van dit account staat (dus eerst pushen) en alleen
+ *  voor een leger van je eigen factie. Daarna kan alleen de campaign master hem nog veranderen. */
+export async function zetEersteCampagneLijst(listId: string): Promise<EersteLijstAntwoord> {
+  const { data, error } = await supabase.rpc('towc_campagne_slot_eerste', { p_list_id: listId });
+  if (error) throw error;
+  const d = (data && typeof data === 'object' ? data : {}) as Record<string, unknown>;
+  return {
+    ok: d.ok === true,
+    fout: typeof d.fout === 'string' ? d.fout : undefined,
+    listId: typeof d.listId === 'string' ? d.listId : undefined,
+  };
 }
 
 /** Kies uit een lijst de campagne die actief moet zijn: de onthouden keuze als die er nog is, anders
@@ -489,10 +534,10 @@ export async function dienLijstIn(speler: string, bron?: CampagneBron): Promise<
   return parseKeuring(data);
 }
 
-/** Het minimum dat we van een opgeslagen lijst moeten weten om 'm te kunnen identificeren. */
-export interface LijstIdentiteit {
+/** Het minimum dat we van een opgeslagen lijst moeten weten om 'm te kunnen identificeren. De oude
+ *  campagnevelden zijn er alleen voor de terugval op een server zonder wijzers. */
+export interface LijstIdentiteit extends OudeCampagneVelden {
   id: string; name: string; army: string;
-  campaign?: boolean; campaignSpeler?: string;
 }
 
 /** Is DIT de lijst die de campagne voor de huidige Act op slot heeft?
@@ -512,7 +557,9 @@ export function isIngediendeLijst(
   alle?: LijstIdentiteit[] | null,
 ): boolean {
   if (!ctx || !lijst) return false;
-  if (!lijst.campaign || lijst.campaignSpeler !== ctx.speler.id) return false;
+  // 04-10-2026: alleen DE campagnelijst kan de inzending zijn. Was: de markering `campaign` +
+  // `campaignSpeler`, zodat elke gemarkeerde kopie meedong.
+  if (!isCampagneLijst(lijst, ctx)) return false;
   // 20-08-2026 — JASPER, DERDE RONDE. De id-vergelijking hieronder is exact, en dat is goed zolang de
   // ingediende lijst óók lokaal bestaat. Maar het builder-id is LOKAAL: een factie-herstel
   // (herstelCampagneLijst), een opnieuw aangemaakte campagne-lijst of een verse install geven de lijst
@@ -524,6 +571,10 @@ export function isIngediendeLijst(
   // verdwenen, dan valt hij terug op de naam+leger-momentopname van de server — dat is dan de enige
   // identiteit die we nog hebben, en een lijst met dezelfde naam én hetzelfde leger is vrijwel zeker
   // dezelfde inzending. `alle` moet daarvoor meekomen; zonder die lijst blijft het oude gedrag staan.
+  // Met de server-wijzer (04-10-2026) is het id geen lokale gok meer: de wijzer en de lock zijn
+  // allebei server-ids. Dan is het een exacte vergelijking; een andere lijst met dezelfde naam (de
+  // campaign master zette de wijzer om terwijl de Act al gelockt was) is NIET de inzending.
+  if (ctx.slotBekend && ctx.lijstId) return lijst.id === ctx.lijstId;
   if (ctx.lijstId) {
     if (lijst.id === ctx.lijstId) return true;
     const ingediendeBestaatNog = (alle ?? []).some((l) => l.id === ctx.lijstId);

@@ -30,7 +30,7 @@ import {
 } from '../../lib/owbBuilder';
 import { deriveList, optionSummary } from '../../lib/builderDerived';
 import { makeTroopTypeLookup } from '../../lib/troopTypes';
-import { useCampagnes, groeiPlafonds, KRIMP_CAP } from '../../lib/campaign';
+import { useCampagnes, groeiPlafonds, KRIMP_CAP, isCampagneLijst } from '../../lib/campaign';
 import { NaamDialoog } from '../game/NaamDialoog';
 import { RosterScreen } from './RosterScreen';
 import { PickerScreen } from './PickerScreen';
@@ -204,7 +204,9 @@ export function BuilderFlow({
   // op de unit-rij zelf verschijnen — precies zoals een te grote unit dat al doet. Zonder dit zag je
   // ze pas bij het indienen op de campagne-site. De server rekent alles opnieuw na bij het locken.
   const { actief: campagneActief } = useCampagnes();
-  const campaignCtx = (list as { campaign?: boolean }).campaign ? campagneActief : null;
+  // 04-10-2026: campagne-regels alleen op DE campagnelijst (de server-wijzer), niet op de markering.
+  const isCampagne = isCampagneLijst(list, campagneActief);
+  const campaignCtx = isCampagne ? campagneActief : null;
   const campaignMods = useMemo(
     () => (campaignCtx
       ? {
@@ -462,9 +464,9 @@ export function BuilderFlow({
     // Alleen op CAMPAGNE-lijsten (Joost 16-08-2026): daar is de uid de identiteit (XP, veteranen,
     // groeiplafond) en is terugzetten dus wezenlijk anders dan opnieuw toevoegen. Op een gewone
     // lijst is "opnieuw toevoegen" hetzelfde resultaat, en dan is een restore-sectie alleen ruis.
-    // Bewust op `list.campaign` en niet op `campaignCtx`: de prullenbak moet ook werken als de
-    // campagne-koppeling even niet geladen is.
-    if (!(list as { campaign?: boolean }).campaign) return [];
+    // Op isCampagneLijst (04-10-2026). Die leest de wijzer uit de context, en die context staat bij
+    // het opstarten al uit de cache klaar; zonder wijzer-info valt hij terug op de oude markering.
+    if (!isCampagne) return [];
     const inLijst = new Set(list.entries.map((e) => e.uid));
     const uit: {
       uid: string; unitId: string; cat: string; modellen: number | null;

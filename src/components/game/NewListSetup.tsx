@@ -28,13 +28,13 @@ const allowedCampaignRules = (compositie: string[]): string[] => {
   return known.length ? known : compositie; // leeg/onbekend ⇒ geef door wat er is (kan leeg zijn)
 };
 
+/** Wat een nieuwe lijst meekrijgt. Sinds 04-10-2026 NOOIT meer campagnevelden: een nieuwe lijst is
+ *  altijd een gewone lijst. De campagnelijst is er precies één, en die wijst de server aan. */
 export interface NewListValues {
   name: string; army: string; composition: string; points: number; rule: string; entries: ListEntry[];
-  // Campagne-koppeling (De Grensvorsten) — alleen gezet als de "Campaign list"-toggle aan stond.
-  campaign?: boolean; campaignSpeler?: string; campaignNaam?: string; campaignFase?: number;
 }
 
-export function NewListSetup({ armies, compsByArmy, defaultArmy, defaultName, onCancel, onCreate, itemsData, itemListsByArmy, forceCampaign }: {
+export function NewListSetup({ armies, compsByArmy, defaultArmy, defaultName, onCancel, onCreate, itemsData, itemListsByArmy }: {
   armies: { slug: string; name: string }[];
   compsByArmy: Record<string, string[]>;
   defaultArmy: string;
@@ -43,8 +43,6 @@ export function NewListSetup({ armies, compsByArmy, defaultArmy, defaultName, on
   onCreate: (v: NewListValues) => void;
   itemsData?: MagicItemsData;
   itemListsByArmy?: Record<string, string[]>; // army slug → its magic-item list ids
-  /** Opened from the campaign panel: this IS the campaign list, so the toggle is on and gone. */
-  forceCampaign?: boolean;
 }) {
   const [name, setName] = useState(defaultName);
   const [army, setArmy] = useState(defaultArmy);
@@ -59,11 +57,12 @@ export function NewListSetup({ armies, compsByArmy, defaultArmy, defaultName, on
   const [catalogue, setCatalogue] = useState<OwbArmy | null>(null);
 
   // ── Campagne (Isle of Celedon) ──────────────────────────────────────────────────────────────
-  // Sinds de account-koppeling (28-07-2026) is een campagne "beschikbaar" als het INGELOGDE account
-  // er een heeft — geen code meer, en de context staat al in de store. `forceCampaign` betekent dat
-  // de speler op "start mijn campagne-lijst" drukte: dan is dit de campagne-lijst, punt.
+  // 04-10-2026 (besluit Joost): de schakelaar "Isle of Celedon list" is weg. Er is precies één
+  // campagnelijst, die in het gele vak, en een nieuwe lijst wordt dat nooit. Wat overblijft is een
+  // gemak: "Use campaign settings" vult de puntenlimiet, de factie en de regel van de huidige Act in,
+  // bijvoorbeeld om een volgende Act voor te bereiden. Er wordt niets vastgezet en niets gemarkeerd.
   const { actief: campaignCtx } = useCampagnes();
-  const [campaign, setCampaign] = useState(!!forceCampaign);
+  const [campagneIngevuld, setCampagneIngevuld] = useState(false);
 
   const armyName = armies.find((a) => a.slug === army)?.name ?? army;
 
@@ -79,14 +78,6 @@ export function NewListSetup({ armies, compsByArmy, defaultArmy, defaultName, on
     return () => { cancelled = true; };
   }, [army]);
 
-  // Houd de rule binnen de campagne-set zolang de lock actief is (bv. een import zette 'm net op een
-  // niet-toegestane rule, of de fase-compositie verschoof). Buiten de campagne: geen bemoeienis.
-  useEffect(() => {
-    if (!campaign || !campaignCtx) return;
-    const allowed = allowedCampaignRules(campaignCtx.compositie);
-    if (allowed.length && !allowed.includes(rule)) setRule(allowed[0]);
-  }, [campaign, campaignCtx, rule]);
-
   const preview = useMemo(() => (mode === 'import' && paste.trim() && catalogue ? importOwbText(paste, catalogue, itemsData, itemListsByArmy?.[army] ?? []) : null), [mode, paste, catalogue, itemsData, itemListsByArmy, army]);
   // Adopt the export's name/points/rule into the editable fields above.
   useEffect(() => {
@@ -96,42 +87,21 @@ export function NewListSetup({ armies, compsByArmy, defaultArmy, defaultName, on
     if (preview.header.rule) setRule(preview.header.rule);
   }, [preview]);
 
-  // Campagne-modus aanzetten: puntenlimiet op de fase-cap (en op slot), de compositie-rule binnen de
-  // toegestane set, en het leger op de campagne-factie. Bij uitzetten laten we de huidige waarden
-  // staan (minder verrassend) en gaat het slot eraf.
-  const zetCampagne = (aan: boolean) => {
-    setCampaign(aan);
-    if (!aan || !campaignCtx) return;
+  // "Use campaign settings": puntenlimiet = de cap van deze Act, de regel binnen de toegestane set en
+  // het leger op de campagne-factie (alleen bij een echte match: 'realms-of-men' bestaat niet in OWC).
+  // Alles blijft daarna gewoon te wijzigen.
+  const vulCampagneIn = () => {
+    if (!campaignCtx) return;
     setPoints(campaignCtx.puntenCap);
-    // Fase 1-2 ⇒ battle-march; fase 3+ ⇒ combined-arms als default.
     const allowed = allowedCampaignRules(campaignCtx.compositie);
     if (allowed.length && !allowed.includes(rule)) setRule(allowed[0]);
-    // De factie komt als catalogus-slug mee (server-side afgeleid van de weergavenaam). Alleen bij een
-    // echte match kiezen — 'realms-of-men' bestaat niet in OWC, dan houdt de speler de vrije keuze.
     const slug = campaignCtx.speler.factieSlug;
     if (slug && armies.some((a) => a.slug === slug)) setArmy(slug);
+    setCampagneIngevuld(true);
   };
-
-  // Vanaf de campagne-band binnengekomen: meteen in campagne-modus, zodra de legers geladen zijn
-  // (de factie-preselectie heeft die lijst nodig).
-  useEffect(() => {
-    if (!forceCampaign || !campaignCtx || armies.length === 0) return;
-    zetCampagne(true);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [forceCampaign, campaignCtx, armies.length]);
 
   const label: React.CSSProperties = { ...eb, fontSize: 8.5, color: TOW.muted };
   const field: React.CSSProperties = { width: '100%', boxSizing: 'border-box', padding: '9px 11px', borderRadius: 9, border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt, fontFamily: towFont.serif, fontSize: 14, color: TOW.ink, outline: 'none' };
-  const pointsLocked = campaign; // punten-veld staat vast op de fase-cap zolang de campagne-toggle aan is
-
-  // Compositie-rule-lock (campagne). Als de toggle aan is, beperken we de rule tot ctx.compositie:
-  //   • 1 optie  ⇒ vast (select disabled), toelichting "Campaign phase X — <naam>";
-  //   • meerdere ⇒ select toont alleen die opties, toelichting "Campaign phase X — A or B".
-  const campaignRules = campaign && campaignCtx ? allowedCampaignRules(campaignCtx.compositie) : [];
-  const ruleLocked = campaignRules.length > 0; // er is een geldige campagne-set om op te locken
-  const ruleLockNote = ruleLocked && campaignCtx
-    ? `Campaign phase ${campaignCtx.fase} — ${campaignRules.map(ruleName).join(' or ')}`
-    : '';
 
   return (
     <div onClick={onCancel} style={{ position: 'fixed', inset: 0, zIndex: 80, background: 'rgba(30,20,8,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 }}>
@@ -179,65 +149,34 @@ export function NewListSetup({ armies, compsByArmy, defaultArmy, defaultName, on
           {comps.map((c) => <option key={c} value={c}>{compNameFor(c, army)}</option>)}
         </select>
 
-        {/* Campagne-lijst — alleen als het ingelogde account een campagne heeft. Aanzetten zet de
-            puntenlimiet op de fase-cap, kiest de campagne-factie en beperkt de compositie-regel.
-            Kwam de speler via "start mijn campagne-lijst", dan is er niets te kiezen: dan staat er
-            een vaste regel i.p.v. een schakelaar. */}
+        {/* Campagne: alleen een invul-gemak, geen campagnelijst (04-10-2026). */}
         {campaignCtx && (
           <>
             <div style={{ ...label, margin: '16px 0 6px' }}>Campaign</div>
-            {forceCampaign ? (
-              <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: '9px 11px', borderRadius: 9, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(138,108,48,0.10)' }}>
-                <span style={{ flex: 1, fontFamily: towFont.serif, fontSize: 13.5, color: TOW.ink }}>{campaignCtx.label}</span>
-                <span style={{ ...eb, fontSize: 8, color: TOW.muted }}>Act {campaignCtx.fase} · {campaignCtx.puntenCap} pts</span>
-              </div>
-            ) : (
-              <button onClick={() => zetCampagne(!campaign)} aria-pressed={campaign}
-                style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 10, padding: '9px 11px', borderRadius: 9, cursor: 'pointer', textAlign: 'left', border: `1px solid ${campaign ? TOW.goldDeep : TOW.line}`, background: campaign ? 'rgba(138,108,48,0.10)' : TOW.cardLt }}>
-                <span style={{ width: 18, height: 18, flexShrink: 0, borderRadius: 5, border: `1.5px solid ${campaign ? TOW.goldDeep : TOW.lineStrong}`, background: campaign ? TOW.goldDeep : 'transparent', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  {campaign && <svg width="11" height="11" viewBox="0 0 12 12"><path d="M2.5 6.4l2.2 2.2 4.8-5" stroke="#f4eedb" strokeWidth="1.8" fill="none" strokeLinecap="round" strokeLinejoin="round" /></svg>}
-                </span>
-                <span style={{ flex: 1, fontFamily: towFont.serif, fontSize: 13.5, color: TOW.ink }}>{campaignCtx.label} list</span>
-                <span style={{ ...eb, fontSize: 8, color: TOW.muted }}>Act {campaignCtx.fase} · {campaignCtx.puntenCap} pts</span>
-              </button>
-            )}
+            <button onClick={vulCampagneIn}
+              style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 10, padding: '9px 11px', borderRadius: 9, cursor: 'pointer', textAlign: 'left', border: `1px solid ${campagneIngevuld ? TOW.goldDeep : TOW.line}`, background: campagneIngevuld ? 'rgba(138,108,48,0.10)' : TOW.cardLt }}>
+              <span style={{ flex: 1, fontFamily: towFont.serif, fontSize: 13.5, color: TOW.ink }}>Use campaign settings</span>
+              <span style={{ ...eb, fontSize: 8, color: TOW.muted }}>Act {campaignCtx.fase} · {campaignCtx.puntenCap} pts · {campaignCtx.compositie.map(ruleName).join(' or ')}</span>
+            </button>
+            <div style={{ ...label, marginTop: 6, textTransform: 'none', letterSpacing: 0, fontFamily: towFont.serif, fontSize: 11.5 }}>
+              This only fills in the points, faction and rule. It does not change your campaign list: that is the one at the top of My lists.
+            </div>
           </>
         )}
 
         <div style={{ ...label, margin: '16px 0 7px' }}>Points limit</div>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5, marginBottom: 7 }}>
-          {POINT_PRESETS.map((t) => { const on = points === t; return <button key={t} disabled={pointsLocked} onClick={() => setPoints(t)} style={{ flex: '1 1 28%', minWidth: 44, padding: '9px 2px', borderRadius: 8, border: `1px solid ${on ? TOW.goldDeep : TOW.line}`, cursor: pointsLocked ? 'default' : 'pointer', fontFamily: towFont.display, fontWeight: 600, fontSize: 12.5, background: on ? 'rgba(138,108,48,0.14)' : TOW.cardLt, color: on ? TOW.gold : TOW.muted, opacity: pointsLocked ? 0.5 : 1 }}>{t}</button>; })}
+          {POINT_PRESETS.map((t) => { const on = points === t; return <button key={t} onClick={() => setPoints(t)} style={{ flex: '1 1 28%', minWidth: 44, padding: '9px 2px', borderRadius: 8, border: `1px solid ${on ? TOW.goldDeep : TOW.line}`, cursor: 'pointer', fontFamily: towFont.display, fontWeight: 600, fontSize: 12.5, background: on ? 'rgba(138,108,48,0.14)' : TOW.cardLt, color: on ? TOW.gold : TOW.muted }}>{t}</button>; })}
         </div>
-        <input type="number" inputMode="numeric" min={0} step={50} disabled={pointsLocked} value={points} onChange={(e) => setPoints(Math.max(0, Math.floor(Number(e.target.value) || 0)))} aria-label="Custom points" style={{ ...field, fontFamily: towFont.display, fontWeight: 600, opacity: pointsLocked ? 0.6 : 1 }} />
-        {pointsLocked && campaignCtx && <div style={{ ...label, marginTop: 6 }}>Campaign phase {campaignCtx.fase} cap</div>}
+        <input type="number" inputMode="numeric" min={0} step={50} value={points} onChange={(e) => setPoints(Math.max(0, Math.floor(Number(e.target.value) || 0)))} aria-label="Custom points" style={{ ...field, fontFamily: towFont.display, fontWeight: 600 }} />
 
         <div style={{ ...label, margin: '16px 0 6px' }}>Composition rule</div>
-        {ruleLocked ? (
-          <>
-            {/* Campagne: rule vast op de fase-compositie. Bij 1 optie disabled; bij meerdere een select
-                beperkt tot die opties (andere rules zijn hier niet kiesbaar). */}
-            <select
-              value={campaignRules.includes(rule) ? rule : campaignRules[0]}
-              disabled={campaignRules.length === 1}
-              onChange={(e) => setRule(e.target.value)}
-              style={{ ...field, opacity: campaignRules.length === 1 ? 0.6 : 1, cursor: campaignRules.length === 1 ? 'default' : 'pointer' }}
-            >
-              {campaignRules.map((id) => <option key={id} value={id}>{ruleName(id)}</option>)}
-            </select>
-            <div style={{ ...label, marginTop: 6 }}>{ruleLockNote}</div>
-          </>
-        ) : (
-          <CompositionRulePicker value={rule} onChange={setRule} onInfo={setCompInfo} fieldStyle={field} />
-        )}
+        <CompositionRulePicker value={rule} onChange={setRule} onInfo={setCompInfo} fieldStyle={field} />
         <CompositionInfo ruleId={compInfo} onClose={() => setCompInfo(null)} />
 
         <div style={{ display: 'flex', gap: 8, marginTop: 20 }}>
           <button onClick={onCancel} style={{ flex: 1, padding: 12, borderRadius: 10, cursor: 'pointer', border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt, color: TOW.inkDim, fontFamily: towFont.display, fontWeight: 600, fontSize: 13, letterSpacing: '0.03em' }}>Cancel</button>
-          <button onClick={() => onCreate({ name: name.trim() || defaultName, army, composition, points, rule, entries: mode === 'import' ? (preview?.entries ?? []) : [],
-            campaign: campaign || undefined,
-            campaignSpeler: campaign ? campaignCtx?.speler.id : undefined,
-            campaignNaam: campaign ? campaignCtx?.speler.naam : undefined,
-            campaignFase: campaign ? campaignCtx?.fase : undefined })} style={{ flex: 1.4, padding: 12, borderRadius: 10, cursor: 'pointer', border: 'none', background: goldGrad, color: TOW.onGrad, fontFamily: towFont.display, fontWeight: 700, fontSize: 13.5, letterSpacing: '0.03em' }}>{mode === 'import' ? 'Import list' : 'Create list'}</button>
+          <button onClick={() => onCreate({ name: name.trim() || defaultName, army, composition, points, rule, entries: mode === 'import' ? (preview?.entries ?? []) : [] })} style={{ flex: 1.4, padding: 12, borderRadius: 10, cursor: 'pointer', border: 'none', background: goldGrad, color: TOW.onGrad, fontFamily: towFont.display, fontWeight: 700, fontSize: 13.5, letterSpacing: '0.03em' }}>{mode === 'import' ? 'Import list' : 'Create list'}</button>
         </div>
       </div>
       <style>{`@keyframes sheet-pop { from { opacity: 0; transform: translateY(8px) scale(0.98); } to { opacity: 1; transform: none; } }`}</style>
