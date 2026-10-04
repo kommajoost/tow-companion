@@ -94,7 +94,7 @@ export function EndBattleOverview({
         {res.verschil > 0 && (
           <div style={{ fontFamily: serif, fontSize: 13.5, color: TOW.parchDim, marginTop: 3 }}>
             +{res.verschil} VP
-            {camp && ` · ${camp.cap} pt bracket · Fame ${camp.tpHost}-${camp.tpGuest}`}
+            {camp && ` · ${camp.cap} pt bracket · Tournament Points ${camp.tpHost}-${camp.tpGuest}`}
           </div>
         )}
 

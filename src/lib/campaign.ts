@@ -64,7 +64,10 @@ export interface CampaignBaseline {
   optCounts: Record<string, number>;
   customName: string | null;
 }
-export interface CampaignUnit { naam: string; catalogusId: string | null; cat: string | null; xp: number; abilities: number; littekens: number; status: string }
+/** Eén regiment uit het campagne-register. `unitId` is de campagne-sleutel (de builder-uid, zie
+ *  campaignUnitId in owbBuilder.ts) waaraan XP/abilities/scars hangen; null bij een oudere server die
+ *  hem nog niet meestuurt (04-10-2026). */
+export interface CampaignUnit { unitId: string | null; naam: string; catalogusId: string | null; cat: string | null; xp: number; abilities: number; littekens: number; status: string }
 export interface CampaignContext {
   ok: true;
   /** Waar deze campagne uit komt: een voorbereiding (de echte campagne) of een game-slot. */
@@ -181,6 +184,7 @@ function parseEen(raw: unknown): CampaignContext {
     units: arr(d.units).map((raw2) => {
       const u = (raw2 && typeof raw2 === 'object' ? raw2 : {}) as Record<string, unknown>;
       return {
+        unitId: typeof u.unitId === 'string' && u.unitId ? u.unitId : null,
         naam: str(u.naam),
         catalogusId: typeof u.catalogusId === 'string' ? u.catalogusId : null,
         cat: typeof u.cat === 'string' ? u.cat : null,
@@ -375,7 +379,9 @@ export function useCampagnes(): CampagneState {
 // ---- Losse RPC's die een koppelcode nodig hebben ------------------------------------------------
 
 /** Hernoem een geregistreerde campagne-unit (veteraan) — XP/abilities/scars blijven behouden.
- *  De server hernoemt de register-rij én schrijft de nieuwe naam meteen in de cloud-lijsten. */
+ *  De server hernoemt de register-rij én schrijft de nieuwe naam meteen in de cloud-lijsten.
+ *  `unitId` is de CAMPAGNE-SLEUTEL (CampaignUnit.unitId = de builder-uid), niet de naam-slug: daarop
+ *  zoekt de server, en sinds 04-10-2026 verandert hij die sleutel nooit meer (alleen de naam). */
 export async function hernoemRegiment(code: string, unitId: string, naam: string): Promise<{ unitId: string; naam: string }> {
   const { data, error } = await supabase.rpc('towc_companion_unit_hernoem', {
     p_code: cleanCode(code), p_unit_id: unitId, p_naam: naam,

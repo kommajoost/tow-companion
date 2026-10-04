@@ -317,6 +317,10 @@ export interface GameTracker {
    *  andere speler en meeloopt in de report-`sig` (verandert een vinkje, dan vervallen beide
    *  goedkeuringen — zelfde regel als voor de VP's). */
   quests?: { host?: boolean; guest?: boolean };
+  /** 04-10: het AANTAL bij een getrapte quest (Captured Colours: veroverde standaarden, Calming of the
+   *  Winds: Fated dispels), per seat. Alleen gezet bij een quest met tredes; de campagne betaalt de
+   *  hoogste trede die dit aantal haalt. Zelfde reden als `quests` om op de tracker te staan. */
+  questAantal?: { host?: number; guest?: number };
   /** 17-08: welk leger zich TERUGTROK, als een van de twee dat deed. Een terugtrekkend leger redt zijn
    *  units (geen verwondings-worpen, geen Battlefield Losses) maar geeft de battle weg: de campagne
    *  legt de trede vast op minimaal Resounding voor de andere kant, en een Crushing tegen de

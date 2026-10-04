@@ -1,7 +1,7 @@
 {
   "name": "tow-companion",
   "private": true,
-  "version": "0.1.402",
+  "version": "0.1.403",
   "type": "module",
   "description": "Warhammer: The Old World turn companion - mobile PWA",
   "scripts": {
@@ -22,6 +22,8 @@
     "test:dark-elves-v2": "node --test scripts/tests/dark-elves-v2.test.cjs",
     "patch-vampire-counts-v2": "node scripts/patch-vampire-counts-v2.mjs",
     "test:vampire-counts-v2": "node --test scripts/tests/vampire-counts-v2.test.cjs",
+    "test:veteraan-rapport": "node --test scripts/tests/veteraan-rapport.test.cjs",
+    "test:campagne-uitkomst": "node --test scripts/tests/campagne-uitkomst.test.cjs",
     "validate-renegade-v2": "node scripts/validate-renegade-v2.mjs",
     "audit-renegade": "node scripts/audit-renegade.mjs",
     "validate-renegade-reference": "node scripts/validate-renegade-reference.mjs",

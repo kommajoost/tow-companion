@@ -486,24 +486,28 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
       </div>
     ) : null;
 
-  // Attached found magic item (max 1 per side) shown read-only — same chip style as the perks. Name
-  // + points on the chip, effect as tooltip, and a "Single use" tag when it's a consumable.
-  const renderItem = (item: FoundItem | null, heading: string) =>
-    item ? (
+  // Attached found magic items (up to 2 per side since 16-08) shown read-only — same chip style as the
+  // perks. Name + points on the chip, effect as tooltip, and a "Single use" tag when it's a consumable.
+  const renderItems = (items: FoundItem[], heading: string) =>
+    items.length > 0 ? (
       <div style={{ marginTop: 12 }}>
-        <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginBottom: 5 }}>{heading}</div>
+        <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginBottom: 5 }}>{heading}{items.length > 1 ? 's' : ''}</div>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, alignItems: 'center' }}>
-          <span
-            title={item.effect || undefined}
-            style={{ fontFamily: serif, fontSize: 12, padding: '3px 10px', borderRadius: 999, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.10)', color: TOW.goldDeep, cursor: item.effect ? 'help' : 'default' }}
-          >
-            {item.naam}{item.punten ? ` · ${item.punten} pts` : ''}
-          </span>
-          {item.soort === 'consumable' && (
-            <span style={{ ...eb, fontSize: 8, padding: '3px 8px', borderRadius: 999, border: `1px solid ${TOW.line}`, background: TOW.panel2, color: TOW.muted }}>
-              Single use
+          {items.map((item, i) => (
+            <span key={`${item.naam}-${i}`} style={{ display: 'inline-flex', gap: 6, alignItems: 'center' }}>
+              <span
+                title={item.effect || undefined}
+                style={{ fontFamily: serif, fontSize: 12, padding: '3px 10px', borderRadius: 999, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.10)', color: TOW.goldDeep, cursor: item.effect ? 'help' : 'default' }}
+              >
+                {item.naam}{item.punten ? ` · ${item.punten} pts` : ''}
+              </span>
+              {item.soort === 'consumable' && (
+                <span style={{ ...eb, fontSize: 8, padding: '3px 8px', borderRadius: 999, border: `1px solid ${TOW.line}`, background: TOW.panel2, color: TOW.muted }}>
+                  Single use
+                </span>
+              )}
             </span>
-          )}
+          ))}
         </div>
       </div>
     ) : null;
@@ -676,8 +680,8 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
       )}
       {battle.items && (
         <>
-          {renderItem(battle.items.aanvaller, `${battle.aanvaller.naam || 'Attacker'} · magic item`)}
-          {renderItem(battle.items.verdediger, `${battle.verdediger.naam || 'Defender'} · magic item`)}
+          {renderItems(battle.items.aanvaller, `${battle.aanvaller.naam || 'Attacker'} · magic item`)}
+          {renderItems(battle.items.verdediger, `${battle.verdediger.naam || 'Defender'} · magic item`)}
         </>
       )}
     </div>

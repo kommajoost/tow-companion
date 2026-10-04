@@ -106,9 +106,9 @@ export interface BattlePerks {
   verdediger: Perk[];
 }
 
-/** Eén gevonden magic item (campagne-progressie) dat de speler aan zijn leger hangt (max 1). De
- *  server maakt naam/effect al leesbaar; we tonen ze read-only. `soort` === 'consumable' → single
- *  use (één keer bruikbaar per battle). */
+/** Eén gevonden magic item (campagne-progressie) dat de speler aan zijn leger hangt (sinds 16-08
+ *  hoogstens twee per kant). De server maakt naam/effect al leesbaar; we tonen ze read-only.
+ *  `soort` === 'consumable' → single use (één keer bruikbaar per battle). */
 export interface FoundItem {
   naam: string;
   punten: number;
@@ -116,10 +116,12 @@ export interface FoundItem {
   soort: string;
 }
 
-/** Aangehangen magic item per kant (max 1, of null). Alleen gevuld als `beideGelockt`. */
+/** Aangehangen magic items per kant: slot 1 en slot 2 (sinds 16-08 twee per kant, kolommen
+ *  aanv_item2/verd_item2). Lege slots vallen weg, dus 0, 1 of 2 items. Alleen gevuld als
+ *  `beideGelockt`. Een oudere server stuurt alleen slot 1 mee; dan is er hoogstens één. */
 export interface BattleItems {
-  aanvaller: FoundItem | null;
-  verdediger: FoundItem | null;
+  aanvaller: FoundItem[];
+  verdediger: FoundItem[];
 }
 
 /** Een campagne-battle zoals opgehaald via de sync-code. */
@@ -148,7 +150,7 @@ export interface CampaignBattle {
    *  Tournament-Points-tabel geldt. Optioneel: oudere servers sturen het niet mee. */
   fase?: number;
   cap?: number;
-  /** Aangehangen found magic item per kant (max 1) — alleen gevuld als `beideGelockt`. Optioneel
+  /** Aangehangen found magic items per kant (tot 2) — alleen gevuld als `beideGelockt`. Optioneel
    *  (oude servers sturen het niet mee → undefined). */
   items?: BattleItems;
   /** Start-/klaar-stand van beide kanten. Optioneel (oude server → undefined; dan geen poort). */
@@ -192,7 +194,7 @@ export const BATTLE_TYPE_LABEL: Record<string, string> = {
  *  soort waarbij er niets op de kaart verandert. */
 export const BATTLE_TYPE_NOTE: Record<string, string> = {
   challenge:
-    'A challenge: no territory is at stake. What rides on it is the wager the two of you agreed in the campaign — the gold you both put up and any magic item each side staked — and it is a real game, so your regiments earn their XP and carry any battle scars home. Scored exactly like every other battle.',
+    'A challenge: no territory is at stake. What rides on it is the wager the two of you agreed in the campaign: the gold you both put up and any magic item each side staked. Challenge: +1 Fame only on a Crushing Victory, XP and scars count as normal.',
 };
 
 /** Label van een battle-soort, of null als de campagne iets stuurt dat we niet kennen. */
@@ -303,11 +305,14 @@ function parseItem(raw: unknown): FoundItem | null {
   return { naam, punten: num(i.punten), effect: str(i.effect), soort: str(i.soort) };
 }
 
-/** Undefined als het veld ontbreekt (oude server) — anders per kant een item of null. */
+/** Undefined als het veld ontbreekt (oude server) — anders per kant de gevulde slots (1 en 2).
+ *  Slot 2 heet op de wire `aanvaller2`/`verdediger2` (04-10-2026); een oudere server stuurt het niet. */
 function parseItems(raw: unknown): BattleItems | undefined {
   if (!raw || typeof raw !== 'object') return undefined;
   const i = raw as Record<string, unknown>;
-  return { aanvaller: parseItem(i.aanvaller), verdediger: parseItem(i.verdediger) };
+  const kant = (a: unknown, b: unknown): FoundItem[] =>
+    [parseItem(a), parseItem(b)].filter((x): x is FoundItem => !!x);
+  return { aanvaller: kant(i.aanvaller, i.aanvaller2), verdediger: kant(i.verdediger, i.verdediger2) };
 }
 
 function parseBattle(data: unknown): CampaignBattle {
@@ -419,6 +424,11 @@ export interface BattleResultaat {
    *  hier samen af. De campagne-RPC roept per `true` towc_spel_quest_voltooi aan; false = geen actie. */
   questAanv?: boolean;
   questVerd?: boolean;
+  /** 04-10-2026: het AANTAL bij een getrapte quest (Captured Colours, Calming of the Winds). Zonder
+   *  dit veld rekent de server met 1, en dan weigerde hij Captured Colours (minstens 2) en betaalde
+   *  hij Calming altijd de laagste trede. Alleen meegestuurd bij een quest met `tiers`. */
+  questAanvAantal?: number;
+  questVerdAantal?: number;
   /** Campagne-relevante per-unit feiten voor de MELDENDE speler z'n EIGEN leger — voedt de
    *  veteraan-XP + battle-scar-triggers van "De Grensvorsten". De campagne-RPC mag dit voorlopig
    *  negeren; het gaat mee in dezelfde jsonb-payload. Optioneel (oude clients sturen het niet). */
@@ -516,6 +526,15 @@ export async function officieleUitslag(
 }
 
 /** Meld de uitslag van een campagne-battle terug (als voorstel). Gated op de sync-code. */
+/** Eén trede van een getrapte quest, precies zoals `towc_quest_def.tiers` hem heeft: vanaf `min`
+ *  (standaarden, Fated dispels) betaalt de quest `fame` en `goud`. `vp` is de officiële VP-waarde. */
+export interface QuestTrede {
+  min: number;
+  fame: number;
+  goud: number;
+  vp: number | null;
+}
+
 /** De actieve BATTLE-quest van één kant, met de tekst uit de campagne-catalogus. */
 export interface BattleQuest {
   speler: string;
@@ -524,6 +543,28 @@ export interface BattleQuest {
   opdracht: string;
   fame: number;
   goud: number;
+  /** Getrapte quest (04-10-2026): de tredes, oplopend op `min`. null = een gewone quest (vinkje).
+   *  Een oudere server stuurt ze niet mee; dan blijft het een vinkje. */
+  tiers: QuestTrede[] | null;
+}
+
+/** De trede die bij `aantal` hoort (de hoogste die gehaald is), of null als zelfs de laagste niet. */
+export function questTrede(q: BattleQuest, aantal: number): QuestTrede | null {
+  if (!q.tiers) return null;
+  let beste: QuestTrede | null = null;
+  for (const t of q.tiers) if (t.min <= aantal) beste = t;
+  return beste;
+}
+
+function parseTiers(v: unknown): QuestTrede[] | null {
+  const lijst = arr(v)
+    .map((raw) => {
+      const t = (raw && typeof raw === 'object' ? raw : {}) as Record<string, unknown>;
+      return { min: num(t.min, NaN), fame: num(t.fame), goud: num(t.goud), vp: typeof t.vp === 'number' ? t.vp : null };
+    })
+    .filter((t) => Number.isFinite(t.min))
+    .sort((a, b) => a.min - b.min);
+  return lijst.length ? lijst : null;
 }
 
 /** Beide kanten hun openstaande battle-quest voor deze Act (null = geen, of een realm-quest die
@@ -544,6 +585,7 @@ function parseQuest(v: unknown): BattleQuest | null {
     opdracht: str(d.opdracht),
     fame: num(d.fame),
     goud: num(d.goud),
+    tiers: parseTiers(d.tiers),
   };
 }
 
@@ -594,7 +636,115 @@ export async function setReportApproval(
   return { sig: r.sig, host: r.host === true || undefined, guest: r.guest === true || undefined };
 }
 
-export async function reportBattleResult(code: string, resultaat: BattleResultaat): Promise<void> {
+// ---- Wat de campagne van het rapport maakte (04-10-2026) ----------------------------------------
+// Tot nu toe gaf towc_battle_resultaat alleen {ok, verwerkt} terug en toonde de Companion de Fame zelf:
+// de kale Tournament-Points-trede ("Fame 4-2"). Maar de campagne telt er de Balancing Modifier, de
+// Council-modifier, geverfd (+1), de verdedigingsbonus en meer bij, en bij een challenge is het iets
+// heel anders (+1 alleen bij een Crushing). En een geweigerde quest werd stil weggevangen. Nu geeft de
+// server het echte Fame-blok terug (`resultaat.fame`, vastgelegd sinds 29-09) en per quest de uitkomst.
+
+/** De Fame zoals de campagne hem boekte, per kant, met de onderdelen. Bij een challenge zijn alleen
+ *  `aanv`/`verd` gevuld (`challenge: true`). */
+export interface FameBlok {
+  challenge: boolean;
+  aanv: number;
+  verd: number;
+  modAanv: number;
+  modVerd: number;
+  councilAanv: number;
+  councilVerd: number;
+  geverfdAanv: boolean;
+  geverfdVerd: boolean;
+  verdedigingsBonus: boolean;
+  proxy: number;
+  highwayman: number;
+}
+
+/** Wat er van één gemelde battle-quest werd. `fout` is de reden van de server bij een weigering. */
+export interface QuestUitkomst {
+  kant: 'aanvaller' | 'verdediger';
+  questId: string | null;
+  naam: string | null;
+  ok: boolean;
+  fout: string | null;
+  aantal: number;
+  min: number | null;
+  fame: number | null;
+  goud: number | null;
+}
+
+/** Wat de campagne van het rapport maakte. Bij een oudere server (zonder deze velden) zijn `fame`
+ *  null en `quests` leeg, en tonen we niets wat we niet weten. */
+export interface RapportUitkomst {
+  verwerkt: boolean;
+  type: string | null;
+  res: ToernooiResultaat | null;
+  fame: FameBlok | null;
+  quests: QuestUitkomst[];
+}
+
+const RESULTATEN: ToernooiResultaat[] = ['CD', 'RD', 'MD', 'D', 'MV', 'RV', 'CV'];
+
+function parseFame(v: unknown): FameBlok | null {
+  if (!v || typeof v !== 'object') return null;
+  const f = v as Record<string, unknown>;
+  if (typeof f.aanv !== 'number' || typeof f.verd !== 'number') return null;
+  return {
+    challenge: f.challenge === true,
+    aanv: f.aanv, verd: f.verd,
+    modAanv: num(f.modAanv), modVerd: num(f.modVerd),
+    councilAanv: num(f.councilAanv), councilVerd: num(f.councilVerd),
+    geverfdAanv: f.geverfdAanv === true, geverfdVerd: f.geverfdVerd === true,
+    verdedigingsBonus: f.verdedigingsBonus === true,
+    proxy: num(f.proxy), highwayman: num(f.highwayman),
+  };
+}
+
+function parseQuestUitkomst(v: unknown): QuestUitkomst | null {
+  if (!v || typeof v !== 'object') return null;
+  const q = v as Record<string, unknown>;
+  if (q.kant !== 'aanvaller' && q.kant !== 'verdediger') return null;
+  return {
+    kant: q.kant,
+    questId: typeof q.questId === 'string' ? q.questId : null,
+    naam: typeof q.naam === 'string' ? q.naam : null,
+    ok: q.ok === true,
+    fout: typeof q.fout === 'string' ? q.fout : null,
+    aantal: num(q.aantal, 1),
+    min: typeof q.min === 'number' ? q.min : null,
+    fame: typeof q.fame === 'number' ? q.fame : null,
+    goud: typeof q.goud === 'number' ? q.goud : null,
+  };
+}
+
+/** Eén Engelse zin over een quest die de campagne NIET voltooide. */
+export function questFoutTekst(q: QuestUitkomst): string {
+  const wie = q.naam ? ` (${q.naam})` : '';
+  if (q.fout === 'GEEN_ACTIEVE_QUEST') return `Quest not completed${wie}: the campaign found no open quest for this Act.`;
+  if (q.min !== null && q.aantal < q.min) {
+    return `Quest not completed${wie}: needs at least ${q.min} (you reported ${q.aantal}).`;
+  }
+  return `Quest not completed${wie}: the campaign refused it${q.fout ? ` (${q.fout})` : ''}.`;
+}
+
+/** De opbouw van de Fame van één kant ("TP 5 · Council +1 · painted +1 · defender +1"). De server
+ *  klemt trede + modifiers op minimaal 0, dus de delen tellen niet altijd exact op tot het totaal. */
+export function fameOpbouw(f: FameBlok, kant: 'aanv' | 'verd', res: ToernooiResultaat | null): string {
+  if (f.challenge) return f[kant] > 0 ? 'Crushing Victory in a challenge' : 'a challenge pays Fame only on a Crushing Victory';
+  const teken = (n: number) => (n > 0 ? `+${n}` : `${n}`);
+  const delen: string[] = [];
+  if (res) delen.push(`TP ${TP_VAN_RESULTAAT[kant === 'aanv' ? res : SPIEGEL[res]]}`);
+  const mod = kant === 'aanv' ? f.modAanv : f.modVerd;
+  if (mod) delen.push(`Balancing Modifier ${teken(mod)}`);
+  const council = kant === 'aanv' ? f.councilAanv : f.councilVerd;
+  if (council) delen.push(`Council ${teken(council)}`);
+  if (kant === 'aanv' ? f.geverfdAanv : f.geverfdVerd) delen.push('painted +1');
+  if (kant === 'verd' && f.verdedigingsBonus) delen.push('defender +1');
+  if (kant === 'verd' && f.proxy) delen.push(`stand-in +${f.proxy}`);
+  return delen.join(' · ');
+}
+
+export async function reportBattleResult(code: string, resultaat: BattleResultaat): Promise<RapportUitkomst> {
   const { data, error } = await supabase.rpc('towc_battle_resultaat', {
     p_code: cleanBattleCode(code),
     p_resultaat: resultaat,
@@ -603,6 +753,14 @@ export async function reportBattleResult(code: string, resultaat: BattleResultaa
   const d = (data && typeof data === 'object' ? data : {}) as Record<string, unknown>;
   // De RPC hoeft geen {ok:true} terug te geven, maar als hij een fout-veld zet, respecteer dat.
   if (d.ok === false) throw new Error(str(d.fout, 'CAMPAGNE_BATTLE_FOUT'));
+  const res = typeof d.res === 'string' && (RESULTATEN as string[]).includes(d.res) ? (d.res as ToernooiResultaat) : null;
+  return {
+    verwerkt: d.verwerkt === true,
+    type: typeof d.type === 'string' ? d.type : null,
+    res,
+    fame: parseFame(d.fame),
+    quests: arr(d.quests).map(parseQuestUitkomst).filter((q): q is QuestUitkomst => !!q),
+  };
 }
 
 /** Samenvatting van één speelklare campagne-battle (beide legers gelockt → code aanwezig). Voor de

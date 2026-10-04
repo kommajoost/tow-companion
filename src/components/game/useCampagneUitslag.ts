@@ -28,7 +28,8 @@ export interface CampagneUitslag {
   /** Leesbare naam vanuit de WINNAAR gezien ('Crushing Victory', 'Draw', …). */
   label: string;
   winnaar: 'host' | 'guest' | null;
-  /** Tournament Points (= Fame) per kant. */
+  /** Tournament Points per kant. Dat is de BASIS van de Fame, niet de Fame zelf (04-10-2026): de
+   *  campagne telt er modifiers bij, en een challenge betaalt alleen +1 bij een Crushing. */
   tpHost: number;
   tpGuest: number;
   /** De punten-cap van de Act, voor de uitleg-regel ("500 pt bracket"). */

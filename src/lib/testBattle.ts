@@ -110,6 +110,13 @@ const ITEM_AANV: FoundItem = {
   soort: 'permanent',
   effect: 'Test item — the bearer may re-roll one failed Armour Save each turn.',
 };
+// Een tweede item voor de aanvaller: sinds 16-08 mag elke kant er twee meenemen (slot 1 en 2).
+const ITEM_AANV2: FoundItem = {
+  naam: 'Charm of Testing',
+  punten: 10,
+  soort: 'magic-item',
+  effect: 'Test item: the bearer may re-roll one failed Leadership test.',
+};
 const ITEM_VERD: FoundItem = {
   naam: 'Draught of Trial',
   punten: 15,
@@ -174,7 +181,7 @@ export function buildTestBattle(): CampaignBattle | null {
     verdLijst: samenvatting(b),
     veteranen: { aanvaller: veteranen(a), verdediger: veteranen(b) },
     perks: { aanvaller: PERKS_AANV, verdediger: PERKS_VERD },
-    items: { aanvaller: ITEM_AANV, verdediger: ITEM_VERD },
+    items: { aanvaller: [ITEM_AANV, ITEM_AANV2], verdediger: [ITEM_VERD] },
     fase: 1,
     cap: 750,
     // Beide handen staan al op start: bij een echte battle drukt de tegenstander die knop, en dat kan

@@ -15,6 +15,7 @@ import {
   STANDAARD_TESTACCOUNTS, type TestAccount,
 } from '../lib/testAccounts';
 import { LogoMark } from './LogoMark';
+import { campaignUnitId } from '../lib/owbBuilder';
 
 const eb = engraved as React.CSSProperties;
 const APP_VERSION = __APP_VERSION__;
@@ -644,9 +645,12 @@ function CampaignSection({
     try {
       const res = await hernoemRegiment(code, unitId, naam);
       setListsRaw((ls) => (Array.isArray(ls) ? ls : []).map((raw) => {
-        const l = raw as { campaign?: boolean; entries?: { customName?: string }[] };
+        const l = raw as { campaign?: boolean; entries?: { uid?: string; customName?: string; unitId?: string }[] };
         if (!l || typeof l !== 'object' || !l.campaign || !Array.isArray(l.entries)) return raw;
-        return { ...l, entries: l.entries.map((e) => (regimentSlug(e?.customName ?? '') === unitId ? { ...e, customName: res.naam } : e)) };
+        // Dezelfde sleutel als de campagne (campaignUnitId: uid, anders de oude naam-slug). Matchen op
+        // de naam-slug vond nooit iets meer sinds de entries een uid dragen.
+        const sleutel = res.unitId || unitId;
+        return { ...l, entries: l.entries.map((e) => (e && campaignUnitId(e) === sleutel ? { ...e, customName: res.naam } : e)) };
       }));
       setHernoemId(null); setHernoemNaam('');
       await verversCampagnes();
@@ -727,10 +731,13 @@ function CampaignSection({
             <div style={{ marginBottom: 12 }}>
               <div style={{ ...eb, fontSize: 8.5, color: TOW.goldDeep, marginBottom: 6 }}>Your regiments</div>
               {ctx.units.map((u) => {
-                const rowId = regimentSlug(u.naam);
+                // De campagne-sleutel van het regiment (04-10-2026). Tot nu toe ging hier de naam-slug
+                // heen, en die bestond in het register niet: hernoemen faalde altijd (NIET_GEVONDEN).
+                // Een oudere server stuurt unitId nog niet; dan de slug, die de server als terugval kent.
+                const rowId = u.unitId ?? regimentSlug(u.naam);
                 const open = hernoemId === rowId;
                 return (
-                  <div key={u.naam} style={{ marginBottom: open ? 8 : 4, opacity: u.status === 'actief' ? 1 : 0.55 }}>
+                  <div key={rowId} style={{ marginBottom: open ? 8 : 4, opacity: u.status === 'actief' ? 1 : 0.55 }}>
                     <div style={{ display: 'flex', alignItems: 'baseline', gap: 7 }}>
                       <span style={{ flex: 1, minWidth: 0, fontFamily: towFont.serif, fontSize: 12.5, color: TOW.ink }}>{u.naam}</span>
                       <span style={{ ...eb, fontSize: 7.5, color: TOW.muted, flexShrink: 0 }}>
