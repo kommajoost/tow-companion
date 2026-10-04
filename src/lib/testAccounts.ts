@@ -145,7 +145,6 @@ function wisAccountStaat(): void {
   setPersisted<string | null>('tow:syncAt', null);
   setPersisted<unknown>('tow:campaignCtx', null);
   setPersisted<string | null>('tow:campaignActief', null);
-  setPersisted<string | null>('tow:campaignCode', null);
   setPersisted<string | null>('tow:builder-active', null);
   setPersisted<string | null>('tow:campaign-battle', null);
 }

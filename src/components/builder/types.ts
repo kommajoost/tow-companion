@@ -124,25 +124,3 @@ export type BuilderScreen =
   | { kind: 'roster' }
   | { kind: 'picker'; category?: Category }
   | { kind: 'options'; uid: string };
-
-/** A single suggested fix in the "Resolve" sheet: one concrete edit and what it changes.
- *
- *  Two kinds, because not every violation is fixed by spending less:
- *  - `reduce` frees points up (over the cap, or a category over its maximum) and CAN be applied for
- *    the user — `apply` is present.
- *  - `add-core` is the Core-minimum case, which needs points ADDED. There is no single edit that does
- *    that (the user must choose which units to add), so `apply` is absent and the sheet renders it as
- *    guidance with a shortfall instead of a button. Pretending to auto-fix this would mean inventing
- *    units into someone's army list. */
-export interface ResolveFix {
-  kind: 'reduce' | 'add-core';
-  /** Human-readable action, e.g. "Drop 4 models from Executioners of Har Ganeth". */
-  label: string;
-  /** Points this frees up (`reduce`, always > 0) or that are still missing (`add-core`, always > 0). */
-  saving: number;
-  /** The entry this touches, so the sheet can highlight the row. Absent for `add-core`. */
-  uid?: string;
-  /** Apply the edit. Present only when `kind === 'reduce'`. Returns the partial for
-   *  `BuilderCtx.update`; it never regenerates uids and never drops unknown fields. */
-  apply?: (l: SavedListLike) => Partial<SavedListLike>;
-}

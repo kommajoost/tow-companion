@@ -6,7 +6,7 @@ import {
   useState,
   type ReactNode,
 } from 'react';
-import type { CompanionData, ErrataItem, FlowData, FlowStep, Lore, Rule, RulesData } from './types';
+import type { CompanionData, ErrataItem, Lore, Rule, RulesData } from './types';
 import { applyOverlayLores, applyOverlayRules, type CompositionOverlay } from './lib/overlays';
 
 interface DataContextValue extends RulesData {
@@ -17,11 +17,8 @@ interface DataContextValue extends RulesData {
   errata: ErrataItem[];
   faq: ErrataItem[];
   getRule: (slug: string | null | undefined) => Rule | undefined;
-  getFlow: (slug: string | null | undefined) => FlowStep | undefined;
   /** Look up a Lore of Magic by slug (undefined if not found). */
   getLore: (slug: string | null | undefined) => Lore | undefined;
-  /** Steps folded into a parent and hidden from the walkthrough sequence. */
-  hiddenSteps: Set<string>;
   /** Curated turn structure for Play (null if not loaded). */
   companion: CompanionData | null;
   /**
@@ -47,7 +44,6 @@ const BASE = import.meta.env.BASE_URL;
 
 export function DataProvider({ children }: { children: ReactNode }) {
   const [data, setData] = useState<RulesData | null>(null);
-  const [flow, setFlow] = useState<FlowData>({ steps: {} });
   const [companion, setCompanion] = useState<CompanionData | null>(null);
   const [error, setError] = useState<string | null>(null);
   // The OVERLAY is held, not the resolved rules: the provider merges it against its own base copy. If
@@ -57,23 +53,19 @@ export function DataProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     let cancelled = false;
-    // rules.json is required; flow.json + companion.json are optional (tolerate absence).
+    // rules.json is required; companion.json is optional (tolerate absence).
     Promise.all([
       fetch(`${BASE}rules.json`).then((r) => {
         if (!r.ok) throw new Error(`rules.json HTTP ${r.status}`);
         return r.json() as Promise<RulesData>;
       }),
-      fetch(`${BASE}flow.json`)
-        .then((r) => (r.ok ? (r.json() as Promise<FlowData>) : { steps: {} }))
-        .catch(() => ({ steps: {} as Record<string, FlowStep> })),
       fetch(`${BASE}companion.json`)
         .then((r) => (r.ok ? (r.json() as Promise<CompanionData>) : null))
         .catch(() => null),
     ])
-      .then(([rules, fl, comp]) => {
+      .then(([rules, comp]) => {
         if (cancelled) return;
         setData(rules);
-        setFlow(fl && fl.steps ? fl : { steps: {} });
         setCompanion(comp && Array.isArray(comp.phases) ? comp : null);
       })
       .catch((e) => {
@@ -86,7 +78,6 @@ export function DataProvider({ children }: { children: ReactNode }) {
 
   const value = useMemo<DataContextValue | null>(() => {
     if (!data) return null;
-    const hiddenSteps = new Set(flow.hidden ?? []);
     // Overlay rules replace base ones by slug. Merged into `rules` itself, not just into `getRule`, so
     // that everything derived from it agrees — above all the name→slug index, which is how a unit's
     // special-rule label finds its text.
@@ -100,13 +91,11 @@ export function DataProvider({ children }: { children: ReactNode }) {
       errata: data.errata ?? [],
       faq: data.faq ?? [],
       getRule: (slug) => (slug ? rules[slug] : undefined),
-      getFlow: (slug) => (slug ? flow.steps[slug] : undefined),
       getLore: (slug) => (slug ? lores[slug] : undefined),
-      hiddenSteps,
       companion,
       setRuleOverlay,
     };
-  }, [data, flow, companion, ruleOverlay]);
+  }, [data, companion, ruleOverlay]);
 
   if (error) {
     return (

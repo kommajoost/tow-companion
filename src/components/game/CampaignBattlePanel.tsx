@@ -148,7 +148,7 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
   const [stagedTegen, setStagedTegen] = useState<Army | null>(null);
 
   // The linked campaign player id (attacker/defender ids are campaign-player ids). Read the cached
-  // context the same way Settings/BuilderWorkspace do; no fetch here — the link is a prerequisite.
+  // context the same way Settings does; no fetch here — the link is a prerequisite.
   // De TESTBATTLE hoeft geen gekoppeld campagneprofiel: hij bestaat alleen op dit apparaat en er is
   // geen kant om aan toegewezen te worden. Zonder deze uitzondering strandt hij op "link this app
   // to your campaign profile first" en valt er niets te testen — precies waar hij voor bedoeld is.

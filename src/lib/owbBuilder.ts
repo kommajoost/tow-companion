@@ -536,34 +536,12 @@ export function toggleMountSubOption(entry: ListEntry, mountIndex: number, optIn
   return toggleSubOption(entry, 'mounts', mountIndex, optIndex);
 }
 
-// Short labels of the chosen non-default upgrades, for a roster row's one-line summary.
-// Pass `itemsData` (the parsed magic-items.json) to also list chosen magic items.
-export function summaryLabels(unit: OwbUnit, entry: ListEntry, itemsData?: MagicItemsData): string[] {
-  const labels = selectedOptions(unit, entry)
-    .filter(({ opt }) => !opt.active)
-    // A stackable option carries HOW MANY models take it, and the roster line is the only place that
-    // shows a loadout without opening the unit — "Great weapon" alone would hide whether one model
-    // or the whole unit has it, which is most of what the choice was.
-    .map(({ opt, key }) => (opt.stackable ? `${opt.name_en} ×${stackTaken(unit, entry, key, opt)}` : opt.name_en));
-  // Nested sub-options of active parents: toggles when on; exclusive picks unless they are the
-  // free `active` default (e.g. show "Level 4 Wizard" / "Venomous tail", not "Level 3 Wizard").
-  for (const g of subOptionGroups(unit, entry)) {
-    for (const it of g.items) {
-      if (!it.selected) continue;
-      if (g.exclusive && it.opt.active) continue; // the implicit default — don't list it
-      labels.push(it.opt.name_en);
-    }
-  }
-  if (itemsData) for (const it of selectedMagicItems(unit, entry, itemsData)) labels.push(it.item.name_en);
-  return labels;
-}
-
 // The FULL effective loadout of an entry — active base equipment + chosen upgrades + active sub-
 // options + magic items — with comma-bundled catalogue labels split into individual wargear names.
-// Unlike `summaryLabels` (which lists only non-default upgrades for a roster row), this mirrors what
-// an OWB export lists, so the game can resolve each weapon's profile — including a unit's FREE base
-// weapon (e.g. a Reaper Bolt Thrower's "Repeater bolt thrower", which is the `active` default and so
-// is omitted by summaryLabels, leaving the game with no shooting profile).
+// Unlike a roster summary (only the non-default upgrades), this mirrors what an OWB export lists, so
+// the game can resolve each weapon's profile — including a unit's FREE base weapon (e.g. a Reaper Bolt
+// Thrower's "Repeater bolt thrower", which is the `active` default; leaving it out would give the game
+// no shooting profile).
 export function loadoutLabels(unit: OwbUnit, entry: ListEntry, itemsData?: MagicItemsData): string[] {
   const labels: string[] = [];
   const add = (name?: string) => {
@@ -1348,7 +1326,7 @@ const MAGIC_TYPE_LABEL: Record<string, string> = {
   'banner-runes': 'Standard Runes', 'engineering-runes': 'Engineering Runes',
   'ranged-weapon-runes': 'Ranged Weapon Runes', 'runic-tattoos': 'Runic Tattoos',
 };
-export const magicTypeLabel = (type: string): string =>
+const magicTypeLabel = (type: string): string =>
   MAGIC_TYPE_LABEL[type] ?? type.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
 
 // A magic-item category the UI renders as one collapsible group. A unit's "Magic Items" section is

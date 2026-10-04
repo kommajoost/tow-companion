@@ -21,7 +21,6 @@ import { getPersisted, setPersisted } from '../store';
 export const DROP_ACTS = [3, 5];
 
 // localStorage-sleutels (via de gedeelde store, niet rechtstreeks localStorage).
-const CODE_KEY = 'tow:campaignCode';
 const CTX_KEY = 'tow:campaignCtx';
 const ACTIEF_KEY = 'tow:campaignActief';
 
@@ -30,14 +29,12 @@ const ACTIEF_KEY = 'tow:campaignActief';
  *  zeggen wélke hij bedoelt. Laat je het weg, dan doet de server wat hij altijd deed (het game-slot). */
 export type CampagneBron = 'voorbereiding' | 'game';
 
-export interface CampaignRosterOptie { id: string; naam: string; level: number; effect: string }
 export interface CampaignSpeler {
   id: string; naam: string; kleur: string; factie: string; alliantie: string;
   /** De factie als catalogus-slug ('dark-elves'), server-side afgeleid — de voorbereiding bewaart een
    *  weergavenaam ("Dark Elves"), een game-slot een slug. Hiermee kan de lijstbouwer het leger kiezen. */
   factieSlug: string;
 }
-export interface CampaignEvent { id: string; details?: Record<string, unknown> }
 /** Eén regel uit het groei-register: waar een unit aan de campagne begon. `eersteKosten` is null als
  *  de campagne die Act nog geen punten per unit bewaarde (snapshots van vóór 30-07) — dan is er geen
  *  plafond te berekenen en blokkeert er niets. */
@@ -108,13 +105,10 @@ export interface CampaignContext {
   // Toegestane compositie-regels deze fase (rule-ids uit COMPOSITION_RULES): fase 1-2 → ["battle-march"],
   // fase 3+ → ["combined-arms","grand-melee"]. Een campagne-lijst MOET een van deze regels gebruiken.
   compositie: string[];
-  // Extra magic-item-toelage (0 of 20; 20 = Quartermaster/Armoury-perk). Informatief — gevonden
-  // campagne-items zijn ≤30 pt en tellen binnen de normale per-character allowance.
-  itemAllowanceBonus: number;
   speler: CampaignSpeler;
-  rosterOpties: CampaignRosterOptie[];
-  tafelTactiek: CampaignRosterOptie[];
-  events: CampaignEvent[];
+  // rosterOpties, tafelTactiek, itemAllowanceBonus en events zijn op 04-10-2026 weggehaald: de server
+  // stuurt ze nog mee, maar altijd leeg/0 (die gebouwcategorieën bestaan niet meer), en alleen de oude
+  // BuilderWorkspace las ze. Onbekende velden uit de server negeren we gewoon.
   // Regiment-register: je named units in de campagne (met XP) — voedt de kies-bestaand-dropdown.
   units: CampaignUnit[];
   // Groei-register: per unit-uid waar 'ie aan de campagne begon. Samen met de staffel hieronder
@@ -134,12 +128,6 @@ const num = (v: unknown, fallback = 0): number => {
 };
 const bool = (v: unknown): boolean => v === true;
 
-/** Normaliseer één roster/tactiek-optie; ontbrekende velden krijgen veilige defaults. */
-function parseOptie(raw: unknown): CampaignRosterOptie {
-  const o = (raw && typeof raw === 'object' ? raw : {}) as Record<string, unknown>;
-  return { id: str(o.id), naam: str(o.naam), level: num(o.level), effect: str(o.effect) };
-}
-
 /** Normaliseer één speler; ontbrekende velden krijgen lege strings. */
 function parseSpeler(raw: unknown): CampaignSpeler {
   const s = (raw && typeof raw === 'object' ? raw : {}) as Record<string, unknown>;
@@ -152,14 +140,6 @@ function parseSpeler(raw: unknown): CampaignSpeler {
     factieSlug: str(s.factieSlug) || str(s.factie),
     alliantie: str(s.alliantie),
   };
-}
-
-/** Normaliseer één event; `details` blijft optioneel en alleen als het echt een object is. */
-function parseEvent(raw: unknown): CampaignEvent {
-  const e = (raw && typeof raw === 'object' ? raw : {}) as Record<string, unknown>;
-  const ev: CampaignEvent = { id: str(e.id) };
-  if (e.details && typeof e.details === 'object') ev.details = e.details as Record<string, unknown>;
-  return ev;
 }
 
 const arr = (v: unknown): unknown[] => (Array.isArray(v) ? v : []);
@@ -189,7 +169,6 @@ function parseEen(raw: unknown): CampaignContext {
     puntenCap: num(d.puntenCap),
     // compositie: alleen strings overhouden; ontbreekt/onbruikbaar ⇒ lege lijst (geen lock).
     compositie: arr(d.compositie).filter((v): v is string => typeof v === 'string'),
-    itemAllowanceBonus: num(d.itemAllowanceBonus),
     speler,
     units: arr(d.units).map((raw2) => {
       const u = (raw2 && typeof raw2 === 'object' ? raw2 : {}) as Record<string, unknown>;
@@ -202,9 +181,6 @@ function parseEen(raw: unknown): CampaignContext {
         status: str(u.status, 'actief'),
       };
     }),
-    rosterOpties: arr(d.rosterOpties).map(parseOptie),
-    tafelTactiek: arr(d.tafelTactiek).map(parseOptie),
-    events: arr(d.events).map(parseEvent),
     baseline: arr(d.baseline).map((raw2) => {
       const b = (raw2 && typeof raw2 === 'object' ? raw2 : {}) as Record<string, unknown>;
       const kosten = Number(b.eersteKosten);
@@ -620,11 +596,9 @@ export async function koppelViaCodeTestOnly(code: string): Promise<CampaignConte
   const { data, error } = await supabase.rpc('towc_companion_context', { p_code: code.trim().toUpperCase() });
   if (error || !data || (data as { ok?: unknown }).ok !== true) return null;
   const ctx = parseEen(data);
+  // De gecachete context draagt de koppelcode zelf; getCampaignCode() leest die als `state.actief`
+  // (gevuld door laadCampagnes(), wat hier niet gebeurt) nog leeg is.
   cacheCampaignContext(ctx);
-  // OOK de losse code vastleggen. getCampaignCode() leest `state.actief` (gevuld door
-  // laadCampagnes(), en dat gebeurt hier niet) of anders CODE_KEY -- zonder deze regel blijft de
-  // battle-brug `linked === false` zien terwijl de context wel gecachet staat.
-  if (ctx.koppelcode) setPersisted<string | null>(CODE_KEY, ctx.koppelcode);
   return ctx;
 }
 
@@ -649,9 +623,13 @@ export function clearCampaignCache(): void {
 
 /** De koppelcode van de actieve campagne. Sinds de account-koppeling voert de speler die niet meer
  *  zelf in; de code komt uit de campagne-context en bestaat alleen voor een GAME-slot (de battle-brug
- *  gebruikt 'm nog). Een voorbereiding heeft er geen — daar zijn ook nog geen battles. */
+ *  gebruikt 'm nog). Een voorbereiding heeft er geen — daar zijn ook nog geen battles.
+ *
+ *  04-10-2026: de terugval op de losse sleutel `tow:campaignCode` (uit de koppelcode-tijd, vóór 28-07)
+ *  is weg. Een verouderde code daar kon "gekoppeld" faken; codes wisselen bij een nieuwe game. De enige
+ *  terugval is nu de gecachete context, dezelfde bron waar de battle-brug z'n speler-id uit leest. */
 export function getCampaignCode(): string | null {
-  return state.actief?.koppelcode ?? getPersisted<string | null>(CODE_KEY, null) ?? null;
+  return state.actief?.koppelcode ?? getCachedCampaign()?.context.koppelcode ?? null;
 }
 
 /** De sync-key van deze app, of null zonder actieve list-sync. Bron is `tow:syncKey` — de ECHTE

@@ -375,7 +375,7 @@ export function CataloguePane(props: {
   // A document listener (bubble phase), not a handler on the pane, because Esc must close it from
   // anywhere in the workspace — the roster table has focus most of the time. `defaultPrevented` is
   // honoured so a deeper layer that already handled the key wins; a modal that also stops propagation
-  // in the CAPTURE phase (as ResolveSheet does) is never overruled by this listener.
+  // in the CAPTURE phase is never overruled by this listener.
   // No `useBackClose` layer is registered: this is not an overlay — it is an in-flow column that
   // covers nothing — and registering a phantom layer would make hardware Back close a pane the user
   // cannot see is modal, exactly the ordering hazard REBUILD-CONSTRAINTS §5 warns about.

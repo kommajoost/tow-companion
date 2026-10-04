@@ -225,8 +225,8 @@ export function DesktopShell(props: {
   // A ResizeObserver on THIS component's own root, not on `window`: the shell can sit next to the
   // app's nav rail, so the window is always wider than the box the layout actually gets.
   //
-  // THE INITIAL-VALUE TRAP (BuilderWorkspace.tsx:200-211 hardcodes 1024 and can flip once on the
-  // first paint): `box` starts as `null` = "not measured yet" and every derived width falls back to
+  // THE INITIAL-VALUE TRAP (the old BuilderWorkspace, verwijderd 04-10-2026, hardcoded 1024 and
+  // could flip once on the first paint): `box` starts as `null` = "not measured yet" and every derived width falls back to
   // the REFERENCE viewport. That matters for more than a flicker here — a first value below
   // MIN_DESKTOP would make the component return `null`, so the root would never mount, the observer
   // would never attach and the shell could never measure its way back. `useLayoutEffect` then writes

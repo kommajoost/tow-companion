@@ -4,7 +4,6 @@ import { TOW, towFont, engraved } from '../../design/tow';
 import { findUnit, validate, type OwbArmy, type OwbUnit, type BuilderList, type MagicItemsData, type CompositionRules } from '../../lib/owbBuilder';
 import { compName } from '../../lib/armies';
 import { troopTypeName } from '../../lib/troopTypes';
-import { BuilderWorkspace } from './BuilderWorkspace';
 import { BuilderFlow } from '../builder/BuilderFlow';
 import { NewListSetup, type NewListValues } from './NewListSetup';
 import { fmt } from '../builder/primitives';
@@ -40,8 +39,8 @@ const kortDatum = (iso: string): string => {
 
 // Multi-army list builder. This file owns the army registry (index.json), each army's composition +
 // item-list metadata (the-old-world.json), an on-demand per-army catalogue cache, and the "My lists"
-// collection (saved locally). The open list is edited in the responsive <BuilderWorkspace> (Claude
-// Design's PC-columns / mobile-sheets builder on our OWB data); each list carries its own army.
+// collection (saved locally). The open list is edited in <BuilderFlow> (src/components/builder/);
+// each list carries its own army.
 const FALLBACK_ARMY = 'dark-elves';
 
 interface SavedList extends BuilderList {
@@ -83,13 +82,9 @@ interface ArmyMeta {
 }
 
 export function ListBuilder() {
-  // ── The redesigned builder is now the DEFAULT ─────────────────────────────────────────────────
-  // `src/components/builder/` replaces this screen's workspace: compact roster on a phone, three-pane
-  // layout on a wide screen. The old `BuilderWorkspace` is still in the bundle and still reachable by
-  // setting `tow:builder-v2` to false, purely as a fallback if something turns out to be broken in
-  // the field — not as an opt-in. Once the new flow has proven itself, both the flag and
-  // BuilderWorkspace can go.
-  const [useV2] = usePersistentState<boolean>('tow:builder-v2', true);
+  // De oude builder (BuilderWorkspace, achter de vlag `tow:builder-v2`) is op 04-10-2026 verwijderd:
+  // hij miste het krimp-budget en toonde campagneregels die niet meer gelden. BuilderFlow is de enige
+  // builder; de oude vlag-sleutel ruimt main.tsx bij het opstarten op.
   const { rules, lores, setRuleOverlay } = useData();
   const { openRule } = useUI();
   const ruleIdx = useMemo(() => getRuleIndex(rules ?? {}), [rules]);
@@ -577,7 +572,7 @@ export function ListBuilder() {
       return [slug, extra.length ? [...v.comps, ...extra] : v.comps];
     }),
   ), [metaByArmy]);
-  // Army slug → its magic-item list ids (the same `items` array BuilderWorkspace gets as armyItemLists).
+  // Army slug → its magic-item list ids (the same `items` array BuilderFlow gets as armyItemLists).
   const itemListsByArmy = useMemo(() => Object.fromEntries(Object.entries(metaByArmy).map(([slug, m]) => [slug, m.items ?? []])), [metaByArmy]);
   const armyName = (slug: string) => armies.find((a) => a.slug === slug)?.name ?? slug;
   const statsFor = useMemo(() => (unitName: string): StatRow[] => {
@@ -786,175 +781,9 @@ export function ListBuilder() {
       />
     );
 
-    if (useV2) {
-      return (
-        <>
-        <BuilderFlow
-          list={active}
-          name={active.name}
-          onUpdate={updateActive}
-          onSetName={setName}
-          onBack={() => setActiveId(null)}
-          army={activeCatalogue}
-          armySlug={active.army}
-          statsFor={statsFor}
-          comps={compsByArmy[active.army] ?? meta?.comps ?? [active.army]}
-          armyName={armyName(active.army)}
-          compName={(c) => compName(c, active.army)}
-          itemsData={activeItemsData ?? undefined}
-          armyItemLists={meta?.items ?? []}
-          // Delen: het OPGESLAGEN lijst-object, want `id` is de sleutel waarop een share hangt. De
-          // share-sheet knipt er zelf de velden uit die de ontvanger niet aangaan (zie listShare).
-          deelLijst={active}
-        compRules={compRules ?? undefined}
-          statIdx={activeStatIdx}
-          // PDF: vier gegevens die het PDF-blad nodig heeft om het SPELMODEL van deze lijst
-          // te bouwen (zie `bouwPrintInput` in BuilderFlow). Ze komen hiervandaan omdat dit scherm ze al
-          // heeft, MET de overlay-patch van een Renegade-lijst erop — nog een keer laden zou een
-          // tweede kopie opleveren die stilletjes uit de pas kan lopen.
-          magicText={activeMagicText}
-          mountText={activeMountText}
-          overlayId={activeOverlay?.baseArmy === active.army ? activeOverlay?.id : undefined}
-          factionNames={armies.map((a) => a.name)}
-          // The desktop rail no longer carries a list-switcher: switching or creating a list belongs on
-          // the lists overview (reachable via "‹ LISTS" in the builder header), not in the left column
-          // of a list being built, where it crowded out the unit catalogue.
-          // The army-summary rows (and the phone header's title) open the list settings. Every field
-          // routes to the same sheet: which one you tapped only tells us you want the settings, and a
-          // four-field sheet is less surprising than four different one-field editors.
-          onEditArmyField={() => setInstellingenOpen(true)}
-          // Import OWB exists, but only as "create a list from a paste" — not as "import into THIS
-          // list", which is what the top-bar button implies. Export and Print do not exist at all.
-          // All three are left undefined so the shell disables them with an explanation.
-          onImportOwb={undefined}
-          // Rule resolution stays OUT of the builder: this screen owns the rules data and the app's
-          // rule sheet, so it maps a label to a slug here. An unresolvable label opens nothing rather
-          // than an empty sheet.
-          onShowInfo={(what) => {
-            if (what.kind === 'item') {
-              // Magic items have NO page in rules.json — the scrape does not cover them — so there is no
-              // slug for `openRule` to resolve and this used to `return` here, which is why the eye on
-              // every magic item and banner did nothing. Their text lives in `magic-item-text.json`, and
-              // `InfoSheet` exists precisely for "things with no rule page of their own". `body` is a
-              // comma-separated list of special rules, and InfoSheet turns each into a rule link, so it
-              // is split rather than shown as one string.
-              const tx = activeMagicText[what.itemId];
-              // De special rules UIT HET WAPENPROFIEL horen bij dezelfde chip-rij als die uit de body
-              // (15-08-2026): Armour Bane, Magical Attacks en Multiple Wounds hebben allemaal hun eigen
-              // regelpagina, dus als losse tekstregel zou je er niet op kunnen tikken. Dubbelen eruit,
-              // want een item kan dezelfde regel in beide velden dragen.
-              const uitProfiel = (tx?.profiel ?? []).flatMap((p) => (p.specialRules ?? '').split(','));
-              // PROZA IS GEEN REGELLIJST. De body van een item is meestal "Armour Bane (1), Magical
-              // Attacks" — een opsomming die je op komma's splitst tot losse chips. Maar hij kan ook
-              // een zin zijn, en dan levert splitsen zinsfragmenten op die als chip worden getoond:
-              // de Cold-Blooded Banner werd één gouden pil van een halve alinea die het scherm uit
-              // liep, met de rest eronder als losse regels (Joost, 17-08). magicItemRules maakt dat
-              // onderscheid al voor het spel-scherm — een punt gevolgd door een spatie betekent
-              // proza — en die toets hoort hier net zo goed.
-              const regels = [...magicItemRules(tx?.body), ...uitProfiel]
-                .map((r) => r.trim())
-                .filter(Boolean);
-              // TERUGVAL OP DE REGELPAGINA (15-08-2026). Zeven catalogus-items zijn geen echte magic
-              // item maar een FACTIE-UPGRADE — de Forbidden Poisons en Gifts of Khaine van de Dark
-              // Elves — en die hebben upstream geen /magic-item-pagina, dus geen tekst in de
-              // snapshot. Ze staan wél gewoon in rules.json ("Manbane: When this character makes a
-              // roll To Wound, a roll of 4+ is always a success…"). Die tekst pakken we hier, zodat
-              // je niet langer "No description recorded" krijgt voor een regel die we gewoon hebben.
-              const heeftTekst = !!(tx?.description || tx?.body || tx?.profiel?.length);
-              const regelSlug = heeftTekst ? null : (resolveRuleSlug(what.name, ruleIdx) ?? resolveOptionSlug(what.name, ruleIdx));
-              const regelTekst = regelSlug ? String((rules?.[regelSlug] as { bodyIndex?: string } | undefined)?.bodyIndex ?? '').trim() : '';
-              setMountInfo({
-                title: what.name,
-                flavour: tx?.description,
-                rules: [...new Set(regels)],
-                wapen: tx?.profiel,
-                // Say so when there is no text at all, instead of opening a blank sheet.
-                details: heeftTekst ? undefined
-                  : regelTekst ? [regelTekst]
-                    : ['No description recorded for this item.'],
-              });
-              return;
-            }
-            if (what.kind === 'lore') {
-              const lore = lores[what.slug];
-              if (lore) {
-                setMountInfo({
-                  title: lore.name,
-                  details: [`${lore.spells.length} spell${lore.spells.length === 1 ? '' : 's'} in this army composition`],
-                  // Mét de slug, niet alleen de naam: "Storm Call" bestaat twee keer — als signature
-                  // spell van Elementalism en als bound spell op een item — en de naam-index koos de
-                  // verkeerde. De lore weet z'n eigen spreukpagina's al, dus geef die door.
-                  rules: lore.spells.map((spell) => ({ label: spell.name, slug: spell.slug })),
-                });
-              }
-              return;
-            }
-            const label = what.name;
-            if (what.kind === 'mount') {
-              const profileKey = normMountProfile(label);
-              const taggedKey = normMountTag(label);
-              // FACTIE-BEWUST OPZOEKEN. mount-text sleutelt de factie plat in de sleutel — "cold one
-              // dark elves", "manticore renegade", "warhorse bretonnia" — omdat dezelfde mount per
-              // leger andere regels heeft. Een gekozen mount-OPTIE draagt die tag nog in z'n naam en
-              // vindt zichzelf dus. Maar een mount die in de unit is INGEBAKKEN staat alleen als
-              // profielrij ("Cold One" in Cold One Knights) en heeft geen tag; die miste alles.
-              // Daarom hier de factienaam als extra kandidaat, plus "renegade" voor de packs.
-              const fac = normMountProfile(armyName(active.army));
-              const sleutels = [profileKey, taggedKey, `${profileKey} ${fac}`, `${profileKey} renegade`];
-              const rows = sleutels.map((k) => statsFor(k)).find((r) => r.length) ?? statsFor(label);
-              const text = sleutels.map((k) => activeMountText[k]).find(Boolean) ?? {};
-              const profiles: UnitProfile[] = rows.map((row) => ({
-                label: row.Name,
-                stats: ['M', 'WS', 'BS', 'S', 'T', 'W', 'I', 'A', 'Ld']
-                  .map((key) => ({ k: key, v: row[key as keyof StatRow] ?? '-' })),
-              }));
-              const details = [
-                text.baseSize ? `Base size: ${text.baseSize}` : null,
-                text.armourValue ? `Armour value: ${text.armourValue}` : null,
-                ...(text.equipment ?? []).map((value) => `Equipment: ${value}`),
-                ...(text.notes ?? []),
-              ].filter((value): value is string => !!value);
-              setMountInfo({
-                title: label.replace(/\s*\{[^}]*\}/g, '').trim(),
-                // rules-index stores troop-type CODES ("MCa"), so this showed a raw "MCA" — unreadable,
-                // and never resolvable to the rule page it names. Mapped to the rulebook's own wording.
-                troopType: troopTypeName(text.troopType
-                  ?? sleutels.map((k) => activeStatIdx?.[k]?.troopType).find(Boolean)),
-                profiles,
-                rules: text.specialRules ?? [],
-                details,
-              });
-              return;
-            }
-            // Kent de aanroeper de pagina al, gebruik die. Een spreuk deelt z'n naam soms met een
-            // gewone special rule, en dan is opzoeken op naam een gok met een verkeerd antwoord.
-            if (what.kind === 'rule' && what.slug) { openRule(what.slug); return; }
-            const slug = resolveRuleSlug(label, ruleIdx) ?? resolveOptionSlug(label, ruleIdx);
-            if (slug) { openRule(slug); return; }
-
-            // A label naming SEVERAL pieces of wargear ("Hand weapons, Additional hand weapon",
-            // "Light armour, Shields") matches no page, because no page is named after the
-            // combination — so the eye on 261 of the catalogue's option rows did nothing at all.
-            // The parts each have a page, so offer the parts: InfoSheet already turns a list of
-            // labels into one tappable chip apiece, which is exactly the choice being offered.
-            const parts = splitCompoundLabel(label);
-            const slugs = parts.map((p) => resolveRuleSlug(p, ruleIdx) ?? resolveOptionSlug(p, ruleIdx));
-            const found = slugs.filter((s): s is string => !!s);
-            if (!found.length) return; // nothing to read — better than an empty sheet
-            // Both halves pointing at one page ("Two Hand Weapons/Additional Hand Weapon" covers each)
-            // means there is a single rule to read: open it, rather than a sheet holding one chip.
-            if (found.length === parts.length && new Set(found).size === 1) { openRule(found[0]); return; }
-            setMountInfo({ title: label, rules: parts });
-          }}
-        />
-        {instellingenBlad}
-        <InfoSheet info={mountInfo} onClose={() => setMountInfo(null)} />
-        </>
-      );
-    }
     return (
       <>
-      <BuilderWorkspace
+      <BuilderFlow
         list={active}
         name={active.name}
         onUpdate={updateActive}
@@ -968,10 +797,152 @@ export function ListBuilder() {
         compName={(c) => compName(c, active.army)}
         itemsData={activeItemsData ?? undefined}
         armyItemLists={meta?.items ?? []}
-        magicTextPatch={activeOverlay?.magicItemText}
-        mountTextPatch={activeMountText}
+        // Delen: het OPGESLAGEN lijst-object, want `id` is de sleutel waarop een share hangt. De
+        // share-sheet knipt er zelf de velden uit die de ontvanger niet aangaan (zie listShare).
+        deelLijst={active}
+      compRules={compRules ?? undefined}
+        statIdx={activeStatIdx}
+        // PDF: vier gegevens die het PDF-blad nodig heeft om het SPELMODEL van deze lijst
+        // te bouwen (zie `bouwPrintInput` in BuilderFlow). Ze komen hiervandaan omdat dit scherm ze al
+        // heeft, MET de overlay-patch van een Renegade-lijst erop — nog een keer laden zou een
+        // tweede kopie opleveren die stilletjes uit de pas kan lopen.
+        magicText={activeMagicText}
+        mountText={activeMountText}
+        overlayId={activeOverlay?.baseArmy === active.army ? activeOverlay?.id : undefined}
+        factionNames={armies.map((a) => a.name)}
+        // The desktop rail no longer carries a list-switcher: switching or creating a list belongs on
+        // the lists overview (reachable via "‹ LISTS" in the builder header), not in the left column
+        // of a list being built, where it crowded out the unit catalogue.
+        // The army-summary rows (and the phone header's title) open the list settings. Every field
+        // routes to the same sheet: which one you tapped only tells us you want the settings, and a
+        // four-field sheet is less surprising than four different one-field editors.
+        onEditArmyField={() => setInstellingenOpen(true)}
+        // Import OWB exists, but only as "create a list from a paste" — not as "import into THIS
+        // list", which is what the top-bar button implies. Export and Print do not exist at all.
+        // All three are left undefined so the shell disables them with an explanation.
+        onImportOwb={undefined}
+        // Rule resolution stays OUT of the builder: this screen owns the rules data and the app's
+        // rule sheet, so it maps a label to a slug here. An unresolvable label opens nothing rather
+        // than an empty sheet.
+        onShowInfo={(what) => {
+          if (what.kind === 'item') {
+            // Magic items have NO page in rules.json — the scrape does not cover them — so there is no
+            // slug for `openRule` to resolve and this used to `return` here, which is why the eye on
+            // every magic item and banner did nothing. Their text lives in `magic-item-text.json`, and
+            // `InfoSheet` exists precisely for "things with no rule page of their own". `body` is a
+            // comma-separated list of special rules, and InfoSheet turns each into a rule link, so it
+            // is split rather than shown as one string.
+            const tx = activeMagicText[what.itemId];
+            // De special rules UIT HET WAPENPROFIEL horen bij dezelfde chip-rij als die uit de body
+            // (15-08-2026): Armour Bane, Magical Attacks en Multiple Wounds hebben allemaal hun eigen
+            // regelpagina, dus als losse tekstregel zou je er niet op kunnen tikken. Dubbelen eruit,
+            // want een item kan dezelfde regel in beide velden dragen.
+            const uitProfiel = (tx?.profiel ?? []).flatMap((p) => (p.specialRules ?? '').split(','));
+            // PROZA IS GEEN REGELLIJST. De body van een item is meestal "Armour Bane (1), Magical
+            // Attacks" — een opsomming die je op komma's splitst tot losse chips. Maar hij kan ook
+            // een zin zijn, en dan levert splitsen zinsfragmenten op die als chip worden getoond:
+            // de Cold-Blooded Banner werd één gouden pil van een halve alinea die het scherm uit
+            // liep, met de rest eronder als losse regels (Joost, 17-08). magicItemRules maakt dat
+            // onderscheid al voor het spel-scherm — een punt gevolgd door een spatie betekent
+            // proza — en die toets hoort hier net zo goed.
+            const regels = [...magicItemRules(tx?.body), ...uitProfiel]
+              .map((r) => r.trim())
+              .filter(Boolean);
+            // TERUGVAL OP DE REGELPAGINA (15-08-2026). Zeven catalogus-items zijn geen echte magic
+            // item maar een FACTIE-UPGRADE — de Forbidden Poisons en Gifts of Khaine van de Dark
+            // Elves — en die hebben upstream geen /magic-item-pagina, dus geen tekst in de
+            // snapshot. Ze staan wél gewoon in rules.json ("Manbane: When this character makes a
+            // roll To Wound, a roll of 4+ is always a success…"). Die tekst pakken we hier, zodat
+            // je niet langer "No description recorded" krijgt voor een regel die we gewoon hebben.
+            const heeftTekst = !!(tx?.description || tx?.body || tx?.profiel?.length);
+            const regelSlug = heeftTekst ? null : (resolveRuleSlug(what.name, ruleIdx) ?? resolveOptionSlug(what.name, ruleIdx));
+            const regelTekst = regelSlug ? String((rules?.[regelSlug] as { bodyIndex?: string } | undefined)?.bodyIndex ?? '').trim() : '';
+            setMountInfo({
+              title: what.name,
+              flavour: tx?.description,
+              rules: [...new Set(regels)],
+              wapen: tx?.profiel,
+              // Say so when there is no text at all, instead of opening a blank sheet.
+              details: heeftTekst ? undefined
+                : regelTekst ? [regelTekst]
+                  : ['No description recorded for this item.'],
+            });
+            return;
+          }
+          if (what.kind === 'lore') {
+            const lore = lores[what.slug];
+            if (lore) {
+              setMountInfo({
+                title: lore.name,
+                details: [`${lore.spells.length} spell${lore.spells.length === 1 ? '' : 's'} in this army composition`],
+                // Mét de slug, niet alleen de naam: "Storm Call" bestaat twee keer — als signature
+                // spell van Elementalism en als bound spell op een item — en de naam-index koos de
+                // verkeerde. De lore weet z'n eigen spreukpagina's al, dus geef die door.
+                rules: lore.spells.map((spell) => ({ label: spell.name, slug: spell.slug })),
+              });
+            }
+            return;
+          }
+          const label = what.name;
+          if (what.kind === 'mount') {
+            const profileKey = normMountProfile(label);
+            const taggedKey = normMountTag(label);
+            // FACTIE-BEWUST OPZOEKEN. mount-text sleutelt de factie plat in de sleutel — "cold one
+            // dark elves", "manticore renegade", "warhorse bretonnia" — omdat dezelfde mount per
+            // leger andere regels heeft. Een gekozen mount-OPTIE draagt die tag nog in z'n naam en
+            // vindt zichzelf dus. Maar een mount die in de unit is INGEBAKKEN staat alleen als
+            // profielrij ("Cold One" in Cold One Knights) en heeft geen tag; die miste alles.
+            // Daarom hier de factienaam als extra kandidaat, plus "renegade" voor de packs.
+            const fac = normMountProfile(armyName(active.army));
+            const sleutels = [profileKey, taggedKey, `${profileKey} ${fac}`, `${profileKey} renegade`];
+            const rows = sleutels.map((k) => statsFor(k)).find((r) => r.length) ?? statsFor(label);
+            const text = sleutels.map((k) => activeMountText[k]).find(Boolean) ?? {};
+            const profiles: UnitProfile[] = rows.map((row) => ({
+              label: row.Name,
+              stats: ['M', 'WS', 'BS', 'S', 'T', 'W', 'I', 'A', 'Ld']
+                .map((key) => ({ k: key, v: row[key as keyof StatRow] ?? '-' })),
+            }));
+            const details = [
+              text.baseSize ? `Base size: ${text.baseSize}` : null,
+              text.armourValue ? `Armour value: ${text.armourValue}` : null,
+              ...(text.equipment ?? []).map((value) => `Equipment: ${value}`),
+              ...(text.notes ?? []),
+            ].filter((value): value is string => !!value);
+            setMountInfo({
+              title: label.replace(/\s*\{[^}]*\}/g, '').trim(),
+              // rules-index stores troop-type CODES ("MCa"), so this showed a raw "MCA" — unreadable,
+              // and never resolvable to the rule page it names. Mapped to the rulebook's own wording.
+              troopType: troopTypeName(text.troopType
+                ?? sleutels.map((k) => activeStatIdx?.[k]?.troopType).find(Boolean)),
+              profiles,
+              rules: text.specialRules ?? [],
+              details,
+            });
+            return;
+          }
+          // Kent de aanroeper de pagina al, gebruik die. Een spreuk deelt z'n naam soms met een
+          // gewone special rule, en dan is opzoeken op naam een gok met een verkeerd antwoord.
+          if (what.kind === 'rule' && what.slug) { openRule(what.slug); return; }
+          const slug = resolveRuleSlug(label, ruleIdx) ?? resolveOptionSlug(label, ruleIdx);
+          if (slug) { openRule(slug); return; }
+
+          // A label naming SEVERAL pieces of wargear ("Hand weapons, Additional hand weapon",
+          // "Light armour, Shields") matches no page, because no page is named after the
+          // combination — so the eye on 261 of the catalogue's option rows did nothing at all.
+          // The parts each have a page, so offer the parts: InfoSheet already turns a list of
+          // labels into one tappable chip apiece, which is exactly the choice being offered.
+          const parts = splitCompoundLabel(label);
+          const slugs = parts.map((p) => resolveRuleSlug(p, ruleIdx) ?? resolveOptionSlug(p, ruleIdx));
+          const found = slugs.filter((s): s is string => !!s);
+          if (!found.length) return; // nothing to read — better than an empty sheet
+          // Both halves pointing at one page ("Two Hand Weapons/Additional Hand Weapon" covers each)
+          // means there is a single rule to read: open it, rather than a sheet holding one chip.
+          if (found.length === parts.length && new Set(found).size === 1) { openRule(found[0]); return; }
+          setMountInfo({ title: label, rules: parts });
+        }}
       />
       {instellingenBlad}
+      <InfoSheet info={mountInfo} onClose={() => setMountInfo(null)} />
       </>
     );
   }

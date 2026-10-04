@@ -1,8 +1,8 @@
 // Army-builder REDESIGN — the container that binds the new screens to the app's real data.
 //
-// This is the seam between the redesign and everything that already works. It is a DROP-IN
-// alternative to `BuilderWorkspace`: same props, same responsibilities, so `ListBuilder` can render
-// either one. Nothing below re-implements a rule — it assembles `BuilderCtx` once and hands it to the
+// This is the seam between the redesign and everything that already works. It started as a DROP-IN
+// alternative to the old `BuilderWorkspace` (same props, same responsibilities); sinds 04-10-2026 is
+// die oude builder weg en is dit de enige. Nothing below re-implements a rule — it assembles `BuilderCtx` once and hands it to the
 // screens, which are pure presentation.
 //
 // WHY THE ASSEMBLY LIVES HERE (and not in each screen):
@@ -47,7 +47,7 @@ import { downloadArmyPdf } from '../../lib/pdfDownload';
 import { useData } from '../../data';
 import type { BuilderCtx, BuilderScreen, PickerEntry, RosterRow, SavedListLike } from './types';
 
-/** Same shape `ListBuilder` already passes to `BuilderWorkspace`, so this is a drop-in swap. */
+/** De props die `ListBuilder` meegeeft (ooit dezelfde vorm als de oude, verwijderde BuilderWorkspace). */
 export interface BuilderFlowProps {
   list: SavedListLike;
   name: string;
@@ -120,8 +120,8 @@ const ruleLabel = (slug: string): string =>
   ?? (slug || '').split('-').filter(Boolean).map((w) => w[0].toUpperCase() + w.slice(1)).join(' ');
 
 // `statsFor`, `onSetName`, `armySlug` and `comps` are part of the props ON PURPOSE even though this
-// component does not read them: keeping the signature identical to `BuilderWorkspace`'s makes the swap
-// in `ListBuilder` a one-line change, and the list-settings screen that needs `comps`/`onSetName` is
+// component does not read them: the signature was kept identical to the old
+// `BuilderWorkspace` (verwijderd 04-10-2026) so the swap in `ListBuilder` was a one-line change, and the list-settings screen that needs `comps`/`onSetName` is
 // still to come. `statsFor` in particular is redundant here because `UnitOptions` resolves statlines
 // from the rules-index itself.
 export function BuilderFlow({
@@ -543,7 +543,7 @@ export function BuilderFlow({
   }, [update, setPrullenbak]);
 
   // ── Navigation ────────────────────────────────────────────────────────────────────────────────
-  // NOTE ON BACK: no layer is registered here. `UnitOptions` and `ResolveSheet` register their own
+  // NOTE ON BACK: no layer is registered here. `UnitOptions` registers its own
   // (`useBackClose`), and `ListBuilder` already owns the "close the open list" layer. A layer here
   // would make hardware Back skip two levels at once.
   const toRoster = useCallback((flash?: string) => {

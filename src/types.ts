@@ -116,34 +116,6 @@ export interface RulesData {
   loreList?: string[];
 }
 
-// ---- Flow enrichment (public/flow.json) ----
-// Adds interpreted structure on top of the verbatim rules so each step reads as a
-// continuous whole. Rule text is never stored here — blocks reference a slug and the
-// verbatim body is resolved from `rules`.
-export type FlowBlockType = 'explain' | 'conditional' | 'ability' | 'seealso';
-
-export interface FlowBlock {
-  type: FlowBlockType;
-  /** Slug of the related rule whose verbatim body this block shows. */
-  slug: string;
-  /** Short framing written by the enrichment, e.g. a condition question. */
-  label?: string;
-}
-
-export interface FlowStep {
-  /** Optional "only do this step if…" question shown as a banner. */
-  stepCondition?: string;
-  blocks: FlowBlock[];
-}
-
-export interface FlowData {
-  generatedAt?: string;
-  model?: string;
-  /** Steps folded into a parent step and removed from the walkthrough sequence. */
-  hidden?: string[];
-  steps: Record<string, FlowStep>;
-}
-
 // ---- Companion structure (public/companion.json) ----
 // The curated turn structure shown in Play: 4 phases × 4 sub-phases, each with tabs.
 // "Quick" tabs are hand-written; "Rules" tabs render verbatim wiki bodies via `rule` blocks.

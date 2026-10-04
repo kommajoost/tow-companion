@@ -2,7 +2,7 @@
 //
 // This is a RE-SKIN, not a redesign of the model. Every rule about what may be chosen, what it
 // costs and what blocks it comes from the existing engine in `src/lib/owbBuilder.ts`; the logic
-// below is lifted from the working editor in `src/components/game/BuilderWorkspace.tsx`
+// below was lifted from the old editor `src/components/game/BuilderWorkspace.tsx` (verwijderd 04-10-2026)
 // (`optionEditor` / `magicCategoryBlock` / `magicItemRow` / `subGroupBlock` / `optionRow` + the
 // lores block) with only the presentation replaced. The designspec's flat
 // `OptionGroup { kind, rule }` model CANNOT express what this screen has to keep working —
