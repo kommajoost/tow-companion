@@ -309,7 +309,7 @@ export function BuilderFlow({
           addCost,
           perModel: multiModel ? (unit.points ?? 0) : null,
           minSize,
-          troopType: troopTypeFor(unit.name_en) ?? '',
+          troopType: troopTypeFor(unit.bronNaam ?? unit.name_en) ?? '',
           unaffordable: addCost > derived.remainingPoints,
           note: unitNote(unit, list.composition),
         });

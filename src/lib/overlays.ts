@@ -302,7 +302,7 @@ const striptag = (naam: unknown): string => String(naam ?? '').replace(TAG, '').
  *  Opties hebben het hier ook niet nodig: elke plek die ze TOONT maakt ze zelf al schoon —
  *  cleanLabel in UnitOptions, de inline replace in UnitCard, clean in listExport. De unitnaam was de
  *  enige die ongefilterd op het scherm kwam, en dat was precies de klacht. */
-const zonderTag = (unit: OwbUnit): OwbUnit => ({ ...unit, name_en: striptag(unit.name_en) });
+const zonderTag = (unit: OwbUnit): OwbUnit => ({ ...unit, bronNaam: unit.bronNaam ?? unit.name_en, name_en: striptag(unit.name_en) });
 
 export function catalogueFor(
   base: OwbArmy,
@@ -450,6 +450,9 @@ export function overlayStatsFor(
   index: Record<string, { stats?: OverlayStatRow[] }>,
   name: string,
   overlay?: CompositionOverlay | null,
+  /** Het leger ("Empire of Man"): kiest bij een kale naam ("Mortar", uit een oude game) de juiste
+   *  getagde datasheet ("mortar empire"). */
+  factie?: string,
 ): OverlayStatRow[] {
   const key = normOpt(name);
   const words = key.split(' ');
@@ -459,7 +462,7 @@ export function overlayStatsFor(
   const patch = overlay?.profiles?.[key] ?? overlay?.profiles?.[singular];
   // 04-10-2026: de sleutel komt uit statSleutels (gedeelde datasheets met een tag, ridderorden,
   // andere namen). Zonder dat vond het spel bij o.a. de Empire-Mortar geen statline (Joost).
-  const sleutel = statSleutels(name, index).find((k) => index[k]?.stats?.length);
+  const sleutel = statSleutels(name, index, factie).find((k) => index[k]?.stats?.length);
   const basis = (sleutel ? index[sleutel]?.stats : undefined)
     ?? index[indexSleutel(index, name)]?.stats ?? [];
   return mergeStatRows(patch?.replaceStats ? [] : basis, patch?.stats);

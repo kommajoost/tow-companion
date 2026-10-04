@@ -59,3 +59,21 @@ test('mortar-profiel: beide waarden, notities en geen To Hit', () => {
   assert.equal(hg.noToHit, undefined);
   assert.equal(hg.sLabel, undefined);
 });
+
+test('via de echte catalogus-trechter (tag weg voor de weergave) houdt de mortar zijn statline', () => {
+  const bt = require(path.join(root, 'src/lib/builderToArmy.ts'));
+  const cat = ov.catalogueFor(read('public/owb/empire-of-man.json'), 'empire-of-man', null);
+  const m = cat.special.find((u) => u.id === 'mortar');
+  assert.equal(m.name_en, 'Mortar');
+  assert.equal(m.bronNaam, 'Mortar {empire}');
+  const army = bt.builderListToArmy(
+    { name: 't', composition: 'empire-of-man', rule: 'grand-army', points: 2000, entries: [{ uid: 'x', cat: 'special', unitId: 'mortar', count: 1, opts: [] }] },
+    cat, (n) => ov.overlayStatsFor(stats, n, null), { faction: 'Empire of Man', troopTypeFor: troopType });
+  assert.deepEqual(army.units[0].profiles.map((p) => p.label), ['Mortar', 'Gun Crew']);
+  assert.equal(army.units[0].troopType, 'War Machine');
+});
+
+test('een oude game-kopie met alleen "Mortar" vindt de Empire-statline via het leger', () => {
+  assert.deepEqual(ov.overlayStatsFor(stats, 'Mortar', null, 'Empire of Man').map((r) => r.Name), ['Mortar', 'Gun Crew']);
+  assert.deepEqual(ov.overlayStatsFor(stats, 'Cannon', null, 'Dwarfen Mountain Holds').map((r) => r.Name), ['Cannon', 'Dwarf Crew']);
+});

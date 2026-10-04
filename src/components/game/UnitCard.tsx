@@ -12,6 +12,11 @@ import { WizardSpells } from './WizardSpells';
 import { WoundTracker } from './WoundTracker';
 import type { ArmyUnit, KillDetail, UnitProfile } from '../../types';
 import { Eye } from './Eye';
+import { useStatIndex } from '../../lib/useStatIndex';
+import { troopTypeName } from '../../lib/troopTypes';
+import { statSleutels } from '../../lib/statSleutel';
+import { overlayStatsFor } from '../../lib/overlays';
+import { STAT_COLS } from '../../lib/builderToArmy';
 
 const eb = engraved as React.CSSProperties;
 
@@ -19,7 +24,7 @@ const eb = engraved as React.CSSProperties;
 // chips (open the pop-up sheet), a wizard spell picker, and a strength/casualty tracker.
 // When the unit is wiped out it shows "Destroyed" and dims.
 export function UnitCard({
-  unit,
+  unit: unitIn,
   faction,
   editable = false,
   onChange,
@@ -70,6 +75,18 @@ export function UnitCard({
   collapsed?: boolean;
   onToggleCollapse?: () => void;
 }) {
+  // 05-10-2026: een game bewaart bij de start een KOPIE van beide legers (tow_games.host_army/guest_army).
+  // Wie startte vóór de statline-fix (0.1.406, o.a. de Empire-Mortar) heeft daarin een unit zonder
+  // profiel. Vul dat hier aan uit de statline-index, zodat ook een lopende game de stats toont.
+  const statIdx = useStatIndex();
+  const unit = useMemo<ArmyUnit>(() => {
+    if (unitIn.profiles?.length || !statIdx) return unitIn;
+    const rows = overlayStatsFor(statIdx, unitIn.statNaam ?? unitIn.datasheet ?? unitIn.name, null, faction);
+    if (!rows.length) return unitIn;
+    const ttSleutel = statSleutels(unitIn.statNaam ?? unitIn.datasheet ?? unitIn.name, statIdx, faction).find((k) => statIdx[k]?.troopType);
+    const tt = unitIn.troopType ?? troopTypeName(ttSleutel ? statIdx[ttSleutel]?.troopType : undefined);
+    return { ...unitIn, ...(tt ? { troopType: tt } : {}), profiles: rows.map((r) => ({ label: r.Name, stats: STAT_COLS.map((k) => ({ k, v: r[k] ?? '-' })) })) };
+  }, [unitIn, statIdx, faction]);
   const toon = unitToon(unit);
   const { rules } = useData();
   const { openRule } = useUI();

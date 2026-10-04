@@ -197,6 +197,8 @@ export interface ArmyUnit {
    *  Overal waar een unit getoond wordt is DIT de primaire regel en is `name` de secundaire: bij een
    *  leger vol eigennamen ("Dreth's Thunder") zie je anders nergens meer WAT er op tafel staat. */
   datasheet?: string;
+  /** De OWB-naam met tag ("Mortar {empire}"): de sleutel voor de statline. Alleen opzoeken, nooit tonen. */
+  statNaam?: string;
   count: number | null; // leading multiplier (e.g. 15 Warriors), null for single models
   points: number | null;
   category: string; // e.g. "Core Units"

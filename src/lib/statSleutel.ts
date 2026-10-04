@@ -32,7 +32,7 @@ const VARIANT_BASIS = ['inner circle knights', 'demigryph knights', 'empire knig
  * Kandidaat-sleutels voor een unitnaam, in volgorde van voorkeur. De aanroeper neemt de eerste die in
  * de index bestaat EN heeft wat hij zoekt (stats of troopType).
  */
-export function statSleutels(naam: string, index?: Record<string, unknown> | null): string[] {
+export function statSleutels(naam: string, index?: Record<string, unknown> | null, factie?: string): string[] {
   const gekwalificeerd = plat(naam);
   const kaal = zonderTag(naam);
   const uit: string[] = [];
@@ -48,6 +48,17 @@ export function statSleutels(naam: string, index?: Record<string, unknown> | nul
   if (index) {
     const titel = Object.keys(index).find((k) => k.startsWith(`${kaal}, `));
     voeg(titel);
+    // Een kale naam waarvan de tag al weg is ("Mortar" i.p.v. "Mortar {empire}", bv. uit een game die
+    // vóór 05-10 startte): de getagde datasheet van DIT leger. De tag is (een deel van) de legernaam:
+    // empire ⊂ empire of man, tomb kings ⊂ tomb kings of khemri; "dwarfs" ↔ "dwarfen mountain holds"
+    // matcht op de eerste vier letters. Geen leger bekend en meer dan één kandidaat: niets raden.
+    const kandidaten = Object.keys(index).filter((k) => k.startsWith(`${kaal} `) && !k.startsWith(`${kaal}, `));
+    const leger = plat(factie || '');
+    const past = (k: string) => {
+      const tag = k.slice(kaal.length + 1);
+      return !!leger && (leger.includes(tag) || leger.slice(0, 4) === tag.slice(0, 4));
+    };
+    voeg(kandidaten.find(past) ?? (kandidaten.length === 1 && !leger ? kandidaten[0] : undefined));
   }
   return uit;
 }

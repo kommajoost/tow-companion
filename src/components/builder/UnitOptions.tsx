@@ -28,6 +28,7 @@
 // Gutter contract: the primitives carry no horizontal padding, so every band here supplies
 // `BUILDER.gutter` itself and all text shares one left edge.
 
+import { useStatIndex, type StatIndex } from '../../lib/useStatIndex';
 import { statSleutels } from '../../lib/statSleutel';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { allowedLores as resolveLores } from '../../lib/armyRules';
@@ -65,27 +66,11 @@ const CAT_LABEL: Record<Category, string> = {
 // at most once per session. Read-only: nothing here writes to the list.
 const STAT_COLS = ['M', 'WS', 'BS', 'S', 'T', 'W', 'I', 'A', 'Ld'] as const;
 type StatRow = { Name: string } & Partial<Record<(typeof STAT_COLS)[number] | 'Sv', string>>;
-type StatIndex = Record<string, { stats?: StatRow[]; troopType?: string }>;
-let statIndexCache: StatIndex | null = null;
-const BASE = import.meta.env.BASE_URL;
 /** OWB's normalizeRuleName — the key shape of rules-index.json (copied from ListBuilder, where it
- *  is a module-private const). */
+ *  is a module-private const). The index itself is loaded by useStatIndex (src/lib/useStatIndex.ts),
+ *  shared with the game's UnitCard. */
 const normRule = (s: string) => (s || '').toLowerCase().replace(/ *\([^)]*\) */g, '')
   .replace(/[{}[\]*]/g, '').replace(/^[0-9]x /g, '').replace(/[“”]/g, '"').trim();
-
-function useStatIndex(): StatIndex | null {
-  const [idx, setIdx] = useState<StatIndex | null>(statIndexCache);
-  useEffect(() => {
-    if (statIndexCache) { setIdx(statIndexCache); return; }
-    let cancelled = false;
-    fetch(`${BASE}owb/rules-index.json`)
-      .then((r) => r.json())
-      .then((j: StatIndex) => { statIndexCache = j; if (!cancelled) setIdx(j); })
-      .catch(() => { /* no statline is a display gap, never an error state */ });
-    return () => { cancelled = true; };
-  }, []);
-  return idx;
-}
 
 // ─────────────────────────── small atoms ───────────────────────────
 /** The spec's two indicators. Radio: a 15px circle, chosen = a 4px accent ring on Raised. Toggle: a
@@ -673,13 +658,16 @@ export function UnitOptions(props: {
   // rulebook page — and every one of the 14 codes in `TROOP_TYPE_NAMES` resolves to one, mostly under a
   // plural title ("Behemoth" → Behemoths, "War Machine" → War Machines), which `resolveRuleSlug` already
   // handles via its singular/plural fallback.
-  const unitTroopType = troopTypeFor(cleanLabel(unit.name_en));
+  const unitTroopType = troopTypeFor(unit.bronNaam ?? unit.name_en) ?? troopTypeFor(cleanLabel(unit.name_en));
 
   const selectedMount = unit.mounts?.[selectedMountIndex(unit, entry)];
   const mountModifiers = selectedMount?.name_en && !/^on foot$/i.test(selectedMount.name_en)
     ? mountStatModifiers(statsFor(cleanLabel(selectedMount.name_en)))
     : {};
-  const profiles = applyMountStatModifiers(statsFor(cleanLabel(unit.name_en)), mountModifiers);
+  // 05-10-2026: EERST de volle naam ("Mortar {empire}" → "mortar empire"). cleanLabel haalt de tag eraf,
+  // en dan kwam de builder op de rulebook-pagina "mortar" uit, zonder statline (Joost).
+  const eigenRijen = statsFor(unit.bronNaam ?? unit.name_en);
+  const profiles = applyMountStatModifiers(eigenRijen.length ? eigenRijen : statsFor(cleanLabel(unit.name_en)), mountModifiers);
   const profile = profiles[Math.min(profileIdx, profiles.length - 1)];
 
   const blocks = unitBlocks(unit);

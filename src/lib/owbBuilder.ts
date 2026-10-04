@@ -69,6 +69,10 @@ export interface CompositionPlacement {
 
 export interface OwbUnit {
   id: string; name_en: string; points?: number; minimum?: number; maximum?: number;
+  /** De OWB-naam MÉT tag ("Mortar {empire}"), bewaard door catalogueFor voordat die de tag voor de
+   *  weergave weghaalt. De statline staat onder die volle naam ("mortar empire"); zonder tag kom je op
+   *  de algemene rulebook-pagina "mortar" uit (05-10-2026). Alleen voor opzoeken, nooit tonen. */
+  bronNaam?: string;
   command?: OwbOption[]; equipment?: OwbOption[]; armor?: OwbOption[]; options?: OwbOption[];
   mounts?: OwbOption[]; lores?: string[]; specialRules?: { name_en?: string };
   items?: OwbItemSection[]; spellCount?: number;

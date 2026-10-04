@@ -44,7 +44,7 @@ export function magicItemRules(body?: string): string[] {
 const CAT_LABEL: Record<Category, string> = {
   characters: 'Characters', core: 'Core', special: 'Special', rare: 'Rare', mercenaries: 'Mercenaries', allies: 'Allies',
 };
-const STAT_COLS = ['M', 'WS', 'BS', 'S', 'T', 'W', 'I', 'A', 'Ld'] as const;
+export const STAT_COLS = ['M', 'WS', 'BS', 'S', 'T', 'W', 'I', 'A', 'Ld'] as const;
 export type StatRow = { Name: string } & Record<(typeof STAT_COLS)[number], string>;
 
 /** A saved builder list = a BuilderList plus its name/faction. */
@@ -101,7 +101,7 @@ export function builderListToArmy(
       ? (statsFor(mOpt.name_en).length ? statsFor(mOpt.name_en) : statsFor(normMount(mOpt.name_en)))
       : [];
     const mountModifiers = mountStatModifiers(mRows);
-    const baseRows = statsFor(u.name_en)
+    const baseRows = statsFor(u.bronNaam ?? u.name_en)
       .filter((r) => !droppedChampions.includes((r.Name || '').toLowerCase()));
     const effectiveRows = applyMountStatModifiers(baseRows, mountModifiers);
     const mountName = mOpt?.name_en?.replace(/\s*\{[^}]*\}/g, '').trim();
@@ -182,10 +182,11 @@ export function builderListToArmy(
       campaignId: campaignUnitId(e),
       name: e.customName?.trim() || u.name_en,
       datasheet: u.name_en,
+      statNaam: u.bronNaam ?? u.name_en,
       count: multi ? e.count : null,
       points: entryPoints(u, e, opts.itemsData),
       category: CAT_LABEL[e.cat],
-      troopType: opts.troopTypeFor?.(u.name_en),
+      troopType: opts.troopTypeFor?.(u.bronNaam ?? u.name_en),
       // Full effective loadout (base weapons + upgrades + magic), so the game resolves shooting/melee
       // profiles the same way it does for a pasted OWB list — not just the non-default upgrades.
       options: loadoutLabels(u, e, opts.itemsData).filter(keepLoadout),
