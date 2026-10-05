@@ -502,11 +502,15 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
   });
 
   // DE VOLGORDE aan tafel. Procedurele lijm, geen regel: alleen welke sectie je wanneer nodig hebt.
+  // Joost (05-10-2026): "eerst deploymentzones markeren, dan de objectives, en dan het terrein". Met de
+  // zones en objectives al op tafel zie je bij het om de beurt plaatsen van het terrein meteen wat je
+  // afschermt of vrijlaat. (Het boek legt het terrein juist eerst; dit is de volgorde van Celedon.)
   const setupStappen: string[] = [];
-  if (terrain.length > 0) setupStappen.push('Place the terrain (below).');
-  if (briefings.length > 0) setupStappen.push('Place the objectives — see Objectives.');
+  if (toontKaart || deployNote) setupStappen.push(toontKaart ? 'Mark the deployment zones (map below).' : 'Mark the deployment zones (see below).');
+  if (briefings.length > 0) setupStappen.push('Set up the objectives — see Objectives.');
   if (heeftLandmark) setupStappen.push("Roll for the landmark's unusual property — see Objectives.");
-  setupStappen.push(toontKaart ? 'Deploy, using the map below.' : deployNote ? 'Deploy (see below).' : 'Deploy.');
+  if (terrain.length > 0) setupStappen.push('Place the terrain (below).');
+  setupStappen.push('Deploy your armies in their zones.');
   const heeftSetup = setupStappen.length > 1 || !!groundType || !!battle.hexGebouw || terrain.length > 0 || toontKaart || !!deployNote;
 
   /** Een feit-chip in de Battle-sectie (Battle March, punten, tafel, rondes). */
@@ -777,6 +781,31 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
           </ol>
         )}
 
+        {/* DE DEPLOYMENT-KAART. Alleen als de sheet een uitgerekende `layout` meebrengt — een oudere
+            (v1) battle heeft die niet, en dan blijft alleen de `deployNote` over. Boven en onder het
+            bord staat wie daar opstelt, zodat je de kaart kunt lezen vanaf jouw kant van de tafel. */}
+        {(toontKaart || deployNote) && subkop('Deployment')}
+        {deployNote && (
+          <div style={{ fontFamily: serif, fontSize: 12.5, color: TOW.parchDim, lineHeight: 1.45, marginBottom: toontKaart ? 6 : 0 }}>{deployNote}</div>
+        )}
+        {layout && tableW && tableH && (
+          <div>
+            <div style={{ fontFamily: serif, fontSize: 12, color: youSide === 'top' ? TOW.goldDeep : TOW.muted, marginBottom: 4 }}>
+              {kantLabel(defenderTop)}
+            </div>
+            <CampaignBoard
+              layout={layout}
+              secLayout={secLayout}
+              tableW={tableW}
+              tableH={tableH}
+              youSide={youSide}
+            />
+            <div style={{ fontFamily: serif, fontSize: 12, color: youSide === 'bottom' ? TOW.goldDeep : TOW.muted, marginTop: 4 }}>
+              {kantLabel(!defenderTop)}
+            </div>
+          </div>
+        )}
+
         {/* DE STREEK. Joost (05-10): "de Plains region is het type hex op de campagnekaart, en dat
             bepaalt welke terrain pieces er gekozen zijn." Dus de streek staat hier bóven de lijst, met
             het gebouw op de hex erbij (de server levert de naam; het ruwe id tonen we niet). */}
@@ -838,30 +867,6 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
           </div>
         )}
 
-        {/* DE DEPLOYMENT-KAART. Alleen als de sheet een uitgerekende `layout` meebrengt — een oudere
-            (v1) battle heeft die niet, en dan blijft alleen de `deployNote` over. Boven en onder het
-            bord staat wie daar opstelt, zodat je de kaart kunt lezen vanaf jouw kant van de tafel. */}
-        {(toontKaart || deployNote) && subkop('Deployment')}
-        {deployNote && (
-          <div style={{ fontFamily: serif, fontSize: 12.5, color: TOW.parchDim, lineHeight: 1.45, marginBottom: toontKaart ? 6 : 0 }}>{deployNote}</div>
-        )}
-        {layout && tableW && tableH && (
-          <div>
-            <div style={{ fontFamily: serif, fontSize: 12, color: youSide === 'top' ? TOW.goldDeep : TOW.muted, marginBottom: 4 }}>
-              {kantLabel(defenderTop)}
-            </div>
-            <CampaignBoard
-              layout={layout}
-              secLayout={secLayout}
-              tableW={tableW}
-              tableH={tableH}
-              youSide={youSide}
-            />
-            <div style={{ fontFamily: serif, fontSize: 12, color: youSide === 'bottom' ? TOW.goldDeep : TOW.muted, marginTop: 4 }}>
-              {kantLabel(!defenderTop)}
-            </div>
-          </div>
-        )}
       </Sectie>
       )}
 
