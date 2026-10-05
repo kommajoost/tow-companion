@@ -171,6 +171,22 @@ export interface CampaignBattle {
    *  (`towc_weer_get`); we bouwen de D6-tabel hier niet na. null vanaf Act 3 (geen weer) of als de
    *  worp nog niet gedaan is; undefined bij een oudere server. */
   weer?: GameWeer | null;
+  /** 05-10-2026: de leesbare NAAM van het gebouw op de hex van deze battle ('Scouting Outpost',
+   *  'Trading Outpost', 'Undeveloped plot', …), of null als er niets staat. Komt kant-en-klaar van de
+   *  server — het ruwe id in `scenario.gebouw` tonen we bewust niet. undefined bij een oudere server. */
+  hexGebouw?: string | null;
+  /** 05-10-2026: modifiers op de roll-off voor de EERSTE BEURT, per kant, met hun bron (War Hall,
+   *  Watchtower, Scouting Outpost, Raider's Den). Zelfde poort als `perks`: null tot beide legers
+   *  gelockt zijn. undefined bij een oudere server. */
+  rollOff?: { aanvaller: RollOffBron[]; verdediger: RollOffBron[] } | null;
+}
+
+/** Eén bron van een roll-off-modifier voor de eerste beurt, bv. `{ bron: 'ranger-outpost',
+ *  label: 'Scouting Outpost', waarde: 1 }`. `label` is server-side al leesbaar gemaakt. */
+export interface RollOffBron {
+  bron: string;
+  label: string;
+  waarde: number;
 }
 
 // ---- Battle-soort ----------------------------------------------------------------------------
@@ -305,6 +321,26 @@ function parseItem(raw: unknown): FoundItem | null {
   return { naam, punten: num(i.punten), effect: str(i.effect), soort: str(i.soort) };
 }
 
+function parseRollOffBron(raw: unknown): RollOffBron | null {
+  if (!raw || typeof raw !== 'object') return null;
+  const r = raw as Record<string, unknown>;
+  const label = str(r.label);
+  // Een modifier zonder getal of zonder naam is niets om aan tafel op te tellen.
+  if (!label || typeof r.waarde !== 'number' || !Number.isFinite(r.waarde)) return null;
+  return { bron: str(r.bron), label, waarde: r.waarde };
+}
+
+/** Undefined als het veld ontbreekt (oude server), null als de server null stuurt (nog niet beide
+ *  gelockt) — anders per kant de defensief geparste bronnen. */
+function parseRollOff(d: Record<string, unknown>): CampaignBattle['rollOff'] {
+  if (!('rollOff' in d)) return undefined;
+  const raw = d.rollOff;
+  if (!raw || typeof raw !== 'object') return null;
+  const r = raw as Record<string, unknown>;
+  const kant = (v: unknown) => arr(v).map(parseRollOffBron).filter((x): x is RollOffBron => !!x);
+  return { aanvaller: kant(r.aanvaller), verdediger: kant(r.verdediger) };
+}
+
 /** Undefined als het veld ontbreekt (oude server) — anders per kant de gevulde slots (1 en 2).
  *  Slot 2 heet op de wire `aanvaller2`/`verdediger2` (04-10-2026); een oudere server stuurt het niet. */
 function parseItems(raw: unknown): BattleItems | undefined {
@@ -345,6 +381,8 @@ function parseBattle(data: unknown): CampaignBattle {
     actStatus: typeof d.actStatus === 'string' ? d.actStatus : null,
     battleMarch: typeof d.battleMarch === 'boolean' ? d.battleMarch : undefined,
     weer: 'weer' in d ? parseWeer(d.weer) : undefined,
+    hexGebouw: 'hexGebouw' in d ? (typeof d.hexGebouw === 'string' && d.hexGebouw.trim() ? d.hexGebouw.trim() : null) : undefined,
+    rollOff: parseRollOff(d),
   };
 }
 

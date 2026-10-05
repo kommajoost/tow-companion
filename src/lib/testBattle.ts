@@ -126,7 +126,12 @@ const ITEM_VERD: FoundItem = {
 
 /** Het nep-battlefield. Bewust een BATTLE MARCH met drie treasure troves: dat zet de objectives-
  *  teller aan, plus de 5-rondenlengte en de halve VP-schaal — precies de dingen die anders alleen
- *  in een echte Act-1-battle te zien zijn. */
+ *  in een echte Act-1-battle te zien zijn.
+ *
+ *  05-10-2026: op 48×36 met de troves op 13/24/35″ van de middellijn, zoals de campagne ze voor
+ *  'bm-troves-3' uitrekent, plus een `layout` (de echte Opposed Flanks-driehoeken van de campagne)
+ *  zodat de deployment-kaart en "as numbered on the map" te zien zijn. Eén heuvel draagt
+ *  `side: 'defender'`: het STERKTEPUNT dat de campagne voor het gebouw op de hex toevoegt. */
 const SCENARIO: Record<string, unknown> = {
   v: 4,
   fase: 1,
@@ -135,23 +140,30 @@ const SCENARIO: Record<string, unknown> = {
   blurb: 'Battle March — slanted, opposed flank deployment.',
   reden: 'Test battle — nothing here is written back to the campaign.',
   deployNote: 'Slanted opposed zones, 18″ deep at the outer edge — A top-left, B bottom-right.',
-  bordLabel: '44×30″',
-  tableW: 44,
-  tableH: 30,
+  bordLabel: '48×36″',
+  tableW: 48,
+  tableH: 36,
   terrein: 'woud',
   intentie: 'raid',
-  gebouw: 'outpost',
+  gebouw: 'ranger-outpost',
   verdedigerKant: 'A',
+  layout: {
+    zones: [
+      { x: 0, y: 0, w: 48, h: 36, label: 'A', kind: 'main', poly: [[0, 0], [48, 0], [0, 14.4]] },
+      { x: 0, y: 0, w: 48, h: 36, label: 'B', kind: 'main', poly: [[48, 36], [0, 36], [48, 21.6]] },
+    ],
+  },
   secondaries: ['bm-troves-3'],
   secLayout: {
     quarters: false,
     baggage: [],
-    objectives: [{ n: 1, x: 11, y: 15 }, { n: 2, x: 22, y: 15 }, { n: 3, x: 33, y: 15 }],
+    objectives: [{ n: 1, x: 13, y: 18 }, { n: 2, x: 24, y: 18 }, { n: 3, x: 35, y: 18 }],
   },
   terrain: [
     { id: 't-test-1', type: 'wood', x: 18, y: 5, w: 8, h: 5, difficult: true },
     { id: 't-test-2', type: 'wood', x: 32, y: 6, w: 9, h: 5, difficult: true },
-    { id: 't-test-3', type: 'hill', x: 3, y: 17, w: 9, h: 9 },
+    { id: 't-test-3', type: 'hill', x: 3, y: 23, w: 9, h: 9 },
+    { id: 't-test-4', type: 'hill', x: 4, y: 3, w: 8, h: 5, side: 'defender' },
   ],
 };
 
@@ -201,6 +213,16 @@ export function buildTestBattle(): CampaignBattle | null {
       worp: 3,
       naam: 'Driving Rain (test)',
       effect: 'Test weather — shooting attacks suffer an additional -1 To Hit modifier.',
+    },
+    // 05-10-2026: het gebouw op de hex en de roll-off-modifiers voor de eerste beurt, zoals de
+    // server ze sinds vandaag meestuurt — zodat de Reminders-sectie hier iets te tonen heeft.
+    hexGebouw: 'Scouting Outpost',
+    rollOff: {
+      aanvaller: [{ bron: 'ranger-outpost', label: 'Scouting Outpost', waarde: 1 }],
+      verdediger: [
+        { bron: 'watchtower', label: 'Watchtower', waarde: 3 },
+        { bron: 'ranger-outpost', label: 'Scouting Outpost', waarde: 1 },
+      ],
     },
   };
 }

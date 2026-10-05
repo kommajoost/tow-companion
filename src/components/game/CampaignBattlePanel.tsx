@@ -9,6 +9,7 @@ import type { Army } from '../../types';
 import { isTestBattleCode } from '../../lib/testBattle';
 import { isVrijPotjeCode } from '../../lib/battleCode';
 import { TERRAIN_PLACEMENT_SHORT, TERRAIN_PLACEMENT_STEPS } from '../../lib/terrainPlacement';
+import { objectiveBriefings, BM_FIRST_TURN, BM_GAME_LENGTH, type ObjectiveBriefing } from '../../lib/battleMarchObjectives';
 
 const eb = engraved as React.CSSProperties;
 const display = towFont.display;
@@ -29,6 +30,83 @@ const GROND: Record<string, string> = {
   moeras: 'Marsh', kust: 'Coast', meer: 'Lake', bergpas: 'Mountain pass',
 };
 const grondLabel = (s: string): string => (GROND[s.toLowerCase().trim()] ? `${GROND[s.toLowerCase().trim()]} region` : pretty(s));
+
+/** Eén terreinstuk zoals dit scherm het nodig heeft: soort, kenmerken en (soms) wiens helft. */
+interface TerreinStuk {
+  type: string;
+  difficult: boolean;
+  dangerous: boolean;
+  /** Alleen gezet bij het STERKTEPUNT van de hex: het stuk hoort op de helft van die kant. */
+  side: 'defender' | 'attacker' | null;
+}
+
+/** Leesbare namen van de terreinsoorten die de campagne genereert (enkelvoud, meervoud). De labels
+ *  volgen de campagne zelf (TERRAIN_TYPES in de campagne-repo); onbekend valt terug op `pretty`. */
+const TERREIN: Record<string, [string, string]> = {
+  hill: ['Hill', 'hills'], wood: ['Wood', 'woods'], field: ['Field', 'fields'], marsh: ['Marsh', 'marshes'],
+  building: ['Building', 'buildings'], obstacle: ['Rampart / Wall', 'ramparts / walls'],
+};
+const terreinNaam = (type: string): string => TERREIN[type.toLowerCase()]?.[0] ?? pretty(type);
+const terreinMeervoud = (type: string): string => TERREIN[type.toLowerCase()]?.[1] ?? `${pretty(type).toLowerCase()}s`;
+/** Het kenmerk achter de soort. Difficult én dangerous heet "dangerous terrain" (Joost, 05-10). */
+const terreinKenmerk = (t: TerreinStuk): string | null =>
+  t.dangerous ? 'dangerous terrain' : t.difficult ? 'difficult terrain' : null;
+
+/** +3 / −1 / +0 — een roll-off-modifier zoals je hem aan tafel optelt. */
+const metTeken = (n: number): string => (n < 0 ? `−${Math.abs(n)}` : `+${n}`);
+
+/** Veteranen die iets te melden hebben: XP, abilities of scars. Een verse unit valt weg. */
+const vetRijen = (vets: VetUnit[] | undefined): VetUnit[] =>
+  (vets ?? []).filter((v) => v.xp > 0 || v.abilities.length > 0 || v.littekens > 0);
+
+/**
+ * Eén sectie van de briefing (05-10-2026): genummerde kop, korte ondertitel, eigen accentkleur.
+ * WAAROM ZO. Joost wilde "een duidelijker onderscheid" tussen battle-info, opstelling, legers en
+ * reminders. Op een telefoon scrol je door één lange kolom; de bovenrand en het nummer vertellen je
+ * zonder lezen in welk deel je zit, de stijl blijft het perkament-en-goud van de app. LET OP: de
+ * Ivory-skin heeft maar één accent-tint (gold = blood = karmijn), dus het onderscheid zit in een mix
+ * van accent, neutraal (muted/ink), tint en een gestippelde rand — niet in kleur alleen.
+ */
+function Sectie({ nr, titel, onder, accent, tint = false, gestippeld = false, children }: {
+  nr: number;
+  titel: string;
+  onder?: string;
+  accent: string;
+  /** Lichte goudtint als achtergrond (Objectives). */
+  tint?: boolean;
+  /** Gestippelde bovenrand (Reminders): in de Ivory-skin zijn gold en blood dezelfde kleur, dus
+   *  kleur alleen onderscheidt Battle en Reminders daar niet. */
+  gestippeld?: boolean;
+  children: React.ReactNode;
+}) {
+  return (
+    <section
+      style={{
+        border: `1px solid ${TOW.line}`, borderTop: `3px ${gestippeld ? 'dashed' : 'solid'} ${accent}`, borderRadius: 12,
+        background: tint ? `linear-gradient(rgba(184,134,47,0.07), rgba(184,134,47,0.07)), ${TOW.panel2}` : TOW.panel2,
+        padding: '12px 15px 15px', marginBottom: 14,
+      }}
+    >
+      <h2 style={{ display: 'flex', alignItems: 'baseline', gap: 8, margin: 0 }}>
+        <span style={{ ...eb, fontSize: 10, color: accent }}>{nr} ·</span>
+        <span style={{ fontFamily: display, fontWeight: 700, fontSize: 18, color: TOW.ink }}>{titel}</span>
+      </h2>
+      {onder && <div style={{ fontFamily: serif, fontStyle: 'italic', fontSize: 12.5, color: TOW.muted, margin: '1px 0 10px' }}>{onder}</div>}
+      {!onder && <div style={{ height: 8 }} />}
+      {children}
+    </section>
+  );
+}
+
+/** Een LETTERLIJKE regeltekst. Eigen vorm (lijn links, cursief) zodat je ziet: dit is het boek,
+ *  niet de app — wat de app zelf zegt staat er nooit zo bij. */
+function RegelTekst({ children }: { children: React.ReactNode }) {
+  return (
+    <div style={{ fontFamily: serif, fontStyle: 'italic', fontSize: 12.5, color: TOW.parch, lineHeight: 1.5, borderLeft: `2px solid ${TOW.goldDeep}`, paddingLeft: 9 }}>
+      {children}
+    </div>
+  );
+}
 
 // ── BattleSheet v2: de UITGEREKENDE opstelling ───────────────────────────────────────────────────
 // Sinds 16-08-2026 rekent de campagne de deployment zelf uit en schrijft 'm mee in de sheet
@@ -302,27 +380,30 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
   const tableLabel = asStr(sheet.bordLabel)
     ?? (asNum(sheet.tableW) && asNum(sheet.tableH) ? `${asNum(sheet.tableW)}×${asNum(sheet.tableH)}″` : null);
   const groundType = asStr(sheet.terrein);
-  /** Secondary objectives = what the campaign calls battle quests. Slugs like "baggage-trains", so they
-   *  are title-cased for display rather than shown raw; the campaign is the authority on their rules. */
-  const quests = Array.isArray(sheet.secondaries)
+  /** De OBJECTIVES van deze battle. De campagne noemt ze `secondaries` (ids als 'bm-troves-3'); wat ze
+   *  zijn, waar ze liggen en wat de regel zegt komt uit `objectiveBriefings` — letterlijk van de
+   *  regel-site, nooit door ons samengevat. */
+  const secondaries = Array.isArray(sheet.secondaries)
     ? (sheet.secondaries as unknown[]).map(asStr).filter((q): q is string => !!q)
     : [];
+  // GEEN AFMETINGEN (Joost 21-08-2026: "niet de afmetingen van de terrainpieces erbij"). Een
+  // gegenereerde 8x5" suggereerde een precisie die er niet is -- aan tafel pak je het stuk dat je hebt.
+  // Het TYPE is de regel (hill/wood/marsh bepaalt de terreinregels), de maat was decoratie; de kaart
+  // tekent sinds 16-08 geen terrein meer, dus ook de coördinaten hoeven hier niet mee.
+  // WEL `dangerous` en `side` (05-10-2026): die werden weggegooid, terwijl `side` precies zegt welk
+  // stuk het sterktepunt van de hex is en op wiens helft het hoort.
   const terrain = Array.isArray(sheet.terrain)
-    ? (sheet.terrain as unknown[]).map((t) => {
+    ? (sheet.terrain as unknown[]).map((t): TerreinStuk | null => {
       const o = (t && typeof t === 'object' ? t : {}) as Record<string, unknown>;
       const type = asStr(o.type);
       if (!type) return null;
-      const w = asNum(o.w);
-      const h = asNum(o.h);
-      // x/y are the piece's position on the table, in the same inches as tableW/tableH. Kept so the
-      // battlefield can be DRAWN rather than only listed — without them a "map" would be decoration.
       return {
         type,
-        size: w && h ? `${w}×${h}″` : null,
         difficult: o.difficult === true,
-        x: asNum(o.x), y: asNum(o.y), w, h,
+        dangerous: o.dangerous === true,
+        side: o.side === 'defender' || o.side === 'attacker' ? o.side : null,
       };
-    }).filter((t): t is { type: string; size: string | null; difficult: boolean; x: number | null; y: number | null; w: number | null; h: number | null } => !!t)
+    }).filter((t): t is TerreinStuk => !!t)
     : [];
   // 14-08-2026: de campagne schrijft de scenario-uitleg mee in de sheet, zodat we hier niet z'n
   // scenario-catalogus hoeven na te bouwen. Ontbreekt hij (oudere battles), dan valt het blok weg.
@@ -345,6 +426,7 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
   const tableH = asNum(sheet.tableH);
   const layout = parseSheetLayout(sheet.layout);
   const secLayout = parseSheetSecLayout(sheet.secLayout);
+  const toontKaart = !!(layout && tableW && tableH);
   // De gerolde D6 achter deze opstelling. Ontbreekt hij op een v2-sheet, dan is het scenario geforceerd
   // (de campagne legt in `reden` uit waarom) — bij een v1-sheet weten we het simpelweg niet, en dan
   // zeggen we niets in plaats van 'forced' te beweren.
@@ -387,21 +469,90 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
     const wie = !mySeat ? null : isDefender === ikBenVerdediger ? 'you' : 'opponent';
     return `${rol}${wie ? ` — ${wie}` : ''}${side.naam ? ` · ${side.naam}` : ''}`;
   };
-  /** Alleen terrein met een volledige positie kan getekend worden; de rest blijft in de chip-lijst. */
 
-  const chip = (text: string, title?: string) => (
+  // ── Objectives (05-10-2026) ────────────────────────────────────────────────────────────────────
+  // Joost: "dit zijn Objectives" — zo heten ze in Battle March, dus zo heten ze hier. Per objective: wat het is, WAAR het ligt
+  // (uitgerekend uit de coördinaten van de campagne) en de letterlijke regel. Geen objectives bij een
+  // CHALLENGE (12-09-2026, Joost): een challenge staat buiten de campagne; ze hier tonen wekt de indruk
+  // dat er iets mee te halen valt.
+  const briefings = battle.type !== 'challenge'
+    ? objectiveBriefings(secondaries, secLayout, tableW, tableH)
+    : [];
+  const heeftLandmark = briefings.some((b) => b.id === 'bm-landmark');
+
+  // ── Terrein: wat je nodig hebt (05-10-2026) ────────────────────────────────────────────────────
+  // Joost: "maak duidelijker welke terrain pieces je nodig hebt". Eén regel per soort met een aantal,
+  // in plaats van een chip per stuk — dat is de boodschappenlijst waarmee je de doos in gaat.
+  const benodigd = Object.values(terrain.reduce<Record<string, { naam: string; kenmerk: string | null; n: number }>>((acc, t) => {
+    const kenmerk = terreinKenmerk(t);
+    const key = `${t.type}|${kenmerk ?? ''}`;
+    acc[key] = acc[key] ?? { naam: terreinNaam(t.type), kenmerk, n: 0 };
+    acc[key].n += 1;
+    return acc;
+  }, {})).sort((a, b) => b.n - a.n || a.naam.localeCompare(b.naam) || (a.kenmerk ?? '').localeCompare(b.kenmerk ?? ''));
+  // HET STERKTEPUNT. Staat er een nederzetting/gebouw op de hex, dan voegt de campagne-generator een
+  // extra stuk toe (een heuvel, of een bos op een woud-hex) dat op de helft van de verdediger hoort:
+  // het staat voor die nederzetting. De sheet merkt het met `side`; zonder dat veld zeggen we niets.
+  const sterktepunten = terrain.filter((t) => t.side).map((t) => {
+    const zelfde = terrain.filter((x) => x.type === t.type).length;
+    const rol = t.side === 'attacker' ? 'attacker' : 'defender';
+    const wie = (rol === 'attacker' ? battle.aanvaller : battle.verdediger).naam;
+    const stuk = zelfde > 1 ? `One of the ${terreinMeervoud(t.type)}` : `The ${terreinNaam(t.type).toLowerCase()}`;
+    return `${stuk} is the strongpoint of the ${rol}${wie ? `, ${wie}` : ''}: it goes on the ${rol}'s half of the table and stands in for the settlement on this hex.`;
+  });
+
+  // DE VOLGORDE aan tafel. Procedurele lijm, geen regel: alleen welke sectie je wanneer nodig hebt.
+  const setupStappen: string[] = [];
+  if (terrain.length > 0) setupStappen.push('Place the terrain (below).');
+  if (briefings.length > 0) setupStappen.push('Place the objectives — see Objectives.');
+  if (heeftLandmark) setupStappen.push("Roll for the landmark's unusual property — see Objectives.");
+  setupStappen.push(toontKaart ? 'Deploy, using the map below.' : deployNote ? 'Deploy (see below).' : 'Deploy.');
+  const heeftSetup = setupStappen.length > 1 || !!groundType || !!battle.hexGebouw || terrain.length > 0 || toontKaart || !!deployNote;
+
+  /** Een feit-chip in de Battle-sectie (Battle March, punten, tafel, rondes). */
+  const feit = (text: string) => (
     <span
       key={text}
-      title={title}
-      style={{ fontFamily: serif, fontSize: 12, padding: '3px 10px', borderRadius: 999, border: `1px solid ${TOW.line}`, background: TOW.panel2, color: TOW.parchDim }}
+      style={{ fontFamily: serif, fontSize: 12.5, padding: '3px 10px', borderRadius: 999, border: `1px solid ${TOW.line}`, background: TOW.bg, color: TOW.parch }}
     >
       {text}
     </span>
   );
-  const chipRow = (heading: string, children: React.ReactNode) => (
-    <div style={{ marginTop: 12 }}>
-      <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginBottom: 5 }}>{heading}</div>
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, alignItems: 'center' }}>{children}</div>
+  const feiten = [
+    typeLabel,
+    battle.battleMarch ? 'Battle March' : null,
+    battle.cap ? `${battle.cap} pts` : null,
+    tableLabel,
+    battle.battleMarch ? '5 rounds' : null,
+  ].filter((f): f is string => !!f);
+
+  /** Kleine kop binnen een sectie. */
+  const subkop = (text: string, mt = 12) => (
+    <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginTop: mt, marginBottom: 5 }}>{text}</div>
+  );
+
+  /** Een letterlijke regeltabel (de Unusual Properties van de landmark): twee kolommen, smal genoeg
+   *  voor een telefoon — de eerste kolom houdt z'n worp op één regel, de tweede loopt door. */
+  const regelTabel = (t: NonNullable<ObjectiveBriefing['table']>) => (
+    <div>
+      {subkop(t.heading, 9)}
+      <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+        <thead>
+          <tr>
+            {t.columns.map((c) => (
+              <th key={c} style={{ ...eb, fontSize: 8, color: TOW.muted, textAlign: 'left', padding: '0 8px 4px 0', borderBottom: `1px solid ${TOW.line}` }}>{c}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {t.rows.map(([a, c]) => (
+            <tr key={a}>
+              <td style={{ fontFamily: display, fontWeight: 700, fontSize: 13, color: TOW.goldDeep, verticalAlign: 'top', padding: '5px 10px 5px 0', whiteSpace: 'nowrap', borderBottom: `1px solid ${TOW.line}` }}>{a}</td>
+              <td style={{ fontFamily: serif, fontStyle: 'italic', fontSize: 12.5, color: TOW.parch, lineHeight: 1.45, padding: '5px 0', borderBottom: `1px solid ${TOW.line}` }}>{c}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 
@@ -420,7 +571,7 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
    *  abilities én scars laten we weg: dat is een verse unit en die heeft hier niets te melden.
    *  De server vult dit veld alleen als beide legers gelockt zijn, dus beide kanten mogen. */
   const renderVets = (vets: VetUnit[] | undefined, heading: string) => {
-    const rijen = (vets ?? []).filter((v) => v.xp > 0 || v.abilities.length > 0 || v.littekens > 0);
+    const rijen = vetRijen(vets);
     if (rijen.length === 0) return null;
     return (
       <div style={{ marginTop: 12 }}>
@@ -467,224 +618,360 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
     );
   };
 
-  // Active building perks (from the campaign) shown read-only. Label as a chip, effect as tooltip.
-  const renderPerks = (perks: Perk[], heading: string) =>
+  // ── Reminders: perks en items met hun EFFECT als tekst (05-10-2026) ────────────────────────────
+  // Tot vandaag stond het effect alleen in een `title`-tooltip, en op een telefoon bestaat hover niet:
+  // je zag "Outpost Watch" en moest raden wat het deed. Nu staat het effect eronder, leesbaar.
+  const renderPerks = (perks: Perk[]) =>
     perks.length > 0 ? (
-      <div style={{ marginTop: 12 }}>
-        <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginBottom: 5 }}>{heading}</div>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+      <div>
+        {subkop(perks.length > 1 ? 'Active perks' : 'Active perk', 8)}
+        <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: 7 }}>
           {perks.map((p, i) => (
-            <span
-              key={i}
-              title={p.effect || undefined}
-              style={{ fontFamily: serif, fontSize: 12, padding: '3px 10px', borderRadius: 999, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.10)', color: TOW.goldDeep, cursor: p.effect ? 'help' : 'default' }}
-            >
-              {p.label}
-            </span>
+            <li key={`${p.perk}-${i}`}>
+              <div style={{ fontFamily: display, fontWeight: 700, fontSize: 13.5, color: TOW.goldDeep }}>{p.label}</div>
+              {p.effect && <div style={{ fontFamily: serif, fontSize: 12.5, color: TOW.parch, lineHeight: 1.45, marginTop: 1 }}>{p.effect}</div>}
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     ) : null;
 
-  // Attached found magic items (up to 2 per side since 16-08) shown read-only — same chip style as the
-  // perks. Name + points on the chip, effect as tooltip, and a "Single use" tag when it's a consumable.
-  const renderItems = (items: FoundItem[], heading: string) =>
+  // Attached found magic items (up to 2 per side since 16-08): name + points, a "Single use" tag when
+  // it's a consumable, and the effect as visible text underneath.
+  const renderItems = (items: FoundItem[]) =>
     items.length > 0 ? (
-      <div style={{ marginTop: 12 }}>
-        <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginBottom: 5 }}>{heading}{items.length > 1 ? 's' : ''}</div>
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, alignItems: 'center' }}>
+      <div>
+        {subkop(items.length > 1 ? 'Magic items' : 'Magic item', 8)}
+        <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: 7 }}>
           {items.map((item, i) => (
-            <span key={`${item.naam}-${i}`} style={{ display: 'inline-flex', gap: 6, alignItems: 'center' }}>
-              <span
-                title={item.effect || undefined}
-                style={{ fontFamily: serif, fontSize: 12, padding: '3px 10px', borderRadius: 999, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.10)', color: TOW.goldDeep, cursor: item.effect ? 'help' : 'default' }}
-              >
-                {item.naam}{item.punten ? ` · ${item.punten} pts` : ''}
-              </span>
-              {item.soort === 'consumable' && (
-                <span style={{ ...eb, fontSize: 8, padding: '3px 8px', borderRadius: 999, border: `1px solid ${TOW.line}`, background: TOW.panel2, color: TOW.muted }}>
-                  Single use
+            <li key={`${item.naam}-${i}`}>
+              <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 7 }}>
+                <span style={{ fontFamily: display, fontWeight: 700, fontSize: 13.5, color: TOW.goldDeep }}>
+                  {item.naam}{item.punten ? <span style={{ fontFamily: serif, fontWeight: 400, fontSize: 12.5, color: TOW.muted }}> · {item.punten} pts</span> : null}
                 </span>
-              )}
-            </span>
+                {item.soort === 'consumable' && (
+                  <span style={{ ...eb, fontSize: 8, padding: '3px 8px', borderRadius: 999, border: `1px solid ${TOW.line}`, background: TOW.bg, color: TOW.muted }}>
+                    Single use
+                  </span>
+                )}
+              </div>
+              {item.effect && <div style={{ fontFamily: serif, fontSize: 12.5, color: TOW.parch, lineHeight: 1.45, marginTop: 1 }}>{item.effect}</div>}
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     ) : null;
 
+  /** Kop van één kant binnen Armies/Reminders: kleurstip + rol + naam. */
+  const kantKop = (side: BattleSide, rol: 'Attacker' | 'Defender') => (
+    <div style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
+      <span style={{ width: 10, height: 10, borderRadius: 99, background: side.kleur || TOW.gold, border: `1px solid ${TOW.line}`, flexShrink: 0 }} />
+      <span style={{ fontFamily: display, fontWeight: 700, fontSize: 14, color: TOW.ink }}>
+        {rol}{side.naam ? <span style={{ fontWeight: 400, color: TOW.parchDim }}> · {side.naam}</span> : null}
+      </span>
+    </div>
+  );
+
+  const kanten = [
+    { rol: 'Attacker' as const, side: battle.aanvaller, lijst: battle.aanvLijst, vets: battle.veteranen?.aanvaller,
+      perks: battle.perks?.aanvaller ?? [], items: battle.items?.aanvaller ?? [], roll: battle.rollOff?.aanvaller ?? [] },
+    { rol: 'Defender' as const, side: battle.verdediger, lijst: battle.verdLijst, vets: battle.veteranen?.verdediger,
+      perks: battle.perks?.verdediger ?? [], items: battle.items?.verdediger ?? [], roll: battle.rollOff?.verdediger ?? [] },
+  ];
+  const heeftLegers = kanten.some((k) => k.lijst || vetRijen(k.vets).length > 0);
+  // ROLL-OFF VOOR DE EERSTE BEURT (05-10-2026). De server levert per kant de modifiers en hun bron
+  // (War Hall, Watchtower, Scouting Outpost, Raider's Den); wij tellen alleen op wat er staat.
+  const heeftRollOff = kanten.some((k) => k.roll.length > 0);
+  const heeftReminders = heeftRollOff || kanten.some((k) => k.perks.length > 0 || k.items.length > 0);
+
+  // Secties nummeren we doorlopend: valt Objectives weg (challenge, of geen secondaries), dan volgt
+  // er geen gat tussen 2 en 4.
+  let sectieNr = 0;
+  const volgende = () => ++sectieNr;
+
+  // ── De briefing: kop + vijf secties (05-10-2026) ───────────────────────────────────────────────
+  // Joost: "maak een duidelijker onderscheid tussen battle info, battlefield setup, de armies en de
+  // reminders." Alles stond in één kaart; nu vijf kaarten in de volgorde waarin je ze aan tafel nodig
+  // hebt, elk met een eigen accentkleur zodat je op een telefoon ziet in welk deel je zit.
   const header = (
-    <div style={{ border: `1px solid ${TOW.line}`, borderRadius: 12, background: TOW.panel2, padding: '14px 15px', marginBottom: 18 }}>
-      <div style={{ ...eb, fontSize: 8.5, color: TOW.goldDeep, marginBottom: 8 }}>Campaign battle{typeLabel ? ` · ${typeLabel}` : ''} · {battle.code}{scenarioName ? ` · ${scenarioName}` : ''}</div>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-        <div style={{ flex: 1, minWidth: 0 }}><SideChip side={battle.aanvaller} label="Attacker" /></div>
-        <span style={{ fontFamily: serif, fontStyle: 'italic', fontSize: 13, color: TOW.faint, flexShrink: 0 }}>vs</span>
-        <div style={{ flex: 1, minWidth: 0 }}><SideChip side={battle.verdediger} label="Defender" /></div>
+    <>
+      <div style={{ border: `1px solid ${TOW.line}`, borderRadius: 12, background: TOW.panel2, padding: '14px 15px', marginBottom: 14 }}>
+        <div style={{ ...eb, fontSize: 8.5, color: TOW.goldDeep, marginBottom: 8 }}>Campaign battle{typeLabel ? ` · ${typeLabel}` : ''} · {battle.code}</div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <div style={{ flex: 1, minWidth: 0 }}><SideChip side={battle.aanvaller} label="Attacker" /></div>
+          <span style={{ fontFamily: serif, fontStyle: 'italic', fontSize: 13, color: TOW.faint, flexShrink: 0 }}>vs</span>
+          <div style={{ flex: 1, minWidth: 0 }}><SideChip side={battle.verdediger} label="Defender" /></div>
+        </div>
+        {!battle.beideGelockt && (
+          <div style={{ fontFamily: serif, fontStyle: 'italic', fontSize: 13, color: TOW.muted, marginTop: 10 }}>
+            Waiting for both players to lock their armies in the campaign app…
+          </div>
+        )}
       </div>
-      {!battle.beideGelockt && (
-        <div style={{ fontFamily: serif, fontStyle: 'italic', fontSize: 13, color: TOW.muted, marginTop: 10 }}>
-          Waiting for both players to lock their armies in the campaign app…
-        </div>
-      )}
-      {/* DE BATTLE ZELF: naam als kop, de campagne-zin eronder als ondertitel (Joost 14-08). De naam
-          stond alleen nog als staartje in het kleine eyebrow-regeltje bovenaan; als je hier binnenkomt
-          wil je in één oogopslag zien wélk scenario je speelt. `reason` is de zin van de campagne,
-          niet een parafrase. */}
-      {(scenarioName || reason) && (
-        <div style={{ marginTop: 12 }}>
-          {scenarioName && (
-            <div style={{ fontFamily: display, fontSize: 20, color: TOW.gold, lineHeight: 1.15 }}>{scenarioName}</div>
-          )}
-          {reason && (
-            <div style={{ fontFamily: serif, fontSize: 13.5, color: TOW.parchDim, marginTop: 4 }}>{reason}</div>
-          )}
-          {/* De worp die dit scenario (en bij Battle March ook de objectives) opleverde. Klein, maar
-              het scheelt het verschil tussen "dit is gerold" en "dit is opgelegd" — en `reason`
-              hierboven vertelt in dat tweede geval waarom. */}
-          {rollLine && (
-            <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginTop: 5 }}>{rollLine}</div>
-          )}
-        </div>
-      )}
 
-      {/* DISRUPTIVE WEATHER — geldt de hele game, dus dit is de regel die je aan tafel het vaakst
-          terug moet lezen. Vandaar naam + volledig effect en niet alleen de worp. */}
-      {weer && (
-        <div style={{ marginTop: 10, border: `1px solid ${TOW.line}`, borderRadius: 10, padding: '10px 12px' }}>
-          <div style={{ ...eb, fontSize: 8, color: TOW.muted }}>
-            Disruptive weather{weer.worp ? ` · roll ${weer.worp}` : ''}
+      {/* ── 1 · BATTLE ── wat je speelt: scenario, soort, grootte, rondes, weer. */}
+      <Sectie nr={volgende()} titel="Battle" onder="What you are playing" accent={TOW.gold}>
+        {/* DE BATTLE ZELF: naam als kop, de campagne-zin eronder als ondertitel (Joost 14-08).
+            `reason` is de zin van de campagne, niet een parafrase. */}
+        {scenarioName && (
+          <div style={{ fontFamily: display, fontSize: 21, color: TOW.gold, lineHeight: 1.15 }}>{scenarioName}</div>
+        )}
+        {reason && (
+          <div style={{ fontFamily: serif, fontSize: 13.5, color: TOW.parchDim, marginTop: 4 }}>{reason}</div>
+        )}
+        {feiten.length > 0 && (
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, alignItems: 'center', marginTop: 10 }}>{feiten.map(feit)}</div>
+        )}
+        {/* "5 rounds" is een regel van Battle March: de letterlijke zin staat er direct onder. */}
+        {battle.battleMarch && <div style={{ marginTop: 8 }}><RegelTekst>{BM_GAME_LENGTH}</RegelTekst></div>}
+        {/* De worp die dit scenario (en bij Battle March ook de objectives) opleverde. Klein, maar
+            het scheelt het verschil tussen "dit is gerold" en "dit is opgelegd" — en `reason`
+            hierboven vertelt in dat tweede geval waarom. */}
+        {rollLine && (
+          <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginTop: 9 }}>{rollLine}</div>
+        )}
+
+        {/* DISRUPTIVE WEATHER — geldt de hele game, dus dit is de regel die je aan tafel het vaakst
+            terug moet lezen. Vandaar naam + volledig effect en niet alleen de worp. */}
+        {weer && (
+          <div style={{ marginTop: 10, border: `1px solid ${TOW.line}`, borderRadius: 10, padding: '10px 12px' }}>
+            <div style={{ ...eb, fontSize: 8, color: TOW.muted }}>
+              Disruptive weather{weer.worp ? ` · roll ${weer.worp}` : ''}
+            </div>
+            <div style={{ fontFamily: display, fontSize: 16, color: TOW.gold, marginTop: 3 }}>{weer.naam}</div>
+            {weer.effect && (
+              <div style={{ fontFamily: serif, fontSize: 12.5, color: TOW.parch, lineHeight: 1.45, marginTop: 4 }}>{weer.effect}</div>
+            )}
+            <div style={{ fontFamily: serif, fontSize: 12, color: TOW.muted, marginTop: 4 }}>
+              Rolled before deployment; in play for the whole game.
+            </div>
           </div>
-          <div style={{ fontFamily: display, fontSize: 16, color: TOW.gold, marginTop: 3 }}>{weer.naam}</div>
-          {weer.effect && (
-            <div style={{ fontFamily: serif, fontSize: 12.5, color: TOW.parch, lineHeight: 1.45, marginTop: 4 }}>{weer.effect}</div>
-          )}
-          <div style={{ fontFamily: serif, fontSize: 12, color: TOW.muted, marginTop: 4 }}>
-            Rolled before deployment; in play for the whole game.
+        )}
+
+        {/* Waar het scenario over gaat en wanneer het potje eindigt. Die tekst stond tot 14-08 alleen
+            in de scenario-catalogus van de campagne-app; nu schrijft de campagne 'm mee in de sheet.
+            De `deployNote` staat sinds 05-10 bij de deployment-kaart in Battlefield setup. */}
+        {(blurb || gameEnd) && (
+          <div style={{ marginTop: 10, border: `1px solid ${TOW.line}`, borderRadius: 10, padding: '10px 12px' }}>
+            {blurb && <div style={{ fontFamily: serif, fontSize: 13, color: TOW.parch, lineHeight: 1.45 }}>{blurb}</div>}
+            {gameEnd && <div style={{ fontFamily: serif, fontSize: 12.5, color: TOW.muted, lineHeight: 1.45, marginTop: blurb ? 6 : 0 }}>Game end: {gameEnd}</div>}
           </div>
-        </div>
-      )}
+        )}
 
-      {/* Hoe je opstelt en wanneer het potje eindigt. Die tekst stond tot 14-08 alleen in de
-          scenario-catalogus van de campagne-app; nu schrijft de campagne 'm mee in de battle-sheet,
-          zodat de Companion hem heeft zonder die catalogus na te bouwen. */}
-      {(blurb || deployNote || gameEnd) && (
-        <div style={{ marginTop: 10, border: `1px solid ${TOW.line}`, borderRadius: 10, padding: '10px 12px' }}>
-          {blurb && <div style={{ fontFamily: serif, fontSize: 13, color: TOW.parch, lineHeight: 1.45 }}>{blurb}</div>}
-          {deployNote && <div style={{ fontFamily: serif, fontSize: 12.5, color: TOW.muted, lineHeight: 1.45, marginTop: blurb ? 6 : 0 }}>{deployNote}</div>}
-          {gameEnd && <div style={{ fontFamily: serif, fontSize: 12.5, color: TOW.muted, lineHeight: 1.45, marginTop: 6 }}>Game end: {gameEnd}</div>}
-        </div>
-      )}
+        {/* What the SORT of battle means, where that is not obvious from the rest of the screen. A
+            challenge is the only one that leaves the map alone, so it is the only one that says so —
+            and it says nothing about how the game is scored, because that is identical for every type. */}
+        {typeNote && (
+          <div style={{ fontFamily: serif, fontStyle: 'italic', fontSize: 13, color: TOW.muted, marginTop: 8 }}>{typeNote}</div>
+        )}
+      </Sectie>
 
-      {/* What the SORT of battle means, where that is not obvious from the rest of the screen. A
-          challenge is the only one that leaves the map alone, so it is the only one that says so —
-          and it says nothing about how the game is scored, because that is identical for every type. */}
-      {typeNote && (
-        <div style={{ fontFamily: serif, fontStyle: 'italic', fontSize: 13, color: TOW.muted, marginTop: 8 }}>{typeNote}</div>
-      )}
+      {/* ── 2 · BATTLEFIELD SETUP ── wat je nodig hebt en hoe je het neerzet. */}
+      {heeftSetup && (
+      <Sectie nr={volgende()} titel="Battlefield setup" onder="What goes on the table, in this order" accent={TOW.muted}>
+        {setupStappen.length > 1 && (
+          <ol style={{ margin: 0, paddingLeft: 20, listStyleType: 'decimal', display: 'flex', flexDirection: 'column', gap: 3 }}>
+            {setupStappen.map((s) => (
+              <li key={s} style={{ fontFamily: serif, fontSize: 13, color: TOW.parch, lineHeight: 1.4 }}>{s}</li>
+            ))}
+          </ol>
+        )}
 
-      {/* Battle quests. The campaign calls them `secondaries`; they decide what you are playing FOR, so
-          they belong on a pre-game screen. Slugs are title-cased for reading — the campaign remains the
-          authority on what each one actually requires. */}
-      {/* Geen battle quests bij een CHALLENGE (12-09-2026, Joost): een challenge staat buiten de
-          campagne en levert geen quest-voortgang op. Ze hier tonen wekt de indruk dat je ze kunt
-          halen. */}
-      {battle.type !== 'challenge' && quests.length > 0
-        && chipRow('Battle quests', quests.map((q) => chip(pretty(q))))}
+        {/* DE STREEK. Joost (05-10): "de Plains region is het type hex op de campagnekaart, en dat
+            bepaalt welke terrain pieces er gekozen zijn." Dus de streek staat hier bóven de lijst, met
+            het gebouw op de hex erbij (de server levert de naam; het ruwe id tonen we niet). */}
+        {(groundType || battle.hexGebouw) && (
+          <>
+            {subkop('Region')}
+            <div style={{ fontFamily: display, fontSize: 16, color: TOW.gold }}>
+              {[groundType ? grondLabel(groundType) : null, battle.hexGebouw || null].filter(Boolean).join(' · ')}
+            </div>
+            {groundType && (
+              <div style={{ fontFamily: serif, fontSize: 12.5, color: TOW.muted, lineHeight: 1.45, marginTop: 2 }}>
+                The type of this battle's hex on the campaign map. It decided which terrain pieces are on this table.
+              </div>
+            )}
+          </>
+        )}
 
-      {/* DE DEPLOYMENT-KAART. Alleen als de sheet een uitgerekende `layout` meebrengt — een oudere
-          (v1) battle heeft die niet, en dan blijft dit scherm precies zoals het was. Boven en onder
-          het bord staat wie daar opstelt, zodat je de kaart kunt lezen vanaf jouw kant van de tafel. */}
-      {layout && tableW && tableH && (
-        <div style={{ marginTop: 12 }}>
-          <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginBottom: 5 }}>Deployment</div>
-          <div style={{ fontFamily: serif, fontSize: 12, color: youSide === 'top' ? TOW.goldDeep : TOW.muted, marginBottom: 4 }}>
-            {kantLabel(defenderTop)}
-          </div>
-          <CampaignBoard
-            layout={layout}
-            secLayout={secLayout}
-            tableW={tableW}
-            tableH={tableH}
-            youSide={youSide}
-          />
-          <div style={{ fontFamily: serif, fontSize: 12, color: youSide === 'bottom' ? TOW.goldDeep : TOW.muted, marginTop: 4 }}>
-            {kantLabel(!defenderTop)}
-          </div>
-        </div>
-      )}
-
-      {/* Battlefield als LIJST — de maat, de grond en elk terreinstuk met z'n formaat. Genoeg om het
-          bord te bouwen; de plaatsing doe je aan tafel. */}
-      {(tableLabel || groundType || terrain.length > 0) && chipRow('Battlefield', (
-        <>
-          {tableLabel && chip(tableLabel)}
-          {groundType && chip(grondLabel(groundType))}
-          {terrain.map((t, i) => (
-            <span
-              key={`${t.type}-${i}`}
-              style={{ fontFamily: serif, fontSize: 12, padding: '3px 10px', borderRadius: 999, border: `1px solid ${TOW.line}`, background: TOW.panel2, color: TOW.parchDim }}
-            >
-              {/* GEEN AFMETINGEN (Joost 21-08-2026: "niet de afmetingen van de terrainpieces erbij").
-                  Een gegenereerde 8x5" suggereerde een precisie die er niet is -- aan tafel pak je het
-                  stuk dat je hebt. Het TYPE is de regel (hill/wood/marsh bepaalt de terreinregels), de
-                  maat was decoratie. De coordinaten blijven bestaan voor de getekende kaart. */}
-              {pretty(t.type)}{t.difficult ? ' · difficult' : ''}
-            </span>
-          ))}
-        </>
-      ))}
-
-      {/* HOE JE HET TERREIN NEERZET. Sinds 29-09-2026 de HUISREGEL van Celedon (lib/terrainPlacement.ts),
-          niet meer de rulebook-regel: om de beurt een stuk op het midden van een kwart, de tegenstander
-          gooit scatter + 2D6 en beslist. Samenvatting altijd zichtbaar, de stappen uitklapbaar. */}
-      {terrain.length > 0 && (
-        <div style={{ marginTop: 10, border: `1px solid ${TOW.line}`, borderRadius: 9, padding: '8px 10px', background: TOW.panel2 }}>
-          <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginBottom: 3 }}>Placing the terrain</div>
-          <div style={{ fontFamily: serif, fontSize: 12, color: TOW.parchDim, lineHeight: 1.5 }}>{TERRAIN_PLACEMENT_SHORT}</div>
-          <details style={{ marginTop: 6 }}>
-            <summary style={{ cursor: 'pointer', fontFamily: towFont.display, fontWeight: 600, fontSize: 11.5, color: TOW.goldDeep, listStyle: 'none' }}>
-              How placement works, step by step ›
-            </summary>
-            <ol style={{ margin: '6px 0 0', paddingLeft: 18, display: 'flex', flexDirection: 'column', gap: 5 }}>
-              {TERRAIN_PLACEMENT_STEPS.map((st) => (
-                <li key={st.title} style={{ fontFamily: serif, fontSize: 12, color: TOW.parchDim, lineHeight: 1.45 }}>
-                  <span style={{ fontWeight: 700, color: TOW.parch }}>{st.title}. </span>{st.text}
+        {benodigd.length > 0 && (
+          <>
+            {subkop('Terrain you need')}
+            <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: 4 }}>
+              {benodigd.map((r) => (
+                <li key={`${r.naam}|${r.kenmerk ?? ''}`} style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
+                  <span aria-hidden style={{ width: 10, height: 10, border: `1.5px solid ${TOW.goldDeep}`, borderRadius: 2, flexShrink: 0, transform: 'translateY(1px)' }} />
+                  <span style={{ fontFamily: serif, fontSize: 14, color: TOW.parch }}>
+                    <span style={{ fontVariantNumeric: 'tabular-nums', fontWeight: 700 }}>{r.n} ×</span> {r.naam}
+                    {r.kenmerk ? <span style={{ color: TOW.muted }}> — {r.kenmerk}</span> : null}
+                  </span>
                 </li>
               ))}
-            </ol>
-          </details>
-        </div>
+            </ul>
+            {sterktepunten.map((s) => (
+              <div key={s} style={{ marginTop: 8, fontFamily: serif, fontSize: 12.5, color: TOW.parch, lineHeight: 1.45, borderLeft: `3px solid ${TOW.goldDeep}`, padding: '2px 0 2px 9px' }}>
+                {s}
+              </div>
+            ))}
+          </>
+        )}
+
+        {/* HOE JE HET TERREIN NEERZET. Sinds 29-09-2026 de HUISREGEL van Celedon (lib/terrainPlacement.ts),
+            niet meer de rulebook-regel: om de beurt een stuk op het midden van een kwart, de tegenstander
+            gooit scatter + 2D6 en beslist. Samenvatting altijd zichtbaar, de stappen uitklapbaar. */}
+        {terrain.length > 0 && (
+          <div style={{ marginTop: 12, border: `1px solid ${TOW.line}`, borderRadius: 9, padding: '8px 10px', background: TOW.bg }}>
+            <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginBottom: 3 }}>Placing the terrain</div>
+            <div style={{ fontFamily: serif, fontSize: 12, color: TOW.parchDim, lineHeight: 1.5 }}>{TERRAIN_PLACEMENT_SHORT}</div>
+            <details style={{ marginTop: 6 }}>
+              <summary style={{ cursor: 'pointer', fontFamily: towFont.display, fontWeight: 600, fontSize: 11.5, color: TOW.goldDeep, listStyle: 'none' }}>
+                How placement works, step by step ›
+              </summary>
+              <ol style={{ margin: '6px 0 0', paddingLeft: 18, listStyleType: 'decimal', display: 'flex', flexDirection: 'column', gap: 5 }}>
+                {TERRAIN_PLACEMENT_STEPS.map((st) => (
+                  <li key={st.title} style={{ fontFamily: serif, fontSize: 12, color: TOW.parchDim, lineHeight: 1.45 }}>
+                    <span style={{ fontWeight: 700, color: TOW.parch }}>{st.title}. </span>{st.text}
+                  </li>
+                ))}
+              </ol>
+            </details>
+          </div>
+        )}
+
+        {/* DE DEPLOYMENT-KAART. Alleen als de sheet een uitgerekende `layout` meebrengt — een oudere
+            (v1) battle heeft die niet, en dan blijft alleen de `deployNote` over. Boven en onder het
+            bord staat wie daar opstelt, zodat je de kaart kunt lezen vanaf jouw kant van de tafel. */}
+        {(toontKaart || deployNote) && subkop('Deployment')}
+        {deployNote && (
+          <div style={{ fontFamily: serif, fontSize: 12.5, color: TOW.parchDim, lineHeight: 1.45, marginBottom: toontKaart ? 6 : 0 }}>{deployNote}</div>
+        )}
+        {layout && tableW && tableH && (
+          <div>
+            <div style={{ fontFamily: serif, fontSize: 12, color: youSide === 'top' ? TOW.goldDeep : TOW.muted, marginBottom: 4 }}>
+              {kantLabel(defenderTop)}
+            </div>
+            <CampaignBoard
+              layout={layout}
+              secLayout={secLayout}
+              tableW={tableW}
+              tableH={tableH}
+              youSide={youSide}
+            />
+            <div style={{ fontFamily: serif, fontSize: 12, color: youSide === 'bottom' ? TOW.goldDeep : TOW.muted, marginTop: 4 }}>
+              {kantLabel(!defenderTop)}
+            </div>
+          </div>
+        )}
+      </Sectie>
       )}
 
-      {/* Both line-ups. Shown for both sides on purpose: what the opponent is bringing is exactly what
-          you want to know before deploying, and the campaign has already locked it. */}
-      {renderLijst(battle.aanvLijst, `${battle.aanvaller.naam || 'Attacker'} · list`)}
-      {renderLijst(battle.verdLijst, `${battle.verdediger.naam || 'Defender'} · list`)}
-
-      {/* Campagne-veteranen voor BEIDE kanten, direct onder de line-ups: welke units al XP hebben en
-          wat ze aan abilities meebrengen is deel van wat er tegenover je staat. */}
-      {battle.veteranen && (
-        <>
-          {renderVets(battle.veteranen.aanvaller, `${battle.aanvaller.naam || 'Attacker'} · campaign veterans`)}
-          {renderVets(battle.veteranen.verdediger, `${battle.verdediger.naam || 'Defender'} · campaign veterans`)}
-        </>
+      {/* ── 3 · OBJECTIVES ── wat je wilt veroveren, waar het ligt, en de letterlijke regel. */}
+      {briefings.length > 0 && (
+        <Sectie nr={volgende()} titel="Objectives" onder="What you fight over, and where it goes" accent={TOW.goldBright} tint>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+            {briefings.map((b) => {
+              // "Zoals genummerd op de kaart" alleen als die kaart er ook echt staat en er nummers op zijn.
+              const opKaart = !toontKaart ? ''
+                : b.id.startsWith('bm-troves') && (secLayout?.objectives.length ?? 0) > 0 ? ' As numbered on the map.'
+                : b.id === 'bm-landmark' && secLayout?.specialFeature ? ' Marked ★ on the map.'
+                : '';
+              return (
+                <div key={b.id} style={{ border: `1px solid ${TOW.line}`, borderRadius: 10, background: TOW.panel2, padding: '10px 12px' }}>
+                  <div style={{ fontFamily: display, fontWeight: 700, fontSize: 16, color: TOW.gold }}>{b.title}</div>
+                  {b.what && <div style={{ fontFamily: serif, fontSize: 13, color: TOW.parchDim, marginTop: 2 }}>{b.what}</div>}
+                  {b.placement && (
+                    <div style={{ marginTop: 8, border: `1px solid ${TOW.goldDeep}`, borderRadius: 8, background: 'rgba(184,134,47,0.10)', padding: '7px 10px', fontFamily: serif, fontSize: 13.5, color: TOW.parch, lineHeight: 1.45 }}>
+                      <span style={{ ...eb, fontSize: 8.5, color: TOW.goldDeep, marginRight: 6 }}>Where:</span>
+                      {b.placement}{opKaart}
+                    </div>
+                  )}
+                  {b.short.map((r, i) => (
+                    <div key={`${r.heading}-${i}`}>
+                      {subkop(r.heading, 9)}
+                      <RegelTekst>{r.text}</RegelTekst>
+                    </div>
+                  ))}
+                  {b.table && regelTabel(b.table)}
+                  {/* Een objective die we niet kennen: alleen de titel. Geen letterlijke tekst = geen tekst. */}
+                  {b.short.length === 0 && (
+                    <div style={{ fontFamily: serif, fontStyle: 'italic', fontSize: 12.5, color: TOW.muted, marginTop: 4 }}>
+                      The campaign sets what this objective requires.
+                    </div>
+                  )}
+                  {b.full.length > 0 && (
+                    <details style={{ marginTop: 9 }}>
+                      <summary style={{ cursor: 'pointer', fontFamily: display, fontWeight: 600, fontSize: 11.5, color: TOW.goldDeep, listStyle: 'none' }}>
+                        Full rules ›
+                      </summary>
+                      {b.full.map((r, i) => (
+                        <div key={`${r.heading}-${i}`}>
+                          {/* Twee alinea's onder dezelfde kop: de kop maar één keer. */}
+                          {(i === 0 || b.full[i - 1].heading !== r.heading) && subkop(r.heading, 8)}
+                          <div style={{ marginTop: i > 0 && b.full[i - 1].heading === r.heading ? 6 : 0 }}><RegelTekst>{r.text}</RegelTekst></div>
+                        </div>
+                      ))}
+                      {b.table && regelTabel(b.table)}
+                      {b.source && (
+                        <div style={{ fontFamily: serif, fontStyle: 'italic', fontSize: 11.5, color: TOW.faint, marginTop: 8 }}>Source: {b.source}</div>
+                      )}
+                    </details>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </Sectie>
       )}
 
-      {/* Perks and found items for BOTH sides. This used to show only your own when you were playing,
-          which is backwards for a pre-game briefing: your opponent's perks are the half you cannot look
-          up anywhere else. */}
-      {battle.perks && (
-        <>
-          {renderPerks(battle.perks.aanvaller, `${battle.aanvaller.naam || 'Attacker'} · active perks`)}
-          {renderPerks(battle.perks.verdediger, `${battle.verdediger.naam || 'Defender'} · active perks`)}
-        </>
+      {/* ── 4 · ARMIES ── beide line-ups en de campagne-veteranen, per kant. Bewust ook die van de
+          tegenstander: wat er tegenover je staat wil je zien vóór je opstelt, en de campagne heeft
+          het al gelockt. */}
+      {heeftLegers && (
+        <Sectie nr={volgende()} titel="Armies" onder="Who brings what" accent={TOW.ink}>
+          {kanten.map((k, i) => (
+            <div key={k.rol} style={{ marginTop: i ? 16 : 0, paddingTop: i ? 12 : 0, borderTop: i ? `1px solid ${TOW.line}` : 'none' }}>
+              {kantKop(k.side, k.rol)}
+              {renderLijst(k.lijst, 'Line-up')}
+              {renderVets(k.vets, 'Campaign veterans')}
+            </div>
+          ))}
+        </Sectie>
       )}
-      {battle.items && (
-        <>
-          {renderItems(battle.items.aanvaller, `${battle.aanvaller.naam || 'Attacker'} · magic item`)}
-          {renderItems(battle.items.verdediger, `${battle.verdediger.naam || 'Defender'} · magic item`)}
-        </>
+
+      {/* ── 5 · REMINDERS ── wat je TIJDENS het potje moet onthouden: de roll-off voor de eerste
+          beurt, de perks (ook die van outposts) en de magic items van beide kanten. Die van de
+          tegenstander zijn de helft die je nergens anders kunt opzoeken. */}
+      {heeftReminders && (
+        <Sectie nr={volgende()} titel="Reminders" onder="Keep these in mind during the game" accent={TOW.blood} gestippeld>
+          {heeftRollOff && (
+            <div style={{ border: `1px solid ${TOW.line}`, borderRadius: 10, padding: '9px 11px', background: TOW.bg, marginBottom: 12 }}>
+              <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginBottom: 5 }}>Roll for first turn</div>
+              <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: 5 }}>
+                {kanten.map((k) => (
+                  <li key={k.rol}>
+                    <div style={{ fontFamily: display, fontWeight: 700, fontSize: 13.5, color: TOW.ink }}>
+                      {k.rol}{k.side.naam ? ` · ${k.side.naam}` : ''}:{' '}
+                      <span style={{ color: TOW.goldDeep, fontVariantNumeric: 'tabular-nums' }}>{metTeken(k.roll.reduce((s, r) => s + r.waarde, 0))}</span>
+                    </div>
+                    <div style={{ fontFamily: serif, fontSize: 12.5, color: TOW.parchDim }}>
+                      {k.roll.length ? k.roll.map((r) => `${r.label} ${metTeken(r.waarde)}`).join(' · ') : 'No modifiers'}
+                    </div>
+                  </li>
+                ))}
+              </ul>
+              {battle.battleMarch && <div style={{ marginTop: 8 }}><RegelTekst>{BM_FIRST_TURN}</RegelTekst></div>}
+            </div>
+          )}
+          {kanten.filter((k) => k.perks.length > 0 || k.items.length > 0).map((k, i) => (
+            <div key={k.rol} style={{ marginTop: i ? 14 : 0, paddingTop: i ? 10 : 0, borderTop: i ? `1px solid ${TOW.line}` : 'none' }}>
+              {kantKop(k.side, k.rol)}
+              {renderPerks(k.perks)}
+              {renderItems(k.items)}
+            </div>
+          ))}
+        </Sectie>
       )}
-    </div>
+    </>
   );
 
   // ── Not linked → can't tell which side you are ──
