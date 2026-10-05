@@ -1,9 +1,8 @@
-import { useEffect, useState } from 'react';
 import { useGame } from '../../game';
 import { usePersistentState } from '../../store';
 import { DEFAULT_BATTLE, scenarioById, type BattleSetupState } from '../../lib/battle';
 import { formatDef, normSheet } from '../../lib/battleSheet';
-import { battleByCode } from '../../lib/campaignBattle';
+import { useCampaignBattle } from './useCampaignBattle';
 import { objectivesVoor, type ObjectiveDef } from '../../lib/objectiveVp';
 
 /** Welke objective-VP-posten gelden in deze battle?
@@ -33,27 +32,16 @@ import { objectivesVoor, type ObjectiveDef } from '../../lib/objectiveVp';
  *  blijft vóór het lokale kladblok staan, om dezelfde reden als altijd: die is gedeeld. */
 export function useObjectives(): ObjectiveDef[] {
   const { tracker, code } = useGame();
-  const [scenario, setScenario] = useState<{ scenario: string | null; secondaries: string[] }>(
-    { scenario: null, secondaries: [] },
-  );
-
-  useEffect(() => {
-    if (!code) { setScenario({ scenario: null, secondaries: [] }); return; }
-    let leeft = true;
-    battleByCode(code)
-      .then((b) => {
-        if (!leeft) return;
-        const sc = b?.scenario as Record<string, unknown> | null | undefined;
-        setScenario({
-          scenario: typeof sc?.scenario === 'string' ? sc.scenario : null,
-          secondaries: Array.isArray(sc?.secondaries)
-            ? (sc.secondaries as unknown[]).filter((x): x is string => typeof x === 'string')
-            : [],
-        });
-      })
-      .catch(() => { if (leeft) setScenario({ scenario: null, secondaries: [] }); });
-    return () => { leeft = false; };
-  }, [code]);
+  // De campagne-battle komt uit de gedeelde ophaal-hook (05-10-2026): deze hook draait op twee plekken
+  // tegelijk (objectives-teller en VP-paneel) en vroeg dezelfde battle dus twee keer op.
+  const campagne = useCampaignBattle(code);
+  const sc = campagne?.scenario as Record<string, unknown> | null | undefined;
+  const scenario = {
+    scenario: typeof sc?.scenario === 'string' ? sc.scenario : null,
+    secondaries: Array.isArray(sc?.secondaries)
+      ? (sc.secondaries as unknown[]).filter((x): x is string => typeof x === 'string')
+      : [],
+  };
 
   // Het lokaal gekozen scenario, voor potjes zonder campagne-rij.
   const [lokaal] = usePersistentState<BattleSetupState>('tow:battle', DEFAULT_BATTLE);

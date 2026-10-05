@@ -1,19 +1,24 @@
-import { useState } from 'react';
 import { TOW, towFont, engraved } from '../../design/tow';
-import type { GameWeer } from '../../types';
 
 const eb = engraved as React.CSSProperties;
 const goldGrad = `linear-gradient(180deg, ${TOW.goldBright} 0%, ${TOW.gold} 55%, ${TOW.goldDeep} 100%)`;
 
 const Minus = ({ c }: { c: string }) => (
-  <svg width="16" height="16" viewBox="0 0 18 18"><path d="M4 9h10" stroke={c} strokeWidth="2" strokeLinecap="round" /></svg>
+  <svg width="14" height="14" viewBox="0 0 18 18"><path d="M4 9h10" stroke={c} strokeWidth="2" strokeLinecap="round" /></svg>
 );
 const Plus = ({ c }: { c: string }) => (
-  <svg width="16" height="16" viewBox="0 0 18 18"><path d="M9 4v10M4 9h10" stroke={c} strokeWidth="2" strokeLinecap="round" /></svg>
+  <svg width="14" height="14" viewBox="0 0 18 18"><path d="M9 4v10M4 9h10" stroke={c} strokeWidth="2" strokeLinecap="round" /></svg>
 );
 
-// Shared battle state: Battle Round (1–6, or 1–5 in a Battle March) and Victory Points per side,
-// plus the Disruptive Weather of this battle when there is any.
+/**
+ * Gedeelde battle-stand: de Battle Round (1–6, of 1–5 bij een Battle March) en de Victory Points per kant.
+ *
+ * COMPACT (Joost 05-10-2026): "die balk met battle round en victory points kan wel een stuk compacter,
+ * zodat het eronder past" — "het" is de reminder-balk met het weer, die er nu vast onder staat. Op de
+ * telefoon was dit twee kaarten van elk ruim 100px hoog, terwijl er maar drie getallen in staan. Nu is
+ * het één rij van 40px: de ronde met z'n − en + links, beide VP-standen rechts. Het weer stond hier tot
+ * vandaag als derde kaart onder; dat is verhuisd naar `ReminderStrip`, samen met de campagne-reminders.
+ */
 export function BattleBar({
   round,
   maxRound = 6,
@@ -25,7 +30,6 @@ export function BattleBar({
   editable = true,
   vertical = false,
   leader = null,
-  weer = null,
 }: {
   round: number;
   /** Game length: 6 for Warhammer Battles, 5 for a Battle March (General's Companion p.27). */
@@ -40,25 +44,23 @@ export function BattleBar({
   vertical?: boolean;
   /** Welke kant leidt (voor highlight); null bij gelijkspel. */
   leader?: 'me' | 'opp' | null;
-  /** Het Disruptive Weather van deze battle, of null → dan tonen we niets. */
-  weer?: GameWeer | null;
 }) {
-  // Het weer-effect staat dicht: aan tafel wil je de NAAM zien staan, en de volledige regel alleen op
-  // het moment dat je 'm nodig hebt. Vóór 21-08 stond het weer alleen op het battle-scherm vóór de
-  // start, dus zodra het potje liep was de regel uit beeld terwijl 'ie de hele game geldt.
-  const [weerOpen, setWeerOpen] = useState(false);
   const laatsteRound = round >= maxRound;
   const card: React.CSSProperties = {
-    padding: '10px 12px',
-    borderRadius: 11,
+    height: 40,
+    padding: '0 8px',
+    borderRadius: 10,
     background: TOW.cardLt,
     border: `1px solid ${TOW.line}`,
     boxSizing: 'border-box',
+    display: 'flex',
+    alignItems: 'center',
   };
   const stepBtn = (gold: boolean): React.CSSProperties => ({
-    width: 30,
-    height: 30,
-    borderRadius: 8,
+    width: 28,
+    height: 28,
+    flexShrink: 0,
+    borderRadius: 7,
     cursor: editable ? 'pointer' : 'default',
     border: gold ? 'none' : `1px solid ${TOW.lineStrong}`,
     background: gold ? goldGrad : 'transparent',
@@ -66,88 +68,57 @@ export function BattleBar({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    padding: 0,
   });
 
-  return (
-    // Kolom: de bestaande Round+VP-rij, met de weer-regel eronder.
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-      <div style={vertical ? { display: 'flex', flexDirection: 'column', gap: 8 } : { display: 'grid', gridTemplateColumns: '1fr 1.25fr', gap: 8 }}>
-        {/* Battle Round */}
-        <div style={{ ...card, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8 }}>
-          <div>
-            <div style={{ ...eb, fontSize: 7.5, color: TOW.muted }}>
-              Battle Round{laatsteRound ? ' · last' : ''}
-            </div>
-            <div style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 19, color: TOW.ink }}>
-              {round}
-              <span style={{ fontSize: 11, color: TOW.muted, fontWeight: 600 }}> / {maxRound}</span>
-            </div>
-          </div>
-          <div style={{ display: 'flex', gap: 5 }}>
-            <button onClick={() => editable && onRound(-1)} disabled={!editable} aria-label="Previous round" style={stepBtn(false)}>
-              <Minus c="currentColor" />
-            </button>
-            <button onClick={() => editable && onRound(1)} disabled={!editable} aria-label="Next round" style={stepBtn(true)}>
-              <Plus c="currentColor" />
-            </button>
-          </div>
-        </div>
+  /** Eén VP-stand: naam (kort af als het moet) en het getal. De leider krijgt goud. */
+  const vp = (s: 'me' | 'opp') => {
+    const leads = leader === s;
+    const kleur = leads ? TOW.goldDeep : leader ? TOW.muted : TOW.ink;
+    return (
+      <span style={{ display: 'flex', alignItems: 'baseline', gap: 5, minWidth: 0, flex: 1, justifyContent: s === 'me' ? 'flex-start' : 'flex-end' }}>
+        {s === 'opp' && (
+          <span style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 16, color: kleur, flexShrink: 0 }}>{vpOpp}</span>
+        )}
+        <span style={{ minWidth: 0, fontFamily: towFont.serif, fontSize: 12, color: leader && !leads ? TOW.muted : TOW.parchDim, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+          {s === 'me' ? myName : opponentName}
+        </span>
+        {s === 'me' && (
+          <span style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 16, color: kleur, flexShrink: 0 }}>{vpMe}</span>
+        )}
+      </span>
+    );
+  };
 
-        {/* Victory Points — read-only; waarde komt uit de engine (leader stuurt de highlight). */}
-        <div style={card}>
-          <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', marginBottom: 7 }}>
-            <span style={{ ...eb, fontSize: 7.5, color: TOW.muted }}>Victory Points</span>
-            <span style={{ ...eb, fontSize: 7, color: TOW.faint }}>auto</span>
-          </div>
-          {(['me', 'opp'] as const).map((s, i) => {
-            const isMe = s === 'me';
-            const leads = leader === s;
-            return (
-              <div key={s} style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: i ? 7 : 0 }}>
-                <span style={{ width: 7, height: 7, borderRadius: 99, background: leads ? TOW.goldDeep : TOW.muted, flexShrink: 0 }} />
-                <span style={{ flex: 1, minWidth: 0, fontFamily: towFont.serif, fontSize: 12.5, color: leader && !leads ? TOW.muted : TOW.ink, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                  {isMe ? myName : opponentName}
-                </span>
-                <span style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 15, color: leads ? TOW.goldDeep : leader ? TOW.muted : TOW.ink, minWidth: 15, textAlign: 'right' }}>
-                  {isMe ? vpMe : vpOpp}
-                </span>
-              </div>
-            );
-          })}
-        </div>
+  return (
+    <div style={vertical ? { display: 'flex', flexDirection: 'column', gap: 6 } : { display: 'grid', gridTemplateColumns: 'auto minmax(0, 1fr)', gap: 6 }}>
+      {/* Battle Round: − [ROUND 1/5] + */}
+      <div style={{ ...card, gap: 7, justifyContent: 'space-between' }}>
+        <button onClick={() => editable && onRound(-1)} disabled={!editable} aria-label="Previous round" style={stepBtn(false)}>
+          <Minus c="currentColor" />
+        </button>
+        <span style={{ display: 'flex', alignItems: 'baseline', gap: 5, whiteSpace: 'nowrap' }}>
+          <span style={{ ...eb, fontSize: 7.5, color: TOW.muted }}>{laatsteRound ? 'Last round' : 'Round'}</span>
+          <span style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 17, color: TOW.ink }}>
+            {round}
+            <span style={{ fontSize: 11, color: TOW.muted, fontWeight: 600 }}>/{maxRound}</span>
+          </span>
+        </span>
+        <button onClick={() => editable && onRound(1)} disabled={!editable} aria-label="Next round" style={stepBtn(true)}>
+          <Plus c="currentColor" />
+        </button>
       </div>
 
-      {/* DISRUPTIVE WEATHER — geldt de HELE game (rolled before deployment), dus 'ie hoort in beeld te
-          blijven zolang het potje loopt. Naam altijd zichtbaar, effect één tik weg. */}
-      {weer && (
-        <button
-          onClick={() => setWeerOpen((o) => !o)}
-          style={{ ...card, width: '100%', textAlign: 'left', cursor: weer.effect ? 'pointer' : 'default', border: `1px solid ${TOW.line}` }}
-          aria-expanded={weerOpen}
-        >
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-            <div style={{ flex: 1, minWidth: 0 }}>
-              <div style={{ ...eb, fontSize: 7.5, color: TOW.muted }}>
-                Weather{weer.worp ? ` · roll ${weer.worp}` : ''}
-              </div>
-              <div style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 14, color: TOW.goldDeep, overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>
-                {weer.naam}
-              </div>
-            </div>
-            {weer.effect && (
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={TOW.muted} strokeWidth="2.6" style={{ flexShrink: 0, transform: weerOpen ? 'rotate(90deg)' : 'none', transition: 'transform .18s ease' }} aria-hidden>
-                <path d="M9 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            )}
-          </div>
-          {weerOpen && weer.effect && (
-            <div style={{ fontFamily: towFont.serif, fontSize: 12.5, color: TOW.parchDim, lineHeight: 1.45, marginTop: 6 }}>
-              {weer.effect}
-              <div style={{ ...eb, fontSize: 7, color: TOW.faint, marginTop: 5 }}>In play for the whole game</div>
-            </div>
-          )}
-        </button>
-      )}
+      {/* Victory Points — read-only; de waarde komt uit de engine (leader stuurt de highlight).
+          minWidth 0 + minmax(0, 1fr) hierboven: zonder die twee rekende het grid met de VOLLE breedte
+          van beide namen, en bij "Proef — Vampire Counts" schoof de VP van de tegenstander rechts van
+          het scherm af. Nu krimpt de kaart en korten de namen af; de getallen blijven altijd staan. */}
+      <div style={{ ...card, gap: 8, minWidth: 0, overflow: 'hidden' }} aria-label="Victory points">
+        <span style={{ ...eb, fontSize: 7.5, color: TOW.muted, flexShrink: 0 }}>VP</span>
+        {vp('me')}
+        <span style={{ color: TOW.faint, fontFamily: towFont.serif, fontSize: 12, flexShrink: 0 }}>·</span>
+        {vp('opp')}
+      </div>
     </div>
   );
 }

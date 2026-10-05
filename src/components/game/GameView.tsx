@@ -8,6 +8,8 @@ import { makeTroopTypeLookup, enrichArmyTroopTypes } from '../../lib/troopTypes'
 import { unitTotalStrength } from '../../lib/armyRules';
 import { UnitCard } from './UnitCard';
 import { BattleBar } from './BattleBar';
+import { ReminderStrip, type KantReminders } from './ReminderStrip';
+import { useCampaignBattle } from './useCampaignBattle';
 import { ObjectivesTracker } from './ObjectivesTracker';
 import { OwbInstructions } from './OwbInstructions';
 import { ArmyListPicker } from './ArmyListPicker';
@@ -192,7 +194,29 @@ export function GameView() {
   );
 
   const battleBar = army && (
-    <BattleBar round={tracker.round} maxRound={maxRound} onRound={adjRound} vpMe={vpMe} vpOpp={vpOpp} leader={leader} myName={myName || 'You'} opponentName={opponentName || 'Opponent'} editable={editable} vertical={wide} weer={tracker.weer ?? null} />
+    <BattleBar round={tracker.round} maxRound={maxRound} onRound={adjRound} vpMe={vpMe} vpOpp={vpOpp} leader={leader} myName={myName || 'You'} opponentName={opponentName || 'Opponent'} editable={editable} vertical={wide} />
+  );
+  // DE REMINDER-BALK (Joost 05-10-2026): vast onder de ronde/VP-balk, met het weer en — bij een
+  // campagne-battle — wat beide kanten meebrengen. Host = aanvaller, guest = verdediger: dezelfde
+  // toewijzing als waarmee openCampaignBattle de stoelen vult. Perks, items en de first-turn-bonus
+  // staan niet op de tracker, dus die komen uit de campagne-battle zelf (één keer opgehaald).
+  const campagne = useCampaignBattle(code);
+  const kantVan = (abs: string, naam: string): KantReminders | null => {
+    if (!campagne) return null;
+    const k = abs === 'host' ? 'aanvaller' : 'verdediger';
+    return {
+      naam,
+      perks: campagne.perks?.[k] ?? [],
+      items: campagne.items?.[k] ?? [],
+      rollOff: campagne.rollOff?.[k] ?? [],
+    };
+  };
+  const reminderStrip = army && (
+    <ReminderStrip
+      weer={tracker.weer ?? null}
+      mij={kantVan(meKey, myName || 'You')}
+      tegen={kantVan(absSeat('opp'), opponentName || 'Opponent')}
+    />
   );
   // Objective-VP hoort bij de RONDE, niet bij het eindscherm: troves en landmarks scoren per
   // speler-turn, dus je tikt ze aan zodra die turn voorbij is. Stond dit alleen achter "End
@@ -278,6 +302,7 @@ export function GameView() {
             <CodeBadge code={code} onLeave={leaveGame} waiting={!!(code && seat === 'host' && !opponentArmy)} />
             {sideToggle}
             {battleBar}
+            {reminderStrip}
             {sheetKnop}
             {objectivesPaneel}
             {(myArmy || opponentArmy) && (
@@ -329,7 +354,10 @@ export function GameView() {
       <div style={{ flexShrink: 0, padding: 10 }}>{sideToggle}</div>
 
       {battleBar && (
-        <div style={{ flexShrink: 0, padding: '0 10px 8px', maxWidth: 620, width: '100%', margin: '0 auto', boxSizing: 'border-box' }}>{battleBar}</div>
+        <div style={{ flexShrink: 0, padding: '0 10px 8px', maxWidth: 620, width: '100%', margin: '0 auto', boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 6 }}>
+          {battleBar}
+          {reminderStrip}
+        </div>
       )}
 
       <div style={{ flex: 1, minHeight: 0, overflowY: 'auto', padding: '4px 12px 28px', maxWidth: 620, width: '100%', margin: '0 auto' }}>
