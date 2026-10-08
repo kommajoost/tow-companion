@@ -529,7 +529,7 @@ function AccountSection({
         // ── Signed out ──
         <>
           <div style={{ ...body, marginBottom: 12 }}>
-            Sign in with the same account as your Grensvorsten campaign. Optional — the army builder works without an account; this just links the companion to your player profile.
+            Sign in with the same account as your Isle of Celedon campaign. Optional — the army builder works without an account; this just links the companion to your player profile.
           </div>
 
           {/* Sign in / Register toggle — mirrors the Appearance toggle. */}

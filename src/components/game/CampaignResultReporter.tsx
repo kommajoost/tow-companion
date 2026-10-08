@@ -390,7 +390,7 @@ export function CampaignResultReporter({ embedded = false }: { embedded?: boolea
       <div style={formWrap}>
         <div style={{ ...eb, fontSize: 8.5, color: TOW.goldDeep, marginBottom: 4 }}>Result reported</div>
         <div style={{ fontFamily: serif, fontSize: 13.5, color: TOW.ink }}>
-          {uitkomst?.verwerkt ? 'Recorded by the campaign.' : 'Reported — the campaign grensmaster approves it.'}
+          {uitkomst?.verwerkt ? 'Recorded by the campaign.' : 'Reported to the campaign.'}
         </div>
         {fame && (
           <div style={{ marginTop: 8 }}>
@@ -416,7 +416,7 @@ export function CampaignResultReporter({ embedded = false }: { embedded?: boolea
       <button onClick={() => setOpen(true)} style={{ ...box, width: '100%', textAlign: 'left', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 10 }}>
         <span style={{ flex: 1, minWidth: 0 }}>
           <span style={{ display: 'block', fontFamily: display, fontWeight: 700, fontSize: 14, color: TOW.goldDeep }}>Report result to campaign</span>
-          <span style={{ display: 'block', fontFamily: serif, fontSize: 12, color: TOW.muted }}>Send winner, VP and casualties back to De Grensvorsten — fill in the roster first: losses, Fleeing, Removed and Kills all count</span>
+          <span style={{ display: 'block', fontFamily: serif, fontSize: 12, color: TOW.muted }}>Send winner, VP and casualties back to the Isle of Celedon campaign — fill in the roster first: losses, Fleeing, Removed and Kills all count</span>
         </span>
         <span aria-hidden style={{ color: TOW.goldDeep, fontSize: 18, flexShrink: 0 }}>›</span>
       </button>
@@ -549,7 +549,7 @@ export function CampaignResultReporter({ embedded = false }: { embedded?: boolea
             </div>
           ))}
           <div style={{ fontFamily: serif, fontStyle: 'italic', fontSize: 11.5, color: TOW.muted, marginBottom: 12 }}>
-            +1 XP for surviving above 50% strength, +1 per kill/trophy — applied to both armies’ campaign veterans once the grensmaster approves.
+            +1 XP for surviving above 50% strength, +1 per kill/trophy — applied to both armies’ campaign veterans when the campaign records the result.
           </div>
         </>
       )}
