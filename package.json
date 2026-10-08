@@ -1,7 +1,7 @@
 {
   "name": "tow-companion",
   "private": true,
-  "version": "0.1.413",
+  "version": "0.1.414",
   "type": "module",
   "description": "Warhammer: The Old World turn companion - mobile PWA",
   "scripts": {
@@ -34,7 +34,8 @@
     "build:test": "vite build --mode test",
     "pdf-preview": "node scripts/pdf-preview.mjs",
     "test:statlines": "node --test scripts/tests/statlines.test.cjs",
-    "test:battle-march-objectives": "node --test scripts/tests/battle-march-objectives.test.cjs"
+    "test:battle-march-objectives": "node --test scripts/tests/battle-march-objectives.test.cjs",
+    "test:veteraan-stats": "node --test scripts/tests/veteraan-stats.test.cjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.106.2",

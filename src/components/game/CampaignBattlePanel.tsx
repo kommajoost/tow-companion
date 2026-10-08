@@ -7,6 +7,9 @@ import { ArmyListPicker } from './ArmyListPicker';
 import { CampaignBoard, defenderIsTop, parseSheetLayout, parseSheetSecLayout } from './CampaignBoard';
 import type { Army } from '../../types';
 import { isTestBattleCode } from '../../lib/testBattle';
+import { useStatIndex } from '../../lib/useStatIndex';
+import { overlayStatsFor } from '../../lib/overlays';
+import { pasVeteraanToe, veteraanBonussen, celDelta, BETER_KLEUR, BETER_ACHTERGROND, type StatCel } from '../../lib/veteraanStats';
 import { isVrijPotjeCode } from '../../lib/battleCode';
 import { TERRAIN_PLACEMENT_SHORT, TERRAIN_PLACEMENT_STEPS } from '../../lib/terrainPlacement';
 import { objectiveBriefings, BM_FIRST_TURN, BM_GAME_LENGTH, type ObjectiveBriefing } from '../../lib/battleMarchObjectives';
@@ -211,6 +214,8 @@ function LijstBlok({ lijst, heading, open: openInit = true }: {
 export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismiss: () => void }) {
   const { openCampaignBattle, busy, error } = useGame();
   const [battle, setBattle] = useState<CampaignBattle | null>(null);
+  // Statline-index (gedeeld, één fetch per sessie): voor de basiswaarde onder een veteraan-bonus.
+  const statIdx = useStatIndex();
   const [loading, setLoading] = useState(true);
   const [loadErr, setLoadErr] = useState<string | null>(null);
   const [name, setName] = useState('');
@@ -574,7 +579,27 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
    *  Per unit: naam, XP en de gewonnen abilities (effect als tooltip) + scars. Units zonder XP,
    *  abilities én scars laten we weg: dat is een verse unit en die heeft hier niets te melden.
    *  De server vult dit veld alleen als beide legers gelockt zijn, dus beide kanten mogen. */
-  const renderVets = (vets: VetUnit[] | undefined, heading: string) => {
+  // VETERANEN-STATS VOORAF (08-10-2026, Joost): wat een ability aan de statline verandert, voor beide
+  // kanten, vóór je opstelt. Basis uit de statline-index via de catalogusnaam van de line-up-regel met
+  // dezelfde uid; zonder statline (oude battle, onbekende naam) alleen de bonus zelf ("Ld +1").
+  const vetStats = (v: VetUnit, lijst: BattleLijstSamenvatting | null | undefined): { k: string; tekst: string; titel: string }[] => {
+    const bonus = veteraanBonussen(v.abilities);
+    const sleutels = Object.keys(bonus);
+    if (!sleutels.length) return [];
+    const regel = lijst?.units.find((u) => u.uid && u.uid === v.unitId);
+    const rows = statIdx && regel?.datasheet ? overlayStatsFor(statIdx, regel.datasheet, null, lijst?.leger) : [];
+    const rij = rows.find((r) => /^\d+$/.test(String(r.Ld ?? '').trim()));
+    if (rij) {
+      const cellen = pasVeteraanToe(Object.entries(rij).filter(([k]) => k !== 'Name').map(([k, val]): StatCel => ({ k, v: String(val ?? '') })), v.abilities);
+      return cellen.filter((c) => celDelta(c) != null).map((c) => ({ k: c.k, tekst: `${c.k} ${c.v} (+${celDelta(c)})`, titel: `${c.k} ${c.base} → ${c.v}: ${c.source}` }));
+    }
+    return sleutels.map((k) => {
+      const naam = k === 'ld' ? 'Ld' : k.toUpperCase();
+      return { k: naam, tekst: `${naam} +${bonus[k].n}`, titel: bonus[k].bron.join(' + ') };
+    });
+  };
+
+  const renderVets = (vets: VetUnit[] | undefined, heading: string, lijst?: BattleLijstSamenvatting | null) => {
     const rijen = vetRijen(vets);
     if (rijen.length === 0) return null;
     return (
@@ -607,6 +632,15 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
                   </span>
                 );
               })}
+              {vetStats(v, lijst).map((c) => (
+                <span
+                  key={c.k}
+                  title={c.titel}
+                  style={{ fontFamily: serif, fontSize: 11.5, fontWeight: 700, padding: '2px 8px', borderRadius: 999, border: `1px solid ${BETER_KLEUR}`, background: BETER_ACHTERGROND, color: BETER_KLEUR, fontVariantNumeric: 'tabular-nums', cursor: 'help' }}
+                >
+                  {c.tekst}
+                </span>
+              ))}
               {v.littekens > 0 && (
                 <span
                   title="Battle scars carried from earlier Acts"
@@ -937,7 +971,7 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
             <div key={k.rol} style={{ marginTop: i ? 16 : 0, paddingTop: i ? 12 : 0, borderTop: i ? `1px solid ${TOW.line}` : 'none' }}>
               {kantKop(k.side, k.rol)}
               {renderLijst(k.lijst, 'Line-up')}
-              {renderVets(k.vets, 'Campaign veterans')}
+              {renderVets(k.vets, 'Campaign veterans', k.lijst)}
             </div>
           ))}
         </Sectie>

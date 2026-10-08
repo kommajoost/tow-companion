@@ -26,6 +26,9 @@ import { normSheet } from '../../lib/battleSheet';
 import { ArmyListPicker } from './ArmyListPicker';
 import { BattleSheetView } from './BattleSheetView';
 import type { Army } from '../../types';
+import { profielenMetVeteraan } from '../../lib/veteraanStats';
+import { abilityLabel, abilityEffect } from '../../lib/campaignBattle';
+import { unitToonRegel } from '../../lib/unitNaam';
 
 const eb = engraved as React.CSSProperties;
 const display = towFont.display;
@@ -60,6 +63,44 @@ function SpelerRij({ naam, leger, jij, wachten }: {
               : 'no army yet'}
         </div>
       </div>
+    </div>
+  );
+}
+
+/** VETERANEN VOORAF (08-10-2026, Joost: "ik wil de aangepaste stats van units vooraf te zien krijgen,
+ *  ook van je tegenstander"). Per leger de units met een veteran ability: de characteristics die
+ *  erdoor veranderen in goud ("Ld 9 (+1)"), de overige abilities als tekst. Zelfde rekenregel als de
+ *  statline in de game (lib/veteraanStats.ts). Niets te melden = geen blok. */
+function VeteranenVooraf({ leger }: { leger: Army | null }): React.JSX.Element | null {
+  const rijen = (leger?.units ?? []).filter((u) => (u.veteraan?.abilities?.length ?? 0) > 0).map((u) => {
+    const oud = u.profiles ?? [];
+    const nieuw = profielenMetVeteraan(oud, u.veteraan!.abilities);
+    // Alleen wat de veteraan-regel veranderde (een mount-bonus stond er al): vergelijk voor en na, per
+    // characteristic de eerste rij (de unit zelf; de champion telt hetzelfde).
+    const cellen = new Map<string, { v: string; base: string }>();
+    nieuw.forEach((p, pi) => p.stats.forEach((c, ci) => {
+      const voor = oud[pi]?.stats[ci]?.v;
+      if (voor != null && voor !== c.v && !cellen.has(c.k)) cellen.set(c.k, { v: c.v, base: voor });
+    }));
+    const overig = u.veteraan!.abilities.filter((a) => a.t !== 'grizzled' && !(a.t === 'weapon_master' && a.keuze));
+    return { id: u.id, naam: unitToonRegel(u), cellen: [...cellen.entries()], overig };
+  });
+  if (!rijen.length) return null;
+  return (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 4, margin: '6px 0 2px 18px' }}>
+      {rijen.map((r) => (
+        <div key={r.id} style={{ fontFamily: serif, fontSize: 12.5, color: TOW.parchDim, lineHeight: 1.35 }}>
+          <span style={{ color: TOW.ink }}>{r.naam}</span>
+          {r.cellen.map(([k, c]) => (
+            <span key={k} title={`${k} ${c.base} → ${c.v}`} style={{ marginLeft: 8, fontWeight: 700, color: TOW.goldDeep, background: 'rgba(184,134,47,0.10)', borderRadius: 4, padding: '0 4px', whiteSpace: 'nowrap' }}>
+              {k} {c.v} (+{Number(c.v) - Number(c.base)})
+            </span>
+          ))}
+          {r.overig.map((a, i) => (
+            <span key={i} title={abilityEffect(a.t)} style={{ marginLeft: 8, color: TOW.muted, fontStyle: 'italic', whiteSpace: 'nowrap' }}>{abilityLabel(a.t)}</span>
+          ))}
+        </div>
+      ))}
     </div>
   );
 }
@@ -133,9 +174,11 @@ export function GameLobby({ onEditSheet }: { onEditSheet?: () => void } = {}): R
       <div style={{ ...eb, fontSize: 8.5, color: TOW.muted, marginBottom: 8 }}>Players</div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 7 }}>
         <SpelerRij naam={myName} leger={myArmy} jij />
+        <VeteranenVooraf leger={myArmy} />
         {/* In solo speel je beide kanten op dit apparaat: er valt niemand te verwachten, dus die kant
             is nooit "waiting". Online wél, tot de ander de code invoert. */}
         <SpelerRij naam={opponentName} leger={opponentArmy} jij={false} wachten={!solo && !opponentName} />
+        <VeteranenVooraf leger={opponentArmy} />
       </div>
     </div>
   );

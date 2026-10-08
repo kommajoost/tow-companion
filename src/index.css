@@ -19,6 +19,9 @@
   --tow-gold: #9c2b2b;
   --tow-gold-bright: #bb463e;
   --tow-gold-deep: #7e2020;
+  /* Een characteristic die beter is dan de basis (veteraan-ability, mount-bonus), 08-10-2026. */
+  --tow-beter: #2e7d32;
+  --tow-beter-bg: rgba(46, 125, 50, 0.13);
   --tow-parch: #1a1714;
   --tow-parch-dim: #403c36;
   --tow-muted: #6f6a62;
@@ -71,6 +74,8 @@
   --tow-gold: #cda64f;
   --tow-gold-bright: #e6c878;
   --tow-gold-deep: #b08a37;
+  --tow-beter: #86d08a;
+  --tow-beter-bg: rgba(134, 208, 138, 0.14);
   --tow-parch: #eef2f4;
   --tow-parch-dim: #c4cfd6;
   --tow-muted: #94a1aa;

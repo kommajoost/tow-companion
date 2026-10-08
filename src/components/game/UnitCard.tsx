@@ -17,6 +17,7 @@ import { troopTypeName } from '../../lib/troopTypes';
 import { statSleutels } from '../../lib/statSleutel';
 import { overlayStatsFor } from '../../lib/overlays';
 import { STAT_COLS } from '../../lib/builderToArmy';
+import { profielenMetVeteraan, celDelta, BETER_KLEUR, BETER_ACHTERGROND } from '../../lib/veteraanStats';
 
 const eb = engraved as React.CSSProperties;
 
@@ -79,7 +80,7 @@ export function UnitCard({
   // Wie startte vóór de statline-fix (0.1.406, o.a. de Empire-Mortar) heeft daarin een unit zonder
   // profiel. Vul dat hier aan uit de statline-index, zodat ook een lopende game de stats toont.
   const statIdx = useStatIndex();
-  const unit = useMemo<ArmyUnit>(() => {
+  const hersteld = useMemo<ArmyUnit>(() => {
     if (unitIn.profiles?.length || !statIdx) return unitIn;
     const rows = overlayStatsFor(statIdx, unitIn.statNaam ?? unitIn.datasheet ?? unitIn.name, null, faction);
     if (!rows.length) return unitIn;
@@ -87,6 +88,15 @@ export function UnitCard({
     const tt = unitIn.troopType ?? troopTypeName(ttSleutel ? statIdx[ttSleutel]?.troopType : undefined);
     return { ...unitIn, ...(tt ? { troopType: tt } : {}), profiles: rows.map((r) => ({ label: r.Name, stats: STAT_COLS.map((k) => ({ k, v: r[k] ?? '-' })) })) };
   }, [unitIn, statIdx, faction]);
+  // 08-10-2026: veteran abilities die een characteristic veranderen (Grizzled +1 Ld, Weapon Master
+  // +1 WS/BS) zitten nu IN de statline, in goud, en dus ook in de gevechtshulp (CombatStats krijgt
+  // deze unit). Bij het renderen, nooit in het opgeslagen leger: zo kan het niet dubbel tellen.
+  const unit = useMemo<ArmyUnit>(
+    () => (hersteld.veteraan?.abilities?.length
+      ? { ...hersteld, profiles: profielenMetVeteraan(hersteld.profiles, hersteld.veteraan.abilities) }
+      : hersteld),
+    [hersteld],
+  );
   const toon = unitToon(unit);
   const { rules } = useData();
   const { openRule } = useUI();
@@ -205,20 +215,23 @@ export function UnitCard({
               </thead>
               <tbody>
                 <tr>
-                  {p.stats.map((s, i) => (
+                  {p.stats.map((s, i) => {
+                    const d = celDelta(s);
+                    return (
                     <td
                       key={i}
                       title={s.modified ? `${s.base} ${s.source ? `+ ${s.source}` : 'modified'}` : undefined}
                       style={{
                         textAlign: 'center',
-                        color: s.modified ? TOW.goldDeep : TOW.ink,
+                        color: d != null && d > 0 ? BETER_KLEUR : s.modified ? TOW.goldDeep : TOW.ink,
                         fontWeight: s.modified ? 700 : 400,
-                        background: s.modified ? 'rgba(184,134,47,0.10)' : 'transparent',
+                        background: d != null && d > 0 ? BETER_ACHTERGROND : s.modified ? 'rgba(184,134,47,0.10)' : 'transparent',
                         border: `1px solid ${TOW.line}`,
                         padding: '3px 2px',
                       }}
-                    >{s.v}</td>
-                  ))}
+                    >{s.v}{d != null && <sup style={{ fontSize: 8, marginLeft: 1 }}>{d > 0 ? `+${d}` : d}</sup>}</td>
+                    );
+                  })}
                 </tr>
               </tbody>
             </table>

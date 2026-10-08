@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { celDelta, BETER_KLEUR, BETER_ACHTERGROND } from '../../lib/veteraanStats';
 import { useData } from '../../data';
 import { useUI } from '../../state';
 import { TOW, towFont, engraved } from '../../design/tow';
@@ -94,10 +95,10 @@ export function CombatStats({ unit, onProfileInfo }: { unit: ArmyUnit; onProfile
   // One profile row. In loadout mode an AP column is inserted after S; every wielder profile (each
   // model, incl. the champion) shows the chosen weapon's effective S/AP (from its OWN base S) and
   // Attacks; mounts/steeds keep their base S (natural attacks, no AP). Off = verbatim base profile.
-  const profileTable = (stats: { k: string; v: string; modified?: boolean }[]) => {
+  const profileTable = (stats: { k: string; v: string; modified?: boolean; base?: string; source?: string }[]) => {
     const sBase = statValue(stats, 'S');
     const e = on && mw && isWielder(stats) ? effectiveMelee(sBase ?? 0, mw, charge) : null;
-    const cols: { k: string; v: string; hl: boolean }[] = [];
+    const cols: { k: string; v: string; hl: boolean; title?: string; d?: number | null }[] = [];
     for (const st of stats) {
       const isS = st.k.toUpperCase() === 'S';
       const isA = st.k.toUpperCase() === 'A';
@@ -111,13 +112,13 @@ export function CombatStats({ unit, onProfileInfo }: { unit: ArmyUnit; onProfile
         const baseA = parseInt(st.v.match(/\d+/)?.[0] ?? '', 10);
         cols.push({ k: 'A', v: Number.isFinite(baseA) ? String(baseA + e.aMod) : st.v, hl: true });
       } else {
-        cols.push({ k: st.k, v: st.v, hl: !!st.modified });
+        cols.push({ k: st.k, v: st.v, hl: !!st.modified, title: st.modified ? `${st.base} + ${st.source ?? 'modified'}` : undefined, d: celDelta(st) });
       }
     }
     return (
       <table style={{ borderCollapse: 'collapse', tableLayout: 'fixed', width: '100%', minWidth: on ? 300 : 280, fontSize: 12.5, fontFamily: towFont.serif }}>
         <thead><tr>{cols.map((c, i) => <th key={i} style={th}>{c.k}</th>)}</tr></thead>
-        <tbody><tr>{cols.map((c, i) => <td key={i} style={td(c.hl)}>{c.v}</td>)}</tr></tbody>
+        <tbody><tr>{cols.map((c, i) => <td key={i} style={c.d != null && c.d > 0 ? { ...td(true), color: BETER_KLEUR, background: BETER_ACHTERGROND } : td(c.hl)} title={c.title}>{c.v}{c.d != null && <sup style={{ fontSize: 8, marginLeft: 1 }}>{c.d > 0 ? `+${c.d}` : c.d}</sup>}</td>)}</tr></tbody>
       </table>
     );
   };
