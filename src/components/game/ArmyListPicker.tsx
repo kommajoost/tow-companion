@@ -5,7 +5,7 @@ import { builderListToArmy, listTotal, type MagicText, type MountText } from '..
 import { makeTroopTypeLookup } from '../../lib/troopTypes';
 import { compName } from '../../lib/armies';
 import {
-  applyOverlayItems, catalogueFor, applyOverlayMagicText, applyOverlayMountText, applyOverlayStatIndex, hasOverlay, isOverlay,
+  itemsFor, catalogueFor, applyOverlayMagicText, applyOverlayMountText, applyOverlayStatIndex, hasOverlay, isOverlay,
   overlayStatsFor, OVERLAY_FILES, type CompositionOverlay,
 } from '../../lib/overlays';
 import type { BuilderList, OwbArmy, MagicItemsData } from '../../lib/owbBuilder';
@@ -107,7 +107,7 @@ export function ArmyListPicker({ onPick, label, lockedListName = null, campaignP
     const overlay = hasOverlay(l.composition) ? overlays[l.composition] : null;
     if (hasOverlay(l.composition) && !overlay) return null;
     const cat = catalogueFor(raw, l.composition, overlay);
-    const itemPool = itemsData && overlay ? applyOverlayItems(itemsData, overlay) : itemsData;
+    const itemPool = itemsData ? itemsFor(itemsData, l.composition, overlay) : itemsData;
     const resolvedIndex = overlay ? applyOverlayStatIndex(statIdx, overlay) : statIdx;
     const statsFor = (name: string): StatRow[] => overlayStatsFor(statIdx, name, overlay);
     const troopTypeFor = makeTroopTypeLookup(resolvedIndex);
@@ -193,7 +193,7 @@ export function ArmyListPicker({ onPick, label, lockedListName = null, campaignP
           const raw = catalogues[l.army] ?? null;
           const overlay = hasOverlay(l.composition) ? overlays[l.composition] : null;
           const cat = raw ? catalogueFor(raw, l.composition, overlay) : raw;
-          const itemPool = itemsData && overlay ? applyOverlayItems(itemsData, overlay) : itemsData;
+          const itemPool = itemsData ? itemsFor(itemsData, l.composition, overlay) : itemsData;
           const total = cat ? listTotal(l, cat, itemPool ?? undefined) : null;
           const ready = !!cat && (!hasOverlay(l.composition) || !!overlay);
           const primary = solo; // the locked list gets a gold "open me" accent

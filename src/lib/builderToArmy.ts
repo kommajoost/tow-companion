@@ -4,7 +4,7 @@
 // profiles) directly from the builder entries + the OWB catalogue.
 
 import type { Army, ArmyUnit, UnitProfile } from '../types';
-import { CATEGORIES, campaignUnitId, findUnit, entryPoints, loadoutLabels, magicItemId, selectedMagicItems, selectedMountIndex, selectedOptions, validate, type BuilderList, type Category, type OwbArmy, type OwbUnit, type MagicItemsData } from './owbBuilder';
+import { CATEGORIES, campaignUnitId, detachmentLabel, findUnit, entryPoints, loadoutLabels, withDetachmentLabel, magicItemId, selectedMagicItems, selectedMountIndex, selectedOptions, validate, type BuilderList, type Category, type OwbArmy, type OwbUnit, type MagicItemsData } from './owbBuilder';
 import { applyMountStatModifiers, mountStatModifiers } from './mountModifiers';
 
 /** Per-item flavour + rules text snapshot (public/owb/magic-item-text.json), keyed by item slug. */
@@ -189,7 +189,8 @@ export function builderListToArmy(
       troopType: opts.troopTypeFor?.(u.bronNaam ?? u.name_en),
       // Full effective loadout (base weapons + upgrades + magic), so the game resolves shooting/melee
       // profiles the same way it does for a pasted OWB list — not just the non-default upgrades.
-      options: loadoutLabels(u, e, opts.itemsData).filter(keepLoadout),
+      // "Detachment" -> "Detachment of <regiment>" (16-10-2026): het spel en de PDF lezen deze regel.
+      options: withDetachmentLabel(loadoutLabels(u, e, opts.itemsData).filter(keepLoadout), detachmentLabel(list.entries, e, getUnit)),
       specialRules,
       profiles,
       // Lore/spell choices made in the builder (Wizards) → carried into the game Army.

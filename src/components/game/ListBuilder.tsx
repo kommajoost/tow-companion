@@ -20,7 +20,7 @@ import { useBackClose } from '../../lib/backStack';
 import { useData } from '../../data';
 import { getRuleIndex, resolveOptionSlug, resolveRuleSlug, splitCompoundLabel } from '../../lib/armyRules';
 import { useUI } from '../../state';
-import { applyOverlayItems, catalogueFor, applyOverlayMagicText, applyOverlayMountText, applyOverlayStatIndex, hasOverlay, isOverlay, overlayCompsFor, overlayStatsFor, OVERLAY_FILES, type CompositionOverlay, type MountProfileText } from '../../lib/overlays';
+import { itemsFor, catalogueFor, applyOverlayMagicText, applyOverlayMountText, applyOverlayStatIndex, hasOverlay, isOverlay, overlayCompsFor, overlayStatsFor, OVERLAY_FILES, type CompositionOverlay, type MountProfileText } from '../../lib/overlays';
 import { InfoSheet, type InfoSheetData } from './InfoSheet';
 import type { MagicText } from '../../lib/builderToArmy';
 import { magicItemRules } from '../../lib/builderToArmy';
@@ -292,8 +292,10 @@ export function ListBuilder() {
     if (hasOverlay(l.composition)) {
       ov = overlays[l.composition] ?? null;
       if (!ov || ov.baseArmy !== l.army) return null; // overlay nodig maar (nog) niet bruikbaar
-      items = applyOverlayItems(itemsData, ov);
     }
+    // itemsFor (16-10-2026): overlay plus de compositie-tag van de items -- dit getal gaat als
+    // computedPoints naar de campagne en moet dus exact de builder volgen.
+    items = itemsFor(itemsData, l.composition, ov);
     c = catalogueFor(cat, l.composition, ov);
     // findUnit, niet c[k].find (22-09-2026). Dit was de ACHTSTE lookup, en de gevaarlijkste: hij
     // schrijft `computedPoints`, en dat veld is wat de CAMPAGNE-server als puntensom leest
@@ -540,9 +542,12 @@ export function ListBuilder() {
     return { ...basis, mercenaries: [...bestaand, ...extra] };
   }, [rawActiveCatalogue, activeOverlay, activeArmySlug, mercUnits]);
   const activeItemsData = useMemo(() => {
-    if (!itemsData || !activeOverlay || activeOverlay.baseArmy !== activeArmySlug) return itemsData;
-    return applyOverlayItems(itemsData, activeOverlay);
-  }, [itemsData, activeOverlay, activeArmySlug]);
+    if (!itemsData) return itemsData;
+    const bruikbaar = activeOverlay && activeOverlay.baseArmy === activeArmySlug ? activeOverlay : null;
+    // Ook ZONDER overlay door de compositie-filter (16-10-2026): een Grand Army Tomb King krijgt de
+    // Royal Mantle van de Nehekharan Royal Hosts niet meer aangeboden.
+    return activeComp ? itemsFor(itemsData, activeComp, bruikbaar) : itemsData;
+  }, [itemsData, activeOverlay, activeArmySlug, activeComp]);
   const activeStatIdx = useMemo(
     () => statIdx ? applyOverlayStatIndex(statIdx, activeOverlay) : statIdx,
     [statIdx, activeOverlay],

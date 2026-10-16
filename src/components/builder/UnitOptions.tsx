@@ -37,7 +37,8 @@ import { TOW, towFont, engraved } from '../../design/tow';
 import { useBackClose } from '../../lib/backStack';
 import { makeTroopTypeLookup } from '../../lib/troopTypes';
 import {
-  DEFAULT_MAGIC_BUDGET, canonicalMagicOptions, entryPoints, magicCategories, magicCategoriesInRule, magicGroupSpent, magicItemId, magicItemTakenElsewhere,
+  DEFAULT_MAGIC_BUDGET, canonicalMagicOptions, detachmentOptionKey, detachmentParents, detachmentStatus, dropNotWith,
+  entryMinimum, entryPoints, isDetachmentEntry, magicCategories, magicCategoriesForPicker, magicGroupSpent, magicItemId, magicItemTakenElsewhere, setDetachment,
   magicWouldExceed, radioSelected, selectedMagicKeys, selectedMountIndex, setExclusiveSubOption,
   setStackCount, stackMax, stackTaken, subOptionGroups,
   toggleMagicItem, toggleOption, toggleSubOption, unitBlocks, unitCategoryFor, validate,
@@ -230,10 +231,13 @@ const BTN_RESET: React.CSSProperties = {
  * PRICE keeps full contrast, because the whole point of showing a blocked item is that you can see
  * what it would cost. A chosen row that costs points gets the White row background.
  */
-function OptionRow({ kind, on, label, sub, delta, deltaMuted, blocked, reason, onToggle, onInfo, infoTitle, dense }: {
+function OptionRow({ kind, on, label, sub, delta, deltaMuted, blocked, reason, onToggle, onInfo, infoTitle, dense, locked }: {
   kind: 'radio' | 'toggle'; on: boolean; label: string; sub?: string;
   delta: string; deltaMuted?: boolean; blocked?: boolean; reason?: string;
   onToggle: () => void; onInfo?: () => void; infoTitle?: string; dense?: boolean;
+  /** Vaste uitrusting (16-10-2026): aangevinkt en niet uit te zetten, maar NIET gedimd -- het is geen
+   *  verboden keuze maar iets wat de unit gewoon heeft. */
+  locked?: boolean;
 }): React.JSX.Element {
   const dim = blocked ? { opacity: 0.42 } : undefined;
   return (
@@ -244,7 +248,7 @@ function OptionRow({ kind, on, label, sub, delta, deltaMuted, blocked, reason, o
     }}>
       <button
         type="button"
-        disabled={blocked}
+        disabled={blocked || locked}
         onClick={onToggle}
         aria-pressed={on}
         style={{
@@ -253,7 +257,7 @@ function OptionRow({ kind, on, label, sub, delta, deltaMuted, blocked, reason, o
           // rows for its height and everything worth comparing was a scroll away.
           ...BTN_RESET, flex: 1, minWidth: 0,
           minHeight: dense ? 32 : 46, padding: dense ? '4px 0' : '9px 0',
-          display: 'flex', alignItems: 'center', gap: dense ? 7 : 10, cursor: blocked ? 'default' : 'pointer',
+          display: 'flex', alignItems: 'center', gap: dense ? 7 : 10, cursor: blocked || locked ? 'default' : 'pointer',
         }}
       >
         <span style={dim}><Indicator kind={kind} on={on} /></span>
@@ -587,19 +591,30 @@ export function UnitOptions(props: {
       // niet ONDER het aantal van je vorige inzending komen. Die regel bestaat niet meer (minor
       // adjustments: tot 50 punten krimp per Act, over alle units samen), dus alleen het datasheet
       // begrenst nog. Het budget wordt gecontroleerd op lijstniveau, niet hier.
-      const min = u?.minimum ?? 1;
+      // Een detachment heeft een eigen minimum (5), zie entryMinimum (16-10-2026).
+      const min = u ? entryMinimum(u, e) : 1;
       const max = (u?.maximum ?? 0) === 0 ? 9999 : (u?.maximum ?? 1);
       return { ...e, count: Math.max(min, Math.min(max, c)) };
     }),
   }));
-  /** Plain toggle of a `<group>/<i>` key. */
+  /** Plain toggle of a `<group>/<i>` key. Twee uitzonderingen (16-10-2026): de "Detachment"-optie
+   *  gaat via `setDetachment` (command eraf, minimum en regiment-koppeling mee), en iets AANZETTEN
+   *  haalt weg wat er niet mee mag (`notWith`: Skeleton Skirmishers, shields of warbows). */
   const toggleOpt = (key: string) =>
-    patch((e) => ({ ...e, opts: unit ? toggleOption(unit, e, key) : e.opts }));
+    patch((e) => {
+      if (!unit) return e;
+      if (key === detachmentOptionKey(unit)) return setDetachment(unit, e, !e.opts.includes(key));
+      const opts = toggleOption(unit, e, key);
+      return { ...e, opts: opts.includes(key) ? dropNotWith(unit, opts, key) : opts };
+    });
   /** Radio set within one group: drop this group's stored pick, store the new index. Deliberately
    *  only touches `<group>/…` keys — stale `subopt/<group>/…` of a no-longer-selected parent are
    *  ignored by the engine (it only looks at ACTIVE parents), exactly as before. */
   const setRadio = (group: string, i: number) =>
-    patch((e) => ({ ...e, opts: [...e.opts.filter((k) => !k.startsWith(`${group}/`)), `${group}/${i}`] }));
+    patch((e) => {
+      const opts = [...e.opts.filter((k) => !k.startsWith(`${group}/`)), `${group}/${i}`];
+      return { ...e, opts: unit ? dropNotWith(unit, opts, `${group}/${i}`) : opts };
+    });
 
   // ── stale / empty entry: render, never throw ────────────────────────────────────────────────────
   if (!entry || !unit) {
@@ -630,8 +645,12 @@ export function UnitOptions(props: {
   }
   const change = unitPoints - baseline.current.pts;
 
-  // Alleen het datasheet-minimum; de campagne-ondergrens is vervallen (zie setCount hierboven).
-  const min = unit.minimum ?? 1;
+  // Alleen het datasheet-minimum; de campagne-ondergrens is vervallen (zie setCount hierboven). Als
+  // detachment geldt het detachment-minimum (16-10-2026).
+  const min = entryMinimum(unit, entry);
+  const isDetachment = isDetachmentEntry(unit, entry);
+  const detStatus = isDetachment ? detachmentStatus(ctx.list.entries, entry, ctx.getUnit) : null;
+  const detParents = isDetachment ? detachmentParents(ctx.list.entries, entry, ctx.getUnit) : [];
   const rawMax = unit.maximum ?? 0;
   const max = rawMax === 0 ? 9999 : rawMax;
   /** A multi-model unit — the only kind with a count to change. A single-model character has no
@@ -681,7 +700,7 @@ export function UnitOptions(props: {
   // Magic items need `itemsData`; while it is undefined we simply render no magic section and touch
   // nothing in `opts`.
   const magicCats = itemsData
-    ? magicCategoriesInRule(magicCategories(unit, ctx.armyItemLists ?? [], itemsData, entry), entry, ctx.list.rule)
+    ? magicCategoriesForPicker(magicCategories(unit, ctx.armyItemLists ?? [], itemsData, entry), entry, ctx.list.rule)
       .filter((c) => c.items.length > 0)
     : [];
   /** One entry per shared points budget: all per-type categories of one section pool into it. */
@@ -862,7 +881,8 @@ export function UnitOptions(props: {
         label={cleanLabel(item.name_en)}
         // Only the rare state earns a second line: `common` (multi-takeable) is the exception, while
         // "one per army" is true of nearly every item and would be noise on every row.
-        sub={item.common ? 'Common — more than one model may carry it'
+        sub={item.foreign || cat.hidden ? 'Not available in this army composition — remove it'
+          : item.common ? 'Common — more than one model may carry it'
           : cat.uniqueness === 'per-army' ? 'One per army — no limit on how many this model takes'
             : undefined}
         delta={pts ? `+${fmt(pts)}` : on ? 'included' : 'free'}
@@ -1160,21 +1180,54 @@ export function UnitOptions(props: {
       >
         {blocks.map((b) => {
           const radioKey = b.radio ? radioSelected(unit, entry, b.key) : '';
+          // Een DETACHMENT heeft geen command (rulebook p. 283). De command-keuzes verdwijnen; alleen wat
+          // een oudere lijst er al had blijft staan, gemarkeerd, zodat het weg te halen is.
+          const items = isDetachment && b.key === 'command'
+            ? b.items.filter(({ i }) => entry.opts.includes(`command/${i}`))
+            : b.items;
+          if (!items.length) return null;
+          const detCommand = isDetachment && b.key === 'command';
           return (
             <div key={`${String(b.key)}-${b.oneOf ? 'eenvan' : 'basis'}`}>
-              <SectionHeader label={b.label} meta={groupMeta(b)} dense />
-              {b.items.map(({ i, opt }) => {
+              <SectionHeader
+                label={b.label}
+                meta={detCommand ? 'not allowed in a detachment — remove' : groupMeta(b)}
+                violated={detCommand}
+                dense
+              />
+              {items.map(({ i, opt }) => {
                 const key = `${String(b.key)}/${i}`;
                 const on = b.radio ? radioKey === key : entry.opts.includes(key);
                 const nested = subsByParent.get(key) ?? [];
                 // An `alwaysActive` parent is a free base you cannot switch off — it is a HEADING for
                 // its children ("Wizard" above the Level radio), not a choice of its own.
-                if (opt.alwaysActive) {
+                if (opt.alwaysActive && nested.length) {
                   return (
                     <div key={key}>
                       <div style={{ ...eb, fontSize: 7.5, color: TOW.muted, padding: '7px 0 3px' }}>{cleanLabel(opt.name_en)}</div>
                       {nested.map(subGroupBlock)}
                     </div>
+                  );
+                }
+                // Vaste uitrusting zonder sub-opties (16-10-2026): een AANGEVINKTE rij die je niet uit
+                // kunt zetten. Hiervoor stond hier een kopje -- en de Necropolis Knights-schilden zelfs
+                // als UIT-vinkje, terwijl ze wel meetelden.
+                if (opt.alwaysActive) {
+                  return (
+                    <OptionRow
+                      dense={dense}
+                      key={key}
+                      kind="toggle"
+                      on
+                      locked
+                      label={cleanLabel(opt.name_en)}
+                      sub="Standard equipment"
+                      delta=""
+                      deltaMuted
+                      onToggle={() => undefined}
+                      onInfo={infoFor(String(b.key), opt.name_en)}
+                      infoTitle={`About ${cleanLabel(opt.name_en)}`}
+                    />
                   );
                 }
                 return (
@@ -1188,6 +1241,49 @@ export function UnitOptions(props: {
             </div>
           );
         })}
+
+        {/* Detachment — bij welk regiment hoort hij (16-10-2026). "Must be assigned to a regimental
+            unit, noted on the muster list" (rulebook p. 283). Wat hier niet klopt is een MELDING, geen
+            blokkade: gelockte campagnelijsten hebben deze koppeling nog niet. */}
+        {isDetachment ? (
+          <div>
+            <SectionHeader label="Detachment of" meta="choose 1" violated={!!detStatus?.problems.length} dense />
+            {detParents.length === 0 ? (
+              <div style={{ ...ROW_SUB(dense), padding: '8px 0' }}>
+                No unit in this list can take a detachment. Add a unit with the Regimental Unit rule first.
+              </div>
+            ) : detParents.map((p) => {
+              const pu = ctx.getUnit(p.cat, p.unitId);
+              const naam = (p.customName ?? '').trim() || cleanLabel(pu?.name_en ?? p.unitId);
+              const on = entry.parentUid === p.uid;
+              return (
+                <OptionRow
+                  dense={dense}
+                  key={`regiment/${p.uid}`}
+                  kind="radio"
+                  on={on}
+                  label={naam}
+                  sub={`${p.count} models · a detachment of up to ${Math.floor(p.count / 2)}`}
+                  delta=""
+                  deltaMuted
+                  onToggle={() => patch((e) => {
+                    if (e.parentUid === p.uid) {
+                      const { parentUid: _weg, ...rest } = e;
+                      void _weg;
+                      return rest;
+                    }
+                    return { ...e, parentUid: p.uid };
+                  })}
+                />
+              );
+            })}
+            {(detStatus?.problems ?? []).map((pr) => (
+              <div key={pr} style={{ ...ROW_SUB(dense), color: TOW.gold, padding: '5px 0 0' }}>
+                Note: {pr}.
+              </div>
+            ))}
+          </div>
+        ) : null}
 
         {/* Magic items — one header per SHARED budget (a section's per-type categories pool into it),
             then a collapsible category per kind. `maxPoints: 0` in the data means UNLIMITED and must

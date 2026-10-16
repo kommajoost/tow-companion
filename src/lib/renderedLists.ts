@@ -1,6 +1,6 @@
 import { entryPoints, findUnit, unitCategoryFor, type BuilderList, type ListEntry, type MagicItemsData, type OwbArmy, type OwbUnit, type Category } from './owbBuilder';
-import { deriveList, optionSummary } from './builderDerived';
-import { applyOverlayItems, catalogueFor, hasOverlay, OVERLAY_FILES, type CompositionOverlay } from './overlays';
+import { deriveList, rosterWhisper } from './builderDerived';
+import { itemsFor, catalogueFor, hasOverlay, OVERLAY_FILES, type CompositionOverlay } from './overlays';
 import { makeUnitStrengthLookup, makeTroopTypeLookup, TROOP_TYPE_NAMES } from './troopTypes';
 
 /* ── Uitgerekende lijst-opsplitsing voor de campagne (30-07-2026) ───────────────────────────────
@@ -233,7 +233,8 @@ function renderEen(
       catEff: unit ? unitCategoryFor(unit, list.composition, e.cat) : e.cat,
       count,
       punten: unit ? entryPoints(unit, e, itemsData ?? undefined) : null,
-      opties: unit ? labels(optionSummary(unit, e, itemsData ?? undefined)) : [],
+      // Met "Detachment of <regiment>" (16-10-2026): de muster list noemt het regiment.
+      opties: unit ? labels(rosterWhisper(unit, e, itemsData ?? undefined, list.entries ?? [], getUnit)) : [],
       datasheet: unit?.name_en ?? null,
       // Op de CATALOGUS-naam, niet op de custom naam: "The Bleeding Hand" staat niet in de
       // rules-index, "Witch Elves" wel.
@@ -287,7 +288,8 @@ export async function renderLists(lists: unknown[]): Promise<RenderedList[]> {
     // Overlay nodig maar niet geladen → geen catalogus doorgeven, dan blijft `fouten` null (onbekend).
     if (nodig && !ov) return renderEen(l, null, null, usVoor, troopVoor);
     const cat = bron.a ? catalogueFor(bron.a, l.composition, ov) : bron.a;
-    const items = ov && bron.i ? applyOverlayItems(bron.i, ov) : bron.i;
+    // itemsFor (16-10-2026): overlay EN de compositie-tag van de items, zoals de builder zelf.
+    const items = bron.i ? itemsFor(bron.i, l.composition, ov) : bron.i;
     return renderEen(l, cat, items, usVoor, troopVoor);
   });
 }

@@ -46,6 +46,10 @@ export interface OwbOption {
   magic?: { types: string[]; maxPoints?: number; maxItemsPerCategory?: number; multipleItems?: boolean };
   /** Additional, separate budgets unlocked by this option (e.g. Kastellan powers). */
   magicAllowances?: NonNullable<OwbOption['magic']>[];
+  /** Namen van opties (in een willekeurige groep van DEZELFDE unit) die niet samen met deze optie
+   *  genomen mogen worden. Symmetrisch gelezen: A.notWith B betekent ook B niet met A. Gezet door
+   *  `scripts/patch-owb-army-fixes.mjs` (16-10-2026, Skeleton Skirmishers: shields OF warbows). */
+  notWith?: string[];
 }
 // A unit's magic-item "section" (from the catalogue's per-unit `items[]`). Each section permits a
 // set of item `types` (mapping to the `type` field in magic-items.json) and carries its own
@@ -55,6 +59,13 @@ export interface OwbOption {
 export interface OwbItemSection {
   name_en: string; name_cn?: string; name_de?: string; name_es?: string; name_fr?: string;
   types: string[]; maxPoints?: number; maxItemsPerCategory?: number; selected?: unknown[];
+  /** OWB tags a section with the composition(s) it belongs to (a string or a list), exactly like an
+   *  option. The Dwarfs use an OBJECT here instead ({ "royal-clan": { maxPoints: 150 } }), a per-
+   *  composition override -- that shape is not a membership tag and never hides the section. */
+  armyComposition?: string | string[] | Record<string, unknown>;
+  /** Hidden by `hideForeignOptions` because the section belongs to another composition. Kept in the
+   *  array so its index -- and so its budget key `sec:<index>` -- stays where it was. */
+  hidden?: boolean;
 }
 export interface CompositionPlacement {
   category?: Category;
@@ -82,6 +93,10 @@ export interface OwbUnit {
   named?: boolean;
   /** Taken as part of a parent regiment, not as its own list entry — see `isDetachment`. */
   detachment?: boolean;
+  /** Het minimum als de unit ALS DETACHMENT wordt opgesteld (OWB-veld; 5 bij vrijwel alles). */
+  minDetachmentSize?: number;
+  /** OWB-vlag naast de special rule "Regimental Unit" (bij de Nuln State Troops). */
+  regimentalUnit?: boolean;
   /** The unit's own restriction note, e.g. "0-1 Supreme Sorceress per 1000 points". The
    *  composition-specific note in `armyComposition[<comp>].notes` overrides it — see `unitNote`. */
   notes?: { name_en?: string };
@@ -322,6 +337,58 @@ export function isRadioGroup(unit: OwbUnit, key: keyof OwbUnit): boolean {
   const list = (Array.isArray(unit[key]) ? (unit[key] as OwbOption[]) : []).filter((o) => o && !o.hidden);
   if (key === 'equipment' && list.some((o) => o.equippedDefault)) return false;   // (2)
   if (list.length === 1 && !list.some((o) => o.active && (o.points ?? 0) === 0)) return false;  // (3)
+  // (4) 16-10-2026: TWEE OF MEER gratis `active`-defaults in één groep zijn geen alternatieven maar
+  // samen de basisuitrusting: Skeleton Archers dragen "Hand weapons" EN "Warbows", High Elf
+  // Spearmen "Hand weapons" EN "Thrusting spears". Als radio pakte `radioSelected` alleen de eerste,
+  // dus de Archers kwamen het spel in zonder warbows en zonder schietprofiel. Een radio heeft per
+  // definitie hooguit één default; staan er meer, dan is het een toggle-set waarin die defaults vast
+  // aan staan (`isStandardOption`). Verborgen varianten tellen niet mee (de Salamander Packs hebben
+  // er twee, één per compositie, en blijven dus een radio).
+  if (list.filter((o) => o.active && (o.points ?? 0) === 0).length > 1) return false;
+  return true;
+}
+
+/** "Great weapons (replace shields)" -> "shields": wat een andere optie van dezelfde unit zegt te
+ *  vervangen. Kleine letters, zonder lidwoord. */
+const vervangtNamen = (unit: OwbUnit): Set<string> => {
+  const uit = new Set<string>();
+  for (const { key } of OPTION_GROUPS) {
+    for (const o of (Array.isArray(unit[key]) ? (unit[key] as OwbOption[]) : [])) {
+      const m = (o?.name_en ?? '').match(/\(\s*replaces?\s+(?:the\s+)?([^)]+)\)/i);
+      if (m) uit.add(m[1].trim().toLowerCase());
+    }
+  }
+  return uit;
+};
+
+/**
+ * Is deze optie VASTE UITRUSTING in plaats van een keuze? Dan toont de editor hem aangevinkt en niet
+ * uit te zetten (`alwaysActive`), en telt hij als actieve ouder voor zijn sub-opties.
+ *
+ * Tot 16-10-2026 gold dat alleen voor `alwaysActive` en de `equippedDefault`-basis. Maar OWB zet ook
+ * gewone standaarduitrusting als losse 0-punten-optie met `active: true` in een toggle-groep:
+ * Necropolis Knights "Shields", Skeleton Warriors "Shields". Die telden al mee in de loadout (zie
+ * `loadoutLabels`), maar de editor toonde ze als UIT-vinkje -- je zag een schild niet dat je wel had.
+ *
+ * BEWUST NIET (gemeten over de hele catalogus, 25 kandidaten):
+ *  - een `exclusive`/`exclusiveGroup`-optie: dat is de DEFAULT van een één-van-set ("The Witch",
+ *    "Lore of Yang", "Terracotta Sentinel", "Vanguard" naast Scouts/Ambushers) en moet kiesbaar blijven;
+ *  - "Mark of ..." : "Mark of Chaos Undivided" is de default naast de andere marks, die in de data
+ *    (nog) niet als één-van gemarkeerd staan -- vastzetten zou er een tweede mark naast laten stapelen;
+ *  - een optie die een andere optie zegt te vervangen ("Great weapons (replace shields)" bij de Grave
+ *    Guard): dan is het schild juist NIET vast;
+ *  - een `stackable` optie (een aantal modellen, geen ja/nee).
+ */
+export function isStandardOption(unit: OwbUnit, group: keyof OwbUnit, opt: OwbOption | undefined): boolean {
+  if (!opt || opt.hidden) return false;
+  if (opt.alwaysActive) return true;
+  if (isRadioGroup(unit, group)) return false;
+  if (opt.equippedDefault) return true;
+  if (!opt.active || (opt.points ?? 0) !== 0) return false;
+  if (opt.exclusive || opt.exclusiveGroup || opt.stackable) return false;
+  const naam = (opt.name_en ?? '').replace(/\{[^}]*\}/g, ' ').replace(/\*/g, '').replace(/\s+/g, ' ').trim();
+  if (/^mark of /i.test(naam)) return false;
+  if (vervangtNamen(unit).has(naam.toLowerCase())) return false;
   return true;
 }
 
@@ -366,10 +433,11 @@ function unitBlocksBasis(unit: OwbUnit): OptionBlock[] {
       radio,
       items: list.map((opt, i) => ({
         i,
-        // In een toggle-groep is de `equippedDefault`-basis geen keuze maar een gegeven: je kunt
-        // "Hand weapons" niet weglaten. `alwaysActive` laat de editor hem als kopje tonen in plaats
-        // van als uitzetbaar vinkje -- anders zou hij als UIT lezen terwijl hij wel meetelt.
-        opt: !radio && opt?.equippedDefault && !opt.alwaysActive ? { ...opt, alwaysActive: true } : opt,
+        // In een toggle-groep is vaste uitrusting geen keuze maar een gegeven: je kunt "Hand weapons"
+        // niet weglaten. `alwaysActive` laat de editor hem als vast aangevinkt tonen in plaats van als
+        // uitzetbaar vinkje -- anders zou hij als UIT lezen terwijl hij wel meetelt. Sinds 16-10-2026
+        // niet alleen de `equippedDefault`-basis maar alle vaste uitrusting, zie `isStandardOption`.
+        opt: !radio && opt && !opt.alwaysActive && isStandardOption(unit, key, opt) ? { ...opt, alwaysActive: true } : opt,
       })).filter(({ opt }) => opt && opt.name_en && !opt.hidden),
     };
   }).filter((b) => b.items.length > 0);
@@ -446,7 +514,10 @@ function parentActive(unit: OwbUnit, entry: ListEntry, group: keyof OwbUnit, par
   // Per UNIT, niet per groep (18-08-2026): een equipment-groep met een `equippedDefault`-basis is
   // een toggle-set, en dan hangt de actieve staat aan de opgeslagen key, niet aan de radio-keuze.
   if (isRadioGroup(unit, group)) return radioSelected(unit, entry, group) === `${String(group)}/${parentIndex}`;
-  return parent.alwaysActive === true || entry.opts.includes(`${String(group)}/${parentIndex}`);
+  // Vaste uitrusting (16-10-2026) is net zo actief als een `alwaysActive`-kop -- zelfde regel als
+  // de editor gebruikt, zodat een vast aangevinkte ouder ook echt zijn sub-opties opent.
+  return parent.alwaysActive === true || isStandardOption(unit, group, parent)
+    || entry.opts.includes(`${String(group)}/${parentIndex}`);
 }
 
 // A nested sub-option ready for the editor: its child index, the option, its stored key, selected state.
@@ -465,26 +536,31 @@ export function subOptionGroups(unit: OwbUnit, entry: ListEntry): SubOptionGroup
   for (const { key: group } of OPTION_GROUPS) {
     const parents = groupItems(unit, group);
     parents.forEach((parent, parentIndex) => {
-      const children = (Array.isArray(parent.options) ? parent.options : []).filter((o) => o && o.name_en);
+      // EERST indexeren, DAN verbergen (16-10-2026). De index `i` is het opgeslagen deel van de sleutel
+      // `subopt/<groep>/<ouder>/<i>`, dus hij moet blijven tellen over dezelfde lijst als altijd; een
+      // kind van een andere compositie (hideForeignOptions zet `hidden`) valt pas daarna weg. Zonder dat
+      // kreeg een Tomb King in de Grand Army "Arise!, Level 1 Wizard" aangeboden, dat alleen bij de
+      // Nehekharan Royal Hosts hoort. Een opgeslagen keuze voor zo'n verborgen kind telt niet meer mee
+      // -- precies zoals een verborgen optie op het hoogste niveau (`selectedOptions`).
+      const children = (Array.isArray(parent.options) ? parent.options : []).filter((o) => o && o.name_en)
+        .map((opt, i) => ({ opt, i }))
+        .filter(({ opt }) => !opt.hidden);
       if (children.length === 0) return;
       if (!parentActive(unit, entry, group, parent, parentIndex)) return;
       const active = true;
       // Find which (if any) exclusive child is the default-active one, for the implicit selection.
-      const exclChildren = children.filter((c) => c.exclusive);
+      const exclChildren = children.filter(({ opt: c }) => c.exclusive);
       const defExclIdx = exclChildren.length
-        ? (() => { const a = children.findIndex((c) => c.exclusive && c.active); return a >= 0 ? a : children.findIndex((c) => c.exclusive); })()
+        ? (exclChildren.find(({ opt: c }) => c.active) ?? exclChildren[0]).i
         : -1;
-      const storedExcl = children.findIndex((c, i) => c.exclusive && hasSubOpt(entry, group, parentIndex, i));
+      const storedExcl = exclChildren.find(({ i }) => hasSubOpt(entry, group, parentIndex, i))?.i ?? -1;
       const selectedExcl = storedExcl >= 0 ? storedExcl : defExclIdx; // nothing stored → the default
       // Emit the exclusive (radio) sub-group, if any.
-      const excl = children
-        .map((opt, i) => ({ opt, i }))
-        .filter(({ opt }) => opt.exclusive)
+      const excl = exclChildren
         .map(({ opt, i }) => ({ i, opt, key: subOptKey(group, parentIndex, i), selected: i === selectedExcl }));
       if (excl.length) out.push({ group, parentIndex, parentLabel: parent.name_en, parentActive: active, alwaysActive: !!parent.alwaysActive, exclusive: true, items: excl });
       // Emit the non-exclusive (toggle) sub-group, if any.
       const toggles = children
-        .map((opt, i) => ({ opt, i }))
         .filter(({ opt }) => !opt.exclusive)
         .map(({ opt, i }) => ({ i, opt, key: subOptKey(group, parentIndex, i), selected: hasSubOpt(entry, group, parentIndex, i) }));
       if (toggles.length) out.push({ group, parentIndex, parentLabel: parent.name_en, parentActive: active, alwaysActive: !!parent.alwaysActive, exclusive: false, items: toggles });
@@ -587,7 +663,10 @@ export function loadoutLabels(unit: OwbUnit, entry: ListEntry, itemsData?: Magic
 // One chosen entry in the list. `opts` holds selected option keys "group/index".
 // `lores`/`spells` (Wizards only) are the lore + spell choices made in the builder, carried into a
 // game Army by builderListToArmy (so the in-game spell card is pre-filled).
-export interface ListEntry { uid: string; cat: Category; unitId: string; count: number; opts: string[]; optCounts?: Record<string, number>; lores?: string[]; spells?: string[]; customName?: string }  // customName: campagne — named unit (veteranen-identiteit in De Grensvorsten)
+export interface ListEntry { uid: string; cat: Category; unitId: string; count: number; opts: string[]; optCounts?: Record<string, number>; lores?: string[]; spells?: string[]; customName?: string; parentUid?: string }  // customName: campagne — named unit (veteranen-identiteit in De Grensvorsten)
+// `parentUid` (16-10-2026) — alleen bij een DETACHMENT: de uid van het regiment waar hij bij hoort
+// ("must be assigned to a regimental unit", rulebook p. 282). Optioneel, dus elke oudere lijst leest
+// ongewijzigd terug; een detachment zonder regiment krijgt een melding die niet blokkeert.
 // `optCounts` — how many models take each `stackable` option, keyed by its "<group>/<index>" opts key.
 // Optional and absent by default, so every list saved before it existed reads back unchanged.
 export interface BuilderList { composition: string; rule: string; points: number; entries: ListEntry[] }
@@ -691,8 +770,14 @@ export function stackCount(entry: ListEntry, key: string): number {
  *  following", so at most every model. `maximum: 0` appears in the data for options that have NO cap,
  *  so it is read as absent rather than as "none allowed". */
 export function stackMax(unit: OwbUnit, entry: ListEntry, opt: OwbOption): number {
-  void unit;
   const cap = opt.maximum ?? 0;
+  // EEN-MODEL-UNIT MET EIGEN MAXIMUM (16-10-2026). Bij een regiment is de cap per model ("any model
+  // may take one"), dus nooit meer dan het aantal modellen. Maar op een unit van één model betekent
+  // een expliciet maximum iets anders: "May add up to two additional Tomb Guard Crew" (Khemrian
+  // Warsphinx, max 2), "Chaos Rewards" (max 3). Daar hield `min(cap, count)` het op 1. Alleen
+  // een EXPLICIET maximum telt zo; zonder maximum blijft het het aantal modellen.
+  const eenModel = (unit.maximum ?? 1) === 1 && (unit.minimum ?? 1) <= 1;
+  if (cap > 0 && eenModel) return cap;
   return cap > 0 ? Math.min(cap, entry.count) : entry.count;
 }
 
@@ -707,7 +792,10 @@ export function stackTaken(unit: OwbUnit, entry: ListEntry, key: string, opt: Ow
   const max = stackMax(unit, entry, opt);
   const stored = entry.optCounts?.[key];
   if (typeof stored === 'number') return Math.max(0, Math.min(Math.floor(stored), max));
-  return entry.opts.includes(key) ? max : 0;
+  // "De hele unit" = hooguit het aantal modellen. Voor een regiment is dat gewoon `max`; voor een
+  // één-model-unit met een eigen maximum (zie stackMax) blijft een oud vinkje zonder aantal 1 model,
+  // zoals het altijd geprijsd is -- anders zou die lijst ineens het drievoudige kosten.
+  return entry.opts.includes(key) ? Math.min(max, Math.max(1, entry.count)) : 0;
 }
 
 /** Set how many models take a `stackable` option, clamped to [0, stackMax]. Keeps `opts` in step:
@@ -740,6 +828,195 @@ export function selectedOptions(unit: OwbUnit, entry: ListEntry): { group: keyof
     if (opt) out.push({ group: g as keyof OwbUnit, opt, key });
   }
   return out;
+}
+
+// ---- Opties die elkaar uitsluiten over groepen heen (`notWith`, 16-10-2026) ---------------------
+// Een één-van binnen EEN groep kon al (radio, `exclusive`, `exclusiveGroup`). Skeleton Skirmishers
+// hebben het over twee groepen: warbows zitten in de equipment-radio ("Hand weapons, Warbows"), het
+// schild is een losse toggle in options. Volgens de spelersmelding is het het een of het ander.
+
+const schoon = (s?: string): string => (s ?? '').replace(/\{[^}]*\}/g, ' ').replace(/\*/g, '').replace(/\s+/g, ' ').trim().toLowerCase();
+
+/** Staat optie `<group>/<i>` op deze entry AAN? Radio: de gekozen (of default) keuze; toggle: opgeslagen
+ *  of vaste uitrusting. */
+export function optionOn(unit: OwbUnit, entry: ListEntry, group: keyof OwbUnit, i: number): boolean {
+  const opt = groupItems(unit, group)[i];
+  if (!opt || opt.hidden) return false;
+  if (isRadioGroup(unit, group)) return radioSelected(unit, entry, group) === `${String(group)}/${i}`;
+  return isStandardOption(unit, group, opt) || entry.opts.includes(`${String(group)}/${i}`);
+}
+
+/** Alle `<group>/<i>`-sleutels van deze unit waarmee optie `key` niet samen mag (beide richtingen). */
+export function notWithKeys(unit: OwbUnit, key: string): string[] {
+  const [g, iStr] = key.split('/');
+  const opt = groupItems(unit, g as keyof OwbUnit)[Number(iStr)];
+  if (!opt) return [];
+  const eigen = new Set((opt.notWith ?? []).map(schoon));
+  const naam = schoon(opt.name_en);
+  const uit: string[] = [];
+  for (const { key: grp } of OPTION_GROUPS) {
+    groupItems(unit, grp).forEach((o, i) => {
+      const k = `${String(grp)}/${i}`;
+      if (k === key || o.hidden) return;
+      if (eigen.has(schoon(o.name_en)) || (o.notWith ?? []).some((n) => schoon(n) === naam)) uit.push(k);
+    });
+  }
+  return uit;
+}
+
+/** Een keuze AANZETTEN haalt wat er niet mee mag weg. Een toggle verdwijnt uit `opts`; een radio-
+ *  keuze valt terug op de gratis default van die groep (de opgeslagen keuze gaat eruit). Geeft de
+ *  nieuwe `opts` terug, muteert niets. */
+export function dropNotWith(unit: OwbUnit, opts: string[], key: string): string[] {
+  let uit = opts;
+  for (const k of notWithKeys(unit, key)) {
+    const [g] = k.split('/');
+    if (isRadioGroup(unit, g as keyof OwbUnit)) {
+      const probe: ListEntry = { uid: '', cat: 'core', unitId: unit.id, count: 1, opts: uit };
+      if (radioSelected(unit, probe, g as keyof OwbUnit) === k) uit = uit.filter((x) => !x.startsWith(`${g}/`));
+    } else {
+      uit = uit.filter((x) => x !== k);
+    }
+  }
+  return uit;
+}
+
+/** De paren die op deze entry allebei aan staan terwijl dat niet mag -- voor een oude lijst. */
+export function notWithConflicts(unit: OwbUnit, entry: ListEntry): [OwbOption, OwbOption][] {
+  const uit: [OwbOption, OwbOption][] = [];
+  const gezien = new Set<string>();
+  for (const { key: grp } of OPTION_GROUPS) {
+    groupItems(unit, grp).forEach((o, i) => {
+      const k = `${String(grp)}/${i}`;
+      if (!optionOn(unit, entry, grp, i)) return;
+      for (const ander of notWithKeys(unit, k)) {
+        const [g2, i2] = ander.split('/');
+        const paar = [k, ander].sort().join('|');
+        if (gezien.has(paar) || !optionOn(unit, entry, g2 as keyof OwbUnit, Number(i2))) continue;
+        gezien.add(paar);
+        uit.push([o, groupItems(unit, g2 as keyof OwbUnit)[Number(i2)]]);
+      }
+    });
+  }
+  return uit;
+}
+
+// ---- Detachments (rulebook p. 282-283, 16-10-2026) ----------------------------------------------
+// "Regimental Unit": mag vergezeld worden door maximaal TWEE detachments. "Detachment": mag als
+// detachment worden opgesteld -- minimaal 5 modellen, maximaal de helft van het aantal modellen van
+// zijn regiment (naar beneden afgerond), normale upgrades mogen, maar GEEN command group of command
+// models, en hij hoort bij precies één regiment (op de muster list genoteerd). Een unit met beide
+// regels is het een of het ander.
+//
+// Wat wél: de 0-punten-optie "Detachment" (16 units in de catalogus) zet het om. Wat bewust NIET: de
+// losse `detachment: true`-entries (Nuln State Troops-detachments, Fanatics, Weapon Teams, de Wood
+// Elf-beasts). Die volgen eigen regels (Nuln mag een Sergeant, Fanatics 1-3 ...) en blijven zoals ze
+// waren.
+
+/** De sleutel van de "Detachment"-optie van deze unit, of null als hij er geen heeft. */
+export function detachmentOptionKey(unit: OwbUnit): string | null {
+  for (const { key } of OPTION_GROUPS) {
+    const i = groupItems(unit, key).findIndex((o) => !o.hidden && /^detachment$/i.test((o.name_en ?? '').trim()));
+    if (i >= 0) return `${String(key)}/${i}`;
+  }
+  return null;
+}
+
+/** Wordt deze entry als detachment opgesteld? */
+export function isDetachmentEntry(unit: OwbUnit, entry: ListEntry): boolean {
+  const key = detachmentOptionKey(unit);
+  return !!key && entry.opts.includes(key);
+}
+
+/** Mag deze unit detachments bij zich hebben? */
+export function isRegimentalUnit(unit: OwbUnit): boolean {
+  return unit.regimentalUnit === true || /(^|,)\s*Regimental Unit\s*(,|$)/i.test(unit.specialRules?.name_en ?? '');
+}
+
+/** Het minimum aantal modellen van DEZE entry: 5 (of het datasheet-getal) als detachment. */
+export function entryMinimum(unit: OwbUnit, entry: ListEntry): number {
+  if (isDetachmentEntry(unit, entry)) return Math.max(1, unit.minDetachmentSize ?? 5);
+  return unit.minimum ?? 1;
+}
+
+/** Detachment aan of uit. Aan: alle command-keuzes eraf (een detachment heeft geen command). Uit: de
+ *  regiment-koppeling eraf en het aantal terug naar minstens het gewone minimum. Muteert niets. */
+export function setDetachment(unit: OwbUnit, entry: ListEntry, on: boolean): ListEntry {
+  const key = detachmentOptionKey(unit);
+  if (!key) return entry;
+  if (on) {
+    const opts = entry.opts.filter((k) => k !== key && !k.startsWith('command/') && !k.startsWith('subopt/command/'));
+    return { ...entry, opts: [...opts, key] };
+  }
+  const { parentUid: _weg, ...rest } = entry;
+  void _weg;
+  return { ...rest, opts: entry.opts.filter((k) => k !== key), count: Math.max(entry.count, unit.minimum ?? 1) };
+}
+
+type GetUnit = (cat: Category, id: string) => OwbUnit | undefined;
+
+/** De regimenten in deze lijst waar `entry` als detachment bij kan horen. */
+export function detachmentParents(entries: ListEntry[], entry: ListEntry, getUnit: GetUnit): ListEntry[] {
+  return entries.filter((p) => {
+    if (p.uid === entry.uid) return false;
+    const u = getUnit(p.cat, p.unitId);
+    return !!u && isRegimentalUnit(u) && !isDetachmentEntry(u, p);
+  });
+}
+
+/** Naam van een entry zoals een speler hem herkent: de eigen naam, anders het datasheet. */
+const entryNaam = (e: ListEntry, u: OwbUnit | undefined): string =>
+  (e.customName ?? '').trim() || (u?.name_en ?? e.unitId).replace(/\s*\{[^}]*\}/g, '').trim();
+
+export interface DetachmentStatus {
+  /** Het regiment, als de koppeling klopt (bestaat, is een regiment, geen detachment zelf). */
+  parent: ListEntry | null;
+  parentName: string | null;
+  /** Wat er niet klopt, in spelerswoorden. Leeg = in orde. NIET blokkerend (zie validate). */
+  problems: string[];
+}
+
+/** Hoe staat een detachment ervoor? null als `entry` geen detachment is. */
+export function detachmentStatus(entries: ListEntry[], entry: ListEntry, getUnit: GetUnit): DetachmentStatus | null {
+  const unit = getUnit(entry.cat, entry.unitId);
+  if (!unit || !isDetachmentEntry(unit, entry)) return null;
+  const problems: string[] = [];
+  const pe = entry.parentUid ? entries.find((e) => e.uid === entry.parentUid) : undefined;
+  const pu = pe ? getUnit(pe.cat, pe.unitId) : undefined;
+  if (!entry.parentUid) problems.push('no regiment assigned');
+  else if (!pe || !pu) problems.push('its regiment is no longer in this list');
+  else if (!isRegimentalUnit(pu) || isDetachmentEntry(pu, pe)) problems.push(`${entryNaam(pe, pu)} cannot take detachments`);
+  const geldig = problems.length === 0 && pe && pu ? pe : null;
+  if (geldig && pu) {
+    // Maximaal TWEE per regiment; de eerste twee in lijstvolgorde zijn in orde, de rest niet.
+    const broers = entries.filter((e) => {
+      if (e.parentUid !== geldig.uid) return false;
+      const u = getUnit(e.cat, e.unitId);
+      return !!u && isDetachmentEntry(u, e);
+    });
+    if (broers.findIndex((e) => e.uid === entry.uid) >= 2) problems.push(`${entryNaam(geldig, pu)} already has two detachments`);
+    const max = Math.floor(geldig.count / 2);
+    if (entry.count > max) problems.push(`too large (max ${max}: half of ${entryNaam(geldig, pu)}'s ${geldig.count} models)`);
+  }
+  return { parent: geldig, parentName: geldig && pu ? entryNaam(geldig, pu) : null, problems };
+}
+
+/** Het label dat de roster, de export, het spel en de campagne tonen in plaats van "Detachment":
+ *  "Detachment of Spearmen", of "Detachment — no regiment assigned". */
+export function detachmentLabel(entries: ListEntry[], entry: ListEntry, getUnit: GetUnit): string | null {
+  const st = detachmentStatus(entries, entry, getUnit);
+  if (!st) return null;
+  const kop = st.parentName ? `Detachment of ${st.parentName}` : 'Detachment';
+  const rest = st.problems.filter((p) => !st.parentName || !p.startsWith('no regiment'));
+  return rest.length ? `${kop} — ${rest.join('; ')}` : kop;
+}
+
+/** Vervang het kale "Detachment"-label in een lijst labels door `label` (of zet hem erachter). */
+export function withDetachmentLabel(labels: string[], label: string | null): string[] {
+  if (!label) return labels;
+  const i = labels.findIndex((l) => /^detachment$/i.test(l.trim()));
+  if (i < 0) return [...labels, label];
+  return [...labels.slice(0, i), label, ...labels.slice(i + 1)];
 }
 
 /** Points for one list entry: base (per model × count) + each selected option (× count if perModel)
@@ -800,6 +1077,15 @@ export interface Validation {
    * untouched.
    */
   entryWarnings: { uid: string; message: string }[];
+  /**
+   * MELDINGEN DIE NIET BLOKKEREN (16-10-2026). Per entry, net als `entryWarnings`, maar ze staan
+   * NIET in `warnings`. Dat verschil is de reden van dit veld: `warnings` gaat als `fouten` naar de
+   * campagne (renderedLists), en de server weigert een lijst met fouten (LIJST_ONGELDIG). Een
+   * detachment zonder regiment-koppeling is een nieuw gegeven -- elke detachment die al in een
+   * gelockte campagnelijst staat heeft er nog geen -- en zo'n lijst mag halverwege een Act niet ineens
+   * onlockbaar worden. Dus: melden, tonen, niet tegenhouden.
+   */
+  advisories: { uid: string; message: string }[];
 }
 
 // Tally points per category and check them against the composition's limits (percent of the points
@@ -890,6 +1176,7 @@ export function validate(
   // Optelsom voor de minor-adjustments-regel: hoeveel punten er in totaal van bestaande units af gaat.
   let krimpTotaal = 0;
 
+  const advisories: Validation['advisories'] = [];
   for (const e of list.entries) {
     const unit = getUnit(e.cat, e.unitId);
     if (!unit) continue;
@@ -898,10 +1185,26 @@ export function validate(
     total += p;
     byCategory[effCat].points += p;
     rows.push({ e, unit, p, level: wizardLevelOf(unit, e), cat: effCat });
-    const min = unit.minimum ?? 1;
+    // Een detachment heeft een eigen minimum (5), zie entryMinimum.
+    const min = entryMinimum(unit, e);
     const max = unit.maximum ?? 0; // 0 = no max
     if (e.count < min) warnEntry(e.uid, `${unit.name_en}: below minimum size (${min})`);
     if (max > 0 && e.count > max) warnEntry(e.uid, `${unit.name_en}: above maximum size (${max})`);
+    // DETACHMENT (16-10-2026). Command models zijn een echte fout (het boek verbiedt ze en de editor
+    // laat ze bij het aanzetten al vallen); de koppeling aan een regiment en de grootte ten opzichte
+    // van dat regiment zijn meldingen die NIET blokkeren -- zie `Validation.advisories`.
+    if (isDetachmentEntry(unit, e)) {
+      const cmd = selectedOptions(unit, e).filter(({ group }) => group === 'command').map(({ opt }) => opt.name_en);
+      if (cmd.length) warnEntry(e.uid, `${unit.name_en}: a detachment cannot include command models (${cmd.join(', ')})`);
+      for (const pr of detachmentStatus(list.entries, e, getUnit)?.problems ?? []) {
+        advisories.push({ uid: e.uid, message: `${unit.name_en} (detachment): ${pr}` });
+      }
+    }
+    // Opties die niet samen mogen (`notWith`). Een lijst van vóór de regel kan ze allebei hebben; die
+    // laadt gewoon en behoudt zijn punten, maar krijgt dit te zien.
+    for (const [a, b] of notWithConflicts(unit, e)) {
+      warnEntry(e.uid, `${unit.name_en}: ${a.name_en} and ${b.name_en} cannot be combined -- choose one`);
+    }
     // Two different reasons, two different messages. A list saved before detachments were filtered out
     // still has the entry, and "not allowed in this army composition" would send you looking in the
     // wrong place — the unit is fine, it just is not something you take on its own.
@@ -941,7 +1244,15 @@ export function validate(
           if (c.maxPoints != null && spent > c.maxPoints) warnEntry(e.uid, `${unit.name_en}: ${c.groupLabel} over its ${c.maxPoints} pt allowance (${spent} pts)`);
         }
       }
-      for (const { item } of selectedMagicItems(unit, e, itemsData)) {
+      for (const { item, category } of selectedMagicItems(unit, e, itemsData)) {
+        // ARMY OF INFAMY (16-10-2026): een item dat bij een andere army composition hoort (Royal Mantle
+        // en Blade of Antarhak bij de Nehekharan Royal Hosts), of een keuze die alleen in een item-
+        // sectie van een andere compositie past (arcane items op een Grand Army Tomb King). Zelfde
+        // aanpak als hieronder: de kiezer biedt het niet meer aan, de punten tellen door, en het wordt
+        // hardop gemeld. Zie `itemsForComposition` en `hideForeignOptions`.
+        if (item.foreign || category.hidden) {
+          warnEntry(e.uid, `${schoneItemNaam(item)}: not available in this army composition`);
+        }
         if (itemAllowedInRule(item, list.rule)) continue;
         const regelNaam = COMPOSITION_RULES.find((r) => r.id === item.compositionRule)?.name ?? item.compositionRule;
         warnEntry(e.uid, `${schoneItemNaam(item)}: only available in ${regelNaam}`);
@@ -1039,12 +1350,14 @@ export function validate(
 
   // Combined Arms: a cap on how many of each unit type you may field (per datasheet) — 0-3 Characters,
   // 0-4 Core, 0-3 Special, 0-2 Rare/Mercenary, +1 per full 1,000 pts above 2,000. (Detachments and
-  // named characters are exempt in the rules; we don't track those, so this counts every entry.)
+  // named characters are exempt in the rules. Named characters are still counted -- the catalogue
+  // flag is not trusted for this yet -- but since 16-10-2026 a detachment entry is skipped.)
   if (hasCombinedArms) {
     const extra = target > 2000 ? Math.floor((target - 2000) / 1000) : 0;
     const baseCap: Partial<Record<Category, number>> = { characters: 3, core: 4, special: 3, rare: 2, mercenaries: 2 };
     const perUnit = new Map<string, { unit: OwbUnit; cat: Category; n: number }>();
     for (const r of rows) {
+      if (isDetachmentEntry(r.unit, r.e)) continue;
       const key = `${r.e.cat}/${r.e.unitId}`;
       const cur = perUnit.get(key);
       if (cur) cur.n += 1; else perUnit.set(key, { unit: r.unit, cat: r.cat, n: 1 });
@@ -1261,7 +1574,7 @@ export function validate(
 
   if (total > target) warnings.push(`Over the points limit by ${total - target}`);
 
-  return { total, byCategory, warnings, entryWarnings };
+  return { total, byCategory, warnings, entryWarnings, advisories };
 }
 
 const cap = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
@@ -1288,6 +1601,13 @@ export interface MagicItem {
    *  komen allebei op dezelfde twintig uit: elk item met dit veld heeft "Battle March: General's
    *  Companion" als bron in `magic-item-text.json`, en elk item met die bron heeft dit veld. */
   compositionRule?: string;
+  /** De ARMY COMPOSITION(s) waar dit item bij hoort -- OWB's tag, een id of een lijst ("Royal Mantle":
+   *  nehekharan-royal-hosts). Afwezig = in elke compositie. Gelezen door `itemsForComposition`. */
+  armyComposition?: string | string[];
+  /** Gezet door `itemsForComposition`: dit item hoort bij een ANDERE compositie dan die van de lijst.
+   *  Het blijft in de data zodat een opgeslagen keuze zijn punten houdt, maar de kiezer biedt het niet
+   *  aan en `validate()` meldt het. */
+  foreign?: boolean;
   /** "Common" = a MULTI-TAKEABLE item: one that more than one model may carry (OWB prints these with
    *  a '*'; in the data they carry `stackable: true`). Any number of common items may be taken in a
    *  category, alongside one unique (one-per-army) item. NOT "from the general list" — most general
@@ -1357,6 +1677,10 @@ export interface MagicCategory {
    *    same entry twice. Vampiric Powers work this way. */
   uniqueness: 'per-category' | 'per-army' | 'per-item-type';
   items: MagicItem[];    // the items selectable in this category
+  /** Uit een item-sectie van een ANDERE compositie (`OwbItemSection.hidden`). Zo'n categorie komt
+   *  achteraan, zodat een opgeslagen keuze eerst in de echte sectie wordt gevonden; ze bestaat alleen
+   *  nog om een oude keuze te beprijzen en te kunnen verwijderen (zie `magicCategoriesForPicker`). */
+  hidden?: boolean;
 }
 
 /** Item types the p. 337 per-category limit does NOT govern, because they are not magic items and
@@ -1394,8 +1718,21 @@ function itemPool(armyItemLists: string[], itemsData: MagicItemsData): MagicItem
 export function magicCategories(unit: OwbUnit, armyItemLists: string[], itemsData: MagicItemsData, entry?: ListEntry): MagicCategory[] {
   const pool = itemPool(armyItemLists, itemsData);
   const out: MagicCategory[] = [];
+  // Secties van een andere compositie (16-10-2026). Een Tomb King draagt er twee -- een voor de Grand
+  // Army en een voor de Nehekharan Royal Hosts (met arcane items) -- en een Beastmen-character zelfs
+  // vier. Allebei tonen gaf twee "Magic Items"-budgetten: dubbel budget. Hun categorieën gaan nu naar
+  // het EINDE, gemarkeerd `hidden`; `si` blijft de echte index, dus het budget heet nog `sec:<si>`.
+  const verborgen: MagicCategory[] = [];
+  const markeer = (doel: MagicCategory[], vanaf: number, sec: OwbItemSection) => {
+    if (!sec?.hidden) return;
+    for (let k = vanaf; k < doel.length; k += 1) {
+      doel[k] = { ...doel[k], hidden: true, groupLabel: `${doel[k].groupLabel} (not in this army composition)` };
+    }
+  };
   const sections = Array.isArray(unit.items) ? unit.items : [];
   sections.forEach((sec, si) => {
+    const doel = sec?.hidden ? verborgen : out;
+    const startAt = doel.length;
     const types = Array.isArray(sec.types) ? sec.types : [];
     // OWB encodes "no points limit" as maxPoints 0 — e.g. the Ogre "Big Name" section: a character
     // may take a single Big Name of ANY value, with no shared points pool. Treat 0 as unlimited
@@ -1408,7 +1745,8 @@ export function magicCategories(unit: OwbUnit, armyItemLists: string[], itemsDat
     if (capped) {
       // Runes etc. — one category, multi-pick up to the section cap, items across all its types.
       const items = pool.filter((it) => types.includes(it.type));
-      if (items.length) out.push({ id: types[0] ?? slug(sec.name_en), label: sec.name_en, groupLabel: sec.name_en, budgetGroup: group, types, maxPoints, maxItems: sec.maxItemsPerCategory!, uniqueness: 'per-category', items });
+      if (items.length) doel.push({ id: types[0] ?? slug(sec.name_en), label: sec.name_en, groupLabel: sec.name_en, budgetGroup: group, types, maxPoints, maxItems: sec.maxItemsPerCategory!, uniqueness: 'per-category', items });
+      markeer(doel, startAt, sec);
       return;
     }
     // Normal magic items — one category per type, sharing the section's points budget. Each category
@@ -1423,8 +1761,9 @@ export function magicCategories(unit: OwbUnit, armyItemLists: string[], itemsDat
       // limited only by the shared points budget — see magicWouldExceed.
       const maxItems = type === 'big-name' ? 1 : Infinity;
       const uniqueness = TYPES_LIMITED_PER_ARMY.has(type) ? 'per-army' as const : 'per-category' as const;
-      out.push({ id: type, label: magicTypeLabel(type), groupLabel: sec.name_en, budgetGroup: group, types: [type], maxPoints, maxItems, uniqueness, items });
+      doel.push({ id: type, label: magicTypeLabel(type), groupLabel: sec.name_en, budgetGroup: group, types: [type], maxPoints, maxItems, uniqueness, items });
     }
+    markeer(doel, startAt, sec);
   });
   // Option-unlocked allowances (magic standards from a Standard bearer, …) — active options only.
   if (entry) {
@@ -1462,7 +1801,7 @@ export function magicCategories(unit: OwbUnit, armyItemLists: string[], itemsDat
       });
     }
   }
-  return out;
+  return [...out, ...verborgen];
 }
 
 // Internal: every magic-item key stored on the entry, parsed into {categoryId, itemId}.
@@ -1574,6 +1913,33 @@ export function magicCategoriesInRule(cats: MagicCategory[], entry: ListEntry, r
       ...c,
       items: c.items.filter((it) => itemAllowedInRule(it, rule) || entry.opts.includes(magicKey(c.id, magicItemId(it)))),
     }))
+    .filter((c) => c.items.length > 0);
+}
+
+/** De categorieën zoals de KIEZER ze toont: `magicCategoriesInRule`, plus de compositie-regel
+ *  (16-10-2026).
+ *
+ *  - Een item van een andere compositie (`foreign`) wordt niet aangeboden, behalve als dit model hem
+ *    al draagt -- dan blijft de rij staan zodat je hem kunt uitzetten.
+ *  - Een categorie uit een verborgen sectie (`hidden`) verdwijnt, behalve de keuzes die ALLEEN daar
+ *    terechtkomen (een arcane item op een Grand Army Tomb King). Een keuze die ook in een zichtbare
+ *    categorie past, staat daar al; hem twee keer tonen zou suggereren dat hij twee keer telt.
+ *
+ *  Net als bij `magicCategoriesInRule` blijft de REKENKANT (`magicCategories`) compleet. */
+export function magicCategoriesForPicker(cats: MagicCategory[], entry: ListEntry, rule?: string): MagicCategory[] {
+  const zichtbaar = cats.filter((c) => !c.hidden);
+  const gekozen = (c: MagicCategory, it: MagicItem) => entry.opts.includes(magicKey(c.id, magicItemId(it)));
+  return magicCategoriesInRule(cats, entry, rule)
+    .map((c) => {
+      if (!c.hidden) return { ...c, items: c.items.filter((it) => !it.foreign || gekozen(c, it)) };
+      return {
+        ...c,
+        items: c.items.filter((it) => {
+          if (!entry.opts.some((k) => k.startsWith(`${MAGIC_PREFIX}/`) && k.split('/')[2] === magicItemId(it))) return false;
+          return !zichtbaar.some((v) => v.items.some((vi) => magicItemId(vi) === magicItemId(it)));
+        }),
+      };
+    })
     .filter((c) => c.items.length > 0);
 }
 

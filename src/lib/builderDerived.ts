@@ -12,7 +12,7 @@
 // cannot carry.
 
 import {
-  CATEGORIES, loadoutLabels, selectedMagicItems, validate,
+  CATEGORIES, detachmentLabel, entryMinimum, loadoutLabels, withDetachmentLabel, selectedMagicItems, selectedOptions, subOptionGroups, validate,
   type BuilderList, type Category, type ListEntry, type MagicItemsData, type OwbArmy, type OwbUnit,
   findUnit,
 } from './owbBuilder';
@@ -71,6 +71,9 @@ export interface DerivedList {
    *  single-unit caps, `unitAllowedIn`, and the campaign's named-unit requirement. A roster row reads
    *  this to flag itself, so the row and the band can never disagree about which unit is at fault. */
   entryWarnings: { uid: string; message: string }[];
+  /** Meldingen per entry die NIET blokkeren (`Validation.advisories`) -- bewust niet in `warnings`,
+   *  want die gaan als fouten naar de campagne. Een detachment zonder regiment staat hier. */
+  advisories: { uid: string; message: string }[];
   unitCount: number;
   modelCount: number;
 }
@@ -198,7 +201,7 @@ export function deriveList(
     if (!unit) continue;
     unitCount += 1;
     modelCount += Math.max(0, Number.isFinite(e.count) ? e.count : 0);
-    const min = unit.minimum ?? 1;
+    const min = entryMinimum(unit, e); // een detachment: 5 (16-10-2026), zelfde bron als validate()
     const max = unit.maximum ?? 0; // 0 = no maximum
     if (e.count < min) {
       violations.push({ kind: 'unit-size', message: `${unit.name_en}: below minimum size (${min})`, delta: min - e.count, uid: e.uid });
@@ -218,6 +221,7 @@ export function deriveList(
     // Same messages, with the entry each belongs to — see `Validation.entryWarnings`. This is what lets
     // a roster ROW carry its own problem instead of only the band naming it.
     entryWarnings: v.entryWarnings,
+    advisories: v.advisories,
     unitCount,
     modelCount,
   };
@@ -235,7 +239,8 @@ export function deriveList(
 //
 // So the whisper is a NOISE-FILTERED loadout, by four stated rules:
 //   1. drop the universal free baseline (MUNDANE below) — a short, explicit denylist, so unknown
-//      wargear is never silently hidden;
+//      wargear is never silently hidden; a MUNDANE label the player PAID for (e.g. light armour at
+//      +1/model) is not baseline and stays (16-10-2026);
 //   2. abbreviate "Level N Wizard" → "Level N" (the "Wizard" header itself is already dropped);
 //   3. roll a complete champion + standard bearer + musician set up into "Full command";
 //   4. order it gear → command → lore → magic items, which reads as "what it carries, who leads it,
@@ -298,11 +303,25 @@ export function optionSummary(unit: OwbUnit, entry: ListEntry, itemsData?: Magic
   );
   const commandNames = new Set((Array.isArray(unit.command) ? unit.command : []).flatMap((o) => parts(o?.name_en)));
 
+  // RULE 1 GELDT ALLEEN VOOR GRATIS BASISUITRUSTING (16-10-2026). Light armour stond op de denylist
+  // omdat het meestal de gratis vloer is -- maar bij Skeleton Archers is het een upgrade van +1 per
+  // model, en dan viel een keuze waarvoor de speler betaalde uit de roster (en via renderedLists ook
+  // uit de campagne). Een label dat als EIGEN, BETAALDE keuze is genomen blijft dus staan. Alleen een
+  // keuze die precies dat ene label is: "Hand weapons" in een betaalde bundel "Hand weapons, Warbows"
+  // blijft de vloer en valt nog steeds weg.
+  const betaald = new Set<string>();
+  const merkBetaald = (name: string | undefined, points: number | undefined) => {
+    const p = parts(name);
+    if (p.length === 1 && (points ?? 0) > 0) betaald.add(p[0].toLowerCase());
+  };
+  for (const { opt } of selectedOptions(unit, entry)) merkBetaald(opt.name_en, opt.points);
+  for (const g of subOptionGroups(unit, entry)) for (const it of g.items) if (it.selected) merkBetaald(it.opt.name_en, it.opt.points);
+
   const gear: string[] = [];
   const command: string[] = [];
   const items: string[] = [];
   for (const label of loadout) {
-    if (MUNDANE.some((re) => re.test(label))) continue;        // rule 1
+    if (MUNDANE.some((re) => re.test(label)) && !betaald.has(label.toLowerCase())) continue; // rule 1
     if (itemNames.has(label)) items.push(label);
     else if (commandNames.has(label)) command.push(label);
     else gear.push(shortenLevel(label));                       // rule 2
@@ -323,4 +342,18 @@ export function optionSummary(unit: OwbUnit, entry: ListEntry, itemsData?: Magic
   const lores = (entry.lores ?? []).filter(Boolean).map(loreLabel);
 
   return [...gear, ...commandOut, ...lores, ...items].join(SEP); // rule 4
+}
+
+/** De whisper-regel MET de detachment-koppeling (16-10-2026): "Detachment" wordt "Detachment of
+ *  Spearmen", of "Detachment — no regiment assigned". `optionSummary` kent alleen de entry zelf; het
+ *  regiment staat elders in de lijst, dus dit krijgt de entries erbij. Gebruikt door de roster, de
+ *  export en de opsplitsing voor de campagne -- één label op elke plek. */
+export function rosterWhisper(
+  unit: OwbUnit, entry: ListEntry, itemsData: MagicItemsData | undefined,
+  entries: ListEntry[], getUnit: (cat: Category, id: string) => OwbUnit | undefined,
+): string {
+  const basis = optionSummary(unit, entry, itemsData);
+  const label = detachmentLabel(entries, entry, getUnit);
+  if (!label) return basis;
+  return withDetachmentLabel(basis ? basis.split(SEP) : [], label).join(SEP);
 }

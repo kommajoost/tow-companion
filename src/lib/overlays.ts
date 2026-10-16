@@ -16,7 +16,7 @@
 // notes rather than being discarded or guessed.
 
 import type { Lore, Rule } from '../types';
-import { CATEGORIES, type Category, type MagicItem, type MagicItemsData, type OwbArmy, type OwbOption, type OwbUnit } from './owbBuilder';
+import { CATEGORIES, magicItemId, type Category, type MagicItem, type MagicItemsData, type OwbArmy, type OwbOption, type OwbUnit } from './owbBuilder';
 import { statSleutels } from './statSleutel';
 
 /** Where a pack came from, so the UI can credit it and link out. */
@@ -245,7 +245,7 @@ export function isOverlay(v: unknown): v is CompositionOverlay {
  */
 /** Does an option's `armyComposition` tag cover `composition`? The tag is a single id OR a list of
  *  them — 61 of the 183 tagged options in the catalogue use the list form. */
-const tagCovers = (tag: string | string[] | undefined, composition?: string): boolean => {
+const tagCovers = (tag: string | string[] | Record<string, unknown> | undefined, composition?: string): boolean => {
   if (!composition) return false;
   return Array.isArray(tag) ? tag.includes(composition) : tag === composition;
 };
@@ -277,7 +277,72 @@ export function hideForeignOptions(unit: OwbUnit, composition: string, inherits?
     });
     next[group] = mark(list);
   }
+  // Item-SECTIES dragen dezelfde tag (16-10-2026). Een Tomb King heeft er twee: Grand Army (100 pt)
+  // en Nehekharan Royal Hosts (100 pt, met arcane items); Beastmen-characters vier (Magic Items en
+  // Chaos Mutations, elk per compositie). Allebei tonen gaf een dubbel budget. Verborgen in plaats
+  // van weggehaald: het budget heet `sec:<index>`, dus de index moet blijven staan.
+  // Alleen een string- of lijst-tag is lidmaatschap. De Dwarfs zetten hier een OBJECT neer
+  // ({ "royal-clan": { maxPoints: 150 } }) -- een afwijkend budget per compositie, geen verbod -- en
+  // dat blijft dus zichtbaar.
+  if (Array.isArray(next.items)) {
+    next.items = next.items.map((sec) => {
+      const tag = sec?.armyComposition;
+      if (tag === undefined || (typeof tag !== 'string' && !Array.isArray(tag))) return sec;
+      const visible = tagCovers(tag, composition) || tagCovers(tag, inherits);
+      return { ...sec, hidden: !visible };
+    });
+  }
   return next;
+}
+
+/**
+ * De magic items zoals ze gelden voor EEN compositie (16-10-2026). Het tegenstuk van `catalogueFor`
+ * voor de item-pool; elke plek die een lijst prijst of toont, haalt de items hier doorheen.
+ *
+ * OWB tagt items net als opties met hun compositie: "Royal Mantle" en "Blade of Antarhak" horen bij
+ * de Nehekharan Royal Hosts, "Staff of Aeons" bij de Mortuary Cults. Tot vandaag keek niets naar die
+ * tag, dus kreeg een Grand Army Tomb King ze gewoon aangeboden. Twee gevallen:
+ *
+ *  1. DUBBELE VARIANTEN. Sommige items staan twee keer in dezelfde lijst, één per compositie, met
+ *     dezelfde id maar een andere prijs (Ogres: Dragonhide Banner 45 in de Grand Army, 75 bij
+ *     Renegade; Lizardmen: Sun Standard of Chotec 40 / 65). Een opgeslagen keuze slaat alleen de id
+ *     op, en de engine pakte de EERSTE variant -- welke dat was hing af van de volgorde in het
+ *     bestand. Nu valt de variant van een andere compositie weg als er een passende naast staat. Dat
+ *     verandert de punten van lijsten die zo'n item dragen, bewust: ze kostten het verkeerde bedrag.
+ *  2. EEN ITEM ZONDER PASSENDE VARIANT blijft staan, met `foreign: true`. Een oude lijst houdt zo zijn
+ *     punten; de kiezer biedt hem niet aan (`magicCategoriesForPicker`) en `validate()` meldt hem.
+ *
+ * `inherits` telt mee zoals bij opties: een Renegade V2-pack erft de tags van de oude Renegade-
+ * compositie (`ok-renegade-v2` -> `ok-renegade`). Muteert niets.
+ */
+export function itemsForComposition(
+  items: MagicItemsData,
+  composition: string,
+  overlay?: CompositionOverlay | null,
+): MagicItemsData {
+  const inherits = overlay?.inheritsComposition;
+  const dekt = (it: MagicItem) => it.armyComposition === undefined
+    || tagCovers(it.armyComposition, composition) || tagCovers(it.armyComposition, inherits);
+  const out: MagicItemsData = { ...items };
+  for (const [listId, arr] of Object.entries(items)) {
+    if (!Array.isArray(arr)) continue;
+    const passend = new Set(arr.filter((it) => it && dekt(it)).map(magicItemId));
+    out[listId] = arr.flatMap((it): MagicItem[] => {
+      if (!it || dekt(it)) return [it];
+      if (passend.has(magicItemId(it))) return [];          // (1) de variant van een andere compositie
+      return [{ ...it, foreign: true }];           // (2) geen alternatief: houden, markeren
+    });
+  }
+  return out;
+}
+
+/** Overlay + compositie in één: wat elke aanroeper van `applyOverlayItems` eigenlijk wil. */
+export function itemsFor(
+  items: MagicItemsData,
+  composition: string,
+  overlay?: CompositionOverlay | null,
+): MagicItemsData {
+  return itemsForComposition(overlay ? applyOverlayItems(items, overlay) : items, composition, overlay);
 }
 
 /** The catalogue as it stands for ONE chosen composition: the pack's patches when there is an

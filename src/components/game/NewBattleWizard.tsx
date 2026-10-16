@@ -9,7 +9,7 @@ import { builderListToArmy, type MagicText, type MountText } from '../../lib/bui
 import { makeTroopTypeLookup, enrichArmyTroopTypes } from '../../lib/troopTypes';
 import { compName } from '../../lib/armies';
 import {
-  applyOverlayItems, catalogueFor, applyOverlayMagicText, applyOverlayMountText, applyOverlayStatIndex,
+  itemsFor, catalogueFor, applyOverlayMagicText, applyOverlayMountText, applyOverlayStatIndex,
   hasOverlay, isOverlay, overlayStatsFor, OVERLAY_FILES, type CompositionOverlay,
 } from '../../lib/overlays';
 import type { OwbArmy, MagicItemsData } from '../../lib/owbBuilder';
@@ -191,7 +191,7 @@ async function deelcodeNaarArmy(code: string): Promise<Army> {
   if (!rawCat) throw new Error(`No catalogue for “${l.army}” — update the app and try again.`);
   if (hasOverlay(l.composition) && !overlay) throw new Error('That list uses a composition this app could not load.');
   const cat = catalogueFor(rawCat, l.composition, overlay);
-  const itemPool = owb.itemsData && overlay ? applyOverlayItems(owb.itemsData, overlay) : owb.itemsData;
+  const itemPool = owb.itemsData ? itemsFor(owb.itemsData, l.composition, overlay) : owb.itemsData;
   const resolvedIndex = overlay ? applyOverlayStatIndex(owb.statIdx, overlay) : owb.statIdx;
   const statsFor = (naam: string): StatRow[] => overlayStatsFor(owb.statIdx, naam, overlay);
   return builderListToArmy({ ...l, name: l.name }, cat, statsFor, {

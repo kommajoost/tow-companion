@@ -23,12 +23,12 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { TOW, towFont } from '../../design/tow';
 import { getPersisted, setPersisted, usePersistentState } from '../../store';
 import {
-  CATEGORIES, COMPOSITION_RULES, entryPoints, loadoutLabels, selectedMagicItems, unitAllowedIn,
+  CATEGORIES, COMPOSITION_RULES, detachmentLabel, entryMinimum, entryPoints, loadoutLabels, selectedMagicItems, unitAllowedIn, withDetachmentLabel,
   unitCategoryFor, unitBlocks, unitNote,
   type BuilderList, type Category, type ListEntry, type MagicItemsData, type OwbArmy, type OwbUnit,
   findUnit,
 } from '../../lib/owbBuilder';
-import { deriveList, optionSummary } from '../../lib/builderDerived';
+import { deriveList, rosterWhisper } from '../../lib/builderDerived';
 import { makeTroopTypeLookup } from '../../lib/troopTypes';
 import { useCampagnes, groeiPlafonds, KRIMP_CAP, isCampagneLijst } from '../../lib/campaign';
 import { NaamDialoog } from '../game/NaamDialoog';
@@ -275,7 +275,8 @@ export function BuilderFlow({
         // `?? undefined`: het plafond is sinds 22-09-2026 null (vervallen) en de kaart verwacht
         // number | undefined. Null en undefined betekenen hier hetzelfde -- geen plafond tonen.
         groeiMax: campaignMods?.groei?.[entry.uid]?.max ?? undefined,
-        whisper: optionSummary(unit, entry, itemsData),
+        // Met de detachment-koppeling erin ("Detachment of Spearmen"), 16-10-2026.
+        whisper: rosterWhisper(unit, entry, itemsData, list.entries ?? [], getUnit),
         points: entryPoints(unit, entry, itemsData),
         count: entry.count,
         magic,
@@ -689,7 +690,7 @@ export function BuilderFlow({
         if (e.uid !== currentUid) return e;
         const unit = getUnit(e.cat, e.unitId);
         if (!unit) return e;
-        const min = unit.minimum ?? 1;
+        const min = entryMinimum(unit, e); // een detachment: 5 (16-10-2026)
         const max = (unit.maximum ?? 0) > 0 ? unit.maximum! : 9999;
         return { ...e, count: Math.min(max, Math.max(min, e.count + delta)) };
       }),
@@ -847,7 +848,7 @@ export function BuilderFlow({
             count: r.count, points: r.points, whisper: r.whisper, unit: r.unit,
             // De VOLLEDIGE loadout, want de OWB-vormen tonen ook de gratis basisuitrusting; de
             // `whisper` is juist de ontruiste versie en dient alleen de `simple`-vorm.
-            loadout: loadoutLabels(r.unit, r.entry, itemsData),
+            loadout: withDetachmentLabel(loadoutLabels(r.unit, r.entry, itemsData), detachmentLabel(list.entries, r.entry, getUnit)),
           }))}
           meta={{
             listName: name || 'Untitled list',
