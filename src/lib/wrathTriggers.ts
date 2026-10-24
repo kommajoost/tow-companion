@@ -28,9 +28,9 @@ export interface WrathTrigger {
 }
 
 export const WRATH_TRIGGERS: WrathTrigger[] = [
-  { d6: 1, naam: 'Rain of Blood', wanneer: 'First Blood: the first unit is destroyed', effect: 'All shooting −1 to hit until the end of the next round.' },
-  { d6: 2, naam: 'The Wrath Watches', wanneer: 'A challenge is fought', effect: 'The winner gains Hatred for the rest of the battle.' },
-  { d6: 3, naam: 'Echo of Fury', wanneer: 'Run Down: a fleeing unit is caught', effect: 'All units in combat +1 S until the end of the next round.' },
+  { d6: 1, naam: 'Rain of Blood', wanneer: 'First Blood: the first unit is destroyed', effect: 'All shooting −1 to hit until the start of the active player’s next turn.' },
+  { d6: 2, naam: 'The Wrath Watches', wanneer: 'A challenge is fought and won', effect: 'The winner gains Hatred for the rest of the battle.' },
+  { d6: 3, naam: 'Echo of Fury', wanneer: 'Run Down: a fleeing unit is caught', effect: 'All units in combat +1 S until the end of the next turn.' },
   { d6: 4, naam: 'The Weeping Rift', wanneer: 'A spell is dispelled', effect: 'Roll a D6: on a 1-3 the rift opens at the dispelling Wizard, on a 4-6 at the casting Wizard (no dispelling Wizard: at the caster). Place a small template there and scatter it D6″ (never onto a unit): dangerous terrain for the rest of the battle.' },
   { d6: 5, naam: 'The Slayer Marked', wanneer: 'A character is slain', effect: 'The unit that slew him gains Impetuous for the rest of the battle.' },
   { d6: 6, naam: 'The Wrath Offers', wanneer: 'A Panic test is failed', effect: 'The unit may hold as if the test was passed, but then gains Stupidity for the rest of the battle. Once per player per battle.' },
