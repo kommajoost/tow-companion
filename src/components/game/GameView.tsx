@@ -6,11 +6,15 @@ import { useBackClose } from '../../lib/backStack';
 import { parseArmyList } from '../../lib/armyParser';
 import { makeTroopTypeLookup, enrichArmyTroopTypes } from '../../lib/troopTypes';
 import { unitTotalStrength } from '../../lib/armyRules';
-import { UnitCard } from './UnitCard';
+import { UnitCard, type ScenarioKnop } from './UnitCard';
 import { BattleBar } from './BattleBar';
 import { ReminderStrip, type KantReminders } from './ReminderStrip';
 import { useCampaignBattle } from './useCampaignBattle';
 import { ObjectivesTracker } from './ObjectivesTracker';
+import { useScenarioBonus } from './useObjectives';
+import { CampaignScenarioOverlay, eersteBeurtZin, useWrath } from './CampaignScenarioBits';
+import { eersteBeurtVast } from '../../lib/campaignScenario';
+import { isScenarioTestCode } from '../../lib/scenarioTest';
 import { OwbInstructions } from './OwbInstructions';
 import { ArmyListPicker } from './ArmyListPicker';
 import { BattleSheetView } from './BattleSheetView';
@@ -21,6 +25,12 @@ import { useData } from '../../data';
 import { inferOverlayId, isOverlay, OVERLAY_FILES } from '../../lib/overlays';
 import type { KillDetail, Army, ArmyUnit } from '../../types';
 import type { BattleSheet } from '../../lib/battleSheet';
+import { VersterkingKiezer } from './VersterkingKiezer';
+import { isVrijPotjeCode } from '../../lib/battleCode';
+import { versterkingVan, versterkingVoorKant, voegVersterkingToe, zonderVersterking } from '../../lib/versterking';
+import { postGeldtVoor } from '../../lib/scenarioBonus';
+import { aangetikt, gedoodDoorVijand, knopLabel, postUitUnits, REKENREGEL, soortUitsluiting, tikUnit, uitsluiting, uitsluitingTekst, waardeNu } from '../../lib/scenarioUnits';
+import type { VpUnitTrack } from '../../lib/victoryPoints';
 
 const eb = engraved as React.CSSProperties;
 const display = towFont.display;
@@ -157,15 +167,51 @@ export function GameView() {
   // einde-battle-overzicht. De handmatige VP-teller is vervangen door deze auto-stand. ──
   const hostArmy: Army | null = meKey === 'host' ? myArmy : opponentArmy;
   const guestArmy: Army | null = meKey === 'host' ? opponentArmy : myArmy;
+  // 22-10-2026: de scenario-posten van de campagne-sheet (Act 3+) tellen mee in de VP, en dus in de
+  // uitslag. Zonder campagne-sheet (vrij potje) is dit null en rekent het precies zoals voorheen.
+  const scenarioDef = useScenarioBonus();
   const res = useMemo(
-    () => berekenVictory(hostArmy, guestArmy, tracker, tracker.bonus?.host, tracker.bonus?.guest),
-    [hostArmy, guestArmy, tracker],
+    () => berekenVictory(hostArmy, guestArmy, tracker, tracker.bonus?.host, tracker.bonus?.guest, tracker.battleMarch === true, scenarioDef),
+    [hostArmy, guestArmy, tracker, scenarioDef],
   );
+  // DE SCENARIO-TEST (22-10-2026, testbuild): een lokaal potje zonder (verplicht) leger. De panelen
+  // (ronde, VP, objectives, reminders, einde) staan er dan ook zonder leger, anders valt er niets te testen.
+  const scenarioTest = isScenarioTestCode(code);
+  const toonPanelen = !!army || scenarioTest;
   const hostName = meKey === 'host' ? (myName || 'You') : (opponentName || 'Opponent');
   const guestName = meKey === 'host' ? (opponentName || 'Opponent') : (myName || 'You');
   const vpMe = meKey === 'host' ? res.hostVp : res.guestVp;
   const vpOpp = meKey === 'host' ? res.guestVp : res.hostVp;
   const leader: 'me' | 'opp' | null = res.winnaar == null ? null : res.winnaar === meKey ? 'me' : 'opp';
+
+  // ── BREAKTHROUGH (24-10-2026, lib/scenarioUnits.ts) ── Heeft de sheet een puntwaarde-post voor de kant die
+  // het roster nu toont (de aanvaller, bij Breakthrough), dan krijgt elke unit die in aanmerking komt een
+  // knopje. Characters en monsters nooit; een unit die vlucht of weg is alleen als hij al aan stond (om hem
+  // uit te kunnen zetten). De post zelf rekent de som in berekenVictory, met dezelfde functies.
+  const rosterZijde: 'host' | 'guest' = absSeat(side) === 'guest' ? 'guest' : 'host';
+  const puntPosten = (scenarioDef?.posten ?? []).filter((p) => postUitUnits(p) && postGeldtVoor(p, rosterZijde));
+  const gedoodRoster = puntPosten.length ? gedoodDoorVijand(rosterZijde, tracker) : null;
+  const knoppenVoor = (u: ArmyUnit): ScenarioKnop[] | undefined => {
+    if (!puntPosten.length || soortUitsluiting(u)) return undefined;
+    const t = tracker.units[`${rosterZijde}:${u.id}`] as VpUnitTrack | undefined;
+    const uit = uitsluiting(u, t, gedoodRoster?.has(u.id) ?? false);
+    return puntPosten.map((p) => {
+      const aan = aangetikt(tracker.bonus?.[rosterZijde], p.id)?.includes(u.id) ?? false;
+      return {
+        postId: p.id,
+        label: knopLabel(p),
+        aan,
+        uitgesloten: uit ? uitsluitingTekst(uit) : null,
+        nu: uit ? 0 : waardeNu(u, t),
+        punten: Math.max(0, u.points ?? 0),
+        uitleg: REKENREGEL,
+        onToggle: () => setTracker({
+          ...tracker,
+          bonus: { ...(tracker.bonus ?? {}), [rosterZijde]: tikUnit(tracker.bonus?.[rosterZijde], p.id, u.id, !aan) },
+        }),
+      };
+    });
+  };
 
   const afield = army
     ? army.units.filter((u) => unitTotalStrength(u) - (tracker.units[unitKey(side, u.id)]?.lost ?? 0) > 0).length
@@ -174,8 +220,11 @@ export function GameView() {
   const groups: { category: string; units: ArmyUnit[] }[] = [];
   if (army) {
     for (const u of army.units) {
-      let g = groups.find((x) => x.category === u.category);
-      if (!g) { g = { category: u.category, units: [] }; groups.push(g); }
+      // Een versterkings-unit (23-10-2026) in een eigen kop, zodat je aan tafel ziet wat er bij hoort.
+      // `u.category` zelf blijft staan: het veteranen-rapport en de PDF lezen dat veld.
+      const kop = u.versterking ? `Reinforcements · ${u.category}` : u.category;
+      let g = groups.find((x) => x.category === kop);
+      if (!g) { g = { category: kop, units: [] }; groups.push(g); }
       g.units.push(u);
     }
   }
@@ -193,7 +242,7 @@ export function GameView() {
     </div>
   );
 
-  const battleBar = army && (
+  const battleBar = toonPanelen && (
     <BattleBar round={tracker.round} maxRound={maxRound} onRound={adjRound} vpMe={vpMe} vpOpp={vpOpp} leader={leader} myName={myName || 'You'} opponentName={opponentName || 'Opponent'} editable={editable} vertical={wide} />
   );
   // DE REMINDER-BALK (Joost 05-10-2026): vast onder de ronde/VP-balk, met het weer en — bij een
@@ -201,6 +250,9 @@ export function GameView() {
   // toewijzing als waarmee openCampaignBattle de stoelen vult. Perks, items en de first-turn-bonus
   // staan niet op de tracker, dus die komen uit de campagne-battle zelf (één keer opgehaald).
   const campagne = useCampaignBattle(code);
+  // 22-10-2026: ligt de eerste beurt vast (Breakthrough, Plunder, The Forge), dan geen roll-off-bonussen
+  // in de balk maar wie er begint. En vanaf Act 3 de Wrath Triggers van deze battle.
+  const eersteVast = eersteBeurtVast(campagne?.scenario);
   const kantVan = (abs: string, naam: string): KantReminders | null => {
     if (!campagne) return null;
     const k = abs === 'host' ? 'aanvaller' : 'verdediger';
@@ -208,14 +260,19 @@ export function GameView() {
       naam,
       perks: campagne.perks?.[k] ?? [],
       items: campagne.items?.[k] ?? [],
-      rollOff: campagne.rollOff?.[k] ?? [],
+      rollOff: eersteVast ? [] : campagne.rollOff?.[k] ?? [],
     };
   };
-  const reminderStrip = army && (
+  // 23-10-2026: de Wrath komt van de campagne (server-worp bij het begin van de War phase); het lab en de
+  // scenario-test gooien lokaal. Geldt hij niet (Act 1-2, geen campagne), dan geen Wrath-regel in de balk.
+  const wrathStand = useWrath(campagne, code);
+  const reminderStrip = toonPanelen && (
     <ReminderStrip
       weer={tracker.weer ?? null}
       mij={kantVan(meKey, myName || 'You')}
       tegen={kantVan(absSeat('opp'), opponentName || 'Opponent')}
+      wrath={wrathStand.geldt ? wrathStand.triggers : null}
+      eersteBeurt={campagne ? eersteBeurtZin(campagne) : null}
     />
   );
   // Objective-VP hoort bij de RONDE, niet bij het eindscherm: troves en landmarks scoren per
@@ -223,7 +280,7 @@ export function GameView() {
   // battle", dan moest je aan het eind reconstrueren hoeveel beurten je wat vasthield (Joost,
   // 29-08). Het volgt de kant-schakelaar hierboven, net als het roster eronder — je scoort voor
   // wie je op dat moment bijhoudt. Buiten een campagne (geen objectives) rendert het niets.
-  const objectivesPaneel = army && (
+  const objectivesPaneel = toonPanelen && (
     <ObjectivesTracker
       zijde={absSeat(side) === 'guest' ? 'guest' : 'host'}
       naam={side === 'me' ? (myName || 'You') : (opponentName || 'Opponent')}
@@ -242,7 +299,11 @@ export function GameView() {
   // potje van vóór de wizard hebben er geen, en een knop die een leeg paneel opent is erger dan
   // geen knop.
   const sheet = normSheet(tracker.sheet);
-  const sheetKnop = sheet && (
+  // 22-10-2026: bij een CAMPAGNE-battle komt de sheet van de server (geen `tracker.sheet`), en ook dan
+  // wil je de kaart en de scenarioteksten tijdens het spel kunnen teruglezen: dezelfde knop opent dan
+  // het compacte scenario-overzicht (CampaignScenarioOverlay).
+  const campagneSheet = !sheet && !!campagne && !!campagne.scenario;
+  const sheetKnop = (sheet || campagneSheet) && (
     <button
       onClick={() => setSheetOpen(true)}
       style={{ width: '100%', padding: '10px 14px', borderRadius: 10, cursor: 'pointer', border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt, color: TOW.ink, fontFamily: display, fontWeight: 600, fontSize: 13.5 }}
@@ -250,8 +311,36 @@ export function GameView() {
       Battlefield
     </button>
   );
-  const sheetModal = sheet && sheetOpen && (
-    <BattlefieldOverlay sheet={sheet} onClose={() => setSheetOpen(false)} />
+  const sheetModal = sheetOpen && (sheet
+    ? <BattlefieldOverlay sheet={sheet} onClose={() => setSheetOpen(false)} />
+    : campagneSheet && campagne && code
+      ? <CampaignScenarioOverlay battle={campagne} code={code} mySeat={meKey === 'guest' ? 'guest' : 'host'} onClose={() => setSheetOpen(false)} />
+      : null);
+
+  // ── REINFORCEMENT DETACHMENT (23-10-2026, lib/versterking.ts) ──────────────────────────────────────
+  // Bij een campagne-battle alleen als de server een versterking voor DEZE kant meegeeft (twee tegen
+  // drie). Bij een vrij potje mag het altijd: de spelers weten zelf of ze met twee tegen drie staan.
+  // Alleen je EIGEN leger, en in solo ook dat van de tegenstander (je bedient dan beide kanten).
+  const kantVanZijde: 'aanvaller' | 'verdediger' = absSeat(side) === 'guest' ? 'verdediger' : 'aanvaller';
+  const rfMax = campagne ? versterkingVoorKant(campagne.versterking, kantVanZijde) : null;
+  // Een campagne-code (geen vier tekens) is een campagne-battle, ook zolang hij nog laadt.
+  const campagneCode = !!code && !isVrijPotjeCode(code);
+  const rfNu = versterkingVan(army);
+  // Staat er al een versterking bij, dan blijft het blok staan (om hem weg te kunnen halen).
+  const rfMag = !!army && (side === 'me' || seat === 'solo') && (!!rfNu || (campagneCode ? !!rfMax : true));
+  const versterkingPaneel = rfMag && army && (
+    <VersterkingKiezer
+      key={`${side}-${rfNu ? 'aan' : 'uit'}`}
+      testid="game-versterking"
+      max={rfMax ?? army.versterking?.max ?? null}
+      // Alleen versterkingen van hetzelfde army book. Het leger draagt de leesbare factienaam, de lijsten
+      // een slug: de kiezer vergelijkt die twee, en valt terug op alle versterkingslijsten als er niets past.
+      leger={null}
+      factie={army.faction}
+      gekozen={rfNu ? { naam: rfNu.naam, punten: rfNu.punten } : null}
+      onPick={(rf) => applyArmy(voegVersterkingToe(army, rf, rfMax ?? null))}
+      onWeg={() => applyArmy(zonderVersterking(army))}
+    />
   );
 
   const endModal = endOpen && (
@@ -265,7 +354,7 @@ export function GameView() {
         {g.units.map((u) => {
           const t = tracker.units[unitKey(side, u.id)];
           return (
-            <UnitCard key={u.id} unit={u} faction={army.faction} editable={editable} onChange={(patch) => onUnitChange(u.id, patch)} lost={t?.lost ?? 0} weg={t?.weg ?? false} fleeing={t?.fleeing ?? false} kills={t?.kills ?? 0} onSetLost={(lost) => setCasualty(u.id, lost)} onRemoved={() => setRemoved(u.id, !(t?.weg ?? false))} onFlee={() => toggleFleeing(u.id)} onSetKills={(k) => setKills(u.id, k)} killDetails={t?.killDetails ?? []} onSetKillDetail={(i, patch) => setKillDetail(u.id, i, patch)} vijandUnits={vijandLeger?.units ?? []} maxRound={maxRound} collapsed={!expanded.has(u.id)} onToggleCollapse={() => toggleExpand(u.id)} />
+            <UnitCard key={u.id} unit={u} faction={army.faction} editable={editable} onChange={(patch) => onUnitChange(u.id, patch)} lost={t?.lost ?? 0} weg={t?.weg ?? false} fleeing={t?.fleeing ?? false} kills={t?.kills ?? 0} onSetLost={(lost) => setCasualty(u.id, lost)} onRemoved={() => setRemoved(u.id, !(t?.weg ?? false))} onFlee={() => toggleFleeing(u.id)} onSetKills={(k) => setKills(u.id, k)} killDetails={t?.killDetails ?? []} onSetKillDetail={(i, patch) => setKillDetail(u.id, i, patch)} vijandUnits={vijandLeger?.units ?? []} maxRound={maxRound} collapsed={!expanded.has(u.id)} onToggleCollapse={() => toggleExpand(u.id)} scenarioKnoppen={knoppenVoor(u)} />
           );
         })}
       </div>
@@ -299,13 +388,13 @@ export function GameView() {
           </div>
           <div style={{ margin: '14px 14px 0', display: 'flex', flexDirection: 'column', gap: 9, overflowY: 'auto', flex: 1, minHeight: 0, paddingBottom: 18 }}>
             <div style={{ ...eb, fontSize: 8.5, color: TOW.muted }}>This game</div>
-            <CodeBadge code={code} onLeave={leaveGame} waiting={!!(code && seat === 'host' && !opponentArmy)} />
+            <CodeBadge code={code} onLeave={leaveGame} waiting={!!(code && seat === 'host' && !opponentArmy)} solo={seat === 'solo'} />
             {sideToggle}
             {battleBar}
             {reminderStrip}
             {sheetKnop}
             {objectivesPaneel}
-            {(myArmy || opponentArmy) && (
+            {(myArmy || opponentArmy || scenarioTest) && (
               <button onClick={() => setEndOpen(true)} style={{ width: '100%', border: 'none', borderRadius: 11, cursor: 'pointer', padding: '12px 16px', background: `linear-gradient(180deg, ${TOW.goldBright}, ${TOW.gold} 55%, ${TOW.goldDeep})`, color: TOW.onGrad, fontFamily: display, fontWeight: 700, fontSize: 14 }}>End battle</button>
             )}
           </div>
@@ -321,6 +410,7 @@ export function GameView() {
                 <Ornament w={150} color={TOW.goldDeep} style={{ display: 'block', margin: '14px 0 2px', opacity: 0.5 }} />
               </>
             )}
+            {versterkingPaneel}
             {rosterBody}
           </div>
         </div>
@@ -345,7 +435,7 @@ export function GameView() {
         {code && seat === 'host' && !opponentArmy && (
           <span style={{ fontFamily: serif, fontStyle: 'italic', fontSize: 12.5, color: TOW.muted }}>waiting for opponent…</span>
         )}
-        {sheet && (
+        {(sheet || campagneSheet) && (
           <button onClick={() => setSheetOpen(true)} style={{ border: `1px solid ${TOW.lineStrong}`, borderRadius: 9, background: TOW.cardLt, color: TOW.ink, cursor: 'pointer', padding: '6px 12px', fontFamily: display, fontSize: 12 }}>Battlefield</button>
         )}
         <button onClick={leaveGame} style={{ border: `1px solid ${TOW.lineStrong}`, borderRadius: 9, background: 'transparent', color: TOW.muted, cursor: 'pointer', padding: '6px 12px', fontFamily: display, fontSize: 12 }}>Leave</button>
@@ -367,8 +457,9 @@ export function GameView() {
             {side === 'me' ? myName || 'You' : opponentName || 'Opponent'} — {army.faction || army.name}{army.points != null ? ` · ${army.points} pts` : ''} · {afield}/{army.units.length} afield
           </div>
         )}
+        {versterkingPaneel}
         {rosterBody}
-        {(myArmy || opponentArmy) && (
+        {(myArmy || opponentArmy || scenarioTest) && (
           <div style={{ marginTop: 16 }}>
             <button onClick={() => setEndOpen(true)} style={{ width: '100%', border: 'none', borderRadius: 11, cursor: 'pointer', padding: '13px 16px', background: `linear-gradient(180deg, ${TOW.goldBright}, ${TOW.gold} 55%, ${TOW.goldDeep})`, color: TOW.onGrad, fontFamily: display, fontWeight: 700, fontSize: 15 }}>End battle</button>
           </div>
@@ -406,11 +497,11 @@ function BattlefieldOverlay({ sheet, onClose }: { sheet: BattleSheet; onClose: (
   );
 }
 
-function CodeBadge({ code, onLeave, waiting }: { code: string | null; onLeave: () => void; waiting: boolean }) {
+function CodeBadge({ code, onLeave, waiting, solo = false }: { code: string | null; onLeave: () => void; waiting: boolean; solo?: boolean }) {
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: 9, padding: '9px 12px', borderRadius: 11, background: TOW.cardLt, border: `1px solid ${TOW.line}` }}>
       <div style={{ flex: 1, minWidth: 0 }}>
-        <div style={{ ...eb, fontSize: 7.5, color: TOW.muted }}>{waiting ? 'Waiting for opponent' : code ? 'Shared game' : 'Local game'}</div>
+        <div style={{ ...eb, fontSize: 7.5, color: TOW.muted }}>{waiting ? 'Waiting for opponent' : code && !solo ? 'Shared game' : 'Local game'}</div>
         <div style={{ fontFamily: display, fontWeight: 700, fontSize: 17, color: code ? TOW.goldDeep : TOW.ink, letterSpacing: code ? '0.2em' : 0 }}>{code || 'Solo'}</div>
       </div>
       <button onClick={onLeave} style={{ ...eb, fontSize: 8, color: TOW.muted, border: `1px solid ${TOW.lineStrong}`, borderRadius: 8, background: 'transparent', cursor: 'pointer', padding: '7px 11px' }}>Leave</button>

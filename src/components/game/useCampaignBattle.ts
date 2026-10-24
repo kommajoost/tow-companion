@@ -34,6 +34,12 @@ function haal(code: string): Promise<CampaignBattle | null> {
   return p;
 }
 
+/** Vergeet de gecachete battle van een code (23-10-2026, Scenario lab): het lab zet onder dezelfde
+ *  testcode telkens een ANDERE battle klaar, en zonder dit las het nieuwe potje de vorige sheet. */
+export function vergeetCampagneBattle(code: string): void {
+  cache.delete(code.trim().toUpperCase());
+}
+
 /** De campagne-battle van dit potje, of null (vrij potje, nog bezig met laden, of niet te vinden). */
 export function useCampaignBattle(code: string | null | undefined): CampaignBattle | null {
   const [battle, setBattle] = useState<CampaignBattle | null>(null);

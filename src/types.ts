@@ -223,6 +223,10 @@ export interface ArmyUnit {
    *  own troop type — the game surfaces it as a tappable chip so the player can see the mount's full
    *  info. */
   mounts?: { name: string; profiles: UnitProfile[]; specialRules: string[]; troopType?: string; details?: string[] }[];
+  /** REINFORCEMENT DETACHMENT (23-10-2026, lib/versterking.ts): deze unit komt uit de versterking die
+   *  alleen voor deze battle bij het leger staat. Telt mee voor de VP en de kills aan tafel, maar is
+   *  geen campagne-unit: geen campaignId, geen XP, geen scars, niet in het veteranen-rapport. */
+  versterking?: boolean;
 }
 
 export interface Army {
@@ -236,6 +240,10 @@ export interface Army {
   overlayId?: string;
   units: ArmyUnit[];
   raw: string; // original pasted text
+  /** REINFORCEMENT DETACHMENT (23-10-2026): staat er een versterking bij dit leger, dan wat het is.
+   *  `max` = de puntengrens van deze battle (helft van de cap), null als die niet bekend is (vrij potje).
+   *  De units zelf staan gewoon in `units`, gemerkt met `versterking: true`. */
+  versterking?: { naam: string; punten: number | null; max: number | null };
 }
 
 /** Per-unit battle state, keyed `<seat>:<unitId>` (seat = host/guest, or me/opp solo). */
@@ -295,13 +303,8 @@ export interface GameTracker {
    *  Winds: Fated dispels), per seat. Alleen gezet bij een quest met tredes; de campagne betaalt de
    *  hoogste trede die dit aantal haalt. Zelfde reden als `quests` om op de tracker te staan. */
   questAantal?: { host?: number; guest?: number };
-  /** 17-08: welk leger zich TERUGTROK, als een van de twee dat deed. Een terugtrekkend leger redt zijn
-   *  units (geen verwondings-worpen, geen Battlefield Losses) maar geeft de battle weg: de campagne
-   *  legt de trede vast op minimaal Resounding voor de andere kant, en een Crushing tegen de
-   *  terugtrekker blijft staan. Staat om dezelfde reden als `quests` op de tracker: het is een
-   *  tafel-feit dat beide spelers moeten zien én dat in de report-`sig` hoort, zodat de vlag niet
-   *  meer kan omgaan nadat de ander heeft goedgekeurd. */
-  withdrew?: 'host' | 'guest';
+  // 23-10-2026: hier stond `withdrew` (welk leger zich terugtrok). Terugtrekken is uit de campagne.
+  // Een oude tracker in tow_games of localStorage kan de sleutel nog dragen; niets leest hem meer.
   /** 21-08: speelt dit potje onder de BATTLE MARCH-regels? Battle March is het kleine-spel-format van
    *  The Old World (General's Companion p. 27) en wijkt op twee punten af die de app moet weten:
    *  het duurt VIJF rounds i.p.v. zes, en de VP-schaal is halveerd (General 50, BSB 25, standaard 25).

@@ -4,7 +4,9 @@ import { useGame } from '../../game';
 import { vpSchaal, type VpBonus, type VpResultaat, type VpSchaal } from '../../lib/victoryPoints';
 import { type ObjectiveDef } from '../../lib/objectiveVp';
 import { useCampagneUitslag } from './useCampagneUitslag';
-import { useObjectives } from './useObjectives';
+import { useObjectives, useScenarioBonus } from './useObjectives';
+import { ScenarioPosten } from './ScenarioPosten';
+import { postenVoor, type ScenarioBonus } from '../../lib/scenarioBonus';
 
 const eb = engraved as React.CSSProperties;
 const display = towFont.display;
@@ -52,6 +54,8 @@ export function VpPanel({ compact = false, res, hostName, guestName, hideOutcome
   // twee kopieën van deze afleiding is precies hoe twee schermen het oneens worden over WELKE
   // objectives er gelden (29-08).
   const objDefs = useObjectives();
+  // 22-10-2026: de scenario-posten van de sheet (Act 3+), per kant de posten die die kant kan scoren.
+  const scenario = useScenarioBonus();
   // De ACTIEVE VP-schaal. Battle March halveert General/BSB/standaard, dus de labels moeten die
   // bedragen tonen: een vast "(+100)" op een Battle March-tafel zou de speler voorliegen over wat de
   // engine erachter optelt.
@@ -103,9 +107,9 @@ export function VpPanel({ compact = false, res, hostName, guestName, hideOutcome
       </button>
       {bonusOpen && (
         <div style={{ marginTop: 8 }}>
-          <BonusEditor name={hostName} bonus={tracker.bonus?.host} onSet={(p) => setBonus('host', p)} compact={compact} objectives={objDefs} schaal={schaal} />
+          <BonusEditor name={hostName} zijde="host" bonus={tracker.bonus?.host} onSet={(p) => setBonus('host', p)} compact={compact} objectives={objDefs} schaal={schaal} scenario={scenario} />
           <div style={{ height: 10 }} />
-          <BonusEditor name={guestName} bonus={tracker.bonus?.guest} onSet={(p) => setBonus('guest', p)} compact={compact} objectives={objDefs} schaal={schaal} />
+          <BonusEditor name={guestName} zijde="guest" bonus={tracker.bonus?.guest} onSet={(p) => setBonus('guest', p)} compact={compact} objectives={objDefs} schaal={schaal} scenario={scenario} />
         </div>
       )}
 
@@ -126,6 +130,8 @@ export function VpPanel({ compact = false, res, hostName, guestName, hideOutcome
 // + scenario-VP). De namen zeggen "Enemy …" want de bonus telt tegen de tegenstander.
 function BonusEditor({
   name,
+  zijde,
+  scenario,
   bonus,
   onSet,
   compact,
@@ -133,6 +139,9 @@ function BonusEditor({
   schaal,
 }: {
   name: string;
+  /** Welke stoel (host = aanvaller): bepaalt welke scenario-posten deze kant kan scoren. */
+  zijde: 'host' | 'guest';
+  scenario: ScenarioBonus | null;
   bonus: VpBonus | undefined;
   onSet: (patch: Partial<VpBonus>) => void;
   compact: boolean;
@@ -203,6 +212,9 @@ function BonusEditor({
           );
         })}
 
+        {/* Scenario-posten uit de sheet (Act 3+, 22-10-2026): tellen mee in de VP en dus in de uitslag. */}
+        {postenVoor(scenario, zijde).length > 0 && <ScenarioPosten def={scenario} zijde={zijde} compact={compact} />}
+
         {/* Vrij veld voor overige/onbekende objective-VP (catch-all naast de bovenstaande). Het heette
             "Other objective VP" en dat was onduidelijk (Joost 21-08-2026): je zag niet WELK objectief er
             op je tafel lag, dus typte je het totaal hier maar in. De objectives hierboven staan nu bij
@@ -211,7 +223,7 @@ function BonusEditor({
           <span style={{ flex: 1, minWidth: 0, fontFamily: serif, fontSize: 12.5, color: TOW.parchDim }}>
             Anything else (+)
             <span style={{ display: 'block', fontStyle: 'italic', fontSize: 10.5, color: TOW.muted, lineHeight: 1.35 }}>
-              {objectives.length
+              {objectives.length || postenVoor(scenario, zijde).length
                 ? 'Only for VP not covered by the objectives listed above.'
                 : 'Free field — use it for scenario VP this game does not list.'}
             </span>

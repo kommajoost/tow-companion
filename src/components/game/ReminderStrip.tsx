@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { TOW, towFont, engraved } from '../../design/tow';
 import type { GameWeer } from '../../types';
 import type { FoundItem, Perk, RollOffBron } from '../../lib/campaignBattle';
+import type { WrathTrigger } from '../../lib/wrathTriggers';
 
 const eb = engraved as React.CSSProperties;
 
@@ -36,14 +37,21 @@ const namenVan = (k: KantReminders): string =>
  *
  * Niets om te tonen (geen weer, geen campagne-reminders) → de balk is er niet.
  */
-export function ReminderStrip({ weer, mij, tegen }: {
+export function ReminderStrip({ weer, mij, tegen, wrath = null, eersteBeurt = null }: {
   weer: GameWeer | null;
   mij: KantReminders | null;
   tegen: KantReminders | null;
+  /** De actieve Wrath Triggers (Act 3+). null = geldt niet in deze battle; een lege lijst = geldt wel,
+   *  maar de campagne heeft nog niet gegooid (dat gebeurt bij het begin van de War phase, 23-10-2026). */
+  wrath?: WrathTrigger[] | null;
+  /** 22-10-2026: wie de eerste beurt heeft als die vastligt (Breakthrough, Plunder, The Forge). De
+   *  roll-off-bonussen geeft GameView dan niet mee: er wordt niet gerold. */
+  eersteBeurt?: string | null;
 }): React.JSX.Element | null {
   const [open, setOpen] = useState(false);
   const heeftKanten = !leeg(mij) || !leeg(tegen);
-  if (!weer && !heeftKanten) return null;
+  if (!weer && !heeftKanten && wrath == null && !eersteBeurt) return null;
+  const wrathNamen = wrath && wrath.length ? wrath.map((t) => t.naam).join(' · ') : null;
 
   const regel: React.CSSProperties = {
     display: 'flex', alignItems: 'baseline', gap: 7, minWidth: 0,
@@ -120,6 +128,21 @@ export function ReminderStrip({ weer, mij, tegen }: {
             <span style={eenRegel}>{samenvatting}</span>
           </div>
         )}
+        {/* De Wrath Triggers van deze battle (Act 3+): de namen, of dat de campagne ze nog gooit. */}
+        {!open && wrath != null && (
+          <div style={regel}>
+            <span style={{ ...kop, color: TOW.blood }}>Wrath</span>
+            <span style={eenRegel}>
+              {wrathNamen ?? 'Rolled when the War phase begins'}
+            </span>
+          </div>
+        )}
+        {!open && !samenvatting && !heeftKanten && !weer && wrath == null && eersteBeurt && (
+          <div style={regel}>
+            <span style={kop}>First turn</span>
+            <span style={eenRegel}>{eersteBeurt}</span>
+          </div>
+        )}
         {/* Alleen een first-turn-bonus en verder niets: dan zegt de samenvatting niets, dus noemen we
             hem hier zelf, anders lijkt de balk leeg. */}
         {!open && !samenvatting && heeftKanten && (
@@ -140,8 +163,30 @@ export function ReminderStrip({ weer, mij, tegen }: {
                 <div style={{ ...eb, fontSize: 7, color: TOW.faint, marginTop: 4 }}>In play for the whole game</div>
               </div>
             )}
+            {wrath != null && (
+              <div style={{ marginTop: weer ? 10 : 0, borderTop: weer ? `1px solid ${TOW.line}` : 'none', paddingTop: weer ? 6 : 0 }}>
+                <div style={{ ...kop, color: TOW.blood }}>Wrath Triggers</div>
+                {wrath.length === 0 && (
+                  <div style={{ fontFamily: towFont.serif, fontSize: 12.5, color: TOW.parch, lineHeight: 1.45, marginTop: 2 }}>
+                    Not rolled yet: the campaign rolls them when the War phase begins.
+                  </div>
+                )}
+                {wrath.map((t) => (
+                  <div key={t.d6} style={{ marginTop: 5 }}>
+                    <div style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 13, color: TOW.ink }}>{t.d6} · {t.naam}</div>
+                    <div style={{ fontFamily: towFont.serif, fontSize: 12.5, color: TOW.parchDim, lineHeight: 1.4 }}>When: {t.wanneer}</div>
+                    <div style={{ fontFamily: towFont.serif, fontSize: 12.5, color: TOW.parch, lineHeight: 1.4 }}>{t.effect}</div>
+                  </div>
+                ))}
+              </div>
+            )}
+            {eersteBeurt && (
+              <div style={{ marginTop: 10, fontFamily: towFont.serif, fontSize: 12.5, color: TOW.parch, lineHeight: 1.45 }}>
+                <span style={{ ...kop, marginRight: 6 }}>First turn</span>{eersteBeurt}
+              </div>
+            )}
             {heeftKanten && (
-              <div style={{ marginTop: weer ? 10 : 0, borderTop: weer ? `1px solid ${TOW.line}` : 'none', paddingTop: weer ? 2 : 0 }}>
+              <div style={{ marginTop: weer || wrath != null ? 10 : 0, borderTop: weer || wrath != null ? `1px solid ${TOW.line}` : 'none', paddingTop: weer || wrath != null ? 2 : 0 }}>
                 {kantBlok(mij)}
                 {kantBlok(tegen)}
               </div>

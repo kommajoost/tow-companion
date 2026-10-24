@@ -18,7 +18,7 @@ import { useEffect, useState } from 'react';
 import { useGame } from '../../game';
 import {
   battleByCode, officieleUitslag, RESULTAAT_NAAM, SPIEGEL, TP_VAN_RESULTAAT,
-  type CampaignBattle, type ToernooiResultaat, type Terugtrekker,
+  type CampaignBattle, type ToernooiResultaat,
 } from '../../lib/campaignBattle';
 import type { VpResultaat } from '../../lib/victoryPoints';
 
@@ -39,7 +39,7 @@ export interface CampagneUitslag {
 }
 
 export function useCampagneUitslag(res: VpResultaat): CampagneUitslag | null {
-  const { code, tracker } = useGame();
+  const { code } = useGame();
   const [battle, setBattle] = useState<CampaignBattle | null>(null);
   const [tp, setTp] = useState<ToernooiResultaat | null>(null);
 
@@ -50,10 +50,8 @@ export function useCampagneUitslag(res: VpResultaat): CampagneUitslag | null {
     return () => { alive = false; };
   }, [code]);
 
-  // Host = aanvaller, guest = verdediger — de campagne denkt in rollen, OWC in seats. Zelfde vertaling
-  // als in CampaignResultReporter; terugtrekken legt de trede vast op minimaal Resounding.
-  const withdrew = tracker?.withdrew ?? null;
-  const terugtrokken: Terugtrekker = withdrew === 'host' ? 'aanvaller' : withdrew === 'guest' ? 'verdediger' : null;
+  // Host = aanvaller, guest = verdediger — de campagne denkt in rollen, OWC in seats. Sinds 23-10-2026
+  // (terugtrekken eruit) beslist alleen het VP-verschil de trede.
   const cap = battle?.cap ?? null;
   const hostVp = res.hostVp;
   const guestVp = res.guestVp;
@@ -61,11 +59,11 @@ export function useCampagneUitslag(res: VpResultaat): CampagneUitslag | null {
   useEffect(() => {
     if (!cap) { setTp(null); return; }
     let alive = true;
-    officieleUitslag(hostVp, guestVp, cap, terugtrokken)
+    officieleUitslag(hostVp, guestVp, cap)
       .then((r) => { if (alive) setTp(r); })
       .catch(() => { if (alive) setTp(null); });
     return () => { alive = false; };
-  }, [cap, hostVp, guestVp, terugtrokken]);
+  }, [cap, hostVp, guestVp]);
 
   if (!tp || !cap) return null;
   const winnaar = tp === 'D' ? null : TP_VAN_RESULTAAT[tp] > 3 ? 'host' : 'guest';

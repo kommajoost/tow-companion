@@ -6,6 +6,8 @@ import { unitTotalStrength } from '../../lib/armyRules';
 import { CampaignResultReporter } from './CampaignResultReporter';
 import { VpPanel } from './VpPanel';
 import { useCampagneUitslag } from './useCampagneUitslag';
+import { isScenarioTestCode } from '../../lib/scenarioTest';
+import { ScenarioTestRapport } from './ScenarioTestRapport';
 import type { Army, GameTracker } from '../../types';
 import type { VpResultaat } from '../../lib/victoryPoints';
 
@@ -40,7 +42,9 @@ export function EndBattleOverview({
   onClose: () => void;
 }) {
   // Alleen `tracker` nodig voor de per-unit casualty-uitlezing; de modal muteert 'm niet.
-  const { tracker } = useGame();
+  const { tracker, code } = useGame();
+  // De scenario-test (22-10-2026) meldt niets: het rapport praat met de server, en deze battle bestaat daar niet.
+  const scenarioTest = isScenarioTestCode(code);
 
   // Hardware Back / Escape-nav sluit de modal (parent unmount 'm bij close, dus altijd active).
   useBackClose(true, onClose);
@@ -117,7 +121,12 @@ export function EndBattleOverview({
 
         {/* 4 — Footer: campagne-rapportage (zelf-detecterend; null bij ad-hoc) + Close */}
         <div style={{ marginTop: 16 }}>
-          <CampaignResultReporter embedded />
+          {scenarioTest ? (
+            // 23-10-2026: het rapport als VOORBEELD (wat er gemeld zou worden), zonder het te versturen.
+            <ScenarioTestRapport res={res} camp={camp} hostName={hostName} guestName={guestName} hostArmy={hostArmy} guestArmy={guestArmy} />
+          ) : (
+            <CampaignResultReporter embedded />
+          )}
         </div>
         <button
           onClick={onClose}
@@ -196,6 +205,8 @@ function CasualtySide({
                 <div key={u.id} style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
                   <span style={{ flex: 1, minWidth: 0, fontFamily: serif, fontSize: 13, color: TOW.ink, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{unitToonRegel(u)}</span>
                   <span style={{ fontFamily: serif, fontSize: 12, color: TOW.parchDim, whiteSpace: 'nowrap' }}>{t.lost}/{total} lost</span>
+                  {/* Een versterking (23-10-2026) telt mee voor de VP, maar is geen campagne-unit. */}
+                  {u.versterking && <span style={tag} title="Reinforcement detachment: this battle only, no XP or scars">Reinforcement</span>}
                   {t.fleeing && <span style={tag}>Fleeing</span>}
                   {t.weg && <span style={destroyedTag}>Destroyed</span>}
                 </div>

@@ -4,6 +4,8 @@ import { GameProvider } from './game';
 import { ListSyncProvider } from './listSync';
 import { PwaProvider } from './pwa';
 import { AppShell } from './components/AppShell';
+import { ScenarioLabShell } from './components/lab/ScenarioLab';
+import { LAB_ACTIEF } from './lib/labModus';
 import { RuleSheet } from './components/RuleSheet';
 import { SyncConflictSheet } from './components/SyncConflictSheet';
 import { NewPasswordDialog } from './components/NewPasswordDialog';
@@ -16,7 +18,8 @@ export default function App() {
         <UIStateProvider>
           <GameProvider>
             <ListSyncProvider>
-              <AppShell />
+              {/* Het Scenario lab (23-10-2026): alleen op de test-build met `?lab=1`, zie lib/labModus.ts. */}
+              {LAB_ACTIEF ? <ScenarioLabShell /> : <AppShell />}
               <RuleSheet />
               {/* Vraagt welke kopie je houdt als synchroniseren lijsten zou wissen. Binnen de provider,
                   want hij leest de botsing daaruit; app-breed, want hij mag geen enkel scherm missen. */}

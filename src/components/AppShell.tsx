@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { IS_TEST_DB } from '../lib/supabase';
 import { koppelViaCodeTestOnly } from '../lib/campaign';
-import { usePersistentState, setPersisted } from '../store';
+import { usePersistentState, setPersisted, getPersisted } from '../store';
 import { TOW } from '../design/tow';
 import { useAuth } from '../lib/auth';
 import { HomeCover } from './HomeCover';
@@ -17,6 +17,8 @@ import { TestAccountSwitcher } from './TestAccountSwitcher';
 import { TowIcon, type IconId } from '../design/icons';
 import { useBackClose } from '../lib/backStack';
 import { TEST_TOOLS_KEY } from '../lib/testBattle';
+import { SCENARIO_TEST_CODE, bewaarScenarioTest, isScenarioTestCode, payloadUitHash } from '../lib/scenarioTest';
+import { wrathSleutel } from '../lib/wrathTriggers';
 import { gedeeldeCodeUitUrl } from '../lib/listShare';
 
 type Tab = 'browse' | 'game' | 'army' | 'settings';
@@ -125,6 +127,41 @@ export function AppShell() {
     const url = new URL(window.location.href);
     url.searchParams.delete('testtools');
     window.history.replaceState(null, '', `${url.pathname}${url.search}${url.hash}`);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Deep-link: /?scenariotest=1#sheet=<base64url> — DE SCENARIO-TEST (22-10-2026), ALLEEN op een
+  // testbuild. Zet de sheet uit de hash in localStorage en opent hem als lokale campagne-battle (zie
+  // lib/scenarioTest.ts): niets gaat naar de server. Een nieuwe sheet is een nieuw potje: een lopend
+  // scenario-test-potje en de aangevinkte Wrath Triggers worden gewist. De hash gaat daarna uit de
+  // adresbalk (herladen houdt het potje); een NIEUWE hash in dezelfde tab laadt de pagina opnieuw,
+  // zodat ook de gecachete battle ververst.
+  useEffect(() => {
+    if (typeof window === 'undefined' || !IS_TEST_DB) return;
+    const laad = (): boolean => {
+      const url = new URL(window.location.href);
+      if (!url.searchParams.has('scenariotest')) return false;
+      const p = payloadUitHash(url.hash);
+      if (!p) return false;
+      const lopend = getPersisted<{ seat?: string; code?: string | null } | null>('tow:game', null);
+      if (lopend && isScenarioTestCode(lopend.code ?? null)) {
+        setPersisted('tow:game', null);
+        setPersisted('tow:solo-mine', null);
+        setPersisted('tow:solo-opp', null);
+        setPersisted('tow:solo-tracker', { round: 1, vp: {}, units: {} });
+      }
+      bewaarScenarioTest(p);
+      setPersisted(wrathSleutel(SCENARIO_TEST_CODE), []);
+      setPersisted('tow:campaign-battle', SCENARIO_TEST_CODE);
+      setScreen('app');
+      setTab('game');
+      window.history.replaceState(null, '', `${url.pathname}${url.search}`);
+      return true;
+    };
+    laad();
+    const opHash = () => { if (laad()) window.location.reload(); };
+    window.addEventListener('hashchange', opHash);
+    return () => window.removeEventListener('hashchange', opHash);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -259,17 +296,21 @@ export function AppShell() {
 
   // TESTBUILD-MARKERING (26-08-2026): een bundel die op de TESTdatabase praat mag er nooit uitzien
   // als de echte app -- dan rapporteer je een potje in de verkeerde wereld. Op een productiebundel
-  // is IS_TEST_DB false en rendert dit niets.
+  // is IS_TEST_DB false en rendert dit niets. 22-10-2026: groter en oranje-rood, "TEST environment"
+  // (de test-deploy oldworldcompanion-test). Blijft een hoek-label zonder kliks, zodat het niets afdekt.
   const testMerk = IS_TEST_DB ? (
     <div
-      aria-hidden
+      role="note"
+      aria-label="TEST environment"
+      data-testid="test-env-banner"
       style={{
         position: 'fixed', top: 0, left: 0, zIndex: 9999, pointerEvents: 'none',
-        background: '#7f1d1d', color: '#fff', font: '700 10px/1 system-ui, sans-serif',
-        letterSpacing: '.12em', padding: '4px 8px', borderBottomRightRadius: 6,
+        background: 'linear-gradient(90deg, #b91c1c, #ea580c)', color: '#fff', font: '800 11px/1 system-ui, sans-serif',
+        letterSpacing: '.1em', padding: '5px 10px', borderBottomRightRadius: 8, boxShadow: '0 1px 4px rgba(0,0,0,0.35)',
+        textTransform: 'uppercase',
       }}
     >
-      TESTDATABASE
+      TEST environment
     </div>
   ) : null;
 

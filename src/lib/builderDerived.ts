@@ -116,7 +116,12 @@ export function deriveList(
   // The points target. Clamped at 0 so a missing/NaN/negative target can never produce a negative
   // percentage denominator; `validate()` itself already treats a falsy target as 0.
   const cap = Math.max(0, Number.isFinite(list?.points) ? list.points : 0);
-  const pctOf = (points: number) => (cap > 0 ? (points / cap) * 100 : 0);
+  // De BASIS van de percentages: dezelfde als waarmee validate() de grenzen uitrekent. Bij een gewone
+  // lijst is dat `points`; bij een REINFORCEMENT DETACHMENT (23-10-2026) de battle-grootte waarop de
+  // regels gelden (625 punten onder de regels van 1250), zodat "Rare at 28% of max 25%" over hetzelfde
+  // getal gaat als de grens. De resterende punten blijven tegen `points`.
+  const basis = campaignMods?.pointsCap ?? (list?.versterking?.basis && list.versterking.basis > 0 ? list.versterking.basis : cap);
+  const pctOf = (points: number) => (basis > 0 ? (points / basis) * 100 : 0);
   // With no points target there is no percentage base, so the percentage limits say nothing: every
   // cap collapses to floor(pct × 0) = 0 and validate() flags EVERY non-empty category at once. Those
   // would render as the nonsense "Characters at 0% of max 50%" (0% — yet breached), so the

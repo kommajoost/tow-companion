@@ -1,5 +1,12 @@
 import { useCallback, useEffect, useReducer } from 'react';
 
+// SLEUTEL-OMLEIDING (23-10-2026, Scenario lab). Standaard de identiteit. In het lab (alleen de test-build,
+// `?lab=1`) zet lib/labModus.ts hier `labSleutel` in, vóór de eerste lees- of schrijfactie: dan krijgen de
+// battle-sleutels een `tow:lab:`-kopie en raakt het lab de echte potjes niet. Alles hieronder werkt met de
+// FYSIEKE sleutel (zoals hij in localStorage staat); de aanroepers blijven de gewone naam gebruiken.
+let omleiding: (key: string) => string = (key) => key;
+export function zetSleutelOmleiding(fn: (key: string) => string): void { omleiding = fn; }
+
 function read<T>(key: string, fallback: T): T {
   try {
     const raw = localStorage.getItem(key);
@@ -15,7 +22,8 @@ function read<T>(key: string, fallback: T): T {
 interface Store<T> { value: T; subs: Set<() => void> }
 const stores = new Map<string, Store<unknown>>();
 
-function getStore<T>(key: string, initial: T): Store<T> {
+function getStore<T>(naam: string, initial: T): Store<T> {
+  const key = omleiding(naam);
   let s = stores.get(key) as Store<T> | undefined;
   if (!s) {
     s = { value: read(key, initial), subs: new Set() };
@@ -35,8 +43,9 @@ if (typeof window !== 'undefined') {
 }
 
 /** Write a key's value programmatically (outside React), notifying every hook bound to it. */
-export function setPersisted<T>(key: string, value: T): void {
-  const s = getStore(key, value);
+export function setPersisted<T>(naam: string, value: T): void {
+  const key = omleiding(naam);
+  const s = getStore(naam, value);
   s.value = value;
   try { localStorage.setItem(key, JSON.stringify(value)); } catch { /* storage full/unavailable */ }
   s.subs.forEach((cb) => cb());
@@ -49,8 +58,9 @@ export function getPersisted<T>(key: string, fallback: T): T {
 
 /** useState that mirrors its value to localStorage under `key` and stays in sync across every
  *  component using the same key (and across browser tabs). */
-export function usePersistentState<T>(key: string, initial: T) {
-  const store = getStore(key, initial);
+export function usePersistentState<T>(naam: string, initial: T) {
+  const key = omleiding(naam);
+  const store = getStore(naam, initial);
   const [, force] = useReducer((c) => c + 1, 0);
 
   useEffect(() => {

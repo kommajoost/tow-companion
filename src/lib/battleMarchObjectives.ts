@@ -16,6 +16,8 @@
 //
 // Puur: geen React, geen fetch — los te testen en door elk scherm te gebruiken.
 
+import { CAMPAGNE_OBJECTIVES } from './campaignScenario';
+
 /** Eén regelblok: een kop (van ons of van de site) en de LETTERLIJKE regeltekst. */
 export interface ObjectiveRuleBlock { heading: string; text: string }
 
@@ -263,6 +265,11 @@ export function objectiveBriefings(
         source: `${BOEK}, p. 25, 27`,
       };
     }
+    // De attacker/defender-objectives van de campagne (Act 3+, 22-10-2026): naam en uitleg zoals de
+    // campagne ze schrijft, in plaats van een kale titel als "Strategic 3 Def". Wat ze aan VP opleveren
+    // staat in de scenario-posten van de sheet (scenarioBonus), niet hier.
+    const camp = CAMPAGNE_OBJECTIVES[id];
+    if (camp) return { id, title: camp.naam, what: camp.uitleg, placement: null, short: [], full: [], source: 'Isle of Celedon campaign' };
     return { id, title: titelVan(id), what: '', placement: null, short: [], full: [], source: '' };
   });
 }

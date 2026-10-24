@@ -1,9 +1,23 @@
+import { useMemo } from 'react';
 import { useGame } from '../../game';
 import { usePersistentState } from '../../store';
 import { DEFAULT_BATTLE, scenarioById, type BattleSetupState } from '../../lib/battle';
 import { formatDef, normSheet } from '../../lib/battleSheet';
 import { useCampaignBattle } from './useCampaignBattle';
 import { objectivesVoor, type ObjectiveDef } from '../../lib/objectiveVp';
+import { isVrijPotjeCode } from '../../lib/battleCode';
+import { scenarioBonusVan } from '../../lib/campaignScenario';
+import type { ScenarioBonus } from '../../lib/scenarioBonus';
+
+/** DE SCENARIO-POSTEN van deze campagne-battle (22-10-2026, Act 3+): wat de sheet in `scenarioBonus`
+ *  meegeeft (C&C-feature, Baggage Train, markers, plunderingen + pot, Forge-beurten, Breakthrough-zone).
+ *  null bij een vrij potje, een oudere sheet, of zolang de battle nog laadt. Eén bron voor de
+ *  objectives-teller, het VP-paneel en de VP-berekening in GameView, net als useObjectives. */
+export function useScenarioBonus(): ScenarioBonus | null {
+  const { code } = useGame();
+  const campagne = useCampaignBattle(code);
+  return useMemo(() => scenarioBonusVan(campagne?.scenario ?? null), [campagne]);
+}
 
 /** Welke objective-VP-posten gelden in deze battle?
  *
@@ -53,6 +67,13 @@ export function useObjectives(): ObjectiveDef[] {
   if (sheet) return objectivesVoor(sheet.scenario, sheet.secondaries, formatDef(sheet.format).battleMarch);
 
   const uitCampagne = objectivesVoor(scenario.scenario, scenario.secondaries, tracker.battleMarch === true);
+  // EEN CAMPAGNE-BATTLE ERFT NOOIT HET KLADBLOK (22-10-2026). Hier stond `if (uitCampagne.length)`, dus
+  // een campagne-battle zonder bekende objectives (elke Act 3+-setup: die scoren via de scenario-posten
+  // van de sheet, zie useScenarioBonus) viel door naar `tow:battle` en kreeg de Domination-tellers van
+  // een vorig vrij potje — die dan ook nog meetelden in de VP. Ook tijdens het laden (campagne nog null)
+  // of zonder netwerk is een campagne-code een campagne-battle. Alleen een potje ZONDER campagne-code
+  // (solo zonder code, of een vrij potje van vier tekens) valt nog terug op het lokale scenario.
+  if (code && !isVrijPotjeCode(code)) return uitCampagne;
   if (uitCampagne.length) return uitCampagne;
   // tracker.battleMarch wordt door de CAMPAGNE gezet. Kies je in een gewoon potje zelf een Battle
   // March-scenario, dan staat die vlag niet aan en zou je juist de treasure troves missen — het

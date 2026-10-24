@@ -22,7 +22,7 @@ const BASE = import.meta.env.BASE_URL;
 interface SavedList extends BuilderList { id: string; name: string; army: string; createdAt: number; updatedAt: number }
 interface StatRow { Name: string; M: string; WS: string; BS: string; S: string; T: string; W: string; I: string; A: string; Ld: string }
 
-export function ArmyListPicker({ onPick, label, lockedListName = null, campaignPlayerId = null, lockedListArmy = null, autoPick = false, stil = false }: {
+export function ArmyListPicker({ onPick, label, lockedListName = null, campaignPlayerId = null, lockedListArmy = null, autoPick = false, stil = false, lijsten = null }: {
   onPick: (a: Army) => void;
   label?: string;
   lockedListName?: string | null;
@@ -43,10 +43,15 @@ export function ArmyListPicker({ onPick, label, lockedListName = null, campaignP
    *  With this on, a found list loads silently; the picker only appears when the list ISN'T on this
    *  device — which is exactly the case where you do need to act. */
   stil?: boolean;
+  /** SCENARIO LAB (23-10-2026, test-build): kies uit DEZE lijsten in plaats van uit `tow:lists`. Het lab
+   *  geeft er zijn vaste mock-legers mee, zodat ze dezelfde omzetting krijgen als een speler-lijst zonder
+   *  ooit in de opgeslagen lijsten van dit apparaat te belanden. */
+  lijsten?: SavedList[] | null;
 }) {
   // Lists can span different armies, so we keep a per-army catalogue cache + army metadata and
   // convert each list with ITS OWN catalogue/faction/composition.
-  const [lists] = usePersistentState<SavedList[]>('tow:lists', []);
+  const [opgeslagen] = usePersistentState<SavedList[]>('tow:lists', []);
+  const lists = lijsten ?? opgeslagen;
   const { actief: campagne } = useCampagnes();
   const [catalogues, setCatalogues] = useState<Record<string, OwbArmy>>({}); // slug → catalogue
   const [armyNames, setArmyNames] = useState<Record<string, string>>({}); // slug → display name

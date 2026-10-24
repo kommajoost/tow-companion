@@ -50,7 +50,10 @@ interface GameContextValue {
   openCampaignBattle: (code: string, seat: 'host' | 'guest', name: string, army: Army | null, veteranen?: BattleVeteranen, opponentName?: string, opponentArmy?: Army | null, regels?: GameRegels) => Promise<boolean>;
   /** Recent games (newest first) for the join lobby. */
   listGames: () => Promise<GameSummary[]>;
-  startSolo: (army?: Army | null, regels?: GameRegels) => void;
+  /** Start a local (solo) game. `code` (22-10-2026) is only for the scenario test: a solo game that
+   *  still carries a campaign-style code so the campaign panels can find their (local) battle. A solo
+   *  game never reads or writes `tow_games`, code or no code. */
+  startSolo: (army?: Army | null, regels?: GameRegels, code?: string | null, opponent?: Army | null) => void;
   setMyArmy: (army: Army) => void;
   setOpponentArmy: (army: Army) => void;
   /** Shared battle state (round, VP, per-unit casualties). */
@@ -260,7 +263,8 @@ export function GameProvider({ children }: { children: ReactNode }) {
 
   // ── realtime subscription to the active game row ──
   useEffect(() => {
-    if (!code) return;
+    // Een SOLO potje met een code (de scenario-test, 22-10-2026) is lokaal: geen rij, geen kanaal.
+    if (!code || seat === 'solo') return;
     let cancelled = false;
 
     // Merge a freshly-fetched row into local state without ever dropping an army we
@@ -306,7 +310,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
       supabase.removeChannel(channel);
       channelRef.current = null;
     };
-  }, [code]);
+  }, [code, seat]);
 
   const createGame = useCallback(
     async (name: string, army: Army | null, regels?: GameRegels): Promise<string | null> => {
@@ -497,9 +501,11 @@ export function GameProvider({ children }: { children: ReactNode }) {
     [setPersisted],
   );
 
-  const startSolo = useCallback((army?: Army | null, regels?: GameRegels) => {
+  const startSolo = useCallback((army?: Army | null, regels?: GameRegels, soloCode?: string | null, opponent?: Army | null) => {
     setError(null);
     if (army) setSoloMine(army); // seed "my army" when a saved/pasted list was chosen at setup
+    // Het Scenario lab (23-10-2026) opent met BEIDE legers: de tegenstander gaat meteen mee.
+    if (opponent) setSoloOpponent(opponent);
     // Solo speelt lokaal, dus de regels gaan in de lokale tracker (zelfde vorm als online) — inclusief
     // een meegegeven battle sheet. `gestart: true` meteen: in solo zit er niemand aan de andere kant
     // van de tafel om op te wachten, dus een lobby met een "waiting"-regel zou een lege handeling zijn.
@@ -507,8 +513,10 @@ export function GameProvider({ children }: { children: ReactNode }) {
       const basis = metRegels(t, regels) ?? t;
       return basis.gestart === true ? basis : { ...basis, gestart: true };
     });
-    setPersisted({ seat: 'solo', code: null });
-  }, [setPersisted, setSoloMine, setSoloTracker]);
+    // De scenario-test (22-10-2026) geeft een code mee, zodat de campagne-panelen hun (lokale) battle
+    // vinden. Het blijft solo: de realtime-hook hieronder slaat een solo-code over.
+    setPersisted({ seat: 'solo', code: soloCode ? soloCode.trim().toUpperCase() : null });
+  }, [setPersisted, setSoloMine, setSoloOpponent, setSoloTracker]);
 
   // List recent games (last 2 days) for the join lobby. Only lightweight columns — never the
   // army payloads — so it stays small and fast.

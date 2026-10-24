@@ -237,7 +237,13 @@ export function BuilderFlow({
     // `list.rule` is a SLUG ('open-war'); the eyebrow needs its display name ('Open War'), or the
     // header reads "DARK ELVES · GRAND ARMY · OPEN-WAR". Unknown slugs fall back to a title-cased
     // version rather than showing nothing.
-    labels: { faction: armyName, composition: compName(list.composition), rule: ruleLabel(list.rule) },
+    // REINFORCEMENT DETACHMENT (23-10-2026): zeg in de kop dat dit een versterking is en onder de regels
+    // van welke battle-grootte hij gebouwd wordt (validate leest `list.versterking` zelf).
+    labels: {
+      faction: armyName,
+      composition: compName(list.composition),
+      rule: list.versterking?.basis ? `${ruleLabel(list.rule)} · Reinforcement, ${list.versterking.basis}-pt rules` : ruleLabel(list.rule),
+    },
     armyItemLists,
     statIdx,
     getUnit,

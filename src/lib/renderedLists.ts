@@ -78,6 +78,11 @@ export interface RenderedList {
    *  veranderden. Tim zat zo een dag vast op een afkeuring die de app al niet meer gaf. De sync
    *  vergelijkt dit stempel met zijn eigen versie en pusht één keer opnieuw als het afwijkt. */
   versie: string;
+  /** REINFORCEMENT DETACHMENT (23-10-2026): gezet als dit een versterkingslijst is — een lijst die alleen
+   *  voor één battle bij een leger komt (lib/versterking.ts), nooit een campagnelijst. `basis` = de
+   *  battle-grootte waarop zijn regels gelden; `punten` hierboven is de som, de grens is de helft van
+   *  `basis`. Ontbreekt bij elke gewone lijst. */
+  versterking?: { basis: number };
 }
 
 /** Minimale vorm van een opgeslagen lijst die we hier nodig hebben. */
@@ -252,6 +257,7 @@ function renderEen(
     entries,
     fouten,
     versie: APP_VERSIE,
+    ...(list.versterking?.basis ? { versterking: { basis: list.versterking.basis } } : {}),
   };
 }
 

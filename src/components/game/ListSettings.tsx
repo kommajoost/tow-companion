@@ -18,7 +18,7 @@ const ruleName = (id: string): string => COMPOSITION_RULES.find((r) => r.id === 
 
 export function ListSettings({
   naam, army, armyName, composition, comps, compName, rule, points,
-  campagneLabel, campagneAct, onClose, onOpslaan,
+  campagneLabel, campagneAct, versterkingBasis = null, onVersterking = null, versterkingPunten = 0, onClose, onOpslaan,
 }: {
   naam: string;
   army: string;
@@ -31,14 +31,23 @@ export function ListSettings({
   /** Set for a campaign list: then points + rule are fixed and we say where they come from. */
   campagneLabel?: string | null;
   campagneAct?: number | null;
+  /** REINFORCEMENT DETACHMENT (23-10-2026): gezet bij een versterkingslijst — de battle-grootte waarop
+   *  zijn regels gelden. Dan stel je die in, en is de puntengrens de helft. */
+  versterkingBasis?: number | null;
+  /** Bij een gewone lijst: maak er een versterkingslijst bij (`versterkingPunten` groot). */
+  onVersterking?: (() => void) | null;
+  versterkingPunten?: number;
   onClose: () => void;
-  onOpslaan: (v: { naam: string; composition: string; rule: string; points: number }) => void;
+  onOpslaan: (v: { naam: string; composition: string; rule: string; points: number; basis?: number }) => void;
 }) {
   const [n, setN] = useState(naam);
   const [comp, setComp] = useState(composition);
   const [r, setR] = useState(rule);
   const [p, setP] = useState(points);
+  const rf = versterkingBasis != null;
+  const [b, setB] = useState(versterkingBasis ?? 0);
   const vast = !!campagneLabel;
+  const opslaan = () => onOpslaan({ naam: n.trim() || naam, composition: comp, rule: r, points: p, basis: rf ? b : undefined });
 
   const veld: React.CSSProperties = {
     width: '100%', boxSizing: 'border-box', padding: '9px 11px', borderRadius: 9,
@@ -57,7 +66,7 @@ export function ListSettings({
 
         <div style={{ ...label, marginBottom: 6 }}>List name</div>
         <input value={n} onChange={(e) => setN(e.target.value)} autoFocus
-          onKeyDown={(e) => { if (e.key === 'Enter') onOpslaan({ naam: n.trim() || naam, composition: comp, rule: r, points: p }); }}
+          onKeyDown={(e) => { if (e.key === 'Enter') opslaan(); }}
           style={{ ...veld, fontFamily: towFont.display, fontWeight: 600, fontSize: 15 }} />
 
         <div style={{ ...label, margin: '16px 0 6px' }}>Army composition</div>
@@ -75,6 +84,18 @@ export function ListSettings({
           Fixed — your units come from this army’s catalogue. Start a new list for another faction.
         </div>
 
+        {rf ? (
+          <>
+            <div style={{ ...label, margin: '16px 0 6px' }}>Battle size (the rules it is built under)</div>
+            <input type="number" inputMode="numeric" min={0} step={250} value={b}
+              onChange={(e) => setB(Math.max(0, Math.floor(Number(e.target.value) || 0)))}
+              style={{ ...veld, fontFamily: towFont.display, fontWeight: 600 }} />
+            <div style={{ ...label, marginTop: 6, color: TOW.faint }}>
+              A reinforcement detachment is up to half of this: {Math.floor(b / 2)} pts. Category limits, the
+              Core minimum and the 0-X per 1,000 points limits count as in a {b}-point battle.
+            </div>
+          </>
+        ) : (<>
         <div style={{ ...label, margin: '16px 0 6px' }}>Points limit</div>
         {vast ? (
           <>
@@ -88,6 +109,7 @@ export function ListSettings({
             onChange={(e) => setP(Math.max(0, Math.floor(Number(e.target.value) || 0)))}
             style={{ ...veld, fontFamily: towFont.display, fontWeight: 600 }} />
         )}
+        </>)}
 
         <div style={{ ...label, margin: '16px 0 6px' }}>Game mode</div>
         {vast ? (
@@ -103,9 +125,27 @@ export function ListSettings({
 
         <div style={{ display: 'flex', gap: 8, marginTop: 20 }}>
           <button onClick={onClose} style={{ flex: 1, padding: 12, borderRadius: 10, cursor: 'pointer', border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt, color: TOW.inkDim, fontFamily: towFont.display, fontWeight: 600, fontSize: 13 }}>Cancel</button>
-          <button onClick={() => onOpslaan({ naam: n.trim() || naam, composition: comp, rule: r, points: p })}
+          <button onClick={opslaan}
             style={{ flex: 1.4, padding: 12, borderRadius: 10, cursor: 'pointer', border: 'none', background: goldGrad, color: TOW.onGrad, fontFamily: towFont.display, fontWeight: 700, fontSize: 13.5 }}>Save</button>
         </div>
+
+        {/* REINFORCEMENT DETACHMENT (23-10-2026). Aan een teamtafel van twee tegen drie mag elke speler
+            aan de kleine kant een versterking van de helft van de cap meenemen, uit zijn eigen army book.
+            Die bouw je als eigen lijst; hier maak je hem aan, bij deze lijst. */}
+        {onVersterking && (
+          <div style={{ marginTop: 18, paddingTop: 14, borderTop: `1px solid ${TOW.line}` }}>
+            <div style={{ ...label, marginBottom: 6 }}>Reinforcement detachment</div>
+            <div style={{ fontFamily: towFont.serif, fontSize: 12.5, lineHeight: 1.5, color: TOW.inkDim, marginBottom: 8 }}>
+              Outnumbered at a team table (2 vs 3)? Each general on the smaller side may bring a reinforcement of
+              half the points, from the same army book. Build it as its own list: it joins your army for that
+              battle only.
+            </div>
+            <button data-testid="maak-versterking" onClick={onVersterking}
+              style={{ width: '100%', padding: 11, borderRadius: 10, cursor: 'pointer', border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.10)', color: TOW.ink, fontFamily: towFont.display, fontWeight: 700, fontSize: 13 }}>
+              New reinforcement detachment · up to {versterkingPunten} pts
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

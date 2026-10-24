@@ -1,0 +1,161 @@
+{
+ "versie": 1,
+ "gemaakt": "2026-10-24T09:48:07.395Z",
+ "bron": "site/scripts/maak-scenario-lab.ts — genereerSlagveld (site/src/data/battlefieldDriver.ts), vaste seed per combinatie",
+ "setups": [
+  {
+   "id": "bm-pitched",
+   "naam": "Battle March",
+   "acts": [
+    1,
+    2
+   ],
+   "uitleg": "Pitched Battle (Mountain Pass on mountains). Act 1: two treasure troves; Act 2: the strategic landmark."
+  },
+  {
+   "id": "ad-flank-attack",
+   "naam": "Flank Attack",
+   "d6": 1,
+   "acts": [
+    3,
+    4,
+    5,
+    6,
+    7
+   ]
+  },
+  {
+   "id": "ad-breakthrough",
+   "naam": "Breakthrough",
+   "d6": 2,
+   "acts": [
+    3,
+    4,
+    5,
+    6,
+    7
+   ]
+  },
+  {
+   "id": "ad-command-control",
+   "naam": "Command & Control",
+   "d6": 3,
+   "acts": [
+    3,
+    4,
+    5,
+    6,
+    7
+   ]
+  },
+  {
+   "id": "ad-strategic",
+   "naam": "Strategic Locations",
+   "d6": 4,
+   "acts": [
+    3,
+    4,
+    5,
+    6,
+    7
+   ]
+  },
+  {
+   "id": "ad-loot-cart",
+   "naam": "Plunder",
+   "d6": 5,
+   "acts": [
+    3,
+    4,
+    5,
+    6,
+    7
+   ]
+  },
+  {
+   "id": "ad-special-feature",
+   "naam": "The Forge",
+   "d6": 6,
+   "acts": [
+    3,
+    4,
+    5,
+    6,
+    7
+   ]
+  }
+ ],
+ "terreinen": [
+  {
+   "id": "vlakte",
+   "naam": "Plains"
+  },
+  {
+   "id": "woud",
+   "naam": "Forest"
+  },
+  {
+   "id": "heuvels",
+   "naam": "Hills"
+  },
+  {
+   "id": "bergen",
+   "naam": "Mountains"
+  },
+  {
+   "id": "moeras",
+   "naam": "Marsh"
+  }
+ ],
+ "acts": [
+  {
+   "act": 1,
+   "cap": 500,
+   "bord": "44×30″",
+   "bestand": "act-1.json",
+   "aantal": 5
+  },
+  {
+   "act": 2,
+   "cap": 750,
+   "bord": "48×36″",
+   "bestand": "act-2.json",
+   "aantal": 5
+  },
+  {
+   "act": 3,
+   "cap": 1000,
+   "bord": "48×48″",
+   "bestand": "act-3.json",
+   "aantal": 30
+  },
+  {
+   "act": 4,
+   "cap": 1250,
+   "bord": "72×48″",
+   "bestand": "act-4.json",
+   "aantal": 30
+  },
+  {
+   "act": 5,
+   "cap": 1500,
+   "bord": "72×48″",
+   "bestand": "act-5.json",
+   "aantal": 30
+  },
+  {
+   "act": 6,
+   "cap": 1750,
+   "bord": "72×48″",
+   "bestand": "act-6.json",
+   "aantal": 30
+  },
+  {
+   "act": 7,
+   "cap": 2000,
+   "bord": "72×48″",
+   "bestand": "act-7.json",
+   "aantal": 30
+  }
+ ]
+}

@@ -21,6 +21,22 @@ import { profielenMetVeteraan, celDelta, BETER_KLEUR, BETER_ACHTERGROND } from '
 
 const eb = engraved as React.CSSProperties;
 
+/** Eén scenario-knopje op de kaart (Breakthrough). */
+export interface ScenarioKnop {
+  postId: string;
+  /** Korte naam op het knopje ("Breakthrough"). */
+  label: string;
+  aan: boolean;
+  /** Waarom hij nu niet meetelt (fleeing, destroyed), of null. */
+  uitgesloten: string | null;
+  /** Wat hij nu oplevert. */
+  nu: number;
+  punten: number;
+  /** De rekenregel, als tooltip. */
+  uitleg: string;
+  onToggle: () => void;
+}
+
 // One army unit: title + points, options, stat-profile table(s), tappable special-rule
 // chips (open the pop-up sheet), a wizard spell picker, and a strength/casualty tracker.
 // When the unit is wiped out it shows "Destroyed" and dims.
@@ -43,6 +59,7 @@ export function UnitCard({
   maxRound,
   collapsed = false,
   onToggleCollapse,
+  scenarioKnoppen,
 }: {
   unit: ArmyUnit;
   /** The army's faction, used to pick the right faction-variant of an ambiguously-named rule
@@ -75,6 +92,10 @@ export function UnitCard({
   /** In the game roster, units are collapsed by default; the header toggles open to show the card. */
   collapsed?: boolean;
   onToggleCollapse?: () => void;
+  /** 24-10-2026: de puntwaarde-posten van de sheet waarvoor deze unit aangetikt kan worden (Breakthrough:
+   *  "staat aan het eind helemaal in de zone van de verdediger"). GameView rekent uit of hij meetelt en voor
+   *  hoeveel (lib/scenarioUnits.ts); de kaart toont alleen het knopje in de kopregel, ook dichtgeklapt. */
+  scenarioKnoppen?: ScenarioKnop[];
 }) {
   // 05-10-2026: een game bewaart bij de start een KOPIE van beide legers (tow_games.host_army/guest_army).
   // Wie startte vóór de statline-fix (0.1.406, o.a. de Empire-Mortar) heeft daarin een unit zonder
@@ -140,6 +161,37 @@ export function UnitCard({
     return m;
   }, [unit.mounts]);
 
+  // Breakthrough (24-10-2026): aan = deze unit staat aan het eind helemaal in de zone van de verdediger en
+  // telt mee met zijn punten van nu. Dichtgeklapt in de kopregel (zo tik je hem aan zonder de kaart te
+  // openen), opengeklapt in een eigen rij eronder: naast de naam drukte hij die anders in drie regels.
+  // stopPropagation omdat de kopregel de kaart in- en uitklapt. Vlucht of sneuvelt een unit die nog niet
+  // aan stond, dan is er niets aan te tikken.
+  const knoppen = scenarioKnoppen?.filter((k) => k.aan || !k.uitgesloten).map((k) => {
+    const telt = k.aan && !k.uitgesloten;
+    return (
+      <button
+        key={k.postId}
+        type="button"
+        data-testid={`unit-knop-${k.postId}-${unit.id}`}
+        aria-pressed={k.aan}
+        title={k.uitgesloten ? `${k.label}: not counted (${k.uitgesloten}). ${k.uitleg}` : `${k.label}: ${k.aan ? `counts ${k.nu} of ${k.punten} pts` : 'tap if this unit ends wholly inside the defender’s zone'}. ${k.uitleg}`}
+        onClick={(e) => { e.stopPropagation(); k.onToggle(); }}
+        style={{
+          flexShrink: 0, display: 'inline-flex', alignItems: 'center', gap: 5, padding: '4px 9px', borderRadius: 999, cursor: 'pointer',
+          border: `1px ${k.aan && k.uitgesloten ? 'dashed' : 'solid'} ${telt ? TOW.goldDeep : TOW.lineStrong}`,
+          background: telt ? TOW.goldDeep : 'transparent',
+          color: telt ? TOW.onGrad : k.aan ? TOW.muted : TOW.parchDim,
+          fontFamily: towFont.display, fontWeight: 700, fontSize: 11, whiteSpace: 'nowrap',
+        }}
+      >
+        {telt && <svg width="10" height="10" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2.5 6.2l2.2 2.3 4.8-5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" /></svg>}
+        {k.label}
+        {telt && k.nu !== k.punten ? ` · ${k.nu}` : ''}
+        {k.aan && k.uitgesloten ? ` · ${k.uitgesloten}` : ''}
+      </button>
+    );
+  });
+
   return (
     <section style={{ border: `1px solid ${TOW.line}`, borderRadius: 12, background: dead ? 'rgba(74,55,22,0.03)' : TOW.panel2, padding: collapsed ? '11px 14px' : 14, marginBottom: 8, opacity: dead ? 0.7 : 1 }}>
       <div
@@ -187,12 +239,16 @@ export function UnitCard({
             </div>
           )}
         </div>
+        {collapsed && knoppen}
         {unit.points != null && (
           <span style={{ ...eb, fontSize: 9, color: TOW.muted, whiteSpace: 'nowrap' }}>{unit.points} pts</span>
         )}
       </div>
 
       {!collapsed && (<>
+      {knoppen && knoppen.length > 0 && (
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, margin: '-2px 0 10px' }}>{knoppen}</div>
+      )}
       {/* All profiles share the column set (M WS BS S T W I A Ld). When the unit has weapons,
           CombatStats owns the profile display + a small "Loadout" toggle for effective stats;
           otherwise we just show the base profile table(s). */}

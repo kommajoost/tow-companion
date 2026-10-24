@@ -1,6 +1,9 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
+// Het Scenario lab (alleen test-build, `?lab=1`) moet zijn sleutel-omleiding in de store zetten VÓÓR App
+// en z'n modules geladen worden (AppShell schrijft al op module-niveau naar de store). Zie lib/labModus.ts.
+import './lib/labModus';
 import App from './App';
 import { Vangnet } from './components/Vangnet';
 

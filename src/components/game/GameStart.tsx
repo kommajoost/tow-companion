@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { TOW, towFont, engraved } from '../../design/tow';
 import { TurnsIcon, MapIcon, FlaskIcon } from '../../design/icons';
+import { IS_TEST_DB } from '../../lib/supabase';
+import { LAB_URL } from '../../lib/labModus';
 import { setPersisted } from '../../store';
 import { getCachedCampaign, getCampaignCode } from '../../lib/campaign';
 import { myCampaignBattles, type CampaignBattleSummary } from '../../lib/campaignBattle';
@@ -147,6 +149,23 @@ export function GameStart({ onNewBattle }: { onNewBattle: () => void }) {
           </span>
           <span aria-hidden style={{ color: TOW.goldDeep, fontSize: 20, flexShrink: 0 }}>›</span>
         </button>
+
+        {/* ── Scenario lab (23-10-2026): alleen op de test-build. Opent de lab-pagina in dezelfde tab;
+            het lab heeft zijn eigen opslag, dus dit potje-scherm blijft zoals het was. ────────────── */}
+        {IS_TEST_DB && (
+          <a
+            href={LAB_URL}
+            data-testid="open-scenario-lab"
+            style={{ display: 'flex', alignItems: 'center', gap: 9, marginTop: 26, padding: '11px 12px', borderRadius: 10, border: '1px dashed #b45309', background: 'rgba(180,83,9,0.08)', textDecoration: 'none' }}
+          >
+            <span aria-hidden style={{ flexShrink: 0, color: '#b45309' }}><FlaskIcon size={16} /></span>
+            <span style={{ flex: 1, minWidth: 0 }}>
+              <span style={{ display: 'block', fontFamily: towFont.display, fontWeight: 700, fontSize: 13.5, color: TOW.ink }}>Scenario lab</span>
+              <span style={{ display: 'block', fontFamily: towFont.serif, fontSize: 12, color: TOW.muted }}>Test build: every setup, Act and hex terrain with two mock armies.</span>
+            </span>
+            <span aria-hidden style={{ color: TOW.faint, fontSize: 15, flexShrink: 0 }}>›</span>
+          </a>
+        )}
 
         {/* ── Testgereedschap (alleen met ?testtools=1) ────────────────────────────────────────── */}
         {testToolsAan() && testLijsten.length >= 1 && (

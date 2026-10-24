@@ -25,6 +25,7 @@ import { InfoSheet, type InfoSheetData } from './InfoSheet';
 import type { MagicText } from '../../lib/builderToArmy';
 import { magicItemRules } from '../../lib/builderToArmy';
 import type { UnitProfile } from '../../types';
+import { helftVan, isVersterkingLijst, maakVersterkingLijst, versterkingBasis } from '../../lib/versterking';
 
 const BASE = import.meta.env.BASE_URL;
 const eb = engraved as React.CSSProperties;
@@ -615,6 +616,19 @@ export function ListBuilder() {
     setActiveId(id);
   };
   const deleteList = (id: string) => { setLists((ls) => ls.filter((l) => l.id !== id)); if (activeId === id) setActiveId(null); };
+  /** REINFORCEMENT DETACHMENT (23-10-2026, lib/versterking.ts): een nieuwe, lege versterkingslijst bij
+   *  deze lijst — zelfde army book en army composition, de helft van de battle-grootte. De battle-grootte
+   *  is bij DE campagnelijst de Act-cap (de regels van wat je op dat moment speelt), anders de
+   *  puntenlimiet van de lijst. Hij komt in dezelfde map als de hoofdlijst en gaat meteen open. */
+  const battleGrootteVan = (l: SavedList): number =>
+    (campagne && isCampagneLijst(l, campagne) ? campagne.puntenCap : 0) || l.points || 0;
+  const maakVersterking = (l: SavedList) => {
+    const id = newId('l');
+    const rf = maakVersterkingLijst(l, battleGrootteVan(l), id, Date.now());
+    setLists((ls) => [{ ...rf, groupId: l.groupId ?? null }, ...ls]);
+    setInstellingenOpen(false);
+    setActiveId(id);
+  };
 
   // ── groups (folders) ──
   const addGroup = () => { const name = window.prompt('Group name'); if (name && name.trim()) setGroups((g) => [...g, { id: newId('g'), name: name.trim() }]); };
@@ -757,6 +771,8 @@ export function ListBuilder() {
           cap={campagne.puntenCap}
           onBack={() => setActiveId(null)}
           onDuplicate={() => duplicateAsPlain(active)}
+          onVersterking={() => maakVersterking(active)}
+          versterkingPunten={helftVan(battleGrootteVan(active))}
         />
       );
     }
@@ -776,10 +792,16 @@ export function ListBuilder() {
         points={active.points}
         campagneLabel={isCampagneLijst(active, campagne) && campagne ? campagne.label : null}
         campagneAct={isCampagneLijst(active, campagne) && campagne ? campagne.fase : null}
+        versterkingBasis={versterkingBasis(active)}
+        onVersterking={isVersterkingLijst(active) ? null : () => maakVersterking(active)}
+        versterkingPunten={helftVan(battleGrootteVan(active))}
         onClose={() => setInstellingenOpen(false)}
         onOpslaan={(v) => {
           setLists((ls) => ls.map((l) => (l.id === active.id
-            ? { ...l, name: v.naam, composition: v.composition, rule: v.rule, points: v.points, updatedAt: Date.now() }
+            // Een versterkingslijst: de battle-grootte is wat je instelt, de puntengrens volgt (de helft).
+            ? isVersterkingLijst(l) && v.basis != null
+              ? { ...l, name: v.naam, composition: v.composition, rule: v.rule, points: helftVan(v.basis), versterking: { ...l.versterking, basis: v.basis }, updatedAt: Date.now() }
+              : { ...l, name: v.naam, composition: v.composition, rule: v.rule, points: v.points, updatedAt: Date.now() }
             : l)));
           setInstellingenOpen(false);
         }}
@@ -1012,6 +1034,7 @@ export function ListBuilder() {
           <span style={{ fontFamily: towFont.serif, fontWeight: 400, fontSize: 15.5, lineHeight: 1.25, color: TOW.ink, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{l.name}</span>
           <span style={{ fontFamily: towFont.serif, fontSize: 11, lineHeight: 1.3, color: TOW.faint, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
             {armyName(l.army)} · {compName(l.composition, l.army)}
+            {isVersterkingLijst(l) ? <span style={{ color: TOW.goldDeep }}> · Reinforcement ({l.versterking.basis}-pt rules)</span> : null}
           </span>
         </button>
         <span style={{ fontFamily: towFont.serif, fontSize: 12.5, color: TOW.muted, fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap', flexShrink: 0 }}>

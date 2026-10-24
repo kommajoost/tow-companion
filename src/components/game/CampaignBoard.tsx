@@ -1,5 +1,6 @@
 import { useId, useMemo } from 'react';
 import { TOW, towFont } from '../../design/tow';
+import { terrainLegend, terrainStyle, terrainTrait, type CampaignTerrainPiece } from '../../lib/campaignTerrain';
 
 /**
  * READ-ONLY deployment map for a CAMPAIGN battle (16-08-2026).
@@ -21,6 +22,18 @@ import { TOW, towFont } from '../../design/tow';
  *   • (old note) terrain was drawn MUTED (low opacity, dashed outline) with a caption saying so — at the table
  *     you put the pieces down by eye, and those inches are not a rule.
  *
+ *   • 18-10-2026: terrain that is a RULE is drawn after all. The building of an attacked hex and the
+ *     low wall in front of it stand on the defender's half before the turn-by-turn placement starts,
+ *     so where they stand is not a matter of taste. The panel hands this board only those pre-placed
+ *     pieces (`terrain` prop); without the prop it draws exactly what it drew before.
+ *
+ *   • 22-10-2026: the Act 3+ setups (campaign, 20-10-2026) bring more of their own furniture, all drawn
+ *     crisp because it is part of the setup: BUILDINGS that belong to the deployment (`layout.buildings`:
+ *     the two storage buildings of Plunder, the Forge), extra DIMENSION LINES (`layout.dims` /
+ *     `secLayout.dims`: the inset of Plunder, the radius of The Forge, the spacing of the Strategic Locations markers), a
+ *     LABEL POSITION for polygon zones (`zone.labelAt`, so "Defender" does not sit on the Forge) and a
+ *     label under the baggage (`baggage[].label`, the Baggage Train). All optional: an older sheet draws as before.
+ *
  * Styling follows `BattleBoard` (the planning tool) so both boards read as the same object, but the
  * two share no code or state: this one is static, has no drag/selection, and is fed by the wire.
  */
@@ -31,7 +44,15 @@ export interface CampaignZone {
   kind: 'main' | 'flank';
   /** Free-form polygon (diagonal/corner deployments); wins from x/y/w/h when present. */
   poly?: [number, number][];
+  /** Where the zone label goes (inches), when the polygon's centroid is a bad spot (The Forge). */
+  labelAt?: [number, number];
 }
+
+/** A dimension line on the board (inches), with its label ("11″"). Baked into the sheet. */
+export interface CampaignDim { x1: number; y1: number; x2: number; y2: number; label: string }
+/** A building that belongs to the DEPLOYMENT (Plunder: two storage buildings; The Forge). Impassable, stands where
+ *  the map draws it and does not scatter. Not a piece from the terrain list. */
+export interface CampaignBuilding { x: number; y: number; w: number; h: number; label: string }
 
 export interface CampaignLayout {
   zones: CampaignZone[];
@@ -39,21 +60,107 @@ export interface CampaignLayout {
   impassable?: { x: number; y: number; w: number; h: number }[];
   hill?: { x: number; y: number; w: number; h: number };
   keepoutCircle?: { x: number; y: number; r: number };
+  buildings?: CampaignBuilding[];
+  dims?: CampaignDim[];
 }
 
 export interface CampaignSecLayout {
   quarters: boolean;
   specialFeature?: { x: number; y: number };
   objectives: { x: number; y: number; n: number }[];
-  baggage: { x: number; y: number; w: number; h: number }[];
+  /** `label` (20-10-2026) = the word under the cart; without it (older sheets) nothing is written. */
+  baggage: { x: number; y: number; w: number; h: number; label?: string }[];
+  dims?: CampaignDim[];
 }
 
-export interface CampaignTerrainPiece {
-  id?: string | null;
-  type: string;
-  x: number; y: number; w: number; h: number;
-  difficult?: boolean;
-  dangerous?: boolean;
+// Het terreinstuk-type woont sinds 18-10-2026 in lib/campaignTerrain.ts (samen met de parser en de
+// legenda); hier opnieuw geëxporteerd zodat bestaande imports blijven werken.
+export type { CampaignTerrainPiece };
+
+// ── Terrein tekenen (18-10-2026) ──
+// De kleuren wonen sinds 22-10-2026 in lib/campaignTerrain.ts (`terrainStyle`): dezelfde tinten als
+// het bord in de campagne-app, en ook gebruikt door de kleurstaaltjes in de terreinlijst.
+export { terrainStyle };
+/** Kort woord óp het stuk (als het past); de legenda eronder noemt het kenmerk voluit. */
+const TERRAIN_SHORT: Record<string, string> = {
+  building: 'Building', hill: 'Hill', wood: 'Woods', 'dense-wood': 'Dense woods', rocks: 'Rocks', marsh: 'Marsh', field: 'Field',
+  'rocky-ground': 'Rocks', outcrop: 'Outcrop', bog: 'Bog', scree: 'Scree',
+};
+
+/** Eén terreinstuk. Dangerous krijgt een driehoekje met uitroepteken (een polygon, geen emoji);
+ *  het gebouw is een dicht blok met een nokleiding (impassable); de muur een donkere, dunne strook. */
+function TerrainShape({ t, uid }: { t: CampaignTerrainPiece; uid: string }) {
+  const x = num(t.x), y = num(t.y), w = num(t.w), h = num(t.h);
+  if (x == null || y == null || w == null || h == null || w <= 0 || h <= 0) return null;
+  const st = terrainStyle(t.type);
+  const trait = terrainTrait(t);
+  const solid = t.type === 'building' || t.type === 'obstacle' || t.type === 'outcrop';
+  const pattern =
+    t.type === 'wood' || t.type === 'dense-wood' ? `cbTree-${uid}`
+      : t.type === 'field' ? `cbField-${uid}`
+        : t.type === 'marsh' || t.type === 'bog' ? `cbWater-${uid}`
+          : t.type === 'rocks' || t.type === 'rocky-ground' || t.type === 'scree' ? `cbRock-${uid}`
+            : null;
+  const word = TERRAIN_SHORT[t.type];
+  const fs = Math.min(2.2, h * 0.42);
+  // The dangerous triangle sits top right; the centred word has to clear it on both sides.
+  const markerRoom = trait === 'dangerous' ? 2 * (2 * Math.min(1.5, w / 3, h / 3) + 0.4) : 0;
+  const fits = !!word && h >= 3 && word.length * fs * 0.56 <= w - 1 - markerRoom;
+  const rx = Math.min(st.rx, w / 2, h / 2);
+  return (
+    <g style={{ pointerEvents: 'none' }}>
+      <rect x={x} y={y} width={w} height={h} rx={rx} fill={st.fill} stroke={st.edge} strokeWidth={solid ? 0.2 : 0.22} />
+      {pattern && <rect x={x} y={y} width={w} height={h} rx={rx} fill={`url(#${pattern})`} />}
+      {t.type === 'building' && (w >= h
+        ? <line x1={x + 0.6} y1={y + h / 2} x2={x + w - 0.6} y2={y + h / 2} stroke={st.ink} strokeOpacity={0.45} strokeWidth={0.2} />
+        : <line x1={x + w / 2} y1={y + 0.6} x2={x + w / 2} y2={y + h - 0.6} stroke={st.ink} strokeOpacity={0.45} strokeWidth={0.2} />)}
+      {fits && (
+        <text x={x + w / 2} y={y + h / 2 + fs * (t.type === 'building' ? 1.15 : 0.35)} fontSize={fs} textAnchor="middle" fontFamily={towFont.display} fontWeight={700} fill={st.ink}>
+          {word}
+        </text>
+      )}
+      {trait === 'dangerous' && (() => {
+        const r = Math.min(1.5, w / 3, h / 3);
+        const cx = x + w - r - 0.4, cy = y + r + 0.3;
+        return (
+          <g>
+            <polygon points={`${cx},${cy - r} ${cx + r},${cy + r * 0.8} ${cx - r},${cy + r * 0.8}`} fill="#b8452f" stroke="#fbfaf6" strokeWidth={0.12} />
+            <text x={cx} y={cy + r * 0.62} fontSize={r * 1.2} textAnchor="middle" fontWeight={800} fill="#fbfaf6">!</text>
+          </g>
+        );
+      })()}
+    </g>
+  );
+}
+
+/** Eén losse maatlijn met kapjes en z'n label (22-10-2026). Horizontaal: label erboven; verticaal:
+ *  links ervan; schuin (de straal van The Forge): naast het midden, aan de kant van de normaal.
+ *  Zelfde vorm als MaatlijnSvg in de campagne-app. */
+function DimLine({ d, halo }: { d: CampaignDim; halo: React.CSSProperties }) {
+  const len = Math.hypot(d.x2 - d.x1, d.y2 - d.y1);
+  if (!(len >= 0.5)) return null;
+  const kleur = 'rgba(60,45,30,0.65)', ink = '#46341a', lw = 0.18, cap = 1.6, fs = 2.4;
+  const ux = (d.x2 - d.x1) / len, uy = (d.y2 - d.y1) / len;
+  const nx = -uy, ny = ux;
+  const kap = (x: number, y: number) => (
+    <line x1={x - (nx * cap) / 2} y1={y - (ny * cap) / 2} x2={x + (nx * cap) / 2} y2={y + (ny * cap) / 2} stroke={kleur} strokeWidth={lw} />
+  );
+  const mx = (d.x1 + d.x2) / 2, my = (d.y1 + d.y2) / 2;
+  const horizontaal = Math.abs(uy) < 0.2;
+  const verticaal = Math.abs(ux) < 0.2;
+  const tx = horizontaal ? mx : verticaal ? mx - cap / 2 - 0.7 : mx + Math.sign(nx || 1) * 1.6;
+  const ty = horizontaal ? my - cap / 2 - 0.8 : verticaal ? my + fs * 0.35 : my + Math.sign(ny || 1) * 1.6 + fs * 0.35;
+  const anker = horizontaal ? 'middle' : verticaal ? 'end' : nx >= 0 ? 'start' : 'end';
+  return (
+    <g style={{ pointerEvents: 'none' }}>
+      <line x1={d.x1} y1={d.y1} x2={d.x2} y2={d.y2} stroke={kleur} strokeWidth={lw} />
+      {kap(d.x1, d.y1)}
+      {kap(d.x2, d.y2)}
+      {d.label && (
+        <text x={tx} y={ty} fontSize={fs} textAnchor={anker} fontFamily={towFont.display} fontWeight={700} fill={ink} style={halo}>{d.label}</text>
+      )}
+    </g>
+  );
 }
 
 const fmt = (n: number) => (Math.round(n * 10) / 10).toString();
@@ -97,9 +204,29 @@ function parseZone(v: unknown): CampaignZone | null {
       return x != null && y != null ? ([x, y] as [number, number]) : null;
     })
     .filter((p): p is [number, number] => !!p);
-  if (poly.length >= 3) return { x: 0, y: 0, w: 0, h: 0, label, kind, poly };
+  const la = Array.isArray(o.labelAt) ? [num(o.labelAt[0]), num(o.labelAt[1])] : null;
+  const labelAt: [number, number] | undefined = la && la[0] != null && la[1] != null ? [la[0], la[1]] : undefined;
+  if (poly.length >= 3) return { x: 0, y: 0, w: 0, h: 0, label, kind, poly, ...(labelAt ? { labelAt } : {}) };
   const box = parseBox(o);
-  return box ? { ...box, label, kind } : null;
+  return box ? { ...box, label, kind, ...(labelAt ? { labelAt } : {}) } : null;
+}
+
+/** Losse maatlijnen (`dims`). Een lijn zonder vier getallen valt weg. */
+function parseDims(v: unknown): CampaignDim[] {
+  return (Array.isArray(v) ? v : []).map((raw) => {
+    const o = sRec(raw);
+    if (!o) return null;
+    const x1 = num(o.x1), y1 = num(o.y1), x2 = num(o.x2), y2 = num(o.y2);
+    return x1 != null && y1 != null && x2 != null && y2 != null ? { x1, y1, x2, y2, label: sStr(o.label) ?? '' } : null;
+  }).filter((d): d is CampaignDim => !!d);
+}
+
+/** Gebouwen van de opstelling (`layout.buildings`). */
+function parseBuildings(v: unknown): CampaignBuilding[] {
+  return (Array.isArray(v) ? v : []).map((raw) => {
+    const box = parseBox(raw);
+    return box ? { ...box, label: sStr(sRec(raw)?.label) ?? '' } : null;
+  }).filter((b): b is CampaignBuilding => !!b);
 }
 
 /** De hele opstelling uit `sheet.layout`, of null als er geen bruikbare zones in zitten — een kaart
@@ -118,6 +245,8 @@ export function parseSheetLayout(v: unknown): CampaignLayout | null {
     impassable: (Array.isArray(o.impassable) ? o.impassable : []).map(parseBox).filter((b): b is NonNullable<typeof b> => !!b),
     hill: parseBox(o.hill) ?? undefined,
     keepoutCircle: kcx != null && kcy != null && kcr != null && kcr > 0 ? { x: kcx, y: kcy, r: kcr } : undefined,
+    buildings: parseBuildings(o.buildings),
+    dims: parseDims(o.dims),
   };
 }
 
@@ -132,11 +261,16 @@ export function parseSheetSecLayout(v: unknown): CampaignSecLayout | null {
       return p ? { ...p, n: n ?? 0 } : null;
     })
     .filter((p): p is { x: number; y: number; n: number } => !!p);
-  const baggage = (Array.isArray(o.baggage) ? o.baggage : []).map(parseBox).filter((b): b is NonNullable<typeof b> => !!b);
+  const baggage = (Array.isArray(o.baggage) ? o.baggage : []).map((raw) => {
+    const box = parseBox(raw);
+    const label = sStr(sRec(raw)?.label);
+    return box ? { ...box, ...(label ? { label } : {}) } : null;
+  }).filter((b): b is NonNullable<typeof b> => !!b);
   const specialFeature = parsePoint(o.specialFeature) ?? undefined;
   const quarters = o.quarters === true;
-  if (!quarters && !specialFeature && objectives.length === 0 && baggage.length === 0) return null;
-  return { quarters, specialFeature, objectives, baggage };
+  const dims = parseDims(o.dims);
+  if (!quarters && !specialFeature && objectives.length === 0 && baggage.length === 0 && dims.length === 0) return null;
+  return { quarters, specialFeature, objectives, baggage, dims };
 }
 
 /** Middelpunt van een zone op de diepte-as — werkt voor rechthoeken én polygonen. */
@@ -206,11 +340,14 @@ function bandDims(zones: CampaignZone[]): { depthTop: number; depthBottom: numbe
   };
 }
 
-export function CampaignBoard({ layout, secLayout, tableW, tableH, youSide }: {
+export function CampaignBoard({ layout, secLayout, tableW, tableH, youSide, terrain }: {
   layout: CampaignLayout;
   secLayout?: CampaignSecLayout | null;
   tableW: number;
   tableH: number;
+  /** Terrain to DRAW (18-10-2026): the panel passes only the pre-placed pieces (building + wall).
+   *  Absent or empty = no terrain, exactly as before. A legend appears under the board. */
+  terrain?: CampaignTerrainPiece[] | null;
   /** Which half of the table the viewer deploys on. Only used for a subtle accent — the labels
    *  around the board carry the actual "you / opponent" reading. */
   youSide?: 'top' | 'bottom';
@@ -232,9 +369,20 @@ export function CampaignBoard({ layout, secLayout, tableW, tableH, youSide }: {
 
   if (!W || !H) return null;
 
+  const pieces = (terrain ?? []).filter((t) => !!t && typeof t.type === 'string');
+  // Eén legenda-regel per soort+kenmerk, in de volgorde waarin ze op het bord staan.
+  const legend: { label: string; type: string }[] = [];
+  for (const t of pieces) {
+    const label = terrainLegend(t);
+    if (!legend.some((l) => l.label === label)) legend.push({ label, type: t.type });
+  }
+
   const zones = (layout.zones || []).filter((z) => !!z && (z.poly ? z.poly.length >= 3 : num(z.w) !== null && num(z.h) !== null));
   const dims = bandDims(zones);
   const hatch = `cbhatch-${uid}`;
+  const buildings = (layout.buildings ?? []).filter((g) => num(g.x) !== null && num(g.y) !== null && (num(g.w) ?? 0) > 0 && (num(g.h) ?? 0) > 0);
+  // Een lichte rand om tekst die over lijnen en vlakken heen valt, in de kleur van het bord.
+  const halo: React.CSSProperties = { paintOrder: 'stroke', stroke: '#efe7d4', strokeWidth: 0.9, strokeLinejoin: 'round' };
 
   /** Is this zone on the viewer's half? Used only for the accent outline. */
   const isMine = (z: CampaignZone): boolean => {
@@ -259,6 +407,23 @@ export function CampaignBoard({ layout, secLayout, tableW, tableH, youSide }: {
             <rect width={1.4} height={1.4} fill="rgba(60,45,30,0.30)" />
             <line x1={0} y1={0} x2={0} y2={1.4} stroke="rgba(40,30,18,0.65)" strokeWidth={0.45} />
           </pattern>
+          {pieces.length > 0 && (
+            <>
+              {/* Terrain textures, so a piece reads by its kind and not only by its colour. */}
+              <pattern id={`cbTree-${uid}`} width={2.4} height={2.4} patternUnits="userSpaceOnUse">
+                <circle cx={1.2} cy={1.2} r={0.55} fill="none" stroke="rgba(30,60,28,0.6)" strokeWidth={0.14} />
+              </pattern>
+              <pattern id={`cbField-${uid}`} width={1.2} height={1.2} patternUnits="userSpaceOnUse" patternTransform="rotate(-30)">
+                <line x1={0} y1={0.6} x2={1.2} y2={0.6} stroke="rgba(96,84,30,0.55)" strokeWidth={0.12} />
+              </pattern>
+              <pattern id={`cbWater-${uid}`} width={2.4} height={1.4} patternUnits="userSpaceOnUse">
+                <path d="M0.2 0.8 q0.5 -0.5 1 0 t1 0" fill="none" stroke="rgba(30,64,78,0.6)" strokeWidth={0.13} />
+              </pattern>
+              <pattern id={`cbRock-${uid}`} width={2.2} height={2.2} patternUnits="userSpaceOnUse">
+                <polygon points="0.4,1.6 0.9,0.6 1.5,1.4" fill="none" stroke="rgba(43,39,34,0.65)" strokeWidth={0.13} />
+              </pattern>
+            </>
+          )}
         </defs>
 
         {/* Deployment zones — a rule, so drawn crisply: a shaded area with a hairline border.
@@ -272,8 +437,10 @@ export function CampaignBoard({ layout, secLayout, tableW, tableH, youSide }: {
           const mine = isMine(z);
           if (z.poly) {
             const pts = z.poly;
-            const cx = pts.reduce((s, p) => s + p[0], 0) / pts.length;
-            const cy = pts.reduce((s, p) => s + p[1], 0) / pts.length;
+            // 22-10-2026: `labelAt` wint van het zwaartepunt. Bij de kwartcirkels van The Forge viel het
+            // zwaartepunt op de Forge zelf; de campagne geeft daarom een eigen plek mee.
+            const cx = z.labelAt?.[0] ?? pts.reduce((s, p) => s + p[0], 0) / pts.length;
+            const cy = z.labelAt?.[1] ?? pts.reduce((s, p) => s + p[1], 0) / pts.length;
             // Widest horizontal run of the polygon's bounding box is the only honest budget here.
             const bw = Math.max(...pts.map((p) => p[0])) - Math.min(...pts.map((p) => p[0]));
             const label = fitLabel(z.label, Math.max(0, bw - 1), fs, flank);
@@ -326,6 +493,9 @@ export function CampaignBoard({ layout, secLayout, tableW, tableH, youSide }: {
 
         {grid}
 
+        {/* Terrain (only what the panel hands over), under the rules so markers stay on top. */}
+        {pieces.map((t, i) => <TerrainShape key={t.id ?? `ter${i}`} t={t} uid={uid} />)}
+
 
         {/* Central objective (a rule — full strength). */}
         {layout.objective && num(layout.objective.x) !== null && num(layout.objective.y) !== null && (
@@ -373,16 +543,55 @@ export function CampaignBoard({ layout, secLayout, tableW, tableH, youSide }: {
             {/* two wheels, so a baggage train reads as a cart rather than as a block of terrain */}
             <circle cx={b.x + b.w * 0.25} cy={b.y + b.h} r={0.5} fill="none" stroke="#5c4326" strokeWidth={0.18} />
             <circle cx={b.x + b.w * 0.75} cy={b.y + b.h} r={0.5} fill="none" stroke="#5c4326" strokeWidth={0.18} />
+            {/* 22-10-2026: de naam eronder (de Baggage Train van Flank Attack). Past hij onder de kar niet
+                meer op het bord, dan erboven. */}
+            {b.label && (() => {
+              const fsK = 2;
+              const onder = b.y + b.h + 0.6 + fsK <= H;
+              return (
+                <text x={b.x + b.w / 2} y={onder ? b.y + b.h + 0.6 + fsK : Math.max(fsK, b.y - 0.5)} fontSize={fsK} textAnchor="middle" fontFamily={towFont.display} fontWeight={700} fill="#46341a" style={halo}>
+                  {b.label}
+                </text>
+              );
+            })()}
           </g>
         ))}
+
+        {/* Gebouwen van de OPSTELLING (22-10-2026): de storage buildings van Plunder, de Forge. Impassable en hun
+            plek is een regel, dus strak getekend: een donker blok met een nok, de naam eronder (of
+            erboven als er onder geen ruimte is). Zelfde vorm als het bord in de campagne-app. */}
+        {buildings.map((g, i) => {
+          const fsG = 2.1;
+          const onder = g.y + g.h + fsG + 0.8 <= H;
+          return (
+            <g key={`geb${i}`} style={{ pointerEvents: 'none' }}>
+              <rect x={g.x} y={g.y} width={g.w} height={g.h} rx={0.5} fill="rgba(58,47,28,0.78)" stroke={TOW.goldDeep} strokeWidth={0.25} />
+              {g.w >= g.h
+                ? <line x1={g.x + 0.7} y1={g.y + g.h / 2} x2={g.x + g.w - 0.7} y2={g.y + g.h / 2} stroke="#f2e7cd" strokeOpacity={0.6} strokeWidth={0.2} />
+                : <line x1={g.x + g.w / 2} y1={g.y + 0.7} x2={g.x + g.w / 2} y2={g.y + g.h - 0.7} stroke="#f2e7cd" strokeOpacity={0.6} strokeWidth={0.2} />}
+              {g.label && (
+                <text x={g.x + g.w / 2} y={onder ? g.y + g.h + fsG + 0.4 : Math.max(fsG, g.y - 0.6)} fontSize={fsG} textAnchor="middle" fontFamily={towFont.display} fontWeight={700} fill="#46341a" style={halo}>
+                  {g.label}
+                </text>
+              )}
+            </g>
+          );
+        })}
+
+        {/* Losse maatlijnen die de sheet meebrengt (22-10-2026): de inzet van Plunder, de straal van The
+            Forge, de afstanden bij Strategic Locations. Zelfde lijn, kapjes en letter als de band-maten. */}
+        {[...(layout.dims ?? []), ...(secLayout?.dims ?? [])].map((d, i) => <DimLine key={`dim${i}`} d={d} halo={halo} />)}
 
         {/* Inch dimension lines: each zone's depth and the no-man's-land between them. These are the
             numbers you actually measure out with a tape before the first turn. */}
         {dims && (() => {
           const m = dims;
           const L = 'rgba(60,45,30,0.65)', ink = '#46341a', lw = 0.18, cap = 1.6, fs = 2.7;
-          const halo: React.CSSProperties = { paintOrder: 'stroke', stroke: '#efe7d4', strokeWidth: 0.9, strokeLinejoin: 'round' };
-          const xr = Math.max(3, Math.min(W - 3, m.hi - 3));
+          // 22-10-2026: valt de rail (of de maat links ervan) door een gebouw van de opstelling (de
+          // rechter storage building van Plunder), dan wijkt hij uit: net buiten de zone, links in de zone, het midden.
+          const raakt = (x: number) => buildings.some((g) => x > g.x - 6 && x < g.x + g.w + 1);
+          const kandidaten = [m.hi - 3, m.hi + 3, m.lo + 9, W / 2 + 4].map((x) => Math.max(3, Math.min(W - 3, x)));
+          const xr = kandidaten.find((x) => !raakt(x)) ?? kandidaten[0];
           const seg = (y1: number, y2: number, label: string, key: string) => (
             <g key={key}>
               <line x1={xr} y1={y1} x2={xr} y2={y2} stroke={L} strokeWidth={lw} />
@@ -400,7 +609,19 @@ export function CampaignBoard({ layout, secLayout, tableW, tableH, youSide }: {
           );
         })()}
       </svg>
-
+      {legend.length > 0 && (
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px 12px', marginTop: 6 }}>
+          {legend.map((l) => {
+            const st = terrainStyle(l.type);
+            return (
+              <span key={l.label} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, fontFamily: towFont.serif, fontSize: 12, color: TOW.parchDim }}>
+                <span aria-hidden style={{ display: 'inline-block', width: 14, height: 10, borderRadius: 2, background: st.fill, border: `1px solid ${st.edge}` }} />
+                {l.label}
+              </span>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }

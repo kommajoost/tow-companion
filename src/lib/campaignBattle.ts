@@ -1,6 +1,9 @@
 import { supabase } from './supabase';
 import type { GameWeer } from '../types';
 import { buildTestBattle, isTestBattleCode } from './testBattle';
+import { buildScenarioTestBattle, isScenarioTestCode } from './scenarioTest';
+import { parseWrath } from './wrathTriggers';
+import { parseVersterking, type BattleVersterking } from './versterking';
 
 // Client-laag voor de campagne-BATTLE-brug ("De Grensvorsten", zelfde Supabase-project). Waar
 // campaign.ts de speler-identiteit/lijstbouw-context levert, opent deze module een concrete
@@ -179,6 +182,16 @@ export interface CampaignBattle {
    *  Watchtower, Scouting Outpost, Raider's Den). Zelfde poort als `perks`: null tot beide legers
    *  gelockt zijn. undefined bij een oudere server. */
   rollOff?: { aanvaller: RollOffBron[]; verdediger: RollOffBron[] } | null;
+  /** 23-10-2026: de WRATH TRIGGERS van deze battle, door de campagne gegooid bij het begin van de War
+   *  phase (twee verschillende D6, in worp-volgorde). null = (nog) geen worp; undefined bij een oudere
+   *  server. Of de Wrath geldt (Act 3+, geen Battle March) zegt `wrathGeldt`, niet dit veld. */
+  wrath?: number[] | null;
+  /** 23-10-2026: REINFORCEMENT DETACHMENT. Aan een teamtafel van twee tegen drie mag elke speler aan de
+   *  kleine kant een versterking van de helft van de cap toevoegen (lib/versterking.ts). Per kant het
+   *  aantal punten per speler, of null. CONTRACT met de campagne (nog niet op de server):
+   *  `versterking: number` (+ optioneel `versterkingKant`), of `{ aanvaller, verdediger }` — zie
+   *  `parseVersterking`. undefined = geen teamtafel of een oudere server: dan geen versterking. */
+  versterking?: BattleVersterking;
 }
 
 /** Eén bron van een roll-off-modifier voor de eerste beurt, bv. `{ bron: 'ranger-outpost',
@@ -203,6 +216,9 @@ export const BATTLE_TYPE_LABEL: Record<string, string> = {
   claim: 'Claim duel',
   calling: 'The Calling',
   challenge: 'Challenge',
+  // 23-10-2026: CALL TO ARMS. Een general zonder tegenstander roept op; een general van de andere
+  // alliantie meldt zich als Champion. Aanvaller = de oproeper, verdediger = de Champion.
+  call: 'Call to Arms',
 };
 
 /** Eén regel over wat er in dit type battle op het spel staat. Alleen gevuld waar de soort iets
@@ -211,7 +227,19 @@ export const BATTLE_TYPE_LABEL: Record<string, string> = {
 export const BATTLE_TYPE_NOTE: Record<string, string> = {
   challenge:
     'A challenge: no territory is at stake. What rides on it is the wager the two of you agreed in the campaign: the gold you both put up and any magic item each side staked. Challenge: +1 Fame only on a Crushing Victory, XP and scars count as normal.',
+  call:
+    'A Call to Arms: the attacker called for a battle and a general of the other alliance answered as their Champion. For the caller it is a normal battle: Fame, raid gold from the bank, no land or items. The Champion plays under challenge rules: +1 Fame only on a Crushing Victory, and the Champion loses nothing.',
 };
+
+/** CALL TO ARMS (23-10-2026): de regel van de Champion (de verdediger), voor bij zijn naam in de
+ *  briefing en de uitslag. Alleen tekst: wat het oplevert rekent de server. */
+export const CHAMPION_REGEL = 'Champion: +1 Fame only on a Crushing Victory, loses nothing';
+/** Is deze kant de Champion van een Call to Arms? */
+export const isChampion = (type: string | null | undefined, kant: 'aanvaller' | 'verdediger'): boolean =>
+  type === 'call' && kant === 'verdediger';
+/** Het rol-label van een kant: "Attacker"/"Defender", bij een Call to Arms "Caller"/"Champion". */
+export const kantLabel = (type: string | null | undefined, kant: 'aanvaller' | 'verdediger'): string =>
+  type === 'call' ? (kant === 'aanvaller' ? 'Caller' : 'Champion') : kant === 'aanvaller' ? 'Attacker' : 'Defender';
 
 /** Label van een battle-soort, of null als de campagne iets stuurt dat we niet kennen. */
 export const battleTypeLabel = (type: string): string | null => BATTLE_TYPE_LABEL[type] ?? null;
@@ -383,6 +411,8 @@ function parseBattle(data: unknown): CampaignBattle {
     weer: 'weer' in d ? parseWeer(d.weer) : undefined,
     hexGebouw: 'hexGebouw' in d ? (typeof d.hexGebouw === 'string' && d.hexGebouw.trim() ? d.hexGebouw.trim() : null) : undefined,
     rollOff: parseRollOff(d),
+    wrath: 'wrath' in d ? parseWrath(d.wrath) : undefined,
+    versterking: parseVersterking(d),
   };
 }
 
@@ -420,6 +450,13 @@ export async function battleByCode(code: string): Promise<CampaignBattle> {
     if (!nep) throw new Error('TESTBATTLE_ONVOLLEDIG');
     return nep;
   }
+  // DE SCENARIO-TEST (22-10-2026, alleen testbuild): de sheet komt uit de URL-hash en leeft in
+  // localStorage. Zelfde reden als hierboven: alles erachter draait op de echte code.
+  if (isScenarioTestCode(code)) {
+    const nep = buildScenarioTestBattle();
+    if (!nep) throw new Error('SCENARIOTEST_ONVOLLEDIG');
+    return nep;
+  }
   const { data, error } = await supabase.rpc('towc_battle_by_code', { p_code: cleanBattleCode(code) });
   if (error) throw error;
   return parseBattle(data);
@@ -453,10 +490,6 @@ export interface BattleResultaat {
   kills: unknown[];
   /** Vrije notities of null. */
   notities: string | null;
-  /** Trok een van de twee legers zich terug? (17-08-2026) De campagne-RPC legt dan de trede vast op
-   *  minimaal Resounding voor de andere kant; een Crushing tegen de terugtrekker blijft staan.
-   *  Afwezig/null = niemand trok zich terug, en de VP-telling beslist zoals altijd. */
-  terugtrokken?: Terugtrekker;
   /** 01-08: battle-quest gehaald, per kant. Battle-quests zijn TAFEL-feiten ("vang de standaard",
    *  "versla hun generaal") die de campagne-app nooit zelf kan zien, dus vinken de twee spelers ze
    *  hier samen af. De campagne-RPC roept per `true` towc_spel_quest_voltooi aan; false = geen actie. */
@@ -522,13 +555,6 @@ export interface BattleResultaat {
 /** De zeven officiële uitkomsten (Tournament Points), altijd vanuit de AANVALLER gezien. */
 export type ToernooiResultaat = 'CD' | 'RD' | 'MD' | 'D' | 'MV' | 'RV' | 'CV';
 
-/** Wie zich terugtrok, als iemand dat deed (17-08-2026). Terugtrekken redt je UNITS — geen
- *  verwondings-worpen, geen Battlefield Losses — maar geeft de battle weg: de tegenstander wint met
- *  minimaal een Resounding Victory. Een Crushing TEGEN de terugtrekker blijft wel staan, anders zou
- *  terugtrekken de ontsnapping uit een afstraffing worden. De regel zelf staat in de campagne-DB
- *  (`towc_vp_resultaat`), niet hier: zo kunnen preview en verwerking niet uit elkaar lopen. */
-export type Terugtrekker = 'aanvaller' | 'verdediger' | null;
-
 export const RESULTAAT_NAAM: Record<ToernooiResultaat, string> = {
   CD: 'Crushing Defeat', RD: 'Resounding Defeat', MD: 'Marginal Defeat', D: 'Draw',
   MV: 'Marginal Victory', RV: 'Resounding Victory', CV: 'Crushing Victory',
@@ -551,13 +577,13 @@ export async function officieleUitslag(
   vpAanvaller: number,
   vpVerdediger: number,
   cap: number,
-  terugtrokken: Terugtrekker = null,
 ): Promise<ToernooiResultaat | null> {
+  // 23-10-2026: TERUGTREKKEN is uit de campagne (niemand deed het ooit). `p_terugtrokken` gaat dus
+  // niet meer mee; de server had er een default null voor, dus dit werkt ook tegen een oudere DB.
   const { data, error } = await supabase.rpc('towc_vp_resultaat', {
     p_vp_aanv: Math.max(0, Math.round(vpAanvaller)),
     p_vp_verd: Math.max(0, Math.round(vpVerdediger)),
     p_cap: cap,
-    p_terugtrokken: terugtrokken,
   });
   if (error || typeof data !== 'string') return null;
   return data as ToernooiResultaat;
@@ -767,7 +793,10 @@ export function questFoutTekst(q: QuestUitkomst): string {
 
 /** De opbouw van de Fame van één kant ("TP 5 · Council +1 · painted +1 · defender +1"). De server
  *  klemt trede + modifiers op minimaal 0, dus de delen tellen niet altijd exact op tot het totaal. */
-export function fameOpbouw(f: FameBlok, kant: 'aanv' | 'verd', res: ToernooiResultaat | null): string {
+export function fameOpbouw(f: FameBlok, kant: 'aanv' | 'verd', res: ToernooiResultaat | null, type: string | null = null): string {
+  // CALL TO ARMS (23-10-2026): de Champion speelt onder challenge-regels, de oproeper niet. Het getal
+  // komt van de server; dit is alleen het waarom.
+  if (type === 'call' && kant === 'verd') return f[kant] > 0 ? 'Champion, Crushing Victory' : 'Champion: Fame only on a Crushing Victory';
   if (f.challenge) return f[kant] > 0 ? 'Crushing Victory in a challenge' : 'a challenge pays Fame only on a Crushing Victory';
   const teken = (n: number) => (n > 0 ? `+${n}` : `${n}`);
   const delen: string[] = [];

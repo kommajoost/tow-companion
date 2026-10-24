@@ -2,16 +2,25 @@ import { useCallback, useEffect, useState } from 'react';
 import { TOW, towFont, engraved } from '../../design/tow';
 import { useGame } from '../../game';
 import { getCachedCampaign, getCampaignCode } from '../../lib/campaign';
+import { CHAMPION_REGEL, isChampion, kantLabel } from '../../lib/campaignBattle';
+import { versterkingVoorKant, voegVersterkingToe } from '../../lib/versterking';
+import { VersterkingKiezer } from './VersterkingKiezer';
 import { battleByCode, battleHandZet, battleTypeLabel, battleTypeNote, abilityLabel, abilityEffect, scarLabel, weerVanBattle, type CampaignBattle, type BattleSide, type Perk, type FoundItem, type BattleLijstSamenvatting, type VetUnit } from '../../lib/campaignBattle';
 import { ArmyListPicker } from './ArmyListPicker';
-import { CampaignBoard, defenderIsTop, parseSheetLayout, parseSheetSecLayout } from './CampaignBoard';
+import { parseSheetLayout, parseSheetSecLayout } from './CampaignBoard';
+import { ScenarioKaart, TerreinLijst, ScenarioVpLijst, WrathVoorBattle, eersteBeurtZin } from './CampaignScenarioBits';
 import type { Army } from '../../types';
 import { isTestBattleCode } from '../../lib/testBattle';
+import { isScenarioTestCode, scenarioTestPayload } from '../../lib/scenarioTest';
+import { mockLeger, mockVersterking } from '../../lib/scenarioLab';
+import { eersteBeurtVast, scenarioBonusVan } from '../../lib/campaignScenario';
+import { wrathGeldt } from '../../lib/wrathTriggers';
 import { useStatIndex } from '../../lib/useStatIndex';
 import { overlayStatsFor } from '../../lib/overlays';
 import { pasVeteraanToe, veteraanBonussen, celDelta, BETER_KLEUR, BETER_ACHTERGROND, type StatCel } from '../../lib/veteraanStats';
 import { isVrijPotjeCode } from '../../lib/battleCode';
-import { TERRAIN_PLACEMENT_SHORT, TERRAIN_PLACEMENT_STEPS } from '../../lib/terrainPlacement';
+import { terrainPlacementShort, terrainPlacementSteps } from '../../lib/terrainPlacement';
+import { parseSheetTerrain, terrainName, terrainPlural } from '../../lib/campaignTerrain';
 import { objectiveBriefings, BM_FIRST_TURN, BM_GAME_LENGTH, type ObjectiveBriefing } from '../../lib/battleMarchObjectives';
 
 const eb = engraved as React.CSSProperties;
@@ -34,26 +43,10 @@ const GROND: Record<string, string> = {
 };
 const grondLabel = (s: string): string => (GROND[s.toLowerCase().trim()] ? `${GROND[s.toLowerCase().trim()]} region` : pretty(s));
 
-/** Eén terreinstuk zoals dit scherm het nodig heeft: soort, kenmerken en (soms) wiens helft. */
-interface TerreinStuk {
-  type: string;
-  difficult: boolean;
-  dangerous: boolean;
-  /** Alleen gezet bij het STERKTEPUNT van de hex: het stuk hoort op de helft van die kant. */
-  side: 'defender' | 'attacker' | null;
-}
-
-/** Leesbare namen van de terreinsoorten die de campagne genereert (enkelvoud, meervoud). De labels
- *  volgen de campagne zelf (TERRAIN_TYPES in de campagne-repo); onbekend valt terug op `pretty`. */
-const TERREIN: Record<string, [string, string]> = {
-  hill: ['Hill', 'hills'], wood: ['Wood', 'woods'], field: ['Field', 'fields'], marsh: ['Marsh', 'marshes'],
-  building: ['Building', 'buildings'], obstacle: ['Rampart / Wall', 'ramparts / walls'],
-};
-const terreinNaam = (type: string): string => TERREIN[type.toLowerCase()]?.[0] ?? pretty(type);
-const terreinMeervoud = (type: string): string => TERREIN[type.toLowerCase()]?.[1] ?? `${pretty(type).toLowerCase()}s`;
-/** Het kenmerk achter de soort. Difficult én dangerous heet "dangerous terrain" (Joost, 05-10). */
-const terreinKenmerk = (t: TerreinStuk): string | null =>
-  t.dangerous ? 'dangerous terrain' : t.difficult ? 'difficult terrain' : null;
+// Terreinstukken: type, parser, namen, kenmerk en effectregel wonen in lib/campaignTerrain.ts (kopie
+// van de campagne); de boodschappenlijst zelf is TerreinLijst in CampaignScenarioBits (22-10-2026).
+const terreinNaam = terrainName;
+const terreinMeervoud = terrainPlural;
 
 /** +3 / −1 / +0 — een roll-off-modifier zoals je hem aan tafel optelt. */
 const metTeken = (n: number): string => (n < 0 ? `−${Math.abs(n)}` : `+${n}`);
@@ -212,7 +205,7 @@ function LijstBlok({ lijst, heading, open: openInit = true }: {
 // Companion builder lists into their seat — then opens the shared realtime game on that code. From
 // there the normal Game-mode tracker takes over. Non-participants get a read-only notice.
 export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismiss: () => void }) {
-  const { openCampaignBattle, busy, error } = useGame();
+  const { openCampaignBattle, startSolo, busy, error } = useGame();
   const [battle, setBattle] = useState<CampaignBattle | null>(null);
   // Statline-index (gedeeld, één fetch per sessie): voor de basiswaarde onder een veteraan-bonus.
   const statIdx = useStatIndex();
@@ -229,6 +222,10 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
   // de tracker leeg en moet jij hun lijst erbij zoeken (Joost 30-07). De AI-dummy is een gedeelde lijst,
   // dus die staat op je eigen apparaat en kan langs dezelfde weg geladen worden als je eigen leger.
   const [stagedTegen, setStagedTegen] = useState<Army | null>(null);
+  // REINFORCEMENT DETACHMENT (23-10-2026): de versterking die bij het leger komt als de battle het
+  // toestaat (twee tegen drie). Los gehouden van het leger zelf tot je start: pas dan gaan ze samen.
+  const [stagedRf, setStagedRf] = useState<Army | null>(null);
+  const [stagedTegenRf, setStagedTegenRf] = useState<Army | null>(null);
 
   // The linked campaign player id (attacker/defender ids are campaign-player ids). Read the cached
   // context the same way Settings does; no fetch here — the link is a prerequisite.
@@ -237,10 +234,20 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
   // to your campaign profile first" en valt er niets te testen — precies waar hij voor bedoeld is.
   // Je speelt er altijd de AANVALLER; de tegenstander is de tweede lijst die je koos.
   const testBattle = isTestBattleCode(code);
-  const myPlayerId = testBattle
-    ? (battle?.aanvaller.id ?? 'test-a')
+  // DE SCENARIO-TEST (22-10-2026, alleen testbuild): net als de testbattle zonder koppeling, en je
+  // speelt de aanvaller. Anders dan de testbattle schrijft hij NIETS naar de server: hij start solo.
+  const scenarioTest = isScenarioTestCode(code);
+  // HET SCENARIO LAB (23-10-2026): een scenario-test MET vaste mock-legers. Dan laden beide legers vanzelf
+  // (geen keuze uit je eigen lijsten) en opent het potje met allebei — solo, beide kanten bedienbaar.
+  const labLegers = scenarioTest ? scenarioTestPayload()?.legers ?? null : null;
+  const labAanv = mockLeger(labLegers?.aanvaller);
+  const labVerd = mockLeger(labLegers?.verdediger);
+  const lab = !!labAanv && !!labVerd;
+  const lokaal = testBattle || scenarioTest;
+  const myPlayerId = lokaal
+    ? (battle?.aanvaller.id ?? (scenarioTest ? 'scen-a' : 'test-a'))
     : getCachedCampaign()?.context?.speler.id ?? null;
-  const linked = testBattle || (!!getCampaignCode() && !!myPlayerId);
+  const linked = lokaal || (!!getCampaignCode() && !!myPlayerId);
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -301,6 +308,13 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
    *  laatste op Start, óf je tegenstander doet dat terwijl jij staat te wachten (de poll hieronder). */
   const startNu = useCallback(async (army: Army | null, tegenLeger: Army | null = null) => {
     if (!battle || !mySeat) return;
+    // Scenario-test: een LOKAAL solo-potje op de testcode. Geen `tow_games`-rij, geen handdruk; de
+    // campagne-panelen vinden hun battle via de code (battleByCode onderschept hem).
+    if (scenarioTest) {
+      startSolo(army, { battleMarch: battle.battleMarch === true, weer: null }, code, tegenLeger);
+      onDismiss();
+      return;
+    }
     const mijn = mySeat === 'host' ? battle.aanvaller : battle.verdediger;
     const tegen = mySeat === 'host' ? battle.verdediger : battle.aanvaller;
     // De GAME-REGELS van deze Act mee naar de tracker (21-08-2026): Battle March (5 rounds + de
@@ -312,7 +326,7 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
       weer: weerVanBattle(battle),
     });
     if (ok) onDismiss(); // GameProvider heeft nu een seat → GameMode wisselt naar GameView
-  }, [battle, mySeat, code, name, openCampaignBattle, onDismiss]);
+  }, [battle, mySeat, code, name, openCampaignBattle, startSolo, scenarioTest, onDismiss]);
 
 
   const wrap = (children: React.ReactNode) => (
@@ -323,7 +337,7 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
 
   const dismissBtn = (
     <button onClick={onDismiss} style={{ background: 'none', border: 'none', cursor: 'pointer', fontFamily: serif, fontSize: 13.5, color: TOW.muted, textDecoration: 'underline' }}>
-      ← back to the normal game setup
+      {lab ? '← back to the lab' : '← back to the normal game setup'}
     </button>
   );
 
@@ -397,19 +411,22 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
   // tekent sinds 16-08 geen terrein meer, dus ook de coördinaten hoeven hier niet mee.
   // WEL `dangerous` en `side` (05-10-2026): die werden weggegooid, terwijl `side` precies zegt welk
   // stuk het sterktepunt van de hex is en op wiens helft het hoort.
-  const terrain = Array.isArray(sheet.terrain)
-    ? (sheet.terrain as unknown[]).map((t): TerreinStuk | null => {
-      const o = (t && typeof t === 'object' ? t : {}) as Record<string, unknown>;
-      const type = asStr(o.type);
-      if (!type) return null;
-      return {
-        type,
-        difficult: o.difficult === true,
-        dangerous: o.dangerous === true,
-        side: o.side === 'defender' || o.side === 'attacker' ? o.side : null,
-      };
-    }).filter((t): t is TerreinStuk => !!t)
-    : [];
+  // 18-10-2026: ook `impassable`, `obstacle` en `preplaced` (het gebouw van de hex en z'n muur staan
+  // al op tafel vóór het om-de-beurt plaatsen). De parser woont in lib/campaignTerrain.ts.
+  const terrain = parseSheetTerrain(sheet.terrain);
+  const vooraf = terrain.filter((t) => t.preplaced);
+  // 22-10-2026: de lage muur van de verdediger in Breakthrough (`byDefender`) is een SCENARIO-STUK: hij
+  // zet hem vooraf, waar hij wil op zijn eigen helft, en hij scattert niet.
+  const muurVerdediger = terrain.some((t) => t.byDefender);
+  // Wie het eerste stuk plaatst hangt aan de Act: roll-off in Battle March (Act 1-2), daarna de
+  // verdediger. Zonder fase op de sheet nemen we Act 3+ aan (zo oud is geen lopende battle meer).
+  const plaatsOpties = { battleMarch: (asNum(sheet.fase) ?? 3) <= 2, building: vooraf.length > 0 };
+  // 22-10-2026: de scenario-VP (gestructureerd uit de sheet), of de eerste beurt vastligt (Breakthrough,
+  // Plunder, The Forge: dan geen "Roll for first turn"), en of de Wrath Triggers gelden (Act 3+).
+  const scenarioDef = scenarioBonusVan(sheet);
+  const eersteVast = eersteBeurtVast(sheet);
+  const eersteZin = eersteBeurtZin(battle);
+  const wrath = wrathGeldt(battle.fase ?? asNum(sheet.fase), battle.battleMarch);
   // 14-08-2026: de campagne schrijft de scenario-uitleg mee in de sheet, zodat we hier niet z'n
   // scenario-catalogus hoeven na te bouwen. Ontbreekt hij (oudere battles), dan valt het blok weg.
   const blurb = asStr(sheet.blurb);
@@ -459,21 +476,8 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
       ? `${setupGeforceerd ? 'Setup forced — took ' : 'Setup '}${setupSlot}${setupTotaal != null ? ` of ${setupTotaal}` : ''} this Act${weerDeel}`
       : sheetV >= 2 ? `Setup: forced — no roll${weerDeel}` : null;
 
-  // WIE STAAT WAAR. `defenderIsTop` leest het uit de zone-labels met de campagne-afspraak
-  // (zone A = boven = verdediger) als terugval. Mijn eigen kant komt uit `mySeat`, de bestaande
-  // stoel-bepaling van dit scherm: AANVALLER → host, VERDEDIGER → guest.
-  const defenderTop = defenderIsTop(layout, tableH ?? 0, asStr(sheet.verdedigerKant));
-  const ikBenVerdediger = mySeat === 'guest';
-  const youSide: 'top' | 'bottom' | undefined = mySeat
-    ? (ikBenVerdediger === defenderTop ? 'top' : 'bottom')
-    : undefined;
-  /** Bijschrift boven/onder het bord: rol, of jij dat bent, en wiens leger het is. */
-  const kantLabel = (isDefender: boolean): string => {
-    const side = isDefender ? battle.verdediger : battle.aanvaller;
-    const rol = isDefender ? 'Defender' : 'Attacker';
-    const wie = !mySeat ? null : isDefender === ikBenVerdediger ? 'you' : 'opponent';
-    return `${rol}${wie ? ` — ${wie}` : ''}${side.naam ? ` · ${side.naam}` : ''}`;
-  };
+  // WIE STAAT WAAR: de kaart met de bijschriften boven en onder staat sinds 22-10-2026 in ScenarioKaart
+  // (CampaignScenarioBits), zodat het scenario-overzicht tijdens het spel precies dezelfde kaart toont.
 
   // ── Objectives (05-10-2026) ────────────────────────────────────────────────────────────────────
   // Joost: "dit zijn Objectives" — zo heten ze in Battle March, dus zo heten ze hier. Per objective: wat het is, WAAR het ligt
@@ -487,34 +491,45 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
 
   // ── Terrein: wat je nodig hebt (05-10-2026) ────────────────────────────────────────────────────
   // Joost: "maak duidelijker welke terrain pieces je nodig hebt". Eén regel per soort met een aantal,
-  // in plaats van een chip per stuk — dat is de boodschappenlijst waarmee je de doos in gaat.
-  const benodigd = Object.values(terrain.reduce<Record<string, { naam: string; kenmerk: string | null; n: number }>>((acc, t) => {
-    const kenmerk = terreinKenmerk(t);
-    const key = `${t.type}|${kenmerk ?? ''}`;
-    acc[key] = acc[key] ?? { naam: terreinNaam(t.type), kenmerk, n: 0 };
-    acc[key].n += 1;
-    return acc;
-  }, {})).sort((a, b) => b.n - a.n || a.naam.localeCompare(b.naam) || (a.kenmerk ?? '').localeCompare(b.kenmerk ?? ''));
-  // HET STERKTEPUNT. Staat er een nederzetting/gebouw op de hex, dan voegt de campagne-generator een
-  // extra stuk toe (een heuvel, of een bos op een woud-hex) dat op de helft van de verdediger hoort:
-  // het staat voor die nederzetting. De sheet merkt het met `side`; zonder dat veld zeggen we niets.
-  const sterktepunten = terrain.filter((t) => t.side).map((t) => {
-    const zelfde = terrain.filter((x) => x.type === t.type).length;
-    const rol = t.side === 'attacker' ? 'attacker' : 'defender';
-    const wie = (rol === 'attacker' ? battle.aanvaller : battle.verdediger).naam;
-    const stuk = zelfde > 1 ? `One of the ${terreinMeervoud(t.type)}` : `The ${terreinNaam(t.type).toLowerCase()}`;
-    return `${stuk} is the strongpoint of the ${rol}${wie ? `, ${wie}` : ''}: it goes on the ${rol}'s half of the table and stands in for the settlement on this hex.`;
-  });
+  // in plaats van een chip per stuk — dat is de boodschappenlijst waarmee je de doos in gaat. Sinds
+  // 22-10-2026 met een kleurstaaltje en de effectregel per soort, en het scenario-stuk van de
+  // verdediger apart (TerreinLijst).
+  // GEBOUWEN VAN DE OPSTELLING (22-10-2026): de storage buildings van Plunder, de Forge. Die staan op de kaart en
+  // horen bij het scenario, niet bij de terreinlijst.
+  const scenarioGebouwen = layout?.buildings ?? [];
+  // HET GEBOUW VAN DE HEX (18-10-2026, alleen nog op oude sheets). Een aanval of raid op een hex met een gebouw zet dat gebouw
+  // (impassable) met een lage muur ervoor op de helft van de verdediger, en die staan al op tafel
+  // vóór het om-de-beurt plaatsen (`preplaced`). Sheets van 21-08 t/m 17-10 hebben in plaats daarvan
+  // een STERKTEPUNT (een heuvel of bos met `side`, zonder `preplaced`): die houden hun oude zin.
+  const voorafWie = battle.verdediger.naam;
+  const sterktepunten = vooraf.length > 0
+    ? [`The building and its low wall stand on the defender's half${voorafWie ? ` (${voorafWie})` : ''}, already on the table before you start: they are not placed in turn. The map shows where.`]
+    : terrain.filter((t) => t.side).map((t) => {
+      const zelfde = terrain.filter((x) => x.type === t.type).length;
+      const rol = t.side === 'attacker' ? 'attacker' : 'defender';
+      const wie = (rol === 'attacker' ? battle.aanvaller : battle.verdediger).naam;
+      const stuk = zelfde > 1 ? `One of the ${terreinMeervoud(t.type)}` : `The ${terreinNaam(t.type).toLowerCase()}`;
+      return `${stuk} is the strongpoint of the ${rol}${wie ? `, ${wie}` : ''}: it goes on the ${rol}'s half of the table and stands in for the settlement on this hex.`;
+    });
 
   // DE VOLGORDE aan tafel. Procedurele lijm, geen regel: alleen welke sectie je wanneer nodig hebt.
   // Joost (05-10-2026): "eerst deploymentzones markeren, dan de objectives, en dan het terrein". Met de
   // zones en objectives al op tafel zie je bij het om de beurt plaatsen van het terrein meteen wat je
   // afschermt of vrijlaat. (Het boek legt het terrein juist eerst; dit is de volgorde van Celedon.)
+  // 22-10-2026: vanaf Act 3 eerst de scenario-stukken (zoals de kaart ze tekent), dan in Breakthrough
+  // de lage muur van de verdediger, dan pas het terrein om de beurt (zie lib/terrainPlacement.ts).
   const setupStappen: string[] = [];
   if (toontKaart || deployNote) setupStappen.push(toontKaart ? 'Mark the deployment zones (map below).' : 'Mark the deployment zones (see below).');
   if (briefings.length > 0) setupStappen.push('Set up the objectives — see Objectives.');
   if (heeftLandmark) setupStappen.push("Roll for the landmark's unusual property — see Objectives.");
-  if (terrain.length > 0) setupStappen.push('Place the terrain (below).');
+  if (scenarioGebouwen.length > 0) {
+    const namen = [...new Set(scenarioGebouwen.map((g) => g.label).filter(Boolean))].join(' and ');
+    setupStappen.push(`The defender sets up the scenario pieces${namen ? ` (${namen})` : ''} exactly where the map shows them; they do not scatter.`);
+  }
+  if (muurVerdediger) setupStappen.push('The defender places their low wall anywhere in their own half; it does not scatter.');
+  if (terrain.some((t) => !t.byDefender)) setupStappen.push(muurVerdediger || scenarioGebouwen.length > 0 ? 'Then place the terrain pieces in turn (below).' : 'Place the terrain (below).');
+  // 23-10-2026: de campagne gooit ze (begin War phase); aan tafel alleen nog weten welke twee het zijn.
+  if (wrath) setupStappen.push(battle.wrath || scenarioTest ? 'Note the two Wrath Triggers of this battle — see Wrath Triggers.' : 'Wrath Triggers: rolled by the campaign when the War phase begins — see Wrath Triggers.');
   setupStappen.push('Deploy your armies in their zones.');
   const heeftSetup = setupStappen.length > 1 || !!groundType || !!battle.hexGebouw || terrain.length > 0 || toontKaart || !!deployNote;
 
@@ -527,10 +542,17 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
       {text}
     </span>
   );
+  // REINFORCEMENT DETACHMENT (23-10-2026): staat er een kant met twee tegen drie, dan noemen we het hier.
+  const rfAanv = versterkingVoorKant(battle.versterking, 'aanvaller');
+  const rfVerd = versterkingVoorKant(battle.versterking, 'verdediger');
+  const rfFeit = rfAanv || rfVerd
+    ? `Reinforcement, ${rfAanv && rfVerd ? 'both sides' : kantLabel(battle.type, rfAanv ? 'aanvaller' : 'verdediger').toLowerCase()}: ${rfAanv ?? rfVerd} pts`
+    : null;
   const feiten = [
     typeLabel,
     battle.battleMarch ? 'Battle March' : null,
     battle.cap ? `${battle.cap} pts` : null,
+    rfFeit,
     tableLabel,
     battle.battleMarch ? '5 rounds' : null,
   ].filter((f): f is string => !!f);
@@ -701,7 +723,7 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
     ) : null;
 
   /** Kop van één kant binnen Armies/Reminders: kleurstip + rol + naam. */
-  const kantKop = (side: BattleSide, rol: 'Attacker' | 'Defender') => (
+  const kantKop = (side: BattleSide, rol: string) => (
     <div style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
       <span style={{ width: 10, height: 10, borderRadius: 99, background: side.kleur || TOW.gold, border: `1px solid ${TOW.line}`, flexShrink: 0 }} />
       <span style={{ fontFamily: display, fontWeight: 700, fontSize: 14, color: TOW.ink }}>
@@ -711,16 +733,18 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
   );
 
   const kanten = [
-    { rol: 'Attacker' as const, side: battle.aanvaller, lijst: battle.aanvLijst, vets: battle.veteranen?.aanvaller,
+    { rol: kantLabel(battle.type, 'aanvaller'), side: battle.aanvaller, lijst: battle.aanvLijst, vets: battle.veteranen?.aanvaller,
       perks: battle.perks?.aanvaller ?? [], items: battle.items?.aanvaller ?? [], roll: battle.rollOff?.aanvaller ?? [] },
-    { rol: 'Defender' as const, side: battle.verdediger, lijst: battle.verdLijst, vets: battle.veteranen?.verdediger,
+    { rol: kantLabel(battle.type, 'verdediger'), side: battle.verdediger, lijst: battle.verdLijst, vets: battle.veteranen?.verdediger,
       perks: battle.perks?.verdediger ?? [], items: battle.items?.verdediger ?? [], roll: battle.rollOff?.verdediger ?? [] },
   ];
   const heeftLegers = kanten.some((k) => k.lijst || vetRijen(k.vets).length > 0);
   // ROLL-OFF VOOR DE EERSTE BEURT (05-10-2026). De server levert per kant de modifiers en hun bron
   // (War Hall, Watchtower, Scouting Outpost, Raider's Den); wij tellen alleen op wat er staat.
-  const heeftRollOff = kanten.some((k) => k.roll.length > 0);
-  const heeftReminders = heeftRollOff || kanten.some((k) => k.perks.length > 0 || k.items.length > 0);
+  // 22-10-2026: ligt de eerste beurt vast (Breakthrough, Plunder, The Forge), dan is er geen roll-off en
+  // doen de modifiers er niet toe: dan staat er wie begint, en geen "Roll for first turn".
+  const heeftRollOff = !eersteVast && kanten.some((k) => k.roll.length > 0);
+  const heeftReminders = heeftRollOff || !!eersteZin || kanten.some((k) => k.perks.length > 0 || k.items.length > 0);
 
   // Secties nummeren we doorlopend: valt Objectives weg (challenge, of geen secondaries), dan volgt
   // er geen gat tussen 2 en 4.
@@ -736,10 +760,16 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
       <div style={{ border: `1px solid ${TOW.line}`, borderRadius: 12, background: TOW.panel2, padding: '14px 15px', marginBottom: 14 }}>
         <div style={{ ...eb, fontSize: 8.5, color: TOW.goldDeep, marginBottom: 8 }}>Campaign battle{typeLabel ? ` · ${typeLabel}` : ''} · {battle.code}</div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-          <div style={{ flex: 1, minWidth: 0 }}><SideChip side={battle.aanvaller} label="Attacker" /></div>
+          <div style={{ flex: 1, minWidth: 0 }}><SideChip side={battle.aanvaller} label={kantLabel(battle.type, 'aanvaller')} /></div>
           <span style={{ fontFamily: serif, fontStyle: 'italic', fontSize: 13, color: TOW.faint, flexShrink: 0 }}>vs</span>
-          <div style={{ flex: 1, minWidth: 0 }}><SideChip side={battle.verdediger} label="Defender" /></div>
+          <div style={{ flex: 1, minWidth: 0 }}><SideChip side={battle.verdediger} label={kantLabel(battle.type, 'verdediger')} /></div>
         </div>
+        {/* CALL TO ARMS (23-10-2026): de Champion speelt onder andere regels dan de oproeper. */}
+        {isChampion(battle.type, 'verdediger') && (
+          <div data-testid="champion-regel" style={{ fontFamily: serif, fontSize: 12.5, color: TOW.parch, marginTop: 9, borderLeft: `3px solid ${TOW.goldDeep}`, padding: '2px 0 2px 9px' }}>
+            {battle.verdediger.naam || 'The Champion'} answered the call. {CHAMPION_REGEL}.
+          </div>
+        )}
         {!battle.beideGelockt && (
           <div style={{ fontFamily: serif, fontStyle: 'italic', fontSize: 13, color: TOW.muted, marginTop: 10 }}>
             Waiting for both players to lock their armies in the campaign app…
@@ -767,6 +797,10 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
             hierboven vertelt in dat tweede geval waarom. */}
         {rollLine && (
           <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginTop: 9 }}>{rollLine}</div>
+        )}
+        {/* 22-10-2026: in Breakthrough, Plunder en The Forge ligt de eerste beurt vast. */}
+        {eersteZin && (
+          <div data-testid="eerste-beurt" style={{ marginTop: 9, fontFamily: serif, fontSize: 13, color: TOW.parch, borderLeft: `3px solid ${TOW.goldDeep}`, padding: '2px 0 2px 9px' }}>{eersteZin}</div>
         )}
 
         {/* DISRUPTIVE WEATHER — geldt de hele game, dus dit is de regel die je aan tafel het vaakst
@@ -822,23 +856,7 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
         {deployNote && (
           <div style={{ fontFamily: serif, fontSize: 12.5, color: TOW.parchDim, lineHeight: 1.45, marginBottom: toontKaart ? 6 : 0 }}>{deployNote}</div>
         )}
-        {layout && tableW && tableH && (
-          <div>
-            <div style={{ fontFamily: serif, fontSize: 12, color: youSide === 'top' ? TOW.goldDeep : TOW.muted, marginBottom: 4 }}>
-              {kantLabel(defenderTop)}
-            </div>
-            <CampaignBoard
-              layout={layout}
-              secLayout={secLayout}
-              tableW={tableW}
-              tableH={tableH}
-              youSide={youSide}
-            />
-            <div style={{ fontFamily: serif, fontSize: 12, color: youSide === 'bottom' ? TOW.goldDeep : TOW.muted, marginTop: 4 }}>
-              {kantLabel(!defenderTop)}
-            </div>
-          </div>
-        )}
+        {toontKaart && <ScenarioKaart battle={battle} mySeat={mySeat} />}
 
         {/* DE STREEK. Joost (05-10): "de Plains region is het type hex op de campagnekaart, en dat
             bepaalt welke terrain pieces er gekozen zijn." Dus de streek staat hier bóven de lijst, met
@@ -857,20 +875,10 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
           </>
         )}
 
-        {benodigd.length > 0 && (
+        {terrain.length > 0 && (
           <>
             {subkop('Terrain you need')}
-            <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: 4 }}>
-              {benodigd.map((r) => (
-                <li key={`${r.naam}|${r.kenmerk ?? ''}`} style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
-                  <span aria-hidden style={{ width: 10, height: 10, border: `1.5px solid ${TOW.goldDeep}`, borderRadius: 2, flexShrink: 0, transform: 'translateY(1px)' }} />
-                  <span style={{ fontFamily: serif, fontSize: 14, color: TOW.parch }}>
-                    <span style={{ fontVariantNumeric: 'tabular-nums', fontWeight: 700 }}>{r.n} ×</span> {r.naam}
-                    {r.kenmerk ? <span style={{ color: TOW.muted }}> — {r.kenmerk}</span> : null}
-                  </span>
-                </li>
-              ))}
-            </ul>
+            <TerreinLijst terrain={terrain} />
             {sterktepunten.map((s) => (
               <div key={s} style={{ marginTop: 8, fontFamily: serif, fontSize: 12.5, color: TOW.parch, lineHeight: 1.45, borderLeft: `3px solid ${TOW.goldDeep}`, padding: '2px 0 2px 9px' }}>
                 {s}
@@ -885,13 +893,13 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
         {terrain.length > 0 && (
           <div style={{ marginTop: 12, border: `1px solid ${TOW.line}`, borderRadius: 9, padding: '8px 10px', background: TOW.bg }}>
             <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginBottom: 3 }}>Placing the terrain</div>
-            <div style={{ fontFamily: serif, fontSize: 12, color: TOW.parchDim, lineHeight: 1.5 }}>{TERRAIN_PLACEMENT_SHORT}</div>
+            <div style={{ fontFamily: serif, fontSize: 12, color: TOW.parchDim, lineHeight: 1.5 }}>{terrainPlacementShort(plaatsOpties)}</div>
             <details style={{ marginTop: 6 }}>
               <summary style={{ cursor: 'pointer', fontFamily: towFont.display, fontWeight: 600, fontSize: 11.5, color: TOW.goldDeep, listStyle: 'none' }}>
                 How placement works, step by step ›
               </summary>
               <ol style={{ margin: '6px 0 0', paddingLeft: 18, listStyleType: 'decimal', display: 'flex', flexDirection: 'column', gap: 5 }}>
-                {TERRAIN_PLACEMENT_STEPS.map((st) => (
+                {terrainPlacementSteps(plaatsOpties).map((st) => (
                   <li key={st.title} style={{ fontFamily: serif, fontSize: 12, color: TOW.parchDim, lineHeight: 1.45 }}>
                     <span style={{ fontWeight: 700, color: TOW.parch }}>{st.title}. </span>{st.text}
                   </li>
@@ -905,19 +913,20 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
       )}
 
       {/* ── 3 · OBJECTIVES ── wat je wilt veroveren, waar het ligt, en de letterlijke regel. */}
-      {briefings.length > 0 && (
+      {(briefings.length > 0 || !!scenarioDef) && (
         <Sectie nr={volgende()} titel="Objectives" onder="What you fight over, and where it goes" accent={TOW.goldBright} tint>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
             {briefings.map((b) => {
               // "Zoals genummerd op de kaart" alleen als die kaart er ook echt staat en er nummers op zijn.
               const opKaart = !toontKaart ? ''
-                : b.id.startsWith('bm-troves') && (secLayout?.objectives.length ?? 0) > 0 ? ' As numbered on the map.'
+                : (b.id.startsWith('bm-troves') || b.id === 'strategic-3-def') && (secLayout?.objectives.length ?? 0) > 0 ? ' As numbered on the map.'
                 : b.id === 'bm-landmark' && secLayout?.specialFeature ? ' Marked ★ on the map.'
+                : b.id === 'loot-cart' && (secLayout?.baggage.length ?? 0) > 0 ? ' Drawn on the map.'
                 : '';
               return (
                 <div key={b.id} style={{ border: `1px solid ${TOW.line}`, borderRadius: 10, background: TOW.panel2, padding: '10px 12px' }}>
                   <div style={{ fontFamily: display, fontWeight: 700, fontSize: 16, color: TOW.gold }}>{b.title}</div>
-                  {b.what && <div style={{ fontFamily: serif, fontSize: 13, color: TOW.parchDim, marginTop: 2 }}>{b.what}</div>}
+                  {b.what && <div style={{ fontFamily: serif, fontSize: 13, color: TOW.parchDim, marginTop: 2 }}>{b.what}{b.placement ? '' : opKaart}</div>}
                   {b.placement && (
                     <div style={{ marginTop: 8, border: `1px solid ${TOW.goldDeep}`, borderRadius: 8, background: 'rgba(184,134,47,0.10)', padding: '7px 10px', fontFamily: serif, fontSize: 13.5, color: TOW.parch, lineHeight: 1.45 }}>
                       <span style={{ ...eb, fontSize: 8.5, color: TOW.goldDeep, marginRight: 6 }}>Where:</span>
@@ -932,7 +941,7 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
                   ))}
                   {b.table && regelTabel(b.table)}
                   {/* Een objective die we niet kennen: alleen de titel. Geen letterlijke tekst = geen tekst. */}
-                  {b.short.length === 0 && (
+                  {b.short.length === 0 && !b.what && (
                     <div style={{ fontFamily: serif, fontStyle: 'italic', fontSize: 12.5, color: TOW.muted, marginTop: 4 }}>
                       The campaign sets what this objective requires.
                     </div>
@@ -958,7 +967,27 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
                 </div>
               );
             })}
+            {/* DE SCENARIO-VP (22-10-2026): wat deze setup oplevert, per kant, zoals de campagne het in
+                de sheet zet (`scenarioBonus`). Je telt het mee in de tracker; het telt in de uitslag. */}
+            {scenarioDef && (
+              <div style={{ border: `1px solid ${TOW.line}`, borderRadius: 10, background: TOW.panel2, padding: '10px 12px' }}>
+                <div style={{ fontFamily: display, fontWeight: 700, fontSize: 16, color: TOW.gold }}>Scenario victory points</div>
+                <div style={{ fontFamily: serif, fontSize: 12.5, color: TOW.muted, margin: '2px 0 8px' }}>
+                  On top of the normal Victory Points. Keep count in the game under Objectives; it counts towards the result.
+                </div>
+                <ScenarioVpLijst def={scenarioDef} battle={battle} />
+              </div>
+            )}
           </div>
+        </Sectie>
+      )}
+
+      {/* ── WRATH TRIGGERS (Act 3+) ── sinds 23-10-2026 gooit de CAMPAGNE ze bij het begin van de War
+          phase (was 22-10: zelf gooien en aanvinken). Hier staan de twee vast; tijdens het spel staan ze
+          in de reminders. Het lab en de scenario-test gooien lokaal (zie useWrath). */}
+      {wrath && (
+        <Sectie nr={volgende()} titel="Wrath Triggers" onder="Ash'Moduhr's presence grows: these two wake in this battle" accent={TOW.blood}>
+          <WrathVoorBattle battle={battle} code={code} />
         </Sectie>
       )}
 
@@ -982,6 +1011,12 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
           tegenstander zijn de helft die je nergens anders kunt opzoeken. */}
       {heeftReminders && (
         <Sectie nr={volgende()} titel="Reminders" onder="Keep these in mind during the game" accent={TOW.blood} gestippeld>
+          {eersteZin && (
+            <div style={{ border: `1px solid ${TOW.line}`, borderRadius: 10, padding: '9px 11px', background: TOW.bg, marginBottom: 12 }}>
+              <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginBottom: 5 }}>First turn</div>
+              <div style={{ fontFamily: serif, fontSize: 13, color: TOW.parch, lineHeight: 1.45 }}>{eersteZin}</div>
+            </div>
+          )}
           {heeftRollOff && (
             <div style={{ border: `1px solid ${TOW.line}`, borderRadius: 10, padding: '9px 11px', background: TOW.bg, marginBottom: 12 }}>
               <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginBottom: 5 }}>Roll for first turn</div>
@@ -1055,6 +1090,21 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
   // Een battle wordt in de WAR PHASE gespeeld: zolang er nog generals marcheren weigert de server een
   // start (NOG_REALM_PHASE). Ontbreekt het veld (oudere server), dan is er ook geen poort → open laten.
   const magStarten = battle.warFase !== false;
+  // "attacker"/"defender", en bij een Call to Arms "caller"/"Champion".
+  const mijnRol = battle.type === 'call' ? (mySeat === 'host' ? 'caller' : 'Champion') : mySeat === 'host' ? 'attacker' : 'defender';
+
+  // REINFORCEMENT DETACHMENT (23-10-2026): mag MIJN kant (en in het lab ook de andere) versterken?
+  const tegenKant: 'aanvaller' | 'verdediger' = mijnKant === 'aanvaller' ? 'verdediger' : 'aanvaller';
+  const mijnRfMax = versterkingVoorKant(battle.versterking, mijnKant);
+  const tegenRfMax = versterkingVoorKant(battle.versterking, tegenKant);
+  const labRfAanv = lab && mijnRfMax ? mockVersterking(labLegers?.aanvaller) : null;
+  const labRfVerd = lab && tegenRfMax ? mockVersterking(labLegers?.verdediger) : null;
+  /** Het leger met zijn versterking erbij, zoals hij de battle in gaat. Zonder leger geen versterking:
+   *  die kun je in het potje zelf nog toevoegen (GameView). */
+  const metRf = (a: Army | null, rf: Army | null, max: number | null): Army | null => (a && rf ? voegVersterkingToe(a, rf, max) : a);
+  const legerIn = metRf(staged, mijnRfMax ? stagedRf : null, mijnRfMax);
+  const tegenIn = metRf(stagedTegen, tegenRfMax && lab ? stagedTegenRf : null, tegenRfMax);
+  const rfLaadt = lab && ((!!labRfAanv && !stagedRf) || (!!labRfVerd && !stagedTegenRf));
 
   /** Zet of trek mijn Start-stempel in. Opent NIETS: staan beide kanten, dan wisselt de knop naar
    *  "Open battle" en druk je zelf door — anders schiet dit briefing-scherm voorbij. */
@@ -1078,10 +1128,14 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
       {header}
 
       <div style={{ ...eb, fontSize: 8.5, color: TOW.goldDeep, marginBottom: 6 }}>
-        You are the {mySeat === 'host' ? 'attacker' : 'defender'}{mySide.naam ? ` · ${mySide.naam}` : ''}
+        You are the {mijnRol}{mySide.naam ? ` · ${mySide.naam}` : ''}
       </div>
       <p style={{ fontFamily: serif, fontSize: 14, color: TOW.parchDim, margin: '0 0 16px' }}>
-        {myLijst?.naam
+        {lab
+          ? <>Scenario lab: this battle exists only on this device. Both mock armies load by themselves ({labAanv!.naam} attacks, {labVerd!.naam} defends); you play both sides. Nothing is saved or reported to the campaign.</>
+          : scenarioTest
+          ? <>Scenario test: this battle exists only on this device. Load an army if you like (optional), then open the battle. You play both sides; nothing is saved or reported to the campaign.</>
+          : myLijst?.naam
           ? <>Your campaign list is locked as <strong>“{myLijst.naam}”</strong>{myLijst.punten ? ` (${myLijst.punten} pts)` : ''} and loads by itself. Read the briefing above, then start the battle when you are ready — your opponent opens the same code on their device and you play with the live tracker.</>
           : <>Load your <strong>full Companion army list</strong> for this battle, then start it. Your opponent opens the same code on their device and you play with the live tracker.</>}
       </p>
@@ -1098,7 +1152,20 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
           Only YOUR army can be loaded this way: the campaign's `verdLijst`/`aanvLijst` are summaries of
           unit NAMES, without options or statlines, so the opponent's line-up is listed above but their
           full army has to come off their own device. */}
-      <ArmyListPicker
+      {/* Het lab: de twee vaste mock-legers, door dezelfde picker (en dus dezelfde omzetting) als een
+          speler-lijst, maar uit de lab-fixtures in plaats van uit `tow:lists`. */}
+      {lab && (
+        <>
+          <ArmyListPicker onPick={setStaged} lijsten={[labAanv!.lijst]} lockedListName={labAanv!.lijst.name} lockedListArmy={labAanv!.lijst.army} autoPick stil />
+          <ArmyListPicker onPick={setStagedTegen} lijsten={[labVerd!.lijst]} lockedListName={labVerd!.lijst.name} lockedListArmy={labVerd!.lijst.army} autoPick stil />
+          <div data-testid="lab-legers" style={{ fontFamily: serif, fontSize: 13, color: TOW.parchDim, lineHeight: 1.5, marginBottom: 4 }}>
+            Attacker: <strong>{labAanv!.naam}</strong> ({labAanv!.factie}) {staged ? `· ${staged.units.length} units loaded` : '· loading…'}<br />
+            Defender: <strong>{labVerd!.naam}</strong> ({labVerd!.factie}) {stagedTegen ? `· ${stagedTegen.units.length} units loaded` : '· loading…'}<br />
+            <span style={{ fontStyle: 'italic', color: TOW.muted }}>Mock armies, points not to scale.</span>
+          </div>
+        </>
+      )}
+      {!lab && <ArmyListPicker
         // STAGES the army; it does not start the battle. Handing this straight to `openWith` made the
         // whole briefing flash past — the army loaded, the game opened, and the screen you came here to
         // read was gone before you could read it. Loading and starting are two decisions, and only the
@@ -1110,7 +1177,7 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
         campaignPlayerId={myPlayerId}
         autoPick
         stil
-      />
+      />}
 
       {/* AI-tegenstander: hun leger komt van deze kant mee, want er is geen tweede device dat 'm gaat
           openen. De AI-dummy is een gedeelde lijst, dus dezelfde picker vindt 'm op naam + leger. Bij
@@ -1124,6 +1191,21 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
           autoPick
           stil
         />
+      )}
+
+      {/* REINFORCEMENT DETACHMENT (23-10-2026). Alleen als de campagne het voor jouw kant meegeeft
+          (twee tegen drie); in het lab de mock-versterking van elk leger aan een kleine kant. */}
+      {lab && labRfAanv && (
+        <VersterkingKiezer testid="versterking-aanvaller" max={mijnRfMax} leger={labAanv!.lijst.army} lijsten={[labRfAanv]} autoPick
+          gekozen={stagedRf ? { naam: stagedRf.name, punten: stagedRf.points } : null} onPick={setStagedRf} onWeg={() => setStagedRf(null)} />
+      )}
+      {lab && labRfVerd && (
+        <VersterkingKiezer testid="versterking-verdediger" max={tegenRfMax} leger={labVerd!.lijst.army} lijsten={[labRfVerd]} autoPick
+          gekozen={stagedTegenRf ? { naam: stagedTegenRf.name, punten: stagedTegenRf.points } : null} onPick={setStagedTegenRf} onWeg={() => setStagedTegenRf(null)} />
+      )}
+      {!lab && !!mijnRfMax && (
+        <VersterkingKiezer testid="versterking" max={mijnRfMax} leger={myLijst?.leger || null}
+          gekozen={stagedRf ? { naam: stagedRf.name, punten: stagedRf.points } : null} onPick={setStagedRf} onWeg={() => setStagedRf(null)} />
       )}
 
       {/* Foto-herinnering (24-08-2026, Joost: "vraag de spelers voordat ze de battle starten om niet
@@ -1146,11 +1228,11 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
       <div style={{ display: 'flex', gap: 14, alignItems: 'center', flexWrap: 'wrap', marginTop: 14 }}>
         <button
           onClick={() => {
-            if (!handen) { void startNu(staged, stagedTegen); return; } // oude server: één druk, direct openen
-            if (beideGestart) { void startNu(staged, stagedTegen); return; } // stap 2
+            if (!handen) { void startNu(legerIn, tegenIn); return; } // oude server: één druk, direct openen
+            if (beideGestart) { void startNu(legerIn, tegenIn); return; } // stap 2
             if (!ikGereed) void zetHand(true);                  // stap 1
           }}
-          disabled={busy || handBezig || !magStarten || (ikGereed && !beideGestart)}
+          disabled={busy || handBezig || !magStarten || (ikGereed && !beideGestart) || (lab && (!staged || !stagedTegen || rfLaadt))}
           style={{
             border: `1px solid ${TOW.goldDeep}`, borderRadius: 10,
             background: beideGestart || staged || ikGereed ? 'rgba(184,134,47,0.16)' : 'transparent',
@@ -1161,6 +1243,8 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
           }}
         >
           {busy ? 'Opening…' : handBezig ? 'Working…'
+            : lab && (!staged || !stagedTegen || rfLaadt) ? 'Loading mock armies…'
+            : scenarioTest ? 'Open test battle'
             : !magStarten ? 'Not yet — Realm phase'
             : beideGestart ? 'Open battle'
             : ikGereed ? 'Waiting for your opponent…'
@@ -1180,7 +1264,9 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
           </button>
         )}
         <span style={{ fontFamily: serif, fontSize: 13, color: TOW.muted }}>
-          {!magStarten
+          {scenarioTest
+            ? 'Opens a local game on this device. The result uses the official table of the test campaign; nothing is written anywhere.'
+            : !magStarten
             ? 'The campaign is still in its Realm phase — generals are taking their turns. Read the briefing; the battle opens once every general has marched.'
             : beideGestart
             ? oppSide.ai

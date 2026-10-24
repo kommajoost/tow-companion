@@ -43,6 +43,7 @@ export interface LeesBanner {
 
 export function LockedListView({
   list, army, armyName, compName, itemsData, fase, cap, onBack, onDuplicate,
+  onVersterking, versterkingPunten,
   banner, backLabel = 'My lists',
 }: {
   list: Lijst;
@@ -57,6 +58,10 @@ export function LockedListView({
   onBack: () => void;
   /** Alleen de campagne-band: "Copy to a normal list". */
   onDuplicate?: () => void;
+  /** REINFORCEMENT DETACHMENT (23-10-2026): een versterkingslijst bij deze (gelockte) lijst maken. Juist
+   *  in Act 4 en 7 staat de campagnelijst op slot, en dan is dit de plek waar je hem nodig hebt. */
+  onVersterking?: () => void;
+  versterkingPunten?: number;
   /** Overschrijft de ingebouwde campagne-band. */
   banner?: LeesBanner;
   /** Het opschrift van de terugknop linksboven. */
@@ -111,6 +116,13 @@ export function LockedListView({
               border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt, color: TOW.inkDim,
               fontFamily: towFont.display, fontWeight: 700, fontSize: 12.5,
             }}>{band.actie.label}</button>
+          )}
+          {onVersterking && !banner && (
+            <button data-testid="maak-versterking" onClick={onVersterking} style={{
+              marginTop: 10, marginLeft: band.actie ? 8 : 0, padding: '8px 14px', borderRadius: 9, cursor: 'pointer',
+              border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.10)', color: TOW.inkDim,
+              fontFamily: towFont.display, fontWeight: 700, fontSize: 12.5,
+            }}>New reinforcement detachment{versterkingPunten ? ` · up to ${versterkingPunten} pts` : ''}</button>
           )}
         </div>
 

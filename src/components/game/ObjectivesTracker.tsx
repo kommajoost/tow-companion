@@ -2,7 +2,9 @@ import { useState } from 'react';
 import { TOW, towFont, engraved } from '../../design/tow';
 import { useGame } from '../../game';
 import type { VpBonus } from '../../lib/victoryPoints';
-import { useObjectives } from './useObjectives';
+import { useObjectives, useScenarioBonus } from './useObjectives';
+import { ScenarioPosten, scenarioTotaal, useEffectieveStanden } from './ScenarioPosten';
+import { postenVoor } from '../../lib/scenarioBonus';
 
 const eb = engraved as React.CSSProperties;
 const display = towFont.display;
@@ -35,8 +37,14 @@ export function ObjectivesTracker({ zijde, naam, editable = true, round }: {
 }) {
   const { tracker, setTracker } = useGame();
   const objectives = useObjectives();
+  // 22-10-2026: de scenario-posten van de sheet (Act 3+) horen hier net zo goed: plunderingen en
+  // Forge-beurten tel je per beurt, niet achteraf.
+  const scenario = useScenarioBonus();
+  // 24-10-2026: de effectieve stand (Breakthrough rekent uit de aangetikte units), zoals de VP-engine.
+  const eff = useEffectieveStanden(scenario);
   const [open, setOpen] = useState(true);
-  if (!objectives.length) return null;
+  const heeftScenario = postenVoor(scenario, zijde).length > 0;
+  if (!objectives.length && !heeftScenario) return null;
 
   const bonus: VpBonus = tracker.bonus?.[zijde] ?? {};
   const zet = (patch: Partial<VpBonus>) => setTracker({
@@ -47,7 +55,8 @@ export function ObjectivesTracker({ zijde, naam, editable = true, round }: {
     objectives: { ...(bonus.objectives ?? {}), [key]: Math.max(0, Math.round(vp)) },
   });
 
-  const totaal = objectives.reduce((som, o) => som + Math.max(0, bonus.objectives?.[o.key] ?? 0), 0);
+  const totaal = objectives.reduce((som, o) => som + Math.max(0, bonus.objectives?.[o.key] ?? 0), 0)
+    + scenarioTotaal(scenario, zijde, eff.host, eff.guest);
   const stap: React.CSSProperties = {
     width: 30, height: 30, borderRadius: 8, border: `1px solid ${TOW.lineStrong}`,
     background: 'transparent', color: TOW.ink, display: 'flex', alignItems: 'center',
@@ -120,6 +129,8 @@ export function ObjectivesTracker({ zijde, naam, editable = true, round }: {
               </div>
             );
           })}
+
+          {heeftScenario && <ScenarioPosten def={scenario} zijde={zijde} editable={editable} />}
         </div>
       )}
     </section>

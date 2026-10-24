@@ -9,9 +9,10 @@ import {
   battleFotos, battleFotosZet, battleFotoUpload, battleFotoWis, type BattleFoto,
   RESULTAAT_NAAM, TP_VAN_RESULTAAT, SPIEGEL, questTrede, questFoutTekst, fameOpbouw,
   type CampaignBattle, type BattleResultaat, type ToernooiResultaat, type BattleQuests, type BattleQuest,
-  type Terugtrekker, type RapportAkkoord, type RapportUitkomst,
+  type RapportAkkoord, type RapportUitkomst,
 } from '../../lib/campaignBattle';
 import { berekenVictory, type VpBonus, type Uitslag } from '../../lib/victoryPoints';
+import { scenarioBonusVan } from '../../lib/campaignScenario';
 import type { ArmyUnit, GameTracker } from '../../types';
 
 const eb = engraved as React.CSSProperties;
@@ -49,18 +50,22 @@ function reportFoutTekst(msg: string): string {
 // Collapse the tracker's per-unit casualties into a compact kills list. We only know lost/fleeing
 // per seat:unitId here (no kill-attribution yet), so we report each side's own losses, tagged with
 // the unit name so the campaign can read it. side = 'attacker' | 'defender' (host = attacker).
-function collectKills(
+// Geëxporteerd (23-10-2026) voor het rapport-voorbeeld van de scenario-test: dat laat zien wat er
+// ZOU worden ingediend, en moet dus met precies deze functie tellen.
+export function collectKills(
   tracker: GameTracker,
   hostArmyUnits: ArmyUnit[] | undefined,
   guestArmyUnits: ArmyUnit[] | undefined,
-): { side: 'attacker' | 'defender'; unitId: string; unit: string; lost: number; fleeing: boolean }[] {
-  const out: { side: 'attacker' | 'defender'; unitId: string; unit: string; lost: number; fleeing: boolean }[] = [];
+): { side: 'attacker' | 'defender'; unitId: string; unit: string; lost: number; fleeing: boolean; versterking?: true }[] {
+  const out: { side: 'attacker' | 'defender'; unitId: string; unit: string; lost: number; fleeing: boolean; versterking?: true }[] = [];
   const push = (seat: 'host' | 'guest', side: 'attacker' | 'defender', units?: ArmyUnit[]) => {
     for (const u of units ?? []) {
       const t = tracker.units[`${seat}:${u.id}`];
       if (!t) continue;
       const lost = verliesVan(u, t);
-      if (lost > 0 || t.fleeing) out.push({ side, unitId: u.id, unit: unitToonRegel(u), lost, fleeing: t.fleeing });
+      // Een versterkings-unit (23-10-2026) staat erin als wat hij is: verliezen in DEZE battle, geen
+      // campagne-unit. `versterking: true` zodat de campagne hem niet bij een unit van de lijst zoekt.
+      if (lost > 0 || t.fleeing) out.push({ side, unitId: u.id, unit: unitToonRegel(u), lost, fleeing: t.fleeing, ...(u.versterking ? { versterking: true as const } : {}) });
     }
   };
   push('host', 'attacker', hostArmyUnits);
@@ -153,23 +158,20 @@ export function CampaignResultReporter({ embedded = false }: { embedded?: boolea
 
   // VP via de rules-kritieke engine (kill-VP uit Dead-or-Fled + handmatige bonussen), NIET meer ruw
   // uit tracker.vp. Bonussen defensief gelezen (zie readBonus). Engine verdraagt afwezige velden.
+  // 22-10-2026: de scenario-posten van de sheet (Act 3+) tellen mee, precies zoals in GameView —
+  // anders meldt het rapport andere VP dan het scherm erboven toont.
+  const scenarioDef = useMemo(() => scenarioBonusVan(battle?.scenario ?? null), [battle]);
   const res = useMemo(() => {
     const b = readBonus(tracker);
-    return berekenVictory(game?.host_army ?? null, game?.guest_army ?? null, tracker, b.host, b.guest);
-  }, [tracker, game?.host_army, game?.guest_army]);
+    return berekenVictory(game?.host_army ?? null, game?.guest_army ?? null, tracker, b.host, b.guest, tracker.battleMarch === true, scenarioDef);
+  }, [tracker, game?.host_army, game?.guest_army, scenarioDef]);
   const vpHost = res.hostVp;
   const vpGuest = res.guestVp;
   const attackerId = battle?.aanvaller.id ?? null;
   const defenderId = battle?.verdediger.id ?? null;
 
-  // TERUGTREKKEN (17-08-2026). Een leger dat zich terugtrekt redt zijn units — geen verwondings-worpen,
-  // geen Battlefield Losses — maar geeft de battle weg: de tegenstander wint met minimaal een
-  // Resounding Victory. Dat kan de VP-telling niet zien, dus het is het enige feit over de UITSLAG dat
-  // de spelers hier zelf melden. Staat op de TRACKER (net als de quest-vinkjes), dus het synct naar de
-  // andere speler en loopt mee in de report-sig. Host = aanvaller, guest = verdediger; de campagne
-  // denkt in rollen, dus we vertalen hier één keer.
-  const withdrew = tracker.withdrew ?? null;
-  const terugtrokken: Terugtrekker = withdrew === 'host' ? 'aanvaller' : withdrew === 'guest' ? 'verdediger' : null;
+  // 23-10-2026: hier stond TERUGTREKKEN ("Did an army withdraw?"). Niemand deed het ooit, dus het is
+  // uit de campagne; de uitslag volgt nu altijd puur uit het VP-verschil.
 
   // Officiële uitslag ophalen zodra de VP (of de battle) veranderen. De cap komt uit de campagne mee;
   // ontbreekt 'ie (oudere server), dan tonen we alleen de kale VP en laat de campagne het uitrekenen.
@@ -177,11 +179,11 @@ export function CampaignResultReporter({ embedded = false }: { embedded?: boolea
     const cap = battle?.cap;
     if (!battle || !cap) { setTpRes(null); return; }
     let alive = true;
-    officieleUitslag(vpHost, vpGuest, cap, terugtrokken)
+    officieleUitslag(vpHost, vpGuest, cap)
       .then((r) => { if (alive) setTpRes(r); })
       .catch(() => { if (alive) setTpRes(null); });
     return () => { alive = false; };
-  }, [battle, vpHost, vpGuest, terugtrokken]);
+  }, [battle, vpHost, vpGuest]);
 
   // Quest-vinkjes staan op de TRACKER, niet in lokale state: zo synct realtime ze naar de andere
   // speler en lopen ze mee in de report-sig (zie hieronder).
@@ -205,9 +207,6 @@ export function CampaignResultReporter({ embedded = false }: { embedded?: boolea
       quests: { ...(tracker.quests ?? {}), [zijde]: gehaald || undefined },
     });
   };
-
-  const zetWithdrew = (zijde: 'host' | 'guest' | null) =>
-    setTracker({ ...tracker, withdrew: zijde ?? undefined });
 
   const kills = useMemo(
     () => (battle ? collectKills(tracker, game?.host_army?.units, game?.guest_army?.units) : []),
@@ -256,11 +255,9 @@ export function CampaignResultReporter({ embedded = false }: { embedded?: boolea
   const sig = useMemo(
     // 01-08: de quest-vinkjes zitten IN de sig. Anders kon iemand na de goedkeuring van de ander nog
     // een quest aanvinken en glipte dat langs de dubbele controle.
-    // 17-08: `withdrew` hoort er net zo goed in — die vlag verandert de trede, dus omzetten ná de
-    // goedkeuring van de ander moet beide vinkjes laten vervallen.
     // 04-10: het quest-AANTAL ook, anders kon je na de goedkeuring nog een trede hoger zetten.
-    () => JSON.stringify([vpHost, vpGuest, kills.map((k) => [k.side, k.unitId, k.lost, k.fleeing]), questAanvOk, questVerdOk, withdrew, questAantalHost, questAantalGuest]),
-    [vpHost, vpGuest, kills, questAanvOk, questVerdOk, withdrew, questAantalHost, questAantalGuest],
+    () => JSON.stringify([vpHost, vpGuest, kills.map((k) => [k.side, k.unitId, k.lost, k.fleeing]), questAanvOk, questVerdOk, questAantalHost, questAantalGuest]),
+    [vpHost, vpGuest, kills, questAanvOk, questVerdOk, questAantalHost, questAantalGuest],
   );
   // ── HET RAPPORT: server-stand + mijn laatste actie ──────────────────────────────────────────
   // `eigenAkkoord` is wat de RPC net terugggaf. De gedeelde tracker loopt daar milliseconden tot
@@ -328,14 +325,13 @@ export function CampaignResultReporter({ embedded = false }: { embedded?: boolea
     // 04-10-2026: hier stond "Fame 4-2", maar dat is de kale Tournament-Points-trede. De Fame rekent
     // de campagne zelf uit (Balancing Modifier, Council, geverfd, verdedigingsbonus, ...) en bij een
     // challenge is het alleen +1 bij een Crushing. Dus noemen we het wat het is.
-    const challengeLine = battle?.type === 'challenge' ? ' · challenge: +1 Fame only on a Crushing Victory' : '';
+    // CALL TO ARMS (23-10-2026): voor de oproeper een gewone battle, de Champion onder challenge-regels.
+    const challengeLine = battle?.type === 'challenge' ? ' · challenge: +1 Fame only on a Crushing Victory'
+      : battle?.type === 'call' ? ` · Call to Arms: ${guestName} is the Champion, +1 Fame only on a Crushing Victory, loses nothing` : '';
     if (tpRes === 'D') return `Result: Draw (${res.verschil} VP difference) · Tournament Points 3-3${challengeLine}`;
     const winRes = tpWinnaar === 'host' ? tpRes : SPIEGEL[tpRes];
     const winName = tpWinnaar === 'host' ? hostName : guestName;
-    // Trok iemand zich terug, dan wijkt de trede bewust af van het VP-verschil. Dat hoort in de notes,
-    // anders leest de grensmaster straks een Resounding bij 80 VP verschil en snapt hij er niets van.
-    const wLine = withdrew ? ` · ${withdrew === 'host' ? hostName : guestName} withdrew` : '';
-    return `Result: ${RESULTAAT_NAAM[winRes]} for ${winName} (+${res.verschil} VP)${wLine} · Tournament Points ${TP_VAN_RESULTAAT[winRes]}-${TP_VAN_RESULTAAT[SPIEGEL[winRes]]}${challengeLine}`;
+    return `Result: ${RESULTAAT_NAAM[winRes]} for ${winName} (+${res.verschil} VP) · Tournament Points ${TP_VAN_RESULTAAT[winRes]}-${TP_VAN_RESULTAAT[SPIEGEL[winRes]]}${challengeLine}`;
   };
 
   const submit = async () => {
@@ -356,7 +352,6 @@ export function CampaignResultReporter({ embedded = false }: { embedded?: boolea
       // Alleen bij een getrapte quest; een gewone quest blijft een vinkje (de server rekent dan met 1).
       questAanvAantal: questAanvOk && quests.aanvaller?.tiers ? questAantalHost : undefined,
       questVerdAantal: questVerdOk && quests.verdediger?.tiers ? questAantalGuest : undefined,
-      terugtrokken: terugtrokken ?? undefined,
     };
     try {
       setUitkomst(await reportBattleResult(code, resultaat));
@@ -381,7 +376,7 @@ export function CampaignResultReporter({ embedded = false }: { embedded?: boolea
       <div style={{ fontFamily: serif, fontSize: 13, color: TOW.ink, marginTop: 3 }}>
         {naam}: <strong>+{fame[kant]} Fame</strong>
         {(() => {
-          const opbouw = fameOpbouw(fame, kant, uitkomst?.res ?? null);
+          const opbouw = fameOpbouw(fame, kant, uitkomst?.res ?? null, battle?.type ?? null);
           return opbouw ? <span style={{ color: TOW.muted, fontStyle: 'italic', fontSize: 11.5 }}> ({opbouw})</span> : null;
         })()}
       </div>
@@ -443,44 +438,10 @@ export function CampaignResultReporter({ embedded = false }: { embedded?: boolea
       </div>
 
       <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginBottom: 5 }}>Victory points (calculated)</div>
-      <div style={{ fontFamily: serif, fontSize: 13.5, color: TOW.ink, marginBottom: 4 }}>
+      <div style={{ fontFamily: serif, fontSize: 13.5, color: TOW.ink, marginBottom: 10 }}>
         {hostName}: <strong>{vpHost}</strong> · {guestName}: <strong>{vpGuest}</strong>
         {kills.length > 0 && <span style={{ color: TOW.muted }}> · {kills.length} unit{kills.length === 1 ? '' : 's'} with losses</span>}
       </div>
-
-      {/* TERUGTREKKEN (17-08-2026) — het enige feit over de uitslag dat de VP-telling niet kan zien.
-          Staat vóór de uitslag, want het verandert 'm: de trede wordt minimaal Resounding voor de
-          andere kant. Drie knoppen in plaats van een vinkje per kant, zodat "beiden trokken zich
-          terug" niet eens te klikken is. */}
-      <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginBottom: 5 }}>Did an army withdraw?</div>
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5, marginBottom: withdrew ? 6 : 12 }}>
-        {([null, 'host', 'guest'] as const).map((keuze) => {
-          const actief = withdrew === keuze || (keuze === null && !withdrew);
-          const label = keuze === null ? 'Neither' : keuze === 'host' ? `${hostName} withdrew` : `${guestName} withdrew`;
-          return (
-            <button
-              key={keuze ?? 'geen'}
-              onClick={() => zetWithdrew(keuze)}
-              style={{
-                cursor: 'pointer', borderRadius: 8, padding: '5px 9px',
-                fontFamily: serif, fontSize: 12.5,
-                border: `1px solid ${actief ? TOW.goldDeep : TOW.line}`,
-                background: actief ? 'rgba(184,134,47,0.16)' : 'transparent',
-                color: actief ? TOW.ink : TOW.muted,
-              }}
-            >
-              {label}
-            </button>
-          );
-        })}
-      </div>
-      {withdrew && (
-        <div style={{ fontFamily: serif, fontSize: 12, color: TOW.muted, lineHeight: 1.45, marginBottom: 12 }}>
-          A withdrawing army saves its units — no wound rolls, no Battlefield Losses — but hands over the
-          battle: the result below is fixed at <strong style={{ color: TOW.ink }}>at least a Resounding
-          Victory</strong> for the other side. A Crushing against the withdrawing army still stands.
-        </div>
-      )}
 
       {/* De uitslag wordt niet meer gekozen: het VP-verschil bepaalt 'm via de officiële
           Tournament-Points-tabel. Die Tournament Points zijn de BASIS van de Fame, niet de Fame zelf
@@ -501,7 +462,9 @@ export function CampaignResultReporter({ embedded = false }: { embedded?: boolea
           <div style={{ fontFamily: serif, fontStyle: 'italic', fontSize: 11.5, color: TOW.muted, marginTop: 2 }}>
             {battle.type === 'challenge'
               ? 'Challenge: +1 Fame only on a Crushing Victory, XP and scars count as normal.'
-              : 'Fame is settled by the campaign: defence bonus, Council modifier, painted bonus and more are added there.'}
+              : battle.type === 'call'
+                ? `Call to Arms: a normal battle for ${hostName}, the caller. ${guestName} is the Champion: +1 Fame only on a Crushing Victory, loses nothing. The campaign settles the Fame.`
+                : 'Fame is settled by the campaign: defence bonus, Council modifier, painted bonus and more are added there.'}
           </div>
         </div>
       ) : (

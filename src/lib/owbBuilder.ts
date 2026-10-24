@@ -669,7 +669,15 @@ export interface ListEntry { uid: string; cat: Category; unitId: string; count: 
 // ongewijzigd terug; een detachment zonder regiment krijgt een melding die niet blokkeert.
 // `optCounts` — how many models take each `stackable` option, keyed by its "<group>/<index>" opts key.
 // Optional and absent by default, so every list saved before it existed reads back unchanged.
-export interface BuilderList { composition: string; rule: string; points: number; entries: ListEntry[] }
+export interface BuilderList {
+  composition: string; rule: string; points: number; entries: ListEntry[];
+  /** REINFORCEMENT DETACHMENT (23-10-2026, lib/versterking.ts). Alleen op een versterkingslijst: de
+   *  battle-grootte (Act-cap) waarop de samenstellingsregels gelden. `points` is dan het maximum van
+   *  de detachment zelf (de helft daarvan). Optioneel: elke andere lijst leest ongewijzigd terug. */
+  versterking?: VersterkingMeta;
+}
+/** Zie `BuilderList.versterking`. `voor` = het id van de hoofdlijst waar hij bij gemaakt is (informatief). */
+export interface VersterkingMeta { basis: number; voor?: string | null }
 
 /** Stabiele CAMPAGNE-sleutel van één lijst-entry ("De Grensvorsten" hangt hier de veteranen-XP,
  *  abilities en battle scars aan op). OWC en de campagne MOETEN exact dezelfde afleiding gebruiken,
@@ -1151,13 +1159,22 @@ export function validate(
     groei?: Record<string, { max: number | null; basis: number; introFase: number; staffel: number; minModellen?: number | null; laatsteFase?: number | null; laatsteKosten?: number | null }>;
     /** Minor adjustments: hoeveel punten je per Act van bestaande units mag afhalen (14-08-2026). */
     krimpCap?: number | null;
+    /** REINFORCEMENT DETACHMENT (23-10-2026): de puntengrens van de lijst zelf, als die afwijkt van de
+     *  basis waarop de samenstellingsregels gelden (`pointsCap`). Een detachment van 625 punten speelt
+     *  onder de regels van 1250: percentages, 0-X per 1000 en Grand Melee op 1250, de som tegen 625. */
+    puntenGrens?: number;
   },
   /** De 0-X-beperkingen (composition-rules.json). ACHTERAAN op purpose: elke bestaande positionele
    *  aanroep blijft zo werken, en zonder die data wordt er simpelweg niet op getoetst. */
   compRules?: CompositionRules,
 ): Validation {
   const limits = limitsFor(list.rule, list.composition);
-  const target = campaignMods?.pointsCap ?? (list.points || 0);
+  // REINFORCEMENT DETACHMENT (23-10-2026): een versterkingslijst draagt zelf de battle-grootte waarop
+  // de samenstellingsregels gelden (`versterking.basis`, bv. 1250); `points` is dan alleen de grens van
+  // de som (625). Zo valideert elke aanroeper — builder, leesscherm, de sync naar de campagne — hem
+  // vanzelf goed, zonder dat iemand het hoeft te weten.
+  const rfBasis = list.versterking && typeof list.versterking.basis === 'number' && list.versterking.basis > 0 ? list.versterking.basis : null;
+  const target = campaignMods?.pointsCap ?? rfBasis ?? (list.points || 0);
   const byCategory = {} as Record<Category, CategoryTally>;
   for (const c of CATEGORIES) byCategory[c] = { points: 0, limit: limits[c], cap: null, floor: null, over: false, under: false };
 
@@ -1572,7 +1589,19 @@ export function validate(
     for (const x of nul_x_rijen) warnEntry(x.e.uid, `One of your "0-X per 1,000 points" options — Battle March allows only one`);
   }
 
-  if (total > target) warnings.push(`Over the points limit by ${total - target}`);
+  const grens = campaignMods?.puntenGrens ?? (rfBasis != null ? (list.points || 0) : target);
+  // Een versterking komt BIJ een leger dat al een General en een Battle Standard Bearer heeft, en een
+  // leger heeft er van elk maar één. Melden, niet blokkeren: wie wat meeneemt is aan tafel te regelen.
+  if (rfBasis != null) {
+    for (const r of rows) {
+      for (const { opt } of selectedOptions(r.unit, r.e)) {
+        const n = (opt.name_en || '').replace(/\{[^}]*\}/g, '').trim();
+        if (/^general$/i.test(n)) advisories.push({ uid: r.e.uid, message: `${r.unit.name_en}: a reinforcement joins an army that already has its General` });
+        else if (/^battle standard bearer$/i.test(n)) advisories.push({ uid: r.e.uid, message: `${r.unit.name_en}: a reinforcement joins an army that already has its Battle Standard Bearer` });
+      }
+    }
+  }
+  if (total > grens) warnings.push(`Over the points limit by ${total - grens}`);
 
   return { total, byCategory, warnings, entryWarnings, advisories };
 }

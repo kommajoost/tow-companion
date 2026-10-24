@@ -16,7 +16,7 @@
 import { TOW, towFont, engraved } from '../../design/tow';
 import { useUI } from '../../state';
 import { scenarioById, secondaryById, terrainType, type BattleSetupState } from '../../lib/battle';
-import { TERRAIN_PLACEMENT_SHORT } from '../../lib/terrainPlacement';
+import { terrainPlacementShort } from '../../lib/terrainPlacement';
 import { formatDef, type BattleSheet } from '../../lib/battleSheet';
 import { BattleBoard } from './BattleBoard';
 import { Eye } from './Eye';
@@ -155,9 +155,11 @@ export function BattleSheetView({ sheet, titel, rechts }: {
         <div style={kaart}>
           <div style={{ ...eyebrow, marginBottom: 4 }}>Terrain</div>
           <div style={{ fontFamily: serif, fontSize: 13, color: TOW.parch, lineHeight: 1.45 }}>{terrein}</div>
-          {/* Huisregel 29-09-2026 (lib/terrainPlacement.ts): op het sheet alleen de samenvatting. */}
+          {/* Huisregel 29-09-2026 (lib/terrainPlacement.ts): op het sheet alleen de samenvatting. Een potje
+              buiten de campagne kent geen verdediger en geen hex-gebouw, dus de roll-off-tekst
+              (18-10-2026: de verdediger-begint-regel geldt alleen in de campagne vanaf Act 3). */}
           <div style={{ fontFamily: serif, fontSize: 12, color: TOW.parchDim, lineHeight: 1.45, marginTop: 5 }}>
-            <span style={{ fontWeight: 700, color: TOW.parch }}>Placing it: </span>{TERRAIN_PLACEMENT_SHORT}
+            <span style={{ fontWeight: 700, color: TOW.parch }}>Placing it: </span>{terrainPlacementShort({ battleMarch: true })}
           </div>
         </div>
       )}

@@ -25,6 +25,8 @@
 //       naar de gewone uitslag-regel. 100 meer = victory, 2× = crushing, in beide formaten.
 import type { Army, ArmyUnit, GameTracker } from '../types';
 import { unitTotalStrength } from './armyRules';
+import { scenarioVp, type ScenarioBonus, type ScenarioStand } from './scenarioBonus';
+import { effectieveStanden, gedoodDoorVijand, type ScenarioUnits } from './scenarioUnits';
 
 /** Per-kant handmatige bonussen — de categorieën die de app niet uit de casualty-tracker kan afleiden. */
 export interface VpBonus {
@@ -35,6 +37,15 @@ export interface VpBonus {
   /** Gestructureerde objective-VP per scenario/secondary (optie B): sleutel → gescoorde VP.
    *  Sleutels + bedragen komen uit OBJECTIVE_VP (objectiveVp.ts, letterlijk van tow.whfb.app). */
   objectives?: Record<string, number>;
+  /** 22-10-2026: de RUWE stand van de scenario-posten uit de sheet (`scenarioBonus`, Act 3+): post-id
+   *  → aantal (eind: 0/1, puntwaarde: punten). Géén VP: de pot van de verdediger hangt af van de teller
+   *  van de aanvaller, dus de VP worden pas in berekenVictory uitgerekend (zie scenarioBonus.ts).
+   *  `bonusVp` telt dit veld daarom bewust NIET mee. */
+  scenario?: ScenarioStand;
+  /** 24-10-2026: bij een PUNTWAARDE-post (Breakthrough) de units van deze stoel die meetellen: post-id →
+   *  unit-ids. De post rekent dan zelf de som van hun puntwaarde van nu (zie scenarioUnits.ts); het getypte
+   *  getal in `scenario` is alleen nog de terugval. Telt net als `scenario` NIET mee in `bonusVp`. */
+  scenarioUnits?: ScenarioUnits;
 }
 
 /** De per-unit toestand die de VP-engine nodig heeft (subset van UnitTrack). */
@@ -81,13 +92,7 @@ export function killVp(leger: Army | null, seat: string, tracker: GameTracker | 
   // Wie de TEGENSTANDER heeft aangewezen in z'n kill-log. De sleutels in de tracker zijn
   // `seat:unitId`, dus alles wat niet van dit leger is, is van de ander — daarmee hoeven we het
   // vijandelijke leger hier niet te kennen.
-  const gedood = new Set<string>();
-  for (const [sleutel, track] of Object.entries(tracker?.units ?? {})) {
-    if (sleutel.startsWith(`${seat}:`)) continue;
-    for (const d of (track as { killDetails?: { unit?: string }[] })?.killDetails ?? []) {
-      if (d?.unit) gedood.add(d.unit);
-    }
-  }
+  const gedood = gedoodDoorVijand(seat, tracker);
   let vp = 0;
   for (const u of leger.units) {
     vp += unitVp(u, tracker?.units?.[`${seat}:${u.id}`] as VpUnitTrack | undefined, gedood.has(u.id));
@@ -136,10 +141,16 @@ export function berekenVictory(
   hostBonus: VpBonus = {},
   guestBonus: VpBonus = {},
   battleMarch: boolean = tracker?.battleMarch === true,
+  /** 22-10-2026: de scenario-posten van de campagne-sheet (Act 3+). Zonder definitie tellen ze niet:
+   *  een vrij potje of een oudere sheet rekent precies zoals voorheen. Host = aanvaller. */
+  scenario: ScenarioBonus | null = null,
 ): VpResultaat {
   const schaal = vpSchaal(battleMarch);
-  const hostVp = killVp(guestArmy, 'guest', tracker) + bonusVp(hostBonus, schaal);
-  const guestVp = killVp(hostArmy, 'host', tracker) + bonusVp(guestBonus, schaal);
+  // 24-10-2026: een puntwaarde-post (Breakthrough) rekent uit de aangetikte units, met hun waarde van nu.
+  const st = effectieveStanden(scenario, hostBonus, guestBonus, hostArmy, guestArmy, tracker);
+  const sc = scenarioVp(scenario, st.host, st.guest);
+  const hostVp = killVp(guestArmy, 'guest', tracker) + bonusVp(hostBonus, schaal) + sc.host;
+  const guestVp = killVp(hostArmy, 'host', tracker) + bonusVp(guestBonus, schaal) + sc.guest;
   const verschil = Math.abs(hostVp - guestVp);
   let winnaar: 'host' | 'guest' | null = null;
   let uitslag: Uitslag = 'draw';

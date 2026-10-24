@@ -114,6 +114,10 @@ export function collectVeteraan(
 
   const out: VetRegel[] = [];
   for (const u of ownArmy?.units ?? []) {
+    // REINFORCEMENT DETACHMENT (23-10-2026, lib/versterking.ts): een versterkings-unit speelt deze ene
+    // battle mee en is daarna weg. Geen campagne-unit, dus geen XP, geen scar, geen regel in het rapport.
+    // Zijn kills en zijn verliezen tellen wel: in de VP, en een kill OP hem levert de doder gewoon XP op.
+    if (u.versterking) continue;
     const t = tracker.units[`${ownSeat}:${u.id}`];
     const ts = unitTotalStrength(u);
     const fleeing = t?.fleeing ?? false;

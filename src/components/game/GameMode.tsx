@@ -9,6 +9,8 @@ import { GameLobby } from './GameLobby';
 import { GameView } from './GameView';
 import { BattlefieldEditor, BF_STEPS } from './BattlefieldEditor';
 import { CampaignBattlePanel } from './CampaignBattlePanel';
+import { ScenarioTestBanner } from './CampaignScenarioBits';
+import { isScenarioTestCode } from '../../lib/scenarioTest';
 
 // The "Game" tab: set up (host/join) a live battle, then track it turn by turn. Army building and
 // the unit catalogue moved to the separate "Army" tab.
@@ -54,9 +56,14 @@ export function GameMode() {
   const seatedInPending = !!pending && !!code && code.trim().toUpperCase() === pending;
   const showBattlePanel = !!pending && !seatedInPending;
   const inLobby = !!seat && tracker.gestart === false;
+  // De SCENARIO-TEST (22-10-2026, alleen testbuild): zolang die open is, bovenaan een banner dat er niets
+  // wordt opgeslagen. Boven het briefing-scherm én boven het lokale potje dat eruit volgt.
+  const scenarioTest = showBattlePanel ? isScenarioTestCode(pending) : isScenarioTestCode(code);
 
   return (
-    <div style={{ height: '100%', minHeight: 0 }}>
+    <div style={{ height: '100%', minHeight: 0, display: 'flex', flexDirection: 'column' }}>
+      {scenarioTest && <ScenarioTestBanner />}
+      <div style={{ flex: 1, minHeight: 0 }}>
       {showBattlePanel ? (
         <CampaignBattlePanel code={pending as string} onDismiss={() => setPendingBattle(null)} />
       ) : inLobby && sheetBewerken ? (
@@ -74,6 +81,7 @@ export function GameMode() {
       ) : (
         <GameStart onNewBattle={() => setNieuw(true)} />
       )}
+      </div>
     </div>
   );
 }
