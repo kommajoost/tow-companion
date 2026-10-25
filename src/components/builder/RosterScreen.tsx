@@ -236,55 +236,68 @@ export function RosterScreen(props: {
         }}
       >
         {/* ── row 1: back · name + eyebrow · total + micro-caps · status dot ── */}
-        <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10 }}>
+        <div style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
+          {/* TERUG NAAR DE LIJSTEN (Joost 25-10-2026: "de terugknop is niet zo duidelijk"). Was een los
+              "‹"-tekentje zonder rand, dat je makkelijk voor versiering hield. Nu hetzelfde soort knop als
+              delen en PDF ernaast: een vlak met een pijl, en het woord eronder zodat je niet hoeft te raden
+              waar hij heen gaat. */}
           <button
             type="button"
             onClick={onBack}
-            aria-label="Back"
-            style={{
-              // 34px tap target (BUILDER.control.back) pulled back to a 23px layout footprint with
-              // negative margins, so the touch area stays honest without inflating the 74px header.
-              width: BUILDER.control.back, height: BUILDER.control.back, flexShrink: 0,
-              margin: '-6px 0 -5px -8px', padding: 0,
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              background: 'none', border: 'none', cursor: 'pointer',
-              color: TOW.goldDeep, fontFamily: towFont.serif, fontSize: 20, lineHeight: 1,
-              WebkitTapHighlightColor: 'transparent',
-            }}
+            aria-label="Back to your lists"
+            title="Back to your lists"
+            style={{ ...KOP_KNOP, marginLeft: -2 }}
           >
-            ‹
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" aria-hidden="true">
+              <path d="M15 5l-7 7 7 7" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            <span aria-hidden style={{ ...eb, fontSize: 6.5, letterSpacing: '0.1em', lineHeight: 1 }}>Lists</span>
           </button>
 
-          {/* Title + eyebrow. With `onEditList` this is the way into the list settings on a phone
-              (rename, army composition) — the desktop rail has its own rows for that, but here there
-              was no way in at all. Rendered as a button only when it does something. */}
+          {/* DE LIJSTINSTELLINGEN (Joost 25-10-2026: "niet zo helder dat je daar settings van je leger
+              moet aanpassen"). De titel wás al de weg naar naam, compositie, punten en game mode, maar
+              dat las je alleen af aan een vaag pennetje. Nu staat hij in een vlak met een rand en een
+              tandwiel: hij ziet eruit als wat hij is, een knop. Zonder `onEditList` blijft het platte
+              tekst — dan doet hij niets, en een knop die niets doet is erger dan geen knop. */}
           <span
             {...(onEditList ? { role: 'button', tabIndex: 0, onClick: onEditList,
                                 onKeyDown: (e: React.KeyboardEvent) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onEditList(); } },
-                                'aria-label': 'List settings' } : {})}
+                                'aria-label': 'List settings: name, composition, points and game mode',
+                                title: 'List settings' } : {})}
             data-tour="lijst-naam"
             style={{
-              flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column',
+              flex: 1, minWidth: 0, display: 'flex', alignItems: 'center', gap: 5,
               cursor: onEditList ? 'pointer' : 'default', WebkitTapHighlightColor: 'transparent',
+              ...(onEditList ? {
+                height: 36, boxSizing: 'border-box', margin: '-6px 0', padding: '0 6px 0 8px',
+                border: `1px solid ${TOW.lineStrong}`, borderRadius: 9, background: TOW.panel2,
+              } : {}),
             }}
           >
-            <span
-              style={{
-                fontFamily: towFont.display, fontWeight: 700, fontSize: 15.5, lineHeight: 1,
-                color: TOW.ink, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
-              }}
-            >
-              {list?.name || 'Untitled list'}
-              {onEditList && <span aria-hidden style={{ color: TOW.faint, fontWeight: 400 }}> ✎</span>}
+            <span style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column' }}>
+              <span
+                style={{
+                  fontFamily: towFont.display, fontWeight: 700, fontSize: 15.5, lineHeight: 1,
+                  color: TOW.ink, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
+                }}
+              >
+                {list?.name || 'Untitled list'}
+              </span>
+              <span
+                style={{
+                  ...eb, fontSize: 7.5, letterSpacing: '0.18em', lineHeight: 1, marginTop: 2,
+                  color: TOW.muted, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
+                }}
+              >
+                {[labels?.faction, labels?.composition, labels?.rule].filter(Boolean).join(' · ')}
+              </span>
             </span>
-            <span
-              style={{
-                ...eb, fontSize: 7.5, letterSpacing: '0.18em', lineHeight: 1, marginTop: 1,
-                color: TOW.muted, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
-              }}
-            >
-              {[labels?.faction, labels?.composition, labels?.rule].filter(Boolean).join(' · ')}
-            </span>
+            {onEditList && (
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={TOW.goldDeep} strokeWidth="2" aria-hidden="true" style={{ flexShrink: 0 }}>
+                <circle cx="12" cy="12" r="3.2" />
+                <path d="M19.4 15a1.7 1.7 0 00.34 1.87l.06.06a2 2 0 11-2.83 2.83l-.06-.06a1.7 1.7 0 00-1.87-.34 1.7 1.7 0 00-1.03 1.56V21a2 2 0 11-4 0v-.09A1.7 1.7 0 009 19.35a1.7 1.7 0 00-1.87.34l-.06.06a2 2 0 11-2.83-2.83l.06-.06A1.7 1.7 0 004.65 15a1.7 1.7 0 00-1.56-1.03H3a2 2 0 110-4h.09A1.7 1.7 0 004.65 9a1.7 1.7 0 00-.34-1.87l-.06-.06a2 2 0 112.83-2.83l.06.06A1.7 1.7 0 009 4.65a1.7 1.7 0 001.03-1.56V3a2 2 0 114 0v.09A1.7 1.7 0 0015 4.65a1.7 1.7 0 001.87-.34l.06-.06a2 2 0 112.83 2.83l-.06.06A1.7 1.7 0 0019.35 9a1.7 1.7 0 001.56 1.03H21a2 2 0 110 4h-.09A1.7 1.7 0 0019.4 15z" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            )}
           </span>
 
           {/* Share en PDF — twee glyphs naast de punten, want de titel is al de weg naar de
