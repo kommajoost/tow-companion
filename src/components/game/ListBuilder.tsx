@@ -436,12 +436,19 @@ export function ListBuilder() {
   // ListBuilder bezit `tow:lists`, dus het geldt in elke builder-versie en ook voor een lijst die je
   // niet openslaat. Alleen de lijst van de ACTIEVE campagne — een lijst van een andere campagne heeft
   // een andere cap en wordt hier dus met rust gelaten.
+  // Hetzelfde geldt voor de compositieregel (25-10-2026, Joost): Act 1-2 is Battle March, vanaf Act 3
+  // Combined Arms + Grand Melee. Staat de regel van de lijst niet in wat de campagne nu toestaat, dan
+  // gaat hij naar de eerste toegestane — anders bleef iedereen in Act 3 op Battle March staan.
   useEffect(() => {
     if (!campagne) return;
-    const raak = lists.filter((l) => isCampagneLijst(l, campagne) && l.points !== campagne.puntenCap);
+    const regels = campagne.compositie.filter((id) => COMPOSITION_RULES.some((r) => r.id === id));
+    const regelFout = (l: SavedList) => regels.length > 0 && !regels.includes(l.rule);
+    const raak = lists.filter((l) => isCampagneLijst(l, campagne) && (l.points !== campagne.puntenCap || regelFout(l)));
     if (raak.length === 0) return;
     const ids = new Set(raak.map((l) => l.id));
-    setLists((ls) => ls.map((l) => (ids.has(l.id) ? { ...l, points: campagne.puntenCap } : l)));
+    setLists((ls) => ls.map((l) => (ids.has(l.id)
+      ? { ...l, points: campagne.puntenCap, rule: regelFout(l) ? regels[0] : l.rule }
+      : l)));
   }, [campagne, lists, setLists]);
 
   const active = lists.find((l) => l.id === activeId) || null;
