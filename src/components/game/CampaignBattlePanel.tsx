@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { TOW, towFont, engraved } from '../../design/tow';
 import { useGame } from '../../game';
 import { getCachedCampaign, getCampaignCode } from '../../lib/campaign';
-import { CHAMPION_REGEL, isChampion, kantLabel } from '../../lib/campaignBattle';
+import { CHAMPION_REGEL, isChampion, kantLabel, isClaim, zonderRollen, perksVoorKant, rollOffVoorKant } from '../../lib/campaignBattle';
 import { versterkingVoorKant, voegVersterkingToe } from '../../lib/versterking';
 import { VersterkingKiezer } from './VersterkingKiezer';
 import { battleByCode, battleHandZet, battleTypeLabel, battleTypeNote, abilityLabel, abilityEffect, scarLabel, weerVanBattle, type CampaignBattle, type BattleSide, type Perk, type FoundItem, type BattleLijstSamenvatting, type VetUnit } from '../../lib/campaignBattle';
@@ -395,7 +395,11 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
   const sheet = (battle.scenario ?? {}) as Record<string, unknown>;
   const asStr = (v: unknown): string | null => (typeof v === 'string' && v.trim() ? v.trim() : null);
   const asNum = (v: unknown): number | null => (typeof v === 'number' && Number.isFinite(v) ? v : null);
-  const reason = asStr(sheet.reden);
+  // 25-10-2026 (Joost): claim-battle zonder aanvaller/verdediger. `claim` stuurt de teksten hieronder;
+  // `rol` haalt "the attacker/defender" uit een spelerstekst (bij elk ander type een no-op).
+  const claim = isClaim(battle.type);
+  const rol = (t: string): string => zonderRollen(t, battle);
+  const reason = asStr(sheet.reden) ? rol(asStr(sheet.reden)!) : null;
   const tableLabel = asStr(sheet.bordLabel)
     ?? (asNum(sheet.tableW) && asNum(sheet.tableH) ? `${asNum(sheet.tableW)}×${asNum(sheet.tableH)}″` : null);
   const groundType = asStr(sheet.terrein);
@@ -429,9 +433,11 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
   const wrath = wrathGeldt(battle.fase ?? asNum(sheet.fase), battle.battleMarch);
   // 14-08-2026: de campagne schrijft de scenario-uitleg mee in de sheet, zodat we hier niet z'n
   // scenario-catalogus hoeven na te bouwen. Ontbreekt hij (oudere battles), dan valt het blok weg.
-  const blurb = asStr(sheet.blurb);
-  const deployNote = asStr(sheet.deployNote);
-  const gameEnd = asStr(sheet.gameEnd);
+  // 25-10-2026 (Joost): claim-battle zonder aanvaller/verdediger -- ook in de teksten van de sheet.
+  const rolStr = (v: unknown): string | null => { const s = asStr(v); return s ? rol(s) : null; };
+  const blurb = rolStr(sheet.blurb);
+  const deployNote = rolStr(sheet.deployNote);
+  const gameEnd = rolStr(sheet.gameEnd);
 
   // ── De deployment-kaart (16-08-2026) ───────────────────────────────────────────────────────────
   // 14-08 ging de getekende plattegrond eruit: het bord werd op schaal getekend met de terreinstukken
@@ -502,14 +508,18 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
   // vóór het om-de-beurt plaatsen (`preplaced`). Sheets van 21-08 t/m 17-10 hebben in plaats daarvan
   // een STERKTEPUNT (een heuvel of bos met `side`, zonder `preplaced`): die houden hun oude zin.
   const voorafWie = battle.verdediger.naam;
+  // 25-10-2026 (Joost): claim-battle zonder aanvaller/verdediger -- dan alleen de naam, geen rol.
   const sterktepunten = vooraf.length > 0
-    ? [`The building and its low wall stand on the defender's half${voorafWie ? ` (${voorafWie})` : ''}, already on the table before you start: they are not placed in turn. The map shows where.`]
+    ? [claim && voorafWie
+      ? `The building and its low wall stand on ${voorafWie}'s half, already on the table before you start: they are not placed in turn. The map shows where.`
+      : `The building and its low wall stand on the defender's half${voorafWie ? ` (${voorafWie})` : ''}, already on the table before you start: they are not placed in turn. The map shows where.`]
     : terrain.filter((t) => t.side).map((t) => {
       const zelfde = terrain.filter((x) => x.type === t.type).length;
-      const rol = t.side === 'attacker' ? 'attacker' : 'defender';
-      const wie = (rol === 'attacker' ? battle.aanvaller : battle.verdediger).naam;
+      const kantRol = t.side === 'attacker' ? 'attacker' : 'defender';
+      const wie = (kantRol === 'attacker' ? battle.aanvaller : battle.verdediger).naam;
       const stuk = zelfde > 1 ? `One of the ${terreinMeervoud(t.type)}` : `The ${terreinNaam(t.type).toLowerCase()}`;
-      return `${stuk} is the strongpoint of the ${rol}${wie ? `, ${wie}` : ''}: it goes on the ${rol}'s half of the table and stands in for the settlement on this hex.`;
+      if (claim && wie) return `${stuk} is the strongpoint of ${wie}: it goes on ${wie}'s half of the table and stands in for the settlement on this hex.`;
+      return `${stuk} is the strongpoint of the ${kantRol}${wie ? `, ${wie}` : ''}: it goes on the ${kantRol}'s half of the table and stands in for the settlement on this hex.`;
     });
 
   // DE VOLGORDE aan tafel. Procedurele lijm, geen regel: alleen welke sectie je wanneer nodig hebt.
@@ -531,6 +541,8 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
   // 23-10-2026: de campagne gooit ze (begin War phase); aan tafel alleen nog weten welke twee het zijn.
   if (wrath) setupStappen.push(battle.wrath || scenarioTest ? 'Note the two Wrath Triggers of this battle — see Wrath Triggers.' : 'Wrath Triggers: rolled by the campaign when the War phase begins — see Wrath Triggers.');
   setupStappen.push('Deploy your armies in their zones.');
+  // 25-10-2026 (Joost): claim-battle zonder aanvaller/verdediger -- "The defender sets up ..." wordt de naam.
+  const setupZinnen = setupStappen.map(rol);
   const heeftSetup = setupStappen.length > 1 || !!groundType || !!battle.hexGebouw || terrain.length > 0 || toontKaart || !!deployNote;
 
   /** Een feit-chip in de Battle-sectie (Battle March, punten, tafel, rondes). */
@@ -545,8 +557,11 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
   // REINFORCEMENT DETACHMENT (23-10-2026): staat er een kant met twee tegen drie, dan noemen we het hier.
   const rfAanv = versterkingVoorKant(battle.versterking, 'aanvaller');
   const rfVerd = versterkingVoorKant(battle.versterking, 'verdediger');
+  // 25-10-2026 (Joost): claim-battle zonder aanvaller/verdediger -- daar de naam van die kant.
+  const rfKant: 'aanvaller' | 'verdediger' = rfAanv ? 'aanvaller' : 'verdediger';
+  const rfWie = claim && battle[rfKant].naam ? battle[rfKant].naam : kantLabel(battle.type, rfKant).toLowerCase();
   const rfFeit = rfAanv || rfVerd
-    ? `Reinforcement, ${rfAanv && rfVerd ? 'both sides' : kantLabel(battle.type, rfAanv ? 'aanvaller' : 'verdediger').toLowerCase()}: ${rfAanv ?? rfVerd} pts`
+    ? `Reinforcement, ${rfAanv && rfVerd ? 'both sides' : rfWie}: ${rfAanv ?? rfVerd} pts`
     : null;
   const feiten = [
     typeLabel,
@@ -732,11 +747,13 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
     </div>
   );
 
+  // 25-10-2026 (Joost): claim-battle zonder aanvaller/verdediger -- perks en roll-off via de helpers
+  // (geen Defense-perks, War Hall voor beide), en `kant` als key: bij een claim heten beide 'Claimant'.
   const kanten = [
-    { rol: kantLabel(battle.type, 'aanvaller'), side: battle.aanvaller, lijst: battle.aanvLijst, vets: battle.veteranen?.aanvaller,
-      perks: battle.perks?.aanvaller ?? [], items: battle.items?.aanvaller ?? [], roll: battle.rollOff?.aanvaller ?? [] },
-    { rol: kantLabel(battle.type, 'verdediger'), side: battle.verdediger, lijst: battle.verdLijst, vets: battle.veteranen?.verdediger,
-      perks: battle.perks?.verdediger ?? [], items: battle.items?.verdediger ?? [], roll: battle.rollOff?.verdediger ?? [] },
+    { kant: 'aanvaller', rol: kantLabel(battle.type, 'aanvaller'), side: battle.aanvaller, lijst: battle.aanvLijst, vets: battle.veteranen?.aanvaller,
+      perks: perksVoorKant(battle, 'aanvaller'), items: battle.items?.aanvaller ?? [], roll: rollOffVoorKant(battle, 'aanvaller') },
+    { kant: 'verdediger', rol: kantLabel(battle.type, 'verdediger'), side: battle.verdediger, lijst: battle.verdLijst, vets: battle.veteranen?.verdediger,
+      perks: perksVoorKant(battle, 'verdediger'), items: battle.items?.verdediger ?? [], roll: rollOffVoorKant(battle, 'verdediger') },
   ];
   const heeftLegers = kanten.some((k) => k.lijst || vetRijen(k.vets).length > 0);
   // ROLL-OFF VOOR DE EERSTE BEURT (05-10-2026). De server levert per kant de modifiers en hun bron
@@ -841,9 +858,9 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
       {/* ── 2 · BATTLEFIELD SETUP ── wat je nodig hebt en hoe je het neerzet. */}
       {heeftSetup && (
       <Sectie nr={volgende()} titel="Battlefield setup" onder="What goes on the table, in this order" accent={TOW.muted}>
-        {setupStappen.length > 1 && (
+        {setupZinnen.length > 1 && (
           <ol style={{ margin: 0, paddingLeft: 20, listStyleType: 'decimal', display: 'flex', flexDirection: 'column', gap: 3 }}>
-            {setupStappen.map((s) => (
+            {setupZinnen.map((s) => (
               <li key={s} style={{ fontFamily: serif, fontSize: 13, color: TOW.parch, lineHeight: 1.4 }}>{s}</li>
             ))}
           </ol>
@@ -878,7 +895,7 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
         {terrain.length > 0 && (
           <>
             {subkop('Terrain you need')}
-            <TerreinLijst terrain={terrain} />
+            <TerreinLijst terrain={terrain} battle={battle} />
             {sterktepunten.map((s) => (
               <div key={s} style={{ marginTop: 8, fontFamily: serif, fontSize: 12.5, color: TOW.parch, lineHeight: 1.45, borderLeft: `3px solid ${TOW.goldDeep}`, padding: '2px 0 2px 9px' }}>
                 {s}
@@ -893,7 +910,8 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
         {terrain.length > 0 && (
           <div style={{ marginTop: 12, border: `1px solid ${TOW.line}`, borderRadius: 9, padding: '8px 10px', background: TOW.bg }}>
             <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginBottom: 3 }}>Placing the terrain</div>
-            <div style={{ fontFamily: serif, fontSize: 12, color: TOW.parchDim, lineHeight: 1.5 }}>{terrainPlacementShort(plaatsOpties)}</div>
+            {/* 25-10-2026 (Joost): claim-battle zonder aanvaller/verdediger -- de huisregel-tekst met namen. */}
+            <div style={{ fontFamily: serif, fontSize: 12, color: TOW.parchDim, lineHeight: 1.5 }}>{rol(terrainPlacementShort(plaatsOpties))}</div>
             <details style={{ marginTop: 6 }}>
               <summary style={{ cursor: 'pointer', fontFamily: towFont.display, fontWeight: 600, fontSize: 11.5, color: TOW.goldDeep, listStyle: 'none' }}>
                 How placement works, step by step ›
@@ -901,7 +919,7 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
               <ol style={{ margin: '6px 0 0', paddingLeft: 18, listStyleType: 'decimal', display: 'flex', flexDirection: 'column', gap: 5 }}>
                 {terrainPlacementSteps(plaatsOpties).map((st) => (
                   <li key={st.title} style={{ fontFamily: serif, fontSize: 12, color: TOW.parchDim, lineHeight: 1.45 }}>
-                    <span style={{ fontWeight: 700, color: TOW.parch }}>{st.title}. </span>{st.text}
+                    <span style={{ fontWeight: 700, color: TOW.parch }}>{rol(st.title)}. </span>{rol(st.text)}
                   </li>
                 ))}
               </ol>
@@ -925,12 +943,14 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
                 : '';
               return (
                 <div key={b.id} style={{ border: `1px solid ${TOW.line}`, borderRadius: 10, background: TOW.panel2, padding: '10px 12px' }}>
-                  <div style={{ fontFamily: display, fontWeight: 700, fontSize: 16, color: TOW.gold }}>{b.title}</div>
-                  {b.what && <div style={{ fontFamily: serif, fontSize: 13, color: TOW.parchDim, marginTop: 2 }}>{b.what}{b.placement ? '' : opKaart}</div>}
+                  {/* 25-10-2026 (Joost): claim-battle zonder aanvaller/verdediger -- titel, uitleg en plek
+                      zijn app-tekst en krijgen de namen; de letterlijke regels (RegelTekst) blijven. */}
+                  <div style={{ fontFamily: display, fontWeight: 700, fontSize: 16, color: TOW.gold }}>{rol(b.title)}</div>
+                  {b.what && <div style={{ fontFamily: serif, fontSize: 13, color: TOW.parchDim, marginTop: 2 }}>{rol(b.what)}{b.placement ? '' : opKaart}</div>}
                   {b.placement && (
                     <div style={{ marginTop: 8, border: `1px solid ${TOW.goldDeep}`, borderRadius: 8, background: 'rgba(184,134,47,0.10)', padding: '7px 10px', fontFamily: serif, fontSize: 13.5, color: TOW.parch, lineHeight: 1.45 }}>
                       <span style={{ ...eb, fontSize: 8.5, color: TOW.goldDeep, marginRight: 6 }}>Where:</span>
-                      {b.placement}{opKaart}
+                      {rol(b.placement)}{opKaart}
                     </div>
                   )}
                   {b.short.map((r, i) => (
@@ -997,7 +1017,7 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
       {heeftLegers && (
         <Sectie nr={volgende()} titel="Armies" onder="Who brings what" accent={TOW.ink}>
           {kanten.map((k, i) => (
-            <div key={k.rol} style={{ marginTop: i ? 16 : 0, paddingTop: i ? 12 : 0, borderTop: i ? `1px solid ${TOW.line}` : 'none' }}>
+            <div key={k.kant} style={{ marginTop: i ? 16 : 0, paddingTop: i ? 12 : 0, borderTop: i ? `1px solid ${TOW.line}` : 'none' }}>
               {kantKop(k.side, k.rol)}
               {renderLijst(k.lijst, 'Line-up')}
               {renderVets(k.vets, 'Campaign veterans', k.lijst)}
@@ -1022,7 +1042,7 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
               <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginBottom: 5 }}>Roll for first turn</div>
               <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: 5 }}>
                 {kanten.map((k) => (
-                  <li key={k.rol}>
+                  <li key={k.kant}>
                     <div style={{ fontFamily: display, fontWeight: 700, fontSize: 13.5, color: TOW.ink }}>
                       {k.rol}{k.side.naam ? ` · ${k.side.naam}` : ''}:{' '}
                       <span style={{ color: TOW.goldDeep, fontVariantNumeric: 'tabular-nums' }}>{metTeken(k.roll.reduce((s, r) => s + r.waarde, 0))}</span>
@@ -1037,7 +1057,7 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
             </div>
           )}
           {kanten.filter((k) => k.perks.length > 0 || k.items.length > 0).map((k, i) => (
-            <div key={k.rol} style={{ marginTop: i ? 14 : 0, paddingTop: i ? 10 : 0, borderTop: i ? `1px solid ${TOW.line}` : 'none' }}>
+            <div key={k.kant} style={{ marginTop: i ? 14 : 0, paddingTop: i ? 10 : 0, borderTop: i ? `1px solid ${TOW.line}` : 'none' }}>
               {kantKop(k.side, k.rol)}
               {renderPerks(k.perks)}
               {renderItems(k.items)}
@@ -1067,7 +1087,8 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
       <>
         {header}
         <p style={{ fontFamily: serif, fontSize: 14.5, color: TOW.parchDim, margin: '0 0 14px' }}>
-          You're not in this battle — it's between {battle.aanvaller.naam || 'the attacker'} and {battle.verdediger.naam || 'the defender'}.
+          {/* 25-10-2026 (Joost): claim-battle zonder aanvaller/verdediger -- ook in de terugval. */}
+          You're not in this battle — it's between {battle.aanvaller.naam || (claim ? 'one claimant' : 'the attacker')} and {battle.verdediger.naam || (claim ? 'the other' : 'the defender')}.
         </p>
         {dismissBtn}
       </>,
@@ -1091,7 +1112,8 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
   // start (NOG_REALM_PHASE). Ontbreekt het veld (oudere server), dan is er ook geen poort → open laten.
   const magStarten = battle.warFase !== false;
   // "attacker"/"defender", en bij een Call to Arms "caller"/"Champion".
-  const mijnRol = battle.type === 'call' ? (mySeat === 'host' ? 'caller' : 'Champion') : mySeat === 'host' ? 'attacker' : 'defender';
+  // 25-10-2026 (Joost): claim-battle zonder aanvaller/verdediger -- dan "a claimant", voor beide kanten.
+  const mijnRol = claim ? 'claimant' : battle.type === 'call' ? (mySeat === 'host' ? 'caller' : 'Champion') : mySeat === 'host' ? 'attacker' : 'defender';
 
   // REINFORCEMENT DETACHMENT (23-10-2026): mag MIJN kant (en in het lab ook de andere) versterken?
   const tegenKant: 'aanvaller' | 'verdediger' = mijnKant === 'aanvaller' ? 'verdediger' : 'aanvaller';
@@ -1128,7 +1150,7 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
       {header}
 
       <div style={{ ...eb, fontSize: 8.5, color: TOW.goldDeep, marginBottom: 6 }}>
-        You are the {mijnRol}{mySide.naam ? ` · ${mySide.naam}` : ''}
+        You are {claim ? 'a' : 'the'} {mijnRol}{mySide.naam ? ` · ${mySide.naam}` : ''}
       </div>
       <p style={{ fontFamily: serif, fontSize: 14, color: TOW.parchDim, margin: '0 0 16px' }}>
         {lab

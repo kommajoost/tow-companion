@@ -3,7 +3,7 @@ import { TOW, towFont, engraved } from '../../design/tow';
 import { usePersistentState } from '../../store';
 import { useBackClose } from '../../lib/backStack';
 import { useLab } from '../lab/labContext';
-import type { CampaignBattle } from '../../lib/campaignBattle';
+import { isClaim, zonderRollen, type CampaignBattle } from '../../lib/campaignBattle';
 import { CampaignBoard, defenderIsTop, parseSheetLayout, parseSheetSecLayout } from './CampaignBoard';
 import {
   parseSheetTerrain, terrainEffect, terrainName, terrainStyle, terrainTrait, TRAIT_TEXT,
@@ -67,16 +67,25 @@ export function ScenarioKaart({ battle, mySeat }: { battle: CampaignBattle; mySe
   const defenderTop = defenderIsTop(layout, tableH, asStr(sheet.verdedigerKant));
   const ikBenVerdediger = mySeat === 'guest';
   const youSide: 'top' | 'bottom' | undefined = mySeat ? (ikBenVerdediger === defenderTop ? 'top' : 'bottom') : undefined;
+  // 25-10-2026 (Joost): claim-battle zonder aanvaller/verdediger. Dan staat er boven en onder het bord
+  // alleen de naam (+ you/opponent), en heten de opstelvakken naar de speler: het "Defender"-vak is de
+  // (gelote) verdediger, het "Attacker"-vak de aanvaller. Alleen bij het TONEN: `defenderTop` hierboven
+  // leest nog de originele labels, en lopende battles hebben die labels al in hun sheet staan.
+  const claim = isClaim(battle.type);
   const kantLabel = (isDefender: boolean): string => {
     const side = isDefender ? battle.verdediger : battle.aanvaller;
-    const rol = isDefender ? 'Defender' : 'Attacker';
+    const rol = claim ? 'Claimant' : isDefender ? 'Defender' : 'Attacker';
     const wie = !mySeat ? null : isDefender === ikBenVerdediger ? 'you' : 'opponent';
+    if (claim && side.naam) return `${side.naam}${wie ? ` (${wie})` : ''}`;
     return `${rol}${wie ? ` (${wie})` : ''}${side.naam ? ` · ${side.naam}` : ''}`;
   };
+  const toonLayout = claim
+    ? { ...layout, zones: layout.zones.map((z) => ({ ...z, label: zonderRollen(z.label, battle) })) }
+    : layout;
   return (
     <div>
       <div style={{ fontFamily: serif, fontSize: 12, color: youSide === 'top' ? TOW.goldDeep : TOW.muted, marginBottom: 4 }}>{kantLabel(defenderTop)}</div>
-      <CampaignBoard layout={layout} secLayout={secLayout} tableW={tableW} tableH={tableH} youSide={youSide} terrain={vooraf} />
+      <CampaignBoard layout={toonLayout} secLayout={secLayout} tableW={tableW} tableH={tableH} youSide={youSide} terrain={vooraf} />
       <div style={{ fontFamily: serif, fontSize: 12, color: youSide === 'bottom' ? TOW.goldDeep : TOW.muted, marginTop: 4 }}>{kantLabel(!defenderTop)}</div>
     </div>
   );
@@ -109,7 +118,14 @@ function groepeer(stukken: CampaignTerrainPiece[]): Regel[] {
  * Het scenario-stuk van de verdediger (de lage muur in Breakthrough, `byDefender`) staat apart: dat
  * wordt niet om de beurt geplaatst maar vooraf door de verdediger, en het komt bovenop het aantal.
  */
-export function TerreinLijst({ terrain, compact = false }: { terrain: CampaignTerrainPiece[]; compact?: boolean }) {
+export function TerreinLijst({ terrain, compact = false, battle = null }: {
+  terrain: CampaignTerrainPiece[];
+  compact?: boolean;
+  /** 25-10-2026 (Joost): claim-battle zonder aanvaller/verdediger -- met de battle erbij heet "the
+   *  defender" in het scenario-stuk de speler. Zonder battle (het lab) de oude tekst. */
+  battle?: CampaignBattle | null;
+}) {
+  const rol = (t: string): string => zonderRollen(t, battle);
   const scenario = groepeer(terrain.filter((t) => t.byDefender));
   const gewoon = groepeer(terrain.filter((t) => !t.byDefender));
   const rij = (r: Regel) => (
@@ -130,10 +146,10 @@ export function TerreinLijst({ terrain, compact = false }: { terrain: CampaignTe
     <div>
       {scenario.length > 0 && (
         <div style={{ marginBottom: 8, border: `1px solid ${TOW.goldDeep}`, borderRadius: 9, padding: '7px 10px', background: 'rgba(184,134,47,0.08)' }}>
-          <div style={{ ...eb, fontSize: 8, color: TOW.goldDeep, marginBottom: 4 }}>Scenario piece · the defender places it first</div>
+          <div style={{ ...eb, fontSize: 8, color: TOW.goldDeep, marginBottom: 4 }}>{rol('Scenario piece · the defender places it first')}</div>
           <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: 4 }}>{scenario.map(rij)}</ul>
           <div style={{ fontFamily: serif, fontSize: 12, color: TOW.parchDim, lineHeight: 1.4, marginTop: 4 }}>
-            Before the other terrain, the defender places it anywhere in their own half. It does not scatter, and it comes on top of the terrain pieces below.
+            {rol('Before the other terrain, the defender places it anywhere in their own half. It does not scatter, and it comes on top of the terrain pieces below.')}
           </div>
         </div>
       )}
@@ -151,6 +167,8 @@ export function eersteBeurtZin(battle: CampaignBattle): string | null {
   const vast = eersteBeurtVast(battle.scenario);
   if (!vast) return null;
   const side = vast === 'aanvaller' ? battle.aanvaller : battle.verdediger;
+  // 25-10-2026 (Joost): claim-battle zonder aanvaller/verdediger -- dan alleen de naam.
+  if (isClaim(battle.type) && side.naam) return `${side.naam} takes the first turn. There is no roll for it in this setup.`;
   return `The ${vast === 'aanvaller' ? 'attacker' : 'defender'}${side.naam ? ` (${side.naam})` : ''} takes the first turn. There is no roll for it in this setup.`;
 }
 
@@ -158,17 +176,25 @@ export function eersteBeurtZin(battle: CampaignBattle): string | null {
 
 /** De posten van `scenarioBonus` als naslag: wie scoort wat, hoeveel, en de uitleg van de campagne. */
 export function ScenarioVpLijst({ def, battle, compact = false }: { def: ScenarioBonus; battle: CampaignBattle; compact?: boolean }) {
-  const wie = (k: 'aanvaller' | 'verdediger' | 'beide') =>
-    k === 'beide' ? kantTekst(k) : `${kantTekst(k)}${(k === 'aanvaller' ? battle.aanvaller : battle.verdediger).naam ? ` (${(k === 'aanvaller' ? battle.aanvaller : battle.verdediger).naam})` : ''}`;
+  // 25-10-2026 (Joost): claim-battle zonder aanvaller/verdediger -- dan de naam i.p.v. de rol, ook in
+  // het label en de uitleg van de campagne ("units in the defender's zone").
+  const claim = isClaim(battle.type);
+  const rol = (t: string): string => zonderRollen(t, battle);
+  const wie = (k: 'aanvaller' | 'verdediger' | 'beide') => {
+    if (k === 'beide') return kantTekst(k);
+    const naam = (k === 'aanvaller' ? battle.aanvaller : battle.verdediger).naam;
+    if (claim && naam) return naam;
+    return `${kantTekst(k)}${naam ? ` (${naam})` : ''}`;
+  };
   return (
     <ul data-testid="scenario-vp-lijst" style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: compact ? 5 : 7 }}>
       {def.posten.map((p) => (
         <li key={p.id}>
-          <div style={{ fontFamily: display, fontWeight: 700, fontSize: compact ? 13 : 13.5, color: TOW.goldDeep }}>{p.label}</div>
+          <div style={{ fontFamily: display, fontWeight: 700, fontSize: compact ? 13 : 13.5, color: TOW.goldDeep }}>{rol(p.label)}</div>
           <div style={{ fontFamily: serif, fontSize: 12.5, color: TOW.parch, lineHeight: 1.4 }}>
-            <span style={{ color: TOW.muted }}>{wie(p.kant)}: </span>{postSamenvatting(def, p)}
+            <span style={{ color: TOW.muted }}>{wie(p.kant)}: </span>{rol(postSamenvatting(def, p))}
           </div>
-          {p.uitleg && <div style={{ fontFamily: serif, fontStyle: 'italic', fontSize: 11.5, color: TOW.muted, lineHeight: 1.35 }}>{p.uitleg}</div>}
+          {p.uitleg && <div style={{ fontFamily: serif, fontStyle: 'italic', fontSize: 11.5, color: TOW.muted, lineHeight: 1.35 }}>{rol(p.uitleg)}</div>}
         </li>
       ))}
     </ul>
@@ -290,8 +316,10 @@ export function CampaignScenarioOverlay({ battle, code, mySeat, onClose }: {
   useBackClose(true, onClose);
   const sheet = sheetVan(battle);
   const naam = asStr(sheet.scenarioNaam);
-  const deployNote = asStr(sheet.deployNote);
-  const gameEnd = asStr(sheet.gameEnd);
+  // 25-10-2026 (Joost): claim-battle zonder aanvaller/verdediger -- de teksten van de sheet met namen.
+  const rol = (t: string): string => zonderRollen(t, battle);
+  const deployNote = asStr(sheet.deployNote) ? rol(asStr(sheet.deployNote)!) : null;
+  const gameEnd = asStr(sheet.gameEnd) ? rol(asStr(sheet.gameEnd)!) : null;
   const def = scenarioBonusVan(sheet);
   const terrain = parseSheetTerrain(sheet.terrain);
   const eerste = eersteBeurtZin(battle);
@@ -329,8 +357,8 @@ export function CampaignScenarioOverlay({ battle, code, mySeat, onClose }: {
             {kop('Objectives')}
             {objectives.map((o) => (
               <div key={o.id} style={{ marginBottom: 6 }}>
-                <div style={{ fontFamily: display, fontWeight: 700, fontSize: 13.5, color: TOW.goldDeep }}>{o.naam}</div>
-                <div style={{ fontFamily: serif, fontSize: 12.5, color: TOW.parchDim, lineHeight: 1.4 }}>{o.uitleg}</div>
+                <div style={{ fontFamily: display, fontWeight: 700, fontSize: 13.5, color: TOW.goldDeep }}>{rol(o.naam)}</div>
+                <div style={{ fontFamily: serif, fontSize: 12.5, color: TOW.parchDim, lineHeight: 1.4 }}>{rol(o.uitleg)}</div>
               </div>
             ))}
           </>
@@ -351,9 +379,9 @@ export function CampaignScenarioOverlay({ battle, code, mySeat, onClose }: {
             </button>
             {open.terrein && (
               <>
-                <TerreinLijst terrain={terrain} compact />
+                <TerreinLijst terrain={terrain} compact battle={battle} />
                 <div style={{ fontFamily: serif, fontSize: 12, color: TOW.parchDim, lineHeight: 1.45, marginTop: 8 }}>
-                  {terrainPlacementShort({ battleMarch: (fase ?? 3) <= 2, building: terrain.some((t) => t.preplaced) })}
+                  {rol(terrainPlacementShort({ battleMarch: (fase ?? 3) <= 2, building: terrain.some((t) => t.preplaced) }))}
                 </div>
               </>
             )}

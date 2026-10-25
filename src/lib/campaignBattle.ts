@@ -238,8 +238,68 @@ export const CHAMPION_REGEL = 'Champion: +1 Fame only on a Crushing Victory, los
 export const isChampion = (type: string | null | undefined, kant: 'aanvaller' | 'verdediger'): boolean =>
   type === 'call' && kant === 'verdediger';
 /** Het rol-label van een kant: "Attacker"/"Defender", bij een Call to Arms "Caller"/"Champion". */
+// 25-10-2026 (Joost): claim-battle zonder aanvaller/verdediger. Beide kanten heten dan 'Claimant'.
 export const kantLabel = (type: string | null | undefined, kant: 'aanvaller' | 'verdediger'): string =>
-  type === 'call' ? (kant === 'aanvaller' ? 'Caller' : 'Champion') : kant === 'aanvaller' ? 'Attacker' : 'Defender';
+  type === 'claim' ? 'Claimant'
+    : type === 'call' ? (kant === 'aanvaller' ? 'Caller' : 'Champion') : kant === 'aanvaller' ? 'Attacker' : 'Defender';
+
+// ---- Claim-battle: geen aanvaller, geen verdediger (25-10-2026) ---------------------------------------
+// 25-10-2026 (Joost): claim-battle zonder aanvaller/verdediger. Twee spelers claimden dezelfde vrije hex;
+// wie in de data `aanvaller` en wie `verdediger` heet is GELOOT en betekent niets. Dus: in beeld geen
+// Attacker/Defender maar "Joost vs Mario", beide rollen 'Claimant'; perks voor BEIDE kanten alleen de
+// aanvalskant (Battle-gebouwen wel, Defense-gebouwen niet, Warhost blijft); geen verdedigersbonussen.
+// Spiegel van de server (20261025b_claim_battle_symmetrisch.sql) en van site/src/data/inzet.ts. De
+// data-velden en alles wat naar de server gaat blijven ongewijzigd: dit is weergave + client-validatie.
+
+/** Is dit een claim-battle (geloot aanvaller/verdediger)? */
+export const isClaim = (type: string | null | undefined): boolean => type === 'claim';
+
+/**
+ * Een spelerstekst zonder aanvaller/verdediger. Bij een claim-battle wordt "the attacker", "the
+ * defender's", "Defender" enz. de naam van de speler op die (gelote) kant; bij elk ander type komt de
+ * tekst ongewijzigd terug. Zonder naam blijft het woord staan (liever een rol dan een gat).
+ * Niet voor LETTERLIJKE regeltekst (tow.whfb.app): die blijft zoals hij is.
+ */
+export function zonderRollen(
+  tekst: string,
+  battle: Pick<CampaignBattle, 'type' | 'aanvaller' | 'verdediger'> | null | undefined,
+): string {
+  if (!tekst || !battle || !isClaim(battle.type)) return tekst;
+  return tekst.replace(/\b(?:the\s+)?(attacker|defender)(['’]s)?\b/gi, (m, rol: string, bezit: string | undefined) => {
+    const naam = (rol.toLowerCase() === 'attacker' ? battle.aanvaller : battle.verdediger).naam;
+    return naam ? `${naam}${bezit ?? ''}` : m;
+  });
+}
+
+/** De Defense-gebouwen (towc_gebouw_def categorie 'defense', params.kant 'verdediger'): hun perk is een
+ *  verdedigersbonus en geldt bij een claim-battle voor geen van beide kanten. */
+const DEFENSE_PERKS = new Set(['watchtower', 'palisade-works', 'signal-tower', 'marksmen-range', 'groundworks']);
+
+/** Is deze perk (gebouw-id) een Defense-perk? */
+export const isDefensePerk = (perk: string): boolean => DEFENSE_PERKS.has(perk);
+
+/** De actieve perks van één kant zoals ze aan tafel gelden. Bij een claim-battle vallen de Defense-perks
+ *  weg (de server laat ze daar ook niet meer kiezen; dit vangt een battle die ze al had). */
+// 25-10-2026 (Joost): claim-battle zonder aanvaller/verdediger
+export function perksVoorKant(battle: CampaignBattle | null | undefined, kant: 'aanvaller' | 'verdediger'): Perk[] {
+  const perks = battle?.perks?.[kant] ?? [];
+  return isClaim(battle?.type) ? perks.filter((p) => !isDefensePerk(p.perk)) : perks;
+}
+
+/** De roll-off-modifiers voor de eerste beurt van één kant. Bij een claim-battle: geen Watchtower (een
+ *  Defense-perk), en de War Hall (+3) geldt voor BEIDE kanten als die speler hem koos. De server bouwt
+ *  de War Hall alleen bij de aanvaller op, dus bij de verdediger vullen we hem hier aan. */
+// 25-10-2026 (Joost): claim-battle zonder aanvaller/verdediger
+export function rollOffVoorKant(battle: CampaignBattle | null | undefined, kant: 'aanvaller' | 'verdediger'): RollOffBron[] {
+  const bronnen = battle?.rollOff?.[kant] ?? [];
+  if (!battle || !isClaim(battle.type)) return bronnen;
+  const zonder = bronnen.filter((r) => !isDefensePerk(r.bron));
+  const warHall = perksVoorKant(battle, kant).find((p) => p.perk === 'war-hall');
+  if (warHall && !zonder.some((r) => r.bron === 'war-hall')) {
+    return [{ bron: 'war-hall', label: warHall.label || 'War Hall', waarde: 3 }, ...zonder];
+  }
+  return zonder;
+}
 
 /** Label van een battle-soort, of null als de campagne iets stuurt dat we niet kennen. */
 export const battleTypeLabel = (type: string): string | null => BATTLE_TYPE_LABEL[type] ?? null;
@@ -806,7 +866,8 @@ export function fameOpbouw(f: FameBlok, kant: 'aanv' | 'verd', res: ToernooiResu
   const council = kant === 'aanv' ? f.councilAanv : f.councilVerd;
   if (council) delen.push(`Council ${teken(council)}`);
   if (kant === 'aanv' ? f.geverfdAanv : f.geverfdVerd) delen.push('painted +1');
-  if (kant === 'verd' && f.verdedigingsBonus) delen.push('defender +1');
+  // 25-10-2026 (Joost): claim-battle zonder aanvaller/verdediger -- geen verdedigersbonus.
+  if (kant === 'verd' && f.verdedigingsBonus && type !== 'claim') delen.push('defender +1');
   if (kant === 'verd' && f.proxy) delen.push(`stand-in +${f.proxy}`);
   return delen.join(' · ');
 }

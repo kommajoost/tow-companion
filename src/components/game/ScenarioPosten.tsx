@@ -7,6 +7,8 @@ import {
 } from '../../lib/scenarioBonus';
 import { effectieveStanden, knopLabel, postUitUnits, puntDetail, REKENREGEL, tikUnit, uitsluitingTekst } from '../../lib/scenarioUnits';
 import { unitToon } from '../../lib/unitNaam';
+import { zonderRollen } from '../../lib/campaignBattle';
+import { useCampaignBattle } from './useCampaignBattle';
 import type { Army } from '../../types';
 
 const display = towFont.display;
@@ -73,11 +75,15 @@ export function ScenarioPosten({ def, zijde, editable = true, compact = false }:
   editable?: boolean;
   compact?: boolean;
 }) {
-  const { tracker, setTracker } = useGame();
+  const { tracker, setTracker, code } = useGame();
   const legers = useLegersPerStoel();
   const eff = useEffectieveStanden(def);
+  // 25-10-2026 (Joost): claim-battle zonder aanvaller/verdediger -- de labels en uitleg van de sheet
+  // ("units in the defender's zone") met de spelersnaam. Alleen weergave: id, kant en bedragen blijven.
+  const campagne = useCampaignBattle(code);
   if (!def) return null;
-  const posten = postenVoor(def, zijde);
+  const rol = (t: string): string => zonderRollen(t, campagne);
+  const posten = postenVoor(def, zijde).map((p) => ({ ...p, label: rol(p.label), ...(p.uitleg ? { uitleg: rol(p.uitleg) } : {}) }));
   if (!posten.length) return null;
 
   // De VP rekenen op de effectieve stand (puntwaarde uit de units); de invoer leest de ruwe.
@@ -122,7 +128,7 @@ export function ScenarioPosten({ def, zijde, editable = true, compact = false }:
                   {p.label}
                   <span style={{ display: 'block', fontSize: 11.5, color: TOW.muted }}>
                     {pot.start}{pot.aftrek ? ` − ${pot.aftrek} × ${pot.keer}` : ''} = {pot.vp} VP
-                    {k ? ` · goes down by itself with each "${k.label}"` : ''}
+                    {k ? ` · goes down by itself with each "${rol(k.label)}"` : ''}
                   </span>
                 </span>
                 <span style={{ ...vpStijl, color: pot.vp > 0 ? TOW.goldDeep : TOW.muted, fontWeight: 700 }}>+{pot.vp} VP</span>
@@ -170,7 +176,7 @@ export function ScenarioPosten({ def, zijde, editable = true, compact = false }:
                 </div>
                 {detail.regels.length === 0 ? (
                   <div style={{ ...uitlegStijl, fontStyle: 'normal' }}>
-                    No units yet. Tap “{knop}” on each attacking unit that ends wholly inside the defender’s zone.
+                    {rol(`No units yet. Tap “${knop}” on each attacking unit that ends wholly inside the defender’s zone.`)}
                   </div>
                 ) : (
                   <div style={{ display: 'flex', flexDirection: 'column', gap: 2, margin: '3px 0 2px' }}>

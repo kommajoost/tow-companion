@@ -7,7 +7,7 @@ import {
   battleByCode, battleQuests, reportBattleResult, officieleUitslag, setReportApproval,
   kroniekMijn, kroniekBattleZet,
   battleFotos, battleFotosZet, battleFotoUpload, battleFotoWis, type BattleFoto,
-  RESULTAAT_NAAM, TP_VAN_RESULTAAT, SPIEGEL, questTrede, questFoutTekst, fameOpbouw,
+  RESULTAAT_NAAM, TP_VAN_RESULTAAT, SPIEGEL, questTrede, questFoutTekst, fameOpbouw, kantLabel,
   type CampaignBattle, type BattleResultaat, type ToernooiResultaat, type BattleQuests, type BattleQuest,
   type RapportAkkoord, type RapportUitkomst,
 } from '../../lib/campaignBattle';
@@ -309,8 +309,10 @@ export function CampaignResultReporter({ embedded = false }: { embedded?: boolea
 
   if (!code || !battle) return null; // not a campaign battle → nothing to report
 
-  const hostName = game?.host_name || battle.aanvaller.naam || 'Attacker';
-  const guestName = game?.guest_name || battle.verdediger.naam || 'Defender';
+  // 25-10-2026 (Joost): claim-battle zonder aanvaller/verdediger -- ook de terugval zonder naam is dan
+  // geen Attacker/Defender (kantLabel geeft 'Claimant').
+  const hostName = game?.host_name || battle.aanvaller.naam || kantLabel(battle.type, 'aanvaller');
+  const guestName = game?.guest_name || battle.verdediger.naam || kantLabel(battle.type, 'verdediger');
 
   // Marge-regel voor de campagne: er is geen apart marge-veld, dus we hangen één nette Engelse regel
   // aan de notes zodat de grensmaster minor (Victory) vs major (Crushing Victory) ziet. Bij een draw

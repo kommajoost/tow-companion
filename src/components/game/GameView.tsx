@@ -10,6 +10,7 @@ import { UnitCard, type ScenarioKnop } from './UnitCard';
 import { BattleBar } from './BattleBar';
 import { ReminderStrip, type KantReminders } from './ReminderStrip';
 import { useCampaignBattle } from './useCampaignBattle';
+import { perksVoorKant, rollOffVoorKant } from '../../lib/campaignBattle';
 import { ObjectivesTracker } from './ObjectivesTracker';
 import { useScenarioBonus } from './useObjectives';
 import { CampaignScenarioOverlay, eersteBeurtZin, useWrath } from './CampaignScenarioBits';
@@ -258,9 +259,10 @@ export function GameView() {
     const k = abs === 'host' ? 'aanvaller' : 'verdediger';
     return {
       naam,
-      perks: campagne.perks?.[k] ?? [],
+      // 25-10-2026 (Joost): claim-battle zonder aanvaller/verdediger -- geen Defense-perks, War Hall voor beide.
+      perks: perksVoorKant(campagne, k),
       items: campagne.items?.[k] ?? [],
-      rollOff: eersteVast ? [] : campagne.rollOff?.[k] ?? [],
+      rollOff: eersteVast ? [] : rollOffVoorKant(campagne, k),
     };
   };
   // 23-10-2026: de Wrath komt van de campagne (server-worp bij het begin van de War phase); het lab en de
