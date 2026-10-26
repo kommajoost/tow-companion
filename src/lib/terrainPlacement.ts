@@ -33,13 +33,11 @@ const SHORT_PLACING =
 /** De samenvatting: altijd zichtbaar. */
 export function terrainPlacementShort(o?: PlacementOptions): string {
   const general = o?.battleMarch === undefined;
+  // 26-10-2026 (Joost): "de huisregel van defender zet terrain is oud, klopt niet meer" -- in ELKE Act
+  // weer een roll-off, de winnaar zet het eerste stuk. Spiegel van site/src/data/terreinPlaatsing.ts.
   const start = general
-    ? 'The defender then places the first terrain piece; in Act 1 and 2 (Battle March) roll off and the winner places first. Then take turns. '
-    : o.battleMarch
-      ? 'Roll off; the winner places first, then take turns. '
-      : o.building
-        ? 'The defender places the first piece, then take turns. '
-        : 'Then the defender places the first terrain piece, and you take turns. ';
+    ? 'Then roll off: the winner places the first terrain piece, and you take turns. '
+    : 'Roll off; the winner places first, then take turns. ';
   // Alleen oude sheets (`building` = er staan vooraf geplaatste stukken, 18-10-2026) houden deze zin.
   const preplaced = !general && o.building
     ? 'The building and its low wall are already on the table and are not placed in turn. '
@@ -47,10 +45,10 @@ export function terrainPlacementShort(o?: PlacementOptions): string {
   // 20-10-2026 (Joost): vanaf Act 3 eerst de scenario-stukken en de muur van de verdediger, dan pas het
   // terrein om de beurt. Battle March heeft geen verdediger-kant en houdt de oude zin.
   const first = general
-    ? 'From Act 3 the defender first sets up the scenario pieces where the map shows them, and in Breakthrough their low wall anywhere in their own half; none of these scatter. '
+    ? 'From Act 3 the scenario pieces go down first, exactly where the map shows them, and in Breakthrough the defender’s low wall anywhere in their own half; none of these scatter. '
     : o.battleMarch || o.building
       ? ''
-      : 'First the defender sets up the scenario pieces where the map shows them, and in Breakthrough their low wall anywhere in their own half; none of these scatter. ';
+      : 'First the scenario pieces go down, exactly where the map shows them, and in Breakthrough the defender’s low wall anywhere in their own half; none of these scatter. ';
   return 'The app sets the number and types of pieces. ' + preplaced + first + start + SHORT_PLACING;
 }
 
@@ -71,8 +69,8 @@ export function terrainPlacementSteps(o?: PlacementOptions): { title: string; te
         title: 'Scenario pieces first',
         text:
           (general ? 'From Act 3: if' : 'If') +
-          ' the map shows buildings or a special feature (the storage buildings, the Forge, the Command & Control feature), the defender ' +
-          'sets them up exactly where the map shows them. They do not scatter and are not part of the terrain list.',
+          ' the map shows buildings or a special feature (the storage buildings, the Forge, the Command & Control feature), they ' +
+          'go down first, exactly where the map shows them. They do not scatter and are not part of the terrain list.',
       },
       {
         title: "Breakthrough: the defender's low wall",
@@ -94,12 +92,9 @@ export function terrainPlacementSteps(o?: PlacementOptions): { title: string; te
   steps.push({
     title: 'Who starts',
     text: general
-      ? 'From Act 3 (every attacker/defender battle, claim battles and challenges included) the defender places the first terrain piece, ' +
-        'and it scatters like any other. In Act 1 and 2 (Battle March) both players roll off and the winner places first. ' +
+      ? 'In every Act both players roll off. The winner places the first terrain piece, and it scatters like any other. ' +
         'Then you alternate: one piece each, until all pieces are down.'
-      : o.battleMarch
-        ? 'Both players roll off. The winner places the first piece, then you alternate: one piece each, until all pieces are down.'
-        : 'The defender places the first terrain piece, and it scatters like any other. Then you alternate: one piece each, until all pieces are down.',
+      : 'Both players roll off. The winner places the first piece, and it scatters like any other. Then you alternate: one piece each, until all pieces are down.',
   });
   steps.push(
     {

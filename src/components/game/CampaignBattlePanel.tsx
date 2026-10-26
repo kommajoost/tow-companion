@@ -534,7 +534,8 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
   if (heeftLandmark) setupStappen.push("Roll for the landmark's unusual property — see Objectives.");
   if (scenarioGebouwen.length > 0) {
     const namen = [...new Set(scenarioGebouwen.map((g) => g.label).filter(Boolean))].join(' and ');
-    setupStappen.push(`The defender sets up the scenario pieces${namen ? ` (${namen})` : ''} exactly where the map shows them; they do not scatter.`);
+    // 26-10-2026 (Joost): de scenariostukken staan vast op de kaart; er hoort geen kant bij wie ze neerzet.
+    setupStappen.push(`Set up the scenario pieces${namen ? ` (${namen})` : ''} exactly where the map shows them; they do not scatter.`);
   }
   if (muurVerdediger) setupStappen.push('The defender places their low wall anywhere in their own half; it does not scatter.');
   if (terrain.some((t) => !t.byDefender)) setupStappen.push(muurVerdediger || scenarioGebouwen.length > 0 ? 'Then place the terrain pieces in turn (below).' : 'Place the terrain (below).');
