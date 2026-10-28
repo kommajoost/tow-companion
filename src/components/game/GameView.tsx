@@ -105,7 +105,14 @@ export function GameView() {
   // 2v2 (28-10-2026): de keuze wordt per STOEL onthouden in plaats van per kant.
   const [gekozen, setGekozen] = useState<Record<string, string | null>>({ me: null, opp: null });
   const kiesSleutel: string = teamModus ? speler : side;
-  const kies = (unitId: string) => setGekozen((g) => ({ ...g, [kiesSleutel]: unitId }));
+  // MOUNT ALS EIGEN TABJE (Joost 28-10-2026: "als een character een mount heeft … die wil ik ook zoals een gewone
+  // unit kunnen zien, met al zijn stats en regels, en gewoon in de lijst"). Welke unit z'n mount-tab open heeft;
+  // een gewone keuze in de lijst opent altijd de rider.
+  const [mountTab, setMountTab] = useState<{ id: string; i: number } | null>(null);
+  const kies = (unitId: string, mount: number | null = null) => {
+    setGekozen((g) => ({ ...g, [kiesSleutel]: unitId }));
+    setMountTab(mount == null ? null : { id: unitId, i: mount });
+  };
   const selId: string | null = army
     ? (army.units.some((u) => u.id === gekozen[kiesSleutel]) ? gekozen[kiesSleutel] ?? null : army.units[0]?.id ?? null)
     : null;
@@ -114,7 +121,7 @@ export function GameView() {
   const detailRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
     detailRef.current?.scrollTo({ top: 0 });
-  }, [selId, side, speler]);
+  }, [selId, side, speler, mountTab]);
 
   // The rule sheet lives outside the builder, so the selected pack must travel with the Army and be
   // restored here. This also switches correctly when both players use different community packs.
@@ -450,7 +457,7 @@ export function GameView() {
   const unitKaart = (a: Army, u: ArmyUnit, weergave: { collapsed: boolean; onToggleCollapse?: () => void; selected?: boolean }) => {
     const t = tracker.units[unitKey(side, u.id)];
     return (
-      <UnitCard key={u.id} unit={u} faction={a.faction} editable={editable} onChange={(patch) => onUnitChange(u.id, patch)} lost={t?.lost ?? 0} weg={t?.weg ?? false} fleeing={t?.fleeing ?? false} kills={t?.kills ?? 0} onSetLost={(lost) => setCasualty(u.id, lost)} onRemoved={() => setRemoved(u.id, !(t?.weg ?? false))} onFlee={() => toggleFleeing(u.id)} onSetKills={killsTonen ? (k) => setKills(u.id, k) : undefined} killDetails={t?.killDetails ?? []} onSetKillDetail={(i, patch) => setKillDetail(u.id, i, patch)} vijandUnits={vijandUnits} maxRound={maxRound} collapsed={weergave.collapsed} onToggleCollapse={weergave.onToggleCollapse} selected={weergave.selected} scenarioKnoppen={knoppenVoor(u)} />
+      <UnitCard key={u.id} unit={u} faction={a.faction} editable={editable} onChange={(patch) => onUnitChange(u.id, patch)} lost={t?.lost ?? 0} weg={t?.weg ?? false} fleeing={t?.fleeing ?? false} kills={t?.kills ?? 0} onSetLost={(lost) => setCasualty(u.id, lost)} onRemoved={() => setRemoved(u.id, !(t?.weg ?? false))} onFlee={() => toggleFleeing(u.id)} onSetKills={killsTonen ? (k) => setKills(u.id, k) : undefined} killDetails={t?.killDetails ?? []} onSetKillDetail={(i, patch) => setKillDetail(u.id, i, patch)} vijandUnits={vijandUnits} maxRound={maxRound} collapsed={weergave.collapsed} onToggleCollapse={weergave.onToggleCollapse} selected={weergave.selected} scenarioKnoppen={knoppenVoor(u)} toonMount={mountTab?.id === u.id ? mountTab.i : null} onToonMount={(i) => setMountTab(i == null ? null : { id: u.id, i })} />
     );
   };
 
@@ -503,18 +510,19 @@ export function GameView() {
     const uit = stand.some((s) => s.t === 'Removed' || s.t === 'Destroyed');
     const gekozen = u.id === selId;
     const aantal = unitSize(u);
+    const mountsVan = u.mounts ?? [];
     return (
+      <div key={u.id}>
       <button
-        key={u.id}
         type="button"
         onClick={() => kies(u.id)}
-        aria-pressed={gekozen}
+        aria-pressed={gekozen && mountTab?.id !== u.id}
         style={{
           width: '100%', display: 'flex', alignItems: 'center', gap: 6, minHeight: 30, boxSizing: 'border-box',
           padding: '4px 8px', margin: '1px 0', borderRadius: 8, cursor: 'pointer', textAlign: 'left',
-          border: `1px solid ${gekozen ? TOW.goldDeep : 'transparent'}`,
-          background: gekozen ? TOW.cardLt : 'transparent',
-          boxShadow: gekozen ? `inset 3px 0 0 ${TOW.goldDeep}` : 'none',
+          border: `1px solid ${gekozen && mountTab?.id !== u.id ? TOW.goldDeep : 'transparent'}`,
+          background: gekozen && mountTab?.id !== u.id ? TOW.cardLt : 'transparent',
+          boxShadow: gekozen && mountTab?.id !== u.id ? `inset 3px 0 0 ${TOW.goldDeep}` : 'none',
         }}
       >
         <span style={{ flex: 1, minWidth: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontFamily: display, fontWeight: gekozen ? 700 : 600, fontSize: 13, color: uit ? TOW.muted : TOW.ink, textDecoration: uit ? 'line-through' : 'none' }}>
@@ -528,6 +536,28 @@ export function GameView() {
           </span>
         )}
       </button>
+      {mountsVan.map((m, i) => {
+        const aan = gekozen && mountTab?.id === u.id && mountTab.i === i;
+        return (
+          <button
+            key={m.name}
+            type="button"
+            onClick={() => kies(u.id, i)}
+            aria-pressed={aan}
+            style={{
+              width: '100%', display: 'flex', alignItems: 'center', gap: 5, minHeight: 24, boxSizing: 'border-box',
+              padding: '2px 8px 2px 22px', margin: '0 0 1px', borderRadius: 8, cursor: 'pointer', textAlign: 'left',
+              border: `1px solid ${aan ? TOW.goldDeep : 'transparent'}`,
+              background: aan ? TOW.cardLt : 'transparent',
+              boxShadow: aan ? `inset 3px 0 0 ${TOW.goldDeep}` : 'none',
+            }}
+          >
+            <span style={{ color: TOW.faint, fontSize: 11 }}>↳</span>
+            <span style={{ flex: 1, minWidth: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontFamily: serif, fontStyle: 'italic', fontSize: 12.5, color: aan ? TOW.ink : TOW.parchDim }}>{m.name.replace(/s*{[^}]*}/g, '')}</span>
+          </button>
+        );
+      })}
+      </div>
     );
   };
 

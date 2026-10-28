@@ -61,6 +61,8 @@ export function UnitCard({
   onToggleCollapse,
   scenarioKnoppen,
   selected,
+  toonMount,
+  onToonMount,
 }: {
   unit: ArmyUnit;
   /** The army's faction, used to pick the right faction-variant of an ambiguously-named rule
@@ -104,6 +106,11 @@ export function UnitCard({
    *  lijst ziet wat je rechts aanpast, en een lange naam mag over twee regels (de kolom is smal). Niet
    *  gezet (undefined) = precies het oude gedrag. */
   selected?: boolean;
+  /** MOUNT-TABJE (Joost 28-10-2026): welke mount van deze unit nu getoond wordt (index in `unit.mounts`), of
+   *  null voor de rider. Gezet door GameView (de subregel "↳ Manticore" in de kieslijst kiest hem); zonder
+   *  deze props houdt de kaart het zelf bij. */
+  toonMount?: number | null;
+  onToonMount?: (i: number | null) => void;
 }) {
   // 05-10-2026: een game bewaart bij de start een KOPIE van beide legers (tow_games.host_army/guest_army).
   // Wie startte vóór de statline-fix (0.1.406, o.a. de Empire-Mortar) heeft daarin een unit zonder
@@ -161,6 +168,31 @@ export function UnitCard({
   // Chosen magic items (weapons, armour, talismans, runes, banners, …) have no rule page; tapping one
   // in the loadout line opens its info sheet (flavour + special rules) instead of the rule sheet.
   const [info, setInfo] = useState<InfoSheetData | null>(null);
+  const mounts = unit.mounts ?? [];
+  const [mountIntern, setMountIntern] = useState<number | null>(null);
+  const mountIdx = toonMount !== undefined ? toonMount : mountIntern;
+  const zetMount = (i: number | null) => { if (onToonMount) onToonMount(i); else setMountIntern(i); };
+  const mount = mountIdx != null ? mounts[mountIdx] : undefined;
+  const mountTtSlug = mount?.troopType ? resolveRuleSlug(mount.troopType, idx) : null;
+  // Special rules als één doorlopende regel (zie hieronder); gedeeld door de rider en de mount.
+  const regelsRegel = (labels: string[]) => (
+    <div style={{ fontFamily: towFont.serif, fontSize: 12.5, lineHeight: 1.55, color: TOW.muted }}>
+      <span style={{ ...eb, fontSize: 8, color: TOW.muted, marginRight: 6 }}>Rules</span>
+      {labels.map((label, i) => {
+        const slug = resolveRuleSlug(label, idx, faction);
+        return (
+          <span key={i} style={{ whiteSpace: 'nowrap' }}>
+            {i > 0 && <span style={{ color: TOW.faint, margin: '0 5px' }}>·</span>}
+            {slug ? (
+              <button onClick={() => openRule(slug)} style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', fontFamily: towFont.serif, fontSize: 12.5, color: TOW.goldDeep, borderBottom: `1px dotted ${TOW.goldDeep}` }}>{label}</button>
+            ) : (
+              <span>{label}</span>
+            )}
+          </span>
+        );
+      })}
+    </div>
+  );
   const magicByName = useMemo(() => {
     const m = new Map<string, { specialRules: string[]; flavour?: string }>();
     for (const mi of unit.magicItems ?? []) m.set(mi.name.toLowerCase(), mi);
@@ -277,6 +309,49 @@ export function UnitCard({
       </div>
 
       {!collapsed && (<>
+      {/* MOUNT ALS EIGEN TABJE (Joost 28-10-2026): "die wil ik ook zoals een gewone unit kunnen zien, met al
+          zijn stats en zijn regels … een soort van knop om zijn mount te kiezen". Rider | Manticore. */}
+      {mounts.length > 0 && (
+        <div role="tablist" style={{ display: 'flex', gap: 4, margin: '0 0 8px' }}>
+          {[{ label: toon.primair, i: null as number | null }, ...mounts.map((m, i) => ({ label: m.name.replace(/s*{[^}]*}/g, '').trim(), i: i as number | null }))].map((t) => {
+            const aan = (mountIdx ?? null) === t.i;
+            return (
+              <button key={String(t.i)} role="tab" aria-selected={aan} onClick={() => zetMount(t.i)}
+                style={{ flex: '0 1 auto', minWidth: 0, maxWidth: '60%', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', padding: '3px 11px', borderRadius: 8, cursor: 'pointer', border: `1px solid ${aan ? TOW.goldDeep : TOW.line}`, background: aan ? 'rgba(184,134,47,0.14)' : 'transparent', color: aan ? TOW.goldDeep : TOW.muted, fontFamily: towFont.display, fontWeight: aan ? 700 : 600, fontSize: 12 }}>
+                {t.i == null ? 'Rider' : t.label}
+              </button>
+            );
+          })}
+        </div>
+      )}
+      {mount ? (
+        <div>
+          {mount.troopType && (
+            <div style={{ ...eb, fontSize: 8, color: TOW.muted, margin: '0 0 4px' }}>
+              {mountTtSlug ? (
+                <button type="button" onClick={() => openRule(mountTtSlug)} title={`What ${mount.troopType} means`}
+                  style={{ border: 'none', background: 'none', padding: 0, margin: 0, font: 'inherit', letterSpacing: 'inherit', textTransform: 'inherit', color: TOW.goldDeep, cursor: 'pointer', borderBottom: `1px dotted ${TOW.goldDeep}` }}>
+                  {mount.troopType}
+                </button>
+              ) : mount.troopType}
+            </div>
+          )}
+          {mount.profiles.length > 0 && (
+            <ProfielTabel
+              koppen={(mount.profiles[0]?.stats ?? []).map((st) => st.k)}
+              rijen={mount.profiles.map((p) => ({ label: p.label, cellen: p.stats.map((st) => ({ v: st.v, hl: false })) }))}
+            />
+          )}
+          {(mount.details?.length ?? 0) > 0 && (
+            <div style={{ fontFamily: towFont.serif, fontSize: 12.5, color: TOW.parchDim, lineHeight: 1.55, margin: '2px 0 6px' }}>
+              {mount.details!.map((d, i) => (
+                <span key={i}>{i > 0 && <span style={{ color: TOW.faint, margin: '0 5px' }}>·</span>}{d}</span>
+              ))}
+            </div>
+          )}
+          {mount.specialRules.length > 0 && regelsRegel(mount.specialRules)}
+        </div>
+      ) : (<>
       {knoppen && knoppen.length > 0 && (
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, margin: '-2px 0 10px' }}>{knoppen}</div>
       )}
@@ -335,7 +410,7 @@ export function UnitCard({
             const onClick = mi
               ? () => setInfo({ title: shown, flavour: mi.flavour, rules: mi.specialRules })
               : mt
-                ? () => setInfo({ title: shown, profiles: mt.profiles, rules: mt.specialRules, troopType: mt.troopType, details: mt.details })
+                ? () => zetMount(Math.max(0, mounts.indexOf(mt as typeof mounts[number])))
                 : slug ? () => openRule(slug) : null;
             return (
               <span key={i} style={{ display: 'inline-flex', alignItems: 'center' }}>
@@ -356,27 +431,9 @@ export function UnitCard({
         </div>
       )}
 
-      {unit.specialRules.length > 0 && (
-        // COMPACT (Joost 28-10-2026: "die special rules hebben allemaal zo'n pil om zich heen, wat best wel groot
-        // is"). Eén doorlopende regel, net als de uitrusting erboven: een regel met een pagina is goud en
-        // onderstreept (tik = de regel), zonder pagina gedimd.
-        <div style={{ fontFamily: towFont.serif, fontSize: 12.5, lineHeight: 1.55, color: TOW.muted }}>
-          <span style={{ ...eb, fontSize: 8, color: TOW.muted, marginRight: 6 }}>Rules</span>
-          {unit.specialRules.map((label, i) => {
-            const slug = resolveRuleSlug(label, idx, faction);
-            return (
-              <span key={i} style={{ whiteSpace: 'nowrap' }}>
-                {i > 0 && <span style={{ color: TOW.faint, margin: '0 5px' }}>·</span>}
-                {slug ? (
-                  <button onClick={() => openRule(slug)} style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', fontFamily: towFont.serif, fontSize: 12.5, color: TOW.goldDeep, borderBottom: `1px dotted ${TOW.goldDeep}` }}>{label}</button>
-                ) : (
-                  <span>{label}</span>
-                )}
-              </span>
-            );
-          })}
-        </div>
-      )}
+      {/* COMPACT (Joost 28-10-2026: "die special rules hebben allemaal zo'n pil om zich heen"): één doorlopende
+          regel, net als de uitrusting erboven; een regel met een pagina is goud en onderstreept. */}
+      {unit.specialRules.length > 0 && regelsRegel(unit.specialRules)}
 
       {/* Campagne-veteraan (De Grensvorsten): campagne-XP, gewonnen veteran-abilities + battle-scars,
           read-only. Alleen getoond als de unit gematcht is en er iets te tonen valt (XP, ability of
@@ -422,6 +479,8 @@ export function UnitCard({
       {isWizard && (
         <WizardSpells unit={unit} editable={editable} onChange={onChange ?? (() => {})} />
       )}
+
+      </>)}
 
       {tracked && (
         <WoundTracker
