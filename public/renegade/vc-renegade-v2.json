@@ -786,7 +786,7 @@
       "body": [
         "A unit comprised entirely of modes with this special rule treats all terrain as open ground for the purposes of movement. They cannot end their movement inside impassable terrain, though they can pass through it."
       ],
-      "overrides": "spell-spectral-steed"
+      "overrides": null
     },
     "the-hunger": {
       "name_en": "The Hunger",

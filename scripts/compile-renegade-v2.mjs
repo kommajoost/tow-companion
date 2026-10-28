@@ -41,6 +41,10 @@ const decodeEntities = (value) => String(value ?? '')
   .replace(/&#39;/gi, "'");
 
 const ruleSlugByName = new Map(Object.entries(baseRules).map(([key, rule]) => [norm(rule.name), key]));
+// Zonder spreuken (28-10-2026): de VC-pack heeft een special rule "Spectral Steed" (skeletpaarden) met
+// dezelfde naam als de Necromancy-spreuk. Op naam koppelen liet die regel de SPREUKTEKST vervangen. Alleen
+// een spreuk uit een lore mag een spreuk overschrijven; special rules en wapens zoeken in deze kaart.
+const ruleSlugByNameZonderSpreuk = new Map(Object.entries(baseRules).filter(([key]) => !key.startsWith('spell-')).map(([key, rule]) => [norm(rule.name), key]));
 const loreSlugByName = new Map(Object.entries(rulesData.lores ?? {}).map(([key, lore]) => [norm(lore.name), key]));
 const itemByName = new Map();
 for (const [listId, items] of Object.entries(allItems)) {
@@ -773,7 +777,7 @@ for (const [key, army] of Object.entries(PACKS)) {
         name_en: group.title,
         body: safeBody,
         ...(tabellen.length ? { tables: tabellen } : {}),
-        overrides: ruleSlugByName.get(norm(group.title)) ?? null,
+        overrides: ruleSlugByNameZonderSpreuk.get(norm(group.title)) ?? null,
       };
     }
     for (const block of group.blocks) implementedBlocks.set(block.id, `rules.${ruleKey}`);
@@ -840,7 +844,7 @@ for (const [key, army] of Object.entries(PACKS)) {
     const current = overlay.rules[ruleKey] ?? {
       name_en: name,
       body: [],
-      overrides: ruleSlugByName.get(norm(name)) ?? null,
+      overrides: ruleSlugByNameZonderSpreuk.get(norm(name)) ?? null,
     };
     const tabel = tabelUitBlok(block);
     if (tabel) {
@@ -1206,7 +1210,7 @@ for (const [key, army] of Object.entries(PACKS)) {
               ap: row.ap || '-',
               specialRules: row.specialRules,
             },
-            overrides: ruleSlugByName.get(norm(name)) ?? null,
+            overrides: ruleSlugByNameZonderSpreuk.get(norm(name)) ?? null,
           };
           result.targets.push(`rules.${keyName}.weaponProfile`);
         }

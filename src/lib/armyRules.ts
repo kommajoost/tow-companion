@@ -26,7 +26,11 @@ export function buildRuleIndex(rules: Record<string, Rule>): Map<string, string>
   const exact = new Set<string>();
   for (const r of Object.values(rules)) {
     const k = normalize(r.name);
-    if (k && !idx.has(k)) {
+    if (!k) continue;
+    // Een unit-label ("Spectral Steed", "Devolve") is een special rule, geen spreuk: spreuken opent de app
+    // altijd op hun eigen slug. Delen een spreuk en een regel dezelfde naam, dan wint de regel (28-10-2026).
+    const huidig = idx.get(k);
+    if (!huidig || (huidig.startsWith('spell-') && !r.slug.startsWith('spell-'))) {
       idx.set(k, r.slug);
       exact.add(k);
     }
