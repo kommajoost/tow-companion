@@ -168,22 +168,23 @@ export function UnitCard({
   const mount = mountIdx != null ? mounts[mountIdx] : undefined;
   const mountTtSlug = mount?.troopType ? resolveRuleSlug(mount.troopType, idx) : null;
   // Special rules als één doorlopende regel (zie hieronder); gedeeld door de rider en de mount.
+  // RUIMER (Joost 28-10-2026, na de compacte ronde: "de rules zitten nu wel heel dicht op elkaar … we hebben
+  // ruimte gecreëerd, dus mag iets ruimer"). Geen doorlopende regel met puntjes meer, maar losse lichte
+  // labels met lucht ertussen: rustiger dan de oude goudomrande pillen, beter te scannen dan een zin.
   const regelsRegel = (labels: string[]) => (
-    <div style={{ fontFamily: towFont.serif, fontSize: 12.5, lineHeight: 1.55, color: TOW.muted }}>
-      <span style={{ ...eb, fontSize: 8, color: TOW.muted, marginRight: 6 }}>Rules</span>
-      {labels.map((label, i) => {
-        const slug = resolveRuleSlug(label, idx, faction);
-        return (
-          <span key={i} style={{ whiteSpace: 'nowrap' }}>
-            {i > 0 && <span style={{ color: TOW.faint, margin: '0 5px' }}>·</span>}
-            {slug ? (
-              <button onClick={() => openRule(slug)} style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', fontFamily: towFont.serif, fontSize: 12.5, color: TOW.goldDeep, borderBottom: `1px dotted ${TOW.goldDeep}` }}>{label}</button>
-            ) : (
-              <span>{label}</span>
-            )}
-          </span>
-        );
-      })}
+    <div style={{ margin: '6px 0 2px' }}>
+      <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginBottom: 5 }}>Special rules</div>
+      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px 6px' }}>
+        {labels.map((label, i) => {
+          const slug = resolveRuleSlug(label, idx, faction);
+          const tag: React.CSSProperties = { fontFamily: towFont.serif, fontSize: 13, lineHeight: 1.3, padding: '3px 9px', borderRadius: 6, border: `1px solid ${TOW.line}`, whiteSpace: 'nowrap' };
+          return slug ? (
+            <button key={i} onClick={() => openRule(slug)} style={{ ...tag, cursor: 'pointer', background: 'rgba(184,134,47,0.07)', color: TOW.goldDeep }}>{label}</button>
+          ) : (
+            <span key={i} style={{ ...tag, background: 'transparent', color: TOW.muted }}>{label}</span>
+          );
+        })}
+      </div>
     </div>
   );
   const magicByName = useMemo(() => {
@@ -401,7 +402,7 @@ export function UnitCard({
       )}
 
       {unit.options.length > 0 && (
-        <div style={{ fontFamily: towFont.serif, fontSize: 12.5, color: TOW.parchDim, lineHeight: 1.55, margin: '2px 0 6px', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '0 4px' }}>
+        <div style={{ fontFamily: towFont.serif, fontSize: 13, color: TOW.parchDim, lineHeight: 1.75, margin: '4px 0 4px', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '0 4px' }}>
           {unit.options.map((opt, i) => {
             // A magic item or a mount → open its info sheet; otherwise a wargear rule → the rule sheet.
             const mi = magicByName.get(opt.toLowerCase());
