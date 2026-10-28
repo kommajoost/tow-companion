@@ -10,14 +10,14 @@ import { CombatStats } from './CombatStats';
 import { InfoSheet, type InfoSheetData } from './InfoSheet';
 import { WizardSpells } from './WizardSpells';
 import { WoundTracker } from './WoundTracker';
+import { ProfielTabel } from './ProfielTabel';
 import type { ArmyUnit, KillDetail, UnitProfile } from '../../types';
-import { Eye } from './Eye';
 import { useStatIndex } from '../../lib/useStatIndex';
 import { troopTypeName } from '../../lib/troopTypes';
 import { statSleutels } from '../../lib/statSleutel';
 import { overlayStatsFor } from '../../lib/overlays';
 import { STAT_COLS } from '../../lib/builderToArmy';
-import { profielenMetVeteraan, celDelta, BETER_KLEUR, BETER_ACHTERGROND } from '../../lib/veteraanStats';
+import { profielenMetVeteraan, celDelta } from '../../lib/veteraanStats';
 
 const eb = engraved as React.CSSProperties;
 
@@ -211,13 +211,13 @@ export function UnitCard({
         border: `1px solid ${kiesRij && selected ? TOW.goldDeep : TOW.line}`, borderRadius: 12,
         background: kiesRij && selected ? TOW.cardLt : dead ? 'rgba(74,55,22,0.03)' : TOW.panel2,
         boxShadow: kiesRij && selected ? `inset 3px 0 0 ${TOW.goldDeep}` : undefined,
-        padding: collapsed ? (kiesRij ? '9px 12px' : '11px 14px') : 14, marginBottom: kiesRij ? 6 : 8,
+        padding: collapsed ? (kiesRij ? '9px 12px' : '11px 14px') : '10px 12px', marginBottom: kiesRij ? 6 : 8,
         opacity: dead ? 0.7 : 1,
       }}
     >
       <div
         onClick={onToggleCollapse}
-        style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: collapsed ? 0 : 8, cursor: onToggleCollapse ? 'pointer' : 'default' }}
+        style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: collapsed ? 0 : 6, cursor: onToggleCollapse ? 'pointer' : 'default' }}
       >
         {onToggleCollapse && (
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke={kiesRij && selected ? TOW.goldDeep : TOW.muted} strokeWidth="2.6" style={{ flexShrink: 0, transform: collapsed ? 'none' : 'rotate(90deg)', transition: 'transform .18s ease' }} aria-hidden="true"><path d="M9 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" /></svg>
@@ -286,56 +286,26 @@ export function UnitCard({
       {hasWeapons ? (
         <CombatStats unit={unit} onProfileInfo={toonProfiel} />
       ) : (
-        unit.profiles.map((p, pi) => (
-          <div key={pi} className="no-scrollbar" style={{ overflowX: 'auto', marginBottom: 8 }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 3 }}>
-              <span style={{ fontFamily: towFont.serif, fontSize: 12.5, color: TOW.parchDim }}>{p.label}</span>
-              {p.info ? <Eye onClick={() => toonProfiel(p)} title={`Rules for ${p.label}`} /> : null}
-            </div>
-            <table style={{ borderCollapse: 'collapse', tableLayout: 'fixed', width: '100%', minWidth: 280, fontSize: 12.5, fontFamily: towFont.serif }}>
-              <thead>
-                <tr>
-                  {p.stats.map((s, i) => (
-                    <th key={i} style={{ ...eb, fontSize: 8.5, color: TOW.goldDeep, border: `1px solid ${TOW.line}`, padding: '3px 2px', textAlign: 'center', background: 'rgba(184,134,47,0.08)' }}>{s.k}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  {p.stats.map((s, i) => {
-                    const d = celDelta(s);
-                    return (
-                    <td
-                      key={i}
-                      title={s.modified ? `${s.base} ${s.source ? `+ ${s.source}` : 'modified'}` : undefined}
-                      style={{
-                        textAlign: 'center',
-                        color: d != null && d > 0 ? BETER_KLEUR : s.modified ? TOW.goldDeep : TOW.ink,
-                        fontWeight: s.modified ? 700 : 400,
-                        background: d != null && d > 0 ? BETER_ACHTERGROND : s.modified ? 'rgba(184,134,47,0.10)' : 'transparent',
-                        border: `1px solid ${TOW.line}`,
-                        padding: '3px 2px',
-                      }}
-                    >{s.v}{d != null && <sup style={{ fontSize: 8, marginLeft: 1 }}>{d > 0 ? `+${d}` : d}</sup>}</td>
-                    );
-                  })}
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        ))
+        <ProfielTabel
+          koppen={(unit.profiles[0]?.stats ?? []).map((st) => st.k)}
+          rijen={unit.profiles.map((p) => ({
+            label: p.label,
+            cellen: p.stats.map((st) => ({ v: st.v, hl: !!st.modified, d: celDelta(st), title: st.modified ? `${st.base} ${st.source ? `+ ${st.source}` : 'modified'}` : undefined })),
+            onInfo: p.info ? () => toonProfiel(p) : undefined,
+          }))}
+        />
       )}
 
       {armour && (
-        <div style={{ margin: '4px 0 10px' }}>
-          <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '4px 8px' }}>
+        <div style={{ margin: '2px 0 6px' }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '3px 8px' }}>
             <button
               onClick={() => openRule('determining-armour-value')}
               title="How armour value is determined"
-              style={{ display: 'inline-flex', alignItems: 'center', gap: 7, padding: '3px 10px', borderRadius: 999, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.10)', cursor: 'pointer' }}
+              style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '2px 8px', borderRadius: 999, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.10)', cursor: 'pointer' }}
             >
               <span style={{ ...eb, fontSize: 8, color: TOW.muted }}>Armour Save</span>
-              <span style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 15, color: TOW.goldDeep, lineHeight: 1 }}>{armour.save}+</span>
+              <span style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 13.5, color: TOW.goldDeep, lineHeight: 1 }}>{armour.save}+</span>
             </button>
             <span style={{ fontFamily: towFont.serif, fontSize: 12, color: TOW.parchDim }}>
               {armour.parts.join(' · ')}{armour.capped ? ' · max 2+' : ''}
@@ -354,7 +324,7 @@ export function UnitCard({
       )}
 
       {unit.options.length > 0 && (
-        <div style={{ fontFamily: towFont.serif, fontSize: 13, color: TOW.parchDim, lineHeight: 1.9, margin: '4px 0 8px', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '0 4px' }}>
+        <div style={{ fontFamily: towFont.serif, fontSize: 12.5, color: TOW.parchDim, lineHeight: 1.55, margin: '2px 0 6px', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '0 4px' }}>
           {unit.options.map((opt, i) => {
             // A magic item or a mount → open its info sheet; otherwise a wargear rule → the rule sheet.
             const mi = magicByName.get(opt.toLowerCase());
@@ -373,7 +343,7 @@ export function UnitCard({
                 {onClick ? (
                   <button
                     onClick={onClick}
-                    style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', fontFamily: towFont.serif, fontSize: 13, color: TOW.goldDeep, borderBottom: `1px dotted ${TOW.goldDeep}` }}
+                    style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', fontFamily: towFont.serif, fontSize: 12.5, color: TOW.goldDeep, borderBottom: `1px dotted ${TOW.goldDeep}` }}
                   >
                     {shown}
                   </button>
@@ -387,19 +357,24 @@ export function UnitCard({
       )}
 
       {unit.specialRules.length > 0 && (
-        <div>
-          <div style={{ ...eb, fontSize: 8.5, color: TOW.muted, marginBottom: 5 }}>Special rules</div>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
-            {unit.specialRules.map((label, i) => {
-              const slug = resolveRuleSlug(label, idx, faction);
-              const common: React.CSSProperties = { fontFamily: towFont.serif, fontSize: 12.5, padding: '4px 10px', borderRadius: 999, border: `1px solid ${slug ? TOW.goldDeep : TOW.line}` };
-              return slug ? (
-                <button key={i} onClick={() => openRule(slug)} style={{ ...common, cursor: 'pointer', background: 'rgba(184,134,47,0.10)', color: TOW.goldDeep }}>{label}</button>
-              ) : (
-                <span key={i} style={{ ...common, background: 'transparent', color: TOW.muted }}>{label}</span>
-              );
-            })}
-          </div>
+        // COMPACT (Joost 28-10-2026: "die special rules hebben allemaal zo'n pil om zich heen, wat best wel groot
+        // is"). Eén doorlopende regel, net als de uitrusting erboven: een regel met een pagina is goud en
+        // onderstreept (tik = de regel), zonder pagina gedimd.
+        <div style={{ fontFamily: towFont.serif, fontSize: 12.5, lineHeight: 1.55, color: TOW.muted }}>
+          <span style={{ ...eb, fontSize: 8, color: TOW.muted, marginRight: 6 }}>Rules</span>
+          {unit.specialRules.map((label, i) => {
+            const slug = resolveRuleSlug(label, idx, faction);
+            return (
+              <span key={i} style={{ whiteSpace: 'nowrap' }}>
+                {i > 0 && <span style={{ color: TOW.faint, margin: '0 5px' }}>·</span>}
+                {slug ? (
+                  <button onClick={() => openRule(slug)} style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', fontFamily: towFont.serif, fontSize: 12.5, color: TOW.goldDeep, borderBottom: `1px dotted ${TOW.goldDeep}` }}>{label}</button>
+                ) : (
+                  <span>{label}</span>
+                )}
+              </span>
+            );
+          })}
         </div>
       )}
 
@@ -409,13 +384,13 @@ export function UnitCard({
           XP staat vooraan (20-08-2026): het is het getal waarmee deze unit ná het potje op de
           veteran-tabel rolt, dus aan tafel wil je het naast de abilities zien staan. */}
       {unit.veteraan && ((unit.veteraan.xp ?? 0) > 0 || unit.veteraan.abilities.length > 0 || unit.veteraan.littekens > 0) && (
-        <div style={{ marginTop: 10 }}>
-          <div style={{ ...eb, fontSize: 8.5, color: TOW.muted, marginBottom: 5 }}>Campaign veteran</div>
-          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, alignItems: 'center' }}>
+        <div style={{ marginTop: 6 }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5, alignItems: 'center' }}>
+            <span style={{ ...eb, fontSize: 8, color: TOW.muted, marginRight: 1 }}>Veteran</span>
             {(unit.veteraan.xp ?? 0) > 0 && (
               <span
                 title={`${unit.veteraan.xp} campaign XP — this unit rolls D6+${unit.veteraan.xp} on the veteran table after the battle`}
-                style={{ fontFamily: towFont.serif, fontSize: 12.5, padding: '4px 10px', borderRadius: 999, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.18)', color: TOW.gold, fontVariantNumeric: 'tabular-nums', cursor: 'help' }}
+                style={{ fontFamily: towFont.serif, fontSize: 11.5, padding: '2px 8px', borderRadius: 999, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.18)', color: TOW.gold, fontVariantNumeric: 'tabular-nums', cursor: 'help' }}
               >
                 {unit.veteraan.xp} XP
               </span>
@@ -426,7 +401,7 @@ export function UnitCard({
                 <span
                   key={i}
                   title={eff || undefined}
-                  style={{ fontFamily: towFont.serif, fontSize: 12.5, padding: '4px 10px', borderRadius: 999, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.10)', color: TOW.goldDeep, cursor: eff ? 'help' : 'default' }}
+                  style={{ fontFamily: towFont.serif, fontSize: 11.5, padding: '2px 8px', borderRadius: 999, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.10)', color: TOW.goldDeep, cursor: eff ? 'help' : 'default' }}
                 >
                   {abilityLabel(a.t)}{a.keuze ? ` · ${a.keuze.toUpperCase()}` : ''}
                 </span>
@@ -435,7 +410,7 @@ export function UnitCard({
             {unit.veteraan.littekens > 0 && (
               <span
                 title="Battle scars carried from the campaign"
-                style={{ fontFamily: towFont.serif, fontSize: 12.5, padding: '4px 10px', borderRadius: 999, border: `1px solid ${TOW.blood}`, background: 'transparent', color: TOW.blood, cursor: 'help' }}
+                style={{ fontFamily: towFont.serif, fontSize: 11.5, padding: '2px 8px', borderRadius: 999, border: `1px solid ${TOW.blood}`, background: 'transparent', color: TOW.blood, cursor: 'help' }}
               >
                 {scarLabel(unit.veteraan.littekens)}
               </span>

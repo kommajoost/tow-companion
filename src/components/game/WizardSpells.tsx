@@ -7,6 +7,7 @@ import { suggestedLores, wizardInfo, allowedLores as resolveLores } from '../../
 import { useBackClose } from '../../lib/backStack';
 import { useSwipeToDismiss, DragHandle } from '../../lib/useSwipeToDismiss';
 import type { ArmyUnit, Lore } from '../../types';
+import { spreukInfo, SPREUK_MOMENT, DUUR_LABEL } from '../../lib/spreukInfo';
 
 const eb = engraved as React.CSSProperties;
 
@@ -22,7 +23,7 @@ export function WizardSpells({
   editable: boolean;
   onChange: (patch: Partial<ArmyUnit>) => void;
 }) {
-  const { lores, loreList } = useData();
+  const { lores, loreList, rules } = useData();
   const { openRule } = useUI();
   const [open, setOpen] = useState(false);
 
@@ -90,8 +91,8 @@ export function WizardSpells({
   if (!haveLoreData) return null;
 
   return (
-    <div style={{ marginTop: 10, paddingTop: 10, borderTop: `1px solid ${TOW.line}` }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: chosenChips.length ? 6 : 0 }}>
+    <div style={{ marginTop: 8, paddingTop: 8, borderTop: `1px solid ${TOW.line}` }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: chosenChips.length ? 4 : 0 }}>
         <span style={{ ...eb, fontSize: 8.5, color: TOW.goldDeep }}>Spells</span>
         {level != null && (
           <span style={{ fontFamily: towFont.serif, fontSize: 11.5, color: TOW.muted }}>Level {level}</span>
@@ -99,7 +100,7 @@ export function WizardSpells({
         {editable && (
           <button
             onClick={() => setOpen(true)}
-            style={{ marginLeft: 'auto', border: `1px solid ${TOW.goldDeep}`, borderRadius: 999, background: 'transparent', color: TOW.goldDeep, cursor: 'pointer', padding: '4px 12px', fontFamily: towFont.display, fontWeight: 600, fontSize: 12 }}
+            style={{ marginLeft: 'auto', border: `1px solid ${TOW.goldDeep}`, borderRadius: 999, background: 'transparent', color: TOW.goldDeep, cursor: 'pointer', padding: '2px 10px', fontFamily: towFont.display, fontWeight: 600, fontSize: 11.5 }}
           >
             {chosenChips.length ? 'Edit spells' : 'Choose spells'}
           </button>
@@ -107,16 +108,40 @@ export function WizardSpells({
       </div>
 
       {chosenChips.length > 0 ? (
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
-          {chosenChips.map((c) => (
-            <button
-              key={c.slug}
-              onClick={() => openRule(c.slug)}
-              style={{ fontFamily: towFont.serif, fontSize: 12.5, padding: '4px 10px', borderRadius: 999, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.12)', color: TOW.goldDeep, cursor: 'pointer' }}
-            >
-              ✦ {c.name}
-            </button>
-          ))}
+        // ONDER ELKAAR, MET DE KERN ERBIJ (Joost 28-10-2026): naam, type en Casting Value/Range letterlijk uit de
+        // tabel van de regel; daaronder de korte uitleg van het effect en wanneer je hem cast. De hele rij is
+        // de knop naar de volledige regeltekst.
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
+          {chosenChips.map((c, i) => {
+            const sp = spreukInfo(c.slug, rules[c.slug]);
+            const moment = sp.type ? SPREUK_MOMENT[sp.type] : undefined;
+            const duur = sp.duur ? DUUR_LABEL[sp.duur] : null;
+            return (
+              <button
+                key={c.slug}
+                onClick={() => openRule(c.slug)}
+                title={`${c.name} — tap for the full rule`}
+                style={{ display: 'block', width: '100%', textAlign: 'left', background: 'none', border: 'none', borderTop: i > 0 ? `1px dashed ${TOW.line}` : 'none', padding: '5px 0', cursor: 'pointer' }}
+              >
+                <span style={{ display: 'flex', alignItems: 'baseline', gap: 7, minWidth: 0 }}>
+                  <span style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 13.5, color: TOW.goldDeep, borderBottom: `1px dotted ${TOW.goldDeep}`, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', minWidth: 0 }}>{c.name}</span>
+                  {sp.type && <span style={{ ...eb, fontSize: 7.5, color: TOW.muted, whiteSpace: 'nowrap' }}>{sp.type}</span>}
+                  <span style={{ marginLeft: 'auto', flexShrink: 0, fontFamily: towFont.serif, fontSize: 12, color: TOW.parchDim, whiteSpace: 'nowrap' }}>
+                    {sp.cv && <><span style={{ ...eb, fontSize: 7.5, color: TOW.muted }}>CV </span><strong style={{ fontFamily: towFont.display, color: TOW.ink }}>{sp.cv}</strong></>}
+                    {sp.range && <span style={{ color: TOW.muted }}> · {sp.range}</span>}
+                  </span>
+                </span>
+                {sp.kort && (
+                  <span style={{ display: 'block', fontFamily: towFont.serif, fontSize: 12.5, lineHeight: 1.35, color: TOW.ink, marginTop: 2 }}>{sp.kort}</span>
+                )}
+                {(moment || duur) && (
+                  <span style={{ display: 'block', fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 11.5, color: TOW.muted, marginTop: 1 }}>
+                    {moment}{moment && duur ? ' · ' : ''}{duur}
+                  </span>
+                )}
+              </button>
+            );
+          })}
         </div>
       ) : (
         <div style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 12, color: TOW.muted }}>

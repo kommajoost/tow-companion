@@ -295,7 +295,7 @@ export function GameView() {
         const on = s === side;
         const txt = s === 'me' ? myName || 'You' : opponentName || 'Opponent';
         return (
-          <button key={s} onClick={() => setSide(s)} style={{ flex: 1, padding: '9px 6px', borderRadius: 9, cursor: 'pointer', border: `1px solid ${on ? TOW.goldDeep : TOW.line}`, background: on ? TOW.cardLt : 'transparent', color: on ? TOW.ink : TOW.muted, fontFamily: display, fontWeight: 600, fontSize: 13.5, overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>{txt}</button>
+          <button key={s} onClick={() => setSide(s)} style={{ flex: 1, padding: wide ? '5px 6px' : '9px 6px', borderRadius: 9, cursor: 'pointer', border: `1px solid ${on ? TOW.goldDeep : TOW.line}`, background: on ? TOW.cardLt : 'transparent', color: on ? TOW.ink : TOW.muted, fontFamily: display, fontWeight: 600, fontSize: 13.5, overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>{txt}</button>
         );
       })}
     </div>
@@ -391,7 +391,7 @@ export function GameView() {
   const sheetKnop = (sheet || campagneSheet) && (
     <button
       onClick={() => setSheetOpen(true)}
-      style={{ flexShrink: 0, border: `1px solid ${TOW.lineStrong}`, borderRadius: 9, background: TOW.cardLt, color: TOW.ink, cursor: 'pointer', padding: '6px 12px', fontFamily: display, fontSize: 12 }}
+      style={{ flexShrink: 0, border: `1px solid ${TOW.lineStrong}`, borderRadius: 9, background: TOW.cardLt, color: TOW.ink, cursor: 'pointer', padding: wide ? '4px 10px' : '6px 12px', fontFamily: display, fontSize: 12 }}
     >
       Battlefield
     </button>
@@ -490,7 +490,7 @@ export function GameView() {
   // dezelfde stijl als Leave — breed in de kopbalk, op de telefoon klein onderaan de lijst.
   const magEinde = !!(myArmy || opponentArmy || (teamModus && (allyArmy || opponent2Army)) || scenarioTest);
   const eindeKnop = magEinde && (
-    <button onClick={() => setEndOpen(true)} style={{ flexShrink: 0, border: `1px solid ${TOW.lineStrong}`, borderRadius: 9, background: 'transparent', color: TOW.inkDim, cursor: 'pointer', padding: '6px 12px', fontFamily: display, fontSize: 12 }}>End battle</button>
+    <button onClick={() => setEndOpen(true)} style={{ flexShrink: 0, border: `1px solid ${TOW.lineStrong}`, borderRadius: 9, background: 'transparent', color: TOW.inkDim, cursor: 'pointer', padding: wide ? '4px 10px' : '6px 12px', fontFamily: display, fontSize: 12 }}>End battle</button>
   );
 
   // DE COMPACTE KIESLIJST (Joost 28-10-2026): "de lijst van de army units mag compacter … dat die goed aan
@@ -510,18 +510,18 @@ export function GameView() {
         onClick={() => kies(u.id)}
         aria-pressed={gekozen}
         style={{
-          width: '100%', display: 'flex', alignItems: 'center', gap: 8, minHeight: 34, boxSizing: 'border-box',
-          padding: '5px 9px', margin: '1px 0', borderRadius: 8, cursor: 'pointer', textAlign: 'left',
+          width: '100%', display: 'flex', alignItems: 'center', gap: 6, minHeight: 30, boxSizing: 'border-box',
+          padding: '4px 8px', margin: '1px 0', borderRadius: 8, cursor: 'pointer', textAlign: 'left',
           border: `1px solid ${gekozen ? TOW.goldDeep : 'transparent'}`,
           background: gekozen ? TOW.cardLt : 'transparent',
           boxShadow: gekozen ? `inset 3px 0 0 ${TOW.goldDeep}` : 'none',
         }}
       >
-        <span style={{ flex: 1, minWidth: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontFamily: display, fontWeight: gekozen ? 700 : 600, fontSize: 13.5, color: uit ? TOW.muted : TOW.ink, textDecoration: uit ? 'line-through' : 'none' }}>
+        <span style={{ flex: 1, minWidth: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontFamily: display, fontWeight: gekozen ? 700 : 600, fontSize: 13, color: uit ? TOW.muted : TOW.ink, textDecoration: uit ? 'line-through' : 'none' }}>
           {aantal > 1 && <span style={{ color: TOW.goldDeep }}>{aantal}× </span>}{u.name}
         </span>
         {stand.length > 0 && (
-          <span style={{ flexShrink: 0, fontFamily: serif, fontSize: 11.5, whiteSpace: 'nowrap' }}>
+          <span style={{ flexShrink: 0, fontFamily: serif, fontSize: 11, whiteSpace: 'nowrap' }}>
             {stand.map((s, i) => (
               <span key={s.t} style={{ color: s.rood ? TOW.blood : TOW.muted }}>{i > 0 ? ' · ' : ''}{s.t}</span>
             ))}
@@ -541,20 +541,19 @@ export function GameView() {
   // dichte rijen en End battle (vast onderaan); rechts de gekozen unit volledig, met al z'n knoppen.
   if (wide) {
     const waiting = !!(code && seat === 'host' && !opponentArmy);
-    const selGroep = selUnit ? groups.find((g) => g.units.includes(selUnit)) : undefined;
     return (
       <div ref={rootRef} className="tow-field" style={{ height: '100%', display: 'flex', flexDirection: 'column', color: TOW.ink }}>
-        <div className="tow-leather" style={{ flexShrink: 0, display: 'flex', flexDirection: 'column', gap: 8, padding: '8px 14px', borderBottom: `1px solid ${TOW.lineStrong}` }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10, minWidth: 0 }}>
+        <div className="tow-leather" style={{ flexShrink: 0, display: 'flex', flexDirection: 'column', gap: 6, padding: '6px 10px', borderBottom: `1px solid ${TOW.lineStrong}` }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, minWidth: 0 }}>
             <CodeBadge code={code} waiting={waiting} solo={seat === 'solo'} />
             <div style={teamModus ? { flex: '0 1 560px', minWidth: 300 } : { flex: '0 1 380px', minWidth: 180 }}>{kantKeuze}</div>
             <div style={{ flex: 1 }} />
             {sheetKnop}
             {eindeKnop}
-            <button onClick={leaveGame} style={{ flexShrink: 0, border: `1px solid ${TOW.lineStrong}`, borderRadius: 9, background: 'transparent', color: TOW.muted, cursor: 'pointer', padding: '6px 12px', fontFamily: display, fontSize: 12 }}>Leave</button>
+            <button onClick={leaveGame} style={{ flexShrink: 0, border: `1px solid ${TOW.lineStrong}`, borderRadius: 9, background: 'transparent', color: TOW.muted, cursor: 'pointer', padding: '4px 10px', fontFamily: display, fontSize: 12 }}>Leave</button>
           </div>
           {battleBar && (
-            <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'flex-start', gap: 8 }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'flex-start', gap: 6 }}>
               <div style={{ flex: '1 1 380px', minWidth: 0, maxWidth: 560 }}>{battleBar}</div>
               <div style={{ flex: '1 1 260px', minWidth: 0 }}>{reminderStrip}</div>
             </div>
@@ -562,9 +561,11 @@ export function GameView() {
         </div>
 
         <div style={{ flex: 1, minHeight: 0, display: 'flex' }}>
-          {/* LINKS — objectives, legerkop, kieslijst, End battle */}
-          <div style={{ width: '42%', minWidth: 330, maxWidth: 460, flexShrink: 0, display: 'flex', flexDirection: 'column', borderRight: `1px solid ${TOW.lineStrong}`, background: TOW.panel }}>
-            <div data-testid="game-unitlijst" style={{ flex: 1, minHeight: 0, overflowY: 'auto', padding: '10px 12px 14px' }}>
+          {/* LINKS — objectives, legerkop, kieslijst, End battle. SMALLER (Joost 28-10-2026: "die kolom is te
+              breed … zodat je iets meer ruimte overhoudt rechts voor unit stats"): de rijen zijn één regel, dus
+              ~30% van de breedte is genoeg; rechts krijgt de rest. */}
+          <div style={{ width: '31%', minWidth: 220, maxWidth: 320, flexShrink: 0, display: 'flex', flexDirection: 'column', borderRight: `1px solid ${TOW.lineStrong}`, background: TOW.panel }}>
+            <div data-testid="game-unitlijst" style={{ flex: 1, minHeight: 0, overflowY: 'auto', padding: '8px 8px 12px' }}>
               {objectivesPaneel}
               {army ? (
                 <>
@@ -591,12 +592,9 @@ export function GameView() {
 
           {/* RECHTS — de gekozen unit volledig (of het leger toevoegen als deze kant er nog geen heeft) */}
           <div ref={detailRef} data-testid="game-unitdetail" className="tow-field" style={{ flex: 1, minWidth: 0, overflowY: 'auto' }}>
-            <div style={{ maxWidth: 720, margin: '0 auto', padding: '14px 22px 40px' }}>
+            <div style={{ maxWidth: 820, margin: '0 auto', padding: '10px 12px 28px' }}>
               {!army ? rosterBody : selUnit ? (
-                <>
-                  {selGroep && <div style={{ ...eb, fontSize: 9, color: TOW.goldDeep, margin: '0 2px 8px' }}>{selGroep.category}</div>}
-                  {unitKaart(army, selUnit, { collapsed: false })}
-                </>
+                unitKaart(army, selUnit, { collapsed: false })
               ) : (
                 <div style={{ padding: '48px 12px', textAlign: 'center', fontFamily: serif, fontStyle: 'italic', fontSize: 15, color: TOW.muted }}>
                   Select a unit on the left to see its stats

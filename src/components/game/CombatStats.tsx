@@ -1,5 +1,6 @@
+import { ProfielTabel } from './ProfielTabel';
 import { useMemo, useState } from 'react';
-import { celDelta, BETER_KLEUR, BETER_ACHTERGROND } from '../../lib/veteraanStats';
+import { celDelta } from '../../lib/veteraanStats';
 import { useData } from '../../data';
 import { useUI } from '../../state';
 import { TOW, towFont, engraved } from '../../design/tow';
@@ -12,7 +13,6 @@ import {
   SHOOTING_MODS,
 } from '../../lib/weaponStats';
 import type { ArmyUnit, UnitProfile } from '../../types';
-import { Eye } from './Eye';
 
 const eb = engraved as React.CSSProperties;
 const goldGrad = `linear-gradient(180deg, ${TOW.goldBright} 0%, ${TOW.gold} 55%, ${TOW.goldDeep} 100%)`;
@@ -115,18 +115,13 @@ export function CombatStats({ unit, onProfileInfo }: { unit: ArmyUnit; onProfile
         cols.push({ k: st.k, v: st.v, hl: !!st.modified, title: st.modified ? `${st.base} + ${st.source ?? 'modified'}` : undefined, d: celDelta(st) });
       }
     }
-    return (
-      <table style={{ borderCollapse: 'collapse', tableLayout: 'fixed', width: '100%', minWidth: on ? 300 : 280, fontSize: 12.5, fontFamily: towFont.serif }}>
-        <thead><tr>{cols.map((c, i) => <th key={i} style={th}>{c.k}</th>)}</tr></thead>
-        <tbody><tr>{cols.map((c, i) => <td key={i} style={c.d != null && c.d > 0 ? { ...td(true), color: BETER_KLEUR, background: BETER_ACHTERGROND } : td(c.hl)} title={c.title}>{c.v}{c.d != null && <sup style={{ fontSize: 8, marginLeft: 1 }}>{c.d > 0 ? `+${c.d}` : c.d}</sup>}</td>)}</tr></tbody>
-      </table>
-    );
+    return cols;
   };
 
   return (
-    <div style={{ margin: '2px 0 10px' }}>
+    <div style={{ margin: '2px 0 6px' }}>
       {/* Loadout toggle + (when on) the melee weapon picker, all on one compact row. */}
-      <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 6, marginBottom: 8 }}>
+      <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 6, marginBottom: 6 }}>
         <button
           onClick={() => setOn((o) => !o)}
           title={on ? 'Showing loadout stats — tap for base profile' : 'Show effective loadout stats'}
@@ -142,15 +137,22 @@ export function CombatStats({ unit, onProfileInfo }: { unit: ArmyUnit; onProfile
         )}
       </div>
 
-      {unit.profiles.map((p, pi) => (
-        <div key={pi} className="no-scrollbar" style={{ overflowX: 'auto', marginBottom: 8 }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 3 }}>
-            <span style={{ fontFamily: towFont.serif, fontSize: 12.5, color: TOW.parchDim }}>{p.label}</span>
-            {p.info && onProfileInfo ? <Eye onClick={() => onProfileInfo(p)} title={`Rules for ${p.label}`} /> : null}
-          </div>
-          {profileTable(p.stats)}
-        </div>
-      ))}
+      {(() => {
+        // Alle profielen onder één kop (ProfielTabel). De kolommen zijn per profiel gelijk: de AP-kolom
+        // komt er in loadout-modus bij ieder profiel bij (een mount krijgt "–").
+        const perProfiel = unit.profiles.map((p) => ({ p, cols: profileTable(p.stats) }));
+        return (
+          <ProfielTabel
+            minWidth={on ? 300 : 280}
+            koppen={(perProfiel[0]?.cols ?? []).map((c) => c.k)}
+            rijen={perProfiel.map(({ p, cols }) => ({
+              label: p.label,
+              cellen: cols.map((c) => ({ v: c.v, hl: c.hl, title: c.title, d: c.d })),
+              onInfo: p.info && onProfileInfo ? () => onProfileInfo(p) : undefined,
+            }))}
+          />
+        );
+      })()}
       {on && mw && ruleChips(mw.specialRules)}
 
       {/* Shooting — only in loadout mode and only when the unit has a ranged weapon. */}

@@ -115,8 +115,6 @@ export function WoundTracker({
   // Single-model unit (óók multi-wound) → één wonden-rij van 0..total (= W).
   const showSingleWound = start === 1;
 
-  const pct = total ? remaining / total : 0;
-  const barColor = dead ? TOW.blood : pct > 0.5 ? TOW.goldDeep : pct > 0.25 ? '#a8842f' : TOW.blood;
 
   // Zet het aantal dode modellen (elke stap = ±W wonden), wonden-op-voorste blijft behouden.
   const setDood = (nieuwDood: number) => {
@@ -135,7 +133,7 @@ export function WoundTracker({
       onClick={onClick}
       disabled={disabled}
       aria-label={dir < 0 ? 'Minus' : 'Plus'}
-      style={{ width: 32, height: 32, flexShrink: 0, borderRadius: 9, cursor: disabled ? 'default' : 'pointer', border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt, color: disabled ? 'rgba(134,116,83,0.4)' : TOW.parchDim, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+      style={{ width: 28, height: 28, flexShrink: 0, borderRadius: 8, cursor: disabled ? 'default' : 'pointer', border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt, color: disabled ? 'rgba(134,116,83,0.4)' : TOW.parchDim, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
     >
       {dir < 0 ? <Minus c="currentColor" /> : <Plus c="currentColor" />}
     </button>
@@ -159,11 +157,11 @@ export function WoundTracker({
     decDisabled: boolean;
     incDisabled: boolean;
   }) => (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-      <span style={{ flex: 1, minWidth: 0, ...eb, fontSize: 8, color: TOW.muted }}>{label}</span>
+    <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+      <span style={{ ...eb, fontSize: 8, color: TOW.muted, marginRight: 2 }}>{label}</span>
       <StepBtn dir={-1} onClick={onDec} disabled={!editable || decDisabled} />
-      <div style={{ display: 'flex', alignItems: 'baseline', gap: 4, minWidth: 52, justifyContent: 'center' }}>
-        <span style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 17, color: TOW.ink }}>{value}</span>
+      <div style={{ display: 'flex', alignItems: 'baseline', gap: 3, minWidth: 40, justifyContent: 'center' }}>
+        <span style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 15, color: TOW.ink }}>{value}</span>
         <span style={{ fontFamily: towFont.serif, fontSize: 12, color: TOW.muted }}>/ {cap}</span>
       </div>
       <StepBtn dir={1} onClick={onInc} disabled={!editable || incDisabled} />
@@ -174,7 +172,7 @@ export function WoundTracker({
     <button
       onClick={onClick}
       disabled={!editable}
-      style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 5, cursor: editable ? 'pointer' : 'default', padding: '6px 8px', borderRadius: 99, border: `1px solid ${on ? TOW.blood : TOW.lineStrong}`, background: on ? (strong ? 'rgba(124,43,34,0.18)' : 'rgba(124,43,34,0.10)') : 'transparent', color: on ? TOW.blood : TOW.muted, fontWeight: on && strong ? 700 : 400 }}
+      style={{ flexShrink: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 4, cursor: editable ? 'pointer' : 'default', padding: '5px 9px', borderRadius: 99, border: `1px solid ${on ? TOW.blood : TOW.lineStrong}`, background: on ? (strong ? 'rgba(124,43,34,0.18)' : 'rgba(124,43,34,0.10)') : 'transparent', color: on ? TOW.blood : TOW.muted, fontWeight: on && strong ? 700 : 400 }}
     >
       {strong ? <Skull c="currentColor" /> : <Flag c="currentColor" />}
       <span style={{ ...eb, fontSize: 8 }}>{on ? onLabel : offLabel}</span>
@@ -182,12 +180,15 @@ export function WoundTracker({
   );
 
   return (
-    <div style={{ marginTop: 11, paddingTop: 11, borderTop: `1px solid ${TOW.line}` }}>
-      {/* Tellers — de enige numerieke bron (de bar hieronder is puur visueel) */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 9 }}>
+    <div style={{ marginTop: 8, paddingTop: 8, borderTop: `1px solid ${TOW.line}` }}>
+      {/* COMPACT (Joost 28-10-2026: "wounds left is goed om in te hebben, maar kan compacter … misschien is
+          dat gekleurde balkje dan ook niet nodig"). Tellers, Flee en Remove staan op één regel (wrapt op een
+          smalle kaart); de sterkte-balk is weg — het getal in de teller zegt hetzelfde. Flee en Remove
+          blijven twee knoppen: een vluchtende unit telt anders dan een verwijderde. */}
+      <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '6px 14px' }}>
         {showModels && (
           <CounterRow
-            label="Models left"
+            label="Models"
             value={modellenLevend}
             cap={start}
             onDec={() => setDood(modellenDood + 1)}
@@ -198,7 +199,7 @@ export function WoundTracker({
         )}
         {showFrontWounds && (
           <CounterRow
-            label={showModels ? 'Wounds left on front model' : 'Wounds left'}
+            label={showModels ? 'Front model W' : 'Wounds'}
             value={frontOver}
             cap={wpm}
             onDec={() => wond(1)}
@@ -209,7 +210,7 @@ export function WoundTracker({
         )}
         {showSingleWound && (
           <CounterRow
-            label="Wounds left"
+            label="Wounds"
             value={remaining}
             cap={total}
             onDec={() => wond(1)}
@@ -218,28 +219,19 @@ export function WoundTracker({
             incDisabled={clampedLost <= 0}
           />
         )}
-      </div>
-
-      {/* Strength-bar — puur visueel; status (Destroyed/Removed) rechts. Getallen staan in de teller. */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 10 }}>
-        <div style={{ flex: 1, height: 6, borderRadius: 99, background: 'rgba(74,55,22,0.12)', overflow: 'hidden' }}>
-          <div style={{ width: `${pct * 100}%`, height: '100%', borderRadius: 99, background: barColor, transition: 'width .25s ease' }} />
+        <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 6 }}>
+          {dead && !weg && (
+            <span style={{ ...eb, fontSize: 8, color: TOW.blood, display: 'flex', alignItems: 'center', gap: 4 }}>
+              <Skull c={TOW.blood} />Destroyed
+            </span>
+          )}
+          {toggle(fleeing, onFlee, 'Fleeing', 'Flee')}
+          {toggle(weg, onRemoved, 'Removed', 'Remove', true)}
         </div>
-        {(dead || weg) && (
-          <span style={{ ...eb, fontSize: 8, color: TOW.blood, display: 'flex', alignItems: 'center', gap: 4, flexShrink: 0 }}>
-            <Skull c={TOW.blood} />{weg ? 'Removed' : 'Destroyed'}
-          </span>
-        )}
-      </div>
-
-      {/* Toggles: Fleeing + Removed */}
-      <div style={{ display: 'flex', gap: 6, marginTop: 10 }}>
-        {toggle(fleeing, onFlee, 'Fleeing', 'Flee')}
-        {toggle(weg, onRemoved, 'Removed', 'Remove', true)}
       </div>
 
       {/* Kills — enemy units destroyed + trophies captured by this unit (feeds campaign veteran XP). */}
-      {toonKills && <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 11, paddingTop: 11, borderTop: `1px solid ${TOW.line}` }}>
+      {toonKills && <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 8, paddingTop: 8, borderTop: `1px solid ${TOW.line}` }}>
         <span style={{ flex: 1, minWidth: 0, ...eb, fontSize: 8, color: TOW.muted }}>Kills</span>
         <StepBtn dir={-1} onClick={() => onSetKills(clampedKills - 1)} disabled={!editable || clampedKills <= 0} />
         <div style={{ display: 'flex', alignItems: 'baseline', gap: 4, minWidth: 52, justifyContent: 'center' }}>
