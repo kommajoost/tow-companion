@@ -23,6 +23,7 @@ import { normSheet } from '../../lib/battleSheet';
 import { berekenTeamVictory, berekenVictory } from '../../lib/victoryPoints';
 import { isTeamTracker, naamVan, objectiefStoel, stoelenVan, TEAM_NAAM, TEAM_STOELEN, teamVan, vijandUnitsVoor } from '../../lib/teams';
 import { useData } from '../../data';
+import { usePersistentState } from '../../store';
 import { inferOverlayId, isOverlay, OVERLAY_FILES } from '../../lib/overlays';
 import type { KillDetail, Army, ArmyUnit, TeamStoel } from '../../types';
 import type { BattleSheet } from '../../lib/battleSheet';
@@ -109,9 +110,13 @@ export function GameView() {
   // unit kunnen zien, met al zijn stats en regels, en gewoon in de lijst"). Welke unit z'n mount-tab open heeft;
   // een gewone keuze in de lijst opent altijd de rider.
   const [mountTab, setMountTab] = useState<{ id: string; i: number } | null>(null);
+  const [telefoonWeergave, setTelefoonWeergave] = usePersistentState<'lijst' | 'kies'>('tow:game-weergave', 'lijst');
+  const kiesKaartRef = useRef<HTMLDivElement>(null);
   const kies = (unitId: string, mount: number | null = null) => {
     setGekozen((g) => ({ ...g, [kiesSleutel]: unitId }));
     setMountTab(mount == null ? null : { id: unitId, i: mount });
+    // Pick-weergave op de telefoon: de kaart staat onder de kiesrijen, dus schuif hem in beeld.
+    if (!wide && telefoonWeergave === 'kies') requestAnimationFrame(() => kiesKaartRef.current?.scrollIntoView({ block: 'start', behavior: 'smooth' }));
   };
   const selId: string | null = army
     ? (army.units.some((u) => u.id === gekozen[kiesSleutel]) ? gekozen[kiesSleutel] ?? null : army.units[0]?.id ?? null)
@@ -495,9 +500,59 @@ export function GameView() {
   // END BATTLE KLEIN (Joost 28-10-2026): "die end battle knop moet echt veel minder aanwezig, die is
   // gewoon niet zo heel belangrijk". Was een volle goudrode balk onder de units; nu een kleine knop in
   // dezelfde stijl als Leave — breed in de kopbalk, op de telefoon klein onderaan de lijst.
+  const [uitOpen, setUitOpen] = useState(false);
+  const uitItem: React.CSSProperties = { display: 'block', width: '100%', textAlign: 'left', border: 'none', background: 'transparent', borderRadius: 8, padding: '8px 10px', cursor: 'pointer' };
   const magEinde = !!(myArmy || opponentArmy || (teamModus && (allyArmy || opponent2Army)) || scenarioTest);
-  const eindeKnop = magEinde && (
-    <button onClick={() => setEndOpen(true)} style={{ flexShrink: 0, border: `1px solid ${TOW.lineStrong}`, borderRadius: 9, background: 'transparent', color: TOW.inkDim, cursor: 'pointer', padding: wide ? '4px 10px' : '6px 12px', fontFamily: display, fontSize: 12 }}>End battle</button>
+
+  // EÉN KNOP OM TE STOPPEN (Joost 28-10-2026: "die knop voor einde battle zit een beetje gek … kan het niet bij
+  // leave? Dat is een beetje hetzelfde"). Rechtsboven één "Exit"-knop met twee keuzes eronder, elk met wat
+  // het doet: End battle telt het potje en toont de uitslag; Leave sluit het potje op dit toestel zonder
+  // uitslag. Ze blijven twee keuzes omdat ze echt iets anders doen.
+  const weergaveKnop = !!army && (
+    <div role="group" aria-label="Unit view" style={{ flexShrink: 0, display: 'flex', border: `1px solid ${TOW.lineStrong}`, borderRadius: 9, overflow: 'hidden' }}>
+      {([['lijst', 'List view: all units as cards'], ['kies', 'Pick view: units on top, the chosen unit below']] as const).map(([w, uitleg]) => {
+        const aan = telefoonWeergave === w;
+        return (
+          <button key={w} onClick={() => setTelefoonWeergave(w)} aria-pressed={aan} aria-label={uitleg} title={uitleg}
+            style={{ width: 34, height: 30, display: 'flex', alignItems: 'center', justifyContent: 'center', border: 'none', cursor: 'pointer', background: aan ? TOW.cardLt : 'transparent', color: aan ? TOW.goldDeep : TOW.muted }}>
+            {w === 'lijst' ? (
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" aria-hidden="true"><path d="M2 3.5h12M2 8h12M2 12.5h12" /></svg>
+            ) : (
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"><rect x="1.8" y="1.8" width="5.4" height="3.2" rx="0.8" /><rect x="8.8" y="1.8" width="5.4" height="3.2" rx="0.8" /><rect x="1.8" y="7.2" width="12.4" height="7" rx="1" /></svg>
+            )}
+          </button>
+        );
+      })}
+    </div>
+  );
+
+  const uitKnop = (
+    <div style={{ position: 'relative', flexShrink: 0 }}>
+      <button
+        onClick={() => setUitOpen((o) => !o)}
+        aria-expanded={uitOpen}
+        style={{ border: `1px solid ${TOW.lineStrong}`, borderRadius: 9, background: uitOpen ? TOW.cardLt : 'transparent', color: TOW.muted, cursor: 'pointer', padding: wide ? '4px 10px' : '6px 12px', fontFamily: display, fontSize: 12, whiteSpace: 'nowrap' }}
+      >
+        Exit <span style={{ fontSize: 9 }}>▾</span>
+      </button>
+      {uitOpen && (
+        <>
+          <div onClick={() => setUitOpen(false)} style={{ position: 'fixed', inset: 0, zIndex: 60 }} />
+          <div role="menu" style={{ position: 'absolute', right: 0, top: 'calc(100% + 6px)', zIndex: 61, width: 250, background: TOW.panel2, border: `1px solid ${TOW.lineStrong}`, borderRadius: 12, boxShadow: '0 10px 30px rgba(0,0,0,0.25)', padding: 6 }}>
+            {magEinde && (
+              <button role="menuitem" onClick={() => { setUitOpen(false); setEndOpen(true); }} style={uitItem}>
+                <span style={{ display: 'block', fontFamily: display, fontWeight: 700, fontSize: 13.5, color: TOW.ink }}>End battle</span>
+                <span style={{ display: 'block', fontFamily: serif, fontSize: 12, color: TOW.muted, marginTop: 1 }}>Count the Victory Points and see the result</span>
+              </button>
+            )}
+            <button role="menuitem" onClick={() => { setUitOpen(false); leaveGame(); }} style={uitItem}>
+              <span style={{ display: 'block', fontFamily: display, fontWeight: 700, fontSize: 13.5, color: TOW.ink }}>Leave game</span>
+              <span style={{ display: 'block', fontFamily: serif, fontSize: 12, color: TOW.muted, marginTop: 1 }}>Close this game on this device, without a result</span>
+            </button>
+          </div>
+        </>
+      )}
+    </div>
   );
 
   // DE COMPACTE KIESLIJST (Joost 28-10-2026): "de lijst van de army units mag compacter … dat die goed aan
@@ -574,8 +629,7 @@ export function GameView() {
             <div style={teamModus ? { flex: '0 1 560px', minWidth: 300 } : { flex: '0 1 380px', minWidth: 180 }}>{kantKeuze}</div>
             <div style={{ flex: 1 }} />
             {sheetKnop}
-            {eindeKnop}
-            <button onClick={leaveGame} style={{ flexShrink: 0, border: `1px solid ${TOW.lineStrong}`, borderRadius: 9, background: 'transparent', color: TOW.muted, cursor: 'pointer', padding: '4px 10px', fontFamily: display, fontSize: 12 }}>Leave</button>
+            {uitKnop}
           </div>
           {battleBar && (
             <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'flex-start', gap: 6 }}>
@@ -635,6 +689,26 @@ export function GameView() {
   }
 
   // ════════════════ PHONE — stacked ════════════════
+  // TWEE WEERGAVEN OP DE TELEFOON (Joost 28-10-2026: "het werkt best fijn om die lijst zo te zien met de
+  // opties van de unit daaronder … een knop in de header dat je van twee varianten kan doen"). "List" is de
+  // vertrouwde lijst met uitklapkaarten; "Pick" zet de units bovenaan als compacte kiesrijen (twee kolommen)
+  // en daaronder de gekozen unit volledig — zoals op de Fold. De keuze blijft per toestel bewaard.
+  const kiesModus = telefoonWeergave === 'kies' && !!army;
+  const kiesBody = army && (
+    <>
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', columnGap: 6, marginBottom: 8 }}>
+        {groups.map((g) => (
+          <div key={g.category} style={{ display: 'contents' }}>
+            <div style={{ gridColumn: '1 / -1', ...eb, fontSize: 8, color: TOW.goldDeep, margin: '6px 2px 1px' }}>{g.category}</div>
+            {g.units.map((u) => kiesRij(u))}
+          </div>
+        ))}
+      </div>
+      <div ref={kiesKaartRef} style={{ scrollMarginTop: 8 }}>
+        {selUnit ? unitKaart(army, selUnit, { collapsed: false }) : null}
+      </div>
+    </>
+  );
   return (
     <div ref={rootRef} className="tow-field" style={{ height: '100%', display: 'flex', flexDirection: 'column', color: TOW.ink }}>
       <div className="tow-leather" style={{ flexShrink: 0, display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px', borderBottom: `1px solid ${TOW.lineStrong}` }}>
@@ -652,7 +726,8 @@ export function GameView() {
         {(sheet || campagneSheet) && (
           <button onClick={() => setSheetOpen(true)} style={{ border: `1px solid ${TOW.lineStrong}`, borderRadius: 9, background: TOW.cardLt, color: TOW.ink, cursor: 'pointer', padding: '6px 12px', fontFamily: display, fontSize: 12 }}>Battlefield</button>
         )}
-        <button onClick={leaveGame} style={{ border: `1px solid ${TOW.lineStrong}`, borderRadius: 9, background: 'transparent', color: TOW.muted, cursor: 'pointer', padding: '6px 12px', fontFamily: display, fontSize: 12 }}>Leave</button>
+        {weergaveKnop}
+        {uitKnop}
       </div>
 
       <div style={{ flexShrink: 0, padding: 10 }}>{kantKeuze}</div>
@@ -672,10 +747,8 @@ export function GameView() {
           </div>
         )}
         {versterkingPaneel}
-        {rosterBody}
-        {eindeKnop && (
-          <div style={{ marginTop: 18, display: 'flex', justifyContent: 'center' }}>{eindeKnop}</div>
-        )}
+        {kiesModus ? kiesBody : rosterBody}
+
       </div>
       {sheetModal}
       {endModal}
