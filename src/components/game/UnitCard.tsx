@@ -116,14 +116,7 @@ export function UnitCard({
   // Wie startte vóór de statline-fix (0.1.406, o.a. de Empire-Mortar) heeft daarin een unit zonder
   // profiel. Vul dat hier aan uit de statline-index, zodat ook een lopende game de stats toont.
   const statIdx = useStatIndex();
-  const hersteld = useMemo<ArmyUnit>(() => {
-    if (unitIn.profiles?.length || !statIdx) return unitIn;
-    const rows = overlayStatsFor(statIdx, unitIn.statNaam ?? unitIn.datasheet ?? unitIn.name, null, faction);
-    if (!rows.length) return unitIn;
-    const ttSleutel = statSleutels(unitIn.statNaam ?? unitIn.datasheet ?? unitIn.name, statIdx, faction).find((k) => statIdx[k]?.troopType);
-    const tt = unitIn.troopType ?? troopTypeName(ttSleutel ? statIdx[ttSleutel]?.troopType : undefined);
-    return { ...unitIn, ...(tt ? { troopType: tt } : {}), profiles: rows.map((r) => ({ label: r.Name, stats: STAT_COLS.map((k) => ({ k, v: r[k] ?? '-' })) })) };
-  }, [unitIn, statIdx, faction]);
+  const hersteld = useMemo<ArmyUnit>(() => metProfielen(unitIn, statIdx, faction), [unitIn, statIdx, faction]);
   // 08-10-2026: veteran abilities die een characteristic veranderen (Grizzled +1 Ld, Weapon Master
   // +1 WS/BS) zitten nu IN de statline, in goud, en dus ook in de gevechtshulp (CombatStats krijgt
   // deze unit). Bij het renderen, nooit in het opgeslagen leger: zo kan het niet dubbel tellen.
@@ -515,6 +508,17 @@ export function UnitCard({
       <InfoSheet info={info} onClose={() => setInfo(null)} />
     </section>
   );
+}
+
+/** Vult een unit zonder profiel aan uit de statline-index (zie `hersteld` in UnitCard). Ook gebruikt door de
+ *  kieslijst in GameView (28-10-2026), zodat de snelle stats daar dezelfde zijn als op de kaart. */
+export function metProfielen(unitIn: ArmyUnit, statIdx: ReturnType<typeof useStatIndex>, faction?: string): ArmyUnit {
+  if (unitIn.profiles?.length || !statIdx) return unitIn;
+  const rows = overlayStatsFor(statIdx, unitIn.statNaam ?? unitIn.datasheet ?? unitIn.name, null, faction);
+  if (!rows.length) return unitIn;
+  const ttSleutel = statSleutels(unitIn.statNaam ?? unitIn.datasheet ?? unitIn.name, statIdx, faction).find((k) => statIdx[k]?.troopType);
+  const tt = unitIn.troopType ?? troopTypeName(ttSleutel ? statIdx[ttSleutel]?.troopType : undefined);
+  return { ...unitIn, ...(tt ? { troopType: tt } : {}), profiles: rows.map((r) => ({ label: r.Name, stats: STAT_COLS.map((k) => ({ k, v: r[k] ?? '-' })) })) };
 }
 
 /** De korte stand van een unit in het spel: "Removed", "Destroyed", "4/5 models" of "2/3 W", "Fleeing",
