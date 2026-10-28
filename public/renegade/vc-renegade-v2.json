@@ -658,7 +658,7 @@
       },
       {
         "name_en": "Sceptre De Noirot",
-        "name": "sceptre de noirot",
+        "name": "sceptre of de noirot",
         "points": 35,
         "type": "arcane-item",
         "onePerArmy": true
@@ -1892,9 +1892,6 @@
     "hand-of-dust": {
       "body": "Necromancers and Wights only. This model can cast the following Bound spell, with a Power Level of 1. Roll a D6 each time the Hand of Dust is used. On a roll of 1, it crumbles to dust and cannot be used again:\n\nType: Assailment Casting Value:8+\n\nRange: Combat\n\nEffect: The target enemy unit suffers 2D6 Strength 5 hits, each with an AP of -1."
     },
-    "sceptre-de-noirot": {
-      "body": "Master Necromancer Only. When the wielder of the Sceptre De Noirot uses the Invocation of Nehek special rule on a friendly unit whose troop type is infantry or cavalry, roll an additional D3 when determining how many wounds are recovered."
-    },
     "curse-of-the-revenant": {
       "body": "This Vampire has a +1 modifier to its Wounds characteristic."
     },
@@ -1918,6 +1915,9 @@
     },
     "honour-or-death": {
       "body": "Any enemy model that wishes to issue a challenge whilst engaged in the same combat as a model with this Vampiric Power must first make a Leadership test (using their own Leadership.) Apply a +1 modifier to the dice roll for each point of difference between its Weapon Skill characteristic and that of the model with this Vampiric Power (to a maximum of +2).\n\nIf the test is passed, the challenge is issued as normal. If the test is failed, the challenge is not issued and the enemy model must Retire, following the rules for refusing a challenge. In addition, challenges issued by a model with this Vampiric Power cannot be refused."
+    },
+    "sceptre-of-de-noirot": {
+      "body": "Master Necromancer Only. When the wielder of the Sceptre De Noirot uses the Invocation of Nehek special rule on a friendly unit whose troop type is infantry or cavalry, roll an additional D3 when determining how many wounds are recovered."
     }
   },
   "addedUnits": {

@@ -111,6 +111,20 @@ export function correctVampireCountsV2(overlay) {
   if (patch('blood-knights').specialRules) blood.specialRules = { name_en: patch('blood-knights').specialRules };
   overlay.addedUnits ??= {};
   overlay.addedUnits.special = [...(overlay.addedUnits.special ?? []).filter((u) => u.id !== blood.id), blood];
+
+  // SCEPTRE DE NOIROT (Joost 28-10-2026: "en die sceptre noirot dan?"). De DOCX hernoemt "Sceptre Of De
+  // Noirot" (het "Of" is doorgestreept) en vervangt de oude regel (twee keer Invocation of Nehek, ook
+  // doorgestreept) door de extra D3. De overlay had hem op de nieuwe naam als NIEUW item toegevoegd —
+  // het basis-item matcht op `name` ("sceptre of de noirot") — dus stonden er twee in de lijst, en het
+  // oude droeg nog de doorgestreepte regel. Nu herprijst/hernoemt de overlay het basis-item: het id
+  // (`sceptre-of-de-noirot`) blijft, zodat een lijst die hem al koos de Renegade-versie krijgt.
+  const vcItems = overlay.magicItems?.['vampire-counts'] ?? [];
+  for (const it of vcItems) if (it.name === 'sceptre de noirot') it.name = 'sceptre of de noirot';
+  const tekst = overlay.magicItemText ?? {};
+  if (tekst['sceptre-de-noirot'] && !tekst['sceptre-of-de-noirot']) {
+    tekst['sceptre-of-de-noirot'] = tekst['sceptre-de-noirot'];
+    delete tekst['sceptre-de-noirot'];
+  }
   return overlay;
 }
 
