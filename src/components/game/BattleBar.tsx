@@ -30,6 +30,7 @@ export function BattleBar({
   editable = true,
   vertical = false,
   leader = null,
+  compact = false,
 }: {
   round: number;
   /** Game length: 6 for Warhammer Battles, 5 for a Battle March (General's Companion p.27). */
@@ -44,11 +45,15 @@ export function BattleBar({
   vertical?: boolean;
   /** Welke kant leidt (voor highlight); null bij gelijkspel. */
   leader?: 'me' | 'opp' | null;
+  /** TELEFOON-KOPBALK (Joost 28-10-2026: "ronde nummer kun je gewoon 1/6 doen, dat kan kleiner … misschien
+   *  kun je die victory points ook in die header doen"). 32 px hoog, geen "Round"-woord en geen namen bij de
+   *  VP: links staat jouw kant, rechts de andere (de namen staan in de tooltip). */
+  compact?: boolean;
 }) {
   const laatsteRound = round >= maxRound;
   const card: React.CSSProperties = {
-    height: 40,
-    padding: '0 8px',
+    height: compact ? 32 : 40,
+    padding: compact ? '0 4px' : '0 8px',
     borderRadius: 10,
     background: TOW.cardLt,
     border: `1px solid ${TOW.line}`,
@@ -57,8 +62,8 @@ export function BattleBar({
     alignItems: 'center',
   };
   const stepBtn = (gold: boolean): React.CSSProperties => ({
-    width: 28,
-    height: 28,
+    width: compact ? 24 : 28,
+    height: compact ? 24 : 28,
     flexShrink: 0,
     borderRadius: 7,
     cursor: editable ? 'pointer' : 'default',
@@ -89,6 +94,27 @@ export function BattleBar({
       </span>
     );
   };
+
+  if (compact) {
+    const kleur = (s: 'me' | 'opp') => (leader === s ? TOW.goldDeep : leader ? TOW.muted : TOW.ink);
+    return (
+      <div style={{ display: 'flex', gap: 6, minWidth: 0 }}>
+        <div style={{ ...card, gap: 5 }}>
+          <button onClick={() => editable && onRound(-1)} disabled={!editable} aria-label="Previous round" style={stepBtn(false)}><Minus c="currentColor" /></button>
+          <span title={laatsteRound ? 'Last round' : 'Battle round'} style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 15, color: TOW.ink, whiteSpace: 'nowrap' }}>
+            {round}<span style={{ fontSize: 10.5, color: laatsteRound ? TOW.goldDeep : TOW.muted, fontWeight: 600 }}>/{maxRound}</span>
+          </span>
+          <button onClick={() => editable && onRound(1)} disabled={!editable} aria-label="Next round" style={stepBtn(true)}><Plus c="currentColor" /></button>
+        </div>
+        <div style={{ ...card, gap: 6, padding: '0 9px' }} aria-label={`Victory points: ${myName} ${vpMe}, ${opponentName} ${vpOpp}`} title={`${myName} ${vpMe} · ${opponentName} ${vpOpp}`}>
+          <span style={{ ...eb, fontSize: 7.5, color: TOW.muted }}>VP</span>
+          <span style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 15, color: kleur('me') }}>{vpMe}</span>
+          <span style={{ color: TOW.faint, fontSize: 12 }}>–</span>
+          <span style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 15, color: kleur('opp') }}>{vpOpp}</span>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div style={vertical ? { display: 'flex', flexDirection: 'column', gap: 6 } : { display: 'grid', gridTemplateColumns: 'auto minmax(0, 1fr)', gap: 6 }}>

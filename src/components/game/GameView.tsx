@@ -116,7 +116,7 @@ export function GameView() {
     setGekozen((g) => ({ ...g, [kiesSleutel]: unitId }));
     setMountTab(mount == null ? null : { id: unitId, i: mount });
     // Pick-weergave op de telefoon: de kaart staat onder de kiesrijen, dus schuif hem in beeld.
-    if (!wide && telefoonWeergave === 'kies') requestAnimationFrame(() => kiesKaartRef.current?.scrollIntoView({ block: 'start', behavior: 'smooth' }));
+    if (!wide && telefoonWeergave === 'kies') requestAnimationFrame(() => kiesKaartRef.current?.scrollTo({ top: 0 }));
   };
   const selId: string | null = army
     ? (army.units.some((u) => u.id === gekozen[kiesSleutel]) ? gekozen[kiesSleutel] ?? null : army.units[0]?.id ?? null)
@@ -337,7 +337,7 @@ export function GameView() {
   const kantKeuze = spelerKeuze || sideToggle;
 
   const battleBar = toonPanelen && (
-    <BattleBar round={tracker.round} maxRound={maxRound} onRound={adjRound} vpMe={vpMe} vpOpp={vpOpp} leader={leader} myName={teamModus ? TEAM_NAAM.A : myName || 'You'} opponentName={teamModus ? TEAM_NAAM.B : opponentName || 'Opponent'} editable={editable} vertical={false} />
+    <BattleBar round={tracker.round} maxRound={maxRound} onRound={adjRound} vpMe={vpMe} vpOpp={vpOpp} leader={leader} myName={teamModus ? TEAM_NAAM.A : myName || 'You'} opponentName={teamModus ? TEAM_NAAM.B : opponentName || 'Opponent'} editable={editable} vertical={false} compact={!wide} />
   );
   // DE REMINDER-BALK (Joost 05-10-2026): vast onder de ronde/VP-balk, met het weer en — bij een
   // campagne-battle — wat beide kanten meebrengen. Host = aanvaller, guest = verdediger: dezelfde
@@ -500,59 +500,32 @@ export function GameView() {
   // END BATTLE KLEIN (Joost 28-10-2026): "die end battle knop moet echt veel minder aanwezig, die is
   // gewoon niet zo heel belangrijk". Was een volle goudrode balk onder de units; nu een kleine knop in
   // dezelfde stijl als Leave — breed in de kopbalk, op de telefoon klein onderaan de lijst.
-  const [uitOpen, setUitOpen] = useState(false);
-  const uitItem: React.CSSProperties = { display: 'block', width: '100%', textAlign: 'left', border: 'none', background: 'transparent', borderRadius: 8, padding: '8px 10px', cursor: 'pointer' };
   const magEinde = !!(myArmy || opponentArmy || (teamModus && (allyArmy || opponent2Army)) || scenarioTest);
 
-  // EÉN KNOP OM TE STOPPEN (Joost 28-10-2026: "die knop voor einde battle zit een beetje gek … kan het niet bij
-  // leave? Dat is een beetje hetzelfde"). Rechtsboven één "Exit"-knop met twee keuzes eronder, elk met wat
-  // het doet: End battle telt het potje en toont de uitslag; Leave sluit het potje op dit toestel zonder
-  // uitslag. Ze blijven twee keuzes omdat ze echt iets anders doen.
-  const weergaveKnop = !!army && (
-    <div role="group" aria-label="Unit view" style={{ flexShrink: 0, display: 'flex', border: `1px solid ${TOW.lineStrong}`, borderRadius: 9, overflow: 'hidden' }}>
-      {([['lijst', 'List view: all units as cards'], ['kies', 'Pick view: units on top, the chosen unit below']] as const).map(([w, uitleg]) => {
-        const aan = telefoonWeergave === w;
-        return (
-          <button key={w} onClick={() => setTelefoonWeergave(w)} aria-pressed={aan} aria-label={uitleg} title={uitleg}
-            style={{ width: 34, height: 30, display: 'flex', alignItems: 'center', justifyContent: 'center', border: 'none', cursor: 'pointer', background: aan ? TOW.cardLt : 'transparent', color: aan ? TOW.goldDeep : TOW.muted }}>
-            {w === 'lijst' ? (
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" aria-hidden="true"><path d="M2 3.5h12M2 8h12M2 12.5h12" /></svg>
-            ) : (
-              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"><rect x="1.8" y="1.8" width="5.4" height="3.2" rx="0.8" /><rect x="8.8" y="1.8" width="5.4" height="3.2" rx="0.8" /><rect x="1.8" y="7.2" width="12.4" height="7" rx="1" /></svg>
-            )}
-          </button>
-        );
-      })}
-    </div>
+  // TWEE KNOPPEN NAAST ELKAAR (Joost 28-10-2026: "doe gewoon twee knoppen naast elkaar, niet exit en dan end
+  // battle / leave game"). End battle telt het potje en toont de uitslag; Leave sluit het op dit toestel.
+  const knopStijl: React.CSSProperties = { flexShrink: 0, border: `1px solid ${TOW.lineStrong}`, borderRadius: 9, background: 'transparent', cursor: 'pointer', padding: wide ? '4px 10px' : '0 9px', height: wide ? undefined : 32, fontFamily: display, fontSize: 12, whiteSpace: 'nowrap' };
+  const stopKnoppen = (
+    <>
+      {magEinde && <button onClick={() => setEndOpen(true)} title="Count the Victory Points and see the result" style={{ ...knopStijl, color: TOW.inkDim }}>End battle</button>}
+      <button onClick={leaveGame} title="Close this game on this device, without a result" style={{ ...knopStijl, color: TOW.muted }}>Leave</button>
+    </>
   );
 
-  const uitKnop = (
-    <div style={{ position: 'relative', flexShrink: 0 }}>
-      <button
-        onClick={() => setUitOpen((o) => !o)}
-        aria-expanded={uitOpen}
-        style={{ border: `1px solid ${TOW.lineStrong}`, borderRadius: 9, background: uitOpen ? TOW.cardLt : 'transparent', color: TOW.muted, cursor: 'pointer', padding: wide ? '4px 10px' : '6px 12px', fontFamily: display, fontSize: 12, whiteSpace: 'nowrap' }}
-      >
-        Exit <span style={{ fontSize: 9 }}>▾</span>
-      </button>
-      {uitOpen && (
-        <>
-          <div onClick={() => setUitOpen(false)} style={{ position: 'fixed', inset: 0, zIndex: 60 }} />
-          <div role="menu" style={{ position: 'absolute', right: 0, top: 'calc(100% + 6px)', zIndex: 61, width: 250, background: TOW.panel2, border: `1px solid ${TOW.lineStrong}`, borderRadius: 12, boxShadow: '0 10px 30px rgba(0,0,0,0.25)', padding: 6 }}>
-            {magEinde && (
-              <button role="menuitem" onClick={() => { setUitOpen(false); setEndOpen(true); }} style={uitItem}>
-                <span style={{ display: 'block', fontFamily: display, fontWeight: 700, fontSize: 13.5, color: TOW.ink }}>End battle</span>
-                <span style={{ display: 'block', fontFamily: serif, fontSize: 12, color: TOW.muted, marginTop: 1 }}>Count the Victory Points and see the result</span>
-              </button>
-            )}
-            <button role="menuitem" onClick={() => { setUitOpen(false); leaveGame(); }} style={uitItem}>
-              <span style={{ display: 'block', fontFamily: display, fontWeight: 700, fontSize: 13.5, color: TOW.ink }}>Leave game</span>
-              <span style={{ display: 'block', fontFamily: serif, fontSize: 12, color: TOW.muted, marginTop: 1 }}>Close this game on this device, without a result</span>
-            </button>
-          </div>
-        </>
+  // EÉN KNOP (Joost 28-10-2026: "kan het ook één knopje zijn"): het icoon toont de weergave waar je naartoe gaat.
+  const weergaveKnop = !!army && (
+    <button
+      onClick={() => setTelefoonWeergave(telefoonWeergave === 'kies' ? 'lijst' : 'kies')}
+      aria-label={telefoonWeergave === 'kies' ? 'Switch to list view: all units as cards' : 'Switch to pick view: units on top, the chosen unit below'}
+      title={telefoonWeergave === 'kies' ? 'List view' : 'Pick view'}
+      style={{ flexShrink: 0, width: 32, height: 32, display: 'flex', alignItems: 'center', justifyContent: 'center', border: `1px solid ${TOW.lineStrong}`, borderRadius: 9, cursor: 'pointer', background: 'transparent', color: TOW.goldDeep }}
+    >
+      {telefoonWeergave === 'kies' ? (
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" aria-hidden="true"><path d="M2 3.5h12M2 8h12M2 12.5h12" /></svg>
+      ) : (
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"><rect x="1.8" y="1.8" width="5.4" height="3.2" rx="0.8" /><rect x="8.8" y="1.8" width="5.4" height="3.2" rx="0.8" /><rect x="1.8" y="7.2" width="12.4" height="7" rx="1" /></svg>
       )}
-    </div>
+    </button>
   );
 
   // DE COMPACTE KIESLIJST (Joost 28-10-2026): "de lijst van de army units mag compacter … dat die goed aan
@@ -616,7 +589,7 @@ export function GameView() {
             <div style={teamModus ? { flex: '0 1 560px', minWidth: 300 } : { flex: '0 1 380px', minWidth: 180 }}>{kantKeuze}</div>
             <div style={{ flex: 1 }} />
             {sheetKnop}
-            {uitKnop}
+            {stopKnoppen}
           </div>
           {battleBar && (
             <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'flex-start', gap: 6 }}>
@@ -675,68 +648,85 @@ export function GameView() {
     );
   }
 
-  // ════════════════ PHONE — stacked ════════════════
-  // TWEE WEERGAVEN OP DE TELEFOON (Joost 28-10-2026: "het werkt best fijn om die lijst zo te zien met de
-  // opties van de unit daaronder … een knop in de header dat je van twee varianten kan doen"). "List" is de
-  // vertrouwde lijst met uitklapkaarten; "Pick" zet de units bovenaan als compacte kiesrijen (twee kolommen)
-  // en daaronder de gekozen unit volledig — zoals op de Fold. De keuze blijft per toestel bewaard.
+  // ════════════════ PHONE ════════════════
+  // COMPACTE KOP (Joost 28-10-2026: "een enorme header, de bovenste 20% is weg"). Geen "Game"/"Local game"
+  // meer (dat zie je aan de tabbalk; een gedeelde code blijft staan, die deel je), en geen regel "You — Dark
+  // Elves · 1000 pts · 6/6 afield". Twee regels: de kant/speler-keuze met de weergaveknop, en daaronder ronde
+  // en VP compact naast End battle en Leave.
+  //
+  // TWEE WEERGAVEN. "List" is de lijst met uitklapkaarten. "Pick" (Joost: "onderaan die kaart met de unit
+  // info moet gewoon vast zijn … maak daar gewoon knoppen van, die pillen") zet alle units als pillen
+  // bovenaan, zonder Characters/Core/Special/Rare, en daaronder de gekozen unit in een eigen scrollvlak:
+  // een andere unit kiezen kan altijd, zonder eerst terug te scrollen. De keuze blijft per toestel bewaard.
   const kiesModus = telefoonWeergave === 'kies' && !!army;
-  const kiesBody = army && (
-    <>
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', columnGap: 6, marginBottom: 8 }}>
-        {groups.map((g) => (
-          <div key={g.category} style={{ display: 'contents' }}>
-            <div style={{ gridColumn: '1 / -1', ...eb, fontSize: 8, color: TOW.goldDeep, margin: '6px 2px 1px' }}>{g.category}</div>
-            {g.units.map((u) => kiesRij(u))}
-          </div>
-        ))}
-      </div>
-      <div ref={kiesKaartRef} style={{ scrollMarginTop: 8 }}>
-        {selUnit ? unitKaart(army, selUnit, { collapsed: false }) : null}
-      </div>
-    </>
-  );
+  const pil = (u: ArmyUnit) => {
+    const t = tracker.units[unitKey(side, u.id)];
+    const stand = korteStand(u, { lost: t?.lost, weg: t?.weg, fleeing: t?.fleeing, kills: t?.kills });
+    const uit = stand.some((st) => st.t === 'Removed' || st.t === 'Destroyed');
+    const vlucht = stand.some((st) => st.t === 'Fleeing');
+    const geraakt = !uit && (t?.lost ?? 0) > 0;
+    const aan = u.id === selId;
+    const aantal = unitSize(u);
+    return (
+      <button
+        key={u.id}
+        type="button"
+        onClick={() => kies(u.id)}
+        aria-pressed={aan}
+        title={stand.map((st) => st.t).join(' · ') || undefined}
+        style={{
+          display: 'inline-flex', alignItems: 'center', gap: 5, maxWidth: '100%', boxSizing: 'border-box',
+          padding: '5px 11px', borderRadius: 999, cursor: 'pointer',
+          border: `1px solid ${aan ? TOW.goldDeep : TOW.line}`,
+          background: aan ? 'rgba(184,134,47,0.16)' : TOW.cardLt,
+          opacity: uit ? 0.55 : 1,
+        }}
+      >
+        {(vlucht || geraakt) && <span aria-hidden style={{ width: 6, height: 6, borderRadius: 3, flexShrink: 0, background: vlucht ? TOW.blood : TOW.goldDeep }} />}
+        <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontFamily: display, fontWeight: aan ? 700 : 600, fontSize: 12.5, color: aan ? TOW.ink : uit ? TOW.muted : TOW.inkDim, textDecoration: uit ? 'line-through' : 'none' }}>
+          {aantal > 1 && <span style={{ color: TOW.goldDeep }}>{aantal}× </span>}{u.name}
+        </span>
+      </button>
+    );
+  };
   return (
     <div ref={rootRef} className="tow-field" style={{ height: '100%', display: 'flex', flexDirection: 'column', color: TOW.ink }}>
-      <div className="tow-leather" style={{ flexShrink: 0, display: 'flex', alignItems: 'center', gap: 10, padding: '10px 14px', borderBottom: `1px solid ${TOW.lineStrong}` }}>
-        <div style={{ flex: 1, minWidth: 0 }}>
-          <div style={{ ...eb, fontSize: 8.5, color: TOW.muted }}>Game</div>
-          {code ? (
-            <div style={{ fontFamily: display, fontWeight: 700, fontSize: 18, color: TOW.goldDeep, letterSpacing: '0.18em' }}>{code}</div>
-          ) : (
-            <div style={{ fontFamily: display, fontWeight: 700, fontSize: 16, color: TOW.ink }}>Local game</div>
+      <div className="tow-leather" style={{ flexShrink: 0, display: 'flex', flexDirection: 'column', gap: 6, padding: '7px 10px', borderBottom: `1px solid ${TOW.lineStrong}` }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6, minWidth: 0 }}>
+          {code && seat !== 'solo' && (
+            <span title={seat === 'host' && !opponentArmy ? 'Waiting for opponent…' : 'Game code'} style={{ flexShrink: 0, fontFamily: display, fontWeight: 700, fontSize: 14, color: TOW.goldDeep, letterSpacing: '0.14em' }}>{code}</span>
           )}
+          <div style={{ flex: 1, minWidth: 0 }}>{kantKeuze}</div>
+          {weergaveKnop}
         </div>
-        {code && seat === 'host' && !opponentArmy && (
-          <span style={{ fontFamily: serif, fontStyle: 'italic', fontSize: 12.5, color: TOW.muted }}>waiting for opponent…</span>
-        )}
-        {(sheet || campagneSheet) && (
-          <button onClick={() => setSheetOpen(true)} style={{ border: `1px solid ${TOW.lineStrong}`, borderRadius: 9, background: TOW.cardLt, color: TOW.ink, cursor: 'pointer', padding: '6px 12px', fontFamily: display, fontSize: 12 }}>Battlefield</button>
-        )}
-        {weergaveKnop}
-        {uitKnop}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6, minWidth: 0 }}>
+          <div style={{ flex: 1, minWidth: 0 }}>{battleBar}</div>
+          {(sheet || campagneSheet) && (
+            <button onClick={() => setSheetOpen(true)} style={{ ...knopStijl, background: TOW.cardLt, color: TOW.ink }}>Battlefield</button>
+          )}
+          {stopKnoppen}
+        </div>
+        {battleBar && reminderStrip}
       </div>
 
-      <div style={{ flexShrink: 0, padding: 10 }}>{kantKeuze}</div>
-
-      {battleBar && (
-        <div style={{ flexShrink: 0, padding: '0 10px 8px', maxWidth: 620, width: '100%', margin: '0 auto', boxSizing: 'border-box', display: 'flex', flexDirection: 'column', gap: 6 }}>
-          {battleBar}
-          {reminderStrip}
+      {kiesModus ? (
+        <>
+          <div style={{ flexShrink: 0, maxHeight: '32vh', overflowY: 'auto', display: 'flex', flexWrap: 'wrap', gap: 5, padding: '8px 10px', borderBottom: `1px solid ${TOW.line}` }}>
+            {groups.flatMap((gr) => gr.units).map((u) => pil(u))}
+          </div>
+          <div ref={kiesKaartRef} style={{ flex: 1, minHeight: 0, overflowY: 'auto', padding: '8px 10px 24px' }}>
+            {objectivesPaneel}
+            {versterkingPaneel}
+            {selUnit && army ? unitKaart(army, selUnit, { collapsed: false }) : null}
+          </div>
+        </>
+      ) : (
+        <div style={{ flex: 1, minHeight: 0, overflowY: 'auto', padding: '4px 12px 28px', maxWidth: 620, width: '100%', margin: '0 auto' }}>
+          {objectivesPaneel}
+          {versterkingPaneel}
+          {rosterBody}
         </div>
       )}
-
-      <div style={{ flex: 1, minHeight: 0, overflowY: 'auto', padding: '4px 12px 28px', maxWidth: 620, width: '100%', margin: '0 auto' }}>
-        {objectivesPaneel}
-        {army && (
-          <div style={{ fontFamily: serif, fontStyle: 'italic', fontSize: 14, color: TOW.parchDim, margin: '4px 2px 12px' }}>
-            {teamModus ? legerKop(speler) : side === 'me' ? myName || 'You' : opponentName || 'Opponent'} — {army.faction || army.name}{army.points != null ? ` · ${army.points} pts` : ''} · {afield}/{army.units.length} afield
-          </div>
-        )}
-        {versterkingPaneel}
-        {kiesModus ? kiesBody : rosterBody}
-
-      </div>
       {sheetModal}
       {endModal}
     </div>
