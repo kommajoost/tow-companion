@@ -4,9 +4,8 @@ import { useGame } from '../../game';
 import { useBackClose } from '../../lib/backStack';
 import { parseArmyList } from '../../lib/armyParser';
 import { makeTroopTypeLookup, enrichArmyTroopTypes } from '../../lib/troopTypes';
-import { unitArmourSave, unitSize, unitTotalStrength } from '../../lib/armyRules';
-import { UnitCard, korteStand, metProfielen, type ScenarioKnop } from './UnitCard';
-import { useStatIndex } from '../../lib/useStatIndex';
+import { unitSize, unitTotalStrength } from '../../lib/armyRules';
+import { UnitCard, korteStand, type ScenarioKnop } from './UnitCard';
 import { BattleBar } from './BattleBar';
 import { ReminderStrip, type KantReminders } from './ReminderStrip';
 import { useCampaignBattle } from './useCampaignBattle';
@@ -111,7 +110,6 @@ export function GameView() {
   // unit kunnen zien, met al zijn stats en regels, en gewoon in de lijst"). Welke unit z'n mount-tab open heeft;
   // een gewone keuze in de lijst opent altijd de rider.
   const [mountTab, setMountTab] = useState<{ id: string; i: number } | null>(null);
-  const statIdx = useStatIndex();
   const [telefoonWeergave, setTelefoonWeergave] = usePersistentState<'lijst' | 'kies'>('tow:game-weergave', 'lijst');
   const kiesKaartRef = useRef<HTMLDivElement>(null);
   const kies = (unitId: string, mount: number | null = null) => {
@@ -567,15 +565,8 @@ export function GameView() {
     const uit = stand.some((s) => s.t === 'Removed' || s.t === 'Destroyed');
     const gekozen = u.id === selId;
     const aantal = unitSize(u);
-    // SNEL ZICHT (Joost 28-10-2026: "de lijst mag iets groter … misschien wat bij zetten voor snel zicht"): onder
-    // de naam de kernstats van het eerste profiel (met de mount-bonussen er al in) en de armour save, en bij
-    // een character z'n mount. De mount heeft geen eigen regel meer in de lijst; hij staat als tabje op de kaart.
-    // Een leger dat zonder profielen in het potje kwam (de statline-index was er bij de start nog niet), vult
-    // de kaart aan uit de index; de kieslijst doet nu hetzelfde, anders bleef deze regel leeg.
-    const metStats = metProfielen(u, statIdx, army?.faction);
-    const kern = (metStats.profiles[0]?.stats ?? []).filter((st) => ['WS', 'S', 'T', 'W', 'A'].includes(st.k.toUpperCase()));
-    const save = unitArmourSave(metStats);
-    const mountNaam = u.mounts?.[0]?.name.replace(/s*{[^}]*}/g, '').trim();
+    // Alleen de naam en de stand (Joost 28-10-2026): een regel met snelle stats eronder voegde aan tafel
+    // niets toe — de stats staan rechts op de kaart.
     return (
       <button
         key={u.id}
@@ -603,15 +594,6 @@ export function GameView() {
             </span>
           )}
         </span>
-        {(kern.length > 0 || save || mountNaam) && (
-          <span style={{ display: 'block', marginTop: 1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontFamily: serif, fontSize: 11.5, color: TOW.parchDim }}>
-            {mountNaam && <span style={{ fontStyle: 'italic' }}>on {mountNaam}<span style={{ color: TOW.faint }}> · </span></span>}
-            {kern.map((st, i) => (
-              <span key={st.k}>{i > 0 ? ' ' : ''}<span style={{ color: TOW.muted, fontSize: 10 }}>{st.k}</span>{st.v}</span>
-            ))}
-            {save && <span>{kern.length > 0 && <span style={{ color: TOW.faint }}> · </span>}<span style={{ color: TOW.muted, fontSize: 10 }}>Sv</span>{save.save}+</span>}
-          </span>
-        )}
       </button>
     );
   };
