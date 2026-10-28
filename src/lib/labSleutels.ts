@@ -8,9 +8,10 @@ export const LAB_PREFIX = 'tow:lab:';
 
 /** De battle-sleutels die in het lab een eigen kopie krijgen. Alles wat een potje, een briefing, de
  *  wizard of het scherm onthoudt; gebruikersdata (`tow:lists`, sync, account) blijft gedeeld en wordt
- *  door het lab alleen gelezen. */
+ *  door het lab alleen gelezen. `tow:solo-host2`/`tow:solo-guest2` (Joost 28-10-2026, 2v2-legers) horen
+ *  erbij: anders zou `leaveGame` in het lab de bondgenoot van een echt lopend 2v2-potje wissen. */
 const OMGELEID = new Set([
-  'tow:game', 'tow:solo-mine', 'tow:solo-opp', 'tow:solo-tracker',
+  'tow:game', 'tow:solo-mine', 'tow:solo-opp', 'tow:solo-tracker', 'tow:solo-host2', 'tow:solo-guest2',
   'tow:campaign-battle', 'tow:battle-wizard-open', 'tow:battle', 'tow:battle-draft',
   'tow:scenario-test', 'tow:test-battle', 'tow:screen', 'tow:tab', 'tow:c:phase', 'tow:c:sub',
 ]);

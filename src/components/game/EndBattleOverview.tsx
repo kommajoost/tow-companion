@@ -8,8 +8,16 @@ import { VpPanel } from './VpPanel';
 import { useCampagneUitslag } from './useCampagneUitslag';
 import { isScenarioTestCode } from '../../lib/scenarioTest';
 import { ScenarioTestRapport } from './ScenarioTestRapport';
-import type { Army, GameTracker } from '../../types';
-import type { VpResultaat } from '../../lib/victoryPoints';
+import type { Army, GameTracker, TeamStoel } from '../../types';
+import type { TeamVpResultaat, VpResultaat } from '../../lib/victoryPoints';
+import { stoelenVan, TEAM_NAAM, type Team } from '../../lib/teams';
+
+/** 2 VS 2 (Joost 28-10-2026): wat het eindscherm extra nodig heeft voor een teampotje. `res` is dezelfde
+ *  uitslag als de gewone `res`-prop (host = team A, guest = team B), plus de uitsplitsing per speler. */
+export interface TeamEinde {
+  res: TeamVpResultaat;
+  spelers: { stoel: TeamStoel; naam: string; army: Army | null }[];
+}
 
 const eb = engraved as React.CSSProperties;
 const display = towFont.display;
@@ -33,6 +41,7 @@ export function EndBattleOverview({
   hostArmy,
   guestArmy,
   onClose,
+  team,
 }: {
   res: VpResultaat;
   hostName: string;
@@ -40,6 +49,8 @@ export function EndBattleOverview({
   hostArmy: Army | null;
   guestArmy: Army | null;
   onClose: () => void;
+  /** 2v2 (28-10-2026): aanwezig = teampotje. hostName/guestName zijn dan de teamnamen. */
+  team?: TeamEinde;
 }) {
   // Alleen `tracker` nodig voor de per-unit casualty-uitlezing; de modal muteert 'm niet.
   const { tracker, code } = useGame();
@@ -55,6 +66,8 @@ export function EndBattleOverview({
   // verdicts op een scherm. Los potje = geen campagne-battle = de rulebook-regel blijft, want dan is
   // die juist. Zie useCampagneUitslag.
   const camp = useCampagneUitslag(res);
+  // 2v2: per team de namen van beide spelers, voor onder de teamnaam ("You & Ally").
+  const ledenVan = (t: Team) => stoelenVan(t).map((st) => team?.spelers.find((p) => p.stoel === st)?.naam ?? st).join(' & ');
   const winnaarKant = camp ? camp.winnaar : res.winnaar;
   const winnerName = winnaarKant === 'host' ? hostName : winnaarKant === 'guest' ? guestName : null;
   const uitslagLabel = camp ? camp.label : UITSLAG_LABEL[res.uitslag];
@@ -95,6 +108,11 @@ export function EndBattleOverview({
         <div style={{ fontFamily: display, fontWeight: 700, fontSize: 24, lineHeight: 1.1, color: headlineColor }}>
           {winnerName ? `${winnerName} — ${uitslagLabel}` : 'Draw'}
         </div>
+        {team && (
+          <div style={{ fontFamily: serif, fontStyle: 'italic', fontSize: 13, color: TOW.parchDim, marginTop: 3 }}>
+            {winnaarKant === 'guest' ? ledenVan('B') : winnaarKant === 'host' ? ledenVan('A') : `${ledenVan('A')} vs ${ledenVan('B')}`}
+          </div>
+        )}
         {res.verschil > 0 && (
           <div style={{ fontFamily: serif, fontSize: 13.5, color: TOW.parchDim, marginTop: 3 }}>
             +{res.verschil} VP
@@ -104,24 +122,32 @@ export function EndBattleOverview({
 
         {/* 2 — Prominente VP-stand: twee grote score-blokken (ScoreCell-look uit VpPanel) */}
         <div style={{ display: 'flex', alignItems: 'stretch', gap: 8, marginTop: 16 }}>
-          <ScoreCell name={hostName} vp={res.hostVp} leads={res.winnaar === 'host'} />
-          <ScoreCell name={guestName} vp={res.guestVp} leads={res.winnaar === 'guest'} />
+          <ScoreCell name={team ? `${hostName} · ${ledenVan('A')}` : hostName} vp={res.hostVp} leads={res.winnaar === 'host'} />
+          <ScoreCell name={team ? `${guestName} · ${ledenVan('B')}` : guestName} vp={res.guestVp} leads={res.winnaar === 'guest'} />
         </div>
+
+        {/* 2a — 2v2: wat elke speler bijdroeg (28-10-2026) */}
+        {team && <PerSpeler team={team} />}
 
         {/* 2b — Bonussen & objectives + regel-referentie (verhuisd uit de losse banner; telt mee in de VP hierboven) */}
         <div style={{ marginTop: 14 }}>
-          <VpPanel res={res} hostName={hostName} guestName={guestName} hideOutcome />
+          <VpPanel res={res} hostName={hostName} guestName={guestName} hideOutcome stoelen={team?.spelers.map((p) => ({ zijde: p.stoel, naam: p.naam }))} />
         </div>
 
-        {/* 3 — Casualty-samenvatting per kant (host, dan guest) */}
+        {/* 3 — Casualty-samenvatting per kant (host, dan guest); in 2v2 per speler */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10, marginTop: 16 }}>
-          <CasualtySide seat="host" name={hostName} army={hostArmy} tracker={tracker} />
-          <CasualtySide seat="guest" name={guestName} army={guestArmy} tracker={tracker} />
+          {team ? team.spelers.map((p) => (
+            <CasualtySide key={p.stoel} seat={p.stoel} name={p.naam} army={p.army} tracker={tracker} />
+          )) : (<>
+            <CasualtySide seat="host" name={hostName} army={hostArmy} tracker={tracker} />
+            <CasualtySide seat="guest" name={guestName} army={guestArmy} tracker={tracker} />
+          </>)}
         </div>
 
-        {/* 4 — Footer: campagne-rapportage (zelf-detecterend; null bij ad-hoc) + Close */}
+        {/* 4 — Footer: campagne-rapportage (zelf-detecterend; null bij ad-hoc) + Close. Een 2v2-potje is
+            altijd solo en nooit een campagne-battle, dus daar geen rapport. */}
         <div style={{ marginTop: 16 }}>
-          {scenarioTest ? (
+          {team ? null : scenarioTest ? (
             // 23-10-2026: het rapport als VOORBEELD (wat er gemeld zou worden), zonder het te versturen.
             <ScenarioTestRapport res={res} camp={camp} hostName={hostName} guestName={guestName} hostArmy={hostArmy} guestArmy={guestArmy} />
           ) : (
@@ -173,7 +199,8 @@ function CasualtySide({
   army,
   tracker,
 }: {
-  seat: 'host' | 'guest';
+  /** host/guest, of in 2v2 ook host2/guest2 (28-10-2026). */
+  seat: TeamStoel;
   name: string;
   army: Army | null;
   tracker: GameTracker;
@@ -216,6 +243,52 @@ function CasualtySide({
           <div style={{ fontFamily: serif, fontSize: 11.5, color: TOW.muted, marginTop: 8 }}>{n} unit{n === 1 ? '' : 's'} with losses</div>
         </>
       )}
+    </div>
+  );
+}
+
+/** 2 VS 2 (Joost 28-10-2026): per speler wat hij aan zijn team bijdroeg. "Scored" = zijn eigen bonussen
+ *  (General/BSB/standaards/anything else); de team-objectives staan apart op de teamregel. "Gave up" = de
+ *  Dead-or-Fled-VP die het vijandelijke team op zijn leger scoorde. Team-VP = wat de vijanden opgaven +
+ *  wat de eigen spelers scoorden + de objectives. */
+function PerSpeler({ team }: { team: TeamEinde }) {
+  const r = team.res;
+  const cel: React.CSSProperties = { fontFamily: serif, fontSize: 12.5, color: TOW.parchDim, textAlign: 'right', whiteSpace: 'nowrap' };
+  const kop: React.CSSProperties = { ...eb, fontSize: 7, color: TOW.muted, textAlign: 'right' };
+  return (
+    <div data-testid="einde-per-speler" style={{ marginTop: 14, border: `1px solid ${TOW.line}`, borderRadius: 10, padding: '10px 12px', background: 'rgba(0,0,0,0.02)' }}>
+      <div style={{ ...eb, fontSize: 8, color: TOW.muted, marginBottom: 8 }}>Per player</div>
+      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) auto auto', columnGap: 14, rowGap: 5, alignItems: 'baseline' }}>
+        <span />
+        <span style={kop}>Scored</span>
+        <span style={kop}>Gave up</span>
+        {(['A', 'B'] as const).map((t) => {
+          const obj = r.spelers[t === 'A' ? 'host' : 'guest'].objectives;
+          const sc = t === 'A' ? r.scenarioA : r.scenarioB;
+          return [
+            <span key={`${t}-kop`} style={{ gridColumn: '1 / -1', ...eb, fontSize: 7.5, color: TOW.goldDeep, marginTop: t === 'B' ? 6 : 0 }}>
+              {TEAM_NAAM[t]} · {t === 'A' ? r.hostVp : r.guestVp} VP
+            </span>,
+            ...stoelenVan(t).flatMap((st) => {
+              const p = team.spelers.find((x) => x.stoel === st);
+              const v = r.spelers[st];
+              return [
+                <span key={`${st}-n`} style={{ minWidth: 0, fontFamily: serif, fontSize: 13, color: TOW.ink, overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>{p?.naam ?? st}{p && !p.army ? ' (no army)' : ''}</span>,
+                <span key={`${st}-s`} style={cel}>+{v.bonus}</span>,
+                <span key={`${st}-g`} style={cel}>{v.afgestaan}</span>,
+              ];
+            }),
+            ...(obj + sc > 0 ? [
+              <span key={`${t}-o`} style={{ fontFamily: serif, fontStyle: 'italic', fontSize: 12.5, color: TOW.parchDim }}>Team objectives</span>,
+              <span key={`${t}-ov`} style={cel}>+{obj + sc}</span>,
+              <span key={`${t}-og`} />,
+            ] : []),
+          ];
+        })}
+      </div>
+      <div style={{ fontFamily: serif, fontStyle: 'italic', fontSize: 11, color: TOW.muted, marginTop: 8, lineHeight: 1.35 }}>
+        Team VP = what both enemy players gave up (dead or fled) + what both team players scored + team objectives.
+      </div>
     </div>
   );
 }

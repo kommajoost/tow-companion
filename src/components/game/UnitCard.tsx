@@ -157,23 +157,7 @@ export function UnitCard({
   // Kieslijst-modus (zie `selected`): de korte stand onder de naam. Zelfde afleiding als WoundTracker
   // (modellen over = start − floor(lost / W)); alleen weergave, er wordt hier niets geschreven.
   const kiesRij = selected !== undefined && collapsed;
-  const stand: { t: string; rood: boolean }[] = [];
-  if (kiesRij && tracked) {
-    const totaal = unitTotalStrength(unit);
-    const start = unitSize(unit);
-    const wpm = Math.max(1, woundsPerModel(unit));
-    const verloren = Math.min(totaal, Math.max(0, lost ?? 0));
-    if (weg) stand.push({ t: 'Removed', rood: true });
-    else if (verloren >= totaal) stand.push({ t: 'Destroyed', rood: true });
-    else if (verloren > 0) {
-      stand.push(start > 1
-        ? { t: `${Math.max(0, start - Math.floor(verloren / wpm))}/${start} models`, rood: false }
-        : { t: `${totaal - verloren}/${totaal} W`, rood: false });
-    }
-    if (fleeing && !dead) stand.push({ t: 'Fleeing', rood: true });
-    const k = Math.max(0, Math.round(kills ?? 0));
-    if (k > 0) stand.push({ t: `${k} kill${k === 1 ? '' : 's'}`, rood: false });
-  }
+  const stand = kiesRij && tracked ? korteStand(unit, { lost, weg, fleeing, kills }) : [];
   // Chosen magic items (weapons, armour, talismans, runes, banners, …) have no rule page; tapping one
   // in the loadout line opens its info sheet (flavour + special rules) instead of the rule sheet.
   const [info, setInfo] = useState<InfoSheetData | null>(null);
@@ -487,4 +471,31 @@ export function UnitCard({
       <InfoSheet info={info} onClose={() => setInfo(null)} />
     </section>
   );
+}
+
+/** De korte stand van een unit in het spel: "Removed", "Destroyed", "4/5 models" of "2/3 W", "Fleeing",
+ *  "1 kill". Zelfde afleiding als WoundTracker (modellen over = start − floor(lost / W)); alleen
+ *  weergave. Eén functie voor de ingeklapte kaart én de compacte kieslijst in het spelscherm (28-10-2026),
+ *  zodat die twee nooit iets anders zeggen. */
+export function korteStand(
+  unit: ArmyUnit,
+  s: { lost?: number; weg?: boolean; fleeing?: boolean; kills?: number },
+): { t: string; rood: boolean }[] {
+  const stand: { t: string; rood: boolean }[] = [];
+  const totaal = unitTotalStrength(unit);
+  const start = unitSize(unit);
+  const wpm = Math.max(1, woundsPerModel(unit));
+  const verloren = Math.min(totaal, Math.max(0, s.lost ?? 0));
+  const dood = verloren >= totaal || !!s.weg;
+  if (s.weg) stand.push({ t: 'Removed', rood: true });
+  else if (verloren >= totaal) stand.push({ t: 'Destroyed', rood: true });
+  else if (verloren > 0) {
+    stand.push(start > 1
+      ? { t: `${Math.max(0, start - Math.floor(verloren / wpm))}/${start} models`, rood: false }
+      : { t: `${totaal - verloren}/${totaal} W`, rood: false });
+  }
+  if (s.fleeing && !dood) stand.push({ t: 'Fleeing', rood: true });
+  const k = Math.max(0, Math.round(s.kills ?? 0));
+  if (k > 0) stand.push({ t: `${k} kill${k === 1 ? '' : 's'}`, rood: false });
+  return stand;
 }

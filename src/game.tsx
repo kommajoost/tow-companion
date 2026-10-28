@@ -12,7 +12,8 @@ import { supabase, TOW_GAMES } from './lib/supabase';
 import { usePersistentState } from './store';
 import type { BattleVeteranen, VetUnit } from './lib/campaignBattle';
 import { formatDef, type BattleSheet } from './lib/battleSheet';
-import type { Army, GameRow, GameSummary, GameTracker, GameWeer } from './types';
+import type { Army, GameRow, GameSummary, GameTracker, GameWeer, TeamStoel } from './types';
+import { schoneNamen } from './lib/teams';
 
 type Seat = 'host' | 'guest' | 'solo';
 
@@ -29,6 +30,17 @@ export interface GameRegels {
    *  dus niet los mee te sturen (zie `metSheet`). De campagne stuurt geen sheet: die krijgt haar
    *  briefing van de server en blijft die losse velden gebruiken. */
   sheet?: BattleSheet;
+}
+
+/** 2 VS 2 (Joost 28-10-2026, alleen solo): de twee extra legers en de optionele spelernamen waarmee een
+ *  teampotje start. Meegeven aan `startSolo` = teampotje; weglaten = gewoon 1v1 zoals altijd. */
+export interface SoloTeamStart {
+  /** Speler 2, de bondgenoot van "You" (team A, stoel `host2`). */
+  ally?: Army | null;
+  /** Speler 4, de tweede tegenstander (team B, stoel `guest2`). */
+  opponent2?: Army | null;
+  /** Optionele korte namen per stoel; leeg = standaardlabel (lib/teams.ts). */
+  spelers?: Partial<Record<TeamStoel, string>>;
 }
 
 interface GameContextValue {
@@ -53,9 +65,15 @@ interface GameContextValue {
   /** Start a local (solo) game. `code` (22-10-2026) is only for the scenario test: a solo game that
    *  still carries a campaign-style code so the campaign panels can find their (local) battle. A solo
    *  game never reads or writes `tow_games`, code or no code. */
-  startSolo: (army?: Army | null, regels?: GameRegels, code?: string | null, opponent?: Army | null) => void;
+  startSolo: (army?: Army | null, regels?: GameRegels, code?: string | null, opponent?: Army | null, team?: SoloTeamStart) => void;
   setMyArmy: (army: Army) => void;
   setOpponentArmy: (army: Army) => void;
+  /** 2 VS 2 (28-10-2026, alleen solo): het leger van de bondgenoot (stoel `host2`). Buiten solo altijd null. */
+  allyArmy: Army | null;
+  /** 2 VS 2: het leger van de tweede tegenstander (stoel `guest2`). Buiten solo altijd null. */
+  opponent2Army: Army | null;
+  setAllyArmy: (army: Army) => void;
+  setOpponent2Army: (army: Army) => void;
   /** Shared battle state (round, VP, per-unit casualties). */
   tracker: GameTracker;
   setTracker: (t: GameTracker) => void;
@@ -171,6 +189,10 @@ function normTracker(t: GameTracker | null | undefined): GameTracker {
   if (typeof uit.battleMarch !== 'boolean') delete uit.battleMarch;
   uit.weer = normWeer(uit.weer);
   if (uit.weer === null && !('weer' in t)) delete uit.weer;
+  // 2 VS 2 (28-10-2026): alleen de bekende waarde '2v2' telt als teampotje; alles anders is 1v1. De namen
+  // moeten een object zijn (de leesplek valt per stoel terug op het standaardlabel).
+  if (uit.teams !== undefined && uit.teams !== '2v2') delete uit.teams;
+  if (uit.spelers !== undefined && (!uit.spelers || typeof uit.spelers !== 'object')) delete uit.spelers;
   return uit;
 }
 
@@ -254,6 +276,10 @@ export function GameProvider({ children }: { children: ReactNode }) {
   const [soloOpponent, setSoloOpponent] = usePersistentState<Army | null>('tow:solo-opp', null);
   const [soloMine, setSoloMine] = usePersistentState<Army | null>('tow:solo-mine', null);
   const [soloTracker, setSoloTracker] = usePersistentState<GameTracker>('tow:solo-tracker', EMPTY_TRACKER);
+  // 2 VS 2 (Joost 28-10-2026): de twee extra solo-legers, elk op een eigen sleutel net als de twee
+  // hierboven. Alleen een teampotje (`tracker.teams === '2v2'`) leest ze; `leaveGame` maakt ze leeg.
+  const [soloHost2, setSoloHost2] = usePersistentState<Army | null>('tow:solo-host2', null);
+  const [soloGuest2, setSoloGuest2] = usePersistentState<Army | null>('tow:solo-guest2', null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const channelRef = useRef<ReturnType<typeof supabase.channel> | null>(null);
@@ -501,22 +527,39 @@ export function GameProvider({ children }: { children: ReactNode }) {
     [setPersisted],
   );
 
-  const startSolo = useCallback((army?: Army | null, regels?: GameRegels, soloCode?: string | null, opponent?: Army | null) => {
+  const startSolo = useCallback((army?: Army | null, regels?: GameRegels, soloCode?: string | null, opponent?: Army | null, team?: SoloTeamStart) => {
     setError(null);
     if (army) setSoloMine(army); // seed "my army" when a saved/pasted list was chosen at setup
     // Het Scenario lab (23-10-2026) opent met BEIDE legers: de tegenstander gaat meteen mee.
     if (opponent) setSoloOpponent(opponent);
+    // 2 VS 2 (28-10-2026): de twee extra legers. Ook bij een 1v1-start schrijven we ze (leeg): een
+    // achtergebleven bondgenoot van een eerder teampotje hoort niet in een nieuw potje te hangen.
+    setSoloHost2(team ? team.ally ?? null : null);
+    setSoloGuest2(team ? team.opponent2 ?? null : null);
     // Solo speelt lokaal, dus de regels gaan in de lokale tracker (zelfde vorm als online) — inclusief
     // een meegegeven battle sheet. `gestart: true` meteen: in solo zit er niemand aan de andere kant
     // van de tafel om op te wachten, dus een lobby met een "waiting"-regel zou een lege handeling zijn.
     setSoloTracker((t) => {
       const basis = metRegels(t, regels) ?? t;
-      return basis.gestart === true ? basis : { ...basis, gestart: true };
+      const gestart = basis.gestart === true ? basis : { ...basis, gestart: true };
+      // 2 VS 2: de teamvlag + namen erop, of er juist af bij een 1v1-start. Staat er niets van op een
+      // 1v1-tracker, dan geven we hem ONVERANDERD terug (zelfde object als voorheen).
+      if (team) {
+        const namen = schoneNamen(team.spelers);
+        const uit: GameTracker = { ...gestart, teams: '2v2' };
+        if (namen) uit.spelers = namen; else delete uit.spelers;
+        return uit;
+      }
+      if (gestart.teams === undefined && gestart.spelers === undefined) return gestart;
+      const zonder: GameTracker = { ...gestart };
+      delete zonder.teams;
+      delete zonder.spelers;
+      return zonder;
     });
     // De scenario-test (22-10-2026) geeft een code mee, zodat de campagne-panelen hun (lokale) battle
     // vinden. Het blijft solo: de realtime-hook hieronder slaat een solo-code over.
     setPersisted({ seat: 'solo', code: soloCode ? soloCode.trim().toUpperCase() : null });
-  }, [setPersisted, setSoloMine, setSoloOpponent, setSoloTracker]);
+  }, [setPersisted, setSoloMine, setSoloOpponent, setSoloHost2, setSoloGuest2, setSoloTracker]);
 
   // List recent games (last 2 days) for the join lobby. Only lightweight columns — never the
   // army payloads — so it stays small and fast.
@@ -574,6 +617,11 @@ export function GameProvider({ children }: { children: ReactNode }) {
     [seat, code, setSoloOpponent],
   );
 
+  // 2 VS 2 (28-10-2026): de extra legers bestaan alleen in solo, dus deze setters schrijven alleen lokaal.
+  // Buiten solo doen ze niets — een online potje heeft geen derde of vierde stoel.
+  const setAllyArmy = useCallback((army: Army) => { if (seat === 'solo') setSoloHost2(army); }, [seat, setSoloHost2]);
+  const setOpponent2Army = useCallback((army: Army) => { if (seat === 'solo') setSoloGuest2(army); }, [seat, setSoloGuest2]);
+
   // Update the shared battle tracker (round, VP, casualties). Solo: local state.
   // Online: write the `tracker` column so both players see the same battle state.
   const setTracker = useCallback(
@@ -630,9 +678,13 @@ export function GameProvider({ children }: { children: ReactNode }) {
     // dit zou het volgende solo-potje met de legers en de casualties van het vorige beginnen.
     setSoloMine(null);
     setSoloOpponent(null);
+    // 2 VS 2 (28-10-2026): ook de bondgenoot en de tweede tegenstander. De teamvlag zelf staat op de
+    // tracker en verdwijnt met EMPTY_TRACKER, dus een volgend solo-potje begint als gewoon 1v1.
+    setSoloHost2(null);
+    setSoloGuest2(null);
     setSoloTracker(EMPTY_TRACKER);
     setPersisted(null);
-  }, [setPersisted, setSoloMine, setSoloOpponent, setSoloTracker]);
+  }, [setPersisted, setSoloMine, setSoloOpponent, setSoloHost2, setSoloGuest2, setSoloTracker]);
 
   const value = useMemo<GameContextValue>(() => {
     let myArmy: Army | null = null;
@@ -674,6 +726,10 @@ export function GameProvider({ children }: { children: ReactNode }) {
       startSolo,
       setMyArmy,
       setOpponentArmy,
+      allyArmy: seat === 'solo' ? soloHost2 : null,
+      opponent2Army: seat === 'solo' ? soloGuest2 : null,
+      setAllyArmy,
+      setOpponent2Army,
       // Ook de SOLO-tracker gaat door `normTracker`: sinds 13-09 komt hij uit localStorage, en dat
       // is net zo goed opgeslagen data van buiten deze sessie als een rij uit de cloud.
       tracker: seat === 'solo' ? normTracker(soloTracker) : normTracker(game?.tracker),
@@ -688,6 +744,8 @@ export function GameProvider({ children }: { children: ReactNode }) {
     game,
     soloMine,
     soloOpponent,
+    soloHost2,
+    soloGuest2,
     soloTracker,
     busy,
     error,
@@ -698,6 +756,8 @@ export function GameProvider({ children }: { children: ReactNode }) {
     startSolo,
     setMyArmy,
     setOpponentArmy,
+    setAllyArmy,
+    setOpponent2Army,
     setTracker,
     setSheet,
     startBattle,

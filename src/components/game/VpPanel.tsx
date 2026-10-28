@@ -7,6 +7,7 @@ import { useCampagneUitslag } from './useCampagneUitslag';
 import { useObjectives, useScenarioBonus } from './useObjectives';
 import { ScenarioPosten } from './ScenarioPosten';
 import { postenVoor, type ScenarioBonus } from '../../lib/scenarioBonus';
+import type { TeamStoel } from '../../types';
 
 const eb = engraved as React.CSSProperties;
 const display = towFont.display;
@@ -34,13 +35,17 @@ const UITSLAG_LABEL: Record<'draw' | 'victory' | 'crushing', string> = {
 //
 // `compact` = variant voor de smalle wide-sidebar: kleinere headline + iets strakkere spacing.
 // De phone-variant laat 'm weg (ruimere weergave).
-export function VpPanel({ compact = false, res, hostName, guestName, hideOutcome = false }: {
+export function VpPanel({ compact = false, res, hostName, guestName, hideOutcome = false, stoelen }: {
   compact?: boolean;
   res: VpResultaat;
   hostName: string;
   guestName: string;
   /** Verberg de uitslag-badge (bv. in het End-battle-overzicht, waar de headline de uitslag al toont). */
   hideOutcome?: boolean;
+  /** 2 VS 2 (Joost 28-10-2026): één bonus-blok per speler in plaats van host/guest. De team-objectives
+   *  en scenario-posten staan alleen bij `host` (team A) en `guest` (team B), zodat ze één keer tellen;
+   *  host2/guest2 krijgen alleen hun eigen General/BSB/standaards/"anything else". Weglaten = 1v1. */
+  stoelen?: { zijde: TeamStoel; naam: string }[];
 }) {
   const { tracker, setTracker } = useGame();
   const [rulesOpen, setRulesOpen] = useState(false);
@@ -62,7 +67,7 @@ export function VpPanel({ compact = false, res, hostName, guestName, hideOutcome
   const schaal = vpSchaal(tracker.battleMarch);
 
   // Muteer één bonus-kant en sync via setTracker (last-write-wins, net als de rest van de tracker).
-  const setBonus = (side: 'host' | 'guest', patch: Partial<VpBonus>) => {
+  const setBonus = (side: TeamStoel, patch: Partial<VpBonus>) => {
     setTracker({
       ...tracker,
       bonus: { ...tracker.bonus, [side]: { ...tracker.bonus?.[side], ...patch } },
@@ -105,7 +110,17 @@ export function VpPanel({ compact = false, res, hostName, guestName, hideOutcome
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke={TOW.muted} strokeWidth="2.6" style={{ flexShrink: 0, transform: bonusOpen ? 'rotate(90deg)' : 'none', transition: 'transform .18s ease' }} aria-hidden><path d="M9 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" /></svg>
         <span style={{ ...eb, fontSize: 8.5, color: TOW.muted }}>Bonuses &amp; objectives (General, standards, scenario)</span>
       </button>
-      {bonusOpen && (
+      {bonusOpen && stoelen && (
+        <div style={{ marginTop: 8, display: 'flex', flexDirection: 'column', gap: 10 }}>
+          {stoelen.map(({ zijde, naam }) => {
+            const hoofd = zijde === 'host' || zijde === 'guest';
+            return (
+              <BonusEditor key={zijde} name={naam} zijde={zijde} bonus={tracker.bonus?.[zijde]} onSet={(p) => setBonus(zijde, p)} compact={compact} objectives={hoofd ? objDefs : []} schaal={schaal} scenario={hoofd ? scenario : null} />
+            );
+          })}
+        </div>
+      )}
+      {bonusOpen && !stoelen && (
         <div style={{ marginTop: 8 }}>
           <BonusEditor name={hostName} zijde="host" bonus={tracker.bonus?.host} onSet={(p) => setBonus('host', p)} compact={compact} objectives={objDefs} schaal={schaal} scenario={scenario} />
           <div style={{ height: 10 }} />
@@ -139,8 +154,9 @@ function BonusEditor({
   schaal,
 }: {
   name: string;
-  /** Welke stoel (host = aanvaller): bepaalt welke scenario-posten deze kant kan scoren. */
-  zijde: 'host' | 'guest';
+  /** Welke stoel (host = aanvaller): bepaalt welke scenario-posten deze kant kan scoren. In 2v2 ook
+   *  host2/guest2 (28-10-2026) — die krijgen nooit scenario-posten (scenario = null). */
+  zijde: TeamStoel;
   scenario: ScenarioBonus | null;
   bonus: VpBonus | undefined;
   onSet: (patch: Partial<VpBonus>) => void;
@@ -149,6 +165,8 @@ function BonusEditor({
   /** De actieve VP-schaal (Warhammer Battles of Battle March) — bepaalt de bedragen in de labels. */
   schaal: VpSchaal;
 }) {
+  // Scenario-posten bestaan alleen voor de hoofdstoelen (host = aanvaller, guest = verdediger).
+  const scZijde: 'host' | 'guest' | null = zijde === 'host' || zijde === 'guest' ? zijde : null;
   const generalDown = bonus?.generalDown ?? false;
   const bsbDown = bonus?.bsbDown ?? false;
   const standaards = Math.max(0, bonus?.standaards ?? 0);
@@ -213,7 +231,7 @@ function BonusEditor({
         })}
 
         {/* Scenario-posten uit de sheet (Act 3+, 22-10-2026): tellen mee in de VP en dus in de uitslag. */}
-        {postenVoor(scenario, zijde).length > 0 && <ScenarioPosten def={scenario} zijde={zijde} compact={compact} />}
+        {scZijde && postenVoor(scenario, scZijde).length > 0 && <ScenarioPosten def={scenario} zijde={scZijde} compact={compact} />}
 
         {/* Vrij veld voor overige/onbekende objective-VP (catch-all naast de bovenstaande). Het heette
             "Other objective VP" en dat was onduidelijk (Joost 21-08-2026): je zag niet WELK objectief er
@@ -223,7 +241,7 @@ function BonusEditor({
           <span style={{ flex: 1, minWidth: 0, fontFamily: serif, fontSize: 12.5, color: TOW.parchDim }}>
             Anything else (+)
             <span style={{ display: 'block', fontStyle: 'italic', fontSize: 10.5, color: TOW.muted, lineHeight: 1.35 }}>
-              {objectives.length || postenVoor(scenario, zijde).length
+              {objectives.length || (scZijde && postenVoor(scenario, scZijde).length)
                 ? 'Only for VP not covered by the objectives listed above.'
                 : 'Free field — use it for scenario VP this game does not list.'}
             </span>

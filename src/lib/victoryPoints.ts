@@ -23,7 +23,8 @@
 //       `objectives` (zie objectiveVp.ts, sleutels bm-troves/bm-landmark).
 //     - De WIN-DREMPELS zijn NIET anders: /battle-march heeft geen eigen marge-pagina en linkt terug
 //       naar de gewone uitslag-regel. 100 meer = victory, 2× = crushing, in beide formaten.
-import type { Army, ArmyUnit, GameTracker } from '../types';
+import type { Army, ArmyUnit, GameTracker, TeamStoel } from '../types';
+import { leesKillVerwijzing, vijandStoelen } from './teams';
 import { unitTotalStrength } from './armyRules';
 import { scenarioVp, type ScenarioBonus, type ScenarioStand } from './scenarioBonus';
 import { effectieveStanden, gedoodDoorVijand, type ScenarioUnits } from './scenarioUnits';
@@ -161,4 +162,114 @@ export function berekenVictory(
     uitslag = win >= 2 * verl ? 'crushing' : 'victory'; // "twice as many VP" → crushing
   }
   return { hostVp, guestVp, verschil, winnaar, uitslag };
+}
+
+// ══════════════════ 2 VS 2 (Joost 28-10-2026, alleen solo) ══════════════════════════════════════════
+// Vier spelers in twee teams: team A = host + host2, team B = guest + guest2 (zie lib/teams.ts).
+// `berekenVictory` hierboven blijft ONAANGEROERD: elk 1v1-potje (solo, host, join, campagne) rekent
+// precies als voorheen. Dit is een aparte ingang die alleen GameView aanroept bij `tracker.teams === '2v2'`.
+
+/** De vier legers van een teampotje. Een lege stoel (nog geen leger) is null en levert 0 VP. */
+export type TeamLegers = Record<TeamStoel, Army | null>;
+
+/** Wat één speler bijdraagt, voor het per-speler-overzicht in End battle. */
+export interface SpelerVp {
+  /** Dead-or-Fled-VP die het VIJANDELIJKE team scoort op het leger van deze speler. */
+  afgestaan: number;
+  /** De eigen handmatige bonussen van deze speler (General/BSB/standaards/"anything else") — zonder de
+   *  team-objectives, die staan apart in `objectives`. Telt mee voor zijn team. */
+  bonus: number;
+  /** Team-objectives (alleen bij `host` en `guest`, de stoel waarop ObjectivesTracker ze zet); 0 bij
+   *  host2/guest2. */
+  objectives: number;
+}
+
+/** Het resultaat van een teampotje. BEWUST dezelfde vorm als VpResultaat, met host = TEAM A en guest =
+ *  TEAM B (ook `winnaar: 'host'` = team A wint). Zo kunnen de BattleBar, het VP-paneel en het
+ *  einde-overzicht het ongewijzigd lezen. `spelers` is de uitsplitsing per stoel. */
+export interface TeamVpResultaat extends VpResultaat {
+  spelers: Record<TeamStoel, SpelerVp>;
+  /** Scenario-VP (campagne-sheet) per team; in een solo-teampotje altijd 0. */
+  scenarioA: number;
+  scenarioB: number;
+}
+
+/** De team-objectives van één bonus (de `objectives`-map), zoals bonusVp ze telt. */
+const objectivesVp = (b: VpBonus | undefined): number =>
+  Object.values(b?.objectives ?? {}).reduce((a, c) => a + Math.max(0, Math.round(c || 0)), 0);
+
+/**
+ * Kill-VP tegen het leger van één 2v2-stoel. Zelfde rekenregel als `killVp` (unitVp per unit, de eigen
+ * tracker onder `stoel:unitId`), maar "gedood door de vijand" leest ALLEEN de kill-logs van het
+ * vijandelijke TEAM, en alleen verwijzingen die naar DEZE stoel wijzen (`stoel:unitId`, zie
+ * vijandUnitsVoor in lib/teams.ts). Waarom niet gewoon killVp: die telt elke kill-log behalve die van
+ * de eigen stoel — in 2v2 dus ook die van je bondgenoot, en bij twee keer dezelfde lijst zou een kill op
+ * de ene vijand ook de andere vijand raken. Een kale id (zonder stoel) telt als terugval voor elk
+ * vijandelijk leger dat die id heeft.
+ */
+export function teamKillVp(leger: Army | null, stoel: TeamStoel, tracker: GameTracker | null): number {
+  if (!leger) return 0;
+  const vijanden = vijandStoelen(stoel);
+  const gedood = new Set<string>();
+  for (const [sleutel, track] of Object.entries(tracker?.units ?? {})) {
+    const van = sleutel.slice(0, sleutel.indexOf(':'));
+    if (!(vijanden as string[]).includes(van)) continue;
+    for (const d of (track as { killDetails?: { unit?: string }[] })?.killDetails ?? []) {
+      if (!d?.unit) continue;
+      const ref = leesKillVerwijzing(d.unit);
+      if (ref.stoel === null || ref.stoel === stoel) gedood.add(ref.id);
+    }
+  }
+  let vp = 0;
+  for (const u of leger.units) {
+    vp += unitVp(u, tracker?.units?.[`${stoel}:${u.id}`] as VpUnitTrack | undefined, gedood.has(u.id));
+  }
+  return vp;
+}
+
+/**
+ * De team-uitslag van een solo-2v2-potje.
+ *   team A VP = teamKillVp(guest) + teamKillVp(guest2) + bonus(host) + bonus(host2) [+ scenario A]
+ *   team B VP = teamKillVp(host)  + teamKillVp(host2)  + bonus(guest) + bonus(guest2) [+ scenario B]
+ * De team-objectives tellen ÉÉN keer per team: alleen die op `host`/`guest` (waar ObjectivesTracker ze
+ * zet). Mocht er op host2/guest2 toch een `objectives`-map staan, dan telt die niet mee.
+ * Marges zoals altijd: ≥100 VP verschil = victory, winnaar ≥ 2× verliezer = crushing.
+ */
+export function berekenTeamVictory(
+  legers: TeamLegers,
+  tracker: GameTracker | null,
+  battleMarch: boolean = tracker?.battleMarch === true,
+  scenario: ScenarioBonus | null = null,
+): TeamVpResultaat {
+  const schaal = vpSchaal(battleMarch);
+  const b = tracker?.bonus ?? {};
+  // Scenario-posten (campagne-sheet) per team, via de hoofdstoelen — in solo is er geen campagne-sheet.
+  const st = effectieveStanden(scenario, b.host, b.guest, legers.host, legers.guest, tracker);
+  const sc = scenarioVp(scenario, st.host, st.guest);
+  const speler = (s: TeamStoel): SpelerVp => {
+    const bon = b[s] ?? {};
+    const isHoofd = s === 'host' || s === 'guest';
+    const obj = isHoofd ? objectivesVp(bon) : 0;
+    return {
+      afgestaan: teamKillVp(legers[s], s, tracker),
+      bonus: bonusVp({ ...bon, objectives: undefined }, schaal),
+      objectives: obj,
+    };
+  };
+  const spelers: Record<TeamStoel, SpelerVp> = {
+    host: speler('host'), host2: speler('host2'), guest: speler('guest'), guest2: speler('guest2'),
+  };
+  const bijdrage = (s: TeamStoel) => spelers[s].bonus + spelers[s].objectives;
+  const hostVp = spelers.guest.afgestaan + spelers.guest2.afgestaan + bijdrage('host') + bijdrage('host2') + sc.host;
+  const guestVp = spelers.host.afgestaan + spelers.host2.afgestaan + bijdrage('guest') + bijdrage('guest2') + sc.guest;
+  const verschil = Math.abs(hostVp - guestVp);
+  let winnaar: 'host' | 'guest' | null = null;
+  let uitslag: Uitslag = 'draw';
+  if (verschil >= 100) {
+    winnaar = hostVp > guestVp ? 'host' : 'guest';
+    const win = Math.max(hostVp, guestVp);
+    const verl = Math.min(hostVp, guestVp);
+    uitslag = win >= 2 * verl ? 'crushing' : 'victory';
+  }
+  return { hostVp, guestVp, verschil, winnaar, uitslag, spelers, scenarioA: sc.host, scenarioB: sc.guest };
 }

@@ -25,7 +25,8 @@ import { BattleSheetView } from './BattleSheetView';
 import { BattlefieldEditor, BF_STAP, BF_STEPS, wisselFormat } from './BattlefieldEditor';
 import { ArmyListPicker } from './ArmyListPicker';
 import { OwbInstructions } from './OwbInstructions';
-import type { Army } from '../../types';
+import type { Army, TeamStoel } from '../../types';
+import { STANDAARD_NAAM, TEAM_NAAM, stoelenVan } from '../../lib/teams';
 
 // DE NIEUWE-BATTLE-WIZARD.
 //
@@ -38,7 +39,8 @@ import type { Army } from '../../types';
 //   1. Players     — spelen we solo, host ik, of sluit ik aan? En hoe heet je?
 //   2. Battlefield — Generate (alles gerold, daarna per onderdeel bij te stellen), Step by step, of
 //                    No battlefield (alleen het format; zie hieronder).
-//   3. Armies      — wie speelt met welke lijst.
+//   3. Armies      — wie speelt met welke lijst. In SOLO ook: 1 vs 1 of 2 vs 2 (Joost 28-10-2026) —
+//                    bij 2 vs 2 vier lijsten in twee teams, elk met een optionele korte naam.
 //   4. Review      — het hele blad nog één keer, en dan één knop.
 //
 // NO BATTLEFIELD (Joost 28-10-2026): "Soms speel je gewoon een potje of een bestaand scenario, dan heb
@@ -102,12 +104,21 @@ interface WizardDraft {
   sheet: BattleSheet;
   mijnLeger: Army | null;
   oppLeger: Army | null;
+  /** 2 VS 2 (Joost 28-10-2026, alleen solo): teamspel aan? Host/join zien de keuze nooit, en `start`
+   *  kijkt alleen in solo naar dit veld — een achtergebleven '2v2' bij Host doet dus niets. */
+  teams: '1v1' | '2v2';
+  /** 2v2: de bondgenoot (team A, stoel host2) en de tweede tegenstander (team B, stoel guest2). */
+  allyLeger: Army | null;
+  opp2Leger: Army | null;
+  /** 2v2: optionele korte namen per stoel; leeg = het standaardlabel (lib/teams.ts). */
+  namen: Partial<Record<TeamStoel, string>>;
 }
 
 const LEEG_DRAFT: WizardDraft = {
   v: 1, stap: 0, modus: 'host', naam: '', joinCode: '', tak: null, bfStap: 0, viaGenerate: false,
   genWeer: false, genSecondaries: false, gegenereerd: false, sheet: DEFAULT_SHEET,
   mijnLeger: null, oppLeger: null,
+  teams: '1v1', allyLeger: null, opp2Leger: null, namen: {},
 };
 
 /** Zet de wizard klaar op "Join battle" met deze code (29-09-2026). Voor het "Battle code"-veld op het
@@ -132,6 +143,9 @@ function normDraft(raw: unknown): WizardDraft {
     // in plaats van een stap 2 waarop niets staat; een oude draft met 'generate'/'step' blijft gewoon.
     tak: TAKKEN.includes(d.tak as Tak) ? (d.tak as Tak) : null,
     bfStap: typeof d.bfStap === 'number' ? Math.max(0, Math.min(BF_STEPS.length - 1, d.bfStap)) : 0,
+    // 2v2 (28-10-2026): een oude draft kent deze velden niet; alleen de bekende waarde telt.
+    teams: d.teams === '2v2' ? '2v2' : '1v1',
+    namen: d.namen && typeof d.namen === 'object' ? d.namen : {},
   };
 }
 
@@ -282,11 +296,14 @@ function TweakRij({ label, waarde, onHerrol, onEdit, onUit }: {
 /** Eén leger kiezen: uit je eigen lijsten, met een deelcode van je tegenstander, of geplakt uit Old
  *  World Builder. Drie wegen naar hetzelfde `Army`, want dat is precies waar mensen aan tafel op
  *  vastlopen: de één heeft zijn lijst in de app, de ander stuurt een code, de derde plakt. */
-function LegerKiezer({ titel, leger, onLeger, troopTypeFor }: {
+function LegerKiezer({ titel, leger, onLeger, troopTypeFor, naam, onNaam }: {
   titel: string;
   leger: Army | null;
   onLeger: (a: Army | null) => void;
   troopTypeFor: (naam: string) => string | undefined;
+  /** 2v2 (28-10-2026): optionele korte spelernaam. Alleen met `onNaam` verschijnt het veld. */
+  naam?: string;
+  onNaam?: (naam: string) => void;
 }) {
   const [plak, setPlak] = useState('');
   const [code, setCode] = useState('');
@@ -315,6 +332,17 @@ function LegerKiezer({ titel, leger, onLeger, troopTypeFor }: {
         <span style={{ ...eb, fontSize: 9, color: TOW.goldDeep, flex: 1, minWidth: 0 }}>{titel}</span>
         {leger && <button onClick={() => onLeger(null)} style={{ flexShrink: 0, padding: '5px 11px', borderRadius: 7, border: `1px solid ${TOW.line}`, background: 'transparent', color: TOW.muted, cursor: 'pointer', fontFamily: towFont.display, fontWeight: 600, fontSize: 12 }}>Change</button>}
       </div>
+
+      {onNaam && (
+        <input
+          value={naam ?? ''}
+          onChange={(e) => onNaam(e.target.value)}
+          placeholder={`Name (optional) — “${titel}”`}
+          maxLength={24}
+          aria-label={`Name for ${titel} (optional)`}
+          style={{ ...invoer, padding: '7px 10px', fontSize: 13.5, margin: leger ? '8px 0 0' : '0 0 10px' }}
+        />
+      )}
 
       {leger ? (
         <div style={{ fontFamily: towFont.serif, fontSize: 14, color: TOW.ink, marginTop: 6 }}>
@@ -427,7 +455,24 @@ export function NewBattleWizard({ onBack }: { onBack: () => void }) {
       ? [{ key: 'opp', titel: 'Opposing army', leger: d.oppLeger, onLeger: (a: Army | null) => zet({ oppLeger: a }) }]
       : []),
   ];
-  const legersOk = legerVakken.every((v) => !!v.leger);
+  // 2 VS 2 (Joost 28-10-2026): alleen in solo. Dan vier vakken in twee teams; de 1v1-vakken hierboven
+  // blijven ongemoeid (dezelfde draft-velden voor "You" en "Opponent 1").
+  const team2v2 = d.modus === 'solo' && d.teams === '2v2';
+  const zetNaam = (st: TeamStoel, naam: string) => setDraft((prev) => {
+    const n = normDraft(prev);
+    return { ...n, namen: { ...n.namen, [st]: naam } };
+  });
+  const teamVakken: Record<TeamStoel, { leger: Army | null; onLeger: (a: Army | null) => void }> = {
+    host: { leger: d.mijnLeger, onLeger: (a) => zet({ mijnLeger: a }) },
+    host2: { leger: d.allyLeger, onLeger: (a) => zet({ allyLeger: a }) },
+    guest: { leger: d.oppLeger, onLeger: (a) => zet({ oppLeger: a }) },
+    guest2: { leger: d.opp2Leger, onLeger: (a) => zet({ opp2Leger: a }) },
+  };
+  /** De naam zoals hij in het spel komt te staan: de eigen naam, anders het standaardlabel. */
+  const toonNaam = (st: TeamStoel) => d.namen[st]?.trim() || STANDAARD_NAAM[st];
+  const legersOk = team2v2
+    ? Object.values(teamVakken).every((v) => !!v.leger)
+    : legerVakken.every((v) => !!v.leger);
 
   // ── Starten ───────────────────────────────────────────────────────────────────────────────────
   // NO BATTLEFIELD: geen sheet, alleen het format als losse regels (zie de kop van dit bestand).
@@ -444,7 +489,10 @@ export function NewBattleWizard({ onBack }: { onBack: () => void }) {
       // we het tweede leger rechtstreeks op de sleutel waar `useGame` het vandaan leest.
       if (d.oppLeger) setPersisted('tow:solo-opp', d.oppLeger);
       wisKladblok();
-      startSolo(d.mijnLeger, regels);
+      // 2 VS 2: de twee extra legers en de namen gaan via `startSolo` mee, die zet ook de teamvlag op de
+      // tracker. Zonder dit vierde argument is het precies de 1v1-start van voorheen.
+      if (team2v2) startSolo(d.mijnLeger, regels, null, null, { ally: d.allyLeger, opponent2: d.opp2Leger, spelers: d.namen });
+      else startSolo(d.mijnLeger, regels);
       setDraft(LEEG_DRAFT);
       return;
     }
@@ -671,12 +719,34 @@ export function NewBattleWizard({ onBack }: { onBack: () => void }) {
 
         {/* ── 3 · ARMIES ───────────────────────────────────────────────────────────────────────── */}
         {d.stap === STAP.legers && (<>
+          {/* 1 VS 1 / 2 VS 2 (Joost 28-10-2026) — alleen solo; host en join blijven altijd 1 vs 1. */}
+          {d.modus === 'solo' && (
+            <div role="radiogroup" aria-label="Game size" style={{ display: 'flex', gap: 6, marginBottom: 12 }}>
+              {(['1v1', '2v2'] as const).map((t) => {
+                const on = d.teams === t;
+                return (
+                  <button key={t} role="radio" aria-checked={on} onClick={() => zet({ teams: t })} style={{ flex: 1, padding: '10px 8px', borderRadius: 10, cursor: 'pointer', border: `1px solid ${on ? TOW.goldDeep : TOW.line}`, background: on ? 'rgba(184,134,47,0.12)' : TOW.panel2, color: on ? TOW.goldDeep : TOW.inkDim, fontFamily: towFont.display, fontWeight: 700, fontSize: 14.5 }}>
+                    {t === '1v1' ? '1 vs 1' : '2 vs 2'}
+                  </button>
+                );
+              })}
+            </div>
+          )}
           <div style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 13.5, color: TOW.parchDim, margin: '0 0 14px' }}>
-            {d.modus === 'solo'
-              ? 'Both armies play on this device, so pick them both.'
-              : 'Pick your own army — your opponent picks theirs on their device.'}
+            {team2v2
+              ? 'Four armies in two teams, all on this device. Names are optional.'
+              : d.modus === 'solo'
+                ? 'Both armies play on this device, so pick them both.'
+                : 'Pick your own army — your opponent picks theirs on their device.'}
           </div>
-          {legerVakken.map((v) => (
+          {team2v2 ? (['A', 'B'] as const).map((team) => (
+            <div key={team} data-testid={`wizard-team-${team}`} style={{ marginBottom: 6 }}>
+              <div style={{ ...eb, fontSize: 9.5, color: TOW.goldDeep, margin: '4px 2px 8px' }}>{TEAM_NAAM[team]}</div>
+              {stoelenVan(team).map((st) => (
+                <LegerKiezer key={st} titel={STANDAARD_NAAM[st]} leger={teamVakken[st].leger} onLeger={teamVakken[st].onLeger} troopTypeFor={troopTypeFor} naam={d.namen[st] ?? ''} onNaam={(n) => zetNaam(st, n)} />
+              ))}
+            </div>
+          )) : legerVakken.map((v) => (
             <LegerKiezer key={v.key} titel={v.titel} leger={v.leger} onLeger={v.onLeger} troopTypeFor={troopTypeFor} />
           ))}
         </>)}
@@ -706,8 +776,28 @@ export function NewBattleWizard({ onBack }: { onBack: () => void }) {
             <BattleSheetView sheet={d.sheet} titel="Battle sheet" rechts={wijzigKnop} />
           )}
 
-          <div style={{ ...eb, fontSize: 9, color: TOW.muted, margin: '18px 0 7px' }}>Players</div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginBottom: 6 }}>
+          <div style={{ ...eb, fontSize: 9, color: TOW.muted, margin: '18px 0 7px' }}>{team2v2 ? 'Players · 2 vs 2' : 'Players'}</div>
+          {team2v2 && (['A', 'B'] as const).map((team) => (
+            <div key={team} style={{ marginBottom: 8 }}>
+              <div style={{ ...eb, fontSize: 8, color: TOW.goldDeep, margin: '0 2px 5px' }}>{TEAM_NAAM[team]}</div>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                {stoelenVan(team).map((st) => {
+                  const l = teamVakken[st].leger;
+                  return (
+                    <div key={st} style={{ display: 'flex', alignItems: 'center', gap: 9, padding: '9px 11px', borderRadius: 10, border: `1px solid ${st === 'host' ? TOW.goldDeep : TOW.line}`, background: st === 'host' ? 'rgba(184,134,47,0.08)' : 'transparent' }}>
+                      <span style={{ flex: 1, minWidth: 0 }}>
+                        <span style={{ display: 'block', fontFamily: towFont.display, fontWeight: 600, fontSize: 14.5, color: TOW.ink }}>{toonNaam(st)}</span>
+                        <span style={{ display: 'block', fontFamily: towFont.serif, fontSize: 12.5, color: l ? TOW.parchDim : TOW.muted, fontStyle: l ? 'normal' : 'italic' }}>
+                          {l ? `${l.name}${l.points != null ? ` · ${l.points} pts` : ''}` : 'no army yet'}
+                        </span>
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
+          {!team2v2 && <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginBottom: 6 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 9, padding: '9px 11px', borderRadius: 10, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.08)' }}>
               <span style={{ flex: 1, minWidth: 0 }}>
                 <span style={{ display: 'block', fontFamily: towFont.display, fontWeight: 600, fontSize: 14.5, color: TOW.ink }}>{d.modus === 'solo' ? 'You' : `${d.naam.trim() || 'You'} · you`}</span>
@@ -726,7 +816,7 @@ export function NewBattleWizard({ onBack }: { onBack: () => void }) {
                 </span>
               </span>
             </div>
-          </div>
+          </div>}
 
           {d.modus === 'host' && (
             <div style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 12.5, color: TOW.muted, margin: '10px 2px 0', lineHeight: 1.4 }}>
@@ -784,7 +874,9 @@ export function NewBattleWizard({ onBack }: { onBack: () => void }) {
         {d.stap === STAP.legers && !legersOk && (
           <div style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 12.5, color: TOW.muted, margin: '8px 2px 0' }}>
             {/* Solo heeft geen lobby (startSolo begint meteen), en een host zonder slagveld ook niet. */}
-            {d.modus === 'solo'
+            {team2v2
+              ? 'You can pick the missing armies later, in the game.'
+              : d.modus === 'solo'
               ? 'You can pick both armies later, in the game.'
               : overgeslagen
                 ? 'No army yet? You can pick it later, in the game.'

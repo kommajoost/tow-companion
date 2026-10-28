@@ -280,6 +280,11 @@ export interface GameWeer {
   effect: string;
 }
 
+/** De vier stoelen van een solo-2v2-potje (Joost 28-10-2026). `host`/`guest` zijn dezelfde stoelen als
+ *  in 1v1; `host2` (bondgenoot) en `guest2` (tweede tegenstander) komen er alleen in teamspel bij.
+ *  Tracker-sleutels blijven `<stoel>:<unitId>`. */
+export type TeamStoel = 'host' | 'host2' | 'guest' | 'guest2';
+
 /** Shared battle-tracking state for a game (round, VP per side, per-unit casualties). */
 export interface GameTracker {
   round: number; // 1–6, of 1–5 bij Battle March (zie `battleMarch`)
@@ -288,8 +293,18 @@ export interface GameTracker {
   /** Per-unit state keyed `<seat>:<unitId>`. */
   units: Record<string, UnitTrack>;
   /** Handmatige VP-bonussen per kant (General/BSB down, buitgemaakte standaards, scenario-VP).
-   *  Optioneel + back-compat: oude trackers hebben dit niet; berekenVictory valt terug op {}. */
-  bonus?: { host?: VpBonus; guest?: VpBonus };
+   *  Optioneel + back-compat: oude trackers hebben dit niet; berekenVictory valt terug op {}.
+   *  2 VS 2 (Joost 28-10-2026): in een solo-teampotje heeft elke speler zijn eigen bonus, dus ook
+   *  `host2` en `guest2`. De team-objectives (ObjectivesTracker) blijven op `host` (team A) en `guest`
+   *  (team B) staan, zodat ze per team maar één keer tellen. Een 1v1-tracker gebruikt alleen host/guest. */
+  bonus?: Partial<Record<TeamStoel, VpBonus>>;
+  /** 2 VS 2 (Joost 28-10-2026): alleen in een SOLO-potje. '2v2' = vier spelers in twee teams:
+   *  team A = `host` (jij) + `host2` (bondgenoot), team B = `guest` + `guest2`. Ontbreekt = gewoon 1v1,
+   *  dus elke tracker van vóór vandaag (en elk online- of campagnepotje) blijft precies zoals hij was. */
+  teams?: '2v2';
+  /** 2 VS 2: optionele korte namen per stoel. Leeg of ontbrekend = het standaardlabel uit lib/teams.ts
+   *  ("You", "Ally", "Opponent 1", "Opponent 2"). */
+  spelers?: Partial<Record<TeamStoel, string>>;
   /** Campagne-rapport: beide spelers moeten de uitslag goedkeuren vóór er iemand mag indienen.
    *  `sig` is de vingerafdruk van de cijfers waarvóór de goedkeuringen gelden — verandert er daarna
    *  nog iets (VP-bonus, casualty), dan wijkt de sig af en vervallen beide goedkeuringen vanzelf.
