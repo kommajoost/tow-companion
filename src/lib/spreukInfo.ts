@@ -40,3 +40,19 @@ export function spreukInfo(slug: string, rule: Rule | undefined): SpreukInfo {
     duur: u?.duur ?? null,
   };
 }
+
+/**
+ * BOUND SPELL IN EEN ITEMTEKST (Joost 28-10-2026: "soms zitten er nog van die gekke onopgemaakte teksten
+ * tussen" — Hand of Dust). Een item met een Bound spell heeft in de bron een blokje Type / Casting Value /
+ * Range: in magic-item-text.json als regels "Type | Assailment", in een Renegade-overlay als
+ * "Type: Assailment Casting Value:8+ Range: Combat Effect: …". Bij het tonen wordt de witruimte
+ * platgeslagen en stond het als één doorlopende zin. Dit knipt de (al platgeslagen) tekst in drie
+ * stukken zodat de sheet er een tabelletje van kan maken: de tekst ervoor, de drie velden, en het
+ * effect erna. Woorden blijven letterlijk; alleen het label "Effect:" vervalt (de basistekst heeft het niet).
+ */
+export function splitsBoundSpell(tekst: string): { voor: string; type: string; cv: string; range: string; na: string } | null {
+  const t = tekst.replace(/\s+/g, ' ').trim();
+  const m = t.match(/^(.*?)\s*Type\s*[:|]\s*(.+?)\s+Casting Value\s*[:|]\s*(\S+)\s+Range\s*[:|]\s*(\S+)\s*(?:Effect\s*:\s*)?(.*)$/i);
+  if (!m) return null;
+  return { voor: m[1].trim(), type: m[2].trim(), cv: m[3].trim(), range: m[4].trim(), na: m[5].trim() };
+}

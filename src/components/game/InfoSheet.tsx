@@ -6,6 +6,7 @@ import { useBackClose } from '../../lib/backStack';
 import { useSwipeToDismiss, DragHandle } from '../../lib/useSwipeToDismiss';
 import { TOW, towFont, engraved } from '../../design/tow';
 import type { UnitProfile } from '../../types';
+import { splitsBoundSpell } from '../../lib/spreukInfo';
 
 const eb = engraved as React.CSSProperties;
 
@@ -160,9 +161,23 @@ export function InfoSheet({ info, onClose }: { info: InfoSheetData | null; onClo
           </div>
         )}
 
-        {prose.map((label, i) => (
-          <p key={i} style={{ margin: '8px 0 0', fontFamily: towFont.serif, fontSize: 13, color: TOW.ink, lineHeight: 1.5 }}>{label}</p>
-        ))}
+        {prose.map((label, i) => {
+          const p: React.CSSProperties = { margin: '8px 0 0', fontFamily: towFont.serif, fontSize: 13, color: TOW.ink, lineHeight: 1.5 };
+          // Een Bound spell (Hand of Dust, Storm Daemon…): de tekst ervoor, Type/Casting Value/Range als
+          // tabelletje, en het effect erna — zie splitsBoundSpell.
+          const sp = splitsBoundSpell(label);
+          if (!sp) return <p key={i} style={p}>{label}</p>;
+          return (
+            <div key={i}>
+              {sp.voor && <p style={p}>{sp.voor}</p>}
+              <table style={{ borderCollapse: 'collapse', width: '100%', fontFamily: towFont.serif, fontSize: 12.5, marginTop: 8 }}>
+                <thead><tr><th style={th}>Type</th><th style={th}>Casting Value</th><th style={th}>Range</th></tr></thead>
+                <tbody><tr><td style={td}>{sp.type}</td><td style={td}>{sp.cv}</td><td style={td}>{sp.range}</td></tr></tbody>
+              </table>
+              {sp.na && <p style={p}>{sp.na}</p>}
+            </div>
+          );
+        })}
 
         {/* "Geen special rules" alleen als de sheet verder ECHT leeg is. Stond er ook onder een item
             dat z'n hele regeltekst via `details` toont (Manbane) of een wapenprofiel heeft — dan is
