@@ -906,17 +906,17 @@ export function UnitOptions(props: {
     );
   };
 
-  /** One collapsible category inside a budget group. Default-collapsed, except an option-unlocked
-   *  allowance with nothing picked yet (it only just appeared because of the player's action) —
-   *  same rule as the old editor, so a magic standard opens the moment you take the standard bearer. */
+  /** One collapsible category inside a budget group. ALTIJD standaard ingeklapt (Joost 28-10-2026: "laat
+   *  standaard ook de opties van magic items en magic standards ingeklapt"). Tot vandaag klapte een
+   *  allowance die door een optie vrijkwam (de magic standard zodra je een standard bearer nam) vanzelf
+   *  open; dat maakte de lijst lang. Wat je gekozen hebt, staat ingeklapt rechts in de kopregel. */
   const magicCategoryBlock = (cat: MagicCategory, budget: number, soleInGroup: boolean) => {
     const catKey = `${entry.uid}/${cat.id}`;
     const selKeys = selectedMagicKeys(entry, cat.id);
     const chosen = cat.items
       .filter((it) => selKeys.includes(`magic/${cat.id}/${magicItemId(it)}`))
       .map((it) => cleanLabel(it.name_en));
-    const toggled = openCats.has(catKey);
-    const open = cat.budgetGroup.startsWith('opt:') && selKeys.length === 0 ? !toggled : toggled;
+    const open = openCats.has(catKey);
     const count = isFinite(cat.maxItems)
       ? (cat.maxItems > 1 ? `${selKeys.length}/${cat.maxItems}` : selKeys.length ? '1' : '')
       : (selKeys.length ? String(selKeys.length) : '');
