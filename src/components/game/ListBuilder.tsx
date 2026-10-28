@@ -26,6 +26,7 @@ import type { MagicText } from '../../lib/builderToArmy';
 import { magicItemRules } from '../../lib/builderToArmy';
 import type { UnitProfile } from '../../types';
 import { helftVan, isVersterkingLijst, maakVersterkingLijst, versterkingBasis } from '../../lib/versterking';
+import { useAanraakSlepen } from './useAanraakSlepen';
 
 const BASE = import.meta.env.BASE_URL;
 const eb = engraved as React.CSSProperties;
@@ -663,6 +664,19 @@ export function ListBuilder() {
       return arr;
     });
 
+  // SLEPEN MET JE VINGER (Joost 28-10-2026: "ik kan op mijn telefoon geen lijsten draggen naar de groepen").
+  // De muisversie (HTML5 drag & drop hieronder in renderCard) start niet met een vinger. Lang drukken pakt
+  // een lijst op; dezelfde reorderList zet hem neer, zodat volgorde en map precies als met de muis gaan.
+  // De sectie-sleutel '__ungrouped__' is UNGROUPED verderop: geen map.
+  const [lijstScroller, lijstScrollerRef] = useState<HTMLDivElement | null>(null);
+  const aanraak = useAanraakSlepen(lijstScroller, {
+    onOver: (doel) => {
+      setDragOver(doel && doel.kaartId == null ? doel.sectie : null);
+      setDragOverCard(doel && doel.kaartId ? { id: doel.kaartId, before: doel.voor } : null);
+    },
+    onDrop: (id, doel) => reorderList(id, doel.kaartId, doel.voor, doel.sectie === '__ungrouped__' ? null : doel.sectie),
+  });
+
   // A list is a HAIRLINE ROW, not a bordered card — the same primitive the redesigned roster uses, so
   // the overview and the builder read as one app. Cards put a frame around every entry and a gap
   // between them, which is a lot of furniture for "here are your lists": eight of them became eight
@@ -1032,12 +1046,15 @@ export function ListBuilder() {
           if (dragged && dragged !== l.id) reorderList(dragged, l.id, before, cardGroup);
           setDragOverCard(null);
         }}
-        style={{ ...card, position: 'relative', display: 'flex', alignItems: 'center', gap: 10, padding: '8px 0', cursor: sleepbaar ? 'grab' : 'default' }}
+        {...(sleepbaar ? { 'data-sleep-lijst': l.id, 'data-sleep-naam': l.name, 'data-sleep-sectie': sectionId } : {})}
+        style={{ ...card, position: 'relative', display: 'flex', alignItems: 'center', gap: 10, padding: '8px 0', cursor: sleepbaar ? 'grab' : 'default',
+          ...(sleepbaar ? { WebkitTouchCallout: 'none', userSelect: 'none', WebkitUserSelect: 'none' } : {}),
+          opacity: aanraak.gesleept?.id === l.id ? 0.4 : 1 }}
       >
         {dropLine != null && <div style={{ position: 'absolute', left: 0, right: 0, [dropLine ? 'top' : 'bottom']: -1, height: 2, background: TOW.goldDeep, borderRadius: 2, pointerEvents: 'none' }} />}
         {/* Same anatomy as the roster's UnitRow: name on one line, a faint whisper beneath, and the
             number right-aligned in tabular figures so a column of lists lines up. */}
-        <button onClick={() => setActiveId(l.id)} style={{ flex: 1, minWidth: 0, textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', padding: 0, display: 'flex', flexDirection: 'column', gap: 1 }}>
+        <button onClick={() => { if (!aanraak.netGesleept()) setActiveId(l.id); }} style={{ flex: 1, minWidth: 0, textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', padding: 0, display: 'flex', flexDirection: 'column', gap: 1 }}>
           <span style={{ fontFamily: towFont.serif, fontWeight: 400, fontSize: 15.5, lineHeight: 1.25, color: TOW.ink, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{l.name}</span>
           <span style={{ fontFamily: towFont.serif, fontSize: 11, lineHeight: 1.3, color: TOW.faint, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
             {armyName(l.army)} · {compName(l.composition, l.army)}
@@ -1047,8 +1064,8 @@ export function ListBuilder() {
         <span style={{ fontFamily: towFont.serif, fontSize: 12.5, color: TOW.muted, fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap', flexShrink: 0 }}>
           {total ?? '…'}/{l.points}
         </span>
-        <button onClick={() => duplicateList(l)} onMouseDown={(e) => e.stopPropagation()} aria-label="Duplicate" title="Duplicate" style={{ ...glyphBtn, fontSize: 14 }}>⧉</button>
-        <button onClick={() => { if (confirm(`Delete “${l.name}”?`)) deleteList(l.id); }} onMouseDown={(e) => e.stopPropagation()} aria-label="Delete" title="Delete" style={{ ...glyphBtn, fontSize: 17 }}>×</button>
+        <button data-geen-sleep onClick={() => duplicateList(l)} onMouseDown={(e) => e.stopPropagation()} aria-label="Duplicate" title="Duplicate" style={{ ...glyphBtn, fontSize: 14 }}>⧉</button>
+        <button data-geen-sleep onClick={() => { if (confirm(`Delete “${l.name}”?`)) deleteList(l.id); }} onMouseDown={(e) => e.stopPropagation()} aria-label="Delete" title="Delete" style={{ ...glyphBtn, fontSize: 17 }}>×</button>
       </div>
     );
   };
@@ -1090,6 +1107,7 @@ export function ListBuilder() {
     return (
       <div
         key={key}
+        data-sleep-doel={key}
         {...dropProps(targetId)}
         style={{ border: `1px ${hovered ? 'dashed' : 'solid'} ${hovered ? TOW.goldDeep : 'transparent'}`, borderRadius: 12, background: hovered ? 'rgba(176,141,87,0.10)' : 'transparent', padding: hovered ? '5px 5px' : '0 6px', transition: 'background 120ms' }}
       >
@@ -1143,7 +1161,16 @@ export function ListBuilder() {
   );
 
   return (
-    <div className="tow-field" style={{ height: '100%', overflowY: 'auto', color: TOW.ink }}>
+    <div ref={lijstScrollerRef} className="tow-field" style={{ height: '100%', overflowY: 'auto', color: TOW.ink }}>
+      {/* De lijst die je met je vinger sleept, zwevend boven je vinger (alleen tijdens aanraak-slepen). */}
+      {aanraak.gesleept && (
+        <div aria-hidden style={{
+          position: 'fixed', left: Math.max(8, aanraak.gesleept.x - 110), top: aanraak.gesleept.y - 56, zIndex: 120,
+          width: 220, padding: '9px 12px', borderRadius: 10, pointerEvents: 'none',
+          background: TOW.cardLt, border: `1px solid ${TOW.goldDeep}`, boxShadow: '0 8px 22px rgba(0,0,0,0.28)',
+          fontFamily: towFont.serif, fontSize: 14.5, color: TOW.ink, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
+        }}>{aanraak.gesleept.naam}</div>
+      )}
       <div style={{ maxWidth: 680, margin: '0 auto', padding: '14px 14px 48px' }}>
         {/* Campagne bovenaan: dit is waar een speler die vanaf Isle of Celedon binnenkomt landt. */}
         <CeledonPanel
