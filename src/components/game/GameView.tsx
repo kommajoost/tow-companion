@@ -4,7 +4,7 @@ import { useGame } from '../../game';
 import { useBackClose } from '../../lib/backStack';
 import { parseArmyList } from '../../lib/armyParser';
 import { makeTroopTypeLookup, enrichArmyTroopTypes } from '../../lib/troopTypes';
-import { unitSize, unitTotalStrength } from '../../lib/armyRules';
+import { unitArmourSave, unitSize, unitTotalStrength } from '../../lib/armyRules';
 import { UnitCard, korteStand, type ScenarioKnop } from './UnitCard';
 import { BattleBar } from './BattleBar';
 import { ReminderStrip, type KantReminders } from './ReminderStrip';
@@ -510,54 +510,49 @@ export function GameView() {
     const uit = stand.some((s) => s.t === 'Removed' || s.t === 'Destroyed');
     const gekozen = u.id === selId;
     const aantal = unitSize(u);
-    const mountsVan = u.mounts ?? [];
+    // SNEL ZICHT (Joost 28-10-2026: "de lijst mag iets groter … misschien wat bij zetten voor snel zicht"): onder
+    // de naam de kernstats van het eerste profiel (met de mount-bonussen er al in) en de armour save, en bij
+    // een character z'n mount. De mount heeft geen eigen regel meer in de lijst; hij staat als tabje op de kaart.
+    const kern = (u.profiles[0]?.stats ?? []).filter((st) => ['WS', 'S', 'T', 'W', 'A'].includes(st.k.toUpperCase()));
+    const save = unitArmourSave(u);
+    const mountNaam = u.mounts?.[0]?.name.replace(/s*{[^}]*}/g, '').trim();
     return (
-      <div key={u.id}>
       <button
+        key={u.id}
         type="button"
         onClick={() => kies(u.id)}
-        aria-pressed={gekozen && mountTab?.id !== u.id}
+        aria-pressed={gekozen}
         style={{
-          width: '100%', display: 'flex', alignItems: 'center', gap: 6, minHeight: 30, boxSizing: 'border-box',
-          padding: '4px 8px', margin: '1px 0', borderRadius: 8, cursor: 'pointer', textAlign: 'left',
-          border: `1px solid ${gekozen && mountTab?.id !== u.id ? TOW.goldDeep : 'transparent'}`,
-          background: gekozen && mountTab?.id !== u.id ? TOW.cardLt : 'transparent',
-          boxShadow: gekozen && mountTab?.id !== u.id ? `inset 3px 0 0 ${TOW.goldDeep}` : 'none',
+          width: '100%', display: 'block', boxSizing: 'border-box',
+          padding: '5px 9px', margin: '1px 0', borderRadius: 8, cursor: 'pointer', textAlign: 'left',
+          border: `1px solid ${gekozen ? TOW.goldDeep : 'transparent'}`,
+          background: gekozen ? TOW.cardLt : 'transparent',
+          boxShadow: gekozen ? `inset 3px 0 0 ${TOW.goldDeep}` : 'none',
+          opacity: uit ? 0.7 : 1,
         }}
       >
-        <span style={{ flex: 1, minWidth: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontFamily: display, fontWeight: gekozen ? 700 : 600, fontSize: 13, color: uit ? TOW.muted : TOW.ink, textDecoration: uit ? 'line-through' : 'none' }}>
-          {aantal > 1 && <span style={{ color: TOW.goldDeep }}>{aantal}× </span>}{u.name}
+        <span style={{ display: 'flex', alignItems: 'baseline', gap: 6 }}>
+          <span style={{ flex: 1, minWidth: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontFamily: display, fontWeight: gekozen ? 700 : 600, fontSize: 14, color: uit ? TOW.muted : TOW.ink, textDecoration: uit ? 'line-through' : 'none' }}>
+            {aantal > 1 && <span style={{ color: TOW.goldDeep }}>{aantal}× </span>}{u.name}
+          </span>
+          {stand.length > 0 && (
+            <span style={{ flexShrink: 0, fontFamily: serif, fontSize: 11.5, whiteSpace: 'nowrap' }}>
+              {stand.map((st, i) => (
+                <span key={st.t} style={{ color: st.rood ? TOW.blood : TOW.muted }}>{i > 0 ? ' · ' : ''}{st.t}</span>
+              ))}
+            </span>
+          )}
         </span>
-        {stand.length > 0 && (
-          <span style={{ flexShrink: 0, fontFamily: serif, fontSize: 11, whiteSpace: 'nowrap' }}>
-            {stand.map((s, i) => (
-              <span key={s.t} style={{ color: s.rood ? TOW.blood : TOW.muted }}>{i > 0 ? ' · ' : ''}{s.t}</span>
+        {(kern.length > 0 || save || mountNaam) && (
+          <span style={{ display: 'block', marginTop: 1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontFamily: serif, fontSize: 11.5, color: TOW.parchDim }}>
+            {mountNaam && <span style={{ fontStyle: 'italic' }}>on {mountNaam}<span style={{ color: TOW.faint }}> · </span></span>}
+            {kern.map((st, i) => (
+              <span key={st.k}>{i > 0 ? ' ' : ''}<span style={{ color: TOW.muted, fontSize: 10 }}>{st.k}</span>{st.v}</span>
             ))}
+            {save && <span><span style={{ color: TOW.faint }}> · </span>{save.save}+</span>}
           </span>
         )}
       </button>
-      {mountsVan.map((m, i) => {
-        const aan = gekozen && mountTab?.id === u.id && mountTab.i === i;
-        return (
-          <button
-            key={m.name}
-            type="button"
-            onClick={() => kies(u.id, i)}
-            aria-pressed={aan}
-            style={{
-              width: '100%', display: 'flex', alignItems: 'center', gap: 5, minHeight: 24, boxSizing: 'border-box',
-              padding: '2px 8px 2px 22px', margin: '0 0 1px', borderRadius: 8, cursor: 'pointer', textAlign: 'left',
-              border: `1px solid ${aan ? TOW.goldDeep : 'transparent'}`,
-              background: aan ? TOW.cardLt : 'transparent',
-              boxShadow: aan ? `inset 3px 0 0 ${TOW.goldDeep}` : 'none',
-            }}
-          >
-            <span style={{ color: TOW.faint, fontSize: 11 }}>↳</span>
-            <span style={{ flex: 1, minWidth: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontFamily: serif, fontStyle: 'italic', fontSize: 12.5, color: aan ? TOW.ink : TOW.parchDim }}>{m.name.replace(/s*{[^}]*}/g, '')}</span>
-          </button>
-        );
-      })}
-      </div>
     );
   };
 
@@ -594,7 +589,7 @@ export function GameView() {
           {/* LINKS — objectives, legerkop, kieslijst, End battle. SMALLER (Joost 28-10-2026: "die kolom is te
               breed … zodat je iets meer ruimte overhoudt rechts voor unit stats"): de rijen zijn één regel, dus
               ~30% van de breedte is genoeg; rechts krijgt de rest. */}
-          <div style={{ width: '31%', minWidth: 220, maxWidth: 320, flexShrink: 0, display: 'flex', flexDirection: 'column', borderRight: `1px solid ${TOW.lineStrong}`, background: TOW.panel }}>
+          <div style={{ width: '34%', minWidth: 240, maxWidth: 360, flexShrink: 0, display: 'flex', flexDirection: 'column', borderRight: `1px solid ${TOW.lineStrong}`, background: TOW.panel }}>
             <div data-testid="game-unitlijst" style={{ flex: 1, minHeight: 0, overflowY: 'auto', padding: '8px 8px 12px' }}>
               {objectivesPaneel}
               {army ? (

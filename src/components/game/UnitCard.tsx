@@ -343,10 +343,19 @@ export function UnitCard({
             />
           )}
           {(mount.details?.length ?? 0) > 0 && (
-            <div style={{ fontFamily: towFont.serif, fontSize: 12.5, color: TOW.parchDim, lineHeight: 1.55, margin: '2px 0 6px' }}>
-              {mount.details!.map((d, i) => (
-                <span key={i}>{i > 0 && <span style={{ color: TOW.faint, margin: '0 5px' }}>·</span>}{d}</span>
-              ))}
+            // OPGEMAAKT (Joost 28-10-2026: "de tekst bij de Manticore is nog een beetje raar onopgemaakt"): elk
+            // gegeven op een eigen regel, het label ervoor ("Base size", "Equipment", "Note") als klein kopje.
+            // De tekst zelf blijft letterlijk zoals in de bron.
+            <div style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', columnGap: 10, rowGap: 3, alignItems: 'baseline', margin: '2px 0 8px' }}>
+              {mount.details!.map((d, i) => {
+                const m = d.match(/^([^:]{2,24}):s*(.*)$/s);
+                return (
+                  <div key={i} style={{ display: 'contents' }}>
+                    <span style={{ ...eb, fontSize: 7.5, color: TOW.muted, whiteSpace: 'nowrap' }}>{m ? m[1] : ''}</span>
+                    <span style={{ fontFamily: towFont.serif, fontSize: 12.5, lineHeight: 1.4, color: TOW.parchDim }}>{m ? m[2] : d}</span>
+                  </div>
+                );
+              })}
             </div>
           )}
           {mount.specialRules.length > 0 && regelsRegel(mount.specialRules)}
