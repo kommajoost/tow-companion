@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { TOW, towFont, engraved } from '../design/tow';
+import { geleden, wanneerVol } from '../lib/geleden';
 import { useTheme } from '../theme';
 import { usePwa } from '../pwa';
 import { supabase, TOW_FEEDBACK } from '../lib/supabase';
@@ -235,8 +236,6 @@ function EerdereVersies({ body, ghostBtn }: { body: React.CSSProperties; ghostBt
     );
   }
 
-  const wanneer = (iso: string) => new Date(iso).toLocaleString([], { dateStyle: 'short', timeStyle: 'short' });
-
   return (
     <div style={{ marginTop: 10, border: `1px solid ${TOW.line}`, borderRadius: 10, padding: '10px 12px', background: TOW.panel }}>
       <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 8, marginBottom: 8 }}>
@@ -262,7 +261,12 @@ function EerdereVersies({ body, ghostBtn }: { body: React.CSSProperties; ghostBt
                 <span style={{ fontFamily: towFont.display, fontWeight: 600, fontSize: 13.5, color: TOW.ink }}>
                   {v.aantal} list{v.aantal === 1 ? '' : 's'}
                 </span>
-                <span style={{ fontFamily: towFont.serif, fontSize: 11.5, color: TOW.muted }}>until {wanneer(v.vervangenOp)}</span>
+                {/* Relatief ("until 3 hours ago") om snel de goede te vinden, exact ernaast om zeker te
+                    zijn (28-10-2026). */}
+                <span style={{ fontFamily: towFont.serif, fontSize: 11.5, color: TOW.muted, textAlign: 'right' }} title={wanneerVol(v.vervangenOp)}>
+                  until {geleden(v.vervangenOp)}
+                  <span style={{ display: 'block', fontSize: 10.5 }}>{wanneerVol(v.vervangenOp)}</span>
+                </span>
               </div>
               {/* De NAMEN, niet alleen een aantal: "5 lists" zegt niet of dit de kopie is die je zoekt. */}
               {v.namen.length > 0 && (
@@ -289,6 +293,107 @@ function EerdereVersies({ body, ghostBtn }: { body: React.CSSProperties; ghostBt
         </div>
       )}
     </div>
+  );
+}
+
+/** Een klok die elke `ms` tikt, zodat "3 minutes ago" niet blijft hangen terwijl je kijkt. */
+function useNu(ms: number): number {
+  const [nu, setNu] = useState(() => Date.now());
+  useEffect(() => {
+    const t = window.setInterval(() => setNu(Date.now()), ms);
+    return () => window.clearInterval(t);
+  }, [ms]);
+  return nu;
+}
+
+/**
+ * Status + knoppen van de lijst-sync, voor beide routes (account en wachtwoord).
+ *
+ * SINDS HET SAMENVOEGEN (28-10-2026). Vroeger stonden hier "Upload now" en "Fetch now" naast elkaar,
+ * en wat ze precies deden was niet te zien: "upload" schreef dit apparaat blind over de cloud heen.
+ * Nu voegt de sync zelf alles samen, dus de hoofdknop is gewoon "Sync now" (ophalen, samenvoegen,
+ * pushen). De twee harde varianten blijven als noodgreep, met een naam die zegt wat ze vervangen, en
+ * vragen één bevestiging: ze gooien bewust de andere kant weg (Joost: "gewoon altijd dezelfde
+ * lijsten" — dat moet vanzelf gaan, niet via een keuze).
+ */
+function SyncBediening({
+  body, goldBtn, ghostBtn, onStop,
+}: {
+  body: React.CSSProperties; goldBtn: React.CSSProperties; ghostBtn: React.CSSProperties;
+  onStop?: () => void;
+}) {
+  const sync = useListSync();
+  const nu = useNu(30_000);
+  const [bezig, setBezig] = useState(false);
+  const [bevestig, setBevestig] = useState<'cloud' | 'hier' | null>(null);
+  const druk = sync.status === 'syncing' || bezig;
+
+  const doe = async (fn: () => Promise<void>) => {
+    setBezig(true);
+    try { await fn(); } finally { setBezig(false); setBevestig(null); }
+  };
+
+  // "Synced · 3 minutes ago" = wanneer dit apparaat voor het laatst heeft vastgesteld dat het gelijk
+  // is aan de cloud, ook als er niets veranderde. Dat is de vraag die je hebt ("is mijn telefoon
+  // bij?"); wanneer de cloud zelf het laatst veranderde staat in de tooltip.
+  const gecontroleerd = sync.lastCheckedAt ?? sync.lastSyncedAt;
+  const statusText = sync.status === 'syncing' ? 'Syncing…'
+    : sync.status === 'error' ? 'Sync error'
+    : gecontroleerd ? `Synced · ${geleden(gecontroleerd, nu)}`
+    : 'Connected';
+  const statusTitel = [
+    sync.lastCheckedAt ? `Last checked: ${wanneerVol(sync.lastCheckedAt)}` : null,
+    sync.lastSyncedAt ? `Cloud copy last changed: ${wanneerVol(sync.lastSyncedAt)}` : null,
+  ].filter(Boolean).join(' · ') || undefined;
+  const statusColor = sync.status === 'error' ? TOW.blood : sync.status === 'synced' ? '#4f6b3a' : TOW.muted;
+
+  const klein: React.CSSProperties = { ...ghostBtn, padding: '7px 11px', fontSize: 12.5, color: TOW.inkDim, borderColor: TOW.line };
+  const uitleg: React.CSSProperties = { fontFamily: towFont.serif, fontSize: 12, color: TOW.muted, lineHeight: 1.4, margin: '3px 0 0' };
+
+  const hard = (soort: 'cloud' | 'hier', label: string, tekst: string, fn: () => Promise<void>) => (
+    <div style={{ marginTop: 8 }}>
+      {bevestig === soort ? (
+        <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+          <button style={{ ...klein, borderColor: TOW.goldDeep, color: TOW.ink, opacity: druk ? 0.6 : 1 }} disabled={druk} onClick={() => doe(fn)}>
+            {druk ? 'Working…' : `Yes, ${label.charAt(0).toLowerCase()}${label.slice(1)}`}
+          </button>
+          <button style={{ ...klein, color: TOW.muted }} onClick={() => setBevestig(null)}>Cancel</button>
+        </div>
+      ) : (
+        <button style={{ ...klein, opacity: druk ? 0.6 : 1 }} disabled={druk} onClick={() => setBevestig(soort)}>{label}</button>
+      )}
+      <p style={uitleg}>{tekst}</p>
+    </div>
+  );
+
+  return (
+    <>
+      <div style={{ ...eb, fontSize: 8.5, color: statusColor, marginBottom: 10 }} title={statusTitel}>
+        {statusText} · {sync.listCount} list{sync.listCount === 1 ? '' : 's'}
+      </div>
+      {sync.error && <div style={{ ...body, color: TOW.blood, marginBottom: 10 }}>{sync.error}</div>}
+      <div style={{ ...body, fontSize: 12.5, color: TOW.muted, marginBottom: 10 }}>
+        Lists merge automatically between your devices: edits, new lists and deletions on either device
+        are combined, and if the same list was changed on both, the newest edit wins.
+      </div>
+      <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+        <button style={{ ...goldBtn, opacity: druk ? 0.6 : 1 }} disabled={druk} onClick={() => doe(() => sync.pushNow())}>
+          {druk ? 'Syncing…' : 'Sync now'}
+        </button>
+        {onStop && <button style={{ ...ghostBtn, color: TOW.muted, borderColor: TOW.line }} onClick={onStop}>Stop syncing</button>}
+      </div>
+
+      {/* Noodgrepen: zelden nodig sinds het samenvoegen, dus klein en onder elkaar, elk met wat het doet. */}
+      <div style={{ marginTop: 14, borderTop: `1px solid ${TOW.line}`, paddingTop: 8 }}>
+        <div style={{ ...eb, fontSize: 8, color: TOW.muted }}>Rarely needed</div>
+        {hard('hier', 'Replace cloud with this device',
+          'Your other devices get exactly the lists on this one; anything only in the cloud is removed.',
+          () => sync.overwriteCloud())}
+        {hard('cloud', 'Replace this device with the cloud',
+          'This device gets exactly the cloud’s lists; anything only on this device is removed.',
+          () => sync.pullNow())}
+      </div>
+    </>
   );
 }
 
@@ -341,12 +446,6 @@ function ListSyncSection({
 
   const stop = () => { sync.disconnect(); setPass(null); setReveal(false); };
 
-  const statusText = sync.status === 'syncing' ? 'Syncing…'
-    : sync.status === 'error' ? 'Sync error'
-    : sync.lastSyncedAt ? `Synced · ${new Date(sync.lastSyncedAt).toLocaleString([], { dateStyle: 'short', timeStyle: 'short' })}`
-    : 'Connected';
-  const statusColor = sync.status === 'error' ? TOW.blood : sync.status === 'synced' ? '#4f6b3a' : TOW.muted;
-
   return (
     <div style={card}>
       <div style={title}>Sync army lists</div>
@@ -361,12 +460,7 @@ function ListSyncSection({
             Your lists &amp; groups sync automatically to your account — sign in on another device and they’re
             there. This is also how the campaign reads your army list.
           </div>
-          <div style={{ ...eb, fontSize: 8.5, color: statusColor, marginBottom: 12 }}>{statusText} · {sync.listCount} list{sync.listCount === 1 ? '' : 's'}</div>
-          {sync.error && <div style={{ ...body, color: TOW.blood, marginBottom: 10 }}>{sync.error}</div>}
-          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-            <button style={{ ...ghostBtn, opacity: sync.status === 'syncing' ? 0.6 : 1 }} disabled={sync.status === 'syncing'} onClick={() => sync.pushNow()}>Upload now</button>
-            <button style={{ ...ghostBtn, opacity: sync.status === 'syncing' ? 0.6 : 1 }} disabled={sync.status === 'syncing'} onClick={() => sync.pullNow()}>Fetch now</button>
-          </div>
+          <SyncBediening body={body} goldBtn={goldBtn} ghostBtn={ghostBtn} />
           <EerdereVersies body={body} ghostBtn={ghostBtn} />
         </>
       ) : sync.key ? (
@@ -399,13 +493,7 @@ function ListSyncSection({
           ) : (
             <div style={{ ...body, fontStyle: 'italic', marginBottom: 6 }}>Connected with an older sync key. Stop and reconnect with a password to switch.</div>
           )}
-          <div style={{ ...eb, fontSize: 8.5, color: statusColor, marginBottom: 12 }}>{statusText} · {sync.listCount} list{sync.listCount === 1 ? '' : 's'}</div>
-          {sync.error && <div style={{ ...body, color: TOW.blood, marginBottom: 10 }}>{sync.error}</div>}
-          <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-            <button style={{ ...ghostBtn, opacity: sync.status === 'syncing' ? 0.6 : 1 }} disabled={sync.status === 'syncing'} onClick={() => sync.pushNow()}>Upload now</button>
-            <button style={{ ...ghostBtn, opacity: sync.status === 'syncing' ? 0.6 : 1 }} disabled={sync.status === 'syncing'} onClick={() => sync.pullNow()}>Fetch now</button>
-            <button style={{ ...ghostBtn, color: TOW.muted, borderColor: TOW.line }} onClick={stop}>Stop syncing</button>
-          </div>
+          <SyncBediening body={body} goldBtn={goldBtn} ghostBtn={ghostBtn} onStop={stop} />
           <EerdereVersies body={body} ghostBtn={ghostBtn} />
         </>
       ) : choice ? (

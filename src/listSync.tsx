@@ -1,72 +1,68 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
-import { usePersistentState } from './store';
+import { getPersisted, setPersisted, usePersistentState } from './store';
 import { accountSyncKey, makeSyncKey, pullLists, pullVersion, pullVersions, pushLists, type CloudLists, type CloudVersie } from './lib/listSync';
+import { mergeSync, zelfdeDoc, type SyncDoc } from './lib/listMerge';
 import { useAuth } from './lib/auth';
 import { testSwitchBezig } from './lib/testAccounts';
 
-// Keeps `tow:lists` in sync across a player's devices:
+// Keeps `tow:lists` (and the group folders) the same on all of a player's devices:
 //  • signed in → automatically, on a key derived from the account (nothing to set up);
-//  • signed out → optionally, on a self-chosen sync password (the original no-login flow);
-//  • on connect/open it pulls the cloud copy and adopts it if another device changed it,
-//  • on every local change it pushes (debounced),
-//  • last write wins (fine for a single player across their own devices).
+//  • signed out → optionally, on a self-chosen sync password (the original no-login flow).
 //
 // The automatic path matters for the campaign: Isle of Celedon reads a player's campaign list
 // straight out of `tow_lists`, so a list that never reaches the cloud is invisible to it. Before
 // 28-07-2026 that needed a sync password, which meant "signed in" was not enough to be coupled.
+//
+// ── SAMENVOEGEN IN PLAATS VAN OVERSCHRIJVEN (28-10-2026) ────────────────────────────────────────
+// Tot vandaag was dit "laatste schrijver wint" op het hele document, met een "which copy?"-dialoog
+// als noodrem. Joost speelt op een PC en een telefoon en had er steeds last van: lijsten liepen
+// achter, en de dialoog vroeg iets wat niemand kon beantwoorden ("gewoon altijd dezelfde lijsten").
+// Drie oorzaken, alle drie hier opgelost:
+//  1. Een verwijdering en een nieuwe lijst waren niet uit elkaar te houden (een id dat de cloud mist:
+//     hier nieuw, of daar weggegooid?). Nu bewaart elk apparaat een BASIS (`tow:syncBase`): de laatste
+//     stand waarvan vaststaat dat dit apparaat en de cloud hem allebei hadden. Daartegen voegt
+//     lib/listMerge.ts per lijst samen — bewerkingen, nieuwe lijsten en verwijderingen van beide kanten
+//     komen door, en bij een echte botsing wint de nieuwste bewerking van díe lijst. Geen dialoog meer.
+//  2. Ophalen gebeurde alleen bij het openen. Een PWA die dagen openstaat op de telefoon bewerkte een
+//     verouderde kopie. Nu ook bij terugkomen in de app (zichtbaar/focus), weer online, en elke minuut
+//     zolang de app in beeld is.
+//  3. De automatische push schreef blind over de cloud heen. Nu is er maar één weg naar de cloud:
+//     `syncNu` — eerst ophalen, dan samenvoegen, dan pas (en alleen als het nodig is) pushen.
 
-type Status = 'off' | 'syncing' | 'synced' | 'error' | 'conflict';
+type Status = 'off' | 'syncing' | 'synced' | 'error';
 
-/** Een naam van een lijst, voor de botsings-dialoog. */
-export interface SyncConflict {
-  key: string;
-  cloud: CloudLists;
-  /** Namen van lijsten die HIER staan en niet in de cloud — precies wat je kwijt zou raken. */
-  verdwijnen: string[];
-  /** Aantal lijsten op dit apparaat / in de cloud. */
-  hier: number;
-  daar: number;
-}
-
-/** De id's van een lijst-array (dezelfde `id` die de app zelf gebruikt). */
-const lijstIds = (v: unknown[]): Set<string> => {
-  const s = new Set<string>();
-  for (const l of Array.isArray(v) ? v : []) {
-    const id = l && typeof l === 'object' ? (l as { id?: unknown }).id : null;
-    if (typeof id === 'string' && id) s.add(id);
-  }
-  return s;
-};
-const telLijsten = (v: unknown[]): number => (Array.isArray(v) ? v.length : 0);
-
-/** Namen van lijsten die in `mijn` zitten maar niet in `hun` — op id vergeleken, niet op inhoud, want
- *  een elders bewerkte lijst is geen verlies en moet gewoon doorlopen. */
-function ontbrekendeLijsten(mijn: unknown[], hun: unknown[]): string[] {
-  const daar = lijstIds(hun);
-  const uit: string[] = [];
-  for (const l of Array.isArray(mijn) ? mijn : []) {
-    if (!l || typeof l !== 'object') continue;
-    const { id, name } = l as { id?: unknown; name?: unknown };
-    if (typeof id !== 'string' || !id || daar.has(id)) continue;
-    uit.push(typeof name === 'string' && name.trim() ? name : 'Naamloze lijst');
-  }
-  return uit;
-}
+/** De laatste stand die dit apparaat en de cloud allebei hadden, met de sleutel erbij: een basis van
+ *  een ANDERE sleutel zegt niets over deze cloud-rij en telt als "geen basis". */
+interface SyncBasis extends SyncDoc { key: string }
+const BASIS = 'tow:syncBase';
+/** ACCOUNTWISSEL (review 28-10-2026): gewoon uitloggen laat de lijsten op het apparaat staan. Logt er
+ *  daarna een ANDER account in, dan zijn die lijsten van het vorige account (dat ze al in z'n eigen
+ *  cloud-rij heeft). Samenvoegen zou ze in het nieuwe account zetten; vroeger hield de keuzedialoog dat
+ *  tegen. Nu onthoudt deze sleutel dat de eerstvolgende ronde voor dat account de cloud OVERNEEMT. */
+const OVERNAME = 'tow:syncOvername';
 
 interface ListSyncValue {
   key: string | null;
   /** True when syncing runs off the signed-in account rather than a typed password. */
   viaAccount: boolean;
   status: Status;
+  /** Server timestamp of the cloud copy as last seen/written — changes only when the cloud changes. */
   lastSyncedAt: string | null;
+  /** When this device last confirmed it matches the cloud (ms), also when nothing changed. */
+  lastCheckedAt: number | null;
   error: string | null;
   listCount: number;
   createKey: () => string;                              // generate a key + push local lists
   peek: (key: string) => Promise<CloudLists | null>;    // look at a key's cloud lists before deciding
   adoptCloud: (key: string, cloud: CloudLists) => void; // replace local lists with the cloud's
   pushMine: (key: string) => Promise<void>;             // connect with a key, overwrite cloud with local
-  pullNow: () => Promise<void>;
+  /** "Make sure the cloud has my lists now": een volledige sync (ophalen, samenvoegen, pushen).
+   *  Resolvet als hij klaar is; gooit niet (een fout staat in `status`/`error`). */
   pushNow: () => Promise<void>;
+  /** Expliciet: dit apparaat := de cloud. Lokale wijzigingen die er nog niet waren, vervallen. */
+  pullNow: () => Promise<void>;
+  /** Expliciet: de cloud := dit apparaat. Wat alleen in de cloud stond, vervalt (en staat in de versies). */
+  overwriteCloud: () => Promise<void>;
   disconnect: () => void;
   /** De bewaarde eerdere versies van deze sleutel, nieuwste eerst. */
   versies: () => Promise<CloudVersie[]>;
@@ -74,10 +70,6 @@ interface ListSyncValue {
   herstelVersie: (id: number) => Promise<void>;
   /** Stap over op de sleutel van het ingelogde account. Null als er niemand is ingelogd. */
   useAccountKey: (() => void) | null;
-  /** Open botsing: de cloud zou lijsten wegnemen die hier staan. Niets synct tot dit beantwoord is. */
-  conflict: SyncConflict | null;
-  /** 'cloud' = neem de cloudversie over; 'hier' = houd dit apparaat en schrijf dat naar de cloud. */
-  resolveConflict: (keuze: 'cloud' | 'hier') => Promise<void>;
 }
 
 const Ctx = createContext<ListSyncValue | null>(null);
@@ -88,11 +80,56 @@ export function useListSync(): ListSyncValue {
 }
 
 const serial = (v: unknown) => JSON.stringify(v ?? []);
+const arr = (v: unknown): unknown[] => (Array.isArray(v) ? v : []);
 function msg(e: unknown): string {
   if (e instanceof Error) return e.message;
   const o = e as Record<string, unknown> | null;
   return (o && typeof o.message === 'string' && o.message) || 'Sync failed — please try again.';
 }
+
+// Alles wat een sync-ronde leest, leest hij ACTUEEL uit de store (niet uit de render-closure): een
+// ronde wacht op het netwerk, en in die tijd kan de speler gewoon doorbouwen of van sleutel wisselen.
+const sleutelNu = () => getPersisted<string | null>('tow:syncKey', null);
+const lokaalNu = (): SyncDoc => ({
+  lists: arr(getPersisted<unknown[]>('tow:lists', [])),
+  groups: arr(getPersisted<unknown[]>('tow:list-groups', [])),
+});
+function basisVoor(k: string): SyncDoc | null {
+  const b = getPersisted<SyncBasis | null>(BASIS, null);
+  return b && b.key === k ? { lists: arr(b.lists), groups: arr(b.groups) } : null;
+}
+
+/** Een Postgres-tijdstempel als ms. Op tijd vergelijken, niet op tekst: de push-RPC en de pull kunnen
+ *  hetzelfde moment verschillend opschrijven ("2026-10-28 10:00:00+00" vs "2026-10-28T10:00:00+00:00"). */
+function serverTijd(s: string | null | undefined): number {
+  if (!s) return NaN;
+  return Date.parse(s.trim().replace(' ', 'T').replace(/([+-]\d\d)$/, '$1:00'));
+}
+
+/** Eenmalig, bij de overstap op samenvoegen (28-10-2026): een apparaat dat nog geen basis heeft maar
+ *  wel een `tow:syncAt` van de oude sync. Die tijd hoort bij een cloud-stand die dit apparaat toen
+ *  precies had (de oude sync zette hem alleen na een push of na het overnemen). Is de cloud sindsdien
+ *  niet veranderd, dan IS de cloud de basis; anders staat die stand in de bewaarde versies, met
+ *  `was_updated_at` = die tijd. Zonder dit zou de eerste ronde na de update alles samenvoegen, en
+ *  kwamen lijsten die op de PC al weg waren via een achterlopende telefoon terug. Lukt het niet
+ *  (versie weggesnoeid, offline): null, en dan wordt er samengevoegd — er gaat niets verloren. */
+async function basisUitOudeSync(k: string, cloud: CloudLists): Promise<SyncDoc | null> {
+  const toen = serverTijd(getPersisted<string | null>('tow:syncAt', null));
+  if (!Number.isFinite(toen)) return null;
+  if (serverTijd(cloud.updatedAt) === toen) return { lists: arr(cloud.lists), groups: arr(cloud.groups) };
+  try {
+    const v = (await pullVersions(k)).find((x) => serverTijd(x.wasUpdatedAt) === toen);
+    if (!v) return null;
+    const doc = await pullVersion(k, v.id);
+    return doc ? { lists: arr(doc.lists), groups: arr(doc.groups) } : null;
+  } catch {
+    return null;
+  }
+}
+
+/** Hoe lang een trigger van buiten (focus, zichtbaar, online, de minuut-tik) wacht na een geslaagde
+ *  ronde. Focus en zichtbaar vuren vaak samen; twee keer ophalen voegt niets toe. */
+const RUST_MS = 5000;
 
 export function ListSyncProvider({ children }: { children: ReactNode }) {
   const [lists, setLists] = usePersistentState<unknown[]>('tow:lists', []);
@@ -100,8 +137,10 @@ export function ListSyncProvider({ children }: { children: ReactNode }) {
   const [key, setKey] = usePersistentState<string | null>('tow:syncKey', null);
   const [viaAccount, setViaAccount] = usePersistentState<boolean>('tow:syncViaAccount', false);
   const [syncAt, setSyncAt] = usePersistentState<string | null>('tow:syncAt', null);
+  const [, setBasis] = usePersistentState<SyncBasis | null>(BASIS, null);
   const [status, setStatus] = useState<Status>(key ? 'syncing' : 'off');
   const [error, setError] = useState<string | null>(null);
+  const [lastCheckedAt, setLastCheckedAt] = useState<number | null>(null);
   const { user } = useAuth();
 
   // Signed in ⇒ sync, without asking anything. Only takes over when there is no key yet, so a player
@@ -112,172 +151,253 @@ export function ListSyncProvider({ children }: { children: ReactNode }) {
     if (!user) return;
     const mine = accountSyncKey(user.id);
     if (!key) { setViaAccount(true); setKey(mine); return; }
-    if (viaAccount && key !== mine) { setSyncAt(null); setKey(mine); }
+    if (viaAccount && key !== mine) { setSyncAt(null); setPersisted<string | null>(OVERNAME, mine); setKey(mine); }
   }, [user, key, viaAccount, setKey, setViaAccount, setSyncAt]);
 
-  // ── Botsing: de cloud zou lijsten wegnemen die dit apparaat wél heeft ────────────────────────────
-  // Tot 02-08 nam het ophalen de cloud ALTIJD stil over. Meestal klopt dat — de cloud is de
-  // gedeelde waarheid — maar één keer niet: een apparaat met lijsten dat voor het eerst een sleutel
-  // krijgt (bv. door in te loggen) zag z'n eigen werk zonder één woord verdwijnen. En omdat de push
-  // last-write-wins is en de server geen geschiedenis bijhield, was dat definitief.
-  //
-  // Alleen dát geval wordt nu voorgelegd: lijsten die LOKAAL bestaan en in de cloud ontbreken
-  // (vergeleken op id, niet op inhoud). Alle andere verschillen — de cloud is nieuwer, heeft er juist
-  // eentje bij, of een lijst is elders bewerkt — lopen door zoals altijd. Anders zou elke gewone
-  // bewerking op een tweede apparaat een dialoog opleveren en leert iedereen 'm wegklikken.
-  const [conflict, setConflict] = useState<SyncConflict | null>(null);
-  /** Staat er een onbeantwoorde botsing? Dan mag NIETS pushen tot de speler gekozen heeft. */
-  const geblokkeerd = useRef(false);
-  const lastPushed = useRef<string | null>(null); // combined lists+groups snapshot known to match the cloud
-  const ready = useRef(false);                    // gate auto-push until the first pull settles
-  // A combined snapshot of everything we sync (lists + group folders), for change detection.
-  const snap = (l: unknown[], g: unknown[]) => serial({ l: l ?? [], g: g ?? [] });
-  const localSnap = snap(lists, groups);
+  // ── Eén rij, nooit twee tegelijk ─────────────────────────────────────────────────────────────────
+  // Elke handeling die de cloud of de lokale lijsten raakt loopt via `inRij`, achter elkaar. Twee
+  // rondes door elkaar zouden elk een andere basis bewaren en elkaars push overschrijven.
+  const keten = useRef<Promise<unknown>>(Promise.resolve());
+  const inRij = useCallback(<T,>(fn: () => Promise<T>): Promise<T> => {
+    const p = keten.current.then(fn);
+    keten.current = p.catch(() => undefined);
+    return p;
+  }, []);
+  /** Een sync-ronde die al in de rij staat maar nog niet begonnen is. Komt er dan nog een trigger,
+   *  dan hoeft er geen tweede bij: die wachtende ronde leest bij zijn start toch de nieuwste staat. */
+  const wachtend = useRef<Promise<void> | null>(null);
+  const loopt = useRef(false);
+  const laatsteCheck = useRef(0);
+  /** Sleutels waarvoor deze sessie de opsplitsing al (opnieuw) is meegestuurd — zie de backfill. */
+  const opgesplitst = useRef<Set<string>>(new Set());
 
-  // On mount and whenever the key changes: reconcile with the cloud.
-  useEffect(() => {
-    let cancelled = false;
+  const klaar = useCallback((k: string, doc: SyncDoc, ts: string) => {
+    setBasis({ key: k, lists: doc.lists, groups: doc.groups });
+    setSyncAt(ts);
+    laatsteCheck.current = Date.now();
+    setLastCheckedAt(laatsteCheck.current);
+    setStatus('synced'); setError(null);
+  }, [setBasis, setSyncAt]);
+
+  /** Eén volledige ronde: ophalen → samenvoegen → (zo nodig) lokaal bijwerken → (zo nodig) pushen. */
+  const ronde = useCallback(async (): Promise<void> => {
+    const k = sleutelNu();
+    if (!k) { setStatus('off'); return; }
     // Middenin een testaccount-wissel: de lokale lijsten zijn dan al gewist en de sleutel is al van
     // het nieuwe account. Zou de seed-tak hier lopen, dan kreeg het nieuwe account de lijsten van het
     // vorige. De wissel herlaadt de pagina, dus deze verzoening gebeurt zo meteen alsnog — schoon.
     if (testSwitchBezig()) return;
-    if (!key) { setStatus('off'); ready.current = true; lastPushed.current = null; return; }
-    ready.current = false;
-    setStatus('syncing');
-    (async () => {
-      try {
-        const cloud = await pullLists(key);
-        if (cancelled) return;
-        if (!cloud) {
-          // key is new to the server — seed it from this device
-          const ts = await pushLists(key, lists, groups);
-          if (cancelled) return;
-          lastPushed.current = snap(lists, groups);
-          setSyncAt(ts);
-        } else if (cloud.updatedAt !== syncAt && snap(cloud.lists, cloud.groups) !== snap(lists, groups)) {
-          // another device changed the lists/groups — adopt them, UNLESS that would drop lists this
-          // device has and the cloud does not. Then we stop and ask: keeping quiet here is what made
-          // a whole evening's work vanish. `ready` stays false so the auto-push cannot fire either —
-          // neither side overwrites the other while the question is open.
-          const weg = ontbrekendeLijsten(lists, cloud.lists);
-          if (weg.length) {
-            setConflict({ key, cloud, verdwijnen: weg, hier: telLijsten(lists), daar: telLijsten(cloud.lists) });
-            setStatus('conflict');
-            // Grendel, geen `return`: een return voert `finally` alsnog uit en zet `ready` op true,
-            // waarna de auto-push dit apparaat over de cloud heen zou schrijven — precies de andere
-            // helft van hetzelfde ongeluk. Zolang deze ref staat doet de push-effect niets.
-            geblokkeerd.current = true;
-            return;
-          }
-          lastPushed.current = snap(cloud.lists, cloud.groups);
-          setLists(cloud.lists);
-          setGroups(cloud.groups);
-          setSyncAt(cloud.updatedAt);
-        } else {
-          // Baseline = what's actually in the cloud, so any local divergence (offline edits, or
-          // groups the cloud doesn't have yet) gets pushed up by the auto-push effect.
-          lastPushed.current = snap(cloud.lists, cloud.groups);
-          if (cloud.updatedAt !== syncAt) setSyncAt(cloud.updatedAt);
-        }
-        // Backfill (30-07): een rij die door een oudere build gepusht is heeft nog geen
-        // campagne-opsplitsing (punten + opties per unit). Zonder deze eenmalige push zou de campagne
-        // daarop moeten wachten tot de speler toevallig z'n lijst wijzigt. Draait alleen als er
-        // campagne-lijsten zijn en verandert de lijsten zelf niet.
-        if (cloud && !cancelled) {
-          // Minder opsplitsingen dan lijsten → een oudere build vulde deze rij (of hij is nooit gevuld).
-          // Eén keer opnieuw pushen; de lijsten zelf veranderen daarbij niet.
-          // Of (22-09-2026): de opsplitsing komt van een ANDERE app-versie. De `fouten` erin zijn het
-          // oordeel van de validator van toen; is die intussen gerepareerd of aangescherpt, dan
-          // blokkeert de campagne op iets wat deze app niet meer (of juist wel) zegt. Eén push per
-          // apparaat per versie; de lijsten zelf veranderen niet, dus de geschiedenis groeit er niet van.
-          const verouderd = (cloud.lists ?? []).length > 0 && cloud.renderedVersie !== __APP_VERSION__;
-          if ((cloud.lists ?? []).length > cloud.renderedCount || verouderd) {
-            try {
-              const ts = await pushLists(key, cloud.lists, cloud.groups);
-              if (!cancelled) { lastPushed.current = snap(cloud.lists, cloud.groups); setSyncAt(ts); }
-            } catch { /* stil: de lijsten zelf staan al goed in de cloud */ }
-          }
-        }
-        if (!cancelled) { setStatus('synced'); setError(null); }
-      } catch (e) {
-        if (!cancelled) { setStatus('error'); setError(msg(e)); }
-      } finally {
-        ready.current = true;
+    // Een achtergrondcontrole laat "Synced" gewoon staan; pas als er echt gepusht wordt, zie je het.
+    // Anders knippert de status elke minuut en springen de effecten die op 'synced' wachten mee.
+    setStatus((s) => (s === 'synced' ? s : 'syncing'));
+    try {
+      const cloud = await pullLists(k);
+      if (sleutelNu() !== k || testSwitchBezig()) return;
+      if (getPersisted<string | null>(OVERNAME, null) === k) {
+        // Ander account op dit apparaat: neem z'n cloud over (of begin leeg), niets samenvoegen.
+        setPersisted<string | null>(OVERNAME, null);
+        const doc: SyncDoc = cloud ? { lists: arr(cloud.lists), groups: arr(cloud.groups) } : { lists: [], groups: [] };
+        setLists(doc.lists);
+        setGroups(doc.groups);
+        if (cloud) { klaar(k, doc, cloud.updatedAt); return; }
+        setBasis({ key: k, lists: [], groups: [] });
+        setStatus('synced'); setError(null);
+        return;
       }
-    })();
-    return () => { cancelled = true; };
+      let basis = basisVoor(k);
+      if (cloud && !basis) {
+        basis = await basisUitOudeSync(k, cloud);
+        if (sleutelNu() !== k || testSwitchBezig()) return;
+      }
+      // Pas NA het wachten lezen: wat de speler intussen deed, hoort erbij.
+      const lokaal = lokaalNu();
+      if (!cloud) {
+        // key is new to the server — seed it from this device
+        setStatus('syncing');
+        const ts = await pushLists(k, lokaal.lists, lokaal.groups);
+        opgesplitst.current.add(k);
+        if (sleutelNu() !== k) return;
+        klaar(k, lokaal, ts);
+        return;
+      }
+      const samen = mergeSync(basis, lokaal, { lists: arr(cloud.lists), groups: arr(cloud.groups) });
+      // Lokaal bijwerken gebeurt METEEN (synchroon na het lezen), niet na de push: anders zou een
+      // bewerking die de speler tijdens de push maakt door deze uitkomst overschreven worden.
+      if (!zelfdeDoc(samen, lokaal)) { setLists(samen.lists); setGroups(samen.groups); }
+      let ts = cloud.updatedAt;
+      if (!zelfdeDoc(samen, cloud)) {
+        setStatus('syncing');
+        ts = await pushLists(k, samen.lists, samen.groups);
+        opgesplitst.current.add(k);
+      } else if (!opgesplitst.current.has(k)) {
+        // Backfill (30-07): een rij die door een oudere build gepusht is heeft nog geen
+        // campagne-opsplitsing (punten + opties per unit). Minder opsplitsingen dan lijsten → één keer
+        // opnieuw pushen; de lijsten zelf veranderen daarbij niet.
+        // Of (22-09-2026): de opsplitsing komt van een ANDERE app-versie. De `fouten` erin zijn het
+        // oordeel van de validator van toen; is die intussen gerepareerd of aangescherpt, dan
+        // blokkeert de campagne op iets wat deze app niet meer (of juist wel) zegt.
+        // Eén poging per sleutel per sessie (28-10): de sync draait nu elke minuut, en een lijst die
+        // nooit een opsplitsing krijgt zou anders elke minuut een push (en een versie) kosten.
+        const n = arr(cloud.lists).length;
+        const verouderd = n > 0 && cloud.renderedVersie !== __APP_VERSION__;
+        if (n > cloud.renderedCount || verouderd) {
+          opgesplitst.current.add(k);
+          try { ts = await pushLists(k, samen.lists, samen.groups); }
+          catch { /* stil: de lijsten zelf staan al goed in de cloud */ }
+        }
+      }
+      if (sleutelNu() !== k) return;
+      klaar(k, samen, ts);
+    } catch (e) {
+      if (sleutelNu() === k) { setStatus('error'); setError(msg(e)); }
+    }
+  }, [klaar, setLists, setGroups, setBasis]);
+
+  /** De enige weg waarlangs de app vanzelf synct. Komt er een trigger terwijl er een ronde loopt, dan
+   *  volgt er precies één ronde daarna — nooit twee tegelijk, en geen stapel. */
+  const syncNu = useCallback((): Promise<void> => {
+    if (wachtend.current) return wachtend.current;
+    const p = inRij(async () => {
+      wachtend.current = null;
+      loopt.current = true;
+      try { await ronde(); } finally { loopt.current = false; }
+    });
+    wachtend.current = p;
+    return p;
+  }, [inRij, ronde]);
+
+  // Snapshot of everything we sync, only for change DETECTION (cheap). Wat er echt veranderd is,
+  // beslist de ronde zelf tegen de basis.
+  const localSnap = serial({ l: lists ?? [], g: groups ?? [] });
+
+  // Trigger 1: on mount and whenever the key changes.
+  useEffect(() => {
+    if (testSwitchBezig()) return;
+    if (!key) { setStatus('off'); return; }
+    void syncNu();
   }, [key]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Push local changes (debounced) once the initial reconcile is done.
+  // Trigger 2: a local change (debounced). Geen blinde push meer: ook dit is een volledige ronde.
   useEffect(() => {
-    if (!key || !ready.current) return;
-    if (geblokkeerd.current) return; // onbeantwoorde botsing — niets overschrijven
-    if (testSwitchBezig()) return;   // accountwissel loopt — niet met halve staat naar de cloud
-    if (localSnap === lastPushed.current) return;
-    const t = setTimeout(async () => {
-      setStatus('syncing');
-      try {
-        const ts = await pushLists(key, lists, groups);
-        lastPushed.current = localSnap;
-        setSyncAt(ts);
-        setStatus('synced'); setError(null);
-      } catch (e) { setStatus('error'); setError(msg(e)); }
+    if (!key) return;
+    const t = setTimeout(() => {
+      if (testSwitchBezig()) return; // accountwissel loopt — niet met halve staat naar de cloud
+      // Is dit precies de stand die al in de basis staat (bv. net door een ronde zelf neergezet)?
+      // Dan valt er hier niets te melden.
+      const b = basisVoor(key);
+      if (b && zelfdeDoc(lokaalNu(), b)) return;
+      void syncNu();
     }, 1200);
     return () => clearTimeout(t);
   }, [localSnap, key]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  // Trigger 3: terug in de app, weer online, en elke minuut zolang hij in beeld is. Dit is wat een
+  // telefoon-PWA die dagen openstaat bij de les houdt.
+  useEffect(() => {
+    if (!key) return;
+    const controleer = () => {
+      if (testSwitchBezig()) return;
+      if (typeof document !== 'undefined' && document.visibilityState !== 'visible') return;
+      if (loopt.current || wachtend.current) return;
+      if (Date.now() - laatsteCheck.current < RUST_MS) return;
+      void syncNu();
+    };
+    const zichtbaar = () => { if (document.visibilityState === 'visible') controleer(); };
+    document.addEventListener('visibilitychange', zichtbaar);
+    window.addEventListener('focus', controleer);
+    window.addEventListener('online', controleer);
+    const tik = window.setInterval(controleer, 60_000);
+    return () => {
+      document.removeEventListener('visibilitychange', zichtbaar);
+      window.removeEventListener('focus', controleer);
+      window.removeEventListener('online', controleer);
+      window.clearInterval(tik);
+    };
+  }, [key, syncNu]);
+
   const createKey = useCallback(() => {
     const k = makeSyncKey();
-    lastPushed.current = null; // force the mount effect to seed the cloud
     setViaAccount(false);      // an explicitly chosen key wins over the account default
-    setKey(k);
+    setKey(k);                 // de basis hoort bij een andere sleutel → telt als geen; de ronde seedt
     return k;
   }, [setKey, setViaAccount]);
 
   const peek = useCallback((k: string) => pullLists(k), []);
 
   const adoptCloud = useCallback((k: string, cloud: CloudLists) => {
-    lastPushed.current = snap(cloud.lists, cloud.groups);
     setLists(cloud.lists);
     setGroups(cloud.groups);
+    // Dit apparaat is nu precies de cloud: dat is de basis voor deze sleutel.
+    setBasis({ key: k, lists: arr(cloud.lists), groups: arr(cloud.groups) });
     setSyncAt(cloud.updatedAt);
     setViaAccount(false);
     setKey(k);
     setStatus('synced'); setError(null);
-  }, [setLists, setGroups, setSyncAt, setKey, setViaAccount]);
+  }, [setLists, setGroups, setBasis, setSyncAt, setKey, setViaAccount]);
 
-  const pushMine = useCallback(async (k: string) => {
+  const pushMine = useCallback((k: string) => inRij(async () => {
     setStatus('syncing');
     try {
-      const ts = await pushLists(k, lists, groups);
-      lastPushed.current = snap(lists, groups);
+      const lokaal = lokaalNu();
+      const ts = await pushLists(k, lokaal.lists, lokaal.groups);
+      opgesplitst.current.add(k);
+      // Basis vóór de sleutel: de ronde die de sleutelwissel straks start, ziet dan meteen dat er
+      // niets te doen is.
+      setBasis({ key: k, lists: lokaal.lists, groups: lokaal.groups });
       setSyncAt(ts);
       setViaAccount(false);
       setKey(k);
       setStatus('synced'); setError(null);
     } catch (e) { setStatus('error'); setError(msg(e)); throw e; }
-  }, [lists, groups, setSyncAt, setKey, setViaAccount]);
+  }), [inRij, setBasis, setSyncAt, setKey, setViaAccount]);
 
-  /** "Fetch now" — de cloud winnen laten, met opzet en op eigen verzoek.
-   *
-   *  Dit is de HANDMATIGE tegenhanger van de botsings-dialoog: die vraagt omdat de app zelf begon,
-   *  hier drukt de speler zelf. Dus geen tweede vraag.
-   *
-   *  Wel moest de GRENDEL eraf (20-09). Stond er een botsing open, dan haalde deze knop de cloud wel
-   *  binnen maar bleef `geblokkeerd` staan — waarna dit apparaat de rest van de sessie niets meer
-   *  pushte en het vraagvenster bleef hangen. De knop leek te werken en hing de sync juist op. */
-  const pullNow = useCallback(async () => {
-    if (!key) return;
+  /** "Replace this device with the cloud" — bewust en op eigen verzoek. Sinds het samenvoegen
+   *  (28-10) zelden nodig; het blijft als noodgreep, bv. als je op dit apparaat iets hebt verknoeid. */
+  const pullNow = useCallback(() => inRij(async () => {
+    const k = sleutelNu();
+    if (!k) return;
     setStatus('syncing');
     try {
-      const cloud = await pullLists(key);
-      if (cloud) { lastPushed.current = snap(cloud.lists, cloud.groups); setLists(cloud.lists); setGroups(cloud.groups); setSyncAt(cloud.updatedAt); }
-      setConflict(null);
-      geblokkeerd.current = false;
-      ready.current = true;
-      setStatus('synced'); setError(null);
+      const cloud = await pullLists(k);
+      if (sleutelNu() !== k) return;
+      if (!cloud) { setStatus('synced'); setError(null); return; } // niets in de cloud: niets te vervangen
+      const doc = { lists: arr(cloud.lists), groups: arr(cloud.groups) };
+      setLists(doc.lists);
+      setGroups(doc.groups);
+      klaar(k, doc, cloud.updatedAt);
     } catch (e) { setStatus('error'); setError(msg(e)); }
-  }, [key, setLists, setGroups, setSyncAt]);
+  }), [inRij, klaar, setLists, setGroups]);
+
+  /** "Replace cloud with this device" — de tegenhanger. Wat alleen in de cloud stond gaat eruit; de
+   *  server bewaart de vervangen versie, dus het is terug te halen via Earlier versions. */
+  const overwriteCloud = useCallback(() => inRij(async () => {
+    const k = sleutelNu();
+    if (!k) return;
+    setStatus('syncing');
+    try {
+      const lokaal = lokaalNu();
+      const ts = await pushLists(k, lokaal.lists, lokaal.groups);
+      opgesplitst.current.add(k);
+      if (sleutelNu() !== k) return;
+      klaar(k, lokaal, ts);
+    } catch (e) { setStatus('error'); setError(msg(e)); }
+  }), [inRij, klaar]);
+
+  /** "Sync now", en wat CeledonPanel/ListBuilder aanroepen om zeker te weten dat een campagnelijst in
+   *  de cloud staat. Vroeger een blinde push (en daarmee de derde oorzaak van het gedoe); nu een
+   *  gewone ronde. Zelfde naam en belofte: resolvet als het klaar is. */
+  const pushNow = useCallback(() => syncNu(), [syncNu]);
+
+  const disconnect = useCallback(() => {
+    setKey(null);
+    setViaAccount(false);
+    setSyncAt(null);
+    // Ook de basis weg: wie later weer koppelt, begint met samenvoegen (er gaat niets verloren) in
+    // plaats van alles wat hier intussen verdween als "verwijderd" naar de cloud te sturen.
+    setBasis(null);
+    setPersisted<string | null>(OVERNAME, null);
+    setStatus('off'); setError(null);
+  }, [setKey, setViaAccount, setSyncAt, setBasis]);
 
   const versies = useCallback(async (): Promise<CloudVersie[]> => {
     if (!key) return [];
@@ -286,70 +406,24 @@ export function ListSyncProvider({ children }: { children: ReactNode }) {
 
   /** Een bewaarde versie terugzetten.
    *
-   *  Hij gaat NIET alleen lokaal terug: hij wordt ook meteen gepusht. Anders zou het volgende apparaat
-   *  dat synct de huidige cloud weer over dit apparaat heen leggen en was het herstel zo weer weg.
-   *  Daarmee is "Keep this device" ook echt terug te draaien in plaats van alleen op papier. */
-  const herstelVersie = useCallback(async (id: number) => {
-    if (!key) return;
+   *  Hij gaat NIET alleen lokaal terug: hij wordt ook meteen gepusht, en wordt de basis. Anders zou de
+   *  volgende ronde de huidige cloud er weer overheen leggen en was het herstel zo weer weg. */
+  const herstelVersie = useCallback((id: number) => inRij(async () => {
+    const k = sleutelNu();
+    if (!k) return;
     setStatus('syncing');
     try {
-      const v = await pullVersion(key, id);
+      const v = await pullVersion(k, id);
       if (!v) { setStatus('error'); setError('That version is no longer available.'); return; }
-      const ts = await pushLists(key, v.lists, v.groups);
-      lastPushed.current = snap(v.lists, v.groups);
-      setLists(v.lists);
-      setGroups(v.groups);
-      setSyncAt(ts);
-      setConflict(null);
-      geblokkeerd.current = false;
-      ready.current = true;
-      setStatus('synced'); setError(null);
+      const doc = { lists: arr(v.lists), groups: arr(v.groups) };
+      const ts = await pushLists(k, doc.lists, doc.groups);
+      opgesplitst.current.add(k);
+      if (sleutelNu() !== k) return;
+      setLists(doc.lists);
+      setGroups(doc.groups);
+      klaar(k, doc, ts);
     } catch (e) { setStatus('error'); setError(msg(e)); }
-  }, [key, setLists, setGroups, setSyncAt]);
-
-  const pushNow = useCallback(async () => {
-    if (!key) return;
-    setStatus('syncing');
-    try {
-      const ts = await pushLists(key, lists, groups);
-      lastPushed.current = snap(lists, groups);
-      setSyncAt(ts);
-      setStatus('synced'); setError(null);
-    } catch (e) { setStatus('error'); setError(msg(e)); }
-  }, [key, lists, groups, setSyncAt]);
-
-  const disconnect = useCallback(() => {
-    setKey(null);
-    setViaAccount(false);
-    setSyncAt(null);
-    setStatus('off'); setError(null);
-  }, [setKey, setViaAccount, setSyncAt]);
-
-  /** Beantwoord de botsing. Pas hierna gaat de grendel eraf, zodat de keuze niet alsnog door een
-   *  wachtende auto-push wordt ingehaald. */
-  const resolveConflict = useCallback(async (keuze: 'cloud' | 'hier') => {
-    const c = conflict;
-    if (!c) return;
-    setStatus('syncing');
-    try {
-      if (keuze === 'cloud') {
-        lastPushed.current = snap(c.cloud.lists, c.cloud.groups);
-        setLists(c.cloud.lists);
-        setGroups(c.cloud.groups);
-        setSyncAt(c.cloud.updatedAt);
-      } else {
-        const ts = await pushLists(c.key, lists, groups);
-        lastPushed.current = snap(lists, groups);
-        setSyncAt(ts);
-      }
-      setConflict(null);
-      geblokkeerd.current = false;
-      ready.current = true;
-      setStatus('synced'); setError(null);
-    } catch (e) {
-      setStatus('error'); setError(msg(e));
-    }
-  }, [conflict, lists, groups, setLists, setGroups, setSyncAt]);
+  }), [inRij, klaar, setLists, setGroups]);
 
   /** Handmatig overstappen naar de accountsleutel.
    *
@@ -357,22 +431,22 @@ export function ListSyncProvider({ children }: { children: ReactNode }) {
    *  cloud-lijsten niet onder je vandaan verdwijnen omdat je toevallig inlogt. Keerzijde is dat een
    *  telefoon die ooit een wachtwoord kreeg voor altijd op die sleutel blijft, ook na uit- en weer
    *  inloggen — je account-lijsten komen dan nooit binnen (Joost 02-08). Vandaar deze bewuste stap.
-   *  De pull erna beslist zelf of er iets zou verdwijnen en vraagt het dan. */
+   *  De basis hoort bij de oude sleutel, dus de eerste ronde op de accountsleutel voegt alles samen:
+   *  de lijsten van dit apparaat en die van het account blijven allebei. */
   const useAccountKey = useCallback(() => {
     if (!user) return;
     setViaAccount(true);
-    setSyncAt(null);            // forceer een verse vergelijking met de cloud
+    setSyncAt(null);
     setKey(accountSyncKey(user.id));
   }, [user, setViaAccount, setSyncAt, setKey]);
 
   const value = useMemo<ListSyncValue>(() => ({
-    key, viaAccount: viaAccount && !!key, status, lastSyncedAt: syncAt, error,
+    key, viaAccount: viaAccount && !!key, status, lastSyncedAt: syncAt, lastCheckedAt, error,
     listCount: Array.isArray(lists) ? lists.length : 0,
-    createKey, peek, adoptCloud, pushMine, pullNow, pushNow, disconnect,
+    createKey, peek, adoptCloud, pushMine, pullNow, pushNow, overwriteCloud, disconnect,
     versies, herstelVersie,
     useAccountKey: user ? useAccountKey : null,
-    conflict, resolveConflict,
-  }), [key, viaAccount, status, syncAt, error, lists, createKey, peek, adoptCloud, pushMine, pullNow, pushNow, disconnect, versies, herstelVersie, user, useAccountKey, conflict, resolveConflict]);
+  }), [key, viaAccount, status, syncAt, lastCheckedAt, error, lists, createKey, peek, adoptCloud, pushMine, pullNow, pushNow, overwriteCloud, disconnect, versies, herstelVersie, user, useAccountKey]);
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
 }

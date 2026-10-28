@@ -143,6 +143,11 @@ function wisAccountStaat(): void {
   setPersisted<unknown[]>('tow:lists', []);
   setPersisted<unknown[]>('tow:list-groups', []);
   setPersisted<string | null>('tow:syncAt', null);
+  // De sync-basis (listSync.tsx, 28-10-2026) MOET mee. Blijft hij staan terwijl de lijsten hierboven
+  // leeg gemaakt zijn, dan ziet de eerstvolgende sync op dezelfde sleutel (terugwisselen, opnieuw
+  // inloggen) "alles hier verwijderd" en haalt hij de lijsten ook uit de cloud. Zonder basis voegt
+  // hij juist samen en komt alles gewoon terug.
+  setPersisted<unknown>('tow:syncBase', null);
   setPersisted<unknown>('tow:campaignCtx', null);
   setPersisted<string | null>('tow:campaignActief', null);
   setPersisted<string | null>('tow:builder-active', null);
