@@ -7,7 +7,7 @@ import { suggestedLores, wizardInfo, allowedLores as resolveLores } from '../../
 import { useBackClose } from '../../lib/backStack';
 import { useSwipeToDismiss, DragHandle } from '../../lib/useSwipeToDismiss';
 import type { ArmyUnit, Lore } from '../../types';
-import { spreukInfo, SPREUK_MOMENT, DUUR_LABEL } from '../../lib/spreukInfo';
+import { spreukInfo } from '../../lib/spreukInfo';
 
 const eb = engraved as React.CSSProperties;
 
@@ -108,36 +108,30 @@ export function WizardSpells({
       </div>
 
       {chosenChips.length > 0 ? (
-        // ONDER ELKAAR, MET DE KERN ERBIJ (Joost 28-10-2026): naam, type en Casting Value/Range letterlijk uit de
-        // tabel van de regel; daaronder de korte uitleg van het effect en wanneer je hem cast. De hele rij is
-        // de knop naar de volledige regeltekst.
+        // ONDER ELKAAR, MET DE KERN ERBIJ (Joost 28-10-2026): naam en type links, rechts uitgelijnd de range en
+        // helemaal aan het eind de casting value (zonder "CV" — "dat is natuurlijk de casting value"), letterlijk
+        // uit de tabel van de regel; daaronder de korte uitleg van het effect. De regel "wanneer cast je hem"
+        // (Shooting/Conjuration/Combat) is er weer af: het type zegt dat al. De hele rij opent de volledige regel.
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           {chosenChips.map((c, i) => {
             const sp = spreukInfo(c.slug, rules[c.slug]);
-            const moment = sp.type ? SPREUK_MOMENT[sp.type] : undefined;
-            const duur = sp.duur ? DUUR_LABEL[sp.duur] : null;
             return (
               <button
                 key={c.slug}
                 onClick={() => openRule(c.slug)}
                 title={`${c.name} — tap for the full rule`}
-                style={{ display: 'block', width: '100%', textAlign: 'left', background: 'none', border: 'none', borderTop: i > 0 ? `1px dashed ${TOW.line}` : 'none', padding: '5px 0', cursor: 'pointer' }}
+                style={{ display: 'block', width: '100%', textAlign: 'left', background: 'none', border: 'none', borderTop: i > 0 ? `1px dashed ${TOW.line}` : 'none', padding: '3px 0', cursor: 'pointer' }}
               >
                 <span style={{ display: 'flex', alignItems: 'baseline', gap: 7, minWidth: 0 }}>
                   <span style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 13.5, color: TOW.goldDeep, borderBottom: `1px dotted ${TOW.goldDeep}`, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', minWidth: 0 }}>{c.name}</span>
                   {sp.type && <span style={{ ...eb, fontSize: 7.5, color: TOW.muted, whiteSpace: 'nowrap' }}>{sp.type}</span>}
-                  <span style={{ marginLeft: 'auto', flexShrink: 0, fontFamily: towFont.serif, fontSize: 12, color: TOW.parchDim, whiteSpace: 'nowrap' }}>
-                    {sp.cv && <><span style={{ ...eb, fontSize: 7.5, color: TOW.muted }}>CV </span><strong style={{ fontFamily: towFont.display, color: TOW.ink }}>{sp.cv}</strong></>}
-                    {sp.range && <span style={{ color: TOW.muted }}> · {sp.range}</span>}
+                  <span style={{ marginLeft: 'auto', flexShrink: 0, display: 'flex', alignItems: 'baseline', gap: 10, whiteSpace: 'nowrap' }}>
+                    {sp.range && <span title="Range" style={{ fontFamily: towFont.serif, fontSize: 12, color: TOW.muted }}>{sp.range}</span>}
+                    {sp.cv && <strong title="Casting value" style={{ fontFamily: towFont.display, fontSize: 13.5, color: TOW.ink }}>{sp.cv}</strong>}
                   </span>
                 </span>
                 {sp.kort && (
-                  <span style={{ display: 'block', fontFamily: towFont.serif, fontSize: 12.5, lineHeight: 1.35, color: TOW.ink, marginTop: 2 }}>{sp.kort}</span>
-                )}
-                {(moment || duur) && (
-                  <span style={{ display: 'block', fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 11.5, color: TOW.muted, marginTop: 1 }}>
-                    {moment}{moment && duur ? ' · ' : ''}{duur}
-                  </span>
+                  <span style={{ display: 'block', fontFamily: towFont.serif, fontSize: 12.5, lineHeight: 1.3, color: TOW.ink, marginTop: 1 }}>{sp.kort}</span>
                 )}
               </button>
             );

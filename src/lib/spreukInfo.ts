@@ -40,21 +40,3 @@ export function spreukInfo(slug: string, rule: Rule | undefined): SpreukInfo {
     duur: u?.duur ?? null,
   };
 }
-
-/** Wanneer een spreuktype gecast wordt en op wie — uit de rulebook-pagina's van de typen
- *  (Conjuration, Conveyance spells, Magic Missile and Magical Vortex spells, Assailment spells). */
-export const SPREUK_MOMENT: Record<string, string> = {
-  'Enchantment': 'Conjuration · friendly unit',
-  'Hex': 'Conjuration · enemy unit',
-  'Conveyance': 'Remaining Moves · friendly unit',
-  'Magic Missile': 'Shooting · enemy in line of sight, auto-hits',
-  'Magical Vortex': 'Shooting · template',
-  'Assailment': 'Combat · enemy you fight, auto-hits',
-};
-
-export const DUUR_LABEL: Record<SpreukDuur, string | null> = {
-  remains: 'Remains in Play',
-  turn: 'Until end of turn',
-  'next-turn': 'Until your next turn',
-  instant: null,
-};
