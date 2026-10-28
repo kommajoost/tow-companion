@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { TOW, towFont, engraved } from '../../design/tow';
 import { COMPOSITION_RULES } from '../../lib/owbBuilder';
+import { VERSTERKING_OVERAL } from '../../lib/versterking';
 
 // List settings: rename the list and change its army composition. Both were unreachable in the
 // redesigned builder — its army-summary rows called an `onEditArmyField` the container never
@@ -132,7 +133,8 @@ export function ListSettings({
         {/* REINFORCEMENT DETACHMENT (23-10-2026). Aan een teamtafel van twee tegen drie mag elke speler
             aan de kleine kant een versterking van de helft van de cap meenemen, uit zijn eigen army book.
             Die bouw je als eigen lijst; hier maak je hem aan, bij deze lijst. */}
-        {onVersterking && (
+        {/* Verborgen tot het nodig is (28-10-2026): zie VERSTERKING_OVERAL in lib/versterking.ts. */}
+        {onVersterking && VERSTERKING_OVERAL && (
           <div style={{ marginTop: 18, paddingTop: 14, borderTop: `1px solid ${TOW.line}` }}>
             <div style={{ ...label, marginBottom: 6 }}>Reinforcement detachment</div>
             <div style={{ fontFamily: towFont.serif, fontSize: 12.5, lineHeight: 1.5, color: TOW.inkDim, marginBottom: 8 }}>

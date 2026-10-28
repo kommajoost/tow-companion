@@ -484,8 +484,17 @@ export function UnitOptions(props: {
    *  een eigen naam VERPLICHT is (de veteranen-identiteit hangt eraan). Ontbreekt hij, dan toont dit
    *  scherm geen naam-rij — een gewone lijst heeft er niets aan. */
   onNaam?: () => void;
+  /** Gesplitst scherm (Joost 28-10-2026, Galaxy Fold opengevouwen): dit scherm staat dan als RECHTER
+   *  paneel naast de roster in plaats van eroverheen. Drie dingen veranderen, verder niets:
+   *   • de knop linksboven heet "✕ Close" en sluit alleen het paneel — "‹ Roster" zou suggereren dat
+   *     je ergens naartoe gaat, terwijl de roster er al naast staat;
+   *   • de legerstrook (lijstnaam + budgetbalk) valt weg, want de roster-kop links toont precies dat;
+   *   • dit scherm registreert GEEN eigen Back-laag: dat doet de container één keer voor het hele
+   *     paneel. Anders zou elke wissel van unit (remount via `key`) een history-entry weghalen en
+   *     meteen een nieuwe pushen, en dat async `history.back()` kan dan de verse entry opeten. */
+  inPane?: boolean;
 }): React.JSX.Element {
-  const { ctx, uid, onBack, onRemove, onDuplicate, onShowInfo, dense, onNaam, groeiMax, groeiMinModellen } = props;
+  const { ctx, uid, onBack, onRemove, onDuplicate, onShowInfo, dense, onNaam, groeiMax, groeiMinModellen, inPane } = props;
   const { itemsData } = ctx;
   // 04-10-2026: promotie alleen op DE campagnelijst (de server-wijzer), niet op de markering.
   const { actief: campagneActief } = useCampagnes();
@@ -546,7 +555,8 @@ export function UnitOptions(props: {
   /** The promotion whose confirmation sheet is open, by target unit id. */
   const [promoteToId, setPromoteToId] = useState<string | null>(null);
   // This screen IS a layer: hardware/browser Back must return to the roster, not leave the app.
-  useBackClose(true, onBack);
+  // Behalve als paneel (`inPane`): dan houdt de container die laag aan (Joost 28-10-2026).
+  useBackClose(!inPane, onBack);
 
   const entry = ctx.list.entries.find((e) => e.uid === uid) ?? null;
   const unit = entry ? ctx.getUnit(entry.cat, entry.unitId) ?? null : null;
@@ -624,7 +634,7 @@ export function UnitOptions(props: {
         background: TOW.bg, color: TOW.ink, fontFamily: towFont.serif,
       }}>
         <div style={{ padding: `10px ${BUILDER.gutter}px`, borderBottom: `1px solid ${TOW.line}` }}>
-          <BackButton onClick={onBack} />
+          <BackButton onClick={onBack} inPane={inPane} />
         </div>
         <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 14, padding: 24, textAlign: 'center' }}>
           <span style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 14, color: TOW.muted }}>
@@ -959,8 +969,9 @@ export function UnitOptions(props: {
             covers the whole app and the budget would otherwise be out of sight while you spend points.
             In the desktop inspector the top bar shows all three of those things a few hundred pixels
             up, so here it is pure repetition and it is dropped: 21px of a 176px header, spent saying
-            what the screen already says. */}
-        {dense ? null : (
+            what the screen already says. Als paneel naast de roster (`inPane`, 28-10-2026) idem: de
+            roster-kop links toont naam, budget en totaal al. */}
+        {dense || inPane ? null : (
         <div style={{
           display: 'flex', alignItems: 'center', gap: 9, height: 8, boxSizing: 'content-box',
           padding: `6px ${BUILDER.gutter}px`, borderBottom: `1px solid ${TOW.line}`,
@@ -981,7 +992,7 @@ export function UnitOptions(props: {
 
         {/* Title row */}
         <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10, padding: `9px ${BUILDER.gutter}px 0` }}>
-          <BackButton onClick={onBack} />
+          <BackButton onClick={onBack} inPane={inPane} />
           <div style={{ flex: 1, minWidth: 0 }}>
             {/* The troop type sits in this line as a LINK, dotted-underlined so it reads as one. The
                 surrounding parts (a renamed unit's real name, the list category) are not rules and stay
@@ -1434,14 +1445,16 @@ const FOOT_BTN: React.CSSProperties = {
   WebkitTapHighlightColor: 'transparent',
 };
 
-/** "‹ Roster". Edits are live, so this discards nothing — it is navigation, not a cancel. */
-function BackButton({ onClick }: { onClick: () => void }): React.JSX.Element {
+/** "‹ Roster". Edits are live, so this discards nothing — it is navigation, not a cancel.
+ *  Als paneel naast de roster (`inPane`, Joost 28-10-2026) wordt het "✕ Close": de roster staat er
+ *  al naast, dus de knop sluit alleen dit paneel (deselecteert de unit). */
+function BackButton({ onClick, inPane }: { onClick: () => void; inPane?: boolean }): React.JSX.Element {
   return (
-    <button type="button" onClick={onClick} aria-label="Back to roster" style={{
+    <button type="button" onClick={onClick} aria-label={inPane ? 'Close unit options' : 'Back to roster'} title={inPane ? 'Close' : undefined} style={{
       ...BTN_RESET, flexShrink: 0, height: BUILDER.control.back, minWidth: 44, padding: '0 9px',
       borderRadius: BUILDER.radius.button, border: `1px solid ${TOW.line}`, background: TOW.panel,
       color: TOW.inkDim, cursor: 'pointer', fontFamily: towFont.display, fontWeight: 600, fontSize: 12,
       display: 'inline-flex', alignItems: 'center', gap: 4,
-    }}>‹ Roster</button>
+    }}>{inPane ? '✕ Close' : '‹ Roster'}</button>
   );
 }

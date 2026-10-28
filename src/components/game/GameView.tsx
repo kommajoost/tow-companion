@@ -28,7 +28,7 @@ import type { KillDetail, Army, ArmyUnit } from '../../types';
 import type { BattleSheet } from '../../lib/battleSheet';
 import { VersterkingKiezer } from './VersterkingKiezer';
 import { isVrijPotjeCode } from '../../lib/battleCode';
-import { versterkingVan, versterkingVoorKant, voegVersterkingToe, zonderVersterking } from '../../lib/versterking';
+import { VERSTERKING_OVERAL, versterkingVan, versterkingVoorKant, voegVersterkingToe, zonderVersterking } from '../../lib/versterking';
 import { postGeldtVoor } from '../../lib/scenarioBonus';
 import { aangetikt, gedoodDoorVijand, knopLabel, postUitUnits, REKENREGEL, soortUitsluiting, tikUnit, uitsluiting, uitsluitingTekst, waardeNu } from '../../lib/scenarioUnits';
 import type { VpUnitTrack } from '../../lib/victoryPoints';
@@ -44,7 +44,8 @@ const Shield = ({ c, size = 22 }: { c: string; size?: number }) => (
 );
 
 // Active game roster + the shared battle tracker. Phone: a stacked header + scrolling roster.
-// Wide: a "This game" sidebar (code, You/Opponent, round, VP) beside a roster reading pane.
+// Wide (28-10-2026): a compact two-row header (code, You/Opponent, round/VP, reminders) above a
+// unit list on the left and the selected unit's full card on the right.
 export function GameView() {
   const { code, seat, myArmy, myName, opponentArmy, opponentName, setMyArmy, setOpponentArmy, tracker, setTracker, leaveGame } = useGame();
   const { setRuleOverlay } = useData();
@@ -57,22 +58,43 @@ export function GameView() {
   // list scannable). Tracked by unit id (ids are unique per army, so no clash between the two sides).
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
   const toggleExpand = (id: string) => setExpanded((s) => { const n = new Set(s); n.has(id) ? n.delete(id) : n.add(id); return n; });
-  const rootRef = useRef<HTMLDivElement>(null);
+  // De breedte meten we op de buitenste div. Telefoon en breed renderen elk een EIGEN buitenste div, dus
+  // bij het oversteken van 700 px wisselt het element: met een callback-ref volgt de observer mee
+  // (28-10-2026; met een vaste ref bleef hij aan de oude, losgekoppelde div hangen en sprong de layout
+  // na één wissel niet meer terug).
+  const [rootEl, rootRef] = useState<HTMLDivElement | null>(null);
   const [w, setW] = useState(420);
   useLayoutEffect(() => {
-    const el = rootRef.current;
-    if (!el) return;
+    if (!rootEl) return;
     const ro = new ResizeObserver((es) => setW(es[0].contentRect.width));
-    ro.observe(el);
-    setW(el.getBoundingClientRect().width);
+    ro.observe(rootEl);
+    setW(rootEl.getBoundingClientRect().width);
     return () => ro.disconnect();
-  }, []);
+  }, [rootEl]);
   const wide = w >= 700; // pane is window−76 when the global rail is shown
 
   const army: Army | null = side === 'me' ? myArmy : opponentArmy;
   // Wie kon deze kant killen? Het leger AAN DE ANDERE KANT van de tafel. Wordt de dropdown-inhoud bij
   // de kills, dus het moet meebewegen met de zijde die je bekijkt.
   const vijandLeger: Army | null = side === 'me' ? opponentArmy : myArmy;
+
+  // ── KIESLIJST OP BREED SCHERM (Joost 28-10-2026, Galaxy Fold) ── Links de units als dichte rijen,
+  // rechts de gekozen unit volledig. De keuze is PER KANT: schakel je naar de tegenstander en terug,
+  // dan staat je eigen unit weer klaar. Is er (nog) niets gekozen, of bestaat de gekozen unit niet meer
+  // in dit leger (leger vervangen, unit eruit), dan valt hij terug op de EERSTE unit van het leger.
+  // Afgeleid bij elke render, dus een realtime tracker-update laat de keuze ongemoeid. De telefoon
+  // gebruikt dit niet: daar klappen de kaarten in de lijst zelf open (`expanded`).
+  const [gekozen, setGekozen] = useState<{ me: string | null; opp: string | null }>({ me: null, opp: null });
+  const kies = (unitId: string) => setGekozen((g) => ({ ...g, [side]: unitId }));
+  const selId: string | null = army
+    ? (army.units.some((u) => u.id === gekozen[side]) ? gekozen[side] : army.units[0]?.id ?? null)
+    : null;
+  const selUnit: ArmyUnit | null = army?.units.find((u) => u.id === selId) ?? null;
+  // Nieuwe unit gekozen → het rechterpaneel begint weer bovenaan (anders sta je midden in de vorige).
+  const detailRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    detailRef.current?.scrollTo({ top: 0 });
+  }, [selId, side]);
 
   // The rule sheet lives outside the builder, so the selected pack must travel with the Army and be
   // restored here. This also switches correctly when both players use different community packs.
@@ -244,7 +266,7 @@ export function GameView() {
   );
 
   const battleBar = toonPanelen && (
-    <BattleBar round={tracker.round} maxRound={maxRound} onRound={adjRound} vpMe={vpMe} vpOpp={vpOpp} leader={leader} myName={myName || 'You'} opponentName={opponentName || 'Opponent'} editable={editable} vertical={wide} />
+    <BattleBar round={tracker.round} maxRound={maxRound} onRound={adjRound} vpMe={vpMe} vpOpp={vpOpp} leader={leader} myName={myName || 'You'} opponentName={opponentName || 'Opponent'} editable={editable} vertical={false} />
   );
   // DE REMINDER-BALK (Joost 05-10-2026): vast onder de ronde/VP-balk, met het weer en — bij een
   // campagne-battle — wat beide kanten meebrengen. Host = aanvaller, guest = verdediger: dezelfde
@@ -305,10 +327,11 @@ export function GameView() {
   // wil je de kaart en de scenarioteksten tijdens het spel kunnen teruglezen: dezelfde knop opent dan
   // het compacte scenario-overzicht (CampaignScenarioOverlay).
   const campagneSheet = !sheet && !!campagne && !!campagne.scenario;
+  // Breed: compacte knop in de kopbalk (28-10-2026), zelfde maat als op de telefoon.
   const sheetKnop = (sheet || campagneSheet) && (
     <button
       onClick={() => setSheetOpen(true)}
-      style={{ width: '100%', padding: '10px 14px', borderRadius: 10, cursor: 'pointer', border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt, color: TOW.ink, fontFamily: display, fontWeight: 600, fontSize: 13.5 }}
+      style={{ flexShrink: 0, border: `1px solid ${TOW.lineStrong}`, borderRadius: 9, background: TOW.cardLt, color: TOW.ink, cursor: 'pointer', padding: '6px 12px', fontFamily: display, fontSize: 12 }}
     >
       Battlefield
     </button>
@@ -329,7 +352,9 @@ export function GameView() {
   const campagneCode = !!code && !isVrijPotjeCode(code);
   const rfNu = versterkingVan(army);
   // Staat er al een versterking bij, dan blijft het blok staan (om hem weg te kunnen halen).
-  const rfMag = !!army && (side === 'me' || seat === 'solo') && (!!rfNu || (campagneCode ? !!rfMax : true));
+  // Vrij potje: sinds 28-10-2026 verborgen (VERSTERKING_OVERAL). Een campagne-battle waarvoor de server
+  // een versterking meegeeft, en een leger dat er al een heeft, blijven gewoon werken.
+  const rfMag = !!army && (side === 'me' || seat === 'solo') && (!!rfNu || (campagneCode ? !!rfMax : VERSTERKING_OVERAL));
   const versterkingPaneel = rfMag && army && (
     <VersterkingKiezer
       key={`${side}-${rfNu ? 'aan' : 'uit'}`}
@@ -349,16 +374,20 @@ export function GameView() {
     <EndBattleOverview res={res} hostName={hostName} guestName={guestName} hostArmy={hostArmy} guestArmy={guestArmy} onClose={() => setEndOpen(false)} />
   );
 
+  // Eén UnitCard met ALLE tracker-koppelingen; alleen de weergave (dicht/open, kiesrij) verschilt per
+  // plek. Zo krijgen de telefoonlijst, de kieslijst links en de detailkaart rechts precies dezelfde props.
+  const unitKaart = (a: Army, u: ArmyUnit, weergave: { collapsed: boolean; onToggleCollapse?: () => void; selected?: boolean }) => {
+    const t = tracker.units[unitKey(side, u.id)];
+    return (
+      <UnitCard key={u.id} unit={u} faction={a.faction} editable={editable} onChange={(patch) => onUnitChange(u.id, patch)} lost={t?.lost ?? 0} weg={t?.weg ?? false} fleeing={t?.fleeing ?? false} kills={t?.kills ?? 0} onSetLost={(lost) => setCasualty(u.id, lost)} onRemoved={() => setRemoved(u.id, !(t?.weg ?? false))} onFlee={() => toggleFleeing(u.id)} onSetKills={(k) => setKills(u.id, k)} killDetails={t?.killDetails ?? []} onSetKillDetail={(i, patch) => setKillDetail(u.id, i, patch)} vijandUnits={vijandLeger?.units ?? []} maxRound={maxRound} collapsed={weergave.collapsed} onToggleCollapse={weergave.onToggleCollapse} selected={weergave.selected} scenarioKnoppen={knoppenVoor(u)} />
+    );
+  };
+
   const rosterBody = army ? (
     groups.map((g) => (
       <div key={g.category} style={{ marginBottom: 8 }}>
         <div style={{ ...eb, fontSize: 9, color: TOW.goldDeep, margin: '12px 2px 8px' }}>{g.category}</div>
-        {g.units.map((u) => {
-          const t = tracker.units[unitKey(side, u.id)];
-          return (
-            <UnitCard key={u.id} unit={u} faction={army.faction} editable={editable} onChange={(patch) => onUnitChange(u.id, patch)} lost={t?.lost ?? 0} weg={t?.weg ?? false} fleeing={t?.fleeing ?? false} kills={t?.kills ?? 0} onSetLost={(lost) => setCasualty(u.id, lost)} onRemoved={() => setRemoved(u.id, !(t?.weg ?? false))} onFlee={() => toggleFleeing(u.id)} onSetKills={(k) => setKills(u.id, k)} killDetails={t?.killDetails ?? []} onSetKillDetail={(i, patch) => setKillDetail(u.id, i, patch)} vijandUnits={vijandLeger?.units ?? []} maxRound={maxRound} collapsed={!expanded.has(u.id)} onToggleCollapse={() => toggleExpand(u.id)} scenarioKnoppen={knoppenVoor(u)} />
-          );
-        })}
+        {g.units.map((u) => unitKaart(army, u, { collapsed: !expanded.has(u.id), onToggleCollapse: () => toggleExpand(u.id) }))}
       </div>
     ))
   ) : side === 'opp' ? (
@@ -376,44 +405,83 @@ export function GameView() {
     <ArmyPaste title="Your army list" cta="Add your army" onSet={setMyArmy} />
   );
 
-  // ════════════════ WIDE — "This game" sidebar + roster pane ════════════════
+  // ════════════════ WIDE — compacte kopbalk + kieslijst links / unit rechts ════════════════
+  // Joost 28-10-2026 (Galaxy Fold 7): "links staat wat normaal bovenin staat … hou dat gewoon in de header
+  // bovenin, maar wel vrij compact", en "mijn lijst met units links en de stats rechts, in plaats van het
+  // uitklappen". De zijbalk is dus een kopbalk van twee regels geworden:
+  //   rij 1 — wie/welk potje: code (of Solo) · You/Opponent · Battlefield · Leave
+  //   rij 2 — de stand: ronde/VP (horizontaal) naast de reminder-balk (weer, perks, Wrath)
+  // Daaronder twee panelen die elk zelf scrollen: links objectives, de legerkop, de units als kiesbare
+  // dichte rijen en End battle (vast onderaan); rechts de gekozen unit volledig, met al z'n knoppen.
   if (wide) {
+    const waiting = !!(code && seat === 'host' && !opponentArmy);
+    const selGroep = selUnit ? groups.find((g) => g.units.includes(selUnit)) : undefined;
     return (
-      <div ref={rootRef} className="tow-field" style={{ height: '100%', display: 'flex', flexDirection: 'row', color: TOW.ink }}>
-        <div style={{ width: 284, flexShrink: 0, borderRight: `1px solid ${TOW.lineStrong}`, background: TOW.panel, display: 'flex', flexDirection: 'column' }}>
-          <div style={{ padding: '20px 18px 0' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 9 }}>
-              <Shield c={TOW.goldDeep} />
-              <div style={{ fontFamily: display, fontWeight: 700, fontSize: 21, color: TOW.ink }}>Armies</div>
-            </div>
-            <Ornament w={180} color={TOW.goldDeep} style={{ display: 'block', marginTop: 12, opacity: 0.6 }} />
-          </div>
-          <div style={{ margin: '14px 14px 0', display: 'flex', flexDirection: 'column', gap: 9, overflowY: 'auto', flex: 1, minHeight: 0, paddingBottom: 18 }}>
-            <div style={{ ...eb, fontSize: 8.5, color: TOW.muted }}>This game</div>
-            <CodeBadge code={code} onLeave={leaveGame} waiting={!!(code && seat === 'host' && !opponentArmy)} solo={seat === 'solo'} />
-            {sideToggle}
-            {battleBar}
-            {reminderStrip}
+      <div ref={rootRef} className="tow-field" style={{ height: '100%', display: 'flex', flexDirection: 'column', color: TOW.ink }}>
+        <div className="tow-leather" style={{ flexShrink: 0, display: 'flex', flexDirection: 'column', gap: 8, padding: '8px 14px', borderBottom: `1px solid ${TOW.lineStrong}` }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, minWidth: 0 }}>
+            <CodeBadge code={code} waiting={waiting} solo={seat === 'solo'} />
+            <div style={{ flex: '0 1 380px', minWidth: 180 }}>{sideToggle}</div>
+            <div style={{ flex: 1 }} />
             {sheetKnop}
-            {objectivesPaneel}
-            {(myArmy || opponentArmy || scenarioTest) && (
-              <button onClick={() => setEndOpen(true)} style={{ width: '100%', border: 'none', borderRadius: 11, cursor: 'pointer', padding: '12px 16px', background: `linear-gradient(180deg, ${TOW.goldBright}, ${TOW.gold} 55%, ${TOW.goldDeep})`, color: TOW.onGrad, fontFamily: display, fontWeight: 700, fontSize: 14 }}>End battle</button>
-            )}
+            <button onClick={leaveGame} style={{ flexShrink: 0, border: `1px solid ${TOW.lineStrong}`, borderRadius: 9, background: 'transparent', color: TOW.muted, cursor: 'pointer', padding: '6px 12px', fontFamily: display, fontSize: 12 }}>Leave</button>
           </div>
+          {battleBar && (
+            <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'flex-start', gap: 8 }}>
+              <div style={{ flex: '1 1 380px', minWidth: 0, maxWidth: 560 }}>{battleBar}</div>
+              <div style={{ flex: '1 1 260px', minWidth: 0 }}>{reminderStrip}</div>
+            </div>
+          )}
         </div>
 
-        <div className="tow-field" style={{ flex: 1, minWidth: 0, overflowY: 'auto' }}>
-          <div style={{ maxWidth: 720, margin: '0 auto', padding: '26px 32px 52px' }}>
-            {army && (
-              <>
-                <div style={{ ...eb, fontSize: 9.5, color: TOW.goldDeep, marginBottom: 5 }}>{side === 'me' ? 'Your army' : "Opponent's army"} · {afield}/{army.units.length} afield</div>
-                <div style={{ fontFamily: display, fontWeight: 700, fontSize: 27, color: TOW.ink, lineHeight: 1.05 }}>{army.name}</div>
-                <div style={{ fontFamily: serif, fontStyle: 'italic', fontSize: 15, color: TOW.parchDim, marginTop: 4 }}>{army.faction || ''}{army.points != null ? ` · ${army.points} pts` : ''}</div>
-                <Ornament w={150} color={TOW.goldDeep} style={{ display: 'block', margin: '14px 0 2px', opacity: 0.5 }} />
-              </>
+        <div style={{ flex: 1, minHeight: 0, display: 'flex' }}>
+          {/* LINKS — objectives, legerkop, kieslijst, End battle */}
+          <div style={{ width: '42%', minWidth: 330, maxWidth: 460, flexShrink: 0, display: 'flex', flexDirection: 'column', borderRight: `1px solid ${TOW.lineStrong}`, background: TOW.panel }}>
+            <div data-testid="game-unitlijst" style={{ flex: 1, minHeight: 0, overflowY: 'auto', padding: '10px 12px 14px' }}>
+              {objectivesPaneel}
+              {army ? (
+                <>
+                  <div style={{ margin: '4px 2px 0' }}>
+                    <div style={{ ...eb, fontSize: 8.5, color: TOW.goldDeep, marginBottom: 3 }}>{side === 'me' ? 'Your army' : "Opponent's army"} · {afield}/{army.units.length} afield</div>
+                    <div style={{ fontFamily: display, fontWeight: 700, fontSize: 19, color: TOW.ink, lineHeight: 1.1 }}>{army.name}</div>
+                    <div style={{ fontFamily: serif, fontStyle: 'italic', fontSize: 13.5, color: TOW.parchDim, marginTop: 2 }}>{army.faction || ''}{army.points != null ? ` · ${army.points} pts` : ''}</div>
+                    <Ornament w={120} color={TOW.goldDeep} style={{ display: 'block', margin: '10px 0 0', opacity: 0.5 }} />
+                  </div>
+                  {versterkingPaneel}
+                  {groups.map((g) => (
+                    <div key={g.category} style={{ marginBottom: 6 }}>
+                      <div style={{ ...eb, fontSize: 9, color: TOW.goldDeep, margin: '12px 2px 7px' }}>{g.category}</div>
+                      {g.units.map((u) => unitKaart(army, u, { collapsed: true, onToggleCollapse: () => kies(u.id), selected: u.id === selId }))}
+                    </div>
+                  ))}
+                </>
+              ) : (
+                <div style={{ padding: '10px 2px 0', fontFamily: serif, fontStyle: 'italic', fontSize: 13.5, color: TOW.muted }}>
+                  {side === 'me' ? 'No army yet — add yours on the right.' : 'No opponent army yet — add one on the right.'}
+                </div>
+              )}
+            </div>
+            {(myArmy || opponentArmy || scenarioTest) && (
+              <div style={{ flexShrink: 0, padding: '10px 12px', borderTop: `1px solid ${TOW.line}` }}>
+                <button onClick={() => setEndOpen(true)} style={{ width: '100%', border: 'none', borderRadius: 11, cursor: 'pointer', padding: '12px 16px', background: `linear-gradient(180deg, ${TOW.goldBright}, ${TOW.gold} 55%, ${TOW.goldDeep})`, color: TOW.onGrad, fontFamily: display, fontWeight: 700, fontSize: 14 }}>End battle</button>
+              </div>
             )}
-            {versterkingPaneel}
-            {rosterBody}
+          </div>
+
+          {/* RECHTS — de gekozen unit volledig (of het leger toevoegen als deze kant er nog geen heeft) */}
+          <div ref={detailRef} data-testid="game-unitdetail" className="tow-field" style={{ flex: 1, minWidth: 0, overflowY: 'auto' }}>
+            <div style={{ maxWidth: 720, margin: '0 auto', padding: '14px 22px 40px' }}>
+              {!army ? rosterBody : selUnit ? (
+                <>
+                  {selGroep && <div style={{ ...eb, fontSize: 9, color: TOW.goldDeep, margin: '0 2px 8px' }}>{selGroep.category}</div>}
+                  {unitKaart(army, selUnit, { collapsed: false })}
+                </>
+              ) : (
+                <div style={{ padding: '48px 12px', textAlign: 'center', fontFamily: serif, fontStyle: 'italic', fontSize: 15, color: TOW.muted }}>
+                  Select a unit on the left to see its stats
+                </div>
+              )}
+            </div>
           </div>
         </div>
         {sheetModal}
@@ -499,14 +567,16 @@ function BattlefieldOverlay({ sheet, onClose }: { sheet: BattleSheet; onClose: (
   );
 }
 
-function CodeBadge({ code, onLeave, waiting, solo = false }: { code: string | null; onLeave: () => void; waiting: boolean; solo?: boolean }) {
+/** Code van het potje in de brede kopbalk (28-10-2026: compact, zonder kader; Leave staat nu rechts in
+ *  dezelfde rij). Het label zegt ook of je nog op de tegenstander wacht. */
+function CodeBadge({ code, waiting, solo = false }: { code: string | null; waiting: boolean; solo?: boolean }) {
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 9, padding: '9px 12px', borderRadius: 11, background: TOW.cardLt, border: `1px solid ${TOW.line}` }}>
-      <div style={{ flex: 1, minWidth: 0 }}>
-        <div style={{ ...eb, fontSize: 7.5, color: TOW.muted }}>{waiting ? 'Waiting for opponent' : code && !solo ? 'Shared game' : 'Local game'}</div>
-        <div style={{ fontFamily: display, fontWeight: 700, fontSize: 17, color: code ? TOW.goldDeep : TOW.ink, letterSpacing: code ? '0.2em' : 0 }}>{code || 'Solo'}</div>
+    <div style={{ display: 'flex', alignItems: 'center', gap: 7, flexShrink: 0, minWidth: 0 }}>
+      <Shield c={TOW.goldDeep} size={18} />
+      <div style={{ minWidth: 0 }}>
+        <div style={{ ...eb, fontSize: 7.5, color: waiting ? TOW.goldDeep : TOW.muted, whiteSpace: 'nowrap' }}>{waiting ? 'Waiting for opponent…' : code && !solo ? 'Shared game' : 'Local game'}</div>
+        <div style={{ fontFamily: display, fontWeight: 700, fontSize: 16, lineHeight: 1.15, color: code ? TOW.goldDeep : TOW.ink, letterSpacing: code ? '0.18em' : 0, whiteSpace: 'nowrap' }}>{code || 'Solo'}</div>
       </div>
-      <button onClick={onLeave} style={{ ...eb, fontSize: 8, color: TOW.muted, border: `1px solid ${TOW.lineStrong}`, borderRadius: 8, background: 'transparent', cursor: 'pointer', padding: '7px 11px' }}>Leave</button>
     </div>
   );
 }

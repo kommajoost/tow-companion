@@ -3,7 +3,7 @@ import { useMemo, useState } from 'react';
 import { useData } from '../../data';
 import { useUI } from '../../state';
 import { TOW, towFont, engraved } from '../../design/tow';
-import { buildRuleIndex, resolveRuleSlug, resolveOptionSlug, wizardInfo, unitTotalStrength, unitArmourSave } from '../../lib/armyRules';
+import { buildRuleIndex, resolveRuleSlug, resolveOptionSlug, wizardInfo, unitTotalStrength, unitArmourSave, unitSize, woundsPerModel } from '../../lib/armyRules';
 import { unitWeapons } from '../../lib/weaponStats';
 import { abilityLabel, abilityEffect, scarLabel } from '../../lib/campaignBattle';
 import { CombatStats } from './CombatStats';
@@ -60,6 +60,7 @@ export function UnitCard({
   collapsed = false,
   onToggleCollapse,
   scenarioKnoppen,
+  selected,
 }: {
   unit: ArmyUnit;
   /** The army's faction, used to pick the right faction-variant of an ambiguously-named rule
@@ -96,6 +97,13 @@ export function UnitCard({
    *  "staat aan het eind helemaal in de zone van de verdediger"). GameView rekent uit of hij meetelt en voor
    *  hoeveel (lib/scenarioUnits.ts); de kaart toont alleen het knopje in de kopregel, ook dichtgeklapt. */
   scenarioKnoppen?: ScenarioKnop[];
+  /** KIESLIJST-MODUS (Joost 28-10-2026): op een breed scherm staat de unitlijst links en de gekozen unit
+   *  rechts. Is `selected` gezet (true/false), dan is deze dichte kaart een kiesbare rij: de kopregel
+   *  roept `onToggleCollapse` aan (GameView kiest er de unit mee), de gekozen rij krijgt een gouden rand,
+   *  onder de naam staat een korte stand (modellen/wonden over, fleeing, destroyed, kills) zodat je in de
+   *  lijst ziet wat je rechts aanpast, en een lange naam mag over twee regels (de kolom is smal). Niet
+   *  gezet (undefined) = precies het oude gedrag. */
+  selected?: boolean;
 }) {
   // 05-10-2026: een game bewaart bij de start een KOPIE van beide legers (tow_games.host_army/guest_army).
   // Wie startte vóór de statline-fix (0.1.406, o.a. de Empire-Mortar) heeft daarin een unit zonder
@@ -146,6 +154,26 @@ export function UnitCard({
   const hasWeapons = weapons.melee.length > 0 || weapons.ranged.length > 0;
   const tracked = onSetLost != null; // casualty-UI is alleen gewired in de game-roster
   const dead = tracked && ((lost ?? 0) >= unitTotalStrength(unit) || (weg ?? false));
+  // Kieslijst-modus (zie `selected`): de korte stand onder de naam. Zelfde afleiding als WoundTracker
+  // (modellen over = start − floor(lost / W)); alleen weergave, er wordt hier niets geschreven.
+  const kiesRij = selected !== undefined && collapsed;
+  const stand: { t: string; rood: boolean }[] = [];
+  if (kiesRij && tracked) {
+    const totaal = unitTotalStrength(unit);
+    const start = unitSize(unit);
+    const wpm = Math.max(1, woundsPerModel(unit));
+    const verloren = Math.min(totaal, Math.max(0, lost ?? 0));
+    if (weg) stand.push({ t: 'Removed', rood: true });
+    else if (verloren >= totaal) stand.push({ t: 'Destroyed', rood: true });
+    else if (verloren > 0) {
+      stand.push(start > 1
+        ? { t: `${Math.max(0, start - Math.floor(verloren / wpm))}/${start} models`, rood: false }
+        : { t: `${totaal - verloren}/${totaal} W`, rood: false });
+    }
+    if (fleeing && !dead) stand.push({ t: 'Fleeing', rood: true });
+    const k = Math.max(0, Math.round(kills ?? 0));
+    if (k > 0) stand.push({ t: `${k} kill${k === 1 ? '' : 's'}`, rood: false });
+  }
   // Chosen magic items (weapons, armour, talismans, runes, banners, …) have no rule page; tapping one
   // in the loadout line opens its info sheet (flavour + special rules) instead of the rule sheet.
   const [info, setInfo] = useState<InfoSheetData | null>(null);
@@ -193,16 +221,25 @@ export function UnitCard({
   });
 
   return (
-    <section style={{ border: `1px solid ${TOW.line}`, borderRadius: 12, background: dead ? 'rgba(74,55,22,0.03)' : TOW.panel2, padding: collapsed ? '11px 14px' : 14, marginBottom: 8, opacity: dead ? 0.7 : 1 }}>
+    <section
+      aria-current={kiesRij && selected ? 'true' : undefined}
+      style={{
+        border: `1px solid ${kiesRij && selected ? TOW.goldDeep : TOW.line}`, borderRadius: 12,
+        background: kiesRij && selected ? TOW.cardLt : dead ? 'rgba(74,55,22,0.03)' : TOW.panel2,
+        boxShadow: kiesRij && selected ? `inset 3px 0 0 ${TOW.goldDeep}` : undefined,
+        padding: collapsed ? (kiesRij ? '9px 12px' : '11px 14px') : 14, marginBottom: kiesRij ? 6 : 8,
+        opacity: dead ? 0.7 : 1,
+      }}
+    >
       <div
         onClick={onToggleCollapse}
         style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: collapsed ? 0 : 8, cursor: onToggleCollapse ? 'pointer' : 'default' }}
       >
         {onToggleCollapse && (
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke={TOW.muted} strokeWidth="2.6" style={{ flexShrink: 0, transform: collapsed ? 'none' : 'rotate(90deg)', transition: 'transform .18s ease' }} aria-hidden="true"><path d="M9 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" /></svg>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke={kiesRij && selected ? TOW.goldDeep : TOW.muted} strokeWidth="2.6" style={{ flexShrink: 0, transform: collapsed ? 'none' : 'rotate(90deg)', transition: 'transform .18s ease' }} aria-hidden="true"><path d="M9 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" /></svg>
         )}
         <div style={{ flex: 1, minWidth: 0 }}>
-          <h3 style={{ margin: 0, fontFamily: towFont.display, fontWeight: 700, fontSize: 16, color: TOW.ink, textDecoration: dead ? 'line-through' : 'none', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: collapsed ? 'nowrap' : 'normal' }}>
+          <h3 style={{ margin: 0, fontFamily: towFont.display, fontWeight: 700, fontSize: 16, color: TOW.ink, textDecoration: dead ? 'line-through' : 'none', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: collapsed && !kiesRij ? 'nowrap' : 'normal' }}>
             {unit.count ? <span style={{ color: TOW.goldDeep }}>{unit.count}× </span> : null}
             {toon.primair}
           </h3>
@@ -236,6 +273,16 @@ export function UnitCard({
                   {unit.troopType}
                 </button>
               ) : unit.troopType}
+            </div>
+          )}
+          {stand.length > 0 && (
+            <div style={{ ...eb, fontSize: 8, marginTop: 3, color: TOW.muted, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+              {stand.map((s, i) => (
+                <span key={i}>
+                  {i > 0 ? <span style={{ color: TOW.faint }}> · </span> : null}
+                  <span style={{ color: s.rood ? TOW.blood : TOW.parchDim }}>{s.t}</span>
+                </span>
+              ))}
             </div>
           )}
         </div>

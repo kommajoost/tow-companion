@@ -315,8 +315,12 @@ export function PickerScreen(props: {
    *  daarmee de campagne-identiteit — opnieuw toevoegen zou een ander regiment opleveren. */
   terugTeHalen?: { uid: string; unitId: string; cat: string; modellen: number | null; label: string; sub: string | null; volledig: boolean }[];
   onRestore?: (b: { uid: string; unitId: string; cat: string; modellen: number | null }) => void;
+  /** Gesplitst scherm (Joost 28-10-2026, Galaxy Fold opengevouwen): de picker staat dan als RECHTER
+   *  paneel naast de roster. De terugknop heet dan "✕ Close" — hij sluit alleen het paneel; de roster
+   *  staat er al naast. Verder verandert er niets aan dit scherm. */
+  inPane?: boolean;
 }): React.JSX.Element {
-  const { ctx, entries, initialCategory, onBack, onAdd, onConfigure, terugTeHalen = [], onRestore } = props;
+  const { ctx, entries, initialCategory, onBack, onAdd, onConfigure, terugTeHalen = [], onRestore, inPane } = props;
 
   const [category, setCategory] = useState<PickerCategoryFilter>(initialCategory ?? 'all');
   const [query, setQuery] = useState('');
@@ -414,6 +418,7 @@ export function PickerScreen(props: {
           <button
             type="button"
             onClick={onBack}
+            aria-label={inPane ? 'Close the unit picker' : undefined}
             style={{
               height: BUILDER.control.back, flexShrink: 0, padding: '0 11px', boxSizing: 'border-box',
               borderRadius: BUILDER.radius.button, border: `1px solid ${TOW.lineStrong}`,
@@ -423,7 +428,7 @@ export function PickerScreen(props: {
               WebkitTapHighlightColor: 'transparent',
             }}
           >
-            ‹ Roster
+            {inPane ? '✕ Close' : '‹ Roster'}
           </button>
 
           <div style={{ flex: 1, minWidth: 0 }}>

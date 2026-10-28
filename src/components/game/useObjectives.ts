@@ -66,7 +66,14 @@ export function useObjectives(): ObjectiveDef[] {
   const sheet = normSheet(tracker.sheet);
   if (sheet) return objectivesVoor(sheet.scenario, sheet.secondaries, formatDef(sheet.format).battleMarch);
 
-  const uitCampagne = objectivesVoor(scenario.scenario, scenario.secondaries, tracker.battleMarch === true);
+  // DE BATTLE MARCH-TERUGVAL ALLEEN BIJ EEN CAMPAGNE-BATTLE (28-10-2026). `objectivesVoor` geeft bij
+  // Battle March zonder bekende objectives de troves + de landmark terug — bedoeld voor een
+  // campagne-battle waarvan de sheet (nog) geen secondaries noemt. Zonder campagne-rij gaf deze regel
+  // diezelfde twee tellers ook aan een potje waarin je in de wizard "No battlefield" koos: precies de
+  // objectives die je net had overgeslagen (Joost wil dan "puur een army list tool").
+  const uitCampagne = campagne
+    ? objectivesVoor(scenario.scenario, scenario.secondaries, tracker.battleMarch === true)
+    : [];
   // EEN CAMPAGNE-BATTLE ERFT NOOIT HET KLADBLOK (22-10-2026). Hier stond `if (uitCampagne.length)`, dus
   // een campagne-battle zonder bekende objectives (elke Act 3+-setup: die scoren via de scenario-posten
   // van de sheet, zie useScenarioBonus) viel door naar `tow:battle` en kreeg de Domination-tellers van
@@ -79,5 +86,7 @@ export function useObjectives(): ObjectiveDef[] {
   // March-scenario, dan staat die vlag niet aan en zou je juist de treasure troves missen — het
   // voorbeeld waar het om begonnen was. Het scenario zegt zelf al tot welke groep het hoort.
   const lokaalBM = scenarioById(lokaal?.scenario ?? '')?.group === 'battle-march';
-  return objectivesVoor(lokaal?.scenario ?? null, lokaal?.secondaries ?? [], tracker.battleMarch === true || lokaalBM);
+  // Alleen een op het oude setup-scherm ZELF gekozen Battle March-scenario krijgt hier nog de terugval;
+  // `tracker.battleMarch` alleen (het format uit de wizard) is geen keuze voor objectives.
+  return objectivesVoor(lokaal?.scenario ?? null, lokaal?.secondaries ?? [], lokaalBM);
 }

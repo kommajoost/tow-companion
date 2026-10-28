@@ -1,6 +1,7 @@
 import { TOW, towFont, engraved } from '../../design/tow';
 import { findUnit, validate, type Category, type OwbArmy, type OwbUnit, type MagicItemsData, type ListEntry } from '../../lib/owbBuilder';
 import { COMPOSITION_RULES } from '../../lib/owbBuilder';
+import { VERSTERKING_OVERAL } from '../../lib/versterking';
 
 // EEN LIJST DIE JE ALLEEN MAG LEZEN. Twee gebruikers:
 //   1. een campagne-lijst die op slot staat voor de huidige Act (de oorspronkelijke reden), en
@@ -117,7 +118,8 @@ export function LockedListView({
               fontFamily: towFont.display, fontWeight: 700, fontSize: 12.5,
             }}>{band.actie.label}</button>
           )}
-          {onVersterking && !banner && (
+          {/* Verborgen tot het nodig is (28-10-2026): zie VERSTERKING_OVERAL in lib/versterking.ts. */}
+          {onVersterking && !banner && VERSTERKING_OVERAL && (
             <button data-testid="maak-versterking" onClick={onVersterking} style={{
               marginTop: 10, marginLeft: band.actie ? 8 : 0, padding: '8px 14px', borderRadius: 9, cursor: 'pointer',
               border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.10)', color: TOW.inkDim,

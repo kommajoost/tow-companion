@@ -28,6 +28,19 @@
  * Dit bestand is PUUR (geen fetch, geen React, geen import.meta), zodat de node-tests het laden.
  */
 import type { BuilderList, VersterkingMeta } from './owbBuilder';
+
+/** VERBORGEN TOT HET NODIG IS (Joost 28-10-2026): "die reinforcement detachment, haal dat even uit de
+ *  app — het komt bijna nooit voor, maar het zit wel overal heel groot. Niet deleten, alleen hiden."
+ *
+ *  Met deze vlag uit verdwijnen de knoppen die ALTIJD in beeld stonden: "New reinforcement detachment"
+ *  in de lijstinstellingen en in de vergrendelde campagnelijst, en het versterkingsblok in een vrij
+ *  potje. Wat BLIJFT:
+ *   · een campagne-battle waarvoor de SERVER zegt dat jouw kant met twee tegen drie staat — dan is hij
+ *     juist nodig, en dat gebeurt alleen aan zo'n tafel;
+ *   · een lijst of leger dat AL een versterking heeft — die moet je nog kunnen zien en weghalen;
+ *   · het Scenario lab (testgereedschap).
+ *  Weer aanzetten = deze vlag op true. Alle code staat er nog. */
+export const VERSTERKING_OVERAL = false;
 import type { Army, ArmyUnit } from '../types';
 
 /** Voorvoegsel van een versterkings-unit in het leger: botst nooit met een builder-uid. */

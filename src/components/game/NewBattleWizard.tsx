@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { TOW, towFont, engraved } from '../../design/tow';
-import { DiceIcon, SoloIcon, HostIcon, JoinIcon, MapIcon } from '../../design/icons';
+import { DiceIcon, SoloIcon, HostIcon, JoinIcon, MapIcon, TurnsIcon } from '../../design/icons';
 import { usePersistentState, setPersisted } from '../../store';
 import { useBackClose } from '../../lib/backStack';
 import { useGame } from '../../game';
@@ -14,7 +14,7 @@ import {
 } from '../../lib/overlays';
 import type { OwbArmy, MagicItemsData } from '../../lib/owbBuilder';
 import { openGedeeldeLijst, type DeelbareLijst } from '../../lib/listShare';
-import { scenarioById, secondaryById } from '../../lib/battle';
+import { DEFAULT_BATTLE, scenarioById, secondaryById } from '../../lib/battle';
 import {
   DEFAULT_SHEET, FORMATS, formatDef, normSheet, type BattleFormat, type BattleSheet,
 } from '../../lib/battleSheet';
@@ -36,9 +36,21 @@ import type { Army } from '../../types';
 //
 // Vier stappen, in de volgorde waarin je aan tafel ook praat:
 //   1. Players     — spelen we solo, host ik, of sluit ik aan? En hoe heet je?
-//   2. Battlefield — Generate (alles gerold, daarna per onderdeel bij te stellen) of Step by step.
+//   2. Battlefield — Generate (alles gerold, daarna per onderdeel bij te stellen), Step by step, of
+//                    No battlefield (alleen het format; zie hieronder).
 //   3. Armies      — wie speelt met welke lijst.
 //   4. Review      — het hele blad nog één keer, en dan één knop.
+//
+// NO BATTLEFIELD (Joost 28-10-2026): "Soms speel je gewoon een potje of een bestaand scenario, dan heb
+// je die hele battlefield-tool niet nodig. Nu druk ik snel op Generate om er vanaf te zijn." Wie dat
+// kiest krijgt GEEN sheet: geen scenario, terrein, objectives of weer. Alleen het FORMAT blijft een
+// keuze, want dat bepaalt de rondes (Battle March 5, anders 6) en de VP-schaal. Het potje start dan
+// met `regels = { battleMarch, weer: null }` en zonder `sheet` — precies het pad dat de campagne en
+// de oude host-knop al gebruiken. Daardoor toont het spelscherm geen Battlefield-knop (die verschijnt
+// alleen bij een sheet) en leest de rondeteller gewoon `tracker.battleMarch`. Een minimale sheet was
+// geen optie: elke sheet heeft een scenario nodig (normSheet), en dan staat er wél een knop met een
+// leeg blad achter. Gevolg voor HOST: zonder sheet zet createGame geen lobby (`gestart: false`) — het
+// potje begint meteen, en de gast kiest zijn leger in het spelscherm.
 //
 // WAAROM JOIN STAP 2 OVERSLAAT. Het slagveld is van de HOST (zie battleSheet.ts: één van de twee moet
 // de baas zijn, anders overschrijven twee spelers elkaars scenario). Een gast die hier een scenario
@@ -46,9 +58,12 @@ import type { Army } from '../../types';
 // erger dan de stap niet krijgen. De stap blijft wél in de balk staan, doorgestreept en met "from the
 // host" erbij: stil verspringen zou de indruk wekken dat er iets misging.
 //
-// WAT ER NIET MEER GEBEURT: deze wizard schrijft NIET naar `tow:battle`. Die sleutel blijft bestaan
-// als terugval voor potjes van vóór vandaag (useObjectives leest hem nog), maar de waarheid over een
-// nieuw potje is de sheet op de tracker.
+// WAT ER NIET MEER GEBEURT: deze wizard schrijft geen scenario naar `tow:battle`. Die sleutel blijft
+// bestaan als terugval voor potjes van vóór 13-09 (useObjectives leest hem nog), maar de waarheid over
+// een nieuw potje is de sheet op de tracker. Wél zet de wizard hem bij het starten terug op de lege
+// standaard (28-10-2026): een potje ZONDER sheet (No battlefield, of joinen bij zo'n host) valt in
+// useObjectives door naar dit kladblok, en zou anders de Domination-tellers van een oud potje erven.
+// Niemand anders schrijft hem nog, dus leegmaken kost niets.
 
 const eb = engraved as React.CSSProperties;
 const BASE = import.meta.env.BASE_URL;
@@ -58,7 +73,9 @@ const STEPS = ['Players', 'Battlefield', 'Armies', 'Review'] as const;
 const STAP = { spelers: 0, battlefield: 1, legers: 2, review: 3 } as const;
 
 type Modus = 'solo' | 'host' | 'join';
-type Tak = 'generate' | 'step' | null;
+/** 'skip' (Joost 28-10-2026): geen slagveld — alleen het format kiezen en dan gewoon spelen. */
+type Tak = 'generate' | 'step' | 'skip' | null;
+const TAKKEN: readonly Tak[] = ['generate', 'step', 'skip'];
 
 interface StatRow { Name: string; M: string; WS: string; BS: string; S: string; T: string; W: string; I: string; A: string; Ld: string }
 type StatIndex = Record<string, { stats?: StatRow[]; troopType?: string }>;
@@ -111,6 +128,9 @@ function normDraft(raw: unknown): WizardDraft {
     v: 1,
     sheet: normSheet(d.sheet) ?? DEFAULT_SHEET,
     stap: typeof d.stap === 'number' ? Math.max(0, Math.min(STEPS.length - 1, d.stap)) : 0,
+    // Alleen een tak die deze versie kent (28-10-2026). Een onbekende waarde wordt "nog niet gekozen"
+    // in plaats van een stap 2 waarop niets staat; een oude draft met 'generate'/'step' blijft gewoon.
+    tak: TAKKEN.includes(d.tak as Tak) ? (d.tak as Tak) : null,
     bfStap: typeof d.bfStap === 'number' ? Math.max(0, Math.min(BF_STEPS.length - 1, d.bfStap)) : 0,
   };
 }
@@ -272,12 +292,16 @@ function LegerKiezer({ titel, leger, onLeger, troopTypeFor }: {
   const [code, setCode] = useState('');
   const [bezig, setBezig] = useState(false);
   const [fout, setFout] = useState<string | null>(null);
+  // Welke opgeslagen lijst hier het laatst gekozen is (28-10-2026). Na "Change" opent de picker dan
+  // op die map, met die rij gemarkeerd. Lokaal: het vak blijft gemount zolang je op deze stap bent.
+  const [lijstId, setLijstId] = useState<string | null>(null);
 
   const haalDeelcode = async () => {
     setBezig(true); setFout(null);
     try {
       onLeger(await deelcodeNaarArmy(code));
       setCode('');
+      setLijstId(null);
     } catch (e) {
       setFout(e instanceof Error ? e.message : 'Could not open that share code.');
     } finally {
@@ -294,10 +318,10 @@ function LegerKiezer({ titel, leger, onLeger, troopTypeFor }: {
 
       {leger ? (
         <div style={{ fontFamily: towFont.serif, fontSize: 14, color: TOW.ink, marginTop: 6 }}>
-          ✓ {leger.name}{leger.points != null ? ` · ${leger.points} pts` : ''} · {leger.units.length} unit{leger.units.length === 1 ? '' : 's'}
+          ✓ {leger.name}{leger.faction ? ` · ${leger.faction}` : ''}{leger.points != null ? ` · ${leger.points} pts` : ''}
         </div>
       ) : (<>
-        <ArmyListPicker onPick={(a) => onLeger(a)} label="From your saved lists" />
+        <ArmyListPicker onPick={(a) => onLeger(a)} onKiesId={setLijstId} gekozenId={lijstId} label="From your saved lists" zonderScheiding />
 
         <label style={veldLabel}>Or open a share code</label>
         <div style={{ display: 'flex', gap: 7, marginBottom: 4 }}>
@@ -330,7 +354,7 @@ function LegerKiezer({ titel, leger, onLeger, troopTypeFor }: {
         />
         {plak.trim() && (
           <button
-            onClick={() => onLeger(enrichArmyTroopTypes(parseArmyList(plak), troopTypeFor))}
+            onClick={() => { setLijstId(null); onLeger(enrichArmyTroopTypes(parseArmyList(plak), troopTypeFor)); }}
             style={{ marginTop: 8, padding: '9px 14px', borderRadius: 9, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.12)', color: TOW.goldDeep, cursor: 'pointer', fontFamily: towFont.display, fontWeight: 600, fontSize: 13.5 }}
           >Use this list</button>
         )}
@@ -386,12 +410,32 @@ export function NewBattleWizard({ onBack }: { onBack: () => void }) {
   const bewerk = (bfStap: number) => zet({ tak: 'step', bfStap, viaGenerate: true });
 
   // ── Doorgaan-knop: mag het al? ────────────────────────────────────────────────────────────────
+  // SOLO HEEFT GEEN NAAM NODIG (Joost 28-10-2026: "bij een solo game hoef ik mijn naam niet in te
+  // vullen"). Het spelscherm noemt je in solo toch altijd "You" (game.tsx zet myName vast), dus de naam
+  // werd daar nergens gebruikt. Host en join houden hem verplicht: de ander ziet hem.
+  const naamNodig = d.modus !== 'solo';
   const naamOk = d.naam.trim().length > 0;
   const codeOk = d.joinCode.trim().length > 0;
-  const stap1Ok = naamOk && (!joinModus || codeOk);
-  const legersOk = d.modus === 'solo' ? !!d.mijnLeger && !!d.oppLeger : !!d.mijnLeger;
+  const stap1Ok = (!naamNodig || naamOk) && (!joinModus || codeOk);
+  const overgeslagen = !joinModus && d.tak === 'skip';
+  // DE LEGER-VAKKEN VAN DEZE MODUS (28-10-2026). Eén lijst in plaats van twee losse kiezers, zodat er
+  // later vakken bij kunnen (bv. teamspel) zonder deze stap te herschrijven: een vak toevoegen is hier
+  // één regel, en "zijn ze allemaal gevuld" volgt vanzelf.
+  const legerVakken: { key: string; titel: string; leger: Army | null; onLeger: (a: Army | null) => void }[] = [
+    { key: 'mijn', titel: 'Your army', leger: d.mijnLeger, onLeger: (a) => zet({ mijnLeger: a }) },
+    ...(d.modus === 'solo'
+      ? [{ key: 'opp', titel: 'Opposing army', leger: d.oppLeger, onLeger: (a: Army | null) => zet({ oppLeger: a }) }]
+      : []),
+  ];
+  const legersOk = legerVakken.every((v) => !!v.leger);
 
   // ── Starten ───────────────────────────────────────────────────────────────────────────────────
+  // NO BATTLEFIELD: geen sheet, alleen het format als losse regels (zie de kop van dit bestand).
+  // `weer: null` expliciet, zodat er nooit een weer van een vorig potje blijft hangen.
+  const regels = overgeslagen ? { battleMarch: fmt.battleMarch, weer: null } : { sheet: d.sheet };
+  // Het oude per-apparaat kladblok leegmaken, zodat een potje zonder sheet er geen objectives uit erft.
+  const wisKladblok = () => setPersisted('tow:battle', DEFAULT_BATTLE);
+
   const start = async () => {
     if (d.modus === 'solo') {
       // De tegenstander gaat er VÓÓR `startSolo` in. `setOpponentArmy` kijkt naar `seat`, en die is
@@ -399,20 +443,45 @@ export function NewBattleWizard({ onBack }: { onBack: () => void }) {
       // niet omdat GameMode de wizard meteen na het starten vervangt door de game. Daarom schrijven
       // we het tweede leger rechtstreeks op de sleutel waar `useGame` het vandaan leest.
       if (d.oppLeger) setPersisted('tow:solo-opp', d.oppLeger);
-      startSolo(d.mijnLeger, { sheet: d.sheet });
+      wisKladblok();
+      startSolo(d.mijnLeger, regels);
       setDraft(LEEG_DRAFT);
       return;
     }
     if (d.modus === 'host') {
       // Mét sheet betekent: dit potje begint in de LOBBY (createGame zet `gestart: false`). De host
-      // deelt de code, beide spelers kiezen hun leger, en de host drukt daar op Start.
-      const code = await createGame(d.naam.trim(), d.mijnLeger, { sheet: d.sheet });
-      if (code) setDraft(LEEG_DRAFT);
+      // deelt de code, beide spelers kiezen hun leger, en de host drukt daar op Start. ZONDER sheet
+      // (No battlefield) begint het meteen; de gast kiest zijn leger dan in het spelscherm.
+      const code = await createGame(d.naam.trim(), d.mijnLeger, regels);
+      if (code) { wisKladblok(); setDraft(LEEG_DRAFT); }
       return;
     }
     const ok = await joinGame(d.joinCode.trim(), d.naam.trim(), d.mijnLeger);
-    if (ok) setDraft(LEEG_DRAFT);
+    if (ok) { wisKladblok(); setDraft(LEEG_DRAFT); }
   };
+
+  /** De format-keuze: in de Generate-tak met de scenario-uitleg, bij No battlefield alleen wat het
+   *  format aan het potje verandert (rondes, VP). Eén weergave, zodat beide er hetzelfde uitzien. */
+  const formatKeuze = (uitleg: (f: (typeof FORMATS)[number]) => string) => (
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 7, marginBottom: 14 }}>
+      {FORMATS.map((f) => {
+        const on = d.sheet.format === f.id;
+        return (
+          <button key={f.id} onClick={() => setSheet(wisselFormat(d.sheet, f.id as BattleFormat))} style={{ display: 'flex', alignItems: 'flex-start', gap: 10, textAlign: 'left', padding: '11px 13px', borderRadius: 10, cursor: 'pointer', border: `1px solid ${on ? TOW.goldDeep : TOW.line}`, background: on ? 'rgba(138,108,48,0.10)' : TOW.cardLt }}>
+            <span style={{ width: 18, height: 18, marginTop: 2, flexShrink: 0, borderRadius: 99, border: `1px solid ${on ? TOW.goldDeep : TOW.lineStrong}`, background: on ? goldGrad : 'transparent', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', color: TOW.onGrad, fontSize: 11, fontWeight: 700 }}>{on ? '✓' : ''}</span>
+            <span style={{ minWidth: 0 }}>
+              <span style={{ display: 'block', fontFamily: towFont.display, fontWeight: 700, fontSize: 14.5, color: on ? TOW.goldDeep : TOW.ink }}>{f.label}</span>
+              <span style={{ display: 'block', fontFamily: towFont.serif, fontSize: 12, color: TOW.muted, lineHeight: 1.35 }}>{uitleg(f)}</span>
+            </span>
+          </button>
+        );
+      })}
+    </div>
+  );
+
+  const wijzigKnop = (
+    <button onClick={() => zet({ stap: STAP.battlefield })} style={{ flexShrink: 0, padding: '6px 12px', borderRadius: 8, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.12)', color: TOW.goldDeep, cursor: 'pointer', fontFamily: towFont.display, fontWeight: 600, fontSize: 12.5 }}>✎ Edit</button>
+  );
 
   const startLabel = d.modus === 'solo' ? 'Start battle' : d.modus === 'host' ? 'Create game & get code' : 'Join battle';
 
@@ -430,18 +499,21 @@ export function NewBattleWizard({ onBack }: { onBack: () => void }) {
           <div style={{ display: 'flex', gap: 5, flex: '1 1 150px', minWidth: 0 }}>
             {STEPS.map((naam, i) => {
               const over = joinModus && i === STAP.battlefield;
+              // No battlefield: de stap is wél doorlopen (je koos er het format), dus hij telt mee en
+              // vult zich — maar gestreept, net als bij join, zodat de balk zegt dat hij leeg bleef.
+              const leeg = overgeslagen && i === STAP.battlefield;
               const gedaan = !over && actief.indexOf(i) >= 0 && actief.indexOf(i) <= posInActief;
               return (
                 <div
                   key={naam}
-                  title={over ? 'Battlefield — set by the host' : naam}
-                  style={{ flex: over ? '0 0 18px' : 1, minWidth: 0, height: 4, borderRadius: 99, background: gedaan ? goldGrad : 'rgba(74,55,22,0.12)', border: over ? `1px dashed ${TOW.lineStrong}` : 'none', boxSizing: 'border-box' }}
+                  title={over ? 'Battlefield — set by the host' : leeg ? 'Battlefield — skipped' : naam}
+                  style={{ flex: over ? '0 0 18px' : 1, minWidth: 0, height: 4, borderRadius: 99, background: gedaan ? (leeg ? 'rgba(184,134,47,0.35)' : goldGrad) : 'rgba(74,55,22,0.12)', border: over || leeg ? `1px dashed ${TOW.lineStrong}` : 'none', boxSizing: 'border-box' }}
                 />
               );
             })}
           </div>
           <span style={{ ...eb, fontSize: 8, color: TOW.muted, whiteSpace: 'nowrap' }}>
-            Step {posInActief + 1}/{actief.length} · {STEPS[d.stap]}
+            Step {posInActief + 1}/{actief.length} · {STEPS[d.stap]}{d.stap === STAP.battlefield && overgeslagen ? ' (skipped)' : ''}
           </span>
         </div>
 
@@ -468,8 +540,11 @@ export function NewBattleWizard({ onBack }: { onBack: () => void }) {
             })}
           </div>
 
-          <label style={veldLabel}>Your name</label>
-          <input value={d.naam} onChange={(e) => zet({ naam: e.target.value })} placeholder="e.g. Joost" style={{ ...invoer, marginBottom: 14 }} />
+          {/* In solo geen naamveld: het spelscherm noemt je daar toch "You" (28-10-2026). */}
+          {naamNodig && (<>
+            <label style={veldLabel}>Your name</label>
+            <input value={d.naam} onChange={(e) => zet({ naam: e.target.value })} placeholder="e.g. Joost" style={{ ...invoer, marginBottom: 14 }} />
+          </>)}
 
           {joinModus && (<>
             <label style={veldLabel}>Game code</label>
@@ -505,25 +580,30 @@ export function NewBattleWizard({ onBack }: { onBack: () => void }) {
                   <span style={{ display: 'block', fontFamily: towFont.serif, fontSize: 12.5, color: TOW.muted, lineHeight: 1.35 }}>Format, map size, scenario, secondaries and terrain — one choice at a time.</span>
                 </span>
               </button>
+              {/* De derde weg (Joost 28-10-2026), even zwaar als Step by step: geen slagveld, alleen
+                  het format. Voor een gewoon potje of een scenario uit het boek dat je al op tafel hebt. */}
+              <button onClick={() => zet({ tak: 'skip', viaGenerate: false })} style={{ display: 'flex', alignItems: 'flex-start', gap: 11, textAlign: 'left', padding: '15px 16px', borderRadius: 12, cursor: 'pointer', border: `1px solid ${TOW.line}`, background: TOW.panel2 }}>
+                <span aria-hidden style={{ flexShrink: 0, marginTop: 1, color: TOW.inkDim }}><TurnsIcon size={23} /></span>
+                <span style={{ flex: 1, minWidth: 0 }}>
+                  <span style={{ display: 'block', fontFamily: towFont.display, fontWeight: 700, fontSize: 16, color: TOW.ink }}>No battlefield — just track the game</span>
+                  <span style={{ display: 'block', fontFamily: towFont.serif, fontSize: 12.5, color: TOW.muted, lineHeight: 1.35 }}>Your own table or a scenario from the book. Only pick the format; no scenario, terrain or weather.</span>
+                </span>
+              </button>
             </div>
+          </>)}
+
+          {d.tak === 'skip' && (<>
+            <div style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 13.5, color: TOW.parchDim, margin: '0 0 12px', lineHeight: 1.4 }}>
+              No battlefield — the app just tracks rounds, units and victory points. The format sets how
+              many rounds you play and how victory points are scored.
+            </div>
+            <div style={{ ...eb, fontSize: 9, color: TOW.muted, marginBottom: 8 }}>Format</div>
+            {formatKeuze((f) => `${f.rounds} battle rounds${f.battleMarch ? ', halved VP bonuses' : ''}.`)}
           </>)}
 
           {d.tak === 'generate' && (<>
             <div style={{ ...eb, fontSize: 9, color: TOW.muted, marginBottom: 8 }}>Format</div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 7, marginBottom: 14 }}>
-              {FORMATS.map((f) => {
-                const on = d.sheet.format === f.id;
-                return (
-                  <button key={f.id} onClick={() => setSheet(wisselFormat(d.sheet, f.id as BattleFormat))} style={{ display: 'flex', alignItems: 'flex-start', gap: 10, textAlign: 'left', padding: '11px 13px', borderRadius: 10, cursor: 'pointer', border: `1px solid ${on ? TOW.goldDeep : TOW.line}`, background: on ? 'rgba(138,108,48,0.10)' : TOW.cardLt }}>
-                    <span style={{ width: 18, height: 18, marginTop: 2, flexShrink: 0, borderRadius: 99, border: `1px solid ${on ? TOW.goldDeep : TOW.lineStrong}`, background: on ? goldGrad : 'transparent', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', color: TOW.onGrad, fontSize: 11, fontWeight: 700 }}>{on ? '✓' : ''}</span>
-                    <span style={{ minWidth: 0 }}>
-                      <span style={{ display: 'block', fontFamily: towFont.display, fontWeight: 700, fontSize: 14.5, color: on ? TOW.goldDeep : TOW.ink }}>{f.label}</span>
-                      <span style={{ display: 'block', fontFamily: towFont.serif, fontSize: 12, color: TOW.muted, lineHeight: 1.35 }}>{f.blurb}</span>
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
+            {formatKeuze((f) => f.blurb)}
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: 7, marginBottom: 14 }}>
               <Vinkje aan={d.genWeer} onClick={() => zet({ genWeer: !d.genWeer })} titel="Include weather" uitleg="Roll one Disruptive Weather effect for the whole battle." />
@@ -596,10 +676,9 @@ export function NewBattleWizard({ onBack }: { onBack: () => void }) {
               ? 'Both armies play on this device, so pick them both.'
               : 'Pick your own army — your opponent picks theirs on their device.'}
           </div>
-          <LegerKiezer titel={d.modus === 'solo' ? 'Your army' : 'Your army'} leger={d.mijnLeger} onLeger={(a) => zet({ mijnLeger: a })} troopTypeFor={troopTypeFor} />
-          {d.modus === 'solo' && (
-            <LegerKiezer titel="Opposing army" leger={d.oppLeger} onLeger={(a) => zet({ oppLeger: a })} troopTypeFor={troopTypeFor} />
-          )}
+          {legerVakken.map((v) => (
+            <LegerKiezer key={v.key} titel={v.titel} leger={v.leger} onLeger={v.onLeger} troopTypeFor={troopTypeFor} />
+          ))}
         </>)}
 
         {/* ── 4 · REVIEW ───────────────────────────────────────────────────────────────────────── */}
@@ -611,19 +690,27 @@ export function NewBattleWizard({ onBack }: { onBack: () => void }) {
                 Comes from the host. You will see the full battle sheet in the lobby, before the game starts.
               </div>
             </div>
+          ) : overgeslagen ? (
+            // No battlefield: geen leeg blad tonen, maar zeggen wát er wel geldt — het format.
+            <div style={{ display: 'flex', alignItems: 'flex-start', gap: 10, padding: '13px 15px', borderRadius: 12, border: `1px dashed ${TOW.lineStrong}`, marginBottom: 14 }}>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ ...eb, fontSize: 9, color: TOW.muted, marginBottom: 5 }}>Battlefield</div>
+                <div style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 15, color: TOW.ink }}>No battlefield</div>
+                <div style={{ fontFamily: towFont.serif, fontSize: 13.5, color: TOW.parchDim, lineHeight: 1.4, marginTop: 2 }}>
+                  {fmt.label} · {fmt.rounds} battle rounds{fmt.battleMarch ? ' · halved VP bonuses' : ''}
+                </div>
+              </div>
+              {wijzigKnop}
+            </div>
           ) : (
-            <BattleSheetView
-              sheet={d.sheet}
-              titel="Battle sheet"
-              rechts={<button onClick={() => zet({ stap: STAP.battlefield })} style={{ padding: '6px 12px', borderRadius: 8, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.12)', color: TOW.goldDeep, cursor: 'pointer', fontFamily: towFont.display, fontWeight: 600, fontSize: 12.5 }}>✎ Edit</button>}
-            />
+            <BattleSheetView sheet={d.sheet} titel="Battle sheet" rechts={wijzigKnop} />
           )}
 
           <div style={{ ...eb, fontSize: 9, color: TOW.muted, margin: '18px 0 7px' }}>Players</div>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 6, marginBottom: 6 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 9, padding: '9px 11px', borderRadius: 10, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.08)' }}>
               <span style={{ flex: 1, minWidth: 0 }}>
-                <span style={{ display: 'block', fontFamily: towFont.display, fontWeight: 600, fontSize: 14.5, color: TOW.ink }}>{d.naam.trim() || 'You'} · you</span>
+                <span style={{ display: 'block', fontFamily: towFont.display, fontWeight: 600, fontSize: 14.5, color: TOW.ink }}>{d.modus === 'solo' ? 'You' : `${d.naam.trim() || 'You'} · you`}</span>
                 <span style={{ display: 'block', fontFamily: towFont.serif, fontSize: 12.5, color: d.mijnLeger ? TOW.parchDim : TOW.muted, fontStyle: d.mijnLeger ? 'normal' : 'italic' }}>
                   {d.mijnLeger ? `${d.mijnLeger.name}${d.mijnLeger.points != null ? ` · ${d.mijnLeger.points} pts` : ''}` : 'no army yet'}
                 </span>
@@ -643,8 +730,9 @@ export function NewBattleWizard({ onBack }: { onBack: () => void }) {
 
           {d.modus === 'host' && (
             <div style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 12.5, color: TOW.muted, margin: '10px 2px 0', lineHeight: 1.4 }}>
-              You get a code to share. Both of you land in the lobby — you can still adjust the battle
-              sheet there, and you press Start when you are both ready.
+              {overgeslagen
+                ? 'You get a code to share and the game starts right away. Your opponent joins with the code and picks their army in the game.'
+                : 'You get a code to share. Both of you land in the lobby — you can still adjust the battle sheet there, and you press Start when you are both ready.'}
             </div>
           )}
           {error && <div style={{ fontFamily: towFont.serif, fontSize: 13.5, color: TOW.blood, marginTop: 12 }}>{error}</div>}
@@ -658,7 +746,7 @@ export function NewBattleWizard({ onBack }: { onBack: () => void }) {
               // tak-keuze (of naar het gegenereerde blad als je daar vandaan kwam).
               if (d.stap === STAP.battlefield && d.tak === 'step' && d.bfStap > 0) zet({ bfStap: d.bfStap - 1 });
               else if (d.stap === STAP.battlefield && d.tak === 'step') zet({ tak: d.viaGenerate ? 'generate' : null });
-              else if (d.stap === STAP.battlefield && d.tak === 'generate') zet({ tak: null });
+              else if (d.stap === STAP.battlefield && (d.tak === 'generate' || d.tak === 'skip')) zet({ tak: null });
               else vorige();
             }}
             style={{ flex: '0 0 auto', padding: '11px 16px', borderRadius: 11, cursor: 'pointer', border: `1px solid ${TOW.lineStrong}`, background: 'transparent', color: TOW.inkDim, fontFamily: towFont.display, fontWeight: 600, fontSize: 14 }}
@@ -695,9 +783,12 @@ export function NewBattleWizard({ onBack }: { onBack: () => void }) {
             het spelscherm. Dus: een opmerking, geen blokkade. */}
         {d.stap === STAP.legers && !legersOk && (
           <div style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 12.5, color: TOW.muted, margin: '8px 2px 0' }}>
+            {/* Solo heeft geen lobby (startSolo begint meteen), en een host zonder slagveld ook niet. */}
             {d.modus === 'solo'
-              ? 'You can pick both armies later, in the lobby.'
-              : 'No army yet? You can pick it later, in the lobby.'}
+              ? 'You can pick both armies later, in the game.'
+              : overgeslagen
+                ? 'No army yet? You can pick it later, in the game.'
+                : 'No army yet? You can pick it later, in the lobby.'}
           </div>
         )}
       </div>

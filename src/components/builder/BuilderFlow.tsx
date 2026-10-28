@@ -20,7 +20,7 @@
 //     during that window — a "tidy up unknown keys" pass there would delete every magic item.
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { TOW, towFont } from '../../design/tow';
+import { TOW, towFont, engraved } from '../../design/tow';
 import { getPersisted, setPersisted, usePersistentState } from '../../store';
 import {
   CATEGORIES, COMPOSITION_RULES, detachmentLabel, entryMinimum, entryPoints, loadoutLabels, selectedMagicItems, unitAllowedIn, withDetachmentLabel,
@@ -45,6 +45,7 @@ import { builderListToArmy, type MagicText, type MountText } from '../../lib/bui
 import type { PrintInput } from '../../lib/printArmy';
 import { downloadArmyPdf } from '../../lib/pdfDownload';
 import { useData } from '../../data';
+import { useBackClose } from '../../lib/backStack';
 import type { BuilderCtx, BuilderScreen, PickerEntry, RosterRow, SavedListLike } from './types';
 
 /** De props die `ListBuilder` meegeeft (ooit dezelfde vorm als de oude, verwijderde BuilderWorkspace). */
@@ -112,6 +113,20 @@ export interface BuilderFlowProps {
 
 const newUid = () => `u${Date.now().toString(36)}${Math.floor(Math.random() * 1e6).toString(36)}`;
 
+/** WAT ER OPEN STOND, OVER EEN REMOUNT HEEN (Joost 28-10-2026, Galaxy Fold).
+ *
+ *  `AppShell` wisselt bij een vensterbreedte van 800px tussen de telefoon-indeling (tabbalk onderin)
+ *  en de brede (NavRail links), en die twee hangen de inhoud op een andere plek in de boom. Gevolg:
+ *  de HELE builder wordt opnieuw gemount, en `screen` begon dan weer op de roster. Klap je de Fold
+ *  dicht (±880 → ±400px) terwijl je een unit aan het bewerken was, dan was die weg — precies wat het
+ *  gesplitste scherm moest voorkomen. AppShell valt buiten de builder, dus vangen we het hier op.
+ *
+ *  Bij unmount schrijven we de stand weg; een mount van DEZELFDE lijst binnen 1 seconde neemt hem
+ *  over. Dat venster is bewust kort: een layout-remount gebeurt in dezelfde tik, terwijl een lijst
+ *  verlaten en weer openen langer duurt — dan begin je zoals altijd op de roster. Een gewone
+ *  module-variabele, geen storage: het hoeft alleen een remount binnen deze pagina te overleven. */
+let bewaardScherm: { listId: string; screen: BuilderScreen; t: number } | null = null;
+
 /** A composition rule's display name from its slug ('open-war' → 'Open War'). Reads the engine's own
  *  `COMPOSITION_RULES` table first so the builder and the list-settings picker always agree; an
  *  unrecognised slug is title-cased rather than shown raw or swallowed. */
@@ -130,7 +145,21 @@ export function BuilderFlow({
   onEditArmyField, onImportOwb, onExport, onPdf,
   magicText, mountText, overlayId, factionNames, deelLijst,
 }: BuilderFlowProps): React.JSX.Element {
-  const [screen, setScreen] = useState<BuilderScreen>({ kind: 'roster' });
+  // Begint op de roster — tenzij dit een REMOUNT is van dezelfde lijst, zie `bewaardScherm` (28-10-2026).
+  const [screen, setScreen] = useState<BuilderScreen>(() => {
+    // Niet leegmaken na lezen: StrictMode roept deze initializer in dev twee keer aan, en elke unmount
+    // schrijft hem toch opnieuw. Het venster van 1 seconde is wat telt.
+    const b = bewaardScherm;
+    if (!b || b.listId !== list.id || Date.now() - b.t > 1000) return { kind: 'roster' };
+    // Een unit die intussen weg is, heropenen we niet: dan gewoon de roster.
+    if (b.screen.kind === 'options' && !list.entries.some((e) => e.uid === (b.screen as { uid: string }).uid)) return { kind: 'roster' };
+    return b.screen;
+  });
+  const screenRef = useRef(screen);
+  useEffect(() => { screenRef.current = screen; }, [screen]);
+  useEffect(() => () => {
+    bewaardScherm = { listId: list.id, screen: screenRef.current, t: Date.now() };
+  }, [list.id]);
   /** Staat het deel-venster open? Leeft hier: het hangt aan de hele lijst, niet aan één scherm. */
   const [exportOpen, setExportOpen] = useState(false);
   /** Wordt er op dit moment een PDF gebouwd? Houdt de knop uit, zodat een dubbelklik geen tweede
@@ -183,6 +212,18 @@ export function BuilderFlow({
   }, []);
   /** The desktop spec's own breakpoint: below this it says to use the phone layout outright. */
   const desktop = boxW >= 1180;
+  /** GESPLITST SCHERM (Joost 28-10-2026, Galaxy Z Fold 7): "split het in tweeën, links de legerlijst
+   *  met al je units, en als je er een selecteert rechts alle opties en stats — in plaats van dat je
+   *  het als pop-up krijgt en dan weer terug moet." Opengevouwen is de Fold ~800–900px breed staand en
+   *  ~1000px+ liggend; daar was de telefoonflow een uitgerekte telefoon. Dus tussen 700 en 1180px:
+   *  roster links, optiescherm (of picker) rechts. Onder 700 blijft de telefoonflow precies zoals hij
+   *  was, vanaf 1180 de DesktopShell.
+   *
+   *  ÉÉN BRON VOOR DE SELECTIE: dit gebruikt dezelfde `screen` als de telefoonflow ('options' = die
+   *  unit staat rechts open, 'picker' = de picker staat rechts open, 'roster' = niets open). Zo raak
+   *  je niets kwijt als je de Fold dichtklapt of draait en de breedte 700 kruist: wat rechts open
+   *  stond, is op de telefoon gewoon het open scherm, en andersom. */
+  const gesplitst = !desktop && boxW >= 700;
 
   // Desktop-only UI state. Deliberately NOT shared with the phone flow's `screen`: on desktop nothing
   // navigates (the roster is permanent), so a "current screen" has no meaning there.
@@ -520,7 +561,11 @@ export function BuilderFlow({
     return uit;
   }, [campaignCtx, list, prullenbak, getUnit]);
 
-  const duplicateUnit = useCallback((uid: string) => {
+  /** Geeft de uid van de kopie terug (28-10-2026), zodat het gesplitste scherm de kopie meteen kan
+   *  openen. De uid wordt daarom VÓÓR de update gemaakt in plaats van erin — verder is het precies
+   *  hetzelfde: één nieuwe uid per kopie, en bestaat het origineel niet meer, dan gebeurt er niets. */
+  const duplicateUnit = useCallback((uid: string): string => {
+    const kopieUid = newUid();
     update((l) => {
       const i = l.entries.findIndex((e) => e.uid === uid);
       if (i < 0) return {};
@@ -530,11 +575,12 @@ export function BuilderFlow({
       // array and object, so editing one unit's loadout would silently edit its twin's.
       const src = l.entries[i];
       const copy: ListEntry = {
-        ...src, uid: newUid(), opts: [...src.opts],
+        ...src, uid: kopieUid, opts: [...src.opts],
         ...(src.optCounts ? { optCounts: { ...src.optCounts } } : {}),
       };
       return { entries: [...l.entries.slice(0, i + 1), copy, ...l.entries.slice(i + 1)] };
     });
+    return kopieUid;
   }, [update]);
 
   const removeUnit = useCallback((uid: string) => {
@@ -565,6 +611,36 @@ export function BuilderFlow({
   const onConfigure = useCallback((unit: OwbUnit, cat: Category) => {
     setScreen({ kind: 'options', uid: addUnit(unit, cat) });
   }, [addUnit]);
+
+  // ── Gesplitst scherm: navigatie van het rechterpaneel (Joost 28-10-2026) ──────────────────────
+  /** Sluit het rechterpaneel: niets geselecteerd, de placeholder komt terug. */
+  const sluitPaneel = useCallback(() => setScreen({ kind: 'roster' }), []);
+  /** Sluit ALLEEN als de picker open staat. De picker roept na "＋" altijd nog `onBack` aan; in het
+   *  gesplitste scherm heeft `onAdd` dan net de nieuwe unit rechts geopend, en die mag deze tweede
+   *  aanroep niet meteen weer dichtdoen. Functioneel, dus hij ziet de stand van `onAdd` al. */
+  const sluitPicker = useCallback(() => setScreen((s) => (s.kind === 'picker' ? { kind: 'roster' } : s)), []);
+  /** De Back-laag voor het paneel. ÉÉN laag zolang er rechts iets open staat, niet één per unit:
+   *  `UnitOptions` krijgt `inPane` en registreert dan zelf niets. Zou hij dat wel doen, dan haalt elke
+   *  wissel van unit (remount via `key`) z'n history-entry weg en pusht hij meteen een nieuwe — en het
+   *  asynchrone `history.back()` van de opruiming kan die verse entry dan opeten. Back sluit dus eerst
+   *  het paneel, en pas de volgende Back verlaat de lijst (die laag is van `ListBuilder`). */
+  useBackClose(gesplitst && screen.kind !== 'roster', sluitPaneel);
+  /** "Lists" (terug naar je lijsten) terwijl er rechts iets open staat. Kan alleen in het gesplitste
+   *  scherm: op de telefoon ligt het optiescherm óver die knop. Zomaar `onBack()` sluit dan TWEE
+   *  Back-lagen in één commit (dit paneel én die van ListBuilder), en twee `history.back()`-aanroepen
+   *  in dezelfde tik leveren in Chrome maar één popstate op — gemeten, 28-10-2026. De backStack telt
+   *  er dan één te veel als "eigen", en slikt daarna stil de eerstvolgende echte Back-druk in.
+   *  Dus eerst het paneel via een ECHTE Back sluiten (die gaat netjes door `onPop`), en pas daarna de
+   *  lijst verlaten. De timer is het vangnet als er geen popstate komt: dan gaat de knop toch. */
+  const verlaatLijst = useCallback(() => {
+    if (!(gesplitst && screen.kind !== 'roster')) { onBack(); return; }
+    let klaar = false;
+    const door = () => { if (klaar) return; klaar = true; window.removeEventListener('popstate', naPop); onBack(); };
+    const naPop = () => window.setTimeout(door, 0);
+    window.addEventListener('popstate', naPop);
+    window.setTimeout(door, 600);
+    window.history.back();
+  }, [gesplitst, screen.kind, onBack]);
 
   // The Celedon walk-through uses one real, legal catalogue entry so its options step is useful.
   // Remembering the uid makes the action idempotent: Back → Next reopens the same example instead of
@@ -837,13 +913,112 @@ export function BuilderFlow({
     );
   })();
 
+  // ── Gesplitst scherm (Joost 28-10-2026) ───────────────────────────────────────────────────────
+  // Links de ROSTER, ongewijzigd, met de open unit gemarkeerd; rechts wat er bij `screen` hoort. Beide
+  // panelen scrollen zelf (RosterScreen en UnitOptions hebben elk hun eigen scroll-body); de rij zelf
+  // heeft `overflow: hidden`, zodat de pagina nooit een horizontale scrollbalk krijgt.
+  //
+  // KEUZES, bewust:
+  //  • Bij openen wordt NIETS automatisch geselecteerd. Een lijst openen is nog geen unit bewerken, en
+  //    een open paneel zet een Back-laag neer: dan zou de eerste Back iets dichtdoen dat je nooit
+  //    opende in plaats van je terug te brengen naar je lijsten.
+  //  • Dupliceren vanuit het rechterpaneel opent de KOPIE (die wil je meestal aanpassen); dupliceren
+  //    via de lange druk in de roster laat de selectie staan, net als op de telefoon.
+  //  • Na "＋" in de picker staat de nieuwe unit rechts open, met z'n opties.
+  //  • Verwijderen van de open unit → placeholder (dat regelt `removeUnit` al, voor elke vorm).
+  const splitShell = gesplitst ? (() => {
+    const linksW = Math.round(Math.min(460, Math.max(340, boxW * 0.42)));
+    const openUid = screen.kind === 'options' ? screen.uid : undefined;
+    const openRow = openUid ? rows.find((r) => r.uid === openUid) : undefined;
+
+    let rechts: React.JSX.Element;
+    if (screen.kind === 'picker') {
+      rechts = (
+        <PickerScreen
+          // De categorie zit in de key: een tik op een andere chip in de roster terwijl de picker al
+          // open staat, opent hem opnieuw met díé categorie (`initialCategory` wordt één keer gelezen).
+          key={`picker:${screen.category ?? 'all'}`}
+          ctx={ctx}
+          entries={pickerEntries}
+          initialCategory={screen.category}
+          onBack={sluitPicker}
+          onAdd={(unit, cat) => setScreen({ kind: 'options', uid: addUnit(unit, cat) })}
+          onConfigure={onConfigure}
+          terugTeHalen={terugTeHalen}
+          onRestore={(b) => { restoreUnit(b); setScreen({ kind: 'options', uid: b.uid }); }}
+          inPane
+        />
+      );
+    } else if (openUid && openRow) {
+      rechts = (
+        <UnitOptions
+          // Per unit een verse editor: de "+15"-delta in de kop, het gekozen profiel en de scroll-stand
+          // horen bij DEZE unit en mogen niet meeschuiven naar de volgende.
+          key={openUid}
+          ctx={ctx}
+          uid={openUid}
+          onBack={sluitPaneel}
+          onRemove={() => removeUnit(openUid)}
+          onDuplicate={() => setScreen({ kind: 'options', uid: duplicateUnit(openUid) })}
+          onShowInfo={onShowInfo}
+          onNaam={openNaam ? () => openNaam(openUid) : undefined}
+          groeiMax={campaignMods?.groei?.[openUid]?.max ?? undefined}
+          groeiMinModellen={campaignMods?.groei?.[openUid]?.minModellen ?? undefined}
+          inPane
+        />
+      );
+    } else {
+      rechts = (
+        <SplitPlaceholder
+          leeg={rows.length === 0}
+          weg={!!openUid}
+          onAddUnit={() => setScreen({ kind: 'picker' })}
+        />
+      );
+    }
+
+    // `scrollbarGutter: 'auto'` op deze drie dozen: index.css zet `scrollbar-gutter: stable` op ALLES,
+    // en een `overflow: hidden`-doos telt als scrollcontainer — dan reserveert elk van deze wrappers
+    // een lege baan van 10px aan de rechterkant (een loze strook naast de divider en tegen de rand).
+    // Ze scrollen zelf nooit; de scroll-bodies daarbinnen houden hun eigen baan.
+    return (
+      <div style={{ display: 'flex', width: '100%', height: '100%', minHeight: 0, overflow: 'hidden', scrollbarGutter: 'auto', background: TOW.bg }}>
+        <div
+          style={{
+            flex: '0 0 auto', width: linksW, height: '100%', minHeight: 0, boxSizing: 'border-box',
+            overflow: 'hidden', scrollbarGutter: 'auto', borderRight: `1px solid ${TOW.lineStrong}`,
+          }}
+        >
+          <RosterScreen
+            ctx={ctx}
+            rows={rows}
+            onBack={verlaatLijst}
+            onEditList={onEditArmyField ? () => onEditArmyField('composition') : undefined}
+            onExport={() => setExportOpen(true)}
+            onPdf={onPdf ?? maakPdf}
+            pdfBezig={pdfBezig}
+            onAddUnit={(category) => setScreen({ kind: 'picker', category })}
+            onSelectUnit={(uid) => { setHighlightUid(undefined); setScreen({ kind: 'options', uid }); }}
+            onDuplicate={duplicateUnit}
+            onRemove={removeUnit}
+            highlightUid={highlightUid}
+            selectedUid={openRow ? openUid : undefined}
+          />
+        </div>
+        <div style={{ flex: 1, minWidth: 0, height: '100%', minHeight: 0, overflow: 'hidden', scrollbarGutter: 'auto' }}>
+          {rechts}
+        </div>
+      </div>
+    );
+  })() : null;
+
   return (
     <div ref={rootRef} style={{ height: '100%', minHeight: 0 }} data-list-name={name}>
       {/* `DesktopShell` returns null below 1180px on its own, but it is also not RENDERED there, so
           its document-level keyboard listener cannot exist while the phone flow is up. Belt and
           braces on purpose: a shortcut listener surviving behind a phone layout would eat arrows and
           Backspace with no visible cause. */}
-      {desktop ? desktopShell : shell}
+      {desktop ? desktopShell : gesplitst ? splitShell : shell}
       {/* Export — leest de rijen die de roster al toont, dus de export kan nooit iets anders zeggen
           dan het scherm. `statsFor` was tot nu toe een ongebruikte prop; de statline-schakelaar is
           z'n eerste echte afnemer. */}
@@ -913,6 +1088,49 @@ export function BuilderFlow({
           onSluit={() => setNaamUid(null)}
         />
       ) : null}
+    </div>
+  );
+}
+
+/** Het rechterpaneel van het gesplitste scherm als er niets open staat (Joost 28-10-2026). Rustig en
+ *  klein: een wachtstand, geen scherm. `weg` = de unit die open stond bestaat niet meer (bijvoorbeeld
+ *  op een ander apparaat verwijderd); `leeg` = de lijst heeft nog geen units. */
+function SplitPlaceholder({ leeg, weg, onAddUnit }: {
+  leeg: boolean; weg: boolean; onAddUnit: () => void;
+}): React.JSX.Element {
+  return (
+    <div
+      style={{
+        width: '100%', height: '100%', boxSizing: 'border-box', padding: 32,
+        display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 14,
+        background: TOW.bg, textAlign: 'center',
+      }}
+    >
+      <span style={{ ...(engraved as React.CSSProperties), fontSize: 8.5, color: TOW.faint }}>
+        Unit options
+      </span>
+      {weg ? (
+        <span style={{ fontFamily: towFont.serif, fontSize: 13, color: TOW.muted }}>
+          That unit is no longer in this list.
+        </span>
+      ) : null}
+      <span style={{ maxWidth: 300, fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 14.5, lineHeight: 1.5, color: TOW.muted }}>
+        {leeg
+          ? 'No units yet. Add your first one — the picker opens here, beside the roster.'
+          : 'Select a unit on the left to see its options and stats.'}
+      </span>
+      <button
+        type="button"
+        onClick={onAddUnit}
+        style={{
+          marginTop: 4, height: 34, padding: '0 14px', boxSizing: 'border-box',
+          borderRadius: 10, border: `1px solid ${TOW.lineStrong}`, background: TOW.panel2,
+          color: TOW.goldDeep, cursor: 'pointer', fontFamily: towFont.display, fontWeight: 600,
+          fontSize: 12, letterSpacing: '0.04em', WebkitTapHighlightColor: 'transparent',
+        }}
+      >
+        + Add a unit
+      </button>
     </div>
   );
 }

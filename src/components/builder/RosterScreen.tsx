@@ -129,8 +129,12 @@ export function RosterScreen(props: {
   /** Opens the container's list-settings sheet (rename, army composition). Without it the header
    *  title is inert text, exactly as it was before. */
   onEditList?: () => void;
+  /** Gesplitst scherm (Joost 28-10-2026): de unit die rechts open staat. Die rij blijft gemarkeerd
+   *  zolang hij open staat — anders dan `highlightUid`, dat alleen de laatste wijziging aanwijst. Op
+   *  de telefoon blijft hij leeg: daar ligt het optiescherm óver de roster en is er niets te markeren. */
+  selectedUid?: string;
 }): React.JSX.Element {
-  const { ctx, rows, onBack, onAddUnit, onSelectUnit, onDuplicate, onRemove, onResolve, highlightUid, onEditList, onExport, onPdf, pdfBezig } = props;
+  const { ctx, rows, onBack, onAddUnit, onSelectUnit, onDuplicate, onRemove, onResolve, highlightUid, onEditList, onExport, onPdf, pdfBezig, selectedUid } = props;
   const { derived, labels, list } = ctx;
 
   // LONG-PRESS ACTIONS — chosen shape and why.
@@ -503,7 +507,8 @@ export function RosterScreen(props: {
                       // accent rail until the next interaction; the row whose actions are showing gets
                       // the same treatment, which is also what makes the action strip's own TOW.panel
                       // background blend seamlessly into the row.
-                      selected={row.uid === highlightUid || open}
+                      // Gesplitst scherm: ook de unit die rechts open staat (28-10-2026).
+                      selected={row.uid === highlightUid || open || (!!selectedUid && row.uid === selectedUid)}
                       onClick={() => {
                         if (open) { closeActions(); return; }  // second tap dismisses, never navigates
                         setActionUid(null);
