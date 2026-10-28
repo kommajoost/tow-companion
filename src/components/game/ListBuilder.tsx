@@ -669,6 +669,9 @@ export function ListBuilder() {
   // een lijst op; dezelfde reorderList zet hem neer, zodat volgorde en map precies als met de muis gaan.
   // De sectie-sleutel '__ungrouped__' is UNGROUPED verderop: geen map.
   const [lijstScroller, lijstScrollerRef] = useState<HTMLDivElement | null>(null);
+  // De HTML5-sleepfunctie alleen op een apparaat met een MUIS: op een aanraakscherm start Chrome bij lang
+  // drukken anders z'n eigen sleepactie en breekt hij onze aanraking af (zie useAanraakSlepen).
+  const [metMuis] = useState(() => typeof window !== 'undefined' && !!window.matchMedia?.('(pointer: fine)').matches);
   const aanraak = useAanraakSlepen(lijstScroller, {
     onOver: (doel) => {
       setDragOver(doel && doel.kaartId == null ? doel.sectie : null);
@@ -1025,7 +1028,7 @@ export function ListBuilder() {
     return (
       <div
         key={l.id}
-        draggable={sleepbaar}
+        draggable={sleepbaar && metMuis}
         onDragStart={(e) => { if (!sleepbaar) return; e.dataTransfer.setData('text/plain', l.id); e.dataTransfer.effectAllowed = 'move'; }}
         onDragOver={(e) => {
           if (!sleepbaar) return;
@@ -1048,10 +1051,21 @@ export function ListBuilder() {
         }}
         {...(sleepbaar ? { 'data-sleep-lijst': l.id, 'data-sleep-naam': l.name, 'data-sleep-sectie': sectionId } : {})}
         style={{ ...card, position: 'relative', display: 'flex', alignItems: 'center', gap: 10, padding: '8px 0', cursor: sleepbaar ? 'grab' : 'default',
-          ...(sleepbaar ? { WebkitTouchCallout: 'none', userSelect: 'none', WebkitUserSelect: 'none' } : {}),
+          ...(sleepbaar ? { WebkitTouchCallout: 'none', userSelect: 'none', WebkitUserSelect: 'none', ...(metMuis ? {} : { WebkitUserDrag: 'none' }) } : {}),
           opacity: aanraak.gesleept?.id === l.id ? 0.4 : 1 }}
       >
         {dropLine != null && <div style={{ position: 'absolute', left: 0, right: 0, [dropLine ? 'top' : 'bottom']: -1, height: 2, background: TOW.goldDeep, borderRadius: 2, pointerEvents: 'none' }} />}
+        {/* De GREEP (28-10-2026): vastpakken = meteen slepen, met je vinger. `touch-action: none` houdt de
+            browser hier weg van scrollen, zodat hij het slepen niet kan overnemen. Ook met de muis zichtbaar:
+            hij laat zien dat een lijst te verplaatsen is. */}
+        {sleepbaar && (
+          <span data-sleep-greep aria-hidden title="Drag to move"
+            style={{ flexShrink: 0, alignSelf: 'stretch', display: 'flex', alignItems: 'center', justifyContent: 'center', width: 26, marginLeft: -4, touchAction: 'none', cursor: 'grab', color: TOW.faint }}>
+            <svg width="12" height="16" viewBox="0 0 12 16" fill="currentColor" aria-hidden="true">
+              <circle cx="3" cy="3" r="1.4" /><circle cx="9" cy="3" r="1.4" /><circle cx="3" cy="8" r="1.4" /><circle cx="9" cy="8" r="1.4" /><circle cx="3" cy="13" r="1.4" /><circle cx="9" cy="13" r="1.4" />
+            </svg>
+          </span>
+        )}
         {/* Same anatomy as the roster's UnitRow: name on one line, a faint whisper beneath, and the
             number right-aligned in tabular figures so a column of lists lines up. */}
         <button onClick={() => { if (!aanraak.netGesleept()) setActiveId(l.id); }} style={{ flex: 1, minWidth: 0, textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', padding: 0, display: 'flex', flexDirection: 'column', gap: 1 }}>

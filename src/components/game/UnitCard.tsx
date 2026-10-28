@@ -459,6 +459,7 @@ export function UnitCard({
           onRemoved={onRemoved ?? (() => {})}
           kills={kills ?? 0}
           onSetKills={onSetKills ?? (() => {})}
+          toonKills={!!onSetKills}
           killDetails={killDetails ?? []}
           onSetKillDetail={onSetKillDetail ?? (() => {})}
           vijandUnits={vijandUnits ?? []}

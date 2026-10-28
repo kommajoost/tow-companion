@@ -410,6 +410,9 @@ export function GameView() {
   const rfMax = campagne ? versterkingVoorKant(campagne.versterking, kantVanZijde) : null;
   // Een campagne-code (geen vier tekens) is een campagne-battle, ook zolang hij nog laadt.
   const campagneCode = !!code && !isVrijPotjeCode(code);
+  // KILLS ALLEEN BIJ EEN CAMPAGNE (Joost 28-10-2026): "die kills aangeven is echt alleen puur bij campagne,
+  // dat hoeft normaal niet". Ze voeden alleen de veteraan-XP van de campagne; zonder campagne geen teller.
+  const killsTonen = campagneCode || !!campagne;
   const rfNu = versterkingVan(army);
   // Staat er al een versterking bij, dan blijft het blok staan (om hem weg te kunnen halen).
   // Vrij potje: sinds 28-10-2026 verborgen (VERSTERKING_OVERAL). Een campagne-battle waarvoor de server
@@ -447,7 +450,7 @@ export function GameView() {
   const unitKaart = (a: Army, u: ArmyUnit, weergave: { collapsed: boolean; onToggleCollapse?: () => void; selected?: boolean }) => {
     const t = tracker.units[unitKey(side, u.id)];
     return (
-      <UnitCard key={u.id} unit={u} faction={a.faction} editable={editable} onChange={(patch) => onUnitChange(u.id, patch)} lost={t?.lost ?? 0} weg={t?.weg ?? false} fleeing={t?.fleeing ?? false} kills={t?.kills ?? 0} onSetLost={(lost) => setCasualty(u.id, lost)} onRemoved={() => setRemoved(u.id, !(t?.weg ?? false))} onFlee={() => toggleFleeing(u.id)} onSetKills={(k) => setKills(u.id, k)} killDetails={t?.killDetails ?? []} onSetKillDetail={(i, patch) => setKillDetail(u.id, i, patch)} vijandUnits={vijandUnits} maxRound={maxRound} collapsed={weergave.collapsed} onToggleCollapse={weergave.onToggleCollapse} selected={weergave.selected} scenarioKnoppen={knoppenVoor(u)} />
+      <UnitCard key={u.id} unit={u} faction={a.faction} editable={editable} onChange={(patch) => onUnitChange(u.id, patch)} lost={t?.lost ?? 0} weg={t?.weg ?? false} fleeing={t?.fleeing ?? false} kills={t?.kills ?? 0} onSetLost={(lost) => setCasualty(u.id, lost)} onRemoved={() => setRemoved(u.id, !(t?.weg ?? false))} onFlee={() => toggleFleeing(u.id)} onSetKills={killsTonen ? (k) => setKills(u.id, k) : undefined} killDetails={t?.killDetails ?? []} onSetKillDetail={(i, patch) => setKillDetail(u.id, i, patch)} vijandUnits={vijandUnits} maxRound={maxRound} collapsed={weergave.collapsed} onToggleCollapse={weergave.onToggleCollapse} selected={weergave.selected} scenarioKnoppen={knoppenVoor(u)} />
     );
   };
 

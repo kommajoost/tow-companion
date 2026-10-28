@@ -59,6 +59,7 @@ export function WoundTracker({
   onSetKills,
   killDetails = [],
   onSetKillDetail = () => {},
+  toonKills = true,
   vijandUnits = [],
   maxRound = 6,
   editable = true,
@@ -80,6 +81,8 @@ export function WoundTracker({
   /** Per kill: welke vijandelijke unit en in welke beurt. Index-gelijk aan de kill-teller. */
   killDetails?: KillDetail[];
   onSetKillDetail?: (i: number, patch: KillDetail) => void;
+  /** Alleen bij een campagne-battle: daar voeden kills de veteraan-XP. Een gewoon potje toont geen teller. */
+  toonKills?: boolean;
   /** Het leger aan de andere kant van de tafel — de keuzelijst bij een kill. */
   vijandUnits?: ArmyUnit[];
   /** Laatste game-round (6, of 5 bij Battle March). */
@@ -236,14 +239,14 @@ export function WoundTracker({
       </div>
 
       {/* Kills — enemy units destroyed + trophies captured by this unit (feeds campaign veteran XP). */}
-      <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 11, paddingTop: 11, borderTop: `1px solid ${TOW.line}` }}>
+      {toonKills && <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginTop: 11, paddingTop: 11, borderTop: `1px solid ${TOW.line}` }}>
         <span style={{ flex: 1, minWidth: 0, ...eb, fontSize: 8, color: TOW.muted }}>Kills</span>
         <StepBtn dir={-1} onClick={() => onSetKills(clampedKills - 1)} disabled={!editable || clampedKills <= 0} />
         <div style={{ display: 'flex', alignItems: 'baseline', gap: 4, minWidth: 52, justifyContent: 'center' }}>
           <span style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 17, color: TOW.ink }}>{clampedKills}</span>
         </div>
         <StepBtn dir={1} onClick={() => onSetKills(clampedKills + 1)} disabled={!editable} />
-      </div>
+      </div>}
 
       {/* WAT WAREN DIE KILLS (Joost 21-08-2026): per kill een regel met wie het was en in welke beurt.
           Zet je de teller een omhoog, dan verschijnt hier een lege regel. Bewust NIET verplicht: aan
@@ -252,7 +255,7 @@ export function WoundTracker({
           De unit-keuze is een echte <select> — met tien units in een leger is een lijst met knoppen
           onwerkbaar, en een select is op mobiel de nette native picker. De beurt is wél een rij
           knopjes: dat zijn er maar vijf of zes en je wil er met een duim bij. */}
-      {clampedKills > 0 && (
+      {toonKills && clampedKills > 0 && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginTop: 9 }}>
           {Array.from({ length: clampedKills }, (_, i) => {
             const d = killDetails[i] ?? {};

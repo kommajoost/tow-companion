@@ -22,6 +22,14 @@ export interface SleepDoel {
  * al meer dan 10 px, dan was het gewoon scrollen en gebeurt er niets. Bij de rand van het scherm schuift
  * de lijst vanzelf mee, zodat je ook een map buiten beeld bereikt.
  *
+ * TWEEDE RONDE (Joost 28-10-2026, op de echte telefoon): "als ik hem ingedrukt houd pakt hij hem wel op,
+ * maar laat hij hem gelijk weer los". Oorzaak: de kaart stond ook als `draggable` (voor de muis), en
+ * Chrome op Android start bij lang drukken op zo'n element zijn EIGEN sleepactie — die breekt de aanraking
+ * af (touchcancel). ListBuilder zet `draggable` daarom alleen nog aan op een apparaat met een muis.
+ * Daarnaast een GREEP (`data-sleep-greep`, met `touch-action: none`): wie die vastpakt sleept meteen,
+ * zonder te wachten. Omdat daar niet gescrold kan worden, kan de browser het slepen ook niet overnemen —
+ * de betrouwbaarste route op een telefoon. Lang drukken op de kaart zelf blijft daarnaast werken.
+ *
  * DE CONTRACTEN. Een kaart die gesleept mag worden draagt `data-sleep-lijst` (het lijst-id),
  * `data-sleep-naam` en `data-sleep-sectie`; een sectie die iets mag ontvangen draagt `data-sleep-doel`.
  * Knoppen binnen een kaart die NIET mogen beginnen met slepen (dupliceren, verwijderen) dragen
@@ -82,6 +90,14 @@ export function useAanraakSlepen(
       if (rand) { cancelAnimationFrame(rand); rand = 0; }
     };
 
+    const oppakken = () => {
+      if (!kandidaat || !start) return;
+      actief = true;
+      try { navigator.vibrate?.(15); } catch { /* geen trilmotor: geen probleem */ }
+      setGesleept({ ...kandidaat, x: start.x, y: start.y });
+      rand = requestAnimationFrame(randLus);
+    };
+
     const onStart = (e: TouchEvent) => {
       if (e.touches.length !== 1) { opruimen(); return; }
       const doelEl = e.target as HTMLElement;
@@ -92,13 +108,9 @@ export function useAanraakSlepen(
       start = { x: t.clientX, y: t.clientY };
       laatsteY = t.clientY;
       kandidaat = { id: kaart.dataset.sleepLijst ?? '', naam: kaart.dataset.sleepNaam ?? '' };
-      timer = window.setTimeout(() => {
-        if (!kandidaat || !start) return;
-        actief = true;
-        try { navigator.vibrate?.(15); } catch { /* geen trilmotor: geen probleem */ }
-        setGesleept({ ...kandidaat, x: start.x, y: start.y });
-        rand = requestAnimationFrame(randLus);
-      }, 380);
+      // Op de greep: meteen oppakken. Elders op de kaart: eerst lang drukken (anders is het scrollen).
+      if (doelEl.closest('[data-sleep-greep]')) { oppakken(); return; }
+      timer = window.setTimeout(oppakken, 380);
     };
 
     const onMove = (e: TouchEvent) => {
