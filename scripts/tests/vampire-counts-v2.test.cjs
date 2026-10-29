@@ -36,8 +36,8 @@ const capWarnings = (result) => result.entryWarnings.filter((w) => /Shared choic
 
 test('Lord includes Level 1; Lord/Thrall/Strigoi upgrades are exclusive and correctly priced', () => {
   for (const [id, basePoints, levels] of [
-    ['vampire-count', 185, [['Level 2 Wizard', 2, 30], ['Be a Level 3 Wizard', 3, 60]]],
-    ['vampire-thrall', 70, [['Level 1 Wizard', 1, 30], ['Be a Level 2 Wizard', 2, 60]]],
+    ['vampire-count', 185, [['Be a Level 2 Wizard', 2, 30], ['Be a Level 3 Wizard', 3, 60]]],
+    ['vampire-thrall', 70, [['Be a Level 1 Wizard', 1, 30], ['Be a Level 2 Wizard', 2, 60]]],
     ['strigoi-ghoul-king', 145, [['Level 1 Wizard', 1, 30], ['Level 2 Wizard', 2, 60]]],
   ]) {
     const u = unit(id), e = entry(id);
@@ -260,6 +260,154 @@ test('Saved Kastellan mixed keys stay removable, over-budget items warn and powe
   assert.equal(ow.magicWouldExceed(unit('vampire-thrall'), { ...vampire, opts: [] }, 'vampiric-power', pool.test[0], pool, { entries: [e] }), true);
 });
 
+// ── Audit DOCX 1.5.3.1 (29-10-2026, Joost: "ja ok verwerk") ─────────────────────────────────────
+test('Master of the Black Arts has the DOCX text (no struck Thrall clause); Flying Horror no longer glued to it', () => {
+  const text = ov.applyOverlayMagicText(read('public/owb/magic-item-text.json'), overlay);
+  assert.equal(text['master-of-the-black-arts'].body,
+    'This Vampiric Power may only be taken by a Vampire Lord that is a Level 3 Wizard, This Vampire increases their Level of Wizardry by 1.');
+  assert.doesNotMatch(text['master-of-the-black-arts'].body, /Thrall|Vampire Count/);
+  assert.equal(text['flying-horror'].body, 'Models whose troop type is ‘infantry’ only. This Vampire gains the Fly (10) rule, but cannot join a unit.');
+});
+
+test('Corpse Cart must take Balefire or Tintinnabulation (new cart 70); Corpsemaster takes one weapon; Legacy untouched', () => {
+  const u = unit('corpse-cart'), e = entry(u.id, 'special', 1);
+  const balefire = key(u, 'equipment', 'Balefire Brazier'), bell = key(u, 'equipment', 'Warped Tintinnabulation');
+  assert.equal(ow.entryPoints(u, e), 70);
+  assert(ow.loadoutLabels(u, e).includes('Balefire Brazier'));
+  assert.equal(ow.entryPoints(u, { ...e, opts: [balefire] }), 70); // explicitly saved pick: not charged twice
+  assert.equal(ow.entryPoints(u, { ...e, opts: [bell] }), 75);
+  assert(!ow.loadoutLabels(u, { ...e, opts: [bell] }).includes('Balefire Brazier'));
+  assert.equal(validate([e]).byCategory.core.points, 70);
+  const whip = key(u, 'options', 'Whip'), spear = key(u, 'options', 'Cavalry spear');
+  const opts = ow.toggleOption(u, { ...e, opts: ow.toggleOption(u, e, whip) }, spear);
+  assert.deepEqual(opts, [spear]);
+  assert.equal(ow.entryPoints(u, { ...e, opts }), 73);
+  assert(validate([{ ...e, opts: [whip, spear] }]).entryWarnings.some((w) => /choose only one of Whip, Cavalry spear/.test(w.message)));
+  const legacy = ov.catalogueFor(base, 'vc-renegade').special.find((x) => x.id === 'corpse-cart');
+  assert.equal(ow.entryPoints(legacy, entry('corpse-cart', 'special', 1)), legacy.points);
+});
+
+test('Mercenaries: Renegade V2 offers Free Company Militia and Empire Archers like the Legacy composition', () => {
+  const vc = read('public/owb/the-old-world.json').armies.find((a) => a.id === 'vampire-counts');
+  const legacy = vc.mercenaries['vc-renegade'];
+  assert.deepEqual(legacy, [{ army: 'empire-of-man', units: ['free-company-militia', 'empire-archers'] }]);
+  assert.deepEqual(ov.mercenarySources(vc.mercenaries, 'vampire-counts', 'vc-renegade-v2', overlay), legacy);
+  assert.deepEqual(ov.mercenarySources(vc.mercenaries, 'vampire-counts', 'vc-renegade', overlay), legacy);
+  assert.deepEqual(ov.mercenarySources(vc.mercenaries, 'vampire-counts', 'vampire-counts', overlay), []);
+  assert.deepEqual(ov.mercenarySources(vc.mercenaries, 'dark-elves', 'vc-renegade-v2', overlay), []);
+  const empire = Object.values(read('public/owb/empire-of-man.json')).filter(Array.isArray).flat();
+  const mercs = legacy[0].units.map((id) => empire.find((x) => x.id === id));
+  assert(mercs.every(Boolean));
+  const withMercs = { ...cat, mercenaries: mercs };
+  const merc = entry('free-company-militia', 'mercenaries', 10);
+  const result = ow.validate(list([merc]), (c, id) => ow.findUnit(withMercs, c, id), items);
+  assert.equal(result.byCategory.mercenaries.points, ow.entryPoints(mercs[0], merc));
+});
+
+test('Terrorgheist as Strigoi mount shows its DOCX special rules (sheet and game)', () => {
+  const u = unit('strigoi-ghoul-king');
+  const b = game([entry(u.id, 'characters', 1, [key(u, 'mounts', 'Terrorgheist {mount}')])]).units[0];
+  assert.deepEqual(b.mounts[0].specialRules, ['Close Order', 'Fly (9)', 'Indomitable (1)', 'Infested', 'Large Target',
+    'Necromantic Undead', 'Regeneration (5+)', 'Stomp Attacks (D6)', 'Swiftstride', 'Terror', 'Wailing Dirge (-2)']);
+  assert(b.mounts[0].details.includes('Base size: 100 x 150 mm'));
+  for (const k of ['terrorgheist', 'terrorgheist mount']) assert(!mounts[k].specialRules.some((r) => /\(X\+\)|^Wailing Dirge$/.test(r)), k);
+  assert.equal(b.mounts[0].profiles[0].stats.find((s) => s.k === 'W').v, '(+5)');
+});
+
+test('0-1 unit per 1,000 points may: Skeleton magic standard / Implacable Defence and Grave Guard Drilled / Implacable Defence', () => {
+  const pool = { test: [{ name_en: 'Test banner', type: 'banner', points: 25 }] };
+  const sk = unit('skeleton-warriors');
+  const id = key(sk, 'options', 'Implacable Defence'), bearer = key(sk, 'command', 'Standard bearer');
+  const skel = (opts) => entry(sk.id, 'core', 10, opts);
+  const warnings = (entries, points = 2000) => capWarnings(validate(entries, points, pool)).length;
+  assert.equal(warnings([skel([id]), skel([id])]), 0);
+  assert.equal(warnings([skel([id]), skel([id]), skel([id])]), 3);
+  assert.equal(warnings([skel([id]), skel([id])], 1000), 2);
+  // The magic standard counts, the plain standard bearer does not; both upgrades on one unit count once.
+  assert.equal(warnings([skel([id]), skel([id]), skel([bearer])]), 0);
+  assert.equal(warnings([skel([id]), skel([id]), skel([bearer, 'magic/banner/test-banner'])]), 3);
+  assert.equal(warnings([skel([id, bearer, 'magic/banner/test-banner']), skel([id])]), 0);
+  assert.equal(warnings([skel([bearer, 'magic/banner/test-banner'])], 999), 1);
+  const gg = (unitId, category, name) => entry(unitId, category, 5, [key(unit(unitId, category), 'options', name)]);
+  assert.equal(warnings([gg('grave-guard', 'special', 'Drilled'), gg('grave-guard-core', 'core', 'Implacable Defence')]), 0);
+  assert.equal(warnings([gg('grave-guard', 'special', 'Drilled'), gg('grave-guard', 'special', 'Implacable Defence'),
+    gg('grave-guard-core', 'core', 'Drilled')]), 3);
+  // Blood Knights' Drilled is not limited by the DOCX.
+  const bk = unit('blood-knights', 'rare');
+  assert.equal(warnings([1, 2, 3].map(() => entry(bk.id, 'rare', 4, [key(bk, 'options', 'Drilled')])), 1000), 0);
+});
+
+test('Grave Guard: choosing great weapons replaces the shields (old Shields tick stays harmless)', () => {
+  for (const [id, category] of [['grave-guard', 'special'], ['grave-guard-core', 'core']]) {
+    const u = unit(id, category), e = entry(id, category, 5);
+    const gw = key(u, 'equipment', 'Hand weapons, Great weapons (replace shields)');
+    assert.equal(gw, 'equipment/1'); // same index as the old "Great weapons (replace shields)"
+    assert.deepEqual(ow.loadoutLabels(u, e).filter((n) => /weapon|shield/i.test(n)), ['Hand weapons', 'Shields']);
+    const great = { ...e, opts: [gw] };
+    assert.deepEqual(ow.loadoutLabels(u, great).filter((n) => /weapon|shield/i.test(n)), ['Hand weapons', 'Great weapons (replace shields)']);
+    assert.equal(ow.entryPoints(u, great), 60);
+    const oldShieldsTick = `options/${u.options.findIndex((o) => o.name_en === 'Shields')}`;
+    assert.equal(ow.entryPoints(u, { ...great, opts: [gw, oldShieldsTick] }), 60);
+    assert(!game([{ ...great, opts: [gw, oldShieldsTick] }]).units[0].options.includes('Shields'));
+  }
+});
+
+test('Vampire Lord is Regular Infantry; old "Vampire Count" lookups get only the Lord row', () => {
+  const tt = require(path.join(root, 'src/lib/troopTypes.ts')).makeTroopTypeLookup(stats);
+  assert.equal(tt('Vampire Lord'), 'Regular Infantry');
+  assert.equal(tt('Vampire Thrall'), 'Regular Infantry');
+  for (const name of ['Vampire Count', 'Vampire Count {renegade}', 'Vampire Lord']) {
+    assert.deepEqual(ov.overlayStatsFor(stats, name, overlay).map((r) => `${r.Name} W${r.W} A${r.A} Ld${r.Ld}`), ['Vampire Lord W4 A5 Ld9'], name);
+  }
+});
+
+test('General: Wights, Cairn Wraith and Tomb Banshee may be General; nothing links The Death of a General', () => {
+  for (const id of ['wight-king', 'wight-lord', 'cairn-wraith', 'tomb-banshee']) {
+    const u = unit(id), e = entry(id, 'characters', 1, [key(u, 'command', 'General')]);
+    assert.equal(ow.entryPoints(u, e), u.points);
+    assert(ow.selectedOptions(u, e).some(({ opt }) => opt.name_en === 'General'));
+  }
+  assert.equal(unit('wight-lord').command[0].name_en, 'Battle Standard Bearer'); // saved command/0 keeps meaning
+  const idx = ar.buildRuleIndex(rules);
+  for (const u of Object.values(cat).flat()) {
+    for (const label of (u.specialRules?.name_en ?? '').split(',').map((s) => s.trim()).filter(Boolean)) {
+      const slug = ar.resolveRuleSlug(label, idx, 'Vampire Counts');
+      if (slug) assert.doesNotMatch(rules[slug].bodyIndex ?? '', /Death of a General/i, `${u.id}: ${label}`);
+    }
+  }
+  assert.doesNotMatch(JSON.stringify(overlay), /Death of a General/i);
+});
+
+test('Small DOCX data fixes: Acolyte rules, Hexwraith rows, names, rule texts, Lore label, Spectral Lance, mount data', () => {
+  assert(!unit('necromantic-acolyte').specialRules.name_en.includes('Level 1 (or 2) Wizard'));
+  assert.deepEqual(ov.overlayStatsFor(stats, 'Hexwraiths', overlay).map((r) => r.Name), ['Hexwraith', 'Hellwraith', 'Skeletal Steed']);
+  assert(unit('zombies').specialRules.name_en.endsWith('Shambling Horde'));
+  assert.deepEqual(mounts['skeleton warriors'].equipment, ['Hand weapons and shields']);
+  for (const id of ['vampire-count', 'vampire-thrall', 'wight-king', 'wight-lord']) {
+    assert(unit(id).equipment.some((o) => o.name_en === 'Lance (if appropriately mounted)'), id);
+  }
+  assert(unit('master-necromancer').options[0].options.some((o) => o.name_en === 'Be a Level 4 Wizard'));
+  assert(unit('necromantic-acolyte').options[0].options.some((o) => o.name_en === 'Be a Level 2 Wizard'));
+  assert.equal(ow.wizardLevelOf(unit('master-necromancer'), entry('master-necromancer', 'characters', 1, ['subopt/options/0/1'])), 4);
+  assert.match(rules['resurrecting-the-fallen'].bodyIndex, /^In a Vampire Counts army/);
+  for (const slug of ['banner-of-the-count', 'wight-banner']) assert.match(rules[slug].bodyIndex, /\(see page 27\)/);
+  const idx = ar.buildRuleIndex(rules);
+  const lore = ar.resolveRuleSlug('Lore of Undeath', idx, 'Vampire Counts');
+  assert.match(rules[lore].bodyIndex, /Vanhal’s Danse Macabre/);
+  assert.doesNotMatch(rules[lore].bodyIndex, /Mystery shrouds/);
+  assert(!overlay.rules['spell-hellish-vigour'].body.some((p) => typeof p === 'string' && /^[\s|]+$/.test(p)));
+  for (const slug of ['accursed-reliquary-renegade', 'blasphemous-tome-renegade']) assert.doesNotMatch(rules[slug].bodyIndex, /Mortis Engines/, slug);
+  const lance = Object.values(rules).find((r) => r.name === 'Spectral Lance');
+  assert.match(JSON.stringify(lance.body), /S\+2.*-2.*Armour Bane \(1\)/);
+  for (const [name, size] of [['zombie dragon', '100 x 150 mm'], ['abyssal terror', '50 x 100 mm'], ['mortis engine', '50 x 100 mm']]) {
+    assert.equal(mounts[name].baseSize, size, name);
+    assert(mounts[name].specialRules.length, name);
+  }
+  assert.equal(mounts['mortis engine'].armourValue, '4+');
+  assert.equal(mounts['black coach'].armourValue, '3+');
+  assert(!(mounts['black coach'].notes ?? []).some((n) => /\| M \| WS/.test(n)));
+});
+
 test('Correction is idempotent, version guarded, and does not mutate Legacy', async () => {
   const { correctVampireCountsV2 } = await import('../patch-vampire-counts-v2.mjs');
   assert.deepEqual(correctVampireCountsV2(structuredClone(overlay)), overlay);
@@ -290,6 +438,11 @@ test('Real compiler retains reviewed corrections after reimport', () => {
     assert.equal(rebuilt.profiles.nightmare.stats[0].M, '7');
     assert.equal(rebuiltCat.special.find((u) => u.id === 'blood-knights').command[0].magic.maxPoints, 25);
     assert(rebuilt.profiles.zombies.replaceStats);
+    assert.match(rebuilt.magicItemText['master-of-the-black-arts'].body, /^This Vampiric Power may only be taken by a Vampire Lord/);
+    assert.doesNotMatch(rebuilt.magicItemText['flying-horror'].body, /Black Arts/);
+    const cart = rebuiltCat.special.find((u) => u.id === 'corpse-cart');
+    assert.equal(ow.entryPoints(cart, entry(cart.id, 'special', 1)), 70);
+    assert.deepEqual(rebuilt.composition.mercenaries, overlay.composition.mercenaries);
   } finally {
     assert.equal(path.dirname(path.resolve(scratch)), tempRoot);
     assert(path.basename(scratch).startsWith('tow-vc-v2-test-'));

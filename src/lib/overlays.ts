@@ -107,6 +107,11 @@ export interface OverlayComposition {
    *  can enforce category placement; conditional/shared caps remain visible here instead of being
    *  flattened into an unsafe guess. */
   sourceRules?: Record<string, string[]>;
+  /** Huurlingen die de pack zelf noemt, in dezelfde vorm als `the-old-world.json` ze per compositie
+   *  geeft ({ army, units }). Nodig omdat dat bestand door sync-owb wordt overschreven en alleen de
+   *  OWB-composities kent: Vampire Counts Renegade V2 bood daardoor geen "Free Company Militia and
+   *  Empire Archers" aan, de Legacy-compositie wel (29-10-2026). */
+  mercenaries?: { army: string; units: string[] }[];
 }
 
 /** One special rule as the pack words it. `body` is paragraphs, in order. */
@@ -820,6 +825,21 @@ export function applyOverlayLores(lores: Record<string, Lore>, overlay?: Composi
     out[loreSlug] = { ...base, ...(patch.name ? { name: patch.name } : {}), spells };
   }
   return out;
+}
+
+/** De huurlingen-bronnen voor een compositie (29-10-2026). Eerst wat de OWB-metadata voor DEZE
+ *  compositie zegt -- elke gewone en Legacy-compositie blijft dus precies zoals hij was. Alleen als die
+ *  niets heeft, en de overlay van dit leger ze zelf noemt (`composition.mercenaries`), die. */
+export function mercenarySources<T extends { army: string; units: string[] }>(
+  perComposition: Record<string, T[]> | undefined,
+  armySlug: string,
+  composition: string,
+  overlay?: CompositionOverlay | null,
+): { army: string; units: string[] }[] {
+  const eigen = perComposition?.[composition];
+  if (eigen) return eigen;
+  if (!overlay || overlay.id !== composition || overlay.baseArmy !== armySlug) return [];
+  return overlay.composition?.mercenaries ?? [];
 }
 
 /** The provenance of a patched unit's points, for a "why is this different" affordance. */

@@ -20,7 +20,7 @@ import { useBackClose } from '../../lib/backStack';
 import { useData } from '../../data';
 import { getRuleIndex, resolveOptionSlug, resolveRuleSlug, splitCompoundLabel } from '../../lib/armyRules';
 import { useUI } from '../../state';
-import { itemsFor, catalogueFor, applyOverlayMagicText, applyOverlayMountText, applyOverlayStatIndex, hasOverlay, isOverlay, overlayCompsFor, overlayStatsFor, OVERLAY_FILES, type CompositionOverlay, type MountProfileText } from '../../lib/overlays';
+import { itemsFor, catalogueFor, applyOverlayMagicText, applyOverlayMountText, applyOverlayStatIndex, hasOverlay, isOverlay, mercenarySources, overlayCompsFor, overlayStatsFor, OVERLAY_FILES, type CompositionOverlay, type MountProfileText } from '../../lib/overlays';
 import { InfoSheet, type InfoSheetData } from './InfoSheet';
 import type { MagicText } from '../../lib/builderToArmy';
 import { magicItemRules } from '../../lib/builderToArmy';
@@ -476,8 +476,10 @@ export function ListBuilder() {
   const mercBronnen = useMemo<MercBron[]>(() => {
     if (!zichtbaar) return [];
     const perComp = metaByArmy[zichtbaar.army]?.mercenaries;
-    return perComp?.[zichtbaar.composition] ?? [];
-  }, [zichtbaar, metaByArmy]);
+    // Een Renegade V2-pack kan zijn huurlingen zelf noemen (29-10-2026, Vampire Counts: Free Company
+    // Militia en Empire Archers); de OWB-metadata kent alleen de Legacy-compositie.
+    return mercenarySources(perComp, zichtbaar.army, zichtbaar.composition, overlays[zichtbaar.composition]);
+  }, [zichtbaar, metaByArmy, overlays]);
 
   useEffect(() => {
     const need = Array.from(new Set(mercBronnen.map((b) => b.army))).filter((s) => s && !catalogues[s]);

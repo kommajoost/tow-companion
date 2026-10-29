@@ -125,6 +125,173 @@ export function correctVampireCountsV2(overlay) {
     tekst['sceptre-of-de-noirot'] = tekst['sceptre-de-noirot'];
     delete tekst['sceptre-de-noirot'];
   }
+
+  // ── Audit 1.5.3.1 (29-10-2026, Joost: "ja ok verwerk") ─────────────────────────────────────────
+  // Alles hieronder volgt de DOCX letterlijk; doorgestreepte tekst komt de app niet in. Teksten die
+  // de DOCX als losse alinea's heeft, komen uit de referentie (`docParagraphs`), niet overgetypt.
+  const ref = read('renegade/vc-renegade-v2-reference.json');
+  const docParagraphs = (heading) => {
+    const at = ref.blocks.findIndex((b) => b.type === 'heading' && String(b.text ?? '').trim() === heading);
+    if (at < 0) throw new Error(`DOCX heading "${heading}" not found; re-review the Vampire Counts corrections`);
+    const out = [];
+    for (const b of ref.blocks.slice(at + 1)) {
+      if (b.type === 'heading' || b.type === 'table') break;
+      if (b.type === 'list') out.push(...(b.items ?? []).map((it) => it.text.trim()).filter(Boolean));
+      else if (String(b.text ?? '').trim()) out.push(b.text.trim());
+    }
+    return out;
+  };
+  const baseOption = (id, group, name) => {
+    const found = (unit(id)[group] ?? []).find((o) => o.name_en === name);
+    if (!found) throw new Error(`Missing base option ${id}/${group}/${name}`);
+    return found;
+  };
+
+  // MASTER OF THE BLACK ARTS / FLYING HORROR. In de DOCX mist de kop van Master of the Black Arts,
+  // dus de importer plakte die power (titel + tekst) achter Flying Horror. Gevolg: Flying Horror had
+  // de tekst van een andere power erachter, en Master of the Black Arts zelf viel terug op de oude
+  // basistekst MET de doorgestreepte Thrall-zin ("or by a Vampire Thrall that is a Level 1 Wizard").
+  // Hier weer uit elkaar; de tekst blijft letterlijk die van de DOCX (ook de komma vóór "This").
+  const flying = tekst['flying-horror']?.body ?? '';
+  const glued = /\s*Master Of The Black Arts\s+30 points\s*/i;
+  if (glued.test(flying)) {
+    const [fh, motba] = flying.split(glued);
+    tekst['flying-horror'].body = fh.trim();
+    tekst['master-of-the-black-arts'] = { body: motba.trim() };
+  }
+  if (!/^This Vampiric Power may only be taken by a Vampire Lord that is a Level 3 Wizard/.test(tekst['master-of-the-black-arts']?.body ?? '')) {
+    throw new Error('Master of the Black Arts text missing; re-review the Vampire Counts corrections');
+  }
+
+  // CORPSE CART. "A Corpse Cart must take one of the following: Balefire Brazier +10 / Warped
+  // Tintinnabulation +15" is een VERPLICHTE betaalde keuze: een nieuwe cart kost dus 70, niet 60. De
+  // Balefire stond als default aangevinkt maar werd niet berekend (een radio-default telt pas mee als
+  // hij opgeslagen is). `paidDefault` laat de engine die default wel rekenen, alleen hier.
+  // "A Corpsemaster may take one of the following: Whip / Cavalry spear" is één-van.
+  option('corpse-cart', 'equipment', 'Balefire Brazier', { action: 'patch', option: { paidDefault: true } });
+  for (const name of ['Whip', 'Cavalry spear']) option('corpse-cart', 'options', name,
+    { action: 'patch', option: { exclusiveGroup: 'vc-v2-corpsemaster-weapon' } });
+
+  // MERCENARIES. "Up to 20% … Free Company Militia and Empire Archers". De huurlingen staan in
+  // `the-old-world.json` alleen onder de Legacy-compositie `vc-renegade`; dat bestand wordt door
+  // sync-owb overschreven, dus de V2-lijst draagt ze hier zelf, in dezelfde vorm.
+  overlay.composition.mercenaries = [{ army: 'empire-of-man', units: ['free-company-militia', 'empire-archers'] }];
+
+  // TERRORGHEIST ALS RIJDIER. De mount-tekst sleutelt op "terrorgheist", en dat profiel droeg alleen de
+  // uitrusting: in het infoscherm en in het spel stond de regellijst leeg. Daaronder lag nog de oude
+  // basistekst ("Regeneration (X+)", "Wailing Dirge" zonder waarde). Beide nu volgens de DOCX.
+  const terrorRules = ['Close Order', 'Fly (9)', 'Indomitable (1)', 'Infested', 'Large Target', 'Necromantic Undead',
+    'Regeneration (5+)', 'Stomp Attacks (D6)', 'Swiftstride', 'Terror', 'Wailing Dirge (-2)'];
+  const terrorEquipment = ['Filth-encrusted talons (see below), rancid maw (see below) and scaly skin (counts as heavy armour)'];
+  Object.assign(overlay.profiles.terrorgheist, { baseSize: '100 x 150 mm', equipment: terrorEquipment, specialRules: terrorRules });
+  overlay.profiles['terrorgheist mount'] = { baseSize: '100 x 150 mm', equipment: terrorEquipment,
+    specialRules: terrorRules, notes: ['Note: A character mounted on a Terrorgheist has +1 Toughness and +5 Wounds.'] };
+
+  // ZOMBIE DRAGON / ABYSSAL TERROR / MORTIS ENGINE / BLACK COACH: base size, armour value en uitrusting
+  // die de DOCX geeft. Een mount-profiel VERVANGT de basis mount-tekst, dus de regels gaan mee. Het
+  // troepentype blijft de code uit de statindex (Be/MCr/HCh): die klopt al, en een vrije tekst ernaast
+  // zou de Unit Strength-opzoeking (hoofdlettergevoelig) kunnen raken.
+  overlay.profiles['zombie dragon'] = { baseSize: '100 x 150 mm',
+    equipment: ['Wicked claws (see below), pestilential breath (see below) and draconic scales (counts as full plate armour)'],
+    specialRules: ['Carrion Feeders', 'Close Order', 'Fly (9)', 'Large Target', 'Necromantic Undead', 'Stomp Attacks (D6)', 'Swiftstride', 'Terror'],
+    notes: ['Note: A character mounted on a Zombie Dragon has +1 Toughness and +5 Wounds.'] };
+  overlay.profiles['abyssal terror'] = { baseSize: '50 x 100 mm',
+    equipment: ['Wicked claws (see below), poisonous tail (see below) and scaly skin (counts as heavy armour)'],
+    specialRules: ['Close Order', 'Fly (9)', 'Large Target', 'Necromantic Undead', 'Stomp Attacks (D3)', 'Swiftstride', 'Terror'],
+    notes: ['Note: A character mounted on an Abyssal Terror has +1 Toughness and +4 Wounds.'] };
+  Object.assign(overlay.profiles['mortis engine'], { baseSize: '50 x 100 mm', armourValue: '4+' });
+  const coach = overlay.profiles['black coach'];
+  // De ruwe tabeltekst ("Black Coach | | M | WS …") was de enige plek waar troepentype en base stonden.
+  coach.notes = (coach.notes ?? []).filter((n) => !/^Black Coach \| \|/.test(n));
+  if (!coach.notes.length) delete coach.notes;
+  Object.assign(coach, { baseSize: '50 x 100 mm min 100x150 mm max', armourValue: '3+',
+    equipment: ['Wraith: Spectral scythe (see below)', 'Nightmares: Iron-shod hooves (counts as hand weapons)'],
+    specialRules: ['Close Order', 'First Charge', 'Impact Hits (D6+2)', 'Indomitable (1)', 'Magical Attacks', 'Necromantic Undead',
+      'Regeneration (6+)', 'Spectral Coach', 'Terror'] });
+
+  // SPECTRAL LANCE (Coven Throne, Mortis Engine): een echt wapenprofiel, zoals de Wicked claws.
+  overlay.rules['spectral-lance'] = { name_en: 'Spectral Lance', overrides: null,
+    body: ['Notes: A Spectral lance can only be used during a turn in which the wielder charged, and its Strength and Armour Piercing modifiers apply only against enemy models the wielder charged that turn.'],
+    weaponProfile: { range: 'Combat', strength: 'S+2', ap: '-2', specialRules: 'Armour Bane (1)' } };
+
+  // "0-1 UNIT PER 1,000 POINTS MAY: …" werd nergens gecontroleerd. Eén gedeelde teller per unit-
+  // soort (zoals bij de Dark Elf Shades): een unit die beide upgrades neemt telt één keer. De magic
+  // standard van de Skeletons hangt aan de Standard bearer; daar telt alleen een GEKOCHTE standard.
+  const skeletonLimit = { group: 'vc-v2-skeleton-upgrades', max: 1, perPoints: 1000 };
+  option('skeleton-warriors', 'options', 'Implacable Defence', { option: {
+    notes: { name_en: '0-1 unit per 1,000 points' }, unitLimit: skeletonLimit } });
+  option('skeleton-warriors', 'command', 'Standard bearer', { action: 'patch', option: {
+    magic: { ...structuredClone(baseOption('skeleton-warriors', 'command', 'Standard bearer').magic), unitLimit: skeletonLimit } } });
+  for (const id of ['grave-guard', 'grave-guard-core']) for (const name of ['Drilled', 'Implacable Defence']) {
+    option(id, 'options', name, { action: 'patch', option: { unitLimit: { group: 'vc-v2-grave-guard-upgrades', max: 1, perPoints: 1000 } } });
+  }
+
+  // GRAVE GUARD: "The entire unit may replace shields with great weapons". Het schild stond als losse,
+  // altijd actieve toggle naast de wapenkeuze, dus great weapons hielden de shields. Nu een echte
+  // keuze tussen twee loadouts; de oude toggle wordt verborgen (niet weggehaald: indexen blijven).
+  for (const id of ['grave-guard', 'grave-guard-core']) {
+    option(id, 'equipment', 'Hand weapons', { action: 'patch', renameTo: 'Hand weapons, Shields' });
+    option(id, 'equipment', 'Great weapons (replace shields)', { action: 'patch', renameTo: 'Hand weapons, Great weapons (replace shields)' });
+    option(id, 'options', 'Shields', { action: 'patch', option: { hidden: true } });
+  }
+
+  // VAMPIRE LORD: "Troop Type: Regular infantry (character)". De naamswijziging maakte een eigen
+  // profiel zonder troepentype; dezelfde code als de andere VC-characters (Thrall, Necromancers).
+  overlay.profiles['vampire lord'].troopType = 'RI';
+  // De oude "Vampire Count"-rij (W3 A4 Ld8) blijft anders naast de Lord-rij staan voor alles wat de
+  // oude naam nog opzoekt (geplakte of oude lijsten). Die lijsten krijgen nu alleen de Lord-rij.
+  overlay.profiles['vampire count'].replaceStats = true;
+
+  // GENERAL. "The Death of a General" is doorgestreept. Joost: "Ze moeten idd nog wel gewoon general
+  // kunnen worden. Alleen de rule death of a general is niet meer." Dus dezelfde General-optie als de
+  // andere characters. Achteraan in `command`: de Battle Standard Bearer van de Wight Lord blijft
+  // `command/0`, zodat opgeslagen lijsten niet verschuiven.
+  const general = structuredClone(baseOption('vampire-thrall', 'command', 'General'));
+  for (const id of ['wight-king', 'wight-lord', 'cairn-wraith', 'tomb-banshee']) {
+    option(id, 'command', 'General', { points: 0, option: general });
+  }
+
+  // KLEINE DATAFOUTEN.
+  // Acolyte: "Level 1 (or 2) Wizard" is geen special rule in de DOCX (de Necromancers delen één regel).
+  patch('necromantic-acolyte').specialRules = unit('necromantic-acolyte').specialRules.name_en
+    .split(',').map((s) => s.trim()).filter((s) => s && !/^Level \d/i.test(s)).join(', ');
+  // Hexwraiths: de basis noemt het paard "Spectral Steed", de DOCX "Skeletal Steed"; niet allebei.
+  overlay.profiles.hexwraiths.replaceStats = true;
+  // Zombies: de punt achter "Shambling Horde." is het einde van de zin in de DOCX, geen deel van de naam.
+  const zonderPunt = (s) => s.replace(/Shambling Horde\.(?=\s*(,|$))/, 'Shambling Horde');
+  patch('zombies').specialRules = zonderPunt(patch('zombies').specialRules);
+  overlay.profiles.zombies.specialRules = overlay.profiles.zombies.specialRules.map(zonderPunt);
+  // Skeletons: "Hand weapons[light armour ]and shields" -- de schrapping nam de spatie mee.
+  overlay.profiles['skeleton warriors'].equipment = overlay.profiles['skeleton warriors'].equipment
+    .map((s) => s.replace(/weaponsand/, 'weapons and'));
+  // Optienamen zoals de DOCX ze schrijft. Alleen de naam: de index en dus opgeslagen lijsten blijven.
+  for (const id of ['vampire-count', 'vampire-thrall', 'wight-king', 'wight-lord']) {
+    option(id, 'equipment', 'Lance (when mounted)', { action: 'patch', renameTo: 'Lance (if appropriately mounted)' });
+  }
+  option('vampire-count', 'options', 'Level 2 Wizard', { renameTo: 'Be a Level 2 Wizard' });
+  option('vampire-thrall', 'options', 'Level 1 Wizard', { renameTo: 'Be a Level 1 Wizard' });
+  option('master-necromancer', 'options', 'Level 4 Wizard', { action: 'patch', renameTo: 'Be a Level 4 Wizard' });
+  option('necromantic-acolyte', 'options', 'Level 2 Wizard', { action: 'patch', renameTo: 'Be a Level 2 Wizard' });
+
+  // REGELTEKSTEN. "Resurrecting The Fallen" zegt "In a Vampire Counts army" (basis: "an undead army");
+  // Banner of the Count en Wight Banner missen "(see page 27)". Letterlijk uit de DOCX.
+  for (const [key, heading] of [['resurrecting-the-fallen', 'Resurrecting The Fallen'],
+    ['banner-of-the-count', 'Banner Of The Count'], ['wight-banner', 'Wight Banner']]) {
+    overlay.rules[key] = { name_en: heading, body: docParagraphs(heading), overrides: key };
+  }
+  // Het label "Lore of Undeath" (zonder tag, bij de Strigoi) opende de oude basispagina zonder de drie
+  // spreuken; zelfde alias-aanpak als Dark Vitality hierboven.
+  overlay.rules['lore-of-undeath-label'] = { ...structuredClone(overlay.rules['lore-of-undeath']), overrides: 'lore-of-undeath' };
+  // De oude Legacy-pagina's "Accursed Reliquary (Renegade)" en "Blasphemous Tome (Renegade)" (met de
+  // vervallen zin "not cumulative with additional Mortis Engines") zijn via zoeken nog te vinden; in
+  // V2 tonen ze dezelfde DOCX-tekst als de echte regel.
+  for (const slug of ['accursed-reliquary', 'blasphemous-tome']) {
+    overlay.rules[`${slug}-renegade`] = { ...structuredClone(overlay.rules[slug]), overrides: `${slug}-renegade` };
+  }
+  // Lege tabel onder Hellish Vigour: het restant van de doorgestreepte Risen Zombie-tabel.
+  for (const rule of Object.values(overlay.rules)) {
+    rule.body = rule.body.filter((part) => typeof part !== 'string' || !/^[\s|]+$/.test(part));
+  }
   return overlay;
 }
 

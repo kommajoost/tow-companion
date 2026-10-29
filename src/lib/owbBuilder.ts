@@ -27,6 +27,12 @@ export interface OwbOption {
   exclusiveGroup?: string;
   /** Cap the number of UNITS taking any upgrade in this shared group. */
   unitLimit?: { group: string; max: number; perPoints: number };
+  /** VERPLICHTE BETAALDE KEUZE (29-10-2026). Een radio-default telt normaal pas mee als hij in `opts`
+   *  staat; bij een gratis default ("Hand weapon", "On foot") klopt dat. Maar "A Corpse Cart must take
+   *  one of the following: Balefire Brazier +10 / Warped Tintinnabulation +15" (VC Renegade V2) heeft
+   *  geen gratis keuze: de aangevinkte Balefire moest ook zonder klik 10 punten kosten. Alleen opties
+   *  met deze vlag; elke andere catalogus rekent precies zoals voorheen. */
+  paidDefault?: boolean;
   // `stackable` — NOT a toggle: a COUNT of how many models in the unit take it, each paying `points`.
   // The army lists word it "Any model in the unit may take one of the following: Additional hand
   // weapon +3 points per model", so a unit can mix — two models with great weapons, one with an
@@ -43,7 +49,11 @@ export interface OwbOption {
   // Some options unlock a magic-item allowance when taken — e.g. a "Standard bearer" command option
   // lets the unit buy a magic standard (`{ types: ["banner"], maxPoints: 50 }`). Surfaced as an extra
   // magic category (gated on the option being active) by `magicCategories`.
-  magic?: { types: string[]; maxPoints?: number; maxItemsPerCategory?: number; multipleItems?: boolean };
+  magic?: { types: string[]; maxPoints?: number; maxItemsPerCategory?: number; multipleItems?: boolean;
+    /** Zoals `unitLimit`, maar de unit telt pas mee als hij uit DEZE toelage echt een item koopt
+     *  (29-10-2026): "0-1 unit per 1,000 points may purchase a magic standard" beperkt de magic
+     *  standard, niet de standard bearer zelf (VC Renegade V2, Skeleton Warriors). */
+    unitLimit?: { group: string; max: number; perPoints: number } };
   /** Additional, separate budgets unlocked by this option (e.g. Kastellan powers). */
   magicAllowances?: NonNullable<OwbOption['magic']>[];
   /** Namen van opties (in een willekeurige groep van DEZELFDE unit) die niet samen met deze optie
@@ -1033,12 +1043,22 @@ export function withDetachmentLabel(labels: string[], label: string | null): str
  *  (keeps the older 2-arg call sites working until the magic-items UI supplies the data). */
 export function entryPoints(unit: OwbUnit, entry: ListEntry, itemsData?: MagicItemsData): number {
   let pts = (unit.points ?? 0) * entry.count;
-  for (const { opt, key } of selectedOptions(unit, entry)) {
+  const gekozen = selectedOptions(unit, entry);
+  for (const { opt, key } of gekozen) {
     // A stackable option is priced by HOW MANY models take it; `perModel` by the whole unit; the
     // rest once. Charging a stackable option once was the bug: a 5-strong Wardancer unit taking
     // additional hand weapons paid 1 point, not 5.
     const times = opt.stackable ? stackTaken(unit, entry, key, opt) : opt.perModel ? entry.count : 1;
     pts += (opt.points ?? 0) * times;
+  }
+  // Een verplichte betaalde radio-default (`paidDefault`, 29-10-2026) die nog niet opgeslagen is: de
+  // speler ziet hem aangevinkt, dus hij kost ook wat de lijst zegt. Is er in die groep al iets
+  // opgeslagen, dan is dat hierboven al geteld.
+  for (const { key: g } of OPTION_GROUPS) {
+    const list = groupItems(unit, g);
+    if (!list.some((o) => o.paidDefault) || !isRadioGroup(unit, g) || gekozen.some((s) => s.group === g)) continue;
+    const opt = list[Number(radioSelected(unit, entry, g).split('/')[1])];
+    if (opt?.paidDefault && !opt.hidden) pts += (opt.points ?? 0) * (opt.perModel ? entry.count : 1);
   }
   // Nested sub-options of active parents (mount toggles, wizard levels, …). The free `active`
   // exclusive default is implicit/free; only a non-default exclusive pick (or any on toggle) costs.
@@ -1446,6 +1466,27 @@ export function validate(
         const group = upgradeGroups.get(key) ?? { max: max * Math.floor(target / perPoints), uids: new Set<string>() };
         group.uids.add(e.uid);
         upgradeGroups.set(key, group);
+      }
+    }
+    // Een magic-item-toelage met een eigen unit-limiet (`magic.unitLimit`, 29-10-2026): de unit telt
+    // mee zodra hij uit die toelage een item heeft gekocht. Zelfde gedeelde teller als hierboven, dus
+    // "0-1 unit per 1,000 points may: purchase a magic standard / have Implacable Defence" is één
+    // teller en een unit met beide telt één keer. Zonder zo'n toelage in de data gebeurt hier niets.
+    if (itemsData && target > 0) {
+      let gekocht: Set<string> | null = null;
+      for (const { key: g } of OPTION_GROUPS) {
+        groupItems(unit, g).forEach((opt, idx) => {
+          [opt.magic, ...(opt.magicAllowances ?? [])].forEach((magic, allowanceIndex) => {
+            if (!magic?.unitLimit) return;
+            gekocht ??= new Set(selectedMagicItems(unit, e, itemsData).map(({ category }) => category.budgetGroup));
+            // Dezelfde budgetsleutel als `magicCategories` voor een optie-toelage.
+            if (!gekocht.has(`opt:${String(g)}:${idx}${allowanceIndex ? `:${allowanceIndex}` : ''}`)) return;
+            const { group: key, max, perPoints } = magic.unitLimit;
+            const group = upgradeGroups.get(key) ?? { max: max * Math.floor(target / perPoints), uids: new Set<string>() };
+            group.uids.add(e.uid);
+            upgradeGroups.set(key, group);
+          });
+        });
       }
     }
     for (const names of exclusive.values()) if (names.length > 1) {
