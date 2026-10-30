@@ -48,6 +48,11 @@ export function OwbInstructions({ defaultOpen = false }: { defaultOpen?: boolean
                 ))}
             </li>
           ))}
+          {/* New Recruit (30-10-2026): die tekst wordt nu ook gelezen. Bewust zonder knopnamen —
+              die van New Recruit kennen we niet uit eigen hand. */}
+          <li style={{ listStyle: 'none', marginLeft: -16, marginTop: 4, fontFamily: towFont.serif, fontSize: 12.5, color: TOW.muted, lineHeight: 1.4 }}>
+            Using <span style={{ color: TOW.goldDeep, fontWeight: 600 }}>New Recruit</span>? Copy your list as text there and paste it below — it works the same way.
+          </li>
         </ol>
       )}
     </div>

@@ -1,18 +1,13 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { TOW, towFont, engraved } from '../../design/tow';
 import { DiceIcon, SoloIcon, HostIcon, JoinIcon, MapIcon, TurnsIcon } from '../../design/icons';
 import { usePersistentState, setPersisted } from '../../store';
 import { useBackClose } from '../../lib/backStack';
 import { useGame } from '../../game';
 import { parseArmyList } from '../../lib/armyParser';
-import { builderListToArmy, type MagicText, type MountText } from '../../lib/builderToArmy';
 import { makeTroopTypeLookup, enrichArmyTroopTypes } from '../../lib/troopTypes';
-import { compName } from '../../lib/armies';
-import {
-  itemsFor, catalogueFor, applyOverlayMagicText, applyOverlayMountText, applyOverlayStatIndex,
-  hasOverlay, isOverlay, overlayStatsFor, OVERLAY_FILES, type CompositionOverlay,
-} from '../../lib/overlays';
-import type { OwbArmy, MagicItemsData } from '../../lib/owbBuilder';
+import { laadOwbData, lijstNaarLegerAsync, useNewRecruitLeger, type StatIndex } from '../../lib/lijstNaarLeger';
+import { useData } from '../../data';
 import { openGedeeldeLijst, type DeelbareLijst } from '../../lib/listShare';
 import { DEFAULT_BATTLE, scenarioById, secondaryById } from '../../lib/battle';
 import {
@@ -25,6 +20,7 @@ import { BattleSheetView } from './BattleSheetView';
 import { BattlefieldEditor, BF_STAP, BF_STEPS, wisselFormat } from './BattlefieldEditor';
 import { ArmyListPicker } from './ArmyListPicker';
 import { OwbInstructions } from './OwbInstructions';
+import { NewRecruitResultaat } from './NewRecruitResultaat';
 import type { Army, TeamStoel } from '../../types';
 import { STANDAARD_NAAM, TEAM_NAAM, stoelenVan } from '../../lib/teams';
 
@@ -68,7 +64,6 @@ import { STANDAARD_NAAM, TEAM_NAAM, stoelenVan } from '../../lib/teams';
 // Niemand anders schrijft hem nog, dus leegmaken kost niets.
 
 const eb = engraved as React.CSSProperties;
-const BASE = import.meta.env.BASE_URL;
 const goldGrad = `linear-gradient(180deg, ${TOW.goldBright} 0%, ${TOW.gold} 55%, ${TOW.goldDeep} 100%)`;
 
 const STEPS = ['Players', 'Battlefield', 'Armies', 'Review'] as const;
@@ -78,9 +73,6 @@ type Modus = 'solo' | 'host' | 'join';
 /** 'skip' (Joost 28-10-2026): geen slagveld — alleen het format kiezen en dan gewoon spelen. */
 type Tak = 'generate' | 'step' | 'skip' | null;
 const TAKKEN: readonly Tak[] = ['generate', 'step', 'skip'];
-
-interface StatRow { Name: string; M: string; WS: string; BS: string; S: string; T: string; W: string; I: string; A: string; Ld: string }
-type StatIndex = Record<string, { stats?: StatRow[]; troopType?: string }>;
 
 /** Alles wat je kwijt zou zijn als je even naar de Army-tab loopt om je lijst te controleren. Staat
  *  daarom in localStorage en niet in useState (Joost, 13-09). Ook de legers: die opnieuw moeten
@@ -153,67 +145,9 @@ function normDraft(raw: unknown): WizardDraft {
 //
 // ArmyListPicker doet dit al voor je EIGEN lijsten. Voor een lijst die met een DEELCODE binnenkomt
 // bestaat die weg niet — die lijst staat niet in `tow:lists` en mag daar ook niet in belanden (het is
-// de lijst van je tegenstander, geen eigen lijst). Vandaar deze losse route, met een cache per
-// bestand zodat een tweede deelcode niets opnieuw ophaalt.
-
-interface OwbData {
-  statIdx: StatIndex;
-  itemsData: MagicItemsData | null;
-  magicText: MagicText;
-  mountText: MountText;
-  armyNames: Record<string, string>;
-  itemsByArmy: Record<string, string[]>;
-}
-
-let owbBelofte: Promise<OwbData> | null = null;
-const haalJson = (pad: string) => fetch(`${BASE}${pad}`).then((r) => (r.ok ? r.json() : null)).catch(() => null);
-
-function laadOwb(): Promise<OwbData> {
-  if (!owbBelofte) {
-    owbBelofte = Promise.all([
-      haalJson('owb/rules-index.json'),
-      haalJson('owb/magic-items.json'),
-      haalJson('owb/magic-item-text.json'),
-      haalJson('owb/mount-text.json'),
-      haalJson('owb/index.json'),
-      haalJson('owb/the-old-world.json'),
-    ]).then(([stats, items, magic, mount, idx, meta]) => {
-      const armyNames: Record<string, string> = Array.isArray(idx?.armies)
-        ? Object.fromEntries(idx.armies.map((a: { slug: string; name: string }) => [a.slug, a.name]))
-        : {};
-      const itemsByArmy: Record<string, string[]> = {};
-      for (const a of (meta?.armies ?? [])) itemsByArmy[a.id] = Array.isArray(a.items) ? a.items : [];
-      return {
-        statIdx: (stats ?? {}) as StatIndex,
-        itemsData: (items ?? null) as MagicItemsData | null,
-        magicText: (magic ?? {}) as MagicText,
-        mountText: (mount ?? {}) as MountText,
-        armyNames,
-        itemsByArmy,
-      };
-    });
-  }
-  return owbBelofte;
-}
-
-const catCache = new Map<string, Promise<OwbArmy | null>>();
-const overlayCache = new Map<string, Promise<CompositionOverlay | null>>();
-
-function laadCatalogus(slug: string): Promise<OwbArmy | null> {
-  let p = catCache.get(slug);
-  if (!p) { p = haalJson(`owb/${slug}.json`) as Promise<OwbArmy | null>; catCache.set(slug, p); }
-  return p;
-}
-
-function laadOverlay(composition: string): Promise<CompositionOverlay | null> {
-  if (!hasOverlay(composition)) return Promise.resolve(null);
-  let p = overlayCache.get(composition);
-  if (!p) {
-    p = haalJson(`renegade/${OVERLAY_FILES[composition]}`).then((j) => (isOverlay(j) ? j : null));
-    overlayCache.set(composition, p);
-  }
-  return p;
-}
+// de lijst van je tegenstander, geen eigen lijst). Het laden en omzetten zelf staat sinds 30-10-2026 in
+// lib/lijstNaarLeger.ts, gedeeld met ArmyListPicker en de geplakte New Recruit-lijst (met dezelfde
+// cache per bestand, zodat een tweede deelcode niets opnieuw ophaalt).
 
 /** Een gedeelde builder-lijst omzetten naar een speelbaar `Army`. Zelfde recept als in
  *  ArmyListPicker (catalogus + stats + magic items + eventuele composition-overlay), alleen dan voor
@@ -221,24 +155,7 @@ function laadOverlay(composition: string): Promise<CompositionOverlay | null> {
 async function deelcodeNaarArmy(code: string): Promise<Army> {
   const gedeeld = await openGedeeldeLijst(code);
   const l: DeelbareLijst = gedeeld.lijst;
-  const [owb, rawCat, overlay] = await Promise.all([laadOwb(), laadCatalogus(l.army), laadOverlay(l.composition)]);
-  if (!rawCat) throw new Error(`No catalogue for “${l.army}” — update the app and try again.`);
-  if (hasOverlay(l.composition) && !overlay) throw new Error('That list uses a composition this app could not load.');
-  const cat = catalogueFor(rawCat, l.composition, overlay);
-  const itemPool = owb.itemsData ? itemsFor(owb.itemsData, l.composition, overlay) : owb.itemsData;
-  const resolvedIndex = overlay ? applyOverlayStatIndex(owb.statIdx, overlay) : owb.statIdx;
-  const statsFor = (naam: string): StatRow[] => overlayStatsFor(owb.statIdx, naam, overlay);
-  return builderListToArmy({ ...l, name: l.name }, cat, statsFor, {
-    faction: owb.armyNames[l.army] ?? l.army,
-    composition: compName(l.composition, l.army),
-    overlayId: overlay?.id,
-    itemsData: itemPool ?? undefined,
-    armyItemLists: owb.itemsByArmy[l.army] ?? [],
-    magicText: applyOverlayMagicText(owb.magicText, overlay),
-    mountText: applyOverlayMountText(owb.mountText, overlay),
-    troopTypeFor: makeTroopTypeLookup(resolvedIndex),
-    factionNames: Object.values(owb.armyNames),
-  });
+  return lijstNaarLegerAsync({ ...l, name: l.name });
 }
 
 // ── Kleine bouwstenen ───────────────────────────────────────────────────────────────────────────
@@ -312,6 +229,12 @@ function LegerKiezer({ titel, leger, onLeger, troopTypeFor, naam, onNaam }: {
   // Welke opgeslagen lijst hier het laatst gekozen is (28-10-2026). Na "Change" opent de picker dan
   // op die map, met die rij gemarkeerd. Lokaal: het vak blijft gemount zolang je op deze stap bent.
   const [lijstId, setLijstId] = useState<string | null>(null);
+  // Geplakte New Recruit-lijst (30-10-2026): via een tijdelijke builder-lijst naar een volwaardig leger
+  // (regels, profielen, rijdiers, magic items). Een OWB-export gaat zoals altijd via parseArmyList.
+  // Niets hiervan wordt opgeslagen in "My lists".
+  const { lores } = useData();
+  const loreKeys = useMemo(() => Object.keys(lores ?? {}), [lores]);
+  const nr = useNewRecruitLeger(plak, loreKeys);
 
   const haalDeelcode = async () => {
     setBezig(true); setFout(null);
@@ -372,18 +295,23 @@ function LegerKiezer({ titel, leger, onLeger, troopTypeFor, naam, onNaam }: {
         </div>
         {fout && <div style={{ fontFamily: towFont.serif, fontSize: 13, color: TOW.blood, marginBottom: 10 }}>{fout}</div>}
 
-        <label style={veldLabel}>Or paste an Old World Builder export</label>
+        <label style={veldLabel}>Or paste an Old World Builder or New Recruit export</label>
         <textarea
           value={plak}
           onChange={(e) => setPlak(e.target.value)}
-          placeholder="Paste the full export here…"
+          placeholder="Paste the full Old World Builder or New Recruit export here…"
           rows={5}
           style={{ ...invoer, resize: 'vertical', fontSize: 13, lineHeight: 1.4 }}
         />
+        <NewRecruitResultaat plak={nr} />
         {plak.trim() && (
           <button
-            onClick={() => { setLijstId(null); onLeger(enrichArmyTroopTypes(parseArmyList(plak), troopTypeFor)); }}
-            style={{ marginTop: 8, padding: '9px 14px', borderRadius: 9, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.12)', color: TOW.goldDeep, cursor: 'pointer', fontFamily: towFont.display, fontWeight: 600, fontSize: 13.5 }}
+            disabled={nr.isNR && !nr.resultaat}
+            onClick={() => {
+              if (nr.isNR) { if (nr.resultaat) { setLijstId(null); onLeger(nr.resultaat.army); } return; }
+              setLijstId(null); onLeger(enrichArmyTroopTypes(parseArmyList(plak), troopTypeFor));
+            }}
+            style={{ marginTop: 8, padding: '9px 14px', borderRadius: 9, border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.12)', color: TOW.goldDeep, cursor: nr.isNR && !nr.resultaat ? 'default' : 'pointer', opacity: nr.isNR && !nr.resultaat ? 0.5 : 1, fontFamily: towFont.display, fontWeight: 600, fontSize: 13.5 }}
           >Use this list</button>
         )}
         <OwbInstructions defaultOpen={false} />
@@ -408,7 +336,7 @@ export function NewBattleWizard({ onBack }: { onBack: () => void }) {
   // Alleen nodig om een GEPLAKTE lijst zijn troop types te geven; de picker en de deelcode-route
   // regelen dat zelf.
   const [statIdx, setStatIdx] = useState<StatIndex | null>(null);
-  useEffect(() => { laadOwb().then((o) => setStatIdx(o.statIdx)).catch(() => {}); }, []);
+  useEffect(() => { laadOwbData().then((o) => setStatIdx(o.statIdx)).catch(() => {}); }, []);
   const troopTypeFor = makeTroopTypeLookup(statIdx);
 
   const joinModus = d.modus === 'join';

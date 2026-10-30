@@ -17,6 +17,8 @@ import { eersteBeurtVast } from '../../lib/campaignScenario';
 import { isScenarioTestCode } from '../../lib/scenarioTest';
 import { OwbInstructions } from './OwbInstructions';
 import { ArmyListPicker } from './ArmyListPicker';
+import { NewRecruitResultaat } from './NewRecruitResultaat';
+import { useNewRecruitLeger } from '../../lib/lijstNaarLeger';
 import { BattleSheetView } from './BattleSheetView';
 import { EndBattleOverview } from './EndBattleOverview';
 import { normSheet } from '../../lib/battleSheet';
@@ -781,12 +783,19 @@ function ArmyPaste({ title, cta, onSet }: { title: string; cta: string; onSet: (
     fetch(`${BASE}owb/rules-index.json`).then((r) => r.json()).then((d) => { riCache = d; setRi(d); }).catch(() => {});
   }, [ri]);
   const troopTypeFor = useMemo(() => makeTroopTypeLookup(ri), [ri]);
-  const army = paste.trim() ? enrichArmyTroopTypes(parseArmyList(paste), troopTypeFor) : null;
+  // New Recruit (30-10-2026): via een tijdelijke builder-lijst naar een volwaardig leger, zodat de
+  // units hun regels, profielen, rijdiers en magic items krijgen. Wordt niet in "My lists" bewaard.
+  // Een OWB-export blijft gaan zoals altijd.
+  const { lores } = useData();
+  const loreKeys = useMemo(() => Object.keys(lores ?? {}), [lores]);
+  const nr = useNewRecruitLeger(paste, loreKeys);
+  const army = nr.isNR ? nr.resultaat?.army ?? null : paste.trim() ? enrichArmyTroopTypes(parseArmyList(paste), troopTypeFor) : null;
   return (
     <div style={{ padding: '12px 2px' }}>
       <div style={{ ...eb, fontSize: 9, color: TOW.muted, marginBottom: 6 }}>{title}</div>
       <ArmyListPicker onPick={onSet} />
-      <textarea value={paste} onChange={(e) => setPaste(e.target.value)} placeholder="Paste the Old World Builder export…" rows={7} style={{ width: '100%', borderRadius: 10, border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt, color: TOW.ink, padding: '10px 12px', fontFamily: serif, fontSize: 13, lineHeight: 1.4, boxSizing: 'border-box', resize: 'vertical' }} />
+      <textarea value={paste} onChange={(e) => setPaste(e.target.value)} placeholder="Paste the Old World Builder or New Recruit export…" rows={7} style={{ width: '100%', borderRadius: 10, border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt, color: TOW.ink, padding: '10px 12px', fontFamily: serif, fontSize: 13, lineHeight: 1.4, boxSizing: 'border-box', resize: 'vertical' }} />
+      <NewRecruitResultaat plak={nr} />
       <OwbInstructions defaultOpen={!paste.trim()} />
       <button onClick={() => army && onSet(army)} disabled={!army} style={{ marginTop: 10, border: 'none', borderRadius: 11, cursor: 'pointer', padding: '11px 18px', width: '100%', background: `linear-gradient(180deg, ${TOW.goldBright}, ${TOW.gold} 55%, ${TOW.goldDeep})`, color: TOW.onGrad, fontFamily: display, fontWeight: 700, fontSize: 14, opacity: army ? 1 : 0.5 }}>{cta}</button>
     </div>

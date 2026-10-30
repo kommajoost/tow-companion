@@ -1,7 +1,7 @@
 {
   "name": "tow-companion",
   "private": true,
-  "version": "0.1.451",
+  "version": "0.1.452",
   "type": "module",
   "description": "Warhammer: The Old World turn companion - mobile PWA",
   "scripts": {
@@ -38,6 +38,7 @@
     "test:veteraan-stats": "node --test scripts/tests/veteraan-stats.test.cjs",
     "patch-owb-army-fixes": "node scripts/patch-owb-army-fixes.mjs",
     "test:builder-fixes": "node --test scripts/tests/builder-fixes.test.cjs",
+    "test:new-recruit": "node --test scripts/tests/new-recruit-import.test.cjs",
     "test:list-merge": "node --test scripts/tests/list-merge.test.cjs",
     "test:versterking": "node --test scripts/tests/versterking.test.cjs",
     "test:campaign-terrain": "node --test scripts/tests/campaign-terrain.test.cjs",

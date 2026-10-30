@@ -1,14 +1,10 @@
 import { useEffect, useRef, useState } from 'react';
 import { TOW, towFont, engraved } from '../../design/tow';
 import { usePersistentState } from '../../store';
-import { builderListToArmy, listTotal, type MagicText, type MountText } from '../../lib/builderToArmy';
-import { makeTroopTypeLookup } from '../../lib/troopTypes';
+import { listTotal } from '../../lib/builderToArmy';
 import { compName } from '../../lib/armies';
-import {
-  itemsFor, catalogueFor, applyOverlayMagicText, applyOverlayMountText, applyOverlayStatIndex, hasOverlay, isOverlay,
-  overlayStatsFor, OVERLAY_FILES, type CompositionOverlay,
-} from '../../lib/overlays';
-import type { BuilderList, OwbArmy, MagicItemsData } from '../../lib/owbBuilder';
+import { useLijstNaarLeger } from '../../lib/lijstNaarLeger';
+import type { BuilderList } from '../../lib/owbBuilder';
 import type { Army } from '../../types';
 import { useCampagnes, isCampagneLijst } from '../../lib/campaign';
 
@@ -18,13 +14,11 @@ import { useCampagnes, isCampagneLijst } from '../../lib/campaign';
 // and inside a live/solo game when adding your own — or your opponent's — army from your lists.
 
 const eb = engraved as React.CSSProperties;
-const BASE = import.meta.env.BASE_URL;
 interface SavedList extends BuilderList { id: string; name: string; army: string; createdAt: number; updatedAt: number; groupId?: string | null }
 /** Een map uit "My lists" (ListBuilder, `tow:list-groups`). */
 interface LijstGroep { id: string; name: string }
 /** Sectie-sleutel voor lijsten zonder (bestaande) map — dezelfde als in ListBuilder. */
 const UNGROUPED = '__ungrouped__';
-interface StatRow { Name: string; M: string; WS: string; BS: string; S: string; T: string; W: string; I: string; A: string; Ld: string }
 
 export function ArmyListPicker({ onPick, label, lockedListName = null, campaignPlayerId = null, lockedListArmy = null, autoPick = false, stil = false, lijsten = null, gekozenId = null, onKiesId, zonderScheiding = false }: {
   onPick: (a: Army) => void;
@@ -70,71 +64,12 @@ export function ArmyListPicker({ onPick, label, lockedListName = null, campaignP
   // De mappen van "My lists". Alleen LEZEN: de picker ordent ermee, maar beheert ze niet.
   const [groepen] = usePersistentState<LijstGroep[]>('tow:list-groups', []);
   const { actief: campagne } = useCampagnes();
-  const [catalogues, setCatalogues] = useState<Record<string, OwbArmy>>({}); // slug → catalogue
-  const [armyNames, setArmyNames] = useState<Record<string, string>>({}); // slug → display name
-  const [itemsByArmy, setItemsByArmy] = useState<Record<string, string[]>>({}); // slug → magic-item lists
-  const [statIdx, setStatIdx] = useState<Record<string, { stats?: StatRow[]; troopType?: string }> | null>(null);
-  const [itemsData, setItemsData] = useState<MagicItemsData | null>(null);
-  const [magicText, setMagicText] = useState<MagicText>({});
-  const [mountText, setMountText] = useState<MountText>({});
-  const [overlays, setOverlays] = useState<Record<string, CompositionOverlay>>({});
-
-  useEffect(() => {
-    fetch(`${BASE}owb/rules-index.json`).then((r) => r.json()).then(setStatIdx).catch(() => {});
-    fetch(`${BASE}owb/magic-items.json`).then((r) => r.json()).then(setItemsData).catch(() => {});
-    fetch(`${BASE}owb/magic-item-text.json`).then((r) => r.json()).then(setMagicText).catch(() => {});
-    fetch(`${BASE}owb/mount-text.json`).then((r) => r.json()).then(setMountText).catch(() => {});
-    fetch(`${BASE}owb/index.json`).then((r) => r.json()).then((idx) => {
-      if (Array.isArray(idx?.armies)) setArmyNames(Object.fromEntries(idx.armies.map((a: { slug: string; name: string }) => [a.slug, a.name])));
-    }).catch(() => {});
-    fetch(`${BASE}owb/the-old-world.json`).then((r) => r.json()).then((m) => {
-      const map: Record<string, string[]> = {};
-      for (const a of (m.armies ?? [])) map[a.id] = Array.isArray(a.items) ? a.items : [];
-      setItemsByArmy(map);
-    }).catch(() => {});
-  }, []);
-
-  useEffect(() => {
-    const need = Array.from(new Set(lists.map((l) => l.army))).filter((s) => s && !catalogues[s]);
-    if (need.length === 0) return;
-    let cancelled = false;
-    Promise.all(need.map((s) => fetch(`${BASE}owb/${s}.json`).then((r) => r.json()).then((c) => [s, c] as const).catch(() => null)))
-      .then((pairs) => { if (cancelled) return; const add: Record<string, OwbArmy> = {}; for (const p of pairs) if (p) add[p[0]] = p[1]; if (Object.keys(add).length) setCatalogues((m) => ({ ...m, ...add })); });
-    return () => { cancelled = true; };
-  }, [lists, catalogues]);
-
-  useEffect(() => {
-    const need = Array.from(new Set(lists.map((list) => list.composition)))
-      .filter((composition) => hasOverlay(composition) && !overlays[composition]);
-    if (!need.length) return;
-    let cancelled = false;
-    Promise.all(need.map((composition) => fetch(`${BASE}renegade/${OVERLAY_FILES[composition]}`)
-      .then((response) => response.ok ? response.json() : null)
-      .then((json) => isOverlay(json) ? [composition, json] as const : null)
-      .catch(() => null)))
-      .then((pairs) => {
-        if (cancelled) return;
-        const found: Record<string, CompositionOverlay> = {};
-        for (const pair of pairs) if (pair) found[pair[0]] = pair[1];
-        if (Object.keys(found).length) setOverlays((current) => ({ ...current, ...found }));
-      });
-    return () => { cancelled = true; };
-  }, [lists, overlays]);
-
-
-  const armyNameFor = (slug: string) => armyNames[slug] ?? slug;
-  const toArmy = (l: SavedList): Army | null => {
-    const raw = catalogues[l.army];
-    if (!raw || !statIdx) return null;
-    const overlay = hasOverlay(l.composition) ? overlays[l.composition] : null;
-    if (hasOverlay(l.composition) && !overlay) return null;
-    const cat = catalogueFor(raw, l.composition, overlay);
-    const itemPool = itemsData ? itemsFor(itemsData, l.composition, overlay) : itemsData;
-    const resolvedIndex = overlay ? applyOverlayStatIndex(statIdx, overlay) : statIdx;
-    const statsFor = (name: string): StatRow[] => overlayStatsFor(statIdx, name, overlay);
-    const troopTypeFor = makeTroopTypeLookup(resolvedIndex);
-    return builderListToArmy(l, cat, statsFor, { faction: armyNameFor(l.army), composition: compName(l.composition, l.army), overlayId: overlay?.id, itemsData: itemPool ?? undefined, armyItemLists: itemsByArmy[l.army] ?? [], magicText: applyOverlayMagicText(magicText, overlay), mountText: applyOverlayMountText(mountText, overlay), troopTypeFor, factionNames: Object.values(armyNames) });
-  };
+  // Catalogus, statlines, magic items, overlays en de omzetting zelf: gedeeld met de battle-wizard
+  // (deelcode, geplakte New Recruit-lijst) via useLijstNaarLeger (30-10-2026). Hetzelfde recept dat
+  // hier altijd stond, nu op één plek.
+  const omzetter = useLijstNaarLeger(lists);
+  const armyNameFor = omzetter.legerNaam;
+  const toArmy = (l: SavedList): Army | null => omzetter.naarLeger(l);
 
   // Campaign battle: the list is already locked in the campaign, so match it by name and show ONLY
   // that one — no picking, and no override either. If the name match fails on this device there is no
@@ -190,7 +125,7 @@ export function ArmyListPicker({ onPick, label, lockedListName = null, campaignP
     onPick(army);
     // `toArmy` and `onPick` are new identities every render; the ref is what makes this idempotent.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [autoPick, locked, catalogues, statIdx, itemsData, overlays, armyNames, itemsByArmy, magicText, mountText]);
+  }, [autoPick, locked, omzetter]);
 
   // ── GEGROEPEERD ZOALS "MY LISTS" (Joost 28-10-2026) ──────────────────────────────────────────
   // "Het kiezen van je armylijsten is erg onduidelijk: je verliest je groepen, en ik moet in een mega
@@ -221,12 +156,9 @@ export function ArmyListPicker({ onPick, label, lockedListName = null, campaignP
   if (stil && locked) return null;
 
   const rij = (l: SavedList) => {
-    const raw = catalogues[l.army] ?? null;
-    const overlay = hasOverlay(l.composition) ? overlays[l.composition] : null;
-    const cat = raw ? catalogueFor(raw, l.composition, overlay) : raw;
-    const itemPool = itemsData ? itemsFor(itemsData, l.composition, overlay) : itemsData;
-    const total = cat ? listTotal(l, cat, itemPool ?? undefined) : null;
-    const ready = !!cat && (!hasOverlay(l.composition) || !!overlay);
+    const data = omzetter.catalogusVoor(l);
+    const total = data ? listTotal(l, data.cat, data.itemPool ?? undefined) : null;
+    const ready = !!data;
     // The locked list gets a gold "open me" accent — and so does the list you already picked here.
     const primary = solo || (!!gekozenId && l.id === gekozenId);
     // GEEN UNIT-AANTAL MEER (Joost 28-10-2026: "het aantal units is daar niet relevant"). Wel de factie

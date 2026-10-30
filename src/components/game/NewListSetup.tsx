@@ -1,8 +1,12 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { TOW, towFont, engraved } from '../../design/tow';
 import { COMPOSITION_RULES, type OwbArmy, type ListEntry, type MagicItemsData } from '../../lib/owbBuilder';
 import { compName as compNameFor } from '../../lib/armies';
 import { importOwbText } from '../../lib/owbImport';
+import { isNewRecruitText, parseNewRecruit, resolveNewRecruitHeader } from '../../lib/newRecruitParser';
+import { catalogueFor, hasOverlay, itemsFor, type CompositionOverlay } from '../../lib/overlays';
+import { laadOverlay } from '../../lib/lijstNaarLeger';
+import { useData } from '../../data';
 import { OwbInstructions } from './OwbInstructions';
 import { CompositionInfo } from './CompositionInfo';
 import { CompositionRulePicker } from './CompositionRulePicker';
@@ -54,7 +58,16 @@ export function NewListSetup({ armies, compsByArmy, defaultArmy, defaultName, on
   const [mode, setMode] = useState<'empty' | 'import'>('empty');
   const [paste, setPaste] = useState('');
   // The selected army's catalogue, fetched here so the import matches against THIS army's units.
-  const [catalogue, setCatalogue] = useState<OwbArmy | null>(null);
+  // Met de slug erbij (30-10-2026): na een legerwissel hoort de oude catalogus niet één render lang
+  // bij het nieuwe leger te worden gebruikt.
+  const [geladen, setGeladen] = useState<{ slug: string; cat: OwbArmy } | null>(null);
+  const catalogue = geladen && geladen.slug === army ? geladen.cat : null;
+  // De overlay van de gekozen compositie (Renegade V2). De import matcht sinds 30-10-2026 tegen de
+  // catalogus ZOALS DEZE COMPOSITIE HEM ZIET (catalogueFor/itemsFor), net als de builder zelf — anders
+  // vond een Renegade-lijst zijn pack-units en -opties niet.
+  const [overlayStaat, setOverlayStaat] = useState<{ comp: string; overlay: CompositionOverlay | null } | null>(null);
+  const { lores } = useData();
+  const loreKeys = useMemo(() => Object.keys(lores ?? {}), [lores]);
 
   // ── Campagne (Isle of Celedon) ──────────────────────────────────────────────────────────────
   // 04-10-2026 (besluit Joost): de schakelaar "Isle of Celedon list" is weg. Er is precies één
@@ -67,18 +80,44 @@ export function NewListSetup({ armies, compsByArmy, defaultArmy, defaultName, on
   const armyName = armies.find((a) => a.slug === army)?.name ?? army;
 
   // When the army changes, reset the composition to its first comp and (re)load its catalogue.
+  // Een compositie die al bij dit leger hoort blijft staan (30-10-2026): de New Recruit-kop zet leger
+  // én compositie tegelijk. Composities zijn per leger uniek, dus een echte legerwissel reset nog steeds.
   useEffect(() => {
     const list = compsByArmy[army] ?? [army];
-    setComposition(list[0] ?? army);
+    setComposition((c) => (list.includes(c) ? c : list[0] ?? army));
   }, [army, compsByArmy]);
   useEffect(() => {
     let cancelled = false;
-    setCatalogue(null);
-    fetch(`${BASE}owb/${army}.json`).then((r) => r.json()).then((c) => { if (!cancelled) setCatalogue(c); }).catch(() => { if (!cancelled) setCatalogue(null); });
+    fetch(`${BASE}owb/${army}.json`).then((r) => r.json()).then((c) => { if (!cancelled) setGeladen({ slug: army, cat: c }); }).catch(() => { if (!cancelled) setGeladen(null); });
     return () => { cancelled = true; };
   }, [army]);
+  useEffect(() => {
+    let cancelled = false;
+    if (!hasOverlay(composition)) { setOverlayStaat({ comp: composition, overlay: null }); return; }
+    laadOverlay(composition).then((o) => { if (!cancelled) setOverlayStaat({ comp: composition, overlay: o }); });
+    return () => { cancelled = true; };
+  }, [composition]);
+  const overlay = overlayStaat && overlayStaat.comp === composition ? overlayStaat.overlay : null;
+  const overlayKlaar = !!overlayStaat && overlayStaat.comp === composition && (!hasOverlay(composition) || !!overlay);
+  const compCatalogue = useMemo(() => (catalogue && overlayKlaar ? catalogueFor(catalogue, composition, overlay) : null), [catalogue, overlayKlaar, composition, overlay]);
+  const compItems = useMemo(() => (itemsData ? itemsFor(itemsData, composition, overlay) : undefined), [itemsData, composition, overlay]);
 
-  const preview = useMemo(() => (mode === 'import' && paste.trim() && catalogue ? importOwbText(paste, catalogue, itemsData, itemListsByArmy?.[army] ?? []) : null), [mode, paste, catalogue, itemsData, itemListsByArmy, army]);
+  // NEW RECRUIT (30-10-2026): de kop noemt leger en compositie ("Dark Elves - Renegades v2.0 - …").
+  // Herkennen we ze, dan zetten we ze één keer per geplakte kop voor je klaar; daarna is alles weer
+  // gewoon met de hand te wijzigen. Herkennen we het leger niet, dan kies je het hierboven zelf.
+  const nrKop = useMemo(() => (mode === 'import' && isNewRecruitText(paste) ? parseNewRecruit(paste).header : null), [mode, paste]);
+  const nrHerkend = useMemo(() => (nrKop ? resolveNewRecruitHeader(nrKop, armies, compsByArmy) : null), [nrKop, armies, compsByArmy]);
+  const nrToegepast = useRef('');
+  useEffect(() => {
+    if (!nrKop || !nrHerkend?.army) return;
+    const sleutel = `${nrKop.faction}|${nrKop.composition}|${nrHerkend.composition ?? ''}`;
+    if (nrToegepast.current === sleutel) return;
+    nrToegepast.current = sleutel;
+    setArmy(nrHerkend.army);
+    if (nrHerkend.composition) setComposition(nrHerkend.composition);
+  }, [nrKop, nrHerkend]);
+
+  const preview = useMemo(() => (mode === 'import' && paste.trim() && compCatalogue ? importOwbText(paste, compCatalogue, compItems, itemListsByArmy?.[army] ?? [], { loreKeys }) : null), [mode, paste, compCatalogue, compItems, itemListsByArmy, army, loreKeys]);
   // Adopt the export's name/points/rule into the editable fields above.
   useEffect(() => {
     if (!preview) return;
@@ -122,13 +161,23 @@ export function NewListSetup({ armies, compsByArmy, defaultArmy, defaultName, on
         <div style={{ ...label, margin: '16px 0 6px' }}>Start from</div>
         <select value={mode} onChange={(e) => setMode(e.target.value as 'empty' | 'import')} style={field}>
           <option value="empty">Empty list</option>
-          <option value="import">Paste an Old World Builder list</option>
+          <option value="import">Paste an Old World Builder or New Recruit list</option>
         </select>
 
         {mode === 'import' && (
           <div style={{ marginTop: 10 }}>
-            <textarea value={paste} onChange={(e) => setPaste(e.target.value)} placeholder="Paste the full Old World Builder export here…" rows={7} style={{ ...field, resize: 'vertical', fontFamily: towFont.serif, fontSize: 13, lineHeight: 1.45 }} />
+            <textarea value={paste} onChange={(e) => setPaste(e.target.value)} placeholder="Paste the full Old World Builder or New Recruit export here…" rows={7} style={{ ...field, resize: 'vertical', fontFamily: towFont.serif, fontSize: 13, lineHeight: 1.45 }} />
             <OwbInstructions defaultOpen={!paste.trim()} />
+            {nrKop && !nrHerkend?.army && (
+              <div style={{ marginTop: 9, fontFamily: towFont.serif, fontSize: 12.5, color: TOW.blood, lineHeight: 1.45 }}>
+                New Recruit list for “{[nrKop.faction, nrKop.composition].filter(Boolean).join(' - ')}”: army not recognised — choose the army and composition yourself.
+              </div>
+            )}
+            {nrKop && nrHerkend?.army && !nrHerkend.composition && nrKop.composition && (
+              <div style={{ marginTop: 9, fontFamily: towFont.serif, fontSize: 12.5, color: TOW.blood, lineHeight: 1.45 }}>
+                Composition “{nrKop.composition}” not recognised — check the army composition below.
+              </div>
+            )}
             {preview && (
               <div style={{ marginTop: 9, padding: '9px 11px', borderRadius: 9, border: `1px solid ${preview.matched ? TOW.line : 'rgba(124,43,34,0.4)'}`, background: 'rgba(74,55,22,0.05)' }}>
                 <div style={{ fontFamily: towFont.serif, fontSize: 12.5, color: preview.matched ? TOW.parchDim : TOW.blood }}>

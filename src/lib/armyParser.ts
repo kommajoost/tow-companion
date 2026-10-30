@@ -1,4 +1,5 @@
 import type { Army, ArmyUnit, UnitProfile } from '../types';
+import { isNewRecruitText, newRecruitToArmy } from './newRecruitParser';
 
 // Parses an "Old World Builder" army-list export into a structured Army.
 // The export looks like:
@@ -34,6 +35,9 @@ const pointsOf = (s: string): number | null => {
 };
 
 export function parseArmyList(text: string): Army {
+  // New Recruit-export (30-10-2026): ander formaat, eigen parser. Zo accepteert elk bestaand plakpad
+  // hem in elk geval; de volle omzetting (regels, profielen, rijdieren) loopt via owbImport.
+  if (isNewRecruitText(text ?? '')) return newRecruitToArmy(text);
   const raw = text ?? '';
   const lines = raw.split(/\r?\n/);
 
