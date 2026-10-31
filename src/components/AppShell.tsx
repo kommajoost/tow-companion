@@ -20,6 +20,7 @@ import { TEST_TOOLS_KEY } from '../lib/testBattle';
 import { SCENARIO_TEST_CODE, bewaarScenarioTest, isScenarioTestCode, payloadUitHash } from '../lib/scenarioTest';
 import { wrathSleutel } from '../lib/wrathTriggers';
 import { gedeeldeCodeUitUrl } from '../lib/listShare';
+import { tegenLijstUitUrl } from '../lib/tegenLijst';
 
 type Tab = 'browse' | 'game' | 'army' | 'settings';
 type Screen = 'home' | 'app';
@@ -209,6 +210,18 @@ export function AppShell() {
   // alleen; de lijstbouwer VERBRUIKT de code (`neemGedeeldeCode`).
   useEffect(() => {
     if (!gedeeldeCodeUitUrl()) return;
+    setScreen('app');
+    setTab('army');
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Deep-link: /?tegenlijst=<battle-id> — de knop "View in Companion" bij het leger van je
+  // tegenstander op het battle-overzicht van de campagne (Joost, 31-10-2026). Precies dezelfde vorm
+  // als ?lijst= hierboven: hier alleen ROUTEREN naar de Army-tab; ListBuilder haalt het leger op en
+  // VERBRUIKT de parameter (`neemTegenLijst`). Beide kanten lezen via lib/tegenLijst, zodat de
+  // volgorde van de effecten niet uitmaakt.
+  useEffect(() => {
+    if (!tegenLijstUitUrl()) return;
     setScreen('app');
     setTab('army');
     // eslint-disable-next-line react-hooks/exhaustive-deps

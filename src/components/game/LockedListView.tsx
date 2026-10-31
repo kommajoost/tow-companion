@@ -45,7 +45,7 @@ export interface LeesBanner {
 export function LockedListView({
   list, army, armyName, compName, itemsData, fase, cap, onBack, onDuplicate,
   onVersterking, versterkingPunten,
-  banner, backLabel = 'My lists',
+  banner, backLabel = 'My lists', inhoud,
 }: {
   list: Lijst;
   army: OwbArmy;
@@ -67,6 +67,10 @@ export function LockedListView({
   banner?: LeesBanner;
   /** Het opschrift van de terugknop linksboven. */
   backLabel?: string;
+  /** VERVANGT HET ROSTER (31-10-2026). Het leger van je tegenstander toont hier de echte unitkaarten
+   *  (TegenLegerKaarten); band, kop en puntenregel blijven van dit scherm. Weglaten = het vertrouwde
+   *  roster, dus de campagne-lock en de gedeelde lijst merken niets. */
+  inhoud?: React.ReactNode;
 }) {
   const getUnit = (c: Category, id: string): OwbUnit | undefined => findUnit(army, c, id); // alle categorieën, 22-09-2026
   const v = validate(list, getUnit, itemsData);
@@ -136,7 +140,7 @@ export function LockedListView({
           {v.total} / {cap} points
         </p>
 
-        {cats.map((cat) => {
+        {inhoud ?? cats.map((cat) => {
           const rijen = list.entries.filter((e) => e.cat === cat);
           if (rijen.length === 0) return null;
           return (
@@ -167,7 +171,7 @@ export function LockedListView({
             </div>
           );
         })}
-        {list.entries.length === 0 && (
+        {!inhoud && list.entries.length === 0 && (
           <p style={{ fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 14, color: TOW.muted }}>This list is empty.</p>
         )}
       </div>

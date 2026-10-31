@@ -9,7 +9,10 @@ import { NewListSetup, type NewListValues } from './NewListSetup';
 import { fmt } from '../builder/primitives';
 import { CeledonPanel } from './CeledonPanel';
 import { LockedListView } from './LockedListView';
+import { TegenLegerKaarten } from './TegenLegerKaarten';
 import { codeUitInvoer, neemGedeeldeCode, openGedeeldeLijst, type GedeeldeLijst } from '../../lib/listShare';
+import { isTegenLijst, neemTegenLijst, onthoudTotInlog, openTegenLijst, TegenFout, vergeetWachtendeTegenLijst, wachtendeTegenLijst } from '../../lib/tegenLijst';
+import { useAuth } from '../../lib/auth';
 import { herstelUnitId } from '../../lib/legacyUnitIds';
 import { ListSettings } from './ListSettings';
 import { useCampagnes, staatOpSlot, isCampagneLijst, hoortBijCampagneOud, zetEersteCampagneLijst, verversCampagnes } from '../../lib/campaign';
@@ -130,6 +133,19 @@ export function ListBuilder() {
   const [gedeeldLinkFout, setGedeeldLinkFout] = useState<string | null>(null);
   const [codeVeld, setCodeVeld] = useState<string | null>(null); // null = het invoerveldje staat dicht
 
+  // ── HET LEGER VAN JE TEGENSTANDER (31-10-2026) ───────────────────────────────────────────────
+  // Binnengekomen via `?tegenlijst=<battle-id>` vanaf het battle-overzicht van de campagne. Hij
+  // landt in DEZELFDE `gedeeld`-state als een gedeelde lijst (een `TegenLijst` is een `GedeeldeLijst`
+  // met de markering `tegen`), zodat catalogus, overlay en terugknop vanzelf meedoen; alleen de band
+  // bovenaan en het label van de foutmelding kijken naar het verschil. Net als een gedeelde lijst
+  // staat hij alleen in het geheugen: het is het leger van een ander en hoort niet in `tow:lists`.
+  /** Het battle-id waarvan het leger nog opgehaald moet worden. Blijft staan zolang de speler niet
+   *  ingelogd is, zodat een sessie die later binnenkomt hem alsnog ophaalt. */
+  const [tegenVraag, setTegenVraag] = useState<number | null>(null);
+  /** Kwam de deep-link-fout van een tegenstanderslink? Dan zegt het label erboven dat ook. */
+  const [linkFoutTegen, setLinkFoutTegen] = useState(false);
+  const { session, loading: authLoading } = useAuth();
+
   const [setupOpen, setSetupOpen] = useState(false);
   /** Open het instellingen-blad van de open lijst (naam + army composition). */
   const [instellingenOpen, setInstellingenOpen] = useState(false);
@@ -179,6 +195,7 @@ export function ListBuilder() {
     setGedeeldLaden(true);
     setGedeeldFout(null);
     setGedeeldLinkFout(null);
+    setLinkFoutTegen(false); // een fout van een deel-link heet weer "Shared list"
     openGedeeldeLijst(code)
       .then((g) => { setGedeeld(g); setCodeVeld(null); })
       .catch((e: unknown) => {
@@ -198,6 +215,50 @@ export function ListBuilder() {
     if (code) haalGedeeld(code, true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // Binnenkomen via `?tegenlijst=<battle-id>`, of terugkomen op Army met een link die nog op
+  // inloggen wachtte (zie `onthoudTotInlog` in lib/tegenLijst). Hier alleen VASTLEGGEN wat er
+  // opgehaald moet worden; het ophalen zelf wacht in het effect hieronder op de auth-store.
+  useEffect(() => {
+    const id = neemTegenLijst() ?? wachtendeTegenLijst();
+    if (id) setTegenVraag(id);
+  }, []);
+
+  /** Haal het leger van de tegenstander op en zet het in dezelfde leesweergave als een gedeelde
+   *  lijst. Fouten gaan naar hetzelfde eigen scherm als een dode deel-link. */
+  const haalTegen = (battleId: number) => {
+    setGedeeldLaden(true);
+    setGedeeldLinkFout(null);
+    openTegenLijst(battleId)
+      .then((t) => {
+        vergeetWachtendeTegenLijst();
+        setTegenVraag(null);
+        setLinkFoutTegen(false);
+        setGedeeld(t);
+      })
+      .catch((e: unknown) => {
+        const nietIngelogd = e instanceof TegenFout && e.code === 'NIET_INGELOGD';
+        // Niet ingelogd: het id BLIJFT staan, zowel hier (een sessie die binnenkomt terwijl Army
+        // openstaat, haalt hem meteen op) als in de module (wie eerst naar Settings gaat om in te
+        // loggen, krijgt hem bij terugkeer op Army). Elke andere fout is definitief voor deze link.
+        if (nietIngelogd) onthoudTotInlog(battleId);
+        else { vergeetWachtendeTegenLijst(); setTegenVraag(null); }
+        setLinkFoutTegen(true);
+        setGedeeldLinkFout(e instanceof Error ? e.message : "Could not load your opponent's army.");
+      })
+      .finally(() => setGedeeldLaden(false));
+  };
+
+  // Pas ophalen als de auth-store weet of er een sessie is: bij het openen van de app wordt een
+  // bewaarde sessie eerst nog hersteld, en dan zou een te vroege aanroep onterecht "Sign in" zeggen.
+  // `!!session` als afhankelijkheid: komt er alsnog een sessie bij (inloggen terwijl Army openstaat),
+  // dan draait dit opnieuw voor de link die nog wachtte.
+  const ingelogd = !!session;
+  useEffect(() => {
+    if (tegenVraag === null || authLoading) return;
+    haalTegen(tegenVraag);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tegenVraag, authLoading, ingelogd]);
 
   // One-time migration: fold an earlier single saved list (`tow:builder-de`) into the collection.
   useEffect(() => {
@@ -716,7 +777,7 @@ export function ListBuilder() {
     return (
       <div className="tow-field" style={{ height: '100%', overflowY: 'auto', color: TOW.ink }}>
         <div style={{ maxWidth: 680, margin: '0 auto', padding: '24px 14px 48px' }}>
-          <div style={{ ...eb, fontSize: 8.5, color: TOW.goldDeep }}>Shared list</div>
+          <div style={{ ...eb, fontSize: 8.5, color: TOW.goldDeep }}>{linkFoutTegen ? "Opponent's army" : 'Shared list'}</div>
           <p style={{ fontFamily: towFont.serif, fontSize: 14, lineHeight: 1.6, color: TOW.inkDim, margin: '8px 0 14px' }}>{gedeeldLinkFout}</p>
           <button onClick={() => setGedeeldLinkFout(null)} style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 13, padding: '7px 14px', borderRadius: 9, cursor: 'pointer', border: `1px solid ${TOW.line}`, background: 'transparent', color: TOW.ink }}>Close</button>
         </div>
@@ -733,13 +794,18 @@ export function ListBuilder() {
     const g = gedeeld.lijst;
     const sluit = () => { setGedeeld(null); setGedeeldFout(null); };
     const gedeeldOp = kortDatum(gedeeld.gedeeldOp);
+    // Het leger van je TEGENSTANDER (31-10-2026) gebruikt precies dit scherm; alleen de woorden
+    // verschillen. Geen deelcode in de band, wel van wie het leger is en voor welke battle. Net als bij
+    // een gedeelde lijst is er geen actie in de band: kopiëren naar je eigen lijsten is niet gevraagd.
+    const tegen = isTegenLijst(gedeeld) ? gedeeld.tegen : null;
+    const kopLabel = tegen ? "Opponent's army" : 'Shared list';
     // Het leger van de deler kan er een zijn dat deze build niet kent (oudere app, of een pack dat
     // hier nog niet is uitgerold). Dan liever dit zeggen dan eindeloos "Loading the catalogue…".
     if (armies.length > 0 && !armies.some((a) => a.slug === g.army)) {
       return (
         <div className="tow-field" style={{ height: '100%', overflowY: 'auto', color: TOW.ink }}>
           <div style={{ maxWidth: 680, margin: '0 auto', padding: '24px 14px 48px' }}>
-            <div style={{ ...eb, fontSize: 8.5, color: TOW.goldDeep }}>Shared list</div>
+            <div style={{ ...eb, fontSize: 8.5, color: TOW.goldDeep }}>{kopLabel}</div>
             <p style={{ fontFamily: towFont.serif, fontSize: 14, lineHeight: 1.6, color: TOW.inkDim, margin: '8px 0 14px' }}>
               This list is built from an army this version of Companion does not know ({g.army}). Try again after the
               next update.
@@ -767,7 +833,20 @@ export function ListBuilder() {
         cap={g.points}
         onBack={sluit}
         backLabel="Close"
-        banner={{
+        // Tegenstander: de echte unitkaarten van de Game-tab in plaats van het kale roster (Joost,
+        // 31-10-2026: "met alle rules enzo"). De gedeelde lijst houdt zijn roster.
+        inhoud={tegen ? <TegenLegerKaarten lijst={g} /> : undefined}
+        banner={tegen ? {
+          eyebrow: `${tegen.tegenstander}'s army${tegen.fase > 0 ? ` · Act ${tegen.fase} battle` : ''} · view only`,
+          body: (
+            <>
+              The army your opponent <strong>{tegen.tegenstander}</strong> locked for this battle
+              {tegen.gelocktOp && kortDatum(tegen.gelocktOp) ? <> · Locked on {kortDatum(tegen.gelocktOp)}</> : null}. Tap a unit
+              for its profile, equipment and special rules. You can read this army, but not change it, and it is
+              not saved to your own lists.
+            </>
+          ),
+        } : {
           eyebrow: 'Shared list · view only',
           body: (
             <>
@@ -1268,7 +1347,7 @@ export function ListBuilder() {
           {/* De melding staat BUITEN de wissel hierboven: een deel-link die niet meer werkt komt via
               de URL binnen, en dan staat het veldje dicht. */}
           {codeVeld === null && gedeeldLaden && (
-            <p style={{ fontFamily: towFont.serif, fontSize: 12, color: TOW.muted, margin: '6px 0 0' }}>Opening the shared list…</p>
+            <p style={{ fontFamily: towFont.serif, fontSize: 12, color: TOW.muted, margin: '6px 0 0' }}>{tegenVraag !== null ? "Opening your opponent's army…" : 'Opening the shared list…'}</p>
           )}
           {gedeeldFout && (
             <p style={{ fontFamily: towFont.serif, fontSize: 12, lineHeight: 1.5, color: TOW.blood, margin: '6px 0 0' }}>{gedeeldFout}</p>
