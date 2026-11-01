@@ -77,3 +77,21 @@ test('een oude game-kopie met alleen "Mortar" vindt de Empire-statline via het l
   assert.deepEqual(ov.overlayStatsFor(stats, 'Mortar', null, 'Empire of Man').map((r) => r.Name), ['Mortar', 'Gun Crew']);
   assert.deepEqual(ov.overlayStatsFor(stats, 'Cannon', null, 'Dwarfen Mountain Holds').map((r) => r.Name), ['Cannon', 'Dwarf Crew']);
 });
+
+test('karakter op een chariot: wonden van rijder en chariot tellen op in het spel', () => {
+  const bt = require(path.join(root, 'src/lib/builderToArmy.ts'));
+  const ar = require(path.join(root, 'src/lib/armyRules.ts'));
+  const cat = ov.catalogueFor(read('public/owb/dark-elves.json'), 'dark-elves', null);
+  const lord = cat.characters.find((u) => u.id === 'dark-elf-dreadlord');
+  const mount = (name) => `mounts/${lord.mounts.findIndex((m) => m.name_en === name)}`;
+  const wonden = (opts) => {
+    const army = bt.builderListToArmy(
+      { name: 't', composition: 'dark-elves', rule: 'grand-army', points: 2000, entries: [{ uid: 'x', cat: 'characters', unitId: lord.id, count: 1, opts }] },
+      cat, (n) => ov.overlayStatsFor(stats, n, null), { faction: 'Dark Elves', troopTypeFor: troopType });
+    return ar.woundsPerModel(army.units[0]);
+  };
+  assert.equal(wonden([]), 3);                               // te voet: W3
+  assert.equal(wonden([mount('Cold One Chariot')]), 3 + 4);  // + chariot W4
+  assert.equal(wonden([mount('Black Dragon')]), 3 + 6);      // W(+6)-modifier, ongewijzigd
+  assert.equal(wonden([mount('Cold One {dark elves}')]), 3); // cavalerie-mount telt niet op
+});

@@ -294,7 +294,8 @@ function parseW(v: string | undefined): { mod: number | null; abs: number | null
  * Wounds for one model. Base = the `W` of the unit's first (main) profile, PLUS any mount/
  * steed wound modifiers on later profiles — e.g. a character on a Dark Pegasus whose profile
  * shows `W(+1)` gets +1 wound. Additional profiles with an absolute `W` (rank-and-file mounts
- * like a Cold One) don't add. Defaults to 1.
+ * like a Cold One) don't add. A character riding a CHARIOT (Light/Heavy Chariot mount) adds the
+ * chariot's own absolute `W` on top: rider + chariot wounds together. Defaults to 1.
  */
 export function woundsPerModel(unit: ArmyUnit): number {
   const profiles = unit.profiles ?? [];
@@ -305,6 +306,15 @@ export function woundsPerModel(unit: ArmyUnit): number {
     if (mod != null) bonus += mod;
     else if (idx === 0 && abs != null && abs > 0) base = abs;
   });
+  for (const m of unit.mounts ?? []) {
+    const isChariot = m.troopType ? /chariot|^[LH]Ch$/i.test(m.troopType.trim()) : /chariot/i.test(m.name);
+    if (!isChariot) continue;
+    // De chariot-romp is de rij met een absolute W; bemanning en trekdieren dragen "-".
+    const w = m.profiles
+      .map((p) => parseW(p.stats.find((s) => s.k.toUpperCase() === 'W')?.v))
+      .find((x) => x.mod == null && x.abs != null && x.abs > 0)?.abs;
+    if (w) bonus += w;
+  }
   const total = base + bonus;
   return total > 0 ? total : 1;
 }
