@@ -87,17 +87,30 @@ export function GameView() {
   }, [rootEl]);
   const wide = w >= 700; // pane is window−76 when the global rail is shown
 
-  const army: Army | null = teamModus ? legers[speler] : side === 'me' ? myArmy : opponentArmy;
+  // ── NAAST ELKAAR (Joost 02-11-2026, Fold opengeklapt): "de keuze voor links en rechts army op deze manier" —
+  // beide legers tegelijk, elk als de pick-weergave van de telefoon (pillen boven, de gekozen unit eronder).
+  // Daarom loopt alles wat van de bekeken kant afhangt via een ZICHT (kant + 2v2-stoel) in plaats van rechtstreeks
+  // via `side`/`speler`: de gewone weergaven geven het huidige zicht mee, de twee kolommen elk hun eigen.
+  // Een tik in een kolom maakt die kolom het huidige zicht (zie `kies`), zodat bv. het regelblad meeloopt.
+  type Zicht = { side: 'me' | 'opp'; speler: TeamStoel };
+  const zicht: Zicht = { side, speler };
+  const legerVan = (z: Zicht): Army | null => (teamModus ? legers[z.speler] : z.side === 'me' ? myArmy : opponentArmy);
+  const [breedWeergave, setBreedWeergave] = usePersistentState<'kies' | 'naast'>('tow:game-weergave-breed', 'kies');
+  // 2v2 naast elkaar: links de laatst gekozen stoel van team A, rechts die van team B.
+  const [teamStoel, setTeamStoel] = useState<Record<'A' | 'B', TeamStoel>>({ A: 'host', B: 'guest' });
+  const kiesSpeler = (st: TeamStoel) => {
+    setSpeler(st);
+    setTeamStoel((t) => ({ ...t, [teamVan(st)]: st }));
+  };
+
+  const army: Army | null = legerVan(zicht);
   // Wie kon deze kant killen? Het leger AAN DE ANDERE KANT van de tafel. Wordt de dropdown-inhoud bij
   // de kills, dus het moet meebewegen met de zijde die je bekijkt.
-  const vijandLeger: Army | null = side === 'me' ? opponentArmy : myArmy;
   // 2v2: de units van BEIDE vijanden, met de stoel in de id (`guest2:<id>`) en de spelernaam ervoor —
   // zie vijandUnitsVoor: zo blijft een kill eenduidig, ook als twee spelers dezelfde lijst kozen.
-  const teamVijanden = useMemo(
-    () => (teamModus ? vijandUnitsVoor(speler, { host: myArmy, host2: allyArmy, guest: opponentArmy, guest2: opponent2Army }, tracker) : null),
-    [teamModus, speler, myArmy, allyArmy, opponentArmy, opponent2Army, tracker],
-  );
-  const vijandUnits: ArmyUnit[] = teamVijanden ?? vijandLeger?.units ?? [];
+  const vijandUnitsVan = (z: Zicht): ArmyUnit[] => (teamModus
+    ? vijandUnitsVoor(z.speler, { host: myArmy, host2: allyArmy, guest: opponentArmy, guest2: opponent2Army }, tracker)
+    : (z.side === 'me' ? opponentArmy : myArmy)?.units ?? []);
 
   // ── KIESLIJST OP BREED SCHERM (Joost 28-10-2026, Galaxy Fold) ── Links de units als dichte rijen,
   // rechts de gekozen unit volledig. De keuze is PER KANT: schakel je naar de tegenstander en terug,
@@ -107,22 +120,34 @@ export function GameView() {
   // gebruikt dit niet: daar klappen de kaarten in de lijst zelf open (`expanded`).
   // 2v2 (28-10-2026): de keuze wordt per STOEL onthouden in plaats van per kant.
   const [gekozen, setGekozen] = useState<Record<string, string | null>>({ me: null, opp: null });
-  const kiesSleutel: string = teamModus ? speler : side;
+  const sleutelVan = (z: Zicht): string => (teamModus ? z.speler : z.side);
   // MOUNT ALS EIGEN TABJE (Joost 28-10-2026: "als een character een mount heeft … die wil ik ook zoals een gewone
   // unit kunnen zien, met al zijn stats en regels, en gewoon in de lijst"). Welke unit z'n mount-tab open heeft;
-  // een gewone keuze in de lijst opent altijd de rider.
-  const [mountTab, setMountTab] = useState<{ id: string; i: number } | null>(null);
+  // een gewone keuze in de lijst opent altijd de rider. Per zicht, want naast elkaar kunnen beide kanten
+  // dezelfde lijst (en dus dezelfde unit-ids) hebben.
+  const [mountTab, setMountTab] = useState<{ sleutel: string; id: string; i: number } | null>(null);
+  const mountTabVan = (z: Zicht, unitId: string): number | null =>
+    (mountTab?.sleutel === sleutelVan(z) && mountTab.id === unitId ? mountTab.i : null);
   const [telefoonWeergave, setTelefoonWeergave] = usePersistentState<'lijst' | 'kies'>('tow:game-weergave', 'lijst');
   const kiesKaartRef = useRef<HTMLDivElement>(null);
-  const kies = (unitId: string, mount: number | null = null) => {
-    setGekozen((g) => ({ ...g, [kiesSleutel]: unitId }));
-    setMountTab(mount == null ? null : { id: unitId, i: mount });
+  // De scrollvlakken van de twee kolommen naast elkaar, per zicht-sleutel.
+  const kolomRefs = useRef<Record<string, HTMLDivElement | null>>({});
+  const kies = (z: Zicht, unitId: string, mount: number | null = null) => {
+    const sl = sleutelVan(z);
+    setGekozen((g) => ({ ...g, [sl]: unitId }));
+    setMountTab(mount == null ? null : { sleutel: sl, id: unitId, i: mount });
+    if (z.side !== side) setSide(z.side);
+    if (teamModus && z.speler !== speler) setSpeler(z.speler);
     // Pick-weergave op de telefoon: de kaart staat onder de kiesrijen, dus schuif hem in beeld.
     if (!wide && telefoonWeergave === 'kies') requestAnimationFrame(() => kiesKaartRef.current?.scrollTo({ top: 0 }));
+    if (wide && breedWeergave === 'naast') requestAnimationFrame(() => kolomRefs.current[sl]?.scrollTo({ top: 0 }));
   };
-  const selId: string | null = army
-    ? (army.units.some((u) => u.id === gekozen[kiesSleutel]) ? gekozen[kiesSleutel] ?? null : army.units[0]?.id ?? null)
-    : null;
+  const selIdVan = (z: Zicht): string | null => {
+    const a = legerVan(z);
+    const g = gekozen[sleutelVan(z)];
+    return a ? (a.units.some((u) => u.id === g) ? g ?? null : a.units[0]?.id ?? null) : null;
+  };
+  const selId = selIdVan(zicht);
   const selUnit: ArmyUnit | null = army?.units.find((u) => u.id === selId) ?? null;
   // Nieuwe unit gekozen → het rechterpaneel begint weer bovenaan (anders sta je midden in de vorige).
   const detailRef = useRef<HTMLDivElement>(null);
@@ -156,38 +181,39 @@ export function GameView() {
 
   // Both armies are editable (you track spells and casualties for both sides).
   const editable = true;
-  const applyArmy = teamModus ? zetLeger[speler] : side === 'me' ? setMyArmy : setOpponentArmy;
-  const onUnitChange = (unitId: string, patch: Partial<ArmyUnit>) => {
-    if (!army) return;
-    applyArmy({ ...army, units: army.units.map((u) => (u.id === unitId ? { ...u, ...patch } : u)) });
+  const applyArmyVan = (z: Zicht) => (teamModus ? zetLeger[z.speler] : z.side === 'me' ? setMyArmy : setOpponentArmy);
+  const onUnitChange = (z: Zicht, unitId: string, patch: Partial<ArmyUnit>) => {
+    const a = legerVan(z);
+    if (!a) return;
+    applyArmyVan(z)({ ...a, units: a.units.map((u) => (u.id === unitId ? { ...u, ...patch } : u)) });
   };
 
   // ── shared battle tracker (absolute seat keys so both players agree) ──
   const absSeat = (s: 'me' | 'opp'): string =>
     seat === 'solo' ? (s === 'me' ? 'host' : 'guest') : s === 'me' ? seat ?? 'host' : seat === 'host' ? 'guest' : 'host';
   // 2v2: de sleutel volgt de gekozen STOEL (host/host2/guest/guest2); `s` doet dan niet mee.
-  const unitKey = (s: 'me' | 'opp', unitId: string) => `${teamModus ? speler : absSeat(s)}:${unitId}`;
+  const unitKey = (z: Zicht, unitId: string) => `${teamModus ? z.speler : absSeat(z.side)}:${unitId}`;
   const meKey = absSeat('me');
 
   // Absolute muteerhelpers voor de per-unit tracker (WoundTracker levert absolute waarden).
   // `prev` default = { lost: 0, fleeing: false }; oude trackers zonder `weg` blijven zo werken.
-  const setCasualty = (unitId: string, lost: number) => {
-    const u = army?.units.find((x) => x.id === unitId);
+  const setCasualty = (z: Zicht, unitId: string, lost: number) => {
+    const u = legerVan(z)?.units.find((x) => x.id === unitId);
     if (!u) return;
     const total = unitTotalStrength(u);
-    const key = unitKey(side, unitId);
+    const key = unitKey(z, unitId);
     const prev = tracker.units[key] ?? { lost: 0, fleeing: false };
     const clamped = Math.min(total, Math.max(0, lost));
     setTracker({ ...tracker, units: { ...tracker.units, [key]: { ...prev, lost: clamped } } });
   };
-  const setRemoved = (unitId: string, weg: boolean) => {
-    const key = unitKey(side, unitId);
+  const setRemoved = (z: Zicht, unitId: string, weg: boolean) => {
+    const key = unitKey(z, unitId);
     const prev = tracker.units[key] ?? { lost: 0, fleeing: false };
     setTracker({ ...tracker, units: { ...tracker.units, [key]: { ...prev, weg } } });
   };
   // Absolute setter voor de per-unit kill-teller (enemy units destroyed + trofeeën); min 0.
-  const setKills = (unitId: string, kills: number) => {
-    const key = unitKey(side, unitId);
+  const setKills = (z: Zicht, unitId: string, kills: number) => {
+    const key = unitKey(z, unitId);
     const prev = tracker.units[key] ?? { lost: 0, fleeing: false };
     const n = Math.max(0, Math.round(kills));
     // De toelichting-rijen lopen mee met de teller: eén erbij geeft een lege rij, eraf gooit de
@@ -199,8 +225,8 @@ export function GameView() {
     setTracker({ ...tracker, units: { ...tracker.units, [key]: { ...prev, kills: n, killDetails: details } } });
   };
   /** Zet wie/wanneer bij één kill. `i` is de index in de kill-lijst van deze unit. */
-  const setKillDetail = (unitId: string, i: number, patch: KillDetail) => {
-    const key = unitKey(side, unitId);
+  const setKillDetail = (z: Zicht, unitId: string, i: number, patch: KillDetail) => {
+    const key = unitKey(z, unitId);
     const prev = tracker.units[key] ?? { lost: 0, fleeing: false };
     const aantal = Math.max(0, Math.round(prev.kills ?? 0));
     const details = [...(prev.killDetails ?? [])];
@@ -209,8 +235,8 @@ export function GameView() {
     details[i] = { ...details[i], ...patch };
     setTracker({ ...tracker, units: { ...tracker.units, [key]: { ...prev, killDetails: details } } });
   };
-  const toggleFleeing = (unitId: string) => {
-    const key = unitKey(side, unitId);
+  const toggleFleeing = (z: Zicht, unitId: string) => {
+    const key = unitKey(z, unitId);
     const prev = tracker.units[key] ?? { lost: 0, fleeing: false };
     setTracker({ ...tracker, units: { ...tracker.units, [key]: { ...prev, fleeing: !prev.fleeing } } });
   };
@@ -257,14 +283,14 @@ export function GameView() {
   // het roster nu toont (de aanvaller, bij Breakthrough), dan krijgt elke unit die in aanmerking komt een
   // knopje. Characters en monsters nooit; een unit die vlucht of weg is alleen als hij al aan stond (om hem
   // uit te kunnen zetten). De post zelf rekent de som in berekenVictory, met dezelfde functies.
-  const rosterZijde: 'host' | 'guest' = absSeat(side) === 'guest' ? 'guest' : 'host';
-  // 2v2 (solo) heeft geen campagne-sheet en dus geen puntwaarde-posten; expliciet leeg voor de zekerheid.
-  const puntPosten = teamModus ? [] : (scenarioDef?.posten ?? []).filter((p) => postUitUnits(p) && postGeldtVoor(p, rosterZijde));
-  const gedoodRoster = puntPosten.length ? gedoodDoorVijand(rosterZijde, tracker) : null;
-  const knoppenVoor = (u: ArmyUnit): ScenarioKnop[] | undefined => {
+  const knoppenVoor = (z: Zicht, u: ArmyUnit): ScenarioKnop[] | undefined => {
+    const rosterZijde: 'host' | 'guest' = absSeat(z.side) === 'guest' ? 'guest' : 'host';
+    // 2v2 (solo) heeft geen campagne-sheet en dus geen puntwaarde-posten; expliciet leeg voor de zekerheid.
+    const puntPosten = teamModus ? [] : (scenarioDef?.posten ?? []).filter((p) => postUitUnits(p) && postGeldtVoor(p, rosterZijde));
     if (!puntPosten.length || soortUitsluiting(u)) return undefined;
+    const gedoodRoster = gedoodDoorVijand(rosterZijde, tracker);
     const t = tracker.units[`${rosterZijde}:${u.id}`] as VpUnitTrack | undefined;
-    const uit = uitsluiting(u, t, gedoodRoster?.has(u.id) ?? false);
+    const uit = uitsluiting(u, t, gedoodRoster.has(u.id));
     return puntPosten.map((p) => {
       const aan = aangetikt(tracker.bonus?.[rosterZijde], p.id)?.includes(u.id) ?? false;
       return {
@@ -283,16 +309,18 @@ export function GameView() {
     });
   };
 
-  const afield = army
-    ? army.units.filter((u) => unitTotalStrength(u) - (tracker.units[unitKey(side, u.id)]?.lost ?? 0) > 0).length
-    : 0;
+  const afieldVan = (z: Zicht): number => {
+    const a = legerVan(z);
+    return a ? a.units.filter((u) => unitTotalStrength(u) - (tracker.units[unitKey(z, u.id)]?.lost ?? 0) > 0).length : 0;
+  };
+  const afield = afieldVan(zicht);
   // 2v2: hoe deze stoel heet in kopjes, en de knoptekst om een leger toe te voegen.
   const zonderEigenNaam = (st: TeamStoel) => !tracker.spelers?.[st]?.trim();
   const legerKop = (st: TeamStoel) => `${TEAM_NAAM[teamVan(st)]} · ${naam(st)}`;
 
-  const groups: { category: string; units: ArmyUnit[] }[] = [];
-  if (army) {
-    for (const u of army.units) {
+  const groepenVan = (a: Army | null): { category: string; units: ArmyUnit[] }[] => {
+    const groups: { category: string; units: ArmyUnit[] }[] = [];
+    for (const u of a?.units ?? []) {
       // Een versterkings-unit (23-10-2026) in een eigen kop, zodat je aan tafel ziet wat er bij hoort.
       // `u.category` zelf blijft staan: het veteranen-rapport en de PDF lezen dat veld.
       const kop = u.versterking ? `Reinforcements · ${u.category}` : u.category;
@@ -300,9 +328,14 @@ export function GameView() {
       if (!g) { g = { category: kop, units: [] }; groups.push(g); }
       g.units.push(u);
     }
-  }
+    return groups;
+  };
+  const groups = groepenVan(army);
 
   // ── shared bits ──
+  const naast = wide && breedWeergave === 'naast' && !!(teamModus ? (myArmy || allyArmy || opponentArmy || opponent2Army) : (myArmy || opponentArmy));
+  const zichtLinks: Zicht = { side: 'me', speler: teamStoel.A };
+  const zichtRechts: Zicht = { side: 'opp', speler: teamStoel.B };
   const sideToggle = (
     <div style={{ display: 'flex', gap: 4 }}>
       {(['me', 'opp'] as const).map((s) => {
@@ -322,13 +355,14 @@ export function GameView() {
     <div data-testid="game-spelerkeuze" style={{ display: 'flex', gap: 8 }}>
       {(['A', 'B'] as const).map((team) => (
         <div key={team} role="group" aria-label={TEAM_NAAM[team]} style={{ flex: 1, minWidth: 0 }}>
-          <div style={{ ...eb, fontSize: 7.5, color: teamVan(speler) === team ? TOW.goldDeep : TOW.muted, margin: '0 0 3px 2px', whiteSpace: 'nowrap' }}>{TEAM_NAAM[team]}</div>
+          <div style={{ ...eb, fontSize: 7.5, color: naast || teamVan(speler) === team ? TOW.goldDeep : TOW.muted, margin: '0 0 3px 2px', whiteSpace: 'nowrap' }}>{TEAM_NAAM[team]}{naast ? (team === 'A' ? ' · left' : ' · right') : ''}</div>
           <div style={{ display: 'flex', gap: 4 }}>
             {stoelenVan(team).map((st) => {
-              const on = st === speler;
+              // Naast elkaar: per team de stoel die in die kolom staat.
+              const on = naast ? st === teamStoel[team] : st === speler;
               const leeg = !legers[st];
               return (
-                <button key={st} onClick={() => setSpeler(st)} aria-pressed={on} title={leeg ? `${naam(st)} — no army yet` : naam(st)} style={{ flex: 1, minWidth: 0, padding: '8px 2px', borderRadius: 9, cursor: 'pointer', border: `1px ${leeg ? 'dashed' : 'solid'} ${on ? TOW.goldDeep : leeg ? TOW.lineStrong : TOW.line}`, background: on ? TOW.cardLt : 'transparent', color: on ? TOW.ink : TOW.muted, fontFamily: display, fontWeight: 600, fontSize: wide ? 13 : 12, fontStyle: leeg ? 'italic' : 'normal', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>{naam(st)}</button>
+                <button key={st} onClick={() => kiesSpeler(st)} aria-pressed={on} title={leeg ? `${naam(st)} — no army yet` : naam(st)} style={{ flex: 1, minWidth: 0, padding: '8px 2px', borderRadius: 9, cursor: 'pointer', border: `1px ${leeg ? 'dashed' : 'solid'} ${on ? TOW.goldDeep : leeg ? TOW.lineStrong : TOW.line}`, background: on ? TOW.cardLt : 'transparent', color: on ? TOW.ink : TOW.muted, fontFamily: display, fontWeight: 600, fontSize: wide ? 13 : 12, fontStyle: leeg ? 'italic' : 'normal', overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>{naam(st)}</button>
               );
             })}
           </div>
@@ -378,14 +412,15 @@ export function GameView() {
   // 29-08). Het volgt de kant-schakelaar hierboven, net als het roster eronder — je scoort voor
   // wie je op dat moment bijhoudt. Buiten een campagne (geen objectives) rendert het niets.
   // 2v2: de objectives zijn van het TEAM en staan op host (team A) of guest (team B), zodat ze één keer tellen.
-  const objectivesPaneel = toonPanelen && (
+  const objectivesPaneelVan = (z: Zicht) => toonPanelen && (
     <ObjectivesTracker
-      zijde={teamModus ? objectiefStoel(teamVan(speler)) : absSeat(side) === 'guest' ? 'guest' : 'host'}
-      naam={teamModus ? TEAM_NAAM[teamVan(speler)] : side === 'me' ? (myName || 'You') : (opponentName || 'Opponent')}
+      zijde={teamModus ? objectiefStoel(teamVan(z.speler)) : absSeat(z.side) === 'guest' ? 'guest' : 'host'}
+      naam={teamModus ? TEAM_NAAM[teamVan(z.speler)] : z.side === 'me' ? (myName || 'You') : (opponentName || 'Opponent')}
       editable={editable}
       round={tracker.round}
     />
   );
+  const objectivesPaneel = objectivesPaneelVan(zicht);
   // DE BATTLE SHEET AAN TAFEL (13-09). Halverwege een potje wil je terug kunnen lezen wat er ook
   // alweer gold: welk scenario, waar de zones liggen, welke secondaries meetellen, welk weer er
   // staat. Dat blad stond tot nu toe alleen vóór het potje, dus tijdens het spelen was het weg.
@@ -420,32 +455,37 @@ export function GameView() {
   // Bij een campagne-battle alleen als de server een versterking voor DEZE kant meegeeft (twee tegen
   // drie). Bij een vrij potje mag het altijd: de spelers weten zelf of ze met twee tegen drie staan.
   // Alleen je EIGEN leger, en in solo ook dat van de tegenstander (je bedient dan beide kanten).
-  const kantVanZijde: 'aanvaller' | 'verdediger' = absSeat(side) === 'guest' ? 'verdediger' : 'aanvaller';
-  const rfMax = campagne ? versterkingVoorKant(campagne.versterking, kantVanZijde) : null;
   // Een campagne-code (geen vier tekens) is een campagne-battle, ook zolang hij nog laadt.
   const campagneCode = !!code && !isVrijPotjeCode(code);
   // KILLS ALLEEN BIJ EEN CAMPAGNE (Joost 28-10-2026): "die kills aangeven is echt alleen puur bij campagne,
   // dat hoeft normaal niet". Ze voeden alleen de veteraan-XP van de campagne; zonder campagne geen teller.
   const killsTonen = campagneCode || !!campagne;
-  const rfNu = versterkingVan(army);
-  // Staat er al een versterking bij, dan blijft het blok staan (om hem weg te kunnen halen).
-  // Vrij potje: sinds 28-10-2026 verborgen (VERSTERKING_OVERAL). Een campagne-battle waarvoor de server
-  // een versterking meegeeft, en een leger dat er al een heeft, blijven gewoon werken.
-  const rfMag = !!army && (side === 'me' || seat === 'solo') && (!!rfNu || (campagneCode ? !!rfMax : VERSTERKING_OVERAL));
-  const versterkingPaneel = rfMag && army && (
-    <VersterkingKiezer
-      key={`${teamModus ? speler : side}-${rfNu ? 'aan' : 'uit'}`}
-      testid="game-versterking"
-      max={rfMax ?? army.versterking?.max ?? null}
-      // Alleen versterkingen van hetzelfde army book. Het leger draagt de leesbare factienaam, de lijsten
-      // een slug: de kiezer vergelijkt die twee, en valt terug op alle versterkingslijsten als er niets past.
-      leger={null}
-      factie={army.faction}
-      gekozen={rfNu ? { naam: rfNu.naam, punten: rfNu.punten } : null}
-      onPick={(rf) => applyArmy(voegVersterkingToe(army, rf, rfMax ?? null))}
-      onWeg={() => applyArmy(zonderVersterking(army))}
-    />
-  );
+  const versterkingPaneelVan = (z: Zicht) => {
+    const a = legerVan(z);
+    const kantVanZijde: 'aanvaller' | 'verdediger' = absSeat(z.side) === 'guest' ? 'verdediger' : 'aanvaller';
+    const rfMax = campagne ? versterkingVoorKant(campagne.versterking, kantVanZijde) : null;
+    const rfNu = versterkingVan(a);
+    // Staat er al een versterking bij, dan blijft het blok staan (om hem weg te kunnen halen).
+    // Vrij potje: sinds 28-10-2026 verborgen (VERSTERKING_OVERAL). Een campagne-battle waarvoor de server
+    // een versterking meegeeft, en een leger dat er al een heeft, blijven gewoon werken.
+    const rfMag = !!a && (z.side === 'me' || seat === 'solo') && (!!rfNu || (campagneCode ? !!rfMax : VERSTERKING_OVERAL));
+    const applyArmy = applyArmyVan(z);
+    return rfMag && a && (
+      <VersterkingKiezer
+        key={`${sleutelVan(z)}-${rfNu ? 'aan' : 'uit'}`}
+        testid="game-versterking"
+        max={rfMax ?? a.versterking?.max ?? null}
+        // Alleen versterkingen van hetzelfde army book. Het leger draagt de leesbare factienaam, de lijsten
+        // een slug: de kiezer vergelijkt die twee, en valt terug op alle versterkingslijsten als er niets past.
+        leger={null}
+        factie={a.faction}
+        gekozen={rfNu ? { naam: rfNu.naam, punten: rfNu.punten } : null}
+        onPick={(rf) => applyArmy(voegVersterkingToe(a, rf, rfMax ?? null))}
+        onWeg={() => applyArmy(zonderVersterking(a))}
+      />
+    );
+  };
+  const versterkingPaneel = versterkingPaneelVan(zicht);
 
   const endModal = endOpen && (
     <EndBattleOverview
@@ -461,30 +501,33 @@ export function GameView() {
 
   // Eén UnitCard met ALLE tracker-koppelingen; alleen de weergave (dicht/open, kiesrij) verschilt per
   // plek. Zo krijgen de telefoonlijst, de kieslijst links en de detailkaart rechts precies dezelfde props.
-  const unitKaart = (a: Army, u: ArmyUnit, weergave: { collapsed: boolean; onToggleCollapse?: () => void; selected?: boolean }) => {
-    const t = tracker.units[unitKey(side, u.id)];
+  const unitKaart = (z: Zicht, a: Army, u: ArmyUnit, weergave: { collapsed: boolean; onToggleCollapse?: () => void; selected?: boolean }) => {
+    const t = tracker.units[unitKey(z, u.id)];
     return (
-      <UnitCard key={u.id} unit={u} faction={a.faction} editable={editable} onChange={(patch) => onUnitChange(u.id, patch)} lost={t?.lost ?? 0} weg={t?.weg ?? false} fleeing={t?.fleeing ?? false} kills={t?.kills ?? 0} onSetLost={(lost) => setCasualty(u.id, lost)} onRemoved={() => setRemoved(u.id, !(t?.weg ?? false))} onFlee={() => toggleFleeing(u.id)} onSetKills={killsTonen ? (k) => setKills(u.id, k) : undefined} killDetails={t?.killDetails ?? []} onSetKillDetail={(i, patch) => setKillDetail(u.id, i, patch)} vijandUnits={vijandUnits} maxRound={maxRound} collapsed={weergave.collapsed} onToggleCollapse={weergave.onToggleCollapse} selected={weergave.selected} scenarioKnoppen={knoppenVoor(u)} toonMount={mountTab?.id === u.id ? mountTab.i : null} onToonMount={(i) => setMountTab(i == null ? null : { id: u.id, i })} />
+      <UnitCard key={u.id} unit={u} faction={a.faction} editable={editable} onChange={(patch) => onUnitChange(z, u.id, patch)} lost={t?.lost ?? 0} weg={t?.weg ?? false} fleeing={t?.fleeing ?? false} kills={t?.kills ?? 0} onSetLost={(lost) => setCasualty(z, u.id, lost)} onRemoved={() => setRemoved(z, u.id, !(t?.weg ?? false))} onFlee={() => toggleFleeing(z, u.id)} onSetKills={killsTonen ? (k) => setKills(z, u.id, k) : undefined} killDetails={t?.killDetails ?? []} onSetKillDetail={(i, patch) => setKillDetail(z, u.id, i, patch)} vijandUnits={vijandUnitsVan(z)} maxRound={maxRound} collapsed={weergave.collapsed} onToggleCollapse={weergave.onToggleCollapse} selected={weergave.selected} scenarioKnoppen={knoppenVoor(z, u)} toonMount={mountTabVan(z, u.id)} onToonMount={(i) => setMountTab(i == null ? null : { sleutel: sleutelVan(z), id: u.id, i })} />
     );
   };
 
-  const rosterBody = army ? (
-    groups.map((g) => (
+  // Het roster als uitklapkaarten, of (zonder leger op deze kant) het leger toevoegen.
+  const rosterBodyVan = (z: Zicht) => {
+    const a = legerVan(z);
+    return a ? (
+    groepenVan(a).map((g) => (
       <div key={g.category} style={{ marginBottom: 8 }}>
         <div style={{ ...eb, fontSize: 9, color: TOW.goldDeep, margin: '12px 2px 8px' }}>{g.category}</div>
-        {g.units.map((u) => unitKaart(army, u, { collapsed: !expanded.has(expKey(u.id)), onToggleCollapse: () => toggleExpand(expKey(u.id)) }))}
+        {g.units.map((u) => unitKaart(z, a, u, { collapsed: !expanded.has(expKey(u.id)), onToggleCollapse: () => toggleExpand(expKey(u.id)) }))}
       </div>
     ))
   ) : teamModus ? (
     // 2v2: een lege stoel vul je hier, net als het tegenstander-leger in 1v1. `key` per stoel, zodat
     // half geplakte tekst niet meeverhuist naar de volgende speler.
     <ArmyPaste
-      key={speler}
-      title={speler === 'host' && zonderEigenNaam('host') ? 'Your army list' : `${naam(speler)}'s army list`}
-      cta={speler === 'host' && zonderEigenNaam('host') ? 'Add your army' : `Add ${naam(speler)}'s army`}
-      onSet={zetLeger[speler]}
+      key={z.speler}
+      title={z.speler === 'host' && zonderEigenNaam('host') ? 'Your army list' : `${naam(z.speler)}'s army list`}
+      cta={z.speler === 'host' && zonderEigenNaam('host') ? 'Add your army' : `Add ${naam(z.speler)}'s army`}
+      onSet={zetLeger[z.speler]}
     />
-  ) : side === 'opp' ? (
+  ) : z.side === 'opp' ? (
     // Tegenstander-leger toevoegen kan in ELKE modus (solo én campagne/online) — zo kun je een battle
     // testen door zelf één van je eigen lijsten voor de opponent te kiezen (ArmyPaste bevat de list-picker).
     <>
@@ -498,6 +541,8 @@ export function GameView() {
   ) : (
     <ArmyPaste title="Your army list" cta="Add your army" onSet={setMyArmy} />
   );
+  };
+  const rosterBody = rosterBodyVan(zicht);
 
   // END BATTLE KLEIN (Joost 28-10-2026): "die end battle knop moet echt veel minder aanwezig, die is
   // gewoon niet zo heel belangrijk". Was een volle goudrode balk onder de units; nu een kleine knop in
@@ -535,7 +580,7 @@ export function GameView() {
   // de korte stand (dezelfde `korteStand` als de ingeklapte kaart) — in plaats van een ingeklapte
   // UnitCard met z'n eigen kader. De volledige kaart staat rechts.
   const kiesRij = (u: ArmyUnit) => {
-    const t = tracker.units[unitKey(side, u.id)];
+    const t = tracker.units[unitKey(zicht, u.id)];
     const stand = korteStand(u, { lost: t?.lost, weg: t?.weg, fleeing: t?.fleeing, kills: t?.kills });
     const uit = stand.some((s) => s.t === 'Removed' || s.t === 'Destroyed');
     const gekozen = u.id === selId;
@@ -546,7 +591,7 @@ export function GameView() {
       <button
         key={u.id}
         type="button"
-        onClick={() => kies(u.id)}
+        onClick={() => kies(zicht, u.id)}
         aria-pressed={gekozen}
         style={{
           width: '100%', display: 'block', boxSizing: 'border-box',
@@ -573,6 +618,54 @@ export function GameView() {
     );
   };
 
+  // DE PIL (telefoon, pick-weergave, en de kolommen naast elkaar): een unit als knopje, met een stip als hij
+  // geraakt is (goud) of vlucht (rood).
+  const pil = (z: Zicht, u: ArmyUnit) => {
+    const t = tracker.units[unitKey(z, u.id)];
+    const stand = korteStand(u, { lost: t?.lost, weg: t?.weg, fleeing: t?.fleeing, kills: t?.kills });
+    const uit = stand.some((st) => st.t === 'Removed' || st.t === 'Destroyed');
+    const vlucht = stand.some((st) => st.t === 'Fleeing');
+    const geraakt = !uit && (t?.lost ?? 0) > 0;
+    const aan = u.id === selIdVan(z);
+    const aantal = unitSize(u);
+    return (
+      <button
+        key={u.id}
+        type="button"
+        onClick={() => kies(z, u.id)}
+        aria-pressed={aan}
+        title={stand.map((st) => st.t).join(' · ') || undefined}
+        style={{
+          display: 'inline-flex', alignItems: 'center', gap: 5, maxWidth: '100%', boxSizing: 'border-box',
+          padding: '5px 11px', borderRadius: 999, cursor: 'pointer',
+          border: `1px solid ${aan ? TOW.goldDeep : TOW.line}`,
+          background: aan ? 'rgba(184,134,47,0.16)' : TOW.cardLt,
+          opacity: uit ? 0.55 : 1,
+        }}
+      >
+        {(vlucht || geraakt) && <span aria-hidden style={{ width: 6, height: 6, borderRadius: 3, flexShrink: 0, background: vlucht ? TOW.blood : TOW.goldDeep }} />}
+        <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontFamily: display, fontWeight: aan ? 700 : 600, fontSize: 12.5, color: aan ? TOW.ink : uit ? TOW.muted : TOW.inkDim, textDecoration: uit ? 'line-through' : 'none' }}>
+          {aantal > 1 && <span style={{ color: TOW.goldDeep }}>{aantal}× </span>}{u.name}
+        </span>
+      </button>
+    );
+  };
+  // BREED: NAAST ELKAAR (Joost 02-11-2026). Zelfde soort knop: het icoon toont de weergave waar je naartoe gaat.
+  const breedKnop = !!(teamModus ? (myArmy || allyArmy || opponentArmy || opponent2Army) : (myArmy || opponentArmy)) && (
+    <button
+      onClick={() => setBreedWeergave(breedWeergave === 'naast' ? 'kies' : 'naast')}
+      aria-label={breedWeergave === 'naast' ? 'Switch to one army: unit list left, the chosen unit right' : 'Switch to both armies side by side'}
+      title={breedWeergave === 'naast' ? 'One army' : 'Both armies side by side'}
+      style={{ flexShrink: 0, width: 30, height: 28, display: 'flex', alignItems: 'center', justifyContent: 'center', border: `1px solid ${TOW.lineStrong}`, borderRadius: 9, cursor: 'pointer', background: 'transparent', color: TOW.goldDeep }}
+    >
+      {breedWeergave === 'naast' ? (
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"><rect x="1.8" y="2" width="4.4" height="12" rx="0.8" /><rect x="7.6" y="2" width="6.6" height="12" rx="0.8" /></svg>
+      ) : (
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" aria-hidden="true"><rect x="1.6" y="1.8" width="5.6" height="2.6" rx="0.7" /><rect x="8.8" y="1.8" width="5.6" height="2.6" rx="0.7" /><rect x="1.6" y="6" width="5.6" height="8.2" rx="0.9" /><rect x="8.8" y="6" width="5.6" height="8.2" rx="0.9" /></svg>
+      )}
+    </button>
+  );
+
   // ════════════════ WIDE — compacte kopbalk + kieslijst links / unit rechts ════════════════
   // Joost 28-10-2026 (Galaxy Fold 7): "links staat wat normaal bovenin staat … hou dat gewoon in de header
   // bovenin, maar wel vrij compact", en "mijn lijst met units links en de stats rechts, in plaats van het
@@ -583,12 +676,47 @@ export function GameView() {
   // dichte rijen en End battle (vast onderaan); rechts de gekozen unit volledig, met al z'n knoppen.
   if (wide) {
     const waiting = !!(code && seat === 'host' && !opponentArmy);
+    // NAAST ELKAAR (Joost 02-11-2026): twee gelijke kolommen, links jouw kant (2v2: team A), rechts de
+    // tegenstander (team B). Elke kolom is de pick-weergave van de telefoon: de legerkop en de unit-pillen
+    // vast bovenaan, daaronder in een eigen scrollvlak de objectives, de versterking en de gekozen unit.
+    const kolom = (z: Zicht) => {
+      const a = legerVan(z);
+      const sl = sleutelVan(z);
+      const sel = a?.units.find((u) => u.id === selIdVan(z)) ?? null;
+      const kop = teamModus ? legerKop(z.speler) : z.side === 'me' ? (myName || 'You') : (opponentName || 'Opponent');
+      return (
+        <div key={z.side} data-testid={`game-kolom-${z.side}`} style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', borderLeft: z.side === 'opp' ? `1px solid ${TOW.lineStrong}` : 'none' }}>
+          <div style={{ flexShrink: 0, padding: '7px 10px 8px', borderBottom: `1px solid ${TOW.line}`, background: TOW.panel }}>
+            <div style={{ ...eb, fontSize: 8, color: TOW.goldDeep, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+              {kop}{a ? ` · ${afieldVan(z)}/${a.units.length} afield` : ''}
+            </div>
+            {a && (
+              <>
+                <div style={{ display: 'flex', alignItems: 'baseline', gap: 6, minWidth: 0, marginTop: 1 }}>
+                  <span style={{ flex: '0 1 auto', minWidth: 0, fontFamily: display, fontWeight: 700, fontSize: 15, color: TOW.ink, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{a.name}</span>
+                  <span style={{ flex: '0 1 auto', minWidth: 0, fontFamily: serif, fontStyle: 'italic', fontSize: 12, color: TOW.parchDim, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{a.faction || ''}{a.points != null ? ` · ${a.points} pts` : ''}</span>
+                </div>
+                <div style={{ maxHeight: '30vh', overflowY: 'auto', display: 'flex', flexWrap: 'wrap', gap: 5, marginTop: 7 }}>
+                  {groepenVan(a).flatMap((gr) => gr.units).map((u) => pil(z, u))}
+                </div>
+              </>
+            )}
+          </div>
+          <div ref={(el) => { kolomRefs.current[sl] = el; }} className="tow-field" style={{ flex: 1, minHeight: 0, overflowY: 'auto', padding: '8px 10px 24px' }}>
+            {objectivesPaneelVan(z)}
+            {versterkingPaneelVan(z)}
+            {a ? (sel ? unitKaart(z, a, sel, { collapsed: false }) : null) : rosterBodyVan(z)}
+          </div>
+        </div>
+      );
+    };
     return (
       <div ref={rootRef} className="tow-field" style={{ height: '100%', display: 'flex', flexDirection: 'column', color: TOW.ink }}>
         <div className="tow-leather" style={{ flexShrink: 0, display: 'flex', flexDirection: 'column', gap: 6, padding: '6px 10px', borderBottom: `1px solid ${TOW.lineStrong}` }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, minWidth: 0 }}>
             <CodeBadge code={code} waiting={waiting} solo={seat === 'solo'} />
-            <div style={teamModus ? { flex: '0 1 560px', minWidth: 300 } : { flex: '0 1 380px', minWidth: 180 }}>{kantKeuze}</div>
+            {!(naast && !teamModus) && <div style={teamModus ? { flex: '0 1 560px', minWidth: 300 } : { flex: '0 1 380px', minWidth: 180 }}>{kantKeuze}</div>}
+            {breedKnop}
             <div style={{ flex: 1 }} />
             {sheetKnop}
             {stopKnoppen}
@@ -601,6 +729,12 @@ export function GameView() {
           )}
         </div>
 
+        {naast ? (
+          <div data-testid="game-naast" style={{ flex: 1, minHeight: 0, display: 'flex' }}>
+            {kolom(zichtLinks)}
+            {kolom(zichtRechts)}
+          </div>
+        ) : (
         <div style={{ flex: 1, minHeight: 0, display: 'flex' }}>
           {/* LINKS — objectives, legerkop, kieslijst, End battle. SMALLER (Joost 28-10-2026: "die kolom is te
               breed … zodat je iets meer ruimte overhoudt rechts voor unit stats"): de rijen zijn één regel, dus
@@ -635,7 +769,7 @@ export function GameView() {
           <div ref={detailRef} data-testid="game-unitdetail" className="tow-field" style={{ flex: 1, minWidth: 0, overflowY: 'auto' }}>
             <div style={{ maxWidth: 820, margin: '0 auto', padding: '10px 12px 28px' }}>
               {!army ? rosterBody : selUnit ? (
-                unitKaart(army, selUnit, { collapsed: false })
+                unitKaart(zicht, army, selUnit, { collapsed: false })
               ) : (
                 <div style={{ padding: '48px 12px', textAlign: 'center', fontFamily: serif, fontStyle: 'italic', fontSize: 15, color: TOW.muted }}>
                   Select a unit on the left to see its stats
@@ -644,6 +778,7 @@ export function GameView() {
             </div>
           </div>
         </div>
+        )}
         {sheetModal}
         {endModal}
       </div>
@@ -661,36 +796,6 @@ export function GameView() {
   // bovenaan, zonder Characters/Core/Special/Rare, en daaronder de gekozen unit in een eigen scrollvlak:
   // een andere unit kiezen kan altijd, zonder eerst terug te scrollen. De keuze blijft per toestel bewaard.
   const kiesModus = telefoonWeergave === 'kies' && !!army;
-  const pil = (u: ArmyUnit) => {
-    const t = tracker.units[unitKey(side, u.id)];
-    const stand = korteStand(u, { lost: t?.lost, weg: t?.weg, fleeing: t?.fleeing, kills: t?.kills });
-    const uit = stand.some((st) => st.t === 'Removed' || st.t === 'Destroyed');
-    const vlucht = stand.some((st) => st.t === 'Fleeing');
-    const geraakt = !uit && (t?.lost ?? 0) > 0;
-    const aan = u.id === selId;
-    const aantal = unitSize(u);
-    return (
-      <button
-        key={u.id}
-        type="button"
-        onClick={() => kies(u.id)}
-        aria-pressed={aan}
-        title={stand.map((st) => st.t).join(' · ') || undefined}
-        style={{
-          display: 'inline-flex', alignItems: 'center', gap: 5, maxWidth: '100%', boxSizing: 'border-box',
-          padding: '5px 11px', borderRadius: 999, cursor: 'pointer',
-          border: `1px solid ${aan ? TOW.goldDeep : TOW.line}`,
-          background: aan ? 'rgba(184,134,47,0.16)' : TOW.cardLt,
-          opacity: uit ? 0.55 : 1,
-        }}
-      >
-        {(vlucht || geraakt) && <span aria-hidden style={{ width: 6, height: 6, borderRadius: 3, flexShrink: 0, background: vlucht ? TOW.blood : TOW.goldDeep }} />}
-        <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontFamily: display, fontWeight: aan ? 700 : 600, fontSize: 12.5, color: aan ? TOW.ink : uit ? TOW.muted : TOW.inkDim, textDecoration: uit ? 'line-through' : 'none' }}>
-          {aantal > 1 && <span style={{ color: TOW.goldDeep }}>{aantal}× </span>}{u.name}
-        </span>
-      </button>
-    );
-  };
   return (
     <div ref={rootRef} className="tow-field" style={{ height: '100%', display: 'flex', flexDirection: 'column', color: TOW.ink }}>
       <div className="tow-leather" style={{ flexShrink: 0, display: 'flex', flexDirection: 'column', gap: 6, padding: '7px 10px', borderBottom: `1px solid ${TOW.lineStrong}` }}>
@@ -714,12 +819,12 @@ export function GameView() {
       {kiesModus ? (
         <>
           <div style={{ flexShrink: 0, maxHeight: '32vh', overflowY: 'auto', display: 'flex', flexWrap: 'wrap', gap: 5, padding: '8px 10px', borderBottom: `1px solid ${TOW.line}` }}>
-            {groups.flatMap((gr) => gr.units).map((u) => pil(u))}
+            {groups.flatMap((gr) => gr.units).map((u) => pil(zicht, u))}
           </div>
           <div ref={kiesKaartRef} style={{ flex: 1, minHeight: 0, overflowY: 'auto', padding: '8px 10px 24px' }}>
             {objectivesPaneel}
             {versterkingPaneel}
-            {selUnit && army ? unitKaart(army, selUnit, { collapsed: false }) : null}
+            {selUnit && army ? unitKaart(zicht, army, selUnit, { collapsed: false }) : null}
           </div>
         </>
       ) : (
