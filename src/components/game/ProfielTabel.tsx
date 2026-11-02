@@ -1,8 +1,13 @@
+import { createContext, useContext } from 'react';
 import { TOW, towFont, engraved } from '../../design/tow';
 import { BETER_KLEUR, BETER_ACHTERGROND } from '../../lib/veteraanStats';
 import { Eye } from './Eye';
 
 const eb = engraved as React.CSSProperties;
+
+/** SMALLE KOLOM (Joost 02-11-2026, "de stats passen dan net niet" in de weergave naast elkaar op de Fold):
+ *  binnen deze vlag krimpen de stattabellen tot ~250 px in plaats van horizontaal te scrollen. */
+export const SmalleKolom = createContext(false);
 
 export interface ProfielCel {
   v: string;
@@ -27,12 +32,13 @@ export interface ProfielRij {
  * te voet) heeft geen naamkolom nodig: de naam staat al boven de kaart.
  */
 export function ProfielTabel({ koppen, rijen, minWidth = 280 }: { koppen: string[]; rijen: ProfielRij[]; minWidth?: number }) {
+  const smal = useContext(SmalleKolom);
   const metNaam = rijen.length > 1;
-  const th: React.CSSProperties = { ...eb, fontSize: 8.5, color: TOW.goldDeep, border: `1px solid ${TOW.line}`, padding: '2px 2px', textAlign: 'center', background: 'rgba(184,134,47,0.08)' };
+  const th: React.CSSProperties = { ...eb, fontSize: smal ? 7.5 : 8.5, letterSpacing: smal ? '0.04em' : undefined, color: TOW.goldDeep, border: `1px solid ${TOW.line}`, padding: smal ? '2px 0' : '2px 2px', textAlign: 'center', background: 'rgba(184,134,47,0.08)' };
   const td = (c: ProfielCel): React.CSSProperties => {
     const beter = c.d != null && c.d > 0;
     return {
-      textAlign: 'center', border: `1px solid ${TOW.line}`, padding: '2px 2px',
+      textAlign: 'center', border: `1px solid ${TOW.line}`, padding: smal ? '2px 0' : '2px 2px',
       color: beter ? BETER_KLEUR : c.hl ? TOW.goldDeep : TOW.ink,
       fontWeight: c.hl ? 700 : 400,
       background: beter ? BETER_ACHTERGROND : c.hl ? 'rgba(184,134,47,0.10)' : 'transparent',
@@ -40,10 +46,10 @@ export function ProfielTabel({ koppen, rijen, minWidth = 280 }: { koppen: string
   };
   return (
     <div className="no-scrollbar" style={{ overflowX: 'auto', marginBottom: 6 }}>
-      <table style={{ borderCollapse: 'collapse', tableLayout: 'fixed', width: '100%', minWidth: metNaam ? minWidth + 70 : minWidth, fontSize: 12.5, fontFamily: towFont.serif }}>
+      <table style={{ borderCollapse: 'collapse', tableLayout: 'fixed', width: '100%', minWidth: smal ? (metNaam ? 250 : 210) : metNaam ? minWidth + 70 : minWidth, fontSize: smal ? 12 : 12.5, fontFamily: towFont.serif }}>
         <thead>
           <tr>
-            {metNaam && <th style={{ ...th, width: '24%' }} />}
+            {metNaam && <th style={{ ...th, width: smal ? '21%' : '24%' }} />}
             {koppen.map((k, i) => <th key={i} style={th}>{k}</th>)}
           </tr>
         </thead>
@@ -51,7 +57,7 @@ export function ProfielTabel({ koppen, rijen, minWidth = 280 }: { koppen: string
           {rijen.map((r, ri) => (
             <tr key={ri}>
               {metNaam && (
-                <td style={{ border: `1px solid ${TOW.line}`, padding: '2px 5px', fontSize: 11.5, color: TOW.parchDim, textAlign: 'left' }}>
+                <td style={{ border: `1px solid ${TOW.line}`, padding: smal ? '2px 3px' : '2px 5px', fontSize: smal ? 10.5 : 11.5, color: TOW.parchDim, textAlign: 'left' }}>
                   <span style={{ display: 'flex', alignItems: 'center', gap: 4, minWidth: 0 }}>
                     <span title={r.label} style={{ flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{r.label}</span>
                     {r.onInfo ? <Eye onClick={r.onInfo} title={`Rules for ${r.label}`} /> : null}

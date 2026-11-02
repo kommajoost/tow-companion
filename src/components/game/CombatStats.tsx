@@ -1,5 +1,5 @@
-import { ProfielTabel } from './ProfielTabel';
-import { useMemo, useState } from 'react';
+import { ProfielTabel, SmalleKolom } from './ProfielTabel';
+import { useContext, useMemo, useState } from 'react';
 import { celDelta } from '../../lib/veteraanStats';
 import { useData } from '../../data';
 import { useUI } from '../../state';
@@ -25,6 +25,7 @@ const fmtAP = (ap: number) => (ap === 0 ? '–' : String(ap));
 export function CombatStats({ unit, onProfileInfo }: { unit: ArmyUnit; onProfileInfo?: (p: UnitProfile) => void }) {
   const { rules } = useData();
   const { openRule } = useUI();
+  const smal = useContext(SmalleKolom);
   const idx = useMemo(() => getRuleIndex(rules), [rules]);
   const { melee, ranged } = useMemo(() => unitWeapons(unit, rules), [unit, rules]);
 
@@ -167,7 +168,7 @@ export function CombatStats({ unit, onProfileInfo }: { unit: ArmyUnit; onProfile
           {rw && (
             <>
               <div className="no-scrollbar" style={{ overflowX: 'auto' }}>
-                <table style={{ borderCollapse: 'collapse', tableLayout: 'fixed', width: '100%', minWidth: 300, fontSize: 12.5, fontFamily: towFont.serif }}>
+                <table style={{ borderCollapse: 'collapse', tableLayout: 'fixed', width: '100%', minWidth: smal ? 240 : 300, fontSize: smal ? 12 : 12.5, fontFamily: towFont.serif }}>
                   <thead><tr>{['Range', 'Shots', 'S', 'AP', 'To Hit'].map((h) => <th key={h} style={th}>{h}</th>)}</tr></thead>
                   <tbody><tr>
                     <td style={td(false)}>{eff?.range}</td>

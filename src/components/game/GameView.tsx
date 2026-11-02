@@ -6,6 +6,7 @@ import { parseArmyList } from '../../lib/armyParser';
 import { makeTroopTypeLookup, enrichArmyTroopTypes } from '../../lib/troopTypes';
 import { unitSize, unitTotalStrength } from '../../lib/armyRules';
 import { UnitCard, korteStand, type ScenarioKnop } from './UnitCard';
+import { SmalleKolom } from './ProfielTabel';
 import { BattleBar } from './BattleBar';
 import { ReminderStrip, type KantReminders } from './ReminderStrip';
 import { useCampaignBattle } from './useCampaignBattle';
@@ -702,10 +703,13 @@ export function GameView() {
               </>
             )}
           </div>
-          <div ref={(el) => { kolomRefs.current[sl] = el; }} className="tow-field" style={{ flex: 1, minHeight: 0, overflowY: 'auto', padding: '8px 10px 24px' }}>
-            {objectivesPaneelVan(z)}
-            {versterkingPaneelVan(z)}
-            {a ? (sel ? unitKaart(z, a, sel, { collapsed: false }) : null) : rosterBodyVan(z)}
+          {/* Smalle kolom: minder rand en compacte stattabellen, zodat de statline zonder scrollen past. */}
+          <div ref={(el) => { kolomRefs.current[sl] = el; }} className="tow-field" style={{ flex: 1, minHeight: 0, overflowY: 'auto', padding: '6px 5px 24px' }}>
+            <SmalleKolom.Provider value>
+              {objectivesPaneelVan(z)}
+              {versterkingPaneelVan(z)}
+              {a ? (sel ? unitKaart(z, a, sel, { collapsed: false }) : null) : rosterBodyVan(z)}
+            </SmalleKolom.Provider>
           </div>
         </div>
       );
