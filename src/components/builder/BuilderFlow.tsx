@@ -791,8 +791,9 @@ export function BuilderFlow({
   const zetNaam = useCallback((uid: string, naam: string) => {
     update((l) => ({ entries: l.entries.map((e) => (e.uid === uid ? { ...e, customName: naam || undefined } : e)) }));
   }, [update]);
-  /** Alleen voor een campagne-lijst; een gewone lijst krijgt geen naam-rij te zien. */
-  const openNaam = campaignCtx ? (uid: string) => setNaamUid(uid) : undefined;
+  /** Elke lijst (Joost 03-11-2026: "voeg de naamoptie ook weer toe aan de andere armylists"); de
+   *  campagne voegt alleen het register met bestaande regimenten toe. */
+  const openNaam = (uid: string) => setNaamUid(uid);
 
   // ── Render ────────────────────────────────────────────────────────────────────────────────────
   const desktopShell = desktop ? (
@@ -889,7 +890,7 @@ export function BuilderFlow({
           onRemove={() => removeUnit(screen.uid)}
           onDuplicate={() => duplicateUnit(screen.uid)}
           onShowInfo={onShowInfo}
-          onNaam={openNaam ? () => openNaam(screen.uid) : undefined}
+          onNaam={() => openNaam(screen.uid)}
           groeiMax={campaignMods?.groei?.[screen.uid]?.max ?? undefined}
           groeiMinModellen={campaignMods?.groei?.[screen.uid]?.minModellen ?? undefined}
         />
@@ -961,7 +962,7 @@ export function BuilderFlow({
           onRemove={() => removeUnit(openUid)}
           onDuplicate={() => setScreen({ kind: 'options', uid: duplicateUnit(openUid) })}
           onShowInfo={onShowInfo}
-          onNaam={openNaam ? () => openNaam(openUid) : undefined}
+          onNaam={() => openNaam(openUid)}
           groeiMax={campaignMods?.groei?.[openUid]?.max ?? undefined}
           groeiMinModellen={campaignMods?.groei?.[openUid]?.minModellen ?? undefined}
           inPane
@@ -1077,8 +1078,9 @@ export function BuilderFlow({
           </button>
         </div>
       )}
-      {naamEntry && naamUnit && campaignCtx ? (
+      {naamEntry && naamUnit ? (
         <NaamDialoog
+          campagne={!!campaignCtx}
           unitNaam={naamUnit.name_en}
           cat={naamEntry.cat}
           armySlug={list.army}

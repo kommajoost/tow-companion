@@ -16,7 +16,9 @@ const eb = engraved as React.CSSProperties;
 // Zelfde lokale gradient-const als de andere dialogen in deze app (CeledonLoginDialog, CombatCalc).
 const goldGrad = `linear-gradient(180deg, ${TOW.goldBright} 0%, ${TOW.gold} 55%, ${TOW.goldDeep} 100%)`;
 
-export function NaamDialoog({ unitNaam, cat, armySlug, huidig, register, onBewaar, onSluit }: {
+export function NaamDialoog({ campagne = true, unitNaam, cat, armySlug, huidig, register, onBewaar, onSluit }: {
+  /** Een gewone lijst (sinds 03-11-2026 ook een naam): dan geen campagne-label en -uitleg. */
+  campagne?: boolean;
   /** De catalogusnaam van de unit ("Witch Elves") — voedt de naam-smid en de placeholder. */
   unitNaam: string;
   /** 'characters' levert persoonsnamen ("Dreth the Cruel"), de rest regimentsnamen. */
@@ -56,15 +58,16 @@ export function NaamDialoog({ unitNaam, cat, armySlug, huidig, register, onBewaa
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 8 }}>
-          <span style={{ ...eb, fontSize: 8, color: TOW.muted }}>Campaign · {unitNaam}</span>
+          <span style={{ ...eb, fontSize: 8, color: TOW.muted }}>{campagne ? `Campaign · ${unitNaam}` : unitNaam}</span>
           <button onClick={onSluit} aria-label="Close" style={{ marginLeft: 'auto', width: 30, height: 30, borderRadius: 8, border: `1px solid ${TOW.line}`, background: TOW.cardLt, cursor: 'pointer', color: TOW.muted, fontSize: 18, lineHeight: 1 }}>×</button>
         </div>
         <div style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 18, color: TOW.ink, marginBottom: 4 }}>
           {cat === 'characters' ? 'Name this character' : 'Name this regiment'}
         </div>
         <div style={{ fontFamily: towFont.serif, fontSize: 12, color: TOW.muted, marginBottom: 10 }}>
-          Optional. The campaign tracks this regiment's XP, abilities and scars either way — a name just
-          makes it yours, and you can change it later without losing any of that.
+          {campagne
+            ? "Optional. The campaign tracks this regiment's XP, abilities and scars either way — a name just makes it yours, and you can change it later without losing any of that."
+            : 'Optional. A name just makes it yours — it shows in the list and during the game, and you can change it any time.'}
         </div>
         <input
           value={concept}
