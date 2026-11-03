@@ -1,6 +1,6 @@
 {
  "versie": 1,
- "gemaakt": "2026-10-24T09:48:07.395Z",
+ "gemaakt": "2026-11-03T17:28:23.025Z",
  "bron": "site/scripts/maak-scenario-lab.ts — genereerSlagveld (site/src/data/battlefieldDriver.ts), vaste seed per combinatie",
  "setups": [
   {
