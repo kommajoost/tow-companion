@@ -457,3 +457,8 @@ test('Black Coach en Corpse Cart: de armour value uit het DOCX-profiel telt mee 
   const cart = game([entry('corpse-cart', 'core')]).units[0];
   assert.equal(ar.unitArmourSave(cart).save, 4);
 });
+
+test('Black Coach en Corpse Cart dragen hun armour value ook als Armour-regel in de builder', () => {
+  assert.deepEqual(unit('black-coach', 'rare').armor.map((a) => a.name_en), ['3+']);
+  assert.deepEqual(unit('corpse-cart', 'special').armor.map((a) => a.name_en), ['4+']);
+});

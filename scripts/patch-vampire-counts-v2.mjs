@@ -208,6 +208,11 @@ export function correctVampireCountsV2(overlay) {
     equipment: ['Wraith: Spectral scythe (see below)', 'Nightmares: Iron-shod hooves (counts as hand weapons)'],
     specialRules: ['Close Order', 'First Charge', 'Impact Hits (D6+2)', 'Indomitable (1)', 'Magical Attacks', 'Necromantic Undead',
       'Regeneration (6+)', 'Spectral Coach', 'Terror'] });
+  // Een gegeven armour value hoort ook als Armour-regel op de UNIT zelf, zoals OWB een Cold One Chariot
+  // "4+" geeft: alleen in het profiel stond hij niet in de builder en telde hij niet mee in de save
+  // (Joost 04-11-2026: "black coach lijkt geen armour te hebben").
+  armour('black-coach', '3+');
+  armour('corpse-cart', overlay.profiles['corpse cart'].armourValue);
 
   // SPECTRAL LANCE (Coven Throne, Mortis Engine): een echt wapenprofiel, zoals de Wicked claws.
   overlay.rules['spectral-lance'] = { name_en: 'Spectral Lance', overrides: null,

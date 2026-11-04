@@ -144,7 +144,17 @@
             "exclusiveGroup": "vc-v2-corpsemaster-weapon"
           }
         }
-      ]
+      ],
+      "replace": {
+        "armor": [
+          {
+            "name_en": "4+",
+            "points": 0,
+            "active": true,
+            "perModel": true
+          }
+        ]
+      }
     },
     "terrorgheist": {
       "minimum": 1,
@@ -832,7 +842,18 @@
       "specialRules": "Cleaving Blow (Black Knights & Hell Knight only), Close Order, First Charge, Necromantic Undead, Regeneration (6+), Swiftstride, Spectral Steed"
     },
     "hexwraiths": {},
-    "black-coach": {}
+    "black-coach": {
+      "replace": {
+        "armor": [
+          {
+            "name_en": "3+",
+            "points": 0,
+            "active": true,
+            "perModel": true
+          }
+        ]
+      }
+    }
   },
   "magicItems": {
     "vampire-counts": [
