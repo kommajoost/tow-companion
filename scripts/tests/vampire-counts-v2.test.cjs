@@ -449,3 +449,11 @@ test('Real compiler retains reviewed corrections after reimport', () => {
     fs.rmSync(scratch, { recursive: true, force: true });
   }
 });
+
+test('Black Coach en Corpse Cart: de armour value uit het DOCX-profiel telt mee in de save', () => {
+  const coach = game([entry('black-coach', 'rare')]).units[0];
+  assert.ok(coach.options.includes('3+'));
+  assert.equal(ar.unitArmourSave(coach).save, 3);
+  const cart = game([entry('corpse-cart', 'core')]).units[0];
+  assert.equal(ar.unitArmourSave(cart).save, 4);
+});

@@ -30,6 +30,17 @@ const normMount = (s: string) => (s || '').toLowerCase().replace(/ *\([^)]*\) */
 const normMountProfile = (s: string) => (s || '').toLowerCase().replace(/\{[^}]*\}/g, '')
   .replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim();
 
+// EEN GEGEVEN ARMOUR VALUE VAN HET PROFIEL ZELF (Joost 04-11-2026: "black coach lijkt geen armour te
+// hebben"). De Renegade-lijst geeft een chariot als de Black Coach zijn armour value in het profiel
+// ("Armour value: 3+"), niet als wargear-regel. De save-berekening (`unitArmourSave`) leest alleen de
+// loadout, en daar staat een gegeven waarde als kale "4+" — precies zoals OWB dat bij een Cold One
+// Chariot doet. Dus zo'n kale regel erbij, tenzij de loadout er al een heeft.
+function metEigenArmourValue(options: string[], armourValue: string | undefined): string[] {
+  const av = armourValue?.trim();
+  if (!av || !/^\d\+$/.test(av) || options.some((o) => /^\d\+$/.test(o.trim()))) return options;
+  return [...options, av];
+}
+
 // A magic item's snapshot body is usually a clean "Rule, Rule, Rule" list (e.g. a weapon's
 // "Armour Bane (1), Magical Attacks", a rune's effects). Prose ("Notes: …" or full sentences) is kept
 // as a single line rather than chopped into fake rule chips.
@@ -112,7 +123,7 @@ export function builderListToArmy(
     const rijInfo = (naam: string): UnitProfile['info'] => {
       // "(x2)" is een AANTAL, geen deel van de naam: een strijdwagen noteert zijn twee trekdieren
       // als "Cold One (x2)" en dat vindt zichzelf nergens terug. Eraf voor het opzoeken.
-      const basis = normMountProfile(naam.replace(/s*(xs*d+)s*$/i, ''));
+      const basis = normMountProfile(naam.replace(/\s*\(x\s*\d+\)\s*$/i, ''));
       if (!basis) return undefined;
       const sleutels = [basis, `${basis} ${facKey}`, `${basis} renegade`];
       const tx = sleutels.map((k) => opts.mountText?.[k]).find(Boolean);
@@ -190,7 +201,10 @@ export function builderListToArmy(
       // Full effective loadout (base weapons + upgrades + magic), so the game resolves shooting/melee
       // profiles the same way it does for a pasted OWB list — not just the non-default upgrades.
       // "Detachment" -> "Detachment of <regiment>" (16-10-2026): het spel en de PDF lezen deze regel.
-      options: withDetachmentLabel(loadoutLabels(u, e, opts.itemsData).filter(keepLoadout), detachmentLabel(list.entries, e, getUnit)),
+      options: metEigenArmourValue(
+        withDetachmentLabel(loadoutLabels(u, e, opts.itemsData).filter(keepLoadout), detachmentLabel(list.entries, e, getUnit)),
+        opts.mountText?.[normMountProfile(u.bronNaam ?? u.name_en)]?.armourValue,
+      ),
       specialRules,
       profiles,
       // Lore/spell choices made in the builder (Wizards) → carried into the game Army.
