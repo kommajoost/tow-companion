@@ -65,6 +65,8 @@ const MODEL_RE = /^[•·*•-]\s*(\d+)\s*x\s+(.+)$/i;
 // Het COMPACTE formaat (Joost 07-11-2026): "151 - 6 Knights Errant, The Crusader's Vow, Gallant, …".
 const COMPACT_RE = /^(\d+)\s+-\s+(.+)$/;
 const COUNT_NAME_RE = /^(\d+)\s*x?\s+(.+)$/i;
+// Een subregel onder een unit ("  • 1x Ogre Loader" onder een Grand Cannon): crew of een los model.
+const SUB_RE = /^[•·*]\s*(?:\d+\s*x\s+)?(.+)$/i;
 
 const ptsOf = (s: string): number | null => { const m = s.match(PTS_RE); return m ? parseInt(m[1], 10) : null; };
 const stripPts = (s: string) => s.replace(PTS_ALL, '').replace(/\s+/g, ' ').trim();
@@ -93,7 +95,7 @@ export function isCompactNewRecruit(text: string): boolean {
   const units = regels.filter((l) => COMPACT_RE.test(l));
   if (units.length < 2) return false;
   // Hooguit de titelregel mag anders zijn (en een eventuele voettekst van New Recruit).
-  const anders = regels.filter((l) => !COMPACT_RE.test(l) && !/^created with newrecruit/i.test(l));
+  const anders = regels.filter((l) => !COMPACT_RE.test(l) && !SUB_RE.test(l) && !/^created with newrecruit/i.test(l));
   return anders.length <= 1 && (anders.length === 0 || regels[0] === anders[0]);
 }
 
@@ -106,6 +108,17 @@ function parseCompact(text: string): NewRecruitList {
   for (const regel of regels) {
     if (/^created with newrecruit/i.test(regel)) break;
     const m = regel.match(COMPACT_RE);
+    const sub = m ? null : regel.match(SUB_RE);
+    // SomeOlives, 07-11-2026: "165 - Cathayan Grand Cannon" met daaronder "  • 1x Ogre Loader". De
+    // subregel hoort bij de unit erboven, als gewoon item (zoals de optie in de catalogus heet).
+    if (sub && units.length) {
+      const u = units[units.length - 1];
+      for (const raw of splitTopLevel(sub[1])) {
+        const { name } = parseItem(raw);
+        if (name && !u.options.some((o) => o.toLowerCase() === name.toLowerCase())) u.options.push(name);
+      }
+      continue;
+    }
     if (!m) { if (!header.name && !units.length) header.name = regel; continue; }
     const [eerste, ...items] = splitTopLevel(m[2]);
     const cn = stripPts(eerste ?? '').match(COUNT_NAME_RE);

@@ -318,3 +318,30 @@ test('compact formaat: Bretonnia Errantry Crusades komt op exact 1000 punten', (
   const opt = (x) => x.r.entries.reduce((t, e) => t + e.opts.length, 0);
   assert.ok(opt(punten('kingdom-of-bretonnia')) < opt({ r }));
 });
+
+// Compact met een subregel (SomeOlives, 07-11-2026): "  • 1x Ogre Loader" onder de Grand Cannon maakte
+// dat de tekst niet meer herkend werd, en de lijst bleef leeg.
+const NR_COMPACT_SUB = `The Orient Crusade - SomeOlives
+170 - Gate Master, General, The Sword of Reason, Levitating Shield
+225 - Shugengan General, Celestial Blade, Light Armour, Heavy Armour, Wizard Level 2, Lore of Yang, Battle Magic, Guardian Feng Shi Bo, Earthing Rod
+172 - 8 Jade Lancer, Jade Lancer Officer, Standard Bearer
+208 - 15 Jade Warriors, Shield, Stubborn, Jade Officer, Standard Bearer, The Jade Banner, Musician
+165 - Cathayan Grand Cannon 
+  • 1x Ogre Loader
+60 - 5 Iron Hail Gunners`;
+
+test('compact formaat met subregel: Grand Cathay, Ogre Loader bij de kanon, 1000 punten', () => {
+  assert.equal(nrp.isNewRecruitText(NR_COMPACT_SUB), true);
+  const nr = nrp.parseNewRecruit(NR_COMPACT_SUB);
+  assert.deepEqual(nr.units.map((u) => [u.name, u.count]), [
+    ['Gate Master', 1], ['Shugengan General', 1], ['Jade Lancer', 8], ['Jade Warriors', 15], ['Cathayan Grand Cannon', 1], ['Iron Hail Gunners', 5],
+  ]);
+  assert.deepEqual(nr.units[4].options, ['Ogre Loader']);
+  const raw = read('public/owb/grand-cathay.json');
+  const lists = read('public/owb/the-old-world.json').armies.find((a) => a.id === 'grand-cathay').items;
+  const cat = ov.catalogueFor(raw, 'grand-cathay', null);
+  const pool = ov.itemsFor(read('public/owb/magic-items.json'), 'grand-cathay', null);
+  const r = imp.importOwbText(NR_COMPACT_SUB, cat, pool, lists);
+  assert.equal(r.matched, 6);
+  assert.equal(r.entries.reduce((t, e) => t + ow.entryPoints(ow.findUnit(cat, e.cat, e.unitId), e, pool), 0), 1000);
+});
