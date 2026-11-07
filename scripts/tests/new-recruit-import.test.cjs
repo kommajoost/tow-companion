@@ -270,3 +270,51 @@ test('Old World Builder-export leest nog precies zoals voorheen', () => {
   assert.deepEqual(r.header, { name: 'Dark Elves allround', points: 295, rule: 'open-war' });
   assert.deepEqual(r.entries.map((e) => [e.unitId, e.count, e.lores]), [['supreme-sorceress', 1, undefined], ['repeater-crossbowmen', 10, undefined]]);
 });
+
+// Het COMPACTE New Recruit-formaat (Joost 07-11-2026, een 2v2-tegenstander): geen factie, geen
+// compositie, geen categorieen; per unit "punten - [aantal] naam, items".
+const NR_COMPACT = `The Orient Crusade - Simon Bouwmeester (Strijd)
+241 - Baron, Lance, Shield, The Crusader's Vow, Virtue of Knightly Temper, General, Barded Pegasus, The Seal Of Parravon
+125 - Damsel, Unicorn, Wizard Level 2, Elementalism
+102 - Paladin, Lance, Shield, The Crusader's Vow, Virtue of the Joust, Battle Standard Bearer, Bretonnian Warhorse
+151 - 6 Knights Errant, The Crusader's Vow, Gallant, Standard Bearer, Banner Of Honourable Warfare
+183 - 6 Mounted Knights of the Realm, The Crusader's Vow, First Knight, Standard Bearer, War Banner
+198 - 3 Pegasus Knights, The Crusader's Vow, First Knight, Standard Bearer, Musician`;
+
+test('compact formaat: herkend, aantallen en punten per unit gelezen', () => {
+  assert.equal(nrp.isNewRecruitText(NR_COMPACT), true);
+  const nr = nrp.parseNewRecruit(NR_COMPACT);
+  assert.equal(nr.header.faction, '');
+  assert.equal(nr.header.name, 'The Orient Crusade - Simon Bouwmeester (Strijd)');
+  assert.equal(nr.header.points, 1000);
+  assert.deepEqual(nr.units.map((u) => [u.name, u.count, u.points]), [
+    ['Baron', 1, 241], ['Damsel', 1, 125], ['Paladin', 1, 102],
+    ['Knights Errant', 6, 151], ['Mounted Knights of the Realm', 6, 183], ['Pegasus Knights', 3, 198],
+  ]);
+  assert.deepEqual(nr.units[3].options, ["The Crusader's Vow", 'Gallant', 'Standard Bearer', 'Banner Of Honourable Warfare']);
+  // Een gewone lijst met een losse regel als "500 - 1000 punten" is nog geen New Recruit.
+  assert.equal(nrp.isNewRecruitText('Mijn lijst\n500 - test'), false);
+});
+
+test('compact formaat: Bretonnia Errantry Crusades komt op exact 1000 punten', () => {
+  const raw = read('public/owb/kingdom-of-bretonnia.json');
+  const lists = read('public/owb/the-old-world.json').armies.find((a) => a.id === 'kingdom-of-bretonnia').items;
+  const allItems = read('public/owb/magic-items.json');
+  const punten = (comp) => {
+    const cat = ov.catalogueFor(raw, comp, null);
+    const pool = ov.itemsFor(allItems, comp, null);
+    const r = imp.importOwbText(NR_COMPACT, cat, pool, lists);
+    assert.equal(r.matched, 6, comp);
+    return { r, cat, pool, totaal: r.entries.reduce((t, e) => t + ow.entryPoints(ow.findUnit(cat, e.cat, e.unitId), e, pool), 0) };
+  };
+  const { r, cat, pool, totaal } = punten('errantry-crusades');
+  assert.equal(totaal, 1000);
+  const labels = (i) => ow.loadoutLabels(ow.findUnit(cat, r.entries[i].cat, r.entries[i].unitId), r.entries[i], pool);
+  assert.ok(labels(0).includes('Virtue of Knightly Temper'));
+  assert.ok(labels(0).some((l) => /Crusader's Vow/.test(l)));
+  assert.ok(labels(4).includes('War Banner'));
+  assert.deepEqual(r.entries[1].lores, ['elementalism']);
+  // In de Grand Army bestaat de Crusader's Vow niet: daar herkent de import minder opties.
+  const opt = (x) => x.r.entries.reduce((t, e) => t + e.opts.length, 0);
+  assert.ok(opt(punten('kingdom-of-bretonnia')) < opt({ r }));
+});

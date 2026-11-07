@@ -62,6 +62,9 @@ const HEADER_RE = /^(.+?)\s+-\s+\[\s*(\d+)\s*(?:pts|points)?\s*\]\s*$/i;
 const RULE_RE = /^#\s*\+\+\s*(.+?)\s*\+\+/;
 const CAT_RE = /^##\s*(.+?)\s*$/;
 const MODEL_RE = /^[•·*•-]\s*(\d+)\s*x\s+(.+)$/i;
+// Het COMPACTE formaat (Joost 07-11-2026): "151 - 6 Knights Errant, The Crusader's Vow, Gallant, …".
+const COMPACT_RE = /^(\d+)\s+-\s+(.+)$/;
+const COUNT_NAME_RE = /^(\d+)\s*x?\s+(.+)$/i;
 
 const ptsOf = (s: string): number | null => { const m = s.match(PTS_RE); return m ? parseInt(m[1], 10) : null; };
 const stripPts = (s: string) => s.replace(PTS_ALL, '').replace(/\s+/g, ' ').trim();
@@ -72,7 +75,56 @@ const stripPts = (s: string) => s.replace(PTS_ALL, '').replace(/\s+/g, ' ').trim
 export function isNewRecruitText(text: string): boolean {
   const t = text ?? '';
   if (/created with newrecruit\.eu/i.test(t)) return true;
-  return /^\s*#\s*\+\+.+\+\+/m.test(t) && /^\s*##\s+\S/m.test(t);
+  if (/^\s*#\s*\+\+.+\+\+/m.test(t) && /^\s*##\s+\S/m.test(t)) return true;
+  return isCompactNewRecruit(t);
+}
+
+/** NEW RECRUIT, COMPACT (Joost 07-11-2026). Zonder factie, compositie of categorieen; alleen een
+ *  titelregel en per unit "punten - [aantal] Naam, item, item":
+ *
+ *    The Orient Crusade - Simon Bouwmeester (Strijd)
+ *    241 - Baron, Lance, Shield, The Crusader's Vow, Virtue of Knightly Temper, General, Barded Pegasus
+ *    151 - 6 Knights Errant, The Crusader's Vow, Gallant, Standard Bearer, Banner Of Honourable Warfare
+ *
+ *  Herkend aan minstens twee van zulke unitregels en geen enkele regel in een ander formaat (een Old
+ *  World Builder-export zet de punten tussen haken achter de naam, nooit vooraan met een streepje). */
+export function isCompactNewRecruit(text: string): boolean {
+  const regels = (text ?? '').split(/\r?\n/).map((l) => l.trim()).filter(Boolean);
+  const units = regels.filter((l) => COMPACT_RE.test(l));
+  if (units.length < 2) return false;
+  // Hooguit de titelregel mag anders zijn (en een eventuele voettekst van New Recruit).
+  const anders = regels.filter((l) => !COMPACT_RE.test(l) && !/^created with newrecruit/i.test(l));
+  return anders.length <= 1 && (anders.length === 0 || regels[0] === anders[0]);
+}
+
+/** Het compacte formaat: de titel is de naam van de lijst; het leger staat er niet in (de resolver
+ *  laat de factie dus leeg, en het leger komt uit de unitnamen; zie raadLegerUitUnits). */
+function parseCompact(text: string): NewRecruitList {
+  const regels = (text ?? '').split(/\r?\n/).map((l) => l.trim()).filter(Boolean);
+  const header: NewRecruitHeader = { faction: '', composition: '', name: '', points: null, ruleText: '' };
+  const units: NewRecruitUnit[] = [];
+  for (const regel of regels) {
+    if (/^created with newrecruit/i.test(regel)) break;
+    const m = regel.match(COMPACT_RE);
+    if (!m) { if (!header.name && !units.length) header.name = regel; continue; }
+    const [eerste, ...items] = splitTopLevel(m[2]);
+    const cn = stripPts(eerste ?? '').match(COUNT_NAME_RE);
+    const u: NewRecruitUnit = {
+      name: cn ? cn[2].trim() : stripPts(eerste ?? '') || 'Unit',
+      count: cn ? parseInt(cn[1], 10) || 1 : 1,
+      points: parseInt(m[1], 10),
+      category: '', options: [], subOptions: [], itemCounts: {},
+    };
+    // Geen aantallen per item: die gelden voor de hele unit (zoals importOwbText dan ook aanneemt).
+    for (const raw of items) {
+      const { name, subs } = parseItem(raw);
+      if (name && !u.options.some((o) => o.toLowerCase() === name.toLowerCase())) u.options.push(name);
+      for (const sub of subs) if (!u.subOptions.some((o) => o.toLowerCase() === sub.toLowerCase())) u.subOptions.push(sub);
+    }
+    units.push(u);
+  }
+  header.points = units.reduce((t, u) => t + (u.points ?? 0), 0) || null;
+  return { header, units };
 }
 
 /** Splitst op komma's die NIET tussen haakjes staan: "Manticore [130 pts] (Wicked claws, Heavy Armour)"
@@ -133,6 +185,7 @@ export function parseNewRecruitHeader(line: string): NewRecruitHeader {
 }
 
 export function parseNewRecruit(text: string): NewRecruitList {
+  if (isCompactNewRecruit(text)) return parseCompact(text);
   const lines = (text ?? '').split(/\r?\n/);
   const firstIdx = lines.findIndex((l) => l.trim());
   const header = parseNewRecruitHeader(firstIdx >= 0 ? lines[firstIdx] : '');

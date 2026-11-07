@@ -15,7 +15,7 @@ import {
   itemsFor, catalogueFor, applyOverlayMagicText, applyOverlayMountText, applyOverlayStatIndex,
   hasOverlay, isOverlay, overlayCompsFor, overlayStatsFor, OVERLAY_FILES, type CompositionOverlay,
 } from './overlays';
-import type { OwbArmy, MagicItemsData } from './owbBuilder';
+import { entryPoints, findUnit, type OwbArmy, type MagicItemsData } from './owbBuilder';
 import { isNewRecruitText, parseNewRecruit, resolveNewRecruitHeader, type NewRecruitHeader } from './newRecruitParser';
 import { importOwbText } from './owbImport';
 
@@ -218,6 +218,45 @@ export interface PlakResultaat {
   owcPunten: number | null;
 }
 
+/** HET LEGER UIT DE UNITS (Joost 07-11-2026). Het compacte New Recruit-formaat noemt geen factie en
+ *  geen compositie ("241 - Baron, Lance, …"), dus die leiden we af uit de tekst zelf, met dezelfde
+ *  import die de lijst straks echt omzet — niets eigens verzonnen:
+ *    1. het leger waarvan de Grand Army-catalogus de MEESTE units herkent (gelijkspel → geen keuze);
+ *    2. binnen dat leger de compositie die de meeste units herkent, dan het dichtst bij het
+ *       New Recruit-totaal uitkomt, dan de meeste opties herkent ("The Crusader's Vow" bestaat
+ *       alleen in Errantry Crusades). Bij een volledig gelijkspel wint de Grand Army.
+ *  Geeft null als er niets eenduidigs uitkomt; dan kiest de speler zelf. */
+export async function raadLegerUitUnits(tekst: string, owb: OwbData): Promise<{ army: string; composition: string } | null> {
+  const slugs = Object.keys(owb.armyNames);
+  const cats = await Promise.all(slugs.map((s) => laadCatalogus(s)));
+  const perLeger = slugs.map((slug, i) => {
+    const raw = cats[i];
+    if (!raw) return { slug, n: 0 };
+    return { slug, n: importOwbText(tekst, catalogueFor(raw, slug, null)).matched };
+  }).sort((a, b) => b.n - a.n);
+  if (!perLeger[0] || perLeger[0].n === 0 || perLeger[1]?.n === perLeger[0].n) return null;
+  const army = perLeger[0].slug;
+  const raw = cats[slugs.indexOf(army)]!;
+  const nrPunten = parseNewRecruit(tekst).header.points;
+  const comps = owb.compsByArmy[army] ?? [army];
+  const scores = await Promise.all(comps.map(async (composition) => {
+    const overlay = await laadOverlay(composition).catch(() => null);
+    if (hasOverlay(composition) && !overlay) return null;
+    const { cat, itemPool } = compositieData(raw, composition, overlay, owb.itemsData);
+    const imp = importOwbText(tekst, cat, itemPool ?? undefined, owb.itemsByArmy[army] ?? []);
+    const punten = imp.entries.reduce((t, e) => {
+      const u = findUnit(cat, e.cat, e.unitId);
+      return t + (u ? entryPoints(u, e, itemPool ?? undefined) : 0);
+    }, 0);
+    const opties = imp.entries.reduce((t, e) => t + e.opts.length, 0);
+    return { composition, matched: imp.matched, verschil: nrPunten == null ? 0 : Math.abs(punten - nrPunten), opties };
+  }));
+  const beste = scores.filter((x): x is NonNullable<typeof x> => !!x).sort((a, b) =>
+    b.matched - a.matched || a.verschil - b.verschil || b.opties - a.opties
+    || Number(b.composition === army) - Number(a.composition === army))[0];
+  return beste ? { army, composition: beste.composition } : { army, composition: comps.includes(army) ? army : comps[0] };
+}
+
 export interface NewRecruitPlak {
   /** Is de geplakte tekst een New Recruit-export? Zo niet: niets van dit alles geldt. */
   isNR: boolean;
@@ -253,10 +292,25 @@ export function useNewRecruitLeger(tekst: string, loreKeys?: string[]): NewRecru
     [owb],
   );
   const compsVoor = useMemo(() => (slug: string) => owb?.compsByArmy[slug] ?? (slug ? [slug] : []), [owb]);
-  const herkenning = useMemo(
+  const kopHerkenning = useMemo(
     () => (kop && owb ? resolveNewRecruitHeader(kop, legers, owb.compsByArmy) : null),
     [kop, owb, legers],
   );
+  // Compact formaat (geen factie in de kop): leger en compositie uit de units afleiden.
+  const moetRaden = !!kop && !kop.faction && !!owb;
+  const [geraden, setGeraden] = useState<{ tekst: string; bezig: boolean; uitkomst: { army: string; composition: string } | null }>({ tekst: '', bezig: false, uitkomst: null });
+  useEffect(() => {
+    if (!moetRaden || !owb) return;
+    let weg = false;
+    setGeraden({ tekst, bezig: true, uitkomst: null });
+    raadLegerUitUnits(tekst, owb)
+      .then((uitkomst) => { if (!weg) setGeraden({ tekst, bezig: false, uitkomst }); })
+      .catch(() => { if (!weg) setGeraden({ tekst, bezig: false, uitkomst: null }); });
+    return () => { weg = true; };
+  }, [moetRaden, owb, tekst]);
+  const raden = moetRaden && (geraden.tekst !== tekst || geraden.bezig);
+  const geradenUitkomst = moetRaden && geraden.tekst === tekst ? geraden.uitkomst : null;
+  const herkenning = geradenUitkomst ? { army: geradenUitkomst.army, composition: geradenUitkomst.composition } : kopHerkenning;
 
   // Een eigen keuze geldt alleen voor DEZE kop: plak je een andere lijst, dan begint het opnieuw.
   const kopSleutel = kop ? `${kop.faction}|${kop.composition}|${kop.name}` : '';
@@ -327,7 +381,7 @@ export function useNewRecruitLeger(tekst: string, loreKeys?: string[]): NewRecru
     kies,
     legers,
     compsVoor,
-    bezig: isNR && (!owb || (!!werkSleutel && (!actueel || staat.bezig))),
+    bezig: isNR && (!owb || raden || (!!werkSleutel && (!actueel || staat.bezig))),
     fout: actueel ? staat.fout : null,
     resultaat: actueel ? staat.resultaat : null,
   };
