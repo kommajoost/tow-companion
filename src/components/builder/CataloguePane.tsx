@@ -172,10 +172,13 @@ function EntryRow({ entry, fits, remaining, selected, hovered, onSelect, onHover
   // The over-budget line ADDS to the facts instead of replacing them. It used to swap the whole whisper
   // for "exceeds remaining points", which threw away the troop type, the unit size and the per-model
   // cost — exactly what you need to decide whether to take it anyway.
-  const whisper = [entry.troopType, size, cost, entry.note].filter(Boolean).join(' · ')
-    // Once the list is ALREADY over, "how much over" is simply the unit's whole price, and printing it
-    // twice on one line ("150 pt · 150 pt over") is noise. Then the note only has to say the state.
-    + (fits ? '' : remaining > 0 ? ` · ${n(entry.addCost - remaining)} pt over` : ' · over budget');
+  const whisper = [entry.troopType, size, cost, entry.note].filter(Boolean).join(' · ');
+  // Once the list is ALREADY over, "how much over" is simply the unit's whole price, and printing it
+  // twice on one line ("150 pt · 150 pt over") is noise. Then the note only has to say the state.
+  // 13-11-2026 (Joost: "dit geel ziet er beetje gek uit"): only THIS part is accent-gold, in its own
+  // non-shrinking span. The whole whisper used to turn gold, so near the points limit the entire list
+  // went yellow — and a long restriction note pushed the "pt over" itself behind the ellipsis.
+  const over = fits ? null : remaining > 0 ? `${n(entry.addCost - remaining)} pt over` : 'over budget';
 
   // ONE vocabulary for these states, shared with RosterTable and PickerScreen: hover lifts the ground,
   // selection adds a 3px inset rail. This pane used to also draw a full 1px accent RING — on hover and
@@ -240,12 +243,16 @@ function EntryRow({ entry, fits, remaining, selected, hovered, onSelect, onHover
         </span>
         <span
           style={{
-            fontFamily: towFont.serif, fontWeight: 400, fontSize: 10.5, lineHeight: 1.3,
-            color: fits ? TOW.faint : TOW.gold,
-            whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
+            display: 'flex', minWidth: 0,
+            fontFamily: towFont.serif, fontWeight: 400, fontSize: 10.5, lineHeight: 1.3, whiteSpace: 'nowrap',
           }}
         >
-          {whisper}
+          <span style={{ color: TOW.faint, flex: '0 1 auto', minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis' }}>
+            {whisper}
+          </span>
+          {over ? (
+            <span style={{ color: TOW.gold, flex: '0 0 auto', paddingLeft: 4 }}>· {over}</span>
+          ) : null}
         </span>
       </span>
 
