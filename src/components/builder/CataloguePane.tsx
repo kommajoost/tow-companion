@@ -146,7 +146,7 @@ function EmptyState({ line, hint }: { line: string; hint?: string }): React.JSX.
  * statline can be read before committing. Keyboard focus does exactly the same thing — it is the
  * pointer-less equivalent of hover, and without it a keyboard user could never see a preview.
  */
-function EntryRow({ entry, fits, remaining, selected, hovered, onSelect, onHover, onAdd }: {
+function EntryRow({ entry, selected, hovered, onSelect, onHover, onAdd }: {
   entry: PickerEntry;
   fits: boolean;
   /** Points left in the list — turns "does not fit" into "by how much". */
@@ -173,12 +173,8 @@ function EntryRow({ entry, fits, remaining, selected, hovered, onSelect, onHover
   // for "exceeds remaining points", which threw away the troop type, the unit size and the per-model
   // cost — exactly what you need to decide whether to take it anyway.
   const whisper = [entry.troopType, size, cost, entry.note].filter(Boolean).join(' · ');
-  // Once the list is ALREADY over, "how much over" is simply the unit's whole price, and printing it
-  // twice on one line ("150 pt · 150 pt over") is noise. Then the note only has to say the state.
-  // 13-11-2026 (Joost: "dit geel ziet er beetje gek uit"): only THIS part is accent-gold, in its own
-  // non-shrinking span. The whole whisper used to turn gold, so near the points limit the entire list
-  // went yellow — and a long restriction note pushed the "pt over" itself behind the ellipsis.
-  const over = fits ? null : remaining > 0 ? `${n(entry.addCost - remaining)} pt over` : 'over budget';
+  // 13-11-2026 (Joost: "dat hele N pt over kan wel weg, niet relevant"): over budget is no longer
+  // spelled out on the row. The header already shows the points remaining, and "Fits ✓" filters.
 
   // ONE vocabulary for these states, shared with RosterTable and PickerScreen: hover lifts the ground,
   // selection adds a 3px inset rail. This pane used to also draw a full 1px accent RING — on hover and
@@ -250,9 +246,6 @@ function EntryRow({ entry, fits, remaining, selected, hovered, onSelect, onHover
           <span style={{ color: TOW.faint, flex: '0 1 auto', minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis' }}>
             {whisper}
           </span>
-          {over ? (
-            <span style={{ color: TOW.gold, flex: '0 0 auto', paddingLeft: 4 }}>· {over}</span>
-          ) : null}
         </span>
       </span>
 

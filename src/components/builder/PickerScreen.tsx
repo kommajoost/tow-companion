@@ -189,7 +189,7 @@ function EmptyState({ line, hint }: { line: string; hint?: string }): React.JSX.
  *    button's 44px target back to the row's 30px content box — and a clipped region is not hittable,
  *    so the spec's 44×44 requirement would silently evaporate. Ellipsising is done by the name span.
  */
-function EntryRow({ entry, fits, remaining, selected, onSelect, onAdd }: {
+function EntryRow({ entry, selected, onSelect, onAdd }: {
   entry: PickerEntry; fits: boolean; remaining: number; selected: boolean; onSelect: () => void; onAdd: () => void;
 }): React.JSX.Element {
   const name = entry.unit.name_en ?? entry.unit.id;
@@ -206,12 +206,8 @@ function EntryRow({ entry, fits, remaining, selected, onSelect, onAdd }: {
   // for "exceeds remaining points", which threw away the troop type, the unit size and the per-model
   // cost — exactly what you need to decide whether to take it anyway.
   const whisper = [entry.troopType, size, cost, entry.note].filter(Boolean).join(' · ');
-  // Once the list is ALREADY over, "how much over" is simply the unit's whole price, and printing it
-  // twice on one line ("150 pt · 150 pt over") is noise. Then the note only has to say the state.
-  // 13-11-2026 (Joost: "dit geel ziet er beetje gek uit"): only THIS part is accent-gold, in its own
-  // non-shrinking span. The whole whisper used to turn gold, so near the points limit the entire list
-  // went yellow — and a long restriction note pushed the "pt over" itself behind the ellipsis.
-  const over = fits ? null : remaining > 0 ? `${n(entry.addCost - remaining)} pt over` : 'over budget';
+  // 13-11-2026 (Joost: "dat hele N pt over kan wel weg, niet relevant"): over budget is no longer
+  // spelled out on the row. The header already shows the points remaining, and "Fits ✓" filters.
 
   return (
     <div
@@ -266,9 +262,6 @@ function EntryRow({ entry, fits, remaining, selected, onSelect, onAdd }: {
           <span style={{ color: TOW.faint, flex: '0 1 auto', minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis' }}>
             {whisper}
           </span>
-          {over ? (
-            <span style={{ color: TOW.gold, flex: '0 0 auto', paddingLeft: 4 }}>· {over}</span>
-          ) : null}
         </span>
       </span>
 
