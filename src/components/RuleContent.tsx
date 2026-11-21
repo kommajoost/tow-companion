@@ -41,6 +41,10 @@ export function RuleContent({ slug }: { slug: string }) {
   const relatedSet = new Set(related);
   const crossRefs = clean(rule.crossRefSlugs).filter((s) => !relatedSet.has(s));
   const showCross = crossOpenFor === slug;
+  // Closed: no cross-references when the wiki has a Related list (those come first), otherwise the
+  // first few — a rule can be linked from 60 others, and that must not open as a wall of chips.
+  const crossClosed = related.length > 0 ? 0 : Math.min(crossRefs.length, 6);
+  const crossShown = showCross ? crossRefs : crossRefs.slice(0, crossClosed);
 
   const children = clean(rule.childSlugs);
   const childrenDefaultOpen = children.length <= SECTION_LIST_OPEN_MAX;
@@ -51,11 +55,14 @@ export function RuleContent({ slug }: { slug: string }) {
   const prev = rule.parentSlug ? getRule(rule.prevSlug) : undefined;
   const next = rule.parentSlug ? getRule(rule.nextSlug) : undefined;
 
-  const chip = (s: string) => (
+  // Compact chips: this footer used to take more room than the rule itself (40px chips, a full
+  // heading per block, boxed prev/next). `dim` marks the broad cross-references, so they read as
+  // secondary next to the wiki's curated Related list.
+  const chip = (s: string, dim = false) => (
     <button
       key={s}
       onClick={() => openRule(s)}
-      className="min-h-[40px] rounded-full border border-border bg-surface-2 px-3 py-1.5 text-sm text-accent active:bg-surface-3"
+      className={`rounded-full border border-border-soft bg-surface-2 px-2.5 py-1 text-[13px] leading-snug active:bg-surface-3 ${dim ? 'text-ink-dim' : 'text-accent'}`}
     >
       {getRule(s)!.name}
     </button>
@@ -135,45 +142,36 @@ export function RuleContent({ slug }: { slug: string }) {
         </section>
       )}
 
-      {related.length > 0 && (
-        <section className="mt-7 border-t border-border-soft pt-4">
-          <div className="text-xs font-semibold uppercase tracking-widest text-ink-faint">Related rules</div>
-          <div className="mt-3 flex flex-wrap gap-2">{related.map(chip)}</div>
-        </section>
-      )}
-
-      {crossRefs.length > 0 && (
-        <section className={`${related.length > 0 ? 'mt-4' : 'mt-7 border-t border-border-soft'} pt-4`}>
-          <button
-            onClick={() => setCrossOpenFor((o) => (o === slug ? null : slug))}
-            className="flex min-h-[40px] w-full items-center gap-2 text-left"
-            aria-expanded={showCross}
-          >
-            <span className="text-xs font-semibold uppercase tracking-widest text-ink-faint">
-              Cross-reference links
-            </span>
-            <span className="rounded-full bg-surface-2 px-2 text-[11px] text-ink-faint">
-              {crossRefs.length}
-            </span>
-            <span
-              className="ml-auto text-ink-faint transition-transform"
-              style={{ transform: showCross ? 'rotate(90deg)' : 'none' }}
-            >
-              ›
-            </span>
-          </button>
-          {showCross && <div className="mt-3 flex flex-wrap gap-2">{crossRefs.map(chip)}</div>}
+      {(related.length > 0 || crossRefs.length > 0) && (
+        // ONE block for both lists. The curated Related chips show straight away; the cross-references
+        // sit behind a single "+N more" chip at the end of the same row instead of a heading and a
+        // collapsed section of their own.
+        <section className="mt-5 border-t border-border-soft pt-3">
+          <div className="mb-2 text-[10px] font-semibold uppercase tracking-widest text-ink-faint">
+            {related.length > 0 ? 'Related' : 'Cross-references'}
+          </div>
+          <div className="flex flex-wrap gap-1.5">
+            {related.map((s) => chip(s))}
+            {crossShown.map((s) => chip(s, related.length > 0))}
+            {crossRefs.length > crossClosed && (
+              <button
+                onClick={() => setCrossOpenFor((o) => (o === slug ? null : slug))}
+                aria-expanded={showCross}
+                className="rounded-full border border-dashed border-border px-2.5 py-1 text-[13px] leading-snug text-ink-faint active:bg-surface-3"
+              >
+                {showCross ? 'Less' : `+${crossRefs.length - crossClosed} more`}
+              </button>
+            )}
+          </div>
         </section>
       )}
 
       {(prev || next) && (
-        // Two equal columns with min-w-0 so long names truncate instead of pushing off a 375px screen.
-        <nav className="mt-7 grid grid-cols-2 gap-2 border-t border-border-soft pt-4">
+        // A slim text row, not two boxed buttons. Two equal columns with min-w-0 so long names
+        // truncate instead of pushing off a 375px screen.
+        <nav className="mt-3 grid grid-cols-2 gap-3 border-t border-border-soft pt-1 text-[13px] text-accent">
           {prev ? (
-            <button
-              onClick={() => openRule(prev.slug)}
-              className="flex min-h-[40px] min-w-0 items-center gap-1 rounded-lg border border-border-soft bg-surface-2 px-3 py-2 text-left text-sm text-accent active:bg-surface-3"
-            >
+            <button onClick={() => openRule(prev.slug)} className="flex min-h-[36px] min-w-0 items-center gap-1 text-left active:opacity-70">
               <span aria-hidden className="shrink-0">‹</span>
               <span className="min-w-0 truncate">{prev.name}</span>
             </button>
@@ -181,10 +179,7 @@ export function RuleContent({ slug }: { slug: string }) {
             <span />
           )}
           {next ? (
-            <button
-              onClick={() => openRule(next.slug)}
-              className="flex min-h-[40px] min-w-0 items-center justify-end gap-1 rounded-lg border border-border-soft bg-surface-2 px-3 py-2 text-right text-sm text-accent active:bg-surface-3"
-            >
+            <button onClick={() => openRule(next.slug)} className="flex min-h-[36px] min-w-0 items-center justify-end gap-1 text-right active:opacity-70">
               <span className="min-w-0 truncate">{next.name}</span>
               <span aria-hidden className="shrink-0">›</span>
             </button>
