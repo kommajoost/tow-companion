@@ -1014,6 +1014,37 @@ export function UnitOptions(props: {
             <div style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 15.5, lineHeight: 1.15, color: TOW.ink }}>
               {cleanLabel(title)}
             </div>
+            {/* Eigen naam — ÉÉN REGEL onder de titel (21-11-2026, Joost: "regiment name neemt nu wel
+                teveel ruimte in in de header"). Dit was een eigen kaart van ruim 60px tussen de kop
+                en de count-rij; nu kost het één tekstregel. Het blijft TEKST en geen icoontje: een
+                eigen naam is waar je regiment z'n verhaal aan ophangt, dus die moet je niet hoeven
+                zoeken. En het blijft optioneel — de veteranen-identiteit hangt aan `entry.uid`, niet
+                aan de naam — vandaar een uitnodiging en geen rode taak. */}
+            {onNaam ? (
+              <button
+                type="button"
+                onClick={onNaam}
+                aria-label={entry.customName ? `Change the name of ${entry.customName}` : `Name this ${unit.name_en}`}
+                style={{
+                  ...BTN_RESET, cursor: 'pointer', display: 'flex', alignItems: 'baseline', gap: 6,
+                  maxWidth: '100%', minHeight: 22, padding: '2px 0', textAlign: 'left',
+                }}
+              >
+                {entry.customName ? (
+                  <>
+                    <span style={{
+                      fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 12.5, color: TOW.ink,
+                      minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
+                    }}>{entry.customName}</span>
+                    <span style={{ ...eb, fontSize: 7.5, color: TOW.goldDeep, flexShrink: 0 }}>Change</span>
+                  </>
+                ) : (
+                  <span style={{ ...eb, fontSize: 7.5, color: TOW.goldDeep }}>
+                    + Name this {entry.cat === 'characters' ? 'character' : 'regiment'}
+                  </span>
+                )}
+              </button>
+            ) : null}
           </div>
           <div style={{ flexShrink: 0, textAlign: 'right' }}>
             <div style={{
@@ -1046,40 +1077,6 @@ export function UnitOptions(props: {
             ) : null}
           </div>
         </div>
-
-        {/* Campagne — naam-rij. Staat BOVEN de count-rij en niet als icoontje in de kop: een eigen
-            naam is waar je regiment z'n verhaal aan ophangt, dus 'm moeten zoeken zou raar zijn.
-            Het is wél OPTIONEEL (02-08): de veteranen-identiteit hangt aan `entry.uid`, niet aan de
-            naam, dus een naamloze unit is niets mis mee. Vandaar een uitnodiging, geen rode taak. */}
-        {onNaam ? (
-          <button
-            type="button"
-            onClick={onNaam}
-            aria-label={entry.customName ? `Change the name of ${entry.customName}` : `Name this ${unit.name_en}`}
-            style={{
-              display: 'flex', alignItems: 'center', gap: 10, textAlign: 'left', boxSizing: 'border-box',
-              margin: `0 ${BUILDER.gutter}px 10px`, width: `calc(100% - ${BUILDER.gutter * 2}px)`,
-              padding: '9px 11px', borderRadius: 10, cursor: 'pointer',
-              border: `1px solid ${TOW.lineStrong}`,
-              background: TOW.cardLt,
-            }}
-          >
-            <span style={{ flex: 1, minWidth: 0 }}>
-              <span style={{ ...eb, fontSize: 7.5, color: TOW.muted, display: 'block' }}>
-                {entry.cat === 'characters' ? 'Character name' : 'Regiment name'}
-              </span>
-              <span style={{
-                fontFamily: towFont.serif, fontSize: 13.5, color: entry.customName ? TOW.ink : TOW.faint,
-                display: 'block', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
-              }}>
-                {entry.customName || 'Unnamed — optional'}
-              </span>
-            </span>
-            <span style={{ ...eb, fontSize: 7.5, color: TOW.goldDeep, flexShrink: 0 }}>
-              {entry.customName ? 'Change' : 'Name it'}
-            </span>
-          </button>
-        ) : null}
 
         {/* Promote — only for a character the curated table actually has a path for, so most units
             never see this row at all. It sits up here with the identity of the unit rather than down
