@@ -29,7 +29,7 @@
 // `BUILDER.gutter` itself and all text shares one left edge.
 
 import { useStatIndex, type StatIndex } from '../../lib/useStatIndex';
-import { statSleutels } from '../../lib/statSleutel';
+import { statSleutels, extraMountSleutels } from '../../lib/statSleutel';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { allowedLores as resolveLores } from '../../lib/armyRules';
 import { useData } from '../../data';
@@ -545,7 +545,9 @@ export function UnitOptions(props: {
     const kaal = cleanLabel(naam).toLowerCase().replace(/ *\([^)]*\) */g, '').trim();
     if (!kaal) return false;
     const fac = (ctx.labels?.faction ?? '').toLowerCase().replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim();
-    return [kaal, `${kaal} ${fac}`, `${kaal} renegade`].some((k) => !!statIdx[k]);
+    if ([kaal, `${kaal} ${fac}`, `${kaal} renegade`].some((k) => !!statIdx[k])) return true;
+    // Meervoud ("War Boars (x2)" → "war boar") en een kortere leger-tag ("skeletal steed tomb kings").
+    return extraMountSleutels(naam, ctx.labels?.faction, Object.keys(statIdx)).some((k) => !!statIdx[k]);
   }, [statIdx, ctx.labels?.faction]);
   /** Which of a multi-row profile (rank-and-file, champion, mount, crew…) the single strip shows. */
   const [profileIdx, setProfileIdx] = useState(0);
@@ -1144,10 +1146,10 @@ export function UnitOptions(props: {
         {profile ? (
           <div style={{ padding: `4px ${BUILDER.gutter}px 7px` }}>
             {profiles.length > 1 ? (
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 5, marginBottom: 5 }}>
+              <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 5, marginBottom: 5 }}>
                 {profiles.map((r, i) => {
                   const on = i === Math.min(profileIdx, profiles.length - 1);
-                  return (
+                  const chip = (
                     <button
                       key={`${r.Name}-${i}`}
                       type="button"
@@ -1159,17 +1161,22 @@ export function UnitOptions(props: {
                       }}
                     >{cleanLabel(r.Name)}</button>
                   );
+                  // 21-11-2026: het oogje staat nu METEEN achter het model dat een eigen pagina heeft,
+                  // niet pas nadat je dat model had aangetikt. Zo zie je bij het openen van de unit al
+                  // dat het rijdier eigen regels heeft. Het verschijnt alleen bij een rij met een eigen
+                  // pagina — bij een champion die de regels van de unit deelt zou het een lege lade
+                  // opentrekken.
+                  if (!onShowInfo || !profielHeeftPagina(r.Name)) return chip;
+                  return (
+                    <span key={`${r.Name}-${i}`} style={{ display: 'inline-flex', alignItems: 'center' }}>
+                      {chip}
+                      <Eye
+                        onClick={() => onShowInfo({ kind: 'mount', name: cleanLabel(r.Name) })}
+                        title={`Rules for ${cleanLabel(r.Name)}`}
+                      />
+                    </span>
+                  );
                 })}
-                {/* Het oogje hoort bij de GEKOZEN rij, niet bij de strip: welke regels je te zien
-                    krijgt hangt af van welk model je hebt aangetikt. Het verschijnt alleen als die
-                    rij een eigen pagina heeft — bij een champion die de regels van de unit deelt
-                    zou het een lege lade opentrekken. */}
-                {onShowInfo && profile && profielHeeftPagina(profile.Name) ? (
-                  <Eye
-                    onClick={() => onShowInfo({ kind: 'mount', name: cleanLabel(profile.Name) })}
-                    title={`Rules for ${cleanLabel(profile.Name)}`}
-                  />
-                ) : null}
               </div>
             ) : null}
             <StatStrip

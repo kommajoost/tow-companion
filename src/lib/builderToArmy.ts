@@ -6,6 +6,7 @@
 import type { Army, ArmyUnit, UnitProfile } from '../types';
 import { CATEGORIES, campaignUnitId, detachmentLabel, findUnit, entryPoints, loadoutLabels, withDetachmentLabel, magicItemId, selectedMagicItems, selectedMountIndex, selectedOptions, validate, type BuilderList, type Category, type OwbArmy, type OwbUnit, type MagicItemsData } from './owbBuilder';
 import { applyMountStatModifiers, mountStatModifiers } from './mountModifiers';
+import { extraMountSleutels } from './statSleutel';
 
 /** Per-item flavour + rules text snapshot (public/owb/magic-item-text.json), keyed by item slug. */
 export type MagicText = Record<string, {
@@ -125,7 +126,11 @@ export function builderListToArmy(
       // als "Cold One (x2)" en dat vindt zichzelf nergens terug. Eraf voor het opzoeken.
       const basis = normMountProfile(naam.replace(/\s*\(x\s*\d+\)\s*$/i, ''));
       if (!basis) return undefined;
-      const sleutels = [basis, `${basis} ${facKey}`, `${basis} renegade`];
+      // 21-11-2026: plus meervoud en kortere leger-tag, zie extraMountSleutels.
+      const sleutels = [
+        basis, `${basis} ${facKey}`, `${basis} renegade`,
+        ...extraMountSleutels(naam, opts.faction, Object.keys(opts.mountText ?? {})),
+      ];
       const tx = sleutels.map((k) => opts.mountText?.[k]).find(Boolean);
       const tt = tx?.troopType ?? sleutels.map((k) => opts.troopTypeFor?.(k)).find(Boolean);
       const det = [

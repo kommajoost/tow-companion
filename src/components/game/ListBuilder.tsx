@@ -27,6 +27,7 @@ import { itemsFor, catalogueFor, applyOverlayMagicText, applyOverlayMountText, a
 import { InfoSheet, type InfoSheetData } from './InfoSheet';
 import type { MagicText } from '../../lib/builderToArmy';
 import { magicItemRules } from '../../lib/builderToArmy';
+import { extraMountSleutels } from '../../lib/statSleutel';
 import type { UnitProfile } from '../../types';
 import { helftVan, isVersterkingLijst, maakVersterkingLijst, versterkingBasis } from '../../lib/versterking';
 import { useAanraakSlepen } from './useAanraakSlepen';
@@ -1026,7 +1027,13 @@ export function ListBuilder() {
             // profielrij ("Cold One" in Cold One Knights) en heeft geen tag; die miste alles.
             // Daarom hier de factienaam als extra kandidaat, plus "renegade" voor de packs.
             const fac = normMountProfile(armyName(active.army));
-            const sleutels = [profileKey, taggedKey, `${profileKey} ${fac}`, `${profileKey} renegade`];
+            // 21-11-2026: plus het meervoud ("War Boars (x2)" → "war boar") en de kortere leger-tag
+            // ("skeletal steed tomb kings" bij Tomb Kings of Khemri). Achteraan, zodat wat al goed
+            // ging — de mounts van characters — dezelfde pagina blijft vinden.
+            const sleutels = [
+              profileKey, taggedKey, `${profileKey} ${fac}`, `${profileKey} renegade`,
+              ...extraMountSleutels(label, armyName(active.army), Object.keys(activeStatIdx ?? {})),
+            ];
             const rows = sleutels.map((k) => statsFor(k)).find((r) => r.length) ?? statsFor(label);
             const text = sleutels.map((k) => activeMountText[k]).find(Boolean) ?? {};
             const profiles: UnitProfile[] = rows.map((row) => ({

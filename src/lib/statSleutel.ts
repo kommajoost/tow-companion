@@ -62,3 +62,47 @@ export function statSleutels(naam: string, index?: Record<string, unknown> | nul
   }
   return uit;
 }
+
+/**
+ * EXTRA kandidaat-sleutels voor een MODEL BINNEN een unit — een profielrij als "War Boars (x2)" of
+ * "Skeletal Steed" — naast de drie die de aanroepers al proberen (kaal, kaal + legernaam, kaal +
+ * "renegade"). (21-11-2026, Joost: "dit is altijd met mounts, alleen bij character mounts gaat dit
+ * nu goed".)
+ *
+ * Twee naamverschillen hielden een ingebakken rijdier weg bij z'n eigen pagina:
+ *   1. MEERVOUD. Een strijdwagen noteert z'n trekdieren als "War Boars (x2)" en "Nightmares (x2)";
+ *      de pagina heet "war boar" en "nightmare".
+ *   2. EEN KORTERE LEGER-TAG. De pagina heet "skeletal steed tomb kings", het leger "Tomb Kings of
+ *      Khemri" — kaal + legernaam vond dus niets.
+ * De tag moet als HELE WOORDEN in de legernaam staan. Op losse letters matchen ging mis: "ungor herd"
+ * paste op "beastmen brayHERDs", en dan kreeg een Ungor in een unit de pagina van een andere unit.
+ * Er wordt niets verzonnen: elke sleutel die hier uitkomt bestaat al in de index die je meegeeft.
+ */
+export function extraMountSleutels(naam: string, factie: string | undefined, sleutels: Iterable<string>): string[] {
+  // "(x2)" is een aantal en "{dark elves}" een tag: geen van beide hoort bij de naam.
+  const basis = plat(String(naam || '').split('(')[0].split('{')[0]);
+  if (!basis) return [];
+  const leger = plat(factie || '');
+  const woorden = basis.split(' ');
+  const laatste = woorden[woorden.length - 1] ?? '';
+  const enkel = laatste.length > 3 && laatste.endsWith('s')
+    ? [...woorden.slice(0, -1), laatste.slice(0, -1)].join(' ')
+    : '';
+  const uit: string[] = [];
+  const voeg = (k?: string) => { if (k && !uit.includes(k)) uit.push(k); };
+  if (enkel) {
+    voeg(enkel);
+    if (leger) voeg(`${enkel} ${leger}`);
+    voeg(`${enkel} renegade`);
+  }
+  if (leger) {
+    const vormen = enkel ? [basis, enkel] : [basis];
+    for (const k of sleutels) {
+      for (const v of vormen) {
+        if (!k.startsWith(`${v} `)) continue;
+        if (` ${leger} `.includes(` ${k.slice(v.length + 1)} `)) voeg(k);
+      }
+    }
+  }
+  return uit;
+}
