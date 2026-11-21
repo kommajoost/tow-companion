@@ -537,11 +537,14 @@ export function UnitOptions(props: {
   // Factie-bewust, want dezelfde mount heeft per leger andere regels en de index sleutelt dat plat
   // in de naam ("cold one dark elves"). Een ingebakken profielrij heet kaal "Cold One" en zou zonder
   // die kandidaat niets vinden.
+  // 21-11-2026: de twee regexen hieronder stonden er sinds 26-08 ZONDER backslashes in (`/ *([^)]*) */`
+  // en `/s+/`). De eerste at daardoor de hele naam op, `kaal` was altijd leeg en het oogje verscheen
+  // in de builder dus nooit — Joost: "ik kan bij die unit nergens de dark steed rules zelf zien".
   const profielHeeftPagina = useMemo(() => (naam: string): boolean => {
     if (!statIdx) return false;
-    const kaal = cleanLabel(naam).toLowerCase().replace(/ *([^)]*) */g, '').trim();
+    const kaal = cleanLabel(naam).toLowerCase().replace(/ *\([^)]*\) */g, '').trim();
     if (!kaal) return false;
-    const fac = (ctx.labels?.faction ?? '').toLowerCase().replace(/[^a-z0-9 ]/g, ' ').replace(/s+/g, ' ').trim();
+    const fac = (ctx.labels?.faction ?? '').toLowerCase().replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim();
     return [kaal, `${kaal} ${fac}`, `${kaal} renegade`].some((k) => !!statIdx[k]);
   }, [statIdx, ctx.labels?.faction]);
   /** Which of a multi-row profile (rank-and-file, champion, mount, crew…) the single strip shows. */
