@@ -38,8 +38,13 @@ export interface Rule {
   childSlugs: string[];
   prevSlug: string | null;
   nextSlug: string | null;
-  /** Related rules surfaced by the wiki. */
+  /** The wiki's "Cross-Reference Links": every rule that links to this one. Broad — for Musicians it
+   *  also holds Grail Reliquae, which merely mentions the word. */
   crossRefSlugs: string[];
+  /** The wiki's own curated "Related:" list (Contentful `relatedLinks`), in the wiki's order. This is
+   *  the short list that explains the rule; `crossRefSlugs` is everything that mentions it. Optional:
+   *  overlay rules, spells and older data bundles do not carry it. */
+  relatedSlugs?: string[];
   /** De wiki's eigen "Last update" (Contentful sys.updatedAt) — waarmee te zien is wat een errata
    *  geraakt heeft. Optioneel: oudere data-bundels hebben 'm niet. */
   updatedAt?: string | null;

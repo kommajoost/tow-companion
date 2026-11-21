@@ -325,6 +325,9 @@ function record(slug, data, parentSlug) {
     prevSlug: pp.prev && pp.prev.fields ? pp.prev.fields.slug : null,
     nextSlug: pp.next && pp.next.fields ? pp.next.fields.slug : null,
     crossRefSlugs: crossRefSlugs(pp.crossReference),
+    // De wiki's eigen, samengestelde "Related:"-lijst. `crossReference` is iets anders: alles wat
+    // naar deze regel linkt. Zie scripts/add-related.mjs, dat dit veld los kan bijwerken.
+    relatedSlugs: entrySlugs(f.relatedLinks),
     refSlugs: [...refs],
   };
   return rules[slug];

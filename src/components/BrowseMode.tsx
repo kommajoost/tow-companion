@@ -9,6 +9,22 @@ import { QuickRollButton, QuickRollSheet } from './CombatCalc';
 
 const MAX_RESULTS = 60;
 
+// The wiki's table of contents in reading groups (same split as the comments in scripts/scrape.mjs).
+// A nav section that is in none of these lands under "Other", so a new wiki section never vanishes;
+// a slug listed here that the nav doesn't have is simply skipped.
+const SECTION_GROUPS: [string, string[]][] = [
+  ['Core rules', ['overview-of-the-game', 'general-principles', 'model-profiles', 'forming-units', 'removing-casualties', 'model-and-unit-facing', 'troop-types-at-a-glance']],
+  ['The turn', ['the-turn-sequence', 'the-strategy-phase', 'the-movement-phase', 'movement-in-detail', 'the-shooting-phase', 'the-combat-phase']],
+  ['Magic', ['magic', 'the-lores-of-magic', 'magic-items']],
+  ['Supporting rules', ['the-psychology-of-war', 'special-rules', 'unusual-formations', 'troop-types-in-detail', 'command-groups', 'characters', 'weapons-of-war', 'war-machines', 'battlefield-terrain']],
+  ['Playing the game', ['warhammer-armies', 'warhammer-battles', 'campaign-battles', 'narrative-battles', 'matched-play', 'quick-reference']],
+];
+
+const groupHeading = 'mb-2 px-1 font-display text-[9px] uppercase tracking-widest text-ink-faint';
+// On the phone the section rows are 18px display type; a 9px heading above them disappears. The
+// sidebar rows are 14px, so the small heading still reads there.
+const groupHeadingPhone = 'mb-2 px-1 font-display text-[11px] uppercase tracking-widest text-ink-dim';
+
 // De ingang naar de turn-companion, in dezelfde familie als QuickRollButton hiernaast: een compacte
 // pil in de Rulebook-kop. (Joost, 12-09) Turns was een hele eigen tab voor iets dat vrijwel niemand
 // aantikte; de companion hoort thuis náást de regels die je er tijdens een potje bij opzoekt.
@@ -137,21 +153,54 @@ export function BrowseMode({ onTurns }: { onTurns?: () => void } = {}) {
   const headerControlsZijbalk = kopKnoppen('compact');
   const headerControls = kopKnoppen('geen');
 
+  // nav in leesgroepen (zie SECTION_GROUPS). Lege groepen vallen weg.
+  const navGroups = useMemo<[string, NavSection[]][]>(() => {
+    const bySlug = new Map(nav.map((s) => [s.slug, s] as const));
+    const used = new Set<string>();
+    const out: [string, NavSection[]][] = [];
+    for (const [label, slugs] of SECTION_GROUPS) {
+      const list = slugs.flatMap((s) => {
+        const sec = bySlug.get(s);
+        if (!sec || used.has(s)) return [];
+        used.add(s);
+        return [sec];
+      });
+      if (list.length) out.push([label, list]);
+    }
+    const rest = nav.filter((s) => !used.has(s.slug));
+    if (rest.length) out.push(['Other', rest]);
+    return out;
+  }, [nav]);
+
   // Lower-cased search index over every rule, built once.
+  // Elk item draagt zijn sectie (sleutel + naam, voor de filterchips en de meta-regel) en pagina.
   const index = useMemo(
     () => [
       ...Object.values(rules)
         // Skip empty section stubs and the standalone weapon/chart "(Profile)" entries —
         // those are already shown inline on their parent weapon/rule.
         .filter((r) => r.body && !r.slug.endsWith('-profile') && !r.slug.endsWith('-chart'))
-        .map((r) => ({
-          slug: r.slug,
-          name: r.name,
-          nameLower: r.name.toLowerCase(),
-          hay: (r.name + ' ' + r.bodyIndex).toLowerCase(),
-          bodyIndex: r.bodyIndex,
-          soort: 'rule' as const,
-        })),
+        .map((r) => {
+          const parent = r.parentSlug ? rules[r.parentSlug] : undefined;
+          // Een sectie hoort bij zichzelf; een losse regel (spreuk, tabel) zonder bestaande parent
+          // valt in de verzamelchip "Other" en krijgt geen sectienaam in de meta-regel.
+          const sec = parent ?? (r.childSlugs.length > 0 ? r : undefined);
+          return {
+            slug: r.slug,
+            name: r.name,
+            nameLower: r.name.toLowerCase(),
+            hay: (r.name + ' ' + r.bodyIndex).toLowerCase(),
+            bodyIndex: r.bodyIndex,
+            soort: 'rule' as const,
+            secKey: sec ? sec.slug : '~other',
+            secName: sec ? sec.name : 'Other',
+            metaSec: sec?.name ?? null,
+            page: r.pageReference,
+            // A page number means nothing without its book: "p.2" for Bellowers is Ravening Hordes,
+            // not the rulebook. The rulebook itself is the default and stays unnamed.
+            book: r.association?.[0] && r.association[0] !== 'Rulebook' ? r.association[0] : null,
+          };
+        }),
       // Errata en FAQ zijn OFFICIËLE regelwijzigingen, geen aantekening erbij: 188 van de 285
       // errata gaan over legerboek-eenheden en -items die hier helemaal geen regelpagina hebben,
       // dus het errata-item is dáár de enige vindplaats van de geldende regel. Ze horen dus in de
@@ -164,23 +213,55 @@ export function BrowseMode({ onTurns }: { onTurns?: () => void } = {}) {
           hay: (e.name + ' ' + e.bodyIndex).toLowerCase(),
           bodyIndex: e.bodyIndex,
           soort,
+          // Errata en FAQ tellen als eigen "secties" in de filterchips.
+          secKey: '~' + soort,
+          secName: soort === 'errata' ? 'Errata' : 'FAQ',
+          metaSec: null as string | null,
+          page: null as number | null,
+          book: null as string | null,
         })),
     ],
     [rules, errata, faq],
   );
 
   const q = query.trim().toLowerCase();
-  const results = useMemo(() => {
-    if (q.length < 2) return [];
+  // Alle treffers (nog NIET afgekapt) + de aantallen per sectie. De chips moeten de echte aantallen
+  // tonen en een sectiefilter moet ook treffers voorbij de eerste MAX_RESULTS vinden, dus het
+  // afkappen gebeurt pas na het filteren, hieronder.
+  const hits = useMemo(() => {
     const nameHits: typeof index = [];
     const bodyHits: typeof index = [];
+    const counts = new Map<string, { name: string; n: number }>();
+    if (q.length < 2) return { nameHits, bodyHits, chips: [] as { key: string; name: string; n: number }[] };
     for (const e of index) {
       if (e.nameLower.includes(q)) nameHits.push(e);
       else if (e.hay.includes(q)) bodyHits.push(e);
+      else continue;
+      const c = counts.get(e.secKey);
+      if (c) c.n++; else counts.set(e.secKey, { name: e.secName, n: 1 });
     }
     nameHits.sort((a, b) => a.name.length - b.name.length);
-    return [...nameHits, ...bodyHits].slice(0, MAX_RESULTS);
+    const chips = [...counts.entries()]
+      .map(([key, c]) => ({ key, ...c }))
+      .sort((a, b) => b.n - a.n || a.name.localeCompare(b.name));
+    return { nameHits, bodyHits, chips };
   }, [q, index]);
+
+  // Gekozen sectiechip, onthouden SAMEN met de zoekterm waarvoor hij gekozen is: bij een nieuwe term
+  // past hij niet meer en valt hij vanzelf terug op "All" (geen effect nodig).
+  const [chipPick, setChipPick] = useState<{ q: string; key: string } | null>(null);
+  const activeChip = chipPick && chipPick.q === q && hits.chips.some((c) => c.key === chipPick.key) ? chipPick.key : null;
+
+  const results = useMemo(() => {
+    const keep = (e: (typeof index)[number]) => !activeChip || e.secKey === activeChip;
+    const names = hits.nameHits.filter(keep);
+    const bodies = hits.bodyHits.filter(keep);
+    const total = names.length + bodies.length;
+    // Eerst naamtreffers, dan teksttreffers; samen maximaal MAX_RESULTS.
+    const shownNames = names.slice(0, MAX_RESULTS);
+    const shownBodies = bodies.slice(0, MAX_RESULTS - shownNames.length);
+    return { names: shownNames, bodies: shownBodies, total, shown: shownNames.length + shownBodies.length };
+  }, [hits, activeChip]);
 
   const f = filter.trim().toLowerCase();
   const children = section
@@ -207,38 +288,78 @@ export function BrowseMode({ onTurns }: { onTurns?: () => void } = {}) {
     </div>
   );
 
+  const resultItem = (e: (typeof index)[number]) => {
+    const pageLabel = e.page != null ? `p.${e.page}` : null;
+    const meta = [e.metaSec, [e.book, pageLabel].filter(Boolean).join(' ') || null].filter(Boolean).join(' · ');
+    return (
+      <li key={e.soort + '/' + e.slug}>
+        <button
+          onClick={() => {
+            if (e.soort === 'rule') { openRule(e.slug); return; }
+            // Geen regelpagina: open het bijbehorende blad met dit item al uitgeklapt.
+            setBlad(e.soort); setSection(null); setOpen(e.slug); setFilter(''); setQuery('');
+          }}
+          className="flex w-full flex-col gap-0.5 rounded-lg border border-border-soft bg-surface-2 px-3 py-2.5 text-left active:bg-surface-3"
+        >
+          <span className="flex items-center gap-2">
+            <span className="min-w-0 flex-1 truncate font-medium text-ink">{e.name}</span>
+            {e.soort !== 'rule' && (
+              <span className="shrink-0 rounded-full border border-border px-1.5 text-[10px] uppercase tracking-wider text-gold">
+                {e.soort === 'errata' ? 'Errata' : 'FAQ'}
+              </span>
+            )}
+          </span>
+          {/* Sectie + pagina op een eigen regel, zodat de naam op 375px de volle breedte houdt. */}
+          {meta && <span className="truncate text-[11px] uppercase tracking-wide text-gold/80">{meta}</span>}
+          {e.bodyIndex && <span className="line-clamp-2 text-xs text-ink-faint">{e.bodyIndex.slice(0, 160)}</span>}
+        </button>
+      </li>
+    );
+  };
+
   const resultsList = (
     <>
       <div className="mb-2 px-1 text-xs uppercase tracking-widest text-ink-faint">
-        {results.length === 0 ? 'No matches' : `${results.length}${results.length === MAX_RESULTS ? '+' : ''} result${results.length === 1 ? '' : 's'} for “${query.trim()}”`}
+        {results.total === 0
+          ? 'No matches'
+          : `${results.shown < results.total ? `${results.shown} of ${results.total}` : results.total} result${results.total === 1 ? '' : 's'} for “${query.trim()}”`}
       </div>
-      {results.length === 0 ? (
+      {hits.chips.length > 1 && (
+        // Eén regel die horizontaal scrolt (geen wrap): bij een brede term zijn er al snel 15+ secties.
+        <div className="-mx-1 mb-3 flex gap-1.5 overflow-x-auto px-1 pb-1" role="group" aria-label="Filter by section">
+          {[{ key: null as string | null, name: 'All', n: hits.nameHits.length + hits.bodyHits.length }, ...hits.chips].map((c) => {
+            const on = activeChip === c.key;
+            return (
+              <button
+                key={c.key ?? '~all'}
+                aria-pressed={on}
+                onClick={() => setChipPick(c.key === null || on ? null : { q, key: c.key })}
+                className={`flex min-h-[40px] shrink-0 items-center gap-1.5 whitespace-nowrap rounded-full border px-3 text-sm ${on ? 'border-accent bg-surface-3 text-gold' : 'border-border bg-surface-2 text-ink-dim'} active:bg-surface-3`}
+              >
+                {c.name}
+                <span className="text-[11px] text-ink-faint">{c.n}</span>
+              </button>
+            );
+          })}
+        </div>
+      )}
+      {results.total === 0 ? (
         <p className="px-1 py-4 text-sm text-ink-faint">No rules match “{query}”.</p>
       ) : (
-        <ul className="space-y-1">
-          {results.map((e) => (
-            <li key={e.soort + '/' + e.slug}>
-              <button
-                onClick={() => {
-                  if (e.soort === 'rule') { openRule(e.slug); return; }
-                  // Geen regelpagina: open het bijbehorende blad met dit item al uitgeklapt.
-                  setBlad(e.soort); setSection(null); setOpen(e.slug); setFilter(''); setQuery('');
-                }}
-                className="flex w-full flex-col gap-0.5 rounded-lg border border-border-soft bg-surface-2 px-3 py-2.5 text-left active:bg-surface-3"
-              >
-                <span className="flex items-center gap-2">
-                  <span className="min-w-0 flex-1 truncate font-medium text-ink">{e.name}</span>
-                  {e.soort !== 'rule' && (
-                    <span className="shrink-0 rounded-full border border-border px-1.5 text-[10px] uppercase tracking-wider text-gold">
-                      {e.soort === 'errata' ? 'Errata' : 'FAQ'}
-                    </span>
-                  )}
-                </span>
-                {e.bodyIndex && <span className="line-clamp-2 text-xs text-ink-faint">{e.bodyIndex.slice(0, 160)}</span>}
-              </button>
-            </li>
-          ))}
-        </ul>
+        <>
+          {results.names.length > 0 && (
+            <>
+              <div className={groupHeading}>Rules</div>
+              <ul className="mb-4 space-y-1">{results.names.map(resultItem)}</ul>
+            </>
+          )}
+          {results.bodies.length > 0 && (
+            <>
+              <div className={groupHeading}>Mentioned in</div>
+              <ul className="space-y-1">{results.bodies.map(resultItem)}</ul>
+            </>
+          )}
+        </>
       )}
     </>
   );
@@ -326,6 +447,7 @@ export function BrowseMode({ onTurns }: { onTurns?: () => void } = {}) {
                 <li key={slug}>
                   <button onClick={() => openRule(slug)} className="flex w-full items-center gap-2 rounded-lg border border-border-soft bg-surface/40 px-3 py-2.5 text-left active:bg-surface-3">
                     <span className="min-w-0 flex-1 truncate text-ink">{r?.name ?? slug}</span>
+                    {r?.pageReference != null && <span className="shrink-0 text-xs text-ink-faint">p.{r.pageReference}</span>}
                     <span className="text-ink-faint">›</span>
                   </button>
                 </li>
@@ -363,24 +485,29 @@ export function BrowseMode({ onTurns }: { onTurns?: () => void } = {}) {
             {SearchBox}
           </div>
           <div className="min-h-0 flex-1 overflow-y-auto px-3 py-3">
-            <div className="mb-2 px-1 font-display text-[9px] uppercase tracking-widest text-ink-faint">Sections</div>
-            <ul className="space-y-1">
-              {nav.map((s) => {
-                const active = section?.slug === s.slug && q.length < 2;
-                return (
-                  <li key={s.slug}>
-                    <button
-                      onClick={() => { setSection(s); setBlad(null); setOpen(null); setFilter(''); setQuery(''); }}
-                      className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left"
-                      style={{ background: active ? 'rgba(138,108,48,0.12)' : 'transparent', color: active ? TOW.goldDeep : TOW.ink }}
-                    >
-                      <span className="min-w-0 flex-1 truncate text-sm" style={{ fontWeight: active ? 600 : 400 }}>{s.name}</span>
-                      <span className="shrink-0 text-xs text-ink-faint">{s.childSlugs.length || '—'}</span>
-                    </button>
-                  </li>
-                );
-              })}
-            </ul>
+            {/* De secties in leesgroepen; de groepskoppen vervangen het oude losse kopje "Sections". */}
+            {navGroups.map(([label, secs], gi) => (
+              <div key={label}>
+                <div className={`${groupHeading}${gi > 0 ? ' mt-4' : ''}`}>{label}</div>
+                <ul className="space-y-1">
+                  {secs.map((s) => {
+                    const active = section?.slug === s.slug && q.length < 2;
+                    return (
+                      <li key={s.slug}>
+                        <button
+                          onClick={() => { setSection(s); setBlad(null); setOpen(null); setFilter(''); setQuery(''); }}
+                          className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left"
+                          style={{ background: active ? 'rgba(138,108,48,0.12)' : 'transparent', color: active ? TOW.goldDeep : TOW.ink }}
+                        >
+                          <span className="min-w-0 flex-1 truncate text-sm" style={{ fontWeight: active ? 600 : 400 }}>{s.name}</span>
+                          <span className="shrink-0 text-xs text-ink-faint">{s.childSlugs.length || '—'}</span>
+                        </button>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            ))}
             {/* Errata en FAQ staan niet in de wiki-nav, maar zijn wel de recentste regelwijzigingen —
                 dus een eigen kopje onder de secties in plaats van verstopt. */}
             <div className="mb-2 mt-4 px-1 font-display text-[9px] uppercase tracking-widest text-ink-faint">Amendments</div>
@@ -464,19 +591,24 @@ export function BrowseMode({ onTurns }: { onTurns?: () => void } = {}) {
           {SearchBox}
         </div>
         <div className="flex-1 overflow-y-auto px-3 pb-28 pt-3">
-          <ul className="space-y-1.5">
-            {nav.map((s) => (
-              <li key={s.slug}>
-                <button onClick={() => { setSection(s); setFilter(''); }} className="flex w-full items-center gap-3 rounded-xl border border-border bg-surface-2 px-3 py-3 text-left active:bg-surface-3">
-                  <span className="min-w-0 flex-1 truncate font-display text-lg text-ink">{s.name}</span>
-                  <span className="shrink-0 text-xs text-ink-faint">{s.childSlugs.length || '—'}</span>
-                  <span className="text-ink-faint">›</span>
-                </button>
-              </li>
-            ))}
-          </ul>
+          {navGroups.map(([label, secs], gi) => (
+            <div key={label}>
+              <div className={`${groupHeadingPhone}${gi > 0 ? ' mt-5' : ''}`}>{label}</div>
+              <ul className="space-y-1.5">
+                {secs.map((s) => (
+                  <li key={s.slug}>
+                    <button onClick={() => { setSection(s); setFilter(''); }} className="flex w-full items-center gap-3 rounded-xl border border-border bg-surface-2 px-3 py-3 text-left active:bg-surface-3">
+                      <span className="min-w-0 flex-1 truncate font-display text-lg text-ink">{s.name}</span>
+                      <span className="shrink-0 text-xs text-ink-faint">{s.childSlugs.length || '—'}</span>
+                      <span className="text-ink-faint">›</span>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
           {/* Errata en FAQ — niet in de wiki-nav, wel de recentste wijzigingen. */}
-          <div className="mb-2 mt-5 px-1 font-display text-[9px] uppercase tracking-widest text-ink-faint">Amendments</div>
+          <div className={`${groupHeadingPhone} mt-5`}>Amendments</div>
           <ul className="space-y-1.5">
             {([['errata', 'Errata', errata.length], ['faq', 'FAQ', faq.length]] as const).map(([id, label, n]) => (
               <li key={id}>
