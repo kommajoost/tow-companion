@@ -11,6 +11,9 @@ import { InfoSheet, type InfoSheetData } from './InfoSheet';
 import { WizardSpells } from './WizardSpells';
 import { WoundTracker } from './WoundTracker';
 import { TargetCalc, isUitgeschakeld, type VijandStand } from './TargetCalc';
+
+/** De Target-rekenhulp (mathhammer) op de unitkaart. Uit sinds 22-11-2026 op verzoek van Joost. */
+const TARGET_ZICHTBAAR = false;
 import { useBackClose } from '../../lib/backStack';
 import { ProfielTabel } from './ProfielTabel';
 import type { ArmyUnit, KillDetail, UnitProfile } from '../../types';
@@ -171,7 +174,9 @@ export function UnitCard({
   // Target (mathhammer): alleen als er een levend vijandelijk doelwit is en deze unit zelf nog op tafel staat.
   // Op een los leger zonder tegenstander (TegenLegerKaarten) is `vijandUnits` leeg, dus geen knop.
   const [targetOpen, setTargetOpen] = useState(false);
-  const kanMikken = !dead && (unit.profiles?.length ?? 0) > 0
+  // VERBORGEN (Joost, 22-11-2026: "de tool voor mathhammer valt niet in de smaak, hide hem maar weer"). De rekenkern
+  // (lib/mathhammer.ts) en het scherm (TargetCalc.tsx) blijven staan; zet TARGET_ZICHTBAAR op true om hem terug te halen.
+  const kanMikken = TARGET_ZICHTBAAR && !dead && (unit.profiles?.length ?? 0) > 0
     && (vijandUnits ?? []).some((v) => !isUitgeschakeld(v, vijandStand?.[v.id]));
   // Android-Back sluit de sheet (zelfde backStack als InfoSheet/ExportSheet). Hier op de kaart, met een
   // wisselende `active`, zodat StrictMode's dubbele mount-effect in dev de val niet meteen weer opruimt.
