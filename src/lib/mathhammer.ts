@@ -60,6 +60,8 @@ export interface AanvalsGroep {
   aanvallen: string;
   stappen: Stap[];
   wounds: number;
+  /** Combat exchange only: position of this group in `GevechtResultaat.volgorde` (0 = strikes first). */
+  slag?: number;
 }
 
 export interface MathResultaat {
@@ -243,6 +245,11 @@ const TELT: Record<string, { kant: Kant; soort?: AanvalSoort }> = {
   // press-of-battle / monstrous-ranks-renegade / phalanx: decide how many ranks fight when the caller gives Files
   // (`breedte`); quoted at the place they are used.
   'press-of-battle': { kant: 'aanvaller', soort: 'combat' },
+  // strike-first / strike-last / elven-reflexes: change Initiative, so the order of blows in a combat exchange
+  // (berekenGevecht); no effect on a one-way attack. Quoted where used (`initiatief`).
+  'strike-first': { kant: 'aanvaller', soort: 'combat' },
+  'strike-last': { kant: 'aanvaller', soort: 'combat' },
+  'elven-reflexes': { kant: 'aanvaller', soort: 'combat' },
   'monstrous-ranks-renegade': { kant: 'aanvaller', soort: 'combat' },
   phalanx: { kant: 'aanvaller', soort: 'combat' },
   // armoured-hide / parry / sea-dragon-cloak / lion-cloak: valued by unitArmourSave (armyRules.ts), which quotes
@@ -261,7 +268,6 @@ const GEEN_EFFECT = new Set<string>([
   'magic-resistance', // Casting rolls of enemy spells
   'first-charge', // "the charge target becomes Disrupted"
   'stubborn', 'unbreakable', 'veteran', 'resolute', 'valour-of-ages', 'mark-of-chaos-undivided', 'cold-blooded-renegade', 'scurry-away', // Break/Leadership/Panic/Flee tests
-  'elven-reflexes', 'strike-first', 'strike-last', // Initiative only (order of strikes, not the rolls)
   'counter-charge', 'impetuous', 'feigned-flight', 'fire-and-flee', 'evasive', // charge reactions / charging
   'fly', 'vanguard', 'scouts', 'ambushers', 'reserve-move', 'random-movement', 'dragged-along', 'fast-cavalry', // movement & deployment
   'horde', 'warband', 'levies', 'mercenaries', 'loner', 'regimental-unit', 'detachment', 'drilled', 'chariot-runners', // rank bonus / unit composition / Leadership
@@ -628,7 +634,21 @@ interface Spec {
   mw: number[]; // damage distribution per unsaved wound
   mwLabel: string | null;
   notes: string[];
+  // ── combat exchange (berekenGevecht) ──
+  /** Attacks per attacking model, and the number of attacking models before any casualties. */
+  perModel?: number[];
+  n0?: number;
+  /** Which models these are, to know who is lost to casualties (see `aantalNa`). */
+  rol?: 'rf' | 'champ' | 'mount' | 'pob' | 'sup' | 'single' | 'impact' | 'stomp';
+  mult?: number;
+  laag?: Laag;
+  /** Initiative step (impact hits 100, stomp attacks −1) and how it was reached. */
+  ini?: number;
+  iniNote?: string;
 }
+
+/** The attacker's layout, for working out who is lost to casualties before striking. */
+interface Laag { multi: boolean; breedte: boolean; F: number; c: number; P: number; S: number; modellen: number }
 
 interface Kansen { pN: number; pC: number; pK: number; hit: number; wound: number; naArmour: number; naWard: number }
 
@@ -667,6 +687,30 @@ function verliesVerdeling(k: Kansen, sp: Spec, cur: number): number[] {
 }
 
 const DP_BUDGET = 4_000_000;
+
+/** The step table of one attack group for `att` expected attacks (fresh-model capping for the group total). */
+function groepTabel(sp: Spec, k: Kansen, att: number, W: number | null): { stappen: Stap[]; verlies: number } {
+  const stappen: Stap[] = [];
+  const hits = att * k.hit;
+  stappen.push({ label: 'To Hit', worp: sp.hitWorp, kans: k.hit, aantal: hits, toelichting: sp.hitNote });
+  stappen.push({ label: 'To Wound', worp: sp.woundNeed > 0 ? plus(Math.max(2, sp.woundNeed - sp.woundMod)) : '—', kans: hits ? (att * k.wound) / hits : 0, aantal: att * k.wound, toelichting: sp.woundNote });
+  const wonden = att * k.wound;
+  const aDoel = sp.armour == null ? null : sp.armour + sp.apImp;
+  stappen.push({
+    label: 'Armour save',
+    worp: aDoel == null || aDoel > 6 ? '—' : plus(aDoel),
+    kans: wonden ? (att * k.naArmour) / wonden : 1,
+    aantal: att * k.naArmour,
+    toelichting: [sp.armour == null ? 'no armour' : `${sp.armour}+${sp.apImp ? ` worsened by AP −${sp.apImp}` : ''}`, ...sp.notes].filter(Boolean).join('; '),
+  });
+  if (sp.ward != null) stappen.push({ label: 'Ward save', worp: plus(sp.ward), kans: saveFaalt(sp.ward), aantal: att * k.naWard });
+  const vers = verliesVerdeling(k, sp, W ?? Infinity);
+  const verlies = vers.reduce((s, p, i) => s + p * i, 0) * att;
+  const zonderRegen = verliesVerdeling(k, { ...sp, regen: null }, W ?? Infinity).reduce((s, p, i) => s + p * i, 0) * att;
+  if (sp.mwLabel || k.pK) stappen.push({ label: k.pK && !sp.mwLabel ? 'Killing Blow' : 'Multiple Wounds', worp: sp.mwLabel ?? 'all', kans: 1, aantal: zonderRegen, toelichting: W != null ? `capped at the target's ${W} Wound(s) per model` : undefined });
+  if (sp.regen != null) stappen.push({ label: 'Regeneration', worp: plus(sp.regen), kans: zonderRegen ? verlies / zonderRegen : 1, aantal: verlies });
+  return { stappen, verlies };
+}
 
 // ───────────────────────────── context: weapons & defaults ─────────────────────────────
 function standaardMelee(melee: WeaponProfile[]): number {
@@ -910,16 +954,23 @@ interface Ctx {
   sit: (key: string, label: string, standaard?: boolean) => boolean;
   lijst: Situatie[];
 }
-function maakCtx(waarden: Record<string, boolean> | undefined): Ctx {
-  const lijst: Situatie[] = [];
+function maakCtx(waarden: Record<string, boolean> | undefined, lijst: Situatie[] = [], hernoem?: (key: string, label: string) => [string, string]): Ctx {
   return {
     lijst,
-    sit(key, label, standaard = false) {
+    sit(key0, label0, standaard = false) {
+      const [key, label] = hernoem ? hernoem(key0, label0) : [key0, label0];
       if (!lijst.some((s) => s.key === key)) lijst.push({ key, label, standaard });
       return waarden && key in waarden ? !!waarden[key] : standaard;
     },
   };
 }
+
+/** The enemy's toggles in a combat exchange: `charged` → "Enemy charged", the shared first round stays, every other
+ *  toggle of the enemy gets its own key and an "Enemy:" label. */
+const vijandSleutel = (key: string, label: string): [string, string] =>
+  key === 'firstRound' ? [key, label]
+    : key === 'charged' ? ['enemyCharged', 'Enemy charged']
+      : [`enemy.${key}`, `Enemy: ${label.charAt(0).toLowerCase()}${label.slice(1)}`];
 
 /** `breedte` (optional): pass it when the UI uses the Files control, so the rank-related toggles (hill, Skirmish
  *  formation, moving for Volley Fire) are offered too. */
@@ -937,7 +988,15 @@ function leeg(): MathResultaat {
   return { wounds: 0, verdeling: null, modellenGedood: null, groepen: [], meegerekend: [], nietMeegerekend: [] };
 }
 
-function reken(a: ArmyUnit, d: ArmyUnit, o: AanvalOpties, rules: Record<string, Rule>, ctx: Ctx): MathResultaat {
+/** Extra input/output when `reken` is one side of a combat exchange (berekenGevecht). */
+interface GevechtCtx {
+  /** The OTHER unit charged this turn (spears' Initiative, long spear's Strike First). */
+  tegenCharged: boolean;
+  /** Receives the finished attack groups, the defender's Wounds per model and its models. */
+  vang: (c: { specs: Spec[]; W: number | null; M: number }) => void;
+}
+
+function reken(a: ArmyUnit, d: ArmyUnit, o: AanvalOpties, rules: Record<string, Rule>, ctx: Ctx, gv?: GevechtCtx): MathResultaat {
   const uit = leeg();
   const meeg = (regel: string, effect: string) => { if (!uit.meegerekend.some((m) => m.regel === regel && m.effect === effect)) uit.meegerekend.push({ regel, effect }); };
   const stop = (reden: string) => { uit.onmogelijk = reden; return afronden(uit); };
@@ -1104,6 +1163,37 @@ function reken(a: ArmyUnit, d: ArmyUnit, o: AanvalOpties, rules: Record<string, 
     // 'fighting rank'" → the front rank; every front-rank model is taken to be in base contact (see `rangLimiet`).
     const front = breedteActief ? rang[0] : 0;
     const champsVoor = breedteActief ? Math.min(champIdx.length, front) : 0;
+    const laag: Laag = { multi: multiModel, breedte: breedteActief, F: breedteActief ? front : modellen, c: breedteActief ? champsVoor : Math.min(champIdx.length, modellen), P: 0, S: 0, modellen };
+
+    // ── Initiative (only for a combat exchange; the order of blows does not change a one-way attack) ──
+    // who-strikes-first: "Work your way through the Initiative values of the models, starting with the highest and
+    // ending with the lowest."
+    const initiatief = (r: Rij, ri: number, w: WeaponProfile, wr: Inst[]): { ini: number; note: string } => {
+      const basis = absGetal(cel(r.stats, 'I'));
+      let ini = basis ?? 1;
+      const delen: string[] = [basis != null ? `I${basis}` : 'I –'];
+      // strike-first: "improves its Initiative characteristic to 10 (before any other modifiers are applied)";
+      // strike-last: "reduces its Initiative characteristic to 1 (before any other modifiers are applied). If a model
+      // has both this rule and Strike First, the two rules cancel one another out." Weapon rules count (great weapon:
+      // "Strike Last"; long-spear: "A long spear's Strike First special rule applies only against charging enemy units").
+      const wapenTekst = rules[w.slug.replace(/(-ranged|-combat)?-profile$/, '')]?.bodyIndex ?? '';
+      const sfWapen = wr.some((i) => i.slug === 'strike-first') && (!/Strike First special rule applies only against charging/i.test(wapenTekst) || gv!.tegenCharged);
+      const sf = heeftOp('strike-first', ri) || sfWapen;
+      const sl = heeftOp('strike-last', ri) || wr.some((i) => i.slug === 'strike-last');
+      if (sf && !sl) { ini = 10; delen.push('Strike First → 10'); meeg('Strike First', `${zonderAantal(r.label)} at Initiative 10`); }
+      else if (sl && !sf) { ini = 1; delen.push('Strike Last → 1'); meeg('Strike Last', `${zonderAantal(r.label)} at Initiative 1`); }
+      // charging-units: "models gain a modifier to their Initiative characteristic during the Combat phase of a turn in
+      // which they charged (to a maximum of 10): Charging an enemy in their front arc: +1 Initiative per full inch
+      // moved (prior to making contact), to a maximum of +3." The owner's assumption: a charge of 3" or more, front arc.
+      if (charged()) { ini += 3; delen.push('+3 charge'); }
+      // elven-reflexes: "A model with this special rule (but not its mount) has a +1 modifier to its Initiative
+      // characteristic (to a maximum of 10) during the first round of any combat."
+      if (heeftOp('elven-reflexes', ri) && r.wielder && eersteRonde()) { ini += 1; delen.push('+1 Elven Reflexes'); }
+      // thrusting-spear / asrai-spear / handmaidens-spear: "During a turn in which it was charged (in its front arc), a
+      // model wielding a ... spear gains a +1 modifier to its Initiative against the charging unit(s)."
+      if (gv!.tegenCharged && /gains a \+1 modifier to its Initiative against the charging unit/i.test(wapenTekst)) { ini += 1; delen.push(`+1 ${w.name}`); }
+      return { ini: Math.min(10, ini), note: delen.join(' ') + (ini > 10 ? ' (max 10)' : '') };
+    };
 
     // Fear (attacker side): fear: "If this test is failed, any models in the unit that direct their attacks
     // against the Fear-causing enemy suffer a -1 modifier to their rolls To Hit." "Models that cause Fear are
@@ -1158,6 +1248,11 @@ function reken(a: ArmyUnit, d: ArmyUnit, o: AanvalOpties, rules: Record<string, 
       const sp = basisSpec(`${naam}`, perModel, breedteActief ? front : modellen, perModel.length === 2 && perModel[1] === 1 ? null : ii.waarde!, { kind: 'auto' }, 'auto', `S${s} (${zonderAantal(rows[ri].label)}, unmodified)`);
       vulWondEnSaves(sp, { s, ap: apBasis, wapen: null, magisch, rij: ri, isMagicWeapon: false, wHeeft: () => false, wapenRegels: [], combatRij: false, auto: true });
       if (apNote) sp.notes.push(apNote);
+      // impact-hits: "resolved against the charged unit when the combat is chosen ..., before issuing challenges" →
+      // before every Initiative step; stomp-attacks: "must be made last, after all other attacks have been made,
+      // including attacks made at Initiative 1".
+      const isImpact = naam === 'Impact Hits';
+      Object.assign(sp, { rol: isImpact ? 'impact' : 'stomp', mult: 1, laag, ini: isImpact ? 100 : -1, iniNote: isImpact ? 'before all blows' : 'after all blows' });
       specs.push(sp);
       meeg(ii.label, `${ii.waarde} automatic hit(s) per model at S${s}${apBasis ? `, AP ${apBasis}` : ''}`);
     };
@@ -1186,6 +1281,8 @@ function reken(a: ArmyUnit, d: ArmyUnit, o: AanvalOpties, rules: Record<string, 
         else if (charged()) meeg('Press of Battle', 'No effect on the turn the unit charged');
         else { pobN = rang[1]; supIdx = 2; meeg('Press of Battle', `+${pobN} model${pobN === 1 ? '' : 's'} in rank 2 make 1 attack each`); }
       }
+      laag.P = pobN;
+      laag.S = rang[supIdx] ?? 0;
     }
 
     rows.forEach((r, ri) => {
@@ -1324,22 +1421,25 @@ function reken(a: ArmyUnit, d: ArmyUnit, o: AanvalOpties, rules: Record<string, 
       const magisch = isMagic(w) || w.specialRules.some((x) => slugVan(x, rules) === 'magical-attacks') || heeftOp('magical-attacks', ri) || heeftOp('daemonic', ri) || heeftOp('daemonic-renegade', ri)
         || (r.wielder && isHandWeapon(w) && heeftOp('ensorcelled-weapons', ri));
       const wr = rijRegels;
-      const maak = (naam: string, dist: number[], aantal: number, diceLabel: string | null) => {
+      const iniRij = gv ? initiatief(r, ri, w, wr) : null;
+      const maak = (naam: string, dist: number[], aantal: number, diceLabel: string | null, rol: NonNullable<Spec['rol']>) => {
         const sp = basisSpec(naam, dist, aantal, diceLabel, hit, hitWorp, hitNote);
         vulWondEnSaves(sp, {
           s: e.s, ap: e.ap, wapen: w, magisch, rij: ri, isMagicWeapon: isMagic(w),
           wHeeft: (slug) => wr.some((i) => i.slug === slug), wapenRegels: wr, combatRij: true,
         });
         sp.notes.push(...wNote);
+        Object.assign(sp, { rol, mult: r.mult, laag, ini: iniRij?.ini, iniNote: iniRij?.note });
         specs.push(sp);
       };
-      if (n > 0) maak(label, aDist, n, perModelLabel ? `${perModelLabel}${aMod ? `+${aMod}` : ''}` : null);
+      const rolHoofd: NonNullable<Spec['rol']> = !multiModel ? 'single' : !r.wielder ? 'mount' : ri === eersteWielder ? 'rf' : 'champ';
+      if (n > 0) maak(label, aDist, n, perModelLabel ? `${perModelLabel}${aMod ? `+${aMod}` : ''}` : null, rolHoofd);
       // how-many-attacks: "If a model is able to fight but is not in base contact with an enemy model, it can make
       // only one attack, regardless of its Attacks characteristic." — the Press of Battle second rank. A supporting
       // attack is "a 'supporting attack'" (one) by a model that is not in base contact.
-      if (pobHier > 0) maak(`${label} · rank 2 (Press of Battle)`, [0, 1], pobHier, null);
+      if (pobHier > 0) maak(`${label} · rank 2 (Press of Battle)`, [0, 1], pobHier, null, 'pob');
       if (supHier > 0) {
-        maak(`${label} · rank ${supIdx + 1} (supporting)`, [0, 1], supHier, null);
+        maak(`${label} · rank ${supIdx + 1} (supporting)`, [0, 1], supHier, null, 'sup');
         meeg('Fight in Extra Rank', `+${supHier} model${supHier === 1 ? '' : 's'} in rank ${supIdx + 1} make 1 supporting attack each`);
       }
     });
@@ -1388,29 +1488,10 @@ function reken(a: ArmyUnit, d: ArmyUnit, o: AanvalOpties, rules: Record<string, 
 
   // ── per-group step tables & the distribution ──
   const W = doel.w;
+  gv?.vang({ specs, W, M });
   const kansen = specs.map(perAanval);
   specs.forEach((sp, gi) => {
-    const k = kansen[gi];
-    const att = verwachting(sp.aantal);
-    const stappen: Stap[] = [];
-    const hits = att * k.hit;
-    stappen.push({ label: 'To Hit', worp: sp.hitWorp, kans: k.hit, aantal: hits, toelichting: sp.hitNote });
-    stappen.push({ label: 'To Wound', worp: sp.woundNeed > 0 ? plus(Math.max(2, sp.woundNeed - sp.woundMod)) : '—', kans: hits ? (att * k.wound) / hits : 0, aantal: att * k.wound, toelichting: sp.woundNote });
-    const wonden = att * k.wound;
-    const aDoel = sp.armour == null ? null : sp.armour + sp.apImp;
-    stappen.push({
-      label: 'Armour save',
-      worp: aDoel == null || aDoel > 6 ? '—' : plus(aDoel),
-      kans: wonden ? (att * k.naArmour) / wonden : 1,
-      aantal: att * k.naArmour,
-      toelichting: [sp.armour == null ? 'no armour' : `${sp.armour}+${sp.apImp ? ` worsened by AP −${sp.apImp}` : ''}`, ...sp.notes].filter(Boolean).join('; '),
-    });
-    if (sp.ward != null) stappen.push({ label: 'Ward save', worp: plus(sp.ward), kans: saveFaalt(sp.ward), aantal: att * k.naWard });
-    const vers = verliesVerdeling(k, sp, W ?? Infinity);
-    const verlies = vers.reduce((s, p, i) => s + p * i, 0) * att;
-    const zonderRegen = verliesVerdeling(k, { ...sp, regen: null }, W ?? Infinity).reduce((s, p, i) => s + p * i, 0) * att;
-    if (sp.mwLabel || k.pK) stappen.push({ label: k.pK && !sp.mwLabel ? 'Killing Blow' : 'Multiple Wounds', worp: sp.mwLabel ?? 'all', kans: 1, aantal: zonderRegen, toelichting: W != null ? `capped at the target's ${W} Wound(s) per model` : undefined });
-    if (sp.regen != null) stappen.push({ label: 'Regeneration', worp: plus(sp.regen), kans: zonderRegen ? verlies / zonderRegen : 1, aantal: verlies });
+    const { stappen, verlies } = groepTabel(sp, kansen[gi], verwachting(sp.aantal), W);
     uit.groepen.push({ naam: sp.naam, aanvallen: sp.aanvallen, stappen, wounds: verlies });
   });
 
@@ -1485,7 +1566,7 @@ function reken(a: ArmyUnit, d: ArmyUnit, o: AanvalOpties, rules: Record<string, 
     return {
       naam,
       aanvallen: vast >= 0 ? String(vast * n) : diceLabel ? `${n}×(${diceLabel})` : String(verwachting(perModel) * n),
-      aantal, hit, hitWorp, hitNote,
+      aantal, hit, hitWorp, hitNote, perModel, n0: n,
       poisoned: false, woundNeed: 0, woundMod: 0, woundNote: '', reroll1Wound: false,
       armour: null, apImp: 0, bane: 0, nat6: null, ward: null, regen: null, mw: [0, 1], mwLabel: null, notes: [],
     };
@@ -1569,6 +1650,304 @@ function reken(a: ArmyUnit, d: ArmyUnit, o: AanvalOpties, rules: Record<string, 
       else uit.nietMeegerekend.push({ regel: mwI[0].label, van: 'wapen', reden: mwI.length > 1 ? 'More than one Multiple Wounds source — not combined' : 'Value not understood' });
     }
   }
+}
+
+// ───────────────────────────── combat exchange ─────────────────────────────
+// One round of close combat between two units: both strike, in Initiative order, and models slain before their
+// Initiative step do not strike back.
+//  who-strikes-first: "Work your way through the Initiative values of the models, starting with the highest and
+//  ending with the lowest. Models make attacks when their Initiative value is reached."
+//  simultaneous-combat: "If models on both sides of a combat have the same Initiative value (after modifiers), they
+//  will attack at the same time. ... Casualties caused by the active player during simultaneous combat do not reduce
+//  the number of attacks made by enemy models with the same Initiative value."
+//  we-cant-all-fight: "If a model in the fighting rank is slain by an enemy with a higher Initiative characteristic
+//  before it has made its attack(s), it cannot fight and its attacks are lost. ... A model cannot fight during a phase
+//  in which it stepped forward into the fighting rank".
+//  stepping-forward-and-closing-in: "casualties are removed from the back rank ... Slain models are considered to have
+//  been removed from the end(s) of the fighting rank."
+//  excess-casualties: "any excess casualties will reduce the number of supporting attacks."
+//  combat-champions: "A champion is not counted amongst casualties caused by enemy attacks in combat unless: They are
+//  the last remaining model in the unit." (attacks directed at the champion are not modelled)
+//  split-profiles-combat: "each set of Attacks is resolved when their Initiative value is reached. If the model is
+//  slain before it can make all of its attacks, any not yet made are lost."
+
+export interface GevechtZijde { modellen: number; breedte?: number; wapenSlug?: string; aanvallerWounds?: number; uitrusting?: EquipmentLine[] | null }
+export interface GevechtOpties {
+  /** The unit the player is looking at. */
+  ik: GevechtZijde;
+  /** The target, striking back. */
+  vijand: GevechtZijde;
+  /** One shared map: `charged` = I charged, `enemyCharged` = the enemy charged (both on = both charged, as after a
+   *  Counter Charge: "Both units are considered to have charged during this turn"), `firstRound` shared, enemy-only
+   *  toggles under `enemy.<key>`. */
+  situaties?: Record<string, boolean>;
+}
+/** Strike order, first to last. */
+export interface SlagBeurt { zijde: 'ik' | 'vijand'; naam: string; initiatief: string; toelichting?: string }
+export interface GevechtResultaat {
+  /** Wounds I inflict, with my attackers reduced by casualties suffered before they strike. */
+  uit: MathResultaat;
+  /** Wounds the enemy inflicts on me, same idea. */
+  terug: MathResultaat;
+  volgorde: SlagBeurt[];
+}
+
+/** Joint-distribution cells below this probability are dropped after each Initiative step. */
+const GEVECHT_PRUNE = 1e-13;
+/** Largest joint state space (my Wounds × enemy Wounds) computed exactly. */
+const GEVECHT_MAX = 40_000;
+
+/** Attacking models of a group after `k` models of its own unit were slain before its Initiative step. */
+function aantalNa(sp: Spec, k: number): number {
+  const L = sp.laag;
+  const m = sp.mult ?? 1;
+  const n0 = sp.n0 ?? 0;
+  if (!L || k <= 0 || sp.rol === 'impact') return n0; // impact-hits come before any blow
+  const levend = Math.max(0, L.modellen - k);
+  if (!L.multi || sp.rol === 'single') return Math.min(n0, levend * m);
+  // Slain models come off the fighting rank (front rank first), then rank 2 (Press of Battle), then the supporting
+  // rank; the champion stays until it is the last model.
+  const rfBasis = Math.max(0, L.F - L.c);
+  const rf = rfBasis - Math.min(k, rfBasis);
+  const champ = levend > 0;
+  switch (sp.rol) {
+    case 'rf': return Math.min(n0, rf * m);
+    case 'champ': return champ ? n0 : 0;
+    case 'mount': return Math.min(n0, (rf + (champ ? L.c : 0)) * m);
+    case 'stomp': return Math.min(n0, rf + (champ ? L.c : 0));
+    case 'pob': return Math.min(n0, Math.max(0, L.P - Math.max(0, k - rfBasis)) * m);
+    case 'sup': return Math.min(n0, Math.max(0, L.S - Math.max(0, k - rfBasis - L.P)) * m);
+    default: return n0;
+  }
+}
+
+/** Apply a group with `aantal` (distribution of its number of attacks) to a distribution over the target's Wounds
+ *  lost (multiple-wound-models: Wounds go on one model until it is slain). */
+function pasGroepToe(v: Float64Array, sp: Spec, k: Kansen, aantal: number[], W: number, M: number, cap: number, cache: Map<number, number[]>): Float64Array {
+  const verlies = (cur: number) => { let x = cache.get(cur); if (!x) { x = verliesVerdeling(k, sp, cur); cache.set(cur, x); } return x; };
+  const stap = (s: Float64Array) => {
+    const nw = new Float64Array(cap + 1);
+    for (let L = 0; L <= cap; L++) {
+      const p = s[L];
+      if (!p) continue;
+      if (L >= M * W) { nw[L] += p; continue; }
+      const x = verlies(W - (L % W));
+      for (let kk = 0; kk < x.length; kk++) if (x[kk]) nw[Math.min(cap, L + kk)] += p * x[kk];
+    }
+    return nw;
+  };
+  const acc = new Float64Array(cap + 1);
+  let cur = v;
+  for (let N = 0; N < aantal.length; N++) {
+    if (N > 0) cur = stap(cur);
+    const pN = aantal[N];
+    if (pN) for (let L = 0; L <= cap; L++) acc[L] += pN * cur[L];
+  }
+  return acc;
+}
+
+interface Vang { specs: Spec[]; W: number | null; M: number }
+
+function gevechtZijden(ik: ArmyUnit, vijand: ArmyUnit, o: GevechtOpties, rules: Record<string, Rule>, lijst: Situatie[]) {
+  const w = o.situaties ?? {};
+  let A: Vang | null = null;
+  let B: Vang | null = null;
+  const optie = (z: GevechtZijde, tegen: GevechtZijde): AanvalOpties => ({
+    soort: 'combat', modellen: z.modellen, breedte: z.breedte, wapenSlug: z.wapenSlug, aanvallerWounds: z.aanvallerWounds,
+    uitrusting: z.uitrusting, doelwitModellen: tegen.modellen, situaties: w,
+  });
+  const uitA = reken(ik, vijand, optie(o.ik, o.vijand), rules, maakCtx(w, lijst), { tegenCharged: !!w.enemyCharged, vang: (c) => { A = c; } });
+  const uitB = reken(vijand, ik, optie(o.vijand, o.ik), rules, maakCtx(w, lijst, vijandSleutel), { tegenCharged: !!w.charged, vang: (c) => { B = c; } });
+  return { uitA, uitB, A: A as Vang | null, B: B as Vang | null };
+}
+
+/** The toggles for a combat exchange: mine, then the enemy's ("Enemy charged", "Enemy: …"). */
+export function situatiesVoorGevecht(ik: ArmyUnit, vijand: ArmyUnit, opties: Pick<GevechtOpties, 'ik' | 'vijand'>, rules: Record<string, Rule>): Situatie[] {
+  const lijst: Situatie[] = [];
+  gevechtZijden(ik, vijand, { ...opties, situaties: undefined }, rules, lijst);
+  return lijst;
+}
+
+const iniLabel = (ini: number) => (ini >= 100 ? 'Impact' : ini < 0 ? 'Stomp' : `I${ini}`);
+const fmtKort = (n: number) => (Math.round(n * 10) / 10).toString();
+
+export function berekenGevecht(ik: ArmyUnit, vijand: ArmyUnit, o: GevechtOpties, rules: Record<string, Rule>): GevechtResultaat {
+  const w = o.situaties ?? {};
+  const { uitA, uitB, A, B } = gevechtZijden(ik, vijand, o, rules, []);
+  const specsA = A?.specs ?? [];
+  const specsB = B?.specs ?? [];
+  type G = { sp: Spec; k: Kansen; zijde: 'ik' | 'vijand'; att: number; wounds: number; cache: Map<number, number[]>; dist: Map<number, number[]>; slag?: number };
+  const groepen: G[] = [
+    ...specsA.map((sp) => ({ sp, k: perAanval(sp), zijde: 'ik' as const, att: 0, wounds: 0, cache: new Map(), dist: new Map() })),
+    ...specsB.map((sp) => ({ sp, k: perAanval(sp), zijde: 'vijand' as const, att: 0, wounds: 0, cache: new Map(), dist: new Map() })),
+  ];
+  const iniVan = (g: G) => g.sp.ini ?? 1;
+  const inis = [...new Set(groepen.map(iniVan))].sort((x, y) => y - x);
+
+  // Strike order (also used when the exact propagation is not possible).
+  const volgorde: SlagBeurt[] = [];
+  for (const ini of inis) {
+    const hier = groepen.filter((g) => iniVan(g) === ini);
+    const samen = hier.some((g) => g.zijde === 'ik') && hier.some((g) => g.zijde === 'vijand');
+    for (const g of [...hier.filter((x) => x.zijde === 'ik'), ...hier.filter((x) => x.zijde === 'vijand')]) {
+      g.slag = volgorde.length;
+      volgorde.push({ zijde: g.zijde, naam: g.sp.naam, initiatief: iniLabel(ini), toelichting: [g.sp.iniNote, samen && ini < 100 && ini >= 0 ? 'same Initiative: simultaneous' : ''].filter(Boolean).join('; ') || undefined });
+    }
+  }
+
+  // Shared notes for both results.
+  const noten = (r: MathResultaat) => {
+    r.nietMeegerekend = r.nietMeegerekend.filter((x) => x.regel !== 'Files');
+    if (o.ik.breedte != null || o.vijand.breedte != null) {
+      r.nietMeegerekend.push({ regel: 'Files', van: 'aanvaller', reden: 'Every front-rank model counts as in base contact. Overlap with a narrower enemy and joined characters are not included.' });
+    }
+    if (w.charged || w.enemyCharged) {
+      r.nietMeegerekend.push({ regel: 'Charge', van: 'aanvaller', reden: 'A charge of 3" or more into the front arc: +3 Initiative (charging-units). A flank or rear charge (up to +4) is not modelled.' });
+    }
+    r.nietMeegerekend.push({ regel: 'Casualties', van: 'aanvaller', reden: 'Models slain before their Initiative step do not strike. Slain models come off the front rank first, then rank 2 (Press of Battle), then the supporting rank; the champion last. Challenges are not modelled.' });
+    if (r.meegerekend.some((m) => /remaining\)/.test(m.effect))) {
+      r.nietMeegerekend.push({ regel: 'Extra Attacks (+remaining Wounds)', van: 'aanvaller', reden: 'Uses the Wounds at the start of the combat, not those left after earlier blows' });
+    }
+  };
+  const klaar = (uit: MathResultaat, terug: MathResultaat): GevechtResultaat => {
+    noten(uit); noten(terug);
+    for (const g of groepen) {
+      const r = g.zijde === 'ik' ? uit : terug;
+      const gr = r.groepen.find((x) => x.naam === g.sp.naam && x.slag == null);
+      if (gr) gr.slag = g.slag;
+    }
+    uit.groepen.sort((x, y) => (x.slag ?? 0) - (y.slag ?? 0));
+    terug.groepen.sort((x, y) => (x.slag ?? 0) - (y.slag ?? 0));
+    return { uit: afronden(uit), terug: afronden(terug), volgorde };
+  };
+
+  const Wv = A?.W ?? null; // enemy Wounds per model (target of my attacks)
+  const Mv = Math.max(0, Math.floor(o.vijand.modellen));
+  const Wi = B?.W ?? null; // my Wounds per model
+  const Mi = Math.max(0, Math.floor(o.ik.modellen));
+  const nietExact = (reden: string) => {
+    for (const r of [uitA, uitB]) {
+      r.verdeling = null;
+      r.nietMeegerekend.push({ regel: 'Casualties before striking', van: 'aanvaller', reden });
+    }
+    return klaar(uitA, uitB);
+  };
+  // My losses are only tracked when the enemy strikes (and need my Wounds per model), and vice versa.
+  if ((specsA.length && Wv == null) || (specsB.length && Wi == null)) {
+    return nietExact('Not counted: Wounds per model unknown, so casualties before striking cannot be worked out');
+  }
+  const WvN = Wv ?? 1;
+  const WiN = Wi ?? 1;
+  const capB = specsA.length ? Mv * WvN : 0;
+  const capA = specsB.length ? Mi * WiN : 0;
+  const nb = capB + 1;
+  if ((capA + 1) * nb > GEVECHT_MAX) return nietExact('Not counted: too many models for the exact calculation');
+
+  const distVan = (g: G, n: number) => { let d = g.dist.get(n); if (!d) { d = somVan(g.sp.perModel ?? [0, 1], n); g.dist.set(n, d); } return d; };
+  const moment = (v: Float64Array) => { let s = 0; for (let i = 1; i < v.length; i++) s += i * v[i]; return s; };
+  const som = (v: Float64Array) => { let s = 0; for (let i = 0; i < v.length; i++) s += v[i]; return s; };
+
+  // My groups: their number of attackers depends on MY Wounds lost (row), they act on the enemy's (column).
+  const doeIk = (J: Float64Array, gs: G[]) => {
+    const out = new Float64Array(J.length);
+    for (let la = 0; la <= capA; la++) {
+      let v: Float64Array = J.slice(la * nb, (la + 1) * nb);
+      const mass = som(v);
+      if (mass <= 0) continue;
+      const kA = Math.floor(la / WiN);
+      for (const g of gs) {
+        const n = aantalNa(g.sp, kA);
+        if (n <= 0) continue;
+        const d = distVan(g, n);
+        g.att += mass * verwachting(d);
+        const m0 = moment(v);
+        v = pasGroepToe(v, g.sp, g.k, d, WvN, Mv, capB, g.cache);
+        g.wounds += moment(v) - m0;
+      }
+      out.set(v, la * nb);
+    }
+    return out;
+  };
+  // The enemy's groups: attackers depend on the enemy's Wounds lost (column, or a fixed count in a simultaneous step).
+  const doeVijand = (J: Float64Array, gs: G[], vastK?: number) => {
+    const out = new Float64Array(J.length);
+    for (let lb = 0; lb <= capB; lb++) {
+      let v: Float64Array = new Float64Array(capA + 1);
+      for (let la = 0; la <= capA; la++) v[la] = J[la * nb + lb];
+      const mass = som(v);
+      if (mass <= 0) continue;
+      const kB = vastK ?? Math.floor(lb / WvN);
+      for (const g of gs) {
+        const n = aantalNa(g.sp, kB);
+        if (n <= 0) continue;
+        const d = distVan(g, n);
+        g.att += mass * verwachting(d);
+        const m0 = moment(v);
+        v = pasGroepToe(v, g.sp, g.k, d, WiN, Mi, capA, g.cache);
+        g.wounds += moment(v) - m0;
+      }
+      for (let la = 0; la <= capA; la++) out[la * nb + lb] = v[la];
+    }
+    return out;
+  };
+
+  let J = new Float64Array((capA + 1) * nb);
+  J[0] = 1;
+  for (const ini of inis) {
+    const ga = groepen.filter((g) => g.zijde === 'ik' && iniVan(g) === ini);
+    const gb = groepen.filter((g) => g.zijde === 'vijand' && iniVan(g) === ini);
+    if (ga.length && gb.length) {
+      // Simultaneous: the enemy's attackers count from its losses BEFORE this step → split by that count.
+      const acc = new Float64Array(J.length);
+      const plakken = new Map<number, Float64Array>();
+      for (let i = 0; i < J.length; i++) {
+        if (!J[i]) continue;
+        const kb = Math.floor((i % nb) / WvN);
+        let s = plakken.get(kb);
+        if (!s) { s = new Float64Array(J.length); plakken.set(kb, s); }
+        s[i] = J[i];
+      }
+      for (const [kb, s] of plakken) {
+        const s2 = doeVijand(doeIk(s, ga), gb, kb);
+        for (let i = 0; i < acc.length; i++) acc[i] += s2[i];
+      }
+      J = acc;
+    } else if (ga.length) J = doeIk(J, ga);
+    else if (gb.length) J = doeVijand(J, gb);
+    for (let i = 0; i < J.length; i++) if (J[i] < GEVECHT_PRUNE) J[i] = 0;
+  }
+
+  // Marginals (renormalised for the pruned mass).
+  const tot = som(J) || 1;
+  const margB = new Array(capB + 1).fill(0);
+  const margA = new Array(capA + 1).fill(0);
+  for (let la = 0; la <= capA; la++) for (let lb = 0; lb <= capB; lb++) {
+    const p = J[la * nb + lb] / tot;
+    if (!p) continue;
+    margB[lb] += p;
+    margA[la] += p;
+  }
+  const trim = (v: number[]) => { let e = v.length; while (e > 1 && v[e - 1] < 1e-15) e--; return v.slice(0, e); };
+  const vul = (r: MathResultaat, gs: G[], marg: number[], Wd: number) => {
+    if (!gs.length) return;
+    r.verdeling = trim(marg);
+    r.wounds = r.verdeling.reduce((s, p, k) => s + p * k, 0);
+    r.modellenGedood = r.verdeling.reduce((s, p, L) => s + p * Math.floor(L / Wd), 0);
+    r.groepen = gs.map((g) => {
+      const att = g.att / tot;
+      const { stappen } = groepTabel(g.sp, g.k, att, Wd);
+      const vol = verwachting(g.sp.aantal);
+      const minder = att < vol - 0.005 && fmtKort(att) !== fmtKort(vol);
+      return { naam: g.sp.naam, aanvallen: minder ? `${fmtKort(att)} of ${g.sp.aanvallen}` : g.sp.aanvallen, stappen, wounds: g.wounds / tot };
+    });
+    const verlorenAtt = gs.reduce((s, g) => s + verwachting(g.sp.aantal) - g.att / tot, 0);
+    if (verlorenAtt > 0.005) {
+      r.meegerekend.push({ regel: 'Casualties before striking', effect: `${fmtKort(verlorenAtt)} attacks lost on average to models slain before they strike (we-cant-all-fight)` });
+    }
+  };
+  vul(uitA, groepen.filter((g) => g.zijde === 'ik'), margB, WvN);
+  vul(uitB, groepen.filter((g) => g.zijde === 'vijand'), margA, WiN);
+  return klaar(uitA, uitB);
 }
 
 function afronden(r: MathResultaat): MathResultaat {

@@ -2,7 +2,7 @@ import { useLayoutEffect, useMemo, useState } from 'react';
 import { useData } from '../../data';
 import { TOW, towFont, engraved } from '../../design/tow';
 import { useSwipeToDismiss, DragHandle } from '../../lib/useSwipeToDismiss';
-import { berekenAanval, breedteVoor, situatiesVoor, wapensVoor, type AanvalSoort, type MathResultaat, type Situatie } from '../../lib/mathhammer';
+import { berekenAanval, berekenGevecht, breedteVoor, situatiesVoor, situatiesVoorGevecht, wapensVoor, type AanvalSoort, type GevechtResultaat, type MathResultaat, type Situatie } from '../../lib/mathhammer';
 import { unitWeapons } from '../../lib/weaponStats';
 import { equipmentVoor } from '../../lib/unitDetails';
 import { useUnitDetails } from '../../lib/useUnitDetails';
@@ -55,9 +55,13 @@ function bereik(v: number[]): [number, number] {
 // supporting attacks, Volley Fire). De gekozen breedte blijft per unit staan zolang de app open is, zodat je
 // hem niet bij elke keer openen opnieuw zet.
 const breedteGeheugen = new Map<string, number>();
+// GEVECHT (22-11-2026, Joost: "In combat kan de tegenpartij ook altijd wel terugslaan"): de breedte van de VIJAND,
+// per vijandelijke unit, ook zolang de app open is.
+const vijandBreedteGeheugen = new Map<string, number>();
 
-/** De aanname die bij een ingestelde breedte hoort. Geen "regel die niet meetelt", dus niet in de teller op de rij. */
-const isAanname = (m: { regel: string }) => m.regel === 'Files';
+/** De aannames achter het getal (breedte, charge, volgorde van slachtoffers). Geen "regel die niet meetelt", dus niet
+ *  in de teller op de rij. */
+const isAanname = (m: { regel: string }) => m.regel === 'Files' || m.regel === 'Charge' || m.regel === 'Casualties';
 
 /** Engine-zinnen gebruiken hier en daar een gedachtestreepje; in de app tonen we een dubbele punt. */
 const netjes = (s: string) => s.replace(/\s+—\s+/g, ': ');
@@ -84,6 +88,10 @@ interface Rij {
   modellen: number;
   start: number;
   r: MathResultaat;
+  /** Combat: the full exchange (`r` = `g.uit`). */
+  g?: GevechtResultaat;
+  /** Combat: the enemy's Files control, when it applies to this unit. */
+  vijandFiles?: { waarde: number; max: number };
 }
 
 export function TargetCalc({
@@ -173,16 +181,45 @@ export function TargetCalc({
       return h.veteraan?.abilities?.length ? { ...h, profiles: profielenMetVeteraan(h.profiles, h.veteraan.abilities) } : h;
     }), [vijandUnits, vijandStand, herstel]);
 
+  // De vijand als tegenstander in een gevecht: levende modellen en Wounds uit `vijandStand` (zoals de aanvaller uit
+  // `lost`), zijn uitrusting per model en zijn eigen Files (per vijand onthouden).
+  const [vijandBreedteKeus, setVijandBreedteKeus] = useState<Record<string, number>>(() => Object.fromEntries(vijandBreedteGeheugen));
+  const zetVijandBreedte = (id: string, n: number) => { vijandBreedteGeheugen.set(id, n); setVijandBreedteKeus((k) => ({ ...k, [id]: n })); };
+  const vijandInfo = useMemo(() => new Map(doelen.map((d) => {
+    const lostD = vijandStand?.[d.id]?.lost ?? 0;
+    const m = modellenOver(d, lostD);
+    const wpmD = Math.max(1, woundsPerModel(d));
+    const brD = breedteVoor(d, m);
+    const files = brD.vanToepassing ? Math.min(brD.max, Math.max(1, vijandBreedteKeus[d.id] ?? brD.standaard)) : undefined;
+    return [d.id, {
+      modellen: m,
+      breedte: files,
+      max: brD.max,
+      aanvallerWounds: unitSize(d) === 1 && wpmD > 1 ? Math.max(1, wpmD - Math.max(0, lostD)) : undefined,
+      uitrusting: equipmentVoor(d, unitDetails),
+    }] as const;
+  })), [doelen, vijandStand, vijandBreedteKeus, unitDetails]);
+  const ikZijde = { modellen, breedte, wapenSlug, aanvallerWounds, uitrusting };
+  const vijandZijde = (d: ArmyUnit) => {
+    const v = vijandInfo.get(d.id)!;
+    return { modellen: Math.max(1, v.modellen), breedte: v.breedte, aanvallerWounds: v.aanvallerWounds, uitrusting: v.uitrusting };
+  };
+
   // Situaties: de vereniging over alle doelwitten (eerste label wint), begin op `standaard`.
   const situaties = useMemo<Situatie[]>(() => {
     const uit: Situatie[] = [];
     for (const d of doelen) {
-      for (const s of situatiesVoor(unit, d, { soort: soortNu, wapenSlug, multi: heeftMulti ? multi : undefined, breedte, uitrusting }, rules)) {
-        if (!uit.some((x) => x.key === s.key)) uit.push(s);
-      }
+      const lijst = soortNu === 'combat'
+        ? situatiesVoorGevecht(unit, d, { ik: ikZijde, vijand: vijandZijde(d) }, rules)
+        : situatiesVoor(unit, d, { soort: soortNu, wapenSlug, multi: heeftMulti ? multi : undefined, breedte, uitrusting }, rules);
+      for (const s of lijst) if (!uit.some((x) => x.key === s.key)) uit.push(s);
     }
+    // The two charge chips side by side.
+    const i = uit.findIndex((s) => s.key === 'enemyCharged');
+    const j = uit.findIndex((s) => s.key === 'charged');
+    if (i >= 0 && j >= 0 && i !== j + 1) { const [s] = uit.splice(i, 1); uit.splice(uit.findIndex((x) => x.key === 'charged') + 1, 0, s); }
     return uit;
-  }, [doelen, unit, soortNu, wapenSlug, multi, heeftMulti, breedte, uitrusting, rules]);
+  }, [doelen, unit, soortNu, wapenSlug, multi, heeftMulti, breedte, uitrusting, rules, vijandInfo, modellen, aanvallerWounds]);
   const [sitKeus, setSitKeus] = useState<Record<string, boolean>>({});
   const sitWaarden = useMemo(() => {
     const m: Record<string, boolean> = {};
@@ -191,9 +228,14 @@ export function TargetCalc({
   }, [situaties, sitKeus]);
 
   const rijen = useMemo<Rij[]>(() => {
-    const uit = doelen.map((d) => {
+    const uit = doelen.map((d): Rij => {
       const { naam, eigenaar } = naamDelen(d);
       const m = modellenOver(d, vijandStand?.[d.id]?.lost ?? 0);
+      if (soortNu === 'combat') {
+        const v = vijandInfo.get(d.id)!;
+        const g = berekenGevecht(unit, d, { ik: ikZijde, vijand: vijandZijde(d), situaties: sitWaarden }, rules);
+        return { u: d, naam, eigenaar, modellen: m, start: unitSize(d), r: g.uit, g, vijandFiles: v.breedte != null ? { waarde: v.breedte, max: v.max } : undefined };
+      }
       const r = berekenAanval(unit, d, {
         soort: soortNu,
         modellen,
@@ -210,12 +252,17 @@ export function TargetCalc({
     });
     // Hoogste verwachting eerst; "kan niet" onderaan.
     return uit.sort((a, b) => (a.r.onmogelijk ? 1 : 0) - (b.r.onmogelijk ? 1 : 0) || b.r.wounds - a.r.wounds);
-  }, [doelen, vijandStand, unit, soortNu, modellen, breedte, wapenSlug, heeftMulti, multi, custom, sitWaarden, aanvallerWounds, uitrusting, rules]);
+  }, [doelen, vijandStand, unit, soortNu, modellen, breedte, wapenSlug, heeftMulti, multi, custom, sitWaarden, aanvallerWounds, uitrusting, rules, vijandInfo]);
 
   const [openId, setOpenId] = useState<string | null>(null);
   // Level 2 of the breakdown ("Details"): one switch for the whole sheet, not per target. Default closed.
   const [details, setDetails] = useState(false);
-  const toonUitsplitsing = (x: Rij) => uitsplitsing(x, details, () => setDetails((d) => !d));
+  const toonUitsplitsing = (x: Rij) => uitsplitsing(x, details, () => setDetails((d) => !d), x.vijandFiles
+    ? stepper('Enemy files', String(x.vijandFiles.waarde),
+      () => zetVijandBreedte(x.u.id, Math.max(1, x.vijandFiles!.waarde - 1)),
+      () => zetVijandBreedte(x.u.id, Math.min(x.vijandFiles!.max, x.vijandFiles!.waarde + 1)),
+      x.vijandFiles.waarde <= 1, x.vijandFiles.waarde >= x.vijandFiles.max, ['Enemy narrower', 'Enemy wider'])
+    : undefined);
   // Breed: altijd een gekozen doelwit rechts (valt terug op de bovenste rij).
   const gekozen = rijen.find((x) => x.u.id === openId) ?? (tweeKolom ? rijen[0] : undefined);
 
@@ -273,7 +320,13 @@ export function TargetCalc({
           {situaties.map((s) => {
             const aan = !!sitWaarden[s.key];
             return (
-              <button key={s.key} type="button" aria-pressed={aan} onClick={() => setSitKeus((k) => ({ ...k, [s.key]: !aan }))} style={selChip(aan)}>
+              <button key={s.key} type="button" aria-pressed={aan} onClick={() => setSitKeus((k) => {
+                // One side charged: turning one charge chip on turns the other off.
+                const nw = { ...k, [s.key]: !aan };
+                if (!aan && s.key === 'charged') nw.enemyCharged = false;
+                if (!aan && s.key === 'enemyCharged') nw.charged = false;
+                return nw;
+              })} style={selChip(aan)}>
                 {aan ? '✓ ' : ''}{s.label}
               </button>
             );
@@ -317,6 +370,11 @@ export function TargetCalc({
               {range && (
                 <span style={{ display: 'block', fontFamily: towFont.serif, fontSize: 10.5, color: TOW.muted, whiteSpace: 'nowrap', fontVariantNumeric: 'tabular-nums' }}>
                   usually {range[0] === range[1] ? range[0] : `${range[0]}–${range[1]}`}
+                </span>
+              )}
+              {x.g && !x.g.terug.onmogelijk && (
+                <span style={{ display: 'block', fontFamily: towFont.serif, fontSize: 10.5, color: TOW.muted, whiteSpace: 'nowrap', fontVariantNumeric: 'tabular-nums' }}>
+                  takes {fmt1(x.g.terug.wounds)} back
                 </span>
               )}
             </span>
@@ -408,42 +466,71 @@ const uniek = (l: string[]) => [...new Set(l)];
 //  1. overzicht: per aanvalsgroep één regel (aanvallen · worpen · wounds), het totaal, de namen van wat wel en
 //     wat niet is meegerekend. "Not counted" staat er altijd als hij niet leeg is: zo blijft het getal eerlijk.
 //  2. Details: de staptabellen met toelichting, de verdeling, effecten en redenen. ──
-function uitsplitsing(x: Rij, open: boolean, wissel: () => void) {
+/** Names of both sides' rules; a name that only the enemy's side has gets " (enemy)". */
+function namenBeide(eigen: string[], vijand: string[]): string[] {
+  const mijn = uniek(eigen);
+  return [...mijn, ...uniek(vijand).filter((n) => !mijn.includes(n)).map((n) => `${n} (enemy)`)];
+}
+
+/** The attack groups of both sides in strike order (combat), or mine only (shooting). */
+function regelsInVolgorde(x: Rij): { g: MathResultaat['groepen'][number]; vijand: boolean; ini?: string }[] {
+  if (!x.g) return x.r.groepen.map((g) => ({ g, vijand: false }));
+  const v = x.g.volgorde;
+  return [
+    ...x.g.uit.groepen.map((g) => ({ g, vijand: false, ini: g.slag != null ? v[g.slag]?.initiatief : undefined })),
+    ...x.g.terug.groepen.map((g) => ({ g, vijand: true, ini: g.slag != null ? v[g.slag]?.initiatief : undefined })),
+  ].sort((a, b) => (a.g.slag ?? 0) - (b.g.slag ?? 0));
+}
+
+function uitsplitsing(x: Rij, open: boolean, wissel: () => void, vijandFiles?: React.ReactNode) {
   const r = x.r;
+  const t = x.g?.terug;
   const nietGeteld0 = r.nietMeegerekend.filter((m) => !isAanname(m));
   const range = r.verdeling && !r.onmogelijk ? bereik(r.verdeling) : null;
   const klein: React.CSSProperties = { fontFamily: towFont.serif, fontSize: 12, lineHeight: 1.35, color: TOW.parchDim, margin: '4px 0 0' };
+  const geteld = namenBeide(r.meegerekend.map((m) => netjes(m.regel)), (t?.meegerekend ?? []).map((m) => netjes(m.regel)));
+  const nietGeteld = namenBeide(nietGeteld0.map((m) => netjes(m.regel)), (t?.nietMeegerekend ?? []).filter((m) => !isAanname(m)).map((m) => netjes(m.regel)));
+  const klein2: React.CSSProperties = { fontFamily: towFont.serif, fontSize: 13, color: TOW.parchDim };
   const overzicht = (
     <div>
       {r.onmogelijk && (
         <p style={{ margin: '0 0 4px', fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 13, color: TOW.muted }}>{netjes(r.onmogelijk)}</p>
       )}
-      {r.groepen.map((g, gi) => (
+      {regelsInVolgorde(x).map(({ g, vijand, ini }, gi) => (
         <div key={gi} style={{ display: 'flex', alignItems: 'baseline', gap: 8, padding: '3px 0', borderBottom: `1px solid ${TOW.hairline}` }}>
-          <span style={{ flex: '1 1 0', minWidth: 0, fontFamily: towFont.display, fontWeight: 600, fontSize: 12.5, color: TOW.ink, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} title={g.naam}>{g.naam}</span>
+          {ini && <span style={{ flexShrink: 0, minWidth: 30, ...eb, fontSize: 8, color: vijand ? TOW.blood : TOW.muted }}>{vijand ? `Enemy ${ini}` : ini}</span>}
+          <span style={{ flex: '1 1 0', minWidth: 0, fontFamily: towFont.display, fontWeight: 600, fontSize: 12.5, color: vijand ? TOW.parchDim : TOW.ink, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} title={g.naam}>{g.naam}</span>
           <span style={{ flexShrink: 0, fontFamily: towFont.serif, fontSize: 12, color: TOW.parchDim, whiteSpace: 'nowrap', fontVariantNumeric: 'tabular-nums' }}>
             {[`${g.aanvallen} att`, ...g.stappen.map(stapToken)].join(' · ')}
           </span>
-          <span style={{ flexShrink: 0, minWidth: 30, textAlign: 'right', fontFamily: towFont.display, fontWeight: 700, fontSize: 12.5, color: TOW.goldDeep, fontVariantNumeric: 'tabular-nums' }}>{fmt1(g.wounds)}</span>
+          <span style={{ flexShrink: 0, minWidth: 30, textAlign: 'right', fontFamily: towFont.display, fontWeight: 700, fontSize: 12.5, color: vijand ? TOW.blood : TOW.goldDeep, fontVariantNumeric: 'tabular-nums' }}>{vijand && fmt1(g.wounds) !== '0.0' ? `−${fmt1(g.wounds)}` : fmt1(g.wounds)}</span>
         </div>
       ))}
       {!r.onmogelijk && (
         <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, flexWrap: 'wrap', marginTop: 6 }}>
           <span style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 20, color: TOW.goldDeep, fontVariantNumeric: 'tabular-nums' }}>{fmt1(r.wounds)}</span>
-          <span style={{ fontFamily: towFont.serif, fontSize: 13, color: TOW.parchDim }}>wounds</span>
+          <span style={klein2}>{t ? 'deal' : 'wounds'}</span>
           {r.modellenGedood != null && (
-            <span style={{ fontFamily: towFont.serif, fontSize: 13, color: TOW.parchDim }}>≈ {fmt1(r.modellenGedood)} {r.modellenGedood === 1 ? 'model' : 'models'}</span>
+            <span style={klein2}>≈ {fmt1(r.modellenGedood)} {r.modellenGedood === 1 ? 'model' : 'models'}</span>
           )}
           {range && (
             <span style={{ fontFamily: towFont.serif, fontSize: 12, color: TOW.muted, fontVariantNumeric: 'tabular-nums' }}>usually {range[0] === range[1] ? range[0] : `${range[0]}–${range[1]}`}</span>
           )}
         </div>
       )}
-      {r.meegerekend.length > 0 && (
-        <p style={klein}><span style={{ color: TOW.ink, fontWeight: 600 }}>Counted:</span> {uniek(r.meegerekend.map((m) => netjes(m.regel))).join(', ')}</p>
+      {t && !t.onmogelijk && (
+        <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, flexWrap: 'wrap', marginTop: 2 }}>
+          <span style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 16, color: TOW.blood, fontVariantNumeric: 'tabular-nums' }}>{fmt1(t.wounds)}</span>
+          <span style={klein2}>take</span>
+          {t.modellenGedood != null && <span style={klein2}>≈ {fmt1(t.modellenGedood)} {t.modellenGedood === 1 ? 'model' : 'models'}</span>}
+        </div>
       )}
-      {nietGeteld0.length > 0 && (
-        <p style={{ ...klein, color: TOW.goldDeep }}><span style={{ fontWeight: 600 }}>Not counted:</span> {uniek(nietGeteld0.map((m) => netjes(m.regel))).join(', ')}</p>
+      {vijandFiles && <div style={{ marginTop: 6 }}>{vijandFiles}</div>}
+      {geteld.length > 0 && (
+        <p style={klein}><span style={{ color: TOW.ink, fontWeight: 600 }}>Counted:</span> {geteld.join(', ')}</p>
+      )}
+      {nietGeteld.length > 0 && (
+        <p style={{ ...klein, color: TOW.goldDeep }}><span style={{ fontWeight: 600 }}>Not counted:</span> {nietGeteld.join(', ')}</p>
       )}
       <button
         type="button"
@@ -475,11 +562,16 @@ function uitsplitsingDetails(x: Rij) {
       <span style={{ color: TOW.ink, fontWeight: 600 }}>{titel}</span>: {netjes(tekst)}
     </div>
   );
-  const nietGeteld = r.nietMeegerekend.filter((m) => !isAanname(m));
-  const aannames = r.nietMeegerekend.filter(isAanname);
-  return (
-    <div>
-      {r.groepen.map((g, gi) => (
+  const t = x.g?.terug;
+  // Both sides' lists; an enemy entry that is not the same as one of mine is marked "Enemy:".
+  const beide = <T extends { regel: string }>(mijn: T[], hun: T[], tekst: (m: T) => string) => [
+    ...mijn.map((m) => ({ titel: m.regel, tekst: tekst(m) })),
+    ...hun.filter((m) => !mijn.some((n) => n.regel === m.regel && tekst(n) === tekst(m))).map((m) => ({ titel: `Enemy: ${m.regel}`, tekst: tekst(m) })),
+  ];
+  const geteld = beide(r.meegerekend, t?.meegerekend ?? [], (m) => m.effect);
+  const nietGeteld = beide(r.nietMeegerekend.filter((m) => !isAanname(m)), (t?.nietMeegerekend ?? []).filter((m) => !isAanname(m)), (m) => m.reden);
+  const aannames = beide(r.nietMeegerekend.filter(isAanname), (t?.nietMeegerekend ?? []).filter(isAanname), (m) => m.reden);
+  const tabellen = (groepen: MathResultaat['groepen']) => groepen.map((g, gi) => (
         <div key={gi} style={{ marginTop: gi === 0 ? 0 : 10 }}>
           <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, marginBottom: 2 }}>
             <span style={{ flex: 1, minWidth: 0, fontFamily: towFont.display, fontWeight: 700, fontSize: 13, color: TOW.ink }}>{g.naam}</span>
@@ -505,31 +597,59 @@ function uitsplitsingDetails(x: Rij) {
             </tbody>
           </table>
         </div>
-      ))}
-
-      {!r.onmogelijk && r.verdeling && r.verdeling.length > 1 && (
+      ));
+  return (
+    <div>
+      {x.g && x.g.volgorde.length > 0 && (
         <>
-          <div style={kopje}>Distribution of wounds</div>
-          <Verdeling v={r.verdeling} />
+          <div style={{ ...kopje, marginTop: 0 }}>Strike order</div>
+          <ol style={{ margin: '0 0 8px', paddingLeft: 18 }}>
+            {x.g.volgorde.map((v, i) => (
+              <li key={i} style={{ fontFamily: towFont.serif, fontSize: 12.5, lineHeight: 1.4, color: v.zijde === 'vijand' ? TOW.parchDim : TOW.ink }}>
+                <span style={{ fontWeight: 600 }}>{v.initiatief}</span> {v.zijde === 'vijand' ? 'Enemy: ' : ''}{v.naam}
+                {v.toelichting && <span style={{ fontSize: 11, color: TOW.muted }}> ({netjes(v.toelichting)})</span>}
+              </li>
+            ))}
+          </ol>
+        </>
+      )}
+      {tabellen(r.groepen)}
+      {t && t.groepen.length > 0 && (
+        <>
+          <div style={{ ...kopje, color: TOW.blood }}>Strikes back</div>
+          {tabellen(t.groepen)}
         </>
       )}
 
-      {r.meegerekend.length > 0 && (
+      {!r.onmogelijk && r.verdeling && r.verdeling.length > 1 && (
+        <>
+          <div style={kopje}>{t ? 'Wounds dealt' : 'Distribution of wounds'}</div>
+          <Verdeling v={r.verdeling} />
+        </>
+      )}
+      {t && !t.onmogelijk && t.verdeling && t.verdeling.length > 1 && (
+        <>
+          <div style={kopje}>Wounds taken</div>
+          <Verdeling v={t.verdeling} />
+        </>
+      )}
+
+      {geteld.length > 0 && (
         <>
           <div style={kopje}>Counted</div>
-          {r.meegerekend.map((m, i) => regel(m.regel, m.effect, i))}
+          {geteld.map((m, i) => regel(m.titel, m.tekst, i))}
         </>
       )}
       {nietGeteld.length > 0 && (
         <>
           <div style={{ ...kopje, color: TOW.goldDeep }}>Not counted</div>
-          {nietGeteld.map((m, i) => regel(m.regel, m.reden, i))}
+          {nietGeteld.map((m, i) => regel(m.titel, m.tekst, i))}
         </>
       )}
       {aannames.length > 0 && (
         <>
           <div style={kopje}>Assumed</div>
-          {aannames.map((m, i) => regel(m.regel, m.reden, i))}
+          {aannames.map((m, i) => regel(m.titel, m.tekst, i))}
         </>
       )}
     </div>

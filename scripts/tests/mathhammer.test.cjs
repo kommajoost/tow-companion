@@ -572,6 +572,140 @@ test('REAL: 20 Dark Elf Warriors with spears, 5 wide (Press of Battle + Fight in
   assert.equal(mh.breedteVoor(war, 20).standaard, 5);
 });
 
+// ─────────────────────────── combat exchange (berekenGevecht) ───────────────────────────
+// Two War Beast blocks (no Press of Battle), WS4 vs WS4 (4+), S3 vs T1 (2+), no armour → every attack slays a W1
+// model with probability 1/2 · 5/6 = 5/12. 10 models, 5 wide: 5 attack.
+const blok = (naam, I, o = {}) => unit({ name: naam, count: 10, tt: o.tt ?? 'War Beast', options: o.options ?? ['Hand weapons'], sr: o.sr,
+  profiles: o.profiles ?? [prof(naam, { M: 5, WS: 4, S: 3, T: 1, W: 1, I, A: 1, Ld: 7 })] });
+const gv = (a, b, extra = {}) => mh.berekenGevecht(a, b, { ik: { modellen: 10, breedte: 5, ...(extra.ik || {}) }, vijand: { modellen: 10, breedte: 5, ...(extra.vijand || {}) }, situaties: extra.situaties }, rules);
+const beide = (r) => { checkVerdeling(r.uit, 'uit'); checkVerdeling(r.terug, 'terug'); };
+const P = 5 / 12;
+
+test('exchange: equal Initiative is simultaneous — nobody loses attacks', () => {
+  const r = gv(blok('A', 4), blok('B', 4));
+  close(r.uit.wounds, 5 * P, 1e-9);
+  close(r.terug.wounds, 5 * P, 1e-9);
+  assert.ok(r.volgorde.every((v) => v.initiatief === 'I4'));
+  assert.match(r.volgorde[0].toelichting, /simultaneous/);
+  beide(r);
+});
+
+test('exchange: higher Initiative kills first and reduces the return attacks', () => {
+  const r = gv(blok('A', 5), blok('B', 3));
+  close(r.uit.wounds, 5 * P, 1e-9);
+  // B strikes with 5 − k models, k ~ Bin(5, 5/6): E = (5 − 5·5/6)·5/6
+  close(r.terug.wounds, (5 - 5 * P) * P, 1e-9);
+  assert.deepEqual(r.volgorde.map((v) => `${v.zijde}@${v.initiatief}`), ['ik@I5', 'vijand@I3']);
+  assert.ok(r.terug.meegerekend.some((m) => m.regel === 'Casualties before striking'));
+  assert.match(r.terug.groepen[0].aanvallen, /of 5/);
+  beide(r);
+  // without Files: all 10 strike; k ~ Bin(10, 5/6) slain first
+  const z = mh.berekenGevecht(blok('A', 5), blok('B', 3), { ik: { modellen: 10 }, vijand: { modellen: 10 } }, rules);
+  close(z.terug.wounds, (10 - 10 * P) * P, 1e-9);
+  beide(z);
+});
+
+test('exchange: the charger gets +3 Initiative and the order flips', () => {
+  const r = gv(blok('A', 5), blok('B', 3), { situaties: { enemyCharged: true } });
+  assert.deepEqual(r.volgorde.map((v) => `${v.zijde}@${v.initiatief}`), ['vijand@I6', 'ik@I5']);
+  close(r.terug.wounds, 5 * P, 1e-9);
+  close(r.uit.wounds, (5 - 5 * P) * P, 1e-9);
+  // I charged: 5 + 3 = 8
+  assert.equal(gv(blok('A', 5), blok('B', 3), { situaties: { charged: true } }).volgorde[0].initiatief, 'I8');
+  // both charged (Counter Charge): both +3 → order as without a charge
+  assert.deepEqual(gv(blok('A', 5), blok('B', 3), { situaties: { charged: true, enemyCharged: true } }).volgorde.map((v) => v.initiatief), ['I8', 'I6']);
+  const sit = mh.situatiesVoorGevecht(blok('A', 5), blok('B', 3), { ik: { modellen: 10 }, vijand: { modellen: 10 } }, rules).map((s) => s.key);
+  assert.ok(sit.includes('charged') && sit.includes('enemyCharged'));
+  beide(r);
+});
+
+test('exchange: a Strike Last weapon (great weapon) strikes at Initiative 1', () => {
+  const a = blok('A', 5, { options: ['Hand weapons', 'Great weapon'] });
+  const r = gv(a, blok('B', 3), { ik: { wapenSlug: 'great-weapon-profile' } });
+  assert.deepEqual(r.volgorde.map((v) => `${v.zijde}@${v.initiatief}`), ['vijand@I3', 'ik@I1']);
+  close(r.uit.wounds, (5 - 5 * P) * P, 1e-9); // the great weapon also wounds T1 on 2+
+  assert.ok(r.uit.meegerekend.some((m) => m.regel === 'Strike Last'));
+  // Strike Last + charge: 1 + 3 = 4 → before B (I3)
+  assert.equal(gv(a, blok('B', 3), { ik: { wapenSlug: 'great-weapon-profile' }, situaties: { charged: true } }).volgorde[0].initiatief, 'I4');
+  beide(r);
+});
+
+test('exchange: Impact Hits come before every Initiative step', () => {
+  const ch = unit({ name: 'Chariot', count: null, tt: 'Light Chariot', options: ['Hand weapons'], sr: ['Impact Hits (2)'],
+    profiles: [prof('Chariot', { WS: '-', S: 3, T: 1, W: 1 }), prof('Crew', { WS: 4, S: 3, I: 1, A: 1, Ld: 7 })] });
+  const r = mh.berekenGevecht(ch, blok('B', 10), { ik: { modellen: 1 }, vijand: { modellen: 10, breedte: 5 }, situaties: { charged: true } }, rules);
+  assert.deepEqual(r.volgorde.map((v) => `${v.zijde}:${v.naam}@${v.initiatief}`), ['ik:Impact Hits@Impact', 'vijand:B@I10', 'ik:Crew@I4']);
+  // 2 automatic impact hits (S3 vs T1: 5/6 each) slay front models of B before B strikes at I10; B's survivors then
+  // need only one success (1/2 · 5/6) to slay the one-Wound chariot: P(chariot slain) = E[1 − (7/12)^(5 − k)].
+  let pDood = 0;
+  for (let k = 0; k <= 2; k++) pDood += [1 / 36, 10 / 36, 25 / 36][k] * (1 - Math.pow(7 / 12, 5 - k));
+  close(r.terug.wounds, pDood, 1e-9);
+  beide(r);
+});
+
+test('exchange: cavalry — rider and mount strike at their own Initiative; slain riders take their mounts', () => {
+  const cav = unit({ name: 'Knights', count: 10, tt: 'Heavy Cavalry', options: ['Hand weapons'],
+    profiles: [prof('Knight', { WS: 4, S: 3, T: 1, W: 1, I: 5, A: 1, Ld: 8 }), prof('Steed', { WS: 3, S: 3, I: 2, A: 1 })] });
+  const r = gv(cav, blok('B', 3));
+  assert.deepEqual(r.volgorde.map((v) => `${v.naam}@${v.initiatief}`), ['Knight@I5', 'B@I3', 'Steed@I2']);
+  // B (5 − k1 models) strikes back; the steeds of slain knights are lost: steeds = 5 − k2 where k2 ~ B's kills
+  const steed = r.uit.groepen.find((g) => g.naam === 'Steed');
+  const eB = (5 - 5 * P) * P; // expected knights slain by B
+  close(steed.stappen[0].aantal / steed.stappen[0].kans, 5 - eB, 1e-9); // attacks = hits / P(hit)
+  beide(r);
+});
+
+test('exchange: a single monster against a ranked unit', () => {
+  const mon = unit({ name: 'Troll', count: null, tt: 'Monstrous Creature', options: ['Hand weapons'],
+    profiles: [prof('Troll', { WS: 3, S: 5, T: 4, W: 6, I: 1, A: 4, Ld: 6 })] });
+  const r = mh.berekenGevecht(mon, krijger({ count: 20 }), { ik: { modellen: 1 }, vijand: { modellen: 20, breedte: 5 } }, rules);
+  assert.deepEqual(r.volgorde.map((v) => v.zijde), ['vijand', 'vijand', 'ik']);
+  assert.ok(r.uit.wounds > 0 && r.terug.wounds > 0);
+  beide(r);
+  const terug = mh.berekenGevecht(krijger({ count: 20 }), mon, { ik: { modellen: 20, breedte: 5 }, vijand: { modellen: 1 } }, rules);
+  close(terug.uit.wounds, r.terug.wounds, 1e-9);
+  close(terug.terug.wounds, r.uit.wounds, 1e-9);
+  beide(terug);
+});
+
+test('exchange REAL: Cold One Knights charging Dark Elf Warriors, and the Warriors charging', () => {
+  const cok = echt('dark-elves', 'Dark Elves', 'Cold One Knights', ['command/0']);
+  const war = echt('dark-elves', 'Dark Elves', 'Dark Elf Warriors', ['command/0'], 20);
+  const r = mh.berekenGevecht(cok, war, { ik: { modellen: 5, breedte: 5 }, vijand: { modellen: 20, breedte: 5 }, situaties: { charged: true } }, rules);
+  assert.equal(r.volgorde[0].initiatief, 'I8'); // I5 + 3
+  assert.ok(r.volgorde.findIndex((v) => v.zijde === 'vijand') > r.volgorde.findIndex((v) => v.naam === 'Cold One'));
+  // the knights strike before the warriors: same as the one-way attack
+  close(r.uit.wounds, cc(cok, war, { modellen: 5, breedte: 5, doelwitModellen: 20, situaties: { charged: true } }).wounds, 1e-9);
+  beide(r);
+  const t = mh.berekenGevecht(war, cok, { ik: { modellen: 20, breedte: 5 }, vijand: { modellen: 5, breedte: 5 }, situaties: { charged: true } }, rules);
+  assert.equal(t.volgorde[0].zijde, 'ik'); // warriors charge: I4 + 3 = 7 > 5
+  beide(t);
+  // no Press of Battle on the turn the warriors charged
+  assert.ok(!t.uit.groepen.some((g) => /Press of Battle/.test(g.naam)));
+});
+
+test('exchange: sweep over builder units — no crashes, proper distributions, timing', () => {
+  const cat = read('public/owb/dark-elves.json');
+  const alle = [];
+  for (const c of ['characters', 'core', 'special', 'rare']) for (const u of cat[c] || []) alle.push(echt('dark-elves', 'Dark Elves', u.name_en, [], u.minimum ? Math.max(u.minimum, 10) : undefined));
+  const emp = read('public/owb/empire-of-man.json');
+  for (const c of ['core', 'special']) for (const u of (emp[c] || []).slice(0, 8)) alle.push(echt('empire-of-man', 'Empire of Man', u.name_en, [], u.minimum ? Math.max(u.minimum, 10) : undefined));
+  let n = 0;
+  const t0 = Date.now();
+  for (const a of alle) for (const b of alle) {
+    const ma = mh.breedteVoor(a, a.count ?? 1);
+    const mb = mh.breedteVoor(b, b.count ?? 1);
+    const r = mh.berekenGevecht(a, b, { ik: { modellen: a.count ?? 1, breedte: ma.vanToepassing ? ma.standaard : undefined }, vijand: { modellen: b.count ?? 1, breedte: mb.vanToepassing ? mb.standaard : undefined }, situaties: { charged: n % 2 === 0 } }, rules);
+    for (const x of [r.uit, r.terug]) {
+      assert.ok(Number.isFinite(x.wounds), `${a.name} vs ${b.name}`);
+      checkVerdeling(x, `${a.name} vs ${b.name}`);
+    }
+    n++;
+  }
+  const ms = (Date.now() - t0) / n;
+  assert.ok(ms < 5, `${ms.toFixed(2)} ms per pair`);
+});
+
 test('performance: 60-attack unit vs W3 target with Multiple Wounds stays fast and exact', () => {
   const horde = krijger({ count: 30, A: 2, sr: ['Multiple Wounds (D3)'] });
   const d = pop({ W: 3, count: 20, T: 3, sr: ['Regeneration (5+)'] });
