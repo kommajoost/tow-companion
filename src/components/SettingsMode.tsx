@@ -29,6 +29,8 @@ const BUILD_LABEL = `${APP_VERSION} · ${BUILD_SHA} · ${BUILD_DATE}`;
 export function SettingsMode({ onTactics }: { onTactics?: () => void } = {}) {
   const { canInstall, installed, promptInstall, needRefresh, updateApp, checkForUpdate } = usePwa();
   const { mode, set: setTheme } = useTheme();
+  // Target calculator op de unitkaart in een game: standaard uit (22-11-2026). Zelfde sleutel als UnitCard.
+  const [targetAan, setTargetAan] = usePersistentState<boolean>('tow:target-calc', false);
   const [checking, setChecking] = useState(false);
   const [checkedNote, setCheckedNote] = useState<string | null>(null);
 
@@ -125,6 +127,23 @@ export function SettingsMode({ onTactics }: { onTactics?: () => void } = {}) {
                 <button key={m} onClick={() => setTheme(m)} aria-pressed={on}
                   style={{ flex: 1, padding: '11px 14px', borderRadius: 11, cursor: 'pointer', border: `1px solid ${on ? TOW.goldDeep : TOW.lineStrong}`, background: on ? 'rgba(138,108,48,0.14)' : 'transparent', color: on ? TOW.goldDeep : TOW.parchDim, fontFamily: towFont.display, fontWeight: 600, fontSize: 14.5 }}>
                   {m === 'light' ? 'Light' : 'Dark'}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* Target calculator: aan/uit voor de Target-knop op de unitkaart in een game. */}
+        <div style={card}>
+          <div style={title}>Target calculator</div>
+          <div style={{ ...body, marginBottom: 12 }}>Adds a Target button to unit cards in a game: expected wounds against each enemy unit.</div>
+          <div style={{ display: 'flex', gap: 8 }}>
+            {([false, true] as const).map((v) => {
+              const on = targetAan === v;
+              return (
+                <button key={String(v)} onClick={() => setTargetAan(v)} aria-pressed={on}
+                  style={{ flex: 1, padding: '11px 14px', borderRadius: 11, cursor: 'pointer', border: `1px solid ${on ? TOW.goldDeep : TOW.lineStrong}`, background: on ? 'rgba(138,108,48,0.14)' : 'transparent', color: on ? TOW.goldDeep : TOW.parchDim, fontFamily: towFont.display, fontWeight: 600, fontSize: 14.5 }}>
+                  {v ? 'On' : 'Off'}
                 </button>
               );
             })}

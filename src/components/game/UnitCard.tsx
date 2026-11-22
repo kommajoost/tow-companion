@@ -11,9 +11,11 @@ import { InfoSheet, type InfoSheetData } from './InfoSheet';
 import { WizardSpells } from './WizardSpells';
 import { WoundTracker } from './WoundTracker';
 import { TargetCalc, isUitgeschakeld, type VijandStand } from './TargetCalc';
+import { usePersistentState } from '../../store';
 
-/** De Target-rekenhulp (mathhammer) op de unitkaart. Uit sinds 22-11-2026 op verzoek van Joost. */
-const TARGET_ZICHTBAAR = false;
+/** De Target-rekenhulp (mathhammer) op de unitkaart: standaard uit, aan te zetten in Settings (Joost,
+ *  22-11-2026: "standaard uitzetten maar dat je bij settings deze kan aanzetten als je wilt"). */
+const TARGET_SLEUTEL = 'tow:target-calc'; // zelfde sleutel als de schakelaar in SettingsMode.tsx
 import { useBackClose } from '../../lib/backStack';
 import { ProfielTabel } from './ProfielTabel';
 import type { ArmyUnit, KillDetail, UnitProfile } from '../../types';
@@ -174,9 +176,9 @@ export function UnitCard({
   // Target (mathhammer): alleen als er een levend vijandelijk doelwit is en deze unit zelf nog op tafel staat.
   // Op een los leger zonder tegenstander (TegenLegerKaarten) is `vijandUnits` leeg, dus geen knop.
   const [targetOpen, setTargetOpen] = useState(false);
-  // VERBORGEN (Joost, 22-11-2026: "de tool voor mathhammer valt niet in de smaak, hide hem maar weer"). De rekenkern
-  // (lib/mathhammer.ts) en het scherm (TargetCalc.tsx) blijven staan; zet TARGET_ZICHTBAAR op true om hem terug te halen.
-  const kanMikken = TARGET_ZICHTBAAR && !dead && (unit.profiles?.length ?? 0) > 0
+  // Standaard uit; de speler zet hem aan in Settings ("Target calculator").
+  const [targetAan] = usePersistentState<boolean>(TARGET_SLEUTEL, false);
+  const kanMikken = targetAan && !dead && (unit.profiles?.length ?? 0) > 0
     && (vijandUnits ?? []).some((v) => !isUitgeschakeld(v, vijandStand?.[v.id]));
   // Android-Back sluit de sheet (zelfde backStack als InfoSheet/ExportSheet). Hier op de kaart, met een
   // wisselende `active`, zodat StrictMode's dubbele mount-effect in dev de val niet meteen weer opruimt.
