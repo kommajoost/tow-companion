@@ -22,6 +22,7 @@ import { wrathSleutel } from '../lib/wrathTriggers';
 import { gedeeldeCodeUitUrl } from '../lib/listShare';
 import { tegenLijstUitUrl } from '../lib/tegenLijst';
 import { TacticsPage } from './tactics/TacticsPage';
+import { isBeheerder } from '../lib/admin';
 
 type Tab = 'browse' | 'game' | 'army' | 'settings';
 type Screen = 'home' | 'app';
@@ -358,7 +359,7 @@ export function AppShell() {
       ) : tab === 'army' ? (
         <ListBuilder />
       ) : tab === 'settings' ? (
-        <SettingsMode onTactics={() => setTacticsOpen(true)} />
+        <SettingsMode onTactics={isBeheerder(session?.user?.id) ? () => setTacticsOpen(true) : undefined} />
       ) : (
         <>
           <div className="h-full pt-safe">
