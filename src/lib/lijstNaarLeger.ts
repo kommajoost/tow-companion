@@ -14,6 +14,7 @@ import { compName } from './armies';
 import {
   itemsFor, catalogueFor, applyOverlayMagicText, applyOverlayMountText, applyOverlayStatIndex,
   hasOverlay, isOverlay, overlayCompsFor, overlayStatsFor, OVERLAY_FILES, type CompositionOverlay,
+  mergeMountDetails, type MountDetailsFile,
 } from './overlays';
 import { entryPoints, findUnit, type OwbArmy, type MagicItemsData } from './owbBuilder';
 import { isNewRecruitText, parseNewRecruit, resolveNewRecruitHeader, type NewRecruitHeader } from './newRecruitParser';
@@ -52,7 +53,8 @@ export function laadOwbData(): Promise<OwbData> {
       haalJson('owb/mount-text.json'),
       haalJson('owb/index.json'),
       haalJson('owb/the-old-world.json'),
-    ]).then(([stats, items, magic, mount, idx, meta]) => {
+      haalJson('mount-details.json'),
+    ]).then(([stats, items, magic, mount, idx, meta, mountDetails]) => {
       const armyNames: Record<string, string> = Array.isArray(idx?.armies)
         ? Object.fromEntries(idx.armies.map((a: { slug: string; name: string }) => [a.slug, a.name]))
         : {};
@@ -67,7 +69,7 @@ export function laadOwbData(): Promise<OwbData> {
         statIdx: (stats ?? {}) as StatIndex,
         itemsData: (items ?? null) as MagicItemsData | null,
         magicText: (magic ?? {}) as MagicText,
-        mountText: (mount ?? {}) as MountText,
+        mountText: mergeMountDetails((mount ?? {}) as MountText, mountDetails as MountDetailsFile | null),
         armyNames,
         itemsByArmy,
         compsByArmy,

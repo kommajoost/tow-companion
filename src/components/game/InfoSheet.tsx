@@ -13,11 +13,22 @@ const eb = engraved as React.CSSProperties;
 // What an InfoSheet shows: a title, optional flavour line, optional stat profile(s) (mounts), and a
 // list of special-rule labels — short rule names render as tappable chips (each opens its rule page),
 // while a magic item's prose effect text renders as a wrapped paragraph.
+/** Eén equipment-regel, verbatim van de wiki, met de woorden die daar een link zijn. */
+export interface UitrustingRegel { line: string; links?: { text: string; rule: string }[] }
+
 export interface InfoSheetData {
   title: string;
   troopType?: string;
   flavour?: string;
-  profiles?: UnitProfile[];
+  /** Vaste datasheet-feiten als kop onder de titel: Armour value 4+ · Base 50 x 100 mm. */
+  meta?: { label: string; value: string }[];
+  /** Per model: de uitrusting die DAT model draagt, en `openInfo` als het model zelf een pagina
+   *  heeft (de Cold Ones in een Cold One Chariot). */
+  profiles?: (UnitProfile & { uitrusting?: UitrustingRegel[]; openInfo?: () => void })[];
+  /** Uitrusting die bij geen enkel profiel past. */
+  uitrusting?: UitrustingRegel[];
+  /** Terug naar de sheet waar je vandaan kwam (Cold One → Cold One Chariot). */
+  terug?: { label: string; open: () => void };
   /** Een regel als LABEL (naam → pagina opzoeken) of, waar de bron de pagina al kent, als
    *  `{ label, slug }`. Dat tweede is nodig omdat een naam twee pagina's kan hebben: "Storm Call" is
    *  zowel de signature spell van Elementalism als een bound spell op een item, en de naam-index
@@ -68,6 +79,36 @@ export function InfoSheet({ info, onClose }: { info: InfoSheetData | null; onClo
   const chips = info.rules.filter((r) => slugOf(r));
   const prose = info.rules.filter((r) => !slugOf(r)).map(labelOf);
 
+  // Een equipment-regel verbatim, met de woorden die op de wiki een link zijn als aantikbare link
+  // ("Hand weapons, cavalry spears and repeater crossbows" → drie links). Een woord zonder pagina
+  // blijft gewone tekst; de regel zelf wordt nooit herschreven.
+  const linkStijl: React.CSSProperties = {
+    border: 'none', background: 'none', padding: 0, margin: 0, font: 'inherit', cursor: 'pointer',
+    color: TOW.goldDeep, borderBottom: `1px dotted ${TOW.goldDeep}`,
+  };
+  const uitrustingTekst = (r: UitrustingRegel) => {
+    const delen: React.ReactNode[] = [];
+    let rest = r.line;
+    let n = 0;
+    for (const l of r.links ?? []) {
+      const at = rest.indexOf(l.text);
+      const slug = resolveRuleSlug(l.rule, idx) ?? resolveOptionSlug(l.rule, idx)
+        ?? resolveRuleSlug(l.text, idx) ?? resolveOptionSlug(l.text, idx);
+      if (at < 0 || !slug) continue;
+      if (at > 0) delen.push(rest.slice(0, at));
+      delen.push(<button key={n++} type="button" onClick={() => openRule(slug)} style={linkStijl}>{l.text}</button>);
+      rest = rest.slice(at + l.text.length);
+    }
+    if (rest) delen.push(rest);
+    return delen;
+  };
+  const uitrustingP: React.CSSProperties = { margin: '0 0 4px', fontFamily: towFont.serif, fontSize: 12.5, color: TOW.parchDim, lineHeight: 1.45 };
+  const oogje = (
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden>
+      <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" /><circle cx="12" cy="12" r="2.6" />
+    </svg>
+  );
+
   return (
     <div
       onClick={onClose}
@@ -78,6 +119,15 @@ export function InfoSheet({ info, onClose }: { info: InfoSheetData | null; onClo
         style={{ width: '100%', maxWidth: wide ? 440 : '100%', maxHeight: '85vh', overflowY: 'auto', background: TOW.panel2, border: `1px solid ${TOW.lineStrong}`, borderRadius: wide ? 16 : '18px 18px 0 0', padding: 16, paddingTop: wide ? 16 : 4, paddingBottom: wide ? 16 : 'max(16px, env(safe-area-inset-bottom))', boxShadow: '0 -10px 40px rgba(0,0,0,0.25)', ...sheetStyle }}
       >
         {!wide && <DragHandle {...handleProps} />}
+        {info.terug && (
+          <button
+            type="button"
+            onClick={info.terug.open}
+            style={{ ...linkStijl, borderBottom: 'none', display: 'flex', alignItems: 'center', gap: 4, minHeight: 32, ...eb, fontSize: 8.5 }}
+          >
+            <span aria-hidden>‹</span>{info.terug.label}
+          </button>
+        )}
         <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, marginBottom: 6 }}>
           <h3 style={{ margin: 0, flex: 1, minWidth: 0, fontFamily: towFont.display, fontWeight: 700, fontSize: 16, color: TOW.ink }}>{info.title}</h3>
           <button onClick={onClose} aria-label="Close" style={{ border: 'none', background: 'none', cursor: 'pointer', fontSize: 22, lineHeight: 1, color: TOW.muted, padding: '0 4px' }}>×</button>
@@ -109,9 +159,28 @@ export function InfoSheet({ info, onClose }: { info: InfoSheetData | null; onClo
           );
         })()}
 
+        {/* Armour value en base: vaste feiten van de datasheet, dus als kop en niet als proza. */}
+        {info.meta?.length ? (
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px 16px', margin: '0 0 10px' }}>
+            {info.meta.map((m) => (
+              <span key={m.label} style={{ display: 'inline-flex', alignItems: 'baseline', gap: 6 }}>
+                <span style={{ ...eb, fontSize: 8, color: TOW.muted }}>{m.label}</span>
+                <span style={{ fontFamily: towFont.serif, fontSize: 14, color: TOW.ink, fontVariantNumeric: 'tabular-nums' }}>{m.value}</span>
+              </span>
+            ))}
+          </div>
+        ) : null}
+
         {info.flavour && (
           <p style={{ margin: '0 0 6px', fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 13, color: TOW.parchDim, lineHeight: 1.5 }}>{info.flavour}</p>
         )}
+
+        {info.uitrusting?.map((r, i) => (
+          <p key={`u${i}`} style={uitrustingP}>
+            <span style={{ ...eb, fontSize: 8, color: TOW.muted, marginRight: 6 }}>Equipment</span>
+            {uitrustingTekst(r)}
+          </p>
+        ))}
 
         {info.details?.map((detail, i) => (
           <p key={i} style={{ margin: '0 0 5px', fontFamily: towFont.serif, fontSize: 12.5, color: TOW.parchDim, lineHeight: 1.45 }}>{detail}</p>
@@ -145,11 +214,26 @@ export function InfoSheet({ info, onClose }: { info: InfoSheetData | null; onClo
 
         {info.profiles?.map((p, pi) => (
           <div key={pi} className="no-scrollbar" style={{ overflowX: 'auto', marginBottom: 8 }}>
-            <div style={{ fontFamily: towFont.serif, fontSize: 12, color: TOW.parchDim, marginBottom: 3 }}>{p.label}</div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 4, minHeight: 24, marginBottom: 3 }}>
+              <span style={{ fontFamily: towFont.serif, fontSize: 12, color: TOW.parchDim }}>{p.label}</span>
+              {p.openInfo && (
+                <button
+                  type="button"
+                  onClick={p.openInfo}
+                  aria-label={`Rules for ${p.label.replace(/\s*\(x\d+\)\s*$/i, '')}`}
+                  title={`Rules for ${p.label.replace(/\s*\(x\d+\)\s*$/i, '')}`}
+                  style={{ border: 'none', background: 'none', cursor: 'pointer', color: TOW.muted, padding: 0, width: 32, height: 24, display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                >{oogje}</button>
+              )}
+            </div>
             <table style={{ borderCollapse: 'collapse', tableLayout: 'fixed', width: '100%', minWidth: 280, fontSize: 12.5, fontFamily: towFont.serif }}>
               <thead><tr>{p.stats.map((s, j) => <th key={j} style={th}>{s.k}</th>)}</tr></thead>
               <tbody><tr>{p.stats.map((s, j) => <td key={j} style={td}>{s.v}</td>)}</tr></tbody>
             </table>
+            {/* De uitrusting van DIT model, direct onder z'n profiel. */}
+            {p.uitrusting?.map((r, i) => (
+              <p key={i} style={{ ...uitrustingP, margin: '4px 0 0' }}>{uitrustingTekst(r)}</p>
+            ))}
           </div>
         ))}
 
@@ -183,7 +267,7 @@ export function InfoSheet({ info, onClose }: { info: InfoSheetData | null; onClo
             dat z'n hele regeltekst via `details` toont (Manbane) of een wapenprofiel heeft — dan is
             het geen nuttige mededeling maar ruis onder een sheet die juist wél iets vertelt. */}
         {chips.length === 0 && prose.length === 0 && !info.profiles?.length
-          && !info.wapen?.length && !info.details?.length && !info.flavour && (
+          && !info.wapen?.length && !info.details?.length && !info.flavour && !info.uitrusting?.length && !info.meta?.length && (
           <p style={{ fontFamily: towFont.serif, fontSize: 12.5, color: TOW.muted }}>No special rules listed.</p>
         )}
       </div>

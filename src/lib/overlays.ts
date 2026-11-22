@@ -661,6 +661,9 @@ export interface MountProfileText {
   baseSize?: string;
   armourValue?: string;
   equipment?: string[];
+  /** Per `equipment`-regel de woorden die op de wiki een link zijn, met de regel erachter
+   *  ("cavalry spears" → Cavalry Spear). Alleen uit mount-details.json; een overlay heeft ze niet. */
+  equipmentLinks?: { text: string; rule: string }[][];
   notes?: string[];
 }
 
@@ -681,6 +684,8 @@ export function applyOverlayMountText<T extends Record<string, MountProfileText>
       baseSize: profile.baseSize,
       armourValue: profile.armourValue,
       equipment: profile.equipment,
+      // Bewust leeg: de links horen bij de wiki-regels, niet bij de eigen equipment-tekst van de overlay.
+      equipmentLinks: undefined,
       notes: profile.notes,
     }]));
   return (Object.keys(additions).length ? { ...text, ...additions } : text) as T & Record<string, MountProfileText>;
@@ -847,4 +852,28 @@ export function unitPointsProvenance(overlay: CompositionOverlay, unitId: string
   const p = overlay.units[unitId];
   if (!p || typeof p.points !== 'number' || typeof p._was !== 'number') return null;
   return { was: p._was, now: p.points };
+}
+
+/** public/mount-details.json (scripts/sync-mount-details.mjs): armour value, base size, equipment
+ *  per model and the special rules WITH their per-model note, verbatim from tow.whfb.app. */
+export interface MountDetailsFile {
+  mounts?: Record<string, MountProfileText>;
+}
+
+/**
+ * Leg mount-details over mount-text (22-11-2026, Joost over een Cold One Chariot als mount: "ik mis
+ * toch wel wat info zoals armour save en de equipment van crew en Cold Ones"). mount-text.json in
+ * public/owb/ houdt alleen regelnamen bij en blijft onaangeroerd; dit bestand vult per sleutel aan.
+ * Volgorde: mount-text < mount-details < Renegade-overlay (die wordt daarna nog over het resultaat
+ * gelegd), zodat een Renegade-profiel altijd wint.
+ */
+export function mergeMountDetails<T extends Record<string, MountProfileText>>(
+  text: T,
+  details?: MountDetailsFile | null,
+): T {
+  const extra = details?.mounts;
+  if (!extra || !Object.keys(extra).length) return text;
+  const out: Record<string, MountProfileText> = { ...text };
+  for (const [k, d] of Object.entries(extra)) out[k] = { ...out[k], ...d };
+  return out as T;
 }

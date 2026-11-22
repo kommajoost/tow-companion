@@ -23,12 +23,11 @@ import { useBackClose } from '../../lib/backStack';
 import { useData } from '../../data';
 import { getRuleIndex, resolveOptionSlug, resolveRuleSlug, splitCompoundLabel } from '../../lib/armyRules';
 import { useUI } from '../../state';
-import { itemsFor, catalogueFor, applyOverlayMagicText, applyOverlayMountText, applyOverlayStatIndex, hasOverlay, isOverlay, mercenarySources, overlayCompsFor, overlayStatsFor, OVERLAY_FILES, type CompositionOverlay, type MountProfileText } from '../../lib/overlays';
+import { mergeMountDetails, itemsFor, catalogueFor, applyOverlayMagicText, applyOverlayMountText, applyOverlayStatIndex, hasOverlay, isOverlay, mercenarySources, overlayCompsFor, overlayStatsFor, OVERLAY_FILES, type CompositionOverlay, type MountProfileText } from '../../lib/overlays';
 import { InfoSheet, type InfoSheetData } from './InfoSheet';
 import type { MagicText } from '../../lib/builderToArmy';
 import { magicItemRules } from '../../lib/builderToArmy';
 import { extraMountSleutels } from '../../lib/statSleutel';
-import type { UnitProfile } from '../../types';
 import { helftVan, isVersterkingLijst, maakVersterkingLijst, versterkingBasis } from '../../lib/versterking';
 import { useAanraakSlepen } from './useAanraakSlepen';
 
@@ -184,7 +183,12 @@ export function ListBuilder() {
       setMetaByArmy(map);
     }).catch(() => {});
     fetch(`${BASE}owb/magic-items.json`).then((r) => r.json()).then(setItemsData).catch(() => setItemsData(null));
-    fetch(`${BASE}owb/mount-text.json`).then((r) => r.json()).then(setBaseMountText).catch(() => {});
+    // mount-text (regelnamen) + mount-details (armour value, base, equipment per model), 22-11-2026.
+    // Ontbreekt mount-details, dan blijft mount-text gewoon werken.
+    Promise.all([
+      fetch(`${BASE}owb/mount-text.json`).then((r) => r.json()),
+      fetch(`${BASE}mount-details.json`).then((r) => (r.ok ? r.json() : null)).catch(() => null),
+    ]).then(([text, details]) => setBaseMountText(mergeMountDetails(text, details))).catch(() => {});
     fetch(`${BASE}owb/magic-item-text.json`).then((r) => r.json()).then(setBaseMagicText).catch(() => {});
     if (statIndexCache) setStatIdx(statIndexCache);
     else fetch(`${BASE}owb/rules-index.json`).then((r) => r.json()).then((idx) => { statIndexCache = idx; setStatIdx(idx); }).catch(() => {});
@@ -1018,45 +1022,87 @@ export function ListBuilder() {
           }
           const label = what.name;
           if (what.kind === 'mount') {
-            const profileKey = normMountProfile(label);
-            const taggedKey = normMountTag(label);
             // FACTIE-BEWUST OPZOEKEN. mount-text sleutelt de factie plat in de sleutel — "cold one
             // dark elves", "manticore renegade", "warhorse bretonnia" — omdat dezelfde mount per
             // leger andere regels heeft. Een gekozen mount-OPTIE draagt die tag nog in z'n naam en
             // vindt zichzelf dus. Maar een mount die in de unit is INGEBAKKEN staat alleen als
             // profielrij ("Cold One" in Cold One Knights) en heeft geen tag; die miste alles.
             // Daarom hier de factienaam als extra kandidaat, plus "renegade" voor de packs.
-            const fac = normMountProfile(armyName(active.army));
             // 21-11-2026: plus het meervoud ("War Boars (x2)" → "war boar") en de kortere leger-tag
             // ("skeletal steed tomb kings" bij Tomb Kings of Khemri). Achteraan, zodat wat al goed
             // ging — de mounts van characters — dezelfde pagina blijft vinden.
-            const sleutels = [
-              profileKey, taggedKey, `${profileKey} ${fac}`, `${profileKey} renegade`,
-              ...extraMountSleutels(label, armyName(active.army), Object.keys(activeStatIdx ?? {})),
-            ];
-            const rows = sleutels.map((k) => statsFor(k)).find((r) => r.length) ?? statsFor(label);
-            const text = sleutels.map((k) => activeMountText[k]).find(Boolean) ?? {};
-            const profiles: UnitProfile[] = rows.map((row) => ({
-              label: row.Name,
-              stats: ['M', 'WS', 'BS', 'S', 'T', 'W', 'I', 'A', 'Ld']
-                .map((key) => ({ k: key, v: row[key as keyof StatRow] ?? '-' })),
-            }));
-            const details = [
-              text.baseSize ? `Base size: ${text.baseSize}` : null,
-              text.armourValue ? `Armour value: ${text.armourValue}` : null,
-              ...(text.equipment ?? []).map((value) => `Equipment: ${value}`),
-              ...(text.notes ?? []),
-            ].filter((value): value is string => !!value);
-            setMountInfo({
-              title: label.replace(/\s*\{[^}]*\}/g, '').trim(),
-              // rules-index stores troop-type CODES ("MCa"), so this showed a raw "MCA" — unreadable,
-              // and never resolvable to the rule page it names. Mapped to the rulebook's own wording.
-              troopType: troopTypeName(text.troopType
-                ?? sleutels.map((k) => activeStatIdx?.[k]?.troopType).find(Boolean)),
-              profiles,
-              rules: text.specialRules ?? [],
-              details,
-            });
+            const legerNaam = armyName(active.army);
+            const fac = normMountProfile(legerNaam);
+            const sleutelsVoor = (naam: string) => {
+              const profileKey = normMountProfile(naam);
+              return [
+                profileKey, normMountTag(naam), `${profileKey} ${fac}`, `${profileKey} renegade`,
+                ...extraMountSleutels(naam, legerNaam, Object.keys(activeStatIdx ?? {})),
+              ];
+            };
+            // Bij welk model hoort een equipment-regel? De wiki schrijft "Knight Charioteers: …" en
+            // "Cold Ones: …"; de profielrijen heten "Knight Charioteer (x2)" en "Cold One (x2)".
+            const modelSleutel = (s: string) => s.toLowerCase().split('(')[0].trim()
+              .split(/\s+/).map((w) => w.replace(/s$/, '')).join(' ');
+
+            // 22-11-2026 (Joost over een Cold One Chariot: "ik mis toch wel wat info zoals armour save
+            // en de equipment van crew en Cold Ones, oogje voor regels daarvan enzo"):
+            //  - armour value en base size als vaste kop, niet als losse tekstregels;
+            //  - de uitrusting ONDER het model dat haar draagt, met de wapens aantikbaar;
+            //  - een oogje bij een model in de mount dat zelf een pagina heeft (de Cold Ones van de
+            //    chariot), met een terugweg naar de chariot.
+            const bouw = (naam: string, terug?: InfoSheetData): InfoSheetData => {
+              const sleutels = sleutelsVoor(naam);
+              const eigenSleutel = sleutels.find((k) => activeMountText[k]);
+              const rows = sleutels.map((k) => statsFor(k)).find((r) => r.length) ?? statsFor(naam);
+              const text = (eigenSleutel ? activeMountText[eigenSleutel] : undefined) ?? {};
+              const regels = (text.equipment ?? []).map((line, i) => {
+                const m = line.match(/^([^:()]{2,40}):\s*(.+)$/);
+                return { model: m ? m[1] : null, line: m ? m[2] : line, links: text.equipmentLinks?.[i] ?? [] };
+              });
+              const gekoppeld = new Set<number>();
+              const info: InfoSheetData = {
+                // "(x2)" is een aantal in de chariot, geen deel van de naam van het model.
+                title: naam.replace(/\s*\{[^}]*\}/g, '').replace(/\s*\(x\s*\d+\)\s*$/i, '').trim(),
+                // rules-index stores troop-type CODES ("MCa"), so this showed a raw "MCA" — unreadable,
+                // and never resolvable to the rule page it names. Mapped to the rulebook's own wording.
+                troopType: troopTypeName(text.troopType
+                  ?? sleutels.map((k) => activeStatIdx?.[k]?.troopType).find(Boolean)),
+                meta: [
+                  text.armourValue ? { label: 'Armour value', value: text.armourValue } : null,
+                  text.baseSize ? { label: 'Base', value: text.baseSize } : null,
+                ].filter((x): x is { label: string; value: string } => !!x),
+                profiles: [],
+                rules: text.specialRules ?? [],
+                details: text.notes ?? [],
+                terug: terug ? { label: terug.title, open: () => setMountInfo(terug) } : undefined,
+              };
+              info.profiles = rows.map((row) => {
+                const ms = modelSleutel(row.Name);
+                const eigen = regels.flatMap((r, i) => {
+                  const past = r.model ? modelSleutel(r.model) === ms : rows.length === 1;
+                  if (past) gekoppeld.add(i);
+                  return past ? [{ line: r.line, links: r.links }] : [];
+                });
+                // Een model met een EIGEN pagina, anders dan de mount zelf: de Cold Ones van een Cold
+                // One Chariot. De bemanning ("Knight Charioteer") heeft er geen en krijgt dus geen oogje.
+                const rijSleutel = rows.length > 1 ? sleutelsVoor(row.Name).find((k) => activeMountText[k]) : undefined;
+                return {
+                  label: row.Name,
+                  stats: ['M', 'WS', 'BS', 'S', 'T', 'W', 'I', 'A', 'Ld']
+                    .map((key) => ({ k: key, v: row[key as keyof StatRow] ?? '-' })),
+                  uitrusting: eigen,
+                  openInfo: rijSleutel && rijSleutel !== eigenSleutel
+                    ? () => setMountInfo(bouw(row.Name, info))
+                    : undefined,
+                };
+              });
+              // Regels die bij geen enkel model passen, blijven zichtbaar als losse uitrusting.
+              info.uitrusting = regels.filter((_, i) => !gekoppeld.has(i))
+                .map((r) => ({ line: r.model ? `${r.model}: ${r.line}` : r.line, links: r.links }));
+              return info;
+            };
+            setMountInfo(bouw(label));
             return;
           }
           // Kent de aanroeper de pagina al, gebruik die. Een spreuk deelt z'n naam soms met een
