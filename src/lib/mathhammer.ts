@@ -816,7 +816,7 @@ interface Doelwit {
   tNote?: string;
 }
 
-function doelwitVan(d: ArmyUnit, soort: AanvalSoort, rules: Record<string, Rule>, uit: MathResultaat): Doelwit {
+function doelwitVan(d: ArmyUnit, soort: AanvalSoort, rules: Record<string, Rule>, uit: MathResultaat, parryActief = true): Doelwit {
   const rows = rijenVan(d);
   const tt = effectiefTroopType(d);
   const { inst, proza } = instanties(d, rows, rules, true, new Set((d.magicWeapons ?? []).map((m) => m.name)));
@@ -888,6 +888,14 @@ function doelwitVan(d: ArmyUnit, soort: AanvalSoort, rules: Record<string, Rule>
       // into its general save but (because its addCond compares against the pre-Parry value) does not always
       // return the shooting save, so undo the Parry +1 here when no shooting conditional came back.
       else if (s != null && asv.parts.some((p) => /^Parry \(\+1/.test(p))) { s += 1; note += ' (Parry only counts in close combat)'; }
+    }
+    // parry: "a model with this rule that is equipped with and CHOOSES TO USE a hand weapon and shield improves its
+    // armour value by 1". A unit that fights this combat with its spears (or any other weapon) has no Parry, so the
+    // +1 that unitArmourSave folded into the close-combat save comes off again (Joost, 22-11-2026: "let ook op de
+    // parry regel": spearmen got the spear's extra rank AND the Parry save).
+    if (asv && soort === 'combat' && !parryActief && s != null && asv.parts.some((p) => /^Parry \(\+1/.test(p))) {
+      s += 1;
+      note += ' (no Parry: not fighting with hand weapon and shield)';
     }
     if (s != null && s >= 7) s = null;
     if (mountAv != null && (s == null || mountAv < s)) { s = mountAv; note = `mount armour value ${mountAv}+ (better)`; }
@@ -1002,6 +1010,9 @@ function leeg(): MathResultaat {
 interface GevechtCtx {
   /** The OTHER unit charged this turn (spears' Initiative, long spear's Strike First). */
   tegenCharged: boolean;
+  /** The weapon the OTHER unit fights with this combat (decides its Parry) and its per-model equipment. */
+  tegenWapenSlug?: string;
+  tegenUitrusting?: EquipmentLine[] | null;
   /** Receives the finished attack groups, the defender's Wounds per model and its models. */
   vang: (c: { specs: Spec[]; W: number | null; M: number }) => void;
 }
@@ -1013,7 +1024,18 @@ function reken(a: ArmyUnit, d: ArmyUnit, o: AanvalOpties, rules: Record<string, 
 
   const rows = rijenVan(a);
   if (!rows.length) return stop('The attacking unit has no profile.');
-  const doel = doelwitVan(d, o.soort, rules, uit);
+  // Parry needs the defender to fight with hand weapon and shield: look at the weapon it uses in this combat (the
+  // one chosen for it in an exchange, else the same default weapon its card shows).
+  let parryActief = true;
+  if (o.soort === 'combat') {
+    const hunWapens = wapensVoor(d, 'combat', rules, gv?.tegenUitrusting);
+    const hun = hunWapens.find((w) => w.slug === gv?.tegenWapenSlug) ?? hunWapens.find((w) => w.standaard) ?? hunWapens[0];
+    if (hun && !(hun.slug === 'hand-weapon-profile' || /^hand weapons?$/i.test(hun.naam))) parryActief = false;
+  }
+  const doel = doelwitVan(d, o.soort, rules, uit, parryActief);
+  if (!parryActief && (unitArmourSave(d)?.parts ?? []).some((p) => /^Parry \(\+1/.test(p))) {
+    meeg('Parry', 'No effect: the target does not fight with hand weapon and shield this combat');
+  }
   if (doel.t == null) return stop('The target has no Toughness value.');
 
   const { melee, ranged } = wapensVan(a, rules);
@@ -1766,8 +1788,8 @@ function gevechtZijden(ik: ArmyUnit, vijand: ArmyUnit, o: GevechtOpties, rules: 
     soort: 'combat', modellen: z.modellen, breedte: z.breedte, wapenSlug: z.wapenSlug, aanvallerWounds: z.aanvallerWounds,
     uitrusting: z.uitrusting, doelwitModellen: tegen.modellen, situaties: w,
   });
-  const uitA = reken(ik, vijand, optie(o.ik, o.vijand), rules, maakCtx(w, lijst), { tegenCharged: !!w.enemyCharged, vang: (c) => { A = c; } });
-  const uitB = reken(vijand, ik, optie(o.vijand, o.ik), rules, maakCtx(w, lijst, vijandSleutel), { tegenCharged: !!w.charged, vang: (c) => { B = c; } });
+  const uitA = reken(ik, vijand, optie(o.ik, o.vijand), rules, maakCtx(w, lijst), { tegenCharged: !!w.enemyCharged, tegenWapenSlug: o.vijand.wapenSlug, tegenUitrusting: o.vijand.uitrusting, vang: (c) => { A = c; } });
+  const uitB = reken(vijand, ik, optie(o.vijand, o.ik), rules, maakCtx(w, lijst, vijandSleutel), { tegenCharged: !!w.charged, tegenWapenSlug: o.ik.wapenSlug, tegenUitrusting: o.ik.uitrusting, vang: (c) => { B = c; } });
   return { uitA, uitB, A: A as Vang | null, B: B as Vang | null };
 }
 

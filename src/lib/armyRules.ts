@@ -469,7 +469,7 @@ export function unitArmourSave(unit: ArmyUnit): ArmourSave | null {
   const parryTelt = parry && handWeapon && shield && !has2H;
   const naParry = parryTelt ? Math.min(save, Math.max(3, save - 1)) : save;
   if (parryTelt) {
-    parts.push(naParry < save ? 'Parry (+1, close combat, max 3+)' : 'Parry (no effect — already 3+ or better)');
+    parts.push(naParry < save ? 'Parry (+1 with hand weapon & shield, close combat, max 3+)' : 'Parry (no effect — already 3+ or better)');
     // Buiten close combat geldt de bonus niet. Alleen melden als hij daadwerkelijk iets deed,
     // anders zijn het twee identieke getallen naast elkaar.
     // 22-11-2026: dit ging via addCond, maar die vergelijkt met `save` zelf en voegde dus nooit iets toe —
