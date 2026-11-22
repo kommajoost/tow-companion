@@ -145,6 +145,17 @@ export function TacticsLessons({ lessen, bronnen, wide, selId, onSelect }: Props
   );
 }
 
+/** YouTube-link naar een moment, een paar seconden voor het citaat (zoals de pijplijn de hoofdlink maakt). */
+function momentUrl(videoUrl: string, sec: number): string {
+  try {
+    const u = new URL(videoUrl);
+    u.searchParams.set('t', `${Math.max(0, Math.floor(sec) - 3)}s`);
+    return u.toString();
+  } catch {
+    return videoUrl;
+  }
+}
+
 function LesDetail({ les, bronIndex, kanaalIndex }: { les: Les; bronIndex: Map<string, Bron>; kanaalIndex: Map<string, Kanaal> }) {
   return (
     <article style={{ maxWidth: 680, minWidth: 0 }}>
@@ -153,6 +164,15 @@ function LesDetail({ les, bronIndex, kanaalIndex }: { les: Les; bronIndex: Map<s
       </h2>
       <Meta parts={[onderwerpLabel(les.onderwerp), legerLabel(les.leger), les.datum]} style={{ marginBottom: 10 }} />
       {les.tekst && <p style={{ ...bodyText, color: TOW.ink, fontSize: 15, margin: '0 0 12px' }}>{les.tekst}</p>}
+
+      {([['Why', les.waarom], ['Example', les.voorbeeld], ['When not', les.wanneerNiet]] as const).map(([label, inhoud]) =>
+        inhoud ? (
+          <section key={label} style={{ borderLeft: `2px solid ${TOW.line}`, padding: '2px 0 2px 10px', margin: '0 0 10px' }}>
+            <div style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 12.5, color: TOW.goldDeep, marginBottom: 2 }}>{label}</div>
+            <p style={{ ...bodyText, fontSize: 14, margin: 0 }}>{inhoud}</p>
+          </section>
+        ) : null,
+      )}
 
       {les.markeringen.length > 0 && (
         <ul style={{ listStyle: 'none', margin: '0 0 12px', padding: 0, display: 'flex', flexDirection: 'column', gap: 6 }}>
@@ -189,29 +209,37 @@ function LesDetail({ les, bronIndex, kanaalIndex }: { les: Les; bronIndex: Map<s
           {les.bronnen.map((lb, i) => {
             const bron = bronIndex.get(lb.bronId);
             const kanaal = bron ? kanaalIndex.get(bron.kanaalId) : undefined;
-            const tijd = tijdLabel(lb.tijd);
-            const href = lb.url || bron?.url;
+            // Hoofdcitaat plus eventuele extra citaten, elk met een eigen link naar dat moment.
+            const citaten = [
+              { citaat: lb.citaat, tijd: lb.tijd, href: lb.url || bron?.url },
+              ...(lb.extraCitaten ?? []).map((ec) => ({ citaat: ec.citaat, tijd: ec.tijd, href: bron?.url ? momentUrl(bron.url, ec.tijd) : undefined })),
+            ];
             return (
               <li key={`${lb.bronId}-${i}`} style={{ ...rowCard, flexDirection: 'column', gap: 4, padding: '10px 12px' }}>
                 <Meta parts={[kanaal?.naam ?? 'Unknown channel', bron?.datum]} />
                 <span style={{ ...titleText, fontSize: 14.5 }}>{bron?.titel ?? lb.bronId}</span>
-                {lb.citaat && (
-                  <q style={{ ...bodyText, fontStyle: 'italic', fontSize: 13.5 }}>{lb.citaat}</q>
-                )}
-                {href && (
-                  <a
-                    href={href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{
-                      alignSelf: 'flex-start', display: 'inline-flex', alignItems: 'center', gap: 6, minHeight: 36,
-                      color: TOW.goldDeep, textDecoration: 'none', fontFamily: towFont.display, fontWeight: 600, fontSize: 13.5,
-                    }}
-                  >
-                    {tijd ? `Watch at ${tijd}` : 'Open source'}
-                    <span aria-hidden>↗</span>
-                  </a>
-                )}
+                {citaten.map((c, j) => {
+                  const tijd = tijdLabel(c.tijd);
+                  return (
+                    <div key={j} style={{ display: 'flex', flexDirection: 'column', gap: 0, paddingTop: j > 0 ? 6 : 0, borderTop: j > 0 ? `1px solid ${TOW.hairline}` : 'none' }}>
+                      {c.citaat && <q style={{ ...bodyText, fontStyle: 'italic', fontSize: 13.5 }}>{c.citaat}</q>}
+                      {c.href && (
+                        <a
+                          href={c.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          style={{
+                            alignSelf: 'flex-start', display: 'inline-flex', alignItems: 'center', gap: 6, minHeight: 36,
+                            color: TOW.goldDeep, textDecoration: 'none', fontFamily: towFont.display, fontWeight: 600, fontSize: 13.5,
+                          }}
+                        >
+                          {tijd ? `Watch at ${tijd}` : 'Open source'}
+                          <span aria-hidden>↗</span>
+                        </a>
+                      )}
+                    </div>
+                  );
+                })}
               </li>
             );
           })}

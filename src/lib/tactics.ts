@@ -65,6 +65,8 @@ export interface LesBron {
   tijd?: number | string | null;
   /** Hooguit 15 woorden, om na te kijken. */
   citaat: string;
+  /** Hooguit twee extra citaten uit dezelfde bron, elk met eigen tijdstip (seconden). */
+  extraCitaten?: { tijd: number; citaat: string }[];
 }
 
 export interface LesMarkering {
@@ -76,6 +78,12 @@ export interface Les {
   id: string;
   titel: string;
   tekst: string;
+  /** De redenering van de spreker, in eigen woorden. null = de spreker geeft er geen. */
+  waarom?: string | null;
+  /** Het concrete voorbeeld van de spreker, of null. */
+  voorbeeld?: string | null;
+  /** Uitzonderingen of voorbehouden die de spreker noemt, of null. */
+  wanneerNiet?: string | null;
   onderwerp: LesOnderwerp;
   /** null = algemeen, anders de Companion-slug (dark-elves). */
   leger: string | null;

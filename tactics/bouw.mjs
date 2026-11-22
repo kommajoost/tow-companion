@@ -56,6 +56,12 @@ function transcript(videoId) {
   return regels;
 }
 
+/** Letterlijk in het transcript, binnen 60 s van het tijdstip (een citaat kan over een regelgrens lopen). */
+function citaatInTranscript(regels, tijd, citaat) {
+  const venster = regels.filter((r) => r.sec >= tijd - 60 && r.sec <= tijd + 60).map((r) => r.tekst).join(' ');
+  return norm(venster).includes(norm(citaat));
+}
+
 const lesIds = new Set();
 const perBron = new Map();
 let citaatGecontroleerd = 0;
@@ -72,7 +78,9 @@ for (const l of lessen.lessen) {
   for (const m of l.markeringen ?? []) if (!MARKERINGEN.includes(m.soort) || !m.tekst) fout(`${w}: markering ${JSON.stringify(m)}`);
   if (!Array.isArray(l.bronnen) || l.bronnen.length === 0) fout(`${w}: geen bron`);
   let oudste = null;
+  let aantalCitaten = 0;
   for (const lb of l.bronnen ?? []) {
+    aantalCitaten++;
     if (!/^https:\/\//.test(lb.url ?? '')) fout(`${w}: url is geen https`);
     if (!lb.citaat) fout(`${w}: citaat ontbreekt`);
     else if (woorden(lb.citaat) > 15) fout(`${w}: citaat heeft ${woorden(lb.citaat)} woorden (max 15)`);
@@ -91,12 +99,27 @@ for (const l of lessen.lessen) {
       const regels = transcript(videoId);
       if (regels && lb.citaat) {
         citaatGecontroleerd++;
-        const doel = norm(lb.citaat);
-        // Venster rond het tijdstip: een citaat kan over een regelgrens lopen.
-        const venster = regels.filter((r) => r.sec >= lb.tijd - 60 && r.sec <= lb.tijd + 60).map((r) => r.tekst).join(' ');
-        if (!norm(venster).includes(doel)) fout(`${w}: citaat niet gevonden binnen 60 s van ${lb.tijd}s: "${lb.citaat}"`);
+        if (!citaatInTranscript(regels, lb.tijd, lb.citaat)) fout(`${w}: citaat niet gevonden binnen 60 s van ${lb.tijd}s: "${lb.citaat}"`);
+      }
+      // Extra citaten bij dezelfde bron: elk met eigen tijdstip, ook letterlijk nagekeken.
+      if (lb.extraCitaten != null && !Array.isArray(lb.extraCitaten)) fout(`${w}: extraCitaten is geen lijst`);
+      for (const ec of lb.extraCitaten ?? []) {
+        aantalCitaten++;
+        if (typeof ec.tijd !== 'number' || !ec.citaat) { fout(`${w}: extra citaat zonder tijd of tekst`); continue; }
+        if (woorden(ec.citaat) > 15) fout(`${w}: extra citaat heeft ${woorden(ec.citaat)} woorden (max 15)`);
+        if (ec.tijd < 0 || (duur && ec.tijd > duur)) fout(`${w}: extra tijd ${ec.tijd}s valt buiten de video`);
+        if (regels) {
+          citaatGecontroleerd++;
+          if (!citaatInTranscript(regels, ec.tijd, ec.citaat)) fout(`${w}: extra citaat niet gevonden binnen 60 s van ${ec.tijd}s: "${ec.citaat}"`);
+        }
       }
     }
+  }
+  if (aantalCitaten > 3) fout(`${w}: ${aantalCitaten} citaten (max 3 per les)`);
+  for (const veld of ['waarom', 'voorbeeld', 'wanneerNiet']) {
+    const v = l[veld];
+    if (v === undefined) fout(`${w}: ${veld} ontbreekt (string of null)`);
+    else if (v !== null && (typeof v !== 'string' || !v.trim())) fout(`${w}: ${veld} moet tekst of null zijn`);
   }
   if (l.datum !== oudste) fout(`${w}: datum ${l.datum} hoort de datum van de oudste bron te zijn (${oudste})`);
 }
