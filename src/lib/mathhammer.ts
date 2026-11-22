@@ -62,6 +62,11 @@ export interface AanvalsGroep {
   wounds: number;
   /** Combat exchange only: position of this group in `GevechtResultaat.volgorde` (0 = strikes first). */
   slag?: number;
+  /** Combat exchange only, and only when casualties cost this group attacks: how many attacks it would have
+   *  made at full strength, and how many of those are lost on average because the models were slain before
+   *  their Initiative step (we-cant-all-fight). `aanvallen` then reads "0.7 of 4". */
+  mogelijk?: number;
+  verloren?: number;
 }
 
 export interface MathResultaat {
@@ -1938,7 +1943,10 @@ export function berekenGevecht(ik: ArmyUnit, vijand: ArmyUnit, o: GevechtOpties,
       const { stappen } = groepTabel(g.sp, g.k, att, Wd);
       const vol = verwachting(g.sp.aantal);
       const minder = att < vol - 0.005 && fmtKort(att) !== fmtKort(vol);
-      return { naam: g.sp.naam, aanvallen: minder ? `${fmtKort(att)} of ${g.sp.aanvallen}` : g.sp.aanvallen, stappen, wounds: g.wounds / tot };
+      return {
+        naam: g.sp.naam, aanvallen: minder ? `${fmtKort(att)} of ${g.sp.aanvallen}` : g.sp.aanvallen, stappen, wounds: g.wounds / tot,
+        ...(minder ? { mogelijk: vol, verloren: vol - att } : {}),
+      };
     });
     const verlorenAtt = gs.reduce((s, g) => s + verwachting(g.sp.aantal) - g.att / tot, 0);
     if (verlorenAtt > 0.005) {

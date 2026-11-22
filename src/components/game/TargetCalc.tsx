@@ -496,16 +496,29 @@ function uitsplitsing(x: Rij, open: boolean, wissel: () => void, vijandFiles?: R
       {r.onmogelijk && (
         <p style={{ margin: '0 0 4px', fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 13, color: TOW.muted }}>{netjes(r.onmogelijk)}</p>
       )}
-      {regelsInVolgorde(x).map(({ g, vijand, ini }, gi) => (
-        <div key={gi} style={{ display: 'flex', alignItems: 'baseline', gap: 8, padding: '3px 0', borderBottom: `1px solid ${TOW.hairline}` }}>
-          {ini && <span style={{ flexShrink: 0, minWidth: 30, ...eb, fontSize: 8, color: vijand ? TOW.blood : TOW.muted }}>{vijand ? `Enemy ${ini}` : ini}</span>}
-          <span style={{ flex: '1 1 0', minWidth: 0, fontFamily: towFont.display, fontWeight: 600, fontSize: 12.5, color: vijand ? TOW.parchDim : TOW.ink, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} title={g.naam}>{g.naam}</span>
-          <span style={{ flexShrink: 0, fontFamily: towFont.serif, fontSize: 12, color: TOW.parchDim, whiteSpace: 'nowrap', fontVariantNumeric: 'tabular-nums' }}>
-            {[`${g.aanvallen} att`, ...g.stappen.map(stapToken)].join(' · ')}
-          </span>
-          <span style={{ flexShrink: 0, minWidth: 30, textAlign: 'right', fontFamily: towFont.display, fontWeight: 700, fontSize: 12.5, color: vijand ? TOW.blood : TOW.goldDeep, fontVariantNumeric: 'tabular-nums' }}>{vijand && fmt1(g.wounds) !== '0.0' ? `−${fmt1(g.wounds)}` : fmt1(g.wounds)}</span>
-        </div>
-      ))}
+      {regelsInVolgorde(x).map(({ g, vijand, ini }, gi) => {
+        // Joost, 22-11-2026: "ik wil ook zien bij terugslaan hoeveel er hadden kunnen slaan en hoeveel er dan nu
+        // dood zijn en dus niet slaan". Verloor de groep attacks aan doden voor hun beurt, dan staat dat eronder.
+        const verlies = g.mogelijk != null && g.verloren != null && g.verloren > 0.005;
+        const over = verlies ? Math.max(0, g.mogelijk! - g.verloren!) : 0;
+        return (
+          <div key={gi} style={{ padding: '3px 0', borderBottom: `1px solid ${TOW.hairline}` }}>
+            <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
+              {ini && <span style={{ flexShrink: 0, minWidth: 30, ...eb, fontSize: 8, color: vijand ? TOW.blood : TOW.muted }}>{vijand ? `Enemy ${ini}` : ini}</span>}
+              <span style={{ flex: '1 1 0', minWidth: 0, fontFamily: towFont.display, fontWeight: 600, fontSize: 12.5, color: vijand ? TOW.parchDim : TOW.ink, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} title={g.naam}>{g.naam}</span>
+              <span style={{ flexShrink: 0, fontFamily: towFont.serif, fontSize: 12, color: TOW.parchDim, whiteSpace: 'nowrap', fontVariantNumeric: 'tabular-nums' }}>
+                {[`${verlies ? fmt1(over) : g.aanvallen} att`, ...g.stappen.map(stapToken)].join(' · ')}
+              </span>
+              <span style={{ flexShrink: 0, minWidth: 30, textAlign: 'right', fontFamily: towFont.display, fontWeight: 700, fontSize: 12.5, color: vijand ? TOW.blood : TOW.goldDeep, fontVariantNumeric: 'tabular-nums' }}>{vijand && fmt1(g.wounds) !== '0.0' ? `−${fmt1(g.wounds)}` : fmt1(g.wounds)}</span>
+            </div>
+            {verlies && (
+              <div style={{ marginTop: 1, paddingLeft: ini ? 38 : 0, fontFamily: towFont.serif, fontSize: 11.5, color: TOW.muted, fontVariantNumeric: 'tabular-nums' }}>
+                {fmt1(g.mogelijk!)} attacks at full strength · {fmt1(g.verloren!)} lost, slain before striking
+              </div>
+            )}
+          </div>
+        );
+      })}
       {!r.onmogelijk && (
         <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, flexWrap: 'wrap', marginTop: 6 }}>
           <span style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 20, color: TOW.goldDeep, fontVariantNumeric: 'tabular-nums' }}>{fmt1(r.wounds)}</span>

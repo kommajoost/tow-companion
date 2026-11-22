@@ -1,7 +1,7 @@
 {
   "name": "tow-companion",
   "private": true,
-  "version": "0.1.473",
+  "version": "0.1.474",
   "type": "module",
   "description": "Warhammer: The Old World turn companion - mobile PWA",
   "scripts": {
@@ -46,7 +46,15 @@
     "test:versterking": "node --test scripts/tests/versterking.test.cjs",
     "test:campaign-terrain": "node --test scripts/tests/campaign-terrain.test.cjs",
     "test:scenario-bonus": "node --test scripts/tests/scenario-bonus.test.cjs",
-    "test:scenario-units": "node --test scripts/tests/scenario-units.test.cjs"
+    "test:scenario-units": "node --test scripts/tests/scenario-units.test.cjs",
+    "tactics:list": "node tactics/lijst.mjs",
+    "tactics:select": "node tactics/selectie.mjs",
+    "tactics:dates": "node tactics/datums.mjs",
+    "tactics:sources": "node tactics/bronnen.mjs",
+    "tactics:glossary": "node tactics/glossary.mjs",
+    "tactics:transcript": "node tactics/transcript.mjs",
+    "tactics:build": "node tactics/bouw.mjs",
+    "tactics:check": "node tactics/bouw.mjs --check"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.106.2",
