@@ -21,6 +21,7 @@ import { SCENARIO_TEST_CODE, bewaarScenarioTest, isScenarioTestCode, payloadUitH
 import { wrathSleutel } from '../lib/wrathTriggers';
 import { gedeeldeCodeUitUrl } from '../lib/listShare';
 import { tegenLijstUitUrl } from '../lib/tegenLijst';
+import { TacticsPage } from './tactics/TacticsPage';
 
 type Tab = 'browse' | 'game' | 'army' | 'settings';
 type Screen = 'home' | 'app';
@@ -60,6 +61,14 @@ function TurnsLayer({ onClose }: { onClose: () => void }) {
   );
 }
 
+// De tactiekdatabank als volledige pagina over de app heen (22-11-2026). Nog geen hoofdtab: open via
+// de rij in Settings of via `?tactics`. Eigen component, zodat `useBackClose` alleen registreert
+// zolang hij open is: Back brengt je terug naar waar je vandaan kwam.
+function TacticsLayer({ onClose }: { onClose: () => void }) {
+  useBackClose(true, onClose);
+  return <TacticsPage onClose={onClose} />;
+}
+
 const TABS: { id: Tab; label: string; icon: IconId }[] = [
   { id: 'browse', label: 'Rulebook', icon: 'rulebook' },
   { id: 'game', label: 'Game', icon: 'game' },
@@ -88,6 +97,7 @@ export function AppShell() {
   // de companion onthoudt zijn fase zelf al in `tow:c:phase`/`tow:c:sub`. Opnieuw openen zet je dus
   // terug op precies dezelfde sub-fase.
   const [turnsOpen, setTurnsOpen] = useState(false);
+  const [tacticsOpen, setTacticsOpen] = useState(false);
   const { session, loading: authLoading } = useAuth();
   const [celedonEntry, setCeledonEntry] = useState(() => {
     if (typeof window === 'undefined') return false;
@@ -227,6 +237,19 @@ export function AppShell() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Deep-link: /?tactics — opent de tactiekdatabank direct. Lezen, openen, parameter opruimen, zodat
+  // herladen hem niet opnieuw opent. De app eronder blijft op je laatste tab staan.
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const url = new URL(window.location.href);
+    if (!url.searchParams.has('tactics')) return;
+    setScreen('app');
+    setTacticsOpen(true);
+    url.searchParams.delete('tactics');
+    window.history.replaceState(null, '', `${url.pathname}${url.search}${url.hash}`);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   // Deep-link: /?celedon=1 — arriving from the campaign app's "Open Old World Companion" button.
   // Land straight on Army, then wait for OWC's own auth session. Signed out players see the account
   // dialog first; signed in players go straight into the guided Army-list tour.
@@ -306,6 +329,7 @@ export function AppShell() {
   // One Back-trap per remembered tab, so Back walks back through visited tabs one at a time before
   // it's allowed to leave the app. Rendered alongside the content in both layouts.
   const tabBackLayers = tabHistory.map((_, i) => <TabBackLayer key={i} onBack={goBackTab} />);
+  const tacticsLayer = tacticsOpen ? <TacticsLayer onClose={() => setTacticsOpen(false)} /> : null;
 
   // TESTBUILD-MARKERING (26-08-2026): een bundel die op de TESTdatabase praat mag er nooit uitzien
   // als de echte app -- dan rapporteer je een potje in de verkeerde wereld. Op een productiebundel
@@ -334,7 +358,7 @@ export function AppShell() {
       ) : tab === 'army' ? (
         <ListBuilder />
       ) : tab === 'settings' ? (
-        <SettingsMode />
+        <SettingsMode onTactics={() => setTacticsOpen(true)} />
       ) : (
         <>
           <div className="h-full pt-safe">
@@ -358,6 +382,7 @@ export function AppShell() {
         {tabBackLayers}
         <NavRail tab={tab} onTab={navTab} onHome={() => setScreen('home')} />
         {content}
+        {tacticsLayer}
         <CeledonTour />
         <CeledonLoginDialog
           open={celedonEntry && !authLoading && !session}
@@ -395,6 +420,7 @@ export function AppShell() {
         {/* Testaccount-switcher: alleen zichtbaar zodra er testaccounts geconfigureerd zijn. */}
         <TestAccountSwitcher placement="tabbar" />
       </nav>
+      {tacticsLayer}
       <CeledonTour />
       <CeledonLoginDialog
         open={celedonEntry && !authLoading && !session}

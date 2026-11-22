@@ -26,7 +26,7 @@ const BUILD_DATE = __BUILD_DATE__;
 const BUILD_LABEL = `${APP_VERSION} · ${BUILD_SHA} · ${BUILD_DATE}`;
 
 // Settings screen — currently the home of "install app" and "updates", with room to grow.
-export function SettingsMode() {
+export function SettingsMode({ onTactics }: { onTactics?: () => void } = {}) {
   const { canInstall, installed, promptInstall, needRefresh, updateApp, checkForUpdate } = usePwa();
   const { mode, set: setTheme } = useTheme();
   const [checking, setChecking] = useState(false);
@@ -130,6 +130,18 @@ export function SettingsMode() {
             })}
           </div>
         </div>
+
+        {/* Tactics library: de tactiekdatabank (nog geen hoofdtab, 22-11-2026). */}
+        {onTactics && (
+          <button
+            type="button"
+            onClick={onTactics}
+            style={{ ...card, width: '100%', minHeight: 52, display: 'flex', alignItems: 'center', gap: 10, cursor: 'pointer', textAlign: 'left', color: TOW.ink }}
+          >
+            <span style={{ flex: 1, minWidth: 0, fontFamily: towFont.display, fontWeight: 600, fontSize: 15.5, color: TOW.ink }}>Tactics library</span>
+            <span aria-hidden style={{ fontSize: 20, lineHeight: 1, color: TOW.muted }}>›</span>
+          </button>
+        )}
 
         {/* Updates */}
         <div style={card}>
