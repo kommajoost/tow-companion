@@ -1,4 +1,828 @@
 {
-  "bijgewerkt": null,
-  "lessen": []
+  "bijgewerkt": "2026-11-22",
+  "lessen": [
+    {
+      "id": "chaff-sets-tempo",
+      "titel": "Take a unit or two of chaff so you are not left without strategic pieces",
+      "tekst": "An army of only damage dealers and casters leaves you little to do, and your opponent gets to dictate the tempo. A unit or two of chaff lets you disrupt his plans and enables your powerful units.",
+      "onderwerp": "chaff",
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-w5Uye9wgycA",
+          "url": "https://www.youtube.com/watch?v=w5Uye9wgycA&t=57s",
+          "tijd": 60,
+          "citaat": "you get to stuff with your opponent's plans"
+        }
+      ],
+      "datum": "2026-11-12",
+      "markeringen": []
+    },
+    {
+      "id": "chaff-speed-bumps",
+      "titel": "Use speed bumps to pull enemy units out of position",
+      "tekst": "A speed bump redirects enemy units by getting in the way, so they charge it or cannot get around it. It is there to die, but to die while achieving something.",
+      "onderwerp": "chaff",
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-w5Uye9wgycA",
+          "url": "https://www.youtube.com/watch?v=w5Uye9wgycA&t=161s",
+          "tijd": 164,
+          "citaat": "their main function is to redirect things and move enemy units out of position"
+        }
+      ],
+      "datum": "2026-11-12",
+      "markeringen": []
+    },
+    {
+      "id": "chaff-decoys",
+      "titel": "Decoys with kill potential draw resources away from your real threats",
+      "tekst": "Fast, dangerous chaff that threatens backline units like artillery or light cavalry cannot be ignored. While your opponent spends shooting and units on it, he is not dealing with your bigger threats.",
+      "onderwerp": "chaff",
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-w5Uye9wgycA",
+          "url": "https://www.youtube.com/watch?v=w5Uye9wgycA&t=297s",
+          "tijd": 300,
+          "citaat": "Your opponent has to pour resources into dealing with them."
+        }
+      ],
+      "datum": "2026-11-12",
+      "markeringen": []
+    },
+    {
+      "id": "chaff-scouts-deployment",
+      "titel": "Use cheap units as early deployment drops",
+      "tekst": "Without chaff you end up putting your key units down early, before your opponent. Cheap drops force him to commit his units first, so you can react and place your win conditions in the matchups you want.",
+      "onderwerp": "deployment",
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-w5Uye9wgycA",
+          "url": "https://www.youtube.com/watch?v=w5Uye9wgycA&t=386s",
+          "tijd": 389,
+          "citaat": "If you don't have chaff in deployment, you're often dropping your key pieces down early"
+        }
+      ],
+      "datum": "2026-11-12",
+      "markeringen": []
+    },
+    {
+      "id": "chaff-must-be-fast",
+      "titel": "Chaff must be fast or mobile",
+      "tekst": "Chaff has to get into position ahead of the enemy, so it needs high movement or mobility such as fly, skirmish or reserve move. For a speed bump the speaker wants fly or movement seven as a minimum.",
+      "onderwerp": "chaff",
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-w5Uye9wgycA",
+          "url": "https://www.youtube.com/watch?v=w5Uye9wgycA&t=530s",
+          "tijd": 533,
+          "citaat": "needs to be fast because it's about getting them in position ahead of your opponent"
+        }
+      ],
+      "datum": "2026-11-12",
+      "markeringen": []
+    },
+    {
+      "id": "chaff-under-100-points",
+      "titel": "Keep chaff cheap, roughly under 100 points",
+      "tekst": "Chaff is likely to die, so it should be cheap; the speaker uses about 100 points as the threshold. A unit above that has to give a good return to be worth it.",
+      "onderwerp": "list-building",
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-w5Uye9wgycA",
+          "url": "https://www.youtube.com/watch?v=w5Uye9wgycA&t=643s",
+          "tijd": 646,
+          "citaat": "get a good return back from a unit that is over 100 points"
+        }
+      ],
+      "datum": "2026-11-12",
+      "markeringen": []
+    },
+    {
+      "id": "chaff-versatile-specific",
+      "titel": "The best chaff covers several roles, but give each unit a specific job",
+      "tekst": "Chaff that can fulfil multiple roles is the best kind: Giant Rats can be a cheap scout drop and a speed bump, and a Great Eagle can redirect and still kill a war machine. Each chaff unit should still go in the list for a specific role.",
+      "onderwerp": "list-building",
+      "leger": null,
+      "units": [
+        "Giant Rats",
+        "Great Eagle"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-w5Uye9wgycA",
+          "url": "https://www.youtube.com/watch?v=w5Uye9wgycA&t=666s",
+          "tijd": 669,
+          "citaat": "If they can fulfill multiple roles they are S tier chaff unit."
+        }
+      ],
+      "datum": "2026-11-12",
+      "markeringen": []
+    },
+    {
+      "id": "mangler-squig-decoy",
+      "titel": "Mangler Squigs make a strong decoy on a flank",
+      "tekst": "With a 3D6 random move the opponent has to respect an 11 to 12 inch threat in any direction. Placed on a flank opposite something like Chaos Knights, they make the knights hold back and delay their push into your backline.",
+      "onderwerp": "chaff",
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Mangler Squigs"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-w5Uye9wgycA",
+          "url": "https://www.youtube.com/watch?v=w5Uye9wgycA&t=892s",
+          "tijd": 895,
+          "citaat": "has to respect an 11 to 12 in any direction"
+        }
+      ],
+      "datum": "2026-11-12",
+      "markeringen": []
+    },
+    {
+      "id": "light-chariot-artillery-hunter",
+      "titel": "Use light chariots as decoys and artillery hunters",
+      "tekst": "A Goblin Wolf Chariot is fast and its impact hits threaten lightly armoured units such as Outriders and artillery. Pushed forward, it cannot be ignored, which buys time for your main units.",
+      "onderwerp": "chaff",
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Goblin Wolf Chariot"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-w5Uye9wgycA",
+          "url": "https://www.youtube.com/watch?v=w5Uye9wgycA&t=1081s",
+          "tijd": 1084,
+          "citaat": "Wolf chariots are great artillery hunters."
+        }
+      ],
+      "datum": "2026-11-12",
+      "markeringen": []
+    },
+    {
+      "id": "decoy-forces-a-choice",
+      "titel": "A decoy wins either way: killed late or left free",
+      "tekst": "The job of a decoy is not to die but to make your opponent choose between wasting time killing it and letting it run free to do its job.",
+      "onderwerp": "chaff",
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-w5Uye9wgycA",
+          "url": "https://www.youtube.com/watch?v=w5Uye9wgycA&t=1165s",
+          "tijd": 1168,
+          "citaat": "The job is to make your opponent decide whether to waste time killing it"
+        }
+      ],
+      "datum": "2026-11-12",
+      "markeringen": []
+    },
+    {
+      "id": "speed-bump-close-order",
+      "titel": "A speed bump must be close or open order, not skirmishers",
+      "tekst": "A charging unit has to align to the front of a close or open order speed bump, so when it wins it overruns in a direction you chose, for example away from the flank of your main unit. Skirmishers cannot steer the post-combat movement this way; the speaker thinks a Great Eagle is the best unit for it.",
+      "onderwerp": "chaff",
+      "leger": null,
+      "units": [
+        "Great Eagle"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-w5Uye9wgycA",
+          "url": "https://www.youtube.com/watch?v=w5Uye9wgycA&t=1202s",
+          "tijd": 1205,
+          "citaat": "being a speed bump is non-negotiable. It cannot be a skirmish unit"
+        },
+        {
+          "bronId": "yt-bbn2DD5MoUk",
+          "url": "https://www.youtube.com/watch?v=bbn2DD5MoUk&t=1304s",
+          "tijd": 1307,
+          "citaat": "It has close order, so the opponent has to align to it."
+        }
+      ],
+      "datum": "2026-11-04",
+      "markeringen": []
+    },
+    {
+      "id": "frenzy-bait-only-target",
+      "titel": "When frenzy baiting, be the only unit they can redirect to",
+      "tekst": "A fast speed bump can sit at the edge of a frenzied unit's charge range, take the charge, flee and rally. Make sure there is nothing else for the enemy to redirect into, or the bait is wasted.",
+      "onderwerp": "psychology",
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-w5Uye9wgycA",
+          "url": "https://www.youtube.com/watch?v=w5Uye9wgycA&t=1401s",
+          "tijd": 1404,
+          "citaat": "make sure it's the only unit there that's going to get charged"
+        }
+      ],
+      "datum": "2026-11-12",
+      "markeringen": []
+    },
+    {
+      "id": "board-in-thirds",
+      "titel": "Think of the board in thirds and aim to win two of them",
+      "tekst": "Plan your game as left flank, centre and right flank. You do not need to win all three: winning two thirds of the board generally wins the game.",
+      "onderwerp": "deployment",
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-bbn2DD5MoUk",
+          "url": "https://www.youtube.com/watch?v=bbn2DD5MoUk&t=89s",
+          "tijd": 92,
+          "citaat": "you need to think of the game or the board of three/3s"
+        }
+      ],
+      "datum": "2026-11-04",
+      "markeringen": []
+    },
+    {
+      "id": "hold-centre-win-flanks",
+      "titel": "Most armies hold the centre, win the flanks, then overwhelm the centre",
+      "tekst": "About 80 percent of armies rely on a heavy anvil in the middle. Winning a flank is usually not enough on its own; the point is to free your flank units to turn on the centre later.",
+      "onderwerp": "movement",
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-bbn2DD5MoUk",
+          "url": "https://www.youtube.com/watch?v=bbn2DD5MoUk&t=172s",
+          "tijd": 175,
+          "citaat": "hold the center, win the flanks, overwhelm the center later"
+        }
+      ],
+      "datum": "2026-11-04",
+      "markeringen": []
+    },
+    {
+      "id": "flank-kill-or-delay",
+      "titel": "On a flank you either kill things or waste time",
+      "tekst": "Put units that can hit hard on the flank you mean to win, and use chaff to delay the enemy on the other one. Both are valid ways to play a flank.",
+      "onderwerp": "movement",
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-bbn2DD5MoUk",
+          "url": "https://www.youtube.com/watch?v=bbn2DD5MoUk&t=482s",
+          "tijd": 485,
+          "citaat": "to kill things, but sometimes you just want to waste time"
+        }
+      ],
+      "datum": "2026-11-04",
+      "markeringen": []
+    },
+    {
+      "id": "flank-not-point-and-click",
+      "titel": "Do not just park heavy cavalry on a flank and charge the closest target",
+      "tekst": "A five-wide unit of knights on the flank charging whatever comes closest is a misconception. Pick your fights in deployment and support your hammer with chaff such as wolf riders.",
+      "onderwerp": "deployment",
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-bbn2DD5MoUk",
+          "url": "https://www.youtube.com/watch?v=bbn2DD5MoUk&t=503s",
+          "tijd": 506,
+          "citaat": "It's not that simple. You need to pick your fights through deployment"
+        }
+      ],
+      "datum": "2026-11-04",
+      "markeringen": []
+    },
+    {
+      "id": "flank-who-benefited",
+      "titel": "Judge a flank by who benefited, not by units lost",
+      "tekst": "The speaker lost more points on one flank but still counts it as won, because his chaff bought the time he needed elsewhere. What happened on the flank and who gained from it matters more than the kill count.",
+      "onderwerp": "movement",
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-bbn2DD5MoUk",
+          "url": "https://www.youtube.com/watch?v=bbn2DD5MoUk&t=642s",
+          "tijd": 645,
+          "citaat": "think about winning a flank as not just killing more units than your opponent"
+        }
+      ],
+      "datum": "2026-11-04",
+      "markeringen": []
+    },
+    {
+      "id": "flank-units-not-infantry",
+      "titel": "Combat infantry is too slow to win flanks",
+      "tekst": "A good flank unit has speed, damage and durability. Infantry at movement four or five cannot compete with light or heavy cavalry out there; its strength is holding space in the centre.",
+      "onderwerp": "movement",
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-bbn2DD5MoUk",
+          "url": "https://www.youtube.com/watch?v=bbn2DD5MoUk&t=803s",
+          "tijd": 806,
+          "citaat": "I don't think you can really win flanks with infantry"
+        }
+      ],
+      "datum": "2026-11-04",
+      "markeringen": []
+    },
+    {
+      "id": "hammers-need-the-charge",
+      "titel": "Give your hammers the speed to get the charge",
+      "tekst": "Hammers are rarely effective when they are not charging. Look for high movement (seven or more, or six with swift stride), swift stride and countercharge so your hammer gets the charge it wants.",
+      "onderwerp": "charging",
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-bbn2DD5MoUk",
+          "url": "https://www.youtube.com/watch?v=bbn2DD5MoUk&t=853s",
+          "tijd": 856,
+          "citaat": "swift stride is a key thing because charging is vital for winning combats"
+        },
+        {
+          "bronId": "yt-Fk8gJUdxLb0",
+          "url": "https://www.youtube.com/watch?v=Fk8gJUdxLb0&t=299s",
+          "tijd": 302,
+          "citaat": "it's very rare that they are effective if they are not charging"
+        }
+      ],
+      "datum": "2026-11-04",
+      "markeringen": []
+    },
+    {
+      "id": "hammers-on-flanks",
+      "titel": "Keep heavy cavalry and other hammers on the flanks, not in the centre",
+      "tekst": "In the middle of the board hammers tend to get shot by everything. On the flanks you can use terrain to block line of sight and screen them with chaff until they can strike.",
+      "onderwerp": "deployment",
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-bbn2DD5MoUk",
+          "url": "https://www.youtube.com/watch?v=bbn2DD5MoUk&t=940s",
+          "tijd": 943,
+          "citaat": "don't want to put a unit of heavy cav in the middle of the board"
+        },
+        {
+          "bronId": "yt-Fk8gJUdxLb0",
+          "url": "https://www.youtube.com/watch?v=Fk8gJUdxLb0&t=258s",
+          "tijd": 261,
+          "citaat": "hard to have your hammers in the middle because they tend to just get shot"
+        }
+      ],
+      "datum": "2026-11-04",
+      "markeringen": []
+    },
+    {
+      "id": "hammers-need-durability",
+      "titel": "Hammers need some durability because they will be targeted",
+      "tekst": "Your opponent wants to kill your hammers first, so they need some redundancy: toughness four or more and at least a 3+ save, a 2+ preferred on heavy cavalry. Then they survive long enough to deal their damage.",
+      "onderwerp": "list-building",
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-bbn2DD5MoUk",
+          "url": "https://www.youtube.com/watch?v=bbn2DD5MoUk&t=974s",
+          "tijd": 977,
+          "citaat": "You need some redundancy of toughness four or above a three up at least save"
+        },
+        {
+          "bronId": "yt-Fk8gJUdxLb0",
+          "url": "https://www.youtube.com/watch?v=Fk8gJUdxLb0&t=223s",
+          "tijd": 226,
+          "citaat": "the reason they need durability is because your opponent wants to kill your hammers"
+        }
+      ],
+      "datum": "2026-11-04",
+      "markeringen": []
+    },
+    {
+      "id": "mobile-caster-flank",
+      "titel": "Put a mobile wizard on the flank, away from the dispel bubble",
+      "tekst": "Opponents usually keep their wizard in the middle for a big dispel range. A reserve-move or flying caster on the flank can move out of that range, cast, and drop back to safety.",
+      "onderwerp": "magic",
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-bbn2DD5MoUk",
+          "url": "https://www.youtube.com/watch?v=bbn2DD5MoUk&t=1128s",
+          "tijd": 1131,
+          "citaat": "you can use their maneuverability to get out of your opponent's dispel range"
+        }
+      ],
+      "datum": "2026-11-04",
+      "markeringen": []
+    },
+    {
+      "id": "skirmish-blender-character",
+      "titel": "Skirmishing combat characters excel on the flanks",
+      "tekst": "A skirmishing combat character can pick off targets or join your flank unit in a combat. Its 360 degree line of sight for charging gives it the flexibility to choose its fight.",
+      "onderwerp": "characters",
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-bbn2DD5MoUk",
+          "url": "https://www.youtube.com/watch?v=bbn2DD5MoUk&t=1243s",
+          "tijd": 1246,
+          "citaat": "360° line of sight for charging is just wild"
+        }
+      ],
+      "datum": "2026-11-04",
+      "markeringen": []
+    },
+    {
+      "id": "screening-chaff",
+      "titel": "Screen hammers with cheap chaff that clears itself out of the way",
+      "tekst": "Expendable chaff or a skirmishing screen gives cover to the unit behind it. When it needs to get out of the way, it charges something and sacrifices itself, and your hammer goes in.",
+      "onderwerp": "chaff",
+      "leger": null,
+      "units": [
+        "Wood Elf Beast Pack"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-bbn2DD5MoUk",
+          "url": "https://www.youtube.com/watch?v=bbn2DD5MoUk&t=1344s",
+          "tijd": 1347,
+          "citaat": "When they need to get out of the way, they just charge something"
+        }
+      ],
+      "datum": "2026-11-04",
+      "markeringen": []
+    },
+    {
+      "id": "sacrifice-a-flank",
+      "titel": "Sacrificing a flank is fine if you gain from it",
+      "tekst": "Double down on the flank you want to win and use chaff to waste time on the one you expect to lose. The speaker accepts forfeiting a flank, but only when it buys something elsewhere.",
+      "onderwerp": "deployment",
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-bbn2DD5MoUk",
+          "url": "https://www.youtube.com/watch?v=bbn2DD5MoUk&t=1379s",
+          "tijd": 1382,
+          "citaat": "It's fine to sacrifice things and indeed fine to sacrifice an entire flank"
+        },
+        {
+          "bronId": "yt-RADUmyzpdmc",
+          "url": "https://www.youtube.com/watch?v=RADUmyzpdmc&t=835s",
+          "tijd": 838,
+          "citaat": "I'm a big fan of forfeiting a flank"
+        }
+      ],
+      "datum": "2026-01-25",
+      "markeringen": []
+    },
+    {
+      "id": "terror-on-flanks",
+      "titel": "Terror is a powerful tool on the flanks",
+      "tekst": "On a flank the enemy is away from his general and close to the board edge, so a unit that flees from terror takes turns to get back, if it returns at all. A cheap character with a faction item that grants terror can do this too.",
+      "onderwerp": "psychology",
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-bbn2DD5MoUk",
+          "url": "https://www.youtube.com/watch?v=bbn2DD5MoUk&t=1432s",
+          "tijd": 1435,
+          "citaat": "Terror is such a powerful tool on the flanks"
+        }
+      ],
+      "datum": "2026-11-04",
+      "markeringen": []
+    },
+    {
+      "id": "after-the-flank",
+      "titel": "Once a flank is won, turn into the centre or the backline",
+      "tekst": "Winning a flank opens up space. Use it to push into the backline against war machines and wizards, or turn into the centre and flank charge the units holding it.",
+      "onderwerp": "movement",
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-bbn2DD5MoUk",
+          "url": "https://www.youtube.com/watch?v=bbn2DD5MoUk&t=1605s",
+          "tijd": 1608,
+          "citaat": "And when you win the flank, you open up space for you to play in."
+        }
+      ],
+      "datum": "2026-11-04",
+      "markeringen": []
+    },
+    {
+      "id": "hammer-must-deal-damage",
+      "titel": "A hammer first of all has to deal damage",
+      "tekst": "Hitting power is the most important part of a hammer: many attacks, high strength, armour piercing, stomps or impact hits. Durability and mobility come after that.",
+      "onderwerp": "list-building",
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-Fk8gJUdxLb0",
+          "url": "https://www.youtube.com/watch?v=Fk8gJUdxLb0&t=133s",
+          "tijd": 136,
+          "citaat": "what it needs to do is deal damage"
+        }
+      ],
+      "datum": "2026-11-19",
+      "markeringen": []
+    },
+    {
+      "id": "hammer-matchups",
+      "titel": "Send each hammer into the matchup it wins",
+      "tekst": "Wild Riders do well into infantry but come out second best against heavily armoured heavy cavalry. A hammer that underperforms may simply be in the wrong matchup, which you set up at deployment and with chaff.",
+      "onderwerp": "deployment",
+      "leger": null,
+      "units": [
+        "Wild Riders"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-Fk8gJUdxLb0",
+          "url": "https://www.youtube.com/watch?v=Fk8gJUdxLb0&t=200s",
+          "tijd": 203,
+          "citaat": "You might just be sending it into the wrong matchup"
+        }
+      ],
+      "datum": "2026-11-19",
+      "markeringen": []
+    },
+    {
+      "id": "behemoth-hammers",
+      "titel": "Behemoths make good hammers on the flanks",
+      "tekst": "Stomps give them reliable damage, and terror means a unit that loses to them is more likely to flee instead of falling back in good order. Most behemoths can stomp their way out of a bad engagement.",
+      "onderwerp": "combat",
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-Fk8gJUdxLb0",
+          "url": "https://www.youtube.com/watch?v=Fk8gJUdxLb0&t=646s",
+          "tijd": 649,
+          "citaat": "likely to make that unit flee as opposed to just fall back in good order"
+        }
+      ],
+      "datum": "2026-11-19",
+      "markeringen": []
+    },
+    {
+      "id": "heavy-chariot-support",
+      "titel": "Use heavy chariots as support pieces, not as your main hammer",
+      "tekst": "Put something in front that holds and falls back in good order, then countercharge with the chariot to get its impact hits in. The speaker would not recommend heavy chariots to new players.",
+      "onderwerp": "charging",
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-Fk8gJUdxLb0",
+          "url": "https://www.youtube.com/watch?v=Fk8gJUdxLb0&t=777s",
+          "tijd": 780,
+          "citaat": "I like to think of them as support pieces though rather than your main hammer"
+        }
+      ],
+      "datum": "2026-11-19",
+      "markeringen": []
+    },
+    {
+      "id": "hybrid-hammer-ap",
+      "titel": "Infantry can hold and kill if it keeps armour piercing while parrying",
+      "tekst": "A hybrid hammer has some static combat resolution and durability but also high quality attacks, so it kills models when it is charged. It needs weapons that still give armour piercing when parrying, such as the speaker describes for Chaos Warriors and Stormvermin.",
+      "onderwerp": "combat",
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-Fk8gJUdxLb0",
+          "url": "https://www.youtube.com/watch?v=Fk8gJUdxLb0&t=1087s",
+          "tijd": 1090,
+          "citaat": "you also need some form of the minus AP attacks"
+        }
+      ],
+      "datum": "2026-11-19",
+      "markeringen": []
+    },
+    {
+      "id": "black-orcs-great-weapons",
+      "titel": "Run Black Orcs with great weapons, two ranks deep",
+      "tekst": "Black Orcs with great weapons hit back with strength six AP2 attacks even when charged, and stubborn keeps them in place. The speaker now builds them as 14 models, two ranks, all great weapons.",
+      "onderwerp": "combat",
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Black Orc Mob"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-Fk8gJUdxLb0",
+          "url": "https://www.youtube.com/watch?v=Fk8gJUdxLb0&t=1362s",
+          "tijd": 1365,
+          "citaat": "You just load them with great weapons, two ranks"
+        }
+      ],
+      "datum": "2026-11-19",
+      "markeringen": []
+    },
+    {
+      "id": "stormvermin-ten-wide",
+      "titel": "Build a Stormvermin brick ten wide with swift stride",
+      "tekst": "The speaker runs 26 to 28 Stormvermin with a Warlord and a battle standard bearer carrying the swift stride banner, ten wide to maximise attacks rather than as a horde. The swift stride lets the infantry be the aggressor.",
+      "onderwerp": "list-building",
+      "leger": "skaven",
+      "units": [
+        "Stormvermin"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-Fk8gJUdxLb0",
+          "url": "https://www.youtube.com/watch?v=Fk8gJUdxLb0&t=1472s",
+          "tijd": 1475,
+          "citaat": "I tend to go 10 wide to maximize the amount of attacks back I get"
+        }
+      ],
+      "datum": "2026-11-19",
+      "markeringen": []
+    },
+    {
+      "id": "behemoth-unbreakable",
+      "titel": "A behemoth that holds and kills needs unbreakable",
+      "tekst": "A behemoth with an offensive package and unbreakable can run into infantry, lose on combat resolution and still not break, while taking models out with stomps and attacks. The speaker's example is the Hell Pit Abomination.",
+      "onderwerp": "combat",
+      "leger": null,
+      "units": [
+        "Hell Pit Abomination"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-Fk8gJUdxLb0",
+          "url": "https://www.youtube.com/watch?v=Fk8gJUdxLb0&t=1251s",
+          "tijd": 1254,
+          "citaat": "What really makes the behemoth version of this good is if they have unbreakable"
+        }
+      ],
+      "datum": "2026-11-19",
+      "markeringen": []
+    },
+    {
+      "id": "hybrid-hammer-objectives",
+      "titel": "Hybrid hammer units are good objective holders",
+      "tekst": "A unit that can sit on an objective and still kill whatever comes to take it has a role in the scoring game. Making such a unit core is another benefit.",
+      "onderwerp": "scenarios",
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-Fk8gJUdxLb0",
+          "url": "https://www.youtube.com/watch?v=Fk8gJUdxLb0&t=1212s",
+          "tijd": 1215,
+          "citaat": "is that it threatens objectives"
+        }
+      ],
+      "datum": "2026-11-19",
+      "markeringen": []
+    },
+    {
+      "id": "deploy-who-is-beatdown",
+      "titel": "Before deploying, work out who is the beatdown",
+      "tekst": "Decide whose list is the aggressor. Aggression can also be firepower, like a gunline or an alpha strike that tries to cripple you in turns one and two.",
+      "onderwerp": "deployment",
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-RADUmyzpdmc",
+          "url": "https://www.youtube.com/watch?v=RADUmyzpdmc&t=121s",
+          "tijd": 124,
+          "citaat": "consider who is the beatdown"
+        }
+      ],
+      "datum": "2026-01-25",
+      "markeringen": []
+    },
+    {
+      "id": "deploy-read-terrain",
+      "titel": "Use the terrain you see before deployment to place key units",
+      "tekst": "Terrain is visible before anything is placed, so it gives you key locations, such as a hill for a cannon or ranged unit. Wood Elves can extend impassable terrain with their woodland ambush to create a line of sight blocker.",
+      "onderwerp": "deployment",
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-RADUmyzpdmc",
+          "url": "https://www.youtube.com/watch?v=RADUmyzpdmc&t=262s",
+          "tijd": 265,
+          "citaat": "You get to see that before you put your first model down."
+        }
+      ],
+      "datum": "2026-01-25",
+      "markeringen": []
+    },
+    {
+      "id": "deploy-slow-army-compact",
+      "titel": "A slow army should not deploy too spread out",
+      "tekst": "If you are the slow army you risk being drawn around the board all game. Consider closing in on one corner and locking down part of the enemy army instead.",
+      "onderwerp": "deployment",
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-RADUmyzpdmc",
+          "url": "https://www.youtube.com/watch?v=RADUmyzpdmc&t=338s",
+          "tijd": 341,
+          "citaat": "if you are the slow army, you don't want to deploy too spread out"
+        }
+      ],
+      "datum": "2026-01-25",
+      "markeringen": []
+    },
+    {
+      "id": "deploy-for-matchups",
+      "titel": "Deploy your units opposite the enemy units they beat",
+      "tekst": "Often all it takes is putting your heavy cavalry opposite enemy heavy cavalry it will beat. The speaker deployed his win condition unit after the enemy unit it needed to kill.",
+      "onderwerp": "deployment",
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-RADUmyzpdmc",
+          "url": "https://www.youtube.com/watch?v=RADUmyzpdmc&t=391s",
+          "tijd": 394,
+          "citaat": "Often, all it takes is to deploy your heavy cavalry opposite your"
+        }
+      ],
+      "datum": "2026-01-25",
+      "markeringen": []
+    },
+    {
+      "id": "king-of-the-hill-forfeit",
+      "titel": "In King of the Hill you can give up the hill early",
+      "tekst": "The speaker let his opponent take the hill in the early game so the enemy had to come forward. Units on a hill have a hard time avoiding charges, so he planned combo charges on it around turn three or four.",
+      "onderwerp": "scenarios",
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-RADUmyzpdmc",
+          "url": "https://www.youtube.com/watch?v=RADUmyzpdmc&t=533s",
+          "tijd": 536,
+          "citaat": "My win condition based on objective scoring is to allow him to have the hill"
+        }
+      ],
+      "datum": "2026-01-25",
+      "markeringen": []
+    },
+    {
+      "id": "deploy-defensively-vs-shooting",
+      "titel": "Against heavy shooting, deploy fragile units defensively",
+      "tekst": "Units deployed forward that cannot charge on turn one just give enemy cannons and shooters targets. With Wood Elves the speaker says to deploy defensively and keep out of sight.",
+      "onderwerp": "deployment",
+      "leger": "wood-elf-realms",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-RADUmyzpdmc",
+          "url": "https://www.youtube.com/watch?v=RADUmyzpdmc&t=644s",
+          "tijd": 647,
+          "citaat": "deploy defensively always. There's no value in sticking your head out."
+        }
+      ],
+      "datum": "2026-01-25",
+      "markeringen": []
+    },
+    {
+      "id": "deploy-aggressive-when-safe",
+      "titel": "Deploy more aggressively when there is little shooting and you go first",
+      "tekst": "Against an army with little shooting, and knowing he would get the first turn, the speaker had the freedom to deploy further forward and put pressure on his opponent from turn one.",
+      "onderwerp": "deployment",
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-RADUmyzpdmc",
+          "url": "https://www.youtube.com/watch?v=RADUmyzpdmc&t=909s",
+          "tijd": 912,
+          "citaat": "I knew that I had the freedom to deploy a bit more aggressively"
+        }
+      ],
+      "datum": "2026-01-25",
+      "markeringen": []
+    }
+  ]
 }

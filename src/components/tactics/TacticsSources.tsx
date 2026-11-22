@@ -309,7 +309,7 @@ function KanaalDetail({ kanaal, items, lessenPerBron, aantalLessen, onOpenLesson
       ) : (
         <>
           <div style={{ ...metaText, margin: '10px 2px 6px', color: TOW.goldDeep }}>
-            Processed · {meervoud(verwerkt.reduce((n, b) => n + (lessenPerBron.get(b.id)?.length ?? 0), 0), 'lesson', 'lessons')}
+            Processed · {meervoud(new Set(verwerkt.flatMap((b) => (lessenPerBron.get(b.id) ?? []).map((l) => l.id))).size, 'lesson', 'lessons')}
           </div>
           {lijstVan(verwerkt, true)}
           {rest.length > 0 && (

@@ -105,6 +105,15 @@ for (const id of ids) {
     ], { allowFail: true });
     await slaap(4000);
   }
+  // Browserroute (zie tactics/README.md): <id>.txt komt rechtstreeks uit het transcriptpaneel van
+  // YouTube en is dan zelf het ruwe bestand. Alleen de herstelde kopie wordt gemaakt.
+  const txt = path.join(RUW, `${id}.txt`);
+  if (!fs.existsSync(j3) && !fs.existsSync(vtt) && fs.existsSync(txt)) {
+    const ruw = fs.readFileSync(txt, 'utf8').replace(/\s+$/, '');
+    fs.writeFileSync(path.join(RUW, `${id}.fixed.txt`), herstel(ruw, vormen) + '\n', 'utf8');
+    console.log(`${id}: browsertranscript, ${ruw.split('\n').length} regels, namen hersteld`);
+    continue;
+  }
   let woorden = [];
   if (fs.existsSync(j3)) woorden = woordenUitJson3(j3);
   else if (fs.existsSync(vtt)) woorden = woordenUitVtt(vtt);
