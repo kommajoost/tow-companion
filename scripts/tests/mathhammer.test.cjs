@@ -446,7 +446,11 @@ const groepen = (r) => r.groepen.map((g) => `${g.naam}:${g.aanvallen}`);
 
 test('breedteVoor: default = the troop type\'s Models per Rank; not for single models or war machines', () => {
   assert.deepEqual(mh.breedteVoor(krijger({ count: 20 }), 20), { vanToepassing: true, standaard: 5, max: 20 });
-  assert.equal(mh.breedteVoor(krijger({ count: 20, tt: 'Heavy Infantry' }), 20).standaard, 4);
+  assert.equal(mh.breedteVoor(krijger({ count: 12, tt: 'Heavy Infantry' }), 12).standaard, 4);
+  // 22-11-2026: nooit standaard een Marching Column (dieper dan breed): minstens √n breed.
+  assert.equal(mh.breedteVoor(krijger({ count: 20, tt: 'Heavy Infantry' }), 20).standaard, 5); // 4 breed = 5 diep
+  assert.equal(mh.breedteVoor(krijger({ count: 30 }), 30).standaard, 6); // 5 breed = 6 diep → 6×5
+  assert.equal(mh.breedteVoor(krijger({ count: 40 }), 40).standaard, 7);
   assert.equal(mh.breedteVoor(krijger({ count: 6, tt: 'Monstrous Infantry' }), 6).standaard, 3);
   assert.equal(mh.breedteVoor(krijger({ count: 3 }), 3).standaard, 3);
   assert.equal(mh.breedteVoor(krijger({ count: 4, tt: 'Swarm' }), 4).standaard, 4);

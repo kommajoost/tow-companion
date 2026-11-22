@@ -488,7 +488,15 @@ function uitsplitsing(x: Rij, open: boolean, wissel: () => void, vijandFiles?: R
   const nietGeteld0 = r.nietMeegerekend.filter((m) => !isAanname(m));
   const range = r.verdeling && !r.onmogelijk ? bereik(r.verdeling) : null;
   const klein: React.CSSProperties = { fontFamily: towFont.serif, fontSize: 12, lineHeight: 1.35, color: TOW.parchDim, margin: '4px 0 0' };
-  const geteld = namenBeide(r.meegerekend.map((m) => netjes(m.regel)), (t?.meegerekend ?? []).map((m) => netjes(m.regel)));
+  // Een regel die deze beurt niets doet ("No effect: …") hoort niet onder Counted: daar las je "Press of Battle"
+  // terwijl de tweede rij juist NIET sloeg (Joost, 22-11-2026, RXB tegen 30 Zombies op 5 breed).
+  const doetIets = (m: { effect: string }) => !/^No effect/i.test(m.effect);
+  const geteld = namenBeide(r.meegerekend.filter(doetIets).map((m) => netjes(m.regel)), (t?.meegerekend ?? []).filter(doetIets).map((m) => netjes(m.regel)));
+  // Een unit die dieper staat dan breed is een Marching Column en mist Press of Battle. Dat zeg je erbij, want
+  // het hangt aan de Files-teller en verklaart waarom er maar één rij slaat.
+  const kolom = (lijst: { effect: string }[] | undefined) => (lijst ?? []).some((m) => /Marching Column/i.test(m.effect));
+  const kolomIk = kolom(r.meegerekend);
+  const kolomVijand = kolom(t?.meegerekend);
   const nietGeteld = namenBeide(nietGeteld0.map((m) => netjes(m.regel)), (t?.nietMeegerekend ?? []).filter((m) => !isAanname(m)).map((m) => netjes(m.regel)));
   const klein2: React.CSSProperties = { fontFamily: towFont.serif, fontSize: 13, color: TOW.parchDim };
   const overzicht = (
@@ -539,6 +547,13 @@ function uitsplitsing(x: Rij, open: boolean, wissel: () => void, vijandFiles?: R
         </div>
       )}
       {vijandFiles && <div style={{ marginTop: 6 }}>{vijandFiles}</div>}
+      {(kolomIk || kolomVijand) && (
+        <p style={{ ...klein, color: TOW.blood }}>
+          {kolomVijand ? 'Enemy is deeper than wide (marching column): no Press of Battle, only the front rank strikes. Widen Enemy files if it stands wider.' : ''}
+          {kolomIk && kolomVijand ? ' ' : ''}
+          {kolomIk ? 'Your unit is deeper than wide (marching column): no Press of Battle. Widen Files if it stands wider.' : ''}
+        </p>
+      )}
       {geteld.length > 0 && (
         <p style={klein}><span style={{ color: TOW.ink, fontWeight: 600 }}>Counted:</span> {geteld.join(', ')}</p>
       )}

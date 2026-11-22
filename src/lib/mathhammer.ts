@@ -782,7 +782,12 @@ export function breedteVoor(aanvaller: ArmyUnit, modellen: number): { vanToepass
   // Default = the troop type's "Models per Rank" (the narrowest front that still claims a Rank Bonus); when the
   // table gives none (Swarms, unknown troop type) the widest value in that column, 5.
   const perRang = (tt && MODELLEN_PER_RANG[tt]) ?? 5;
-  return { vanToepassing, standaard: Math.max(1, Math.min(n, perRang)), max: Math.max(1, n) };
+  // 22-11-2026 (Joost: "rxb tegen zombies, die slaan maar met 5 terug"): 30 Zombies op de standaard 5 breed staan
+  // 6 diep, en dat is volgens marching-column ("deeper than it is wide") een Marching Column: geen Press of Battle.
+  // Niemand zet een blok zo neer, dus de standaard is de smalste breedte die nog Combat Order is
+  // (combat-order-close-order: "wider than it is deep ... or that is square"): minstens √n breed.
+  const combatOrder = Math.ceil(Math.sqrt(n));
+  return { vanToepassing, standaard: Math.max(1, Math.min(n, Math.max(perRang, combatOrder))), max: Math.max(1, n) };
 }
 
 /** Models per rank, front first ("it must be the rear rank that has fewer models" — close-order-formation). */
