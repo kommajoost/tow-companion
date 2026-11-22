@@ -1,35 +1,15 @@
 import { useEffect, useState } from 'react';
 import { TOW, towFont, engraved } from '../design/tow';
+import { TO_HIT_CHART, TO_WOUND_CHART } from '../lib/mathhammer';
 
 const eb = engraved as React.CSSProperties;
 const goldGrad = `linear-gradient(180deg, ${TOW.goldBright} 0%, ${TOW.gold} 55%, ${TOW.goldDeep} 100%)`;
 
-// The Old World quick-reference charts, verbatim from rules.json (to-hit-chart / to-wound-chart).
+// The Old World quick-reference charts, verbatim from rules.json (to-hit-chart / to-wound-chart), now shared
+// with the mathhammer engine (a test re-parses them from rules.json).
 // grid[attacker − 1][defender − 1] → required roll (number; 0 = cannot wound).
-const HIT: number[][] = [
-  [4, 4, 5, 5, 5, 5, 5, 5, 5, 5],
-  [3, 4, 4, 4, 5, 5, 5, 5, 5, 5],
-  [2, 3, 4, 4, 4, 4, 5, 5, 5, 5],
-  [2, 3, 3, 4, 4, 4, 4, 4, 5, 5],
-  [2, 2, 3, 3, 4, 4, 4, 4, 4, 4],
-  [2, 2, 3, 3, 3, 4, 4, 4, 4, 4],
-  [2, 2, 2, 3, 3, 3, 4, 4, 4, 4],
-  [2, 2, 2, 3, 3, 3, 3, 4, 4, 4],
-  [2, 2, 2, 2, 3, 3, 3, 3, 4, 4],
-  [2, 2, 2, 2, 3, 3, 3, 3, 3, 4],
-];
-const WOUND: number[][] = [
-  [4, 5, 6, 6, 6, 6, 0, 0, 0, 0],
-  [3, 4, 5, 6, 6, 6, 6, 0, 0, 0],
-  [2, 3, 4, 5, 6, 6, 6, 6, 0, 0],
-  [2, 2, 3, 4, 5, 6, 6, 6, 6, 0],
-  [2, 2, 2, 3, 4, 5, 6, 6, 6, 6],
-  [2, 2, 2, 2, 3, 4, 5, 6, 6, 6],
-  [2, 2, 2, 2, 2, 3, 4, 5, 6, 6],
-  [2, 2, 2, 2, 2, 2, 3, 4, 5, 6],
-  [2, 2, 2, 2, 2, 2, 2, 3, 4, 5],
-  [2, 2, 2, 2, 2, 2, 2, 2, 3, 4],
-];
+const HIT = TO_HIT_CHART;
+const WOUND = TO_WOUND_CHART;
 
 const clamp = (n: number) => Math.max(1, Math.min(10, n));
 

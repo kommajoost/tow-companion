@@ -10,6 +10,8 @@ import { CombatStats } from './CombatStats';
 import { InfoSheet, type InfoSheetData } from './InfoSheet';
 import { WizardSpells } from './WizardSpells';
 import { WoundTracker } from './WoundTracker';
+import { TargetCalc, isUitgeschakeld, type VijandStand } from './TargetCalc';
+import { useBackClose } from '../../lib/backStack';
 import { ProfielTabel } from './ProfielTabel';
 import type { ArmyUnit, KillDetail, UnitProfile } from '../../types';
 import { useStatIndex } from '../../lib/useStatIndex';
@@ -56,6 +58,7 @@ export function UnitCard({
   killDetails,
   onSetKillDetail,
   vijandUnits,
+  vijandStand,
   maxRound,
   collapsed = false,
   onToggleCollapse,
@@ -90,6 +93,10 @@ export function UnitCard({
   onSetKillDetail?: (i: number, patch: KillDetail) => void;
   /** Het leger aan de andere kant van de tafel — de keuzelijst bij een kill. */
   vijandUnits?: ArmyUnit[];
+  /** MATHHAMMER (22-11-2026): de stand van elke vijandelijke unit (lost wounds, Removed), op de id zoals hij in
+   *  `vijandUnits` staat (2v2: `stoel:id`). Voor de Target-rekenhulp: modellen over per doelwit, en wie weg is
+   *  valt uit de lijst. Zonder deze prop telt elke vijand als vol en levend. */
+  vijandStand?: Record<string, VijandStand>;
   /** Laatste game-round (6, of 5 bij Battle March) — bepaalt de beurt-knopjes. */
   maxRound?: number;
   /** In the game roster, units are collapsed by default; the header toggles open to show the card. */
@@ -161,6 +168,15 @@ export function UnitCard({
   // Chosen magic items (weapons, armour, talismans, runes, banners, …) have no rule page; tapping one
   // in the loadout line opens its info sheet (flavour + special rules) instead of the rule sheet.
   const [info, setInfo] = useState<InfoSheetData | null>(null);
+  // Target (mathhammer): alleen als er een levend vijandelijk doelwit is en deze unit zelf nog op tafel staat.
+  // Op een los leger zonder tegenstander (TegenLegerKaarten) is `vijandUnits` leeg, dus geen knop.
+  const [targetOpen, setTargetOpen] = useState(false);
+  const kanMikken = !dead && (unit.profiles?.length ?? 0) > 0
+    && (vijandUnits ?? []).some((v) => !isUitgeschakeld(v, vijandStand?.[v.id]));
+  // Android-Back sluit de sheet (zelfde backStack als InfoSheet/ExportSheet). Hier op de kaart, met een
+  // wisselende `active`, zodat StrictMode's dubbele mount-effect in dev de val niet meteen weer opruimt.
+  useBackClose(targetOpen && kanMikken, () => setTargetOpen(false));
+  const herstelVijand = useMemo(() => (v: ArmyUnit) => metProfielen(v, statIdx), [statIdx]);
   const mounts = unit.mounts ?? [];
   const [mountIntern, setMountIntern] = useState<number | null>(null);
   const mountIdx = toonMount !== undefined ? toonMount : mountIntern;
@@ -307,7 +323,7 @@ export function UnitCard({
           zijn stats en zijn regels … een soort van knop om zijn mount te kiezen". Rider | Manticore. */}
       {mounts.length > 0 && (
         <div role="tablist" style={{ display: 'flex', gap: 4, margin: '0 0 8px' }}>
-          {[{ label: toon.primair, i: null as number | null }, ...mounts.map((m, i) => ({ label: m.name.replace(/s*{[^}]*}/g, '').trim(), i: i as number | null }))].map((t) => {
+          {[{ label: toon.primair, i: null as number | null }, ...mounts.map((m, i) => ({ label: m.name.replace(/\s*\{[^}]*\}/g, '').trim(), i: i as number | null }))].map((t) => {
             const aan = (mountIdx ?? null) === t.i;
             return (
               <button key={String(t.i)} role="tab" aria-selected={aan} onClick={() => zetMount(t.i)}
@@ -342,7 +358,7 @@ export function UnitCard({
             // De tekst zelf blijft letterlijk zoals in de bron.
             <div style={{ display: 'grid', gridTemplateColumns: 'auto 1fr', columnGap: 10, rowGap: 3, alignItems: 'baseline', margin: '2px 0 8px' }}>
               {mount.details!.map((d, i) => {
-                const m = d.match(/^([^:]{2,24}):s*(.*)$/s);
+                const m = d.match(/^([^:]{2,24}):\s*(.*)$/s);
                 return (
                   <div key={i} style={{ display: 'contents' }}>
                     <span style={{ ...eb, fontSize: 7.5, color: TOW.muted, whiteSpace: 'nowrap' }}>{m ? m[1] : ''}</span>
@@ -355,8 +371,22 @@ export function UnitCard({
           {mount.specialRules.length > 0 && regelsRegel(mount.specialRules)}
         </div>
       ) : (<>
-      {knoppen && knoppen.length > 0 && (
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, margin: '-2px 0 10px' }}>{knoppen}</div>
+      {((knoppen && knoppen.length > 0) || kanMikken) && (
+        <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 6, margin: '-2px 0 8px' }}>
+          {knoppen}
+          {kanMikken && (
+            <button
+              type="button"
+              data-testid={`target-knop-${unit.id}`}
+              onClick={() => setTargetOpen(true)}
+              title="Expected wounds against each enemy unit"
+              style={{ marginLeft: 'auto', display: 'inline-flex', alignItems: 'center', gap: 5, fontFamily: towFont.display, fontWeight: 600, fontSize: 9.5, letterSpacing: '0.06em', textTransform: 'uppercase', padding: '4px 10px', borderRadius: 7, cursor: 'pointer', border: `1px solid ${TOW.goldDeep}`, background: 'rgba(184,134,47,0.12)', color: TOW.goldDeep }}
+            >
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" aria-hidden="true"><circle cx="8" cy="8" r="5.5" /><circle cx="8" cy="8" r="1.6" /><path d="M8 0.8v3M8 12.2v3M0.8 8h3M12.2 8h3" /></svg>
+              Target
+            </button>
+          )}
+        </div>
       )}
       {/* All profiles share the column set (M WS BS S T W I A Ld). When the unit has weapons,
           CombatStats owns the profile display + a small "Loadout" toggle for effective stats;
@@ -507,6 +537,17 @@ export function UnitCard({
       </>)}
 
       <InfoSheet info={info} onClose={() => setInfo(null)} />
+      {targetOpen && kanMikken && (
+        <TargetCalc
+          unit={unit}
+          naam={toon.primair}
+          lost={lost ?? 0}
+          vijandUnits={vijandUnits ?? []}
+          vijandStand={vijandStand}
+          herstel={herstelVijand}
+          onClose={() => setTargetOpen(false)}
+        />
+      )}
     </section>
   );
 }

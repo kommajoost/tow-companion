@@ -472,7 +472,12 @@ export function unitArmourSave(unit: ArmyUnit): ArmourSave | null {
     parts.push(naParry < save ? 'Parry (+1, close combat, max 3+)' : 'Parry (no effect — already 3+ or better)');
     // Buiten close combat geldt de bonus niet. Alleen melden als hij daadwerkelijk iets deed,
     // anders zijn het twee identieke getallen naast elkaar.
-    if (naParry < save) addCond(save, 'vs shooting (Parry telt alleen in close combat)');
+    // 22-11-2026: dit ging via addCond, maar die vergelijkt met `save` zelf en voegde dus nooit iets toe —
+    // Dark Elf Warriors (light armour + shield) toonden 4+ zonder de 5+ tegen schieten. Rechtstreeks toevoegen,
+    // tenzij er al een schiet-save staat (Sea Dragon Cloak: die is al zonder Parry berekend).
+    if (naParry < save && !conditional.some((c) => /shooting/.test(c.when))) {
+      conditional.push({ save, when: 'vs shooting (Parry only counts in close combat)' });
+    }
   } else if (parry) {
     notes.push('Parry: +1 armour in close combat with a hand weapon & shield (max 3+)');
   }

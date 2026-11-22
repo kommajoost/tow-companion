@@ -6,6 +6,7 @@ import { parseArmyList } from '../../lib/armyParser';
 import { makeTroopTypeLookup, enrichArmyTroopTypes } from '../../lib/troopTypes';
 import { unitSize, unitTotalStrength } from '../../lib/armyRules';
 import { UnitCard, korteStand, type ScenarioKnop } from './UnitCard';
+import type { VijandStand } from './TargetCalc';
 import { SmalleKolom } from './ProfielTabel';
 import { BattleBar } from './BattleBar';
 import { ReminderStrip, type KantReminders } from './ReminderStrip';
@@ -195,6 +196,17 @@ export function GameView() {
   // 2v2: de sleutel volgt de gekozen STOEL (host/host2/guest/guest2); `s` doet dan niet mee.
   const unitKey = (z: Zicht, unitId: string) => `${teamModus ? z.speler : absSeat(z.side)}:${unitId}`;
   const meKey = absSeat('me');
+  // MATHHAMMER (22-11-2026): de stand (lost, Removed) van elke unit in `vijandUnitsVan(z)`, op die id. 1v1: de
+  // tracker-sleutel van de ANDERE kant; 2v2: de vijand-id is al `stoel:id`, precies de tracker-sleutel.
+  const vijandStandVan = (z: Zicht): Record<string, VijandStand> => {
+    const uit: Record<string, VijandStand> = {};
+    const ander: Zicht = { side: z.side === 'me' ? 'opp' : 'me', speler: z.speler };
+    for (const v of vijandUnitsVan(z)) {
+      const t = tracker.units[teamModus ? v.id : unitKey(ander, v.id)];
+      uit[v.id] = { lost: t?.lost ?? 0, weg: t?.weg ?? false };
+    }
+    return uit;
+  };
 
   // Absolute muteerhelpers voor de per-unit tracker (WoundTracker levert absolute waarden).
   // `prev` default = { lost: 0, fleeing: false }; oude trackers zonder `weg` blijven zo werken.
@@ -505,7 +517,7 @@ export function GameView() {
   const unitKaart = (z: Zicht, a: Army, u: ArmyUnit, weergave: { collapsed: boolean; onToggleCollapse?: () => void; selected?: boolean }) => {
     const t = tracker.units[unitKey(z, u.id)];
     return (
-      <UnitCard key={u.id} unit={u} faction={a.faction} editable={editable} onChange={(patch) => onUnitChange(z, u.id, patch)} lost={t?.lost ?? 0} weg={t?.weg ?? false} fleeing={t?.fleeing ?? false} kills={t?.kills ?? 0} onSetLost={(lost) => setCasualty(z, u.id, lost)} onRemoved={() => setRemoved(z, u.id, !(t?.weg ?? false))} onFlee={() => toggleFleeing(z, u.id)} onSetKills={killsTonen ? (k) => setKills(z, u.id, k) : undefined} killDetails={t?.killDetails ?? []} onSetKillDetail={(i, patch) => setKillDetail(z, u.id, i, patch)} vijandUnits={vijandUnitsVan(z)} maxRound={maxRound} collapsed={weergave.collapsed} onToggleCollapse={weergave.onToggleCollapse} selected={weergave.selected} scenarioKnoppen={knoppenVoor(z, u)} toonMount={mountTabVan(z, u.id)} onToonMount={(i) => setMountTab(i == null ? null : { sleutel: sleutelVan(z), id: u.id, i })} />
+      <UnitCard key={u.id} unit={u} faction={a.faction} editable={editable} onChange={(patch) => onUnitChange(z, u.id, patch)} lost={t?.lost ?? 0} weg={t?.weg ?? false} fleeing={t?.fleeing ?? false} kills={t?.kills ?? 0} onSetLost={(lost) => setCasualty(z, u.id, lost)} onRemoved={() => setRemoved(z, u.id, !(t?.weg ?? false))} onFlee={() => toggleFleeing(z, u.id)} onSetKills={killsTonen ? (k) => setKills(z, u.id, k) : undefined} killDetails={t?.killDetails ?? []} onSetKillDetail={(i, patch) => setKillDetail(z, u.id, i, patch)} vijandUnits={vijandUnitsVan(z)} vijandStand={vijandStandVan(z)} maxRound={maxRound} collapsed={weergave.collapsed} onToggleCollapse={weergave.onToggleCollapse} selected={weergave.selected} scenarioKnoppen={knoppenVoor(z, u)} toonMount={mountTabVan(z, u.id)} onToonMount={(i) => setMountTab(i == null ? null : { sleutel: sleutelVan(z), id: u.id, i })} />
     );
   };
 

@@ -125,8 +125,10 @@ export function parseArmyList(text: string): Army {
     // special rules line
     if (/^special rules\s*:/i.test(line)) {
       const list = line.replace(/^special rules\s*:/i, '');
+      // 22-11-2026: alleen splitsen op komma's BUITEN haakjes. "Armour Bane (1, Cold One only)" werd in tweeen
+      // geknipt ("Armour Bane (1" + "Cold One only)"), waardoor de regel-chip en de mathhammer hem niet kenden.
       const rules = list
-        .split(',')
+        .split(/,(?![^()]*\))/)
         .map((s) => s.replace(/\s+/g, ' ').trim())
         .filter(Boolean);
       if (current) current.specialRules.push(...rules);
