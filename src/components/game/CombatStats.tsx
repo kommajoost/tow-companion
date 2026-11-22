@@ -11,7 +11,10 @@ import {
   rangedToHit,
   statValue,
   SHOOTING_MODS,
+  type WeaponProfile,
 } from '../../lib/weaponStats';
+import { equipmentVoor, wapensPerRij, rijMeleeWapen } from '../../lib/unitDetails';
+import { useUnitDetails } from '../../lib/useUnitDetails';
 import type { ArmyUnit, UnitProfile } from '../../types';
 
 const eb = engraved as React.CSSProperties;
@@ -28,12 +31,31 @@ export function CombatStats({ unit, onProfileInfo }: { unit: ArmyUnit; onProfile
   const smal = useContext(SmalleKolom);
   const idx = useMemo(() => getRuleIndex(rules), [rules]);
   const { melee, ranged } = useMemo(() => unitWeapons(unit, rules), [unit, rules]);
+  // A profile is a weapon-WIELDER (gets the loadout's effective stats) if it has a Leadership and
+  // Strength value — i.e. the unit's models including its champion (Reaver/Dread Knight/Herald),
+  // but NOT mounts/steeds or a chariot frame (those carry "-" for Ld). Each wielder uses its OWN
+  // base S/A, so a champion's +1 Attack stacks with an extra hand weapon's +1.
+  const isWielder = (stats: { k: string; v: string }[]) =>
+    statValue(stats, 'Ld') != null && statValue(stats, 'S') != null;
+
+  // WHICH MODEL CARRIES WHICH WEAPON (22-11-2026): the wiki's equipment line per model
+  // (public/unit-details.json). A row without a line (null) keeps the old behaviour.
+  const details = useUnitDetails();
+  const perRij = useMemo(() => wapensPerRij(
+    unit.profiles.map((p) => ({ label: p.label, wielder: isWielder(p.stats) })),
+    equipmentVoor(unit, details),
+    { melee, ranged },
+  ), [unit, details, melee, ranged]);
+  const hoofd = unit.profiles.findIndex((p) => isWielder(p.stats));
+  // The chips offer the main model's weapons only (never the handlers' whip for the Hydra itself).
+  const keuzes = (hoofd >= 0 ? perRij[hoofd]?.melee : undefined) ?? melee;
 
   // Default the melee pick to the unit's actual upgrade weapon (cavalry spear, great weapon,
   // two hand weapons, …) rather than the baseline hand weapon, if it has one.
-  const defaultMelee = Math.max(0, melee.findIndex((w) => !/^hand weapon$/i.test(w.name)));
+  const defaultMelee = Math.max(0, keuzes.findIndex((w) => !/^hand weapon$/i.test(w.name)));
   const [on, setOn] = useState(true); // loadout view on by default
-  const [meleeSel, setMeleeSel] = useState(defaultMelee);
+  // By slug: the list can change once unit-details.json has loaded.
+  const [meleeSlug, setMeleeSlug] = useState<string | null>(null);
   const [charge, setCharge] = useState(false);
   const [rangedSel, setRangedSel] = useState(0);
   const [mods, setMods] = useState<Record<string, boolean>>({});
@@ -41,16 +63,17 @@ export function CombatStats({ unit, onProfileInfo }: { unit: ArmyUnit; onProfile
   const [modsOpen, setModsOpen] = useState(false);
   const [multiOn, setMultiOn] = useState(true); // fire the multiple-shots mode (−1 To Hit)
 
-  const mw = melee[meleeSel];
+  const mw: WeaponProfile | undefined = keuzes.find((w) => w.slug === meleeSlug) ?? keuzes[defaultMelee];
+  // The melee weapon of profile row i: the chosen one if that model carries it, else its own default
+  // (unitDetails.rijMeleeWapen). Without a line: every wielder takes the chosen weapon, as before.
+  const rijWapen = (i: number, stats: { k: string; v: string }[]): WeaponProfile | null => {
+    const rwp = perRij[i];
+    if (rwp) return rijMeleeWapen(rwp, mw);
+    return isWielder(stats) ? mw ?? null : null;
+  };
   const rw = ranged[rangedSel];
   const showCharge = melee.some((w) => w.chargeBonus);
   const bs = Math.max(0, ...unit.profiles.map((p) => statValue(p.stats, 'BS') ?? 0));
-  // A profile is a weapon-WIELDER (gets the loadout's effective stats) if it has a Leadership and
-  // Strength value — i.e. the unit's models including its champion (Reaver/Dread Knight/Herald),
-  // but NOT mounts/steeds or a chariot frame (those carry "-" for Ld). Each wielder uses its OWN
-  // base S/A, so a champion's +1 Attack stacks with an extra hand weapon's +1.
-  const isWielder = (stats: { k: string; v: string }[]) =>
-    statValue(stats, 'Ld') != null && statValue(stats, 'S') != null;
   // The firing model's Strength — used for ranged weapons whose profile S is relative ("S" = use the
   // wielder's Strength, e.g. thrown weapons), so the shooting table shows a number, not an em-dash.
   const shooterS = Math.max(0, ...unit.profiles.filter((p) => isWielder(p.stats)).map((p) => statValue(p.stats, 'S') ?? 0));
@@ -94,11 +117,12 @@ export function CombatStats({ unit, onProfileInfo }: { unit: ArmyUnit; onProfile
   const td = (hl: boolean): React.CSSProperties => ({ textAlign: 'center', color: hl ? TOW.goldDeep : TOW.ink, fontWeight: hl ? 700 : 400, border: `1px solid ${TOW.line}`, padding: '3px 2px', background: hl ? 'rgba(184,134,47,0.10)' : 'transparent' });
 
   // One profile row. In loadout mode an AP column is inserted after S; every wielder profile (each
-  // model, incl. the champion) shows the chosen weapon's effective S/AP (from its OWN base S) and
-  // Attacks; mounts/steeds keep their base S (natural attacks, no AP). Off = verbatim base profile.
-  const profileTable = (stats: { k: string; v: string; modified?: boolean; base?: string; source?: string }[]) => {
+  // model, incl. the champion) shows ITS weapon's effective S/AP (from its OWN base S) and Attacks;
+  // mounts/steeds keep their base S (natural attacks, no AP). Off = verbatim base profile.
+  const profileTable = (stats: { k: string; v: string; modified?: boolean; base?: string; source?: string }[], i: number) => {
     const sBase = statValue(stats, 'S');
-    const e = on && mw && isWielder(stats) ? effectiveMelee(sBase ?? 0, mw, charge) : null;
+    const w = on ? rijWapen(i, stats) : null;
+    const e = w ? effectiveMelee(sBase ?? 0, w, charge) : null;
     const cols: { k: string; v: string; hl: boolean; title?: string; d?: number | null }[] = [];
     for (const st of stats) {
       const isS = st.k.toUpperCase() === 'S';
@@ -130,8 +154,8 @@ export function CombatStats({ unit, onProfileInfo }: { unit: ArmyUnit; onProfile
         >
           Loadout
         </button>
-        {on && melee.map((w, i) => (
-          <button key={w.slug} onClick={() => setMeleeSel(i)} style={selChip(i === meleeSel)}>{w.name}</button>
+        {on && keuzes.map((w) => (
+          <button key={w.slug} onClick={() => setMeleeSlug(w.slug)} style={selChip(w.slug === mw?.slug)}>{w.name}</button>
         ))}
         {on && showCharge && (
           <button onClick={() => setCharge((c) => !c)} style={selChip(charge)}>{charge ? '✓ ' : ''}On charge</button>
@@ -141,13 +165,22 @@ export function CombatStats({ unit, onProfileInfo }: { unit: ArmyUnit; onProfile
       {(() => {
         // Alle profielen onder één kop (ProfielTabel). De kolommen zijn per profiel gelijk: de AP-kolom
         // komt er in loadout-modus bij ieder profiel bij (een mount krijgt "–").
-        const perProfiel = unit.profiles.map((p) => ({ p, cols: profileTable(p.stats) }));
+        const perProfiel = unit.profiles.map((p, i) => ({ p, i, cols: profileTable(p.stats, i) }));
+        // A model that fights with another weapon than the chosen chip says which, under its name.
+        const sub = (p: UnitProfile, i: number): string | undefined => {
+          const rwp = perRij[i];
+          if (!on || !rwp || !isWielder(p.stats)) return undefined;
+          const w = rijWapen(i, p.stats);
+          if (w) return w.slug !== mw?.slug ? w.name : undefined;
+          return mw && rwp.hand ? 'Hand weapon' : undefined;
+        };
         return (
           <ProfielTabel
             minWidth={on ? 300 : 280}
             koppen={(perProfiel[0]?.cols ?? []).map((c) => c.k)}
-            rijen={perProfiel.map(({ p, cols }) => ({
+            rijen={perProfiel.map(({ p, i, cols }) => ({
               label: p.label,
+              sub: sub(p, i),
               cellen: cols.map((c) => ({ v: c.v, hl: c.hl, title: c.title, d: c.d })),
               onInfo: p.info && onProfileInfo ? () => onProfileInfo(p) : undefined,
             }))}

@@ -20,6 +20,9 @@ export interface ProfielCel {
 
 export interface ProfielRij {
   label: string;
+  /** Tweede regel onder de naam, klein en gedempt: het wapen van DIT model als dat een ander is dan het
+   *  gekozen wapen (de handlers van een War Hydra met hun whip). */
+  sub?: string;
   cellen: ProfielCel[];
   /** Er is een eigen regelblad voor dit model (een mount, de crew): toont het oogje. */
   onInfo?: () => void;
@@ -59,7 +62,10 @@ export function ProfielTabel({ koppen, rijen, minWidth = 280 }: { koppen: string
               {metNaam && (
                 <td style={{ border: `1px solid ${TOW.line}`, padding: smal ? '2px 3px' : '2px 5px', fontSize: smal ? 10.5 : 11.5, color: TOW.parchDim, textAlign: 'left' }}>
                   <span style={{ display: 'flex', alignItems: 'center', gap: 4, minWidth: 0 }}>
-                    <span title={r.label} style={{ flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{r.label}</span>
+                    <span title={r.sub ? `${r.label} · ${r.sub}` : r.label} style={{ flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                      {r.label}
+                      {r.sub && <span style={{ display: 'block', overflow: 'hidden', textOverflow: 'ellipsis', fontSize: smal ? 9 : 9.5, color: TOW.muted, lineHeight: 1.15 }}>{r.sub}</span>}
+                    </span>
                     {r.onInfo ? <Eye onClick={r.onInfo} title={`Rules for ${r.label}`} /> : null}
                   </span>
                 </td>

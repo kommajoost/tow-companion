@@ -4,6 +4,8 @@ import { TOW, towFont, engraved } from '../../design/tow';
 import { useSwipeToDismiss, DragHandle } from '../../lib/useSwipeToDismiss';
 import { berekenAanval, breedteVoor, situatiesVoor, wapensVoor, type AanvalSoort, type MathResultaat, type Situatie } from '../../lib/mathhammer';
 import { unitWeapons } from '../../lib/weaponStats';
+import { equipmentVoor } from '../../lib/unitDetails';
+import { useUnitDetails } from '../../lib/useUnitDetails';
 import { unitSize, woundsPerModel, unitTotalStrength } from '../../lib/armyRules';
 import { profielenMetVeteraan } from '../../lib/veteraanStats';
 import type { ArmyUnit } from '../../types';
@@ -137,8 +139,11 @@ export function TargetCalc({
   const levend = Math.max(1, modellenOver(unit, lost));
   const aanvallerWounds = start === 1 && wpm > 1 ? Math.max(1, wpm - Math.max(0, lost)) : undefined;
 
-  const schietWapens = useMemo(() => wapensVoor(unit, 'schieten', rules), [unit, rules]);
-  const combatWapens = useMemo(() => wapensVoor(unit, 'combat', rules), [unit, rules]);
+  // Which model carries which weapon (public/unit-details.json); null = unknown, old behaviour.
+  const unitDetails = useUnitDetails();
+  const uitrusting = useMemo(() => equipmentVoor(unit, unitDetails), [unit, unitDetails]);
+  const schietWapens = useMemo(() => wapensVoor(unit, 'schieten', rules, uitrusting), [unit, rules, uitrusting]);
+  const combatWapens = useMemo(() => wapensVoor(unit, 'combat', rules, uitrusting), [unit, rules, uitrusting]);
   const ranged = useMemo(() => unitWeapons(unit, rules).ranged, [unit, rules]);
 
   const [soort, setSoort] = useState<AanvalSoort>(() => (schietWapens.length > 0 ? 'schieten' : 'combat'));
@@ -172,12 +177,12 @@ export function TargetCalc({
   const situaties = useMemo<Situatie[]>(() => {
     const uit: Situatie[] = [];
     for (const d of doelen) {
-      for (const s of situatiesVoor(unit, d, { soort: soortNu, wapenSlug, multi: heeftMulti ? multi : undefined, breedte }, rules)) {
+      for (const s of situatiesVoor(unit, d, { soort: soortNu, wapenSlug, multi: heeftMulti ? multi : undefined, breedte, uitrusting }, rules)) {
         if (!uit.some((x) => x.key === s.key)) uit.push(s);
       }
     }
     return uit;
-  }, [doelen, unit, soortNu, wapenSlug, multi, heeftMulti, breedte, rules]);
+  }, [doelen, unit, soortNu, wapenSlug, multi, heeftMulti, breedte, uitrusting, rules]);
   const [sitKeus, setSitKeus] = useState<Record<string, boolean>>({});
   const sitWaarden = useMemo(() => {
     const m: Record<string, boolean> = {};
@@ -199,14 +204,18 @@ export function TargetCalc({
         situaties: sitWaarden,
         aanvallerWounds,
         doelwitModellen: m,
+        uitrusting,
       }, rules);
       return { u: d, naam, eigenaar, modellen: m, start: unitSize(d), r };
     });
     // Hoogste verwachting eerst; "kan niet" onderaan.
     return uit.sort((a, b) => (a.r.onmogelijk ? 1 : 0) - (b.r.onmogelijk ? 1 : 0) || b.r.wounds - a.r.wounds);
-  }, [doelen, vijandStand, unit, soortNu, modellen, breedte, wapenSlug, heeftMulti, multi, custom, sitWaarden, aanvallerWounds, rules]);
+  }, [doelen, vijandStand, unit, soortNu, modellen, breedte, wapenSlug, heeftMulti, multi, custom, sitWaarden, aanvallerWounds, uitrusting, rules]);
 
   const [openId, setOpenId] = useState<string | null>(null);
+  // Level 2 of the breakdown ("Details"): one switch for the whole sheet, not per target. Default closed.
+  const [details, setDetails] = useState(false);
+  const toonUitsplitsing = (x: Rij) => uitsplitsing(x, details, () => setDetails((d) => !d));
   // Breed: altijd een gekozen doelwit rechts (valt terug op de bovenste rij).
   const gekozen = rijen.find((x) => x.u.id === openId) ?? (tweeKolom ? rijen[0] : undefined);
 
@@ -313,7 +322,7 @@ export function TargetCalc({
             </span>
           )}
         </button>
-        {!tweeKolom && open && <div style={{ padding: '4px 8px 12px' }}>{uitsplitsing(x)}</div>}
+        {!tweeKolom && open && <div style={{ padding: '4px 8px 12px' }}>{toonUitsplitsing(x)}</div>}
       </div>
     );
   };
@@ -368,7 +377,7 @@ export function TargetCalc({
                     <span style={{ flex: 1, minWidth: 0, fontFamily: towFont.display, fontWeight: 700, fontSize: 15, color: TOW.ink }}>{gekozen.naam}</span>
                     {gekozen.eigenaar && <span style={{ fontFamily: towFont.serif, fontSize: 12, color: TOW.muted }}>{gekozen.eigenaar}</span>}
                   </div>
-                  {uitsplitsing(gekozen)}
+                  {toonUitsplitsing(gekozen)}
                 </>
               ) : null}
             </div>
@@ -382,9 +391,80 @@ export function TargetCalc({
   );
 }
 
-// ── De uitsplitsing van één doelwit: per aanvalsgroep de stappen, dan het totaal, de verdeling, en wat wel en
-// niet is meegerekend. "Not counted" staat er altijd als hij niet leeg is: zo blijft het getal eerlijk. ──
-function uitsplitsing(x: Rij) {
+/** One compact token per step: "4+", "auto", "no save", "ward 5+", "regen 5+", "MW D3". */
+function stapToken(s: { label: string; worp: string }): string {
+  const save = /save/i.test(s.label);
+  const w = save && (s.worp === '—' || s.worp === '-') ? 'no save' : s.worp;
+  if (/^ward/i.test(s.label)) return w === 'no save' ? w : `ward ${w}`;
+  if (/^regeneration/i.test(s.label)) return `regen ${w}`;
+  if (/^multiple wounds/i.test(s.label)) return `MW ${w}`;
+  if (/^killing blow/i.test(s.label)) return 'KB';
+  return w;
+}
+const uniek = (l: string[]) => [...new Set(l)];
+
+// ── De uitsplitsing van één doelwit in twee lagen (22-11-2026, Joost: "Die uitleg is wel echt te uitgebreid.
+// Zorg dat het slim overzicht geeft met extra info uit te klappen."):
+//  1. overzicht: per aanvalsgroep één regel (aanvallen · worpen · wounds), het totaal, de namen van wat wel en
+//     wat niet is meegerekend. "Not counted" staat er altijd als hij niet leeg is: zo blijft het getal eerlijk.
+//  2. Details: de staptabellen met toelichting, de verdeling, effecten en redenen. ──
+function uitsplitsing(x: Rij, open: boolean, wissel: () => void) {
+  const r = x.r;
+  const nietGeteld0 = r.nietMeegerekend.filter((m) => !isAanname(m));
+  const range = r.verdeling && !r.onmogelijk ? bereik(r.verdeling) : null;
+  const klein: React.CSSProperties = { fontFamily: towFont.serif, fontSize: 12, lineHeight: 1.35, color: TOW.parchDim, margin: '4px 0 0' };
+  const overzicht = (
+    <div>
+      {r.onmogelijk && (
+        <p style={{ margin: '0 0 4px', fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 13, color: TOW.muted }}>{netjes(r.onmogelijk)}</p>
+      )}
+      {r.groepen.map((g, gi) => (
+        <div key={gi} style={{ display: 'flex', alignItems: 'baseline', gap: 8, padding: '3px 0', borderBottom: `1px solid ${TOW.hairline}` }}>
+          <span style={{ flex: '1 1 0', minWidth: 0, fontFamily: towFont.display, fontWeight: 600, fontSize: 12.5, color: TOW.ink, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} title={g.naam}>{g.naam}</span>
+          <span style={{ flexShrink: 0, fontFamily: towFont.serif, fontSize: 12, color: TOW.parchDim, whiteSpace: 'nowrap', fontVariantNumeric: 'tabular-nums' }}>
+            {[`${g.aanvallen} att`, ...g.stappen.map(stapToken)].join(' · ')}
+          </span>
+          <span style={{ flexShrink: 0, minWidth: 30, textAlign: 'right', fontFamily: towFont.display, fontWeight: 700, fontSize: 12.5, color: TOW.goldDeep, fontVariantNumeric: 'tabular-nums' }}>{fmt1(g.wounds)}</span>
+        </div>
+      ))}
+      {!r.onmogelijk && (
+        <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, flexWrap: 'wrap', marginTop: 6 }}>
+          <span style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 20, color: TOW.goldDeep, fontVariantNumeric: 'tabular-nums' }}>{fmt1(r.wounds)}</span>
+          <span style={{ fontFamily: towFont.serif, fontSize: 13, color: TOW.parchDim }}>wounds</span>
+          {r.modellenGedood != null && (
+            <span style={{ fontFamily: towFont.serif, fontSize: 13, color: TOW.parchDim }}>≈ {fmt1(r.modellenGedood)} {r.modellenGedood === 1 ? 'model' : 'models'}</span>
+          )}
+          {range && (
+            <span style={{ fontFamily: towFont.serif, fontSize: 12, color: TOW.muted, fontVariantNumeric: 'tabular-nums' }}>usually {range[0] === range[1] ? range[0] : `${range[0]}–${range[1]}`}</span>
+          )}
+        </div>
+      )}
+      {r.meegerekend.length > 0 && (
+        <p style={klein}><span style={{ color: TOW.ink, fontWeight: 600 }}>Counted:</span> {uniek(r.meegerekend.map((m) => netjes(m.regel))).join(', ')}</p>
+      )}
+      {nietGeteld0.length > 0 && (
+        <p style={{ ...klein, color: TOW.goldDeep }}><span style={{ fontWeight: 600 }}>Not counted:</span> {uniek(nietGeteld0.map((m) => netjes(m.regel))).join(', ')}</p>
+      )}
+      <button
+        type="button"
+        onClick={wissel}
+        aria-expanded={open}
+        style={{ marginTop: 6, padding: '2px 0', border: 'none', background: 'none', cursor: 'pointer', fontFamily: towFont.serif, fontSize: 12.5, color: TOW.goldDeep, display: 'inline-flex', alignItems: 'center', gap: 4 }}
+      >
+        Details <span aria-hidden style={{ fontSize: 9 }}>{open ? '▲' : '▼'}</span>
+      </button>
+    </div>
+  );
+  if (!open) return overzicht;
+  return (
+    <div>
+      {overzicht}
+      <div style={{ marginTop: 8, paddingTop: 8, borderTop: `1px solid ${TOW.line}` }}>{uitsplitsingDetails(x)}</div>
+    </div>
+  );
+}
+
+function uitsplitsingDetails(x: Rij) {
   const r = x.r;
   const kopje: React.CSSProperties = { ...eb, fontSize: 8, color: TOW.muted, margin: '12px 0 4px' };
   const th: React.CSSProperties = { ...eb, fontSize: 7.5, color: TOW.goldDeep, borderBottom: `1px solid ${TOW.line}`, padding: '3px 4px', textAlign: 'left', fontWeight: 600 };
@@ -399,9 +479,6 @@ function uitsplitsing(x: Rij) {
   const aannames = r.nietMeegerekend.filter(isAanname);
   return (
     <div>
-      {r.onmogelijk && (
-        <p style={{ margin: '0 0 6px', fontFamily: towFont.serif, fontStyle: 'italic', fontSize: 13, color: TOW.muted }}>{netjes(r.onmogelijk)}</p>
-      )}
       {r.groepen.map((g, gi) => (
         <div key={gi} style={{ marginTop: gi === 0 ? 0 : 10 }}>
           <div style={{ display: 'flex', alignItems: 'baseline', gap: 8, marginBottom: 2 }}>
@@ -430,17 +507,10 @@ function uitsplitsing(x: Rij) {
         </div>
       ))}
 
-      {!r.onmogelijk && (
+      {!r.onmogelijk && r.verdeling && r.verdeling.length > 1 && (
         <>
-          <div style={kopje}>Total</div>
-          <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, flexWrap: 'wrap' }}>
-            <span style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 22, color: TOW.goldDeep, fontVariantNumeric: 'tabular-nums' }}>{fmt1(r.wounds)}</span>
-            <span style={{ fontFamily: towFont.serif, fontSize: 13, color: TOW.parchDim }}>wounds</span>
-            {r.modellenGedood != null && (
-              <span style={{ fontFamily: towFont.serif, fontSize: 13, color: TOW.parchDim }}>≈ {fmt1(r.modellenGedood)} {r.modellenGedood === 1 ? 'model' : 'models'}</span>
-            )}
-          </div>
-          {r.verdeling && r.verdeling.length > 1 && <Verdeling v={r.verdeling} />}
+          <div style={kopje}>Distribution of wounds</div>
+          <Verdeling v={r.verdeling} />
         </>
       )}
 

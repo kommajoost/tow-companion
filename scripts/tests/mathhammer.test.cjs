@@ -583,3 +583,120 @@ test('performance: 60-attack unit vs W3 target with Multiple Wounds stays fast a
   checkVerdeling(r, 'horde');
   assert.ok(r.modellenGedood > 0 && r.modellenGedood <= 20);
 });
+
+// ─────────────────────────── which model carries which weapon (unit-details.json) ───────────────────────────
+// 22-11-2026, Joost: "Nu lijkt het alsof de Beast handlers ook met de claws vechten". The wiki's equipment
+// line per model (public/unit-details.json) decides which profile row fights with which weapon.
+const ud = require(path.join(root, 'src/lib/unitDetails.ts'));
+const ws = require(path.join(root, 'src/lib/weaponStats.ts'));
+const details = read('public/unit-details.json').units;
+const numCel = (v) => /\d/.test(String(v ?? ''));
+const indexRijen = (k) => statsIdx[k].stats.map((s) => ({ label: s.Name, wielder: numCel(s.Ld) && numCel(s.S) }));
+const unitRijen = (u) => u.profiles.map((p) => ({ label: p.label, wielder: numCel(p.stats.find((s) => s.k === 'Ld')?.v) && numCel(p.stats.find((s) => s.k === 'S')?.v) }));
+
+test('unit-details: rows match their wiki line (plural, "(x2)", champion, mount, spelling slips, unit prefix)', () => {
+  const regel = (k) => ud.rijUitrusting(indexRijen(k), details[k].equipment).map((e) => e && e.model);
+  assert.deepEqual(regel('war hydra'), ['War Hydra', 'Beastmaster Handlers']);
+  assert.deepEqual(regel('cold one knights'), ['Cold One Knights', 'Cold One Knights', 'Cold Ones']); // Dread Knight shares
+  assert.deepEqual(regel('dark riders'), ['Dark Riders', 'Dark Riders', 'Dark Steeds']);
+  assert.deepEqual(regel('cold one chariot'), [null, 'Knight Charioteers', 'Cold Ones']); // the chariot body has no line
+  assert.deepEqual(regel('empire knights'), ['Knights', 'Knights', 'Barded Warhorse']);
+  assert.deepEqual(regel("chieftain's chariot"), [null, 'Charioteers', 'Characian Lions']); // the wiki writes "Characian"
+  assert.deepEqual(regel('goblin wolf rider mob'), ['Wolf Riders', 'Wolf Riders', 'Giant Wolves']);
+  // two kinds of rank and file: whose champion the Master of Horse is, is not said → unknown
+  assert.deepEqual(regel('skeleton cavalry cohort'), ['Royal Host Horseman', 'Royal Host Horse Archer', null, 'Skeletal Steed']);
+  // no data → every row unknown
+  assert.deepEqual(ud.rijUitrusting([{ label: 'X', wielder: true }], null), [null]);
+  // every unit in the file has a "Model:" line, and almost every line finds its row
+  let los = 0;
+  for (const [k, v] of Object.entries(details)) {
+    assert.ok(v.equipment.some((e) => e.model), k);
+    const m = ud.rijUitrusting(indexRijen(k), v.equipment);
+    los += v.equipment.filter((e) => !m.includes(e)).length;
+  }
+  assert.ok(los <= 2, `${los} lines without a row`); // "Skeleton Crew" vs "Skeletal Crew", "Skeleton Horsemen" vs "Skeleton Horse Archer"
+});
+
+test('unit-details: lookup by statline key; a pasted list without statNaam finds it by name; unknown unit → null', () => {
+  assert.equal(ud.equipmentVoor({ name: 'War Hydra' }, details)[1].model, 'Beastmaster Handlers');
+  assert.ok(ud.equipmentVoor({ name: 'My hydra', datasheet: 'War Hydra' }, details));
+  assert.ok(ud.equipmentVoor({ name: 'x', statNaam: 'War Hydra {renegade}' }, details));
+  assert.equal(ud.equipmentVoor({ name: 'Dark Elf Warriors' }, details), null);
+  assert.equal(ud.equipmentVoor({ name: 'War Hydra' }, null), null);
+});
+
+test('REAL: War Hydra: the Hydra fights with its claws, the handlers with their own weapon, never swapped', () => {
+  const hy = echt('dark-elves', 'Dark Elves', 'War Hydra');
+  const war = echt('dark-elves', 'Dark Elves', 'Dark Elf Warriors', [], 20);
+  const uitrusting = ud.equipmentVoor(hy, details);
+  // the chips offer the Hydra's weapons only (no hand weapon, no whip)
+  assert.deepEqual(mh.wapensVoor(hy, 'combat', rules, uitrusting).map((w) => w.slug), ['wicked-claws-profile']);
+  assert.ok(mh.wapensVoor(hy, 'combat', rules).some((w) => w.slug === 'whip-profile')); // without data: as before
+  const r = cc(hy, war, { modellen: 1, uitrusting });
+  assert.deepEqual(r.groepen.map((g) => g.naam), ['War Hydra · Wicked Claws', 'Beastmaster Handlers · Whip', 'Stomp Attacks']);
+  const hydra = r.groepen[0].stappen;
+  const handlers = r.groepen[1].stappen;
+  assert.equal(hydra[2].worp, '6+'); // 4+ (LA, shield, Parry) worsened by the claws' AP −2
+  assert.ok(handlers[1].toelichting.startsWith('S3 vs T3'), handlers[1].toelichting); // whip: the handler's own S, no AP
+  assert.equal(handlers[2].worp, '4+');
+  // the stopgap entry is gone; the whip's own rule is reported
+  assert.ok(!r.nietMeegerekend.some((x) => /Counted with hand weapons/.test(x.reden)), JSON.stringify(r.nietMeegerekend));
+  assert.ok(r.nietMeegerekend.some((x) => x.van === 'wapen' && /Fight In Extra Rank/i.test(x.regel)));
+  // choosing the other row's weapon never moves it: whip asked → the Hydra still uses its claws
+  const w = cc(hy, war, { modellen: 1, uitrusting, wapenSlug: 'whip-profile' });
+  assert.deepEqual(w.groepen.map((g) => g.naam), r.groepen.map((g) => g.naam));
+  close(w.wounds, r.wounds);
+  checkVerdeling(r);
+  // no data: the old fallback (handlers with hand weapons, and it says so)
+  const oud = cc(hy, war, { modellen: 1 });
+  assert.equal(oud.groepen[1].naam, 'Beastmaster Handlers');
+  assert.ok(oud.nietMeegerekend.some((x) => /Counted with hand weapons/.test(x.reden)));
+});
+
+test('REAL: Cold One Knights: knights (and the Dread Knight) carry the lance, the Cold Ones a hand weapon', () => {
+  const cok = echt('dark-elves', 'Dark Elves', 'Cold One Knights', ['command/0']);
+  const war = echt('dark-elves', 'Dark Elves', 'Dark Elf Warriors', [], 20);
+  const uitrusting = ud.equipmentVoor(cok, details);
+  assert.deepEqual(mh.wapensVoor(cok, 'combat', rules, uitrusting).map((w) => `${w.slug}${w.standaard ? '*' : ''}`), ['hand-weapon-profile', 'lance-profile*']);
+  const r = cc(cok, war, { modellen: 5, situaties: { charged: true }, uitrusting });
+  assert.deepEqual(r.groepen.map((g) => `${g.naam}:${g.aanvallen}`), ['Cold One Knight · Lance:4', 'Dread Knight · Lance:2', 'Cold One:10']);
+  // the data agrees with what the engine already did
+  close(r.wounds, cc(cok, war, { modellen: 5, situaties: { charged: true } }).wounds);
+  const per = ud.wapensPerRij(unitRijen(cok), uitrusting, ws.unitWeapons(cok, rules));
+  assert.deepEqual(per[2].melee, []);
+  assert.equal(per[2].hand, true); // "Claws and teeth (counts as a hand weapons)"
+  // hand weapon chosen → knights with hand weapons, the Cold Ones unchanged
+  const hw = cc(cok, war, { modellen: 5, situaties: { charged: true }, uitrusting, wapenSlug: 'hand-weapon-profile' });
+  assert.deepEqual(hw.groepen.map((g) => g.naam), ['Cold One Knight', 'Dread Knight', 'Cold One']);
+});
+
+test('REAL: Dark Riders with bought repeater crossbows: an upgrade not in the wiki line goes to the main model (and its champion)', () => {
+  const dr = echt('dark-elves', 'Dark Elves', 'Dark Riders', ['equipment/1', 'command/0'], 5);
+  const war = echt('dark-elves', 'Dark Elves', 'Dark Elf Warriors', [], 20);
+  const uitrusting = ud.equipmentVoor(dr, details);
+  const per = ud.wapensPerRij(unitRijen(dr), uitrusting, ws.unitWeapons(dr, rules));
+  assert.deepEqual(per.map((x) => x && x.ranged.map((w) => w.slug)), [['repeater-crossbow-profile'], ['repeater-crossbow-profile'], []]);
+  assert.deepEqual(per.map((x) => x && x.melee.map((w) => w.slug)), [['hand-weapon-profile', 'cavalry-spear-profile'], ['hand-weapon-profile', 'cavalry-spear-profile'], []]);
+  assert.equal(per[2].hand, true); // "Hooves (counts as a hand weapons)"
+  assert.deepEqual(mh.wapensVoor(dr, 'schieten', rules, uitrusting).map((w) => w.slug), ['repeater-crossbow-profile']);
+  const s = sh(dr, war, { modellen: 5, uitrusting });
+  close(s.wounds, sh(dr, war, { modellen: 5 }).wounds);
+  assert.equal(s.groepen[0].stappen[0].worp, '4+');
+  const c = cc(dr, war, { modellen: 5, situaties: { charged: true }, uitrusting });
+  assert.deepEqual(c.groepen.map((g) => g.naam), ['Dark Rider · Cavalry Spear', 'Herald · Cavalry Spear', 'Dark Steed']);
+});
+
+test('a unit absent from unit-details.json behaves exactly as before', () => {
+  const war = echt('dark-elves', 'Dark Elves', 'Dark Elf Warriors', ['command/0'], 20);
+  const doel = echt('empire-of-man', 'Empire of Man', 'State Missile Troops', [], 10);
+  const uitrusting = ud.equipmentVoor(war, details);
+  assert.equal(uitrusting, null);
+  assert.deepEqual(cc(war, doel, { modellen: 6, uitrusting }), cc(war, doel, { modellen: 6 }));
+  assert.deepEqual(mh.wapensVoor(war, 'combat', rules, uitrusting), mh.wapensVoor(war, 'combat', rules));
+  // a pasted unit whose rows the data does not match: old behaviour per row
+  const vreemd = unit({ name: 'War Hydra', count: null, options: ['Wicked claws', 'Hand weapons'], sr: ['Monster Handlers'], tt: 'Behemoth',
+    profiles: [prof('Hydra Beast', { WS: 4, S: 5, T: 5, W: 5, A: 2, Ld: 6 })] });
+  const u2 = ud.equipmentVoor(vreemd, details);
+  assert.ok(u2);
+  assert.deepEqual(cc(vreemd, pop({ WS: 3 }), { modellen: 1, uitrusting: u2 }), cc(vreemd, pop({ WS: 3 }), { modellen: 1 }));
+});

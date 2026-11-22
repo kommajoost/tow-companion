@@ -1,6 +1,7 @@
 import type { ArmyUnit, Rule, UnitProfile } from '../types';
 import { unitWeapons, effectiveMelee, statValue, SHOOTING_MODS, type WeaponProfile } from './weaponStats';
 import { unitArmourSave, getRuleIndex, resolveRuleSlug, unitSize, woundsPerModel } from './armyRules';
+import { wapensPerRij, rijMeleeWapen, type EquipmentLine, type RijWapens } from './unitDetails';
 
 // ─────────────────────────────────────────────────────────────────────────────────────────────────
 // MATHHAMMER — expected wounds (and the exact distribution of wounds) for one unit attacking another,
@@ -38,6 +39,10 @@ export interface AanvalOpties {
    *  alive in the unit and the engine works out who attacks / shoots from the rules. Omit = old behaviour
    *  (`modellen` models attack with full Attacks). */
   breedte?: number;
+  /** The attacker's equipment PER MODEL, verbatim from public/unit-details.json (unitDetails.equipmentVoor).
+   *  Given: each profile row fights with its own weapon (the chosen `wapenSlug` only where that model carries
+   *  it). Omit / null = old behaviour (every wielder row takes the chosen weapon). The engine never fetches. */
+  uitrusting?: EquipmentLine[] | null;
 }
 
 export interface Stap {
@@ -686,10 +691,27 @@ function wapensVan(u: ArmyUnit, rules: Record<string, Rule>): ReturnType<typeof 
   return w;
 }
 
-export function wapensVoor(aanvaller: ArmyUnit, soort: AanvalSoort, rules: Record<string, Rule>): { slug: string; naam: string; standaard: boolean }[] {
+/** Per profile row its own weapons (unitDetails.wapensPerRij), or null when there is no per-model data. */
+function rijWapensVan(a: ArmyUnit, rows: Rij[], uitrusting: EquipmentLine[] | null | undefined, rules: Record<string, Rule>): (RijWapens | null)[] | null {
+  if (!uitrusting?.length) return null;
+  const per = wapensPerRij(rows, uitrusting, wapensVan(a, rules));
+  return per.some(Boolean) ? per : null;
+}
+
+/** `uitrusting` (optional, unit-details.json): the melee list is then the MAIN model's weapons only (the
+ *  first wielder row and its champion), so a War Hydra is never offered its handlers' whip. Ranged stays
+ *  unit-wide: the shooting calculation picks the row that carries the chosen ranged weapon. */
+export function wapensVoor(aanvaller: ArmyUnit, soort: AanvalSoort, rules: Record<string, Rule>, uitrusting?: EquipmentLine[] | null): { slug: string; naam: string; standaard: boolean }[] {
   const { melee, ranged } = wapensVan(aanvaller, rules);
-  const lijst = soort === 'schieten' ? ranged : melee;
-  const std = soort === 'schieten' ? 0 : standaardMelee(melee);
+  let meleeLijst = melee;
+  if (soort === 'combat' && uitrusting?.length) {
+    const rows = rijenVan(aanvaller);
+    const hoofd = rows.findIndex((r) => r.wielder);
+    const eigen = hoofd >= 0 ? rijWapensVan(aanvaller, rows, uitrusting, rules)?.[hoofd] : null;
+    if (eigen) meleeLijst = eigen.melee;
+  }
+  const lijst = soort === 'schieten' ? ranged : meleeLijst;
+  const std = soort === 'schieten' ? 0 : standaardMelee(meleeLijst);
   return lijst.map((w, i) => ({ slug: w.slug, naam: w.name, standaard: i === std }));
 }
 
@@ -901,7 +923,7 @@ function maakCtx(waarden: Record<string, boolean> | undefined): Ctx {
 
 /** `breedte` (optional): pass it when the UI uses the Files control, so the rank-related toggles (hill, Skirmish
  *  formation, moving for Volley Fire) are offered too. */
-export function situatiesVoor(aanvaller: ArmyUnit, doelwit: ArmyUnit, opties: Pick<AanvalOpties, 'soort' | 'wapenSlug' | 'multi' | 'breedte'>, rules: Record<string, Rule>): Situatie[] {
+export function situatiesVoor(aanvaller: ArmyUnit, doelwit: ArmyUnit, opties: Pick<AanvalOpties, 'soort' | 'wapenSlug' | 'multi' | 'breedte' | 'uitrusting'>, rules: Record<string, Rule>): Situatie[] {
   const ctx = maakCtx(undefined);
   reken(aanvaller, doelwit, { ...opties, modellen: unitSize(aanvaller) }, rules, ctx);
   return ctx.lijst;
@@ -926,6 +948,8 @@ function reken(a: ArmyUnit, d: ArmyUnit, o: AanvalOpties, rules: Record<string, 
   if (doel.t == null) return stop('The target has no Toughness value.');
 
   const { melee, ranged } = wapensVan(a, rules);
+  // Which model carries which weapon (unit-details.json), when the caller passes it; null = unknown.
+  const perRij = rijWapensVan(a, rows, o.uitrusting, rules);
   const modellen = Math.max(0, Math.floor(Number.isFinite(o.modellen) ? o.modellen : unitSize(a)));
   const M = Math.max(0, Math.floor(o.doelwitModellen ?? unitSize(d)));
   if (modellen === 0 || M === 0) {
@@ -975,11 +999,14 @@ function reken(a: ArmyUnit, d: ArmyUnit, o: AanvalOpties, rules: Record<string, 
       for (const i of wapenRegels) classificeer(i, 'wapen', o.soort, rules, uit);
       return stop(`${rw.name} uses a template (no To Hit roll) — the number of models hit depends on the table.`);
     }
-    const bs = Math.max(0, ...rows.map((r) => statValue(r.stats, 'BS') ?? 0));
+    // With per-model data: only the rows that carry this weapon shoot it (their BS, their Strength).
+    const dragers = perRij ? rows.map((_, i) => i).filter((i) => perRij[i]?.ranged.some((w) => w.slug === rw.slug)) : [];
+    const schietRijen = dragers.length ? dragers.map((i) => rows[i]) : rows;
+    const bs = Math.max(0, ...schietRijen.map((r) => statValue(r.stats, 'BS') ?? 0));
     // characteristics-of-zero: "many models simply lack the ability to make any form of ranged attack"
     if (bs <= 0) return stop('This unit has no Ballistic Skill.');
-    const shooterRij = rows.findIndex((r) => (statValue(r.stats, 'BS') ?? 0) === bs);
-    const shooterS = Math.max(0, ...rows.filter((r) => r.wielder).map((r) => statValue(r.stats, 'S') ?? 0));
+    const shooterRij = rows.indexOf(schietRijen.find((r) => (statValue(r.stats, 'BS') ?? 0) === bs)!);
+    const shooterS = Math.max(0, ...schietRijen.filter((r) => r.wielder).map((r) => statValue(r.stats, 'S') ?? 0));
     const s = eff.sAbs != null ? eff.sAbs : eff.sMod != null && shooterS > 0 ? shooterS + eff.sMod : null;
     if (s == null) return stop(`${eff.name} has a variable Strength — not calculable.`);
 
@@ -1061,10 +1088,15 @@ function reken(a: ArmyUnit, d: ArmyUnit, o: AanvalOpties, rules: Record<string, 
     // ── close combat ──
     const charged = () => ctx.sit('charged', 'Charged this turn');
     const eersteRonde = () => ctx.sit('firstRound', 'First round of combat');
-    const gekozen = melee.find((w) => w.slug === o.wapenSlug) ?? melee[standaardMelee(melee)] ?? HAND_WEAPON;
-    wapenRegels = gekozen.specialRules.map((l) => ({ label: l, slug: slugVan(l, rules), ...regelParam(l), bron: 'wapen' as const, rijen: null }));
-    const multiModel = a.count != null;
     const eersteWielder = rows.findIndex((r) => r.wielder);
+    // The chosen weapon is one of the MAIN model's weapons when per-model data is given (wapensVoor offers those).
+    const keuzeLijst = (perRij && eersteWielder >= 0 ? perRij[eersteWielder]?.melee : undefined) ?? melee;
+    const gekozen = keuzeLijst.find((w) => w.slug === o.wapenSlug) ?? keuzeLijst[standaardMelee(keuzeLijst)] ?? HAND_WEAPON;
+    const regelsVan = (w: WeaponProfile): Inst[] => w.specialRules.map((l) => ({ label: l, slug: slugVan(l, rules), ...regelParam(l), bron: 'wapen' as const, rijen: null }));
+    wapenRegels = regelsVan(gekozen);
+    // Weapon rules of every weapon a row actually fights with (per-model data: not only the chosen one).
+    const gebruikteRegels = new Map<string, Inst>();
+    const multiModel = a.count != null;
     // characteristics-champions: "A unit's champion usually has slightly better characteristics ... shown in the
     // model's profile" → in a multi-model unit, every wielder row after the first is a champion (1 model).
     const champIdx = multiModel ? rows.map((r, i) => (r.wielder && i > eersteWielder ? i : -1)).filter((i) => i >= 0) : [];
@@ -1166,25 +1198,41 @@ function reken(a: ArmyUnit, d: ArmyUnit, o: AanvalOpties, rules: Record<string, 
       const wsA = absGetal(cel(r.stats, 'WS'));
       const sBase = absGetal(cel(r.stats, 'S'));
       if (sBase == null) return;
-      // monster-handlers: "In combat, each handler adds its attacks to those of the monster." The monster's own
-      // weapon (Wicked claws, …) is not the handlers'; the game data does not say which model carries which weapon,
-      // so a handler row fights with the plain hand weapon every model has, and the result says so (review 22-11-2026:
-      // the War Hydra's handlers were struck at AP −2 with its Wicked Claws).
-      const isHandler = r.wielder && ri > eersteWielder && /handler/i.test(r.label) && heeftUnit('monster-handlers');
-      const draagtGekozen = r.wielder && !isHandler;
+      // Which weapon this row fights with.
+      //  - Per-model data (unit-details.json, `o.uitrusting`): the chosen weapon only if THIS model carries it,
+      //    else its own default (unitDetails.rijMeleeWapen); a model whose line names no weapon of the unit (a
+      //    mount's "hooves (counts as a hand weapons)") fights with the plain hand weapon.
+      //  - A row the data does not match: every wielder takes the chosen weapon, as before.
+      //  - No per-model data at all (fallback): monster-handlers — "In combat, each handler adds its attacks to
+      //    those of the monster." The monster's own weapon (Wicked claws, …) is not the handlers', so a handler
+      //    row fights with the plain hand weapon every model has, and the result says so (review 22-11-2026).
+      const eigen = perRij?.[ri] ?? null;
+      const isHandler = !perRij && r.wielder && ri > eersteWielder && /handler/i.test(r.label) && heeftUnit('monster-handlers');
+      let draagt: boolean;
+      let w: WeaponProfile;
+      if (eigen) {
+        const x = rijMeleeWapen(eigen, gekozen);
+        w = x ?? HAND_WEAPON;
+        draagt = !!x;
+      } else {
+        draagt = r.wielder && !isHandler;
+        w = draagt ? gekozen : HAND_WEAPON;
+      }
       if (isHandler && gekozen !== HAND_WEAPON && !isHandWeapon(gekozen)) {
         uit.nietMeegerekend.push({ regel: zonderAantal(r.label), van: 'aanvaller', reden: `Counted with hand weapons — the game data does not say which weapons the handlers carry` });
       }
-      let w = draagtGekozen ? gekozen : HAND_WEAPON;
+      // This row's weapon rules (Armour Bane, Fight in Extra Rank, …): those of ITS weapon.
+      const rijRegels = !draagt ? [] : w === gekozen ? wapenRegels : regelsVan(w);
+      for (const i of rijRegels) if (!gebruikteRegels.has(i.label)) gebruikteRegels.set(i.label, i);
       const wNote: string[] = [];
       // lance: "A lance can only be used during a turn in which the wielder charged"
       const baseRule = rules[w.slug.replace(/(-ranged|-combat)?-profile$/, '')];
-      if (draagtGekozen && /can only be used during a turn in which the wielder charged/i.test(baseRule?.bodyIndex ?? '') && !charged()) {
+      if (draagt && /can only be used during a turn in which the wielder charged/i.test(baseRule?.bodyIndex ?? '') && !charged()) {
         wNote.push(`${w.name} only usable when charging → hand weapon`);
         w = HAND_WEAPON;
       }
       const e = effectiveMelee(sBase, w, w.chargeBonus ? charged() : false);
-      let aMod = draagtGekozen ? e.aMod : 0;
+      let aMod = draagt ? e.aMod : 0;
       // extra-attacks (on the model, not the weapon — the weapon's is already in aMod)
       for (const ei of instVan('extra-attacks', ri)) {
         const n = (ei.waarde ?? '').match(/^\+?(\d+)$/);
@@ -1233,7 +1281,7 @@ function reken(a: ArmyUnit, d: ArmyUnit, o: AanvalOpties, rules: Record<string, 
         // the rank or file directly behind the fighting rank"; fight-in-extra-rank: "A model with this special rule
         // may make a supporting attacks." Spears/polearms: "cannot make a supporting attack during a turn in which it
         // charged".
-        const fier = (draagtGekozen && wapenRegels.some((i) => i.slug === 'fight-in-extra-rank')) || heeftOp('fight-in-extra-rank', ri);
+        const fier = (draagt && rijRegels.some((i) => i.slug === 'fight-in-extra-rank')) || heeftOp('fight-in-extra-rank', ri);
         const nietOpCharge = /cannot make a supporting attack during a turn in which it charged/i.test(rules[w.slug.replace(/(-ranged|-combat)?-profile$/, '')]?.bodyIndex ?? '');
         if (fier && !(nietOpCharge && charged())) supHier = (rang[supIdx] ?? 0) * r.mult;
         if (fier && nietOpCharge && charged() && (rang[supIdx] ?? 0) > 0) meeg('Fight in Extra Rank', `No supporting attacks: the ${w.name} cannot support on the turn it charged`);
@@ -1271,11 +1319,11 @@ function reken(a: ArmyUnit, d: ArmyUnit, o: AanvalOpties, rules: Record<string, 
         hitWorp = plus(Math.max(2, Math.min(6, need)));
         hitNote = `WS${wsEff} vs WS${doel.ws}${mods.length ? ', ' + mods.join(', ') : ''}`;
       }
-      const label = draagtGekozen && w !== HAND_WEAPON && w.slug !== 'hand-weapon-profile' ? `${zonderAantal(r.label)} · ${w.name}` : zonderAantal(r.label);
+      const label = draagt && w !== HAND_WEAPON && w.slug !== 'hand-weapon-profile' ? `${zonderAantal(r.label)} · ${w.name}` : zonderAantal(r.label);
       const perModelLabel = absGetal(aCel) != null ? null : aCel;
       const magisch = isMagic(w) || w.specialRules.some((x) => slugVan(x, rules) === 'magical-attacks') || heeftOp('magical-attacks', ri) || heeftOp('daemonic', ri) || heeftOp('daemonic-renegade', ri)
         || (r.wielder && isHandWeapon(w) && heeftOp('ensorcelled-weapons', ri));
-      const wr = draagtGekozen ? wapenRegels : [];
+      const wr = rijRegels;
       const maak = (naam: string, dist: number[], aantal: number, diceLabel: string | null) => {
         const sp = basisSpec(naam, dist, aantal, diceLabel, hit, hitWorp, hitNote);
         vulWondEnSaves(sp, {
@@ -1295,6 +1343,9 @@ function reken(a: ArmyUnit, d: ArmyUnit, o: AanvalOpties, rules: Record<string, 
         meeg('Fight in Extra Rank', `+${supHier} model${supHier === 1 ? '' : 's'} in rank ${supIdx + 1} make 1 supporting attack each`);
       }
     });
+
+    // Per-model data: report the rules of the weapons the rows really used (the handlers' whip too).
+    if (perRij) wapenRegels = [...gebruikteRegels.values()];
 
     // Stomp Attacks — last (stomp-attacks: "must be made last, after all other attacks have been made").
     if (stompInst) {
@@ -1326,7 +1377,9 @@ function reken(a: ArmyUnit, d: ArmyUnit, o: AanvalOpties, rules: Record<string, 
   }
   for (const p of proza) uit.nietMeegerekend.push({ regel: p.item, van: 'aanvaller', reden: 'Magic item with a free-text effect — not evaluated' });
   if (o.soort === 'combat') {
-    const gekozen = melee.find((w) => w.slug === o.wapenSlug) ?? melee[standaardMelee(melee)];
+    const hoofd = rows.findIndex((r) => r.wielder);
+    const lijst = (perRij && hoofd >= 0 ? perRij[hoofd]?.melee : undefined) ?? melee;
+    const gekozen = lijst.find((w) => w.slug === o.wapenSlug) ?? lijst[standaardMelee(lijst)];
     if (gekozen && isMagic(gekozen)) uit.nietMeegerekend.push({ regel: gekozen.name, van: 'wapen', reden: 'Magic weapon: its own S/AP profile is not in the game data — the wielder\'s base profile is used' });
   } else {
     const rw = ranged.find((w) => w.slug === o.wapenSlug) ?? ranged[0];
