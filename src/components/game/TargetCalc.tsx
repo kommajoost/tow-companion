@@ -340,7 +340,6 @@ export function TargetCalc({
     const r = x.r;
     const open = gekozen?.u.id === x.u.id;
     const range = r.verdeling && !r.onmogelijk ? bereik(r.verdeling) : null;
-    const nNiet = r.nietMeegerekend.filter((m) => !isAanname(m)).length;
     return (
       <div key={x.u.id} style={{ borderBottom: `1px solid ${TOW.hairline}` }}>
         <button
@@ -359,7 +358,6 @@ export function TargetCalc({
             <span style={{ display: 'block', fontFamily: towFont.serif, fontSize: 11.5, color: TOW.muted, marginTop: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
               {x.eigenaar ? `${x.eigenaar} · ` : ''}
               {x.start > 1 ? `${x.modellen}/${x.start} models` : '1 model'}
-              {nNiet > 0 && <span style={{ color: TOW.goldDeep }}> · {nNiet} {nNiet === 1 ? 'rule' : 'rules'} not counted</span>}
             </span>
           </span>
           {r.onmogelijk ? (
@@ -464,7 +462,7 @@ const uniek = (l: string[]) => [...new Set(l)];
 // ── De uitsplitsing van één doelwit in twee lagen (22-11-2026, Joost: "Die uitleg is wel echt te uitgebreid.
 // Zorg dat het slim overzicht geeft met extra info uit te klappen."):
 //  1. overzicht: per aanvalsgroep één regel (aanvallen · worpen · wounds), het totaal, de namen van wat wel en
-//     wat niet is meegerekend. "Not counted" staat er altijd als hij niet leeg is: zo blijft het getal eerlijk.
+//     wat is meegerekend. "Not counted" staat alleen onder Details (Joost, 22-11-2026).
 //  2. Details: de staptabellen met toelichting, de verdeling, effecten en redenen. ──
 /** Names of both sides' rules; a name that only the enemy's side has gets " (enemy)". */
 function namenBeide(eigen: string[], vijand: string[]): string[] {
@@ -485,7 +483,6 @@ function regelsInVolgorde(x: Rij): { g: MathResultaat['groepen'][number]; vijand
 function uitsplitsing(x: Rij, open: boolean, wissel: () => void, vijandFiles?: React.ReactNode) {
   const r = x.r;
   const t = x.g?.terug;
-  const nietGeteld0 = r.nietMeegerekend.filter((m) => !isAanname(m));
   const range = r.verdeling && !r.onmogelijk ? bereik(r.verdeling) : null;
   const klein: React.CSSProperties = { fontFamily: towFont.serif, fontSize: 12, lineHeight: 1.35, color: TOW.parchDim, margin: '4px 0 0' };
   // Een regel die deze beurt niets doet ("No effect: …") hoort niet onder Counted: daar las je "Press of Battle"
@@ -497,7 +494,6 @@ function uitsplitsing(x: Rij, open: boolean, wissel: () => void, vijandFiles?: R
   const kolom = (lijst: { effect: string }[] | undefined) => (lijst ?? []).some((m) => /Marching Column/i.test(m.effect));
   const kolomIk = kolom(r.meegerekend);
   const kolomVijand = kolom(t?.meegerekend);
-  const nietGeteld = namenBeide(nietGeteld0.map((m) => netjes(m.regel)), (t?.nietMeegerekend ?? []).filter((m) => !isAanname(m)).map((m) => netjes(m.regel)));
   const klein2: React.CSSProperties = { fontFamily: towFont.serif, fontSize: 13, color: TOW.parchDim };
   const overzicht = (
     <div>
@@ -556,9 +552,6 @@ function uitsplitsing(x: Rij, open: boolean, wissel: () => void, vijandFiles?: R
       )}
       {geteld.length > 0 && (
         <p style={klein}><span style={{ color: TOW.ink, fontWeight: 600 }}>Counted:</span> {geteld.join(', ')}</p>
-      )}
-      {nietGeteld.length > 0 && (
-        <p style={{ ...klein, color: TOW.goldDeep }}><span style={{ fontWeight: 600 }}>Not counted:</span> {nietGeteld.join(', ')}</p>
       )}
       <button
         type="button"
