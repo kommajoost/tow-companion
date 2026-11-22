@@ -1,0 +1,4 @@
+{
+  "uitleg": "Verbasterde vormen uit de automatische Engelse ondertitels, gekoppeld aan de juiste term. Alleen vormen die echt in een transcript zijn gezien, met de video waarin ze opvielen. Hele woorden, hoofdletterongevoelig. Wordt toegepast door tactics/transcript.mjs op <id>.fixed.txt; het ruwe bestand blijft zoals het is.",
+  "vormen": {}
+}

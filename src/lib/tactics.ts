@@ -22,16 +22,23 @@ export interface Kanaal {
 
 export type BronStatus = 'candidate' | 'processed';
 
+/** Soort video, beslist in tactics/selectie.json. Alleen de eerste vier komen op de pagina. */
+export type BronSoort = 'tactics' | 'list-building' | 'army-review' | 'rules-explained' | 'battle-report' | 'meta' | 'other';
+
+export const BRON_SOORTEN: BronSoort[] = ['tactics', 'list-building', 'army-review', 'rules-explained', 'battle-report', 'meta', 'other'];
+
 export interface Bron {
   id: string;
   kanaalId: string;
   titel: string;
   url: string;
   datum: string | null;
-  onderwerp: 'general' | 'dark-elves';
+  /** 'general' of de Companion-slug van het leger waar de video over gaat (dark-elves). */
+  onderwerp: string;
   status: BronStatus;
   lessen: number;
-  duurMin?: number;
+  duurMin?: number | null;
+  soort?: BronSoort;
   verwerktOp?: string | null;
 }
 

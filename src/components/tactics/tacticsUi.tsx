@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { TOW, towFont, engraved } from '../../design/tow';
-import type { KanaalType, Waardering } from '../../lib/tactics';
+import type { BronSoort, KanaalType, Waardering } from '../../lib/tactics';
 
 export const eb = engraved as React.CSSProperties;
 
@@ -24,6 +24,16 @@ export const TYPE_LABEL: Record<KanaalType, string> = {
 };
 
 export const WAARDERING_LABEL: Record<Waardering, string> = { A: 'Core', B: 'Useful', C: 'Marginal' };
+
+export const SOORT_LABEL: Record<BronSoort, string> = {
+  'tactics': 'Tactics',
+  'list-building': 'Lists',
+  'army-review': 'Army review',
+  'rules-explained': 'Rules',
+  'battle-report': 'Battle report',
+  'meta': 'Meta',
+  'other': 'Other',
+};
 
 export function legerLabel(slug: string | null): string {
   if (!slug) return 'General';

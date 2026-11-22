@@ -1,9 +1,9 @@
 import { useMemo, useState } from 'react';
 import { TOW, towFont } from '../../design/tow';
-import type { Bron, BronnenBestand, Kanaal, Les, Waardering } from '../../lib/tactics';
+import { BRON_SOORTEN, type Bron, type BronSoort, type BronnenBestand, type Kanaal, type Les, type Waardering } from '../../lib/tactics';
 import {
   Badge, Chip, ChipRow, EmptyLine, ExternalButton, ExternalIcon, Meta,
-  TYPE_LABEL, WAARDERING_LABEL, bodyText, clamp2, inputStyle, meervoud, rowButton, rowCard,
+  SOORT_LABEL, TYPE_LABEL, WAARDERING_LABEL, bodyText, clamp2, inputStyle, legerLabel, meervoud, metaText, rowButton, rowCard,
   sectionHead, titleText,
 } from './tacticsUi';
 
@@ -163,6 +163,7 @@ export function TacticsSources({ data, lessen, wide, selId, onSelect, onOpenLess
   // ── Kanaal open ──────────────────────────────────────────────────────────
   const detail = sel && (
     <KanaalDetail
+      key={sel.id}
       kanaal={sel}
       items={bronnenPer.get(sel.id) ?? []}
       lessenPerBron={lessenPerBron}
@@ -201,6 +202,68 @@ function KanaalDetail({ kanaal, items, lessenPerBron, aantalLessen, onOpenLesson
   aantalLessen: number;
   onOpenLesson: (id: string) => void;
 }) {
+  const [soort, setSoort] = useState<BronSoort | null>(null);
+  // Alleen de soorten die bij dit kanaal voorkomen, in de vaste volgorde.
+  const soorten = useMemo(() => {
+    const n = new Map<BronSoort, number>();
+    for (const b of items) if (b.soort) n.set(b.soort, (n.get(b.soort) ?? 0) + 1);
+    return BRON_SOORTEN.filter((s) => n.has(s)).map((s) => ({ s, n: n.get(s) ?? 0 }));
+  }, [items]);
+  const zichtbaar = soort ? items.filter((b) => b.soort === soort) : items;
+  // Verwerkte video's bovenaan, zodat ze tussen de kandidaten te vinden zijn.
+  const verwerkt = zichtbaar.filter((b) => b.status === 'processed');
+  const rest = zichtbaar.filter((b) => b.status !== 'processed');
+
+  const lijstVan = (lijst: Bron[], open = false) => (
+    <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: 6 }}>
+      {lijst.map((b) => {
+        const uit = lessenPerBron.get(b.id) ?? [];
+        return (
+          <li key={b.id} style={{ ...rowCard, flexDirection: 'column', gap: 0, borderColor: open ? TOW.goldDeep : TOW.line }}>
+            <a
+              href={b.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ ...rowButton, flexDirection: 'row', alignItems: 'center', gap: 10, textDecoration: 'none', minHeight: 44 }}
+            >
+              <span style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 3 }}>
+                <span style={{ ...titleText, fontSize: 14.5 }}>{b.titel}</span>
+                <Meta parts={[
+                  b.datum,
+                  b.duurMin ? `${b.duurMin} min` : null,
+                  b.soort ? SOORT_LABEL[b.soort] : null,
+                  b.onderwerp && b.onderwerp !== 'general' ? legerLabel(b.onderwerp) : null,
+                  b.status === 'processed' ? meervoud(uit.length, 'lesson', 'lessons') : null,
+                ]} />
+              </span>
+              <span aria-hidden style={{ color: TOW.goldDeep, flexShrink: 0, fontSize: 15 }}>↗</span>
+            </a>
+            {uit.length > 0 && (
+              <ul style={{ listStyle: 'none', margin: 0, padding: '0 8px 8px', display: 'flex', flexDirection: 'column', gap: 2 }}>
+                {uit.map((les) => (
+                  <li key={les.id}>
+                    <button
+                      type="button"
+                      onClick={() => onOpenLesson(les.id)}
+                      style={{
+                        width: '100%', minHeight: 36, display: 'flex', alignItems: 'center', gap: 6, padding: '4px 6px',
+                        border: 'none', borderTop: `1px solid ${TOW.hairline}`, background: 'none', cursor: 'pointer', textAlign: 'left',
+                        ...bodyText, fontSize: 13, color: TOW.ink,
+                      }}
+                    >
+                      <span style={{ flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{les.titel}</span>
+                      <span aria-hidden style={{ color: TOW.muted }}>›</span>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
+        );
+      })}
+    </ul>
+  );
+
   return (
     <div style={{ maxWidth: 680, minWidth: 0 }}>
       <h2 style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 21, color: TOW.ink, margin: '0 0 6px', lineHeight: 1.25, overflowWrap: 'anywhere' }}>
@@ -227,57 +290,35 @@ function KanaalDetail({ kanaal, items, lessenPerBron, aantalLessen, onOpenLesson
 
       <h3 style={sectionHead}>
         <span>{isVideo(kanaal) ? 'Videos' : 'Articles'}</span>
-        <span style={{ color: TOW.muted }}>{items.length}</span>
+        <span style={{ color: TOW.muted }}>{soort ? `${zichtbaar.length} of ${items.length}` : items.length}</span>
       </h3>
+      {soorten.length > 1 && (
+        <div style={{ marginBottom: 6 }}>
+          <ChipRow label="Type">
+            <Chip on={soort === null} onClick={() => setSoort(null)}>All</Chip>
+            {soorten.map(({ s, n }) => (
+              <Chip key={s} on={soort === s} onClick={() => setSoort(soort === s ? null : s)}>{SOORT_LABEL[s]} {n}</Chip>
+            ))}
+          </ChipRow>
+        </div>
+      )}
       {items.length === 0 ? (
         <EmptyLine>{isVideo(kanaal) ? 'No videos listed yet.' : 'No articles listed yet.'}</EmptyLine>
+      ) : verwerkt.length === 0 ? (
+        lijstVan(zichtbaar)
       ) : (
-        <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: 6 }}>
-          {items.map((b) => {
-            const uit = lessenPerBron.get(b.id) ?? [];
-            return (
-              <li key={b.id} style={{ ...rowCard, flexDirection: 'column', gap: 0 }}>
-                <a
-                  href={b.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  style={{ ...rowButton, flexDirection: 'row', alignItems: 'center', gap: 10, textDecoration: 'none', minHeight: 44 }}
-                >
-                  <span style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 3 }}>
-                    <span style={{ ...titleText, fontSize: 14.5 }}>{b.titel}</span>
-                    <Meta parts={[
-                      b.datum,
-                      b.status === 'processed' ? 'Processed' : 'Candidate',
-                      b.onderwerp === 'dark-elves' ? 'Dark Elves' : 'General',
-                      meervoud(uit.length, 'lesson', 'lessons'),
-                    ]} />
-                  </span>
-                  <span aria-hidden style={{ color: TOW.goldDeep, flexShrink: 0, fontSize: 15 }}>↗</span>
-                </a>
-                {uit.length > 0 && (
-                  <ul style={{ listStyle: 'none', margin: 0, padding: '0 8px 8px', display: 'flex', flexDirection: 'column', gap: 2 }}>
-                    {uit.map((les) => (
-                      <li key={les.id}>
-                        <button
-                          type="button"
-                          onClick={() => onOpenLesson(les.id)}
-                          style={{
-                            width: '100%', minHeight: 36, display: 'flex', alignItems: 'center', gap: 6, padding: '4px 6px',
-                            border: 'none', borderTop: `1px solid ${TOW.hairline}`, background: 'none', cursor: 'pointer', textAlign: 'left',
-                            ...bodyText, fontSize: 13, color: TOW.ink,
-                          }}
-                        >
-                          <span style={{ flex: 1, minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{les.titel}</span>
-                          <span aria-hidden style={{ color: TOW.muted }}>›</span>
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </li>
-            );
-          })}
-        </ul>
+        <>
+          <div style={{ ...metaText, margin: '10px 2px 6px', color: TOW.goldDeep }}>
+            Processed · {meervoud(verwerkt.reduce((n, b) => n + (lessenPerBron.get(b.id)?.length ?? 0), 0), 'lesson', 'lessons')}
+          </div>
+          {lijstVan(verwerkt, true)}
+          {rest.length > 0 && (
+            <>
+              <div style={{ ...metaText, margin: '14px 2px 6px' }}>Not processed yet · {rest.length}</div>
+              {lijstVan(rest)}
+            </>
+          )}
+        </>
       )}
     </div>
   );
