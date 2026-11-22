@@ -4,6 +4,8 @@
 // Verwerkte video's staan in tactics/verwerkt.json ({ videoId: 'YYYY-MM-DD' }).
 // Als het transcript lokaal in tactics/ruw/ staat, wordt ook nagekeken dat elk citaat daar letterlijk
 // in voorkomt, binnen een minuut van het opgegeven tijdstip.
+// Thema's en fases komen uit tactics/themas.json; de bouw schrijft er een kopie van naar
+// public/tactics/themas.json en toont per thema en per fase het aantal lessen.
 import fs from 'node:fs';
 import path from 'node:path';
 import { CACHE, PUB, ROOT, RUW, TDIR, leesJson, schrijfJson, schrijfJsonRegels } from './lib.mjs';
@@ -21,10 +23,33 @@ const legers = new Set(fs.readdirSync(path.join(ROOT, 'public', 'owb')).filter((
   return d && Array.isArray(d.characters);
 }).map((f) => f.replace(/\.json$/, '')));
 
-const ONDERWERPEN = ['deployment', 'movement', 'charging', 'shooting', 'combat', 'magic', 'list-building', 'scenarios', 'characters', 'psychology', 'chaff'];
 const MARKERINGEN = ['verouderd', 'renegade-afwijking', 'regel-afwijking'];
 const fouten = [];
 const fout = (m) => fouten.push(m);
+const waarschuwingen = [];
+
+// ── Thema's en fases ───────────────────────────────────────────────────────
+// Het vaste vocabulaire staat in tactics/themas.json; de bouw zet een kopie in public/tactics/ zodat
+// de pagina en het AI-hulpje dezelfde lijst lezen.
+const themasBronPad = path.join(TDIR, 'themas.json');
+const themasPubPad = path.join(PUB, 'themas.json');
+const vocab = leesJson(themasBronPad);
+if (!vocab || !Array.isArray(vocab.themas) || !Array.isArray(vocab.fases)) {
+  console.error('tactics/themas.json ontbreekt of heeft geen themas/fases.');
+  process.exit(1);
+}
+const THEMAS = new Map();
+for (const t of vocab.themas) {
+  if (!t.id || !t.naam || !t.omschrijving || typeof t.volgorde !== 'number') fout(`thema ${JSON.stringify(t)}: id, naam, omschrijving en volgorde zijn verplicht`);
+  if (THEMAS.has(t.id)) fout(`thema ${t.id}: dubbel id`);
+  THEMAS.set(t.id, t);
+}
+const FASES = new Map();
+for (const f of vocab.fases) {
+  if (!f.id || !f.naam || typeof f.volgorde !== 'number') fout(`fase ${JSON.stringify(f)}: id, naam en volgorde zijn verplicht`);
+  if (FASES.has(f.id)) fout(`fase ${f.id}: dubbel id`);
+  FASES.set(f.id, f);
+}
 
 // ── Bronnen ────────────────────────────────────────────────────────────────
 const kanaalIds = new Set(bronnen.kanalen.map((k) => k.id));
@@ -72,7 +97,13 @@ for (const l of lessen.lessen) {
   if (!l.titel || !l.tekst) fout(`${w}: titel of tekst ontbreekt`);
   const zinnen = (l.tekst ?? '').split(/(?<=[.!?])\s+/).filter(Boolean).length;
   if (zinnen > 3) fout(`${w}: tekst heeft ${zinnen} zinnen (max 3)`);
-  if (!ONDERWERPEN.includes(l.onderwerp)) fout(`${w}: onderwerp ${l.onderwerp}`);
+  if (l.onderwerp !== undefined) fout(`${w}: onderwerp is vervangen door fase + themas`);
+  if (!FASES.has(l.fase)) fout(`${w}: fase ${l.fase} staat niet in tactics/themas.json`);
+  if (!Array.isArray(l.themas) || l.themas.length < 1 || l.themas.length > 3) fout(`${w}: themas moet 1 tot 3 ids hebben`);
+  else {
+    if (new Set(l.themas).size !== l.themas.length) fout(`${w}: dubbel thema`);
+    for (const t of l.themas) if (!THEMAS.has(t)) fout(`${w}: thema ${t} staat niet in tactics/themas.json`);
+  }
   if (l.leger !== null && !legers.has(l.leger)) fout(`${w}: leger ${l.leger} bestaat niet`);
   for (const u of l.units ?? []) if (!index[u.toLowerCase()]?.url?.startsWith('unit/')) fout(`${w}: unit "${u}" niet in rules-index.json`);
   for (const m of l.markeringen ?? []) if (!MARKERINGEN.includes(m.soort) || !m.tekst) fout(`${w}: markering ${JSON.stringify(m)}`);
@@ -126,13 +157,37 @@ for (const l of lessen.lessen) {
 
 for (const id of Object.keys(verwerkt)) if (!bronIndex.has(`yt-${id}`)) fout(`verwerkt.json: yt-${id} staat niet in bronnen.json`);
 
+// Per thema en per fase tellen. Een thema met minder dan 3 lessen is een waarschuwing, geen fout:
+// een nieuwe ronde mag een thema beginnen dat later groeit (of opgaat in een breder thema).
+const perThema = new Map([...THEMAS.keys()].map((id) => [id, 0]));
+const perFase = new Map([...FASES.keys()].map((id) => [id, 0]));
+for (const l of lessen.lessen) {
+  if (perFase.has(l.fase)) perFase.set(l.fase, perFase.get(l.fase) + 1);
+  for (const t of Array.isArray(l.themas) ? l.themas : []) if (perThema.has(t)) perThema.set(t, perThema.get(t) + 1);
+}
+for (const [id, n] of perThema) if (n < 3) waarschuwingen.push(`thema ${id} heeft ${n} les(sen) (minstens 3)`);
+
+// De gepubliceerde kopie moet gelijk zijn aan de bron.
+const pubVocab = leesJson(themasPubPad);
+const vocabGelijk = JSON.stringify(pubVocab) === JSON.stringify(vocab);
+if (alleenCheck && !vocabGelijk) fout('public/tactics/themas.json wijkt af van tactics/themas.json (draai npm run tactics:build)');
+
 if (fouten.length) {
   console.error(`${fouten.length} fout(en):\n- ` + fouten.join('\n- '));
   process.exit(1);
 }
 console.log(`OK: ${bronnen.bronnen.length} bronnen, ${lessen.lessen.length} lessen, ${citaatGecontroleerd} citaten nagekeken in het transcript.`);
+const opVolgorde = (m) => [...m.values()].sort((a, b) => a.volgorde - b.volgorde);
+const breedte = Math.max(...[...THEMAS.values(), ...FASES.values()].map((x) => x.naam.length));
+console.log('Thema\'s:');
+for (const t of opVolgorde(THEMAS)) console.log(`  ${t.naam.padEnd(breedte)}  ${perThema.get(t.id)}`);
+console.log('Fases:');
+for (const f of opVolgorde(FASES)) console.log(`  ${f.naam.padEnd(breedte)}  ${perFase.get(f.id)}`);
+if (waarschuwingen.length) console.warn(`${waarschuwingen.length} waarschuwing(en):\n- ` + waarschuwingen.join('\n- '));
 
 if (alleenCheck) process.exit(0);
+
+if (!vocabGelijk) schrijfJson(themasPubPad, vocab);
 
 // ── Tellingen en status herberekenen ───────────────────────────────────────
 let gewijzigd = 0;

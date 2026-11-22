@@ -9,13 +9,15 @@ import { BackButton, EmptyLine, useTacticsWide } from './tacticsUi';
 type Tab = 'lessons' | 'sources';
 
 // De tactiekdatabank (docs/tactics/ontwerp.md). Nog geen hoofdtab: geopend vanuit Settings of via
-// `?tactics`. Twee weergaven: Lessons en Sources. Op de telefoon opent een kanaal of les als eigen
-// scherm (Back sluit het eerst); vanaf ~760 px staat het geopende item rechts naast de lijst.
+// `?tactics`. Twee weergaven: Lessons (thema's, daarbinnen lessen per fase) en Sources. Op de
+// telefoon opent een thema, les of kanaal als eigen scherm (Back sluit het eerst); vanaf ~760 px
+// staat het geopende item rechts naast de lijst.
 export function TacticsPage({ onClose }: { onClose: () => void }) {
   const wide = useTacticsWide();
   const [data, setData] = useState<TacticsData | null>(null);
   const [tab, setTab] = useState<Tab | null>(null);
   const [selKanaal, setSelKanaal] = useState<string | null>(null);
+  const [selThema, setSelThema] = useState<string | null>(null);
   const [selLes, setSelLes] = useState<string | null>(null);
   // Een les die vanuit een kanaal geopend is: terug gaat dan naar Sources.
   const [lesVanuitBronnen, setLesVanuitBronnen] = useState(false);
@@ -38,14 +40,32 @@ export function TacticsPage({ onClose }: { onClose: () => void }) {
     setLesVanuitBronnen(false);
   }, []);
 
-  // Back sluit eerst het geopende kanaal of de les (alleen op de telefoon; breed staan ze naast de
-  // lijst). Elk op zich, zodat een les die vanuit een kanaal geopend is terugkeert naar dat kanaal.
+  // Lessons heeft tot twee lagen boven de themalijst: thema, dan les. Op de telefoon is elk een eigen
+  // scherm; breed staat het thema naast de lijst en is alleen een les die het thema afdekt een laag.
+  // Een les zonder thema (uit zoeken of uit Sources) is op de telefoon één laag.
+  const diepte = tab !== 'lessons' ? 0
+    : wide ? (selLes !== null && selThema !== null ? 1 : 0)
+    : (selThema !== null ? 1 : 0) + (selLes !== null ? 1 : 0);
+
+  // Eén laag omhoog in Lessons: les → thema → themalijst. Via een ref, zodat Back de actuele stand ziet.
+  const omhoogRef = useRef<() => void>(() => {});
+  omhoogRef.current = () => {
+    if (selLes !== null) sluitLes();
+    else if (selThema !== null) setSelThema(null);
+  };
+
+  // Back sluit eerst wat open staat. De kanaallaag (alleen telefoon) en de Lessons-lagen elk op zich,
+  // zodat een les die vanuit een kanaal geopend is terugkeert naar dat kanaal. De Lessons-lagen zijn
+  // genummerd in plaats van per soort, zodat les → ander thema (een tik in de les) precies één laag
+  // weghaalt en Back in balans blijft.
   useBackClose(!wide && selKanaal !== null, () => setSelKanaal(null));
-  useBackClose(!wide && selLes !== null, sluitLes);
+  useBackClose(diepte >= 1, () => omhoogRef.current());
+  useBackClose(diepte >= 2, () => omhoogRef.current());
 
   const kiesTab = (t: Tab) => {
     if (t === tab) return;
-    // Wat op de andere tab open stond gaat dicht, zodat Back niet iets onzichtbaars sluit.
+    // Wat op de andere tab open stond gaat dicht, zodat Back niet iets onzichtbaars sluit. Het geopende
+    // thema blijft bewaard (de lagen tellen alleen op de Lessons-tab).
     if (t === 'lessons') setSelKanaal(null);
     else { setSelLes(null); setLesVanuitBronnen(false); }
     setTab(t);
@@ -53,20 +73,36 @@ export function TacticsPage({ onClose }: { onClose: () => void }) {
 
   const openLesVanuitBron = (id: string) => {
     setLesVanuitBronnen(true);
+    setSelThema(null);
     setSelLes(id);
     setTab('lessons');
   };
 
-  // Eén terugknop in de kop. Op de telefoon sluit hij eerst het geopende kanaal of de les (precies
-  // wat de hardware-Back doet), daarna de pagina. Zo gaat er per tik één laag van de back-stack af.
-  const lesOpen = !wide && tab === 'lessons' && selLes !== null;
+  const openLes = (id: string, inThema: boolean) => {
+    if (!inThema) setSelThema(null);
+    setSelLes(id);
+  };
+
+  // Een thema openen (uit de lijst of uit de les) sluit de les. Kwam die les uit Sources, dan gaat
+  // ook het kanaal dicht: terug loopt vanaf hier door Lessons.
+  const openThema = (id: string | null) => {
+    setSelThema(id);
+    setSelLes(null);
+    if (vanuitRef.current) { setLesVanuitBronnen(false); setSelKanaal(null); }
+  };
+
+  // Eén terugknop in de kop: haalt precies de laag weg die de hardware-Back ook zou weghalen, en
+  // sluit daarna de pagina.
   const kanaalOpen = !wide && tab === 'sources' && selKanaal !== null;
+  const themaNaam = (selThema && data?.vocab.themas.find((t) => t.id === selThema)?.naam) || 'Lessons';
   const terug = () => {
-    if (lesOpen) sluitLes();
+    if (diepte > 0) omhoogRef.current();
     else if (kanaalOpen) setSelKanaal(null);
     else onClose();
   };
-  const terugLabel = lesOpen ? (lesVanuitBronnen ? 'Sources' : 'Lessons') : kanaalOpen ? 'Sources' : 'Back';
+  const terugLabel = diepte > 0
+    ? (selLes !== null ? (lesVanuitBronnen ? 'Sources' : selThema !== null ? themaNaam : 'Lessons') : 'Lessons')
+    : kanaalOpen ? 'Sources' : 'Back';
 
   const aantalLessen = data?.lessen.lessen.length ?? 0;
   const aantalKanalen = data?.bronnen?.kanalen.length ?? 0;
@@ -114,10 +150,13 @@ export function TacticsPage({ onClose }: { onClose: () => void }) {
     inhoud = (
       <TacticsLessons
         lessen={data.lessen.lessen}
+        vocab={data.vocab}
         bronnen={data.bronnen}
         wide={wide}
+        selThema={selThema}
         selId={selLes}
-        onSelect={(id) => (id === null ? sluitLes() : setSelLes(id))}
+        onOpenThema={openThema}
+        onOpenLes={openLes}
       />
     );
   }

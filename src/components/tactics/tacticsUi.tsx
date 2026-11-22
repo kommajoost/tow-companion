@@ -40,11 +40,6 @@ export function legerLabel(slug: string | null): string {
   return slug.split('-').map((w) => (w ? w[0].toUpperCase() + w.slice(1) : w)).join(' ');
 }
 
-export function onderwerpLabel(o: string): string {
-  const s = o.replace(/-/g, ' ');
-  return s ? s[0].toUpperCase() + s.slice(1) : s;
-}
-
 export const meervoud = (n: number, een: string, veel: string) => `${n} ${n === 1 ? een : veel}`;
 
 // ── Stijlen ─────────────────────────────────────────────────────────────────

@@ -1,6 +1,7 @@
 // Tactiekdatabank (zie docs/tactics/ontwerp.md). Twee vaste bestanden in public/tactics/, gemaakt
 // door de verzamelroutine op Joosts pc: bronnen.json (kanalen + losse video's/artikelen) en
-// lessen.json (de lessen zelf, elk met bron). Deze module typt ze en haalt ze één keer op.
+// lessen.json (de lessen zelf, elk met bron, fase en thema's). Daarnaast themas.json: het vaste
+// vocabulaire van thema's en fases. Deze module typt ze en haalt ze één keer op.
 
 export type KanaalType = 'youtube' | 'artikel' | 'wiki' | 'data';
 export type Waardering = 'A' | 'B' | 'C';
@@ -48,14 +49,27 @@ export interface BronnenBestand {
   bronnen: Bron[];
 }
 
-export type LesOnderwerp =
-  | 'deployment' | 'movement' | 'charging' | 'shooting' | 'combat' | 'magic'
-  | 'list-building' | 'scenarios' | 'characters' | 'psychology' | 'chaff';
+/** Een thema is de ingang op de pagina ("Flanks"). Een les hoort bij 1 tot 3 thema's. */
+export interface Thema {
+  id: string;
+  naam: string;
+  /** Eén korte feitelijke regel, Engels. */
+  omschrijving: string;
+  volgorde: number;
+}
 
-export const LES_ONDERWERPEN: LesOnderwerp[] = [
-  'deployment', 'movement', 'charging', 'shooting', 'combat', 'magic',
-  'list-building', 'scenarios', 'characters', 'psychology', 'chaff',
-];
+/** De spelfase waarin een les speelt; binnen een thema de onderverdeling. Precies één per les. */
+export interface Fase {
+  id: string;
+  naam: string;
+  volgorde: number;
+}
+
+/** public/tactics/themas.json, een kopie van tactics/themas.json (gemaakt door tactics:build). */
+export interface ThemasBestand {
+  themas: Thema[];
+  fases: Fase[];
+}
 
 export interface LesBron {
   bronId: string;
@@ -84,7 +98,10 @@ export interface Les {
   voorbeeld?: string | null;
   /** Uitzonderingen of voorbehouden die de spreker noemt, of null. */
   wanneerNiet?: string | null;
-  onderwerp: LesOnderwerp;
+  /** Fase-id uit themas.json. */
+  fase: string;
+  /** 1 tot 3 thema-ids uit themas.json. */
+  themas: string[];
   /** null = algemeen, anders de Companion-slug (dark-elves). */
   leger: string | null;
   units: string[];
@@ -103,6 +120,8 @@ export interface TacticsData {
   bronnen: BronnenBestand | null;
   /** Ontbreekt lessen.json, dan een lege lijst: dat is gewoon "nog geen lessen". */
   lessen: LessenBestand;
+  /** Thema's en fases. Ontbreekt themas.json, dan afgeleid uit de ids in de lessen. */
+  vocab: ThemasBestand;
 }
 
 const BASE = import.meta.env.BASE_URL;
@@ -139,6 +158,8 @@ function leesLessen(v: unknown): LessenBestand {
       .filter((l): l is Les => isObj(l) && typeof l.id === 'string' && typeof l.titel === 'string')
       .map((l) => ({
         ...l,
+        fase: typeof l.fase === 'string' ? l.fase : '',
+        themas: Array.isArray(l.themas) ? l.themas.filter((t): t is string => typeof t === 'string') : [],
         units: Array.isArray(l.units) ? l.units : [],
         bronnen: Array.isArray(l.bronnen) ? l.bronnen : [],
         markeringen: Array.isArray(l.markeringen) ? l.markeringen : [],
@@ -146,14 +167,44 @@ function leesLessen(v: unknown): LessenBestand {
   };
 }
 
+const idLabel = (id: string) => {
+  const s = id.replace(/-/g, ' ');
+  return s ? s[0].toUpperCase() + s.slice(1) : s;
+};
+
+/** Leest themas.json; wat ontbreekt (bestand weg, of een id die er nog niet in staat) wordt
+ *  aangevuld uit de lessen, zodat geen les onvindbaar wordt. */
+function leesVocab(v: unknown, lessen: Les[]): ThemasBestand {
+  type Item = Record<string, unknown> & { id: string; naam: string };
+  const items = (lijst: unknown): Item[] =>
+    Array.isArray(lijst) ? lijst.filter((x): x is Item => isObj(x) && typeof x.id === 'string' && typeof x.naam === 'string') : [];
+  const volgorde = (x: Item, i: number) => (typeof x.volgorde === 'number' ? x.volgorde : i + 1);
+  const themas: Thema[] = items(isObj(v) ? v.themas : null).map((t, i) => ({
+    id: t.id, naam: t.naam, omschrijving: typeof t.omschrijving === 'string' ? t.omschrijving : '', volgorde: volgorde(t, i),
+  }));
+  const fases: Fase[] = items(isObj(v) ? v.fases : null).map((f, i) => ({ id: f.id, naam: f.naam, volgorde: volgorde(f, i) }));
+  const themaIds = new Set(themas.map((t) => t.id));
+  const faseIds = new Set(fases.map((f) => f.id));
+  for (const l of lessen) {
+    for (const t of l.themas) if (!themaIds.has(t)) { themaIds.add(t); themas.push({ id: t, naam: idLabel(t), omschrijving: '', volgorde: 1000 + themas.length }); }
+    if (l.fase && !faseIds.has(l.fase)) { faseIds.add(l.fase); fases.push({ id: l.fase, naam: idLabel(l.fase), volgorde: 1000 + fases.length }); }
+  }
+  themas.sort((a, b) => a.volgorde - b.volgorde);
+  fases.sort((a, b) => a.volgorde - b.volgorde);
+  return { themas, fases };
+}
+
 let cache: Promise<TacticsData> | null = null;
 
-/** Haalt beide bestanden één keer op. Mislukt bronnen.json (offline, ontbreekt), dan wordt de
+/** Haalt de bestanden één keer op. Mislukt bronnen.json (offline, ontbreekt), dan wordt de
  *  cache niet vastgehouden, zodat een volgende keer openen het opnieuw probeert. */
 export function laadTactics(): Promise<TacticsData> {
   if (cache) return cache;
-  const p = Promise.all([haalJson('tactics/bronnen.json'), haalJson('tactics/lessen.json')])
-    .then(([b, l]) => ({ bronnen: leesBronnen(b), lessen: leesLessen(l) }));
+  const p = Promise.all([haalJson('tactics/bronnen.json'), haalJson('tactics/lessen.json'), haalJson('tactics/themas.json')])
+    .then(([b, l, t]) => {
+      const lessen = leesLessen(l);
+      return { bronnen: leesBronnen(b), lessen, vocab: leesVocab(t, lessen.lessen) };
+    });
   cache = p;
   void p.then((d) => { if (!d.bronnen && cache === p) cache = null; });
   return p;

@@ -55,8 +55,8 @@ AI-koppeling moet straks bij alle drie.
 { bijgewerkt, lessen: [{
     id, titel,                // korte stelling, Engels
     tekst,                    // 1 tot 3 zinnen, in eigen woorden, Engels
-    onderwerp,                // deployment | movement | charging | shooting | combat | magic |
-                              // list-building | scenarios | characters | psychology | chaff
+    fase,                     // één fase-id uit public/tactics/themas.json (army-building, deployment, ...)
+    themas: string[],         // 1 tot 3 thema-ids uit public/tactics/themas.json (flanks, chaff, ...)
     leger,                    // null = algemeen, anders de Companion-slug (dark-elves)
     units: string[],          // Companion-unitnamen waar de les over gaat
     bronnen: [{ bronId, url,  // url met tijdstip (&t=123s)
@@ -88,8 +88,10 @@ antwoorden.
 
 Verborgen route in de Companion (alleen via de directe link), drie weergaven:
 
-- **Lessons:** zoekveld, filters op onderwerp, leger, unit en waardering van de bron. Per les de
-  tekst, de markeringen en het aantal bronnen.
+- **Lessons:** zoekveld en de lijst met thema's (met aantal). Een thema open toont zijn lessen per
+  fase; tijdens het zoeken een platte lijst met treffers. Legerfilter als één keuzelijst, alleen als
+  er lessen voor meer dan één leger zijn. Thema's en fases staan in `public/tactics/themas.json`
+  (bron: `tactics/themas.json`, zie `tactics/README.md`).
 - **Les open:** elke bron met kanaal, titel, datum, citaat en een link naar het moment in de video.
 - **Sources:** kanalen met waardering en aantal lessen; een kanaal open toont de video's, een video
   open toont de lessen die eruit kwamen.

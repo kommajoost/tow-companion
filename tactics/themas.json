@@ -1,0 +1,20 @@
+{
+  "themas": [
+    { "id": "flanks", "naam": "Flanks", "omschrijving": "Winning, using and defending a flank, and what to do once it is won.", "volgorde": 1 },
+    { "id": "chaff", "naam": "Chaff & redirecting", "omschrijving": "Cheap units that redirect, delay, screen or distract the enemy.", "volgorde": 2 },
+    { "id": "hammers", "naam": "Hammers", "omschrijving": "Units that break the enemy: what they need and where to use them.", "volgorde": 3 },
+    { "id": "game-plan", "naam": "Game plan", "omschrijving": "Tempo, the thirds of the board and how the centre is won.", "volgorde": 4 },
+    { "id": "matchups", "naam": "Matchups", "omschrijving": "Putting each unit opposite the enemy unit it beats.", "volgorde": 5 },
+    { "id": "infantry", "naam": "Infantry", "omschrijving": "Infantry blocks that hold the centre or hit back hard.", "volgorde": 6 },
+    { "id": "shooting-terrain", "naam": "Shooting & terrain", "omschrijving": "Staying out of enemy fire, line of sight and placing your shooters.", "volgorde": 7 },
+    { "id": "psychology", "naam": "Psychology", "omschrijving": "Terror, frenzy and making the enemy flee.", "volgorde": 8 }
+  ],
+  "fases": [
+    { "id": "army-building", "naam": "Army building", "volgorde": 1 },
+    { "id": "deployment", "naam": "Deployment", "volgorde": 2 },
+    { "id": "movement", "naam": "Movement", "volgorde": 3 },
+    { "id": "combat", "naam": "Combat", "volgorde": 4 },
+    { "id": "magic-shooting", "naam": "Magic & shooting", "volgorde": 5 },
+    { "id": "scenarios", "naam": "Scenarios", "volgorde": 6 }
+  ]
+}

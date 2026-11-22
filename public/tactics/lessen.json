@@ -8,7 +8,11 @@
       "waarom": "He found that armies made only of death stars, dragons, damage dealers and casters left him with little to do on the table. Chaff lets you interfere with the opponent's plans and enables your powerful units, and it often costs under 100 points. He also finds it makes the game more strategic, so you feel more like a general.",
       "voorbeeld": null,
       "wanneerNiet": null,
-      "onderwerp": "chaff",
+      "fase": "army-building",
+      "themas": [
+        "chaff",
+        "game-plan"
+      ],
       "leger": null,
       "units": [],
       "bronnen": [
@@ -35,7 +39,10 @@
       "waarom": "It all comes down to wasting your opponent's time: getting in the way forces him into decisions he did not expect or want to make. Part of a list's win condition can be that this unit moves an enemy out of position so it cannot perform at its peak. Redirecting is difficult, but he thinks mastering it makes you a top tier player.",
       "voorbeeld": "He put a Great Eagle in front of Grail Knights that threatened his Waywatchers and Wild Riders. The knights had to charge and kill the eagle, overran in the direction he chose, and his Wild Riders could later charge them without being countercharged and win that flank.",
       "wanneerNiet": null,
-      "onderwerp": "chaff",
+      "fase": "movement",
+      "themas": [
+        "chaff"
+      ],
       "leger": null,
       "units": [],
       "bronnen": [
@@ -66,7 +73,10 @@
       "waarom": "Decoys are fast and dangerous, so if left alone they threaten backline units such as artillery and light cavalry, or become a flanking force that turns a key combat. Dealing with them costs the opponent resources and buys time for your win condition. He likes them most because they do not just take up space: they threaten a space and force a response.",
       "voorbeeld": "An enemy Helblaster Volley Gun shooting a 95 point Mangler Squig is not shooting your big unit of Boar Boyz. He names the Mangler Squig as his favourite decoy and a Hell Pit as an expensive version that works the same way.",
       "wanneerNiet": null,
-      "onderwerp": "chaff",
+      "fase": "movement",
+      "themas": [
+        "chaff"
+      ],
       "leger": null,
       "units": [],
       "bronnen": [
@@ -93,7 +103,11 @@
       "waarom": "If every unit in your list must perform to win, you end up dropping your key pieces first, and that alone shapes the game. When the opponent places his big flanking unit before your counter unit, he has committed to a flank and you can react. Scouts also gain intel during deployment.",
       "voorbeeld": "Wood Elf Beast Packs, a handler and two beasts for about 30 points, are in his view the best scout unit in the game. Giant Rats at 30 points without a handler do the same, and in marching column they become a speed bump.",
       "wanneerNiet": null,
-      "onderwerp": "deployment",
+      "fase": "deployment",
+      "themas": [
+        "chaff",
+        "matchups"
+      ],
       "leger": null,
       "units": [],
       "bronnen": [
@@ -120,7 +134,10 @@
       "waarom": "Chaff is about getting into position ahead of the opponent; too slow and it cannot get in the way or into the right spot to flee in the direction you want. He separates speed (high movement) from mobility (skirmish, fly, reserve move), which lets chaff use every corner of the board.",
       "voorbeeld": "His checklist: under 100 points and movement seven or more, with fly, skirmish or reserve move as bonuses. For a speed bump he wants fly and movement seven as a minimum.",
       "wanneerNiet": null,
-      "onderwerp": "chaff",
+      "fase": "army-building",
+      "themas": [
+        "chaff"
+      ],
       "leger": null,
       "units": [],
       "bronnen": [
@@ -147,7 +164,10 @@
       "waarom": "Chaff has to go into dangerous parts of the board, so it is likely to die and the return shrinks as it gets more expensive. He credits an early Wood Elf guide by AJ of the Rank and Flank podcast for the under 100 points threshold and thinks it still holds.",
       "voorbeeld": "For elves, a unit of seven Dryads with a Nymph at about 120 points can still be chaff, because chaff is defined by what it is trying to do.",
       "wanneerNiet": "Some armies can go over 100 points, but then the unit has to give a good return.",
-      "onderwerp": "list-building",
+      "fase": "army-building",
+      "themas": [
+        "chaff"
+      ],
       "leger": null,
       "units": [],
       "bronnen": [
@@ -174,7 +194,10 @@
       "waarom": "Chaff shines when it can fulfil more than one role, but each unit should still go in the list as the time waster for a specific role.",
       "voorbeeld": "Giant Rats are a scout just by being cheap and placed early, and a speed bump because they are fast and their formation lets you control how units contact them. The Great Eagle is there to redirect with its close order, yet with three or four attacks, a stomp, strength four and weapon skill five it can also kill a war machine.",
       "wanneerNiet": null,
-      "onderwerp": "list-building",
+      "fase": "army-building",
+      "themas": [
+        "chaff"
+      ],
       "leger": null,
       "units": [
         "Giant Rats",
@@ -204,7 +227,11 @@
       "waarom": "He sees Mangler Squigs as chaff and the perfect decoy: a 3D6 random move, strength six impact hits, killing blow, stomps and random attacks give huge damage potential. The threat makes the opponent change how he moves, and with toughness five and four wounds they may win the combat if they get to hit back.",
       "voorbeeld": "Rangers were shooting him while pushing down his right flank. He moved his Manglers into range until one could hit them; over two or three combats they killed the whole unit without losing a Mangler, and soaked up the arrows in the meantime.",
       "wanneerNiet": "The random move can also come up short, as low as four inches, and they have to wheel.",
-      "onderwerp": "chaff",
+      "fase": "movement",
+      "themas": [
+        "chaff",
+        "flanks"
+      ],
       "leger": "orc-and-goblin-tribes",
       "units": [
         "Mangler Squigs"
@@ -237,7 +264,10 @@
       "waarom": "Light chariots are good decoys and also good speed bumps. They cannot be ignored because their impact hits can kill Outriders, which opponents like to protect. A Goblin Wolf Chariot is very fast with swift stride, and artillery has little armour, so its impact hits are a real threat.",
       "voorbeeld": "In his Nomadic Waaagh list one chariot pushed forward to pressure Outriders and bait the Demigryph Knights, buying his Wyvern a turn. Another stood beside his Boar Boyz to shape a Griffon's charge; when the Griffon charged the Boar Boyz instead, the chariot roamed free and smashed a mortar in one turn.",
       "wanneerNiet": null,
-      "onderwerp": "chaff",
+      "fase": "movement",
+      "themas": [
+        "chaff"
+      ],
       "leger": "orc-and-goblin-tribes",
       "units": [
         "Goblin Wolf Chariot"
@@ -266,7 +296,10 @@
       "waarom": "If you do not deal with a decoy it has something to do, so it is not just there to die. He notes that opponents often decide to go and kill it anyway.",
       "voorbeeld": null,
       "wanneerNiet": null,
-      "onderwerp": "chaff",
+      "fase": "movement",
+      "themas": [
+        "chaff"
+      ],
       "leger": null,
       "units": [],
       "bronnen": [
@@ -287,7 +320,10 @@
       "waarom": "A speed bump takes a hit, dies and shapes the post combat movement. With close or open order the charger has to align to its front, so when it wins it overruns in a direction that protects your other units, and you may countercharge the unit that got sucked in (Chaff video). Against a close order Great Eagle the charger either takes a restraint test and stays put for the turn, or overruns in the direction you chose (Flanks video).",
       "voorbeeld": "Skin Wolves charged his open order Goblin Wolf Riders, killed them and overran in a direction that protected the flank of his Boar Boyz. He adds that a Boar Chariot wheeled a little further could then have countercharged the Skin Wolves (Chaff video).",
       "wanneerNiet": "Skirmishers can still pull a unit where you want if it is frenzied or you are its only possible charge target, but they cannot shape the post combat move this way.",
-      "onderwerp": "chaff",
+      "fase": "movement",
+      "themas": [
+        "chaff"
+      ],
       "leger": null,
       "units": [
         "Great Eagle"
@@ -322,7 +358,11 @@
       "waarom": "A speed bump with swift stride is his main frenzy bait: it can sit at the very edge of a frenzied unit's charge range, make it charge, then flee and try to rally. If the enemy can redirect into something else after you flee, the whole move was a waste of time.",
       "voorbeeld": "He calls a Razorgor a very good speed bump and decoy for this.",
       "wanneerNiet": null,
-      "onderwerp": "psychology",
+      "fase": "movement",
+      "themas": [
+        "chaff",
+        "psychology"
+      ],
       "leger": null,
       "units": [],
       "bronnen": [
@@ -349,7 +389,11 @@
       "waarom": "It is the overarching principle: deployment ties the flanks and the centre together, and what you do afterwards decides whether you roll into the middle or the backline and own space. You do not need to win all three thirds.",
       "voorbeeld": "Two thirds can be the centre and one flank, or both flanks, after which you overwhelm the centre with a bigger flanking force than the enemy has left there.",
       "wanneerNiet": null,
-      "onderwerp": "deployment",
+      "fase": "deployment",
+      "themas": [
+        "game-plan",
+        "flanks"
+      ],
       "leger": null,
       "units": [],
       "bronnen": [
@@ -376,7 +420,11 @@
       "waarom": "Faster units sit on the flanks, so the action starts there early, while the centre becomes a standoff about who holds longest. If your flank units do not get unlocked you cannot win the centre. Flank matchups are rarely one sided, so you often sacrifice something to win one.",
       "voorbeeld": "Against Alex's Beastmen his block of Black Orcs with a Shaman and battle standard, about 700 points, held the centre. His stacked right flank won, then his Squig Hoppers and Wolf Riders charged into the central combat and turned it.",
       "wanneerNiet": "With Wood Elves, which he also plays, he thinks you win by winning the flanks and creating space, because winning the centre alone is very hard.",
-      "onderwerp": "movement",
+      "fase": "movement",
+      "themas": [
+        "flanks",
+        "game-plan"
+      ],
       "leger": null,
       "units": [],
       "bronnen": [
@@ -403,7 +451,11 @@
       "waarom": "You need units that can hit things to destroy the enemy on one flank, and chaff to delay the enemy on the other. He calls that split the key to getting the most out of flank units.",
       "voorbeeld": "His skirmishing characters, frenzied Boar Boyz and Squig Hoppers did the killing on his right, while Goblin Wolf Riders on his left used feigned flight to draw a charge and get away.",
       "wanneerNiet": null,
-      "onderwerp": "movement",
+      "fase": "deployment",
+      "themas": [
+        "flanks",
+        "chaff"
+      ],
       "leger": null,
       "units": [],
       "bronnen": [
@@ -430,7 +482,12 @@
       "waarom": "Once your hammer is on the flank it needs support from units like wolf riders. Simply placing a great flank unit such as Wild Riders at the edge of your deployment and sending it off does not work, and neither does parking a Heavy Chariot on a flank just because it does nothing in the middle.",
       "voorbeeld": null,
       "wanneerNiet": null,
-      "onderwerp": "deployment",
+      "fase": "deployment",
+      "themas": [
+        "flanks",
+        "hammers",
+        "chaff"
+      ],
       "leger": null,
       "units": [],
       "bronnen": [
@@ -457,7 +514,11 @@
       "waarom": "Delaying the enemy on one flank can buy the time you need to win elsewhere. His Wolf Riders baited a charge and escaped, which bought a turn, then beat an infantry unit and came into the middle while the enemy Preyton was busy with his Boar Chariot.",
       "voorbeeld": "He lost the Boar Chariot and the Doom Diver on that flank, about 190 points, but it took his opponent longer than planned, which gave him time to win the right flank and the middle.",
       "wanneerNiet": null,
-      "onderwerp": "movement",
+      "fase": "movement",
+      "themas": [
+        "flanks",
+        "chaff"
+      ],
       "leger": null,
       "units": [],
       "bronnen": [
@@ -478,7 +539,11 @@
       "waarom": "Infantry's power is holding space and combat resolution. Its big drawback is speed: movement four, or five for elves and rats, cannot compete with light cavalry outmanoeuvring you or heavy cavalry picking its charge.",
       "voorbeeld": "In his game his Night Goblins stood on the left flank but faced the centre, because that is where they would be needed.",
       "wanneerNiet": null,
-      "onderwerp": "movement",
+      "fase": "deployment",
+      "themas": [
+        "flanks",
+        "infantry"
+      ],
       "leger": null,
       "units": [],
       "bronnen": [
@@ -505,7 +570,10 @@
       "waarom": "Charging is vital for winning combats on the flank, so he counts heavy cavalry as fast enough from about movement six with swift stride (Flanks video). Hammers are rarely effective when not charging; swift stride, countercharge and skirmish give redundancy, so you still get the matchup you want whatever happens on the table (Infantry video).",
       "voorbeeld": "Demigryph Knights have movement seven and swift stride, a 16 inch charge range, and countercharge lets them still charge back when out of position (Infantry video). Glade Riders with movement nine and reserve move use their speed to distract rather than to deal damage (Flanks video).",
       "wanneerNiet": "Speed is about what the unit does with it, not only the raw number (Flanks video).",
-      "onderwerp": "charging",
+      "fase": "army-building",
+      "themas": [
+        "hammers"
+      ],
       "leger": null,
       "units": [],
       "bronnen": [
@@ -538,7 +606,12 @@
       "waarom": "On the flanks a hammer can manoeuvre around terrain, use it to block line of sight from shooters, and be covered by screening skirmishers or chaff. In the middle, because of the terrain rule for the centre of the board, hammers tend to get blown up straight away. From the flanks they can later turn to the centre or get into the backline.",
       "voorbeeld": null,
       "wanneerNiet": null,
-      "onderwerp": "deployment",
+      "fase": "deployment",
+      "themas": [
+        "hammers",
+        "flanks",
+        "shooting-terrain"
+      ],
       "leger": null,
       "units": [],
       "bronnen": [
@@ -571,7 +644,10 @@
       "waarom": "Hammers win games, so the opponent targets them and they are often the first thing shot. If a hammer does not strike first in combat it is wasted; durability gives it redundancy to take a hit and still deal its damage.",
       "voorbeeld": "Wild Riders have no durability and get smashed by toughness four, 2+ save, multi wound Demigryph Knights if they fail to kill in the first round (Infantry video). Orc Boar Boyz with toughness four, a 5+ save and a 6+ ward will not go down to light shooting (Flanks video).",
       "wanneerNiet": null,
-      "onderwerp": "list-building",
+      "fase": "army-building",
+      "themas": [
+        "hammers"
+      ],
       "leger": null,
       "units": [],
       "bronnen": [
@@ -598,7 +674,10 @@
       "waarom": "If the enemy pulls his own wizard out to the side to deal with yours, you have already won part of the mind game, and your caster is probably the more manoeuvrable one.",
       "voorbeeld": "A Renegade Crowns outcast wizard with Dark Magic cast his hex and enchantment, then used reserve move to drop out of dispel range, cast Doombolt and go back to safety. He mentions Pegasus riders, with versions in Dark Elves and Empire, and the Wood Elf Warhawk and reserve move Spellweaver.",
       "wanneerNiet": null,
-      "onderwerp": "magic",
+      "fase": "magic-shooting",
+      "themas": [
+        "flanks"
+      ],
       "leger": null,
       "units": [],
       "bronnen": [
@@ -625,7 +704,11 @@
       "waarom": "With skirmish and a high charge distance it can pick things off and join combats you can compound, with the choice to commit alongside your flank unit or pick another target. He says such characters sway the course of the battle for about 250 to 300 points.",
       "voorbeeld": "His Orc War Boss on boar fought next to his Boar Boyz on the flank. He also uses a Great Stag version at about 280 to 300 points.",
       "wanneerNiet": null,
-      "onderwerp": "characters",
+      "fase": "movement",
+      "themas": [
+        "flanks",
+        "hammers"
+      ],
       "leger": null,
       "units": [],
       "bronnen": [
@@ -652,7 +735,12 @@
       "waarom": "A great flank unit placed at the edge of deployment and sent off does not work; the flank needs investment, and a screen protects your hammer until it picks its target.",
       "voorbeeld": "Wood Elf Beast Packs live on the flank and cover Wild Riders; once the screen gets out of the way, the Wild Riders pick their target and charge. Chaos Warhounds are another example of expendable chaff.",
       "wanneerNiet": null,
-      "onderwerp": "chaff",
+      "fase": "movement",
+      "themas": [
+        "chaff",
+        "hammers",
+        "flanks"
+      ],
       "leger": null,
       "units": [
         "Wood Elf Beast Pack"
@@ -675,7 +763,11 @@
       "waarom": "You win a flank by doubling down on it and using chaff to waste time on the flank you expect to lose (Flanks video). A Heavy Chariot parked on a flank only because it does nothing in the middle sacrifices that flank for no gain.",
       "voorbeeld": "Against Empire he effectively gave up his left flank after a deployment mistake, but won his right flank heavily and broke through the middle; the game was a draw. Against Bretonnia an Eagle and Wildwood Rangers held one flank almost alone and drew fire that helped his main units break through (Deploy video).",
       "wanneerNiet": "Against Empire he thinks he went too heavy on one flank and should have left something on the other side (Deploy video).",
-      "onderwerp": "deployment",
+      "fase": "deployment",
+      "themas": [
+        "flanks",
+        "chaff"
+      ],
       "leger": null,
       "units": [],
       "bronnen": [
@@ -702,7 +794,11 @@
       "waarom": "Making an opponent flee is a huge deal: even if the unit rallies, it takes many turns to get back to the centre. Monsters already suit the flanks with high toughness, mobility, stomps and impact hits, so one that causes terror is even better.",
       "voorbeeld": "His Arachnarok Spider caused terror in a Leadership 9 Renegade Crowns sellsword unit; it fled, lost its warband bonus and ran off the board, 160 points gone, and he turned into the middle. He also mentions a Wood Elf banner that gives fear, which lets Wild Riders cause terror.",
       "wanneerNiet": null,
-      "onderwerp": "psychology",
+      "fase": "combat",
+      "themas": [
+        "psychology",
+        "flanks"
+      ],
       "leger": null,
       "units": [],
       "bronnen": [
@@ -729,7 +825,11 @@
       "waarom": "Your flank units should support the rest of the board, while the units in the centre do the dirty work of holding it.",
       "voorbeeld": "After his Arachnarok Spider won its flank, it turned and drove straight through the middle of the board.",
       "wanneerNiet": null,
-      "onderwerp": "movement",
+      "fase": "movement",
+      "themas": [
+        "flanks",
+        "game-plan"
+      ],
       "leger": null,
       "units": [],
       "bronnen": [
@@ -750,7 +850,10 @@
       "waarom": "The hammer is the unit that breaks the enemy while the anvil holds it in place. Whatever the unit type, dealing damage is the first and most important job.",
       "voorbeeld": "Wild Riders have zero durability, but on the charge they get three attacks each at strength five with AP2 and armour bane, which makes up for it.",
       "wanneerNiet": null,
-      "onderwerp": "list-building",
+      "fase": "army-building",
+      "themas": [
+        "hammers"
+      ],
       "leger": null,
       "units": [],
       "bronnen": [
@@ -777,7 +880,11 @@
       "waarom": "He sees matchups as about 80 percent of the game. They are decided at deployment or by enabling your hammers with chaff, screens and buffs.",
       "voorbeeld": "Wild Riders kill enough infantry without being hit back, but against Demigryph Knights with a 2+ save, toughness four and multiple wounds they get smashed if they do not kill in the first round.",
       "wanneerNiet": null,
-      "onderwerp": "deployment",
+      "fase": "deployment",
+      "themas": [
+        "hammers",
+        "matchups"
+      ],
       "leger": null,
       "units": [
         "Wild Riders"
@@ -806,7 +913,12 @@
       "waarom": "Behemoths can wreck both infantry and heavy cavalry through high strength and AP2 thunder stomps, and they often have five or more high strength attacks with good AP.",
       "voorbeeld": "A Giant Spawn of Chaos rolling a six on its stomps will cook Wild Riders and even hurt Demigryph Knights with strength six AP2 hits.",
       "wanneerNiet": null,
-      "onderwerp": "combat",
+      "fase": "combat",
+      "themas": [
+        "hammers",
+        "flanks",
+        "psychology"
+      ],
       "leger": null,
       "units": [],
       "bronnen": [
@@ -833,7 +945,10 @@
       "waarom": "When they connect, heavy chariots are devastating through their impact hits. But the first charge bonus is easily wasted, they are easy to kill with only four wounds and hard to get into position, and impact hits can spike but are never certain.",
       "voorbeeld": "D6+1 impact hits at strength five AP2 can wreck a unit of infantry.",
       "wanneerNiet": "He would not recommend them to new players, who are likely to be disappointed.",
-      "onderwerp": "charging",
+      "fase": "combat",
+      "themas": [
+        "hammers"
+      ],
       "leger": null,
       "units": [],
       "bronnen": [
@@ -860,7 +975,11 @@
       "waarom": "He finds units that are only immovable boring; a hybrid brings static combat resolution and durability but kills models when it hits back, so the opponent is invited to come for the points and can be punished. Being able to parry and still hit with armour piercing is a massive deal.",
       "voorbeeld": "Chaos Warriors with ensorcelled weapons are strength four AP1 with a 3+ save in combat. Stormvermin with halberds can parry for a 3+ save and hit back at AP1, or use the halberds for AP2 on the charge.",
       "wanneerNiet": "He does not think all elite infantry can do this and doubts Swordmasters get a look in.",
-      "onderwerp": "combat",
+      "fase": "combat",
+      "themas": [
+        "infantry",
+        "hammers"
+      ],
       "leger": null,
       "units": [],
       "bronnen": [
@@ -887,7 +1006,10 @@
       "waarom": "Black Orcs are toughness four, base strength four and stubborn, so they hold while nearby units countercharge, and with press of battle they hit back with many strength six AP2 attacks. He no longer likes to parry with them.",
       "voorbeeld": "A big unit of Chaos Knights charged his 14 Black Orcs: he lost two and killed three in return. The combat tied, the knights lost their lance bonus the next turn and the Black Orcs cleaned house.",
       "wanneerNiet": "They are expensive.",
-      "onderwerp": "combat",
+      "fase": "army-building",
+      "themas": [
+        "infantry"
+      ],
       "leger": "orc-and-goblin-tribes",
       "units": [
         "Black Orc Mob"
@@ -916,7 +1038,10 @@
       "waarom": "The swift stride banner gives movement five infantry a long charge, which unlocks the power of infantry. He goes ten wide because it is more fun and gets good results, and keeps about six or seven static combat resolution plus the Grand Banner of Superiority.",
       "voorbeeld": "His Stormvermin charged foot Knights of the Realm with great weapons and killed eight in the first round, about 15 combat resolution in total. Over three rounds they destroyed the unit and broke through the centre.",
       "wanneerNiet": null,
-      "onderwerp": "list-building",
+      "fase": "army-building",
+      "themas": [
+        "infantry"
+      ],
       "leger": "skaven",
       "units": [
         "Stormvermin"
@@ -945,7 +1070,10 @@
       "waarom": "Behemoths tend to have an offensive package anyway; unbreakable lets them hold up a lot, so they can lose on combat resolution and still have taken models out.",
       "voorbeeld": "He has held up a monster slaying Duke with a Hell Pit. He thinks the new Gargantuan treeman may also fit, because it can cast, has a decent number of attacks and stomps, and is unbreakable.",
       "wanneerNiet": "A Gigantic Spawn has potential but is more an anvil than a hammer: the unit needs real offensive power, not just to be a roadblock.",
-      "onderwerp": "combat",
+      "fase": "combat",
+      "themas": [
+        "hammers"
+      ],
       "leger": null,
       "units": [
         "Hell Pit Abomination"
@@ -974,7 +1102,10 @@
       "waarom": "Such a unit keeps the death star role of come and get me while it holds an objective, but it can kill you if you come and fail. That gives it a role on the board.",
       "voorbeeld": null,
       "wanneerNiet": "It matters in tournaments or when you play objectives with your friends.",
-      "onderwerp": "scenarios",
+      "fase": "scenarios",
+      "themas": [
+        "hammers"
+      ],
       "leger": null,
       "units": [],
       "bronnen": [
@@ -995,7 +1126,10 @@
       "waarom": "The term comes from Magic: the Gathering and is about tempo: some armies need to win early, others win in the late game. List building freedom, especially with armies of infamy, lets you steer toward an aggressive, control or mixed arms army.",
       "voorbeeld": "City-State of Nuln lists with heavy firepower, and Cathay with its alpha strike, try to wreck you in turns one and two; if you survive that, you have a good chance.",
       "wanneerNiet": null,
-      "onderwerp": "deployment",
+      "fase": "deployment",
+      "themas": [
+        "game-plan"
+      ],
       "leger": null,
       "units": [],
       "bronnen": [
@@ -1022,7 +1156,10 @@
       "waarom": "In his opinion terrain is where the skill in deployment comes from, because it shows key locations before you see where the enemy deploys.",
       "voorbeeld": "With Wood Elves he connects his woodland ambush forest to impassable terrain or a hill almost every game to create more space to hide. A cannon or ranged unit often goes on a hill to see the whole battlefield.",
       "wanneerNiet": null,
-      "onderwerp": "deployment",
+      "fase": "deployment",
+      "themas": [
+        "shooting-terrain"
+      ],
       "leger": null,
       "units": [],
       "bronnen": [
@@ -1049,7 +1186,10 @@
       "waarom": "Speed is about board control and space. Instead of spreading out, a slow army can close in on one corner and lock down part of the enemy army while its more flexible pieces pick off chaff.",
       "voorbeeld": "Dwarfs are always the slow army; movement three limits what they can do, even with marching column and drilled.",
       "wanneerNiet": null,
-      "onderwerp": "deployment",
+      "fase": "deployment",
+      "themas": [
+        "game-plan"
+      ],
       "leger": null,
       "units": [],
       "bronnen": [
@@ -1076,7 +1216,10 @@
       "waarom": "Your win condition unit needs to take out a key enemy unit; if it does, your chances increase significantly.",
       "voorbeeld": "Against Empire, his Wild Riders with a Glade Lord were about the only unit that could kill toughness four, 2+ save Demigryph Knights, so he dropped them after the Demigryphs. Against Bretonnia his Wild Riders and Great Stag lined up on the Grail Knights, a unit worth about 500 points.",
       "wanneerNiet": null,
-      "onderwerp": "deployment",
+      "fase": "deployment",
+      "themas": [
+        "matchups"
+      ],
       "leger": null,
       "units": [],
       "bronnen": [
@@ -1103,7 +1246,10 @@
       "waarom": "With Wood Elves, and Wild Hunt in particular, he finds it hard to hold the hill from turn one to six, so letting the opponent have it makes the enemy come forward.",
       "voorbeeld": "Later his Glade Riders scooted round to capture the hill and used it to block line of sight.",
       "wanneerNiet": null,
-      "onderwerp": "scenarios",
+      "fase": "scenarios",
+      "themas": [
+        "game-plan"
+      ],
       "leger": null,
       "units": [],
       "bronnen": [
@@ -1130,7 +1276,10 @@
       "waarom": "The enemy Outriders' early presence and firepower made the Empire player the beatdown: going first, he could unload a volley and weaken the Wood Elves badly before combat.",
       "voorbeeld": "He placed units forward on his left flank; the opponent shot two Warhawk Riders dead with a cannon and shot his Wildwood Rangers with the Outriders. Deployed further back, the cannons would have had nothing to shoot.",
       "wanneerNiet": "Against an army with little shooting, while going first, he deployed more aggressively.",
-      "onderwerp": "deployment",
+      "fase": "deployment",
+      "themas": [
+        "shooting-terrain"
+      ],
       "leger": "wood-elf-realms",
       "units": [],
       "bronnen": [
@@ -1157,7 +1306,10 @@
       "waarom": "The Bretonnian army had more combat units and little shooting, only Peasant Bowmen and a Trebuchet, and since Bretonnia always prays he knew he would go first. That let him set up his first turn and put pressure on his opponent.",
       "voorbeeld": "He pushed up aggressively but kept everything out of the Duke's charge range, and lined up his Wild Riders and Great Stag to charge the Grail Knights.",
       "wanneerNiet": null,
-      "onderwerp": "deployment",
+      "fase": "deployment",
+      "themas": [
+        "shooting-terrain"
+      ],
       "leger": null,
       "units": [],
       "bronnen": [

@@ -10,7 +10,7 @@ How `public/tactics/bronnen.json` and `lessen.json` are made. Design: `docs/tact
 | Write the sources file | `npm run tactics:sources` | `public/tactics/bronnen.json` |
 | Glossary from the app data | `npm run tactics:glossary` | `tactics/glossary.json` |
 | Name repair on a transcript | `npm run tactics:transcript -- --convert-only <id> ...` | `tactics/ruw/<id>.fixed.txt` |
-| Validate and recount | `npm run tactics:build` (or `tactics:check`) | counts and status in `bronnen.json` |
+| Validate and recount | `npm run tactics:build` (or `tactics:check`) | counts and status in `bronnen.json`, `public/tactics/themas.json`, lessons per theme and phase |
 
 `tactics/ruw/` and `tactics/cache/` are in `.gitignore`. Transcripts are never published.
 
@@ -34,6 +34,28 @@ the transcript is read the normal way, like a viewer, in the Browser pane:
 
 Quotes in `lessen.json` are checked against `<id>.fixed.txt` by `tactics:build`: verbatim, at most
 15 words, within 60 seconds of the timestamp. Processed videos are listed in `tactics/verwerkt.json`.
+
+## Themes and phases
+
+Every lesson gets one `fase` (phase) and one to three `themas` (themes). The vocabulary lives in
+`tactics/themas.json` (id, name, one-line description, order); `tactics:build` copies it to
+`public/tactics/themas.json`, which the page and the AI tool read. The Lessons page opens on the
+themes; inside a theme the lessons are grouped by phase.
+
+- **Phase**: when in the game the advice applies. `army-building` (what to take, how to build or
+  equip a unit), `deployment` (where units go before the game), `movement` (manoeuvring, charging,
+  redirecting, flank play during the game), `combat` (what happens in close combat), `magic-shooting`,
+  `scenarios` (objectives and scenario-specific play). Pick the phase where you act on the advice.
+- **Themes**: what the lesson is about, as a player would browse for it. Read the title, text, why
+  and example. Give a theme only when the lesson is about it, not when it is mentioned in passing:
+  "Flanks" means the lesson is about winning, using or defending a flank of the board (not the flank
+  of a single unit); "Chaff" means cheap units that redirect, delay, screen or distract. Order the
+  themes by weight, main theme first.
+- Keep the theme list short (now 8). A new theme is fine when the round brings at least three lessons
+  that fit no existing theme; `tactics:build` warns (does not fail) while a theme has fewer than 3
+  lessons. Otherwise use the broader theme. Names short and plain, descriptions one factual line.
+- `tactics:build` fails on an unknown phase or theme, on fewer than 1 or more than 3 themes, and on a
+  leftover `onderwerp` field (replaced by `fase` + `themas`).
 
 One video at a time, with a pause between videos. In the first round a 28-minute video took about
 3 minutes to fetch and 10 to 15 minutes to read and turn into lessons.
