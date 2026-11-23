@@ -148,7 +148,7 @@ export function TafelTempo({ info, onEinde, compact = false, stoelKnop = null }:
             </div>
             <div data-testid="tempo-schema" style={{ marginTop: 3, fontFamily: serif, fontSize: 11.5, color: beeld.laatsteRonde ? KLEUR.rood : TOW.parchDim, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
               {beeld.laatsteRonde
-                ? <span data-testid="tempo-laatste-ronde">Last round: no new round after {tempo.instelling.laatsteRonde}</span>
+                ? <span data-testid="tempo-laatste-ronde">Past {tempo.instelling.laatsteRonde}: finish this round, then tap More, Battle ended</span>
                 : <>{tempo.huidig.pauzeSinds ? 'Paused · ' : ''}{achter <= 0 ? (achter < 0 ? `${-achter} min ahead` : 'On schedule') : `${achter} min behind`} · end {beeld.verwachtEind ? uurMin(beeld.verwachtEind) : '?'} · to round {beeld.haalbaarTot}</>}
             </div>
             {meer && (

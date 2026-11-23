@@ -54,12 +54,15 @@ test('na ronde 6 en na 22:15 begint er geen nieuwe ronde', () => {
   assert.equal(t.einde.reden, 'zes-rondes');
   assert.equal(tempo.gespeeldeRondes(t), 6);
 
-  // Laat: start om 21:40, ronde 1 klaar om 22:20 -> geen ronde 2.
+  // Laat: start om 21:40, ronde 1 klaar om 22:20. Joost 24-11: de timer eindigt de slag niet zelf; na 22:15
+  // alleen de melding, ronde 2 begint gewoon, en de tafel drukt zelf op Battle ended (reden eindtijd).
   let l = tempo.pasToe(tempo.leegTempo(), { soort: 'start', eersteTeam: 'A' }, T0 + 130 * MIN);
   l = tempo.pasToe(l, { soort: 'beurtKlaar', verwacht: { ronde: 1, team: 'A' }, plein: null, raiders: [] }, T0 + 150 * MIN);
   assert.ok(tempo.tempoBeeld(l, T0 + 166 * MIN).laatsteRonde, 'na 22:15 de melding laatste ronde');
   l = tempo.pasToe(l, { soort: 'beurtKlaar', verwacht: { ronde: 1, team: 'B' }, plein: null, raiders: [] }, T0 + 170 * MIN);
-  assert.equal(l.huidig, null);
+  assert.equal(l.einde, null);
+  assert.equal(l.huidig.ronde, 2);
+  l = tempo.pasToe(l, { soort: 'einde', reden: 'eindtijd' }, T0 + 175 * MIN);
   assert.equal(l.einde.reden, 'eindtijd');
 });
 

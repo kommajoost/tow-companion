@@ -242,11 +242,9 @@ export function pasToe(t: TempoStand, a: TempoActie, nu: number): TempoStand | n
       } else if (h.ronde >= MAX_RONDES) {
         huidig = null;
         einde = { tijd: iso, reden: 'zes-rondes' };
-      } else if (!nieuweRondeMag(t, nu)) {
-        // Na 22:15 begint geen nieuwe ronde: de slag is op tijd voorbij.
-        huidig = null;
-        einde = { tijd: iso, reden: 'eindtijd' };
       } else {
+        // 24-11 (Joost): "zo strikt moet het niet zijn". Na de laatste-rondetijd beëindigt de timer de slag
+        // NIET meer zelf: hij waarschuwt alleen, en de tafel drukt zelf op Battle ended (reden eindtijd).
         huidig = { ronde: h.ronde + 1, team: eerste, start: iso, pauzeMs: 0, pauzeSinds: null };
       }
       return metUndo({ ...basis, beurten: [...t.beurten, beurt], huidig, einde });
