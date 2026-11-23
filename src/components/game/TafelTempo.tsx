@@ -54,6 +54,9 @@ export function TafelTempo({ info, onEinde, compact = false, stoelKnop = null }:
   const [instOpen, setInstOpen] = useState(false);
   const [logOpen, setLogOpen] = useState(false);
   const [open, setOpen] = useState(true);
+  // COMPACT TIJDENS HET SPEL (Joost 24-11): één regel met ronde, klok en Turn done; de rest achter "More".
+  const [meer, setMeer] = useState(false);
+  const [tabelOpen, setTabelOpen] = useState(false);
 
   /** Eén actie, als compare-and-set. Bij TEMPO_VERANDERD (iemand anders tikte net) één keer opnieuw op de
    *  verse stand; geldt de actie dan niet meer (die beurt is al afgesloten), dan gebeurt er niets. */
@@ -121,17 +124,62 @@ export function TafelTempo({ info, onEinde, compact = false, stoelKnop = null }:
     );
   }
 
+  const loopt = beeld.gestart && !beeld.klaar && !!tempo?.huidig;
+
   return (
-    <div data-testid="tafel-tempo" style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-      <div style={kaart}>
+    <div data-testid="tafel-tempo" style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+      <div style={loopt ? { ...kaart, padding: '6px 8px' } : kaart}>
+        {loopt && tempo?.huidig && (
+          <div data-testid="tempo-balk">
+            <div style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
+              <span aria-hidden style={{ width: 9, height: 9, borderRadius: 5, background: tempo.huidig.pauzeSinds ? TOW.muted : kleur, flexShrink: 0 }} />
+              <span data-testid="tempo-ronde" style={{ fontFamily: display, fontWeight: 700, fontSize: 13.5, color: TOW.ink, whiteSpace: 'nowrap' }}>R{beeld.ronde} · {teamNaam(beeld.team)}</span>
+              <span data-testid="tempo-klok" style={{ fontFamily: display, fontWeight: 700, fontSize: 17, color: beeld.restMs < 0 ? KLEUR.rood : TOW.ink, fontVariantNumeric: 'tabular-nums' }}>{klok(beeld.restMs)}</span>
+              <span style={{ flex: 1 }} />
+              <button
+                data-testid="tempo-turn-done"
+                disabled={bezig}
+                onClick={() => tempo?.huidig && setVraagVoor({ ronde: tempo.huidig.ronde, team: tempo.huidig.team })}
+                style={{ padding: '7px 12px', borderRadius: 9, border: 'none', background: goldGrad, color: TOW.onGrad, fontFamily: display, fontWeight: 700, fontSize: 13, cursor: 'pointer', whiteSpace: 'nowrap' }}
+              >
+                Turn done
+              </button>
+              <button data-testid="tempo-meer" onClick={() => setMeer((v) => !v)} aria-expanded={meer} style={{ ...knop, padding: '6px 8px', fontSize: 11.5 }}>{meer ? 'Less' : 'More'}</button>
+            </div>
+            <div data-testid="tempo-schema" style={{ marginTop: 3, fontFamily: serif, fontSize: 11.5, color: beeld.laatsteRonde ? KLEUR.rood : TOW.parchDim, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+              {beeld.laatsteRonde
+                ? <span data-testid="tempo-laatste-ronde">Last round: no new round after {tempo.instelling.laatsteRonde}</span>
+                : <>{tempo.huidig.pauzeSinds ? 'Paused · ' : ''}{achter <= 0 ? (achter < 0 ? `${-achter} min ahead` : 'On schedule') : `${achter} min behind`} · end {beeld.verwachtEind ? uurMin(beeld.verwachtEind) : '?'} · to round {beeld.haalbaarTot}</>}
+            </div>
+            {meer && (
+              <div style={{ display: 'flex', gap: 6, marginTop: 7, flexWrap: 'wrap' }}>
+                {tempo.huidig.pauzeSinds
+                  ? <button data-testid="tempo-hervat" disabled={bezig} onClick={() => voerUit({ soort: 'hervat' })} style={knop}>Resume</button>
+                  : <button data-testid="tempo-pauze" disabled={bezig} onClick={() => voerUit({ soort: 'pauze' })} style={knop}>Pause</button>}
+                <button data-testid="tempo-undo" disabled={bezig || !(tempo.vorige?.length)} onClick={() => voerUit({ soort: 'undo' })} style={knop}>Undo</button>
+                {tempo.beurten.length === 0 && (
+                  <button disabled={bezig} onClick={() => voerUit({ soort: 'eersteTeam', eersteTeam: anderTeam(tempo.huidig!.team) })} style={knop}>{TAFEL_TEAMNAMEN[anderTeam(tempo.huidig.team)]} go first instead</button>
+                )}
+                <button onClick={() => setInstOpen((v) => !v)} style={knop}>Times</button>
+                {stoelKnop}
+                {compact && <button onClick={() => { setMeer(false); setOpen(false); }} style={knop}>Hide timer</button>}
+                <button data-testid="tempo-einde" disabled={bezig} onClick={() => setEindeOpen(true)} style={{ ...knop, color: TOW.blood }}>Battle ended</button>
+              </div>
+            )}
+            {meer && instOpen && <InstellingForm inst={tempo?.instelling ?? STANDAARD_INSTELLING} bezig={bezig} onOpslaan={async (i) => { if (await voerUit({ soort: 'instelling', instelling: i })) setInstOpen(false); }} onDicht={() => setInstOpen(false)} />}
+          </div>
+        )}
+
+        {!loopt && (
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <div style={{ ...eb, fontSize: 8.5, color: TOW.goldDeep, flex: 1 }}>Table timer · evening {tempo?.instelling.avondStart ?? STANDAARD_INSTELLING.avondStart}–{tempo?.instelling.avondEind ?? STANDAARD_INSTELLING.avondEind}</div>
           {stoelKnop}
           <button onClick={() => setInstOpen((v) => !v)} style={{ ...knop, padding: '3px 8px', fontSize: 11 }}>Times</button>
           {compact && <button onClick={() => setOpen(false)} style={{ ...knop, padding: '3px 8px', fontSize: 11 }}>Hide</button>}
         </div>
+        )}
 
-        {instOpen && <InstellingForm inst={tempo?.instelling ?? STANDAARD_INSTELLING} bezig={bezig} onOpslaan={async (i) => { if (await voerUit({ soort: 'instelling', instelling: i })) setInstOpen(false); }} onDicht={() => setInstOpen(false)} />}
+        {!loopt && instOpen && <InstellingForm inst={tempo?.instelling ?? STANDAARD_INSTELLING} bezig={bezig} onOpslaan={async (i) => { if (await voerUit({ soort: 'instelling', instelling: i })) setInstOpen(false); }} onDicht={() => setInstOpen(false)} />}
 
         {!beeld.gestart && (
           <div style={{ marginTop: 6 }}>
@@ -144,47 +192,6 @@ export function TafelTempo({ info, onEinde, compact = false, stoelKnop = null }:
                   Start battle: {TAFEL_TEAMNAMEN[t]} go first
                 </button>
               ))}
-            </div>
-          </div>
-        )}
-
-        {beeld.gestart && !beeld.klaar && tempo?.huidig && (
-          <div style={{ marginTop: 4 }}>
-            <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, flexWrap: 'wrap' }}>
-              <span data-testid="tempo-ronde" style={{ fontFamily: display, fontWeight: 700, fontSize: compact ? 16 : 19, color: TOW.ink }}>Round {beeld.ronde} · {teamNaam(beeld.team)}</span>
-              <span data-testid="tempo-klok" style={{ fontFamily: display, fontWeight: 700, fontSize: compact ? 20 : 26, color: beeld.restMs < 0 ? KLEUR.rood : TOW.ink, fontVariantNumeric: 'tabular-nums' }}>{klok(beeld.restMs)}</span>
-              <span style={{ fontFamily: serif, fontSize: 12, color: TOW.muted }}>of {Math.round(beeld.richtMs / 60000)} min{beeld.gepauzeerd ? ' · paused' : ''}</span>
-            </div>
-            <div data-testid="tempo-schema" style={{ display: 'flex', alignItems: 'center', gap: 7, marginTop: 4, flexWrap: 'wrap' }}>
-              <span style={{ padding: '2px 8px', borderRadius: 999, background: kleur, color: '#fff', fontFamily: display, fontWeight: 700, fontSize: 11.5 }}>
-                {achter <= 0 ? (achter < 0 ? `${-achter} min ahead` : 'On schedule') : `${achter} min behind`}
-              </span>
-              <span style={{ fontFamily: serif, fontSize: 12.5, color: TOW.parchDim }}>
-                Expected end {beeld.verwachtEind ? uurMin(beeld.verwachtEind) : '?'} · at this pace up to round {beeld.haalbaarTot}
-              </span>
-            </div>
-            {beeld.laatsteRonde && (
-              <div data-testid="tempo-laatste-ronde" style={{ marginTop: 6, padding: '6px 9px', borderRadius: 8, background: 'rgba(163,39,28,0.12)', border: `1px solid ${KLEUR.rood}`, fontFamily: serif, fontSize: 13, color: TOW.parch }}>
-                Last round: after {tempo.instelling.laatsteRonde} no new round starts. Finish this round.
-              </div>
-            )}
-            <button
-              data-testid="tempo-turn-done"
-              disabled={bezig}
-              onClick={() => tempo?.huidig && setVraagVoor({ ronde: tempo.huidig.ronde, team: tempo.huidig.team })}
-              style={{ marginTop: 9, width: '100%', padding: compact ? '12px 10px' : '15px 12px', borderRadius: 12, border: 'none', background: goldGrad, color: TOW.onGrad, fontFamily: display, fontWeight: 700, fontSize: compact ? 15 : 17, cursor: 'pointer' }}
-            >
-              Turn done: {teamNaam(beeld.team)}
-            </button>
-            <div style={{ display: 'flex', gap: 6, marginTop: 7, flexWrap: 'wrap' }}>
-              {tempo.huidig.pauzeSinds
-                ? <button data-testid="tempo-hervat" disabled={bezig} onClick={() => voerUit({ soort: 'hervat' })} style={knop}>Resume</button>
-                : <button data-testid="tempo-pauze" disabled={bezig} onClick={() => voerUit({ soort: 'pauze' })} style={knop}>Pause</button>}
-              <button data-testid="tempo-undo" disabled={bezig || !(tempo.vorige?.length)} onClick={() => voerUit({ soort: 'undo' })} style={knop}>Undo</button>
-              {tempo.beurten.length === 0 && (
-                <button disabled={bezig} onClick={() => voerUit({ soort: 'eersteTeam', eersteTeam: anderTeam(tempo.huidig!.team) })} style={knop}>{TAFEL_TEAMNAMEN[anderTeam(tempo.huidig.team)]} go first instead</button>
-              )}
-              <button data-testid="tempo-einde" disabled={bezig} onClick={() => setEindeOpen(true)} style={{ ...knop, color: TOW.blood }}>Battle ended</button>
             </div>
           </div>
         )}
@@ -204,7 +211,7 @@ export function TafelTempo({ info, onEinde, compact = false, stoelKnop = null }:
 
         {melding && <div data-testid="tempo-melding" style={{ marginTop: 6, fontFamily: serif, fontStyle: 'italic', fontSize: 12.5, color: TOW.blood }}>{melding}</div>}
 
-        {tempo && tempo.beurten.length > 0 && (
+        {tempo && tempo.beurten.length > 0 && (!loopt || meer) && (
           <div style={{ marginTop: 8 }}>
             <button onClick={() => setLogOpen((v) => !v)} style={{ ...knop, padding: '3px 8px', fontSize: 11 }}>{logOpen ? 'Hide log' : `Turn log (${tempo.beurten.length})`}</button>
             {logOpen && (
@@ -231,17 +238,19 @@ export function TafelTempo({ info, onEinde, compact = false, stoelKnop = null }:
       </div>
 
       {toonArtefact && tabel && artefactWeg !== beurtSleutel && (
-        <div data-testid="artefact-herinnering" style={{ ...kaart, borderColor: TOW.blood, background: 'rgba(160,40,30,0.07)' }}>
+        <div data-testid="artefact-herinnering" style={{ ...kaart, padding: '6px 8px', borderColor: TOW.blood, background: 'rgba(160,40,30,0.07)' }}>
           <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
             <div style={{ ...eb, fontSize: 8.5, color: TOW.blood, flex: 1 }}>Start of the turn · {info?.artefact?.naam}</div>
             <button onClick={() => setArtefactWeg(beurtSleutel)} style={{ ...knop, padding: '2px 8px', fontSize: 11 }}>Done</button>
           </div>
-          <div style={{ fontFamily: display, fontWeight: 700, fontSize: 14, color: TOW.ink, margin: '3px 0 4px' }}>
+          <div style={{ fontFamily: display, fontWeight: 700, fontSize: 13, color: TOW.ink, margin: '2px 0 5px' }}>
             {opShrine
               ? `${teamNaam(tempo?.huidig?.team ?? null)}: roll D6 on the ${tabel.naam} table`
               : `${teamNaam(controle)} control the ${tabel.naam}: roll D6 on its table`}
           </div>
-          <div style={{ fontFamily: serif, fontSize: 12.5, color: TOW.parchDim, lineHeight: 1.4 }}>
+          <button data-testid="artefact-tabel-toggle" onClick={() => setTabelOpen((v) => !v)} aria-expanded={tabelOpen} style={{ ...knop, padding: '3px 8px', fontSize: 11 }}>{tabelOpen ? 'Hide the table' : 'Show the table'}</button>
+          {tabelOpen && (<>
+          <div style={{ fontFamily: serif, fontSize: 12.5, color: TOW.parchDim, lineHeight: 1.4, marginTop: 6 }}>
             Aura {aura}″ in Act {info?.fase ?? 4}. Every unit within the aura, of both sides, rolls D6: on 4+ it is affected, until the start of this player’s next turn. A unit in combat cannot move: Forward, by His Will, Swift Obedience and Voices of Terror pass it by.
           </div>
           {opShrine && (
@@ -274,6 +283,7 @@ export function TafelTempo({ info, onEinde, compact = false, stoelKnop = null }:
               <button key={label} disabled={bezig} onClick={() => voerUit({ soort: 'artefactBij', team: t })} aria-pressed={controle === t} style={{ ...knop, padding: '3px 8px', fontSize: 11, background: controle === t ? TOW.panel : 'transparent' }}>{label}</button>
             ))}
           </div>
+          </>)}
         </div>
       )}
 
