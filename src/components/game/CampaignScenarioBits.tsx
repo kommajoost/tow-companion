@@ -13,9 +13,10 @@ import { terrainPlacementShort } from '../../lib/terrainPlacement';
 import { eersteBeurtVast, scenarioBonusVan, CAMPAGNE_OBJECTIVES } from '../../lib/campaignScenario';
 import { kantTekst, postSamenvatting, type ScenarioBonus } from '../../lib/scenarioBonus';
 import {
-  WRATH_NOG_NIET, WRATH_REGEL, gooiWrath, volledigeWorp, wrathActief, wrathGeldt, wrathSleutel,
+  WRATH_NOG_NIET, wrathRegel, wrathRegelVoorAct, gooiWrath, volledigeWorp, wrathActief, wrathGeldt, wrathSleutel,
   type WrathTrigger,
 } from '../../lib/wrathTriggers';
+import { isTafelTestCode } from '../../lib/tafel';
 import { isScenarioTestCode } from '../../lib/scenarioTest';
 
 // GEDEELDE STUKKEN VAN DE CAMPAGNE-BRIEFING (22-10-2026).
@@ -207,12 +208,14 @@ export function ScenarioVpLijst({ def, battle, compact = false }: { def: Scenari
 export interface WrathStand {
   /** Geldt de Wrath hier (Act 3+, geen Battle March)? Zo niet, dan toont niemand iets. */
   geldt: boolean;
-  /** De twee actieve triggers in worp-volgorde. Leeg = geldt wel, maar er is (nog) geen worp. */
+  /** De actieve triggers (1-6, per Act) in de volgorde van de server. Leeg = geldt wel, maar er is (nog) geen worp. */
   triggers: WrathTrigger[];
   /** Lokaal gegooid (Scenario lab / scenario-test) in plaats van door de campagne. */
   lokaal: boolean;
   /** Alleen in het Scenario lab: opnieuw gooien. */
   reroll: (() => void) | null;
+  /** De Act (bepaalt hoeveel triggers er actief zijn en welke regeltekst er staat). */
+  fase: number | null;
 }
 
 /**
@@ -224,23 +227,29 @@ export interface WrathStand {
 export function useWrath(battle: CampaignBattle | null | undefined, code: string | null | undefined): WrathStand {
   const lab = useLab();
   const sleutelCode = code || battle?.code || '';
-  const lokaal = isScenarioTestCode(sleutelCode);
+  // De tafeltest (blok E) zonder worp in zijn voorbeeld gooit ook lokaal; mét worp toont hij die.
+  const lokaal = isScenarioTestCode(sleutelCode) || (isTafelTestCode(sleutelCode) && !battle?.wrath?.length);
   const [raw, zet] = usePersistentState<number[]>(wrathSleutel(sleutelCode), []);
   const fase = battle ? battle.fase ?? asNum(sheetVan(battle).fase) : null;
   const geldt = !!battle && wrathGeldt(fase, battle.battleMarch);
-  const lokaleWorp = lokaal ? volledigeWorp(raw) : null;
+  // 23-11-2026: het aantal actieve triggers groeit per Act. Een lokale worp die bij een andere Act hoort
+  // (het lab wisselde van Act onder dezelfde code) telt niet en wordt opnieuw gegooid.
+  const nodig = wrathRegelVoorAct(fase).actief;
+  const geldigeWorp = lokaal ? volledigeWorp(raw) : null;
+  const lokaleWorp = geldigeWorp && geldigeWorp.length === nodig ? geldigeWorp : null;
   const heeftWorp = !!lokaleWorp;
   // Lokaal en nog geen (bruikbare) worp: nu gooien. Na een reset van het lab staat er weer [] en komt er
   // vanzelf een nieuwe.
   useEffect(() => {
-    if (lokaal && geldt && !heeftWorp) zet(gooiWrath());
-  }, [lokaal, geldt, heeftWorp, zet]);
+    if (lokaal && geldt && !heeftWorp) zet(gooiWrath(fase));
+  }, [lokaal, geldt, heeftWorp, zet, fase]);
   const d6 = lokaal ? lokaleWorp ?? [] : battle?.wrath ?? [];
   return {
     geldt,
     triggers: geldt ? wrathActief(d6) : [],
     lokaal,
-    reroll: lokaal && lab ? () => zet(gooiWrath()) : null,
+    reroll: lokaal && lab ? () => zet(gooiWrath(fase)) : null,
+    fase,
   };
 }
 
@@ -254,11 +263,11 @@ export function WrathVast({ stand, compact = false }: { stand: WrathStand; compa
   return (
     <div data-testid="wrath-vast">
       <div style={{ fontFamily: serif, fontStyle: 'italic', fontSize: 12, color: TOW.muted, lineHeight: 1.4, margin: '0 0 8px' }}>
-        {stand.lokaal ? 'Rolled here for this test with the campaign rule: two different triggers, a double is rolled again.' : WRATH_REGEL}
+        {stand.lokaal ? `Rolled here for this test with the campaign rule. ${wrathRegel(stand.fase)}` : wrathRegel(stand.fase)}
       </div>
       {stand.triggers.length === 0 ? (
         <div data-testid="wrath-nog-niet" style={{ fontFamily: serif, fontSize: 13, color: TOW.parch, lineHeight: 1.45, border: `1px dashed ${TOW.lineStrong}`, borderRadius: 9, padding: compact ? '6px 8px' : '8px 10px' }}>
-          {WRATH_NOG_NIET}. You will see the two here, on the campaign battle page and on the battle sheet.
+          {WRATH_NOG_NIET}. You will see them here, on the campaign battle page and on the battle sheet.
         </div>
       ) : (
         <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: 6 }}>

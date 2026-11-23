@@ -352,6 +352,12 @@ export interface GameTracker {
    *  ineens in een lobby te belanden voor een potje dat al loopt. Alleen wat de wizard aanmaakt
    *  begint expliciet op `false`. */
   gestart?: boolean;
+  /** ACT 4-TAFEL (blok E, 24-11-2026): de tempometer van de tafel (lib/tempo.ts, `TempoStand`). Alleen
+   *  via een compare-and-set op `rev` geschreven (tow_game_tracker_patch), nooit als deel van de hele
+   *  tracker. Ontbreekt = geen tempometer (elk ander potje). */
+  tempo?: unknown;
+  /** ACT 4-TAFEL: de eindvragen (plein aan het eind, artefact, raiders), zodat alle vier de telefoons ze zien. */
+  tafelEinde?: { plein?: 'A' | 'B' | null; artefact?: string | null; raiders?: Record<string, boolean> };
 }
 
 /** A shared game row (mirrors the tow_games table). */
@@ -362,6 +368,14 @@ export interface GameRow {
   guest_name: string | null;
   guest_army: Army | null;
   tracker: GameTracker | null;
+  /** ACT 4-TAFEL (blok E, 24-11-2026): de twee extra stoelen van een gedeelde 2-tegen-2-battle, en wie
+   *  waar zit. Alleen gevuld bij een tafel; een 1-tegen-1-rij heeft ze niet (of null). Optioneel, zodat
+   *  een database zonder deze kolommen (de campagne vóór de migratie) gewoon blijft werken. */
+  host2_name?: string | null;
+  host2_army?: Army | null;
+  guest2_name?: string | null;
+  guest2_army?: Army | null;
+  stoelen?: unknown;
 }
 
 /** Lightweight game summary for the join lobby (no army payloads). */

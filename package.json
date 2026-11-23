@@ -1,7 +1,7 @@
 {
   "name": "tow-companion",
   "private": true,
-  "version": "0.1.485",
+  "version": "0.1.486",
   "type": "module",
   "description": "Warhammer: The Old World turn companion - mobile PWA",
   "scripts": {
@@ -47,6 +47,7 @@
     "test:campaign-terrain": "node --test scripts/tests/campaign-terrain.test.cjs",
     "test:scenario-bonus": "node --test scripts/tests/scenario-bonus.test.cjs",
     "test:scenario-units": "node --test scripts/tests/scenario-units.test.cjs",
+    "test:tafel": "node --test scripts/tests/tafel.test.cjs",
     "tactics:list": "node tactics/lijst.mjs",
     "tactics:select": "node tactics/selectie.mjs",
     "tactics:dates": "node tactics/datums.mjs",

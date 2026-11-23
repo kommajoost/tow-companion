@@ -37,6 +37,9 @@ import { VERSTERKING_OVERAL, versterkingVan, versterkingVoorKant, voegVersterkin
 import { postGeldtVoor } from '../../lib/scenarioBonus';
 import { aangetikt, gedoodDoorVijand, knopLabel, postUitUnits, REKENREGEL, soortUitsluiting, tikUnit, uitsluiting, uitsluitingTekst, waardeNu } from '../../lib/scenarioUnits';
 import type { VpUnitTrack } from '../../lib/victoryPoints';
+import { TafelTempo } from './TafelTempo';
+import { stoelLabel, TAFEL_TEAMNAMEN, tafelInfo } from '../../lib/tafel';
+import type { Team } from '../../lib/teams';
 
 const eb = engraved as React.CSSProperties;
 const display = towFont.display;
@@ -52,7 +55,12 @@ const Shield = ({ c, size = 22 }: { c: string; size?: number }) => (
 // Wide (28-10-2026): a compact two-row header (code, You/Opponent, round/VP, reminders) above a
 // unit list on the left and the selected unit's full card on the right.
 export function GameView() {
-  const { code, seat, myArmy, myName, opponentArmy, opponentName, setMyArmy, setOpponentArmy, allyArmy, opponent2Army, setAllyArmy, setOpponent2Army, tracker, setTracker, leaveGame } = useGame();
+  const { code, seat, myArmy, myName, opponentArmy, opponentName, setMyArmy, setOpponentArmy, allyArmy, opponent2Army, setAllyArmy, setOpponent2Army, tracker, setTracker, leaveGame, stoel, verlaatStoel } = useGame();
+  // ACT 4-TAFEL (blok E, 24-11-2026): een gedeelde 2-tegen-2-battle met vier stoelen. Werkt als het solo-2v2
+  // (stoelen host/host2/guest/guest2, legers absoluut per stoel), maar elke telefoon heeft zijn eigen stoel.
+  const tafel = seat === 'tafel';
+  const tafelData = tafel ? tafelInfo(code) : null;
+  const teamNaam = (t: Team): string => (tafel ? TAFEL_TEAMNAMEN[t] : TEAM_NAAM[t]);
   const { setRuleOverlay } = useData();
   // GameView only mounts while a game is active, so a hardware Back here leaves the game.
   useBackClose(true, leaveGame);
@@ -61,11 +69,12 @@ export function GameView() {
   // van You/Opponent kies je dan één van vier stoelen; roster, wonden, flee en kills werken per stoel
   // precies als in 1v1, onder de sleutel `<stoel>:<unitId>`. Een 1v1-potje (ook solo) komt hier nooit:
   // zonder `tracker.teams` blijft `teamModus` false en loopt alles via `side` zoals voorheen.
-  const teamModus = seat === 'solo' && isTeamTracker(tracker);
-  const [speler, setSpeler] = useState<TeamStoel>('host');
+  const teamModus = (seat === 'solo' || tafel) && isTeamTracker(tracker);
+  const [speler, setSpeler] = useState<TeamStoel>(stoel ?? 'host');
   const legers: Record<TeamStoel, Army | null> = { host: myArmy, host2: allyArmy, guest: opponentArmy, guest2: opponent2Army };
   const zetLeger: Record<TeamStoel, (a: Army) => void> = { host: setMyArmy, host2: setAllyArmy, guest: setOpponentArmy, guest2: setOpponent2Army };
-  const naam = (st: TeamStoel) => naamVan(tracker, st);
+  // Aan een tafel heet een stoel waar nog niemand zit "1st general"/"2nd general" (geen "Ally"/"Opponent").
+  const naam = (st: TeamStoel) => (tafel && !tracker.spelers?.[st]?.trim() ? (st === 'host' || st === 'guest' ? '1st general' : '2nd general') : naamVan(tracker, st));
   const [endOpen, setEndOpen] = useState(false); // einde-battle-overzicht open?
   const [sheetOpen, setSheetOpen] = useState(false); // battle sheet als overlay open?
   // Roster units are collapsed by default; tapping a unit's header expands just that one (keeps the
@@ -104,6 +113,8 @@ export function GameView() {
     setSpeler(st);
     setTeamStoel((t) => ({ ...t, [teamVan(st)]: st }));
   };
+  // Aan een tafel opent het scherm op je eigen stoel (en volgt het als je van stoel wisselt).
+  useEffect(() => { if (tafel && stoel) kiesSpeler(stoel); /* eslint-disable-next-line react-hooks/exhaustive-deps */ }, [tafel, stoel]);
 
   const army: Army | null = legerVan(zicht);
   // Wie kon deze kant killen? Het leger AAN DE ANDERE KANT van de tafel. Wordt de dropdown-inhoud bij
@@ -192,7 +203,7 @@ export function GameView() {
 
   // ── shared battle tracker (absolute seat keys so both players agree) ──
   const absSeat = (s: 'me' | 'opp'): string =>
-    seat === 'solo' ? (s === 'me' ? 'host' : 'guest') : s === 'me' ? seat ?? 'host' : seat === 'host' ? 'guest' : 'host';
+    seat === 'solo' || seat === 'tafel' ? (s === 'me' ? 'host' : 'guest') : s === 'me' ? seat ?? 'host' : seat === 'host' ? 'guest' : 'host';
   // 2v2: de sleutel volgt de gekozen STOEL (host/host2/guest/guest2); `s` doet dan niet mee.
   const unitKey = (z: Zicht, unitId: string) => `${teamModus ? z.speler : absSeat(z.side)}:${unitId}`;
   const meKey = absSeat('me');
@@ -286,8 +297,8 @@ export function GameView() {
   // 2v2: de ronde/VP-balk is van het hele potje, dus hij blijft staan zolang één van de vier een leger heeft
   // (ook als je net de stoel bekijkt die nog leeg is).
   const toonPanelen = (teamModus ? !!(myArmy || allyArmy || opponentArmy || opponent2Army) : !!army) || scenarioTest;
-  const hostName = teamModus ? TEAM_NAAM.A : meKey === 'host' ? (myName || 'You') : (opponentName || 'Opponent');
-  const guestName = teamModus ? TEAM_NAAM.B : meKey === 'host' ? (opponentName || 'Opponent') : (myName || 'You');
+  const hostName = teamModus ? teamNaam('A') : meKey === 'host' ? (myName || 'You') : (opponentName || 'Opponent');
+  const guestName = teamModus ? teamNaam('B') : meKey === 'host' ? (opponentName || 'Opponent') : (myName || 'You');
   const vpMe = meKey === 'host' ? res.hostVp : res.guestVp;
   const vpOpp = meKey === 'host' ? res.guestVp : res.hostVp;
   const leader: 'me' | 'opp' | null = res.winnaar == null ? null : res.winnaar === meKey ? 'me' : 'opp';
@@ -329,7 +340,7 @@ export function GameView() {
   const afield = afieldVan(zicht);
   // 2v2: hoe deze stoel heet in kopjes, en de knoptekst om een leger toe te voegen.
   const zonderEigenNaam = (st: TeamStoel) => !tracker.spelers?.[st]?.trim();
-  const legerKop = (st: TeamStoel) => `${TEAM_NAAM[teamVan(st)]} · ${naam(st)}`;
+  const legerKop = (st: TeamStoel) => `${teamNaam(teamVan(st))} · ${naam(st)}`;
 
   const groepenVan = (a: Army | null): { category: string; units: ArmyUnit[] }[] => {
     const groups: { category: string; units: ArmyUnit[] }[] = [];
@@ -367,8 +378,8 @@ export function GameView() {
   const spelerKeuze = teamModus && (
     <div data-testid="game-spelerkeuze" style={{ display: 'flex', gap: 8 }}>
       {(['A', 'B'] as const).map((team) => (
-        <div key={team} role="group" aria-label={TEAM_NAAM[team]} style={{ flex: 1, minWidth: 0 }}>
-          <div style={{ ...eb, fontSize: 7.5, color: naast || teamVan(speler) === team ? TOW.goldDeep : TOW.muted, margin: '0 0 3px 2px', whiteSpace: 'nowrap' }}>{TEAM_NAAM[team]}{naast ? (team === 'A' ? ' · left' : ' · right') : ''}</div>
+        <div key={team} role="group" aria-label={teamNaam(team)} style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ ...eb, fontSize: 7.5, color: naast || teamVan(speler) === team ? TOW.goldDeep : TOW.muted, margin: '0 0 3px 2px', whiteSpace: 'nowrap' }}>{teamNaam(team)}{naast ? (team === 'A' ? ' · left' : ' · right') : ''}</div>
           <div style={{ display: 'flex', gap: 4 }}>
             {stoelenVan(team).map((st) => {
               // Naast elkaar: per team de stoel die in die kolom staat.
@@ -386,7 +397,7 @@ export function GameView() {
   const kantKeuze = spelerKeuze || sideToggle;
 
   const battleBar = toonPanelen && (
-    <BattleBar round={tracker.round} maxRound={maxRound} onRound={adjRound} vpMe={vpMe} vpOpp={vpOpp} leader={leader} myName={teamModus ? TEAM_NAAM.A : myName || 'You'} opponentName={teamModus ? TEAM_NAAM.B : opponentName || 'Opponent'} editable={editable} vertical={false} compact={!wide} />
+    <BattleBar round={tracker.round} maxRound={maxRound} onRound={adjRound} vpMe={vpMe} vpOpp={vpOpp} leader={leader} myName={teamModus ? teamNaam('A') : myName || 'You'} opponentName={teamModus ? teamNaam('B') : opponentName || 'Opponent'} editable={editable} vertical={false} compact={!wide} />
   );
   // DE REMINDER-BALK (Joost 05-10-2026): vast onder de ronde/VP-balk, met het weer en — bij een
   // campagne-battle — wat beide kanten meebrengen. Host = aanvaller, guest = verdediger: dezelfde
@@ -413,8 +424,8 @@ export function GameView() {
   const reminderStrip = toonPanelen && (
     <ReminderStrip
       weer={tracker.weer ?? null}
-      mij={kantVan(meKey, myName || 'You')}
-      tegen={kantVan(absSeat('opp'), opponentName || 'Opponent')}
+      mij={tafel && stoel ? kantVan(teamVan(stoel) === 'A' ? 'host' : 'guest', teamNaam(teamVan(stoel))) : kantVan(meKey, myName || 'You')}
+      tegen={tafel && stoel ? kantVan(teamVan(stoel) === 'A' ? 'guest' : 'host', teamNaam(teamVan(stoel) === 'A' ? 'B' : 'A')) : kantVan(absSeat('opp'), opponentName || 'Opponent')}
       wrath={wrathStand.geldt ? wrathStand.triggers : null}
       eersteBeurt={campagne ? eersteBeurtZin(campagne) : null}
     />
@@ -428,7 +439,7 @@ export function GameView() {
   const objectivesPaneelVan = (z: Zicht) => toonPanelen && (
     <ObjectivesTracker
       zijde={teamModus ? objectiefStoel(teamVan(z.speler)) : absSeat(z.side) === 'guest' ? 'guest' : 'host'}
-      naam={teamModus ? TEAM_NAAM[teamVan(z.speler)] : z.side === 'me' ? (myName || 'You') : (opponentName || 'Opponent')}
+      naam={teamModus ? teamNaam(teamVan(z.speler)) : z.side === 'me' ? (myName || 'You') : (opponentName || 'Opponent')}
       editable={editable}
       round={tracker.round}
     />
@@ -500,6 +511,16 @@ export function GameView() {
   };
   const versterkingPaneel = versterkingPaneelVan(zicht);
 
+  // ACT 4-TAFEL: de tempometer met Turn done, de plein-vraag en de artefact-herinnering (TafelTempo).
+  const tafelTempo = tafel && teamModus && (
+    <TafelTempo
+      info={tafelData}
+      compact
+      onEinde={() => setEndOpen(true)}
+      stoelKnop={stoel ? <button data-testid="tafel-stoel-wissel" onClick={() => { void verlaatStoel(); }} title={`You sit as ${stoelLabel(stoel)}. Stand up and pick again.`} style={{ border: `1px solid ${TOW.lineStrong}`, borderRadius: 9, background: 'transparent', color: TOW.muted, cursor: 'pointer', padding: '3px 8px', fontFamily: display, fontSize: 11 }}>Change seat</button> : null}
+    />
+  );
+
   const endModal = endOpen && (
     <EndBattleOverview
       res={res}
@@ -508,7 +529,7 @@ export function GameView() {
       hostArmy={hostArmy}
       guestArmy={guestArmy}
       onClose={() => setEndOpen(false)}
-      team={teamRes ? { res: teamRes, spelers: TEAM_STOELEN.map((st) => ({ stoel: st, naam: naam(st), army: legers[st] })) } : undefined}
+      team={teamRes ? { res: teamRes, spelers: TEAM_STOELEN.map((st) => ({ stoel: st, naam: naam(st), army: legers[st] })), ...(tafel ? { teamNamen: TAFEL_TEAMNAMEN } : {}) } : undefined}
     />
   );
 
@@ -531,6 +552,11 @@ export function GameView() {
         {g.units.map((u) => unitKaart(z, a, u, { collapsed: !expanded.has(expKey(u.id)), onToggleCollapse: () => toggleExpand(expKey(u.id)) }))}
       </div>
     ))
+  ) : tafel && teamModus && z.speler !== stoel ? (
+    // ACT 4-TAFEL: een andere stoel vult zijn eigen speler op zijn eigen telefoon.
+    <div data-testid="tafel-lege-stoel" style={{ padding: '14px 2px 0', fontFamily: serif, fontStyle: 'italic', fontSize: 13.5, color: TOW.muted }}>
+      {stoelLabel(z.speler)}: waiting for {tracker.spelers?.[z.speler] ? `${tracker.spelers[z.speler]} to load his army` : 'a general to sit down'} on his own phone.
+    </div>
   ) : teamModus ? (
     // 2v2: een lege stoel vul je hier, net als het tegenstander-leger in 1v1. `key` per stoel, zodat
     // half geplakte tekst niet meeverhuist naar de volgende speler.
@@ -743,6 +769,7 @@ export function GameView() {
               <div style={{ flex: '1 1 260px', minWidth: 0 }}>{reminderStrip}</div>
             </div>
           )}
+          {tafelTempo && <div style={{ maxHeight: '46vh', overflowY: 'auto' }}>{tafelTempo}</div>}
         </div>
 
         {naast ? (
@@ -830,6 +857,7 @@ export function GameView() {
           {stopKnoppen}
         </div>
         {battleBar && reminderStrip}
+        {tafelTempo && <div style={{ maxHeight: '52vh', overflowY: 'auto' }}>{tafelTempo}</div>}
       </div>
 
       {kiesModus ? (

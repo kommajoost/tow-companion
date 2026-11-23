@@ -540,7 +540,7 @@ export function CampaignBattlePanel({ code, onDismiss }: { code: string; onDismi
   if (muurVerdediger) setupStappen.push('The defender places their low wall anywhere in their own half; it does not scatter.');
   if (terrain.some((t) => !t.byDefender)) setupStappen.push(muurVerdediger || scenarioGebouwen.length > 0 ? 'Then place the terrain pieces in turn (below).' : 'Place the terrain (below).');
   // 23-10-2026: de campagne gooit ze (begin War phase); aan tafel alleen nog weten welke twee het zijn.
-  if (wrath) setupStappen.push(battle.wrath || scenarioTest ? 'Note the two Wrath Triggers of this battle — see Wrath Triggers.' : 'Wrath Triggers: rolled by the campaign when the War phase begins — see Wrath Triggers.');
+  if (wrath) setupStappen.push(battle.wrath || scenarioTest ? 'Note the active Wrath Triggers of this battle — see Wrath Triggers.' : 'Wrath Triggers: rolled by the campaign when the War phase begins — see Wrath Triggers.');
   setupStappen.push('Deploy your armies in their zones.');
   // 25-10-2026 (Joost): claim-battle zonder aanvaller/verdediger -- "The defender sets up ..." wordt de naam.
   const setupZinnen = setupStappen.map(rol);

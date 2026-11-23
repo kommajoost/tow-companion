@@ -166,7 +166,7 @@ test('Wrath Triggers: zes, letterlijk, alleen vanaf Act 3', () => {
       assert.ok(rijen.includes(JSON.stringify([`${t.d6}`, `**${t.naam}**`, t.wanneer, t.effect])), `trigger ${t.d6} letterlijk`);
     }
   }
-  assert.deepEqual(wrath.normWrath([7, 2, 2, 'x', 4, 5]), [2, 4]);
+  assert.deepEqual(wrath.normWrath([7, 2, 2, 'x', 4, 5]), [2, 4, 5]);
   assert.equal(wrath.wrathGeldt(3, false), true);
   assert.equal(wrath.wrathGeldt(2, true), false);
   assert.equal(wrath.wrathGeldt(3, true), false);
@@ -181,7 +181,13 @@ test('Wrath: de server-worp uit towc_battle_by_code', () => {
   assert.equal(wrath.parseWrath(null), null);
   assert.equal(wrath.parseWrath(undefined), null);
   assert.equal(wrath.parseWrath({ d6: [3, 3] }), null, 'een dubbel is geen geldige worp');
-  assert.equal(wrath.parseWrath({ d6: [3] }), null);
+  // 23-11-2026: d6 = de lijst ACTIEVE triggers, 1 tot 6 waarden (Act 4 drie, Act 5 vier, Act 7 zes).
+  assert.deepEqual(wrath.parseWrath({ d6: [3] }), [3]);
+  assert.deepEqual(wrath.parseWrath({ d6: [4, 1, 6], worp: [4, 1, 6], modus: 'actief' }), [4, 1, 6]);
+  assert.deepEqual(wrath.parseWrath({ d6: [1, 3, 4, 6], worp: [2, 5], modus: 'niet-actief' }), [1, 3, 4, 6]);
+  assert.deepEqual(wrath.parseWrath({ d6: [1, 2, 3, 4, 5, 6], modus: 'alles' }), [1, 2, 3, 4, 5, 6]);
+  assert.equal(wrath.parseWrath({ d6: [] }), null);
+  assert.equal(wrath.parseWrath({ d6: [1, 2, 3, 4, 5, 6, 1] }), null);
   assert.equal(wrath.parseWrath({ d6: [0, 7] }), null);
   assert.deepEqual(wrath.wrathActief([4, 6]).map((t) => t.naam), ['The Weeping Rift', 'The Wrath Offers']);
 });
@@ -190,13 +196,13 @@ test('Wrath: lokaal gooien geeft altijd twee verschillende (dubbel = opnieuw)', 
   // Een vaste rng die eerst een dubbel 3 geeft en dan een 6: de tweede dobbelsteen gaat opnieuw.
   const rij = [2 / 6, 2 / 6, 2 / 6, 5 / 6];
   let i = 0;
-  assert.deepEqual(wrath.gooiWrath(() => rij[i++]), [3, 6]);
+  assert.deepEqual(wrath.gooiWrath(3, () => rij[i++]), [3, 6]);
   // Een kapotte rng (altijd 0) mag geen eindeloze lus geven.
-  assert.deepEqual(wrath.gooiWrath(() => 0), [1, 2]);
+  assert.deepEqual(wrath.gooiWrath(3, () => 0), [1, 2]);
   // Met Math.random: 5000 worpen, nooit een dubbel, alle zes de waarden komen voor.
   const gezien = new Set();
   for (let n = 0; n < 5000; n++) {
-    const [a, b] = wrath.gooiWrath();
+    const [a, b] = wrath.gooiWrath(3);
     assert.notEqual(a, b);
     assert.ok(a >= 1 && a <= 6 && b >= 1 && b <= 6);
     gezien.add(a); gezien.add(b);
@@ -221,4 +227,29 @@ test('scenario-test: base64url-hash met UTF-8 terug naar de sheet', () => {
   assert.equal(st.payloadUitHash(''), null);
   assert.ok(st.isScenarioTestCode('scentest'));
   assert.ok(!st.isScenarioTestCode('TEST00'));
+});
+
+test('Wrath per Act (23-11-2026): Act 3 twee, Act 4 drie, Act 5 vier, Act 6 vijf, Act 7 zes actief', () => {
+  const verwacht = { 3: 2, 4: 3, 5: 4, 6: 5, 7: 6 };
+  for (const [act, n] of Object.entries(verwacht)) {
+    assert.equal(wrath.wrathRegelVoorAct(Number(act)).actief, n, `Act ${act}`);
+    for (let k = 0; k < 500; k++) {
+      const w = wrath.gooiWrath(Number(act));
+      assert.equal(w.length, n, `Act ${act} geeft ${n} actieve`);
+      assert.equal(new Set(w).size, n, 'geen dubbele');
+      assert.ok(w.every((x) => x >= 1 && x <= 6));
+    }
+  }
+  // Act 5: de twee gegooide zijn NIET actief.
+  const rij = [1 / 6, 4 / 6];
+  let i = 0;
+  assert.deepEqual(wrath.gooiWrath(5, () => rij[i++]), [1, 3, 4, 6]);
+  // Act 6: de ene gegooide is niet actief.
+  assert.deepEqual(wrath.gooiWrath(6, () => 0), [2, 3, 4, 5, 6]);
+  assert.deepEqual(wrath.gooiWrath(7), [1, 2, 3, 4, 5, 6]);
+  assert.match(wrath.wrathRegel(4), /3D6.*3 Wrath Triggers are active/);
+  assert.match(wrath.wrathRegel(5), /2D6.*NOT active, the other four are/);
+  assert.match(wrath.wrathRegel(6), /1D6.*NOT active, the other five are/);
+  assert.match(wrath.wrathRegel(7), /All six/);
+  assert.equal(wrath.wrathRegel(3), wrath.WRATH_REGEL);
 });

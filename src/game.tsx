@@ -14,8 +14,18 @@ import type { BattleVeteranen, VetUnit } from './lib/campaignBattle';
 import { formatDef, type BattleSheet } from './lib/battleSheet';
 import type { Army, GameRow, GameSummary, GameTracker, GameWeer, TeamStoel } from './types';
 import { schoneNamen } from './lib/teams';
+import { trackerDiff, pasPatchesToe, type TrackerPatch } from './lib/trackerPatch';
+import {
+  apparaatId, bewaarMijnStoel, bewaarTafel, isTafelTestCode, leesMijnStoel, leesStoelen, stoelZet,
+  type StoelAntwoord, type Stoelen, type TafelInfo,
+} from './lib/tafel';
 
-type Seat = 'host' | 'guest' | 'solo';
+/** 'tafel' (blok E, 24-11-2026): een gedeelde Act 4-battle met vier stoelen; welke stoel van DIT toestel
+ *  is staat in `stoel` (lib/tafel.ts leesMijnStoel). De legers staan absoluut per stoel, net als in solo. */
+type Seat = 'host' | 'guest' | 'solo' | 'tafel';
+
+/** Wat de tafel-RPC teruggeeft (tow_game_tracker_patch). */
+export interface PatchAntwoord { ok: boolean; fout?: string; tracker?: GameTracker }
 
 /** De gedeelde GAME-REGELS van een potje: welk formaat, en welk weer. Ze horen bij de game en niet bij
  *  een speler, dus ze leven in de tracker (zie GameTracker.battleMarch/weer) — `tow_games` heeft geen
@@ -83,6 +93,19 @@ interface GameContextValue {
   /** De host drukt op Start: het potje begint voor beide spelers. */
   startBattle: () => void;
   leaveGame: () => void;
+  // ── ACT 4-TAFEL (blok E, 24-11-2026) ──
+  /** Mijn stoel aan de tafel (alleen bij seat 'tafel'); null = nog niet gekozen. */
+  stoel: TeamStoel | null;
+  /** Wie waar zit (kolom tow_games.stoelen). */
+  stoelen: Stoelen;
+  /** Ga aan deze tafel zitten (nog zonder stoel): de tafel wordt bewaard en de gedeelde rij gevolgd. */
+  openTafel: (info: TafelInfo, code: string) => void;
+  /** Claim een stoel met je general en je leger. `actie: 'overnemen'` neemt hem over van een ander toestel. */
+  claimStoel: (stoel: TeamStoel, general: { id: string; naam: string }, army: Army | null, veteranen?: VetUnit[], actie?: 'claim' | 'overnemen') => Promise<StoelAntwoord>;
+  /** Sta op van je stoel (op dit toestel) en kies opnieuw. */
+  verlaatStoel: () => Promise<void>;
+  /** Zet alleen deze paden in de gedeelde tracker. `tempoRev` = compare-and-set op tracker.tempo.rev. */
+  tafelPatch: (patches: TrackerPatch[], tempoRev?: number | null) => Promise<PatchAntwoord>;
 }
 
 const Ctx = createContext<GameContextValue | null>(null);
@@ -144,7 +167,7 @@ function withTimeout<T>(p: PromiseLike<T>, ms: number, msg: string): Promise<T> 
 // XP GING HIER VERLOREN (20-08-2026): `towc_battle_by_code` levert per veteraan-unit óók `xp` (zie
 // VetUnit in lib/campaignBattle.ts), maar dit stempel kopieerde alleen abilities + littekens. Aan tafel
 // is de XP juist het getal dat zegt hoe hard deze unit ná het potje op de veteran-tabel rolt.
-function annotateArmyWithVets(army: Army | null, vets: VetUnit[] | undefined): Army | null {
+export function annotateArmyWithVets(army: Army | null, vets: VetUnit[] | undefined): Army | null {
   if (!army || !vets || vets.length === 0) return army;
   const byId = new Map(vets.map((v) => [v.unitId, v]));
   return {
@@ -286,6 +309,13 @@ export function GameProvider({ children }: { children: ReactNode }) {
 
   const seat = persisted?.seat ?? null;
   const code = persisted?.code ?? null;
+  // ACT 4-TAFEL: mijn stoel. Niet in `tow:game`, want in de tafeltest delen vier tabbladen die sleutel;
+  // lib/tafel.ts bewaart hem per toestel (echt) of per tabblad (test).
+  const [stoel, setStoelState] = useState<TeamStoel | null>(() => (seat === 'tafel' ? leesMijnStoel(code) : null));
+  useEffect(() => { setStoelState(seat === 'tafel' ? leesMijnStoel(code) : null); }, [seat, code]);
+  // Lopende tafel-schrijfacties: zolang er een onderweg is, laten we een antwoord van de server de
+  // optimistische stand niet terugzetten (de laatste schrijfactie brengt de eindstand mee).
+  const patchesOnderweg = useRef(0);
 
   // ── realtime subscription to the active game row ──
   useEffect(() => {
@@ -306,7 +336,11 @@ export function GameProvider({ children }: { children: ReactNode }) {
           guest_army: row.guest_army ?? prev.guest_army,
           host_name: row.host_name ?? prev.host_name,
           guest_name: row.guest_name ?? prev.guest_name,
-          tracker: row.tracker ?? prev.tracker,
+          // Act 4-tafel: dezelfde bescherming voor de twee extra stoelen (bestaan alleen op een tafel-rij).
+          host2_army: row.host2_army ?? prev.host2_army,
+          guest2_army: row.guest2_army ?? prev.guest2_army,
+          // Een eigen tafel-schrijfactie is nog onderweg: houd de optimistische tracker vast.
+          tracker: patchesOnderweg.current > 0 ? prev.tracker : row.tracker ?? prev.tracker,
         };
       });
     };
@@ -575,12 +609,24 @@ export function GameProvider({ children }: { children: ReactNode }) {
     return (data ?? []) as GameSummary[];
   }, []);
 
+  /** ACT 4-TAFEL: het leger van één stoel in zijn eigen kolom. Elke speler schrijft alleen zijn eigen
+   *  kolom, dus vier telefoons zitten elkaar niet in de weg. */
+  const zetTafelLeger = useCallback((s: TeamStoel, army: Army | null) => {
+    if (!code) return;
+    const col = `${s}_army`;
+    setGame((g) => (g ? { ...g, [col]: army } : g));
+    supabase.from(TOW_GAMES).update({ [col]: army }).eq('code', code).then(({ error: err }) => {
+      if (err) setError(supaErr(err));
+    });
+  }, [code]);
+
   const setMyArmy = useCallback(
     (army: Army) => {
       if (seat === 'solo') {
         setSoloMine(army);
         return;
       }
+      if (seat === 'tafel') { zetTafelLeger('host', army); return; }
       if (!code || !seat) return;
       const col = seat === 'host' ? 'host_army' : 'guest_army';
       setGame((g) => (g ? { ...g, [col]: army } : g)); // optimistic
@@ -592,7 +638,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
           if (err) setError(supaErr(err));
         });
     },
-    [seat, code, setSoloMine],
+    [seat, code, setSoloMine, zetTafelLeger],
   );
 
   // Edit the opponent's army. Solo: local state. Online: write the opponent's column so
@@ -603,6 +649,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
         setSoloOpponent(army);
         return;
       }
+      if (seat === 'tafel') { zetTafelLeger('guest', army); return; }
       if (!code || !seat) return;
       const col = seat === 'host' ? 'guest_army' : 'host_army';
       setGame((g) => (g ? { ...g, [col]: army } : g)); // optimistic
@@ -614,13 +661,47 @@ export function GameProvider({ children }: { children: ReactNode }) {
           if (err) setError(supaErr(err));
         });
     },
-    [seat, code, setSoloOpponent],
+    [seat, code, setSoloOpponent, zetTafelLeger],
   );
 
   // 2 VS 2 (28-10-2026): de extra legers bestaan alleen in solo, dus deze setters schrijven alleen lokaal.
   // Buiten solo doen ze niets — een online potje heeft geen derde of vierde stoel.
-  const setAllyArmy = useCallback((army: Army) => { if (seat === 'solo') setSoloHost2(army); }, [seat, setSoloHost2]);
-  const setOpponent2Army = useCallback((army: Army) => { if (seat === 'solo') setSoloGuest2(army); }, [seat, setSoloGuest2]);
+  // ACT 4-TAFEL (24-11-2026): ook aan een tafel, daar in de eigen kolom van die stoel.
+  const setAllyArmy = useCallback((army: Army) => {
+    if (seat === 'solo') setSoloHost2(army);
+    else if (seat === 'tafel') zetTafelLeger('host2', army);
+  }, [seat, setSoloHost2, zetTafelLeger]);
+  const setOpponent2Army = useCallback((army: Army) => {
+    if (seat === 'solo') setSoloGuest2(army);
+    else if (seat === 'tafel') zetTafelLeger('guest2', army);
+  }, [seat, setSoloGuest2, zetTafelLeger]);
+
+  /** ACT 4-TAFEL: patches naar de server (tow_game_tracker_patch), optimistisch lokaal toegepast. */
+  const tafelPatch = useCallback(async (patches: TrackerPatch[], tempoRev: number | null = null): Promise<PatchAntwoord> => {
+    if (!code || !patches.length) return { ok: true };
+    setGame((g) => (g ? { ...g, tracker: pasPatchesToe(normTracker(g.tracker), patches) } : g));
+    patchesOnderweg.current += 1;
+    try {
+      const { data, error: err } = await supabase.rpc('tow_game_tracker_patch', { p_code: code, p_patches: patches, p_tempo_rev: tempoRev });
+      if (err) throw err;
+      const d = (data && typeof data === 'object' ? data : {}) as { ok?: boolean; fout?: string; tracker?: GameTracker };
+      patchesOnderweg.current = Math.max(0, patchesOnderweg.current - 1);
+      // De server-stand wint als dit de laatste schrijfactie was, of als de compare-and-set mislukte (dan
+      // klopt de optimistische stand niet en moet de echte terug).
+      if (d.tracker && (patchesOnderweg.current === 0 || d.ok === false)) {
+        setGame((g) => (g ? { ...g, tracker: d.tracker as GameTracker } : g));
+      }
+      if (d.ok === false && d.fout !== 'TEMPO_VERANDERD') setError(`Could not save: ${d.fout ?? 'unknown error'}`);
+      return { ok: d.ok === true, fout: d.fout, tracker: d.tracker };
+    } catch (e) {
+      patchesOnderweg.current = Math.max(0, patchesOnderweg.current - 1);
+      setError(supaErr(e));
+      // Zonder antwoord weten we de echte stand niet: haal hem op.
+      const { data } = await supabase.from(TOW_GAMES).select('*').eq('code', code).maybeSingle();
+      if (data) setGame(data as GameRow);
+      return { ok: false, fout: 'NETWERK' };
+    }
+  }, [code]);
 
   // Update the shared battle tracker (round, VP, casualties). Solo: local state.
   // Online: write the `tracker` column so both players see the same battle state.
@@ -628,6 +709,13 @@ export function GameProvider({ children }: { children: ReactNode }) {
     (t: GameTracker) => {
       if (seat === 'solo') {
         setSoloTracker(t);
+        return;
+      }
+      // ACT 4-TAFEL: nooit de hele tracker, alleen wat er veranderde (lib/trackerPatch.ts). De tempo-stand
+      // en het rapport-akkoord lopen langs hun eigen weg en worden hier overgeslagen.
+      if (seat === 'tafel') {
+        const patches = trackerDiff(normTracker(game?.tracker), t).filter((p) => p.p[0] !== 'tempo' && p.p[0] !== 'report');
+        void tafelPatch(patches);
         return;
       }
       if (!code || !seat) return;
@@ -640,7 +728,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
           if (err) setError(supaErr(err));
         });
     },
-    [seat, code, setSoloTracker],
+    [seat, code, setSoloTracker, game, tafelPatch],
   );
 
   /** De tracker zoals hij NU is, solo of online. Bestaat omdat `setSheet` en `startBattle` een VELD
@@ -683,8 +771,57 @@ export function GameProvider({ children }: { children: ReactNode }) {
     setSoloHost2(null);
     setSoloGuest2(null);
     setSoloTracker(EMPTY_TRACKER);
+    // Act 4-tafel: de stoel op dit toestel vergeten (op de server blijft hij van dit toestel, dus wie
+    // terugkomt kan hem zonder overnemen weer pakken).
+    if (seat === 'tafel' && code) bewaarMijnStoel(code, null);
+    setStoelState(null);
     setPersisted(null);
-  }, [setPersisted, setSoloMine, setSoloOpponent, setSoloHost2, setSoloGuest2, setSoloTracker]);
+  }, [setPersisted, setSoloMine, setSoloOpponent, setSoloHost2, setSoloGuest2, setSoloTracker, seat, code]);
+
+  // ── ACT 4-TAFEL ──────────────────────────────────────────────────────────────────────────────────
+  const openTafel = useCallback((info: TafelInfo, tafelCode: string) => {
+    const c = tafelCode.trim().toUpperCase();
+    if (!isTafelTestCode(c)) bewaarTafel(info);
+    setError(null);
+    setGame(null);
+    setPersisted({ seat: 'tafel', code: c });
+    setStoelState(leesMijnStoel(c));
+  }, [setPersisted]);
+
+  const claimStoel = useCallback(async (s: TeamStoel, general: { id: string; naam: string }, army: Army | null, veteranen?: VetUnit[], actie: 'claim' | 'overnemen' = 'claim'): Promise<StoelAntwoord> => {
+    if (!code) return { ok: false, fout: 'GEEN_CODE', stoelen: {} };
+    setBusy(true);
+    setError(null);
+    try {
+      const r = await stoelZet(code, s, { apparaat: apparaatId(code), general: general.id, naam: general.naam }, actie);
+      if (!r.ok) return r;
+      // Het leger in de eigen kolom, met de campagne-veteranen erop gestempeld (zoals openCampaignBattle).
+      const leger = annotateArmyWithVets(army, veteranen);
+      if (leger) {
+        const { error: err } = await supabase.from(TOW_GAMES).update({ [`${s}_army`]: leger }).eq('code', code);
+        if (err) throw err;
+      }
+      const { data } = await supabase.from(TOW_GAMES).select('*').eq('code', code).maybeSingle();
+      if (data) setGame(data as GameRow);
+      bewaarMijnStoel(code, s);
+      setStoelState(s);
+      return r;
+    } catch (e) {
+      setError(supaErr(e));
+      return { ok: false, fout: supaErr(e), stoelen: {} };
+    } finally {
+      setBusy(false);
+    }
+  }, [code]);
+
+  const verlaatStoel = useCallback(async () => {
+    if (!code || !stoel) return;
+    try {
+      await stoelZet(code, stoel, { apparaat: apparaatId(code) }, 'los');
+    } catch { /* de stoel blijft dan op de server van dit toestel; opnieuw claimen mag */ }
+    bewaarMijnStoel(code, null);
+    setStoelState(null);
+  }, [code, stoel]);
 
   const value = useMemo<GameContextValue>(() => {
     let myArmy: Army | null = null;
@@ -697,6 +834,12 @@ export function GameProvider({ children }: { children: ReactNode }) {
       opponentArmy = soloOpponent;
       myName = 'You';
       opponentName = 'Opponent';
+    } else if (game && seat === 'tafel') {
+      // ACT 4-TAFEL: absoluut per stoel, net als solo-2v2 (host = Wardens 1st, guest = Unchained 1st).
+      myArmy = game.host_army;
+      opponentArmy = game.guest_army;
+      myName = game.host_name;
+      opponentName = game.guest_name;
     } else if (game && seat === 'host') {
       myArmy = game.host_army;
       opponentArmy = game.guest_army;
@@ -726,8 +869,8 @@ export function GameProvider({ children }: { children: ReactNode }) {
       startSolo,
       setMyArmy,
       setOpponentArmy,
-      allyArmy: seat === 'solo' ? soloHost2 : null,
-      opponent2Army: seat === 'solo' ? soloGuest2 : null,
+      allyArmy: seat === 'solo' ? soloHost2 : seat === 'tafel' ? game?.host2_army ?? null : null,
+      opponent2Army: seat === 'solo' ? soloGuest2 : seat === 'tafel' ? game?.guest2_army ?? null : null,
       setAllyArmy,
       setOpponent2Army,
       // Ook de SOLO-tracker gaat door `normTracker`: sinds 13-09 komt hij uit localStorage, en dat
@@ -737,8 +880,19 @@ export function GameProvider({ children }: { children: ReactNode }) {
       setSheet,
       startBattle,
       leaveGame,
+      stoel: seat === 'tafel' ? stoel : null,
+      stoelen: seat === 'tafel' ? leesStoelen(game?.stoelen) : {},
+      openTafel,
+      claimStoel,
+      verlaatStoel,
+      tafelPatch,
     };
   }, [
+    stoel,
+    openTafel,
+    claimStoel,
+    verlaatStoel,
+    tafelPatch,
     seat,
     code,
     game,

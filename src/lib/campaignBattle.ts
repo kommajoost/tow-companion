@@ -4,6 +4,7 @@ import { buildTestBattle, isTestBattleCode } from './testBattle';
 import { buildScenarioTestBattle, isScenarioTestCode } from './scenarioTest';
 import { parseWrath } from './wrathTriggers';
 import { parseVersterking, type BattleVersterking } from './versterking';
+import { tafelBattleVoorCode } from './tafelRegister';
 
 // Client-laag voor de campagne-BATTLE-brug ("De Grensvorsten", zelfde Supabase-project). Waar
 // campaign.ts de speler-identiteit/lijstbouw-context levert, opent deze module een concrete
@@ -330,7 +331,7 @@ function parseLijstUnit(raw: unknown): BattleLijstUnit {
   };
 }
 
-function parseLijst(raw: unknown): BattleLijstSamenvatting | null {
+export function parseLijst(raw: unknown): BattleLijstSamenvatting | null {
   if (!raw || typeof raw !== 'object') return null;
   const l = raw as Record<string, unknown>;
   return {
@@ -343,7 +344,7 @@ function parseLijst(raw: unknown): BattleLijstSamenvatting | null {
 
 /** Het weer van de Act: null als er geen weer geldt (vanaf Act 3, of nog niet gerold) én als de
  *  server iets stuurt zonder naam — een weer-effect zonder naam is niets om aan tafel te tonen. */
-function parseWeer(raw: unknown): GameWeer | null {
+export function parseWeer(raw: unknown): GameWeer | null {
   if (!raw || typeof raw !== 'object') return null;
   const w = raw as Record<string, unknown>;
   const naam = str(w.naam);
@@ -369,7 +370,7 @@ function parseAbility(raw: unknown): { t: string; keuze: string | null } {
   return { t: str(a.t), keuze: typeof a.keuze === 'string' ? a.keuze : null };
 }
 
-function parseVetUnit(raw: unknown): VetUnit {
+export function parseVetUnit(raw: unknown): VetUnit {
   const u = (raw && typeof raw === 'object' ? raw : {}) as Record<string, unknown>;
   return {
     unitId: str(u.unitId),
@@ -388,7 +389,7 @@ function parseVeteranen(raw: unknown): BattleVeteranen | undefined {
   return { aanvaller: arr(v.aanvaller).map(parseVetUnit), verdediger: arr(v.verdediger).map(parseVetUnit) };
 }
 
-function parsePerk(raw: unknown): Perk {
+export function parsePerk(raw: unknown): Perk {
   const p = (raw && typeof raw === 'object' ? raw : {}) as Record<string, unknown>;
   return { perk: str(p.perk), label: str(p.label), effect: str(p.effect) };
 }
@@ -401,7 +402,7 @@ function parsePerks(raw: unknown): BattlePerks | undefined {
 }
 
 /** Null als er geen item hangt — anders een defensief geparst item. */
-function parseItem(raw: unknown): FoundItem | null {
+export function parseItem(raw: unknown): FoundItem | null {
   if (!raw || typeof raw !== 'object') return null;
   const i = raw as Record<string, unknown>;
   const naam = str(i.naam);
@@ -409,7 +410,7 @@ function parseItem(raw: unknown): FoundItem | null {
   return { naam, punten: num(i.punten), effect: str(i.effect), soort: str(i.soort) };
 }
 
-function parseRollOffBron(raw: unknown): RollOffBron | null {
+export function parseRollOffBron(raw: unknown): RollOffBron | null {
   if (!raw || typeof raw !== 'object') return null;
   const r = raw as Record<string, unknown>;
   const label = str(r.label);
@@ -517,6 +518,12 @@ export async function battleByCode(code: string): Promise<CampaignBattle> {
     if (!nep) throw new Error('SCENARIOTEST_ONVOLLEDIG');
     return nep;
   }
+  // ACT 4-TAFEL (blok E, 24-11-2026): de tafelcode is de code van de EERSTE battle van de tafel, maar
+  // `towc_battle_by_code` zou daar één tegen één van maken. Zit dit toestel aan die tafel, dan geven we
+  // de tafel als één battle terug (Wardens = aanvaller, Unchained = verdediger), zodat de objectives,
+  // de reminders, de Wrath en de officiele uitslag (tafelCap) op de hele tafel rekenen.
+  const tafel = tafelBattleVoorCode(code);
+  if (tafel) return tafel;
   const { data, error } = await supabase.rpc('towc_battle_by_code', { p_code: cleanBattleCode(code) });
   if (error) throw error;
   return parseBattle(data);

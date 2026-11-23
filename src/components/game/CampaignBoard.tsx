@@ -62,7 +62,13 @@ export interface CampaignLayout {
   keepoutCircle?: { x: number; y: number; r: number };
   buildings?: CampaignBuilding[];
   dims?: CampaignDim[];
+  /** ACT 4 (King of the Shrine, sheet v6, 24-11-2026): het plein rond de shrine in het midden, straal in
+   *  inches (r 4 = ongeveer 8" doorsnede). De shrine zelf staat in het midden: impassable. */
+  plein?: { x: number; y: number; r: number; label: string };
 }
+
+/** ACT 4: een artefact-marker met zijn aura (inches), uit `secLayout.artefacten`. */
+export interface CampaignArtefact { x: number; y: number; aura: number; id: string; naam: string; opShrine: boolean }
 
 export interface CampaignSecLayout {
   quarters: boolean;
@@ -71,6 +77,8 @@ export interface CampaignSecLayout {
   /** `label` (20-10-2026) = the word under the cart; without it (older sheets) nothing is written. */
   baggage: { x: number; y: number; w: number; h: number; label?: string }[];
   dims?: CampaignDim[];
+  /** ACT 4 (24-11-2026): de artefacten aan deze tafel, met hun aura. */
+  artefacten?: CampaignArtefact[];
 }
 
 // Het terreinstuk-type woont sinds 18-10-2026 in lib/campaignTerrain.ts (samen met de parser en de
@@ -239,7 +247,10 @@ export function parseSheetLayout(v: unknown): CampaignLayout | null {
   if (zones.length === 0) return null;
   const kc = sRec(o.keepoutCircle);
   const kcx = kc ? num(kc.x) : null, kcy = kc ? num(kc.y) : null, kcr = kc ? num(kc.r) : null;
+  const pl = sRec(o.plein);
+  const plx = pl ? num(pl.x) : null, ply = pl ? num(pl.y) : null, plr = pl ? num(pl.r) : null;
   return {
+    plein: plx != null && ply != null && plr != null && plr > 0 ? { x: plx, y: ply, r: plr, label: sStr(pl?.label) ?? 'Plaza' } : undefined,
     zones,
     objective: parsePoint(o.objective) ?? undefined,
     impassable: (Array.isArray(o.impassable) ? o.impassable : []).map(parseBox).filter((b): b is NonNullable<typeof b> => !!b),
@@ -269,8 +280,15 @@ export function parseSheetSecLayout(v: unknown): CampaignSecLayout | null {
   const specialFeature = parsePoint(o.specialFeature) ?? undefined;
   const quarters = o.quarters === true;
   const dims = parseDims(o.dims);
-  if (!quarters && !specialFeature && objectives.length === 0 && baggage.length === 0 && dims.length === 0) return null;
-  return { quarters, specialFeature, objectives, baggage, dims };
+  const artefacten = (Array.isArray(o.artefacten) ? o.artefacten : []).map((raw): CampaignArtefact | null => {
+    const r = sRec(raw);
+    const x = r ? num(r.x) : null, y = r ? num(r.y) : null;
+    if (!r || x == null || y == null) return null;
+    const aura = num(r.aura);
+    return { x, y, aura: aura != null && aura > 0 ? aura : 6, id: sStr(r.id) ?? '', naam: sStr(r.naam) ?? 'Artefact', opShrine: r.opShrine === true };
+  }).filter((a): a is CampaignArtefact => !!a);
+  if (!quarters && !specialFeature && objectives.length === 0 && baggage.length === 0 && dims.length === 0 && artefacten.length === 0) return null;
+  return { quarters, specialFeature, objectives, baggage, dims, ...(artefacten.length ? { artefacten } : {}) };
 }
 
 /** Middelpunt van een zone op de diepte-as — werkt voor rechthoeken én polygonen. */
@@ -497,8 +515,18 @@ export function CampaignBoard({ layout, secLayout, tableW, tableH, youSide, terr
         {pieces.map((t, i) => <TerrainShape key={t.id ?? `ter${i}`} t={t} uid={uid} />)}
 
 
-        {/* Central objective (a rule — full strength). */}
-        {layout.objective && num(layout.objective.x) !== null && num(layout.objective.y) !== null && (
+        {/* ACT 4 (24-11-2026): het plein met de shrine in het midden (King of the Shrine). De shrine is
+            impassable en blokkeert zicht; het plein is de cirkel eromheen. */}
+        {layout.plein && (
+          <g data-testid="bord-plein">
+            <circle cx={layout.plein.x} cy={layout.plein.y} r={layout.plein.r} fill="rgba(184,134,47,0.16)" stroke={TOW.goldDeep} strokeWidth={0.3} />
+            <rect x={layout.plein.x - 1.1} y={layout.plein.y - 1.1} width={2.2} height={2.2} rx={0.3} fill="rgba(58,47,28,0.85)" stroke={TOW.goldDeep} strokeWidth={0.18} transform={`rotate(45 ${layout.plein.x} ${layout.plein.y})`} />
+            <text x={layout.plein.x} y={layout.plein.y + layout.plein.r + 2.4} fontSize={2.1} textAnchor="middle" fontFamily={towFont.display} fontWeight={700} fill="#46341a" style={halo}>{layout.plein.label} · shrine</text>
+          </g>
+        )}
+
+        {/* Central objective (a rule — full strength). Bij een plein staat de shrine al op die plek. */}
+        {!layout.plein && layout.objective && num(layout.objective.x) !== null && num(layout.objective.y) !== null && (
           <g>
             <circle cx={layout.objective.x} cy={layout.objective.y} r={3.4} fill="rgba(138,108,48,0.18)" stroke={TOW.goldDeep} strokeWidth={0.3} />
             <text x={layout.objective.x} y={layout.objective.y + 1.7} fontSize={4.4} textAnchor="middle" fill={TOW.goldDeep}>★</text>
@@ -535,6 +563,16 @@ export function CampaignBoard({ layout, secLayout, tableW, tableH, youSide, terr
           <g key={`sobj${i}`}>
             <circle cx={o.x} cy={o.y} r={2.4} fill="rgba(138,108,48,0.20)" stroke={TOW.goldDeep} strokeWidth={0.3} />
             <text x={o.x} y={o.y + 1.1} fontSize={3} textAnchor="middle" fontFamily={towFont.display} fontWeight={700} fill={TOW.goldDeep}>{num(o.n) ?? ''}</text>
+          </g>
+        ))}
+        {/* ACT 4 (24-11-2026): de artefact-marker met zijn aura (gestippelde ring). */}
+        {(secLayout?.artefacten ?? []).map((a, i) => (
+          <g key={`art${i}`} data-testid="bord-artefact">
+            <circle cx={a.x} cy={a.y} r={a.aura} fill="rgba(140,40,30,0.07)" stroke={TOW.blood} strokeWidth={0.25} strokeDasharray="1.2 0.9" />
+            <circle cx={a.x} cy={a.y} r={0.9} fill={TOW.blood} stroke="#fbfaf6" strokeWidth={0.2} />
+            <text x={a.x} y={Math.min(H - 0.6, a.y + a.aura + 2.2)} fontSize={2} textAnchor="middle" fontFamily={towFont.display} fontWeight={700} fill="#5a1d14" style={halo}>
+              {a.naam} · {a.aura}″ aura
+            </text>
           </g>
         ))}
         {(secLayout?.baggage || []).filter((b) => num(b?.w) !== null && num(b?.h) !== null).map((b, i) => (

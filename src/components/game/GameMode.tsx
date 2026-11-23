@@ -8,9 +8,10 @@ import { NewBattleWizard } from './NewBattleWizard';
 import { GameLobby } from './GameLobby';
 import { GameView } from './GameView';
 import { BattlefieldEditor, BF_STEPS } from './BattlefieldEditor';
-import { CampaignBattlePanel } from './CampaignBattlePanel';
 import { ScenarioTestBanner } from './CampaignScenarioBits';
 import { isScenarioTestCode } from '../../lib/scenarioTest';
+import { TafelOfCampagne, TafelStoelKiezer } from './TafelPanel';
+import { isTafelTestCode } from '../../lib/tafel';
 
 // The "Game" tab: set up (host/join) a live battle, then track it turn by turn. Army building and
 // the unit catalogue moved to the separate "Army" tab.
@@ -28,7 +29,7 @@ import { isScenarioTestCode } from '../../lib/scenarioTest';
 // wachtkamer te belanden voor een potje dat al twee rondes bezig is. De lobby eist daarom een
 // EXPLICIETE `false`, en alleen de wizard zet die.
 export function GameMode() {
-  const { seat, code, tracker, setSheet } = useGame();
+  const { seat, code, tracker, setSheet, stoel } = useGame();
   // A pending campaign-battle code (from the ?battle= deep-link, or set elsewhere) takes over the
   // setup screen with the campaign-battle flow — until the user is seated in a game or dismisses it.
   // Normal (no-code) game setup is unchanged.
@@ -59,13 +60,23 @@ export function GameMode() {
   // De SCENARIO-TEST (22-10-2026, alleen testbuild): zolang die open is, bovenaan een banner dat er niets
   // wordt opgeslagen. Boven het briefing-scherm én boven het lokale potje dat eruit volgt.
   const scenarioTest = showBattlePanel ? isScenarioTestCode(pending) : isScenarioTestCode(code);
+  // ACT 4-TAFEL (blok E, 24-11-2026): in de tafeltest dezelfde waarschuwing (er gaat niets naar de campagne).
+  const tafelTest = showBattlePanel ? isTafelTestCode(pending) : isTafelTestCode(code);
 
   return (
     <div style={{ height: '100%', minHeight: 0, display: 'flex', flexDirection: 'column' }}>
       {scenarioTest && <ScenarioTestBanner />}
+      {tafelTest && (
+        <div role="status" data-testid="tafeltest-banner" style={{ background: '#b45309', color: '#fff', fontFamily: 'var(--tow-font-display)', fontWeight: 700, fontSize: 13, textAlign: 'center', padding: '6px 12px 6px 150px' }}>
+          Table test: nothing goes to the campaign
+        </div>
+      )}
       <div style={{ flex: 1, minHeight: 0 }}>
       {showBattlePanel ? (
-        <CampaignBattlePanel code={pending as string} onDismiss={() => setPendingBattle(null)} />
+        // ACT 4 (blok E): eerst kijken of de code een tafel van twee tegen twee is; zo niet, de gewone briefing.
+        <TafelOfCampagne code={pending as string} onDismiss={() => setPendingBattle(null)} />
+      ) : seat === 'tafel' && !stoel ? (
+        <TafelStoelKiezer />
       ) : inLobby && sheetBewerken ? (
         <LobbySheetEditor
           sheet={normSheet(tracker.sheet) ?? DEFAULT_SHEET}

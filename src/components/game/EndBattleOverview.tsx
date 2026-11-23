@@ -8,6 +8,7 @@ import { VpPanel } from './VpPanel';
 import { useCampagneUitslag } from './useCampagneUitslag';
 import { isScenarioTestCode } from '../../lib/scenarioTest';
 import { ScenarioTestRapport } from './ScenarioTestRapport';
+import { TafelEinde } from './TafelEinde';
 import type { Army, GameTracker, TeamStoel } from '../../types';
 import type { TeamVpResultaat, VpResultaat } from '../../lib/victoryPoints';
 import { stoelenVan, TEAM_NAAM, type Team } from '../../lib/teams';
@@ -17,6 +18,8 @@ import { stoelenVan, TEAM_NAAM, type Team } from '../../lib/teams';
 export interface TeamEinde {
   res: TeamVpResultaat;
   spelers: { stoel: TeamStoel; naam: string; army: Army | null }[];
+  /** Act 4-tafel (24-11-2026): "Wardens"/"Unchained" in plaats van "Team A"/"Team B". */
+  teamNamen?: Record<Team, string>;
 }
 
 const eb = engraved as React.CSSProperties;
@@ -53,7 +56,7 @@ export function EndBattleOverview({
   team?: TeamEinde;
 }) {
   // Alleen `tracker` nodig voor de per-unit casualty-uitlezing; de modal muteert 'm niet.
-  const { tracker, code } = useGame();
+  const { tracker, code, seat } = useGame();
   // De scenario-test (22-10-2026) meldt niets: het rapport praat met de server, en deze battle bestaat daar niet.
   const scenarioTest = isScenarioTestCode(code);
 
@@ -147,7 +150,12 @@ export function EndBattleOverview({
         {/* 4 — Footer: campagne-rapportage (zelf-detecterend; null bij ad-hoc) + Close. Een 2v2-potje is
             altijd solo en nooit een campagne-battle, dus daar geen rapport. */}
         <div style={{ marginTop: 16 }}>
-          {team ? null : scenarioTest ? (
+          {team ? (
+            // ACT 4-TAFEL (blok E, 24-11-2026): een gedeelde 2-tegen-2-battle meldt wel, via contract 2.
+            seat === 'tafel' ? (
+              <TafelEinde res={res} legers={{ host: null, host2: null, guest: null, guest2: null, ...Object.fromEntries(team.spelers.map((p) => [p.stoel, p.army])) }} />
+            ) : null
+          ) : scenarioTest ? (
             // 23-10-2026: het rapport als VOORBEELD (wat er gemeld zou worden), zonder het te versturen.
             <ScenarioTestRapport res={res} camp={camp} hostName={hostName} guestName={guestName} hostArmy={hostArmy} guestArmy={guestArmy} />
           ) : (
@@ -267,7 +275,7 @@ function PerSpeler({ team }: { team: TeamEinde }) {
           const sc = t === 'A' ? r.scenarioA : r.scenarioB;
           return [
             <span key={`${t}-kop`} style={{ gridColumn: '1 / -1', ...eb, fontSize: 7.5, color: TOW.goldDeep, marginTop: t === 'B' ? 6 : 0 }}>
-              {TEAM_NAAM[t]} · {t === 'A' ? r.hostVp : r.guestVp} VP
+              {team.teamNamen?.[t] ?? TEAM_NAAM[t]} · {t === 'A' ? r.hostVp : r.guestVp} VP
             </span>,
             ...stoelenVan(t).flatMap((st) => {
               const p = team.spelers.find((x) => x.stoel === st);

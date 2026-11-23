@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { IS_TEST_DB } from '../lib/supabase';
+import { IS_TEST_DB, supabase, TOW_GAMES } from '../lib/supabase';
+import { bewaarMijnStoel, bewaarTafelTest, tafelTestCode, tafelTestUitUrl } from '../lib/tafel';
 import { koppelViaCodeTestOnly } from '../lib/campaign';
 import { usePersistentState, setPersisted, getPersisted } from '../store';
 import { TOW } from '../design/tow';
@@ -174,6 +175,39 @@ export function AppShell() {
     const opHash = () => { if (laad()) window.location.reload(); };
     window.addEventListener('hashchange', opHash);
     return () => window.removeEventListener('hashchange', opHash);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Deep-link: /?tafeltest=1#tafel=<base64url> — DE TAFELTEST (Act 4, blok E, 24-11-2026), ALLEEN op een
+  // testbuild. Een Act 4-tafel met vier stoelen zonder echte campagnetafel: het contract-1-object uit de hash
+  // (zonder hash het ingebouwde voorbeeld; `&variant=shrine|geen` voor het artefact op de shrine of geen
+  // artefact). De tafel draait op een eigen tow_games-rij op de TESTdatabase (code TAFELT...), zodat vier
+  // tabbladen samen spelen; elk tabblad is een eigen speler (lib/tafel.ts, sessionStorage). `&reset=1`
+  // maakt die rij weer leeg. Er gaat NIETS naar de campagne-uitslag (TafelEinde toont het object alleen).
+  useEffect(() => {
+    if (typeof window === 'undefined' || !IS_TEST_DB) return;
+    const url = new URL(window.location.href);
+    if (!url.searchParams.has('tafeltest')) return;
+    const info = tafelTestUitUrl(url.hash, url.searchParams.get('variant'));
+    if (!info) return;
+    const code = tafelTestCode(info);
+    const klaar = () => {
+      bewaarTafelTest(info);
+      setPersisted('tow:campaign-battle', code);
+      setScreen('app');
+      setTab('game');
+      window.history.replaceState(null, '', url.pathname);
+    };
+    if (url.searchParams.get('reset') === '1') {
+      bewaarMijnStoel(code, null);
+      setPersisted('tow:game', null);
+      void supabase.from(TOW_GAMES)
+        .update({ tracker: { round: 1, vp: {}, units: {}, teams: '2v2' }, stoelen: null, host_name: null, host_army: null, host2_name: null, host2_army: null, guest_name: null, guest_army: null, guest2_name: null, guest2_army: null })
+        .eq('code', code)
+        .then(klaar, klaar);
+    } else {
+      klaar();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
