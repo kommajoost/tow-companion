@@ -1,0 +1,236 @@
+{
+  "videoId": "Fw4DRqs5aV0",
+  "bronId": "yt-Fw4DRqs5aV0",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T21:53:15.901Z",
+  "nieuw": [
+    {
+      "id": "fleeing-diverters-steer-charges",
+      "titel": "Use fleeing diverters to steer enemy charges",
+      "tekst": "Angle a diverter to draw charging enemies towards your waiting units, even if the diverter flees. The speaker recommends this to bring a more aggressive army towards your slower units.",
+      "waarom": "He explains that the charger pivots towards the diverter's position and continues in that direction after the diverter flees.",
+      "voorbeeld": "His Wolf Riders fled when both the knights and Marauders charged them. Both enemy units came forward angled towards the area where his counterchargers were waiting.",
+      "wanneerNiet": "He describes fleeing as a high-stakes choice: his earlier attempts sometimes ended with the fleeing unit being run down.",
+      "fase": "movement",
+      "themas": [
+        "chaff",
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-Fw4DRqs5aV0",
+          "url": "https://www.youtube.com/watch?v=Fw4DRqs5aV0&t=185s",
+          "tijd": 188,
+          "citaat": "pivot towards that spot and then move in that direction.",
+          "extraCitaten": [
+            {
+              "tijd": 1021,
+              "citaat": "towards your slower moving units."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-12-31",
+      "markeringen": []
+    },
+    {
+      "id": "declare-beneficial-terror-charges-first",
+      "titel": "Declare terror charges early when fleeing benefits you",
+      "tekst": "Consider declaring your terror-causing charges earlier when an enemy fleeing would benefit you. Use the immediate terror test to gain information before making later charge decisions.",
+      "waarom": "He says the immediate test lets you move ahead in the charge sequence and see more information before deciding what to do next.",
+      "voorbeeld": null,
+      "wanneerNiet": "He says this did not apply to the charges in his example: both dragons caused terror, and his Iron Daemon had not been given Hellbound.",
+      "fase": "movement",
+      "themas": [
+        "psychology",
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-Fw4DRqs5aV0",
+          "url": "https://www.youtube.com/watch?v=Fw4DRqs5aV0&t=604s",
+          "tijd": 607,
+          "citaat": "think about doing your terror charges earlier if the fleeing is beneficial for you.",
+          "extraCitaten": [
+            {
+              "tijd": 1168,
+              "citaat": "it allows you to jump up in that order"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-12-31",
+      "markeringen": []
+    },
+    {
+      "id": "charge-enemy-retreat-backstops",
+      "titel": "Charge enemy backstops to deny protected retreats",
+      "tekst": "If an enemy support unit would protect another unit's fall back in good order, consider charging that support unit separately rather than adding another charger to the main fight.",
+      "waarom": "He wanted to prevent the wolves behind the knights from protecting the knights' fall back in good order.",
+      "voorbeeld": "He positioned a Bull Centaur to charge the wolves behind the knights, using its all-round charge movement instead of initially charging the knights themselves.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "chaff",
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-Fw4DRqs5aV0",
+          "url": "https://www.youtube.com/watch?v=Fw4DRqs5aV0&t=460s",
+          "tijd": 463,
+          "citaat": "what I don't want to happen is those wolves to protect the falling back",
+          "extraCitaten": [
+            {
+              "tijd": 470,
+              "citaat": "instead of charging the knights, I've charged the wolf riders"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-12-31",
+      "markeringen": []
+    },
+    {
+      "id": "clear-blockers-before-pursuing-fugitives",
+      "titel": "Clear fleeing blockers before catching the valuable target",
+      "tekst": "When fleeing enemies obstruct a charge at a more valuable fleeing unit, look for a legal redirection that lets one charger remove the blocker first. Then resolve the charger that can reach the valuable target.",
+      "waarom": "He explains that contacting the fleeing warhounds on the way to the knights would have stopped his charger; the warhounds would not flee again to clear the route.",
+      "voorbeeld": "He redirected his Wyvern into the fleeing warhounds and removed them first. His Bull Centaur then redirected into the knights and caught them.",
+      "wanneerNiet": "The redirections had to be legal and required successful tests. He says neither the Black Orcs nor the Iron Daemon had a legal alternative charge in this position.",
+      "fase": "movement",
+      "themas": [
+        "game-plan",
+        "chaff"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-Fw4DRqs5aV0",
+          "url": "https://www.youtube.com/watch?v=Fw4DRqs5aV0&t=723s",
+          "tijd": 726,
+          "citaat": "redirect them into the war hounds, hoping to clear them out of the way.",
+          "extraCitaten": [
+            {
+              "tijd": 734,
+              "citaat": "make contact with the war hounds, they're not going to flee again."
+            },
+            {
+              "tijd": 766,
+              "citaat": "Instead of charging the wolves, it's closer to the knights."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-12-31",
+      "markeringen": []
+    },
+    {
+      "id": "prioritise-charger-movement-order",
+      "titel": "Move the charger you need further forward first",
+      "tekst": "When two chargers will pivot into each other's paths, decide which one you most need further forward and move it first. Consider their positions after the charge sequence, including access to objectives.",
+      "waarom": "He warns that the other unit can hit the first unit's rear and stop, even if it rolled a much longer move.",
+      "voorbeeld": "After the knights fled, he moved the Black Orcs first because they could score and needed to be nearer the central objective. The Iron Daemon then hit their rear and stopped.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-Fw4DRqs5aV0",
+          "url": "https://www.youtube.com/watch?v=Fw4DRqs5aV0&t=799s",
+          "tijd": 802,
+          "citaat": "who do I want more forward because the other unit is going to hit",
+          "extraCitaten": [
+            {
+              "tijd": 827,
+              "citaat": "I need those black orcs who can score in this to be closer"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-12-31",
+      "markeringen": []
+    },
+    {
+      "id": "high-leadership-charge-control",
+      "titel": "Value high leadership for redirection and restraint",
+      "tekst": "Value high leadership when your plan relies on redirecting charges or restraining and reforming. The speaker stresses that testing on leadership eight is much less reliable than testing on ten.",
+      "waarom": "He says failed redirections would have left him in a much worse position on the following turn, with the knights able to rally. Reliable restraint and reform also offer substantial advantages in his view.",
+      "voorbeeld": "His Sorcerer-Prophet on a large target stayed close to the other units and provided leadership ten. He says many of his tests were automatic in this game.",
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "psychology",
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-Fw4DRqs5aV0",
+          "url": "https://www.youtube.com/watch?v=Fw4DRqs5aV0&t=1253s",
+          "tijd": 1256,
+          "citaat": "High leadership matters a lot for redirection",
+          "extraCitaten": [
+            {
+              "tijd": 1248,
+              "citaat": "If you can roll on a high leadership there"
+            },
+            {
+              "tijd": 1265,
+              "citaat": "it's nothing like rolling on tens."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-12-31",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "chaff-under-100-points",
+      "bron": {
+        "bronId": "yt-Fw4DRqs5aV0",
+        "url": "https://www.youtube.com/watch?v=Fw4DRqs5aV0&t=985s",
+        "tijd": 988,
+        "citaat": "less than 100 points open order or close order diverters",
+        "extraCitaten": [
+          {
+            "tijd": 997,
+            "citaat": "ideally you want 50 point things around 50 more than 100."
+          }
+        ]
+      },
+      "toelichting": "He again recommends inexpensive chaff below 100 points, ideally nearer 50."
+    },
+    {
+      "lesId": "commit-minimum-winning-force",
+      "bron": {
+        "bronId": "yt-Fw4DRqs5aV0",
+        "url": "https://www.youtube.com/watch?v=Fw4DRqs5aV0&t=550s",
+        "tijd": 553,
+        "citaat": "if you commit too many units to a fight, they all end up tripping"
+      },
+      "toelichting": "His warning against committing too many units repeats the advice to limit the force invested in a combat."
+    }
+  ],
+  "overgeslagen": "Skipped sponsors, channel news, tournament results, list and combat-resolution readouts without clear recommendations, speculative banner discussion, uncertain landing and base-size rules, and general praise of flight without a concrete recommendation. Omitted the disputed flee-direction detail and garbled unit names.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

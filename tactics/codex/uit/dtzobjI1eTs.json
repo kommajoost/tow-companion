@@ -1,0 +1,197 @@
+{
+  "videoId": "dtzobjI1eTs",
+  "bronId": "yt-dtzobjI1eTs",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T21:17:50.310Z",
+  "nieuw": [
+    {
+      "id": "prefer-familiar-tournament-armies",
+      "titel": "Prefer a familiar army to an unfamiliar tournament list",
+      "tekst": "If you are worried about your performance at an event, he thinks playing an army you know may be better than copying an unfamiliar list from the internet. Get practice with the list so you know its interactions and remember its abilities.",
+      "waarom": "He finds that experience with an army makes tabletop decisions quicker and teaches how it handles particular types of enemy army. With unfamiliar armies, he finds it easy to forget abilities or the right moment to use magic.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-dtzobjI1eTs",
+          "url": "https://www.youtube.com/watch?v=dtzobjI1eTs&t=249s",
+          "tijd": 252,
+          "citaat": "I think playing with what you're familiar with is maybe better",
+          "extraCitaten": [
+            {
+              "tijd": 259,
+              "citaat": "than playing with something you took from the internet and you're unfamiliar with."
+            },
+            {
+              "tijd": 179,
+              "citaat": "you need the reps in with tournament list."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-06-01",
+      "markeringen": []
+    },
+    {
+      "id": "commit-minimum-winning-force",
+      "titel": "Commit only enough force to win a combat",
+      "tekst": "Try to put the minimum viable force into a combat to win it. Be careful about committing several units to one enemy: he thinks multiple charges are often bad, and a front charge plus a flank charge no longer guarantees breaking the target.",
+      "waarom": "He points to falling back in good order and giving ground. He also warns that committing all your units to one combat leaves you subject to the pursuit rules and unable to maintain the initiative.",
+      "voorbeeld": null,
+      "wanneerNiet": "He acknowledges that multiple charges may still be necessary.",
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-dtzobjI1eTs",
+          "url": "https://www.youtube.com/watch?v=dtzobjI1eTs&t=760s",
+          "tijd": 763,
+          "citaat": "putting just the minimum viable amount of force into a combat to win.",
+          "extraCitaten": [
+            {
+              "tijd": 321,
+              "citaat": "I actually think multiple charges are bad a lot of the time."
+            },
+            {
+              "tijd": 400,
+              "citaat": "careful about how much you invest in particular combat."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-06-01",
+      "markeringen": []
+    },
+    {
+      "id": "prepare-for-local-opponents",
+      "titel": "Prepare for the opponents actually attending your events",
+      "tekst": "Base your tournament preparation on what people actually play locally, rather than assuming the online or international meta describes your event. Sometimes you need to attend and see what is there instead of trying to answer every dragon, gun line and death star discussed online.",
+      "waarom": "He says local environments differ, and what people discuss online is not always what they paint and bring to events. In his experience, three consecutive games against the hardest competitive lists are very unlikely.",
+      "voorbeeld": "He says the Sydney Old Hammer events they often attend have few Vampire Counts, fewer Tomb Kings than before, and many all-comers lists that win.",
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "matchups",
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-dtzobjI1eTs",
+          "url": "https://www.youtube.com/watch?v=dtzobjI1eTs&t=454s",
+          "tijd": 457,
+          "citaat": "the local meta is not the global meta.",
+          "extraCitaten": [
+            {
+              "tijd": 525,
+              "citaat": "You need to sometimes just show up and see what's there."
+            },
+            {
+              "tijd": 533,
+              "citaat": "what people are seeing online is not always what people are painting up to play"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-06-01",
+      "markeringen": []
+    },
+    {
+      "id": "avoid-single-matchup-tech",
+      "titel": "Avoid tailoring your army to one specific matchup",
+      "tekst": "He recommends against building your army around countering one particular matchup. He would rather take an army with a chance in every game than one with sharply favourable and unfavourable matchups, and focus on movement and deployment skills.",
+      "waarom": "In his view, tailoring against one skew turns your own army into a skew that loses to something else. He wants meaningful decisions throughout a three-hour game and notes that dice can still prevent a tailored counter from winning.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "matchups",
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-dtzobjI1eTs",
+          "url": "https://www.youtube.com/watch?v=dtzobjI1eTs&t=615s",
+          "tijd": 618,
+          "citaat": "stop trying to tech against a specific matchup.",
+          "extraCitaten": [
+            {
+              "tijd": 684,
+              "citaat": "then you become skew yourself and then you lose to a different skew."
+            },
+            {
+              "tijd": 755,
+              "citaat": "instead focus on the micro skills of movement and"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-06-01",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "deploy-for-matchups",
+      "bron": {
+        "bronId": "yt-dtzobjI1eTs",
+        "url": "https://www.youtube.com/watch?v=dtzobjI1eTs&t=332s",
+        "tijd": 335,
+        "citaat": "you need to think of your matchups."
+      },
+      "toelichting": "He likewise recommends planning deployment around matchups rather than simply sending everything into the nearest enemy unit."
+    },
+    {
+      "lesId": "flank-kill-or-delay",
+      "bron": {
+        "bronId": "yt-dtzobjI1eTs",
+        "url": "https://www.youtube.com/watch?v=dtzobjI1eTs&t=341s",
+        "tijd": 344,
+        "citaat": "maybe a weak flank or distracting a unit",
+        "extraCitaten": [
+          {
+            "tijd": 351,
+            "citaat": "you're not going to be able to throw at all flanks."
+          }
+        ]
+      },
+      "toelichting": "He likewise advises considering a weak flank or distracting the enemy instead of trying to win every flank with damage."
+    },
+    {
+      "lesId": "chaff-speed-bumps",
+      "bron": {
+        "bronId": "yt-dtzobjI1eTs",
+        "url": "https://www.youtube.com/watch?v=dtzobjI1eTs&t=356s",
+        "tijd": 359,
+        "citaat": "you can move your opponent's units out of position by tempting them",
+        "extraCitaten": [
+          {
+            "tijd": 368,
+            "citaat": "into charges they might not want to make or just forcing their maneuvers"
+          }
+        ]
+      },
+      "toelichting": "He likewise recommends redirection to pull enemies out of position through unwanted charges or constrained movement."
+    }
+  ],
+  "overgeslagen": "Skipped event philosophy, personal tournament results, coaching and guide promotions, sponsorship, and broad comments about meta verdicts without concrete tactical instructions. Omitted garbled army-list examples and general rules or balance discussion.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

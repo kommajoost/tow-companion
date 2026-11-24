@@ -1,0 +1,48 @@
+{
+  "videoId": "P-3Vr1TRlvY",
+  "bronId": "yt-P-3Vr1TRlvY",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T21:14:10.806Z",
+  "nieuw": [
+    {
+      "id": "empire-double-missile-blocks",
+      "titel": "Consider two blocks of 20 State Missile Troops",
+      "tekst": "Consider two units of 20 State Missile Troops for Empire core. His Battle March game made him question whether this might also be better at 2,000 points than his preferred combination of Veteran State Troops and knights.",
+      "waarom": "He found the State Missile Troops extremely effective in this game, with 20 models costing roughly 150 points and providing five points of combat resolution.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "infantry"
+      ],
+      "leger": "empire-of-man",
+      "units": [
+        "State Missile Troops"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-P-3Vr1TRlvY",
+          "url": "https://www.youtube.com/watch?v=P-3Vr1TRlvY&t=579s",
+          "tijd": 582,
+          "citaat": "might not be as good as the double 20 uh state missile troops.",
+          "extraCitaten": [
+            {
+              "tijd": 590,
+              "citaat": "Just 20 for roughly 150 points giving plus five combat res."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-07-11",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [],
+  "overgeslagen": "Skipped format and market commentary, challenge anecdotes and rules discussion without a concrete tactical recommendation, observations about starting distances and first-turn charges, equipment and combat-mechanic evaluations without clear selection or use advice, hobby talk, promotions and channel news.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

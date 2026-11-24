@@ -1,0 +1,451 @@
+{
+  "videoId": "RFTZBd8s3bI",
+  "bronId": "yt-RFTZBd8s3bI",
+  "model": "GPT-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T22:04:22.426Z",
+  "nieuw": [
+    {
+      "id": "focus-combat-character-role",
+      "titel": "Build combat characters around one efficient role",
+      "tekst": "Give a combat character a defined job and focus its build on doing that job efficiently. Aim to spend fewer points on the character and free points for other tasks.",
+      "waarom": "He argues that using points better than the opponent, both in list building and during play, is how games are won.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-RFTZBd8s3bI",
+          "url": "https://www.youtube.com/watch?v=RFTZBd8s3bI&t=61s",
+          "tijd": 64,
+          "citaat": "a character when it has a defined role",
+          "extraCitaten": [
+            {
+              "tijd": 72,
+              "citaat": "be done in a focused and efficient way"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-12-18",
+      "markeringen": []
+    },
+    {
+      "id": "tank-buys-flanking-time",
+      "titel": "Use a tank character to buy time for flanking",
+      "tekst": "Use a tank character to hold a position while your other units work around the enemy. Its job is to draw attention and make the opponent commit too many resources to dealing with it.",
+      "waarom": "He sees flanking as an advantage that a tank can buy time for the rest of the army to exploit.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "game-plan",
+        "flanks"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-RFTZBd8s3bI",
+          "url": "https://www.youtube.com/watch?v=RFTZBd8s3bI&t=129s",
+          "tijd": 132,
+          "citaat": "the battlefield role of the tank is to hold a position",
+          "extraCitaten": [
+            {
+              "tijd": 140,
+              "citaat": "time for flanking from your other units in the game."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-12-18",
+      "markeringen": []
+    },
+    {
+      "id": "tank-layer-three-saves",
+      "titel": "Layer armour, regeneration and ward saves on a tank",
+      "tekst": "When building a tank character, try to combine armour, regeneration and ward saves. He considers a triple-save option very hard to pass up for competitive play.",
+      "waarom": "He argues that layered saves can make a model so difficult to kill that the opponent cannot score its points. Monster mounts can add high toughness and more wounds to that protection.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-RFTZBd8s3bI",
+          "url": "https://www.youtube.com/watch?v=RFTZBd8s3bI&t=230s",
+          "tijd": 233,
+          "citaat": "if you can find something with a triple save",
+          "extraCitaten": [
+            {
+              "tijd": 203,
+              "citaat": "all three if you can."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-12-18",
+      "markeringen": []
+    },
+    {
+      "id": "orc-wyvern-layered-tank",
+      "titel": "Consider an Orc Warboss on Wyvern as a cheap tank",
+      "tekst": "He considers an Orc Warboss on a Wyvern an undercosted tank option. For the regular Orc Warboss, combine heavy armour, a shield and Troll Hide Trousers, then add the Talisman of Protection for a ward save.",
+      "waarom": "He highlights toughness six, many wounds and a cost often around 350 points. He says this setup can have a three-plus armour save alongside five-plus regeneration and ward saves.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Orc Warboss",
+        "Wyvern"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-RFTZBd8s3bI",
+          "url": "https://www.youtube.com/watch?v=RFTZBd8s3bI&t=238s",
+          "tijd": 241,
+          "citaat": "an undercosted example of this is the orc war boss on a wven.",
+          "extraCitaten": [
+            {
+              "tijd": 290,
+              "citaat": "You can take heavy armor, shield, troll hide trousers,"
+            },
+            {
+              "tijd": 298,
+              "citaat": "Then you can take talisman of protection, get the five plus ward,"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-12-18",
+      "markeringen": []
+    },
+    {
+      "id": "tank-nearby-bsb-support",
+      "titel": "Consider a nearby BSB to help a tank hold",
+      "tekst": "Consider supporting a tank character with a nearby battle standard bearer and high leadership. He points to early High Elf tank builds using this support.",
+      "waarom": "He identifies breaking from combat as the tank's weakness. With very high leadership, he says it is rare to do worse than fall back in good order.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "combat",
+      "themas": [
+        "psychology",
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-RFTZBd8s3bI",
+          "url": "https://www.youtube.com/watch?v=RFTZBd8s3bI&t=404s",
+          "tijd": 407,
+          "citaat": "run the battle standard bearer nearby",
+          "extraCitaten": [
+            {
+              "tijd": 416,
+              "citaat": "if you can roll on a very high leadership"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-12-18",
+      "markeringen": []
+    },
+    {
+      "id": "blenders-break-and-reform",
+      "titel": "Use blenders to break enemies and find another combat",
+      "tekst": "Use a blender character to win combats quickly by inflicting enough wounds to break the enemy. Follow that victory by pursuing and running them down, or restraining and reforming to seek another combat quickly.",
+      "waarom": "He explains that a large damage advantage makes the opponent's break roll harder, letting the blender move on rather than remain tied up.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "combat",
+      "themas": [
+        "hammers",
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-RFTZBd8s3bI",
+          "url": "https://www.youtube.com/watch?v=RFTZBd8s3bI&t=510s",
+          "tijd": 513,
+          "citaat": "you're doing so much damage",
+          "extraCitaten": [
+            {
+              "tijd": 529,
+              "citaat": "restrain and reform and then seek other combats really quickly."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-12-18",
+      "markeringen": []
+    },
+    {
+      "id": "blender-volume-and-accuracy",
+      "titel": "Build blenders for numerous accurate, powerful attacks",
+      "tekst": "Build a blender character around a high volume of quality attacks. Add high weapon skill, strength and armour piercing rather than looking only at the number of attacks.",
+      "waarom": "He says high weapon skill makes the attempts to hit more likely to succeed, while strength and armour piercing complete the offensive package.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "hammers"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-RFTZBd8s3bI",
+          "url": "https://www.youtube.com/watch?v=RFTZBd8s3bI&t=454s",
+          "tijd": 457,
+          "citaat": "a high volume of quality attacks.",
+          "extraCitaten": [
+            {
+              "tijd": 480,
+              "citaat": "those hits or attempts to hit are likely to succeed."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-12-18",
+      "markeringen": []
+    },
+    {
+      "id": "blender-first-round-targets",
+      "titel": "Pick blender targets it can beat in the first round",
+      "tekst": "Choose targets that your blender character can defeat in the first round of combat. He values the ability to move around and select those fights.",
+      "waarom": null,
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "matchups",
+        "hammers"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-RFTZBd8s3bI",
+          "url": "https://www.youtube.com/watch?v=RFTZBd8s3bI&t=542s",
+          "tijd": 545,
+          "citaat": "pick on something that it can win in the first round of combat."
+        }
+      ],
+      "datum": "2025-12-18",
+      "markeringen": []
+    },
+    {
+      "id": "baron-royal-pegasus-blender",
+      "titel": "Build a Baron blender on a Royal Pegasus",
+      "tekst": "Consider a Baron on a Royal Pegasus with Virtue of Knightly Temper as a blender; he presents it as the leading example. He praises the Frontier Axe for Bretonnian Exiles, while considering a lance a much cheaper substitute outside Exiles.",
+      "waarom": "He values its all-round flying charge options for picking targets, the virtue's hatred for reliable hits, and the Royal Pegasus's stomps for extra damage.",
+      "voorbeeld": null,
+      "wanneerNiet": "He notes that the Royal Pegasus can be a significant points increase; a tank build would not necessarily need its extra damage.",
+      "fase": "army-building",
+      "themas": [
+        "hammers",
+        "matchups"
+      ],
+      "leger": "kingdom-of-bretonnia",
+      "units": [
+        "Baron",
+        "Royal Pegasus"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-RFTZBd8s3bI",
+          "url": "https://www.youtube.com/watch?v=RFTZBd8s3bI&t=526s",
+          "tijd": 529,
+          "citaat": "The best example of this is the Baron on Royal Pegasus",
+          "extraCitaten": [
+            {
+              "tijd": 538,
+              "citaat": "with Virtue of Nightly Temper."
+            },
+            {
+              "tijd": 591,
+              "citaat": "Pegasus is key here because it adds those stomps."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-12-18",
+      "markeringen": []
+    },
+    {
+      "id": "assassins-all-round-movement",
+      "titel": "Value all-round movement on assassin characters",
+      "tekst": "Look for all-round movement when choosing an assassin character. He considers it a major advantage for this role under the skirmisher rules he is discussing.",
+      "waarom": "He regards all-round movement as much more capable than the single facing available to close- or open-order units.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "matchups",
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-RFTZBd8s3bI",
+          "url": "https://www.youtube.com/watch?v=RFTZBd8s3bI&t=805s",
+          "tijd": 808,
+          "citaat": "So the assassin again 360 movement is a really big deal."
+        }
+      ],
+      "datum": "2025-12-18",
+      "markeringen": []
+    },
+    {
+      "id": "protect-assassins-from-range",
+      "titel": "Protect assassin characters from ranged attacks",
+      "tekst": "Give an assassin protection from ranged attacks while it gets into position. Consider keeping it near units of the same subtype for lone-character targeting protection, or placing it in a unit of at least five models for protection against cannons.",
+      "waarom": "He describes these as cheap characters focused on a particular job, which a cannon could otherwise pick off.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "shooting-terrain",
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-RFTZBd8s3bI",
+          "url": "https://www.youtube.com/watch?v=RFTZBd8s3bI&t=832s",
+          "tijd": 835,
+          "citaat": "I think you also need protections from range.",
+          "extraCitaten": [
+            {
+              "tijd": 859,
+              "citaat": "As long as there are five or more models,"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-12-18",
+      "markeringen": []
+    },
+    {
+      "id": "assassins-hunt-valuable-targets",
+      "titel": "Focus assassins on valuable targets rather than ranked troops",
+      "tekst": "Use an assassin to reach a high-value target, with magic items or abilities chosen to kill it. Avoid treating it as a fighter for ordinary rank-and-file units with combat resolution.",
+      "waarom": "He says an assassin is no good against those ordinary units; the aim is to kill something worth more than the points spent on the assassin.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "combat",
+      "themas": [
+        "matchups"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-RFTZBd8s3bI",
+          "url": "https://www.youtube.com/watch?v=RFTZBd8s3bI&t=887s",
+          "tijd": 890,
+          "citaat": "You're trying to find high value targets and have a kit,",
+          "extraCitaten": [
+            {
+              "tijd": 882,
+              "citaat": "an assassin will be no good to you against a unit with resolution"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-12-18",
+      "markeringen": []
+    },
+    {
+      "id": "tomb-banshee-budget-assassin",
+      "titel": "Consider a Tomb Banshee as a cheap assassin",
+      "tekst": "Consider a Tomb Banshee as a cheap assassin that can threaten even a dragon. He would like leadership-reducing spells in place, but still considers it dangerous without them.",
+      "waarom": "He says that a 90-point model taking wounds off a much larger target is a good return, and highlights the minus-two leadership effect even without spells.",
+      "voorbeeld": null,
+      "wanneerNiet": "He notes that its roll sometimes comes up three and sometimes 11.",
+      "fase": "army-building",
+      "themas": [
+        "matchups"
+      ],
+      "leger": "vampire-counts",
+      "units": [
+        "Tomb Banshee"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-RFTZBd8s3bI",
+          "url": "https://www.youtube.com/watch?v=RFTZBd8s3bI&t=896s",
+          "tijd": 899,
+          "citaat": "for 90 points they can take down anything in the game.",
+          "extraCitaten": [
+            {
+              "tijd": 917,
+              "citaat": "for 90 points, you can have a crack at a dragon."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-12-18",
+      "markeringen": []
+    },
+    {
+      "id": "griffon-bsb-rear-charge",
+      "titel": "Try a High Elf Griffon BSB for rear charges",
+      "tekst": "Consider a High Elf Noble BSB on a Griffon, probably carrying the War Banner, to manoeuvre behind a unit and charge its rear. He presents this as a cheaper character that may win through combat resolution rather than simply killing its target.",
+      "waarom": "He counts two combat resolution for the rear charge and another two for the BSB and War Banner. He also highlights the Griffon's terror and available High Elf defensive equipment.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "matchups",
+        "game-plan"
+      ],
+      "leger": "high-elf-realms",
+      "units": [
+        "Noble",
+        "Griffon High Elves"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-RFTZBd8s3bI",
+          "url": "https://www.youtube.com/watch?v=RFTZBd8s3bI&t=1021s",
+          "tijd": 1024,
+          "citaat": "they can maneuver to be able to hit into the back of a unit.",
+          "extraCitaten": [
+            {
+              "tijd": 1006,
+              "citaat": "high elf noble on a griffin"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-12-18",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [],
+  "overgeslagen": "Skipped introductory discussion, sponsor and channel news, speculative changes to Elf attack counts, uncertain Death Hag abilities, and garbled or insufficiently developed alternative builds.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

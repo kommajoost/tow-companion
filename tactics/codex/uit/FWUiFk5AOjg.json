@@ -1,0 +1,302 @@
+{
+  "videoId": "FWUiFk5AOjg",
+  "bronId": "yt-FWUiFk5AOjg",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T21:57:54.310Z",
+  "nieuw": [
+    {
+      "id": "encirclement-protect-vulnerable-scorer",
+      "titel": "Put vulnerable scorers on Encirclement's protected flank",
+      "tekst": "In Encirclement with three strategic objectives, put your more vulnerable scoring unit on the flank where the opponent cannot deploy.",
+      "waarom": "He expects the middle objective to be contested and sees the flank without enemy deployment as the safer place for a vulnerable unit.",
+      "voorbeeld": "He plans to place his Infernal Guard on that wing to shoot towards the objective and slowly advance if the opponent gives it up.",
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "game-plan",
+        "flanks"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-FWUiFk5AOjg",
+          "url": "https://www.youtube.com/watch?v=FWUiFk5AOjg&t=311s",
+          "tijd": 314,
+          "citaat": "the flank that I have that has no deployment from my opponent",
+          "extraCitaten": [
+            {
+              "tijd": 314,
+              "citaat": "where I'm going to want to place the unit that's more vulnerable"
+            },
+            {
+              "tijd": 1104,
+              "citaat": "slowly move towards it if he gives up on it"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-12-26",
+      "markeringen": []
+    },
+    {
+      "id": "identify-enemy-winning-method",
+      "titel": "Identify how the enemy army intends to win",
+      "tekst": "Before choosing your matchups, identify the enemy units' broad roles and how they work together to win. At an event, use that big picture rather than trying to analyse every possible detail.",
+      "waarom": "He says time is limited at events, especially when meeting an unfamiliar opponent and trying to be sociable.",
+      "voorbeeld": "He expects the two enemy dragons and the Chaos Knights to combine attacks against one unit, break it through damage, then pursue or reform towards the next block.",
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "game-plan",
+        "matchups"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-FWUiFk5AOjg",
+          "url": "https://www.youtube.com/watch?v=FWUiFk5AOjg&t=559s",
+          "tijd": 562,
+          "citaat": "you need to think about how he's going to win",
+          "extraCitaten": [
+            {
+              "tijd": 410,
+              "citaat": "more in terms of big picture heruristics rather than every [clears throat] little detail"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-12-26",
+      "markeringen": []
+    },
+    {
+      "id": "shoot-diverters-out-early",
+      "titel": "Clear enemy diverters early with light shooting",
+      "tekst": "Use light shooting to remove enemy diverters early, rather than leaving them free to control the main combats.",
+      "waarom": "He says removing them limits the opponent's ways to redirect combats. Even a few casualties might panic the Warhounds away or stop them blocking lines of sight.",
+      "voorbeeld": "In this matchup he redirects his Sneaky Gits from backline troublemaking towards shooting Warhounds, and separates his Hobgoblin Khan from the riders so it can move and shoot at the diverters too.",
+      "wanneerNiet": null,
+      "fase": "magic-shooting",
+      "themas": [
+        "chaff",
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-FWUiFk5AOjg",
+          "url": "https://www.youtube.com/watch?v=FWUiFk5AOjg&t=862s",
+          "tijd": 865,
+          "citaat": "best to try to go after these war hounds early",
+          "extraCitaten": [
+            {
+              "tijd": 735,
+              "citaat": "it doesn't give him a lot of ways to redirect the combats"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-12-26",
+      "markeringen": []
+    },
+    {
+      "id": "wyvern-against-unbuffed-warpfire",
+      "titel": "Consider a Wyvern against an unbuffed Warpfire Dragon",
+      "tekst": "In this matchup, he favours sending his Warboss on a Wyvern against the Warpfire Dragon when it has not gained the ward save from its spell.",
+      "waarom": "He notes that his Wyvern rider has no magical attacks and says that, in his experience, this matchup can be won fairly easily.",
+      "voorbeeld": null,
+      "wanneerNiet": "His recommendation depends on the Warpfire Dragon not having that ward save active.",
+      "fase": "movement",
+      "themas": [
+        "matchups"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Orc Warboss",
+        "Wyvern",
+        "Warpfire Dragon"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-FWUiFk5AOjg",
+          "url": "https://www.youtube.com/watch?v=FWUiFk5AOjg&t=913s",
+          "tijd": 916,
+          "citaat": "is ideally suited to take on the warfire if he doesn't have that ward up",
+          "extraCitaten": [
+            {
+              "tijd": 926,
+              "citaat": "they're actually able to beat them pretty easily"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-12-26",
+      "markeringen": []
+    },
+    {
+      "id": "hide-artillery-waste-hunters-time",
+      "titel": "Hide artillery to waste an enemy hunter's time",
+      "tekst": "Consider hiding a war machine during deployment and making an enemy come to it, wasting time on the approach.",
+      "waarom": null,
+      "voorbeeld": "He plans to hide his Deathshrieker Rocket Launcher during deployment and place it towards the back.",
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "shooting-terrain",
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-FWUiFk5AOjg",
+          "url": "https://www.youtube.com/watch?v=FWUiFk5AOjg&t=1066s",
+          "tijd": 1069,
+          "citaat": "Sometimes with war machines, they can come to you and it wastes their time",
+          "extraCitaten": [
+            {
+              "tijd": 1069,
+              "citaat": "I think I'm going to hide it in deployment"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-12-26",
+      "markeringen": []
+    },
+    {
+      "id": "central-iron-daemon-dragon-bait",
+      "titel": "Use a central Iron Daemon to bait the dragon",
+      "tekst": "In this matchup, deploy the Iron Daemon centrally to tempt the enemy dragon towards it while it shoots without moving.",
+      "waarom": "He identifies toughness seven as his advantage and says the opponent cannot do much to kill his Iron Daemon.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "matchups",
+        "game-plan"
+      ],
+      "leger": "chaos-dwarfs",
+      "units": [
+        "Iron Daemon"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-FWUiFk5AOjg",
+          "url": "https://www.youtube.com/watch?v=FWUiFk5AOjg&t=1083s",
+          "tijd": 1086,
+          "citaat": "I'm going to centralize the Iron Demon",
+          "extraCitaten": [
+            {
+              "tijd": 1095,
+              "citaat": "hopefully he then brings the dragon to it"
+            },
+            {
+              "tijd": 1095,
+              "citaat": "I can just shoot things without moving"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-12-26",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "check-scenario-deployment-map",
+      "bron": {
+        "bronId": "yt-FWUiFk5AOjg",
+        "url": "https://www.youtube.com/watch?v=FWUiFk5AOjg&t=296s",
+        "tijd": 299,
+        "citaat": "the first thing you want to do is think through the scenario"
+      },
+      "voorbeeld": "He starts by examining Encirclement's deployment restrictions and the positions of the three strategic objectives.",
+      "toelichting": "He likewise recommends examining the scenario and deployment layout before deciding where units belong."
+    },
+    {
+      "lesId": "deploy-who-is-beatdown",
+      "bron": {
+        "bronId": "yt-FWUiFk5AOjg",
+        "url": "https://www.youtube.com/watch?v=FWUiFk5AOjg&t=671s",
+        "tijd": 674,
+        "citaat": "who has to make the move is probably Chris",
+        "extraCitaten": [
+          {
+            "tijd": 666,
+            "citaat": "he has no shooting and a smaller army"
+          }
+        ]
+      },
+      "toelichting": "He determines which army must advance before planning deployment and the engagement."
+    },
+    {
+      "lesId": "deploy-for-matchups",
+      "bron": {
+        "bronId": "yt-FWUiFk5AOjg",
+        "url": "https://www.youtube.com/watch?v=FWUiFk5AOjg&t=1159s",
+        "tijd": 1162,
+        "citaat": "I need to match them up across from those things that I've chosen"
+      },
+      "toelichting": "He recommends deploying his characters opposite the targets already selected as their favourable matchups."
+    },
+    {
+      "lesId": "anchor-challenges-against-dragons",
+      "bron": {
+        "bronId": "yt-FWUiFk5AOjg",
+        "url": "https://www.youtube.com/watch?v=FWUiFk5AOjg&t=946s",
+        "tijd": 949,
+        "citaat": "But if I can challenge out that lord and hang on",
+        "extraCitaten": [
+          {
+            "tijd": 782,
+            "citaat": "I can challenge out a monster and survive around"
+          }
+        ]
+      },
+      "voorbeeld": "He wants his Black Orcs to engage the enemy dragon lord, using a challenge to help them hold on.",
+      "toelichting": "He again uses challenges to help an infantry block survive an enemy dragon."
+    },
+    {
+      "lesId": "stubborn-anchor-countercharge",
+      "bron": {
+        "bronId": "yt-FWUiFk5AOjg",
+        "url": "https://www.youtube.com/watch?v=FWUiFk5AOjg&t=795s",
+        "tijd": 798,
+        "citaat": "I'm going to try to take the hit, hold on",
+        "extraCitaten": [
+          {
+            "tijd": 1144,
+            "citaat": "hang on in combat and bring up a charge for the iron demon"
+          }
+        ]
+      },
+      "toelichting": "He plans to hold the initial attack with his resilient blocks, including Stubborn infantry, so the Iron Daemon can join with a supporting charge."
+    },
+    {
+      "lesId": "chaff-speed-bumps",
+      "bron": {
+        "bronId": "yt-FWUiFk5AOjg",
+        "url": "https://www.youtube.com/watch?v=FWUiFk5AOjg&t=896s",
+        "tijd": 899,
+        "citaat": "I would deploy them most likely in open order",
+        "extraCitaten": [
+          {
+            "tijd": 908,
+            "citaat": "try to push the knights um in a different direction"
+          }
+        ]
+      },
+      "toelichting": "His Wolf Riders have the same redirecting role: getting the enemy knights to move in a different direction."
+    }
+  ],
+  "overgeslagen": "Skipped sponsorship, hobby and channel material, list and stat readouts, and speculative spell choices. The objective-points discussion reaches no firm recommendation. Omitted the garbled 'taro/tower' unit references and the uncertain spell-name passage rather than guessing their identities.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

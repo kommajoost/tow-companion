@@ -1,0 +1,463 @@
+{
+  "videoId": "3L00jVNHOfg",
+  "bronId": "yt-3L00jVNHOfg",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T21:08:13.221Z",
+  "nieuw": [
+    {
+      "id": "infantry-central-anchor",
+      "titel": "Use infantry as a central anchor",
+      "tekst": "The speaker considers infantry best suited to the central anchor role: holding a position and surviving a hammer's attack. Offensive ability is a bonus rather than a requirement.",
+      "waarom": "He says infantry can generate combat resolution, take plenty of bodies and become hard to shift. Because the job is to hold ground, its low speed matters less.",
+      "voorbeeld": null,
+      "wanneerNiet": "He says armies such as Wood Elves struggle to build a good infantry anchor and need to consider alternatives.",
+      "fase": "army-building",
+      "themas": [
+        "infantry",
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-3L00jVNHOfg",
+          "url": "https://www.youtube.com/watch?v=3L00jVNHOfg&t=262s",
+          "tijd": 265,
+          "citaat": "best suited to an infantry unit because they are tasked with holding a position",
+          "extraCitaten": [
+            {
+              "tijd": 277,
+              "citaat": "Offensive ability is not mandatory, although if they have it, it's definitely a bonus."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-10-21",
+      "markeringen": []
+    },
+    {
+      "id": "anchor-spend-on-defence",
+      "titel": "Spend your anchor's points on defence",
+      "tekst": "Save points on offensive upgrades for a primarily defensive anchor and put those points into its defensive capability.",
+      "waarom": "He says the unit's primary job is to hold space without being destroyed in one attack by a hammer.",
+      "voorbeeld": "He has moved away from upgrading his defensive Orc block to Big 'Uns because he finds the extra offensive cost rarely pays off.",
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "infantry"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-3L00jVNHOfg",
+          "url": "https://www.youtube.com/watch?v=3L00jVNHOfg&t=398s",
+          "tijd": 401,
+          "citaat": "you should be pouring that into the defensive capability of this unit.",
+          "extraCitaten": [
+            {
+              "tijd": 384,
+              "citaat": "not making them biggin because you end up paying 60 points or 48 points"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-10-21",
+      "markeringen": []
+    },
+    {
+      "id": "anchor-core-objective-threat",
+      "titel": "Make your anchor an objective threat",
+      "tekst": "Where possible, use a core unit with more than unit strength 10 for your anchor so it can also threaten objectives or hold a table quarter.",
+      "waarom": "He says an anchor's usual central position lets it threaten an objective, and its ability to hold ground suits the objective game.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "game-plan",
+        "infantry"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-3L00jVNHOfg",
+          "url": "https://www.youtube.com/watch?v=3L00jVNHOfg&t=453s",
+          "tijd": 456,
+          "citaat": "you want this to be an objective threat.",
+          "extraCitaten": [
+            {
+              "tijd": 456,
+              "citaat": "it's really great if it's a core unit."
+            },
+            {
+              "tijd": 456,
+              "citaat": "It's really great if it's over unit strength 10."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-10-21",
+      "markeringen": []
+    },
+    {
+      "id": "anchor-static-combat-resolution",
+      "titel": "Aim for six static combat resolution and a musician",
+      "tekst": "Build an anchor towards six static combat resolution plus a musician, which the speaker calls 6.5. Use ranks, Horde, Close Order, Massed Infantry and a banner, and push higher with a War Banner or battle standard where available.",
+      "waarom": "He says six plus a musician beats the maximum combat resolution a dragon or a Duke on a Pegasus can generate in a challenge. Higher static combat resolution makes the block harder for attacking units to beat.",
+      "voorbeeld": "He says Orcs can combine a War Banner, Red Raggedy Flag and battle standard to reach eight or nine combat resolution.",
+      "wanneerNiet": "He says Wood Elves lack the same ability to generate static combat resolution.",
+      "fase": "army-building",
+      "themas": [
+        "infantry"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-3L00jVNHOfg",
+          "url": "https://www.youtube.com/watch?v=3L00jVNHOfg&t=622s",
+          "tijd": 625,
+          "citaat": "Specifically a static combat res of 6.5.",
+          "extraCitaten": [
+            {
+              "tijd": 659,
+              "citaat": "you have a musician to give you 6.5 combat res."
+            },
+            {
+              "tijd": 666,
+              "citaat": "Go above that though. It's it's easy to do. War banner, chuck that in there."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-10-21",
+      "markeringen": []
+    },
+    {
+      "id": "anchor-heavy-armour-parry",
+      "titel": "Prefer heavy armour for a parrying anchor",
+      "tekst": "The speaker particularly values heavy armour on infantry using parry when building an anchor.",
+      "waarom": "He says that against AP2 attacks, heavy armour parry gives a five-up save rather than light armour parry's six-up save, doubling the saves made.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "infantry"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-3L00jVNHOfg",
+          "url": "https://www.youtube.com/watch?v=3L00jVNHOfg&t=814s",
+          "tijd": 817,
+          "citaat": "So heavy armor is great.",
+          "extraCitaten": [
+            {
+              "tijd": 800,
+              "citaat": "a five up save compared to a six up save is double the amount"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-10-21",
+      "markeringen": []
+    },
+    {
+      "id": "anchor-toughness-four",
+      "titel": "Value toughness four in an infantry anchor",
+      "tekst": "Look for toughness four when selecting infantry to hold a charge.",
+      "waarom": "He says toughness four changes attacks from Orc Boar Boyz, Empire Knights or Knights of the Realm from wounding on twos to wounding on threes. In his view, that reduction adds up alongside the unit's other defences.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "infantry"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-3L00jVNHOfg",
+          "url": "https://www.youtube.com/watch?v=3L00jVNHOfg&t=822s",
+          "tijd": 825,
+          "citaat": "But if you have toughness four, also a really big deal."
+        }
+      ],
+      "datum": "2026-10-21",
+      "markeringen": []
+    },
+    {
+      "id": "anchor-warband-leadership",
+      "titel": "Use Warband to support your anchor's leadership",
+      "tekst": "Look for Warband to boost the anchor's leadership if it loses combat, and maintain its rank bonus.",
+      "waarom": "He says high leadership backs the unit up when its combat result is not enough.",
+      "voorbeeld": null,
+      "wanneerNiet": "He makes the leadership benefit conditional on maintaining the rank bonus.",
+      "fase": "army-building",
+      "themas": [
+        "infantry",
+        "psychology"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-3L00jVNHOfg",
+          "url": "https://www.youtube.com/watch?v=3L00jVNHOfg&t=840s",
+          "tijd": 843,
+          "citaat": "warband incredible for boosting the leadership.",
+          "extraCitaten": [
+            {
+              "tijd": 852,
+              "citaat": "you have the high leadership to back it up if you're maintaining your rank bonus."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-10-21",
+      "markeringen": []
+    },
+    {
+      "id": "anchor-challenges-against-dragons",
+      "titel": "Use challenges to help infantry hold against dragons",
+      "tekst": "Use challenges as a defensive tool for an infantry anchor against a dragon while the current challenge rules apply.",
+      "waarom": "He says dragons used to overkill through a challenge and still beat a large infantry block, but the change has made challenges a major advantage for infantry.",
+      "voorbeeld": null,
+      "wanneerNiet": "He cautions that the rules could change in a future edition.",
+      "fase": "combat",
+      "themas": [
+        "infantry"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-3L00jVNHOfg",
+          "url": "https://www.youtube.com/watch?v=3L00jVNHOfg&t=856s",
+          "tijd": 859,
+          "citaat": "huge advantage to infantry. Use it while you can."
+        }
+      ],
+      "datum": "2026-10-21",
+      "markeringen": []
+    },
+    {
+      "id": "stubborn-anchor-countercharge",
+      "titel": "Use Stubborn to set up a supporting flank charge",
+      "tekst": "Use Stubborn to fall back in good order, then reform to set up a flank charge by a supporting hammer if the enemy follows.",
+      "waarom": "He stresses that Stubborn does more than prevent fleeing: the reform can create the next engagement.",
+      "voorbeeld": "His opponent's Veteran Sellswords survived charges from three units and used Stubborn to fall back. When his Orc units followed, Imperial Dwarf Mercenaries charged their flank, and the opponent won the next combat.",
+      "wanneerNiet": "The flank-charge setup he describes depends on the opponent following the retreating anchor.",
+      "fase": "movement",
+      "themas": [
+        "infantry",
+        "hammers"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-3L00jVNHOfg",
+          "url": "https://www.youtube.com/watch?v=3L00jVNHOfg&t=885s",
+          "tijd": 888,
+          "citaat": "Stubborn uh allows you to just fall back in good order,",
+          "extraCitaten": [
+            {
+              "tijd": 896,
+              "citaat": "set up a flank charge for your hammers coming in if your opponent follows through."
+            },
+            {
+              "tijd": 1422,
+              "citaat": "there are some dwarf mercenaries to his flank. Setting up a flank charge"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-10-21",
+      "markeringen": []
+    },
+    {
+      "id": "anchor-unbreakable-rule",
+      "titel": "Look for Unbreakable when choosing an anchor",
+      "tekst": "Treat Unbreakable as one of the key rules to look for when building an anvil or central anchor.",
+      "waarom": "He considers moving back two inches without rolling a break test very powerful, and says Unbreakable is a major reason Undead anchors are so effective.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "infantry",
+        "psychology"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-3L00jVNHOfg",
+          "url": "https://www.youtube.com/watch?v=3L00jVNHOfg&t=882s",
+          "tijd": 885,
+          "citaat": "Stubborn and unbreakable are two of the most important ones.",
+          "extraCitaten": [
+            {
+              "tijd": 905,
+              "citaat": "moving back two inches, not having to roll a break test"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-10-21",
+      "markeringen": []
+    },
+    {
+      "id": "eternal-guard-anchor-trap",
+      "titel": "Avoid Eternal Guard as a central anchor",
+      "tekst": "The speaker considers Eternal Guard a trap for the central anchor role, even with upgrades such as Stubborn.",
+      "waarom": "He says they cost too much to field enough bodies, have toughness three and light armour, and their spears give up parry when used. He also finds them too weak offensively to compensate and says they struggle to reach six plus a musician without paying for a War Banner.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "infantry"
+      ],
+      "leger": "wood-elf-realms",
+      "units": [
+        "Eternal Guard"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-3L00jVNHOfg",
+          "url": "https://www.youtube.com/watch?v=3L00jVNHOfg&t=1057s",
+          "tijd": 1060,
+          "citaat": "eternal guard are a massive trap.",
+          "extraCitaten": [
+            {
+              "tijd": 1076,
+              "citaat": "far too expensive to be able to put enough"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-10-21",
+      "markeringen": []
+    },
+    {
+      "id": "tree-kin-wood-elf-anchor",
+      "titel": "Use Tree Kin to hold enemies in combat",
+      "tekst": "The speaker considers the buffed Tree Kin the best Wood Elf option for holding something up in combat and filling the anchor role.",
+      "waarom": "He values toughness six, Stubborn and built-in five-plus regeneration. He says Stubborn means the combat resolution suffered from regeneration saves does not matter.",
+      "voorbeeld": null,
+      "wanneerNiet": "He finds that the centre is sometimes not the best position for them.",
+      "fase": "army-building",
+      "themas": [
+        "infantry"
+      ],
+      "leger": "wood-elf-realms",
+      "units": [
+        "Tree Kin"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-3L00jVNHOfg",
+          "url": "https://www.youtube.com/watch?v=3L00jVNHOfg&t=1238s",
+          "tijd": 1241,
+          "citaat": "it is your best unit to hold something up in combat.",
+          "extraCitaten": [
+            {
+              "tijd": 1241,
+              "citaat": "Toughness six, fantastic."
+            },
+            {
+              "tijd": 1248,
+              "citaat": "Stubborn, fantastic. Built-in five plus regen, so you're always getting a save."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-10-21",
+      "markeringen": []
+    },
+    {
+      "id": "character-leadership-central-anchor",
+      "titel": "Use a character's leadership bubble as an anchor",
+      "tekst": "A central anchor can also be a character whose high leadership steadies the army. Consider that option when a large infantry anchor is difficult to build.",
+      "waarom": "He says a general's high-leadership bubble gives the fighting unit a safety net to hold the line when charged.",
+      "voorbeeld": "He places a Grey Seer on a Screaming Bell in Clanrats behind his Stormvermin, providing an 18-inch Leadership 10 bubble.",
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "game-plan",
+        "psychology"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-3L00jVNHOfg",
+          "url": "https://www.youtube.com/watch?v=3L00jVNHOfg&t=154s",
+          "tijd": 157,
+          "citaat": "It can come from a character also.",
+          "extraCitaten": [
+            {
+              "tijd": 217,
+              "citaat": "inspiring presence as a bit of a safety net for them to hold the line."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-10-21",
+      "markeringen": []
+    },
+    {
+      "id": "orc-anchor-defensive-magic",
+      "titel": "Consider ward-save magic for a defensive Orc block",
+      "tekst": "Consider Elementalism or Battle Magic to try to give a defensive Orc block a ward save.",
+      "waarom": "He says this significantly improves the block's defensive capability.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "infantry"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Orc Mob"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-3L00jVNHOfg",
+          "url": "https://www.youtube.com/watch?v=3L00jVNHOfg&t=423s",
+          "tijd": 426,
+          "citaat": "elementalism or battle magic to try and give them a ward save,"
+        }
+      ],
+      "datum": "2026-10-21",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "hold-centre-win-flanks",
+      "bron": {
+        "bronId": "yt-3L00jVNHOfg",
+        "url": "https://www.youtube.com/watch?v=3L00jVNHOfg&t=1557s",
+        "tijd": 1560,
+        "citaat": "the central unit needs to buy time, take a hit, fall back,",
+        "extraCitaten": [
+          {
+            "tijd": 241,
+            "citaat": "if they can not lose the middle and I can win one of these flanks,"
+          }
+        ]
+      },
+      "toelichting": "He repeats the plan of holding the centre while flank forces win and converge to counterattack."
+    }
+  ],
+  "overgeslagen": "Skipped introductions, guide promotion, supporter acknowledgements, list readouts without advice, and rules descriptions without a recommendation. Omitted uncertain High Elf unit suggestions, speculative future Treeman options and the garbled unfinished rule interaction at 15:21.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

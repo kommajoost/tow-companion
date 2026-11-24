@@ -1,0 +1,100 @@
+{
+  "videoId": "Z-MMDE1c5o8",
+  "bronId": "yt-Z-MMDE1c5o8",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T21:19:25.615Z",
+  "nieuw": [
+    {
+      "id": "deploy-heavy-chariots-back",
+      "titel": "Deploy heavy chariots further back and bring them in patiently",
+      "tekst": "He recommends deploying heavy chariots further back and bringing them into the battle later, often around turn three. Avoid rushing forward just to set up an early charge.",
+      "waarom": "He warns that pushing forward for a turn-two charge can leave the chariot shot down or charged by cavalry or something with Swiftstride, then stuck dealing mediocre damage.",
+      "voorbeeld": null,
+      "wanneerNiet": "He welcomes a successful turn-two charge and says a turn-one opportunity is something the opponent has handed you.",
+      "fase": "deployment",
+      "themas": [
+        "hammers",
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-Z-MMDE1c5o8",
+          "url": "https://www.youtube.com/watch?v=Z-MMDE1c5o8&t=222s",
+          "tijd": 225,
+          "citaat": "I believe they should be deployed further back",
+          "extraCitaten": [
+            {
+              "tijd": 234,
+              "citaat": "they're charging things on turn three at best."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-05-29",
+      "markeringen": []
+    },
+    {
+      "id": "black-orc-chariot-standard",
+      "titel": "Give a supporting Black Orc chariot a standard bearer",
+      "tekst": "He values a standard bearer on a Black Orc Boar Chariot for the extra combat resolution it brings to a support charge. Combined with a flank charge, that supplies two combat resolution before impact hits do any damage.",
+      "waarom": "In his view, even one extra combat resolution can tip the scales in an existing fight.",
+      "voorbeeld": "In his game, a rear charge and the chariot's banner supplied three combat resolution; one impact-hit wound made it four and swung the combat.",
+      "wanneerNiet": "He accepts that the standard can mean giving up points.",
+      "fase": "army-building",
+      "themas": [
+        "hammers"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Black Orc Boar Chariot"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-Z-MMDE1c5o8",
+          "url": "https://www.youtube.com/watch?v=Z-MMDE1c5o8&t=380s",
+          "tijd": 383,
+          "citaat": "being able to bring a standard bearer on\na chariot is a fantastic addition.",
+          "extraCitaten": [
+            {
+              "tijd": 400,
+              "citaat": "you're bringing two combat res in a support charge."
+            },
+            {
+              "tijd": 572,
+              "citaat": "an extra plus one combat res is sometimes all it takes to tip the scales."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-05-29",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "heavy-chariot-support",
+      "bron": {
+        "bronId": "yt-Z-MMDE1c5o8",
+        "url": "https://www.youtube.com/watch?v=Z-MMDE1c5o8&t=578s",
+        "tijd": 581,
+        "citaat": "Essentially, you should be considering heavy chariots as a rescue team.",
+        "extraCitaten": [
+          {
+            "tijd": 534,
+            "citaat": "That allows you to support charge with the chariot."
+          }
+        ]
+      },
+      "toelichting": "He gives the same recommendation to pair a heavy chariot with a durable unit and countercharge after that unit holds or falls back in good order."
+    }
+  ],
+  "overgeslagen": "Skipped introductions, guide and sponsor promotion, list readouts, rules explanations without separate advice, and unclear captions. The battle examples illustrate the support role already in the index.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

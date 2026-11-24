@@ -1,0 +1,171 @@
+{
+  "videoId": "WiPvn9BMDyQ",
+  "bronId": "yt-WiPvn9BMDyQ",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T22:45:11.380Z",
+  "nieuw": [
+    {
+      "id": "lumbering-perpendicular-charge-options",
+      "titel": "Use Lumbering to finish perpendicular with several charge options",
+      "tekst": "Use Lumbering pivots and planned wheels to finish perpendicular to the opposing force, outside its charge arcs, with the widest possible choice of legal charges next turn. Reserve Move makes this positioning easier; pre-measure the movement needed to wheel back before using the final pivot.",
+      "waarom": "He considers chariots poor when they cannot get the charge. He says Lumbering is often on powerful hammer units with Close Order, whose charge arcs need careful positioning.",
+      "voorbeeld": "He moved his Black Coach 11 inches forward and pivoted 45 degrees away from the enemy. During its Reserve Move, he moved eight inches forward, used two inches to wheel back, then pivoted 90 degrees towards the enemy, finishing perpendicular and outside their charge arc.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "hammers",
+        "flanks"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-WiPvn9BMDyQ",
+          "url": "https://www.youtube.com/watch?v=WiPvn9BMDyQ&t=577s",
+          "tijd": 580,
+          "citaat": "you need to make sure that you have that maximizing your charge arc.",
+          "extraCitaten": [
+            {
+              "tijd": 258,
+              "citaat": "where I'm perpendicular to the opponent ideally,"
+            },
+            {
+              "tijd": 354,
+              "citaat": "reserve move makes this a lot easier"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-10-01",
+      "markeringen": []
+    },
+    {
+      "id": "black-coach-mobile-backline-hunter",
+      "titel": "Use the Black Coach's mobility to attack vulnerable backline targets",
+      "tekst": "Use the Black Coach's Ethereal flying option, combined with Reserve Move when available, to get behind the enemy army and attack vulnerable targets such as war machine crews.",
+      "waarom": "He finds the combination of Ethereal, toughness six and a three-plus armour save highly resilient, while its mobility gets it across the board quickly.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "flanks",
+        "matchups"
+      ],
+      "leger": "vampire-counts",
+      "units": [
+        "Black Coach"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-WiPvn9BMDyQ",
+          "url": "https://www.youtube.com/watch?v=WiPvn9BMDyQ&t=144s",
+          "tijd": 147,
+          "citaat": "with the black coach to hit vulnerable targets in the back of an army.",
+          "extraCitaten": [
+            {
+              "tijd": 549,
+              "citaat": "behind and attack things like war machine cruise very easily"
+            },
+            {
+              "tijd": 132,
+              "citaat": "either have D6 plus two impact hits or ethereal and fly 10."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-10-01",
+      "markeringen": []
+    },
+    {
+      "id": "bsb-restraint-reform-support",
+      "titel": "Keep a BSB nearby to support restraint and reform",
+      "tekst": "Keep a battle standard bearer nearby when you want a victorious unit to restrain and reform instead of continuing into an unwanted fight.",
+      "waarom": null,
+      "voorbeeld": "His nearby battle standard bearer supplied a leadership reroll that let the Black Coach restrain and reform after beating a Razorgor. Instead of continuing into what he considered a suicidal fight, it flew over the enemy and helped secure unit strength in a back quarter for Domination.",
+      "wanneerNiet": null,
+      "fase": "combat",
+      "themas": [
+        "game-plan",
+        "psychology"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-WiPvn9BMDyQ",
+          "url": "https://www.youtube.com/watch?v=WiPvn9BMDyQ&t=490s",
+          "tijd": 493,
+          "citaat": "my BB who's sitting right here for this purpose",
+          "extraCitaten": [
+            {
+              "tijd": 500,
+              "citaat": "which means I can restrain and reform"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-10-01",
+      "markeringen": []
+    },
+    {
+      "id": "dragon-first-turn-march",
+      "titel": "Usually march a dragon forward on its first turn",
+      "tekst": "Typically, use a dragon's first turn to march forward towards the opponent.",
+      "waarom": "He describes this as a way to get 20 inches up towards the opponent.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-WiPvn9BMDyQ",
+          "url": "https://www.youtube.com/watch?v=WiPvn9BMDyQ&t=608s",
+          "tijd": 611,
+          "citaat": "But typically, in the first turn, something like a dragon will want to march."
+        }
+      ],
+      "datum": "2025-10-01",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "hammers-on-flanks",
+      "bron": {
+        "bronId": "yt-WiPvn9BMDyQ",
+        "url": "https://www.youtube.com/watch?v=WiPvn9BMDyQ&t=383s",
+        "tijd": 386,
+        "citaat": "out on the extreme flank, I think you've got the right idea."
+      },
+      "voorbeeld": "He approves of his opponent placing a Tuskgor Chariot on the extreme flank.",
+      "toelichting": "He endorses placing a chariot on the extreme flank, matching the existing recommendation to put hammers on the flanks."
+    },
+    {
+      "lesId": "reserve-move-blaster-withdrawal",
+      "bron": {
+        "bronId": "yt-WiPvn9BMDyQ",
+        "url": "https://www.youtube.com/watch?v=WiPvn9BMDyQ&t=642s",
+        "tijd": 645,
+        "citaat": "shoot its magic missiles, and then jump back behind cover",
+        "extraCitaten": [
+          {
+            "tijd": 635,
+            "citaat": "if they have reserve move and a wizard joins that unit"
+          }
+        ]
+      },
+      "toelichting": "He recommends the same Reserve Move sequence of emerging with a wizard, casting magic missiles and withdrawing behind cover."
+    }
+  ],
+  "overgeslagen": "Skipped channel, tournament and sponsor talk; introductory rules descriptions; and combat narration not developed into separate advice. Did not infer additional tactics from the failed charges, fleeing paths or panic tests.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

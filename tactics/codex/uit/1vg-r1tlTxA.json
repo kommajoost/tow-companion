@@ -1,0 +1,496 @@
+{
+  "videoId": "1vg-r1tlTxA",
+  "bronId": "yt-1vg-r1tlTxA",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T22:51:26.321Z",
+  "nieuw": [
+    {
+      "id": "illusion-familiar-control-spells",
+      "titel": "Consider Lore Familiar for an Illusion control caster",
+      "tekst": "He thinks an Illusion caster would benefit from Lore Familiar when the plan depends on Miasmic Mirage or Crystal Column. Those are the spells he wants to disrupt the opponent's dangerous offensive pieces.",
+      "waarom": "He wants those control spells almost every time, while Glittering Robe is available as his fallback.",
+      "voorbeeld": null,
+      "wanneerNiet": "Without Lore Familiar, he acknowledges the risk of having to roll for the desired spells.",
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-1vg-r1tlTxA",
+          "url": "https://www.youtube.com/watch?v=1vg-r1tlTxA&t=199s",
+          "tijd": 202,
+          "citaat": "I really think illusion would benefit from the law familiar",
+          "extraCitaten": [
+            {
+              "tijd": 208,
+              "citaat": "myasmic mirage and crystal column which I want almost every time"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-09-23",
+      "markeringen": []
+    },
+    {
+      "id": "kiknik-ambushers-score-objectives",
+      "titel": "Use Kiknik's ambushing Wolf Riders to capture objectives",
+      "tekst": "Use Kiknik Toofsnatcha with ambushing Goblin Wolf Riders as a mobile scoring unit. He particularly likes them for entering vacant space and capturing baggage trains or other objectives.",
+      "waarom": "He says Kiknik grants a Wolf Rider unit free Ambush even in a Grand Army and makes its arrival more reliable on a three-plus.",
+      "voorbeeld": "He describes bringing them on after units have left the deployment zone, then using their nine-inch Reserve Move to contact the baggage train despite being unable to charge that turn.",
+      "wanneerNiet": "He notes that rolling a one or two on the first ambush roll can still delay their arrival.",
+      "fase": "scenarios",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Kiknik Toofsnatcha",
+        "Goblin Wolf Rider Mob"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-1vg-r1tlTxA",
+          "url": "https://www.youtube.com/watch?v=1vg-r1tlTxA&t=295s",
+          "tijd": 298,
+          "citaat": "And I really believe in ambushing, especially for objective capturing.",
+          "extraCitaten": [
+            {
+              "tijd": 1535,
+              "citaat": "They just get to move straight into base contact with the baggage train."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-09-23",
+      "markeringen": []
+    },
+    {
+      "id": "fanatics-essential-offensive-pieces",
+      "titel": "Include Fanatics as essential offensive pieces",
+      "tekst": "He considers Fanatics essential to winning with Orcs and Goblins and thinks three are not enough.",
+      "waarom": "In his view, Fanatics provide strong offence that the opponent cannot ignore.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "hammers"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Fanatic"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-1vg-r1tlTxA",
+          "url": "https://www.youtube.com/watch?v=1vg-r1tlTxA&t=372s",
+          "tijd": 375,
+          "citaat": "essentially you cannot win games I think without fanatics as orcs and goblins.",
+          "extraCitaten": [
+            {
+              "tijd": 383,
+              "citaat": "Three is not enough."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-09-23",
+      "markeringen": []
+    },
+    {
+      "id": "night-goblins-netters-robe",
+      "titel": "Combine Netters and Glittering Robe on Night Goblins",
+      "tekst": "He recommends Netters on Night Goblins and combining them with Glittering Robe to make the unit harder to hit and wound.",
+      "waarom": "He argues that moving enemy hit and wound rolls from twos to threes gives the opponent substantially more chances to fail.",
+      "voorbeeld": "He says Netters make charging Strength 5 Empire Knights wound the Night Goblins on threes rather than twos.",
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "infantry"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Night Goblin Mob"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-1vg-r1tlTxA",
+          "url": "https://www.youtube.com/watch?v=1vg-r1tlTxA&t=400s",
+          "tijd": 403,
+          "citaat": "They also have netas which I do believe in.",
+          "extraCitaten": [
+            {
+              "tijd": 411,
+              "citaat": "combine glittering robe to make them minus one to hit"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-09-23",
+      "markeringen": []
+    },
+    {
+      "id": "ignore-single-lantern-matchup",
+      "titel": "Consider ignoring a lone Sky Lantern",
+      "tekst": "In this matchup, he plans to ignore the lone Sky Lantern rather than spend his Doom Diver shots trying to kill it. He wants to deal with the other offensive threats instead.",
+      "waarom": "He expects the Lantern to be difficult to catch and thinks removing its ten wounds would consume too much of the game.",
+      "voorbeeld": null,
+      "wanneerNiet": "He would still take an opportunity to attack it with a Mangler Squig. He says multiple Lanterns are much harder to ignore.",
+      "fase": "magic-shooting",
+      "themas": [
+        "matchups",
+        "game-plan"
+      ],
+      "leger": "grand-cathay",
+      "units": [
+        "Sky Lantern"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-1vg-r1tlTxA",
+          "url": "https://www.youtube.com/watch?v=1vg-r1tlTxA&t=896s",
+          "tijd": 899,
+          "citaat": "that's why my plan here is just to kind of ignore the lantern.",
+          "extraCitaten": [
+            {
+              "tijd": 944,
+              "citaat": "one lantern, you can kind of choose to just ignore it."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-09-23",
+      "markeringen": []
+    },
+    {
+      "id": "infantry-combat-escapes-bombardment",
+      "titel": "Get infantry into combat to escape Cathayan bombardment",
+      "tekst": "In this Cathay matchup, try to get the Black Orcs and Night Goblins into infantry combats early. He uses engagement as the way to stop their exposure to the Lantern's bombs and the artillery.",
+      "waarom": "He says those attacks cannot target his infantry once it is in combat, so the opponent does not have the entire game to bombard it.",
+      "voorbeeld": null,
+      "wanneerNiet": "He warns that an opening volley before he can engage could destroy either infantry unit.",
+      "fase": "movement",
+      "themas": [
+        "infantry",
+        "shooting-terrain"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Black Orc Mob",
+        "Night Goblin Mob"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-1vg-r1tlTxA",
+          "url": "https://www.youtube.com/watch?v=1vg-r1tlTxA&t=880s",
+          "tijd": 883,
+          "citaat": "if I can get my infantry into combat, then he can't fire dragon bombs",
+          "extraCitaten": [
+            {
+              "tijd": 994,
+              "citaat": "Once I'm in combat, he can't target it"
+            },
+            {
+              "tijd": 2198,
+              "citaat": "My other strategy is infantry into infantry"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-09-23",
+      "markeringen": []
+    },
+    {
+      "id": "jade-warriors-deny-scoring",
+      "titel": "Reduce or displace Jade Warriors to deny objective points",
+      "tekst": "In this scenario, reduce Jade Warrior units to nine models or push them off objectives and capture those objectives yourself. Do not ignore them merely because they do little damage.",
+      "waarom": "He warns that the three units can win the game through objective bonuses even while the dangerous units fight elsewhere.",
+      "voorbeeld": "He plans to send three Fanatics through a Jade Warrior unit, hoping to reduce it to Unit Strength 9 so it can no longer score an objective.",
+      "wanneerNiet": null,
+      "fase": "scenarios",
+      "themas": [
+        "game-plan",
+        "matchups"
+      ],
+      "leger": "grand-cathay",
+      "units": [
+        "Jade Warriors"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-1vg-r1tlTxA",
+          "url": "https://www.youtube.com/watch?v=1vg-r1tlTxA&t=1233s",
+          "tijd": 1236,
+          "citaat": "I have to whittle them down to at least nine models",
+          "extraCitaten": [
+            {
+              "tijd": 1244,
+              "citaat": "push them off objectives and capture them for myself."
+            },
+            {
+              "tijd": 1732,
+              "citaat": "unit strength nine, which means they can't score an objective."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-09-23",
+      "markeringen": []
+    },
+    {
+      "id": "support-wyvern-against-shugengan",
+      "titel": "Support the Wyvern when attacking the Shugengan Lord",
+      "tekst": "He does not expect his Warboss on Wyvern to kill the Shugengan Lord alone. He wants to soften the Lord with Doom Divers or charge alongside a Mangler Squig to inflict impact hits before the likely challenge.",
+      "waarom": "He wants enough early damage to let the Wyvern finish the Lord before its Strength 10 attacks.",
+      "voorbeeld": "He describes a Mangler inflicting two impact-hit wounds on the charge, potentially allowing the Wyvern to finish the Lord.",
+      "wanneerNiet": "He thinks the Wyvern's stats favour it without Spectral Doppelganger, but that spell can swing the fight against him.",
+      "fase": "movement",
+      "themas": [
+        "matchups",
+        "hammers"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Black Orc Warboss",
+        "Wyvern",
+        "Doom Diver Catapult",
+        "Mangler Squigs"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-1vg-r1tlTxA",
+          "url": "https://www.youtube.com/watch?v=1vg-r1tlTxA&t=1294s",
+          "tijd": 1297,
+          "citaat": "I need to combo charge with a mangler to get some impact hits",
+          "extraCitaten": [
+            {
+              "tijd": 1291,
+              "citaat": "I don't think he's going to do it by himself."
+            },
+            {
+              "tijd": 1475,
+              "citaat": "I have the opportunity to fire two doom divers at him, I will probably"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-09-23",
+      "markeringen": []
+    },
+    {
+      "id": "doom-divers-opening-artillery-volley",
+      "titel": "Use Doom Divers to reduce Cathay's opening artillery volley",
+      "tekst": "If going first, aim Doom Divers at the Cathayan artillery to remove pieces before their opening barrage. He sees killing one or two of the four war machines immediately as a major improvement to his chances.",
+      "waarom": "He says a Doom Diver can destroy an artillery piece with one shot, and removing one of the four cuts the initial artillery threat by a quarter.",
+      "voorbeeld": null,
+      "wanneerNiet": "If the Shugengan Lord comes into the open, he would probably shoot it instead to prepare the Wyvern's attack.",
+      "fase": "magic-shooting",
+      "themas": [
+        "shooting-terrain",
+        "matchups"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Doom Diver Catapult"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-1vg-r1tlTxA",
+          "url": "https://www.youtube.com/watch?v=1vg-r1tlTxA&t=1398s",
+          "tijd": 1401,
+          "citaat": "they can just one-shot one of his artillery.",
+          "extraCitaten": [
+            {
+              "tijd": 1424,
+              "citaat": "if I can weaken that first onslaught of artillery"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-09-23",
+      "markeringen": []
+    },
+    {
+      "id": "ambushing-wolves-artillery-blind-spots",
+      "titel": "Bring Wolf Riders on where artillery obstructs its own fire",
+      "tekst": "Bring the ambushing Wolf Riders on where Cathayan artillery pieces block one another's line of sight. He also looks for a position inside the Fire Rain Rocket Battery's minimum range.",
+      "waarom": "He hopes this positioning will leave only one artillery piece able to shoot the unit.",
+      "voorbeeld": null,
+      "wanneerNiet": "He says to stay outside the cannon's short-range attack, which would annihilate the Wolf Riders.",
+      "fase": "movement",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Goblin Wolf Rider Mob"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-1vg-r1tlTxA",
+          "url": "https://www.youtube.com/watch?v=1vg-r1tlTxA&t=1617s",
+          "tijd": 1620,
+          "citaat": "the artillery blocks their own line of sight.",
+          "extraCitaten": [
+            {
+              "tijd": 1627,
+              "citaat": "within the minimum range of the firing rocket battery."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-09-23",
+      "markeringen": []
+    },
+    {
+      "id": "black-orcs-rust-jade-warriors",
+      "titel": "Cast Plague of Rust before Black Orcs charge Jade Warriors",
+      "tekst": "In this matchup, use Plague of Rust on the Jade Warriors before charging them with Black Orcs.",
+      "waarom": "He expects the Black Orcs' wounds to become casualties without an armour save after this preparation.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "magic-shooting",
+      "themas": [
+        "infantry",
+        "matchups"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Black Orc Mob"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-1vg-r1tlTxA",
+          "url": "https://www.youtube.com/watch?v=1vg-r1tlTxA&t=1808s",
+          "tijd": 1811,
+          "citaat": "I can plague of rust into the infantry unit um before I charge them.",
+          "extraCitaten": [
+            {
+              "tijd": 1825,
+              "citaat": "my wounds will go straight to deaths. There'll be no armor save against that."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-09-23",
+      "markeringen": []
+    },
+    {
+      "id": "pair-manglers-reduce-randomness",
+      "titel": "Consider charging with Mangler Squigs in pairs",
+      "tekst": "In this matchup, he plans to run his Mangler Squigs together so they can charge the same target.",
+      "waarom": "He says combining their impact hits and random attacks helps compensate for the uncertainty of each Mangler's damage.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "hammers"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Mangler Squigs"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-1vg-r1tlTxA",
+          "url": "https://www.youtube.com/watch?v=1vg-r1tlTxA&t=1939s",
+          "tijd": 1942,
+          "citaat": "I will likely run these guys in pairs",
+          "extraCitaten": [
+            {
+              "tijd": 1958,
+              "citaat": "shoring up that randomness with them"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-09-23",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "orc-wyvern-layered-tank",
+      "bron": {
+        "bronId": "yt-1vg-r1tlTxA",
+        "url": "https://www.youtube.com/watch?v=1vg-r1tlTxA&t=134s",
+        "tijd": 137,
+        "citaat": "tie up the big bad of the opponent's",
+        "extraCitaten": [
+          {
+            "tijd": 145,
+            "citaat": "It's durable. It can deal damage"
+          }
+        ]
+      },
+      "toelichting": "He again builds the Warboss on Wyvern as a durable tank intended to hold an opposing dragon or Baron in place."
+    },
+    {
+      "lesId": "kiknik-wolves-cathayan-artillery",
+      "bron": {
+        "bronId": "yt-1vg-r1tlTxA",
+        "url": "https://www.youtube.com/watch?v=1vg-r1tlTxA&t=1608s",
+        "tijd": 1611,
+        "citaat": "So, I should be able to wipe out one piece of artillery at a time.",
+        "extraCitaten": [
+          {
+            "tijd": 1565,
+            "citaat": "Kicknik beats an ogre loader in combat"
+          }
+        ]
+      },
+      "toelichting": "He again recommends Kiknik and his Wolf Riders for clearing Cathayan artillery because Kiknik can overcome the Ogre Loader."
+    },
+    {
+      "lesId": "orc-anchor-defensive-magic",
+      "bron": {
+        "bronId": "yt-1vg-r1tlTxA",
+        "url": "https://www.youtube.com/watch?v=1vg-r1tlTxA&t=1839s",
+        "tijd": 1842,
+        "citaat": "I think I want earth and ramparts because a five up ward save"
+      },
+      "toelichting": "He again considers Elementalism's ward-save spell to preserve a defensive Orc infantry block."
+    },
+    {
+      "lesId": "random-movement-catches-shooters",
+      "bron": {
+        "bronId": "yt-1vg-r1tlTxA",
+        "url": "https://www.youtube.com/watch?v=1vg-r1tlTxA&t=2018s",
+        "tijd": 2021,
+        "citaat": "the lantern can't stand and shoot against this thing."
+      },
+      "voorbeeld": "He would take an opportunity to attack the Sky Lantern with a Mangler Squig, whose random movement prevents its Stand and Shoot reaction.",
+      "toelichting": "He again uses random movement to threaten a shooting unit without allowing its usual charge reaction."
+    },
+    {
+      "lesId": "exploit-random-movement-variance",
+      "bron": {
+        "bronId": "yt-1vg-r1tlTxA",
+        "url": "https://www.youtube.com/watch?v=1vg-r1tlTxA&t=2060s",
+        "tijd": 2063,
+        "citaat": "send them as far towards the artillery as possible so they can't be ignored.",
+        "extraCitaten": [
+          {
+            "tijd": 2079,
+            "citaat": "But you have to respect it"
+          }
+        ]
+      },
+      "toelichting": "He again describes how the possibility of a large 3D6 move forces opponents to respect a threat they cannot predict exactly."
+    }
+  ],
+  "overgeslagen": "Skipped introductions, painting and tournament chatter, sponsorship and supporter appeals, equipment and enemy-list readouts without advice, and unclear caption fragments. Omitted his unresolved choice of deployment quarter and other options for which he explicitly had not settled on a plan. These are pregame intentions, not demonstrated battle outcomes.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": [
+      {
+        "wie": "aanvulling exploit-random-movement-variance",
+        "wat": "voorbeeld weggelaten: de les heeft dat veld al"
+      }
+    ]
+  }
+}

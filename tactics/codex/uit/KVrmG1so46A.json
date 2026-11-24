@@ -1,0 +1,272 @@
+{
+  "videoId": "KVrmG1so46A",
+  "bronId": "yt-KVrmG1so46A",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T22:19:47.010Z",
+  "nieuw": [
+    {
+      "id": "fell-bats-scenario-pairs",
+      "titel": "Consider two Fell Bat units for mobile scenario play",
+      "tekst": "Consider two units of Fell Bats when preparing for Domination and Baggage Train. He preferred the two units for the scenarios he expected to play.",
+      "waarom": "He valued being able to fly in unit strength nine for Domination and the combination of Fly 10, Swiftstride and Skirmish for Baggage Train.",
+      "voorbeeld": null,
+      "wanneerNiet": "For breaking war machine crews, he acknowledges that four bats are probably better than three: losing one reduces their attacks, and distant bats are difficult to bring back.",
+      "fase": "army-building",
+      "themas": [
+        "chaff",
+        "game-plan"
+      ],
+      "leger": "vampire-counts",
+      "units": [
+        "Fell Bats"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-KVrmG1so46A",
+          "url": "https://www.youtube.com/watch?v=KVrmG1so46A&t=117s",
+          "tijd": 120,
+          "citaat": "so they were no-brainers for me to run two units.",
+          "extraCitaten": [
+            {
+              "tijd": 93,
+              "citaat": "It's four is probably better than three"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-11-02",
+      "markeringen": []
+    },
+    {
+      "id": "chaff-intercept-overruns",
+      "titel": "Use chaff to intercept dangerous overruns",
+      "tekst": "Place cheap chaff in the path of a possible enemy overrun when it could otherwise reach a valuable unit.",
+      "waarom": "He describes the 45-point bat unit as insurance to save one of his big hitters if the opponent rolled high.",
+      "voorbeeld": "He placed Fell Bats in case the Giant Cave Squig rider broke through and overran towards his Mortis Engine or Tomb Banshee.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "chaff"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-KVrmG1so46A",
+          "url": "https://www.youtube.com/watch?v=KVrmG1so46A&t=546s",
+          "tijd": 549,
+          "citaat": "doing defensive duty for 45 points to save one of my big hitters",
+          "extraCitaten": [
+            {
+              "tijd": 533,
+              "citaat": "overran straight forward into one of one of say like my mortise engine"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-11-02",
+      "markeringen": []
+    },
+    {
+      "id": "chaff-all-round-movement",
+      "titel": "Value all-round movement when choosing chaff",
+      "tekst": "When available, favour chaff that can move in any direction.",
+      "waarom": "He regards the freedom to reposition at different angles as exceptionally powerful.",
+      "voorbeeld": "His Fell Bats drew interest on a flank, returned to block a possible overrun, then moved behind an enemy unit to extend its flee path.",
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "chaff"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-KVrmG1so46A",
+          "url": "https://www.youtube.com/watch?v=KVrmG1so46A&t=799s",
+          "tijd": 802,
+          "citaat": "being able to just flick flick around at any sort of angle"
+        }
+      ],
+      "datum": "2025-11-02",
+      "markeringen": []
+    },
+    {
+      "id": "chaff-safe-charge-pockets",
+      "titel": "Fit mobile chaff into pockets outside enemy charge ranges",
+      "tekst": "Find pockets where your mobile chaff can fit without entering enemy charge ranges. Check how far the lead or last model can move when arranging the unit there.",
+      "waarom": "He says this can leave the opponent with little choice but to ignore the unit.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "chaff"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-KVrmG1so46A",
+          "url": "https://www.youtube.com/watch?v=KVrmG1so46A&t=875s",
+          "tijd": 878,
+          "citaat": "find the spots on the board that you can sink into",
+          "extraCitaten": [
+            {
+              "tijd": 878,
+              "citaat": "avoid all the charge ranges"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-11-02",
+      "markeringen": []
+    },
+    {
+      "id": "chaff-attack-weak-targets",
+      "titel": "Choose weak targets for chaff to attack",
+      "tekst": "Choose weak targets for your chaff, and be willing to wait until those targets become available.",
+      "waarom": "He did not want his bats stuck fighting wolves and judged that taking around 100 points from a war machine would more than justify their cost.",
+      "voorbeeld": "He was willing to commit his Fell Bats against Doom Diver Catapult or bolt thrower crews, but disagreed that he should have attacked the Goblin Wolf Rider Mob.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "chaff",
+        "matchups"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-KVrmG1so46A",
+          "url": "https://www.youtube.com/watch?v=KVrmG1so46A&t=886s",
+          "tijd": 889,
+          "citaat": "Find weak targets.",
+          "extraCitaten": [
+            {
+              "tijd": 910,
+              "citaat": "just to trot around until the Doom Diver became available to hit."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-11-02",
+      "markeringen": []
+    },
+    {
+      "id": "chaff-block-marching",
+      "titel": "Use chaff to obstruct enemy marching",
+      "tekst": "Position chaff within eight inches to force enemy march tests, and block lanes that enemy units would otherwise march through.",
+      "waarom": null,
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "chaff"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-KVrmG1so46A",
+          "url": "https://www.youtube.com/watch?v=KVrmG1so46A&t=928s",
+          "tijd": 931,
+          "citaat": "And you can block those lanes of marching."
+        }
+      ],
+      "datum": "2025-11-02",
+      "markeringen": []
+    },
+    {
+      "id": "hidden-mobile-objective-grabs",
+      "titel": "Hide fast units for late objective grabs",
+      "tekst": "Consider keeping cheap flying units or fast cavalry behind a hill, then sending them out to claim objectives late in the game.",
+      "waarom": null,
+      "voorbeeld": "His Fell Bats helped him secure objectives in the tournament's first two rounds.",
+      "wanneerNiet": "He notes that the tournament format he played allowed this contribution even though the bats were not core.",
+      "fase": "scenarios",
+      "themas": [
+        "chaff",
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-KVrmG1so46A",
+          "url": "https://www.youtube.com/watch?v=KVrmG1so46A&t=985s",
+          "tijd": 988,
+          "citaat": "behind a hill or something and then fly out and grab objectives"
+        }
+      ],
+      "datum": "2025-11-02",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "chaff-scouts-deployment",
+      "bron": {
+        "bronId": "yt-KVrmG1so46A",
+        "url": "https://www.youtube.com/watch?v=KVrmG1so46A&t=308s",
+        "tijd": 311,
+        "citaat": "you can deploy them early and wait for your opponent to do things."
+      },
+      "toelichting": "He gives the same advice to use chaff as early deployment drops while waiting to see the opponent's placements."
+    },
+    {
+      "lesId": "chaff-engineered-enemy-retreats",
+      "bron": {
+        "bronId": "yt-KVrmG1so46A",
+        "url": "https://www.youtube.com/watch?v=KVrmG1so46A&t=564s",
+        "tijd": 567,
+        "citaat": "it's going to have to bounce through them much further than it normally would.",
+        "extraCitaten": [
+          {
+            "tijd": 575,
+            "citaat": "it can then go all the way off the board if they're not careful."
+          }
+        ]
+      },
+      "toelichting": "He spaces chaff behind an enemy to extend its flee move, potentially sending it off the board."
+    },
+    {
+      "lesId": "skirmishers-kite-ranked-pursuers",
+      "bron": {
+        "bronId": "yt-KVrmG1so46A",
+        "url": "https://www.youtube.com/watch?v=KVrmG1so46A&t=637s",
+        "tijd": 640,
+        "citaat": "move them right up behind these Boar Boyz.",
+        "extraCitaten": [
+          {
+            "tijd": 640,
+            "citaat": "So neither of these units could really charge"
+          }
+        ]
+      },
+      "toelichting": "He uses his bats' movement in any direction to move behind ranked enemies and escape their charges."
+    },
+    {
+      "lesId": "chaff-versatile-specific",
+      "bron": {
+        "bronId": "yt-KVrmG1so46A",
+        "url": "https://www.youtube.com/watch?v=KVrmG1so46A&t=895s",
+        "tijd": 898,
+        "citaat": "at the start of the game you have to have a role for these units.",
+        "extraCitaten": [
+          {
+            "tijd": 901,
+            "citaat": "Like if they survive what's the plan with them in the late game"
+          }
+        ]
+      },
+      "toelichting": "He repeats the need to give chaff a specific role, including a plan for surviving units in the late game."
+    }
+  ],
+  "overgeslagen": "Skipped tournament scores, sponsor and hobby talk, balance complaints, rules explanations without advice, and battle narration that did not clearly establish a recommendation.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

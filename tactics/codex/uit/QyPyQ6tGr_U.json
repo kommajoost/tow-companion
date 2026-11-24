@@ -1,0 +1,311 @@
+{
+  "videoId": "QyPyQ6tGr_U",
+  "bronId": "yt-QyPyQ6tGr_U",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T21:36:34.914Z",
+  "nieuw": [
+    {
+      "id": "random-movement-catches-shooters",
+      "titel": "Use 3D6 random movement to catch shooting units",
+      "tekst": "Use units with 3D6 random movement to threaten shooting units that rely on charge reactions. The speaker says these targets must hold instead of standing and shooting or firing and fleeing.",
+      "waarom": "He says most shooting units are lightly armoured, hit back weakly and try to avoid combat, so 3D6 random movers can decimate them.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "matchups",
+        "shooting-terrain"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-QyPyQ6tGr_U",
+          "url": "https://www.youtube.com/watch?v=QyPyQ6tGr_U&t=125s",
+          "tijd": 128,
+          "citaat": "As I mentioned, it counters shooting armies.",
+          "extraCitaten": [
+            {
+              "tijd": 142,
+              "citaat": "The fact that they cannot stand and shoot or fire and flee"
+            },
+            {
+              "tijd": 158,
+              "citaat": "most shooting units because they're often lightly armored"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-03-05",
+      "markeringen": []
+    },
+    {
+      "id": "random-movement-denies-countercharge",
+      "titel": "Use random movement to deny cavalry their countercharge",
+      "tekst": "Threaten countercharge-dependent cavalry with 3D6 random movement. The speaker says contact forces them to hold, removing the countercharge safety net that can encourage aggressive movement.",
+      "waarom": "He says heavy cavalry benefits significantly from countercharge and can move more aggressively when it expects to use it.",
+      "voorbeeld": "His opponent left a ten-inch gap between knights and his Mangler Squigs. He rolled twelve, reached the knights without allowing a countercharge, and inflicted heavy casualties before they broke and fled.",
+      "wanneerNiet": "He describes the Mangler Squigs' damage rolls in this example as unusually high.",
+      "fase": "movement",
+      "themas": [
+        "matchups"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-QyPyQ6tGr_U",
+          "url": "https://www.youtube.com/watch?v=QyPyQ6tGr_U&t=163s",
+          "tijd": 166,
+          "citaat": "They also, as I mentioned, threaten countercharge units and armies that rely on that.",
+          "extraCitaten": [
+            {
+              "tijd": 890,
+              "citaat": "because it charged the knights and they didn't countercharge blunts the lance"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-03-05",
+      "markeringen": []
+    },
+    {
+      "id": "exploit-random-movement-variance",
+      "titel": "Use 3D6 variance to pressure enemy movement",
+      "tekst": "Use the possibility of a high 3D6 movement roll to put pressure on enemy positioning. The speaker recommends exploiting this variance: opponents may underestimate it or play too defensively around it.",
+      "waarom": "He says the high potential threat range forces opponents to respect the unit, sometimes more than they need to.",
+      "voorbeeld": "His Hell Pit Abomination's advance made Alex hide a unit behind a forest and move another unit back. A subsequent high movement roll still let the monster reach its preferred target, and Alex committed more resources to containing it.",
+      "wanneerNiet": "He says an eighteen-inch roll is difficult and the fourteen- or fifteen-inch roll in his example will not happen every time.",
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-QyPyQ6tGr_U",
+          "url": "https://www.youtube.com/watch?v=QyPyQ6tGr_U&t=954s",
+          "tijd": 957,
+          "citaat": "more people should be utilizing the variance of it",
+          "extraCitaten": [
+            {
+              "tijd": 242,
+              "citaat": "your opponent has to respect it"
+            },
+            {
+              "tijd": 965,
+              "citaat": "often they go a little too far in the other direction"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-03-05",
+      "markeringen": []
+    },
+    {
+      "id": "random-movement-unseen-targets",
+      "titel": "Consider unseen targets when moving randomly",
+      "tekst": "In the speaker's interpretation, random movement lets you attack a preferred target even without line of sight. Consider this when an enemy shelters behind terrain; he is fairly confident in this interpretation but invites correction.",
+      "waarom": "He reasons that the unit does not declare a charge and that the charge movement restrictions he cites do not require line of sight.",
+      "voorbeeld": "His Hell Pit Abomination moved through a forest into his preferred target, which it could not see. He hoped to break through into the combat involving his surrounded Stormvermin.",
+      "wanneerNiet": "He says the move must still obey charge movement restrictions, including the shortest route and alignment. He also says you cannot move out of one target arc into another before making contact.",
+      "fase": "movement",
+      "themas": [
+        "matchups",
+        "shooting-terrain"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-QyPyQ6tGr_U",
+          "url": "https://www.youtube.com/watch?v=QyPyQ6tGr_U&t=469s",
+          "tijd": 472,
+          "citaat": "you do not need to be able to see your opponent",
+          "extraCitaten": [
+            {
+              "tijd": 463,
+              "citaat": "Someone can correct me if this wrong, but I'm fairly confident in this"
+            },
+            {
+              "tijd": 612,
+              "citaat": "charge through the forest despite not being able to see the"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-03-05",
+      "markeringen": []
+    },
+    {
+      "id": "prefer-three-dice-random-movement",
+      "titel": "Prefer 3D6 random movement over 2D6",
+      "tekst": "When choosing random-movement units, favour 3D6 over 2D6. The speaker considers most 3D6 units really good, while judging 2D6 random movement unplayable.",
+      "waarom": null,
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-QyPyQ6tGr_U",
+          "url": "https://www.youtube.com/watch?v=QyPyQ6tGr_U&t=261s",
+          "tijd": 264,
+          "citaat": "Random movement 2d6 is really bad. Like, it's it's unplayable.",
+          "extraCitaten": [
+            {
+              "tijd": 284,
+              "citaat": "I think most of the units that have 3d6 movement are really good"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-03-05",
+      "markeringen": []
+    },
+    {
+      "id": "squig-hoppers-hunt-chaff",
+      "titel": "Use Squig Hoppers against chaff and Outriders",
+      "tekst": "Use Night Goblin Squig Hopper Mob as an inexpensive threat to enemy chaff and units such as Outriders. The speaker values how much they can destroy for their cost.",
+      "waarom": "He describes Squig Hoppers as very cheap and capable of wrecking these targets.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "chaff",
+        "matchups"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Night Goblin Squig Hopper Mob"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-QyPyQ6tGr_U",
+          "url": "https://www.youtube.com/watch?v=QyPyQ6tGr_U&t=295s",
+          "tijd": 298,
+          "citaat": "squig hoppers super cheap and for their cost can just wreck other chaff",
+          "extraCitaten": [
+            {
+              "tijd": 307,
+              "citaat": "For a relatively cheap unit, squig hoppers can destroy them."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-03-05",
+      "markeringen": []
+    },
+    {
+      "id": "hell-pit-utility-monster",
+      "titel": "Choose the Hell Pit Abomination for its movement utility",
+      "tekst": "He considers the Hell Pit Abomination playable because its 3D6 movement makes it a utility piece. Use that unpredictability rather than treating it only as a large monster that chases targets.",
+      "waarom": "He says it has a good combat package, but the randomness it creates on the battlefield is what goes a long way towards making it good.",
+      "voorbeeld": null,
+      "wanneerNiet": "He considers it expensive.",
+      "fase": "army-building",
+      "themas": [
+        "game-plan",
+        "hammers"
+      ],
+      "leger": "skaven",
+      "units": [
+        "Hell Pit Abomination"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-QyPyQ6tGr_U",
+          "url": "https://www.youtube.com/watch?v=QyPyQ6tGr_U&t=321s",
+          "tijd": 324,
+          "citaat": "the 3d6 just makes it a big utility piece.",
+          "extraCitaten": [
+            {
+              "tijd": 333,
+              "citaat": "not just this big monster that you have to chase things with."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-03-05",
+      "markeringen": []
+    },
+    {
+      "id": "mangler-efficient-random-mover",
+      "titel": "Consider Mangler Squigs for efficient 3D6 impact",
+      "tekst": "He considers Mangler Squigs the ideal random-movement unit. Take them for their potential to change the game dramatically at a low points cost.",
+      "waarom": "He says that at 95 points their ability to alter the game state is probably unmatched at that price.",
+      "voorbeeld": null,
+      "wanneerNiet": "He stresses that their potential to fail badly is as large as their potential to spike.",
+      "fase": "army-building",
+      "themas": [
+        "hammers",
+        "game-plan"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Mangler Squigs"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-QyPyQ6tGr_U",
+          "url": "https://www.youtube.com/watch?v=QyPyQ6tGr_U&t=775s",
+          "tijd": 778,
+          "citaat": "The mangler is the perfect random unit in the game.",
+          "extraCitaten": [
+            {
+              "tijd": 790,
+              "citaat": "Its spike potential is massive. Its whiff potential is massive."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-03-05",
+      "markeringen": []
+    },
+    {
+      "id": "hide-mangler-from-cannons",
+      "titel": "Hide Mangler Squigs from cannons during deployment",
+      "tekst": "Deploy Mangler Squigs hidden from enemy cannons to avoid being shot on turn one, then send them forward. This was the speaker's plan in his example game.",
+      "waarom": null,
+      "voorbeeld": "He hid the unit from both enemy cannons, one on a hill and one on the far left.",
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Mangler Squigs"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-QyPyQ6tGr_U",
+          "url": "https://www.youtube.com/watch?v=QyPyQ6tGr_U&t=810s",
+          "tijd": 813,
+          "citaat": "I deploy it there so it doesn't get shot turn one.",
+          "extraCitaten": [
+            {
+              "tijd": 813,
+              "citaat": "Then I just send it up. That's my plan."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-03-05",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [],
+  "overgeslagen": "Skipped introductions, guide promotions, sponsors and closing remarks; rules readouts except where needed to explain actionable advice; the casualty-removal and flee-direction observation; uncertain captioned unit names and exact casualty totals. The Mangler Squigs recommendations concern unit selection and cannon-safe deployment rather than the existing flank-decoy lesson.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

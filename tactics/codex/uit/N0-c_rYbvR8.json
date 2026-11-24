@@ -1,0 +1,384 @@
+{
+  "videoId": "N0-c_rYbvR8",
+  "bronId": "yt-N0-c_rYbvR8",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T21:13:23.981Z",
+  "nieuw": [
+    {
+      "id": "control-with-ranged-firepower",
+      "titel": "Use superior ranged firepower to prepare favourable combats",
+      "tekst": "When you have superior ranged firepower but lack the speed for an aggressive plan, play a control role. Weaken the enemy battle line before taking the combats you want.",
+      "waarom": null,
+      "voorbeeld": "He judged his army too slow to play the aggressor and did not want his General to fight the enemy Wyvern head-on.",
+      "wanneerNiet": null,
+      "fase": "magic-shooting",
+      "themas": [
+        "game-plan",
+        "matchups"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-N0-c_rYbvR8",
+          "url": "https://www.youtube.com/watch?v=N0-c_rYbvR8&t=760s",
+          "tijd": 763,
+          "citaat": "I am what you would call the control army",
+          "extraCitaten": [
+            {
+              "tijd": 772,
+              "citaat": "sure that I get the combats I want after I weaken Patty's battle line."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-08-11",
+      "markeringen": []
+    },
+    {
+      "id": "weaken-giant-before-infantry",
+      "titel": "Weaken the Giant before it reaches your infantry",
+      "tekst": "If your strongest infantry relies on static combat resolution and can barely hurt the Giant, try to keep it out of that matchup. Wear the Giant down with ranged attacks before it reaches the unit.",
+      "waarom": "He explains that the Giant is Unbreakable and his infantry's Strength three attacks can barely scratch it, so it threatens to tie up his best unit.",
+      "voorbeeld": "The Giant eventually reached his infantry, but the earlier shooting had weakened it enough for one wound in combat to kill it.",
+      "wanneerNiet": null,
+      "fase": "magic-shooting",
+      "themas": [
+        "matchups",
+        "infantry"
+      ],
+      "leger": null,
+      "units": [
+        "Giant"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-N0-c_rYbvR8",
+          "url": "https://www.youtube.com/watch?v=N0-c_rYbvR8&t=560s",
+          "tijd": 563,
+          "citaat": "I've got to really wear down this giant with attacks from range.",
+          "extraCitaten": [
+            {
+              "tijd": 2255,
+              "citaat": "The giant did get in but got in weak enough"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-08-11",
+      "markeringen": []
+    },
+    {
+      "id": "save-vulnerable-valuable-units",
+      "titel": "Preserve valuable units that lose the main matchup",
+      "tekst": "Keep a valuable unit away from an enemy that is likely to grind it down, even if that means chasing a much cheaper target. Saving its points can be as worthwhile as earning points.",
+      "waarom": "He thought his General would eventually lose to the enemy Wyvern, making his own expensive model a vulnerability in this matchup.",
+      "voorbeeld": "His roughly 350-point General chased a chariot away from the Helblaster Volley Gun instead of fighting the Wyvern. He could later fly back into the battle.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "matchups",
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-N0-c_rYbvR8",
+          "url": "https://www.youtube.com/watch?v=N0-c_rYbvR8&t=1880s",
+          "tijd": 1883,
+          "citaat": "sometimes points saved are the same as points earned.",
+          "extraCitaten": [
+            {
+              "tijd": 1925,
+              "citaat": "I wasn't going to lose those points to the to the wven"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-08-11",
+      "markeringen": []
+    },
+    {
+      "id": "identify-expendable-units",
+      "titel": "Decide which units your plan can afford to lose",
+      "tekst": "After deployment and the early moves, identify which units your game plan requires you to sacrifice. Find the best use for those losses rather than expecting every unit to win its fight.",
+      "waarom": "He says you cannot save every unit or expect to win in every part of the board.",
+      "voorbeeld": "He saw his Flagellants as a unit to sacrifice as effectively as possible rather than one that would win combats.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-N0-c_rYbvR8",
+          "url": "https://www.youtube.com/watch?v=N0-c_rYbvR8&t=2029s",
+          "tijd": 2032,
+          "citaat": "due to the game plan, they got to go.",
+          "extraCitaten": [
+            {
+              "tijd": 1829,
+              "citaat": "I'm just going to have to find the best way to sacrifice them"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-08-11",
+      "markeringen": []
+    },
+    {
+      "id": "commit-slow-infantry-plan",
+      "titel": "Commit slow infantry to a plan during deployment",
+      "tekst": "Choose your infantry's job when deploying it and commit to that plan. Expect its part of the battle plan to remain fairly static.",
+      "waarom": "He stresses how little mobility infantry has compared with faster units, Swiftstride and units that can move in any direction.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "infantry",
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-N0-c_rYbvR8",
+          "url": "https://www.youtube.com/watch?v=N0-c_rYbvR8&t=858s",
+          "tijd": 861,
+          "citaat": "you have to commit to a plan with them",
+          "extraCitaten": [
+            {
+              "tijd": 876,
+              "citaat": "your whole game plan with infantry is going to be quite static."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-08-11",
+      "markeringen": []
+    },
+    {
+      "id": "flagellants-wood-roadblock",
+      "titel": "Use Flagellants as a roadblock in the woods",
+      "tekst": "In this matchup, deploy the Flagellants behind the woods and advance them into it to block the enemy's approach. Use them to bog an enemy down rather than expecting them to win through combat resolution.",
+      "waarom": "He judged the Flagellants one of his weaker units and wanted to give them a useful holding role.",
+      "voorbeeld": "He hoped they could hold up the Wyvern for a long time.",
+      "wanneerNiet": "He was willing to charge out of the woods if the opportunity arose, despite rolling the low die for the charge.",
+      "fase": "deployment",
+      "themas": [
+        "infantry",
+        "game-plan"
+      ],
+      "leger": "empire-of-man",
+      "units": [
+        "Flagellants"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-N0-c_rYbvR8",
+          "url": "https://www.youtube.com/watch?v=N0-c_rYbvR8&t=887s",
+          "tijd": 890,
+          "citaat": "I'm going to be putting them as just a roadblock.",
+          "extraCitaten": [
+            {
+              "tijd": 906,
+              "citaat": "it could bog them down for a long time."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-08-11",
+      "markeringen": []
+    },
+    {
+      "id": "helblaster-entire-base-cover",
+      "titel": "Put the Helblaster's whole base inside its cover",
+      "tekst": "When using terrain to shelter the Helblaster Volley Gun, put its whole base inside the terrain if the deployment space allows.",
+      "waarom": "He found that leaving part of the base exposed at the back allowed a skirmisher to draw line of sight and charge it.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "leger": "empire-of-man",
+      "units": [
+        "Helblaster Volley Gun"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-N0-c_rYbvR8",
+          "url": "https://www.youtube.com/watch?v=N0-c_rYbvR8&t=1118s",
+          "tijd": 1121,
+          "citaat": "I should have just put my unit completely in that cover"
+        }
+      ],
+      "datum": "2026-08-11",
+      "markeringen": []
+    },
+    {
+      "id": "delay-vulnerable-artillery-deployment",
+      "titel": "Wait for enemy artillery before placing a vulnerable war machine",
+      "tekst": "If enemy artillery threatens your war machine, try to delay placing yours until the enemy's has been deployed. Use that information to find a protected position.",
+      "waarom": "He feared the Doom Diver Catapult could destroy his Helblaster Volley Gun before it got to shoot.",
+      "voorbeeld": "He intended to deploy infantry first and the Helblaster Volley Gun late, and was willing to obscure it behind a unit to protect it.",
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "shooting-terrain",
+        "matchups"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-N0-c_rYbvR8",
+          "url": "https://www.youtube.com/watch?v=N0-c_rYbvR8&t=940s",
+          "tijd": 943,
+          "citaat": "I wanted Patty to put his doom diver down first",
+          "extraCitaten": [
+            {
+              "tijd": 943,
+              "citaat": "so I could potentially protect the Helblaster"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-08-11",
+      "markeringen": []
+    },
+    {
+      "id": "war-wagon-light-cavalry-matchup",
+      "titel": "Give the War Wagon lightly armoured shooting targets",
+      "tekst": "In this matchup, put the Empire War Wagon opposite the Goblin Wolf Rider Mob so its missile attacks have useful targets. He preferred that shooting matchup to firing into heavily armoured Black Orcs.",
+      "waarom": "He describes the missile attacks as random and fairly weak, but thinks a hit has a good chance of killing a Wolf Rider.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "matchups",
+        "shooting-terrain"
+      ],
+      "leger": "empire-of-man",
+      "units": [
+        "Empire War Wagon",
+        "Goblin Wolf Rider Mob",
+        "Black Orc Mob"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-N0-c_rYbvR8",
+          "url": "https://www.youtube.com/watch?v=N0-c_rYbvR8&t=1360s",
+          "tijd": 1363,
+          "citaat": "On the left flank, it can handle those wolf riders.",
+          "extraCitaten": [
+            {
+              "tijd": 1015,
+              "citaat": "whereas against like the heavily armored Blackhawks and other targets"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-08-11",
+      "markeringen": []
+    },
+    {
+      "id": "empire-knights-support-combats",
+      "titel": "Use Empire Knights to support an existing infantry fight",
+      "tekst": "Against the central units in this matchup, use Empire Knights to join a combined combat rather than fighting alone. Position them to charge the flank of an enemy held by your infantry.",
+      "waarom": "He judged that his Knights would not beat the enemy's central units without joining a combined combat.",
+      "voorbeeld": "He planned for the Knights to support his central infantry if that unit could hold its ground.",
+      "wanneerNiet": "He thought Wolf Riders and the Goblin Wolf Chariot were possible independent targets for the Knights.",
+      "fase": "movement",
+      "themas": [
+        "hammers",
+        "matchups"
+      ],
+      "leger": "empire-of-man",
+      "units": [
+        "Empire Knights"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-N0-c_rYbvR8",
+          "url": "https://www.youtube.com/watch?v=N0-c_rYbvR8&t=1047s",
+          "tijd": 1050,
+          "citaat": "the knights aren't going to beat anything in the middle of the board",
+          "extraCitaten": [
+            {
+              "tijd": 1050,
+              "citaat": "if they're not joining a combined combat already."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-08-11",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "deploy-for-matchups",
+      "bron": {
+        "bronId": "yt-N0-c_rYbvR8",
+        "url": "https://www.youtube.com/watch?v=N0-c_rYbvR8&t=1317s",
+        "tijd": 1320,
+        "citaat": "identifying those matchups and then being able to sequence deployment to get them."
+      },
+      "toelichting": "He recommends using deployment to obtain the favourable unit matchups identified before the game."
+    },
+    {
+      "lesId": "deploy-read-terrain",
+      "bron": {
+        "bronId": "yt-N0-c_rYbvR8",
+        "url": "https://www.youtube.com/watch?v=N0-c_rYbvR8&t=810s",
+        "tijd": 813,
+        "citaat": "lanes not only uh of cover for your units but lanes of attack."
+      },
+      "toelichting": "He recommends considering terrain's cover and attack lanes before placing units."
+    },
+    {
+      "lesId": "mobile-caster-flank",
+      "bron": {
+        "bronId": "yt-N0-c_rYbvR8",
+        "url": "https://www.youtube.com/watch?v=N0-c_rYbvR8&t=2129s",
+        "tijd": 2132,
+        "citaat": "I was staying out of the bubble",
+        "extraCitaten": [
+          {
+            "tijd": 2132,
+            "citaat": "my wizard was just slinging double summoning every turn."
+          }
+        ]
+      },
+      "toelichting": "He uses his mobile wizard outside the opposing dispel bubble to cast repeatedly."
+    },
+    {
+      "lesId": "decline-charges-for-better-engagements",
+      "bron": {
+        "bronId": "yt-N0-c_rYbvR8",
+        "url": "https://www.youtube.com/watch?v=N0-c_rYbvR8&t=1989s",
+        "tijd": 1992,
+        "citaat": "it doesn't have a slam dunk charge, it's just not going to take it.",
+        "extraCitaten": [
+          {
+            "tijd": 2002,
+            "citaat": "I didn't charge them the first time I had them in the front"
+          }
+        ]
+      },
+      "voorbeeld": "He declined the War Wagon's initial frontal charge into Black Orcs while seeking a flank charge for another point of combat resolution. His opponent reformed to face it.",
+      "toelichting": "He describes declining an available charge while trying to arrange a better engagement."
+    }
+  ],
+  "overgeslagen": "Skipped introductions, guide promotions, sponsor talk, list and rule readouts without recommendations, and unclear names or details. Omitted uncertain wound totals and the garbled magic-item names. Did not extract a separate frenzy-baiting lesson because the described positioning is not clear enough without the images.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

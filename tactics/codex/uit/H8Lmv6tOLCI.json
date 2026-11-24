@@ -1,0 +1,400 @@
+{
+  "videoId": "H8Lmv6tOLCI",
+  "bronId": "yt-H8Lmv6tOLCI",
+  "model": "GPT-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T22:16:04.871Z",
+  "nieuw": [
+    {
+      "id": "fast-armies-deploy-deeper",
+      "titel": "Use superior speed to deploy further back",
+      "tekst": "If your army is faster than the opponent's, give yourself more distance instead of automatically deploying on the forward deployment line. Use that speed to open up the battlefield or a flank and delay being caught.",
+      "waarom": "He says a fast army has more freedom to play defensively because it can cover more ground than its opponent.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-H8Lmv6tOLCI",
+          "url": "https://www.youtube.com/watch?v=H8Lmv6tOLCI&t=366s",
+          "tijd": 369,
+          "citaat": "if you're faster than your opponent, you can give yourself a bit more range",
+          "extraCitaten": [
+            {
+              "tijd": 376,
+              "citaat": "open up a flank, and not let your opponent catch you for longer."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-11-16",
+      "markeringen": []
+    },
+    {
+      "id": "glade-riders-shoot-withdraw",
+      "titel": "Deploy Glade Riders for shooting and a safe withdrawal",
+      "tekst": "Hide Glade Riders during deployment and leave enough distance to move out, shoot and Reserve Move back to safety.",
+      "waarom": "He highlights their exceptional speed and manoeuvrability.",
+      "voorbeeld": "Against Dwarfs, he deployed his Glade Riders on a protected flank, far enough away to move in, shoot and move back to safety.",
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "leger": "wood-elf-realms",
+      "units": [
+        "Glade Riders"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-H8Lmv6tOLCI",
+          "url": "https://www.youtube.com/watch?v=H8Lmv6tOLCI&t=341s",
+          "tijd": 344,
+          "citaat": "hide them. Turn one, poke your head out, shoot, reserve, move back.",
+          "extraCitaten": [
+            {
+              "tijd": 1414,
+              "citaat": "far enough away that I could move them in, shoot"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-11-16",
+      "markeringen": []
+    },
+    {
+      "id": "cannons-behind-vanguarding-outriders",
+      "titel": "Deploy cannons behind Outriders that can Vanguard clear",
+      "tekst": "Cannons can deploy behind Outriders that will Vanguard out of their firing lane. The speaker praises his opponent's use of this deployment to open line of sight before shooting.",
+      "waarom": "He says the Outriders initially blocked the cannons' line of sight, then moved clear to expose his prime target.",
+      "voorbeeld": "Mike placed his cannons behind Outriders, catching the speaker by surprise when their Vanguard move opened a shot at his Wyvern.",
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "leger": "empire-of-man",
+      "units": [
+        "Great Cannon Empire",
+        "Outriders"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-H8Lmv6tOLCI",
+          "url": "https://www.youtube.com/watch?v=H8Lmv6tOLCI&t=885s",
+          "tijd": 888,
+          "citaat": "he deployed his cannons behind his vanguarding unit of Outriders.",
+          "extraCitaten": [
+            {
+              "tijd": 1127,
+              "citaat": "vanguarding unit that then vanguarded out of the way"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-11-16",
+      "markeringen": []
+    },
+    {
+      "id": "shelter-monsters-from-cannons",
+      "titel": "Deploy monsters out of enemy cannon sight",
+      "tekst": "Keep monsters out of enemy cannon line of sight during deployment. Use blocking terrain or deploy large targets on the side of the battlefield away from the cannons.",
+      "waarom": "He says exposing his Wyvern cost him the piece that could kill most of the opposing army.",
+      "voorbeeld": "His Wyvern took five wounds on turn one from cannon fire and Outriders, then died on turn three without reaching combat. He says deploying behind the forest or the central blocking terrain would have kept it safe.",
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-H8Lmv6tOLCI",
+          "url": "https://www.youtube.com/watch?v=H8Lmv6tOLCI&t=920s",
+          "tijd": 923,
+          "citaat": "put your monster in firing line of a cannon.",
+          "extraCitaten": [
+            {
+              "tijd": 927,
+              "citaat": "I could have quite easily just deployed it here behind this forest"
+            },
+            {
+              "tijd": 1034,
+              "citaat": "would deploy his large targets on this side of the battlefield away from the cannons."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-11-16",
+      "markeringen": []
+    },
+    {
+      "id": "arachnarok-avoid-ogre-blade",
+      "titel": "Keep the Arachnarok away from an Ogre Blade Grand Master",
+      "tekst": "Do not deploy an Arachnarok Spider to fight a Grand Master with an Ogre Blade. The speaker says his expectation that the spider and static combat resolution could handle that matchup was a mistake.",
+      "waarom": "He points to the Grand Master's strength-six attacks dealing D3 wounds, despite the spider's four-up save, seven wounds and toughness six.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "matchups"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Arachnarok Spider",
+        "Grand Master"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-H8Lmv6tOLCI",
+          "url": "https://www.youtube.com/watch?v=H8Lmv6tOLCI&t=1092s",
+          "tijd": 1095,
+          "citaat": "nowhere near the guy who has D3 wounds",
+          "extraCitaten": [
+            {
+              "tijd": 1087,
+              "citaat": "grandmaster in there who had an ogre blade."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-11-16",
+      "markeringen": []
+    },
+    {
+      "id": "combine-wood-elf-forests",
+      "titel": "Combine your extra forest with an existing forest",
+      "tekst": "Use the Wood Elves' extra forest together with a natural forest to create a larger line-of-sight blocker. Deploy important targets behind it for protection if the opponent goes first.",
+      "waarom": "He says the combined forest protected his high-priority targets from an opposing shooting army when the opponent had the first-turn roll bonus.",
+      "voorbeeld": "He used this against a Dwarf army with Irondrakes, two Grudge Throwers and an Anvil of Doom.",
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "leger": "wood-elf-realms",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-H8Lmv6tOLCI",
+          "url": "https://www.youtube.com/watch?v=H8Lmv6tOLCI&t=1276s",
+          "tijd": 1279,
+          "citaat": "creating one mega forest that blocked line of sight",
+          "extraCitaten": [
+            {
+              "tijd": 1299,
+              "citaat": "use this forest to block line of sight to some high priority targets"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-11-16",
+      "markeringen": []
+    },
+    {
+      "id": "anticipate-enemy-deployment-pattern",
+      "titel": "Pre-plan around the opponent's likely deployment pattern",
+      "tekst": "Use the opposing army's usual deployment pattern to pre-plan your own deployment. Consider whether it is likely to occupy a compact area or spread across the board.",
+      "waarom": "He says knowing the Dwarfs would deploy compactly let him deploy more widely and flexibly.",
+      "voorbeeld": "He contrasts tightly deployed Dwarfs with an expected wide Empire mixed-arms deployment and a compact Vampire Counts army built around Grave Guard and a Mortis Engine.",
+      "wanneerNiet": "He cautions that play style is not everything.",
+      "fase": "deployment",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-H8Lmv6tOLCI",
+          "url": "https://www.youtube.com/watch?v=H8Lmv6tOLCI&t=1395s",
+          "tijd": 1398,
+          "citaat": "that you know how to pre-plan your deployment.",
+          "extraCitaten": [
+            {
+              "tijd": 1351,
+              "citaat": "knowing that I was able to be more flexible and wide in my deployment."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-11-16",
+      "markeringen": []
+    },
+    {
+      "id": "wood-elves-spread-opponents",
+      "titel": "Spread Wood Elves out to draw opponents apart",
+      "tekst": "Deploy Wood Elves widely and use their speed and manoeuvrability to spread the opponent out, then pick off weak targets.",
+      "waarom": null,
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": "wood-elf-realms",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-H8Lmv6tOLCI",
+          "url": "https://www.youtube.com/watch?v=H8Lmv6tOLCI&t=1221s",
+          "tijd": 1224,
+          "citaat": "Use their speed and maneuverability to manipulate the board and spread out your opponent",
+          "extraCitaten": [
+            {
+              "tijd": 1232,
+              "citaat": "pick off weak targets."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-11-16",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "deploy-read-terrain",
+      "bron": {
+        "bronId": "yt-H8Lmv6tOLCI",
+        "url": "https://www.youtube.com/watch?v=H8Lmv6tOLCI&t=108s",
+        "tijd": 111,
+        "citaat": "look at what's in front of you and see what affects the game.",
+        "extraCitaten": [
+          {
+            "tijd": 142,
+            "citaat": "by blocking line of sight or using difficult terrain"
+          }
+        ]
+      },
+      "toelichting": "He likewise recommends assessing terrain before deployment and using its effects to place units advantageously."
+    },
+    {
+      "lesId": "deploy-defensively-vs-shooting",
+      "bron": {
+        "bronId": "yt-H8Lmv6tOLCI",
+        "url": "https://www.youtube.com/watch?v=H8Lmv6tOLCI&t=1296s",
+        "tijd": 1299,
+        "citaat": "use this forest to block line of sight to some high priority targets",
+        "extraCitaten": [
+          {
+            "tijd": 264,
+            "citaat": "It's so much better if you play it safe, hide"
+          }
+        ]
+      },
+      "toelichting": "His Wood Elf example repeats the advice to hide vulnerable targets from heavy shooting rather than gamble on going first."
+    },
+    {
+      "lesId": "deploy-for-matchups",
+      "bron": {
+        "bronId": "yt-H8Lmv6tOLCI",
+        "url": "https://www.youtube.com/watch?v=H8Lmv6tOLCI&t=463s",
+        "tijd": 466,
+        "citaat": "Is that why I brought this unit? Then that's where it's going.",
+        "extraCitaten": [
+          {
+            "tijd": 999,
+            "citaat": "follow through with it unless there's some deviation that makes you have to rethink it."
+          }
+        ]
+      },
+      "wanneerNiet": "He says a development that forces a rethink can justify changing the planned matchups.",
+      "toelichting": "He repeats that units should deploy against the opponents they were brought to beat and stresses following that plan."
+    },
+    {
+      "lesId": "board-in-thirds",
+      "bron": {
+        "bronId": "yt-H8Lmv6tOLCI",
+        "url": "https://www.youtube.com/watch?v=H8Lmv6tOLCI&t=569s",
+        "tijd": 572,
+        "citaat": "If you win two out of three of them, generally you win the game.",
+        "extraCitaten": [
+          {
+            "tijd": 559,
+            "citaat": "Left flank, center, right flank."
+          }
+        ]
+      },
+      "wanneerNiet": "He frames this as a principle for balanced games and notes that a massive list disparity can allow one army to win all three thirds.",
+      "toelichting": "He explicitly divides the board into left flank, centre and right flank and recommends aiming to win two thirds."
+    },
+    {
+      "lesId": "sacrifice-a-flank",
+      "bron": {
+        "bronId": "yt-H8Lmv6tOLCI",
+        "url": "https://www.youtube.com/watch?v=H8Lmv6tOLCI&t=586s",
+        "tijd": 589,
+        "citaat": "willingly sacrificing a third is also a pretty strong strategy.",
+        "extraCitaten": [
+          {
+            "tijd": 597,
+            "citaat": "so your opponent may stack that board a bit heavier"
+          }
+        ]
+      },
+      "toelichting": "He again recommends willingly conceding one third to concentrate elsewhere, here drawing enemy deployment with a target he can afford to lose."
+    },
+    {
+      "lesId": "identify-contestable-objectives",
+      "bron": {
+        "bronId": "yt-H8Lmv6tOLCI",
+        "url": "https://www.youtube.com/watch?v=H8Lmv6tOLCI&t=646s",
+        "tijd": 649,
+        "citaat": "deploy in a way that means you can contest, capture, or hold objectives"
+      },
+      "voorbeeld": "In his two-tower game, core infantry of unit strength 10 or more could capture the objectives, so he considered his Night Goblins and Black Orcs for the towers.",
+      "wanneerNiet": "He says ignoring objectives might work if a severe list disparity lets you wipe out the opposing army.",
+      "toelichting": "He likewise recommends considering the objectives and which units can capture them when deploying."
+    },
+    {
+      "lesId": "deploy-who-is-beatdown",
+      "bron": {
+        "bronId": "yt-H8Lmv6tOLCI",
+        "url": "https://www.youtube.com/watch?v=H8Lmv6tOLCI&t=739s",
+        "tijd": 742,
+        "citaat": "Are you the aggressor? If so, go hard.",
+        "extraCitaten": [
+          {
+            "tijd": 742,
+            "citaat": "If not, you have to be more strategic, more defensive with your movement."
+          }
+        ]
+      },
+      "toelichting": "He repeats the beatdown distinction: identify the aggressor and adopt a more defensive approach if it is the opponent."
+    },
+    {
+      "lesId": "concentrate-against-enemy-part",
+      "bron": {
+        "bronId": "yt-H8Lmv6tOLCI",
+        "url": "https://www.youtube.com/watch?v=H8Lmv6tOLCI&t=1242s",
+        "tijd": 1245,
+        "citaat": "I deployed them together on the weak flank for my opponent",
+        "extraCitaten": [
+          {
+            "tijd": 1254,
+            "citaat": "I killed that unit of five iron drakes."
+          }
+        ]
+      },
+      "toelichting": "His successful deployment concentrates two Wild Riders units against a weak Dwarf flank rather than distributing them evenly."
+    }
+  ],
+  "overgeslagen": "Skipped introductions, sponsor and supporter messages, hobby comments, results, and the request for viewer tips. Omitted uncertain first-turn probability estimates, garbled character-protection details around 19:30, and casual list-sharing discussion without a concrete tactical unit recommendation. Kept game examples only where the speaker clearly draws a deployment lesson.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": [
+      {
+        "wie": "aanvulling deploy-for-matchups",
+        "wat": "voorbeeld weggelaten: de les heeft dat veld al"
+      }
+    ]
+  }
+}

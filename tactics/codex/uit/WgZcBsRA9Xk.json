@@ -1,0 +1,46 @@
+{
+  "videoId": "WgZcBsRA9Xk",
+  "bronId": "yt-WgZcBsRA9Xk",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T21:26:00.276Z",
+  "nieuw": [
+    {
+      "id": "prefer-equipped-generic-characters",
+      "titel": "Usually prefer a generic character with an Ogre Blade and armour",
+      "tekst": "The speaker would usually take a generic character with an Ogre Blade and armour rather than a named character.",
+      "waarom": "In his view, many named characters are overpriced and do not offer enough over a basic character with an Ogre Blade.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-WgZcBsRA9Xk",
+          "url": "https://www.youtube.com/watch?v=WgZcBsRA9Xk&t=593s",
+          "tijd": 596,
+          "citaat": "I'd rather just take a guy with an ogre blade",
+          "extraCitaten": [
+            {
+              "tijd": 209,
+              "citaat": "You're overpaying now for a lot of characters"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-04-25",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [],
+  "overgeslagen": "Skipped discussion of lore, thematic army choices, model prices, hobby motivation, channel promotions and banter. Character ratings and rule descriptions without concrete tactical recommendations were omitted, as were unclear names and speculative rules discussion.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

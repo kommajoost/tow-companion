@@ -1,0 +1,79 @@
+{
+  "videoId": "Q270ZT77jZE",
+  "bronId": "yt-Q270ZT77jZE",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T21:15:12.014Z",
+  "nieuw": [
+    {
+      "id": "warriors-beginner-direct-combat",
+      "titel": "Choose Warriors of Chaos for straightforward combat as a beginner",
+      "tekst": "For a beginner who wants to send combat troops straight in and have them stay in the fight, he recommends Warriors of Chaos. He considers them the most beginner-friendly army.",
+      "waarom": null,
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": "warriors-of-chaos",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-Q270ZT77jZE",
+          "url": "https://www.youtube.com/watch?v=Q270ZT77jZE&t=372s",
+          "tijd": 375,
+          "citaat": "I think warriors are actually the army that best suits that.",
+          "extraCitaten": [
+            {
+              "tijd": 375,
+              "citaat": "have them stick around in combat"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-06-29",
+      "markeringen": []
+    },
+    {
+      "id": "ghorros-near-centigor-drunkenness",
+      "titel": "Keep Ghorros Warhoof near Centigor to avoid drunkenness",
+      "tekst": "If using Ghorros Warhoof to avoid Centigor drunkenness, keep him nearby. The speaker thinks this may be workable even though he cannot join their unit.",
+      "waarom": "He considers drunkenness nearly as punishing as failing Stupidity and says there is little else to mitigate it.",
+      "voorbeeld": null,
+      "wanneerNiet": "He says Ghorros Warhoof is heavy cavalry and Centigor are light cavalry, so Ghorros cannot join their unit.",
+      "fase": "movement",
+      "themas": [
+        "psychology"
+      ],
+      "leger": "beastmen-brayherds",
+      "units": [
+        "Ghorros Warhoof",
+        "Centigor Herd"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-Q270ZT77jZE",
+          "url": "https://www.youtube.com/watch?v=Q270ZT77jZE&t=1339s",
+          "tijd": 1342,
+          "citaat": "As long as he's nearby to avoid the drunkenness, it might be okay.",
+          "extraCitaten": [
+            {
+              "tijd": 1332,
+              "citaat": "you can't put him in the unit with the centigor."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-06-29",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [],
+  "overgeslagen": "Skipped army history, lore, personal anecdotes, promotions, and speculation about the unreleased March of Chaos list, general upgrades, magic and shock troops. Unit assessments and possible future roles were not treated as recommendations without clear advice.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

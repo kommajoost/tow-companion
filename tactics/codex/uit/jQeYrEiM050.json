@@ -1,0 +1,164 @@
+{
+  "videoId": "jQeYrEiM050",
+  "bronId": "yt-jQeYrEiM050",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T21:49:56.147Z",
+  "nieuw": [
+    {
+      "id": "match-screen-advance-speed",
+      "titel": "Match your screen's advance to the unit behind it",
+      "tekst": "Ideally, the screening unit should advance at the same speed as the unit it protects, so the protected unit does not lose time moving forward.",
+      "waarom": "He says this maximises the time the screen can absorb fire while the units behind it advance.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "chaff",
+        "shooting-terrain"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-jQeYrEiM050",
+          "url": "https://www.youtube.com/watch?v=jQeYrEiM050&t=326s",
+          "tijd": 329,
+          "citaat": "your unit in front is advancing at the same speed as the unit behind it."
+        }
+      ],
+      "datum": "2026-01-14",
+      "markeringen": []
+    },
+    {
+      "id": "magic-missiles-bypass-cover",
+      "titel": "Consider magic missiles against enemies relying on cover",
+      "tekst": "Consider magic missiles as a way to bypass the protection enemies gain from cover. The speaker says they can shoot through a gap without the cover penalties that affect ballistic-skill shooting.",
+      "waarom": "He says enemies cannot get cover from a magic missile, making missiles useful as players increasingly use cover to survive shooting.",
+      "voorbeeld": null,
+      "wanneerNiet": "He says Magic Resistance 2 and the general weakening of magic have reduced the appeal of magic missiles.",
+      "fase": "magic-shooting",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-jQeYrEiM050",
+          "url": "https://www.youtube.com/watch?v=jQeYrEiM050&t=609s",
+          "tijd": 612,
+          "citaat": "things like magic missiles come back into the fray as ways of circumventing that advantage.",
+          "extraCitaten": [
+            {
+              "tijd": 572,
+              "citaat": "You cannot get cover from a magic missile."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-01-14",
+      "markeringen": []
+    },
+    {
+      "id": "woods-block-attack-lanes",
+      "titel": "Use woods to block shooting and charging lanes",
+      "tekst": "Use woods to block line of sight completely, rather than merely reduce the visible portion of a unit. Move behind the woods to avoid attacks, with the option of coming back through to shoot or contest a quarter.",
+      "waarom": null,
+      "voorbeeld": "He describes a lone Glade Rider using a crescent-shaped wood to hide on the far side or return through it to shoot or contest a quarter in Domination.",
+      "wanneerNiet": "He says a model touching the forest can be shot at, whereas standing on the far side can block line of sight.",
+      "fase": "movement",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-jQeYrEiM050",
+          "url": "https://www.youtube.com/watch?v=jQeYrEiM050&t=713s",
+          "tijd": 716,
+          "citaat": "you can use these woods to create or block lines of sight.",
+          "extraCitaten": [
+            {
+              "tijd": 739,
+              "citaat": "If I'm touching, I can be shot at"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-01-14",
+      "markeringen": []
+    },
+    {
+      "id": "endgame-hide-save-points",
+      "titel": "Hide mobile survivors when nothing remains to win",
+      "tekst": "Once there is nothing else to win on the battlefield, move mobile survivors out to the wings and hide behind terrain to save their points. He particularly recommends this endgame avoidance for elves in tournament play.",
+      "waarom": "He says that on a nearly empty board, units with 360-degree movement can move faster than their pursuers and avoid being caught. In his view, seeking cover in the endgame can win games.",
+      "voorbeeld": "After four Glade Riders were killed, the surviving model stayed outside charge arcs and eventually hid behind a forest, saving the unit's points.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "shooting-terrain",
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-jQeYrEiM050",
+          "url": "https://www.youtube.com/watch?v=jQeYrEiM050&t=871s",
+          "tijd": 874,
+          "citaat": "you can just play out to the wings, hide behind things",
+          "extraCitaten": [
+            {
+              "tijd": 906,
+              "citaat": "once there is nothing else to be won on the battleground."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-01-14",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "screening-chaff",
+      "bron": {
+        "bronId": "yt-jQeYrEiM050",
+        "url": "https://www.youtube.com/watch?v=jQeYrEiM050&t=177s",
+        "tijd": 180,
+        "citaat": "they are giving cover from shooting to the unit behind.",
+        "extraCitaten": [
+          {
+            "tijd": 379,
+            "citaat": "They're a very cheap unit. They did exactly what they meant to do."
+          }
+        ]
+      },
+      "toelichting": "This is the same advice to screen advancing combat threats with expendable units that provide cover and absorb shooting."
+    },
+    {
+      "lesId": "horizontal-skirmisher-cover",
+      "bron": {
+        "bronId": "yt-jQeYrEiM050",
+        "url": "https://www.youtube.com/watch?v=jQeYrEiM050&t=253s",
+        "tijd": 256,
+        "citaat": "those are skirmishing units. They can stand sideways."
+      },
+      "toelichting": "This repeats the use of sideways skirmishers as a cover screen for units behind them."
+    }
+  ],
+  "overgeslagen": "Skipped introductions, sponsors, hobby talk and closing promotions; descriptive deployment and shootout narration without a distinct recommendation; rules explanations without advice; and garbled unit names or uncertain details.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": [
+      {
+        "wie": "aanvulling screening-chaff",
+        "wat": "voorbeeld weggelaten: de les heeft dat veld al"
+      }
+    ]
+  }
+}

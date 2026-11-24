@@ -1,0 +1,276 @@
+{
+  "videoId": "PTzfN_o2UJo",
+  "bronId": "yt-PTzfN_o2UJo",
+  "model": "GPT-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T21:25:10.625Z",
+  "nieuw": [
+    {
+      "id": "consider-low-odds-powerful-spells",
+      "titel": "Do not dismiss powerful spells because of low casting odds",
+      "tekst": "Do not rule out casting a powerful 10+ spell just because its chance of resolving through a dispel attempt is only around 30 to 40 percent.",
+      "waarom": "He says the expected value of a spell such as Spiritual Vortex can still be enormous and might win the game.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "magic-shooting",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-PTzfN_o2UJo",
+          "url": "https://www.youtube.com/watch?v=PTzfN_o2UJo&t=350s",
+          "tijd": 353,
+          "citaat": "does that mean you shouldn't cast these spells? Well, not at all.",
+          "extraCitaten": [
+            {
+              "tijd": 361,
+              "citaat": "the expected value, especially of a 10 plus spell like spiritual vortex, might be enormous."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-05-04",
+      "markeringen": []
+    },
+    {
+      "id": "invest-repeatable-magical-defence",
+      "titel": "Invest in a wizard for repeatable magical defence",
+      "tekst": "He thinks a level-three dispeller is worth taking if it comes cheaply or at little cost to the army. Even a level-one or level-two wizard is worth considering for repeated dispel attempts rather than relying only on a fated dispel.",
+      "waarom": "In his view, the dispeller has the advantage in a casting contest. He values the level-three wizard's extra six inches of dispel range and notes that a fated dispel is limited to one per turn.",
+      "voorbeeld": null,
+      "wanneerNiet": "His recommendation to invest in magical defence is conditional on being able to fit it into the army at little cost.",
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-PTzfN_o2UJo",
+          "url": "https://www.youtube.com/watch?v=PTzfN_o2UJo&t=436s",
+          "tijd": 439,
+          "citaat": "having a level three dispeller, if you can get that cheaply",
+          "extraCitaten": [
+            {
+              "tijd": 499,
+              "citaat": "repeatedly dispels is also good."
+            },
+            {
+              "tijd": 843,
+              "citaat": "that 6 in in the bubble is a big deal"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-05-04",
+      "markeringen": []
+    },
+    {
+      "id": "central-protected-dispeller",
+      "titel": "Keep a protected dispeller near the centre",
+      "tekst": "Position a defensive wizard centrally, in or near a friendly unit, to spread its dispel bubble over the board. For a combat army that wants little investment in magic, he recommends at least a level-one wizard in the central infantry unit.",
+      "waarom": "He says a central dispeller restricts the opponent's casting without needing the line of sight or vision arcs a caster may require. A wizard close behind a matching unit type can also benefit from the lone-character targeting restrictions he describes.",
+      "voorbeeld": null,
+      "wanneerNiet": "He says central positioning makes the wizard more vulnerable. Cannons are a concern for a wizard outside a unit, so joining a unit for Look Out, Sir may be safer.",
+      "fase": "deployment",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-PTzfN_o2UJo",
+          "url": "https://www.youtube.com/watch?v=PTzfN_o2UJo&t=742s",
+          "tijd": 745,
+          "citaat": "a dispeller who can be in a unit or around a unit centrally",
+          "extraCitaten": [
+            {
+              "tijd": 1235,
+              "citaat": "have a level one at a minimum in that central infantry unit"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-05-04",
+      "markeringen": []
+    },
+    {
+      "id": "opening-outside-dispel-range",
+      "titel": "Start outside dispel range for opening spells",
+      "tekst": "Use a starting position outside the opposing wizard's dispel range to cast first-turn spells before moving into its bubble.",
+      "waarom": "He says starting outside the bubble lets the first player cast without facing a wizardly dispel.",
+      "voorbeeld": null,
+      "wanneerNiet": "He notes that a fated dispel can still be available.",
+      "fase": "deployment",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-PTzfN_o2UJo",
+          "url": "https://www.youtube.com/watch?v=PTzfN_o2UJo&t=623s",
+          "tijd": 626,
+          "citaat": "if you start on that first turn outside of dispel range",
+          "extraCitaten": [
+            {
+              "tijd": 636,
+              "citaat": "before your opponent had a chance to dispel"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-05-04",
+      "markeringen": []
+    },
+    {
+      "id": "buff-wizard-behind-bubble",
+      "titel": "Keep buffing wizards back beyond enemy dispel range",
+      "tekst": "Keep a wizard casting buffs or movement spells outside the enemy dispel bubble but within spell range of your troops. Consider deploying farther back to make this possible, especially against an opponent equipped to shut down your magic.",
+      "waarom": "He says the wizard can still target friendly units while the enemy dispeller is too far away to intervene.",
+      "voorbeeld": "For Vampire Counts relying on Hellish Vigor to get troops moving, he would park the wizard behind the troops and outside the bubble.",
+      "wanneerNiet": "He says characters deploying last can make it difficult to know the opposing wizard's position. He also warns that a second Walk Between Worlds cast inside the bubble may fail when trying to create an anvil or set up combat.",
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-PTzfN_o2UJo",
+          "url": "https://www.youtube.com/watch?v=PTzfN_o2UJo&t=1011s",
+          "tijd": 1014,
+          "citaat": "parking my mage outside the bubble but within range of my own troops",
+          "extraCitaten": [
+            {
+              "tijd": 1022,
+              "citaat": "you might want to even start deploying further back"
+            },
+            {
+              "tijd": 1142,
+              "citaat": "It's that second one that doesn't get off that's the problem."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-05-04",
+      "markeringen": []
+    },
+    {
+      "id": "higher-wizards-support-from-rear",
+      "titel": "Favour enchantments and conveyances for higher-level supporting wizards",
+      "tekst": "He favours using higher-level wizards for enchantments and conveyance spells, supporting the army from the rear.",
+      "waarom": null,
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-PTzfN_o2UJo",
+          "url": "https://www.youtube.com/watch?v=PTzfN_o2UJo&t=1100s",
+          "tijd": 1103,
+          "citaat": "You probably want to use your high level wizards for those enchantments.",
+          "extraCitaten": [
+            {
+              "tijd": 1228,
+              "citaat": "larger level wizards, they want to drive your army forward from the back."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-05-04",
+      "markeringen": []
+    },
+    {
+      "id": "scrolls-contested-hexes-vortexes",
+      "titel": "Consider Power Scrolls for hexes and vortexes inside the bubble",
+      "tekst": "When casting hexes or vortexes requires entering enemy dispel range, consider Power Scrolls to improve the chance of beating the dispel.",
+      "waarom": "He says these spells require entering the bubble, where the opponent can contest the cast.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "magic-shooting",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-PTzfN_o2UJo",
+          "url": "https://www.youtube.com/watch?v=PTzfN_o2UJo&t=1108s",
+          "tijd": 1111,
+          "citaat": "you might need to use power scrolls or something"
+        }
+      ],
+      "datum": "2026-05-04",
+      "markeringen": []
+    },
+    {
+      "id": "engage-wizard-before-casting",
+      "titel": "Engage the enemy wizard before casting a crucial spell",
+      "tekst": "If your army relies heavily on a spell such as Spectral Doppelganger, consider expendable fast troops to charge and engage the enemy wizard before casting. He finds that flyers are usually needed to reach the wizard.",
+      "waarom": "He says engaging the wizard switches off its dispel bubble, allowing you to cast before the attacking troops die.",
+      "voorbeeld": null,
+      "wanneerNiet": "He says this can be difficult, particularly when a lone wizard is protected from charges. Flyers help obtain line of sight and cross intervening troops; Dire Wolves or fast cavalry in open order find the approach harder.",
+      "fase": "movement",
+      "themas": [
+        "chaff",
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-PTzfN_o2UJo",
+          "url": "https://www.youtube.com/watch?v=PTzfN_o2UJo&t=1173s",
+          "tijd": 1176,
+          "citaat": "engage the wizard and then you can use your spell",
+          "extraCitaten": [
+            {
+              "tijd": 1202,
+              "citaat": "really need flyers to pull it off"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-05-04",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "mobile-caster-flank",
+      "bron": {
+        "bronId": "yt-PTzfN_o2UJo",
+        "url": "https://www.youtube.com/watch?v=PTzfN_o2UJo&t=961s",
+        "tijd": 964,
+        "citaat": "Use them on the flanks. use your magic missiles out",
+        "extraCitaten": [
+          {
+            "tijd": 913,
+            "citaat": "This is where you want your things like ruby ring."
+          }
+        ]
+      },
+      "toelichting": "He gives the same advice to put offensive magic on a flank outside the opposing wizard's dispel bubble."
+    }
+  ],
+  "overgeslagen": "Skipped the channel introduction, probability and rules explanations without separate advice, promotion of magic guides, closing sponsor talk, and garbled names. Combined repeated recommendations about dispel defence and casting outside the bubble.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

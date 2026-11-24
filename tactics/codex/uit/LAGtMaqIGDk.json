@@ -1,0 +1,413 @@
+{
+  "videoId": "LAGtMaqIGDk",
+  "bronId": "yt-LAGtMaqIGDk",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T22:30:19.484Z",
+  "nieuw": [
+    {
+      "id": "kiknik-wolves-cathayan-artillery",
+      "titel": "Use Kiknik and Wolf Riders to hunt Cathayan artillery",
+      "tekst": "He recommends Kiknik Toofsnatcha with skirmishing Goblin Wolf Riders to reach and clear Cathayan artillery. Bring enough combat power to kill the Ogre Loader rather than expecting ordinary light cavalry to sweep the crew aside.",
+      "waarom": "He found their movement, Reserve Move and skirmishing made them extremely mobile. Kiknik killed an Ogre Loader each turn while the wolves killed the crew; he thinks cannon fire against such light skirmishers may feel wasteful to the opponent.",
+      "voorbeeld": "His riders charged on turn two, cleared the cannons and killed the remaining Fire Rain Rocket Battery around turn four or five.",
+      "wanneerNiet": "He does not think Glade Riders alone would necessarily do the same job, because the Ogre Loader makes Cathayan artillery harder to clear than ordinary crews.",
+      "fase": "army-building",
+      "themas": [
+        "matchups",
+        "chaff"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Kiknik Toofsnatcha",
+        "Goblin Wolf Rider Mob"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-LAGtMaqIGDk",
+          "url": "https://www.youtube.com/watch?v=LAGtMaqIGDk&t=1709s",
+          "tijd": 1712,
+          "citaat": "Mobile skirmishes like Kicknik and Wolf Riders for me seem like the perfect antidote",
+          "extraCitaten": [
+            {
+              "tijd": 1067,
+              "citaat": "Kicknick killed an ogre a return and the wolves cleaned up the crew."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-10-03",
+      "markeringen": []
+    },
+    {
+      "id": "deploy-wolves-earlier-artillery-charge",
+      "titel": "Consider deploying Wolf Riders instead of ambushing for earlier charges",
+      "tekst": "For his artillery-hunting plan, he preferred deploying Kiknik's Wolf Riders normally and taking them around the forest. This offered a turn-two charge rather than a turn-three charge after a successful ambush roll.",
+      "waarom": "He valued reaching the artillery sooner and avoiding the risk of failing the ambush roll.",
+      "voorbeeld": "He deployed the riders to run around the forest, attack the artillery and clear it one piece at a time.",
+      "wanneerNiet": "He says normal deployment exposed them to artillery and to an Impetuous test forcing a charge into Jade Warriors. He also thinks the opposing Shugengan should have killed them if possible.",
+      "fase": "deployment",
+      "themas": [
+        "game-plan",
+        "matchups"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Goblin Wolf Rider Mob",
+        "Kiknik Toofsnatcha"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-LAGtMaqIGDk",
+          "url": "https://www.youtube.com/watch?v=LAGtMaqIGDk&t=670s",
+          "tijd": 673,
+          "citaat": "could get a turn two charge off with my wolf riders"
+        }
+      ],
+      "datum": "2025-10-03",
+      "markeringen": []
+    },
+    {
+      "id": "doom-divers-against-cathay",
+      "titel": "Take Doom Divers against Cathay's large threats",
+      "tekst": "He considers Doom Divers essential for an Orcs and Goblins list facing Cathay. Use them to damage the Sky Lantern and Shugengan Lord, with enemy artillery also a possible target.",
+      "waarom": "In his view, the Sky Lantern's large base and the Doom Diver's scatter reduction make direct hits likely. He values their multiple wounds and AP3 against these targets.",
+      "voorbeeld": "He fired two Doom Divers at the Sky Lantern throughout the game and estimates they dealt about six wounds in total.",
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "matchups",
+        "shooting-terrain"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Doom Diver Catapult"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-LAGtMaqIGDk",
+          "url": "https://www.youtube.com/watch?v=LAGtMaqIGDk&t=300s",
+          "tijd": 303,
+          "citaat": "Doom divers are essential.",
+          "extraCitaten": [
+            {
+              "tijd": 1453,
+              "citaat": "I was just throwing doom divers at it. I do about six wounds to it."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-10-03",
+      "markeringen": []
+    },
+    {
+      "id": "fanatics-cathay-large-targets",
+      "titel": "Consider Fanatics against Cathay's large threats",
+      "tekst": "He thinks Fanatics may be the best piece against Cathay if you can get them close enough. Use their damage to threaten the Shugengan Lord and Sky Lantern.",
+      "waarom": "He highlights strength five and AP3 against toughness five, with the armour piercing taking the Sky Lantern straight to its ward save.",
+      "voorbeeld": "His Fanatics took three wounds from the Shugengan Lord and later a randomly moving Fanatic inflicted the Sky Lantern's final wound.",
+      "wanneerNiet": "He says getting close enough may be the biggest problem.",
+      "fase": "army-building",
+      "themas": [
+        "matchups"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Fanatic"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-LAGtMaqIGDk",
+          "url": "https://www.youtube.com/watch?v=LAGtMaqIGDk&t=928s",
+          "tijd": 931,
+          "citaat": "they might be the best piece against cafe a if you can get close enough",
+          "extraCitaten": [
+            {
+              "tijd": 1524,
+              "citaat": "AP3 goes straight to the five up ward save."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-10-03",
+      "markeringen": []
+    },
+    {
+      "id": "central-night-goblin-fanatics",
+      "titel": "Deploy Night Goblins centrally to keep Fanatics responsive",
+      "tekst": "Deploy the Night Goblins carrying your important Fanatics centrally so they can respond to the enemy's approach.",
+      "waarom": "He wanted the centrally placed Fanatics to be able to respond rather than committing them to one side.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Night Goblin Mob",
+        "Fanatic"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-LAGtMaqIGDk",
+          "url": "https://www.youtube.com/watch?v=LAGtMaqIGDk&t=614s",
+          "tijd": 617,
+          "citaat": "The night goblins here I wanted to deploy centrally because the fanatics were so important."
+        }
+      ],
+      "datum": "2025-10-03",
+      "markeringen": []
+    },
+    {
+      "id": "tmp-fanatic-release-range",
+      "titel": "Use TMP to bring Night Goblins into Fanatic release range",
+      "tekst": "Use TMP to move Night Goblins into range to release their Fanatics against an approaching threat.",
+      "waarom": null,
+      "voorbeeld": "He used TMP on his Night Goblins and released the Fanatics in front of the Shugengan Lord. He positioned them so a charge into the Night Goblins would have to pass through the Fanatics.",
+      "wanneerNiet": null,
+      "fase": "magic-shooting",
+      "themas": [
+        "game-plan",
+        "matchups"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Night Goblin Mob",
+        "Fanatic"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-LAGtMaqIGDk",
+          "url": "https://www.youtube.com/watch?v=LAGtMaqIGDk&t=622s",
+          "tijd": 625,
+          "citaat": "my plan was to TMP them into a fanatic disposal range."
+        }
+      ],
+      "datum": "2025-10-03",
+      "markeringen": []
+    },
+    {
+      "id": "manglers-shield-doom-divers",
+      "titel": "Consider Mangler Squigs as shields for vital Doom Divers",
+      "tekst": "Consider deploying Mangler Squigs in front of Doom Divers when protecting the artillery from an opening cannon shot is crucial.",
+      "waarom": "He says a Mangler Squig can stop a cannonball and can absorb more than one cannon shot, making the opponent spend resources before reaching the Doom Divers.",
+      "voorbeeld": "He put two Mangler Squigs ahead of his Doom Divers because he needed the Doom Divers alive if he went second.",
+      "wanneerNiet": "He was unsure this protection was necessary. He also says one Mangler's intended position was unsuitable because a cannon could see it.",
+      "fase": "deployment",
+      "themas": [
+        "shooting-terrain",
+        "chaff"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Mangler Squigs",
+        "Doom Diver Catapult"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-LAGtMaqIGDk",
+          "url": "https://www.youtube.com/watch?v=LAGtMaqIGDk&t=482s",
+          "tijd": 485,
+          "citaat": "the idea was to use them as a bit of a meat shield",
+          "extraCitaten": [
+            {
+              "tijd": 505,
+              "citaat": "manglers there being behemoths could take a cannon and the cannonball would stop."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-10-03",
+      "markeringen": []
+    },
+    {
+      "id": "champion-absorbs-spectral-doppelganger",
+      "titel": "Use a champion's challenge to absorb Spectral Doppelganger",
+      "tekst": "Bring a unit champion into the fight to challenge a Spectral Doppelganger attacker and protect a valuable model already in combat.",
+      "waarom": "He says the attacks that killed his champion would have killed his Wyvern instead. He considers preserving the Wyvern this way the turning point of the game.",
+      "voorbeeld": "He charged his surviving Black Orcs into the Shugengan Lord's fight with his Wyvern. Their champion took the challenge and absorbed the Spectral Doppelganger attacks, letting the Wyvern survive to win later.",
+      "wanneerNiet": null,
+      "fase": "combat",
+      "themas": [
+        "matchups",
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-LAGtMaqIGDk",
+          "url": "https://www.youtube.com/watch?v=LAGtMaqIGDk&t=1208s",
+          "tijd": 1211,
+          "citaat": "I wanted to get a champion in there to soak up a spectral doppelganger.",
+          "extraCitaten": [
+            {
+              "tijd": 1258,
+              "citaat": "if that was into my wyven, he would have been dead."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-10-03",
+      "markeringen": []
+    },
+    {
+      "id": "illusion-needs-casting-bonuses",
+      "titel": "Avoid relying on Illusion without extra casting bonuses",
+      "tekst": "He doubts the value of relying on Illusion beyond Glittering Robe without extra casting bonuses. He does not think a mere +1 to cast makes that reliance worthwhile and is sceptical even with only +2.",
+      "waarom": "He finds the casting values too high to rely on without additional bonuses.",
+      "voorbeeld": "The Shugengan Lord failed Spectral Doppelganger in the first combat round and again in the final round against his Wyvern.",
+      "wanneerNiet": "He makes an exception for using Illusion just for Glittering Robe.",
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-LAGtMaqIGDk",
+          "url": "https://www.youtube.com/watch?v=LAGtMaqIGDk&t=1131s",
+          "tijd": 1134,
+          "citaat": "I really struggled to think people can bring illusion casting and rely on it",
+          "extraCitaten": [
+            {
+              "tijd": 1141,
+              "citaat": "The casting value is just so high with only a plus two to cast."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-10-03",
+      "markeringen": []
+    },
+    {
+      "id": "reliable-strength-against-cathay",
+      "titel": "Use reliable high-strength shooting against Cathay's toughness-five threats",
+      "tekst": "Use high-strength shooting that hits regularly to damage the Sky Lantern and Shugengan Lord. He highlights strength five as a useful benchmark against them.",
+      "waarom": "In his view, their toughness five makes them vulnerable to many more attacks than toughness-six monsters.",
+      "voorbeeld": "After his Doom Divers had damaged the Sky Lantern, his Wind Blast inflicted another wound or two.",
+      "wanneerNiet": null,
+      "fase": "magic-shooting",
+      "themas": [
+        "matchups",
+        "shooting-terrain"
+      ],
+      "leger": "grand-cathay",
+      "units": [
+        "Sky Lantern",
+        "Shugengan Lord"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-LAGtMaqIGDk",
+          "url": "https://www.youtube.com/watch?v=LAGtMaqIGDk&t=1649s",
+          "tijd": 1652,
+          "citaat": "if you have high strength shooting that hits regularly,",
+          "extraCitaten": [
+            {
+              "tijd": 1473,
+              "citaat": "Strength five is a big uh marker against Cath."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-10-03",
+      "markeringen": []
+    },
+    {
+      "id": "multiple-wounds-cathay-lantern",
+      "titel": "Use multiple-wound attacks against the Sky Lantern",
+      "tekst": "Prioritise multiple-wound damage against a Sky Lantern with its large wound pool.",
+      "waarom": "He points to the Lantern's ten wounds and the Doom Diver's ability to remove up to four with a direct hit.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "matchups"
+      ],
+      "leger": "grand-cathay",
+      "units": [
+        "Sky Lantern"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-LAGtMaqIGDk",
+          "url": "https://www.youtube.com/watch?v=LAGtMaqIGDk&t=1656s",
+          "tijd": 1659,
+          "citaat": "Multi- wounds is where it's at.",
+          "extraCitaten": [
+            {
+              "tijd": 1666,
+              "citaat": "you can be chipping off a max of four wounds per direct hit."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-10-03",
+      "markeringen": []
+    },
+    {
+      "id": "ap-three-cathay-threats",
+      "titel": "Aim for AP3 against Sky Lanterns and Shugengan Lords",
+      "tekst": "He recommends AP3 as a useful benchmark against the Sky Lantern and Shugengan Lord.",
+      "waarom": "He says AP3 removes the Lantern's armour save and leaves its ward save, avoiding wounds being stopped by a lucky armour roll.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "matchups"
+      ],
+      "leger": "grand-cathay",
+      "units": [
+        "Sky Lantern",
+        "Shugengan Lord"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-LAGtMaqIGDk",
+          "url": "https://www.youtube.com/watch?v=LAGtMaqIGDk&t=1672s",
+          "tijd": 1675,
+          "citaat": "AP3 seems like a good marker as well.",
+          "extraCitaten": [
+            {
+              "tijd": 1683,
+              "citaat": "That means it goes straight to its ward."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-10-03",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "shelter-monsters-from-cannons",
+      "bron": {
+        "bronId": "yt-LAGtMaqIGDk",
+        "url": "https://www.youtube.com/watch?v=LAGtMaqIGDk&t=572s",
+        "tijd": 575,
+        "citaat": "I needed to play defensively so he didn't get shot by the cannons"
+      },
+      "toelichting": "He deployed his Wyvern defensively to keep it safe from cannon fire, matching the existing recommendation."
+    },
+    {
+      "lesId": "random-movement-catches-shooters",
+      "bron": {
+        "bronId": "yt-LAGtMaqIGDk",
+        "url": "https://www.youtube.com/watch?v=LAGtMaqIGDk&t=1848s",
+        "tijd": 1851,
+        "citaat": "random movers, um, so they can't stand and shoot"
+      },
+      "toelichting": "He recommends random movers against Cathay because they prevent stand and shoot, the same shooting-reaction countermeasure."
+    }
+  ],
+  "overgeslagen": "Skipped sponsorship, channel talk, list readouts, balance complaints and proposed rules changes. Omitted uncertain overrun recollection, disputed impact-hit handling, speculative save combinations, and broad encouragement without a concrete tactical action.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

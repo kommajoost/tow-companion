@@ -1,0 +1,307 @@
+{
+  "videoId": "bmIXdCKnW14",
+  "bronId": "yt-bmIXdCKnW14",
+  "model": "GPT-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T21:34:13.991Z",
+  "nieuw": [
+    {
+      "id": "screen-frenzy-compulsory-charges",
+      "titel": "Block unwanted frenzied charges with a screening unit",
+      "tekst": "Put a cheaper screening unit in front of your frenzied unit so that unwanted charges are physically impossible. Use that protection to move the frenzied unit into a better position before committing it.",
+      "waarom": "He explains that a frenzied unit need not declare a charge blocked by its own screen. The screen can also provide cover from ballistic skill shooting, and its destruction will not panic the frenzied unit.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "psychology",
+        "chaff"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-bmIXdCKnW14",
+          "url": "https://www.youtube.com/watch?v=bmIXdCKnW14&t=618s",
+          "tijd": 621,
+          "citaat": "they're able to stop unwanted charges from your frenzied unit",
+          "extraCitaten": [
+            {
+              "tijd": 275,
+              "citaat": "if they die, it won't cause a panic test in the frenzied unit"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-03-19",
+      "markeringen": []
+    },
+    {
+      "id": "skirmishers-for-frenzy-screens",
+      "titel": "Prefer skirmishers to screen frenzied units",
+      "tekst": "Use skirmishing units as screens for frenzied troops. Their gaps let the protected unit see potential charge targets while the screen is still in front.",
+      "waarom": "He considers skirmishers best for this job because their gaps allow more charge declarations and make the manoeuvre work more easily than a close order screen with large bases.",
+      "voorbeeld": "He shows a Wood Elf Beast Pack screening Wild Riders, which can see Dragon Ogres through the gaps.",
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "chaff",
+        "psychology"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-bmIXdCKnW14",
+          "url": "https://www.youtube.com/watch?v=bmIXdCKnW14&t=659s",
+          "tijd": 662,
+          "citaat": "Skirmishes are best for this",
+          "extraCitaten": [
+            {
+              "tijd": 676,
+              "citaat": "So there's gaps in your skirmishes. That allows you to declare charges on more things."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-03-19",
+      "markeringen": []
+    },
+    {
+      "id": "screeners-evasive-feigned-flight",
+      "titel": "Value Evasive or Feigned Flight on screening units",
+      "tekst": "Treat Evasive or Feigned Flight as a useful bonus when choosing screeners. He values being able to retreat with the screen without having to rally it afterwards.",
+      "waarom": "He explains that Feigned Flight would save the rally after fleeing, while an Evasive screener that falls back in good order can move away next turn.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "chaff"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-bmIXdCKnW14",
+          "url": "https://www.youtube.com/watch?v=bmIXdCKnW14&t=836s",
+          "tijd": 839,
+          "citaat": "A little bonus is having evasive or faint flight",
+          "extraCitaten": [
+            {
+              "tijd": 855,
+              "citaat": "a better unit having fane flight means I don't have to rally them."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-03-19",
+      "markeringen": []
+    },
+    {
+      "id": "flee-screen-prevent-overrun",
+      "titel": "Flee with a screen to prevent an unwanted overrun",
+      "tekst": "If an enemy charging your screen could kill it and overrun into the protected unit, flee through the protected unit instead.",
+      "waarom": "He wants to avoid letting the enemy reach his Wild Riders by killing their screen.",
+      "voorbeeld": "He describes Dragon Ogres charging a Wood Elf Beast Pack in front of Wild Riders. He would flee the Beast Pack behind the Wild Riders rather than let the Dragon Ogres kill it and overrun into them.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "chaff"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-bmIXdCKnW14",
+          "url": "https://www.youtube.com/watch?v=bmIXdCKnW14&t=852s",
+          "tijd": 855,
+          "citaat": "So I flee through them behind here.",
+          "extraCitaten": [
+            {
+              "tijd": 848,
+              "citaat": "the dragon ogres to kill the beast pack then overrun into the wild riders."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-03-19",
+      "markeringen": []
+    },
+    {
+      "id": "warhawk-riders-evasive-screen",
+      "titel": "Use Warhawk Riders as an Evasive screen for Wild Riders",
+      "tekst": "Screen Wild Riders with Warhawk Riders to draw shooting that would otherwise target the Wild Riders. When targeted, use Evasive to fall back in good order behind them. Once the screen has escorted the Wild Riders into position, fly it away next turn and charge with the Wild Riders.",
+      "waarom": "He says the opponent cannot choose a new target after the Warhawk Riders retreat out of sight. Because they fell back in good order rather than fleeing, they can fly away next turn.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "chaff",
+        "shooting-terrain"
+      ],
+      "leger": "wood-elf-realms",
+      "units": [
+        "Warhawk Riders",
+        "Wild Riders"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-bmIXdCKnW14",
+          "url": "https://www.youtube.com/watch?v=bmIXdCKnW14&t=866s",
+          "tijd": 869,
+          "citaat": "Warhawk riders are a great example of how evasive can be really effective",
+          "extraCitaten": [
+            {
+              "tijd": 879,
+              "citaat": "as they are targeted, they fall back in good order behind them."
+            },
+            {
+              "tijd": 897,
+              "citaat": "they can just fly away the next turn and the Wild Riders charge next turn."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-03-19",
+      "markeringen": []
+    },
+    {
+      "id": "screened-frenzy-reliable-charge",
+      "titel": "Advance behind screens until the frenzied charge cannot fail",
+      "tekst": "Move the screeners forward with the frenzied unit behind them, closing the gap to the intended target. Aim to clear the screen once the frenzied unit has a charge it cannot fail.",
+      "waarom": "He wants the fight to happen on his terms rather than have the frenzied unit baited around the board chasing targets.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "psychology",
+        "chaff"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-bmIXdCKnW14",
+          "url": "https://www.youtube.com/watch?v=bmIXdCKnW14&t=1026s",
+          "tijd": 1029,
+          "citaat": "once your screeners are out of the way, you cannot fail.",
+          "extraCitaten": [
+            {
+              "tijd": 1020,
+              "citaat": "move the screeners forward, the wild riders behind them"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-03-19",
+      "markeringen": []
+    },
+    {
+      "id": "wild-hunt-combat-choice",
+      "titel": "Consider Wild Hunt for a combat-focused Wood Elf army",
+      "tekst": "He considers Orion's Wild Hunt the best way to play Wood Elves both competitively and socially. Use its frenzied units to force combat while controlling which fights they enter.",
+      "waarom": "He says Wild Hunt forces combat instead of relying on evasive shooting units that opponents cannot catch. In his view, choosing the combats gives the Wild Hunt player a narrow but effective advantage.",
+      "voorbeeld": null,
+      "wanneerNiet": "He describes the list as a glass cannon that hits hard but dies quickly.",
+      "fase": "army-building",
+      "themas": [
+        "game-plan",
+        "psychology"
+      ],
+      "leger": "wood-elf-realms",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-bmIXdCKnW14",
+          "url": "https://www.youtube.com/watch?v=bmIXdCKnW14&t=909s",
+          "tijd": 912,
+          "citaat": "I do believe it's the best way to play wood elves, both competitively and socially.",
+          "extraCitaten": [
+            {
+              "tijd": 922,
+              "citaat": "Wild Hunt forces the issue and makes you fight combats."
+            },
+            {
+              "tijd": 932,
+              "citaat": "if you're able to control those combats, as in pick the combats that you want"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-03-19",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "screening-chaff",
+      "bron": {
+        "bronId": "yt-bmIXdCKnW14",
+        "url": "https://www.youtube.com/watch?v=bmIXdCKnW14&t=722s",
+        "tijd": 725,
+        "citaat": "the beast pack goes over there, clearing the charge lane for the wild riders",
+        "extraCitaten": [
+          {
+            "tijd": 695,
+            "citaat": "if they're in the way when you need to charge, then you're stuffed."
+          }
+        ]
+      },
+      "wanneerNiet": "He warns that a screen left in the way when the protected unit needs to charge prevents the plan from working.",
+      "toelichting": "This is the same advice to screen a hammer with chaff that can clear its charge lane."
+    },
+    {
+      "lesId": "chaff-under-100-points",
+      "bron": {
+        "bronId": "yt-bmIXdCKnW14",
+        "url": "https://www.youtube.com/watch?v=bmIXdCKnW14&t=787s",
+        "tijd": 790,
+        "citaat": "Screening units also want to be cheap because they often die",
+        "extraCitaten": [
+          {
+            "tijd": 822,
+            "citaat": "So that's why you use the 19 point beast pack and the 60 point eagle"
+          }
+        ]
+      },
+      "toelichting": "He gives the same recommendation to keep expendable chaff cheap, here specifically screening units."
+    },
+    {
+      "lesId": "chaff-scouts-deployment",
+      "bron": {
+        "bronId": "yt-bmIXdCKnW14",
+        "url": "https://www.youtube.com/watch?v=bmIXdCKnW14&t=1003s",
+        "tijd": 1006,
+        "citaat": "I deploy my screeners first to act as chaff",
+        "extraCitaten": [
+          {
+            "tijd": 1012,
+            "citaat": "to force my opponent to start placing units themselves"
+          }
+        ]
+      },
+      "toelichting": "This is the same advice to use chaff as early deployment drops before committing important units."
+    },
+    {
+      "lesId": "deploy-for-matchups",
+      "bron": {
+        "bronId": "yt-bmIXdCKnW14",
+        "url": "https://www.youtube.com/watch?v=bmIXdCKnW14&t=978s",
+        "tijd": 981,
+        "citaat": "You need to find your matchups early and align them"
+      },
+      "toelichting": "He again recommends aligning units with their intended enemy matchups during deployment."
+    }
+  ],
+  "overgeslagen": "Skipped the opening Frenzy rules review and complaints, Wild Hunt list and stat readouts without distinct advice, theme and tournament-result remarks, guide promotion, sponsors and thanks. Omitted uncertain caption details about charge distances and garbled unit names.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": [
+      {
+        "wie": "aanvulling chaff-scouts-deployment",
+        "wat": "voorbeeld weggelaten: de les heeft dat veld al"
+      }
+    ]
+  }
+}

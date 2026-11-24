@@ -1,0 +1,234 @@
+{
+  "videoId": "3p-wqVu5bSs",
+  "bronId": "yt-3p-wqVu5bSs",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T21:22:29.727Z",
+  "nieuw": [
+    {
+      "id": "choose-dark-magic-spells",
+      "titel": "Choose your Dark Magic spells rather than rolling",
+      "tekst": "Use Lore Familiar to select useful Dark Magic spells, or take the signature spell. He considers the lore much more viable when you can choose your spells.",
+      "waarom": "He considers four of its seven spells mediocre or useless, so rolling can leave an expensive wizard with spells it cannot use effectively.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-3p-wqVu5bSs",
+          "url": "https://www.youtube.com/watch?v=3p-wqVu5bSs&t=555s",
+          "tijd": 558,
+          "citaat": "Really, you need to play law familiar or you need to take the signature.",
+          "extraCitaten": [
+            {
+              "tijd": 844,
+              "citaat": "you have to be able to choose on the spells"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-05-11",
+      "markeringen": []
+    },
+    {
+      "id": "battle-lust-before-charge",
+      "titel": "Use Battle Lust before a charge with the initiative",
+      "tekst": "Cast Battle Lust before charging with a unit that has the initiative. He regards it as a particularly powerful way to improve an already good combat unit.",
+      "waarom": "He says Hatred rerolls can add three or four combat resolution for big units, while Frenzy provides an additional attack.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "magic-shooting",
+      "themas": [
+        "hammers"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-3p-wqVu5bSs",
+          "url": "https://www.youtube.com/watch?v=3p-wqVu5bSs&t=370s",
+          "tijd": 373,
+          "citaat": "So if you've got the initiative and you're going to charge",
+          "extraCitaten": [
+            {
+              "tijd": 382,
+              "citaat": "it's going to take your good unit into the stratosphere."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-05-11",
+      "markeringen": []
+    },
+    {
+      "id": "word-pain-wizard-exposure",
+      "titel": "Respect flying monsters when casting Word of Pain",
+      "tekst": "Be careful about exposing your wizard at Word of Pain's 18-inch range. He warns that this is where large flying monsters start to threaten charges.",
+      "waarom": "In his view, 15 to 18 inches is a difficult distance for a wizard to operate at, whereas longer spell ranges allow safer casting.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "magic-shooting",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-3p-wqVu5bSs",
+          "url": "https://www.youtube.com/watch?v=3p-wqVu5bSs&t=427s",
+          "tijd": 430,
+          "citaat": "18 is where you start to get into charge ranges of big flying monsters",
+          "extraCitaten": [
+            {
+              "tijd": 430,
+              "citaat": "you got to be very careful"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-05-11",
+      "markeringen": []
+    },
+    {
+      "id": "doombolt-long-range-chip",
+      "titel": "Use Doombolt for long-range chip damage",
+      "tekst": "Consider Doombolt for repeated chip damage from 24 inches, casting from outside the enemy dispel bubble. He regards it as a sound spell, particularly against infantry.",
+      "waarom": "He values its casting cost, range and armour piercing, and says casting outside the dispel bubble helps it resolve often.",
+      "voorbeeld": null,
+      "wanneerNiet": "He notes that Strength three and partial template hits limit its damage, especially with larger bases.",
+      "fase": "magic-shooting",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-3p-wqVu5bSs",
+          "url": "https://www.youtube.com/watch?v=3p-wqVu5bSs&t=471s",
+          "tijd": 474,
+          "citaat": "So you can just keep pinging away from 24",
+          "extraCitaten": [
+            {
+              "tijd": 483,
+              "citaat": "you can play from outside the bubble."
+            },
+            {
+              "tijd": 496,
+              "citaat": "it's just worth the chip the chip potential."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-05-11",
+      "markeringen": []
+    },
+    {
+      "id": "dark-magic-reserve-bunker",
+      "titel": "Use a Reserve Move bunker for your Dark Magic wizard",
+      "tekst": "Where this setup is available, put your Dark Magic wizard in a skirmishing Reserve Move bunker. Move out to cast, then move back to safety; he also suggests moving into range when you want the wizard to dispel.",
+      "waarom": "He says the bunker lets the wizard cast outside the enemy dispel bubble and makes it very difficult to catch.",
+      "voorbeeld": "He recommends an Outcast Wizard with Pistoliers in Renegade Crowns or Mounted Yeomen in Exiles, and says a Spellsinger can do the same with Glade Riders.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-3p-wqVu5bSs",
+          "url": "https://www.youtube.com/watch?v=3p-wqVu5bSs&t=587s",
+          "tijd": 590,
+          "citaat": "then it can move back with the 360 movement of those skirmishes.",
+          "extraCitaten": [
+            {
+              "tijd": 574,
+              "citaat": "outcast wizard who should always be in a reserve move bunker of pistolers for"
+            },
+            {
+              "tijd": 606,
+              "citaat": "You're pretty much never going to get caught"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-05-11",
+      "markeringen": []
+    },
+    {
+      "id": "mobile-dark-wizard-scrolls",
+      "titel": "Give a protected mobile Dark Magic wizard Power Scrolls",
+      "tekst": "For the mobile Lore Familiar wizard protected by the setup he describes, he would also take a few Power Scrolls.",
+      "waarom": "He says the wizard's mobility means it needs no further protection.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-3p-wqVu5bSs",
+          "url": "https://www.youtube.com/watch?v=3p-wqVu5bSs&t=628s",
+          "tijd": 631,
+          "citaat": "I'd take a few power scrolls as well",
+          "extraCitaten": [
+            {
+              "tijd": 631,
+              "citaat": "because you're not going to need to defend it with anything."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-05-11",
+      "markeringen": []
+    },
+    {
+      "id": "empire-level-one-doombolt",
+      "titel": "Consider an Empire level-one Doombolt caster",
+      "tekst": "Consider a level-one Empire wizard with the 20-point item that adds one to magic missile casting, using Doombolt from further back and outside the enemy dispel bubble. He suggests this as an option when you only want a small investment in a dispeller.",
+      "waarom": "He expects the casting bonus to make Doombolt go off often, and values its longer range and easier casting compared with Summoning.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": "empire-of-man",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-3p-wqVu5bSs",
+          "url": "https://www.youtube.com/watch?v=3p-wqVu5bSs&t=739s",
+          "tijd": 742,
+          "citaat": "there's a 20 point magic item that gives you plus one to cast magic missiles",
+          "extraCitaten": [
+            {
+              "tijd": 757,
+              "citaat": "the dune bolt guy with plus one to cast could sit a little bit further"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-05-11",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [],
+  "overgeslagen": "Skipped the introduction, guide promotion, channel and sponsor material, spell rules and ratings without actionable advice, and unclear passages about particular character builds and unit names. Also omitted the Battle Magic alternative and third-party Infernal Gateway anecdote.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

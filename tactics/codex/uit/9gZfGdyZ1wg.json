@@ -1,0 +1,354 @@
+{
+  "videoId": "9gZfGdyZ1wg",
+  "bronId": "yt-9gZfGdyZ1wg",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T21:39:15.487Z",
+  "nieuw": [
+    {
+      "id": "skirmishers-kite-ranked-pursuers",
+      "titel": "Keep skirmishers outside a ranked pursuer's arc",
+      "tekst": "Use skirmishers' movement in any direction to keep escaping a ranked unit's charge arc. Let the pursuit waste its time while preserving your skirmishers' points.",
+      "waarom": "He says ranked units can spend several turns approaching only for the skirmishers to march out of their arc again. In his view, the time gained can also expose the pursuer to a hammer attacking from the side.",
+      "voorbeeld": "He describes games where enemy units spent three turns marching towards him, after which he simply marched back outside their arc.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "chaff",
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-9gZfGdyZ1wg",
+          "url": "https://www.youtube.com/watch?v=9gZfGdyZ1wg&t=362s",
+          "tijd": 365,
+          "citaat": "slip out of arc over and over and over again.",
+          "extraCitaten": [
+            {
+              "tijd": 403,
+              "citaat": "going to preserve their points, which is what wins in the game."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-02-09",
+      "markeringen": []
+    },
+    {
+      "id": "horizontal-skirmisher-cover",
+      "titel": "Turn skirmishing screens sideways while keeping line of sight",
+      "tekst": "Use the horizontal orientation of skirmishing cavalry bases to obscure the unit behind them, leaving gaps that preserve its line of sight.",
+      "waarom": "He says a skirmishing screen can provide hard cover to the unit behind it, making that unit difficult to hit.",
+      "voorbeeld": "He describes players using Marauder Horsemen to screen Chaos Knights.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "shooting-terrain",
+        "chaff"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-9gZfGdyZ1wg",
+          "url": "https://www.youtube.com/watch?v=9gZfGdyZ1wg&t=703s",
+          "tijd": 706,
+          "citaat": "pivot into this flat horizontal position",
+          "extraCitaten": [
+            {
+              "tijd": 681,
+              "citaat": "and keep line of sight."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-02-09",
+      "markeringen": []
+    },
+    {
+      "id": "try-solitary-doombull",
+      "titel": "Try a Doombull on its own",
+      "tekst": "He encourages trying a Doombull as an individual character, using its ability to threaten in all directions rather than keeping it inside a ranked unit.",
+      "waarom": "He calls it a powerful piece and says it is tanky enough to stay in the middle of the board.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "hammers",
+        "game-plan"
+      ],
+      "leger": "beastmen-brayherds",
+      "units": [
+        "Doombull"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-9gZfGdyZ1wg",
+          "url": "https://www.youtube.com/watch?v=9gZfGdyZ1wg&t=1363s",
+          "tijd": 1366,
+          "citaat": "I would love to see more people try that out on its own.",
+          "extraCitaten": [
+            {
+              "tijd": 2257,
+              "citaat": "the doom bull is tanky enough to"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-02-09",
+      "markeringen": []
+    },
+    {
+      "id": "flying-daemon-prince-hunter",
+      "titel": "Give a monstrous-infantry Daemon Prince flight",
+      "tekst": "He recommends always giving a monstrous-infantry Daemon Prince flight so it has the speed to chase units around a flank.",
+      "waarom": "He says flight gives it movement nine, which is enough for that pursuit.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "flanks",
+        "chaff"
+      ],
+      "leger": "warriors-of-chaos",
+      "units": [
+        "Daemon Prince Warriors Of Chaos"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-9gZfGdyZ1wg",
+          "url": "https://www.youtube.com/watch?v=9gZfGdyZ1wg&t=2262s",
+          "tijd": 2265,
+          "citaat": "the demon prince in monstrous infantry should always take flight"
+        }
+      ],
+      "datum": "2026-02-09",
+      "markeringen": []
+    },
+    {
+      "id": "skirmisher-hunter-minimum-speed",
+      "titel": "Give skirmisher hunters enough speed",
+      "tekst": "When choosing a character to chase skirmishers, he thinks movement seven or Swiftstride is probably the minimum. Use something fast enough to reach the wings, such as a steed or flying carpet.",
+      "waarom": null,
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "chaff"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-9gZfGdyZ1wg",
+          "url": "https://www.youtube.com/watch?v=9gZfGdyZ1wg&t=2254s",
+          "tijd": 2257,
+          "citaat": "probably need move seven or swift stripe is a minimum"
+        }
+      ],
+      "datum": "2026-02-09",
+      "markeringen": []
+    },
+    {
+      "id": "mounted-hunter-fortitude",
+      "titel": "Equip a mounted hunter with protection and a magic weapon",
+      "tekst": "He recommends a mounted hero with movement in all directions, a magic weapon and the Icon of Fortitude to chase skirmishers. He suggests getting its armour save to 2+.",
+      "waarom": "He values the Icon of Fortitude because it prevents the character being killed by a single cannon shot.",
+      "voorbeeld": null,
+      "wanneerNiet": "He says these little hammers are usually vulnerable enough that the shooters can still try to bring them down before they arrive.",
+      "fase": "army-building",
+      "themas": [
+        "chaff",
+        "hammers"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-9gZfGdyZ1wg",
+          "url": "https://www.youtube.com/watch?v=9gZfGdyZ1wg&t=2215s",
+          "tijd": 2218,
+          "citaat": "give him a magic sword. The icon of fortitude is a great little item",
+          "extraCitaten": [
+            {
+              "tijd": 2218,
+              "citaat": "you're not going to get one shot by cannon."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-02-09",
+      "markeringen": []
+    },
+    {
+      "id": "offset-skirmisher-charge-contact",
+      "titel": "Offset the front skirmisher to protect against overruns",
+      "tekst": "Place the front skirmisher to one side of the unit you want to protect, while the remaining models continue screening it. Use that front model to choose where the enemy charge makes contact.",
+      "waarom": "He says the charger must reach the front model, letting you set the point of contact even though the skirmishers align to the charger.",
+      "voorbeeld": null,
+      "wanneerNiet": "He warns that you must predict where the unit will form up and maintain coherency so models do not die trying to reach the back rank.",
+      "fase": "movement",
+      "themas": [
+        "chaff"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-9gZfGdyZ1wg",
+          "url": "https://www.youtube.com/watch?v=9gZfGdyZ1wg&t=1742s",
+          "tijd": 1745,
+          "citaat": "you can set the point where the charge takes place.",
+          "extraCitaten": [
+            {
+              "tijd": 1765,
+              "citaat": "maximum coherency so you don't lose models"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-02-09",
+      "markeringen": []
+    },
+    {
+      "id": "skirmisher-rear-combat-support",
+      "titel": "Rear-charge with skirmishers to add combat resolution",
+      "tekst": "Use mobile skirmishers to charge the rear of an enemy already fighting your strong unit in front. Value the extra two combat resolution even when you do not expect the skirmishers to cause damage.",
+      "waarom": "He says rolling to hit, wound and penetrate saves often produces few wounds, so an extra two combat resolution is substantial.",
+      "voorbeeld": null,
+      "wanneerNiet": "He says the skirmishers cannot disrupt the enemy's rank bonus this way.",
+      "fase": "combat",
+      "themas": [
+        "chaff"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-9gZfGdyZ1wg",
+          "url": "https://www.youtube.com/watch?v=9gZfGdyZ1wg&t=1846s",
+          "tijd": 1849,
+          "citaat": "they're providing plus two by just hitting into the back",
+          "extraCitaten": [
+            {
+              "tijd": 1888,
+              "citaat": "but you can often add to the combat in the front"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-02-09",
+      "markeringen": []
+    },
+    {
+      "id": "skirmishers-pursue-block-reforms",
+      "titel": "Let skirmishers pursue while the heavy unit reforms",
+      "tekst": "After winning a fight with a strong unit in front and skirmishers behind the enemy, let the mobile skirmishers pursue. Restrain and reform the heavy combat unit to keep it in the centre.",
+      "waarom": "He says the heavy unit lacks mobility and wants to stay central. The skirmishers' position behind the enemy also gives them a head start when pursuing.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "combat",
+      "themas": [
+        "game-plan",
+        "chaff"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-9gZfGdyZ1wg",
+          "url": "https://www.youtube.com/watch?v=9gZfGdyZ1wg&t=1940s",
+          "tijd": 1943,
+          "citaat": "restrain and reform with that heavy combat unit",
+          "extraCitaten": [
+            {
+              "tijd": 1935,
+              "citaat": "if you have a strong unit in the front, skirmishes in"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-02-09",
+      "markeringen": []
+    },
+    {
+      "id": "avoid-ranked-skirmisher-pursuit",
+      "titel": "Do not chase wing skirmishers without an all-round charge arc",
+      "tekst": "Do not send units after skirmishers on the wings if those units lack a charge arc in all directions. He warns that the skirmishers will simply march past them or hide behind terrain.",
+      "waarom": "He says the skirmishers' superior mobility lets them escape ranked pursuers.",
+      "voorbeeld": "He describes Chaos Chosen being unable to catch Mounted Yeomen, despite having Drilled and Swiftstride.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "chaff",
+        "flanks"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-9gZfGdyZ1wg",
+          "url": "https://www.youtube.com/watch?v=9gZfGdyZ1wg&t=2054s",
+          "tijd": 2057,
+          "citaat": "don't send your models out if you don't have the 360 degree charge arc."
+        }
+      ],
+      "datum": "2026-02-09",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "skirmish-blender-character",
+      "bron": {
+        "bronId": "yt-9gZfGdyZ1wg",
+        "url": "https://www.youtube.com/watch?v=9gZfGdyZ1wg&t=1467s",
+        "tijd": 1470,
+        "citaat": "they can be your sort of blender or hammers",
+        "extraCitaten": [
+          {
+            "tijd": 1486,
+            "citaat": "They can catch these skirmishing small units"
+          }
+        ]
+      },
+      "wanneerNiet": "He thinks these characters probably lack the power to defeat a central block relying on combat resolution on their own.",
+      "toelichting": "He again recommends skirmishing combat characters as flank hammers that catch small units and pick off targets."
+    },
+    {
+      "lesId": "central-anvil-all-round-wings",
+      "bron": {
+        "bronId": "yt-9gZfGdyZ1wg",
+        "url": "https://www.youtube.com/watch?v=9gZfGdyZ1wg&t=2005s",
+        "tijd": 2008,
+        "citaat": "you can probably get away with a brick or a Death Star",
+        "extraCitaten": [
+          {
+            "tijd": 2016,
+            "citaat": "on the flanks, you're not going to be able to compete without the mobility"
+          }
+        ]
+      },
+      "waarom": "He argues that competitive play on the flanks requires the mobility and access in all directions that skirmishers provide.",
+      "toelichting": "He recommends the same combination of a central brick or Death Star and all-round mobility on the wings."
+    },
+    {
+      "lesId": "chaff-engineered-enemy-retreats",
+      "bron": {
+        "bronId": "yt-9gZfGdyZ1wg",
+        "url": "https://www.youtube.com/watch?v=9gZfGdyZ1wg&t=1910s",
+        "tijd": 1913,
+        "citaat": "you line them up and they have to flee through the last model."
+      },
+      "toelichting": "He again recommends extending a skirmishing formation behind an enemy to carry its flee move further, potentially off the board."
+    }
+  ],
+  "overgeslagen": "Skipped channel and event promotion, sponsorship, criticism of immersion and game design, proposed house rules, and rules explanations without tactical advice. Omitted uncertain intermingling rules, garbled mount names and unclear combat interactions.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

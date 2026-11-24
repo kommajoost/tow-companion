@@ -1,0 +1,396 @@
+{
+  "videoId": "yA48rL-yKxo",
+  "bronId": "yt-yA48rL-yKxo",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T22:01:31.170Z",
+  "nieuw": [
+    {
+      "id": "define-wizard-role-cheaply",
+      "titel": "Build each wizard around a clear, economical role",
+      "tekst": "Decide whether your wizard is a blaster, buffer or control piece, then tighten its build around that job. Aim to fulfil that role cheaply rather than taking the most expensive version.",
+      "waarom": "In his view, a cheaper, more clearly defined character improves your chances of winning through favourable points trades while leaving you options to pursue your plans.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-yA48rL-yKxo",
+          "url": "https://www.youtube.com/watch?v=yA48rL-yKxo&t=68s",
+          "tijd": 71,
+          "citaat": "how can I do it cheaply to fulfill a role",
+          "extraCitaten": [
+            {
+              "tijd": 895,
+              "citaat": "if you can tighten those builds"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-12-20",
+      "markeringen": []
+    },
+    {
+      "id": "blaster-multiple-magic-missiles",
+      "titel": "Give a blaster mage multiple magic missiles",
+      "tekst": "Build a blaster mage with more than one magic missile. He recommends the Ruby Ring when you lack another option such as the Rod of the Damned.",
+      "waarom": "He says the double magic missile attack defines the blaster's role. Combining the Wood Elf missile with the Ruby Ring lets the caster choose different types of targets and remain effective.",
+      "voorbeeld": null,
+      "wanneerNiet": "He notes that the Ruby Ring may fail to go off throughout a game, although in other games it works repeatedly.",
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-yA48rL-yKxo",
+          "url": "https://www.youtube.com/watch?v=yA48rL-yKxo&t=164s",
+          "tijd": 167,
+          "citaat": "You can't just have one magic missile. You've got to have multiples",
+          "extraCitaten": [
+            {
+              "tijd": 408,
+              "citaat": "then that's what I would use"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-12-20",
+      "markeringen": []
+    },
+    {
+      "id": "mobile-blaster-late-points",
+      "titel": "Give blasters mobility to collect late-game points",
+      "tekst": "Give a blaster mage the mobility to find vulnerable targets, particularly a steed and, where available, movement in all directions. Use that reach to clear chaff and finish weakened or fragile units when late-game charges and combats no longer offer scoring opportunities.",
+      "waarom": "He finds lightly armoured, low-toughness skirmishers ideal missile targets, but their mobility makes reaching them important. He has seen a mobile blaster swing games by collecting extra points late.",
+      "voorbeeld": "In his High Elf game against Dark Elves, the opposing Pegasus-mounted wizard used Fireball and Pillar of Fire to collect about 300 points late, turning a likely narrow victory into a much larger one.",
+      "wanneerNiet": "He says rising Magic Resistance, especially Magic Resistance 2, and harder casting have made blasters less popular, although he still considers them worth considering for many armies.",
+      "fase": "army-building",
+      "themas": [
+        "chaff",
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-yA48rL-yKxo",
+          "url": "https://www.youtube.com/watch?v=yA48rL-yKxo&t=156s",
+          "tijd": 159,
+          "citaat": "the mobility to find vulnerable targets",
+          "extraCitaten": [
+            {
+              "tijd": 213,
+              "citaat": "its ability to clear chaff and score points in the late game"
+            },
+            {
+              "tijd": 293,
+              "citaat": "cleaned up about 300 points in the late game"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-12-20",
+      "markeringen": []
+    },
+    {
+      "id": "wood-elf-reserve-blaster",
+      "titel": "Consider a Wood Elf blaster in Glade Riders",
+      "tekst": "He recommends a Wood Elf wizard with the Ruby Ring and Lore Familiar in a Glade Riders unit with Reserve Move as a strong blaster setup. Combine the Lore of the Wilds magic missile with the ring to address different targets.",
+      "waarom": "He considers the Lore of the Wilds missile exceptional and values the flexibility of using it alongside the Ruby Ring. Reserve Move supplies the move, cast and move again function he wants.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": "wood-elf-realms",
+      "units": [
+        "Glade Riders"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-yA48rL-yKxo",
+          "url": "https://www.youtube.com/watch?v=yA48rL-yKxo&t=305s",
+          "tijd": 308,
+          "citaat": "mage with ruby ring and l familiar in a glade rider unit with reserve move",
+          "extraCitaten": [
+            {
+              "tijd": 331,
+              "citaat": "you can pick different types of targets and still be effective"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-12-20",
+      "markeringen": []
+    },
+    {
+      "id": "reserve-move-blaster-withdrawal",
+      "titel": "Use Reserve Move to cast and withdraw",
+      "tekst": "Use a Reserve Move unit to move a blaster into targeting range or out of enemy dispel range, cast, then move away again. He highlights this as a way to keep the wizard alive and protected within a unit.",
+      "waarom": "He values the ability to move, shoot and move again, together with the targeting protection the unit provides.",
+      "voorbeeld": "He points to a Bretonnian Exiles Outcast Wizard joining Mounted Yeomen as a cheap way to obtain this function.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "shooting-terrain",
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-yA48rL-yKxo",
+          "url": "https://www.youtube.com/watch?v=yA48rL-yKxo&t=372s",
+          "tijd": 375,
+          "citaat": "you can move into targeting range and then move",
+          "extraCitaten": [
+            {
+              "tijd": 383,
+              "citaat": "out again so that the blaster mage can survive"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-12-20",
+      "markeringen": []
+    },
+    {
+      "id": "pair-movement-combat-buffs",
+      "titel": "Pair movement spells with combat buffs",
+      "tekst": "Consider a buff mage that combines a movement spell with a spell enhancing the unit's combat prospects. He highlights Arcane Urgency with Oaken Shield as one such pairing, aiming to arrange a fight heavily in your favour.",
+      "waarom": "He says movement and characteristic buffs shift the odds in your favour, and there are relatively few ways to stop buffing compared with the Magic Resistance that counters missiles.",
+      "voorbeeld": "He identifies Oaken Shield's inexpensive ward save as useful in Ogre Death Star builds.",
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-yA48rL-yKxo",
+          "url": "https://www.youtube.com/watch?v=yA48rL-yKxo&t=493s",
+          "tijd": 496,
+          "citaat": "any unit that has that movement spell,",
+          "extraCitaten": [
+            {
+              "tijd": 505,
+              "citaat": "buff spell, I would consider the buff mage at the moment"
+            },
+            {
+              "tijd": 582,
+              "citaat": "you are trying to have a combat that is lopsided in your favor"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-12-20",
+      "markeringen": []
+    },
+    {
+      "id": "bray-shaman-gor-buffer",
+      "titel": "Consider a level-two Bray-Shaman to buff a Gor block",
+      "tekst": "For a Gor Herd block, he recommends considering a level-two Bray-Shaman with Lore Familiar and a Power Scroll. Select a movement spell and Daemonic Vessel for the buffing role.",
+      "waarom": null,
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "infantry",
+        "game-plan"
+      ],
+      "leger": "beastmen-brayherds",
+      "units": [
+        "Bray-Shaman",
+        "Gor Herd"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-yA48rL-yKxo",
+          "url": "https://www.youtube.com/watch?v=yA48rL-yKxo&t=548s",
+          "tijd": 551,
+          "citaat": "You can take a level two law familiar.",
+          "extraCitaten": [
+            {
+              "tijd": 551,
+              "citaat": "with a power scroll in a gorick"
+            },
+            {
+              "tijd": 560,
+              "citaat": "You're going to take demonic vessel."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-12-20",
+      "markeringen": []
+    },
+    {
+      "id": "movement-debuff-range-control",
+      "titel": "Use movement debuffs to upset carefully judged ranges",
+      "tekst": "Use a control mage to disrupt enemy movement, including spells that reduce movement. He considers even Elementalism's minus-one-movement signature useful for interfering with carefully judged charge and missile ranges.",
+      "waarom": "In his view, movement is the source of the game's advantages. Good players operate as close as possible to the relevant range boundaries, making movement buffs or debuffs valuable.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "magic-shooting",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-yA48rL-yKxo",
+          "url": "https://www.youtube.com/watch?v=yA48rL-yKxo&t=679s",
+          "tijd": 682,
+          "citaat": "I like the elementalism signature that has",
+          "extraCitaten": [
+            {
+              "tijd": 691,
+              "citaat": "minus one movement"
+            },
+            {
+              "tijd": 698,
+              "citaat": "if you can buff or debuff movement, you're on to a winner"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-12-20",
+      "markeringen": []
+    },
+    {
+      "id": "necromancy-leadership-control",
+      "titel": "Consider Necromancy to attack enemy leadership",
+      "tekst": "Consider Necromancy's leadership debuffs as a control tool. He particularly values the minus-two leadership effect for its potential to make critical leadership tests fail.",
+      "waarom": "He regards failing leadership tests as the next most important lever after movement: the effect may seem irrelevant until a decisive failure occurs.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "magic-shooting",
+      "themas": [
+        "psychology",
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-yA48rL-yKxo",
+          "url": "https://www.youtube.com/watch?v=yA48rL-yKxo&t=710s",
+          "tijd": 713,
+          "citaat": "necromancy has dominated this format for a long time now with its leadership debuffing",
+          "extraCitaten": [
+            {
+              "tijd": 731,
+              "citaat": "leadership test tends to be the next most important lever to pull"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-12-20",
+      "markeringen": []
+    },
+    {
+      "id": "bone-dragon-control-priest",
+      "titel": "Consider a Bone Dragon High Priest for control magic",
+      "tekst": "He considers a High Priest on a Necrolith Bone Dragon an ideal carrier for control magic because it can choose Illusion or Necromancy. Consider an Illusion setup with movement-disrupting and blocking spells, or Necromancy with Spirit Leech and other debuffs.",
+      "waarom": "He values the High Priest's access to both of these lores and the range of builds this gives Tomb Kings.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": "tomb-kings-of-khemri",
+      "units": [
+        "High Priest",
+        "Necrolith Bone Dragon"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-yA48rL-yKxo",
+          "url": "https://www.youtube.com/watch?v=yA48rL-yKxo&t=744s",
+          "tijd": 747,
+          "citaat": "he who can take both of these is probably the ideal caddy",
+          "extraCitaten": [
+            {
+              "tijd": 739,
+              "citaat": "the tomb king high priest on a bone dragon"
+            },
+            {
+              "tijd": 770,
+              "citaat": "spirit leech and the other spells that are there that debuff as well"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-12-20",
+      "markeringen": []
+    },
+    {
+      "id": "control-spells-block-lanes",
+      "titel": "Use control spells to obstruct movement and charging lanes",
+      "tekst": "Look for control magic that blocks line of sight or creates dangerous or difficult terrain to interfere with enemy charges and movement. He regards forcing the opponent to take the low charge roll through terrain as an underused tool.",
+      "waarom": "He recalls the disruption Wood Elves could cause by blocking movement and charging lanes with Pillar of Fire and Tree Singing when those options were more effective.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "magic-shooting",
+      "themas": [
+        "shooting-terrain",
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-yA48rL-yKxo",
+          "url": "https://www.youtube.com/watch?v=yA48rL-yKxo&t=807s",
+          "tijd": 810,
+          "citaat": "anything that blocks line of sight or creates dangerous terrain",
+          "extraCitaten": [
+            {
+              "tijd": 818,
+              "citaat": "make your opponent take the low role on a charge"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-12-20",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "opening-outside-dispel-range",
+      "bron": {
+        "bronId": "yt-yA48rL-yKxo",
+        "url": "https://www.youtube.com/watch?v=yA48rL-yKxo&t=454s",
+        "tijd": 457,
+        "citaat": "with the movement spell particularly is it casts out of range in deployment.",
+        "extraCitaten": [
+          {
+            "tijd": 461,
+            "citaat": "you can guarantee that you're going to be outside of 24 in"
+          }
+        ]
+      },
+      "toelichting": "He recommends starting outside enemy dispel range to resolve an opening movement spell before advancing, matching the existing advice."
+    }
+  ],
+  "overgeslagen": "Skipped introductory commentary, edition comparisons, sponsor and channel talk, incidental rules explanations, and wishes for future army design. Omitted unclear Primal Magic spell names and speculative builds; did not turn alternative combat-caster loadouts into separate recommendations.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

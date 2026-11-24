@@ -1,0 +1,339 @@
+{
+  "videoId": "-z73OW3qT8Q",
+  "bronId": "yt--z73OW3qT8Q",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T22:24:11.959Z",
+  "nieuw": [
+    {
+      "id": "men-at-arms-resolution-block",
+      "titel": "Use Men-at-Arms as a cheap combat-resolution block",
+      "tekst": "He considers Men-at-Arms an effective infantry choice for winning through numbers and combat resolution.",
+      "waarom": "He credits their low cost, at about 200 points at most, and their ability to reach seven combat resolution. He says that resolution can beat a dragon's overkill when it is challenged, and also values their two champion options, built-in Shieldwall and Warband.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "infantry"
+      ],
+      "leger": "kingdom-of-bretonnia",
+      "units": [
+        "Men-at-Arms"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt--z73OW3qT8Q",
+          "url": "https://www.youtube.com/watch?v=-z73OW3qT8Q&t=200s",
+          "tijd": 203,
+          "citaat": "It's an infantry unit that can beat other units through strength in numbers",
+          "extraCitaten": [
+            {
+              "tijd": 210,
+              "citaat": "the reason it's effective in the game is it's cheap."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-10-25",
+      "markeringen": []
+    },
+    {
+      "id": "men-at-arms-skip-stubborn",
+      "titel": "Consider skipping the Stubborn upgrade for Men-at-Arms",
+      "tekst": "He does not think the 25-point upgrade giving Men-at-Arms Stubborn seems worthwhile.",
+      "waarom": "He says the unit already has Shieldwall, which he describes as a weaker effect with similarities to Stubborn.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "infantry"
+      ],
+      "leger": "kingdom-of-bretonnia",
+      "units": [
+        "Men-at-Arms"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt--z73OW3qT8Q",
+          "url": "https://www.youtube.com/watch?v=-z73OW3qT8Q&t=134s",
+          "tijd": 137,
+          "citaat": "for 25 points doesn't seem worth it."
+        }
+      ],
+      "datum": "2025-10-25",
+      "markeringen": []
+    },
+    {
+      "id": "monstrous-infantry-death-stars",
+      "titel": "Favour monstrous infantry for a Death Star",
+      "tekst": "He thinks monstrous infantry, particularly ogres, tends to be the best way to build an infantry Death Star.",
+      "waarom": "He says a Death Star needs a large wound count and the ability to strike back to win central combats through wounds.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "infantry"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt--z73OW3qT8Q",
+          "url": "https://www.youtube.com/watch?v=-z73OW3qT8Q&t=283s",
+          "tijd": 286,
+          "citaat": "the monstrous infantry version with ogres tends to be the best way to play",
+          "extraCitaten": [
+            {
+              "tijd": 286,
+              "citaat": "it's that large wound count and the ability to strike back that matters."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-10-25",
+      "markeringen": []
+    },
+    {
+      "id": "death-star-wheel-arc",
+      "titel": "March a Death Star into the enemy's wheel arc",
+      "tekst": "Rather than charging immediately, march a Death Star close into the enemy's wheel arc to restrict its movement. Set up a reliable charge next turn while occupying valuable space in the centre.",
+      "waarom": "He says units cannot wheel backwards. If the Death Star charges and loses instead, the opponent can restrain, reform and escape, which has happened to him.",
+      "voorbeeld": null,
+      "wanneerNiet": "He notes that the enemy can still reform when its wheeling is blocked.",
+      "fase": "movement",
+      "themas": [
+        "infantry",
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt--z73OW3qT8Q",
+          "url": "https://www.youtube.com/watch?v=-z73OW3qT8Q&t=305s",
+          "tijd": 308,
+          "citaat": "you want with this sort of unit not to charge almost,",
+          "extraCitaten": [
+            {
+              "tijd": 324,
+              "citaat": "by marching into their wheel arc. Units can't wheel backwards."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-10-25",
+      "markeringen": []
+    },
+    {
+      "id": "death-star-champion-challenge",
+      "titel": "Use Death Star champions to absorb the enemy's attacks",
+      "tekst": "When a Death Star is charged, use its champion to challenge the enemy's nominated attacker. This leaves the general or other big hitter in the front rank to hit back.",
+      "waarom": null,
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "combat",
+      "themas": [
+        "infantry"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt--z73OW3qT8Q",
+          "url": "https://www.youtube.com/watch?v=-z73OW3qT8Q&t=393s",
+          "tijd": 396,
+          "citaat": "It can use challenges, especially when you're being charged",
+          "extraCitaten": [
+            {
+              "tijd": 404,
+              "citaat": "your general or big hitter can hit back"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-10-25",
+      "markeringen": []
+    },
+    {
+      "id": "sisters-preserve-points-harassment",
+      "titel": "Consider Sisters of Avelorn for points-preserving harassment",
+      "tekst": "He rates Sisters of Avelorn as probably the best option for a harassment unit whose priority is staying alive and preserving its points.",
+      "waarom": "He values their protection from shooting through Skirmish, their ability to move through cover and their Evasive rule, which makes them difficult to catch.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "shooting-terrain",
+        "infantry"
+      ],
+      "leger": "high-elf-realms",
+      "units": [
+        "Sisters of Avelorn"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt--z73OW3qT8Q",
+          "url": "https://www.youtube.com/watch?v=-z73OW3qT8Q&t=433s",
+          "tijd": 436,
+          "citaat": "sisters tend to be the best at it",
+          "extraCitaten": [
+            {
+              "tijd": 457,
+              "citaat": "staying alive is a priority."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-10-25",
+      "markeringen": []
+    },
+    {
+      "id": "sisters-prioritise-valuable-targets",
+      "titel": "Prioritise valuable targets with Sisters of Avelorn",
+      "tekst": "Use Sisters of Avelorn to prioritise high-value shooting targets such as Tomb Banshees and heavy cavalry.",
+      "waarom": "He points to their high armour piercing, magical attacks and 30-inch range. He also says ignoring cover helps them hit consistently.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "magic-shooting",
+      "themas": [
+        "matchups",
+        "shooting-terrain"
+      ],
+      "leger": "high-elf-realms",
+      "units": [
+        "Sisters of Avelorn"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt--z73OW3qT8Q",
+          "url": "https://www.youtube.com/watch?v=-z73OW3qT8Q&t=476s",
+          "tijd": 479,
+          "citaat": "you can really prioritize high value targets",
+          "extraCitaten": [
+            {
+              "tijd": 488,
+              "citaat": "Ignoring cover means you're going to hit a lot."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-10-25",
+      "markeringen": []
+    },
+    {
+      "id": "harassment-infantry-flank-terrain",
+      "titel": "Use harassment infantry on a flank near terrain",
+      "tekst": "Use mobile harassment infantry on a flank near terrain to delay or kill opposing units. If it gets into trouble, march it into cover and out of line of sight to preserve its points.",
+      "waarom": "He says this can diminish the opponent's resources in one part of the board and allow the army's hammers to strike harder elsewhere.",
+      "voorbeeld": null,
+      "wanneerNiet": "He does not see this type of unit as the army's centrepiece or as something that necessarily holds the centre.",
+      "fase": "movement",
+      "themas": [
+        "flanks",
+        "shooting-terrain",
+        "infantry"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt--z73OW3qT8Q",
+          "url": "https://www.youtube.com/watch?v=-z73OW3qT8Q&t=528s",
+          "tijd": 531,
+          "citaat": "it can sit on a flank near terrain and delay or kill opposing units.",
+          "extraCitaten": [
+            {
+              "tijd": 546,
+              "citaat": "they can march away into cover"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-10-25",
+      "markeringen": []
+    },
+    {
+      "id": "grave-guard-great-weapons",
+      "titel": "Prefer great weapons on competitive Grave Guard",
+      "tekst": "He thinks great weapons are the better way to equip Grave Guard for competitive play.",
+      "waarom": "In his view, great weapons turn them into a blender that can grind through any unit.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "infantry",
+        "hammers"
+      ],
+      "leger": "vampire-counts",
+      "units": [
+        "Grave Guard"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt--z73OW3qT8Q",
+          "url": "https://www.youtube.com/watch?v=-z73OW3qT8Q&t=850s",
+          "tijd": 853,
+          "citaat": "great weapons, which I think is the better way to play them competitively",
+          "extraCitaten": [
+            {
+              "tijd": 853,
+              "citaat": "they can grind through any unit"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-10-25",
+      "markeringen": []
+    },
+    {
+      "id": "grave-guard-drilled-widen",
+      "titel": "Use Drilled to widen Grave Guard after taking a charge",
+      "tekst": "If taking Drilled on Grave Guard, use it to fan out after receiving a charge and giving ground, choosing a formation that maximises their attacks.",
+      "waarom": "He says this gives Drilled a use even though the unit cannot march.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "combat",
+      "themas": [
+        "infantry"
+      ],
+      "leger": "vampire-counts",
+      "units": [
+        "Grave Guard"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt--z73OW3qT8Q",
+          "url": "https://www.youtube.com/watch?v=-z73OW3qT8Q&t=893s",
+          "tijd": 896,
+          "citaat": "you've been charged, you take the hit, and then you fan out",
+          "extraCitaten": [
+            {
+              "tijd": 887,
+              "citaat": "maximize your attacks on give grounds and things like that."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-10-25",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "concentrate-points-death-star",
+      "bron": {
+        "bronId": "yt--z73OW3qT8Q",
+        "url": "https://www.youtube.com/watch?v=-z73OW3qT8Q&t=418s",
+        "tijd": 421,
+        "citaat": "I think they do offer a very effective path to play infantry in this game."
+      },
+      "toelichting": "He likewise endorses a large, durable Death Star as an effective competitive infantry choice."
+    }
+  ],
+  "overgeslagen": "Skipped the balance and power-creep debate, hypothetical redesigns, unit and rule readouts without clear advice, speculative rankings, unclear captioned names, and the closing sponsorship and channel announcements.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

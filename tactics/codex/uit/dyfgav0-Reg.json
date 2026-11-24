@@ -1,0 +1,545 @@
+{
+  "videoId": "dyfgav0-Reg",
+  "bronId": "yt-dyfgav0-Reg",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T21:47:47.303Z",
+  "nieuw": [
+    {
+      "id": "vampire-bsb-healing-rerolls",
+      "titel": "Take a Vampire Counts BSB to support healing",
+      "tekst": "The speaker considers a BSB mandatory when using healing in a Vampire Counts army. Use its bubble to give nearby Necromancers rerolls on their healing tests.",
+      "waarom": "He says rerolls substantially improve the reliability of low-leadership healing tests, and the bubble can benefit several healers rather than just one.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": "vampire-counts",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-dyfgav0-Reg",
+          "url": "https://www.youtube.com/watch?v=dyfgav0-Reg&t=372s",
+          "tijd": 375,
+          "citaat": "mandatory because if you're doing any healing whatsoever",
+          "extraCitaten": [
+            {
+              "tijd": 438,
+              "citaat": "he gives a big bubble of all the necromancers"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-01-19",
+      "markeringen": []
+    },
+    {
+      "id": "horde-bsb-break-rerolls",
+      "titel": "Take a BSB to steady low-leadership hordes",
+      "tekst": "Include a BSB in a lower-leadership horde army to reroll crucial break tests. He particularly values this when lost ranks or being away from the general leaves troops testing on lower leadership.",
+      "waarom": "He says an unexpected failed break test can cost a frontline unit and potentially the game. He expects Beastmen, Orcs and Goblins, and Skaven to take a BSB at 2,000 points.",
+      "voorbeeld": null,
+      "wanneerNiet": "He warns that this does not protect against Fear, Terror or Vampire screams.",
+      "fase": "army-building",
+      "themas": [
+        "psychology",
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-dyfgav0-Reg",
+          "url": "https://www.youtube.com/watch?v=dyfgav0-Reg&t=929s",
+          "tijd": 932,
+          "citaat": "So you take it if you're like a horde army or a lower leadership army",
+          "extraCitaten": [
+            {
+              "tijd": 656,
+              "citaat": "especially if your general isn't necessarily hanging out next to them"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-01-19",
+      "markeringen": []
+    },
+    {
+      "id": "leadership-ten-bsb-savings",
+      "titel": "Leadership ten can make a BSB unnecessary",
+      "tekst": "If a leadership-ten general already provides a large leadership bubble, the speaker often skips the BSB. Assess the cost of the character, its mount and protective equipment rather than treating it as only a 25-point upgrade.",
+      "waarom": "In his view, leadership ten already passes often enough that the reroll offers relatively little extra reliability. Buying another protected character takes points away from other parts of the army.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "psychology",
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-dyfgav0-Reg",
+          "url": "https://www.youtube.com/watch?v=dyfgav0-Reg&t=567s",
+          "tijd": 570,
+          "citaat": "you very often just don't need that reroll anyway",
+          "extraCitaten": [
+            {
+              "tijd": 594,
+              "citaat": "isn't 25 point investment. It's like a 225 point investment"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-01-19",
+      "markeringen": []
+    },
+    {
+      "id": "upgrade-existing-combat-bsb",
+      "titel": "Consider making an existing combat character your BSB",
+      "tekst": "If you already want a combat character, consider paying for the BSB upgrade to help it or its unit win combat. This is especially relevant when the character is already required by the army list.",
+      "waarom": "He says even one extra point of combat resolution can make the enemy take the test instead of you.",
+      "voorbeeld": "He describes an Exalted Champion on a Chaos Dragon carrying the battle standard and a War Banner, adding two combat resolution while the character and mount still hit hard.",
+      "wanneerNiet": "He describes the Knightly Orders Chapter Master example as much less competitive than the Chaos Dragon build.",
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-dyfgav0-Reg",
+          "url": "https://www.youtube.com/watch?v=dyfgav0-Reg&t=686s",
+          "tijd": 689,
+          "citaat": "you might as well just make the battle standard bearer",
+          "extraCitaten": [
+            {
+              "tijd": 1007,
+              "citaat": "having even one more point than the enemy is enough"
+            },
+            {
+              "tijd": 971,
+              "citaat": "he's the battle standard bearer and he's got a war banner."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-01-19",
+      "markeringen": []
+    },
+    {
+      "id": "unit-carries-magic-banner",
+      "titel": "Put a valuable banner on the unit when possible",
+      "tekst": "When a unit can carry the magic banner you want, prefer putting it there rather than on the BSB.",
+      "waarom": "He points out that the BSB can be singled out and killed. In a unit, another model picks up the standard when its bearer dies.",
+      "voorbeeld": "He notes that Grave Guard can buy the regeneration banner with core points rather than requiring the BSB to carry it.",
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-dyfgav0-Reg",
+          "url": "https://www.youtube.com/watch?v=dyfgav0-Reg&t=1081s",
+          "tijd": 1084,
+          "citaat": "you'd rather put it on the unit than the BSB",
+          "extraCitaten": [
+            {
+              "tijd": 1092,
+              "citaat": "the next guy picks up the banner"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-01-19",
+      "markeringen": []
+    },
+    {
+      "id": "bsb-host-before-mount",
+      "titel": "Choose the BSB's intended unit before its mount",
+      "tekst": "Start a BSB build by deciding which unit it should join. Then check whether its available mounts match that unit.",
+      "waarom": "He notes that a mount can leave the BSB unable to join any suitable unit: an Empire Captain on a Pegasus has no Pegasus Knights to join.",
+      "voorbeeld": null,
+      "wanneerNiet": "He says flying around alone on a Pegasus is not necessarily a bad option in itself.",
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-dyfgav0-Reg",
+          "url": "https://www.youtube.com/watch?v=dyfgav0-Reg&t=1588s",
+          "tijd": 1591,
+          "citaat": "what unit do I want him to be joining?",
+          "extraCitaten": [
+            {
+              "tijd": 1600,
+              "citaat": "mount choices that match up with the unit you want to join"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-01-19",
+      "markeringen": []
+    },
+    {
+      "id": "empire-infantry-bsb-foot",
+      "titel": "Keep an infantry Captain BSB on foot",
+      "tekst": "For an Empire Captain BSB joining infantry, the speaker now generally prefers staying on foot rather than buying a Demigryph.",
+      "waarom": "He says changes to Look Out Sir make the mounted character vulnerable to cannonballs. Being on foot also makes him easier to hide and avoids a wider base allowing more enemies to attack him.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "infantry",
+        "shooting-terrain"
+      ],
+      "leger": "empire-of-man",
+      "units": [
+        "Captain of the Empire"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-dyfgav0-Reg",
+          "url": "https://www.youtube.com/watch?v=dyfgav0-Reg&t=1753s",
+          "tijd": 1756,
+          "citaat": "be on foot if you're going to join an infantry unit.",
+          "extraCitaten": [
+            {
+              "tijd": 1749,
+              "citaat": "50 points so that you can get killed by cannonballs isn't worth it"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-01-19",
+      "markeringen": []
+    },
+    {
+      "id": "captain-bsb-defensive-investment",
+      "titel": "Prioritise survival over damage on a Captain BSB",
+      "tekst": "Build an Empire Captain BSB primarily to stay alive and support the army rather than investing in making him a dangerous fighter. The speaker generally sees little value in buying him a magic weapon for only two attacks.",
+      "waarom": "He says the Captain lacks the attack profile to justify offensive investment. Losing the BSB also gives away extra victory points and can swing the game.",
+      "voorbeeld": null,
+      "wanneerNiet": "He allows that a cheap weapon giving the unit access to magical attacks could be a reason to take one.",
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": "empire-of-man",
+      "units": [
+        "Captain of the Empire"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-dyfgav0-Reg",
+          "url": "https://www.youtube.com/watch?v=dyfgav0-Reg&t=1832s",
+          "tijd": 1835,
+          "citaat": "So I think we always just default to let me just keep him alive.",
+          "extraCitaten": [
+            {
+              "tijd": 1843,
+              "citaat": "His goal is to buff the army around him."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-01-19",
+      "markeringen": []
+    },
+    {
+      "id": "veteran-state-griffin-banner",
+      "titel": "Prefer Veteran State Troops with the Griffin Banner",
+      "tekst": "For his Empire combat-resolution block, the speaker prefers Veteran State Troops carrying the Griffin Banner. He uses it to double their rank bonus.",
+      "waarom": "He values their weapon skill four because it can reduce the combat resolution they give away to enemies hitting them on threes.",
+      "voorbeeld": null,
+      "wanneerNiet": "If Veteran State Troops are too expensive for the list, he says ordinary State Troops would need a BSB to bring this banner.",
+      "fase": "army-building",
+      "themas": [
+        "infantry"
+      ],
+      "leger": "empire-of-man",
+      "units": [
+        "Veteran State Troops",
+        "State Troops"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-dyfgav0-Reg",
+          "url": "https://www.youtube.com/watch?v=dyfgav0-Reg&t=1903s",
+          "tijd": 1906,
+          "citaat": "I personally just prefer this veteran state troops",
+          "extraCitaten": [
+            {
+              "tijd": 1891,
+              "citaat": "the griffin banner for the combat resolution."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-01-19",
+      "markeringen": []
+    },
+    {
+      "id": "bsb-joins-elite-troops",
+      "titel": "Usually place the BSB with elite troops",
+      "tekst": "When putting a BSB into a unit, usually choose elite troops rather than chaff.",
+      "waarom": "He says elite troops are generally more durable and give better value from the BSB's presence.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-dyfgav0-Reg",
+          "url": "https://www.youtube.com/watch?v=dyfgav0-Reg&t=1961s",
+          "tijd": 1964,
+          "citaat": "typically your BSP, you want to put them on your elite troops."
+        }
+      ],
+      "datum": "2026-01-19",
+      "markeringen": []
+    },
+    {
+      "id": "avoid-redundant-bsb-banner",
+      "titel": "Avoid paying for banner effects the unit already covers",
+      "tekst": "Check a proposed BSB banner against the abilities of the unit he will join. Do not assume an expensive banner is worthwhile if its benefits overlap with protection or rerolls the unit already has.",
+      "waarom": "He questions buying the Imperial Banner for an Empire Captain's Veteran State Troops unit: the Captain already makes the unit immune to Panic, and Veteran already provides leadership rerolls.",
+      "voorbeeld": null,
+      "wanneerNiet": "He acknowledges that the Imperial Banner's help against Terror might still be useful.",
+      "fase": "army-building",
+      "themas": [
+        "psychology",
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-dyfgav0-Reg",
+          "url": "https://www.youtube.com/watch?v=dyfgav0-Reg&t=1974s",
+          "tijd": 1977,
+          "citaat": "the unit already kind of does this",
+          "extraCitaten": [
+            {
+              "tijd": 1959,
+              "citaat": "if I have via veteran rroll, do I need 36 as well?"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-01-19",
+      "markeringen": []
+    },
+    {
+      "id": "captain-witch-hunters-ward",
+      "titel": "Consider Witch Hunter's Ward for a supporting Captain",
+      "tekst": "The speaker recommends considering Witch Hunter's Ward on the Empire Captain BSB, particularly when supporting a good unit.",
+      "waarom": "He considers it cost effective for magic resistance two and an armour-save reroll, which he values on a two-wound character.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": "empire-of-man",
+      "units": [
+        "Captain of the Empire"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-dyfgav0-Reg",
+          "url": "https://www.youtube.com/watch?v=dyfgav0-Reg&t=2220s",
+          "tijd": 2223,
+          "citaat": "especially on a good good unit you should take it.",
+          "extraCitaten": [
+            {
+              "tijd": 2273,
+              "citaat": "the MR re-rolling armor save"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-01-19",
+      "markeringen": []
+    },
+    {
+      "id": "state-troops-monster-tapestry",
+      "titel": "Consider Monster Hunters Tapestry for Veteran State Troops",
+      "tekst": "For Veteran State Troops already carrying the Griffin Banner, consider giving their BSB the Monster Hunters Tapestry to protect the block from Stomp attacks.",
+      "waarom": "He says a unit can win on combat resolution yet still lose too many models over several rounds. Preventing repeated Stomp casualties helps preserve the block.",
+      "voorbeeld": "He recalls his Veteran State Troops winning combat but being reduced to about seven models after three rounds.",
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "infantry",
+        "matchups"
+      ],
+      "leger": "empire-of-man",
+      "units": [
+        "Veteran State Troops",
+        "Captain of the Empire"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-dyfgav0-Reg",
+          "url": "https://www.youtube.com/watch?v=dyfgav0-Reg&t=2301s",
+          "tijd": 2304,
+          "citaat": "bring like the Monster Hunters Tapestry",
+          "extraCitaten": [
+            {
+              "tijd": 2311,
+              "citaat": "even though I win combat, I end up with like seven guys"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-01-19",
+      "markeringen": []
+    },
+    {
+      "id": "captain-pistol-charge-reaction",
+      "titel": "Consider a pistol for the Captain's stand and shoot",
+      "tekst": "The speaker occasionally gives his Empire Captain a pistol to take a stand-and-shoot shot at charging enemies. He thinks the five-point investment might be worthwhile for a chance to gain extra combat resolution before the fight.",
+      "waarom": "He points to the character's high ballistic skill and the pistol's Quick Shot rule.",
+      "voorbeeld": null,
+      "wanneerNiet": "He notes that the player has to remember the pistol is there.",
+      "fase": "army-building",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "leger": "empire-of-man",
+      "units": [
+        "Captain of the Empire"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-dyfgav0-Reg",
+          "url": "https://www.youtube.com/watch?v=dyfgav0-Reg&t=2371s",
+          "tijd": 2374,
+          "citaat": "I do occasionally take a pistol",
+          "extraCitaten": [
+            {
+              "tijd": 2391,
+              "citaat": "for five points I don't know might be worth it"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-01-19",
+      "markeringen": []
+    },
+    {
+      "id": "necromancy-supports-state-troops",
+      "titel": "Support the State Troops block with leadership-reducing Necromancy",
+      "tekst": "Consider supporting a Veteran State Troops combat-resolution block with Necromancy spells that lower enemy leadership. Use them to make enemies more likely to run after losing combat to the block.",
+      "waarom": "He likes being able to make enemies flee even when the Empire troops themselves do little damage.",
+      "voorbeeld": "He describes enemies losing combat by seven while reduced to leadership five by Necromancy spells.",
+      "wanneerNiet": null,
+      "fase": "magic-shooting",
+      "themas": [
+        "psychology",
+        "infantry"
+      ],
+      "leger": "empire-of-man",
+      "units": [
+        "Veteran State Troops"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-dyfgav0-Reg",
+          "url": "https://www.youtube.com/watch?v=dyfgav0-Reg&t=2513s",
+          "tijd": 2516,
+          "citaat": "I throw out a bunch of necromancy spells, lower their leadership"
+        }
+      ],
+      "datum": "2026-01-19",
+      "markeringen": []
+    },
+    {
+      "id": "archer-screen-state-troops-trap",
+      "titel": "Use archer screens to draw enemies into State Troops",
+      "tekst": "Use small archer screens to bring enemies into a fight with Veteran State Troops. He describes fleeing screens being run down with the enemy caught in front of the block, or screens fighting and potentially allowing an overrun into it.",
+      "waarom": "He wants the enemy to reach the Veteran State Troops so the block can win on combat resolution.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "chaff",
+        "infantry"
+      ],
+      "leger": "empire-of-man",
+      "units": [
+        "Empire Archers",
+        "Veteran State Troops"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-dyfgav0-Reg",
+          "url": "https://www.youtube.com/watch?v=dyfgav0-Reg&t=2499s",
+          "tijd": 2502,
+          "citaat": "I use them to either flee so that then they get run down",
+          "extraCitaten": [
+            {
+              "tijd": 2508,
+              "citaat": "the enemy then might overrun when they don't want to straight into my unit"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-01-19",
+      "markeringen": []
+    },
+    {
+      "id": "cheap-bsb-outside-combat",
+      "titel": "Keep a cheap horde BSB beside the fighting unit",
+      "tekst": "If the BSB's job is simply to keep a horde from running, consider giving him only heavy armour and a shield. Keep him beside the unit so he stays out of combat.",
+      "waarom": null,
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "psychology",
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-dyfgav0-Reg",
+          "url": "https://www.youtube.com/watch?v=dyfgav0-Reg&t=2562s",
+          "tijd": 2565,
+          "citaat": "give them nothing but heavy armor and a shield",
+          "extraCitaten": [
+            {
+              "tijd": 2573,
+              "citaat": "stand next to the unit so you don't ever get in combat"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-01-19",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [],
+  "overgeslagen": "Skipped introductions, Patreon and Discord promotion, edition history, balance proposals, character stat readouts, and rules explanations without advice. Omitted unclear Dwarf rune names around 12:35-14:30 and garbled item names in the defensive-loadout discussion. Omitted the confused Stomp examples around 38:54-39:18 and the unclear movement-spell name at 41:25. No supplied existing lesson gives the same recommendations.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

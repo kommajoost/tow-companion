@@ -1,0 +1,176 @@
+{
+  "videoId": "HOYnnBsOFl8",
+  "bronId": "yt-HOYnnBsOFl8",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T21:10:27.440Z",
+  "nieuw": [
+    {
+      "id": "kroxigor-mixed-skink-unit",
+      "titel": "Field Kroxigor inside a Skink Cohort",
+      "tekst": "Under Renegades 2.0, field Kroxigor inside a Skink Cohort rather than on their own. The speaker considers the mixed unit a competitive way to bring them back to the table.",
+      "waarom": "He explains that the Skinks protect the Kroxigor from being targeted and supply ranks and static combat resolution. The Kroxigor give the mixed unit powerful attacks that the cheaper infantry otherwise lacks.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "infantry"
+      ],
+      "leger": "lizardmen",
+      "units": [
+        "Kroxigor"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-HOYnnBsOFl8",
+          "url": "https://www.youtube.com/watch?v=HOYnnBsOFl8&t=1414s",
+          "tijd": 1417,
+          "citaat": "you can dust them off in the skink unit.",
+          "extraCitaten": [
+            {
+              "tijd": 852,
+              "citaat": "putting them in a unit, they don't get shot or targeted as easily."
+            },
+            {
+              "tijd": 894,
+              "citaat": "The mixed unit allows you to sort of plump out the ranks"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-09-21",
+      "markeringen": []
+    },
+    {
+      "id": "cohort-javelins-and-shields",
+      "titel": "Default to javelins and shields for the Skink Cohort",
+      "tekst": "When equipping a Skink Cohort under Renegades 2.0, the speaker favours javelins and shields as the default choice.",
+      "waarom": "He values the combination because the shields give the Skinks parry and the javelins give them poisoned shooting.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "infantry"
+      ],
+      "leger": "lizardmen",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-HOYnnBsOFl8",
+          "url": "https://www.youtube.com/watch?v=HOYnnBsOFl8&t=789s",
+          "tijd": 792,
+          "citaat": "Javelins and shields are fantastic",
+          "extraCitaten": [
+            {
+              "tijd": 800,
+              "citaat": "that's probably the default."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-09-21",
+      "markeringen": []
+    },
+    {
+      "id": "saurus-anvil-takes-charges",
+      "titel": "Consider Saurus Warriors for the anvil role",
+      "tekst": "Under Renegades 2.0, consider Saurus Warriors as an anvil that receives charges and hits back. In the speaker's comparison with the Skink Cohort, Saurus Warriors perform better when taking the charge.",
+      "waarom": "He credits their extra attacks when charged, toughness four and access to a three-plus parry save. He also values their ability to inflict wounds rather than relying entirely on static combat resolution.",
+      "voorbeeld": null,
+      "wanneerNiet": "He warns that their movement of four leaves them slow, even with Drilled.",
+      "fase": "combat",
+      "themas": [
+        "infantry"
+      ],
+      "leger": "lizardmen",
+      "units": [
+        "Saurus Warriors"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-HOYnnBsOFl8",
+          "url": "https://www.youtube.com/watch?v=HOYnnBsOFl8&t=1333s",
+          "tijd": 1336,
+          "citaat": "the Saurus could operate as more of an anvil",
+          "extraCitaten": [
+            {
+              "tijd": 1272,
+              "citaat": "better if they take the hit with those extra attacks."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-09-21",
+      "markeringen": []
+    },
+    {
+      "id": "cohort-raids-through-terrain",
+      "titel": "Use the Skink Cohort to raid through terrain",
+      "tekst": "Under Renegades 2.0, use the Skink Cohort as a raiding unit coming through trees or water. Look to get the charge, where the speaker finds it slightly better than comparable Saurus Warriors.",
+      "waarom": "He expects its movement of six and Move Through Cover to make getting the charge more likely.",
+      "voorbeeld": null,
+      "wanneerNiet": "He stresses that the difference between the two units is marginal; Saurus Warriors are better at receiving the charge.",
+      "fase": "movement",
+      "themas": [
+        "infantry"
+      ],
+      "leger": "lizardmen",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-HOYnnBsOFl8",
+          "url": "https://www.youtube.com/watch?v=HOYnnBsOFl8&t=1341s",
+          "tijd": 1344,
+          "citaat": "surprising raiding party coming through the trees or water feature",
+          "extraCitaten": [
+            {
+              "tijd": 1256,
+              "citaat": "the cohort is a little bit better if it can get the charge off"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-09-21",
+      "markeringen": []
+    },
+    {
+      "id": "jungle-swarms-disposable-anvil",
+      "titel": "Consider Jungle Swarms as a disposable anvil",
+      "tekst": "Under Renegades 2.0, consider Jungle Swarms for a disposable anvil role. The speaker thinks they are quite good at that job.",
+      "waarom": "He thinks the increased cost of Skink Skirmishers makes Jungle Swarms more worth considering.",
+      "voorbeeld": null,
+      "wanneerNiet": "He still rates them the weakest of the five core choices.",
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": "lizardmen",
+      "units": [
+        "Jungle Swarms"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-HOYnnBsOFl8",
+          "url": "https://www.youtube.com/watch?v=HOYnnBsOFl8&t=1397s",
+          "tijd": 1400,
+          "citaat": "jungle swarms as a little bit of a throwaway anvil",
+          "extraCitaten": [
+            {
+              "tijd": 1409,
+              "citaat": "even if they're the worst out of the five core units I'd say."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-09-21",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [],
+  "overgeslagen": "Skipped personal history, hobby and aesthetic discussion, channel promotion, tournament results, general balance commentary, proposed rules changes, and stat or formation readouts without a clear tactical recommendation. Unclear caption fragments were not used. All extracted advice is conditional on the Renegades 2.0 rules discussed in the video.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

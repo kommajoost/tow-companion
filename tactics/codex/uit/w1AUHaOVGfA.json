@@ -1,0 +1,257 @@
+{
+  "videoId": "w1AUHaOVGfA",
+  "bronId": "yt-w1AUHaOVGfA",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T21:42:50.778Z",
+  "nieuw": [
+    {
+      "id": "chaos-core-choose-focus",
+      "titel": "Choose one core focus and support it",
+      "tekst": "Build Warriors of Chaos core around one chosen direction, then support it with the rest of the army. At 2,000 points, he thinks 500 points of core cannot deliver what you want from several different core units at once.",
+      "waarom": "He says the core choices become expensive quickly, even Marauders with basic upgrades, and unfocused core accomplishes little. He sees Warriors of Chaos more as an elite army than a horde.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": "warriors-of-chaos",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-w1AUHaOVGfA",
+          "url": "https://www.youtube.com/watch?v=w1AUHaOVGfA&t=367s",
+          "tijd": 370,
+          "citaat": "pick one and then you're going to have to support it.",
+          "extraCitaten": [
+            {
+              "tijd": 606,
+              "citaat": "500 points in core and get what you want uh from more than one unit."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-01-21",
+      "markeringen": []
+    },
+    {
+      "id": "consider-larger-forsaken-unit",
+      "titel": "Consider a larger unit of Forsaken",
+      "tekst": "He thinks a larger unit of Forsaken is worth considering and is being overlooked.",
+      "waarom": "He calls Forsaken probably the most efficient core unit point for point. He highlights their five-plus ward, D3 attacks, Stubborn, good mutations, access to Swiftstride and First Charge.",
+      "voorbeeld": null,
+      "wanneerNiet": "He says finding room for ten or more and keeping ten alive to score objectives has become harder.",
+      "fase": "army-building",
+      "themas": [
+        "infantry"
+      ],
+      "leger": "warriors-of-chaos",
+      "units": [
+        "Forsaken"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-w1AUHaOVGfA",
+          "url": "https://www.youtube.com/watch?v=w1AUHaOVGfA&t=838s",
+          "tijd": 841,
+          "citaat": "people sleep on a bigger unit of forsaken might not be so bad as well.",
+          "extraCitaten": [
+            {
+              "tijd": 796,
+              "citaat": "Forsaken are point for point probably the most efficient core unit there is"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-01-21",
+      "markeringen": []
+    },
+    {
+      "id": "chaos-warriors-defensive-attrition",
+      "titel": "Use Chaos Warriors primarily for defensive attrition",
+      "tekst": "Treat Chaos Warriors primarily as an attrition or anvil unit rather than expecting them to be a dedicated hammer. Use them to occupy the centre and contest objectives while powerful characters and special or rare units operate on the flanks.",
+      "waarom": "He says their toughness, parry save and infantry combat resolution make them hard to beat, while leadership eight means they fall back in good order more often than they flee.",
+      "voorbeeld": null,
+      "wanneerNiet": "He says you pay extra for their flexibility: Marauders provide combat resolution more cheaply, Forsaken are more efficient point for point, and Chaos Knights are more likely to break enemies in combat.",
+      "fase": "movement",
+      "themas": [
+        "infantry",
+        "game-plan"
+      ],
+      "leger": "warriors-of-chaos",
+      "units": [
+        "Chaos Warriors"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-w1AUHaOVGfA",
+          "url": "https://www.youtube.com/watch?v=w1AUHaOVGfA&t=898s",
+          "tijd": 901,
+          "citaat": "I think they're actually more of an attrition or even an anvil piece",
+          "extraCitaten": [
+            {
+              "tijd": 1020,
+              "citaat": "piece that can sit in the middle of the board, try to contest scoring objectives"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-01-21",
+      "markeringen": []
+    },
+    {
+      "id": "chaos-warriors-shields-great-weapons",
+      "titel": "Equip Chaos Warriors with shields and great weapons",
+      "tekst": "Give Chaos Warriors both shields and great weapons so you can choose how to fight the opponent in front of you. He describes switching between strength-six attacks and the defensive toughness-four, three-plus-save option, with great weapons offering a chance to kill something big that attacks them.",
+      "waarom": "He values paying for the ability to choose between a fully defensive approach and hitting back harder during the game.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "infantry"
+      ],
+      "leger": "warriors-of-chaos",
+      "units": [
+        "Chaos Warriors"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-w1AUHaOVGfA",
+          "url": "https://www.youtube.com/watch?v=w1AUHaOVGfA&t=993s",
+          "tijd": 996,
+          "citaat": "buying shields, buying great weapons",
+          "extraCitaten": [
+            {
+              "tijd": 1054,
+              "citaat": "decide whether to go full defensive"
+            },
+            {
+              "tijd": 1062,
+              "citaat": "six attacks or you can revert to your toughness four three plus save."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-01-21",
+      "markeringen": []
+    },
+    {
+      "id": "warriors-monster-hunter-tapestry",
+      "titel": "Consider the Monster Hunter Tapestry for Chaos Warriors",
+      "tekst": "He favours a magic standard such as the Monster Hunter Tapestry for Chaos Warriors to protect them from being smashed head-on by dragons or even Dragon Ogres.",
+      "waarom": null,
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "infantry",
+        "matchups"
+      ],
+      "leger": "warriors-of-chaos",
+      "units": [
+        "Chaos Warriors"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-w1AUHaOVGfA",
+          "url": "https://www.youtube.com/watch?v=w1AUHaOVGfA&t=1000s",
+          "tijd": 1003,
+          "citaat": "I tend to like something like the Monster Hunter Tapestry",
+          "extraCitaten": [
+            {
+              "tijd": 1010,
+              "citaat": "not just dragons, but even things like dragon ogres."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-01-21",
+      "markeringen": []
+    },
+    {
+      "id": "central-warriors-foot-wizard-bunker",
+      "titel": "Use central Chaos Warriors as a foot wizard bunker",
+      "tekst": "If taking a wizard on foot, consider putting him in a Chaos Warriors unit in the centre of the board.",
+      "waarom": "He considers this one of the few places where a foot wizard works and says the central position maximises his spell range.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "infantry",
+        "game-plan"
+      ],
+      "leger": "warriors-of-chaos",
+      "units": [
+        "Chaos Warriors"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-w1AUHaOVGfA",
+          "url": "https://www.youtube.com/watch?v=w1AUHaOVGfA&t=1067s",
+          "tijd": 1070,
+          "citaat": "it definitely works in this sort of unit"
+        }
+      ],
+      "datum": "2026-01-21",
+      "markeringen": []
+    },
+    {
+      "id": "warriors-bunker-wizard-daemonology",
+      "titel": "Favour Daemonology for the central Warriors wizard",
+      "tekst": "For the foot wizard in his central Chaos Warriors unit, he typically chooses Daemonology for its flexibility.",
+      "waarom": "He says most of its spells do something useful.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": "warriors-of-chaos",
+      "units": [
+        "Chaos Warriors"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-w1AUHaOVGfA",
+          "url": "https://www.youtube.com/watch?v=w1AUHaOVGfA&t=1074s",
+          "tijd": 1077,
+          "citaat": "typically take the flexible Daemonology option",
+          "extraCitaten": [
+            {
+              "tijd": 1085,
+              "citaat": "most of the spells do something"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-01-21",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "warriors-beginner-direct-combat",
+      "bron": {
+        "bronId": "yt-w1AUHaOVGfA",
+        "url": "https://www.youtube.com/watch?v=w1AUHaOVGfA&t=1315s",
+        "tijd": 1318,
+        "citaat": "I would really highly recommend warriors.",
+        "extraCitaten": [
+          {
+            "tijd": 1180,
+            "citaat": "they're really straightforward army"
+          }
+        ]
+      },
+      "waarom": "He finds them straightforward in a complex game: they can march forward, zone and divert enemies, and line up advantageous charges. In combat, he values their staying power from toughness and armour alongside hard-hitting attacks.",
+      "toelichting": "He again recommends Warriors of Chaos to beginners because they offer straightforward play and durable, hard-hitting combat troops."
+    }
+  ],
+  "overgeslagen": "Skipped collecting anecdotes, sponsorship and product promotion, rumours and channel plans; archetype definitions without concrete recommendations; Chaos Knights and Marauder statistics and open questions about builds; and the unclear attrition explanation around 8:04.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

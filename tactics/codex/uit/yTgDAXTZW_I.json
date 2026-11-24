@@ -1,0 +1,151 @@
+{
+  "videoId": "yTgDAXTZW_I",
+  "bronId": "yt-yTgDAXTZW_I",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T22:25:44.886Z",
+  "nieuw": [
+    {
+      "id": "impassable-safe-advance-lanes",
+      "titel": "Use impassable terrain to create safe lanes for advancing",
+      "tekst": "Use impassable terrain to create a lane where a unit can attack, advance after winning combat and escape an enemy charge on the following turn.",
+      "waarom": "He values being able to keep moving forward after winning a combat while the terrain protects the unit from a counterattack.",
+      "voorbeeld": "His Mortis Engine fitted into a narrow pocket beside the Herdstone, where he found its unusual base size a major advantage.",
+      "wanneerNiet": "He was unsure whether any other base size could have fitted into that pocket.",
+      "fase": "movement",
+      "themas": [
+        "shooting-terrain",
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-yTgDAXTZW_I",
+          "url": "https://www.youtube.com/watch?v=yTgDAXTZW_I&t=960s",
+          "tijd": 963,
+          "citaat": "you can create a lane for your unit to surge forward and then escape"
+        }
+      ],
+      "datum": "2025-10-06",
+      "markeringen": []
+    },
+    {
+      "id": "impassable-limit-enemy-frontage",
+      "titel": "Use impassable terrain to restrict enemy frontage",
+      "tekst": "Try to hem advancing enemy units in against impassable terrain and limit the frontage they can use.",
+      "waarom": "He says restricting frontage makes it awkward for the enemy to move and limits their options.",
+      "voorbeeld": "He consciously tried to limit the frontage of the opposing Dragon Ogres as they advanced across the board.",
+      "wanneerNiet": "He warns that terrain used to block line of sight or maintain control of a position can also hem in your own units.",
+      "fase": "movement",
+      "themas": [
+        "shooting-terrain",
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-yTgDAXTZW_I",
+          "url": "https://www.youtube.com/watch?v=yTgDAXTZW_I&t=992s",
+          "tijd": 995,
+          "citaat": "limit his frontage",
+          "extraCitaten": [
+            {
+              "tijd": 1020,
+              "citaat": "ham your opponent in and limit their options."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-10-06",
+      "markeringen": []
+    },
+    {
+      "id": "impassable-disrupt-skirmisher-forming",
+      "titel": "Attack skirmishers where terrain obstructs forming ranks",
+      "tekst": "Look for a charge into one side of a large skirmishing unit where impassable terrain prevents models from reaching the rear ranks when forming up. He recommends exploiting this vulnerability to remove skirmishers.",
+      "waarom": "He identifies coherency as a weakness of large skirmishing units. In his game, moving around the impassable terrain used more distance than some models could cover when forming ranks.",
+      "voorbeeld": "His Mortis Engine charged beside the Herdstone, and about half the opposing skirmishing unit died because it could not form up around the terrain.",
+      "wanneerNiet": "His event's judge required the models to form ranks and fit through the gap rather than scatter around the terrain; that ruling determined which models could reach their positions.",
+      "fase": "movement",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-yTgDAXTZW_I",
+          "url": "https://www.youtube.com/watch?v=yTgDAXTZW_I&t=1033s",
+          "tijd": 1036,
+          "citaat": "if you can hit them on one side",
+          "extraCitaten": [
+            {
+              "tijd": 387,
+              "citaat": "they have to go around this impossible terrain and that's measurable distance"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-10-06",
+      "markeringen": []
+    },
+    {
+      "id": "impassable-shorten-enemy-retreats",
+      "titel": "Use impassable terrain to shorten enemy retreats",
+      "tekst": "Try to force enemies to flee towards impassable terrain so they cannot escape as far and are easier to catch. He suggests terrain-creating spells can make this easier to arrange.",
+      "waarom": "He argues that even if the fleeing unit is allowed to snake around the obstacle, moving sideways costs movement rather than increasing its distance from pursuers.",
+      "voorbeeld": "His opponent's Black Orc Mob had to flee towards impassable terrain. The judge ruled that it could not pivot to move away, and his Grave Guard caught it in pursuit.",
+      "wanneerNiet": "He acknowledges that other players may disagree with the ruling that the fleeing unit could not move at all.",
+      "fase": "movement",
+      "themas": [
+        "shooting-terrain",
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-yTgDAXTZW_I",
+          "url": "https://www.youtube.com/watch?v=yTgDAXTZW_I&t=1078s",
+          "tijd": 1081,
+          "citaat": "reduce their ability to flee around those types",
+          "extraCitaten": [
+            {
+              "tijd": 803,
+              "citaat": "it's going to cost him movement to move sideways."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-10-06",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "control-spells-block-lanes",
+      "bron": {
+        "bronId": "yt-yTgDAXTZW_I",
+        "url": "https://www.youtube.com/watch?v=yTgDAXTZW_I&t=228s",
+        "tijd": 231,
+        "citaat": "that crystal column blocked all line of sight",
+        "extraCitaten": [
+          {
+            "tijd": 631,
+            "citaat": "to put it in that gap to give me another turn of battle points."
+          }
+        ]
+      },
+      "voorbeeld": "He tried to bridge a gap between terrain pieces with Crystal Column to block the magic-missile firing lane to his Terrorgheist, but his opponent dispelled it. In another game, he wanted Crystal Column in a gap to delay a charge and gain another turn of objective points.",
+      "toelichting": "Using Crystal Column to obstruct firing and charging lanes is the same recommendation as using control spells to block those lanes."
+    }
+  ],
+  "overgeslagen": "Skipped sponsorship, channel and tournament news, results, general rules commentary and garbled unit or character names. Kept the event-specific rulings qualified rather than presenting them as universal rules.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

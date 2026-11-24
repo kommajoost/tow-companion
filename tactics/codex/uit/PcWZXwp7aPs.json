@@ -1,0 +1,277 @@
+{
+  "videoId": "PcWZXwp7aPs",
+  "bronId": "yt-PcWZXwp7aPs",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T22:21:40.985Z",
+  "nieuw": [
+    {
+      "id": "baggage-placement-after-opponent",
+      "titel": "See the enemy baggage placement before choosing yours",
+      "tekst": "Prefer seeing where the opponent puts their baggage train before choosing the position of your own.",
+      "waarom": null,
+      "voorbeeld": "After his opponent placed the baggage train behind impassable terrain, he chose the extreme corner for his own. He says that if the opponent had chosen that corner, he would have been happy on the other side; against a central placement, either side would have suited him.",
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-PcWZXwp7aPs",
+          "url": "https://www.youtube.com/watch?v=PcWZXwp7aPs&t=232s",
+          "tijd": 235,
+          "citaat": "wanted to see where they put theirs",
+          "extraCitaten": [
+            {
+              "tijd": 242,
+              "citaat": "I go for the extreme corner"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-10-31",
+      "markeringen": []
+    },
+    {
+      "id": "vampire-force-necromancer-range",
+      "titel": "Keep the Vampire Counts force within necromancer support",
+      "tekst": "Avoid spreading the main Vampire Counts force widely when attacking a baggage train. Keep it together for the necromancer's restoration and movement support.",
+      "waarom": "He says Vampire Counts can become stretched in this scenario, and their units generally cannot operate independently. In his view, the necromancer's bubble is important for restoring models and getting the force moving.",
+      "voorbeeld": "He planned to deploy his main force in one corner and move slowly across if he failed to cast his movement spell.",
+      "wanneerNiet": "He identifies the Black Coach as a unit that can operate independently.",
+      "fase": "deployment",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": "vampire-counts",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-PcWZXwp7aPs",
+          "url": "https://www.youtube.com/watch?v=PcWZXwp7aPs&t=302s",
+          "tijd": 305,
+          "citaat": "You cannot run wide like you can with some fast armies",
+          "extraCitaten": [
+            {
+              "tijd": 312,
+              "citaat": "units can't really operate independently"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-10-31",
+      "markeringen": []
+    },
+    {
+      "id": "ethereal-coach-shields-bats",
+      "titel": "Shield approaching Fell Bats with an Ethereal Black Coach",
+      "tekst": "When enemy shooting cannot hurt the Ethereal Black Coach, position it to shield the Fell Bats as both approach the baggage train.",
+      "waarom": "He wanted to keep the Fell Bats from being shot. He says the Ethereal Black Coach could take no damage from the shooting in that position.",
+      "voorbeeld": "He reoriented the Black Coach to protect the Fell Bats from the Leadbelchers, setting up both units to move onto the objective the following turn.",
+      "wanneerNiet": "He notes that the Black Coach was no longer Ethereal after making its charge onto the baggage train.",
+      "fase": "movement",
+      "themas": [
+        "shooting-terrain",
+        "game-plan"
+      ],
+      "leger": "vampire-counts",
+      "units": [
+        "Black Coach",
+        "Fell Bats"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-PcWZXwp7aPs",
+          "url": "https://www.youtube.com/watch?v=PcWZXwp7aPs&t=793s",
+          "tijd": 796,
+          "citaat": "So I position the ethereal black coach to",
+          "extraCitaten": [
+            {
+              "tijd": 804,
+              "citaat": "protect those bats"
+            },
+            {
+              "tijd": 819,
+              "citaat": "being ethereal, he can't take any damage from there"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-10-31",
+      "markeringen": []
+    },
+    {
+      "id": "attack-weaker-baggage-side",
+      "titel": "Attack the weaker side of the baggage train",
+      "tekst": "As a default plan for attacking a baggage train, try to approach its weaker side if you can.",
+      "waarom": null,
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "scenarios",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-PcWZXwp7aPs",
+          "url": "https://www.youtube.com/watch?v=PcWZXwp7aPs&t=952s",
+          "tijd": 955,
+          "citaat": "the weaker side of the baggage train if you can"
+        }
+      ],
+      "datum": "2025-10-31",
+      "markeringen": []
+    },
+    {
+      "id": "mobile-baggage-train-attackers",
+      "titel": "Bring highly mobile units to attack baggage trains",
+      "tekst": "Include highly mobile units for attacking the enemy baggage train. He considers them critical to reaching it.",
+      "waarom": "He points out how far back on the board the baggage train can be placed.",
+      "voorbeeld": "His attack used a flying Black Coach and Fell Bats working together to reach the enemy baggage train.",
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-PcWZXwp7aPs",
+          "url": "https://www.youtube.com/watch?v=PcWZXwp7aPs&t=969s",
+          "tijd": 972,
+          "citaat": "you are going to need highly mobile units. They're critical"
+        }
+      ],
+      "datum": "2025-10-31",
+      "markeringen": []
+    },
+    {
+      "id": "two-units-baggage-contact",
+      "titel": "Get two units into contact with the baggage train",
+      "tekst": "Try to reach the baggage train with two units in base contact together, rather than relying on one attacker.",
+      "waarom": "He says two units in contact are very difficult to drive away.",
+      "voorbeeld": "He brought both the Black Coach and Fell Bats into contact. His opponent killed two bats, but the Black Coach remained to destroy the baggage train.",
+      "wanneerNiet": null,
+      "fase": "scenarios",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-PcWZXwp7aPs",
+          "url": "https://www.youtube.com/watch?v=PcWZXwp7aPs&t=984s",
+          "tijd": 987,
+          "citaat": "Getting two units in base to base is critical.",
+          "extraCitaten": [
+            {
+              "tijd": 987,
+              "citaat": "If you can get two, it's very difficult to drive them away."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-10-31",
+      "markeringen": []
+    },
+    {
+      "id": "army-plan-every-mission",
+      "titel": "Build a tournament army with a plan for every mission",
+      "tekst": "When preparing a tournament army, make sure it can play each mission well and has a strategy for each one.",
+      "waarom": "He says scenario games require different tactics and strategies, and that Baggage Train diverges more widely from other scenarios.",
+      "voorbeeld": "For an event using Domination and Baggage Train, he wanted two Fell Bat units for their unit strength in Domination and their flying, all-round vision in Baggage Train.",
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-PcWZXwp7aPs",
+          "url": "https://www.youtube.com/watch?v=PcWZXwp7aPs&t=944s",
+          "tijd": 947,
+          "citaat": "can play each of the missions well and it has some sort of strategy"
+        }
+      ],
+      "datum": "2025-10-31",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "fell-bats-scenario-pairs",
+      "bron": {
+        "bronId": "yt-PcWZXwp7aPs",
+        "url": "https://www.youtube.com/watch?v=PcWZXwp7aPs&t=151s",
+        "tijd": 154,
+        "citaat": "I wanted two units of felbats",
+        "extraCitaten": [
+          {
+            "tijd": 162,
+            "citaat": "each for domination. And for this baggage train, they are flyers"
+          }
+        ]
+      },
+      "voorbeeld": "He used Fell Bats alongside a Black Coach to attack the baggage train. Both reached base contact, and the Black Coach remained to destroy it after his opponent killed two bats.",
+      "toelichting": "He again recommends two Fell Bat units specifically for Domination and Baggage Train."
+    },
+    {
+      "lesId": "chaff-scouts-deployment",
+      "bron": {
+        "bronId": "yt-PcWZXwp7aPs",
+        "url": "https://www.youtube.com/watch?v=PcWZXwp7aPs&t=394s",
+        "tijd": 397,
+        "citaat": "one of the ways I do that is by putting the fell bats down first."
+      },
+      "toelichting": "He uses early chaff drops to conceal his intended deployment before placing his important units."
+    },
+    {
+      "lesId": "shelter-monsters-from-cannons",
+      "bron": {
+        "bronId": "yt-PcWZXwp7aPs",
+        "url": "https://www.youtube.com/watch?v=PcWZXwp7aPs&t=511s",
+        "tijd": 514,
+        "citaat": "this black coach could start behind the hill,",
+        "extraCitaten": [
+          {
+            "tijd": 521,
+            "citaat": "so avoid getting hit by the D3 plus one cannon"
+          }
+        ]
+      },
+      "toelichting": "He deploys the Black Coach behind a hill to protect it from the enemy cannon."
+    },
+    {
+      "lesId": "decline-charges-for-better-engagements",
+      "bron": {
+        "bronId": "yt-PcWZXwp7aPs",
+        "url": "https://www.youtube.com/watch?v=PcWZXwp7aPs&t=766s",
+        "tijd": 769,
+        "citaat": "I don't want to take any risks here. I could wheel it around,",
+        "extraCitaten": [
+          {
+            "tijd": 790,
+            "citaat": "I just reorient everything, take my time."
+          }
+        ]
+      },
+      "voorbeeld": "Near the baggage train, he chose to reorient the Black Coach and Fell Bats instead of attempting combat immediately. He feared being charged by the Gnoblars and losing, so he protected the bats and prepared both units to reach the objective next turn.",
+      "toelichting": "He passes up an immediate combat opportunity to reposition for a safer engagement on the following turn."
+    }
+  ],
+  "overgeslagen": "Skipped sponsor and channel material, scenario opinions and scoring readouts without advice, spell and combat narration without a clear recommendation, and garbled passages about the opening scoring plan, spell names and Leadbelcher damage.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

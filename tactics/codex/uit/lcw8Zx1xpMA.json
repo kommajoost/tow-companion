@@ -1,0 +1,326 @@
+{
+  "videoId": "lcw8Zx1xpMA",
+  "bronId": "yt-lcw8Zx1xpMA",
+  "model": "GPT-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T21:30:46.968Z",
+  "nieuw": [
+    {
+      "id": "concentrate-points-death-star",
+      "titel": "Prefer a Death Star to several medium units",
+      "tekst": "For competitive play, he recommends concentrating points in one large, durable unit rather than distributing them across medium units. Stack unit-wide buffs on it and make it hard for the opponent to claim its points.",
+      "waarom": "He argues that medium units are too expensive to sacrifice but too small to hold a fight. Buffs benefit the whole large unit, and surviving models preserve its points. He also values having fewer separate panic, terror and other risk rolls.",
+      "voorbeeld": null,
+      "wanneerNiet": "He acknowledges that coordinated medium units can sometimes win, but considers them harder to play.",
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-lcw8Zx1xpMA",
+          "url": "https://www.youtube.com/watch?v=lcw8Zx1xpMA&t=916s",
+          "tijd": 919,
+          "citaat": "the best way to play is to have a unit that can't get killed.",
+          "extraCitaten": [
+            {
+              "tijd": 195,
+              "citaat": "if you form a big unit, a lot of the things like buffs compound."
+            },
+            {
+              "tijd": 54,
+              "citaat": "you've got to understand that medium units are a trap."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-03-30",
+      "markeringen": []
+    },
+    {
+      "id": "dragon-hunt-largest-vulnerable-unit",
+      "titel": "Hunt the largest vulnerable unit with your dragon",
+      "tekst": "Use a dragon to hunt the biggest enemy unit vulnerable to its strength six or seven and toughness six in combat. He identifies heavy cavalry, elite heavy infantry and exposed characters as possible targets.",
+      "waarom": "He says picking up 200 to 300 points through one favourable fight can be enough to win the game.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "matchups",
+        "hammers"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-lcw8Zx1xpMA",
+          "url": "https://www.youtube.com/watch?v=lcw8Zx1xpMA&t=63s",
+          "tijd": 66,
+          "citaat": "you want to run around and hunt the biggest unit",
+          "extraCitaten": [
+            {
+              "tijd": 81,
+              "citaat": "maybe a heavy cavalry unit, an elite heavy infantry unit"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-03-30",
+      "markeringen": []
+    },
+    {
+      "id": "grave-guard-battle-lust-mirror",
+      "titel": "Consider Dark Magic for Grave Guard mirror fights",
+      "tekst": "He thinks the best Grave Guard Death Star lists used Dark Magic for access to Battle Lust. Use its frenzy and hatred to help win fights against another such infantry block.",
+      "waarom": "He says the Vampire Counts Battle Lust setup was designed to win the mirror matchup.",
+      "voorbeeld": null,
+      "wanneerNiet": "He notes that the unit's hitting power depends on getting the Dark Magic spell off.",
+      "fase": "army-building",
+      "themas": [
+        "infantry",
+        "matchups"
+      ],
+      "leger": "vampire-counts",
+      "units": [
+        "Grave Guard"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-lcw8Zx1xpMA",
+          "url": "https://www.youtube.com/watch?v=lcw8Zx1xpMA&t=396s",
+          "tijd": 399,
+          "citaat": "the best best list in the end were running dark magic",
+          "extraCitaten": [
+            {
+              "tijd": 407,
+              "citaat": "battle lust to give the unit frenzy and hatred."
+            },
+            {
+              "tijd": 637,
+              "citaat": "that dark magic battle lust thing with vampires was initially designed to do."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-03-30",
+      "markeringen": []
+    },
+    {
+      "id": "gor-death-star-infantry-choice",
+      "titel": "Consider a Gor Death Star for competitive infantry",
+      "tekst": "For a competitive infantry army built around a Death Star, he recommends Beastmen and particularly the Wild Herd Gor block. He considers this a stronger contender than the Vampire Counts Grave Guard block.",
+      "waarom": "He argues that the Gor block can absorb casualties, deliver damage and support magic missiles. His example of up to 60 Gor retains its maximum rank bonus even after substantial losses.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "infantry",
+        "game-plan"
+      ],
+      "leger": "beastmen-brayherds",
+      "units": [
+        "Gor Herd"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-lcw8Zx1xpMA",
+          "url": "https://www.youtube.com/watch?v=lcw8Zx1xpMA&t=752s",
+          "tijd": 755,
+          "citaat": "you want to play infantry in the old world, this is the way to go.",
+          "extraCitaten": [
+            {
+              "tijd": 356,
+              "citaat": "I want to make the argument here that beastmen are the best at this."
+            },
+            {
+              "tijd": 448,
+              "citaat": "up to 60 gauze, for example, you've got so many models"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-03-30",
+      "markeringen": []
+    },
+    {
+      "id": "death-star-missile-support",
+      "titel": "Give your Death Star army magic missile support",
+      "tekst": "Include magic missiles to deal with enemies that avoid your Death Star. Use them to pick off key targets, including chaff or unbreakable units that get in its way.",
+      "waarom": "He calls enemies simply running away the biggest threat to a Death Star. He values magic missiles because they hit automatically.",
+      "voorbeeld": null,
+      "wanneerNiet": "He notes that magic resistance can be present in these matchups.",
+      "fase": "army-building",
+      "themas": [
+        "game-plan",
+        "chaff"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-lcw8Zx1xpMA",
+          "url": "https://www.youtube.com/watch?v=lcw8Zx1xpMA&t=664s",
+          "tijd": 667,
+          "citaat": "The way to catch those units is to have magic missiles.",
+          "extraCitaten": [
+            {
+              "tijd": 706,
+              "citaat": "you've just got to be able to pick off key targets."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-03-30",
+      "markeringen": []
+    },
+    {
+      "id": "vile-tide-large-wound-targets",
+      "titel": "Use Vile Tide against large targets with many wounds",
+      "tekst": "Use Vile Tide against targets with many wounds and toughness six or below. He rates it highly for bringing down those targets.",
+      "waarom": null,
+      "voorbeeld": "He names a Hell Pit Abomination as a suitable target.",
+      "wanneerNiet": null,
+      "fase": "magic-shooting",
+      "themas": [
+        "matchups"
+      ],
+      "leger": "beastmen-brayherds",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-lcw8Zx1xpMA",
+          "url": "https://www.youtube.com/watch?v=lcw8Zx1xpMA&t=712s",
+          "tijd": 715,
+          "citaat": "vile tide is excellent at taking down big targets like Hell Pit abominations",
+          "extraCitaten": [
+            {
+              "tijd": 723,
+              "citaat": "anything toughness six or below that has a lot of wounds."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-03-30",
+      "markeringen": []
+    },
+    {
+      "id": "summoning-pick-off-light-cavalry",
+      "titel": "Use The Summoning to pick off evasive light cavalry",
+      "tekst": "Use The Summoning to pick off light cavalry that can run away from your Death Star and score points against you.",
+      "waarom": null,
+      "voorbeeld": "He gives Glade Riders as an example of a target.",
+      "wanneerNiet": null,
+      "fase": "magic-shooting",
+      "themas": [
+        "matchups",
+        "game-plan"
+      ],
+      "leger": "beastmen-brayherds",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-lcw8Zx1xpMA",
+          "url": "https://www.youtube.com/watch?v=lcw8Zx1xpMA&t=720s",
+          "tijd": 723,
+          "citaat": "the summoning can be there to pick off",
+          "extraCitaten": [
+            {
+              "tijd": 731,
+              "citaat": "cavalry that can run away and score points from you."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-03-30",
+      "markeringen": []
+    },
+    {
+      "id": "central-anvil-all-round-wings",
+      "titel": "Support a central anvil with all-round movement on the wings",
+      "tekst": "He considers a large central anvil supported by units with 360-degree movement on the wings the default setup most armies should aim for.",
+      "waarom": null,
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "flanks",
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-lcw8Zx1xpMA",
+          "url": "https://www.youtube.com/watch?v=lcw8Zx1xpMA&t=810s",
+          "tijd": 813,
+          "citaat": "anvil with 360 movement guys on the wings",
+          "extraCitaten": [
+            {
+              "tijd": 813,
+              "citaat": "the default most army should aim for."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-03-30",
+      "markeringen": []
+    },
+    {
+      "id": "beastmen-death-star-chaff-wings",
+      "titel": "Support a Beastmen Death Star with chaff on the wings",
+      "tekst": "When supporting a Beastmen Death Star, look to chaff for the wings.",
+      "waarom": "He says Beastmen lack the 360-degree movement options he recommends for other armies, but have better Death Star options.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "chaff",
+        "flanks"
+      ],
+      "leger": "beastmen-brayherds",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-lcw8Zx1xpMA",
+          "url": "https://www.youtube.com/watch?v=lcw8Zx1xpMA&t=819s",
+          "tijd": 822,
+          "citaat": "If it's beastman specifically you're looking more at chaff.",
+          "extraCitaten": [
+            {
+              "tijd": 829,
+              "citaat": "those options 360, but your death star options are a lot better than other people."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-03-30",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "anchor-static-combat-resolution",
+      "bron": {
+        "bronId": "yt-lcw8Zx1xpMA",
+        "url": "https://www.youtube.com/watch?v=lcw8Zx1xpMA&t=461s",
+        "tijd": 464,
+        "citaat": "to get that plus six from close order, masked infantry, plus three horde ranks",
+        "extraCitaten": [
+          {
+            "tijd": 473,
+            "citaat": "is critical."
+          }
+        ]
+      },
+      "toelichting": "He likewise recommends building an infantry anchor to six static combat resolution, here discussing the Gor block."
+    }
+  ],
+  "overgeslagen": "Skipped promotional material, general rules commentary without a distinct recommendation, and speculative Dwarf unit choices. Omitted the garbled Beastmen equipment and spell-name passages around 8:36-10:52 rather than reconstructing item names or combinations.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

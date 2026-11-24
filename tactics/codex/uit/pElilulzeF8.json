@@ -1,0 +1,1473 @@
+{
+  "videoId": "pElilulzeF8",
+  "bronId": "yt-pElilulzeF8",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T22:43:07.716Z",
+  "nieuw": [
+    {
+      "id": "thin-formations-against-bombing",
+      "titel": "Use thin formations to reduce bombing-run casualties",
+      "tekst": "Against Sky Lanterns, use long lines or marching columns rather than square blocks. Use Drilled where available to change formation; consider advancing in marching column against a gunline without a threatening charge.",
+      "waarom": "He says a large blast can hit an entire five-by-five block, whereas a thin formation takes fewer hits.",
+      "voorbeeld": null,
+      "wanneerNiet": "His suggestion to advance in marching column assumes there is no enemy charge threat that concerns the unit.",
+      "fase": "movement",
+      "themas": [
+        "shooting-terrain",
+        "infantry"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-pElilulzeF8",
+          "url": "https://www.youtube.com/watch?v=pElilulzeF8&t=280s",
+          "tijd": 283,
+          "citaat": "marching column is just as good as being in a long line.",
+          "extraCitaten": [
+            {
+              "tijd": 296,
+              "citaat": "you might as well just go into marching column"
+            },
+            {
+              "tijd": 305,
+              "citaat": "The worst thing you can do is be five models wide, five models deep."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-10-02",
+      "markeringen": []
+    },
+    {
+      "id": "stone-throwers-against-lanterns",
+      "titel": "Consider stone throwers rather than relying only on cannons",
+      "tekst": "He considers stone throwers more effective than cannons at hitting and damaging Sky Lanterns. Include them as an answer to Lanterns that manoeuvre around cannon shots or hide behind terrain.",
+      "waarom": "He says the large base makes a central template hit easier, indirect fire reaches hidden targets, and a Lantern can invalidate a cannon shot by moving near friendly troops.",
+      "voorbeeld": "In the Dwarf comparison, he points out that a Grudge Thrower inflicts D3 plus one wounds, compared with a cannon's D3.",
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "matchups",
+        "shooting-terrain"
+      ],
+      "leger": null,
+      "units": [
+        "Sky Lantern"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-pElilulzeF8",
+          "url": "https://www.youtube.com/watch?v=pElilulzeF8&t=399s",
+          "tijd": 402,
+          "citaat": "actually more effective at at damaging and hitting sky lanterns um than actually cannons are.",
+          "extraCitaten": [
+            {
+              "tijd": 395,
+              "citaat": "have indirect fire to shoot at it."
+            },
+            {
+              "tijd": 408,
+              "citaat": "the cannon does D3 wounds and the grudge thrower does D3 plus one."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-10-02",
+      "markeringen": []
+    },
+    {
+      "id": "rangers-skirmish-versus-cathay",
+      "titel": "Deploy Rangers in skirmish against Cathay",
+      "tekst": "Against Cathay, he would deploy Rangers in skirmish even in a unit of around 18 models. Prioritise reducing shooting damage over keeping every model ready to fight if charged.",
+      "waarom": "He expects shooting to hurt more than losing some models' participation in combat. He says skirmish gives a hit penalty against Dragonfire Bombs and reduces bombing-run hits.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [
+        "Rangers"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-pElilulzeF8",
+          "url": "https://www.youtube.com/watch?v=pElilulzeF8&t=504s",
+          "tijd": 507,
+          "citaat": "Even if there's like 18 guys in the unit, still skirmish",
+          "extraCitaten": [
+            {
+              "tijd": 521,
+              "citaat": "I'm in skirmish and now I'm minus one to hit from dragonfire bombs."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-10-02",
+      "markeringen": []
+    },
+    {
+      "id": "spread-skirmishers-with-casualties",
+      "titel": "Remove casualties to reduce the next bombing run's hits",
+      "tekst": "When two Sky Lanterns bomb the same skirmishing unit, choose casualties from the first run to spread the surviving models out. He uses this after charges have already been resolved, when immediate combat coherency is no longer his concern.",
+      "waarom": "He found the second bombing run then hit fewer models.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-pElilulzeF8",
+          "url": "https://www.youtube.com/watch?v=pElilulzeF8&t=529s",
+          "tijd": 532,
+          "citaat": "I can remove models that help kind of spread my skirmishers out",
+          "extraCitaten": [
+            {
+              "tijd": 540,
+              "citaat": "the second bombing run hits even fewer guys"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-10-02",
+      "markeringen": []
+    },
+    {
+      "id": "scouts-deny-lantern-deployment",
+      "titel": "Use scouts to push Sky Lantern deployment back",
+      "tekst": "Use scouts to deny forward deployment space to Sky Lanterns. If you place scouts first, establish the exclusion area in front of your army; use another scouting unit to block a remaining approach.",
+      "waarom": "He says pushing Lanterns back can buy at least another turn of shooting before their full armament reaches the army.",
+      "voorbeeld": "He suggests placing Empire Archers centrally first, then placing another unit on the other side after the opponent deploys a Lantern.",
+      "wanneerNiet": "The initial blocking position depends on winning the roll to place scouts first.",
+      "fase": "deployment",
+      "themas": [
+        "game-plan",
+        "shooting-terrain"
+      ],
+      "leger": null,
+      "units": [
+        "Sky Lantern"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-pElilulzeF8",
+          "url": "https://www.youtube.com/watch?v=pElilulzeF8&t=572s",
+          "tijd": 575,
+          "citaat": "Being able to push those sky lanterns back with a scouting unit",
+          "extraCitaten": [
+            {
+              "tijd": 929,
+              "citaat": "Empire archers straight out in front, right in the middle."
+            },
+            {
+              "tijd": 938,
+              "citaat": "you can put more archers on the second side over here."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-10-02",
+      "markeringen": []
+    },
+    {
+      "id": "flaming-defence-against-lanterns",
+      "titel": "Reconsider protection against flaming attacks for Sky Lanterns",
+      "tekst": "Consider defensive options that give a ward save against flaming attacks when preparing for Sky Lanterns. Remember to apply that protection against their Dragonfire Bombs.",
+      "waarom": "He says Lanterns give previously seldom-used anti-flaming defences a worthwhile target.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "shooting-terrain",
+        "matchups"
+      ],
+      "leger": null,
+      "units": [
+        "Sky Lantern"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-pElilulzeF8",
+          "url": "https://www.youtube.com/watch?v=pElilulzeF8&t=627s",
+          "tijd": 630,
+          "citaat": "remind your opponent dragon fire bombs are flaming.",
+          "extraCitaten": [
+            {
+              "tijd": 643,
+              "citaat": "There's a reason to take them."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-10-02",
+      "markeringen": []
+    },
+    {
+      "id": "spellbreaking-stop-plague-rust",
+      "titel": "Use Rune of Spellbreaking against the Alchemist's Mask",
+      "tekst": "Use Rune of Spellbreaking to stop the Plague of Rust cast through the Alchemist's Mask.",
+      "waarom": "He says the Mask can cast Plague of Rust at a high casting value that is difficult to stop.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "magic-shooting",
+      "themas": [
+        "shooting-terrain",
+        "matchups"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-pElilulzeF8",
+          "url": "https://www.youtube.com/watch?v=pElilulzeF8&t=619s",
+          "tijd": 622,
+          "citaat": "So that's where your rune of spellbreaking comes in."
+        }
+      ],
+      "datum": "2025-10-02",
+      "markeringen": []
+    },
+    {
+      "id": "share-engineer-between-artillery",
+      "titel": "Share an Empire Engineer between artillery pieces",
+      "tekst": "In an Empire Grand Army, take advantage of one Engineer supporting multiple artillery pieces, especially against another gunline.",
+      "waarom": "He calls sharing the Engineer an efficiency the army should exploit.",
+      "voorbeeld": null,
+      "wanneerNiet": "He also recommends spreading cannons for crossfire against Sky Lanterns, despite the loss of Engineer efficiency.",
+      "fase": "army-building",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "leger": "empire-of-man",
+      "units": [
+        "Empire Engineer"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-pElilulzeF8",
+          "url": "https://www.youtube.com/watch?v=pElilulzeF8&t=682s",
+          "tijd": 685,
+          "citaat": "you can have one engineer shared between multiple artillery pieces."
+        }
+      ],
+      "datum": "2025-10-02",
+      "markeringen": []
+    },
+    {
+      "id": "cannon-bounce-multiple-lanterns",
+      "titel": "Look for cannon shots through multiple Sky Lanterns",
+      "tekst": "With Empire cannons, look for a bounce that passes through more than one Sky Lantern instead of automatically aiming ten inches from one target's rear. Consider baiting Lanterns into lining up while they attack the same unit.",
+      "waarom": "He says Sky Lanterns are not Behemoths, so a cannonball can pass through more than one.",
+      "voorbeeld": "He suggests advancing Demigryph Knights as bait, hoping two Lanterns finish their bombing runs in line for a cannon shot.",
+      "wanneerNiet": "The proposed bait relies on the opponent making a positioning mistake.",
+      "fase": "magic-shooting",
+      "themas": [
+        "shooting-terrain",
+        "matchups"
+      ],
+      "leger": "empire-of-man",
+      "units": [
+        "Great Cannon Empire",
+        "Sky Lantern"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-pElilulzeF8",
+          "url": "https://www.youtube.com/watch?v=pElilulzeF8&t=698s",
+          "tijd": 701,
+          "citaat": "you can actually bounce cannonballs through more than one of them at a time.",
+          "extraCitaten": [
+            {
+              "tijd": 729,
+              "citaat": "my cannons can hit two in a row."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-10-02",
+      "markeringen": []
+    },
+    {
+      "id": "spread-artillery-create-crossfire",
+      "titel": "Spread artillery to create crossfire against Sky Lanterns",
+      "tekst": "Put artillery in separated positions across the board so Sky Lanterns must account for fire from different directions. With Empire cannons, he recommends this even if it reduces the efficiency of a shared Engineer.",
+      "waarom": "He says clustered guns let Lanterns avoid them together or attack them head-on. Crossfire makes it harder for the Lanterns to concentrate their own fire while avoiding incoming shots.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-pElilulzeF8",
+          "url": "https://www.youtube.com/watch?v=pElilulzeF8&t=764s",
+          "tijd": 767,
+          "citaat": "to create crossfire lanes",
+          "extraCitaten": [
+            {
+              "tijd": 774,
+              "citaat": "cannons at other ends of the table"
+            },
+            {
+              "tijd": 2098,
+              "citaat": "You want to space them out"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-10-02",
+      "markeringen": []
+    },
+    {
+      "id": "white-wolf-knights-charge-lanterns",
+      "titel": "Consider Inner Circle White Wolves for charging Sky Lanterns",
+      "tekst": "Consider Inner Circle Knights of the White Wolf as a unit that can survive a Sky Lantern's Stand and Shoot and hit it hard on the charge. He specifically distinguishes them from regular White Wolf knights.",
+      "waarom": "He points to their five-plus ward against flaming attacks, armour and Furious Charge.",
+      "voorbeeld": null,
+      "wanneerNiet": "His favourable armour-save comparison assumes they have not been affected by Plague of Rust.",
+      "fase": "army-building",
+      "themas": [
+        "matchups",
+        "hammers"
+      ],
+      "leger": "empire-of-man",
+      "units": [
+        "Inner Circle Knights"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-pElilulzeF8",
+          "url": "https://www.youtube.com/watch?v=pElilulzeF8&t=805s",
+          "tijd": 808,
+          "citaat": "a unit that actually has some kind of hope of charging a sky lantern",
+          "extraCitaten": [
+            {
+              "tijd": 816,
+              "citaat": "If they don't have plague of rust on them"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-10-02",
+      "markeringen": []
+    },
+    {
+      "id": "bait-lanterns-into-concentrated-fire",
+      "titel": "Sacrifice bait to bring Sky Lanterns into concentrated fire",
+      "tekst": "Offer a unit you can afford to lose as an attractive target, with your guns and magic ready to punish Lanterns that approach it. He suggests making that bait the only target initially within reach.",
+      "waarom": "He says players want to use their shooting each turn, and Lanterns often move ahead without support. This can let the whole army fight only the Lanterns rather than the full opposing army.",
+      "voorbeeld": "He proposes sacrificing a roughly 200-point State Troops block to draw two Lanterns into a bad position.",
+      "wanneerNiet": "He stresses that the bait may die; the trade is worthwhile if it lets you take down the Lanterns.",
+      "fase": "movement",
+      "themas": [
+        "game-plan",
+        "shooting-terrain"
+      ],
+      "leger": null,
+      "units": [
+        "Sky Lantern"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-pElilulzeF8",
+          "url": "https://www.youtube.com/watch?v=pElilulzeF8&t=873s",
+          "tijd": 876,
+          "citaat": "You want the sky lanterns to go after it",
+          "extraCitaten": [
+            {
+              "tijd": 970,
+              "citaat": "sacrifice 200 points of state troops"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-10-02",
+      "markeringen": []
+    },
+    {
+      "id": "sigmar-prayer-shooting-ward",
+      "titel": "Consider a Sigmar Priest for protection against shooting",
+      "tekst": "Consider a Priest of Sigmar for the prayer that gives a unit a five-plus ward save against shooting. Facing Sky Lanterns has made him reconsider a prayer he previously thought useless.",
+      "waarom": "He thinks even one unit with a ward save against shooting could be a lifesaver.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "leger": "empire-of-man",
+      "units": [
+        "Priest of Sigmar"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-pElilulzeF8",
+          "url": "https://www.youtube.com/watch?v=pElilulzeF8&t=1035s",
+          "tijd": 1038,
+          "citaat": "gives you a five a board versus shooting."
+        }
+      ],
+      "datum": "2025-10-02",
+      "markeringen": []
+    },
+    {
+      "id": "plagued-pegasus-knights-withdraw",
+      "titel": "Withdraw Pegasus Knights affected by Plague of Rust",
+      "tekst": "Do not charge a Sky Lantern with Pegasus Knights while Plague of Rust is affecting them. Fly away and save the charge for a later turn.",
+      "waarom": "He warns that the Lantern's Stand and Shoot will wipe them out after their armour has been weakened.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "matchups",
+        "shooting-terrain"
+      ],
+      "leger": "kingdom-of-bretonnia",
+      "units": [
+        "Pegasus Knights"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-pElilulzeF8",
+          "url": "https://www.youtube.com/watch?v=pElilulzeF8&t=1081s",
+          "tijd": 1084,
+          "citaat": "If you're if you're peg knights get plague arrested, you cannot charge that turn.",
+          "extraCitaten": [
+            {
+              "tijd": 1094,
+              "citaat": "you have to just fly away"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-10-02",
+      "markeringen": []
+    },
+    {
+      "id": "pegasus-knights-reliable-lantern-charges",
+      "titel": "Set up reliable Pegasus Knight charges rather than long attempts",
+      "tekst": "Avoid speculative long charges into Sky Lanterns with Pegasus Knights. Plan across the six turns and use sacrificial units to bring a Lantern into a position where the charge is almost guaranteed.",
+      "waarom": "He says Pegasus Knights have enough hitting power, particularly with a character, but a failed charge leaves them in serious trouble.",
+      "voorbeeld": "He suggests sacrificing a Knights of the Realm unit if that draws the Lanterns into reach.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "matchups",
+        "game-plan"
+      ],
+      "leger": "kingdom-of-bretonnia",
+      "units": [
+        "Pegasus Knights"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-pElilulzeF8",
+          "url": "https://www.youtube.com/watch?v=pElilulzeF8&t=1108s",
+          "tijd": 1111,
+          "citaat": "do not do those long bomb charges.",
+          "extraCitaten": [
+            {
+              "tijd": 1132,
+              "citaat": "you can almost guarantee your peg knights are going to be able to charge"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-10-02",
+      "markeringen": []
+    },
+    {
+      "id": "pegasus-overrun-second-lantern",
+      "titel": "Line up a Pegasus Knight overrun into another Lantern",
+      "tekst": "Try to position skirmishing Pegasus Knights to destroy one Sky Lantern and overrun into the next.",
+      "waarom": "He says the second Lantern cannot fire at them as they overrun into it, creating a possible two-for-one attack.",
+      "voorbeeld": null,
+      "wanneerNiet": "He says setting this up with the Pegasus Knights alone is difficult and discusses using sacrificial units to draw the Lanterns out.",
+      "fase": "movement",
+      "themas": [
+        "matchups",
+        "hammers"
+      ],
+      "leger": "kingdom-of-bretonnia",
+      "units": [
+        "Pegasus Knights",
+        "Sky Lantern"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-pElilulzeF8",
+          "url": "https://www.youtube.com/watch?v=pElilulzeF8&t=1136s",
+          "tijd": 1139,
+          "citaat": "punch through the first balloon and overrun into the next balloon",
+          "extraCitaten": [
+            {
+              "tijd": 1139,
+              "citaat": "so that it can't fire at you as you're overrunning"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-10-02",
+      "markeringen": []
+    },
+    {
+      "id": "knightly-temper-lantern-hunter",
+      "titel": "Prefer Knightly Temper and multiple wounds against Sky Lanterns",
+      "tekst": "For a Duke or Baron hunting Sky Lanterns, he prefers Virtue of Knightly Temper with a weapon that inflicts multiple wounds over Virtue of Heroism.",
+      "waarom": null,
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "matchups",
+        "hammers"
+      ],
+      "leger": "kingdom-of-bretonnia",
+      "units": [
+        "Duke",
+        "Baron"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-pElilulzeF8",
+          "url": "https://www.youtube.com/watch?v=pElilulzeF8&t=1207s",
+          "tijd": 1210,
+          "citaat": "that's what you want charging into the sky lantern",
+          "extraCitaten": [
+            {
+              "tijd": 1196,
+              "citaat": "the virtue of heroism essentially just it's out compared"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-10-02",
+      "markeringen": []
+    },
+    {
+      "id": "glittering-robe-lantern-charge",
+      "titel": "Support the Lantern charge with Glittering Robe",
+      "tekst": "Consider a Damsel casting Glittering Robe to protect the Bretonnian attacker from shooting, including the Sky Lantern's Stand and Shoot.",
+      "waarom": "He stresses that charging a unit with so much shooting gives it another opportunity to inflict damage.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "magic-shooting",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "leger": "kingdom-of-bretonnia",
+      "units": [
+        "Damsel"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-pElilulzeF8",
+          "url": "https://www.youtube.com/watch?v=pElilulzeF8&t=1216s",
+          "tijd": 1219,
+          "citaat": "glittering rope works versus shooting, even stand and shoot"
+        }
+      ],
+      "datum": "2025-10-02",
+      "markeringen": []
+    },
+    {
+      "id": "falcon-horn-stop-lantern-flight",
+      "titel": "Use the Falcon Horn to interrupt Sky Lantern movement",
+      "tekst": "Reconsider the Falcon Horn to switch off flying for a crucial turn against Sky Lanterns. Use that turn to prevent them flying over your troops or reaching a position to shoot.",
+      "waarom": "He says Lanterns like to cross over advancing troops and keep shooting from behind, where many units cannot fight them.",
+      "voorbeeld": "For Bretonnian Exiles going first, he suggests blowing the horn to prevent first-turn shooting and potentially reach an objective without an immediate response.",
+      "wanneerNiet": "He notes the horn is single-use.",
+      "fase": "movement",
+      "themas": [
+        "game-plan",
+        "shooting-terrain"
+      ],
+      "leger": "kingdom-of-bretonnia",
+      "units": [
+        "Sky Lantern"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-pElilulzeF8",
+          "url": "https://www.youtube.com/watch?v=pElilulzeF8&t=1280s",
+          "tijd": 1283,
+          "citaat": "Shutting off flying for one turn in particular versus balloons is massive.",
+          "extraCitaten": [
+            {
+              "tijd": 1298,
+              "citaat": "not being able to fly over your troops is probably the main one."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-10-02",
+      "markeringen": []
+    },
+    {
+      "id": "wood-elves-reconsider-poison",
+      "titel": "Reconsider poisoned arrows against Sky Lanterns",
+      "tekst": "Consider putting poison back into a Wood Elf army facing Sky Lanterns and concentrate the shooting. One speaker recommends this as a way to improve the chances of wounding them.",
+      "waarom": "He says poison can replace needing a six to wound with wounding on a four-plus, and the Lanterns' saves are not particularly good.",
+      "voorbeeld": null,
+      "wanneerNiet": "He says Wood Elf models with poison are expensive, making it difficult to obtain enough shots.",
+      "fase": "army-building",
+      "themas": [
+        "shooting-terrain",
+        "matchups"
+      ],
+      "leger": "wood-elf-realms",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-pElilulzeF8",
+          "url": "https://www.youtube.com/watch?v=pElilulzeF8&t=1395s",
+          "tijd": 1398,
+          "citaat": "I encourage you to reevaluate putting poison back in your armies."
+        }
+      ],
+      "datum": "2025-10-02",
+      "markeringen": []
+    },
+    {
+      "id": "bodkins-remove-lantern-armour",
+      "titel": "Consider Arcane Bodkins to remove Sky Lantern armour",
+      "tekst": "The other speaker prefers Arcane Bodkins against Sky Lanterns. He would rather work towards removing their armour save than take poison for an improved chance of wounding.",
+      "waarom": "He says Bodkins start at AP2 and reach AP3 with Armour Bane on a six to wound, removing the usual four-plus Lantern armour save.",
+      "voorbeeld": null,
+      "wanneerNiet": "He acknowledges that poison is also a valid strategy.",
+      "fase": "army-building",
+      "themas": [
+        "shooting-terrain",
+        "matchups"
+      ],
+      "leger": "wood-elf-realms",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-pElilulzeF8",
+          "url": "https://www.youtube.com/watch?v=pElilulzeF8&t=1410s",
+          "tijd": 1413,
+          "citaat": "I want to have the Arcane Bodkins",
+          "extraCitaten": [
+            {
+              "tijd": 1429,
+              "citaat": "I'd rather get rid of their whole armor save"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-10-02",
+      "markeringen": []
+    },
+    {
+      "id": "evasive-push-bombs-long-range",
+      "titel": "Use Evasive to push Dragonfire Bombs into long range",
+      "tekst": "With Wood Elves, use Evasive moves to retreat beyond short range when a Sky Lantern approaches to shoot. He recommends combining this with skirmishing units to stack penalties to hit.",
+      "waarom": "He says moving from one inch away to five inches away makes the nine-inch bombs shoot at long range. Fewer successful hit rolls sharply reduce the resulting multiple hits.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "leger": "wood-elf-realms",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-pElilulzeF8",
+          "url": "https://www.youtube.com/watch?v=pElilulzeF8&t=1455s",
+          "tijd": 1458,
+          "citaat": "fall back even just a couple inches further",
+          "extraCitaten": [
+            {
+              "tijd": 1467,
+              "citaat": "go from one inch away to five inches away"
+            },
+            {
+              "tijd": 1467,
+              "citaat": "if every single unit in your army is skirmishing, another minus one to hit."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-10-02",
+      "markeringen": []
+    },
+    {
+      "id": "forest-dragon-threatens-lanterns",
+      "titel": "Reconsider a Glade Lord on Forest Dragon against Lanterns",
+      "tekst": "Consider bringing a Glade Lord on a Forest Dragon back into a Wood Elf list to threaten Sky Lanterns.",
+      "waarom": "He says it has the range and hitting power to threaten a Lantern, with high toughness and wounds plus defensive equipment on its rider.",
+      "voorbeeld": null,
+      "wanneerNiet": "He says it is less durable than other dragons.",
+      "fase": "army-building",
+      "themas": [
+        "hammers",
+        "matchups"
+      ],
+      "leger": "wood-elf-realms",
+      "units": [
+        "Glade Lord",
+        "Forest Dragon"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-pElilulzeF8",
+          "url": "https://www.youtube.com/watch?v=pElilulzeF8&t=1499s",
+          "tijd": 1502,
+          "citaat": "the wood elf lord on a dragon absolutely is a legitimate threat to Skyllanterns.",
+          "extraCitaten": [
+            {
+              "tijd": 1532,
+              "citaat": "a dragon has huge threat range"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-10-02",
+      "markeringen": []
+    },
+    {
+      "id": "forest-dragon-evade-reform",
+      "titel": "Evade and reform the Forest Dragon towards Lanterns",
+      "tekst": "If Sky Lanterns fly behind a Glade Lord's Forest Dragon and shoot it, use Evasive to move away and reform to face them.",
+      "waarom": "He says the prospect of giving the dragon a free reform may even discourage the opponent from shooting it.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "shooting-terrain",
+        "matchups"
+      ],
+      "leger": "wood-elf-realms",
+      "units": [
+        "Glade Lord",
+        "Forest Dragon"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-pElilulzeF8",
+          "url": "https://www.youtube.com/watch?v=pElilulzeF8&t=1543s",
+          "tijd": 1546,
+          "citaat": "you can evade away and reform to face towards them now."
+        }
+      ],
+      "datum": "2025-10-02",
+      "markeringen": []
+    },
+    {
+      "id": "wilds-missile-against-lanterns",
+      "titel": "Use the Lore of the Wilds missile against Lanterns",
+      "tekst": "Consider the Lore of the Wilds for its missile delivering D3 plus one Strength 6, AP2 hits with D3 damage against Sky Lanterns.",
+      "waarom": "He values the high strength missing elsewhere in Wood Elf shooting and the ability to do substantial damage without charging into Stand and Shoot.",
+      "voorbeeld": "He describes the spell to an opponent as shooting D3 plus one Ogre Blade hits.",
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "matchups",
+        "shooting-terrain"
+      ],
+      "leger": "wood-elf-realms",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-pElilulzeF8",
+          "url": "https://www.youtube.com/watch?v=pElilulzeF8&t=1594s",
+          "tijd": 1597,
+          "citaat": "very strong especially for skyllant spell",
+          "extraCitaten": [
+            {
+              "tijd": 1605,
+              "citaat": "It's D3 plus one strength six AP2 D3 damage hits."
+            },
+            {
+              "tijd": 1624,
+              "citaat": "without having to give them a stand and shoot against us."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-10-02",
+      "markeringen": []
+    },
+    {
+      "id": "ethereal-bunker-against-lanterns",
+      "titel": "Consider making the target bunker Ethereal",
+      "tekst": "Consider High Magic to make a bunker Ethereal against a Cathay force relying on non-magical Dragonfire Bombs. The speakers discuss this option for both Wood Elves and High Elves.",
+      "waarom": "He says those flaming attacks are not magical, so becoming Ethereal can prevent them from hurting the unit.",
+      "voorbeeld": null,
+      "wanneerNiet": "He says the spell no longer goes off reliably every turn under the changed casting system. He also qualifies the lack of magical attacks as a feature of Cathay builds seen until recently.",
+      "fase": "magic-shooting",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-pElilulzeF8",
+          "url": "https://www.youtube.com/watch?v=pElilulzeF8&t=1659s",
+          "tijd": 1662,
+          "citaat": "a bunker unit that you're just trying to make ethereal",
+          "extraCitaten": [
+            {
+              "tijd": 1677,
+              "citaat": "they throw dragonfire bombs they're flaming and they're not magical."
+            },
+            {
+              "tijd": 1702,
+              "citaat": "this spell just doesn't go off every single turn"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-10-02",
+      "markeringen": []
+    },
+    {
+      "id": "skycutter-over-stationary-bolt-thrower",
+      "titel": "Prefer a bolt-thrower Skycutter for High Elf shooting",
+      "tekst": "For High Elf shooting, he recommends a Lothern Skycutter with a bolt thrower rather than a stationary Eagle-Claw Bolt Thrower, including as an option against Sky Lanterns.",
+      "waarom": "He considers the Skycutter more durable and manoeuvrable while providing essentially the same shooting.",
+      "voorbeeld": null,
+      "wanneerNiet": "He notes it costs a little more and qualifies the comparison for shots through a ranked unit.",
+      "fase": "army-building",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "leger": "high-elf-realms",
+      "units": [
+        "Lothern Skycutter",
+        "Eagle-Claw Bolt Thrower"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-pElilulzeF8",
+          "url": "https://www.youtube.com/watch?v=pElilulzeF8&t=2021s",
+          "tijd": 2024,
+          "citaat": "the sky cutter with a boltthrower on it instead of just eagleclaw boltthrowers",
+          "extraCitaten": [
+            {
+              "tijd": 2032,
+              "citaat": "the sky cutter boltthrower is just better."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-10-02",
+      "markeringen": []
+    },
+    {
+      "id": "release-fanatics-before-bombardment",
+      "titel": "Release Fanatics before Lanterns destroy their carriers",
+      "tekst": "Make sure Fanatics get released before Sky Lantern shooting wipes out or panics their Night Goblins. He suggests either a larger carrier unit or positioning for an enemy-turn release, and even considers releasing them all on turn one.",
+      "waarom": "He warns that two Lanterns can destroy a 20-model carrier unit before it releases anything. Once released, the Fanatics can remain a threat even if the Goblins die.",
+      "voorbeeld": null,
+      "wanneerNiet": "The turn-one option leaves the Fanatics moving randomly rather than guaranteeing they hit a Lantern.",
+      "fase": "movement",
+      "themas": [
+        "matchups",
+        "game-plan"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Fanatic",
+        "Night Goblin Mob"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-pElilulzeF8",
+          "url": "https://www.youtube.com/watch?v=pElilulzeF8&t=2413s",
+          "tijd": 2416,
+          "citaat": "I'm going to release all my fanatics turn one",
+          "extraCitaten": [
+            {
+              "tijd": 2256,
+              "citaat": "if you're taking that 30man unit"
+            },
+            {
+              "tijd": 2256,
+              "citaat": "you're going to release them on the enemy turn"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-10-02",
+      "markeringen": []
+    },
+    {
+      "id": "hide-marauder-missile-bunker",
+      "titel": "Shelter the Marauder Horsemen missile bunker until targets emerge",
+      "tekst": "Keep a Warriors of Chaos magic-missile bunker in Marauder Horsemen hidden behind terrain until the Sky Lanterns are exposed. Use bait to bring the Lanterns out before committing the bunker.",
+      "waarom": "He values the Horsemen's manoeuvrability over a Chaos Warriors bunker but warns they are vulnerable to Lantern shooting.",
+      "voorbeeld": null,
+      "wanneerNiet": "He warns that careless placement can get the bunker shot off the board before it brings its missiles to bear.",
+      "fase": "movement",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "leger": "warriors-of-chaos",
+      "units": [
+        "Marauder Horsemen"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-pElilulzeF8",
+          "url": "https://www.youtube.com/watch?v=pElilulzeF8&t=2549s",
+          "tijd": 2552,
+          "citaat": "you want to hide them behind uh terrain, a hill or something",
+          "extraCitaten": [
+            {
+              "tijd": 2561,
+              "citaat": "then you can unleash your magic missiles on him."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-10-02",
+      "markeringen": []
+    },
+    {
+      "id": "nurgle-spawn-against-lanterns",
+      "titel": "Consider a Nurgle Gigantic Spawn against Sky Lanterns",
+      "tekst": "Consider the Nurgle version of a Gigantic Spawn of Chaos rather than automatically choosing the Khorne option when preparing for Sky Lanterns.",
+      "waarom": "He says its five-plus regeneration makes it significantly more durable against shooting, while random movement prevents a charge reaction.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "matchups"
+      ],
+      "leger": "warriors-of-chaos",
+      "units": [
+        "Gigantic Spawn of Chaos"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-pElilulzeF8",
+          "url": "https://www.youtube.com/watch?v=pElilulzeF8&t=2574s",
+          "tijd": 2577,
+          "citaat": "spawn of Nurgle and getting that five regen save makes you significantly more durable",
+          "extraCitaten": [
+            {
+              "tijd": 2585,
+              "citaat": "they can't respond to you"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-10-02",
+      "markeringen": []
+    },
+    {
+      "id": "warpfire-aura-remove-lantern-ward",
+      "titel": "Bring the Warpfire Dragon's aura near warded Lanterns",
+      "tekst": "If a Sky Lantern has a Talisman of Protection ward save, bring a Warpfire Dragon close enough for its aura to remove that protection.",
+      "waarom": "He says removing the ward makes the army's other attacks, including magic missiles, more effective.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "matchups"
+      ],
+      "leger": "warriors-of-chaos",
+      "units": [
+        "Warpfire Dragon",
+        "Sky Lantern"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-pElilulzeF8",
+          "url": "https://www.youtube.com/watch?v=pElilulzeF8&t=2638s",
+          "tijd": 2641,
+          "citaat": "Take down that ward save with his aura"
+        }
+      ],
+      "datum": "2025-10-02",
+      "markeringen": []
+    },
+    {
+      "id": "skirmishing-marauders-alternative-bunker",
+      "titel": "Consider skirmishing Chaos Marauders as an alternative wizard bunker",
+      "tekst": "Consider skirmishing Chaos Marauders as a magic-missile bunker. He suggests bringing more than one potential bunker so the wizard can use skirmishing Marauders against Cathay and Chaos Warriors in another matchup.",
+      "waarom": "He says the infantry bunker trades the Horsemen's speed for all-round mobility, a shooting hit penalty and more wounds.",
+      "voorbeeld": "He describes taking ten skirmishing Marauders as an alternative place for the wizard against Cathay.",
+      "wanneerNiet": "He says this bunker is less fast than Marauder Horsemen.",
+      "fase": "army-building",
+      "themas": [
+        "shooting-terrain",
+        "game-plan"
+      ],
+      "leger": "warriors-of-chaos",
+      "units": [
+        "Chaos Marauders"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-pElilulzeF8",
+          "url": "https://www.youtube.com/watch?v=pElilulzeF8&t=2686s",
+          "tijd": 2689,
+          "citaat": "take chaos marauders and give them the skirmish upgrade",
+          "extraCitaten": [
+            {
+              "tijd": 2792,
+              "citaat": "You can bring more than one unit to be your potential bunker."
+            },
+            {
+              "tijd": 2802,
+              "citaat": "I have 10 marauders in skirmish."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-10-02",
+      "markeringen": []
+    },
+    {
+      "id": "daemon-prince-plate-against-bombs",
+      "titel": "Consider plate mail for a Daemon Prince facing bombs",
+      "tekst": "Consider the Daemon Prince's plate-mail upgrade to reach Toughness 6 against Dragonfire Bombs while skirmishing.",
+      "waarom": "He says the higher toughness makes the bombs much harder to wound with and halves their damage.",
+      "voorbeeld": null,
+      "wanneerNiet": "He considers the Daemon Prince incredibly expensive.",
+      "fase": "army-building",
+      "themas": [
+        "shooting-terrain",
+        "matchups"
+      ],
+      "leger": "warriors-of-chaos",
+      "units": [
+        "Daemon Prince Warriors Of Chaos"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-pElilulzeF8",
+          "url": "https://www.youtube.com/watch?v=pElilulzeF8&t=2731s",
+          "tijd": 2734,
+          "citaat": "you can take demonic plate mail to be toughness six"
+        }
+      ],
+      "datum": "2025-10-02",
+      "markeringen": []
+    },
+    {
+      "id": "chaos-stack-shooting-hit-penalties",
+      "titel": "Stack shooting hit penalties on a Chaos cavalry block",
+      "tekst": "If keeping a large Chaos cavalry block, combine the shooting-penalty banner with the Chaos power that also gives minus one to hit. Take enough models to absorb shooting rather than relying on a five-model unit.",
+      "waarom": "He says the penalties apply to the whole unit and that minus two to hit greatly reduces Sky Lantern shooting effectiveness.",
+      "voorbeeld": null,
+      "wanneerNiet": "He explicitly says this does not help against cannons.",
+      "fase": "army-building",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "leger": "warriors-of-chaos",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-pElilulzeF8",
+          "url": "https://www.youtube.com/watch?v=pElilulzeF8&t=2757s",
+          "tijd": 2760,
+          "citaat": "two minus one to hits that you are able to stack",
+          "extraCitaten": [
+            {
+              "tijd": 2780,
+              "citaat": "making it minus two to hit you"
+            },
+            {
+              "tijd": 2780,
+              "citaat": "It's not going to help you versus the cannons,"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-10-02",
+      "markeringen": []
+    },
+    {
+      "id": "beastmen-protected-vile-tide-bunker",
+      "titel": "Protect the Vile Tide bunker with stacked hit penalties",
+      "tekst": "Use a skirmishing bunker for multiple level-one Bray-Shamans casting Vile Tide, and add the character upgrade that imposes another shooting hit penalty. He proposes this as a protected deterrent to approaching Sky Lanterns.",
+      "waarom": "He says the combination makes the bunker minus two to hit against shooting while Vile Tide does substantial damage once Lanterns approach.",
+      "voorbeeld": "At Palm Springs Open, he instead left a solo Vile Tide caster beside roughly 25 to 30 Primal Warherd models. He found that Lanterns could remove that protection and still have shots left for the caster.",
+      "wanneerNiet": "He warns that relying on a nearby ranked block to protect a solo caster does not work against this shooting.",
+      "fase": "army-building",
+      "themas": [
+        "shooting-terrain",
+        "matchups"
+      ],
+      "leger": "beastmen-brayherds",
+      "units": [
+        "Bray-Shaman"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-pElilulzeF8",
+          "url": "https://www.youtube.com/watch?v=pElilulzeF8&t=2840s",
+          "tijd": 2843,
+          "citaat": "make a skirmish bunker that's already minus two to hit",
+          "extraCitaten": [
+            {
+              "tijd": 2897,
+              "citaat": "the solo character who is now not safe anymore."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-10-02",
+      "markeringen": []
+    },
+    {
+      "id": "light-death-leadership-debuffs",
+      "titel": "Combine leadership reduction with Light of Death against Lanterns",
+      "tekst": "Use leadership reduction from Skulls of the Foe or Necromancy to make Light of Death more dangerous against Sky Lanterns.",
+      "waarom": "He says a failed leadership test can lead to an enormous number of damaging hits.",
+      "voorbeeld": null,
+      "wanneerNiet": "He makes the damage conditional on the target failing its leadership test.",
+      "fase": "magic-shooting",
+      "themas": [
+        "psychology",
+        "matchups"
+      ],
+      "leger": "tomb-kings-of-khemri",
+      "units": [
+        "Casket of Souls"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-pElilulzeF8",
+          "url": "https://www.youtube.com/watch?v=pElilulzeF8&t=2985s",
+          "tijd": 2988,
+          "citaat": "Soon as you lower someone's leadership, like with necromancy spells",
+          "extraCitaten": [
+            {
+              "tijd": 2995,
+              "citaat": "light of death is potentially worse than a vampire scream."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-10-02",
+      "markeringen": []
+    },
+    {
+      "id": "ushabti-great-bows-lanterns",
+      "titel": "Shoot Lanterns with Ushabti great bows after reducing armour",
+      "tekst": "Use Ushabti great bows against Sky Lanterns, particularly after Plague of Rust has reduced their armour. Turn or reform to keep the target in sight.",
+      "waarom": "He values their high strength and two damage per hit, and says turning does not add hit penalties. He also says regeneration and their monstrous-infantry formation help them withstand the Lanterns' attacks.",
+      "voorbeeld": null,
+      "wanneerNiet": "He notes the bows have only AP1.",
+      "fase": "magic-shooting",
+      "themas": [
+        "matchups",
+        "shooting-terrain"
+      ],
+      "leger": "tomb-kings-of-khemri",
+      "units": [
+        "Ushabti"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-pElilulzeF8",
+          "url": "https://www.youtube.com/watch?v=pElilulzeF8&t=3040s",
+          "tijd": 3043,
+          "citaat": "you just fire a lot of great bow shots at it.",
+          "extraCitaten": [
+            {
+              "tijd": 3046,
+              "citaat": "reform or turn to face the target without any further minuses to hit."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-10-02",
+      "markeringen": []
+    },
+    {
+      "id": "necrosphinx-zone-sky-lanterns",
+      "titel": "Use the Necrosphinx's charge threat against Sky Lanterns",
+      "tekst": "Use the Necrosphinx's flying movement and speed to threaten a charge if Sky Lanterns approach.",
+      "waarom": "He says its flight gives it considerable threat range.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "matchups"
+      ],
+      "leger": "tomb-kings-of-khemri",
+      "units": [
+        "Necrosphinx"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-pElilulzeF8",
+          "url": "https://www.youtube.com/watch?v=pElilulzeF8&t=3082s",
+          "tijd": 3085,
+          "citaat": "Skyantern, come over here. You're going to get charged by this big old monster."
+        }
+      ],
+      "datum": "2025-10-02",
+      "markeringen": []
+    },
+    {
+      "id": "skeleton-archers-poison-volume",
+      "titel": "Give a large Skeleton Archer unit poisoned shooting",
+      "tekst": "Use the 30-point character item to give a large Skeleton Archer unit poisoned shooting against Sky Lanterns.",
+      "waarom": "He says cheap archers provide the volume that makes the upgrade worthwhile. The speakers point to Volley Fire and poison wounds on fours as damage that adds up.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "shooting-terrain",
+        "matchups"
+      ],
+      "leger": "tomb-kings-of-khemri",
+      "units": [
+        "Skeleton Archers"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-pElilulzeF8",
+          "url": "https://www.youtube.com/watch?v=pElilulzeF8&t=3125s",
+          "tijd": 3128,
+          "citaat": "that one item on the big unit and have a million poison shots.",
+          "extraCitaten": [
+            {
+              "tijd": 3106,
+              "citaat": "stick the 30 point item on a guy"
+            },
+            {
+              "tijd": 3131,
+              "citaat": "a big skeleton archer unit with volley fire"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-10-02",
+      "markeringen": []
+    },
+    {
+      "id": "tomb-king-dragon-armour-ages",
+      "titel": "Consider Armour of Ages on a dragon-mounted Tomb King",
+      "tekst": "Consider Armour of Ages for a Tomb King on a Necrolith Bone Dragon when preparing for Sky Lanterns.",
+      "waarom": "He says forcing successful wound rolls to be rerolled makes it much harder to inflict damage, particularly against a dragon.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "leger": "tomb-kings-of-khemri",
+      "units": [
+        "Tomb King",
+        "Necrolith Bone Dragon"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-pElilulzeF8",
+          "url": "https://www.youtube.com/watch?v=pElilulzeF8&t=3159s",
+          "tijd": 3162,
+          "citaat": "the tomb king on the dragon",
+          "extraCitaten": [
+            {
+              "tijd": 3171,
+              "citaat": "a lot harder if you have to reroll all your successful wounds"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-10-02",
+      "markeringen": []
+    },
+    {
+      "id": "blazing-sun-order-versus-cathay",
+      "titel": "Consider Blazing Sun for a Knightly Order facing Cathay",
+      "tekst": "If choosing a Knightly Order with the Cathay matchup in mind, he would choose Blazing Sun. Combine its Evasive knights with access to cannons and missile-casting wizards.",
+      "waarom": "He says the knights can potentially evade completely beyond the nine-inch range of Dragonfire Bombs.",
+      "voorbeeld": null,
+      "wanneerNiet": "He presents this as a choice he is considering rather than an approach he has already tested.",
+      "fase": "army-building",
+      "themas": [
+        "matchups",
+        "shooting-terrain"
+      ],
+      "leger": "empire-of-man",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-pElilulzeF8",
+          "url": "https://www.youtube.com/watch?v=pElilulzeF8&t=3213s",
+          "tijd": 3216,
+          "citaat": "it would have to be blazing sun because all of the knights have evasive.",
+          "extraCitaten": [
+            {
+              "tijd": 3233,
+              "citaat": "you could have some knights, some cannons, some wizards"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-10-02",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "doom-divers-against-cathay",
+      "bron": {
+        "bronId": "yt-pElilulzeF8",
+        "url": "https://www.youtube.com/watch?v=pElilulzeF8&t=2069s",
+        "tijd": 2072,
+        "citaat": "The doom divers um and catapults are super effective",
+        "extraCitaten": [
+          {
+            "tijd": 2294,
+            "citaat": "more powerful than a cannon because it can shoot around corners and stuff."
+          }
+        ]
+      },
+      "wanneerNiet": "He cautions that Doom Divers can misfire.",
+      "toelichting": "The same recommendation to take Doom Divers against Cathay, here specifically to damage Sky Lanterns."
+    },
+    {
+      "lesId": "orc-wyvern-layered-tank",
+      "bron": {
+        "bronId": "yt-pElilulzeF8",
+        "url": "https://www.youtube.com/watch?v=pElilulzeF8&t=2139s",
+        "tijd": 2142,
+        "citaat": "that ward save, you have that regen save",
+        "extraCitaten": [
+          {
+            "tijd": 2142,
+            "citaat": "it's super cost effective"
+          }
+        ]
+      },
+      "toelichting": "The same inexpensive, defensively equipped Warboss on Wyvern, here recommended for attacking Sky Lanterns."
+    },
+    {
+      "lesId": "random-movement-catches-shooters",
+      "bron": {
+        "bronId": "yt-pElilulzeF8",
+        "url": "https://www.youtube.com/watch?v=pElilulzeF8&t=2157s",
+        "tijd": 2160,
+        "citaat": "they don't get to stand and shoot versus random movers."
+      },
+      "voorbeeld": "He recommends Squig random movers against Sky Lanterns because they can enter combat without receiving Stand and Shoot.",
+      "toelichting": "The same use of random movement to attack shooters without allowing their shooting charge reaction."
+    },
+    {
+      "lesId": "random-movement-unseen-targets",
+      "bron": {
+        "bronId": "yt-pElilulzeF8",
+        "url": "https://www.youtube.com/watch?v=pElilulzeF8&t=2189s",
+        "tijd": 2192,
+        "citaat": "You can go through that forest and still slam into that sky lantern",
+        "extraCitaten": [
+          {
+            "tijd": 2183,
+            "citaat": "you can hide them behind terrain to avoid getting shot by the sky lantern."
+          }
+        ]
+      },
+      "toelichting": "The same recommendation to threaten a target from behind obscuring terrain using random movement."
+    },
+    {
+      "lesId": "chaff-engineered-enemy-retreats",
+      "bron": {
+        "bronId": "yt-pElilulzeF8",
+        "url": "https://www.youtube.com/watch?v=pElilulzeF8&t=2350s",
+        "tijd": 2353,
+        "citaat": "it just bounces all the way off the table",
+        "extraCitaten": [
+          {
+            "tijd": 2344,
+            "citaat": "into a conga line behind this lantern."
+          }
+        ]
+      },
+      "wanneerNiet": "He says the Lantern can stay in combat instead of falling back off the table.",
+      "toelichting": "The same placement of chaff behind an enemy to extend its retreat off the board, applied here to a Sky Lantern falling back in good order."
+    },
+    {
+      "lesId": "tank-layer-three-saves",
+      "bron": {
+        "bronId": "yt-pElilulzeF8",
+        "url": "https://www.youtube.com/watch?v=pElilulzeF8&t=1860s",
+        "tijd": 1863,
+        "citaat": "taking that armor save, that ward save, that regen save"
+      },
+      "toelichting": "The same defensive layering of armour, ward and regeneration saves, here on a High Elf dragon rider surviving Lantern shooting."
+    },
+    {
+      "lesId": "save-vulnerable-valuable-units",
+      "bron": {
+        "bronId": "yt-pElilulzeF8",
+        "url": "https://www.youtube.com/watch?v=pElilulzeF8&t=1907s",
+        "tijd": 1910,
+        "citaat": "you are not going to be using them in combat this game.",
+        "extraCitaten": [
+          {
+            "tijd": 1806,
+            "citaat": "all you're going to try to do is make sure that they just don't die."
+          }
+        ]
+      },
+      "toelichting": "The same advice to preserve valuable units that cannot win the matchup, here High Elf cavalry and White Lions against Cathay."
+    },
+    {
+      "lesId": "mobile-caster-flank",
+      "bron": {
+        "bronId": "yt-pElilulzeF8",
+        "url": "https://www.youtube.com/watch?v=pElilulzeF8&t=1635s",
+        "tijd": 1638,
+        "citaat": "positioning your spellcaster so that he's having to use a faded dispel",
+        "extraCitaten": [
+          {
+            "tijd": 2511,
+            "citaat": "position your wizard so you are they're having to use their faded dispel."
+          }
+        ]
+      },
+      "wanneerNiet": "He says attacking Lanterns outside their wizard's effective dispel coverage is often possible, but not always.",
+      "toelichting": "The same positioning principle of casting beyond the enemy wizard's dispel bubble, here exploiting Lanterns that have moved ahead of their army."
+    },
+    {
+      "lesId": "try-solitary-doombull",
+      "bron": {
+        "bronId": "yt-pElilulzeF8",
+        "url": "https://www.youtube.com/watch?v=pElilulzeF8&t=2907s",
+        "tijd": 2910,
+        "citaat": "you can just run as a skirmisher so that he can react and respond",
+        "extraCitaten": [
+          {
+            "tijd": 2927,
+            "citaat": "separately in skirmish trying to just see who he's going to chase down."
+          }
+        ]
+      },
+      "toelichting": "The same recommendation to run the Doombull separately so he can react and threaten targets in different directions."
+    }
+  ],
+  "overgeslagen": "Skipped introductions, meta commentary, jokes, hobby discussion and closing channel requests. Omitted uncertain item names and unclear upgrade wording, including the banner at 20:51, the Cave Squig character build at 36:48 and the Marauder upgrade at 44:49. Brief unit mentions and stat descriptions without a sufficiently clear recommendation were not extracted.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": [
+      {
+        "wie": "aanvulling random-movement-unseen-targets",
+        "wat": "voorbeeld weggelaten: de les heeft dat veld al"
+      }
+    ]
+  }
+}

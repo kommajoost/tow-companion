@@ -1,0 +1,300 @@
+{
+  "videoId": "AnCRVjL8dJg",
+  "bronId": "yt-AnCRVjL8dJg",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T22:12:09.616Z",
+  "nieuw": [
+    {
+      "id": "chaff-kills-are-bonuses",
+      "titel": "Do not expect chaff to kill much",
+      "tekst": "Use chaff to disrupt the opponent rather than expecting it to kill things. Treat any kills it makes as a bonus.",
+      "waarom": null,
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "chaff"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-AnCRVjL8dJg",
+          "url": "https://www.youtube.com/watch?v=AnCRVjL8dJg&t=226s",
+          "tijd": 229,
+          "citaat": "don't expect them to kill much."
+        }
+      ],
+      "datum": "2025-12-08",
+      "markeringen": []
+    },
+    {
+      "id": "avoid-protecting-expendable-chaff",
+      "titel": "Expect chaff to die instead of spending resources protecting it",
+      "tekst": "Expect your chaff to die, and avoid pouring resources into protecting it. He considers that a misuse of chaff.",
+      "waarom": "He says its job is to get in the way, waste the opponent's time and get slaughtered.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "chaff"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-AnCRVjL8dJg",
+          "url": "https://www.youtube.com/watch?v=AnCRVjL8dJg&t=241s",
+          "tijd": 244,
+          "citaat": "You cannot pour resources into protecting chaff.",
+          "extraCitaten": [
+            {
+              "tijd": 252,
+              "citaat": "That is when you are misplaying chaff."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-12-08",
+      "markeringen": []
+    },
+    {
+      "id": "giant-rats-absorb-first-charge",
+      "titel": "Use Giant Rats to absorb First Charge",
+      "tekst": "He particularly recommends Giant Rats as speed bumps against units with First Charge, including Bretonnia. Put them in front of a unit you want to protect so the enemy must charge the rats instead.",
+      "waarom": "He says an overrun can take the enemy away from the protected unit, while restraining and reforming essentially wastes a turn during which you can shoot and improve your position.",
+      "voorbeeld": "In the example he shows, Giant Rats in marching column block Inner Circle Knights' view of Clanrats. The knights must charge the rats, and an overrun would miss the Clanrats, potentially leaving the knights exposed to another round of gunfire.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "chaff"
+      ],
+      "leger": "skaven",
+      "units": [
+        "Giant Rats"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-AnCRVjL8dJg",
+          "url": "https://www.youtube.com/watch?v=AnCRVjL8dJg&t=501s",
+          "tijd": 504,
+          "citaat": "giant rats here are incredible against first charge units",
+          "extraCitaten": [
+            {
+              "tijd": 816,
+              "citaat": "stop a first charge as well."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-12-08",
+      "markeringen": []
+    },
+    {
+      "id": "decoys-set-up-countercharges",
+      "titel": "Position decoys to draw enemies into countercharges",
+      "tekst": "Position a decoy so that charging it takes the enemy into a bad position and sets up your own countercharge. Do not simply push it into the middle of the battlefield and hope for the best.",
+      "waarom": null,
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "chaff"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-AnCRVjL8dJg",
+          "url": "https://www.youtube.com/watch?v=AnCRVjL8dJg&t=990s",
+          "tijd": 993,
+          "citaat": "if they charge them they're going into a bad position.",
+          "extraCitaten": [
+            {
+              "tijd": 993,
+              "citaat": "Set up countercharges of your own."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-12-08",
+      "markeringen": []
+    },
+    {
+      "id": "tomb-scorpion-dangerous-chaff",
+      "titel": "Consider a Tomb Scorpion as dangerous chaff",
+      "tekst": "He considers the Tomb Scorpion probably the best chaff unit in the game because its killing threat makes it impossible to ignore.",
+      "waarom": "He says it can kill a Pegasus Lord, and even a dragon if it somehow gets to strike first.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "chaff"
+      ],
+      "leger": "tomb-kings-of-khemri",
+      "units": [
+        "Tomb Scorpion"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-AnCRVjL8dJg",
+          "url": "https://www.youtube.com/watch?v=AnCRVjL8dJg&t=1039s",
+          "tijd": 1042,
+          "citaat": "scorpion is probably the best chaff unit in the game.",
+          "extraCitaten": [
+            {
+              "tijd": 1051,
+              "citaat": "you can't ignore it."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-12-08",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "chaff-must-be-fast",
+      "bron": {
+        "bronId": "yt-AnCRVjL8dJg",
+        "url": "https://www.youtube.com/watch?v=AnCRVjL8dJg&t=126s",
+        "tijd": 129,
+        "citaat": "they need to be fast"
+      },
+      "toelichting": "He likewise recommends fast chaff so it can get into or out of the way quickly."
+    },
+    {
+      "lesId": "chaff-under-100-points",
+      "bron": {
+        "bronId": "yt-AnCRVjL8dJg",
+        "url": "https://www.youtube.com/watch?v=AnCRVjL8dJg&t=152s",
+        "tijd": 155,
+        "citaat": "generally cheap is under 100 points for the unit."
+      },
+      "toelichting": "He gives the same general limit of under 100 points because chaff is likely to die."
+    },
+    {
+      "lesId": "chaff-scouts-deployment",
+      "bron": {
+        "bronId": "yt-AnCRVjL8dJg",
+        "url": "https://www.youtube.com/watch?v=AnCRVjL8dJg&t=318s",
+        "tijd": 321,
+        "citaat": "It allows you to waste drops",
+        "extraCitaten": [
+          {
+            "tijd": 329,
+            "citaat": "So then you can line up favorable matchups."
+          }
+        ]
+      },
+      "wanneerNiet": "He says extra cheap drops can be wasted on armies that really want to go first and therefore prefer as few deployment drops as possible.",
+      "toelichting": "His scout role is the same recommendation to deploy cheap units before committing valuable units."
+    },
+    {
+      "lesId": "chaff-speed-bumps",
+      "bron": {
+        "bronId": "yt-AnCRVjL8dJg",
+        "url": "https://www.youtube.com/watch?v=AnCRVjL8dJg&t=583s",
+        "tijd": 586,
+        "citaat": "They're very good at redirecting charges."
+      },
+      "toelichting": "He recommends the same speed-bump role of putting expendable bodies in the way to redirect charges."
+    },
+    {
+      "lesId": "speed-bump-close-order",
+      "bron": {
+        "bronId": "yt-AnCRVjL8dJg",
+        "url": "https://www.youtube.com/watch?v=AnCRVjL8dJg&t=591s",
+        "tijd": 594,
+        "citaat": "most importantly they're non skirmishers."
+      },
+      "toelichting": "He again recommends non-skirmishing speed bumps so the charger must align to their facing."
+    },
+    {
+      "lesId": "screening-chaff",
+      "bron": {
+        "bronId": "yt-AnCRVjL8dJg",
+        "url": "https://www.youtube.com/watch?v=AnCRVjL8dJg&t=715s",
+        "tijd": 718,
+        "citaat": "So you just plunk an eagle in front of your high priority target.",
+        "extraCitaten": [
+          {
+            "tijd": 727,
+            "citaat": "charge with the eagle to get it out of the way"
+          }
+        ]
+      },
+      "toelichting": "He recommends the same expendable cover screen that charges away before the protected unit charges."
+    },
+    {
+      "lesId": "screen-frenzy-compulsory-charges",
+      "bron": {
+        "bronId": "yt-AnCRVjL8dJg",
+        "url": "https://www.youtube.com/watch?v=AnCRVjL8dJg&t=407s",
+        "tijd": 410,
+        "citaat": "stops this frenzied unit from having to declare a charge."
+      },
+      "toelichting": "He likewise puts a cheap unit in front of frenzied troops to prevent an unwanted baited charge."
+    },
+    {
+      "lesId": "chaff-decoys",
+      "bron": {
+        "bronId": "yt-AnCRVjL8dJg",
+        "url": "https://www.youtube.com/watch?v=AnCRVjL8dJg&t=856s",
+        "tijd": 859,
+        "citaat": "you have to kill it or be killed by it.",
+        "extraCitaten": [
+          {
+            "tijd": 867,
+            "citaat": "it buys time for your priority units"
+          }
+        ]
+      },
+      "toelichting": "His decoy role is the same dangerous chaff that forces a response and buys time for priority units."
+    },
+    {
+      "lesId": "decoy-forces-a-choice",
+      "bron": {
+        "bronId": "yt-AnCRVjL8dJg",
+        "url": "https://www.youtube.com/watch?v=AnCRVjL8dJg&t=998s",
+        "tijd": 1001,
+        "citaat": "Their sole role isn't to die",
+        "extraCitaten": [
+          {
+            "tijd": 894,
+            "citaat": "your opponent's not going to let their great cannon die."
+          }
+        ]
+      },
+      "toelichting": "He makes the same distinction that a decoy threatens consequences if ignored rather than existing only to die."
+    },
+    {
+      "lesId": "mangler-squig-decoy",
+      "bron": {
+        "bronId": "yt-AnCRVjL8dJg",
+        "url": "https://www.youtube.com/watch?v=AnCRVjL8dJg&t=933s",
+        "tijd": 936,
+        "citaat": "a mangler is chaff, but I do believe it is."
+      },
+      "toelichting": "He again presents Mangler Squigs as dangerous decoy chaff, illustrating their threat with a destroyed knight unit."
+    },
+    {
+      "lesId": "light-chariot-artillery-hunter",
+      "bron": {
+        "bronId": "yt-AnCRVjL8dJg",
+        "url": "https://www.youtube.com/watch?v=AnCRVjL8dJg&t=962s",
+        "tijd": 965,
+        "citaat": "the Goblin Wolf chariot also I believe really great use of chaff."
+      },
+      "toelichting": "He recommends the Goblin Wolf Chariot for the same fast, threatening decoy role."
+    }
+  ],
+  "overgeslagen": "Skipped the introduction, sponsor and supporter material, channel requests, and stat readouts without separate advice. Kept the described games only where they support a recommendation; omitted visual details that cannot be established from the transcript.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

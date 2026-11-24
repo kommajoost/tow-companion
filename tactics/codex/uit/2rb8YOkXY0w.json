@@ -1,0 +1,222 @@
+{
+  "videoId": "2rb8YOkXY0w",
+  "bronId": "yt-2rb8YOkXY0w",
+  "model": "GPT-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T22:07:16.607Z",
+  "nieuw": [
+    {
+      "id": "charge-order-flee-paths",
+      "titel": "Calculate flee paths before choosing charge order",
+      "tekst": "Before declaring and resolving several charges, estimate where fleeing targets could end up. Choose the order with those possible positions in mind, because a fleeing unit may obstruct another charge.",
+      "waarom": "He found that charge order could leave one charger stuck behind a fleeing unit, even though its original lane had been open.",
+      "voorbeeld": "His fleeing Mounted Yeomen landed in the BSB chariot's path towards the Duke. The Boar Boyz redirected into the Mounted Yeomen and destroyed them, opening the chariot's lane again.",
+      "wanneerNiet": "He notes that a different flee roll could have carried the Mounted Yeomen through instead, so the outcome was uncertain.",
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-2rb8YOkXY0w",
+          "url": "https://www.youtube.com/watch?v=2rb8YOkXY0w&t=538s",
+          "tijd": 541,
+          "citaat": "when you're declaring multiple charges, you need to be very careful",
+          "extraCitaten": [
+            {
+              "tijd": 1289,
+              "citaat": "if you know that something could flee, where will it"
+            },
+            {
+              "tijd": 1296,
+              "citaat": "end up in the ballpark with its 2d6 flea range"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-12-12",
+      "markeringen": []
+    },
+    {
+      "id": "duke-pegasus-charge-flexibility",
+      "titel": "Prefer a Pegasus mount for the Duke",
+      "tekst": "He considers a Pegasus a far superior mount to a Hippogryph for the Duke, chiefly because of its all-round line of sight.",
+      "waarom": "He points to the Pegasus's 360-degree line of sight, Fly 10 and Swiftstride. He identifies the Hippogryph's Close Order as its main disadvantage in this comparison.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "hammers"
+      ],
+      "leger": "kingdom-of-bretonnia",
+      "units": [
+        "Duke",
+        "Pegasus",
+        "Hippogryph"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-2rb8YOkXY0w",
+          "url": "https://www.youtube.com/watch?v=2rb8YOkXY0w&t=622s",
+          "tijd": 625,
+          "citaat": "a Pegasus, which would be by far the superior choice.",
+          "extraCitaten": [
+            {
+              "tijd": 632,
+              "citaat": "the Pegasus has a 360° line of sight"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-12-12",
+      "markeringen": []
+    },
+    {
+      "id": "reform-for-future-targets",
+      "titel": "Restrain and reform to preserve several future charge options",
+      "tekst": "After winning with a Close Order hammer, consider restraining and reforming to keep several targets in its charge arc. Anticipate where those targets could move next turn, rather than assuming the nearest target will remain available.",
+      "waarom": "He argues that these units cannot afford turns out of combat. Multiple targets leave alternatives if one moves out of the arc or flees.",
+      "voorbeeld": "After winning with his Duke, he reformed instead of overrunning into Black Orcs, which he expected to be a disastrous fight. He turned towards the Boar Boyz, then later angled to threaten the Doom Diver while keeping options to its right.",
+      "wanneerNiet": "He says enemy movement cannot always be predicted, so positioning cannot guarantee that a target remains available.",
+      "fase": "movement",
+      "themas": [
+        "hammers",
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-2rb8YOkXY0w",
+          "url": "https://www.youtube.com/watch?v=2rb8YOkXY0w&t=966s",
+          "tijd": 969,
+          "citaat": "Make a big play out of restraining and reforming.",
+          "extraCitaten": [
+            {
+              "tijd": 977,
+              "citaat": "make sure that you are angling in a way that you're still a threat"
+            },
+            {
+              "tijd": 1353,
+              "citaat": "you need to make sure that you have multiple targets"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-12-12",
+      "markeringen": []
+    },
+    {
+      "id": "champion-delaying-challenge",
+      "titel": "Preserve the champion for a delaying challenge",
+      "tekst": "When using Mounted Knights of the Realm to hold rather than win, keep the champion in the fighting rank so he can challenge an incoming Warboss.",
+      "waarom": "His plan was to keep giving ground or falling back in good order, supported by the battle standard reroll and the nearby Duke's leadership.",
+      "voorbeeld": "He preserved the champion in the fighting rank and challenged the Warboss. The champion died in the first combat, but the unit held through two combats while relying on a reroll on leadership nine.",
+      "wanneerNiet": null,
+      "fase": "combat",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": "kingdom-of-bretonnia",
+      "units": [
+        "Mounted Knights of the Realm"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-2rb8YOkXY0w",
+          "url": "https://www.youtube.com/watch?v=2rb8YOkXY0w&t=1037s",
+          "tijd": 1040,
+          "citaat": "preserve the champion",
+          "extraCitaten": [
+            {
+              "tijd": 1040,
+              "citaat": "So I could challenge the war boss as it came in"
+            },
+            {
+              "tijd": 1047,
+              "citaat": "the plan here is not to win"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-12-12",
+      "markeringen": []
+    },
+    {
+      "id": "flee-through-enemy-escape",
+      "titel": "Consider fleeing through enemies after their charge declarations",
+      "tekst": "If an escape route runs through another enemy unit, consider fleeing through it after that unit's opportunity to declare charges has passed. Check whether your flee distance is likely to carry you through.",
+      "waarom": "He points out that the other enemy unit could not declare a new charge at the fleeing Knights, even if they had ended inside its charge arc.",
+      "voorbeeld": "His Knights fled from the Warboss through the Black Orcs and escaped their charge arc. He judged that the flee roll plus Swiftstride was likely to clear them.",
+      "wanneerNiet": "He had to take a peril test for passing through the Black Orcs and lost two Knights.",
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-2rb8YOkXY0w",
+          "url": "https://www.youtube.com/watch?v=2rb8YOkXY0w&t=1086s",
+          "tijd": 1089,
+          "citaat": "instead of taking the hit again I flee",
+          "extraCitaten": [
+            {
+              "tijd": 1149,
+              "citaat": "he can only declare his charges at the start of the turn."
+            },
+            {
+              "tijd": 1133,
+              "citaat": "It wouldn't have mattered if I was in"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-12-12",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "declare-beneficial-terror-charges-first",
+      "bron": {
+        "bronId": "yt-2rb8YOkXY0w",
+        "url": "https://www.youtube.com/watch?v=2rb8YOkXY0w&t=793s",
+        "tijd": 796,
+        "citaat": "you can just declare a terror charge and see what will happen next.",
+        "extraCitaten": [
+          {
+            "tijd": 804,
+            "citaat": "that flee happens straight away."
+          }
+        ]
+      },
+      "toelichting": "Under his tentative interpretation of terror timing, declaring the terror charge first reveals an immediate flee and possible redirection before other charges are committed."
+    },
+    {
+      "lesId": "fleeing-diverters-steer-charges",
+      "bron": {
+        "bronId": "yt-2rb8YOkXY0w",
+        "url": "https://www.youtube.com/watch?v=2rb8YOkXY0w&t=1397s",
+        "tijd": 1400,
+        "citaat": "you see good players use fleeing to flee behind their own troops.",
+        "extraCitaten": [
+          {
+            "tijd": 1408,
+            "citaat": "one of your own units that's able to charge on the next turn against them."
+          }
+        ]
+      },
+      "toelichting": "He likewise recommends fleeing behind friendly troops so the charger faces a waiting unit that can charge it next turn."
+    }
+  ],
+  "overgeslagen": "Skipped sponsorship, channel support, social-play commentary, rules complaints and rules explanations without advice. Omitted the uncertain details of rearranging the Knights' formation and the rally-and-march sequence.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}
