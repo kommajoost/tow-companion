@@ -6,7 +6,7 @@ import { setPersisted } from '../store';
 import type { OwbArmy, MagicItemsData } from './owbBuilder';
 import { findUnit, entryPoints, validate } from './owbBuilder';
 import { optionSummary } from './builderDerived';
-import { catalogueFor, itemsFor } from './overlays';
+import { catalogueFor, itemsFor, mergeExtraItems, type ExtraItemsFile } from './overlays';
 import type { BattleLijstSamenvatting } from './campaignBattle';
 import { SCENARIO_TEST_CODE, bewaarScenarioTest, type ScenarioTestPayload } from './scenarioTest';
 import { wrathSleutel } from './wrathTriggers';
@@ -53,7 +53,11 @@ const laadCatalogus = (slug: string): Promise<OwbArmy | null> => {
 };
 let itemsBelofte: Promise<MagicItemsData | null> | null = null;
 const laadItems = (): Promise<MagicItemsData | null> =>
-  (itemsBelofte ??= fetch(`${BASE}owb/magic-items.json`).then((r) => (r.ok ? r.json() : null)).catch(() => null));
+  (itemsBelofte ??= Promise.all([
+    fetch(`${BASE}owb/magic-items.json`).then((r) => (r.ok ? r.json() : null)).catch(() => null),
+    // + de New Recruit-items die OWB niet heeft (24-11-2026); geen bestand = niets erbij.
+    fetch(`${BASE}extra-items.json`).then((r) => (r.ok ? r.json() : null)).catch(() => null),
+  ]).then(([items, extra]) => (items ? mergeExtraItems(items as MagicItemsData, extra as ExtraItemsFile | null) : null)));
 
 /**
  * De lijst-samenvatting van een mock-leger, zoals de campagne hem in `aanvLijst`/`verdLijst` meestuurt:

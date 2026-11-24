@@ -1,6 +1,6 @@
 import { entryPoints, findUnit, unitCategoryFor, type BuilderList, type ListEntry, type MagicItemsData, type OwbArmy, type OwbUnit, type Category } from './owbBuilder';
 import { deriveList, rosterWhisper } from './builderDerived';
-import { itemsFor, catalogueFor, hasOverlay, OVERLAY_FILES, type CompositionOverlay } from './overlays';
+import { itemsFor, catalogueFor, hasOverlay, mergeExtraItems, OVERLAY_FILES, type CompositionOverlay, type ExtraItemsFile } from './overlays';
 import { makeUnitStrengthLookup, makeTroopTypeLookup, TROOP_TYPE_NAMES } from './troopTypes';
 
 /* ── Uitgerekende lijst-opsplitsing voor de campagne (30-07-2026) ───────────────────────────────
@@ -129,7 +129,10 @@ async function haalItems(slug: string): Promise<MagicItemsData | null> {
   try {
     if (!alleItems) {
       const r = await fetch(`${BASE}owb/magic-items.json`);
-      alleItems = r.ok ? ((await r.json()) as Record<string, unknown>) : {};
+      const basis = r.ok ? ((await r.json()) as MagicItemsData) : {};
+      // + de New Recruit-items die OWB niet heeft (24-11-2026); geen bestand = niets erbij.
+      const extra = await fetch(`${BASE}extra-items.json`).then((x) => (x.ok ? x.json() : null)).catch(() => null);
+      alleItems = mergeExtraItems(basis, extra as ExtraItemsFile | null) as Record<string, unknown>;
     }
     if (!itemsByArmy) {
       const r = await fetch(`${BASE}owb/the-old-world.json`);

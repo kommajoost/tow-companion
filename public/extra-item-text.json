@@ -1,0 +1,129 @@
+{
+  "helmcutter": {
+    "body": "Notes: - Restriction: Helmcutter wielder\n- Condition: natural 6 on a roll To Wound with it\n- Result: the enemy model gets no armour save against that attack",
+    "profiel": [
+      {
+        "naam": "Helmcutter",
+        "range": "Combat",
+        "strength": "S",
+        "ap": "-1",
+        "specialRules": "Magical Attacks"
+      }
+    ],
+    "bron": "New Recruit",
+    "bronKort": "NR",
+    "publicatie": null,
+    "nrUrl": "https://www.newrecruit.eu/wiki/tow/warhammer-the-old-world/magic-items/0fcd-913a-1fcd-d0ff/helmcutter"
+  },
+  "the-axe-of-abandon": {
+    "body": "Notes: - Condition: Extra Attacks (D3) special rule yields a 3\n- Result: wielder suffers −1 To Hit\n- Duration: to the close of that Combat phase",
+    "profiel": [
+      {
+        "naam": "The Axe of Abandon",
+        "range": "Combat",
+        "strength": "S+1",
+        "ap": "-2",
+        "specialRules": "Extra Attacks (D3), Magical Attacks"
+      }
+    ],
+    "bron": "New Recruit",
+    "bronKort": "NR",
+    "publicatie": null,
+    "nrUrl": "https://www.newrecruit.eu/wiki/tow/warhammer-the-old-world/magic-items/671a-6a55-cbfb-44b9/the-axe-of-abandon"
+  },
+  "the-briar-bow": {
+    "body": "Notes: - Restriction: the Briar-bow\n- Condition: its roll To Hit is successful\n- Result: hits dealt = 1 Artillery dice (not the usual 1)\n  - Misfire instead: 1 hit on the wielder, and after it resolves the weapon shatters for good",
+    "profiel": [
+      {
+        "naam": "The Briar-bow",
+        "range": "30\"",
+        "strength": "3",
+        "ap": "-1",
+        "specialRules": "Magical Attacks"
+      }
+    ],
+    "bron": "New Recruit",
+    "bronKort": "NR",
+    "publicatie": null,
+    "nrUrl": "https://www.newrecruit.eu/wiki/tow/warhammer-the-old-world/magic-items/e53a-4c6b-a328-b9db/the-briar-bow"
+  },
+  "the-flaming-sword": {
+    "body": "Notes: - Restriction: the Flaming Sword wielder; cannot join any unit that has the Regeneration (X+) special rule\n- Select: models that have the Flammable special rule\n- Result: the roll this weapon needs To Wound them is always 4+, whatever their Toughness",
+    "profiel": [
+      {
+        "naam": "The Flaming Sword",
+        "range": "Combat",
+        "strength": "S",
+        "ap": "-1",
+        "specialRules": "Flaming Attacks, Magical Attacks"
+      }
+    ],
+    "bron": "New Recruit",
+    "bronKort": "NR",
+    "publicatie": null,
+    "nrUrl": "https://www.newrecruit.eu/wiki/tow/warhammer-the-old-world/magic-items/ff99-3836-e5ac-7ffa/the-flaming-sword"
+  },
+  "the-armour-of-jet": {
+    "body": "Notes: - Restriction: the Armour of Jet\n- Result: heavy armour; a Wizard wears it with no penalty\n  - Drawback: if that Wizard miscasts or is outclassed in the art, −1 on the Miscast table roll",
+    "bron": "New Recruit",
+    "bronKort": "NR",
+    "publicatie": null,
+    "nrUrl": "https://www.newrecruit.eu/wiki/tow/warhammer-the-old-world/magic-items/d81f-dbd0-09fb-a06a/the-armour-of-jet"
+  },
+  "the-banner-of-the-resolute-dead": {
+    "body": "Notes: - Restriction: the Banner Of The Resolute Dead, held by a unit\n- Result:\n  - always: Movement characteristic of the bearing unit −1\n  - optional, when that unit takes a Leadership test or a Break test: throw 1 further D6 and set aside the highest die",
+    "bron": "New Recruit",
+    "bronKort": "NR",
+    "publicatie": null,
+    "nrUrl": "https://www.newrecruit.eu/wiki/tow/warhammer-the-old-world/magic-items/8d63-5c34-acf0-a918/the-banner-of-the-resolute-dead"
+  },
+  "the-mouldering-banner": {
+    "body": "Notes: - Restriction: the Mouldering Banner\n- Result: two penalties\n  - Enemy unit picking a unit with the banner as target in the shooting phase: extra −1 To Hit\n  - Friendly units ≤6\" of the unit carrying the banner: extra −1 To Hit on their shooting attacks",
+    "bron": "New Recruit",
+    "bronKort": "NR",
+    "publicatie": null,
+    "nrUrl": "https://www.newrecruit.eu/wiki/tow/warhammer-the-old-world/magic-items/6ba0-5da2-6eaa-1a5d/the-mouldering-banner"
+  },
+  "the-obsidian-pendant": {
+    "body": "Notes: - Restriction: the Obsidian Pendant bearer\n- Result: single-purpose protection\n  - Magic Missle wounds on the bearer: Ward save 4+\n  - However, any failed Ward save of this kind destroys the pendant, to be used no more",
+    "bron": "New Recruit",
+    "bronKort": "NR",
+    "publicatie": null,
+    "nrUrl": "https://www.newrecruit.eu/wiki/tow/warhammer-the-old-world/magic-items/3888-ebe5-457e-e278/the-obsidian-pendant"
+  },
+  "the-pariah-stone": {
+    "body": "Notes: - Restriction: the Pariah Stone bearer\n- Timing: any model, friend or foe, wants to pick the bearer as target of a spell or Bound spell\n- Result: that model takes a Leadership test with its own Leadership first\n  - Failed: it picks another target\n  - Passed: the bearer is a legal target",
+    "bron": "New Recruit",
+    "bronKort": "NR",
+    "publicatie": null,
+    "nrUrl": "https://www.newrecruit.eu/wiki/tow/warhammer-the-old-world/magic-items/7c25-7071-2bd2-578f/the-pariah-stone"
+  },
+  "barrow-dirt": {
+    "body": "Notes: - Restriction: Barrow-dirt\n- Limits: 0-1 per model; single use\n- Result: breath weapon\n  - Special Rules: Breath Weapon, Magical Attacks, Multiple Wounds (2)\n  - Profile: R: N/A, S: 3, AP: -3\n  - once the breath weapon is resolved: the bearer takes an Initiative test; failing it puts the bearer at risk of a hit as if it stood partly under the flame template",
+    "bron": "New Recruit",
+    "bronKort": "NR",
+    "publicatie": null,
+    "nrUrl": "https://www.newrecruit.eu/wiki/tow/warhammer-the-old-world/magic-items/e037-dcb5-958b-a948/barrow-dirt"
+  },
+  "the-crown-of-fury": {
+    "body": "Notes: - Restriction: the Crown of Fury\n- Result: its wearer is granted the special rules Furious Charge and Impetuous; the mount receives neither",
+    "bron": "New Recruit",
+    "bronKort": "NR",
+    "publicatie": null,
+    "nrUrl": "https://www.newrecruit.eu/wiki/tow/warhammer-the-old-world/magic-items/4f08-9a09-c155-fc45/the-crown-of-fury"
+  },
+  "crude-canopics": {
+    "body": "Notes: - Restriction: Crude Canopic bearer\n- Timing: bearer makes a Wizardly dispel attempt\n- Result: any natural double besides double 1 unbinds the spell\n  - Drawback: natural double 1 is a normal defeat in the art, plus 2 rolls on the Miscast table, both applied",
+    "bron": "New Recruit",
+    "bronKort": "NR",
+    "publicatie": null,
+    "nrUrl": "https://www.newrecruit.eu/wiki/tow/warhammer-the-old-world/magic-items/7f3c-0ca7-3d5c-836a/crude-canopics"
+  },
+  "morithein-s-magnifier": {
+    "body": "Notes: - Restriction: Morthein's Magnifier bearer\n- Limits: 1× per turn\n- Timing: ahead of declaring the spell's target\n- Result: (optional) spell's range +3\"; its Casting Value rises by 1",
+    "bron": "New Recruit",
+    "bronKort": "NR",
+    "publicatie": null,
+    "nrUrl": "https://www.newrecruit.eu/wiki/tow/warhammer-the-old-world/magic-items/d1bc-5e64-3d83-53f1/morithein's-magnifier"
+  }
+}

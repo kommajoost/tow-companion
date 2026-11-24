@@ -1,0 +1,152 @@
+{
+  "general": [
+    {
+      "name_en": "Crude Canopics",
+      "points": 30,
+      "type": "arcane-item",
+      "onePerArmy": false,
+      "stackable": true,
+      "name": "crude canopics",
+      "bron": "New Recruit",
+      "publicatie": null,
+      "toegevoegd": "2026-11-24",
+      "nrUrl": "https://www.newrecruit.eu/wiki/tow/warhammer-the-old-world/magic-items/7f3c-0ca7-3d5c-836a/crude-canopics"
+    },
+    {
+      "name_en": "Morithein's Magnifier",
+      "points": 25,
+      "type": "arcane-item",
+      "onePerArmy": true,
+      "name": "morithein's magnifier",
+      "bron": "New Recruit",
+      "publicatie": null,
+      "toegevoegd": "2026-11-24",
+      "nrUrl": "https://www.newrecruit.eu/wiki/tow/warhammer-the-old-world/magic-items/d1bc-5e64-3d83-53f1/morithein's-magnifier"
+    },
+    {
+      "name_en": "The Armour Of Jet",
+      "points": 20,
+      "type": "armor",
+      "onePerArmy": false,
+      "stackable": true,
+      "maximum": 1,
+      "name": "the armour of jet",
+      "bron": "New Recruit",
+      "publicatie": null,
+      "toegevoegd": "2026-11-24",
+      "nrUrl": "https://www.newrecruit.eu/wiki/tow/warhammer-the-old-world/magic-items/d81f-dbd0-09fb-a06a/the-armour-of-jet"
+    },
+    {
+      "name_en": "The Mouldering Banner",
+      "points": 25,
+      "type": "banner",
+      "onePerArmy": true,
+      "name": "the mouldering banner",
+      "bron": "New Recruit",
+      "publicatie": null,
+      "toegevoegd": "2026-11-24",
+      "nrUrl": "https://www.newrecruit.eu/wiki/tow/warhammer-the-old-world/magic-items/6ba0-5da2-6eaa-1a5d/the-mouldering-banner"
+    },
+    {
+      "name_en": "The Banner Of The Resolute Dead",
+      "points": 15,
+      "type": "banner",
+      "onePerArmy": true,
+      "name": "the banner of the resolute dead",
+      "bron": "New Recruit",
+      "publicatie": null,
+      "toegevoegd": "2026-11-24",
+      "nrUrl": "https://www.newrecruit.eu/wiki/tow/warhammer-the-old-world/magic-items/8d63-5c34-acf0-a918/the-banner-of-the-resolute-dead"
+    },
+    {
+      "name_en": "Barrow-dirt",
+      "points": 20,
+      "type": "enchanted-item",
+      "onePerArmy": false,
+      "stackable": true,
+      "maximum": 1,
+      "name": "barrow-dirt",
+      "bron": "New Recruit",
+      "publicatie": null,
+      "toegevoegd": "2026-11-24",
+      "nrUrl": "https://www.newrecruit.eu/wiki/tow/warhammer-the-old-world/magic-items/e037-dcb5-958b-a948/barrow-dirt"
+    },
+    {
+      "name_en": "The Crown Of Fury",
+      "points": 20,
+      "type": "enchanted-item",
+      "onePerArmy": true,
+      "name": "the crown of fury",
+      "bron": "New Recruit",
+      "publicatie": null,
+      "toegevoegd": "2026-11-24",
+      "nrUrl": "https://www.newrecruit.eu/wiki/tow/warhammer-the-old-world/magic-items/4f08-9a09-c155-fc45/the-crown-of-fury"
+    },
+    {
+      "name_en": "The Pariah Stone",
+      "points": 35,
+      "type": "talisman",
+      "onePerArmy": true,
+      "name": "the pariah stone",
+      "bron": "New Recruit",
+      "publicatie": null,
+      "toegevoegd": "2026-11-24",
+      "nrUrl": "https://www.newrecruit.eu/wiki/tow/warhammer-the-old-world/magic-items/7c25-7071-2bd2-578f/the-pariah-stone"
+    },
+    {
+      "name_en": "The Obsidian Pendant",
+      "points": 20,
+      "type": "talisman",
+      "onePerArmy": true,
+      "name": "the obsidian pendant",
+      "bron": "New Recruit",
+      "publicatie": null,
+      "toegevoegd": "2026-11-24",
+      "nrUrl": "https://www.newrecruit.eu/wiki/tow/warhammer-the-old-world/magic-items/3888-ebe5-457e-e278/the-obsidian-pendant"
+    },
+    {
+      "name_en": "The Axe Of Abandon",
+      "points": 40,
+      "type": "weapon",
+      "onePerArmy": true,
+      "name": "the axe of abandon",
+      "bron": "New Recruit",
+      "publicatie": null,
+      "toegevoegd": "2026-11-24",
+      "nrUrl": "https://www.newrecruit.eu/wiki/tow/warhammer-the-old-world/magic-items/671a-6a55-cbfb-44b9/the-axe-of-abandon"
+    },
+    {
+      "name_en": "The Briar-bow",
+      "points": 25,
+      "type": "weapon",
+      "onePerArmy": true,
+      "name": "the briar-bow",
+      "bron": "New Recruit",
+      "publicatie": null,
+      "toegevoegd": "2026-11-24",
+      "nrUrl": "https://www.newrecruit.eu/wiki/tow/warhammer-the-old-world/magic-items/e53a-4c6b-a328-b9db/the-briar-bow"
+    },
+    {
+      "name_en": "The Flaming Sword",
+      "points": 25,
+      "type": "weapon",
+      "onePerArmy": true,
+      "name": "the flaming sword",
+      "bron": "New Recruit",
+      "publicatie": null,
+      "toegevoegd": "2026-11-24",
+      "nrUrl": "https://www.newrecruit.eu/wiki/tow/warhammer-the-old-world/magic-items/ff99-3836-e5ac-7ffa/the-flaming-sword"
+    },
+    {
+      "name_en": "Helmcutter",
+      "points": 20,
+      "type": "weapon",
+      "onePerArmy": true,
+      "name": "helmcutter",
+      "bron": "New Recruit",
+      "publicatie": null,
+      "toegevoegd": "2026-11-24",
+      "nrUrl": "https://www.newrecruit.eu/wiki/tow/warhammer-the-old-world/magic-items/0fcd-913a-1fcd-d0ff/helmcutter"
+    }
+  ]
+}

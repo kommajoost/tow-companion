@@ -877,3 +877,39 @@ export function mergeMountDetails<T extends Record<string, MountProfileText>>(
   for (const [k, d] of Object.entries(extra)) out[k] = { ...out[k], ...d };
   return out as T;
 }
+
+/** public/extra-items.json (scripts/sync-new-recruit-items.mjs): magic items that New Recruit has and
+ *  the OWB catalogue does not, in the SAME shape as owb/magic-items.json (list-id -> items), each with
+ *  `bron: "New Recruit"`, `publicatie` and `toegevoegd`. See docs/items/new-recruit-diff.md. */
+export type ExtraItemsFile = Record<string, (MagicItem & { bron?: string; publicatie?: string | null; toegevoegd?: string })[]>;
+
+/**
+ * Leg de New Recruit-items over de OWB-catalogus (24-11-2026, The Briar-bow: wel in New Recruit, niet
+ * bij ons). Puur AANVULLEND: een item dat de catalogus al kent (zelfde `magicItemId`, in welke lijst
+ * dan ook) wordt overgeslagen, zodat een latere OWB-sync altijd wint en er nooit twee versies naast
+ * elkaar staan. Volgorde: OWB < extra-items < Renegade-overlay (`itemsFor` legt die er daarna nog
+ * overheen, en `applyOverlayItems` matcht op `name`), dus een Renegade-pack wint ook hier.
+ */
+export function mergeExtraItems(items: MagicItemsData, extra?: ExtraItemsFile | null): MagicItemsData {
+  if (!items || !extra || typeof extra !== 'object' || !Object.keys(extra).length) return items;
+  const bekend = new Set<string>();
+  for (const arr of Object.values(items)) if (Array.isArray(arr)) for (const it of arr) if (it) bekend.add(magicItemId(it));
+  const out: MagicItemsData = { ...items };
+  for (const [listId, arr] of Object.entries(extra)) {
+    if (!Array.isArray(arr)) continue;
+    const nieuw = arr.filter((it) => it && it.type && it.name_en && !bekend.has(magicItemId(it)));
+    if (!nieuw.length) continue;
+    out[listId] = [...(Array.isArray(items[listId]) ? items[listId] : []), ...nieuw];
+  }
+  return out;
+}
+
+/** De regeltekst bij extra-items.json (public/extra-item-text.json), zelfde vorm en sleutel als
+ *  owb/magic-item-text.json. Alleen sleutels die de OWB-tekst nog NIET heeft komen erbij; de
+ *  Renegade-tekst (`applyOverlayMagicText`) gaat er daarna nog overheen. */
+export function mergeExtraMagicText<T extends Record<string, unknown>>(text: T, extra?: Record<string, unknown> | null): T {
+  if (!text || !extra || typeof extra !== 'object' || !Object.keys(extra).length) return text;
+  const out: Record<string, unknown> = { ...text };
+  for (const [k, v] of Object.entries(extra)) if (!(k in out) && v && typeof v === 'object') out[k] = v;
+  return out as T;
+}

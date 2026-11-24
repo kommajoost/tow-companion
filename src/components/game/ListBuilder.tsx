@@ -23,7 +23,7 @@ import { useBackClose } from '../../lib/backStack';
 import { useData } from '../../data';
 import { getRuleIndex, resolveOptionSlug, resolveRuleSlug, splitCompoundLabel } from '../../lib/armyRules';
 import { useUI } from '../../state';
-import { mergeMountDetails, itemsFor, catalogueFor, applyOverlayMagicText, applyOverlayMountText, applyOverlayStatIndex, hasOverlay, isOverlay, mercenarySources, overlayCompsFor, overlayStatsFor, OVERLAY_FILES, type CompositionOverlay, type MountProfileText } from '../../lib/overlays';
+import { mergeMountDetails, mergeExtraItems, mergeExtraMagicText, itemsFor, catalogueFor, applyOverlayMagicText, applyOverlayMountText, applyOverlayStatIndex, hasOverlay, isOverlay, mercenarySources, overlayCompsFor, overlayStatsFor, OVERLAY_FILES, type CompositionOverlay, type MountProfileText } from '../../lib/overlays';
 import { InfoSheet, type InfoSheetData } from './InfoSheet';
 import type { MagicText } from '../../lib/builderToArmy';
 import { magicItemRules } from '../../lib/builderToArmy';
@@ -182,14 +182,22 @@ export function ListBuilder() {
       };
       setMetaByArmy(map);
     }).catch(() => {});
-    fetch(`${BASE}owb/magic-items.json`).then((r) => r.json()).then(setItemsData).catch(() => setItemsData(null));
+    // + extra-items.json: wat New Recruit heeft en OWB niet (24-11-2026, The Briar-bow). Ontbreekt dat
+    // bestand, dan blijft de OWB-catalogus gewoon werken.
+    Promise.all([
+      fetch(`${BASE}owb/magic-items.json`).then((r) => r.json()),
+      fetch(`${BASE}extra-items.json`).then((r) => (r.ok ? r.json() : null)).catch(() => null),
+    ]).then(([items, extra]) => setItemsData(mergeExtraItems(items, extra))).catch(() => setItemsData(null));
     // mount-text (regelnamen) + mount-details (armour value, base, equipment per model), 22-11-2026.
     // Ontbreekt mount-details, dan blijft mount-text gewoon werken.
     Promise.all([
       fetch(`${BASE}owb/mount-text.json`).then((r) => r.json()),
       fetch(`${BASE}mount-details.json`).then((r) => (r.ok ? r.json() : null)).catch(() => null),
     ]).then(([text, details]) => setBaseMountText(mergeMountDetails(text, details))).catch(() => {});
-    fetch(`${BASE}owb/magic-item-text.json`).then((r) => r.json()).then(setBaseMagicText).catch(() => {});
+    Promise.all([
+      fetch(`${BASE}owb/magic-item-text.json`).then((r) => r.json()),
+      fetch(`${BASE}extra-item-text.json`).then((r) => (r.ok ? r.json() : null)).catch(() => null),
+    ]).then(([text, extra]) => setBaseMagicText(mergeExtraMagicText(text, extra))).catch(() => {});
     if (statIndexCache) setStatIdx(statIndexCache);
     else fetch(`${BASE}owb/rules-index.json`).then((r) => r.json()).then((idx) => { statIndexCache = idx; setStatIdx(idx); }).catch(() => {});
   }, []);

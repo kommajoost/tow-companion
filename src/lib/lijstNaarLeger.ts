@@ -14,7 +14,7 @@ import { compName } from './armies';
 import {
   itemsFor, catalogueFor, applyOverlayMagicText, applyOverlayMountText, applyOverlayStatIndex,
   hasOverlay, isOverlay, overlayCompsFor, overlayStatsFor, OVERLAY_FILES, type CompositionOverlay,
-  mergeMountDetails, type MountDetailsFile,
+  mergeMountDetails, type MountDetailsFile, mergeExtraItems, mergeExtraMagicText, type ExtraItemsFile,
 } from './overlays';
 import { entryPoints, findUnit, type OwbArmy, type MagicItemsData } from './owbBuilder';
 import { isNewRecruitText, parseNewRecruit, resolveNewRecruitHeader, type NewRecruitHeader } from './newRecruitParser';
@@ -54,7 +54,10 @@ export function laadOwbData(): Promise<OwbData> {
       haalJson('owb/index.json'),
       haalJson('owb/the-old-world.json'),
       haalJson('mount-details.json'),
-    ]).then(([stats, items, magic, mount, idx, meta, mountDetails]) => {
+      // New Recruit-items die OWB niet heeft (24-11-2026); ontbreken ze, dan null en verandert er niets.
+      haalJson('extra-items.json'),
+      haalJson('extra-item-text.json'),
+    ]).then(([stats, items, magic, mount, idx, meta, mountDetails, extraItems, extraText]) => {
       const armyNames: Record<string, string> = Array.isArray(idx?.armies)
         ? Object.fromEntries(idx.armies.map((a: { slug: string; name: string }) => [a.slug, a.name]))
         : {};
@@ -67,8 +70,8 @@ export function laadOwbData(): Promise<OwbData> {
       }
       return {
         statIdx: (stats ?? {}) as StatIndex,
-        itemsData: (items ?? null) as MagicItemsData | null,
-        magicText: (magic ?? {}) as MagicText,
+        itemsData: items ? mergeExtraItems(items as MagicItemsData, extraItems as ExtraItemsFile | null) : null,
+        magicText: mergeExtraMagicText((magic ?? {}) as MagicText, extraText as Record<string, unknown> | null),
         mountText: mergeMountDetails((mount ?? {}) as MountText, mountDetails as MountDetailsFile | null),
         armyNames,
         itemsByArmy,
