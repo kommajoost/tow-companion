@@ -57,6 +57,11 @@ const TYPE_BY_GROUP = {
 };
 // Our types that count as the same category (OWB has a separate armour list for Beastmen wizards).
 const SAME_TYPE = { armor: ['armor', 'armor-mages'] };
+// Items whose type in OUR builder must follow upstream Old World Builder rather than New Recruit's group.
+// The Armour of Jet: NR files it under Magic Armour, but its text says a Wizard wears it, and upstream OWB
+// types it 'armor-mages' (the wizard armour slot). As plain 'armor' a Wizard could not pick it at all,
+// because wizards only have the 'armor-mages' slot (Joost, 24-11-2026).
+const TYPE_OVERRIDE = { 'the armour of jet': 'armor-mages' };
 
 // ---------------------------------------------------------------------------------------------------
 // Fetching + decoding the Nuxt payload
@@ -130,7 +135,7 @@ async function crawlNr() {
     const walk = (opts, path) => {
       for (const o of opts ?? []) {
         if (o.group) walk(o.options, [...path, o.name]);
-        else leaves.push({ name: o.name, url: o.url, group: g.name, subgroup: path.join(' > ') || null, type });
+        else leaves.push({ name: o.name, url: o.url, group: g.name, subgroup: path.join(' > ') || null, type: TYPE_OVERRIDE[String(o.name).toLowerCase()] ?? type });
       }
     };
     walk(grp.options, []);

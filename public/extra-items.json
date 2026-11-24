@@ -26,7 +26,7 @@
     {
       "name_en": "The Armour Of Jet",
       "points": 20,
-      "type": "armor",
+      "type": "armor-mages",
       "onePerArmy": false,
       "stackable": true,
       "maximum": 1,
