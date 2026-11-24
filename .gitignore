@@ -23,3 +23,6 @@ public/_preview/
 # Tactiekroutine: ruwe ondertitels en yt-dlp-cache, nooit publiceren.
 tactics/ruw/
 tactics/cache/
+
+# Codex-route: kopieen van bestanden die de runner terugdraaide.
+tactics/codex/teruggedraaid/

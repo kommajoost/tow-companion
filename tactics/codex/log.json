@@ -1,0 +1,214 @@
+[
+  {
+    "videoId": "w5Uye9wgycA",
+    "titel": "THREE Ways To Use Chaff Better",
+    "start": "2026-11-24T20:20:38.542Z",
+    "modus": "kalibratie",
+    "model": "gpt-6.1-sol",
+    "effort": "high",
+    "pogingen": 2,
+    "promptKB": 31,
+    "sec": 15,
+    "exit": 0,
+    "usage": {
+      "input_tokens": 111659,
+      "cached_input_tokens": 81536,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 325,
+      "reasoning_output_tokens": 86
+    },
+    "items": {
+      "agent_message": 2
+    },
+    "commandos": 0,
+    "bericht": "0 lessons and 0 additions written: policy blocked transcript access, and the session is read-only; no output file created.",
+    "status": "mislukt",
+    "reden": "geen uitvoerbestand (exit 0)  2026-11-24T20:21:08.716114Z ERROR codex_core::tools::router: error=exec_command failed: CreateProcess { message: \"Rejected(\\\"`\\\\\\\"C:\\\\\\\\\\\\\\\\Windows\\\\\\\\\\\\\\\\System32\\\\\\\\\\\\\\\\WindowsPowerShell\\\\\\\\\\\\\\\\v1.0\\\\\\\\\\\\\\\\powershell.exe\\\\\\\" -Command \\\\\\\"Get-Content -Raw -LiteralPath 'tactics/ruw/w5Uye9wgycA.fixed.txt'\\\\\\\"` rejected: blocked by policy\\\")\" }",
+    "runner": true
+  },
+  {
+    "videoId": "w5Uye9wgycA",
+    "titel": "THREE Ways To Use Chaff Better",
+    "start": "2026-11-24T20:22:20.583Z",
+    "modus": "kalibratie",
+    "model": "gpt-6.1-sol",
+    "effort": "high",
+    "pogingen": 1,
+    "promptKB": 31,
+    "sec": 231,
+    "exit": 0,
+    "usage": {
+      "input_tokens": 527378,
+      "cached_input_tokens": 466176,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 7079,
+      "reasoning_output_tokens": 2228
+    },
+    "items": {
+      "agent_message": 4,
+      "command_execution": 6
+    },
+    "commandos": 6,
+    "bericht": "0 new lessons, 11 additions.",
+    "status": "ok",
+    "modelGemeld": "gpt-6",
+    "nieuw": 0,
+    "aanvullingen": 0,
+    "afgekeurd": [
+      "aanvulling chaff-sets-tempo: les bestaat niet",
+      "aanvulling chaff-speed-bumps: les bestaat niet",
+      "aanvulling chaff-decoys: les bestaat niet",
+      "aanvulling chaff-scouts-deployment: les bestaat niet",
+      "aanvulling chaff-must-be-fast: les bestaat niet",
+      "aanvulling chaff-under-100-points: les bestaat niet",
+      "aanvulling chaff-versatile-specific: les bestaat niet",
+      "aanvulling mangler-squig-decoy: les bestaat niet",
+      "aanvulling light-chariot-artillery-hunter: les bestaat niet",
+      "aanvulling speed-bump-close-order: deze video is al een bron van de les",
+      "aanvulling frenzy-bait-only-target: les bestaat niet"
+    ],
+    "gecorrigeerd": 0
+  },
+  {
+    "videoId": "w5Uye9wgycA",
+    "titel": "THREE Ways To Use Chaff Better",
+    "start": "2026-11-24T20:26:50.097Z",
+    "modus": "kalibratie",
+    "model": "gpt-6.1-sol",
+    "effort": "high",
+    "pogingen": 1,
+    "promptKB": 31,
+    "sec": 190,
+    "exit": 0,
+    "usage": {
+      "input_tokens": 225910,
+      "cached_input_tokens": 194816,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 8042,
+      "reasoning_output_tokens": 2643
+    },
+    "items": {
+      "agent_message": 3,
+      "command_execution": 4
+    },
+    "commandos": [
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/w5Uye9wgycA.fixed.txt' -Encoding UTF8\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$json = @'\"'\n{\n  \\\"videoId\\\": \\\"w5Uye9wgycA\\\",\n  \\\"bronId\\\": \\\"yt-w5Uye9wgycA\\\",\n  \\\"model\\\": \\\"gpt-6\\\",\n  \\\"nieuw\\\": [\n    {",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$json = @'\"'\n{\n  \\\"videoId\\\": \\\"w5Uye9wgycA\\\",\n  \\\"bronId\\\": \\\"yt-w5Uye9wgycA\\\",\n  \\\"model\\\": \\\"gpt-6\\\",\n  \\\"nieuw\\\": [\n    {",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$json = @'\"'\n{\n  \\\"videoId\\\": \\\"w5Uye9wgycA\\\",\n  \\\"bronId\\\": \\\"yt-w5Uye9wgycA\\\",\n  \\\"model\\\": \\\"gpt-6\\\",\n  \\\"nieuw\\\": [\n    {"
+    ],
+    "bericht": "8 new lessons, 1 addition.",
+    "status": "ok",
+    "modelGemeld": "gpt-6",
+    "nieuw": 8,
+    "aanvullingen": 0,
+    "afgekeurd": [
+      "aanvulling speed-bump-close-order: deze video is al een bron van de les"
+    ],
+    "gecorrigeerd": 0
+  },
+  {
+    "videoId": "72Xb6oBk4Mk",
+    "titel": "You’re Deploying Your Army WRONG",
+    "start": "2026-11-24T20:30:38.760Z",
+    "modus": "uit",
+    "model": "gpt-6.1-sol",
+    "effort": "high",
+    "pogingen": 1,
+    "promptKB": 34,
+    "sec": 171,
+    "exit": 0,
+    "usage": {
+      "input_tokens": 169923,
+      "cached_input_tokens": 141696,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 7544,
+      "reasoning_output_tokens": 4028
+    },
+    "items": {
+      "agent_message": 3,
+      "command_execution": 2
+    },
+    "commandos": [
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/72Xb6oBk4Mk.fixed.txt' -Encoding UTF8\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$lessonJson = @'\"'\n{\n  \\\"videoId\\\": \\\"72Xb6oBk4Mk\\\",\n  \\\"bronId\\\": \\\"yt-72Xb6oBk4Mk\\\",\n  \\\"model\\\": \\\"GPT-6\\\",\n  \\\"nieuw\\\": ["
+    ],
+    "bericht": "13 new lessons, 3 additions.",
+    "status": "ok",
+    "modelGemeld": "GPT-6",
+    "nieuw": 13,
+    "aanvullingen": 3,
+    "afgekeurd": [],
+    "gecorrigeerd": 0
+  },
+  {
+    "videoId": "alCIWRq-CsY",
+    "titel": "Stop Losing Games in the Movement Phase",
+    "start": "2026-11-24T20:33:34.898Z",
+    "modus": "uit",
+    "model": "gpt-6.1-sol",
+    "effort": "high",
+    "pogingen": 1,
+    "promptKB": 37,
+    "sec": 121,
+    "exit": 0,
+    "usage": {
+      "input_tokens": 159232,
+      "cached_input_tokens": 143104,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 4929,
+      "reasoning_output_tokens": 674
+    },
+    "items": {
+      "agent_message": 2,
+      "command_execution": 3
+    },
+    "commandos": [
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/alCIWRq-CsY.fixed.txt' -Encoding UTF8\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$json = @'\"'\n{\n  \\\"videoId\\\": \\\"alCIWRq-CsY\\\",\n  \\\"bronId\\\": \\\"yt-alCIWRq-CsY\\\",\n  \\\"model\\\": \\\"gpt-6\\\",\n  \\\"nieuw\\\": [\n    {",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$json = @'\"'\n{\n  \\\"videoId\\\": \\\"alCIWRq-CsY\\\",\n  \\\"bronId\\\": \\\"yt-alCIWRq-CsY\\\",\n  \\\"model\\\": \\\"gpt-6\\\",\n  \\\"nieuw\\\": [\n    {"
+    ],
+    "bericht": "5 new lessons and 1 addition.",
+    "status": "ok",
+    "modelGemeld": "gpt-6",
+    "nieuw": 5,
+    "aanvullingen": 1,
+    "afgekeurd": [],
+    "gecorrigeerd": 0
+  },
+  {
+    "videoId": "PTlZU04Hjw4",
+    "titel": "Are You Using Chaff Wrong?",
+    "start": "2026-11-24T20:35:41.230Z",
+    "modus": "uit",
+    "model": "gpt-6.1-sol",
+    "effort": "high",
+    "pogingen": 1,
+    "promptKB": 38,
+    "sec": 152,
+    "exit": 0,
+    "usage": {
+      "input_tokens": 168538,
+      "cached_input_tokens": 136064,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 6298,
+      "reasoning_output_tokens": 3726
+    },
+    "items": {
+      "agent_message": 3,
+      "command_execution": 2,
+      "file_change": 1
+    },
+    "commandos": [
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/PTlZU04Hjw4.fixed.txt' -Encoding UTF8\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/PTlZU04Hjw4.fixed.txt' -Encoding UTF8\""
+    ],
+    "bericht": "6 new lessons and 1 addition.",
+    "status": "ok",
+    "modelGemeld": "gpt-6",
+    "nieuw": 6,
+    "aanvullingen": 1,
+    "afgekeurd": [],
+    "gecorrigeerd": 1
+  }
+]

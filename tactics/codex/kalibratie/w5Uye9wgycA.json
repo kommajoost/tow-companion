@@ -1,0 +1,270 @@
+{
+  "videoId": "w5Uye9wgycA",
+  "bronId": "yt-w5Uye9wgycA",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T20:30:00.704Z",
+  "nieuw": [
+    {
+      "id": "choose-fast-cheap-chaff",
+      "titel": "Choose fast, mobile chaff that usually costs under 100 points",
+      "tekst": "When choosing chaff, check speed, mobility and cost first. The speaker suggests under 100 points and movement seven or above, with flying, skirmishing or reserve move as useful bonuses.",
+      "waarom": "He says chaff needs speed to get into position ahead of the opponent. It also needs to be cheap because it is likely to die.",
+      "voorbeeld": null,
+      "wanneerNiet": "He allows more expensive chaff, including some Elf units, but says a unit over 100 points needs a good return to justify the investment.",
+      "fase": "army-building",
+      "themas": [
+        "chaff"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-w5Uye9wgycA",
+          "url": "https://www.youtube.com/watch?v=w5Uye9wgycA&t=758s",
+          "tijd": 761,
+          "citaat": "Under 100 points, let's say movement seven and above",
+          "extraCitaten": [
+            {
+              "tijd": 646,
+              "citaat": "you really have to get a good return back from a unit"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-11-12",
+      "markeringen": []
+    },
+    {
+      "id": "prefer-versatile-chaff",
+      "titel": "Prefer chaff that can fulfil multiple roles",
+      "tekst": "The speaker rates chaff that can perform multiple roles particularly highly. Look for units that can serve as deployment drops, redirectors or threats to vulnerable targets.",
+      "waarom": "In his view, versatility is where chaff units shine.",
+      "voorbeeld": "He describes Giant Rats as cheap deployment drops that can also become speed bumps. He also describes a Great Eagle redirecting units or killing a war machine.",
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "chaff"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-w5Uye9wgycA",
+          "url": "https://www.youtube.com/watch?v=w5Uye9wgycA&t=666s",
+          "tijd": 669,
+          "citaat": "If they can fulfill multiple roles they are S tier chaff unit."
+        }
+      ],
+      "datum": "2026-11-12",
+      "markeringen": []
+    },
+    {
+      "id": "deploy-cheap-chaff-first",
+      "titel": "Deploy cheap chaff before committing your key units",
+      "tekst": "Use cheap chaff as early deployment drops to encourage the opponent to place important units first. Then place your key units against the matchups you want.",
+      "waarom": "He says that without these spare drops, you can be forced to reveal your key pieces before the opponent commits theirs.",
+      "voorbeeld": "He describes deploying a Wood Elf Beast Pack with a handler and two beasts early to use up a drop and make the opponent place another unit.",
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "chaff",
+        "matchups"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-w5Uye9wgycA",
+          "url": "https://www.youtube.com/watch?v=w5Uye9wgycA&t=440s",
+          "tijd": 443,
+          "citaat": "And you put them down early, essentially wasting one of your drops.",
+          "extraCitaten": [
+            {
+              "tijd": 485,
+              "citaat": "force your opponent to put a unit down."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-11-12",
+      "markeringen": []
+    },
+    {
+      "id": "decoys-divert-enemy-resources",
+      "titel": "Use threatening decoys to divert resources from your main threats",
+      "tekst": "Put chaff with real damage potential where it threatens something the opponent wants to protect. Make the opponent choose between spending resources to kill the decoy and letting it attack.",
+      "waarom": "He says that resources spent dealing with decoys are resources not spent dealing with your bigger threats, buying those threats time.",
+      "voorbeeld": "He pushed a Goblin Wolf Chariot forward to threaten Outriders and possibly bait Demigryph Knights. He describes it taking punishment while his Wyvern survived another turn and got the charge it needed.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "chaff"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-w5Uye9wgycA",
+          "url": "https://www.youtube.com/watch?v=w5Uye9wgycA&t=297s",
+          "tijd": 300,
+          "citaat": "Your opponent has to pour resources into dealing with them.",
+          "extraCitaten": [
+            {
+              "tijd": 1168,
+              "citaat": "make your opponent decide whether to waste time killing it"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-11-12",
+      "markeringen": []
+    },
+    {
+      "id": "wolf-chariots-hunt-artillery",
+      "titel": "Use Goblin Wolf Chariots to hunt artillery",
+      "tekst": "The speaker recommends Goblin Wolf Chariots as artillery hunters. If the opponent leaves one free, send it after a war machine.",
+      "waarom": "He points to their speed and the threat their impact hits pose to artillery with little armour.",
+      "voorbeeld": "When an enemy Griffon charged his Orc Boar Boy Mob instead of dealing with the Goblin Wolf Chariot, the chariot reached a mortar and destroyed it in one turn.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "chaff"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Goblin Wolf Chariot"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-w5Uye9wgycA",
+          "url": "https://www.youtube.com/watch?v=w5Uye9wgycA&t=1081s",
+          "tijd": 1084,
+          "citaat": "Wolf chariots are great artillery hunters.",
+          "extraCitaten": [
+            {
+              "tijd": 1159,
+              "citaat": "he gets into a mortar and smashes it in one turn."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-11-12",
+      "markeringen": []
+    },
+    {
+      "id": "cover-speed-bump-overruns",
+      "titel": "Cover a speed bump's overrun route with a countercharge",
+      "tekst": "Position a supporting unit to cover where the enemy will overrun after killing your speed bump. If the overrun leaves the enemy within reach, the support unit can countercharge it.",
+      "waarom": null,
+      "voorbeeld": "He says he should have wheeled his Orc Boar Chariot further to cover the area where the Skin Wolves would overrun after killing his Goblin Wolf Rider Mob.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "chaff"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-w5Uye9wgycA",
+          "url": "https://www.youtube.com/watch?v=w5Uye9wgycA&t=1261s",
+          "tijd": 1264,
+          "citaat": "the Boar Chariot is able to countercharge the unit"
+        }
+      ],
+      "datum": "2026-11-12",
+      "markeringen": []
+    },
+    {
+      "id": "bait-frenzy-then-flee",
+      "titel": "Bait frenzied charges at maximum range, then flee",
+      "tekst": "Place chaff near the edge of a frenzied unit's charge range, make it charge, then flee and try to rally. The speaker particularly likes swift stride for this; make sure the enemy has no other unit to redirect into.",
+      "waarom": "He says the aim is to create space for the rest of your army to operate.",
+      "voorbeeld": null,
+      "wanneerNiet": "He says fleeing is a waste if the opponent can redirect the charge into another unit.",
+      "fase": "movement",
+      "themas": [
+        "chaff",
+        "psychology"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-w5Uye9wgycA",
+          "url": "https://www.youtube.com/watch?v=w5Uye9wgycA&t=1368s",
+          "tijd": 1371,
+          "citaat": "at the very edge of a frenzied unit's charge distance",
+          "extraCitaten": [
+            {
+              "tijd": 1404,
+              "citaat": "if you flee and then you redirect, then it's just a waste of time."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-11-12",
+      "markeringen": []
+    },
+    {
+      "id": "wild-riders-deny-countercharge",
+      "titel": "Set up Wild Riders to charge Grail Knights without countercharge",
+      "tekst": "Against Grail Knights, use a Great Eagle to disrupt their movement so Wild Riders can charge without being countercharged. This is how the speaker sets up the matchup rather than relying on a straight fight.",
+      "waarom": "He says his force would not win that matchup in a straight fight and needed to disrupt the Grail Knights' movement to improve its chances.",
+      "voorbeeld": "His Great Eagle drew the Grail Knights into an overrun. The Wild Riders eventually charged, and he says the charge, a flank charge and the Waywatchers brought down the Grail Knights over two turns.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "chaff",
+        "matchups"
+      ],
+      "leger": "wood-elf-realms",
+      "units": [
+        "Great Eagle",
+        "Wild Riders"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-w5Uye9wgycA",
+          "url": "https://www.youtube.com/watch?v=w5Uye9wgycA&t=1593s",
+          "tijd": 1596,
+          "citaat": "able to eventually charge the uh Grail Knights without him countercharging me.",
+          "extraCitaten": [
+            {
+              "tijd": 1618,
+              "citaat": "I'm not going to win that match up in a straight fight."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-11-12",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [],
+  "overgeslagen": "Skipped the introduction, guide promotions, membership thanks, stat readouts and repeated descriptions of chaff. Omitted the uncertain Griffon alignment interaction at 18:36-18:53 and uncertain unit costs or attack counts.",
+  "controle": {
+    "afgekeurd": [
+      {
+        "soort": "aanvulling",
+        "id": "speed-bump-close-order",
+        "reden": "deze video is al een bron van de les",
+        "aanvulling": {
+          "lesId": "speed-bump-close-order",
+          "bron": {
+            "tijd": 1231,
+            "citaat": "So, close order and open order is vital",
+            "extraCitaten": []
+          },
+          "waarom": null,
+          "voorbeeld": null,
+          "wanneerNiet": null,
+          "toelichting": "He repeats that a speed bump needs close or open order to control the charging unit's alignment and subsequent overrun direction."
+        }
+      }
+    ],
+    "gecorrigeerd": []
+  }
+}

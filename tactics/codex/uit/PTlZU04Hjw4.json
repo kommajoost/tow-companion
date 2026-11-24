@@ -1,0 +1,245 @@
+{
+  "videoId": "PTlZU04Hjw4",
+  "bronId": "yt-PTlZU04Hjw4",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T20:38:13.153Z",
+  "nieuw": [
+    {
+      "id": "chaff-retreat-backstop",
+      "titel": "Place skirmishing chaff behind your block as a retreat backstop",
+      "tekst": "Arrange skirmishing chaff behind your fighting block, extending the formation within coherency so a retreat carries the block through and beyond it. Arrange the chaff across the pursuers' path so they encounter it instead of running directly into the block.",
+      "waarom": "He explains that a retreating unit must keep moving until it clears friendly models, letting the block reach safety behind the chaff and then reform or attempt to rally.",
+      "voorbeeld": "In his example, Harpies were positioned so even a three-inch retreat would carry his block behind them. A pursuing enemy would encounter the skirmishers at an angle that did not lead directly into the block.",
+      "wanneerNiet": "He reports that he later retreated through his unit but failed his rally roll of eight after losing his ranks.",
+      "fase": "movement",
+      "themas": [
+        "chaff"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-PTlZU04Hjw4",
+          "url": "https://www.youtube.com/watch?v=PTlZU04Hjw4&t=303s",
+          "tijd": 306,
+          "citaat": "You can use it as a backs stop",
+          "extraCitaten": [
+            {
+              "tijd": 272,
+              "citaat": "I'm going to fall back in good order behind those harpies"
+            },
+            {
+              "tijd": 772,
+              "citaat": "but I failed my eight up roll."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-04-02",
+      "markeringen": []
+    },
+    {
+      "id": "chaff-maximise-peril-tests",
+      "titel": "Position chaff behind enemies to maximise peril tests",
+      "tekst": "Position skirmishing chaff behind enemy units you expect to break, arranging the models within coherency to maximise peril tests when enemies flee through them.",
+      "waarom": "He says this adds wounds to fleeing enemy units.",
+      "voorbeeld": "His ambushing Ungor moved five inches onto the board, with the models behind the front arranged in a three-by-three grid. Either enemy unit would flee through them if he broke it.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "chaff"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-PTlZU04Hjw4",
+          "url": "https://www.youtube.com/watch?v=PTlZU04Hjw4&t=358s",
+          "tijd": 361,
+          "citaat": "Maximizing peril test.",
+          "extraCitaten": [
+            {
+              "tijd": 361,
+              "citaat": "if I break either of my opponent's units, they're going to flee through my angor"
+            },
+            {
+              "tijd": 376,
+              "citaat": "I'm going to add more wounds to the table."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-04-02",
+      "markeringen": []
+    },
+    {
+      "id": "chaff-engineered-enemy-retreats",
+      "titel": "Use chaff to extend enemy retreats towards the board edge",
+      "tekst": "Place chaff behind enemy units so a fleeing enemy must keep moving until it clears the chaff, potentially leaving the board. Use an extended skirmishing formation, or bring ambushers on in marching column, to create this flee path.",
+      "waarom": "He explains that fleeing through enemy models extends the retreat until the unit is no longer overlapping them. Even if it stays on the board, it may end up too far away to threaten his block.",
+      "voorbeeld": "In his example, only about three inches remained behind the Ungor, giving fleeing enemies a chance of being pushed off the board entirely.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "chaff"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-PTlZU04Hjw4",
+          "url": "https://www.youtube.com/watch?v=PTlZU04Hjw4&t=383s",
+          "tijd": 386,
+          "citaat": "flee through an enemy unit, they're going to have to keep going",
+          "extraCitaten": [
+            {
+              "tijd": 396,
+              "citaat": "there's a chance that they will go right off the board in their entirety"
+            },
+            {
+              "tijd": 422,
+              "citaat": "If you have ambushes specifically, you can bring them on in marching column,"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-04-02",
+      "markeringen": []
+    },
+    {
+      "id": "harpies-mobile-retreat-screens",
+      "titel": "Use Harpies to position retreat screens wherever needed",
+      "tekst": "Use Harpies to get behind enemies for engineered flee paths or peril tests, or behind friendly units to provide a safe path for falling back in good order. He recommends their flying movement for reaching these positions without needing ambush.",
+      "waarom": "He values five Harpies at 55 points and their 20-inch flying march, which he says does not require a march-block test.",
+      "voorbeeld": null,
+      "wanneerNiet": "He says Harpies are not much use in combat.",
+      "fase": "movement",
+      "themas": [
+        "chaff"
+      ],
+      "leger": "beastmen-brayherds",
+      "units": [
+        "Harpies"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-PTlZU04Hjw4",
+          "url": "https://www.youtube.com/watch?v=PTlZU04Hjw4&t=519s",
+          "tijd": 522,
+          "citaat": "they can fly march 20 and get to any position.",
+          "extraCitaten": [
+            {
+              "tijd": 531,
+              "citaat": "they can easily provide the fallback in good order path"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-04-02",
+      "markeringen": []
+    },
+    {
+      "id": "ungor-cheap-objective-holders",
+      "titel": "Use Ungor as cheap objective holders",
+      "tekst": "Use Ungor as inexpensive scoring units to hold a Herdstone or baggage train.",
+      "waarom": "He highlights their 50-point cost, unit strength of ten and scoring status, alongside being regular infantry that can skirmish.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "scenarios",
+      "themas": [
+        "chaff"
+      ],
+      "leger": "beastmen-brayherds",
+      "units": [
+        "Ungor Herd"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-PTlZU04Hjw4",
+          "url": "https://www.youtube.com/watch?v=PTlZU04Hjw4&t=562s",
+          "tijd": 565,
+          "citaat": "they can hold the herd stone.",
+          "extraCitaten": [
+            {
+              "tijd": 568,
+              "citaat": "They can hold a baggage train."
+            },
+            {
+              "tijd": 540,
+              "citaat": "You're getting 10 unit strength."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-04-02",
+      "markeringen": []
+    },
+    {
+      "id": "gor-chaff-occupies-space",
+      "titel": "Use Gor chaff to occupy space and waste turns",
+      "tekst": "Use Gor chaff to take up space and waste your opponent's time, rather than seeking attacks. He highlights access to Scourge of the Burdened on the champion for Reserve Move.",
+      "waarom": "He values their access to Reserve Move and Toughness 4 for only a little more than Ungor.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "chaff"
+      ],
+      "leger": "beastmen-brayherds",
+      "units": [
+        "Gor Herd"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-PTlZU04Hjw4",
+          "url": "https://www.youtube.com/watch?v=PTlZU04Hjw4&t=604s",
+          "tijd": 607,
+          "citaat": "It's not to get in. It's to take up space.",
+          "extraCitaten": [
+            {
+              "tijd": 611,
+              "citaat": "It's to waste your opponent's time"
+            },
+            {
+              "tijd": 584,
+              "citaat": "you're getting here access to scourge of the burdened on your champ."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-04-02",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "chaff-sets-tempo",
+      "bron": {
+        "bronId": "yt-PTlZU04Hjw4",
+        "url": "https://www.youtube.com/watch?v=PTlZU04Hjw4&t=713s",
+        "tijd": 716,
+        "citaat": "one or two pieces tends to be pretty good.",
+        "extraCitaten": [
+          {
+            "tijd": 726,
+            "citaat": "you have too much chaff or you're giving too many points to it"
+          }
+        ]
+      },
+      "wanneerNiet": "He cautions against spending too many points on chaff: these units support the fighting block, which still has to do the work.",
+      "toelichting": "He gives the same recommendation to take one or two pieces of chaff."
+    }
+  ],
+  "overgeslagen": "Skipped channel promotion, army overview and stat readouts without distinct advice, audience questions and banter. The opening discussion of conventional sacrifices, redirectors and cover mainly sets up his criticism of their marginal returns. Omitted unclear captioned rule names around Shaman protection and the closing reference to wolf riders for Chaos Wolves.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": [
+      {
+        "wie": "ungor-cheap-objective-holders",
+        "wat": "extra tijd 546 -> 540"
+      }
+    ]
+  }
+}

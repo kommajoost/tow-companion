@@ -55,7 +55,9 @@
     "tactics:glossary": "node tactics/glossary.mjs",
     "tactics:transcript": "node tactics/transcript.mjs",
     "tactics:build": "node tactics/bouw.mjs",
-    "tactics:check": "node tactics/bouw.mjs --check"
+    "tactics:check": "node tactics/bouw.mjs --check",
+    "tactics:codex": "node tactics/codex/run.mjs",
+    "tactics:merge": "node tactics/codex/samenvoegen.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.106.2",

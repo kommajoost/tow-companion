@@ -1,0 +1,60 @@
+{
+  "72Xb6oBk4Mk": {
+    "op": "2026-11-24",
+    "bestand": "tactics/codex/uit/72Xb6oBk4Mk.json",
+    "nieuw": [
+      "check-scenario-deployment-map",
+      "identify-contestable-objectives",
+      "identify-fast-enemy-threats",
+      "locate-magic-before-wizard",
+      "check-intended-ambushers",
+      "check-scouts-vanguard-safety",
+      "fewer-drops-first-turn",
+      "deploy-for-later-positions",
+      "central-deployment-limits-cavalry",
+      "concentrate-against-enemy-part",
+      "shooters-need-time-safe",
+      "protect-main-hammer-flank",
+      "check-first-movement-options"
+    ],
+    "aanvullingen": [
+      "deploy-read-terrain",
+      "chaff-scouts-deployment",
+      "chaff-speed-bumps"
+    ],
+    "opmerkingen": [
+      "aanvulling op chaff-speed-bumps: extra citaat van yt-w5Uye9wgycA weggehaald voor de nieuwe bron (\"What I need to do is disrupt his movement, improve my chances\")"
+    ]
+  },
+  "PTlZU04Hjw4": {
+    "op": "2026-11-24",
+    "bestand": "tactics/codex/uit/PTlZU04Hjw4.json",
+    "nieuw": [
+      "chaff-retreat-backstop",
+      "chaff-maximise-peril-tests",
+      "chaff-engineered-enemy-retreats",
+      "harpies-mobile-retreat-screens",
+      "ungor-cheap-objective-holders",
+      "gor-chaff-occupies-space"
+    ],
+    "aanvullingen": [
+      "chaff-sets-tempo (+wanneerNiet)"
+    ],
+    "opmerkingen": []
+  },
+  "alCIWRq-CsY": {
+    "op": "2026-11-24",
+    "bestand": "tactics/codex/uit/alCIWRq-CsY.json",
+    "nieuw": [
+      "position-for-next-turn-charges",
+      "check-angles-before-approaching",
+      "coordinate-front-flank-arrival",
+      "decline-charges-for-better-engagements",
+      "move-to-hold-objectives"
+    ],
+    "aanvullingen": [
+      "screening-chaff"
+    ],
+    "opmerkingen": []
+  }
+}

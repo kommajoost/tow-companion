@@ -1,0 +1,258 @@
+{
+  "videoId": "w5Uye9wgycA",
+  "bronId": "yt-w5Uye9wgycA",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T20:26:11.698Z",
+  "nieuw": [],
+  "aanvullingen": [],
+  "overgeslagen": "Skipped promotions, channel thanks, repeated explanations and stat readouts without separate advice; omitted the uncertain Griffon alignment at 18:36-18:53. Matching advice already in the database, including lessons already citing this video, is recorded as additions.",
+  "controle": {
+    "afgekeurd": [
+      {
+        "soort": "aanvulling",
+        "id": "chaff-sets-tempo",
+        "reden": "les bestaat niet",
+        "aanvulling": {
+          "lesId": "chaff-sets-tempo",
+          "bron": {
+            "tijd": 60,
+            "citaat": "unit or a couple units of chaff in your list",
+            "extraCitaten": [
+              {
+                "tijd": 53,
+                "citaat": "my opponent gets to dictate the tempo of the game."
+              }
+            ]
+          },
+          "waarom": null,
+          "voorbeeld": null,
+          "wanneerNiet": null,
+          "toelichting": "He recommends including chaff to disrupt the opponent's plans and enable the army's powerful units, matching the existing advice."
+        }
+      },
+      {
+        "soort": "aanvulling",
+        "id": "chaff-speed-bumps",
+        "reden": "les bestaat niet",
+        "aanvulling": {
+          "lesId": "chaff-speed-bumps",
+          "bron": {
+            "tijd": 164,
+            "citaat": "their main function is to redirect things and move enemy units out of position.",
+            "extraCitaten": [
+              {
+                "tijd": 228,
+                "citaat": "And it all comes down to wasting your opponent's time."
+              }
+            ]
+          },
+          "waarom": null,
+          "voorbeeld": null,
+          "wanneerNiet": null,
+          "toelichting": "He recommends using sacrificial roadblocks to displace enemy units and waste their time, as the existing lesson does."
+        }
+      },
+      {
+        "soort": "aanvulling",
+        "id": "chaff-decoys",
+        "reden": "les bestaat niet",
+        "aanvulling": {
+          "lesId": "chaff-decoys",
+          "bron": {
+            "tijd": 300,
+            "citaat": "Your opponent has to pour resources into dealing with them.",
+            "extraCitaten": [
+              {
+                "tijd": 284,
+                "citaat": "But if they don't get killed, they threaten your opponent."
+              }
+            ]
+          },
+          "waarom": null,
+          "voorbeeld": null,
+          "wanneerNiet": null,
+          "toelichting": "He advises using dangerous decoys to force a response and divert resources from bigger threats, matching the existing recommendation."
+        }
+      },
+      {
+        "soort": "aanvulling",
+        "id": "chaff-scouts-deployment",
+        "reden": "les bestaat niet",
+        "aanvulling": {
+          "lesId": "chaff-scouts-deployment",
+          "bron": {
+            "tijd": 443,
+            "citaat": "And you put them down early, essentially wasting one of your drops.",
+            "extraCitaten": [
+              {
+                "tijd": 448,
+                "citaat": "Wasting in a good term to force your opponent to put something down."
+              }
+            ]
+          },
+          "waarom": null,
+          "voorbeeld": null,
+          "wanneerNiet": null,
+          "toelichting": "He recommends deploying cheap units early so the opponent commits important units before yours, the same deployment advice."
+        }
+      },
+      {
+        "soort": "aanvulling",
+        "id": "chaff-must-be-fast",
+        "reden": "les bestaat niet",
+        "aanvulling": {
+          "lesId": "chaff-must-be-fast",
+          "bron": {
+            "tijd": 533,
+            "citaat": "needs to be fast because it's about getting them in position ahead of your opponent.",
+            "extraCitaten": [
+              {
+                "tijd": 1287,
+                "citaat": "The speed and the mobility of the speed bump is very very important"
+              }
+            ]
+          },
+          "waarom": null,
+          "voorbeeld": null,
+          "wanneerNiet": null,
+          "toelichting": "He recommends speed and mobility so chaff can reach the required position, matching the existing selection advice."
+        }
+      },
+      {
+        "soort": "aanvulling",
+        "id": "chaff-under-100-points",
+        "reden": "les bestaat niet",
+        "aanvulling": {
+          "lesId": "chaff-under-100-points",
+          "bron": {
+            "tijd": 609,
+            "citaat": "his threshold was under 100 points. I think that's pretty true today still.",
+            "extraCitaten": [
+              {
+                "tijd": 646,
+                "citaat": "get a good return back from a unit that is over 100 points"
+              }
+            ]
+          },
+          "waarom": null,
+          "voorbeeld": null,
+          "wanneerNiet": null,
+          "toelichting": "He endorses roughly 100 points as the chaff threshold and demands a good return above it, matching the existing advice and qualification."
+        }
+      },
+      {
+        "soort": "aanvulling",
+        "id": "chaff-versatile-specific",
+        "reden": "les bestaat niet",
+        "aanvulling": {
+          "lesId": "chaff-versatile-specific",
+          "bron": {
+            "tijd": 669,
+            "citaat": "If they can fulfill multiple roles they are S tier chaff unit.",
+            "extraCitaten": [
+              {
+                "tijd": 701,
+                "citaat": "each chaff unit for a specific role."
+              }
+            ]
+          },
+          "waarom": null,
+          "voorbeeld": null,
+          "wanneerNiet": null,
+          "toelichting": "He values chaff that can cover several roles while still including each unit for a specific job, as the existing lesson recommends."
+        }
+      },
+      {
+        "soort": "aanvulling",
+        "id": "mangler-squig-decoy",
+        "reden": "les bestaat niet",
+        "aanvulling": {
+          "lesId": "mangler-squig-decoy",
+          "bron": {
+            "tijd": 874,
+            "citaat": "They are in my mind the perfect decoy.",
+            "extraCitaten": [
+              {
+                "tijd": 919,
+                "citaat": "But you put these guys out on the flank."
+              }
+            ]
+          },
+          "waarom": null,
+          "voorbeeld": null,
+          "wanneerNiet": null,
+          "toelichting": "He recommends Mangler Squigs as flank decoys whose threat slows enemy advances, the same unit-specific use."
+        }
+      },
+      {
+        "soort": "aanvulling",
+        "id": "light-chariot-artillery-hunter",
+        "reden": "les bestaat niet",
+        "aanvulling": {
+          "lesId": "light-chariot-artillery-hunter",
+          "bron": {
+            "tijd": 1084,
+            "citaat": "Wolf chariots are great artillery hunters.",
+            "extraCitaten": [
+              {
+                "tijd": 1159,
+                "citaat": "he gets into a mortar and smashes it in one turn."
+              }
+            ]
+          },
+          "waarom": null,
+          "voorbeeld": null,
+          "wanneerNiet": null,
+          "toelichting": "He recommends Goblin Wolf Chariots as threatening decoys that can hunt artillery if left free, matching the existing lesson."
+        }
+      },
+      {
+        "soort": "aanvulling",
+        "id": "speed-bump-close-order",
+        "reden": "deze video is al een bron van de les",
+        "aanvulling": {
+          "lesId": "speed-bump-close-order",
+          "bron": {
+            "tijd": 1205,
+            "citaat": "being a speed bump is non-negotiable. It cannot be a skirmish unit",
+            "extraCitaten": [
+              {
+                "tijd": 1231,
+                "citaat": "So, close order and open order is vital"
+              }
+            ]
+          },
+          "waarom": null,
+          "voorbeeld": null,
+          "wanneerNiet": null,
+          "toelichting": "He requires close or open order for a sacrificial speed bump to control the enemy's post-combat direction, the same advice."
+        }
+      },
+      {
+        "soort": "aanvulling",
+        "id": "frenzy-bait-only-target",
+        "reden": "les bestaat niet",
+        "aanvulling": {
+          "lesId": "frenzy-bait-only-target",
+          "bron": {
+            "tijd": 1396,
+            "citaat": "it's really important that the opponent doesn't have anything to redirect into",
+            "extraCitaten": [
+              {
+                "tijd": 1371,
+                "citaat": "at the very edge of a frenzied unit's charge distance, make them charge you"
+              }
+            ]
+          },
+          "waarom": null,
+          "voorbeeld": null,
+          "wanneerNiet": null,
+          "toelichting": "He advises baiting frenzy at the edge of charge range and fleeing only when no other target permits a redirect, matching the existing advice."
+        }
+      }
+    ],
+    "gecorrigeerd": []
+  }
+}

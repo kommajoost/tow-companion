@@ -1,0 +1,177 @@
+{
+  "videoId": "alCIWRq-CsY",
+  "bronId": "yt-alCIWRq-CsY",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T20:35:36.227Z",
+  "nieuw": [
+    {
+      "id": "position-for-next-turn-charges",
+      "titel": "Move into realistic charge range for next turn",
+      "tekst": "Position your units this turn so they have a realistic charge next turn. Check the actual distance instead of leaving a gap that requires a high roll to close.",
+      "waarom": "He explains that a unit's opportunity to fight next turn depends on where it finishes this turn; an average charge distance cannot bridge a larger gap.",
+      "voorbeeld": "He contrasts placing a Movement 4 infantry block seven inches from the enemy with leaving it ten inches away: the former creates a realistic threat, while the latter requires a high roll.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-alCIWRq-CsY",
+          "url": "https://www.youtube.com/watch?v=alCIWRq-CsY&t=218s",
+          "tijd": 221,
+          "citaat": "The movement phase is where you create your threat ranges for the following turn.",
+          "extraCitaten": [
+            {
+              "tijd": 196,
+              "citaat": "You have created a realistic charge threat for next turn."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-07-31",
+      "markeringen": []
+    },
+    {
+      "id": "check-angles-before-approaching",
+      "titel": "Check your angles when moving into charge range",
+      "tekst": "When moving closer to the enemy, consider your facing as well as the distance. Avoid creating your own charge opportunity at the cost of exposing your flank to an enemy charge.",
+      "waarom": "He stresses that moving into charge range creates opportunities for both players; a poor angle can give the opponent the fight they wanted.",
+      "voorbeeld": "He describes a unit approaching enemy cavalry at an incorrect angle: it appears to have a good charge available but has also exposed its flank.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-alCIWRq-CsY",
+          "url": "https://www.youtube.com/watch?v=alCIWRq-CsY&t=262s",
+          "tijd": 265,
+          "citaat": "That means thinking about angles, not just distance.",
+          "extraCitaten": [
+            {
+              "tijd": 282,
+              "citaat": "you have also exposed your flank"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-07-31",
+      "markeringen": []
+    },
+    {
+      "id": "coordinate-front-flank-arrival",
+      "titel": "Time supporting units to join the same combat",
+      "tekst": "Move your main unit and its support into position over the preceding one or two turns so they arrive together. Aim to engage the front with one unit while another reaches the flank or rear.",
+      "waarom": "He says this adds attacks and stacks combat resolution bonuses before the dice decide the outcome.",
+      "voorbeeld": "His worked example keeps the primary unit and its combat rolls identical, but adds a smaller supporting unit that was positioned two turns earlier to arrive on the flank.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-alCIWRq-CsY",
+          "url": "https://www.youtube.com/watch?v=alCIWRq-CsY&t=362s",
+          "tijd": 365,
+          "citaat": "one fighting the front and another hitting the flank or rear",
+          "extraCitaten": [
+            {
+              "tijd": 380,
+              "citaat": "position over one or two previous turns, timing them till they arrive together."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-07-31",
+      "markeringen": []
+    },
+    {
+      "id": "decline-charges-for-better-engagements",
+      "titel": "Decline an available charge to prepare a better fight",
+      "tekst": "Sometimes pass up an available charge, wait and reposition to create a better engagement. Aim to enter combat with an advantage already established.",
+      "waarom": "He explains that simply reaching combat is not the goal; the positioning before it should build the advantage.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-alCIWRq-CsY",
+          "url": "https://www.youtube.com/watch?v=alCIWRq-CsY&t=427s",
+          "tijd": 430,
+          "citaat": "They will wait, reposition, and create a better engagement"
+        }
+      ],
+      "datum": "2026-07-31",
+      "markeringen": []
+    },
+    {
+      "id": "move-to-hold-objectives",
+      "titel": "Move to hold objectives at the end of the battle",
+      "tekst": "In games decided by objectives, use movement to get units onto them and keep those units alive until the end. Refuse fights that do not matter to that plan.",
+      "waarom": "He says an objective is claimed by being in the right place, surviving and remaining there when the game ends, rather than by fighting well.",
+      "voorbeeld": "He has seen players win almost every major combat and destroy large parts of the enemy army but still lose on points to opponents who controlled objectives and protected key units.",
+      "wanneerNiet": null,
+      "fase": "scenarios",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-alCIWRq-CsY",
+          "url": "https://www.youtube.com/watch?v=alCIWRq-CsY&t=464s",
+          "tijd": 467,
+          "citaat": "it was in the right place, stayed alive, and was still there",
+          "extraCitaten": [
+            {
+              "tijd": 486,
+              "citaat": "controlling objectives, protecting key units, and refusing fights that didn't matter."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-07-31",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "screening-chaff",
+      "bron": {
+        "bronId": "yt-alCIWRq-CsY",
+        "url": "https://www.youtube.com/watch?v=alCIWRq-CsY&t=296s",
+        "tijd": 299,
+        "citaat": "A cheap disposable unit in front of your real damage dealer",
+        "extraCitaten": [
+          {
+            "tijd": 307,
+            "citaat": "It is there to control where the enemies can charge."
+          }
+        ]
+      },
+      "toelichting": "The same recommendation to screen a damage dealer with cheap disposable chaff, here to control enemy charges and allow a countercharge."
+    }
+  ],
+  "overgeslagen": "Skipped the introduction, subscription request, repeated claims about movement's importance, and rules explanations without a separate actionable recommendation.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

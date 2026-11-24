@@ -1,0 +1,401 @@
+{
+  "videoId": "72Xb6oBk4Mk",
+  "bronId": "yt-72Xb6oBk4Mk",
+  "model": "GPT-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T20:33:29.883Z",
+  "nieuw": [
+    {
+      "id": "check-scenario-deployment-map",
+      "titel": "Check the scenario and deployment map before placing units",
+      "tekst": "Before deploying, check which scenario you are playing and what shape your deployment zone has. Account for whether it gives your army a wide area or confines it to a narrower space.",
+      "waarom": "He says different deployment maps can completely change how an army approaches the game.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-72Xb6oBk4Mk",
+          "url": "https://www.youtube.com/watch?v=72Xb6oBk4Mk&t=139s",
+          "tijd": 142,
+          "citaat": "First, know the scenario.",
+          "extraCitaten": [
+            {
+              "tijd": 148,
+              "citaat": "they can completely change how your army approaches the game."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-09-12",
+      "markeringen": []
+    },
+    {
+      "id": "identify-contestable-objectives",
+      "titel": "Identify which objectives your army can realistically contest",
+      "tekst": "Before deployment, check how many objectives there are and where they are. Decide which ones your army can realistically contest.",
+      "waarom": "He says an objective on the other side of the battlefield might not be relevant to your army at all.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-72Xb6oBk4Mk",
+          "url": "https://www.youtube.com/watch?v=72Xb6oBk4Mk&t=170s",
+          "tijd": 173,
+          "citaat": "which objectives are you realistically going to be able to contest?"
+        }
+      ],
+      "datum": "2026-09-12",
+      "markeringen": []
+    },
+    {
+      "id": "identify-fast-enemy-threats",
+      "titel": "Ask which enemy units fly or have Swiftstride",
+      "tekst": "Before deployment, ask which enemy units can fly or have Swiftstride. Track where those units are placed and account for their threat ranges when deploying valuable units.",
+      "waarom": "He says these abilities can create enormous threat ranges, so a valuable unit may be unsafe even when you think it is far enough away.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "matchups"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-72Xb6oBk4Mk",
+          "url": "https://www.youtube.com/watch?v=72Xb6oBk4Mk&t=357s",
+          "tijd": 360,
+          "citaat": "which units can fly or have swift stride?"
+        }
+      ],
+      "datum": "2026-09-12",
+      "markeringen": []
+    },
+    {
+      "id": "locate-magic-before-wizard",
+      "titel": "Locate enemy magic threats before positioning your wizard",
+      "tekst": "Ask which enemy models are wizards and which have bound spells or bound magic items. Use the positions of those threats to decide where to deploy your own wizard so it can attempt to stop enemy spells.",
+      "waarom": "He says your wizard needs to be within spell range to attempt to stop enemy spells.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "matchups"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-72Xb6oBk4Mk",
+          "url": "https://www.youtube.com/watch?v=72Xb6oBk4Mk&t=390s",
+          "tijd": 393,
+          "citaat": "You want to know where your opponent's magic threats are.",
+          "extraCitaten": [
+            {
+              "tijd": 406,
+              "citaat": "wizard needs to be within the spell range to attempt to stop enemy spells."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-09-12",
+      "markeringen": []
+    },
+    {
+      "id": "check-intended-ambushers",
+      "titel": "Ask which enemy units will actually ambush",
+      "tekst": "Before deploying, ask whether your opponent has ambushers and whether any will actually ambush. Account for threats that will arrive later instead of considering only the units placed during deployment.",
+      "waarom": "He says an ambushing unit can appear later from a completely different part of the battlefield.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-72Xb6oBk4Mk",
+          "url": "https://www.youtube.com/watch?v=72Xb6oBk4Mk&t=417s",
+          "tijd": 420,
+          "citaat": "are any of them going to ambush?"
+        }
+      ],
+      "datum": "2026-09-12",
+      "markeringen": []
+    },
+    {
+      "id": "check-scouts-vanguard-safety",
+      "titel": "Check for scouts and vanguard before judging positions safe",
+      "tekst": "Ask whether your opponent has scouts or vanguard units before you finish deploying. Account for how much closer those units could start when deciding whether a position is safe.",
+      "waarom": "He says these units can start much closer than normal deployment allows, changing what counts as a safe position.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-72Xb6oBk4Mk",
+          "url": "https://www.youtube.com/watch?v=72Xb6oBk4Mk&t=432s",
+          "tijd": 435,
+          "citaat": "does your opponent have scouts",
+          "extraCitaten": [
+            {
+              "tijd": 450,
+              "citaat": "potentially start the game much closer to your army than normal deployment allows"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-09-12",
+      "markeringen": []
+    },
+    {
+      "id": "fewer-drops-first-turn",
+      "titel": "Consider fewer drops when the first turn matters",
+      "tekst": "If the scenario offers a first-turn roll bonus for finishing deployment first, consider reducing your deployment drops. He suggests this particularly for a fast, aggressive army that places high value on going first.",
+      "waarom": "He says getting the first turn can be extremely valuable for a fast, aggressive army.",
+      "voorbeeld": null,
+      "wanneerNiet": "He says more drops give more information and control over the final deployment. The choice depends on your army, the scenario and how important the first turn is.",
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-72Xb6oBk4Mk",
+          "url": "https://www.youtube.com/watch?v=72Xb6oBk4Mk&t=607s",
+          "tijd": 610,
+          "citaat": "you may want to minimize the number of drops",
+          "extraCitaten": [
+            {
+              "tijd": 623,
+              "citaat": "More drops give you more information and more control over the final deployment."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-09-12",
+      "markeringen": []
+    },
+    {
+      "id": "deploy-for-later-positions",
+      "titel": "Deploy for the position you want in later turns",
+      "tekst": "Deploy your army around a shared plan for where its units should be over the next two or three turns. Before pursuing a quick charge, consider the position after the combat and whether the unit will still have support.",
+      "waarom": "He says getting one unit into combat quickly is not necessarily a victory. A slightly passive deployment can force the opponent to make the first difficult decision.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-72Xb6oBk4Mk",
+          "url": "https://www.youtube.com/watch?v=72Xb6oBk4Mk&t=1107s",
+          "tijd": 1110,
+          "citaat": "Deploy for the position you want to create.",
+          "extraCitaten": [
+            {
+              "tijd": 1084,
+              "citaat": "A good deployment considers turn one, but it also considers turn two and turn three."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-09-12",
+      "markeringen": []
+    },
+    {
+      "id": "central-deployment-limits-cavalry",
+      "titel": "Consider central deployment against cavalry threatening your flank",
+      "tekst": "If powerful enemy cavalry threatens to get around your flank and attack a valuable unit, consider deploying more centrally.",
+      "waarom": "He gives this as a way to reduce the angles from which the cavalry can attack.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "flanks"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-72Xb6oBk4Mk",
+          "url": "https://www.youtube.com/watch?v=72Xb6oBk4Mk&t=751s",
+          "tijd": 754,
+          "citaat": "deploy more centrally and reduce the number of angles they can attack from."
+        }
+      ],
+      "datum": "2026-09-12",
+      "markeringen": []
+    },
+    {
+      "id": "concentrate-against-enemy-part",
+      "titel": "Concentrate force against only part of the enemy army",
+      "tekst": "Concentrate your units to create a local advantage rather than spreading them evenly into equal fights. You can leave part of the battlefield empty while concentrating your strength elsewhere.",
+      "waarom": "He argues that you do not necessarily need a better army if more of yours fights the right part of theirs.",
+      "voorbeeld": "He contrasts spreading four combat units into two even fights with concentrating all four against two enemy units.",
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-72Xb6oBk4Mk",
+          "url": "https://www.youtube.com/watch?v=72Xb6oBk4Mk&t=816s",
+          "tijd": 819,
+          "citaat": "concentrate four of your units against two of theirs?"
+        }
+      ],
+      "datum": "2026-09-12",
+      "markeringen": []
+    },
+    {
+      "id": "shooters-need-time-safe",
+      "titel": "Keep shooters beyond an immediate enemy cavalry attack",
+      "tekst": "If a shooting unit needs several turns to earn back its points, do not deploy it where enemy cavalry can reach it immediately.",
+      "waarom": null,
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-72Xb6oBk4Mk",
+          "url": "https://www.youtube.com/watch?v=72Xb6oBk4Mk&t=890s",
+          "tijd": 893,
+          "citaat": "don't put it somewhere enemy cavalry can reach it immediately."
+        }
+      ],
+      "datum": "2026-09-12",
+      "markeringen": []
+    },
+    {
+      "id": "protect-main-hammer-flank",
+      "titel": "Protect your main damage dealer's flank during deployment",
+      "tekst": "If an elite combat unit is your main damage dealer, do not expose its flank just to let it move faster.",
+      "waarom": null,
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "hammers"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-72Xb6oBk4Mk",
+          "url": "https://www.youtube.com/watch?v=72Xb6oBk4Mk&t=898s",
+          "tijd": 901,
+          "citaat": "don't expose it flank just because you want it to move faster."
+        }
+      ],
+      "datum": "2026-09-12",
+      "markeringen": []
+    },
+    {
+      "id": "check-first-movement-options",
+      "titel": "Check that deployment leaves useful first-turn movement choices",
+      "tekst": "Before accepting your deployment, check whether you can advance, hold, threaten a charge, redirect or respond to your opponent on the first movement phase. Reconsider the deployment if you cannot identify useful options.",
+      "waarom": "He describes bad positioning as leaving every possible move with a problem.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-72Xb6oBk4Mk",
+          "url": "https://www.youtube.com/watch?v=72Xb6oBk4Mk&t=962s",
+          "tijd": 965,
+          "citaat": "Good deployment gives you options. Bad deployment takes them away.",
+          "extraCitaten": [
+            {
+              "tijd": 1151,
+              "citaat": "Can I respond to what my opponent does?"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-09-12",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "deploy-read-terrain",
+      "bron": {
+        "bronId": "yt-72Xb6oBk4Mk",
+        "url": "https://www.youtube.com/watch?v=72Xb6oBk4Mk&t=182s",
+        "tijd": 185,
+        "citaat": "identify what each important piece of terrain is doing."
+      },
+      "toelichting": "He likewise recommends assessing hills, sight blockers and difficult terrain before deployment to find advantageous positions."
+    },
+    {
+      "lesId": "chaff-scouts-deployment",
+      "bron": {
+        "bronId": "yt-72Xb6oBk4Mk",
+        "url": "https://www.youtube.com/watch?v=72Xb6oBk4Mk&t=543s",
+        "tijd": 546,
+        "citaat": "You can deploy these units early to give yourself more drops than your opponent."
+      },
+      "toelichting": "He likewise recommends deploying cheap units first so the opponent commits important units before you place yours."
+    },
+    {
+      "lesId": "chaff-speed-bumps",
+      "bron": {
+        "bronId": "yt-72Xb6oBk4Mk",
+        "url": "https://www.youtube.com/watch?v=72Xb6oBk4Mk&t=930s",
+        "tijd": 933,
+        "citaat": "Sometimes its job is simply to stand in the way.",
+        "extraCitaten": [
+          {
+            "tijd": 939,
+            "citaat": "It can block a charge, protect a flank, control an approach,"
+          }
+        ]
+      },
+      "toelichting": "He likewise recommends using chaff to obstruct the enemy and force it to spend a turn on an unwanted fight."
+    }
+  ],
+  "overgeslagen": "Skipped the introductory framing, repeated summaries, channel promotion and the partly garbled Bretonnian example. General cautions about character safety were not specific enough for a separate actionable lesson.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}
