@@ -1,0 +1,233 @@
+{
+  "batch": 16,
+  "gemaaktOp": "2026-11-25T22:53:46.611Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "ids": [
+    "shooting-ambushers-immediate-impact",
+    "sneaky-gits-backline-volley",
+    "beastmen-infantry-safe-ambush",
+    "road-wardens-shooting-ambush",
+    "respect-successful-ambush-arrivals",
+    "wolf-riders-selective-fights",
+    "ambush-protects-fragile-flex-units",
+    "bait-compulsory-charges-maximum-range",
+    "angle-compulsory-charge-bait-outward",
+    "ambushers-support-flank-rear-charges",
+    "disperse-enemies-open-ambush-space",
+    "close-order-wolves-ambush-support"
+  ],
+  "resultaten": {
+    "shooting-ambushers-immediate-impact": {
+      "themas": [
+        {
+          "thema": "shooting-terrain",
+          "subthema": "missile-units"
+        },
+        {
+          "thema": "deployment",
+          "subthema": "ambush-scouts-vanguard"
+        }
+      ],
+      "tags": [
+        "ambush",
+        "missile-troops"
+      ]
+    },
+    "sneaky-gits-backline-volley": {
+      "themas": [
+        {
+          "thema": "shooting-terrain",
+          "subthema": "hunting-shooters"
+        },
+        {
+          "thema": "deployment",
+          "subthema": "ambush-scouts-vanguard"
+        }
+      ],
+      "tags": [
+        "ambush",
+        "missile-troops",
+        "war-machines"
+      ]
+    },
+    "beastmen-infantry-safe-ambush": {
+      "themas": [
+        {
+          "thema": "scenarios",
+          "subthema": "objectives"
+        },
+        {
+          "thema": "deployment",
+          "subthema": "ambush-scouts-vanguard"
+        }
+      ],
+      "tags": [
+        "ambush",
+        "objectives",
+        "scoring-units"
+      ]
+    },
+    "road-wardens-shooting-ambush": {
+      "themas": [
+        {
+          "thema": "shooting-terrain",
+          "subthema": "missile-units"
+        },
+        {
+          "thema": "deployment",
+          "subthema": "ambush-scouts-vanguard"
+        }
+      ],
+      "tags": [
+        "ambush",
+        "missile-troops",
+        "light-cavalry"
+      ]
+    },
+    "respect-successful-ambush-arrivals": {
+      "themas": [
+        {
+          "thema": "deployment",
+          "subthema": "ambush-scouts-vanguard"
+        }
+      ],
+      "tags": [
+        "ambush",
+        "zoning"
+      ]
+    },
+    "wolf-riders-selective-fights": {
+      "themas": [
+        {
+          "thema": "matchups",
+          "subthema": "picking-fights"
+        }
+      ],
+      "tags": [
+        "light-cavalry",
+        "ambush"
+      ]
+    },
+    "ambush-protects-fragile-flex-units": {
+      "themas": [
+        {
+          "thema": "deployment",
+          "subthema": "ambush-scouts-vanguard"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "avoiding-fire"
+        }
+      ],
+      "tags": [
+        "ambush",
+        "armour"
+      ]
+    },
+    "bait-compulsory-charges-maximum-range": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "decoys-bait"
+        }
+      ],
+      "tags": [
+        "bait",
+        "frenzy",
+        "charge-range",
+        "delay"
+      ]
+    },
+    "angle-compulsory-charge-bait-outward": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "decoys-bait"
+        },
+        {
+          "thema": "movement",
+          "subthema": "wheels-alignment"
+        }
+      ],
+      "tags": [
+        "bait",
+        "frenzy",
+        "redirect",
+        "alignment",
+        "wheel"
+      ]
+    },
+    "ambushers-support-flank-rear-charges": {
+      "themas": [
+        {
+          "thema": "movement",
+          "subthema": "support-countercharge"
+        },
+        {
+          "thema": "deployment",
+          "subthema": "ambush-scouts-vanguard"
+        }
+      ],
+      "tags": [
+        "ambush",
+        "flank-charge",
+        "rear-charge",
+        "combined-charge"
+      ]
+    },
+    "disperse-enemies-open-ambush-space": {
+      "themas": [
+        {
+          "thema": "deployment",
+          "subthema": "ambush-scouts-vanguard"
+        }
+      ],
+      "tags": [
+        "ambush",
+        "zoning"
+      ]
+    },
+    "close-order-wolves-ambush-support": {
+      "themas": [
+        {
+          "thema": "movement",
+          "subthema": "support-countercharge"
+        },
+        {
+          "thema": "deployment",
+          "subthema": "ambush-scouts-vanguard"
+        }
+      ],
+      "tags": [
+        "ambush",
+        "combat-resolution",
+        "rear-charge",
+        "close-order",
+        "light-cavalry"
+      ]
+    }
+  },
+  "open": {},
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 22,
+      "sec": 35,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 32915,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1513,
+        "reasoning_output_tokens": 810
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

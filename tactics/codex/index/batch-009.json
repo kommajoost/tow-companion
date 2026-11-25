@@ -1,0 +1,682 @@
+{
+  "batch": 9,
+  "gemaaktOp": "2026-11-25T22:40:32.337Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "ids": [
+    "warriors-bunker-wizard-daemonology",
+    "define-wizard-role-cheaply",
+    "blaster-multiple-magic-missiles",
+    "mobile-blaster-late-points",
+    "wood-elf-reserve-blaster",
+    "reserve-move-blaster-withdrawal",
+    "pair-movement-combat-buffs",
+    "bray-shaman-gor-buffer",
+    "movement-debuff-range-control",
+    "necromancy-leadership-control",
+    "bone-dragon-control-priest",
+    "control-spells-block-lanes",
+    "impassable-safe-advance-lanes",
+    "impassable-limit-enemy-frontage",
+    "impassable-disrupt-skirmisher-forming",
+    "impassable-shorten-enemy-retreats",
+    "scale-buffs-across-attacks",
+    "debuff-strongest-enemy-unit",
+    "plan-around-guaranteed-signatures",
+    "skirmishing-missile-wizard-bunker",
+    "fated-dispel-low-roll",
+    "multiple-low-level-signature-casters",
+    "casting-bonuses-magic-investment",
+    "battle-magic-ward-block",
+    "arrow-attraction-concentrated-fire",
+    "arcane-urgency-escape-charge-arcs",
+    "gathering-darkness-terror-combination",
+    "daemonic-vessel-basic-infantry",
+    "daemonic-vigour-defensive-priority",
+    "infernal-gateway-save-character",
+    "phantasmagoria-force-bad-charges",
+    "plague-rust-armoured-targets",
+    "earthen-ramparts-shooting-defence",
+    "mystical-pathways-change-attack-angle",
+    "mystical-pathways-open-shooting",
+    "drain-magic-low-level-casters",
+    "shimmering-dragon-backline-hunter",
+    "crystal-column-block-artillery",
+    "preserve-vortex-outside-dispel-range",
+    "doppelganger-needs-combat-caster"
+  ],
+  "resultaten": {
+    "warriors-bunker-wizard-daemonology": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "lores-spells"
+        }
+      ],
+      "tags": [
+        "daemonology",
+        "bunker"
+      ]
+    },
+    "define-wizard-role-cheaply": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "wizard-builds"
+        }
+      ],
+      "tags": [
+        "magic-missile",
+        "enchantment",
+        "victory-points"
+      ]
+    },
+    "blaster-multiple-magic-missiles": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "magic-missiles"
+        }
+      ],
+      "tags": [
+        "magic-missile",
+        "magic-items"
+      ]
+    },
+    "mobile-blaster-late-points": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "magic-missiles"
+        },
+        {
+          "thema": "scenarios",
+          "subthema": "late-game"
+        },
+        {
+          "thema": "chaff",
+          "subthema": "clearing-chaff"
+        }
+      ],
+      "tags": [
+        "magic-missile",
+        "victory-points",
+        "mounts",
+        "skirmishers"
+      ]
+    },
+    "wood-elf-reserve-blaster": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "wizard-builds"
+        }
+      ],
+      "tags": [
+        "magic-missile",
+        "reserve-move",
+        "lore-familiar",
+        "light-cavalry",
+        "bunker",
+        "magic-items"
+      ]
+    },
+    "reserve-move-blaster-withdrawal": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "wizard-placement"
+        }
+      ],
+      "tags": [
+        "reserve-move",
+        "magic-missile",
+        "dispel",
+        "bunker"
+      ]
+    },
+    "pair-movement-combat-buffs": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "buffs-hexes"
+        }
+      ],
+      "tags": [
+        "enchantment",
+        "conveyance",
+        "ward-save",
+        "battle-magic"
+      ]
+    },
+    "bray-shaman-gor-buffer": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "wizard-builds"
+        },
+        {
+          "thema": "infantry",
+          "subthema": "unit-builds"
+        }
+      ],
+      "tags": [
+        "enchantment",
+        "daemonology",
+        "wizard-level",
+        "lore-familiar",
+        "power-scroll",
+        "conveyance"
+      ]
+    },
+    "movement-debuff-range-control": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "buffs-hexes"
+        }
+      ],
+      "tags": [
+        "hex",
+        "charge-range",
+        "elementalism",
+        "signature-spell",
+        "zoning"
+      ]
+    },
+    "necromancy-leadership-control": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "buffs-hexes"
+        }
+      ],
+      "tags": [
+        "necromancy",
+        "hex",
+        "leadership",
+        "break-test"
+      ]
+    },
+    "bone-dragon-control-priest": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "wizard-builds"
+        },
+        {
+          "thema": "characters",
+          "subthema": "mounts-items"
+        }
+      ],
+      "tags": [
+        "illusion",
+        "necromancy",
+        "dragons",
+        "mounts",
+        "hex",
+        "zoning"
+      ]
+    },
+    "control-spells-block-lanes": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "control-spells"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "terrain-los"
+        }
+      ],
+      "tags": [
+        "zoning",
+        "line-of-sight",
+        "charge-range"
+      ]
+    },
+    "impassable-safe-advance-lanes": {
+      "themas": [
+        {
+          "thema": "shooting-terrain",
+          "subthema": "terrain-los"
+        },
+        {
+          "thema": "movement",
+          "subthema": "overrun-pursuit"
+        }
+      ],
+      "tags": [
+        "impassable",
+        "overrun",
+        "pursuit",
+        "zoning"
+      ]
+    },
+    "impassable-limit-enemy-frontage": {
+      "themas": [
+        {
+          "thema": "shooting-terrain",
+          "subthema": "terrain-los"
+        }
+      ],
+      "tags": [
+        "impassable",
+        "zoning"
+      ]
+    },
+    "impassable-disrupt-skirmisher-forming": {
+      "themas": [
+        {
+          "thema": "movement",
+          "subthema": "wheels-alignment"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "terrain-los"
+        }
+      ],
+      "tags": [
+        "skirmishers",
+        "impassable",
+        "alignment"
+      ]
+    },
+    "impassable-shorten-enemy-retreats": {
+      "themas": [
+        {
+          "thema": "movement",
+          "subthema": "overrun-pursuit"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "terrain-los"
+        }
+      ],
+      "tags": [
+        "flee",
+        "pursuit",
+        "impassable"
+      ]
+    },
+    "scale-buffs-across-attacks": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "buffs-hexes"
+        }
+      ],
+      "tags": [
+        "enchantment",
+        "concentration"
+      ]
+    },
+    "debuff-strongest-enemy-unit": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "buffs-hexes"
+        }
+      ],
+      "tags": [
+        "hex",
+        "concentration"
+      ]
+    },
+    "plan-around-guaranteed-signatures": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "lores-spells"
+        }
+      ],
+      "tags": [
+        "signature-spell",
+        "wizard-level"
+      ]
+    },
+    "skirmishing-missile-wizard-bunker": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "wizard-placement"
+        }
+      ],
+      "tags": [
+        "bunker",
+        "skirmishers",
+        "line-of-sight",
+        "magic-missile"
+      ]
+    },
+    "fated-dispel-low-roll": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "dispelling"
+        },
+        {
+          "thema": "characters",
+          "subthema": "protecting-characters"
+        }
+      ],
+      "tags": [
+        "dispel",
+        "victory-points"
+      ]
+    },
+    "multiple-low-level-signature-casters": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "wizard-builds"
+        }
+      ],
+      "tags": [
+        "wizard-level",
+        "signature-spell",
+        "magic-missile",
+        "vortex"
+      ]
+    },
+    "casting-bonuses-magic-investment": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "casting-aids"
+        }
+      ],
+      "tags": [
+        "wizard-level",
+        "magic-items"
+      ]
+    },
+    "battle-magic-ward-block": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "buffs-hexes"
+        }
+      ],
+      "tags": [
+        "battle-magic",
+        "ward-save",
+        "enchantment",
+        "wizard-level"
+      ]
+    },
+    "arrow-attraction-concentrated-fire": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "buffs-hexes"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "target-priority"
+        }
+      ],
+      "tags": [
+        "hex",
+        "concentration",
+        "missile-troops"
+      ]
+    },
+    "arcane-urgency-escape-charge-arcs": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "control-spells"
+        }
+      ],
+      "tags": [
+        "conveyance",
+        "charge-arc",
+        "battle-magic"
+      ]
+    },
+    "gathering-darkness-terror-combination": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "buffs-hexes"
+        }
+      ],
+      "tags": [
+        "hex",
+        "terror",
+        "leadership",
+        "necromancy",
+        "general"
+      ]
+    },
+    "daemonic-vessel-basic-infantry": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "buffs-hexes"
+        }
+      ],
+      "tags": [
+        "enchantment",
+        "daemonology"
+      ]
+    },
+    "daemonic-vigour-defensive-priority": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "buffs-hexes"
+        }
+      ],
+      "tags": [
+        "enchantment",
+        "daemonology"
+      ]
+    },
+    "infernal-gateway-save-character": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "control-spells"
+        },
+        {
+          "thema": "characters",
+          "subthema": "protecting-characters"
+        }
+      ],
+      "tags": [
+        "conveyance",
+        "victory-points",
+        "daemonology"
+      ]
+    },
+    "phantasmagoria-force-bad-charges": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "control-spells"
+        }
+      ],
+      "tags": [
+        "vortex",
+        "frenzy",
+        "zoning",
+        "break-test",
+        "daemonology"
+      ]
+    },
+    "plague-rust-armoured-targets": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "buffs-hexes"
+        }
+      ],
+      "tags": [
+        "hex",
+        "armour",
+        "armour-piercing",
+        "elementalism"
+      ]
+    },
+    "earthen-ramparts-shooting-defence": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "buffs-hexes"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "missile-units"
+        }
+      ],
+      "tags": [
+        "enchantment",
+        "ward-save",
+        "missile-troops",
+        "elementalism"
+      ]
+    },
+    "mystical-pathways-change-attack-angle": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "control-spells"
+        },
+        {
+          "thema": "movement",
+          "subthema": "charge-setup"
+        }
+      ],
+      "tags": [
+        "conveyance",
+        "flank-charge",
+        "rear-charge",
+        "charge-arc",
+        "high-magic"
+      ]
+    },
+    "mystical-pathways-open-shooting": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "control-spells"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "terrain-los"
+        }
+      ],
+      "tags": [
+        "conveyance",
+        "line-of-sight",
+        "missile-troops",
+        "high-magic"
+      ]
+    },
+    "drain-magic-low-level-casters": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "lores-spells"
+        }
+      ],
+      "tags": [
+        "high-magic",
+        "wizard-level",
+        "signature-spell",
+        "hex"
+      ]
+    },
+    "shimmering-dragon-backline-hunter": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "control-spells"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "hunting-shooters"
+        }
+      ],
+      "tags": [
+        "conveyance",
+        "fly",
+        "war-machines",
+        "flank-charge",
+        "rear-charge",
+        "high-magic"
+      ]
+    },
+    "crystal-column-block-artillery": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "control-spells"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "avoiding-fire"
+        }
+      ],
+      "tags": [
+        "impassable",
+        "line-of-sight",
+        "war-machines",
+        "vortex",
+        "illusion"
+      ]
+    },
+    "preserve-vortex-outside-dispel-range": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "dispelling"
+        }
+      ],
+      "tags": [
+        "dispel",
+        "vortex"
+      ]
+    },
+    "doppelganger-needs-combat-caster": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "wizard-builds"
+        },
+        {
+          "thema": "characters",
+          "subthema": "combat-roles"
+        }
+      ],
+      "tags": [
+        "illusion",
+        "magic-items"
+      ]
+    }
+  },
+  "open": {},
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 35,
+      "sec": 87,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 35974,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 4139,
+        "reasoning_output_tokens": 2055
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

@@ -1,0 +1,786 @@
+{
+  "batch": 8,
+  "gemaaktOp": "2026-11-25T22:38:48.456Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "ids": [
+    "share-engineer-between-artillery",
+    "cannon-bounce-multiple-lanterns",
+    "spread-artillery-create-crossfire",
+    "white-wolf-knights-charge-lanterns",
+    "bait-lanterns-into-concentrated-fire",
+    "sigmar-prayer-shooting-ward",
+    "plagued-pegasus-knights-withdraw",
+    "pegasus-knights-reliable-lantern-charges",
+    "pegasus-overrun-second-lantern",
+    "knightly-temper-lantern-hunter",
+    "glittering-robe-lantern-charge",
+    "falcon-horn-stop-lantern-flight",
+    "wood-elves-reconsider-poison",
+    "bodkins-remove-lantern-armour",
+    "evasive-push-bombs-long-range",
+    "forest-dragon-threatens-lanterns",
+    "forest-dragon-evade-reform",
+    "wilds-missile-against-lanterns",
+    "ethereal-bunker-against-lanterns",
+    "skycutter-over-stationary-bolt-thrower",
+    "release-fanatics-before-bombardment",
+    "hide-marauder-missile-bunker",
+    "nurgle-spawn-against-lanterns",
+    "warpfire-aura-remove-lantern-ward",
+    "skirmishing-marauders-alternative-bunker",
+    "daemon-prince-plate-against-bombs",
+    "chaos-stack-shooting-hit-penalties",
+    "beastmen-protected-vile-tide-bunker",
+    "light-death-leadership-debuffs",
+    "ushabti-great-bows-lanterns",
+    "necrosphinx-zone-sky-lanterns",
+    "skeleton-archers-poison-volume",
+    "tomb-king-dragon-armour-ages",
+    "blazing-sun-order-versus-cathay",
+    "chaos-core-choose-focus",
+    "consider-larger-forsaken-unit",
+    "chaos-warriors-defensive-attrition",
+    "chaos-warriors-shields-great-weapons",
+    "warriors-monster-hunter-tapestry",
+    "central-warriors-foot-wizard-bunker"
+  ],
+  "resultaten": {
+    "share-engineer-between-artillery": {
+      "themas": [
+        {
+          "thema": "shooting-terrain",
+          "subthema": "war-machines"
+        }
+      ],
+      "tags": [
+        "war-machines",
+        "concentration"
+      ]
+    },
+    "cannon-bounce-multiple-lanterns": {
+      "themas": [
+        {
+          "thema": "shooting-terrain",
+          "subthema": "war-machines"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-sky-lanterns"
+        }
+      ],
+      "tags": [
+        "cannons",
+        "bait",
+        "concentration"
+      ]
+    },
+    "spread-artillery-create-crossfire": {
+      "themas": [
+        {
+          "thema": "deployment",
+          "subthema": "unit-placement"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "war-machines"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-sky-lanterns"
+        }
+      ],
+      "tags": [
+        "war-machines",
+        "cannons",
+        "zoning",
+        "concentration"
+      ]
+    },
+    "white-wolf-knights-charge-lanterns": {
+      "themas": [
+        {
+          "thema": "hammers",
+          "subthema": "heavy-cavalry"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-sky-lanterns"
+        }
+      ],
+      "tags": [
+        "heavy-cavalry",
+        "stand-and-shoot",
+        "ward-save",
+        "flaming",
+        "armour",
+        "hammer"
+      ]
+    },
+    "bait-lanterns-into-concentrated-fire": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "decoys-bait"
+        },
+        {
+          "thema": "game-plan",
+          "subthema": "concentration"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-sky-lanterns"
+        }
+      ],
+      "tags": [
+        "bait",
+        "sacrifice",
+        "concentration",
+        "decoy"
+      ]
+    },
+    "sigmar-prayer-shooting-ward": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "buffs-hexes"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "avoiding-fire"
+        }
+      ],
+      "tags": [
+        "ward-save",
+        "enchantment"
+      ]
+    },
+    "plagued-pegasus-knights-withdraw": {
+      "themas": [
+        {
+          "thema": "shooting-terrain",
+          "subthema": "avoiding-fire"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-sky-lanterns"
+        }
+      ],
+      "tags": [
+        "hex",
+        "armour",
+        "stand-and-shoot",
+        "fly",
+        "heavy-cavalry"
+      ]
+    },
+    "pegasus-knights-reliable-lantern-charges": {
+      "themas": [
+        {
+          "thema": "movement",
+          "subthema": "charge-setup"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-sky-lanterns"
+        },
+        {
+          "thema": "chaff",
+          "subthema": "decoys-bait"
+        }
+      ],
+      "tags": [
+        "charge-range",
+        "bait",
+        "sacrifice",
+        "fly",
+        "heavy-cavalry"
+      ]
+    },
+    "pegasus-overrun-second-lantern": {
+      "themas": [
+        {
+          "thema": "movement",
+          "subthema": "overrun-pursuit"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-sky-lanterns"
+        }
+      ],
+      "tags": [
+        "overrun",
+        "skirmishers",
+        "fly",
+        "heavy-cavalry",
+        "stand-and-shoot"
+      ]
+    },
+    "knightly-temper-lantern-hunter": {
+      "themas": [
+        {
+          "thema": "characters",
+          "subthema": "mounts-items"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-sky-lanterns"
+        }
+      ],
+      "tags": [
+        "multiple-wounds",
+        "magic-items"
+      ]
+    },
+    "glittering-robe-lantern-charge": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "buffs-hexes"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-sky-lanterns"
+        }
+      ],
+      "tags": [
+        "enchantment",
+        "stand-and-shoot"
+      ]
+    },
+    "falcon-horn-stop-lantern-flight": {
+      "themas": [
+        {
+          "thema": "characters",
+          "subthema": "mounts-items"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-sky-lanterns"
+        }
+      ],
+      "tags": [
+        "magic-items",
+        "fly",
+        "zoning"
+      ]
+    },
+    "wood-elves-reconsider-poison": {
+      "themas": [
+        {
+          "thema": "shooting-terrain",
+          "subthema": "missile-units"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-sky-lanterns"
+        }
+      ],
+      "tags": [
+        "poison",
+        "missile-troops",
+        "concentration"
+      ]
+    },
+    "bodkins-remove-lantern-armour": {
+      "themas": [
+        {
+          "thema": "shooting-terrain",
+          "subthema": "missile-units"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-sky-lanterns"
+        }
+      ],
+      "tags": [
+        "armour-piercing",
+        "missile-troops",
+        "armour"
+      ]
+    },
+    "evasive-push-bombs-long-range": {
+      "themas": [
+        {
+          "thema": "shooting-terrain",
+          "subthema": "evasive-skirmish"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-sky-lanterns"
+        }
+      ],
+      "tags": [
+        "evasive",
+        "hit-penalties",
+        "skirmishers"
+      ]
+    },
+    "forest-dragon-threatens-lanterns": {
+      "themas": [
+        {
+          "thema": "hammers",
+          "subthema": "monsters-dragons"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-sky-lanterns"
+        }
+      ],
+      "tags": [
+        "dragons",
+        "mounts",
+        "charge-range",
+        "hammer"
+      ]
+    },
+    "forest-dragon-evade-reform": {
+      "themas": [
+        {
+          "thema": "shooting-terrain",
+          "subthema": "evasive-skirmish"
+        },
+        {
+          "thema": "movement",
+          "subthema": "reforms-formations"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-sky-lanterns"
+        }
+      ],
+      "tags": [
+        "evasive",
+        "reform",
+        "dragons",
+        "charge-arc"
+      ]
+    },
+    "wilds-missile-against-lanterns": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "magic-missiles"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-sky-lanterns"
+        }
+      ],
+      "tags": [
+        "magic-missile",
+        "multiple-wounds",
+        "armour-piercing"
+      ]
+    },
+    "ethereal-bunker-against-lanterns": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "buffs-hexes"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-sky-lanterns"
+        }
+      ],
+      "tags": [
+        "ethereal",
+        "high-magic",
+        "bunker",
+        "enchantment",
+        "flaming"
+      ]
+    },
+    "skycutter-over-stationary-bolt-thrower": {
+      "themas": [
+        {
+          "thema": "shooting-terrain",
+          "subthema": "war-machines"
+        }
+      ],
+      "tags": [
+        "bolt-throwers",
+        "chariots",
+        "fly",
+        "war-machines"
+      ]
+    },
+    "release-fanatics-before-bombardment": {
+      "themas": [
+        {
+          "thema": "hammers",
+          "subthema": "random-movers"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-sky-lanterns"
+        }
+      ],
+      "tags": [
+        "random-movement",
+        "zoning",
+        "break-test"
+      ]
+    },
+    "hide-marauder-missile-bunker": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "wizard-placement"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "avoiding-fire"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-sky-lanterns"
+        }
+      ],
+      "tags": [
+        "bunker",
+        "line-of-sight",
+        "light-cavalry",
+        "bait",
+        "magic-missile",
+        "cover"
+      ]
+    },
+    "nurgle-spawn-against-lanterns": {
+      "themas": [
+        {
+          "thema": "hammers",
+          "subthema": "random-movers"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-sky-lanterns"
+        }
+      ],
+      "tags": [
+        "random-movement",
+        "regeneration",
+        "monsters",
+        "stand-and-shoot"
+      ]
+    },
+    "warpfire-aura-remove-lantern-ward": {
+      "themas": [
+        {
+          "thema": "matchups",
+          "subthema": "vs-sky-lanterns"
+        },
+        {
+          "thema": "hammers",
+          "subthema": "monsters-dragons"
+        }
+      ],
+      "tags": [
+        "ward-save",
+        "dragons"
+      ]
+    },
+    "skirmishing-marauders-alternative-bunker": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "wizard-placement"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "avoiding-fire"
+        }
+      ],
+      "tags": [
+        "bunker",
+        "skirmishers",
+        "hit-penalties",
+        "magic-missile"
+      ]
+    },
+    "daemon-prince-plate-against-bombs": {
+      "themas": [
+        {
+          "thema": "characters",
+          "subthema": "mounts-items"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-sky-lanterns"
+        }
+      ],
+      "tags": [
+        "armour",
+        "monsters",
+        "skirmishers"
+      ]
+    },
+    "chaos-stack-shooting-hit-penalties": {
+      "themas": [
+        {
+          "thema": "shooting-terrain",
+          "subthema": "avoiding-fire"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-sky-lanterns"
+        }
+      ],
+      "tags": [
+        "hit-penalties",
+        "magic-banner",
+        "heavy-cavalry"
+      ]
+    },
+    "beastmen-protected-vile-tide-bunker": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "wizard-placement"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "avoiding-fire"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-sky-lanterns"
+        }
+      ],
+      "tags": [
+        "bunker",
+        "hit-penalties",
+        "skirmishers",
+        "magic-missile",
+        "wizard-level",
+        "zoning"
+      ]
+    },
+    "light-death-leadership-debuffs": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "buffs-hexes"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-sky-lanterns"
+        }
+      ],
+      "tags": [
+        "leadership",
+        "hex",
+        "necromancy"
+      ]
+    },
+    "ushabti-great-bows-lanterns": {
+      "themas": [
+        {
+          "thema": "shooting-terrain",
+          "subthema": "missile-units"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-sky-lanterns"
+        }
+      ],
+      "tags": [
+        "missile-troops",
+        "multiple-wounds",
+        "armour",
+        "monstrous-infantry",
+        "reform",
+        "hex"
+      ]
+    },
+    "necrosphinx-zone-sky-lanterns": {
+      "themas": [
+        {
+          "thema": "hammers",
+          "subthema": "monsters-dragons"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-sky-lanterns"
+        }
+      ],
+      "tags": [
+        "charge-range",
+        "fly",
+        "zoning",
+        "monsters"
+      ]
+    },
+    "skeleton-archers-poison-volume": {
+      "themas": [
+        {
+          "thema": "shooting-terrain",
+          "subthema": "missile-units"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-sky-lanterns"
+        }
+      ],
+      "tags": [
+        "poison",
+        "missile-troops",
+        "magic-items"
+      ]
+    },
+    "tomb-king-dragon-armour-ages": {
+      "themas": [
+        {
+          "thema": "characters",
+          "subthema": "mounts-items"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-sky-lanterns"
+        }
+      ],
+      "tags": [
+        "magic-items",
+        "dragons",
+        "mounts",
+        "armour"
+      ]
+    },
+    "blazing-sun-order-versus-cathay": {
+      "themas": [
+        {
+          "thema": "matchups",
+          "subthema": "vs-grand-cathay"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "evasive-skirmish"
+        }
+      ],
+      "tags": [
+        "evasive",
+        "heavy-cavalry",
+        "cannons",
+        "magic-missile"
+      ]
+    },
+    "chaos-core-choose-focus": {
+      "themas": [
+        {
+          "thema": "game-plan",
+          "subthema": "list-building"
+        }
+      ],
+      "tags": [
+        "concentration",
+        "horde"
+      ]
+    },
+    "consider-larger-forsaken-unit": {
+      "themas": [
+        {
+          "thema": "infantry",
+          "subthema": "unit-builds"
+        }
+      ],
+      "tags": [
+        "ward-save",
+        "stubborn",
+        "swiftstride",
+        "first-charge"
+      ]
+    },
+    "chaos-warriors-defensive-attrition": {
+      "themas": [
+        {
+          "thema": "infantry",
+          "subthema": "anchors"
+        },
+        {
+          "thema": "game-plan",
+          "subthema": "flanks-centre"
+        },
+        {
+          "thema": "scenarios",
+          "subthema": "objectives"
+        }
+      ],
+      "tags": [
+        "anvil",
+        "centre",
+        "flanks",
+        "objectives",
+        "fall-back",
+        "combat-resolution"
+      ]
+    },
+    "chaos-warriors-shields-great-weapons": {
+      "themas": [
+        {
+          "thema": "infantry",
+          "subthema": "unit-builds"
+        }
+      ],
+      "tags": [
+        "great-weapons",
+        "armour"
+      ]
+    },
+    "warriors-monster-hunter-tapestry": {
+      "themas": [
+        {
+          "thema": "infantry",
+          "subthema": "unit-builds"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-monsters"
+        }
+      ],
+      "tags": [
+        "magic-banner",
+        "dragons",
+        "anvil"
+      ]
+    },
+    "central-warriors-foot-wizard-bunker": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "wizard-placement"
+        },
+        {
+          "thema": "deployment",
+          "subthema": "unit-placement"
+        }
+      ],
+      "tags": [
+        "bunker",
+        "centre"
+      ]
+    }
+  },
+  "open": {},
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 36,
+      "sec": 100,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 36620,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 4719,
+        "reasoning_output_tokens": 2070
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

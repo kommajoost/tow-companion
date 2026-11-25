@@ -1,0 +1,713 @@
+{
+  "batch": 4,
+  "gemaaktOp": "2026-11-25T22:32:19.048Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "ids": [
+    "mounted-hunter-fortitude",
+    "offset-skirmisher-charge-contact",
+    "skirmisher-rear-combat-support",
+    "skirmishers-pursue-block-reforms",
+    "avoid-ranked-skirmisher-pursuit",
+    "chaff-kills-are-bonuses",
+    "avoid-protecting-expendable-chaff",
+    "giant-rats-absorb-first-charge",
+    "decoys-set-up-countercharges",
+    "tomb-scorpion-dangerous-chaff",
+    "encirclement-protect-vulnerable-scorer",
+    "identify-enemy-winning-method",
+    "shoot-diverters-out-early",
+    "wyvern-against-unbuffed-warpfire",
+    "hide-artillery-waste-hunters-time",
+    "central-iron-daemon-dragon-bait",
+    "fleeing-diverters-steer-charges",
+    "declare-beneficial-terror-charges-first",
+    "charge-enemy-retreat-backstops",
+    "clear-blockers-before-pursuing-fugitives",
+    "prioritise-charger-movement-order",
+    "high-leadership-charge-control",
+    "fast-armies-deploy-deeper",
+    "glade-riders-shoot-withdraw",
+    "cannons-behind-vanguarding-outriders",
+    "shelter-monsters-from-cannons",
+    "arachnarok-avoid-ogre-blade",
+    "combine-wood-elf-forests",
+    "anticipate-enemy-deployment-pattern",
+    "wood-elves-spread-opponents",
+    "kroxigor-mixed-skink-unit",
+    "cohort-javelins-and-shields",
+    "saurus-anvil-takes-charges",
+    "cohort-raids-through-terrain",
+    "jungle-swarms-disposable-anvil",
+    "fell-bats-scenario-pairs",
+    "chaff-intercept-overruns",
+    "chaff-all-round-movement",
+    "chaff-safe-charge-pockets",
+    "chaff-attack-weak-targets"
+  ],
+  "resultaten": {
+    "mounted-hunter-fortitude": {
+      "themas": [
+        {
+          "thema": "characters",
+          "subthema": "mounts-items"
+        },
+        {
+          "thema": "chaff",
+          "subthema": "clearing-chaff"
+        }
+      ],
+      "tags": [
+        "mounts",
+        "magic-items",
+        "armour",
+        "skirmishers",
+        "cannons"
+      ]
+    },
+    "offset-skirmisher-charge-contact": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "screens"
+        },
+        {
+          "thema": "movement",
+          "subthema": "wheels-alignment"
+        }
+      ],
+      "tags": [
+        "skirmishers",
+        "screen",
+        "alignment",
+        "overrun"
+      ]
+    },
+    "skirmisher-rear-combat-support": {
+      "themas": [
+        {
+          "thema": "movement",
+          "subthema": "support-countercharge"
+        }
+      ],
+      "tags": [
+        "rear-charge",
+        "combat-resolution",
+        "skirmishers",
+        "combined-charge"
+      ]
+    },
+    "skirmishers-pursue-block-reforms": {
+      "themas": [
+        {
+          "thema": "movement",
+          "subthema": "overrun-pursuit"
+        }
+      ],
+      "tags": [
+        "pursuit",
+        "restrain",
+        "reform",
+        "skirmishers",
+        "centre"
+      ]
+    },
+    "avoid-ranked-skirmisher-pursuit": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "clearing-chaff"
+        }
+      ],
+      "tags": [
+        "skirmishers",
+        "charge-arc",
+        "close-order",
+        "flanks"
+      ]
+    },
+    "chaff-kills-are-bonuses": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "choosing-chaff"
+        },
+        {
+          "thema": "game-plan",
+          "subthema": "tempo-trading"
+        }
+      ],
+      "tags": [
+        "sacrifice",
+        "delay"
+      ]
+    },
+    "avoid-protecting-expendable-chaff": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "choosing-chaff"
+        },
+        {
+          "thema": "game-plan",
+          "subthema": "tempo-trading"
+        }
+      ],
+      "tags": [
+        "sacrifice",
+        "delay",
+        "speed-bump"
+      ]
+    },
+    "giant-rats-absorb-first-charge": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "screens"
+        },
+        {
+          "thema": "movement",
+          "subthema": "overrun-pursuit"
+        }
+      ],
+      "tags": [
+        "first-charge",
+        "speed-bump",
+        "screen",
+        "overrun",
+        "delay",
+        "sacrifice"
+      ]
+    },
+    "decoys-set-up-countercharges": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "decoys-bait"
+        },
+        {
+          "thema": "movement",
+          "subthema": "support-countercharge"
+        }
+      ],
+      "tags": [
+        "decoy",
+        "countercharge",
+        "bait",
+        "flee",
+        "overrun",
+        "sacrifice"
+      ]
+    },
+    "tomb-scorpion-dangerous-chaff": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "choosing-chaff"
+        }
+      ],
+      "tags": [
+        "monsters",
+        "hammer",
+        "zoning"
+      ]
+    },
+    "encirclement-protect-vulnerable-scorer": {
+      "themas": [
+        {
+          "thema": "scenarios",
+          "subthema": "scenario-plans"
+        },
+        {
+          "thema": "deployment",
+          "subthema": "unit-placement"
+        }
+      ],
+      "tags": [
+        "scoring-units",
+        "objectives",
+        "flanks"
+      ]
+    },
+    "identify-enemy-winning-method": {
+      "themas": [
+        {
+          "thema": "game-plan",
+          "subthema": "reading-the-enemy"
+        }
+      ],
+      "tags": [
+        "tournament",
+        "victory-points"
+      ]
+    },
+    "shoot-diverters-out-early": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "clearing-chaff"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "target-priority"
+        }
+      ],
+      "tags": [
+        "redirect",
+        "missile-troops",
+        "break-test",
+        "line-of-sight"
+      ]
+    },
+    "wyvern-against-unbuffed-warpfire": {
+      "themas": [
+        {
+          "thema": "matchups",
+          "subthema": "vs-monsters"
+        },
+        {
+          "thema": "hammers",
+          "subthema": "monsters-dragons"
+        }
+      ],
+      "tags": [
+        "dragons",
+        "monsters",
+        "ward-save",
+        "mounts"
+      ]
+    },
+    "hide-artillery-waste-hunters-time": {
+      "themas": [
+        {
+          "thema": "deployment",
+          "subthema": "unit-placement"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "war-machines"
+        }
+      ],
+      "tags": [
+        "war-machines",
+        "delay",
+        "line-of-sight"
+      ]
+    },
+    "central-iron-daemon-dragon-bait": {
+      "themas": [
+        {
+          "thema": "deployment",
+          "subthema": "unit-placement"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-monsters"
+        }
+      ],
+      "tags": [
+        "bait",
+        "dragons",
+        "centre"
+      ]
+    },
+    "fleeing-diverters-steer-charges": {
+      "themas": [
+        {
+          "thema": "movement",
+          "subthema": "fleeing"
+        },
+        {
+          "thema": "chaff",
+          "subthema": "redirecting"
+        }
+      ],
+      "tags": [
+        "flee",
+        "redirect",
+        "alignment",
+        "bait"
+      ]
+    },
+    "declare-beneficial-terror-charges-first": {
+      "themas": [
+        {
+          "thema": "movement",
+          "subthema": "charge-order"
+        }
+      ],
+      "tags": [
+        "terror",
+        "flee"
+      ]
+    },
+    "charge-enemy-retreat-backstops": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "retreat-paths"
+        },
+        {
+          "thema": "movement",
+          "subthema": "charge-order"
+        }
+      ],
+      "tags": [
+        "fall-back",
+        "screen"
+      ]
+    },
+    "clear-blockers-before-pursuing-fugitives": {
+      "themas": [
+        {
+          "thema": "movement",
+          "subthema": "charge-order"
+        },
+        {
+          "thema": "chaff",
+          "subthema": "clearing-chaff"
+        }
+      ],
+      "tags": [
+        "flee",
+        "redirect",
+        "charge-range"
+      ]
+    },
+    "prioritise-charger-movement-order": {
+      "themas": [
+        {
+          "thema": "movement",
+          "subthema": "charge-order"
+        }
+      ],
+      "tags": [
+        "alignment",
+        "wheel",
+        "objectives"
+      ]
+    },
+    "high-leadership-charge-control": {
+      "themas": [
+        {
+          "thema": "movement",
+          "subthema": "charge-order"
+        }
+      ],
+      "tags": [
+        "leadership",
+        "redirect",
+        "restrain",
+        "reform"
+      ]
+    },
+    "fast-armies-deploy-deeper": {
+      "themas": [
+        {
+          "thema": "deployment",
+          "subthema": "unit-placement"
+        },
+        {
+          "thema": "game-plan",
+          "subthema": "aggression-control"
+        }
+      ],
+      "tags": [
+        "charge-range",
+        "delay",
+        "flanks",
+        "zoning"
+      ]
+    },
+    "glade-riders-shoot-withdraw": {
+      "themas": [
+        {
+          "thema": "deployment",
+          "subthema": "unit-placement"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "evasive-skirmish"
+        }
+      ],
+      "tags": [
+        "reserve-move",
+        "light-cavalry",
+        "missile-troops",
+        "line-of-sight"
+      ]
+    },
+    "cannons-behind-vanguarding-outriders": {
+      "themas": [
+        {
+          "thema": "deployment",
+          "subthema": "ambush-scouts-vanguard"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "war-machines"
+        }
+      ],
+      "tags": [
+        "vanguard",
+        "cannons",
+        "line-of-sight",
+        "missile-troops"
+      ]
+    },
+    "shelter-monsters-from-cannons": {
+      "themas": [
+        {
+          "thema": "deployment",
+          "subthema": "deploying-vs-shooting"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "avoiding-fire"
+        }
+      ],
+      "tags": [
+        "monsters",
+        "cannons",
+        "line-of-sight",
+        "large-target"
+      ]
+    },
+    "arachnarok-avoid-ogre-blade": {
+      "themas": [
+        {
+          "thema": "matchups",
+          "subthema": "vs-other"
+        },
+        {
+          "thema": "deployment",
+          "subthema": "unit-placement"
+        }
+      ],
+      "tags": [
+        "monsters",
+        "magic-items",
+        "multiple-wounds"
+      ]
+    },
+    "combine-wood-elf-forests": {
+      "themas": [
+        {
+          "thema": "shooting-terrain",
+          "subthema": "terrain-los"
+        },
+        {
+          "thema": "deployment",
+          "subthema": "deploying-vs-shooting"
+        }
+      ],
+      "tags": [
+        "woods",
+        "line-of-sight",
+        "gunline",
+        "first-turn"
+      ]
+    },
+    "anticipate-enemy-deployment-pattern": {
+      "themas": [
+        {
+          "thema": "deployment",
+          "subthema": "unit-placement"
+        },
+        {
+          "thema": "game-plan",
+          "subthema": "reading-the-enemy"
+        }
+      ],
+      "tags": [
+        "concentration",
+        "flanks"
+      ]
+    },
+    "wood-elves-spread-opponents": {
+      "themas": [
+        {
+          "thema": "game-plan",
+          "subthema": "concentration"
+        },
+        {
+          "thema": "deployment",
+          "subthema": "unit-placement"
+        }
+      ],
+      "tags": [
+        "concentration",
+        "flanks"
+      ]
+    },
+    "kroxigor-mixed-skink-unit": {
+      "themas": [
+        {
+          "thema": "infantry",
+          "subthema": "unit-builds"
+        }
+      ],
+      "tags": [
+        "monstrous-infantry",
+        "combat-resolution",
+        "close-order",
+        "hammer",
+        "renegades"
+      ]
+    },
+    "cohort-javelins-and-shields": {
+      "themas": [
+        {
+          "thema": "infantry",
+          "subthema": "unit-builds"
+        }
+      ],
+      "tags": [
+        "parry",
+        "poison",
+        "armour",
+        "renegades"
+      ]
+    },
+    "saurus-anvil-takes-charges": {
+      "themas": [
+        {
+          "thema": "infantry",
+          "subthema": "anchors"
+        }
+      ],
+      "tags": [
+        "anvil",
+        "parry",
+        "renegades"
+      ]
+    },
+    "cohort-raids-through-terrain": {
+      "themas": [
+        {
+          "thema": "infantry",
+          "subthema": "infantry-moves"
+        }
+      ],
+      "tags": [
+        "woods",
+        "charge-range",
+        "renegades"
+      ]
+    },
+    "jungle-swarms-disposable-anvil": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "choosing-chaff"
+        }
+      ],
+      "tags": [
+        "anvil",
+        "sacrifice",
+        "tarpit",
+        "renegades"
+      ]
+    },
+    "fell-bats-scenario-pairs": {
+      "themas": [
+        {
+          "thema": "scenarios",
+          "subthema": "baggage-train"
+        },
+        {
+          "thema": "chaff",
+          "subthema": "choosing-chaff"
+        }
+      ],
+      "tags": [
+        "baggage-train",
+        "fly",
+        "unit-strength",
+        "swiftstride",
+        "skirmishers",
+        "objectives"
+      ]
+    },
+    "chaff-intercept-overruns": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "screens"
+        },
+        {
+          "thema": "movement",
+          "subthema": "overrun-pursuit"
+        }
+      ],
+      "tags": [
+        "overrun",
+        "screen",
+        "speed-bump",
+        "sacrifice"
+      ]
+    },
+    "chaff-all-round-movement": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "choosing-chaff"
+        }
+      ],
+      "tags": [
+        "skirmishers",
+        "redirect"
+      ]
+    },
+    "chaff-safe-charge-pockets": {
+      "themas": [
+        {
+          "thema": "movement",
+          "subthema": "charge-setup"
+        }
+      ],
+      "tags": [
+        "charge-range",
+        "zoning"
+      ]
+    },
+    "chaff-attack-weak-targets": {
+      "themas": [
+        {
+          "thema": "matchups",
+          "subthema": "picking-fights"
+        },
+        {
+          "thema": "chaff",
+          "subthema": "choosing-chaff"
+        }
+      ],
+      "tags": [
+        "victory-points",
+        "war-machines"
+      ]
+    }
+  },
+  "open": {},
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 35,
+      "sec": 89,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 36153,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 4231,
+        "reasoning_output_tokens": 2070
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

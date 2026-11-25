@@ -3,22 +3,26 @@ import { TOW, towFont } from '../../design/tow';
 import { useBackClose } from '../../lib/backStack';
 import { laadTactics, type TacticsData } from '../../lib/tactics';
 import { TacticsSources } from './TacticsSources';
-import { TacticsLessons } from './TacticsLessons';
+import { TacticsLessons, type Laag } from './TacticsLessons';
 import { BackButton, EmptyLine, useTacticsWide } from './tacticsUi';
 
 type Tab = 'lessons' | 'sources';
 
+/** Hooguit zoveel lagen boven de themalijst (thema, les, tag, les, ...); daarboven vervangt een
+ *  nieuwe laag de bovenste. Er zijn evenveel useBackClose-haken als lagen. */
+const MAX_LAGEN = 6;
+
 // De tactiekdatabank (docs/tactics/ontwerp.md). Nog geen hoofdtab: geopend vanuit Settings of via
-// `?tactics`. Twee weergaven: Lessons (thema's, daarbinnen lessen per fase) en Sources. Op de
-// telefoon opent een thema, les of kanaal als eigen scherm (Back sluit het eerst); vanaf ~760 px
-// staat het geopende item rechts naast de lijst.
+// `?tactics`. Twee weergaven: Lessons (thema's met subthema's, tags, lessen) en Sources. In Lessons
+// staan de geopende lagen op een stapel: thema, les, de lessen met een tag, weer een les. Op de
+// telefoon is elke laag een eigen scherm (Back haalt de bovenste weg); vanaf ~760 px staat de lijst
+// links en de bovenste laag rechts, en is de onderste laag rechts geen aparte Back-stap.
 export function TacticsPage({ onClose }: { onClose: () => void }) {
   const wide = useTacticsWide();
   const [data, setData] = useState<TacticsData | null>(null);
   const [tab, setTab] = useState<Tab | null>(null);
   const [selKanaal, setSelKanaal] = useState<string | null>(null);
-  const [selThema, setSelThema] = useState<string | null>(null);
-  const [selLes, setSelLes] = useState<string | null>(null);
+  const [lagen, setLagen] = useState<Laag[]>([]);
   // Een les die vanuit een kanaal geopend is: terug gaat dan naar Sources.
   const [lesVanuitBronnen, setLesVanuitBronnen] = useState(false);
 
@@ -34,75 +38,78 @@ export function TacticsPage({ onClose }: { onClose: () => void }) {
 
   const vanuitRef = useRef(false);
   vanuitRef.current = lesVanuitBronnen;
-  const sluitLes = useCallback(() => {
-    setSelLes(null);
-    if (vanuitRef.current) setTab('sources');
-    setLesVanuitBronnen(false);
+  const lagenRef = useRef<Laag[]>([]);
+  lagenRef.current = lagen;
+
+  // Eén laag omhoog. Was dat de les uit Sources, dan terug naar Sources.
+  const omhoog = useCallback(() => {
+    const rest = lagenRef.current.slice(0, -1);
+    setLagen(rest);
+    if (rest.length === 0 && vanuitRef.current) { setTab('sources'); setLesVanuitBronnen(false); }
   }, []);
 
-  // Lessons heeft tot twee lagen boven de themalijst: thema, dan les. Op de telefoon is elk een eigen
-  // scherm; breed staat het thema naast de lijst en is alleen een les die het thema afdekt een laag.
-  // Een les zonder thema (uit zoeken of uit Sources) is op de telefoon één laag.
-  const diepte = tab !== 'lessons' ? 0
-    : wide ? (selLes !== null && selThema !== null ? 1 : 0)
-    : (selThema !== null ? 1 : 0) + (selLes !== null ? 1 : 0);
+  const diepte = tab !== 'lessons' ? 0 : wide ? Math.max(0, lagen.length - 1) : lagen.length;
 
-  // Eén laag omhoog in Lessons: les → thema → themalijst. Via een ref, zodat Back de actuele stand ziet.
-  const omhoogRef = useRef<() => void>(() => {});
-  omhoogRef.current = () => {
-    if (selLes !== null) sluitLes();
-    else if (selThema !== null) setSelThema(null);
-  };
-
-  // Back sluit eerst wat open staat. De kanaallaag (alleen telefoon) en de Lessons-lagen elk op zich,
-  // zodat een les die vanuit een kanaal geopend is terugkeert naar dat kanaal. De Lessons-lagen zijn
-  // genummerd in plaats van per soort, zodat les → ander thema (een tik in de les) precies één laag
-  // weghaalt en Back in balans blijft.
+  // Back sluit eerst wat open staat: de kanaallaag (alleen telefoon) en elke laag in Lessons apart.
+  // Vast aantal haken; elk is actief zolang de stapel minstens zo diep is.
   useBackClose(!wide && selKanaal !== null, () => setSelKanaal(null));
-  useBackClose(diepte >= 1, () => omhoogRef.current());
-  useBackClose(diepte >= 2, () => omhoogRef.current());
+  useBackClose(diepte >= 1, omhoog);
+  useBackClose(diepte >= 2, omhoog);
+  useBackClose(diepte >= 3, omhoog);
+  useBackClose(diepte >= 4, omhoog);
+  useBackClose(diepte >= 5, omhoog);
+  useBackClose(diepte >= 6, omhoog);
 
   const kiesTab = (t: Tab) => {
     if (t === tab) return;
-    // Wat op de andere tab open stond gaat dicht, zodat Back niet iets onzichtbaars sluit. Het geopende
-    // thema blijft bewaard (de lagen tellen alleen op de Lessons-tab).
+    // Wat op de andere tab open stond gaat dicht, zodat Back niet iets onzichtbaars sluit. Een geopend
+    // thema blijft bewaard (de lagen tellen alleen op de Lessons-tab); wat erboven lag gaat dicht.
     if (t === 'lessons') setSelKanaal(null);
-    else { setSelLes(null); setLesVanuitBronnen(false); }
+    else { setLagen((l) => (l[0]?.soort === 'thema' ? [l[0]] : [])); setLesVanuitBronnen(false); }
     setTab(t);
   };
 
+  const duw = (laag: Laag) => setLagen((l) => {
+    const boven = l[l.length - 1];
+    if (boven && boven.soort === laag.soort && boven.id === laag.id) return l;
+    return l.length >= MAX_LAGEN ? [...l.slice(0, -1), laag] : [...l, laag];
+  });
+
   const openLesVanuitBron = (id: string) => {
     setLesVanuitBronnen(true);
-    setSelThema(null);
-    setSelLes(id);
+    setLagen([{ soort: 'les', id }]);
     setTab('lessons');
   };
 
-  const openLes = (id: string, inThema: boolean) => {
-    if (!inThema) setSelThema(null);
-    setSelLes(id);
+  const openLes = (id: string, vanuitLijst: boolean) => {
+    if (vanuitLijst) setLagen([{ soort: 'les', id }]);
+    else duw({ soort: 'les', id });
   };
 
-  // Een thema openen (uit de lijst of uit de les) sluit de les. Kwam die les uit Sources, dan gaat
-  // ook het kanaal dicht: terug loopt vanaf hier door Lessons.
-  const openThema = (id: string | null) => {
-    setSelThema(id);
-    setSelLes(null);
+  const openTag = (id: string) => duw({ soort: 'tag', id });
+
+  // Een thema openen (uit de lijst of uit een les) begint de stapel opnieuw. Kwam de les uit Sources,
+  // dan gaat ook het kanaal dicht: terug loopt vanaf hier door Lessons.
+  const openThema = (id: string, sub?: string | null) => {
+    setLagen([{ soort: 'thema', id, sub: sub ?? null }]);
     if (vanuitRef.current) { setLesVanuitBronnen(false); setSelKanaal(null); }
   };
 
   // Eén terugknop in de kop: haalt precies de laag weg die de hardware-Back ook zou weghalen, en
   // sluit daarna de pagina.
   const kanaalOpen = !wide && tab === 'sources' && selKanaal !== null;
-  const themaNaam = (selThema && data?.vocab.themas.find((t) => t.id === selThema)?.naam) || 'Lessons';
+  const laagNaam = (laag: Laag | undefined): string => {
+    if (!laag) return lesVanuitBronnen ? 'Sources' : 'Lessons';
+    if (laag.soort === 'thema') return data?.vocab.themas.find((t) => t.id === laag.id)?.naam ?? 'Theme';
+    if (laag.soort === 'tag') return data?.tags.find((t) => t.id === laag.id)?.label ?? 'Tag';
+    return 'Lesson';
+  };
   const terug = () => {
-    if (diepte > 0) omhoogRef.current();
+    if (diepte > 0) omhoog();
     else if (kanaalOpen) setSelKanaal(null);
     else onClose();
   };
-  const terugLabel = diepte > 0
-    ? (selLes !== null ? (lesVanuitBronnen ? 'Sources' : selThema !== null ? themaNaam : 'Lessons') : 'Lessons')
-    : kanaalOpen ? 'Sources' : 'Back';
+  const terugLabel = diepte > 0 ? laagNaam(lagen[lagen.length - 2]) : kanaalOpen ? 'Sources' : 'Back';
 
   const aantalLessen = data?.lessen.lessen.length ?? 0;
   const aantalKanalen = data?.bronnen?.kanalen.length ?? 0;
@@ -151,12 +158,14 @@ export function TacticsPage({ onClose }: { onClose: () => void }) {
       <TacticsLessons
         lessen={data.lessen.lessen}
         vocab={data.vocab}
+        tags={data.tags}
         bronnen={data.bronnen}
         wide={wide}
-        selThema={selThema}
-        selId={selLes}
+        lagen={lagen}
         onOpenThema={openThema}
         onOpenLes={openLes}
+        onOpenTag={openTag}
+        onTerug={omhoog}
       />
     );
   }

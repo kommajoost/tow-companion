@@ -1,0 +1,733 @@
+{
+  "batch": 1,
+  "gemaaktOp": "2026-11-25T22:27:11.384Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "ids": [
+    "chaff-sets-tempo",
+    "chaff-speed-bumps",
+    "chaff-decoys",
+    "chaff-scouts-deployment",
+    "chaff-must-be-fast",
+    "chaff-under-100-points",
+    "chaff-versatile-specific",
+    "mangler-squig-decoy",
+    "light-chariot-artillery-hunter",
+    "decoy-forces-a-choice",
+    "speed-bump-close-order",
+    "frenzy-bait-only-target",
+    "board-in-thirds",
+    "hold-centre-win-flanks",
+    "flank-kill-or-delay",
+    "flank-not-point-and-click",
+    "flank-who-benefited",
+    "flank-units-not-infantry",
+    "hammers-need-the-charge",
+    "hammers-on-flanks",
+    "hammers-need-durability",
+    "mobile-caster-flank",
+    "skirmish-blender-character",
+    "screening-chaff",
+    "sacrifice-a-flank",
+    "terror-on-flanks",
+    "after-the-flank",
+    "hammer-must-deal-damage",
+    "hammer-matchups",
+    "behemoth-hammers",
+    "heavy-chariot-support",
+    "hybrid-hammer-ap",
+    "black-orcs-great-weapons",
+    "stormvermin-ten-wide",
+    "behemoth-unbreakable",
+    "hybrid-hammer-objectives",
+    "deploy-who-is-beatdown",
+    "deploy-read-terrain",
+    "deploy-slow-army-compact",
+    "deploy-for-matchups"
+  ],
+  "resultaten": {
+    "chaff-sets-tempo": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "choosing-chaff"
+        },
+        {
+          "thema": "game-plan",
+          "subthema": "tempo-trading"
+        }
+      ],
+      "tags": [
+        "delay",
+        "redirect"
+      ]
+    },
+    "chaff-speed-bumps": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "redirecting"
+        }
+      ],
+      "tags": [
+        "speed-bump",
+        "redirect",
+        "delay",
+        "sacrifice"
+      ]
+    },
+    "chaff-decoys": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "decoys-bait"
+        }
+      ],
+      "tags": [
+        "decoy",
+        "zoning",
+        "delay"
+      ]
+    },
+    "chaff-scouts-deployment": {
+      "themas": [
+        {
+          "thema": "deployment",
+          "subthema": "drops-first-turn"
+        },
+        {
+          "thema": "chaff",
+          "subthema": "choosing-chaff"
+        }
+      ],
+      "tags": [
+        "deployment-drops",
+        "scouts"
+      ]
+    },
+    "chaff-must-be-fast": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "choosing-chaff"
+        }
+      ],
+      "tags": [
+        "fly",
+        "skirmishers",
+        "reserve-move",
+        "speed-bump"
+      ]
+    },
+    "chaff-under-100-points": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "choosing-chaff"
+        }
+      ],
+      "tags": [
+        "sacrifice",
+        "victory-points"
+      ]
+    },
+    "chaff-versatile-specific": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "choosing-chaff"
+        }
+      ],
+      "tags": [
+        "redirect",
+        "speed-bump",
+        "scouts",
+        "war-machines"
+      ]
+    },
+    "mangler-squig-decoy": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "decoys-bait"
+        },
+        {
+          "thema": "hammers",
+          "subthema": "random-movers"
+        }
+      ],
+      "tags": [
+        "random-movement",
+        "decoy",
+        "zoning",
+        "flanks",
+        "impact-hits",
+        "delay"
+      ]
+    },
+    "light-chariot-artillery-hunter": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "decoys-bait"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "hunting-shooters"
+        }
+      ],
+      "tags": [
+        "chariots",
+        "decoy",
+        "war-machines",
+        "impact-hits",
+        "swiftstride"
+      ]
+    },
+    "decoy-forces-a-choice": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "decoys-bait"
+        }
+      ],
+      "tags": [
+        "decoy",
+        "delay",
+        "zoning"
+      ]
+    },
+    "speed-bump-close-order": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "redirecting"
+        },
+        {
+          "thema": "movement",
+          "subthema": "overrun-pursuit"
+        }
+      ],
+      "tags": [
+        "speed-bump",
+        "alignment",
+        "overrun",
+        "redirect",
+        "close-order",
+        "open-order"
+      ]
+    },
+    "frenzy-bait-only-target": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "decoys-bait"
+        },
+        {
+          "thema": "movement",
+          "subthema": "fleeing"
+        }
+      ],
+      "tags": [
+        "frenzy",
+        "bait",
+        "flee",
+        "redirect",
+        "charge-range",
+        "swiftstride"
+      ]
+    },
+    "board-in-thirds": {
+      "themas": [
+        {
+          "thema": "game-plan",
+          "subthema": "flanks-centre"
+        }
+      ],
+      "tags": [
+        "flanks",
+        "centre"
+      ]
+    },
+    "hold-centre-win-flanks": {
+      "themas": [
+        {
+          "thema": "game-plan",
+          "subthema": "flanks-centre"
+        }
+      ],
+      "tags": [
+        "flanks",
+        "centre",
+        "anvil",
+        "concentration"
+      ]
+    },
+    "flank-kill-or-delay": {
+      "themas": [
+        {
+          "thema": "game-plan",
+          "subthema": "flanks-centre"
+        },
+        {
+          "thema": "chaff",
+          "subthema": "redirecting"
+        }
+      ],
+      "tags": [
+        "flanks",
+        "delay",
+        "hammer",
+        "refused-flank"
+      ]
+    },
+    "flank-not-point-and-click": {
+      "themas": [
+        {
+          "thema": "hammers",
+          "subthema": "using-hammers"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "picking-fights"
+        },
+        {
+          "thema": "deployment",
+          "subthema": "unit-placement"
+        }
+      ],
+      "tags": [
+        "heavy-cavalry",
+        "hammer",
+        "flanks"
+      ]
+    },
+    "flank-who-benefited": {
+      "themas": [
+        {
+          "thema": "game-plan",
+          "subthema": "tempo-trading"
+        }
+      ],
+      "tags": [
+        "delay",
+        "flanks",
+        "victory-points",
+        "bait"
+      ]
+    },
+    "flank-units-not-infantry": {
+      "themas": [
+        {
+          "thema": "game-plan",
+          "subthema": "flanks-centre"
+        },
+        {
+          "thema": "infantry",
+          "subthema": "anchors"
+        }
+      ],
+      "tags": [
+        "flanks",
+        "anvil",
+        "centre",
+        "combat-resolution"
+      ]
+    },
+    "hammers-need-the-charge": {
+      "themas": [
+        {
+          "thema": "hammers",
+          "subthema": "hammer-basics"
+        }
+      ],
+      "tags": [
+        "hammer",
+        "charge-range",
+        "swiftstride",
+        "countercharge",
+        "skirmishers"
+      ]
+    },
+    "hammers-on-flanks": {
+      "themas": [
+        {
+          "thema": "hammers",
+          "subthema": "using-hammers"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "avoiding-fire"
+        },
+        {
+          "thema": "game-plan",
+          "subthema": "flanks-centre"
+        }
+      ],
+      "tags": [
+        "hammer",
+        "flanks",
+        "line-of-sight",
+        "screen",
+        "cover",
+        "heavy-cavalry"
+      ]
+    },
+    "hammers-need-durability": {
+      "themas": [
+        {
+          "thema": "hammers",
+          "subthema": "hammer-basics"
+        }
+      ],
+      "tags": [
+        "hammer",
+        "armour",
+        "heavy-cavalry"
+      ]
+    },
+    "mobile-caster-flank": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "wizard-placement"
+        }
+      ],
+      "tags": [
+        "dispel",
+        "reserve-move",
+        "fly",
+        "flanks"
+      ]
+    },
+    "skirmish-blender-character": {
+      "themas": [
+        {
+          "thema": "characters",
+          "subthema": "combat-roles"
+        },
+        {
+          "thema": "movement",
+          "subthema": "support-countercharge"
+        }
+      ],
+      "tags": [
+        "skirmishers",
+        "charge-arc",
+        "charge-range",
+        "combined-charge",
+        "flanks"
+      ]
+    },
+    "screening-chaff": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "screens"
+        },
+        {
+          "thema": "hammers",
+          "subthema": "using-hammers"
+        }
+      ],
+      "tags": [
+        "screen",
+        "sacrifice",
+        "cover",
+        "skirmishers",
+        "hammer"
+      ]
+    },
+    "sacrifice-a-flank": {
+      "themas": [
+        {
+          "thema": "game-plan",
+          "subthema": "flanks-centre"
+        },
+        {
+          "thema": "chaff",
+          "subthema": "redirecting"
+        }
+      ],
+      "tags": [
+        "refused-flank",
+        "concentration",
+        "sacrifice",
+        "delay",
+        "flanks"
+      ]
+    },
+    "terror-on-flanks": {
+      "themas": [
+        {
+          "thema": "game-plan",
+          "subthema": "flanks-centre"
+        },
+        {
+          "thema": "hammers",
+          "subthema": "monsters-dragons"
+        }
+      ],
+      "tags": [
+        "terror",
+        "flanks",
+        "board-edge",
+        "flee",
+        "leadership",
+        "monsters"
+      ]
+    },
+    "after-the-flank": {
+      "themas": [
+        {
+          "thema": "game-plan",
+          "subthema": "flanks-centre"
+        }
+      ],
+      "tags": [
+        "flanks",
+        "flank-charge",
+        "centre",
+        "war-machines"
+      ]
+    },
+    "hammer-must-deal-damage": {
+      "themas": [
+        {
+          "thema": "hammers",
+          "subthema": "hammer-basics"
+        }
+      ],
+      "tags": [
+        "hammer",
+        "armour-piercing",
+        "impact-hits"
+      ]
+    },
+    "hammer-matchups": {
+      "themas": [
+        {
+          "thema": "matchups",
+          "subthema": "picking-fights"
+        },
+        {
+          "thema": "hammers",
+          "subthema": "using-hammers"
+        }
+      ],
+      "tags": [
+        "hammer",
+        "heavy-cavalry",
+        "armour"
+      ]
+    },
+    "behemoth-hammers": {
+      "themas": [
+        {
+          "thema": "hammers",
+          "subthema": "monsters-dragons"
+        }
+      ],
+      "tags": [
+        "monsters",
+        "hammer",
+        "terror",
+        "armour-piercing",
+        "fall-back"
+      ]
+    },
+    "heavy-chariot-support": {
+      "themas": [
+        {
+          "thema": "hammers",
+          "subthema": "chariots"
+        },
+        {
+          "thema": "movement",
+          "subthema": "support-countercharge"
+        }
+      ],
+      "tags": [
+        "chariots",
+        "impact-hits",
+        "countercharge",
+        "fall-back",
+        "first-charge",
+        "anvil"
+      ]
+    },
+    "hybrid-hammer-ap": {
+      "themas": [
+        {
+          "thema": "infantry",
+          "subthema": "unit-builds"
+        },
+        {
+          "thema": "hammers",
+          "subthema": "hammer-basics"
+        }
+      ],
+      "tags": [
+        "parry",
+        "armour-piercing",
+        "hammer",
+        "combat-resolution",
+        "anvil"
+      ]
+    },
+    "black-orcs-great-weapons": {
+      "themas": [
+        {
+          "thema": "infantry",
+          "subthema": "unit-builds"
+        }
+      ],
+      "tags": [
+        "great-weapons",
+        "stubborn",
+        "armour-piercing",
+        "countercharge",
+        "hammer"
+      ]
+    },
+    "stormvermin-ten-wide": {
+      "themas": [
+        {
+          "thema": "infantry",
+          "subthema": "unit-builds"
+        }
+      ],
+      "tags": [
+        "swiftstride",
+        "magic-banner",
+        "combat-resolution",
+        "close-order",
+        "bsb"
+      ]
+    },
+    "behemoth-unbreakable": {
+      "themas": [
+        {
+          "thema": "hammers",
+          "subthema": "monsters-dragons"
+        }
+      ],
+      "tags": [
+        "unbreakable",
+        "monsters",
+        "hammer",
+        "combat-resolution",
+        "tarpit"
+      ]
+    },
+    "hybrid-hammer-objectives": {
+      "themas": [
+        {
+          "thema": "scenarios",
+          "subthema": "objectives"
+        },
+        {
+          "thema": "hammers",
+          "subthema": "using-hammers"
+        }
+      ],
+      "tags": [
+        "objectives",
+        "hammer",
+        "anvil"
+      ]
+    },
+    "deploy-who-is-beatdown": {
+      "themas": [
+        {
+          "thema": "game-plan",
+          "subthema": "reading-the-enemy"
+        },
+        {
+          "thema": "deployment",
+          "subthema": "pre-game-checks"
+        }
+      ],
+      "tags": [
+        "gunline",
+        "first-turn"
+      ]
+    },
+    "deploy-read-terrain": {
+      "themas": [
+        {
+          "thema": "deployment",
+          "subthema": "unit-placement"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "terrain-los"
+        }
+      ],
+      "tags": [
+        "line-of-sight",
+        "hills",
+        "impassable",
+        "woods",
+        "war-machines",
+        "missile-troops"
+      ]
+    },
+    "deploy-slow-army-compact": {
+      "themas": [
+        {
+          "thema": "deployment",
+          "subthema": "unit-placement"
+        },
+        {
+          "thema": "game-plan",
+          "subthema": "concentration"
+        }
+      ],
+      "tags": [
+        "concentration",
+        "refused-flank",
+        "zoning"
+      ]
+    },
+    "deploy-for-matchups": {
+      "themas": [
+        {
+          "thema": "deployment",
+          "subthema": "unit-placement"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "picking-fights"
+        }
+      ],
+      "tags": [
+        "heavy-cavalry",
+        "deployment-drops",
+        "hammer"
+      ]
+    }
+  },
+  "open": {},
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 40,
+      "sec": 107,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 37449,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 5117,
+        "reasoning_output_tokens": 2070
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

@@ -1,0 +1,709 @@
+{
+  "batch": 3,
+  "gemaaktOp": "2026-11-25T22:30:40.396Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "ids": [
+    "night-goblins-netters-robe",
+    "ignore-single-lantern-matchup",
+    "infantry-combat-escapes-bombardment",
+    "jade-warriors-deny-scoring",
+    "support-wyvern-against-shugengan",
+    "doom-divers-opening-artillery-volley",
+    "ambushing-wolves-artillery-blind-spots",
+    "black-orcs-rust-jade-warriors",
+    "pair-manglers-reduce-randomness",
+    "charge-order-flee-paths",
+    "duke-pegasus-charge-flexibility",
+    "reform-for-future-targets",
+    "champion-delaying-challenge",
+    "flee-through-enemy-escape",
+    "infantry-central-anchor",
+    "anchor-spend-on-defence",
+    "anchor-core-objective-threat",
+    "anchor-static-combat-resolution",
+    "anchor-heavy-armour-parry",
+    "anchor-toughness-four",
+    "anchor-warband-leadership",
+    "anchor-challenges-against-dragons",
+    "stubborn-anchor-countercharge",
+    "anchor-unbreakable-rule",
+    "eternal-guard-anchor-trap",
+    "tree-kin-wood-elf-anchor",
+    "character-leadership-central-anchor",
+    "orc-anchor-defensive-magic",
+    "choose-dark-magic-spells",
+    "battle-lust-before-charge",
+    "word-pain-wizard-exposure",
+    "doombolt-long-range-chip",
+    "dark-magic-reserve-bunker",
+    "mobile-dark-wizard-scrolls",
+    "empire-level-one-doombolt",
+    "skirmishers-kite-ranked-pursuers",
+    "horizontal-skirmisher-cover",
+    "try-solitary-doombull",
+    "flying-daemon-prince-hunter",
+    "skirmisher-hunter-minimum-speed"
+  ],
+  "resultaten": {
+    "night-goblins-netters-robe": {
+      "themas": [
+        {
+          "thema": "infantry",
+          "subthema": "unit-builds"
+        },
+        {
+          "thema": "magic",
+          "subthema": "buffs-hexes"
+        }
+      ],
+      "tags": [
+        "hit-penalties",
+        "enchantment"
+      ]
+    },
+    "ignore-single-lantern-matchup": {
+      "themas": [
+        {
+          "thema": "matchups",
+          "subthema": "vs-sky-lanterns"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "target-priority"
+        }
+      ],
+      "tags": [
+        "war-machines",
+        "concentration"
+      ]
+    },
+    "infantry-combat-escapes-bombardment": {
+      "themas": [
+        {
+          "thema": "shooting-terrain",
+          "subthema": "avoiding-fire"
+        },
+        {
+          "thema": "infantry",
+          "subthema": "infantry-moves"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-grand-cathay"
+        }
+      ],
+      "tags": [
+        "war-machines",
+        "gunline"
+      ]
+    },
+    "jade-warriors-deny-scoring": {
+      "themas": [
+        {
+          "thema": "scenarios",
+          "subthema": "objectives"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-grand-cathay"
+        }
+      ],
+      "tags": [
+        "objectives",
+        "scoring-units",
+        "victory-points"
+      ]
+    },
+    "support-wyvern-against-shugengan": {
+      "themas": [
+        {
+          "thema": "movement",
+          "subthema": "support-countercharge"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-grand-cathay"
+        },
+        {
+          "thema": "hammers",
+          "subthema": "using-hammers"
+        }
+      ],
+      "tags": [
+        "combined-charge",
+        "impact-hits",
+        "monsters",
+        "challenge",
+        "war-machines"
+      ]
+    },
+    "doom-divers-opening-artillery-volley": {
+      "themas": [
+        {
+          "thema": "shooting-terrain",
+          "subthema": "target-priority"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-grand-cathay"
+        }
+      ],
+      "tags": [
+        "war-machines",
+        "first-turn"
+      ]
+    },
+    "ambushing-wolves-artillery-blind-spots": {
+      "themas": [
+        {
+          "thema": "deployment",
+          "subthema": "ambush-scouts-vanguard"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "avoiding-fire"
+        }
+      ],
+      "tags": [
+        "ambush",
+        "line-of-sight",
+        "war-machines",
+        "light-cavalry"
+      ]
+    },
+    "black-orcs-rust-jade-warriors": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "buffs-hexes"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-grand-cathay"
+        }
+      ],
+      "tags": [
+        "hex",
+        "armour"
+      ]
+    },
+    "pair-manglers-reduce-randomness": {
+      "themas": [
+        {
+          "thema": "hammers",
+          "subthema": "random-movers"
+        },
+        {
+          "thema": "movement",
+          "subthema": "support-countercharge"
+        }
+      ],
+      "tags": [
+        "combined-charge",
+        "impact-hits",
+        "random-movement",
+        "hammer"
+      ]
+    },
+    "charge-order-flee-paths": {
+      "themas": [
+        {
+          "thema": "movement",
+          "subthema": "charge-order"
+        }
+      ],
+      "tags": [
+        "flee",
+        "charge-range"
+      ]
+    },
+    "duke-pegasus-charge-flexibility": {
+      "themas": [
+        {
+          "thema": "characters",
+          "subthema": "mounts-items"
+        }
+      ],
+      "tags": [
+        "mounts",
+        "charge-arc",
+        "fly",
+        "swiftstride",
+        "line-of-sight",
+        "close-order"
+      ]
+    },
+    "reform-for-future-targets": {
+      "themas": [
+        {
+          "thema": "movement",
+          "subthema": "reforms-formations"
+        },
+        {
+          "thema": "hammers",
+          "subthema": "using-hammers"
+        }
+      ],
+      "tags": [
+        "reform",
+        "restrain",
+        "charge-arc",
+        "close-order",
+        "hammer"
+      ]
+    },
+    "champion-delaying-challenge": {
+      "themas": [
+        {
+          "thema": "characters",
+          "subthema": "challenges"
+        },
+        {
+          "thema": "hammers",
+          "subthema": "heavy-cavalry"
+        }
+      ],
+      "tags": [
+        "challenge",
+        "champion",
+        "delay",
+        "heavy-cavalry",
+        "fall-back",
+        "leadership"
+      ]
+    },
+    "flee-through-enemy-escape": {
+      "themas": [
+        {
+          "thema": "movement",
+          "subthema": "fleeing"
+        }
+      ],
+      "tags": [
+        "flee",
+        "charge-range",
+        "charge-arc"
+      ]
+    },
+    "infantry-central-anchor": {
+      "themas": [
+        {
+          "thema": "infantry",
+          "subthema": "anchors"
+        }
+      ],
+      "tags": [
+        "anvil",
+        "centre",
+        "combat-resolution"
+      ]
+    },
+    "anchor-spend-on-defence": {
+      "themas": [
+        {
+          "thema": "infantry",
+          "subthema": "anchors"
+        }
+      ],
+      "tags": [
+        "anvil",
+        "tarpit"
+      ]
+    },
+    "anchor-core-objective-threat": {
+      "themas": [
+        {
+          "thema": "infantry",
+          "subthema": "anchors"
+        },
+        {
+          "thema": "scenarios",
+          "subthema": "objectives"
+        }
+      ],
+      "tags": [
+        "anvil",
+        "objectives",
+        "unit-strength",
+        "scoring-units",
+        "centre"
+      ]
+    },
+    "anchor-static-combat-resolution": {
+      "themas": [
+        {
+          "thema": "infantry",
+          "subthema": "unit-builds"
+        }
+      ],
+      "tags": [
+        "combat-resolution",
+        "anvil",
+        "horde",
+        "close-order",
+        "magic-banner"
+      ]
+    },
+    "anchor-heavy-armour-parry": {
+      "themas": [
+        {
+          "thema": "infantry",
+          "subthema": "unit-builds"
+        }
+      ],
+      "tags": [
+        "parry",
+        "armour",
+        "anvil"
+      ]
+    },
+    "anchor-toughness-four": {
+      "themas": [
+        {
+          "thema": "infantry",
+          "subthema": "anchors"
+        }
+      ],
+      "tags": [
+        "anvil",
+        "tarpit"
+      ]
+    },
+    "anchor-warband-leadership": {
+      "themas": [
+        {
+          "thema": "infantry",
+          "subthema": "holding-combat"
+        }
+      ],
+      "tags": [
+        "warband",
+        "leadership",
+        "break-test",
+        "combat-resolution",
+        "anvil"
+      ]
+    },
+    "anchor-challenges-against-dragons": {
+      "themas": [
+        {
+          "thema": "infantry",
+          "subthema": "holding-combat"
+        },
+        {
+          "thema": "characters",
+          "subthema": "challenges"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-monsters"
+        }
+      ],
+      "tags": [
+        "challenge",
+        "dragons",
+        "anvil",
+        "combat-resolution"
+      ]
+    },
+    "stubborn-anchor-countercharge": {
+      "themas": [
+        {
+          "thema": "movement",
+          "subthema": "support-countercharge"
+        },
+        {
+          "thema": "infantry",
+          "subthema": "holding-combat"
+        }
+      ],
+      "tags": [
+        "stubborn",
+        "fall-back",
+        "reform",
+        "flank-charge",
+        "hammer",
+        "pursuit"
+      ]
+    },
+    "anchor-unbreakable-rule": {
+      "themas": [
+        {
+          "thema": "infantry",
+          "subthema": "anchors"
+        }
+      ],
+      "tags": [
+        "unbreakable",
+        "anvil",
+        "break-test",
+        "fall-back"
+      ]
+    },
+    "eternal-guard-anchor-trap": {
+      "themas": [
+        {
+          "thema": "infantry",
+          "subthema": "anchors"
+        }
+      ],
+      "tags": [
+        "anvil",
+        "parry",
+        "armour",
+        "combat-resolution",
+        "stubborn"
+      ]
+    },
+    "tree-kin-wood-elf-anchor": {
+      "themas": [
+        {
+          "thema": "infantry",
+          "subthema": "anchors"
+        }
+      ],
+      "tags": [
+        "anvil",
+        "monstrous-infantry",
+        "stubborn",
+        "regeneration",
+        "tarpit"
+      ]
+    },
+    "character-leadership-central-anchor": {
+      "themas": [
+        {
+          "thema": "characters",
+          "subthema": "leadership"
+        }
+      ],
+      "tags": [
+        "leadership",
+        "general",
+        "anvil",
+        "centre",
+        "break-test"
+      ]
+    },
+    "orc-anchor-defensive-magic": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "buffs-hexes"
+        },
+        {
+          "thema": "infantry",
+          "subthema": "anchors"
+        }
+      ],
+      "tags": [
+        "ward-save",
+        "enchantment",
+        "anvil",
+        "elementalism",
+        "battle-magic"
+      ]
+    },
+    "choose-dark-magic-spells": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "lores-spells"
+        }
+      ],
+      "tags": [
+        "dark-magic",
+        "lore-familiar",
+        "signature-spell"
+      ]
+    },
+    "battle-lust-before-charge": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "buffs-hexes"
+        }
+      ],
+      "tags": [
+        "enchantment",
+        "frenzy",
+        "combat-resolution"
+      ]
+    },
+    "word-pain-wizard-exposure": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "wizard-placement"
+        }
+      ],
+      "tags": [
+        "charge-range",
+        "fly",
+        "monsters"
+      ]
+    },
+    "doombolt-long-range-chip": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "magic-missiles"
+        }
+      ],
+      "tags": [
+        "magic-missile",
+        "dispel",
+        "armour-piercing"
+      ]
+    },
+    "dark-magic-reserve-bunker": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "wizard-placement"
+        }
+      ],
+      "tags": [
+        "reserve-move",
+        "bunker",
+        "skirmishers",
+        "dark-magic",
+        "dispel"
+      ]
+    },
+    "mobile-dark-wizard-scrolls": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "casting-aids"
+        }
+      ],
+      "tags": [
+        "power-scroll",
+        "dark-magic",
+        "lore-familiar"
+      ]
+    },
+    "empire-level-one-doombolt": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "wizard-builds"
+        }
+      ],
+      "tags": [
+        "wizard-level",
+        "magic-missile",
+        "magic-items",
+        "dispel"
+      ]
+    },
+    "skirmishers-kite-ranked-pursuers": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "decoys-bait"
+        }
+      ],
+      "tags": [
+        "skirmishers",
+        "charge-arc",
+        "delay",
+        "victory-points"
+      ]
+    },
+    "horizontal-skirmisher-cover": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "screens"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "avoiding-fire"
+        }
+      ],
+      "tags": [
+        "screen",
+        "skirmishers",
+        "cover",
+        "line-of-sight",
+        "light-cavalry"
+      ]
+    },
+    "try-solitary-doombull": {
+      "themas": [
+        {
+          "thema": "characters",
+          "subthema": "combat-roles"
+        }
+      ],
+      "tags": [
+        "lone-character",
+        "charge-arc",
+        "monstrous-infantry",
+        "hammer",
+        "centre"
+      ]
+    },
+    "flying-daemon-prince-hunter": {
+      "themas": [
+        {
+          "thema": "characters",
+          "subthema": "combat-roles"
+        },
+        {
+          "thema": "chaff",
+          "subthema": "clearing-chaff"
+        }
+      ],
+      "tags": [
+        "fly",
+        "monstrous-infantry",
+        "flanks"
+      ]
+    },
+    "skirmisher-hunter-minimum-speed": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "clearing-chaff"
+        },
+        {
+          "thema": "characters",
+          "subthema": "combat-roles"
+        }
+      ],
+      "tags": [
+        "skirmishers",
+        "charge-range",
+        "swiftstride",
+        "mounts",
+        "fly"
+      ]
+    }
+  },
+  "open": {},
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 35,
+      "sec": 94,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 36152,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 4472,
+        "reasoning_output_tokens": 2370
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

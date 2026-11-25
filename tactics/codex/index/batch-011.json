@@ -1,0 +1,787 @@
+{
+  "batch": 11,
+  "gemaaktOp": "2026-11-25T22:44:08.221Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "ids": [
+    "flying-large-target-charge-access",
+    "large-target-pursuit-order",
+    "reavers-marching-column-breakthrough",
+    "reavers-widen-clear-breakthrough",
+    "reavers-question-bow-upgrade",
+    "concentrate-fire-finish-lanterns",
+    "infernal-guard-fireglaive-armour",
+    "skullcracker-iron-daemon-lanterns",
+    "larger-khorne-fury-units",
+    "small-units-waste-lantern-shots",
+    "plague-drones-fight-lanterns",
+    "bloodthirster-needs-lantern-support",
+    "mixed-daemon-gods-lanterns",
+    "black-staff-focus-familiars",
+    "avoid-column-dependent-strategy",
+    "scourgerunner-over-reaper",
+    "deny-lantern-rear-landings",
+    "dark-riders-trap-disengagement",
+    "power-scrolls-critical-ethereal-turns",
+    "hills-reduce-cannon-bounces",
+    "skinks-screen-cannon-sight",
+    "multiple-stonehorns-against-cathay",
+    "gorgers-hunt-cathayan-cannons",
+    "mournfang-impact-wound-rerolls",
+    "time-stonehorn-pressure-turn",
+    "ogre-vanguard-threat-overload",
+    "warp-lightning-cannons-lanterns",
+    "jezzails-hidden-lantern-kill-lanes",
+    "lower-lantern-leadership-screams",
+    "vampire-ethereal-lantern-control",
+    "avoid-blood-knights-lanterns",
+    "hexwraith-marching-column-attacks",
+    "six-fell-bats-cannons",
+    "avoid-vargheists-lantern-matchup",
+    "repeated-terror-charges-lanterns",
+    "miao-ying-hunts-lanterns",
+    "prefer-granite-sentinel-durability",
+    "jade-lancers-ambush-cannons",
+    "jade-fleet-allied-outriders",
+    "align-sacrifices-for-empty-overruns"
+  ],
+  "resultaten": {
+    "flying-large-target-charge-access": {
+      "themas": [
+        {
+          "thema": "movement",
+          "subthema": "charge-setup"
+        }
+      ],
+      "tags": [
+        "fly",
+        "large-target",
+        "line-of-sight"
+      ]
+    },
+    "large-target-pursuit-order": {
+      "themas": [
+        {
+          "thema": "movement",
+          "subthema": "overrun-pursuit"
+        }
+      ],
+      "tags": [
+        "pursuit",
+        "overrun",
+        "large-target",
+        "fly",
+        "alignment"
+      ]
+    },
+    "reavers-marching-column-breakthrough": {
+      "themas": [
+        {
+          "thema": "scenarios",
+          "subthema": "scenario-plans"
+        },
+        {
+          "thema": "movement",
+          "subthema": "reforms-formations"
+        }
+      ],
+      "tags": [
+        "marching-column",
+        "light-cavalry",
+        "board-edge",
+        "victory-points"
+      ]
+    },
+    "reavers-widen-clear-breakthrough": {
+      "themas": [
+        {
+          "thema": "movement",
+          "subthema": "reforms-formations"
+        },
+        {
+          "thema": "scenarios",
+          "subthema": "scenario-plans"
+        }
+      ],
+      "tags": [
+        "reform",
+        "marching-column",
+        "light-cavalry",
+        "overrun",
+        "board-edge"
+      ]
+    },
+    "reavers-question-bow-upgrade": {
+      "themas": [
+        {
+          "thema": "shooting-terrain",
+          "subthema": "missile-units"
+        }
+      ],
+      "tags": [
+        "light-cavalry",
+        "missile-troops"
+      ]
+    },
+    "concentrate-fire-finish-lanterns": {
+      "themas": [
+        {
+          "thema": "matchups",
+          "subthema": "vs-sky-lanterns"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "target-priority"
+        },
+        {
+          "thema": "magic",
+          "subthema": "magic-missiles"
+        }
+      ],
+      "tags": [
+        "concentration",
+        "magic-missile"
+      ]
+    },
+    "infernal-guard-fireglaive-armour": {
+      "themas": [
+        {
+          "thema": "infantry",
+          "subthema": "unit-builds"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-sky-lanterns"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "missile-units"
+        }
+      ],
+      "tags": [
+        "armour",
+        "missile-troops",
+        "flaming"
+      ]
+    },
+    "skullcracker-iron-daemon-lanterns": {
+      "themas": [
+        {
+          "thema": "matchups",
+          "subthema": "vs-sky-lanterns"
+        },
+        {
+          "thema": "hammers",
+          "subthema": "chariots"
+        }
+      ],
+      "tags": [
+        "impact-hits",
+        "chariots",
+        "stand-and-shoot"
+      ]
+    },
+    "larger-khorne-fury-units": {
+      "themas": [
+        {
+          "thema": "matchups",
+          "subthema": "vs-sky-lanterns"
+        }
+      ],
+      "tags": [
+        "fly",
+        "skirmishers",
+        "stand-and-shoot"
+      ]
+    },
+    "small-units-waste-lantern-shots": {
+      "themas": [
+        {
+          "thema": "game-plan",
+          "subthema": "list-building"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-sky-lanterns"
+        }
+      ],
+      "tags": [
+        "sacrifice",
+        "decoy"
+      ]
+    },
+    "plague-drones-fight-lanterns": {
+      "themas": [
+        {
+          "thema": "matchups",
+          "subthema": "vs-sky-lanterns"
+        },
+        {
+          "thema": "hammers",
+          "subthema": "hammer-basics"
+        }
+      ],
+      "tags": [
+        "fly",
+        "hammer"
+      ]
+    },
+    "bloodthirster-needs-lantern-support": {
+      "themas": [
+        {
+          "thema": "matchups",
+          "subthema": "vs-sky-lanterns"
+        },
+        {
+          "thema": "movement",
+          "subthema": "support-countercharge"
+        },
+        {
+          "thema": "hammers",
+          "subthema": "monsters-dragons"
+        }
+      ],
+      "tags": [
+        "combined-charge",
+        "monsters",
+        "stand-and-shoot",
+        "screen"
+      ]
+    },
+    "mixed-daemon-gods-lanterns": {
+      "themas": [
+        {
+          "thema": "game-plan",
+          "subthema": "list-building"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-sky-lanterns"
+        }
+      ],
+      "tags": [
+        "concentration",
+        "monsters",
+        "cannons",
+        "magic-missile"
+      ]
+    },
+    "black-staff-focus-familiars": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "casting-aids"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-sky-lanterns"
+        }
+      ],
+      "tags": [
+        "magic-items",
+        "illusion"
+      ]
+    },
+    "avoid-column-dependent-strategy": {
+      "themas": [
+        {
+          "thema": "game-plan",
+          "subthema": "list-building"
+        },
+        {
+          "thema": "magic",
+          "subthema": "control-spells"
+        }
+      ],
+      "tags": [
+        "vortex",
+        "dispel"
+      ]
+    },
+    "scourgerunner-over-reaper": {
+      "themas": [
+        {
+          "thema": "shooting-terrain",
+          "subthema": "war-machines"
+        },
+        {
+          "thema": "hammers",
+          "subthema": "chariots"
+        }
+      ],
+      "tags": [
+        "bolt-throwers",
+        "chariots"
+      ]
+    },
+    "deny-lantern-rear-landings": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "redirecting"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-sky-lanterns"
+        }
+      ],
+      "tags": [
+        "zoning",
+        "fly",
+        "large-target",
+        "light-cavalry",
+        "skirmishers"
+      ]
+    },
+    "dark-riders-trap-disengagement": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "retreat-paths"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-sky-lanterns"
+        }
+      ],
+      "tags": [
+        "board-edge",
+        "light-cavalry",
+        "tarpit"
+      ]
+    },
+    "power-scrolls-critical-ethereal-turns": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "casting-aids"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-sky-lanterns"
+        }
+      ],
+      "tags": [
+        "power-scroll",
+        "ethereal",
+        "enchantment"
+      ]
+    },
+    "hills-reduce-cannon-bounces": {
+      "themas": [
+        {
+          "thema": "shooting-terrain",
+          "subthema": "terrain-los"
+        }
+      ],
+      "tags": [
+        "hills",
+        "cannons"
+      ]
+    },
+    "skinks-screen-cannon-sight": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "screens"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "terrain-los"
+        }
+      ],
+      "tags": [
+        "screen",
+        "line-of-sight",
+        "cannons",
+        "skirmishers",
+        "sacrifice"
+      ]
+    },
+    "multiple-stonehorns-against-cathay": {
+      "themas": [
+        {
+          "thema": "hammers",
+          "subthema": "monsters-dragons"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-grand-cathay"
+        }
+      ],
+      "tags": [
+        "monsters",
+        "multiple-wounds",
+        "mounts"
+      ]
+    },
+    "gorgers-hunt-cathayan-cannons": {
+      "themas": [
+        {
+          "thema": "shooting-terrain",
+          "subthema": "hunting-shooters"
+        },
+        {
+          "thema": "deployment",
+          "subthema": "ambush-scouts-vanguard"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-grand-cathay"
+        }
+      ],
+      "tags": [
+        "ambush",
+        "cannons",
+        "monstrous-infantry"
+      ]
+    },
+    "mournfang-impact-wound-rerolls": {
+      "themas": [
+        {
+          "thema": "matchups",
+          "subthema": "vs-sky-lanterns"
+        },
+        {
+          "thema": "hammers",
+          "subthema": "heavy-cavalry"
+        }
+      ],
+      "tags": [
+        "impact-hits",
+        "heavy-cavalry",
+        "magic-banner",
+        "feigned-flight"
+      ]
+    },
+    "time-stonehorn-pressure-turn": {
+      "themas": [
+        {
+          "thema": "game-plan",
+          "subthema": "aggression-control"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-sky-lanterns"
+        },
+        {
+          "thema": "hammers",
+          "subthema": "using-hammers"
+        }
+      ],
+      "tags": [
+        "concentration",
+        "monsters",
+        "screen",
+        "zoning",
+        "charge-range"
+      ]
+    },
+    "ogre-vanguard-threat-overload": {
+      "themas": [
+        {
+          "thema": "game-plan",
+          "subthema": "concentration"
+        },
+        {
+          "thema": "deployment",
+          "subthema": "ambush-scouts-vanguard"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-grand-cathay"
+        }
+      ],
+      "tags": [
+        "vanguard",
+        "concentration",
+        "first-turn",
+        "monstrous-infantry",
+        "charge-range"
+      ]
+    },
+    "warp-lightning-cannons-lanterns": {
+      "themas": [
+        {
+          "thema": "matchups",
+          "subthema": "vs-sky-lanterns"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "war-machines"
+        }
+      ],
+      "tags": [
+        "cannons",
+        "war-machines",
+        "line-of-sight"
+      ]
+    },
+    "jezzails-hidden-lantern-kill-lanes": {
+      "themas": [
+        {
+          "thema": "deployment",
+          "subthema": "deploying-vs-shooting"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-sky-lanterns"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "terrain-los"
+        }
+      ],
+      "tags": [
+        "line-of-sight",
+        "missile-troops",
+        "flanks"
+      ]
+    },
+    "lower-lantern-leadership-screams": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "buffs-hexes"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-sky-lanterns"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "target-priority"
+        }
+      ],
+      "tags": [
+        "leadership",
+        "hex",
+        "necromancy",
+        "concentration"
+      ]
+    },
+    "vampire-ethereal-lantern-control": {
+      "themas": [
+        {
+          "thema": "matchups",
+          "subthema": "vs-grand-cathay"
+        },
+        {
+          "thema": "game-plan",
+          "subthema": "threat-zones"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "avoiding-fire"
+        }
+      ],
+      "tags": [
+        "ethereal",
+        "zoning",
+        "cannons"
+      ]
+    },
+    "avoid-blood-knights-lanterns": {
+      "themas": [
+        {
+          "thema": "matchups",
+          "subthema": "vs-sky-lanterns"
+        },
+        {
+          "thema": "hammers",
+          "subthema": "heavy-cavalry"
+        }
+      ],
+      "tags": [
+        "heavy-cavalry",
+        "armour"
+      ]
+    },
+    "hexwraith-marching-column-attacks": {
+      "themas": [
+        {
+          "thema": "movement",
+          "subthema": "reforms-formations"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-sky-lanterns"
+        }
+      ],
+      "tags": [
+        "marching-column",
+        "ethereal"
+      ]
+    },
+    "six-fell-bats-cannons": {
+      "themas": [
+        {
+          "thema": "shooting-terrain",
+          "subthema": "hunting-shooters"
+        },
+        {
+          "thema": "chaff",
+          "subthema": "choosing-chaff"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-grand-cathay"
+        }
+      ],
+      "tags": [
+        "fly",
+        "cannons",
+        "tarpit"
+      ]
+    },
+    "avoid-vargheists-lantern-matchup": {
+      "themas": [
+        {
+          "thema": "matchups",
+          "subthema": "vs-sky-lanterns"
+        }
+      ],
+      "tags": [
+        "frenzy",
+        "monstrous-infantry",
+        "stand-and-shoot",
+        "charge-range"
+      ]
+    },
+    "repeated-terror-charges-lanterns": {
+      "themas": [
+        {
+          "thema": "movement",
+          "subthema": "charge-order"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-sky-lanterns"
+        },
+        {
+          "thema": "magic",
+          "subthema": "buffs-hexes"
+        }
+      ],
+      "tags": [
+        "terror",
+        "leadership",
+        "redirect",
+        "flee",
+        "hex"
+      ]
+    },
+    "miao-ying-hunts-lanterns": {
+      "themas": [
+        {
+          "thema": "matchups",
+          "subthema": "vs-sky-lanterns"
+        },
+        {
+          "thema": "hammers",
+          "subthema": "monsters-dragons"
+        }
+      ],
+      "tags": [
+        "dragons",
+        "hammer"
+      ]
+    },
+    "prefer-granite-sentinel-durability": {
+      "themas": [
+        {
+          "thema": "matchups",
+          "subthema": "vs-sky-lanterns"
+        },
+        {
+          "thema": "hammers",
+          "subthema": "monsters-dragons"
+        }
+      ],
+      "tags": [
+        "monsters",
+        "multiple-wounds",
+        "cannons"
+      ]
+    },
+    "jade-lancers-ambush-cannons": {
+      "themas": [
+        {
+          "thema": "deployment",
+          "subthema": "ambush-scouts-vanguard"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "hunting-shooters"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-grand-cathay"
+        }
+      ],
+      "tags": [
+        "ambush",
+        "cannons",
+        "heavy-cavalry"
+      ]
+    },
+    "jade-fleet-allied-outriders": {
+      "themas": [
+        {
+          "thema": "shooting-terrain",
+          "subthema": "missile-units"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-sky-lanterns"
+        }
+      ],
+      "tags": [
+        "missile-troops",
+        "light-cavalry",
+        "sacrifice"
+      ]
+    },
+    "align-sacrifices-for-empty-overruns": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "redirecting"
+        },
+        {
+          "thema": "movement",
+          "subthema": "wheels-alignment"
+        }
+      ],
+      "tags": [
+        "sacrifice",
+        "alignment",
+        "overrun",
+        "redirect",
+        "delay"
+      ]
+    }
+  },
+  "open": {},
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 36,
+      "sec": 92,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 36479,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 4369,
+        "reasoning_output_tokens": 1731
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

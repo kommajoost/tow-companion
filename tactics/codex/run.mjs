@@ -20,21 +20,21 @@
 // npm run tactics:merge zet het in public/tactics/lessen.json. Logboek: tactics/codex/log.json.
 // Zuinig met het abonnement: een video tegelijk, hooguit 1 herkansing per video, stoppen na 3
 // mislukte runs op rij en meteen bij een gebruikslimiet of loginfout.
-import { spawnSync } from 'node:child_process';
-import crypto from 'node:crypto';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { ROOT, RUW, TDIR, leesJson, schrijfJson, slaap } from '../lib.mjs';
+import { RUW, TDIR, leesJson, schrijfJson, slaap } from '../lib.mjs';
+import { STANDAARD_MODEL, draaiCodex, draaiTerug, momentopname, verschillen } from './cli.mjs';
 import {
-  CDIR, KALIBRATIE, LOG, MAX_CITATEN, MISLUKT, RONDE, SAMENGEVOEGD, TERUGGEDRAAID, UIT, VELDEN_TEKST,
-  bronUrl, controleerCitaat, duurVan, laadContext, leesUitBestanden, rel, transcriptRegels, zinnen,
+  CDIR, KALIBRATIE, LOG, MAX_CITATEN, MISLUKT, RONDE, SAMENGEVOEGD, UIT, VELDEN_TEKST,
+  bronUrl, controleerCitaat, duurVan, indelingVelden, laadContext, leesUitBestanden, normaliseerIndex, rel, themaIds,
+  transcriptRegels, vocabTekst, zinnen,
 } from './gedeeld.mjs';
 
 // ── Argumenten ─────────────────────────────────────────────────────────────
 const argv = process.argv.slice(2);
 const opties = { ids: [], kalibratie: false, max: Infinity, droog: false,
-  model: process.env.TACTICS_CODEX_MODEL || 'gpt-6.1-sol', effort: process.env.TACTICS_CODEX_EFFORT || 'high' };
+  model: process.env.TACTICS_CODEX_MODEL || STANDAARD_MODEL, effort: process.env.TACTICS_CODEX_EFFORT || 'high' };
 for (let i = 0; i < argv.length; i++) {
   const a = argv[i];
   if (a === '--kalibratie') opties.kalibratie = true;
@@ -58,143 +58,12 @@ const PAUZE_MS = 5000;
 const ANDEREN = ['tactics/ophalen-log.json', 'tactics/garbled.json', 'tactics/ruw/', 'tactics/cache/',
   'tactics/codex/log.json', 'tactics/codex/teruggedraaid/'];
 
-// ── Codex starten ──────────────────────────────────────────────────────────
-function codexOpdracht() {
-  if (process.env.CODEX_JS) return { cmd: process.execPath, pre: [process.env.CODEX_JS], shell: false };
-  if (process.platform === 'win32') {
-    // codex.cmd is een npm-shim; node rechtstreeks op codex.js voorkomt quoting-gedoe met de spatie
-    // in "D:\CLAUDE CODE".
-    const r = spawnSync('where', ['codex.cmd'], { encoding: 'utf8' });
-    const shim = (r.stdout ?? '').split(/\r?\n/).find(Boolean);
-    if (shim) {
-      const js = path.join(path.dirname(shim), 'node_modules', '@openai', 'codex', 'bin', 'codex.js');
-      if (fs.existsSync(js)) return { cmd: process.execPath, pre: [js], shell: false };
-    }
-  }
-  return { cmd: 'codex', pre: [], shell: process.platform === 'win32' };
-}
-
-const FATAAL = /usage limit|usage_limit|quota|insufficient|not logged in|log ?in again|unauthori[sz]ed|\b401\b|model_not_found|not supported when using codex/i;
-
-function draaiCodex(prompt, laatsteBericht) {
-  const { cmd, pre, shell } = codexOpdracht();
-  const args = [...pre, 'exec',
-    '--ignore-user-config', // geen MCP-servers, plugins of meldingen van de gewone Codex-config
-    '--ephemeral', // geen sessie in de Codex-geschiedenis per video
-    '-m', opties.model,
-    '-c', `model_reasoning_effort="${opties.effort}"`,
-    '-c', 'approval_policy="never"',
-    // Zonder deze instelling (staat in Joosts gewone config) weigert Codex op Windows elk commando.
-    ...(process.platform === 'win32' ? ['-c', 'windows.sandbox="elevated"'] : []),
-    '-s', 'workspace-write',
-    '-C', ROOT,
-    '--color', 'never',
-    '--json',
-    '-o', laatsteBericht,
-    '-'];
-  const t0 = Date.now();
-  const r = spawnSync(cmd, args, {
-    cwd: ROOT, input: prompt, encoding: 'utf8', shell, timeout: TIMEOUT_MS,
-    maxBuffer: 512 * 1024 * 1024, windowsHide: true,
-  });
-  const events = [];
-  for (const regel of (r.stdout ?? '').split(/\r?\n/)) {
-    if (!regel.trim().startsWith('{')) continue;
-    try { events.push(JSON.parse(regel)); } catch { /* geen JSON */ }
-  }
-  const items = events.filter((e) => e.type === 'item.completed').map((e) => e.item ?? {});
-  const perSoort = {};
-  for (const it of items) perSoort[it.type] = (perSoort[it.type] ?? 0) + 1;
-  const usage = events.filter((e) => e.type === 'turn.completed' && e.usage).map((e) => e.usage).pop() ?? null;
-  const fouten = [
-    ...events.filter((e) => e.type === 'error').map((e) => e.message),
-    ...events.filter((e) => e.type === 'turn.failed').map((e) => e.error?.message),
-    ...items.filter((it) => it.type === 'error').map((it) => it.message),
-  ].filter(Boolean).map(String);
-  const stderr = (r.stderr ?? '').trim();
-  return {
-    exit: r.status, signaal: r.signal, timeout: r.error?.code === 'ETIMEDOUT', startFout: r.error?.message,
-    sec: Math.round((Date.now() - t0) / 1000), perSoort, usage, fouten,
-    stderrStaart: stderr.split(/\r?\n/).filter((l) => !/failed to load skill|rmcp::transport/.test(l)).slice(-5).join('\n'),
-    bericht: fs.existsSync(laatsteBericht) ? fs.readFileSync(laatsteBericht, 'utf8').trim().slice(0, 500) : null,
-    commandos: items.filter((it) => it.type === 'command_execution').map((it) => String(it.command ?? '').slice(0, 200)),
-    fataal: FATAAL.test([...fouten, stderr].join('\n')),
-  };
-}
-
-// ── Git-controle ───────────────────────────────────────────────────────────
-function gitStatus() {
-  const r = spawnSync('git', ['status', '--porcelain=v1', '-z', '-uall'], { cwd: ROOT, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
-  if (r.status !== 0) throw new Error(`git status faalde: ${r.stderr}`);
-  const delen = r.stdout.split('\0');
-  const m = new Map();
-  for (let i = 0; i < delen.length; i++) {
-    const s = delen[i];
-    if (!s) continue;
-    const xy = s.slice(0, 2);
-    m.set(s.slice(3), xy);
-    if (xy[0] === 'R' || xy[0] === 'C') i++; // het oude pad van een rename overslaan
-  }
-  return m;
-}
-
-function momentopname(uitgesloten) {
-  const m = new Map();
-  for (const [p, xy] of gitStatus()) {
-    if (uitgesloten(p)) continue;
-    let inhoud = null;
-    try {
-      const st = fs.statSync(path.join(ROOT, p));
-      if (st.isFile() && st.size < 20 * 1024 * 1024) inhoud = fs.readFileSync(path.join(ROOT, p));
-    } catch { /* verwijderd */ }
-    m.set(p, { xy, inhoud, hash: inhoud ? crypto.createHash('sha1').update(inhoud).digest('hex') : 'weg' });
-  }
-  return m;
-}
-
-function verschillen(voor, na) {
-  const uit = new Set();
-  for (const [p, n] of na) if (!voor.has(p) || voor.get(p).hash !== n.hash || voor.get(p).xy !== n.xy) uit.add(p);
-  for (const p of voor.keys()) if (!na.has(p)) uit.add(p);
-  return [...uit].sort();
-}
-
-/** Zet een door Codex aangeraakt bestand terug; de aangetroffen versie gaat eerst naar teruggedraaid/. */
-function draaiTerug(p, voor, stempel) {
-  const abs = path.join(ROOT, p);
-  if (fs.existsSync(abs) && fs.statSync(abs).isFile()) {
-    const kopie = path.join(TERUGGEDRAAID, stempel, p);
-    fs.mkdirSync(path.dirname(kopie), { recursive: true });
-    fs.copyFileSync(abs, kopie);
-  }
-  const was = voor.get(p);
-  if (was) {
-    // Stond al gewijzigd of nieuw in de werkmap: die versie terugzetten.
-    if (was.inhoud) { fs.mkdirSync(path.dirname(abs), { recursive: true }); fs.writeFileSync(abs, was.inhoud); return 'oude inhoud teruggezet'; }
-    if (fs.existsSync(abs)) fs.rmSync(abs, { force: true });
-    return 'weer verwijderd';
-  }
-  const gevolgd = spawnSync('git', ['ls-files', '--error-unmatch', '--', p], { cwd: ROOT, encoding: 'utf8' }).status === 0;
-  if (gevolgd) {
-    const r = spawnSync('git', ['checkout', '--', p], { cwd: ROOT, encoding: 'utf8' });
-    return r.status === 0 ? 'git checkout' : `git checkout faalde: ${r.stderr.trim()}`;
-  }
-  fs.rmSync(abs, { force: true });
-  // Lege mappen die Codex aanmaakte opruimen.
-  let dir = path.dirname(abs);
-  while (dir.startsWith(ROOT) && dir !== ROOT && fs.existsSync(dir) && fs.readdirSync(dir).length === 0) {
-    fs.rmdirSync(dir);
-    dir = path.dirname(dir);
-  }
-  return 'nieuw bestand verwijderd';
-}
-
 // ── Prompt ─────────────────────────────────────────────────────────────────
 function indexRegel(l) {
   const eerste = String(l.tekst ?? '').split(/(?<=[.!?])\s+/)[0] ?? '';
   const kort = eerste.length > 110 ? eerste.slice(0, 107) + '...' : eerste;
   const leeg = VELDEN_TEKST.filter((v) => l[v] == null).join(',') || '-';
-  return `${l.id} | ${l.fase} | ${(l.themas ?? []).join(',')} | ${l.leger ?? '-'} | ${l.titel} | ${kort} | ${leeg}`;
+  return `${l.id} | ${l.fase} | ${themaIds(l).join(',')} | ${l.leger ?? '-'} | ${l.titel} | ${kort} | ${leeg}`;
 }
 
 function bouwPrompt(ctx, video, doelRel, pool) {
@@ -216,7 +85,7 @@ function bouwPrompt(ctx, video, doelRel, pool) {
     ].join('\n'),
     '## Vocabulary',
     'Phases:\n' + ctx.vocab.fases.map((f) => `- ${f.id} (${f.naam})`).join('\n'),
-    'Themes:\n' + ctx.vocab.themas.map((t) => `- ${t.id} (${t.naam}): ${t.omschrijving}`).join('\n'),
+    vocabTekst(ctx),
     '## Army slugs',
     [...ctx.legers].sort().join(', '),
     '## Unit names',
@@ -268,11 +137,14 @@ function normaliseer(ruw, ctx, video, poolMap, bekendeIds) {
     if (!titel || !tekst) { keur('titel of tekst ontbreekt'); continue; }
     if (zinnen(tekst) > 3) { keur(`tekst heeft ${zinnen(tekst)} zinnen (max 3)`); continue; }
     if (!ctx.fases.has(l.fase)) { keur(`onbekende fase ${l.fase}`); continue; }
-    const themasIn = Array.isArray(l.themas) ? l.themas : [];
-    let themas = [...new Set(themasIn.filter((t) => ctx.themas.has(t)))];
-    if (themas.length !== themasIn.length) gecorrigeerd.push({ wie, wat: `thema's ${JSON.stringify(themasIn)} -> ${JSON.stringify(themas)}` });
-    if (themas.length > 3) { themas = themas.slice(0, 3); gecorrigeerd.push({ wie, wat: 'meer dan 3 thema\'s, eerste 3 gehouden' }); }
-    if (themas.length === 0) { keur('geen geldig thema'); continue; }
+    // Thema's met subthema's en tags: een les zonder geldig thema valt af; te weinig tags blijft een
+    // correctie (tactics:build waarschuwt, npm run tactics:index kan het later aanvullen).
+    const idx = normaliseerIndex(ctx, l.themas, l.tags);
+    for (const c of idx.correcties) gecorrigeerd.push({ wie, wat: c });
+    if (idx.themas.length === 0) { keur(`geen geldig thema: ${idx.fouten.join('; ')}`); continue; }
+    for (const f of idx.fouten) gecorrigeerd.push({ wie, wat: f });
+    const { themas, subthemas } = indelingVelden(idx.themas);
+    const { tags } = idx;
     const leger = l.leger == null || l.leger === '' ? null : l.leger;
     if (leger !== null && !ctx.legers.has(leger)) { keur(`onbekend leger ${leger}`); continue; }
     const units = [];
@@ -293,7 +165,7 @@ function normaliseer(ruw, ctx, video, poolMap, bekendeIds) {
     bekendeIds.add(id);
     const les = { id, titel, tekst };
     for (const v of VELDEN_TEKST) les[v] = tekstOfNull(l[v]);
-    Object.assign(les, { fase: l.fase, themas, leger, units, bronnen: [b.bron], datum: bron.datum ?? null, markeringen: [] });
+    Object.assign(les, { fase: l.fase, themas, subthemas, tags, leger, units, bronnen: [b.bron], datum: bron.datum ?? null, markeringen: [] });
     nieuw.push(les);
   }
 
@@ -332,12 +204,12 @@ async function verwerkVideo(ctx, video, doel, pool) {
 
   const voor = momentopname(uitgesloten);
   if (fs.existsSync(doel)) fs.rmSync(doel);
-  const run = draaiCodex(prompt, laatste);
+  const run = draaiCodex(prompt, laatste, { model: opties.model, effort: opties.effort, timeoutMs: TIMEOUT_MS });
   fs.rmSync(laatste, { force: true });
   const na = momentopname(uitgesloten);
 
   const basis = { promptKB: Math.round(Buffer.byteLength(prompt) / 1024), sec: run.sec, exit: run.exit,
-    usage: run.usage, items: run.perSoort, commandos: run.commandos, bericht: run.bericht };
+    usage: run.usage, items: run.perSoort, commandos: run.commandos, bericht: run.bericht?.slice(0, 500) ?? null };
 
   const vreemd = verschillen(voor, na);
   if (vreemd.length) {

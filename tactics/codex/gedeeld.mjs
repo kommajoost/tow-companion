@@ -25,11 +25,85 @@ export const zinnen = (s) => String(s ?? '').split(/(?<=[.!?])\s+/).filter(Boole
 export const vandaag = () => new Date().toISOString().slice(0, 10);
 export const rel = (p) => path.relative(ROOT, p).split(path.sep).join('/');
 
+export const MIN_TAGS = 2;
+export const MAX_TAGS = 6;
+export const MAX_THEMAS = 3;
+
+// Een les bewaart thema's als twee lijsten in dezelfde volgorde: themas (ids, hoofdthema eerst) en
+// subthemas (per thema het subthema). Codex antwoordt als [{ thema, subthema }]; die vorm heet hier
+// "indeling".
+
+/** Thema-ids van een les (ook als een oud bestand nog objecten zou hebben). */
+export const themaIds = (l) => (Array.isArray(l?.themas) ? l.themas : [])
+  .map((t) => (typeof t === 'string' ? t : t?.thema)).filter((t) => typeof t === 'string');
+
+/** themas + subthemas van een les als [{ thema, subthema }] (subthema null als het ontbreekt). */
+export const lesIndeling = (l) => themaIds(l).map((thema, i) => ({ thema, subthema: Array.isArray(l?.subthemas) ? l.subthemas[i] ?? null : null }));
+
+/** [{ thema, subthema }] naar de velden van een les. */
+export const indelingVelden = (indeling) => ({ themas: indeling.map((t) => t.thema), subthemas: indeling.map((t) => t.subthema) });
+
+/** Het vocabulaire (thema's met subthema's, tags) als prompttekst voor Codex. */
+export function vocabTekst(ctx) {
+  const themas = ctx.vocab.themas.map((t) => [
+    `- ${t.id} (${t.naam}): ${t.omschrijving}`,
+    ...(t.subthemas ?? []).map((s) => `  - ${s.id} (${s.naam}): ${s.omschrijving}`),
+  ].join('\n')).join('\n');
+  const groepen = ctx.tagGroepen.map((g) => {
+    const tags = [...ctx.tags.values()].filter((t) => t.groep === g.id);
+    if (!tags.length) return null;
+    return `${g.naam}: ` + tags.map((t) => (t.synonyms?.length ? `${t.id} (${t.synonyms.join(', ')})` : t.id)).join('; ');
+  }).filter(Boolean).join('\n');
+  return [
+    'Themes and their sub-themes (theme id, then its sub-theme ids indented):\n' + themas,
+    'Tags (id, with synonyms in brackets; use the id):\n' + groepen,
+  ].join('\n\n');
+}
+
+/**
+ * Thema's met subthema's en tags van een les nakijken tegen het vocabulaire.
+ * themasIn: [{ thema, subthema }] (een los subthema-id of een thema zonder subthema wordt aangevuld
+ * als dat eenduidig kan). tagsIn: tag-ids; labels en synoniemen worden omgezet naar het id.
+ * Geeft { themas, tags, fouten: [], correcties: [] }. fouten leeg = bruikbaar.
+ */
+export function normaliseerIndex(ctx, themasIn, tagsIn) {
+  const fouten = [];
+  const correcties = [];
+  const themas = [];
+  const gezien = new Set();
+  for (const x of Array.isArray(themasIn) ? themasIn : []) {
+    let thema = typeof x === 'string' ? x : x?.thema;
+    let sub = typeof x === 'string' ? null : x?.subthema;
+    if (!ctx.themas.has(thema) && ctx.subthemaThema.has(thema) && !sub) { sub = thema; thema = ctx.subthemaThema.get(sub); }
+    if (!ctx.themas.has(thema) && ctx.subthemaThema.has(sub)) { correcties.push(`thema ${thema} -> ${ctx.subthemaThema.get(sub)} (van subthema ${sub})`); thema = ctx.subthemaThema.get(sub); }
+    if (!ctx.themas.has(thema)) { fouten.push(`onbekend thema ${JSON.stringify(x)}`); continue; }
+    const subs = ctx.themas.get(thema).subthemas;
+    if (!subs.has(sub)) { fouten.push(`subthema ${sub} hoort niet bij ${thema}`); continue; }
+    if (gezien.has(thema)) { correcties.push(`dubbel thema ${thema} weggelaten`); continue; }
+    gezien.add(thema);
+    themas.push({ thema, subthema: sub });
+  }
+  if (themas.length === 0 && !fouten.length) fouten.push('geen thema');
+  if (themas.length > MAX_THEMAS) { correcties.push(`meer dan ${MAX_THEMAS} thema's, eerste ${MAX_THEMAS} gehouden`); themas.length = MAX_THEMAS; }
+  const tags = [];
+  for (const t of Array.isArray(tagsIn) ? tagsIn : []) {
+    const k = String(t).toLowerCase().trim();
+    const id = ctx.tagAlias.get(k) ?? ctx.tagAlias.get(k.replace(/-/g, ' '));
+    if (!id) { correcties.push(`onbekende tag "${t}" weggelaten`); continue; }
+    if (id !== t) correcties.push(`tag "${t}" -> ${id}`);
+    if (!tags.includes(id)) tags.push(id);
+  }
+  if (tags.length > MAX_TAGS) { correcties.push(`meer dan ${MAX_TAGS} tags, eerste ${MAX_TAGS} gehouden`); tags.length = MAX_TAGS; }
+  if (tags.length < MIN_TAGS) fouten.push(`${tags.length} geldige tag(s) (minstens ${MIN_TAGS})`);
+  return { themas, tags, fouten, correcties };
+}
+
 /** Alles wat de controles nodig hebben, in een keer gelezen. */
 export function laadContext() {
   const bronnen = leesJson(path.join(PUB, 'bronnen.json'));
   const lessen = leesJson(path.join(PUB, 'lessen.json'));
   const vocab = leesJson(path.join(TDIR, 'themas.json'));
+  const tagsBestand = leesJson(path.join(TDIR, 'tags.json'), { groepen: [], tags: [] });
   const meta = leesJson(path.join(CACHE, 'meta.json'), {});
   const glossary = leesJson(path.join(TDIR, 'glossary.json'), {});
   const index = leesJson(path.join(ROOT, 'public', 'owb', 'rules-index.json'), {});
@@ -44,10 +118,20 @@ export function laadContext() {
   for (const [k, v] of Object.entries(index)) {
     if (v?.url?.startsWith('unit/')) units.set(k, weergave[k] ?? titel(k));
   }
+  // thema-id -> { ...thema, subthemas: Set }; subthema-id -> thema-id; tag-id/label/synoniem -> tag-id.
+  const themas = new Map(vocab.themas.map((t) => [t.id, { ...t, subthemas: new Set((t.subthemas ?? []).map((s) => s.id)) }]));
+  const subthemaThema = new Map();
+  for (const t of vocab.themas) for (const s of t.subthemas ?? []) subthemaThema.set(s.id, t.id);
+  const tags = new Map((tagsBestand.tags ?? []).map((t) => [t.id, t]));
+  const tagAlias = new Map();
+  for (const t of tags.values()) {
+    for (const a of [t.label, ...(t.synonyms ?? [])]) if (a && !tagAlias.has(a.toLowerCase())) tagAlias.set(a.toLowerCase(), t.id);
+  }
+  for (const id of tags.keys()) tagAlias.set(id, id); // het id wint altijd
   return {
     bronnen, lessen, vocab, meta, legers, units,
     fases: new Set(vocab.fases.map((f) => f.id)),
-    themas: new Set(vocab.themas.map((t) => t.id)),
+    themas, subthemaThema, tags, tagAlias, tagGroepen: tagsBestand.groepen ?? [],
     bronIndex: new Map(bronnen.bronnen.map((b) => [b.id, b])),
     kanaalIndex: new Map(bronnen.kanalen.map((k) => [k.id, k])),
   };

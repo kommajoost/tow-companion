@@ -1,52 +1,512 @@
 {
   "themas": [
     {
-      "id": "flanks",
-      "naam": "Flanks",
-      "omschrijving": "Winning, using and defending a flank, and what to do once it is won.",
-      "volgorde": 1
+      "id": "game-plan",
+      "naam": "Game plan",
+      "omschrijving": "Strategy: reading the enemy, where to fight, trading and tempo.",
+      "volgorde": 1,
+      "subthemas": [
+        {
+          "id": "reading-the-enemy",
+          "naam": "Reading the enemy",
+          "omschrijving": "Who is the beatdown, how the enemy army wins and what to focus on.",
+          "volgorde": 1
+        },
+        {
+          "id": "flanks-centre",
+          "naam": "Flanks & centre",
+          "omschrijving": "Board thirds, winning a flank and turning into the centre.",
+          "volgorde": 2
+        },
+        {
+          "id": "concentration",
+          "naam": "Concentrating force",
+          "omschrijving": "Local superiority, minimum force and avoiding fair fights.",
+          "volgorde": 3
+        },
+        {
+          "id": "tempo-trading",
+          "naam": "Tempo & trading",
+          "omschrijving": "Buying time, sacrifices and which units the plan can lose.",
+          "volgorde": 4
+        },
+        {
+          "id": "threat-zones",
+          "naam": "Threats & zoning",
+          "omschrijving": "Threat ranges and positions that limit the enemy's choices.",
+          "volgorde": 5
+        },
+        {
+          "id": "aggression-control",
+          "naam": "Aggression or control",
+          "omschrijving": "When to push in and when to hold back and play patiently.",
+          "volgorde": 6
+        },
+        {
+          "id": "list-building",
+          "naam": "List building",
+          "omschrijving": "General principles for building an army and preparing for events.",
+          "volgorde": 7
+        }
+      ]
+    },
+    {
+      "id": "deployment",
+      "naam": "Deployment",
+      "omschrijving": "Pre-game checks, drop order and where units start.",
+      "volgorde": 2,
+      "subthemas": [
+        {
+          "id": "pre-game-checks",
+          "naam": "Pre-game checks",
+          "omschrijving": "Scenario, map, table side and what to ask about the enemy list.",
+          "volgorde": 1
+        },
+        {
+          "id": "drops-first-turn",
+          "naam": "Drops & first turn",
+          "omschrijving": "Number of drops, deploying first or second and the first-turn roll.",
+          "volgorde": 2
+        },
+        {
+          "id": "unit-placement",
+          "naam": "Unit placement",
+          "omschrijving": "Where units start and how deployed units support each other.",
+          "volgorde": 3
+        },
+        {
+          "id": "deploying-vs-shooting",
+          "naam": "Deploying vs shooting",
+          "omschrijving": "Starting out of enemy range and sight.",
+          "volgorde": 4
+        },
+        {
+          "id": "ambush-scouts-vanguard",
+          "naam": "Ambush, scouts & vanguard",
+          "omschrijving": "Using and countering units that arrive later or start ahead.",
+          "volgorde": 5
+        }
+      ]
+    },
+    {
+      "id": "movement",
+      "naam": "Movement & charges",
+      "omschrijving": "Manoeuvring, charging, fleeing, overruns and reforms.",
+      "volgorde": 3,
+      "subthemas": [
+        {
+          "id": "charge-setup",
+          "naam": "Charge setup",
+          "omschrijving": "Getting into charge range at the right angle for next turn.",
+          "volgorde": 1
+        },
+        {
+          "id": "charge-order",
+          "naam": "Charge order & redirects",
+          "omschrijving": "Sequencing charges, redirecting and charge reactions.",
+          "volgorde": 2
+        },
+        {
+          "id": "wheels-alignment",
+          "naam": "Wheels & alignment",
+          "omschrijving": "Wheeling, closing the door and how units end up facing.",
+          "volgorde": 3
+        },
+        {
+          "id": "overrun-pursuit",
+          "naam": "Overrun & pursuit",
+          "omschrijving": "Planning overruns, pursuits and follow-ups.",
+          "volgorde": 4
+        },
+        {
+          "id": "reforms-formations",
+          "naam": "Reforms & formations",
+          "omschrijving": "Restrain and reform, Drilled, marching column and formations.",
+          "volgorde": 5
+        },
+        {
+          "id": "fleeing",
+          "naam": "Fleeing as a tool",
+          "omschrijving": "Flee reactions and flee paths that deny or steer the enemy.",
+          "volgorde": 6
+        },
+        {
+          "id": "support-countercharge",
+          "naam": "Support & countercharges",
+          "omschrijving": "Combined charges, supporting units and countercharges.",
+          "volgorde": 7
+        }
+      ]
     },
     {
       "id": "chaff",
-      "naam": "Chaff & redirecting",
+      "naam": "Chaff & screens",
       "omschrijving": "Cheap units that redirect, delay, screen or distract the enemy.",
-      "volgorde": 2
-    },
-    {
-      "id": "hammers",
-      "naam": "Hammers",
-      "omschrijving": "Units that break the enemy: what they need and where to use them.",
-      "volgorde": 3
-    },
-    {
-      "id": "game-plan",
-      "naam": "Game plan",
-      "omschrijving": "Tempo, the thirds of the board and how the centre is won.",
-      "volgorde": 4
-    },
-    {
-      "id": "matchups",
-      "naam": "Matchups",
-      "omschrijving": "Putting each unit opposite the enemy unit it beats.",
-      "volgorde": 5
+      "volgorde": 4,
+      "subthemas": [
+        {
+          "id": "choosing-chaff",
+          "naam": "Choosing chaff",
+          "omschrijving": "What makes good chaff and which units do the job.",
+          "volgorde": 1
+        },
+        {
+          "id": "redirecting",
+          "naam": "Redirecting & blocking",
+          "omschrijving": "Speed bumps, redirects and march blocking.",
+          "volgorde": 2
+        },
+        {
+          "id": "decoys-bait",
+          "naam": "Decoys & bait",
+          "omschrijving": "Units that draw charges, shots or attention, including frenzy bait.",
+          "volgorde": 3
+        },
+        {
+          "id": "screens",
+          "naam": "Screens",
+          "omschrijving": "Units that block sight or charges in front of another unit.",
+          "volgorde": 4
+        },
+        {
+          "id": "retreat-paths",
+          "naam": "Retreat paths",
+          "omschrijving": "Backstops, peril tests and steering retreats and overruns.",
+          "volgorde": 5
+        },
+        {
+          "id": "clearing-chaff",
+          "naam": "Clearing enemy chaff",
+          "omschrijving": "Hunting enemy skirmishers, screens and diverters.",
+          "volgorde": 6
+        }
+      ]
     },
     {
       "id": "infantry",
       "naam": "Infantry",
       "omschrijving": "Infantry blocks that hold the centre or hit back hard.",
-      "volgorde": 6
+      "volgorde": 5,
+      "subthemas": [
+        {
+          "id": "anchors",
+          "naam": "Anchors & anvils",
+          "omschrijving": "Infantry that holds the centre and what it needs.",
+          "volgorde": 1
+        },
+        {
+          "id": "death-stars",
+          "naam": "Death stars",
+          "omschrijving": "One large, buffed unit as the core of the army.",
+          "volgorde": 2
+        },
+        {
+          "id": "unit-builds",
+          "naam": "Unit size & equipment",
+          "omschrijving": "How many models, which weapons, armour and upgrades.",
+          "volgorde": 3
+        },
+        {
+          "id": "holding-combat",
+          "naam": "Holding in combat",
+          "omschrijving": "Stubborn, giving ground, reforms and challenges to stay in the fight.",
+          "volgorde": 4
+        },
+        {
+          "id": "infantry-moves",
+          "naam": "Infantry on the move",
+          "omschrijving": "Advancing, raiding and charging with infantry.",
+          "volgorde": 5
+        }
+      ]
+    },
+    {
+      "id": "hammers",
+      "naam": "Hammers & monsters",
+      "omschrijving": "Units that break the enemy: cavalry, chariots, monsters and how to use them.",
+      "volgorde": 6,
+      "subthemas": [
+        {
+          "id": "hammer-basics",
+          "naam": "What a hammer needs",
+          "omschrijving": "Speed, damage and durability.",
+          "volgorde": 1
+        },
+        {
+          "id": "heavy-cavalry",
+          "naam": "Heavy cavalry",
+          "omschrijving": "Knights and other heavy cavalry.",
+          "volgorde": 2
+        },
+        {
+          "id": "chariots",
+          "naam": "Chariots",
+          "omschrijving": "Light and heavy chariots.",
+          "volgorde": 3
+        },
+        {
+          "id": "monsters-dragons",
+          "naam": "Monsters & dragons",
+          "omschrijving": "Behemoths, dragons and other large monsters.",
+          "volgorde": 4
+        },
+        {
+          "id": "random-movers",
+          "naam": "Random movers",
+          "omschrijving": "Units with random movement, such as 3D6 movers.",
+          "volgorde": 5
+        },
+        {
+          "id": "using-hammers",
+          "naam": "Using hammers",
+          "omschrijving": "Picking targets, attacking in waves and supporting the charge.",
+          "volgorde": 6
+        }
+      ]
+    },
+    {
+      "id": "characters",
+      "naam": "Characters",
+      "omschrijving": "Lords and heroes: combat roles, battle standards, mounts and challenges.",
+      "volgorde": 7,
+      "subthemas": [
+        {
+          "id": "combat-roles",
+          "naam": "Combat roles",
+          "omschrijving": "Tank, blender and assassin characters.",
+          "volgorde": 1
+        },
+        {
+          "id": "bsb",
+          "naam": "Battle standard & leadership",
+          "omschrijving": "The BSB, the general's leadership and characters that keep units in the fight.",
+          "volgorde": 2
+        },
+        {
+          "id": "mounts-items",
+          "naam": "Mounts & items",
+          "omschrijving": "Choosing a mount, weapons and magic items for a character.",
+          "volgorde": 3
+        },
+        {
+          "id": "challenges",
+          "naam": "Challenges & champions",
+          "omschrijving": "Using challenges and champions to protect or delay.",
+          "volgorde": 4
+        },
+        {
+          "id": "protecting-characters",
+          "naam": "Protecting characters",
+          "omschrijving": "Lone characters, rescue spells and safe positions.",
+          "volgorde": 5
+        }
+      ]
+    },
+    {
+      "id": "magic",
+      "naam": "Magic",
+      "omschrijving": "Wizards, lores, spells and dispelling.",
+      "volgorde": 8,
+      "subthemas": [
+        {
+          "id": "wizard-builds",
+          "naam": "Wizard builds",
+          "omschrijving": "Wizard roles, levels and how many wizards to take.",
+          "volgorde": 1
+        },
+        {
+          "id": "lores-spells",
+          "naam": "Lores & spell choice",
+          "omschrijving": "Which lore and which spells to pick.",
+          "volgorde": 2
+        },
+        {
+          "id": "dispelling",
+          "naam": "Dispelling",
+          "omschrijving": "Dispel range, dispel scrolls and stopping key spells.",
+          "volgorde": 3
+        },
+        {
+          "id": "wizard-placement",
+          "naam": "Wizard placement",
+          "omschrijving": "Bunkers, casting range and keeping wizards safe.",
+          "volgorde": 4
+        },
+        {
+          "id": "magic-missiles",
+          "naam": "Magic missiles",
+          "omschrijving": "Damage spells and what to aim them at.",
+          "volgorde": 5
+        },
+        {
+          "id": "buffs-hexes",
+          "naam": "Buffs & hexes",
+          "omschrijving": "Enchantments on your units and hexes on the enemy.",
+          "volgorde": 6
+        },
+        {
+          "id": "control-spells",
+          "naam": "Control & movement spells",
+          "omschrijving": "Vortexes, terrain spells, conveyance and push-backs.",
+          "volgorde": 7
+        },
+        {
+          "id": "casting-aids",
+          "naam": "Casting aids",
+          "omschrijving": "Power Scrolls, Lore Familiar, casting bonuses and arcane items.",
+          "volgorde": 8
+        }
+      ]
     },
     {
       "id": "shooting-terrain",
       "naam": "Shooting & terrain",
-      "omschrijving": "Staying out of enemy fire, line of sight and placing your shooters.",
-      "volgorde": 7
+      "omschrijving": "War machines, missile units, avoiding fire and line of sight.",
+      "volgorde": 9,
+      "subthemas": [
+        {
+          "id": "war-machines",
+          "naam": "War machines",
+          "omschrijving": "Cannons, stone throwers, bolt throwers and where they go.",
+          "volgorde": 1
+        },
+        {
+          "id": "missile-units",
+          "naam": "Missile units",
+          "omschrijving": "Building and using shooting troops.",
+          "volgorde": 2
+        },
+        {
+          "id": "target-priority",
+          "naam": "Target priority",
+          "omschrijving": "What to shoot first and with what.",
+          "volgorde": 3
+        },
+        {
+          "id": "avoiding-fire",
+          "naam": "Avoiding fire",
+          "omschrijving": "Staying out of range and sight, hit penalties and cover.",
+          "volgorde": 4
+        },
+        {
+          "id": "evasive-skirmish",
+          "naam": "Evasive & skirmish shooting",
+          "omschrijving": "Hit-and-run shooters, Evasive and skirmishing missile units.",
+          "volgorde": 5
+        },
+        {
+          "id": "terrain-los",
+          "naam": "Terrain & line of sight",
+          "omschrijving": "Hills, woods and impassable terrain.",
+          "volgorde": 6
+        },
+        {
+          "id": "hunting-shooters",
+          "naam": "Hunting shooters",
+          "omschrijving": "Reaching and silencing gunlines and war machines.",
+          "volgorde": 7
+        }
+      ]
     },
     {
-      "id": "psychology",
-      "naam": "Psychology",
-      "omschrijving": "Terror, frenzy and making the enemy flee.",
-      "volgorde": 8
+      "id": "matchups",
+      "naam": "Matchups",
+      "omschrijving": "Facing a specific army or unit, and putting units against what they beat.",
+      "volgorde": 10,
+      "subthemas": [
+        {
+          "id": "picking-fights",
+          "naam": "Picking fights",
+          "omschrijving": "Putting each unit opposite what it beats and avoiding bad trades.",
+          "volgorde": 1
+        },
+        {
+          "id": "vs-sky-lanterns",
+          "naam": "vs Sky Lanterns",
+          "omschrijving": "Shooting, charging and surviving Grand Cathay's Sky Lanterns.",
+          "volgorde": 2
+        },
+        {
+          "id": "vs-grand-cathay",
+          "naam": "vs Grand Cathay",
+          "omschrijving": "Cathayan artillery, Jade Warriors, Shugengan Lords and the mirror match.",
+          "volgorde": 3
+        },
+        {
+          "id": "vs-beastmen",
+          "naam": "vs Beastmen",
+          "omschrijving": "Playing against Beastmen Brayherds.",
+          "volgorde": 4
+        },
+        {
+          "id": "vs-bretonnia",
+          "naam": "vs Bretonnia",
+          "omschrijving": "Playing against Bretonnian knights, Pegasus Knights and Dukes.",
+          "volgorde": 5
+        },
+        {
+          "id": "vs-tomb-kings",
+          "naam": "vs Tomb Kings",
+          "omschrijving": "Playing against Tomb Kings of Khemri.",
+          "volgorde": 6
+        },
+        {
+          "id": "vs-monsters",
+          "naam": "vs Monsters & dragons",
+          "omschrijving": "Answering dragons, giants and other large monsters.",
+          "volgorde": 7
+        },
+        {
+          "id": "vs-other",
+          "naam": "vs other armies",
+          "omschrijving": "Advice against one named army not listed above.",
+          "volgorde": 8
+        }
+      ]
+    },
+    {
+      "id": "scenarios",
+      "naam": "Scenarios & objectives",
+      "omschrijving": "Scoring, objectives and plans for a named scenario.",
+      "volgorde": 11,
+      "subthemas": [
+        {
+          "id": "scoring-units",
+          "naam": "Scoring units",
+          "omschrijving": "Which units score and how to keep them alive.",
+          "volgorde": 1
+        },
+        {
+          "id": "objectives",
+          "naam": "Taking & holding objectives",
+          "omschrijving": "Claiming, contesting and holding objectives.",
+          "volgorde": 2
+        },
+        {
+          "id": "baggage-train",
+          "naam": "Baggage train",
+          "omschrijving": "Attacking and defending baggage trains.",
+          "volgorde": 3
+        },
+        {
+          "id": "king-of-the-hill",
+          "naam": "King of the Hill",
+          "omschrijving": "Playing the King of the Hill scenario.",
+          "volgorde": 4
+        },
+        {
+          "id": "scenario-plans",
+          "naam": "Other scenarios",
+          "omschrijving": "Plans for Breakthrough, Encirclement, Field of Glory and other named scenarios.",
+          "volgorde": 5
+        },
+        {
+          "id": "late-game",
+          "naam": "Late game",
+          "omschrijving": "Last turns: denying points, hiding survivors and late grabs.",
+          "volgorde": 6
+        }
+      ]
     }
   ],
   "fases": [

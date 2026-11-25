@@ -1,0 +1,703 @@
+{
+  "batch": 13,
+  "gemaaktOp": "2026-11-25T22:48:14.271Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "ids": [
+    "marching-column-anvil-advance",
+    "judge-units-by-points-role",
+    "gunlines-score-without-contact",
+    "fast-armies-close-gunlines",
+    "charge-weak-target-then-redirect",
+    "redirect-deny-stand-shoot",
+    "choose-dragon-role-early",
+    "dragon-threatens-mobile-duke",
+    "commit-dragon-accept-risk",
+    "hide-random-movers-behind-hills",
+    "spawn-catch-fleeing-targets",
+    "charge-adjacent-targets-together",
+    "cheap-area-capture-units",
+    "maintain-cover-for-scorers",
+    "clear-route-for-scorers",
+    "resolve-overrun-feeder-first",
+    "drilled-widen-overrun-contact",
+    "shift-lone-character-protection",
+    "screen-pursuit-misses-character",
+    "characters-improve-ordinary-troops",
+    "equal-drops-deploy-first",
+    "channel-ambushers-into-charges",
+    "mark-threat-ranges-dice",
+    "deploy-for-unit-synergy",
+    "combat-units-guard-artillery",
+    "deploy-early-ensure-fit",
+    "deploy-obvious-positions-early",
+    "wood-elves-outrange-dwarf-shooting",
+    "split-units-limit-dragon-targets",
+    "angle-skirmisher-dragon-overrun",
+    "delay-dragon-score-elsewhere",
+    "fast-cavalry-skirmish-marching",
+    "seekers-mobile-core-scorers",
+    "seekers-spread-against-shooting",
+    "angle-charges-avoid-characters",
+    "layer-resilient-units-retreat-trap",
+    "double-hammer-consecutive-waves",
+    "plan-overruns-repeat-combats",
+    "swiftstride-extend-orderly-retreats",
+    "budget-safe-flee-distance"
+  ],
+  "resultaten": {
+    "marching-column-anvil-advance": {
+      "themas": [
+        {
+          "thema": "movement",
+          "subthema": "reforms-formations"
+        },
+        {
+          "thema": "infantry",
+          "subthema": "infantry-moves"
+        }
+      ],
+      "tags": [
+        "marching-column",
+        "anvil",
+        "stubborn",
+        "fall-back"
+      ]
+    },
+    "judge-units-by-points-role": {
+      "themas": [
+        {
+          "thema": "game-plan",
+          "subthema": "list-building"
+        }
+      ],
+      "tags": [
+        "victory-points",
+        "hammer"
+      ]
+    },
+    "gunlines-score-without-contact": {
+      "themas": [
+        {
+          "thema": "game-plan",
+          "subthema": "aggression-control"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "missile-units"
+        }
+      ],
+      "tags": [
+        "gunline",
+        "victory-points",
+        "missile-troops",
+        "war-machines"
+      ]
+    },
+    "fast-armies-close-gunlines": {
+      "themas": [
+        {
+          "thema": "shooting-terrain",
+          "subthema": "hunting-shooters"
+        },
+        {
+          "thema": "game-plan",
+          "subthema": "reading-the-enemy"
+        }
+      ],
+      "tags": [
+        "gunline",
+        "charge-range"
+      ]
+    },
+    "charge-weak-target-then-redirect": {
+      "themas": [
+        {
+          "thema": "movement",
+          "subthema": "charge-order"
+        }
+      ],
+      "tags": [
+        "redirect",
+        "flee",
+        "terror",
+        "swiftstride"
+      ]
+    },
+    "redirect-deny-stand-shoot": {
+      "themas": [
+        {
+          "thema": "movement",
+          "subthema": "charge-order"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "hunting-shooters"
+        }
+      ],
+      "tags": [
+        "redirect",
+        "stand-and-shoot",
+        "flee",
+        "missile-troops"
+      ]
+    },
+    "choose-dragon-role-early": {
+      "themas": [
+        {
+          "thema": "deployment",
+          "subthema": "unit-placement"
+        },
+        {
+          "thema": "hammers",
+          "subthema": "monsters-dragons"
+        }
+      ],
+      "tags": [
+        "dragons",
+        "victory-points",
+        "hammer"
+      ]
+    },
+    "dragon-threatens-mobile-duke": {
+      "themas": [
+        {
+          "thema": "matchups",
+          "subthema": "vs-bretonnia"
+        },
+        {
+          "thema": "hammers",
+          "subthema": "monsters-dragons"
+        }
+      ],
+      "tags": [
+        "dragons",
+        "zoning",
+        "hammer"
+      ]
+    },
+    "commit-dragon-accept-risk": {
+      "themas": [
+        {
+          "thema": "hammers",
+          "subthema": "monsters-dragons"
+        },
+        {
+          "thema": "game-plan",
+          "subthema": "aggression-control"
+        }
+      ],
+      "tags": [
+        "dragons",
+        "hammer"
+      ]
+    },
+    "hide-random-movers-behind-hills": {
+      "themas": [
+        {
+          "thema": "hammers",
+          "subthema": "random-movers"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "terrain-los"
+        }
+      ],
+      "tags": [
+        "random-movement",
+        "hills",
+        "line-of-sight",
+        "zoning",
+        "flanks"
+      ]
+    },
+    "spawn-catch-fleeing-targets": {
+      "themas": [
+        {
+          "thema": "hammers",
+          "subthema": "random-movers"
+        },
+        {
+          "thema": "movement",
+          "subthema": "charge-order"
+        }
+      ],
+      "tags": [
+        "random-movement",
+        "flee",
+        "monsters"
+      ]
+    },
+    "charge-adjacent-targets-together": {
+      "themas": [
+        {
+          "thema": "movement",
+          "subthema": "charge-setup"
+        }
+      ],
+      "tags": [
+        "alignment",
+        "overrun",
+        "reform"
+      ]
+    },
+    "cheap-area-capture-units": {
+      "themas": [
+        {
+          "thema": "scenarios",
+          "subthema": "scoring-units"
+        }
+      ],
+      "tags": [
+        "scoring-units",
+        "objectives",
+        "victory-points"
+      ]
+    },
+    "maintain-cover-for-scorers": {
+      "themas": [
+        {
+          "thema": "scenarios",
+          "subthema": "scoring-units"
+        },
+        {
+          "thema": "chaff",
+          "subthema": "screens"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "avoiding-fire"
+        }
+      ],
+      "tags": [
+        "scoring-units",
+        "screen",
+        "cover",
+        "light-cavalry"
+      ]
+    },
+    "clear-route-for-scorers": {
+      "themas": [
+        {
+          "thema": "scenarios",
+          "subthema": "objectives"
+        },
+        {
+          "thema": "game-plan",
+          "subthema": "threat-zones"
+        }
+      ],
+      "tags": [
+        "scoring-units",
+        "objectives",
+        "zoning"
+      ]
+    },
+    "resolve-overrun-feeder-first": {
+      "themas": [
+        {
+          "thema": "movement",
+          "subthema": "overrun-pursuit"
+        }
+      ],
+      "tags": [
+        "overrun",
+        "combined-charge"
+      ]
+    },
+    "drilled-widen-overrun-contact": {
+      "themas": [
+        {
+          "thema": "movement",
+          "subthema": "overrun-pursuit"
+        }
+      ],
+      "tags": [
+        "drilled",
+        "overrun",
+        "reform",
+        "alignment"
+      ]
+    },
+    "shift-lone-character-protection": {
+      "themas": [
+        {
+          "thema": "characters",
+          "subthema": "protecting-characters"
+        }
+      ],
+      "tags": [
+        "lone-character",
+        "screen"
+      ]
+    },
+    "screen-pursuit-misses-character": {
+      "themas": [
+        {
+          "thema": "characters",
+          "subthema": "protecting-characters"
+        },
+        {
+          "thema": "movement",
+          "subthema": "overrun-pursuit"
+        }
+      ],
+      "tags": [
+        "lone-character",
+        "pursuit",
+        "alignment",
+        "screen"
+      ]
+    },
+    "characters-improve-ordinary-troops": {
+      "themas": [
+        {
+          "thema": "characters",
+          "subthema": "combat-roles"
+        },
+        {
+          "thema": "infantry",
+          "subthema": "unit-builds"
+        }
+      ],
+      "tags": [
+        "enchantment",
+        "hammer",
+        "close-order"
+      ]
+    },
+    "equal-drops-deploy-first": {
+      "themas": [
+        {
+          "thema": "deployment",
+          "subthema": "drops-first-turn"
+        }
+      ],
+      "tags": [
+        "deployment-drops",
+        "first-turn"
+      ]
+    },
+    "channel-ambushers-into-charges": {
+      "themas": [
+        {
+          "thema": "deployment",
+          "subthema": "ambush-scouts-vanguard"
+        }
+      ],
+      "tags": [
+        "ambush",
+        "zoning",
+        "charge-range"
+      ]
+    },
+    "mark-threat-ranges-dice": {
+      "themas": [
+        {
+          "thema": "deployment",
+          "subthema": "pre-game-checks"
+        }
+      ],
+      "tags": [
+        "charge-range",
+        "vanguard",
+        "first-turn",
+        "missile-troops"
+      ]
+    },
+    "deploy-for-unit-synergy": {
+      "themas": [
+        {
+          "thema": "deployment",
+          "subthema": "unit-placement"
+        }
+      ],
+      "tags": [
+        "screen",
+        "leadership",
+        "enchantment"
+      ]
+    },
+    "combat-units-guard-artillery": {
+      "themas": [
+        {
+          "thema": "deployment",
+          "subthema": "unit-placement"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "war-machines"
+        }
+      ],
+      "tags": [
+        "war-machines",
+        "screen",
+        "cannons"
+      ]
+    },
+    "deploy-early-ensure-fit": {
+      "themas": [
+        {
+          "thema": "deployment",
+          "subthema": "unit-placement"
+        }
+      ],
+      "tags": [
+        "deployment-drops",
+        "leadership"
+      ]
+    },
+    "deploy-obvious-positions-early": {
+      "themas": [
+        {
+          "thema": "deployment",
+          "subthema": "drops-first-turn"
+        }
+      ],
+      "tags": [
+        "deployment-drops",
+        "missile-troops",
+        "hills"
+      ]
+    },
+    "wood-elves-outrange-dwarf-shooting": {
+      "themas": [
+        {
+          "thema": "shooting-terrain",
+          "subthema": "avoiding-fire"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-other"
+        }
+      ],
+      "tags": [
+        "missile-troops",
+        "zoning"
+      ]
+    },
+    "split-units-limit-dragon-targets": {
+      "themas": [
+        {
+          "thema": "matchups",
+          "subthema": "vs-monsters"
+        },
+        {
+          "thema": "game-plan",
+          "subthema": "threat-zones"
+        }
+      ],
+      "tags": [
+        "dragons",
+        "charge-range",
+        "charge-arc",
+        "line-of-sight"
+      ]
+    },
+    "angle-skirmisher-dragon-overrun": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "redirecting"
+        },
+        {
+          "thema": "movement",
+          "subthema": "overrun-pursuit"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-monsters"
+        }
+      ],
+      "tags": [
+        "skirmishers",
+        "alignment",
+        "overrun",
+        "redirect",
+        "dragons"
+      ]
+    },
+    "delay-dragon-score-elsewhere": {
+      "themas": [
+        {
+          "thema": "game-plan",
+          "subthema": "tempo-trading"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-monsters"
+        }
+      ],
+      "tags": [
+        "dragons",
+        "delay",
+        "victory-points"
+      ]
+    },
+    "fast-cavalry-skirmish-marching": {
+      "themas": [
+        {
+          "thema": "movement",
+          "subthema": "reforms-formations"
+        }
+      ],
+      "tags": [
+        "light-cavalry",
+        "skirmishers",
+        "open-order"
+      ]
+    },
+    "seekers-mobile-core-scorers": {
+      "themas": [
+        {
+          "thema": "scenarios",
+          "subthema": "scoring-units"
+        }
+      ],
+      "tags": [
+        "scoring-units",
+        "light-cavalry",
+        "swiftstride",
+        "renegades",
+        "charge-range"
+      ]
+    },
+    "seekers-spread-against-shooting": {
+      "themas": [
+        {
+          "thema": "shooting-terrain",
+          "subthema": "avoiding-fire"
+        }
+      ],
+      "tags": [
+        "skirmishers",
+        "light-cavalry"
+      ]
+    },
+    "angle-charges-avoid-characters": {
+      "themas": [
+        {
+          "thema": "movement",
+          "subthema": "wheels-alignment"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "picking-fights"
+        }
+      ],
+      "tags": [
+        "alignment",
+        "close-order"
+      ]
+    },
+    "layer-resilient-units-retreat-trap": {
+      "themas": [
+        {
+          "thema": "infantry",
+          "subthema": "anchors"
+        },
+        {
+          "thema": "deployment",
+          "subthema": "unit-placement"
+        },
+        {
+          "thema": "movement",
+          "subthema": "support-countercharge"
+        }
+      ],
+      "tags": [
+        "anvil",
+        "fall-back",
+        "pursuit",
+        "countercharge",
+        "leadership",
+        "centre"
+      ]
+    },
+    "double-hammer-consecutive-waves": {
+      "themas": [
+        {
+          "thema": "hammers",
+          "subthema": "using-hammers"
+        },
+        {
+          "thema": "movement",
+          "subthema": "support-countercharge"
+        }
+      ],
+      "tags": [
+        "hammer",
+        "heavy-cavalry",
+        "sacrifice"
+      ]
+    },
+    "plan-overruns-repeat-combats": {
+      "themas": [
+        {
+          "thema": "movement",
+          "subthema": "overrun-pursuit"
+        }
+      ],
+      "tags": [
+        "overrun",
+        "restrain",
+        "reform",
+        "hammer"
+      ]
+    },
+    "swiftstride-extend-orderly-retreats": {
+      "themas": [
+        {
+          "thema": "movement",
+          "subthema": "fleeing"
+        }
+      ],
+      "tags": [
+        "swiftstride",
+        "fall-back",
+        "pursuit"
+      ]
+    },
+    "budget-safe-flee-distance": {
+      "themas": [
+        {
+          "thema": "movement",
+          "subthema": "fleeing"
+        },
+        {
+          "thema": "chaff",
+          "subthema": "decoys-bait"
+        }
+      ],
+      "tags": [
+        "flee",
+        "bait",
+        "swiftstride",
+        "charge-range",
+        "board-edge"
+      ]
+    }
+  },
+  "open": {},
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 35,
+      "sec": 97,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 35992,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 4656,
+        "reasoning_output_tokens": 2546
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

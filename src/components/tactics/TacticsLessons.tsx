@@ -1,6 +1,9 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { TOW, towFont } from '../../design/tow';
-import { tijdLabel, type Bron, type BronnenBestand, type Fase, type Kanaal, type Les, type LesMarkering, type Thema, type ThemasBestand } from '../../lib/tactics';
+import {
+  lesThemas, tijdLabel, type Bron, type BronnenBestand, type Fase, type Kanaal, type Les, type LesMarkering, type Subthema, type Tag,
+  type Thema, type ThemasBestand,
+} from '../../lib/tactics';
 import {
   BackButton, Badge, EmptyLine, Meta, bodyText, clamp2, inputStyle,
   legerLabel, meervoud, rowButton, rowCard, sectionHead, titleText,
@@ -15,30 +18,73 @@ const MARKERING_LABEL: Record<LesMarkering['soort'], string> = {
 /** Waarde van het legerfilter: '' = alle legers, '~general' = alleen algemene lessen, anders de slug. */
 const ALLE = '';
 const ALGEMEEN = '~general';
+/** Subthema-sleutel voor lessen zonder (bekend) subthema. */
+const OVERIG = '~other';
+/** Een thema met meer lessen dan dit opent met alleen de eerste secties uitgeklapt. */
+const LANG_THEMA = 24;
+const OPEN_SECTIES = 3;
+
+/** Een laag boven de themalijst: een thema (eventueel met het subthema waarop het opende), de lessen
+ *  met een tag, of een les. TacticsPage beheert de stapel; de bovenste laag is wat je ziet. */
+export type Laag =
+  | { soort: 'thema'; id: string; sub?: string | null }
+  | { soort: 'tag'; id: string }
+  | { soort: 'les'; id: string };
 
 interface Props {
   lessen: Les[];
   vocab: ThemasBestand;
+  tags: Tag[];
   bronnen: BronnenBestand | null;
   wide: boolean;
-  selThema: string | null;
-  selId: string | null;
-  onOpenThema: (id: string | null) => void;
-  /** inThema: de les is geopend vanuit het geopende thema (terug gaat daarheen). */
-  onOpenLes: (id: string, inThema: boolean) => void;
+  lagen: Laag[];
+  /** Een thema openen vanuit de lijst of vanuit een les (vervangt de stapel). */
+  onOpenThema: (id: string, sub?: string | null) => void;
+  /** vanuitLijst: geopend uit de zoektreffers (vervangt de stapel), anders bovenop de huidige laag. */
+  onOpenLes: (id: string, vanuitLijst: boolean) => void;
+  onOpenTag: (id: string) => void;
+  /** Een laag terug (de terugknop boven het rechterpaneel). */
+  onTerug: () => void;
 }
 
-// Lessons: zoekveld + thema's. Een thema open toont zijn lessen per fase; tijdens het zoeken staat er
-// een platte lijst met treffers. Breed staat de lijst links en het thema of de les rechts.
-export function TacticsLessons({ lessen, vocab, bronnen, wide, selThema, selId, onOpenThema, onOpenLes }: Props) {
+const kleine = (s: string) => s.toLowerCase();
+const escRegex = (s: string) => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+
+/** Een zoekwoord in een tekst: korte woorden (ap, bsb) alleen als heel woord, langere overal. */
+function bevat(hooi: string, woord: string): boolean {
+  if (woord.length >= 3) return hooi.includes(woord);
+  return new RegExp(`(^|[^a-z0-9])${escRegex(woord)}([^a-z0-9]|$)`).test(hooi);
+}
+
+const tagTermen = (t: Tag) => [t.label, t.id.replace(/-/g, ' '), ...t.synonyms].map(kleine);
+/** Past een zoekwoord op een tag (label, id of synoniem)? */
+const tagPast = (t: Tag, woord: string) => tagTermen(t).some((x) => x === woord || (woord.length >= 3 && x.includes(woord)));
+
+// Lessons: zoekveld + thema's. Een thema open toont zijn subthema's als secties met de lessen eronder;
+// een tag open toont alle lessen met die tag; tijdens het zoeken staat er een platte lijst met
+// treffers. Breed staat de lijst links en de bovenste laag (thema, tag of les) rechts.
+export function TacticsLessons({ lessen, vocab, tags, bronnen, wide, lagen, onOpenThema, onOpenLes, onOpenTag, onTerug }: Props) {
   const [query, setQuery] = useState('');
   const [leger, setLeger] = useState<string>(ALLE);
+  // Uit- of ingeklapte secties per thema ("thema:subthema" -> open), alleen waar de gebruiker tikte.
+  const [klap, setKlap] = useState<Map<string, boolean>>(() => new Map());
   const q = query.trim().toLowerCase();
 
   const bronIndex = useMemo(() => new Map<string, Bron>((bronnen?.bronnen ?? []).map((b) => [b.id, b])), [bronnen]);
   const kanaalIndex = useMemo(() => new Map<string, Kanaal>((bronnen?.kanalen ?? []).map((k) => [k.id, k])), [bronnen]);
   const themaIndex = useMemo(() => new Map<string, Thema>(vocab.themas.map((t) => [t.id, t])), [vocab]);
   const faseIndex = useMemo(() => new Map<string, Fase>(vocab.fases.map((f) => [f.id, f])), [vocab]);
+  const tagIndex = useMemo(() => new Map<string, Tag>(tags.map((t) => [t.id, t])), [tags]);
+  const faseVolgorde = (id: string) => faseIndex.get(id)?.volgorde ?? 1000;
+  const subNaam = (thema: string, sub: string | null) =>
+    (sub && themaIndex.get(thema)?.subthemas.find((s) => s.id === sub)?.naam) || null;
+
+  // Zoektekst per les: alle teksten, units, tags met synoniemen en de namen van thema en subthema.
+  const hooiberg = useMemo(() => new Map(lessen.map((l) => [l.id, kleine([
+    l.titel, l.tekst, l.waarom, l.voorbeeld, l.wanneerNiet, ...l.units,
+    ...(l.tags ?? []).flatMap((id) => { const t = tagIndex.get(id); return t ? tagTermen(t) : [id]; }),
+    ...lesThemas(l).flatMap((lt) => [themaIndex.get(lt.thema)?.naam, subNaam(lt.thema, lt.subthema)]),
+  ].filter((x): x is string => typeof x === 'string').join('\n'))])), [lessen, tagIndex, themaIndex]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Het legerfilter verschijnt alleen als er lessen voor meer dan één leger zijn (algemeen telt mee).
   const legers = useMemo(() => {
@@ -48,18 +94,36 @@ export function TacticsLessons({ lessen, vocab, bronnen, wide, selThema, selId, 
   const legerPast = (l: Les) => leger === ALLE || (leger === ALGEMEEN ? l.leger == null : l.leger === leger);
   const gefilterd = lessen.filter(legerPast);
 
-  const treffers = q
-    ? gefilterd.filter((l) => [l.titel, l.tekst, l.waarom, l.voorbeeld, l.wanneerNiet, ...l.units]
-      .some((t) => typeof t === 'string' && t.toLowerCase().includes(q)))
+  // Zoeken: elk woord moet ergens in de les staan. Eerst lessen met een tag die op de hele zoekterm
+  // past ("march block"), dan treffers in de titel, dan tags die op een los woord passen.
+  const woorden = q ? q.split(/\s+/).filter(Boolean) : [];
+  const lesTags = (l: Les) => (l.tags ?? []).map((id) => tagIndex.get(id)).filter((t): t is Tag => !!t);
+  const frasePast = (t: Tag) => tagPast(t, q);
+  /** Tags om bij een treffer te tonen: die op de hele zoekterm passen, anders die op een los woord. */
+  const gevondenTags = (l: Les) => {
+    const frase = woorden.length > 1 ? lesTags(l).filter(frasePast) : [];
+    return frase.length ? frase : lesTags(l).filter((t) => woorden.some((w) => tagPast(t, w)));
+  };
+  const treffers = woorden.length
+    ? gefilterd
+      .filter((l) => woorden.every((w) => bevat(hooiberg.get(l.id) ?? '', w)))
+      .map((l, i) => {
+        const titel = kleine(l.titel);
+        const score = (lesTags(l).some(frasePast) ? 4 : 0) + (woorden.every((w) => bevat(titel, w)) ? 3 : 0)
+          + (gevondenTags(l).length ? 1 : 0);
+        return { l, i, score };
+      })
+      .sort((a, b) => b.score - a.score || a.i - b.i)
+      .map((x) => x.l)
     : [];
 
   const themas = vocab.themas
     .map((t) => ({ t, n: gefilterd.filter((l) => l.themas.includes(t.id)).length }))
     .filter((x) => x.n > 0);
 
-  const thema = selThema ? themaIndex.get(selThema) ?? null : null;
-  const sel = selId ? lessen.find((l) => l.id === selId) ?? null : null;
   const faseNaam = (id: string) => faseIndex.get(id)?.naam ?? null;
+  const specifiekLeger = (l: Les) => (l.leger ? legerLabel(l.leger) : null);
+  const opFase = (a: Les, b: Les) => faseVolgorde(a.fase) - faseVolgorde(b.fase);
 
   if (lessen.length === 0) {
     return (
@@ -69,16 +133,20 @@ export function TacticsLessons({ lessen, vocab, bronnen, wide, selThema, selId, 
     );
   }
 
-  const lesRij = (l: Les, meta: (string | null)[], inThema: boolean) => {
-    const actief = wide && sel?.id === l.id;
+  const top = lagen.length ? lagen[lagen.length - 1] : null;
+  const lijstStijl: React.CSSProperties = { listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: 6 };
+
+  const lesRij = (l: Les, meta: (string | null)[], vanuitLijst: boolean, extra?: React.ReactNode) => {
+    const actief = wide && top?.soort === 'les' && top.id === l.id;
     return (
       <li key={l.id} style={{ ...rowCard, borderColor: actief ? TOW.goldDeep : TOW.line, background: actief ? 'rgba(138,108,48,0.10)' : TOW.panel2 }}>
-        <button type="button" onClick={() => onOpenLes(l.id, inThema)} style={rowButton} aria-current={actief ? 'true' : undefined}>
+        <button type="button" onClick={() => onOpenLes(l.id, vanuitLijst)} style={rowButton} aria-current={actief ? 'true' : undefined}>
           <span style={{ ...titleText, ...clamp2 }}>{l.titel}</span>
           <Meta parts={meta} />
-          {l.markeringen.length > 0 && (
+          {(l.markeringen.length > 0 || extra) && (
             <span style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginTop: 2 }}>
               {l.markeringen.map((m, i) => <Badge key={i} tone="blood">{MARKERING_LABEL[m.soort] ?? m.soort}</Badge>)}
+              {extra}
             </span>
           )}
         </button>
@@ -86,8 +154,13 @@ export function TacticsLessons({ lessen, vocab, bronnen, wide, selThema, selId, 
     );
   };
 
-  const lijstStijl: React.CSSProperties = { listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: 6 };
-  const specifiekLeger = (l: Les) => (l.leger ? legerLabel(l.leger) : null);
+  const filterLabel = leger !== ALLE ? (leger === ALGEMEEN ? 'General only' : legerLabel(leger)) : null;
+  const kop = (tekst: string, ondertitel?: string | null) => (
+    <h2 style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 21, color: TOW.ink, margin: '0 0 4px', lineHeight: 1.25, overflowWrap: 'anywhere' }}>
+      {ondertitel && <span style={{ display: 'block', fontSize: 12.5, fontWeight: 600, color: TOW.muted, marginBottom: 2 }}>{ondertitel}</span>}
+      {tekst}
+    </h2>
+  );
 
   // ── Lijst: zoeken + thema's (of treffers) ──────────────────────────────────
   const lijst = (
@@ -97,8 +170,8 @@ export function TacticsLessons({ lessen, vocab, bronnen, wide, selThema, selId, 
           type="search"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search lessons"
-          aria-label="Search lessons"
+          placeholder="Search lessons and tags"
+          aria-label="Search lessons and tags"
           style={{ ...inputStyle, flex: 1 }}
         />
         {legers.length > 1 && (
@@ -107,7 +180,7 @@ export function TacticsLessons({ lessen, vocab, bronnen, wide, selThema, selId, 
             onChange={(e) => setLeger(e.target.value)}
             aria-label="Army"
             style={{
-              flexShrink: 0, width: 128, minHeight: 40, padding: '0 6px', borderRadius: 11, cursor: 'pointer',
+              flexShrink: 0, width: 118, minHeight: 40, padding: '0 6px', borderRadius: 11, cursor: 'pointer',
               border: `1px solid ${leger === ALLE ? TOW.lineStrong : TOW.goldDeep}`, background: TOW.bg,
               color: leger === ALLE ? TOW.parchDim : TOW.goldDeep, fontFamily: towFont.display, fontWeight: 600, fontSize: 13,
               textOverflow: 'ellipsis',
@@ -119,21 +192,29 @@ export function TacticsLessons({ lessen, vocab, bronnen, wide, selThema, selId, 
         )}
       </div>
 
-      {q ? (
+      {woorden.length ? (
         <>
           <div style={{ ...bodyText, fontSize: 13, color: TOW.muted, margin: '0 2px 8px' }}>
             {meervoud(treffers.length, 'lesson', 'lessons')}
           </div>
           {treffers.length === 0
             ? <EmptyLine>No lessons match.</EmptyLine>
-            : <ul style={lijstStijl}>{treffers.map((l) => lesRij(l, [faseNaam(l.fase), specifiekLeger(l)], false))}</ul>}
+            : (
+              <ul style={lijstStijl}>
+                {treffers.map((l) => {
+                  const gevonden = gevondenTags(l);
+                  return lesRij(l, [faseNaam(l.fase), specifiekLeger(l)], true,
+                    gevonden.length ? gevonden.map((t) => <Badge key={t.id} tone="muted">{t.label}</Badge>) : null);
+                })}
+              </ul>
+            )}
         </>
       ) : themas.length === 0 ? (
         <EmptyLine>No lessons for this army.</EmptyLine>
       ) : (
         <ul style={lijstStijl}>
           {themas.map(({ t, n }) => {
-            const actief = wide && selThema === t.id;
+            const actief = wide && lagen[0]?.soort === 'thema' && lagen[0].id === t.id;
             return (
               <li key={t.id} style={{ ...rowCard, borderColor: actief ? TOW.goldDeep : TOW.line, background: actief ? 'rgba(138,108,48,0.10)' : TOW.panel2 }}>
                 <button
@@ -154,46 +235,115 @@ export function TacticsLessons({ lessen, vocab, bronnen, wide, selThema, selId, 
     </div>
   );
 
-  // ── Thema open: lessen per fase ────────────────────────────────────────────
-  const themaView = thema && (() => {
+  // ── Thema open: subthema's als secties ─────────────────────────────────────
+  const themaView = (laag: Extract<Laag, { soort: 'thema' }>) => {
+    const thema = themaIndex.get(laag.id);
+    if (!thema) return <EmptyLine>Theme not found.</EmptyLine>;
     const van = gefilterd.filter((l) => l.themas.includes(thema.id));
-    const groepen = vocab.fases
-      .map((f) => ({ key: f.id, naam: f.naam, lessen: van.filter((l) => l.fase === f.id) }))
+    const subVan = (l: Les) => lesThemas(l).find((x) => x.thema === thema.id)?.subthema ?? null;
+    const bekend = new Set(thema.subthemas.map((s) => s.id));
+    const secties: { sub: Subthema | null; key: string; lessen: Les[] }[] = thema.subthemas
+      .map((s) => ({ sub: s, key: s.id, lessen: van.filter((l) => subVan(l) === s.id).sort(opFase) }))
       .filter((g) => g.lessen.length > 0);
-    const overig = van.filter((l) => !faseIndex.has(l.fase));
-    if (overig.length) groepen.push({ key: '~other', naam: 'Other', lessen: overig });
+    const overig = van.filter((l) => { const s = subVan(l); return !s || !bekend.has(s); });
+    if (overig.length) secties.push({ sub: null, key: OVERIG, lessen: overig.sort(opFase) });
+    // Een lang thema opent met de eerste sectie plus de volgende zolang er samen niet meer dan
+    // LANG_THEMA lessen open staan (hooguit OPEN_SECTIES), zodat de overige koppen zichtbaar blijven.
+    const lang = van.length > LANG_THEMA;
+    const standaardOpen = new Set<string>();
+    let opgeteld = 0;
+    secties.forEach((g, i) => {
+      if (!lang || i === 0 || (i < OPEN_SECTIES && opgeteld + g.lessen.length <= LANG_THEMA && standaardOpen.size === i)) {
+        standaardOpen.add(g.key);
+        opgeteld += g.lessen.length;
+      }
+    });
+    const isOpen = (key: string, _i: number) => klap.get(`${thema.id}:${key}`) ?? (standaardOpen.has(key) || key === laag.sub);
+    const wissel = (key: string, i: number) => setKlap((m) => new Map(m).set(`${thema.id}:${key}`, !isOpen(key, i)));
     return (
       <div style={{ maxWidth: 680, minWidth: 0 }}>
-        <h2 style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 21, color: TOW.ink, margin: '0 0 4px', lineHeight: 1.25, overflowWrap: 'anywhere' }}>
-          {thema.naam}
-        </h2>
+        {kop(thema.naam)}
         {thema.omschrijving && <p style={{ ...bodyText, margin: '0 0 4px' }}>{thema.omschrijving}</p>}
-        <Meta parts={[meervoud(van.length, 'lesson', 'lessons'), leger !== ALLE ? (leger === ALGEMEEN ? 'General only' : legerLabel(leger)) : null]} />
+        <Meta parts={[meervoud(van.length, 'lesson', 'lessons'), meervoud(secties.length, 'section', 'sections'), filterLabel]} />
         {van.length === 0 && <EmptyLine>No lessons for this army.</EmptyLine>}
-        {groepen.map((g) => (
-          <section key={g.key}>
-            <h3 style={sectionHead}>
-              <span>{g.naam}</span>
-              <span style={{ color: TOW.muted }}>{g.lessen.length}</span>
-            </h3>
-            <ul style={lijstStijl}>{g.lessen.map((l) => lesRij(l, [specifiekLeger(l)], true))}</ul>
-          </section>
-        ))}
+        {secties.map((g, i) => {
+          const open = isOpen(g.key, i);
+          return (
+            <section key={g.key} id={`sectie-${thema.id}-${g.key}`} style={{ scrollMarginTop: 8 }}>
+              <h3 style={{ margin: 0 }}>
+                <button
+                  type="button"
+                  onClick={() => wissel(g.key, i)}
+                  aria-expanded={open}
+                  title={g.sub?.omschrijving || undefined}
+                  style={{
+                    ...sectionHead, width: '100%', minHeight: 40, margin: '10px 0 4px', padding: '0 2px', border: 'none',
+                    borderBottom: `1px solid ${TOW.hairline}`, background: 'none', cursor: 'pointer', textAlign: 'left',
+                  }}
+                >
+                  <span style={{ flex: 1, minWidth: 0, overflowWrap: 'anywhere' }}>{g.sub?.naam ?? 'Other'}</span>
+                  <span style={{ color: TOW.muted }}>{g.lessen.length}</span>
+                  <span aria-hidden style={{ color: TOW.muted, fontSize: 16, lineHeight: 1, width: 12, textAlign: 'center', transform: open ? 'rotate(90deg)' : 'none' }}>›</span>
+                </button>
+              </h3>
+              {open && <ul style={{ ...lijstStijl, marginTop: 6 }}>{g.lessen.map((l) => lesRij(l, [faseNaam(l.fase), specifiekLeger(l)], false))}</ul>}
+            </section>
+          );
+        })}
       </div>
     );
-  })();
+  };
 
-  const detail = sel && (
-    <LesDetail
-      key={sel.id}
-      les={sel}
-      bronIndex={bronIndex}
-      kanaalIndex={kanaalIndex}
-      faseNaam={faseNaam(sel.fase)}
-      themas={sel.themas.map((id) => themaIndex.get(id)).filter((t): t is Thema => !!t)}
-      onOpenThema={onOpenThema}
-    />
-  );
+  // ── Tag open: alle lessen met die tag ──────────────────────────────────────
+  const tagView = (id: string) => {
+    const tag = tagIndex.get(id);
+    const van = gefilterd.filter((l) => (l.tags ?? []).includes(id));
+    const hoofd = (l: Les) => {
+      const lt = lesThemas(l)[0];
+      return lt ? (subNaam(lt.thema, lt.subthema) ?? themaIndex.get(lt.thema)?.naam ?? null) : null;
+    };
+    return (
+      <div style={{ maxWidth: 680, minWidth: 0 }}>
+        {kop(tag?.label ?? id, 'Tag')}
+        <Meta parts={[meervoud(van.length, 'lesson', 'lessons'), filterLabel]} />
+        {van.length === 0
+          ? <EmptyLine>No lessons for this army.</EmptyLine>
+          : <ul style={{ ...lijstStijl, marginTop: 12 }}>{van.map((l) => lesRij(l, [hoofd(l), specifiekLeger(l)], false))}</ul>}
+      </div>
+    );
+  };
+
+  const lesView = (id: string) => {
+    const les = lessen.find((l) => l.id === id);
+    if (!les) return <EmptyLine>Lesson not found.</EmptyLine>;
+    return (
+      <LesDetail
+        les={les}
+        bronIndex={bronIndex}
+        kanaalIndex={kanaalIndex}
+        faseNaam={faseNaam(les.fase)}
+        themas={lesThemas(les).map((lt) => ({ thema: themaIndex.get(lt.thema), sub: subNaam(lt.thema, lt.subthema), subId: lt.subthema }))
+          .filter((x): x is { thema: Thema; sub: string | null; subId: string | null } => !!x.thema)}
+        tags={(les.tags ?? []).map((t) => tagIndex.get(t)).filter((t): t is Tag => !!t)}
+        onOpenThema={(t, sub) => {
+          if (sub) setKlap((m) => new Map(m).set(`${t}:${sub}`, true));
+          onOpenThema(t, sub);
+        }}
+        onOpenTag={onOpenTag}
+      />
+    );
+  };
+
+  const laagView = (laag: Laag) => (laag.soort === 'thema' ? <ThemaScroll laag={laag}>{themaView(laag)}</ThemaScroll>
+    : laag.soort === 'tag' ? tagView(laag.id) : lesView(laag.id));
+
+  /** Naam van de laag onder de bovenste (voor de terugknop). */
+  const laagNaam = (laag: Laag | undefined): string => {
+    if (!laag) return 'Lessons';
+    if (laag.soort === 'thema') return themaIndex.get(laag.id)?.naam ?? 'Theme';
+    if (laag.soort === 'tag') return tagIndex.get(laag.id)?.label ?? 'Tag';
+    return 'Lesson';
+  };
 
   if (wide) {
     return (
@@ -201,27 +351,42 @@ export function TacticsLessons({ lessen, vocab, bronnen, wide, selThema, selId, 
         <div style={{ width: 380, flexShrink: 0, overflowY: 'auto', padding: '14px 14px 40px', borderRight: `1px solid ${TOW.lineStrong}` }}>
           {lijst}
         </div>
-        <div key={sel ? `les-${sel.id}` : `thema-${thema?.id ?? ''}`} style={{ flex: 1, minWidth: 0, overflowY: 'auto', padding: '14px 24px 40px' }}>
-          {sel ? (
+        <div key={top ? `${lagen.length}-${top.soort}-${top.id}` : 'leeg'} style={{ flex: 1, minWidth: 0, overflowY: 'auto', padding: '14px 24px 40px' }}>
+          {top ? (
             <>
-              {thema && <div style={{ margin: '0 0 6px -4px' }}><BackButton onClick={() => onOpenThema(thema.id)} label={thema.naam} /></div>}
-              {detail}
+              {lagen.length > 1 && <div style={{ margin: '0 0 6px -4px' }}><BackButton onClick={onTerug} label={laagNaam(lagen[lagen.length - 2])} /></div>}
+              {laagView(top)}
             </>
-          ) : themaView ?? <EmptyLine>Select a theme.</EmptyLine>}
+          ) : <EmptyLine>Select a theme.</EmptyLine>}
         </div>
       </div>
     );
   }
 
-  // Telefoon: lijst en thema blijven gemount (verborgen) zodat de scrollpositie bewaard blijft; terug
-  // gaat via de knop in de kop van de pagina of de hardware-Back.
+  // Telefoon: elke laag blijft gemount (verborgen) zodat de scrollpositie bewaard blijft; terug gaat
+  // via de knop in de kop van de pagina of de hardware-Back.
   return (
     <>
-      <div style={{ height: '100%', overflowY: 'auto', padding: '12px 12px 40px', display: thema || sel ? 'none' : 'block' }}>{lijst}</div>
-      {thema && <div key={thema.id} style={{ height: '100%', overflowY: 'auto', padding: '14px 12px 40px', display: sel ? 'none' : 'block' }}>{themaView}</div>}
-      {sel && <div key={sel.id} style={{ height: '100%', overflowY: 'auto', padding: '14px 12px 40px' }}>{detail}</div>}
+      <div style={{ height: '100%', overflowY: 'auto', padding: '12px 12px 40px', display: top ? 'none' : 'block' }}>{lijst}</div>
+      {lagen.map((laag, i) => (
+        <div
+          key={`${i}-${laag.soort}-${laag.id}`}
+          style={{ height: '100%', overflowY: 'auto', padding: '14px 12px 40px', display: i === lagen.length - 1 ? 'block' : 'none' }}
+        >
+          {laagView(laag)}
+        </div>
+      ))}
     </>
   );
+}
+
+/** Scrolt bij het openen naar het subthema waarmee het thema geopend werd (een tik in een les). */
+function ThemaScroll({ laag, children }: { laag: Extract<Laag, { soort: 'thema' }>; children: React.ReactNode }) {
+  useEffect(() => {
+    if (!laag.sub) return;
+    document.getElementById(`sectie-${laag.id}-${laag.sub}`)?.scrollIntoView({ block: 'start' });
+  }, [laag.id, laag.sub]);
+  return <>{children}</>;
 }
 
 /** YouTube-link naar een moment, een paar seconden voor het citaat (zoals de pijplijn de hoofdlink maakt). */
@@ -235,41 +400,44 @@ function momentUrl(videoUrl: string, sec: number): string {
   }
 }
 
-function LesDetail({ les, bronIndex, kanaalIndex, faseNaam, themas, onOpenThema }: {
+const chipKnop: React.CSSProperties = {
+  minHeight: 36, padding: '0 12px', borderRadius: 999, cursor: 'pointer', maxWidth: '100%',
+  border: `1px solid ${TOW.lineStrong}`, background: 'transparent', color: TOW.goldDeep,
+  fontFamily: towFont.display, fontWeight: 600, fontSize: 13, overflowWrap: 'anywhere', textAlign: 'left',
+};
+
+function LesDetail({ les, bronIndex, kanaalIndex, faseNaam, themas, tags, onOpenThema, onOpenTag }: {
   les: Les;
   bronIndex: Map<string, Bron>;
   kanaalIndex: Map<string, Kanaal>;
   faseNaam: string | null;
-  themas: Thema[];
-  onOpenThema: (id: string) => void;
+  themas: { thema: Thema; sub: string | null; subId: string | null }[];
+  tags: Tag[];
+  onOpenThema: (id: string, sub?: string | null) => void;
+  onOpenTag: (id: string) => void;
 }) {
   return (
     <article style={{ maxWidth: 680, minWidth: 0 }}>
       <h2 style={{ fontFamily: towFont.display, fontWeight: 700, fontSize: 20, color: TOW.ink, margin: '0 0 2px', lineHeight: 1.3, overflowWrap: 'anywhere' }}>
         {les.titel}
       </h2>
-      <Meta
-        style={{ alignItems: 'center', marginBottom: 8 }}
-        parts={[
-          faseNaam,
-          ...themas.map((t) => (
-            <button
-              key={t.id}
-              type="button"
-              onClick={() => onOpenThema(t.id)}
-              style={{
-                minHeight: 36, padding: 0, border: 'none', background: 'none', cursor: 'pointer',
-                color: TOW.goldDeep, fontFamily: towFont.display, fontWeight: 600, fontSize: 13,
-                textDecoration: 'underline', textDecorationColor: TOW.line, textUnderlineOffset: 3,
-              }}
-            >
-              {t.naam}
-            </button>
-          )),
-          legerLabel(les.leger),
-          les.datum,
-        ]}
-      />
+      <Meta style={{ marginBottom: 4 }} parts={[faseNaam, legerLabel(les.leger), les.datum]} />
+      <div style={{ display: 'flex', flexWrap: 'wrap', columnGap: 12, rowGap: 0, marginBottom: 8 }}>
+        {themas.map(({ thema, sub, subId }) => (
+          <button
+            key={thema.id}
+            type="button"
+            onClick={() => onOpenThema(thema.id, subId)}
+            style={{
+              minHeight: 36, padding: 0, border: 'none', background: 'none', cursor: 'pointer', textAlign: 'left', maxWidth: '100%',
+              color: TOW.goldDeep, fontFamily: towFont.display, fontWeight: 600, fontSize: 13, overflowWrap: 'anywhere',
+              textDecoration: 'underline', textDecorationColor: TOW.line, textUnderlineOffset: 3,
+            }}
+          >
+            {sub ? `${thema.naam}: ${sub}` : thema.naam}
+          </button>
+        ))}
+      </div>
       {les.tekst && <p style={{ ...bodyText, color: TOW.ink, fontSize: 15, margin: '0 0 12px' }}>{les.tekst}</p>}
 
       {([['Why', les.waarom], ['Example', les.voorbeeld], ['When not', les.wanneerNiet]] as const).map(([label, inhoud]) =>
@@ -292,6 +460,17 @@ function LesDetail({ les, bronIndex, kanaalIndex, faseNaam, themas, onOpenThema 
             </li>
           ))}
         </ul>
+      )}
+
+      {tags.length > 0 && (
+        <>
+          <h3 style={sectionHead}>Tags</h3>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+            {tags.map((t) => (
+              <button key={t.id} type="button" onClick={() => onOpenTag(t.id)} style={chipKnop}>{t.label}</button>
+            ))}
+          </div>
+        </>
       )}
 
       {les.units.length > 0 && (

@@ -1,7 +1,9 @@
 // Tactiekdatabank (zie docs/tactics/ontwerp.md). Twee vaste bestanden in public/tactics/, gemaakt
 // door de verzamelroutine op Joosts pc: bronnen.json (kanalen + losse video's/artikelen) en
-// lessen.json (de lessen zelf, elk met bron, fase en thema's). Daarnaast themas.json: het vaste
-// vocabulaire van thema's en fases. Deze module typt ze en haalt ze één keer op.
+// lessen.json (de lessen zelf, elk met bron, fase, thema's met subthema en tags). Daarnaast
+// themas.json (thema's met subthema's, en fases) en tags.json (zoektermen met synoniemen): het vaste
+// vocabulaire. Deze module typt ze en haalt ze één keer op; ontbreekt een vocabulairebestand, dan
+// wordt het afgeleid uit de lessen.
 
 export type KanaalType = 'youtube' | 'artikel' | 'wiki' | 'data';
 export type Waardering = 'A' | 'B' | 'C';
@@ -49,13 +51,36 @@ export interface BronnenBestand {
   bronnen: Bron[];
 }
 
-/** Een thema is de ingang op de pagina ("Flanks"). Een les hoort bij 1 tot 3 thema's. */
+/** Onderverdeling van een thema ("Magic" → "Dispelling"). Een les heeft per thema één subthema. */
+export interface Subthema {
+  id: string;
+  naam: string;
+  omschrijving: string;
+  volgorde: number;
+}
+
+/** Een thema is de ingang op de pagina ("Magic"). Een les hoort bij 1 tot 3 thema's. */
 export interface Thema {
   id: string;
   naam: string;
   /** Eén korte feitelijke regel, Engels. */
   omschrijving: string;
   volgorde: number;
+  subthemas: Subthema[];
+}
+
+/** Een zoekterm uit public/tactics/tags.json ("overrun", synoniemen "overruns"). */
+export interface Tag {
+  id: string;
+  label: string;
+  groep: string | null;
+  synonyms: string[];
+}
+
+/** Thema van een les met het subthema daarbinnen. subthema null = (nog) niet ingedeeld. */
+export interface LesThema {
+  thema: string;
+  subthema: string | null;
 }
 
 /** De spelfase waarin een les speelt; binnen een thema de onderverdeling. Precies één per les. */
@@ -100,8 +125,12 @@ export interface Les {
   wanneerNiet?: string | null;
   /** Fase-id uit themas.json. */
   fase: string;
-  /** 1 tot 3 thema-ids uit themas.json. */
+  /** 1 tot 3 thema-ids uit themas.json; het eerste is het hoofdthema. */
   themas: string[];
+  /** Per thema (zelfde volgorde) het subthema-id daarbinnen. Ontbreekt bij oude gegevens. */
+  subthemas?: string[];
+  /** 2 tot 6 tag-ids uit tags.json. Ontbreekt bij oude gegevens. */
+  tags?: string[];
   /** null = algemeen, anders de Companion-slug (dark-elves). */
   leger: string | null;
   units: string[];
@@ -122,6 +151,8 @@ export interface TacticsData {
   lessen: LessenBestand;
   /** Thema's en fases. Ontbreekt themas.json, dan afgeleid uit de ids in de lessen. */
   vocab: ThemasBestand;
+  /** Tags uit tags.json; ontbreekt dat bestand, dan afgeleid uit de ids in de lessen (zonder synoniemen). */
+  tags: Tag[];
 }
 
 const BASE = import.meta.env.BASE_URL;
@@ -150,6 +181,24 @@ function leesBronnen(v: unknown): BronnenBestand | null {
   };
 }
 
+/** themas (ids) en subthemas (zelfde volgorde) netjes gemaakt; een subthema ontbreekt als ''. */
+function leesLesThemas(t: unknown, s: unknown): { themas: string[]; subthemas: string[] } {
+  const themas: string[] = [];
+  const subthemas: string[] = [];
+  const subs = Array.isArray(s) ? s : [];
+  (Array.isArray(t) ? t : []).forEach((x, i) => {
+    if (typeof x !== 'string' || themas.includes(x)) return;
+    themas.push(x);
+    subthemas.push(typeof subs[i] === 'string' ? subs[i] : '');
+  });
+  return { themas, subthemas };
+}
+
+/** Thema's van een les met het subthema daarbinnen (null = niet ingedeeld). */
+export function lesThemas(l: Les): LesThema[] {
+  return l.themas.map((thema, i) => ({ thema, subthema: l.subthemas?.[i] || null }));
+}
+
 function leesLessen(v: unknown): LessenBestand {
   if (!isObj(v) || !Array.isArray(v.lessen)) return { bijgewerkt: null, lessen: [] };
   return {
@@ -159,7 +208,8 @@ function leesLessen(v: unknown): LessenBestand {
       .map((l) => ({
         ...l,
         fase: typeof l.fase === 'string' ? l.fase : '',
-        themas: Array.isArray(l.themas) ? l.themas.filter((t): t is string => typeof t === 'string') : [],
+        ...leesLesThemas(l.themas, l.subthemas),
+        tags: Array.isArray(l.tags) ? [...new Set(l.tags.filter((t): t is string => typeof t === 'string'))] : [],
         units: Array.isArray(l.units) ? l.units : [],
         bronnen: Array.isArray(l.bronnen) ? l.bronnen : [],
         markeringen: Array.isArray(l.markeringen) ? l.markeringen : [],
@@ -179,19 +229,50 @@ function leesVocab(v: unknown, lessen: Les[]): ThemasBestand {
   const items = (lijst: unknown): Item[] =>
     Array.isArray(lijst) ? lijst.filter((x): x is Item => isObj(x) && typeof x.id === 'string' && typeof x.naam === 'string') : [];
   const volgorde = (x: Item, i: number) => (typeof x.volgorde === 'number' ? x.volgorde : i + 1);
+  const omschrijving = (x: Item) => (typeof x.omschrijving === 'string' ? x.omschrijving : '');
   const themas: Thema[] = items(isObj(v) ? v.themas : null).map((t, i) => ({
-    id: t.id, naam: t.naam, omschrijving: typeof t.omschrijving === 'string' ? t.omschrijving : '', volgorde: volgorde(t, i),
+    id: t.id, naam: t.naam, omschrijving: omschrijving(t), volgorde: volgorde(t, i),
+    subthemas: items(t.subthemas).map((s, j) => ({ id: s.id, naam: s.naam, omschrijving: omschrijving(s), volgorde: volgorde(s, j) })),
   }));
   const fases: Fase[] = items(isObj(v) ? v.fases : null).map((f, i) => ({ id: f.id, naam: f.naam, volgorde: volgorde(f, i) }));
-  const themaIds = new Set(themas.map((t) => t.id));
+  const themaIndex = new Map(themas.map((t) => [t.id, t]));
   const faseIds = new Set(fases.map((f) => f.id));
   for (const l of lessen) {
-    for (const t of l.themas) if (!themaIds.has(t)) { themaIds.add(t); themas.push({ id: t, naam: idLabel(t), omschrijving: '', volgorde: 1000 + themas.length }); }
+    for (const { thema, subthema } of lesThemas(l)) {
+      let t = themaIndex.get(thema);
+      if (!t) {
+        t = { id: thema, naam: idLabel(thema), omschrijving: '', volgorde: 1000 + themas.length, subthemas: [] };
+        themas.push(t);
+        themaIndex.set(thema, t);
+      }
+      if (subthema && !t.subthemas.some((s) => s.id === subthema)) {
+        t.subthemas.push({ id: subthema, naam: idLabel(subthema), omschrijving: '', volgorde: 1000 + t.subthemas.length });
+      }
+    }
     if (l.fase && !faseIds.has(l.fase)) { faseIds.add(l.fase); fases.push({ id: l.fase, naam: idLabel(l.fase), volgorde: 1000 + fases.length }); }
   }
   themas.sort((a, b) => a.volgorde - b.volgorde);
+  for (const t of themas) t.subthemas.sort((a, b) => a.volgorde - b.volgorde);
   fases.sort((a, b) => a.volgorde - b.volgorde);
   return { themas, fases };
+}
+
+/** Leest tags.json; tag-ids uit de lessen die er niet in staan worden aangevuld (label = id). */
+function leesTags(v: unknown, lessen: Les[]): Tag[] {
+  const ruw = isObj(v) && Array.isArray(v.tags) ? (v.tags as unknown[]) : [];
+  const tags: Tag[] = ruw
+    .filter((t): t is Record<string, unknown> & { id: string; label: string } => isObj(t) && typeof t.id === 'string' && typeof t.label === 'string')
+    .map((t) => ({
+      id: t.id,
+      label: t.label,
+      groep: typeof t.groep === 'string' ? t.groep : null,
+      synonyms: Array.isArray(t.synonyms) ? t.synonyms.filter((s): s is string => typeof s === 'string') : [],
+    }));
+  const ids = new Set(tags.map((t) => t.id));
+  for (const l of lessen) {
+    for (const id of l.tags ?? []) if (!ids.has(id)) { ids.add(id); tags.push({ id, label: id.replace(/-/g, ' '), groep: null, synonyms: [] }); }
+  }
+  return tags;
 }
 
 let cache: Promise<TacticsData> | null = null;
@@ -200,10 +281,12 @@ let cache: Promise<TacticsData> | null = null;
  *  cache niet vastgehouden, zodat een volgende keer openen het opnieuw probeert. */
 export function laadTactics(): Promise<TacticsData> {
   if (cache) return cache;
-  const p = Promise.all([haalJson('tactics/bronnen.json'), haalJson('tactics/lessen.json'), haalJson('tactics/themas.json')])
-    .then(([b, l, t]) => {
+  const p = Promise.all([
+    haalJson('tactics/bronnen.json'), haalJson('tactics/lessen.json'), haalJson('tactics/themas.json'), haalJson('tactics/tags.json'),
+  ])
+    .then(([b, l, t, g]) => {
       const lessen = leesLessen(l);
-      return { bronnen: leesBronnen(b), lessen, vocab: leesVocab(t, lessen.lessen) };
+      return { bronnen: leesBronnen(b), lessen, vocab: leesVocab(t, lessen.lessen), tags: leesTags(g, lessen.lessen) };
     });
   cache = p;
   void p.then((d) => { if (!d.bronnen && cache === p) cache = null; });

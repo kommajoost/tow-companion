@@ -62,7 +62,8 @@
     "tactics:build": "node tactics/bouw.mjs",
     "tactics:check": "node tactics/bouw.mjs --check",
     "tactics:codex": "node tactics/codex/run.mjs",
-    "tactics:merge": "node tactics/codex/samenvoegen.mjs"
+    "tactics:merge": "node tactics/codex/samenvoegen.mjs",
+    "tactics:index": "node tactics/codex/indexeren.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.106.2",

@@ -1,0 +1,690 @@
+{
+  "batch": 5,
+  "gemaaktOp": "2026-11-25T22:33:52.516Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "ids": [
+    "chaff-block-marching",
+    "hidden-mobile-objective-grabs",
+    "kiknik-wolves-cathayan-artillery",
+    "deploy-wolves-earlier-artillery-charge",
+    "doom-divers-against-cathay",
+    "fanatics-cathay-large-targets",
+    "central-night-goblin-fanatics",
+    "tmp-fanatic-release-range",
+    "manglers-shield-doom-divers",
+    "champion-absorbs-spectral-doppelganger",
+    "illusion-needs-casting-bonuses",
+    "reliable-strength-against-cathay",
+    "multiple-wounds-cathay-lantern",
+    "ap-three-cathay-threats",
+    "control-with-ranged-firepower",
+    "weaken-giant-before-infantry",
+    "save-vulnerable-valuable-units",
+    "identify-expendable-units",
+    "commit-slow-infantry-plan",
+    "flagellants-wood-roadblock",
+    "helblaster-entire-base-cover",
+    "delay-vulnerable-artillery-deployment",
+    "war-wagon-light-cavalry-matchup",
+    "empire-knights-support-combats",
+    "empire-double-missile-blocks",
+    "consider-low-odds-powerful-spells",
+    "invest-repeatable-magical-defence",
+    "central-protected-dispeller",
+    "opening-outside-dispel-range",
+    "buff-wizard-behind-bubble",
+    "higher-wizards-support-from-rear",
+    "scrolls-contested-hexes-vortexes",
+    "engage-wizard-before-casting",
+    "baggage-placement-after-opponent",
+    "vampire-force-necromancer-range",
+    "ethereal-coach-shields-bats",
+    "attack-weaker-baggage-side",
+    "mobile-baggage-train-attackers",
+    "two-units-baggage-contact",
+    "army-plan-every-mission"
+  ],
+  "resultaten": {
+    "chaff-block-marching": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "redirecting"
+        }
+      ],
+      "tags": [
+        "march-block",
+        "speed-bump",
+        "delay"
+      ]
+    },
+    "hidden-mobile-objective-grabs": {
+      "themas": [
+        {
+          "thema": "scenarios",
+          "subthema": "late-game"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "avoiding-fire"
+        }
+      ],
+      "tags": [
+        "objectives",
+        "fly",
+        "light-cavalry",
+        "hills",
+        "scoring-units"
+      ]
+    },
+    "kiknik-wolves-cathayan-artillery": {
+      "themas": [
+        {
+          "thema": "shooting-terrain",
+          "subthema": "hunting-shooters"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-grand-cathay"
+        }
+      ],
+      "tags": [
+        "war-machines",
+        "light-cavalry",
+        "reserve-move",
+        "skirmishers"
+      ]
+    },
+    "deploy-wolves-earlier-artillery-charge": {
+      "themas": [
+        {
+          "thema": "deployment",
+          "subthema": "ambush-scouts-vanguard"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "hunting-shooters"
+        }
+      ],
+      "tags": [
+        "ambush",
+        "light-cavalry",
+        "war-machines",
+        "charge-range"
+      ]
+    },
+    "doom-divers-against-cathay": {
+      "themas": [
+        {
+          "thema": "matchups",
+          "subthema": "vs-grand-cathay"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "war-machines"
+        }
+      ],
+      "tags": [
+        "stone-throwers",
+        "multiple-wounds",
+        "armour-piercing",
+        "large-target"
+      ]
+    },
+    "fanatics-cathay-large-targets": {
+      "themas": [
+        {
+          "thema": "matchups",
+          "subthema": "vs-grand-cathay"
+        },
+        {
+          "thema": "hammers",
+          "subthema": "random-movers"
+        }
+      ],
+      "tags": [
+        "armour-piercing",
+        "random-movement",
+        "large-target",
+        "ward-save"
+      ]
+    },
+    "central-night-goblin-fanatics": {
+      "themas": [
+        {
+          "thema": "deployment",
+          "subthema": "unit-placement"
+        }
+      ],
+      "tags": [
+        "centre",
+        "zoning",
+        "random-movement"
+      ]
+    },
+    "tmp-fanatic-release-range": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "control-spells"
+        }
+      ],
+      "tags": [
+        "conveyance",
+        "random-movement"
+      ]
+    },
+    "manglers-shield-doom-divers": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "screens"
+        },
+        {
+          "thema": "deployment",
+          "subthema": "deploying-vs-shooting"
+        }
+      ],
+      "tags": [
+        "screen",
+        "cannons",
+        "war-machines",
+        "random-movement"
+      ]
+    },
+    "champion-absorbs-spectral-doppelganger": {
+      "themas": [
+        {
+          "thema": "characters",
+          "subthema": "challenges"
+        }
+      ],
+      "tags": [
+        "champion",
+        "challenge",
+        "sacrifice"
+      ]
+    },
+    "illusion-needs-casting-bonuses": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "casting-aids"
+        }
+      ],
+      "tags": [
+        "illusion",
+        "wizard-level"
+      ]
+    },
+    "reliable-strength-against-cathay": {
+      "themas": [
+        {
+          "thema": "matchups",
+          "subthema": "vs-grand-cathay"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "target-priority"
+        }
+      ],
+      "tags": [
+        "missile-troops",
+        "large-target"
+      ]
+    },
+    "multiple-wounds-cathay-lantern": {
+      "themas": [
+        {
+          "thema": "matchups",
+          "subthema": "vs-sky-lanterns"
+        }
+      ],
+      "tags": [
+        "multiple-wounds",
+        "large-target"
+      ]
+    },
+    "ap-three-cathay-threats": {
+      "themas": [
+        {
+          "thema": "matchups",
+          "subthema": "vs-grand-cathay"
+        }
+      ],
+      "tags": [
+        "armour-piercing",
+        "armour",
+        "ward-save"
+      ]
+    },
+    "control-with-ranged-firepower": {
+      "themas": [
+        {
+          "thema": "game-plan",
+          "subthema": "aggression-control"
+        }
+      ],
+      "tags": [
+        "gunline",
+        "missile-troops"
+      ]
+    },
+    "weaken-giant-before-infantry": {
+      "themas": [
+        {
+          "thema": "matchups",
+          "subthema": "vs-monsters"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "target-priority"
+        }
+      ],
+      "tags": [
+        "monsters",
+        "missile-troops",
+        "unbreakable",
+        "combat-resolution",
+        "tarpit"
+      ]
+    },
+    "save-vulnerable-valuable-units": {
+      "themas": [
+        {
+          "thema": "matchups",
+          "subthema": "picking-fights"
+        },
+        {
+          "thema": "game-plan",
+          "subthema": "tempo-trading"
+        }
+      ],
+      "tags": [
+        "victory-points",
+        "monsters"
+      ]
+    },
+    "identify-expendable-units": {
+      "themas": [
+        {
+          "thema": "game-plan",
+          "subthema": "tempo-trading"
+        }
+      ],
+      "tags": [
+        "sacrifice",
+        "victory-points"
+      ]
+    },
+    "commit-slow-infantry-plan": {
+      "themas": [
+        {
+          "thema": "deployment",
+          "subthema": "unit-placement"
+        },
+        {
+          "thema": "infantry",
+          "subthema": "infantry-moves"
+        }
+      ],
+      "tags": [
+        "close-order",
+        "charge-range"
+      ]
+    },
+    "flagellants-wood-roadblock": {
+      "themas": [
+        {
+          "thema": "infantry",
+          "subthema": "holding-combat"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "terrain-los"
+        },
+        {
+          "thema": "deployment",
+          "subthema": "unit-placement"
+        }
+      ],
+      "tags": [
+        "tarpit",
+        "woods",
+        "delay",
+        "anvil"
+      ]
+    },
+    "helblaster-entire-base-cover": {
+      "themas": [
+        {
+          "thema": "shooting-terrain",
+          "subthema": "terrain-los"
+        },
+        {
+          "thema": "deployment",
+          "subthema": "unit-placement"
+        }
+      ],
+      "tags": [
+        "war-machines",
+        "cover",
+        "line-of-sight"
+      ]
+    },
+    "delay-vulnerable-artillery-deployment": {
+      "themas": [
+        {
+          "thema": "deployment",
+          "subthema": "drops-first-turn"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "avoiding-fire"
+        }
+      ],
+      "tags": [
+        "deployment-drops",
+        "war-machines",
+        "line-of-sight",
+        "cover"
+      ]
+    },
+    "war-wagon-light-cavalry-matchup": {
+      "themas": [
+        {
+          "thema": "matchups",
+          "subthema": "picking-fights"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "target-priority"
+        }
+      ],
+      "tags": [
+        "chariots",
+        "light-cavalry",
+        "missile-troops",
+        "armour"
+      ]
+    },
+    "empire-knights-support-combats": {
+      "themas": [
+        {
+          "thema": "movement",
+          "subthema": "support-countercharge"
+        },
+        {
+          "thema": "hammers",
+          "subthema": "heavy-cavalry"
+        }
+      ],
+      "tags": [
+        "heavy-cavalry",
+        "flank-charge",
+        "combined-charge",
+        "anvil"
+      ]
+    },
+    "empire-double-missile-blocks": {
+      "themas": [
+        {
+          "thema": "shooting-terrain",
+          "subthema": "missile-units"
+        },
+        {
+          "thema": "infantry",
+          "subthema": "unit-builds"
+        }
+      ],
+      "tags": [
+        "missile-troops",
+        "close-order",
+        "combat-resolution"
+      ]
+    },
+    "consider-low-odds-powerful-spells": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "lores-spells"
+        }
+      ],
+      "tags": [
+        "dispel",
+        "vortex"
+      ]
+    },
+    "invest-repeatable-magical-defence": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "dispelling"
+        }
+      ],
+      "tags": [
+        "dispel",
+        "wizard-level"
+      ]
+    },
+    "central-protected-dispeller": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "wizard-placement"
+        },
+        {
+          "thema": "deployment",
+          "subthema": "unit-placement"
+        }
+      ],
+      "tags": [
+        "dispel",
+        "centre",
+        "bunker",
+        "lone-character",
+        "wizard-level"
+      ]
+    },
+    "opening-outside-dispel-range": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "dispelling"
+        },
+        {
+          "thema": "deployment",
+          "subthema": "unit-placement"
+        }
+      ],
+      "tags": [
+        "dispel",
+        "first-turn"
+      ]
+    },
+    "buff-wizard-behind-bubble": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "wizard-placement"
+        }
+      ],
+      "tags": [
+        "dispel",
+        "enchantment",
+        "conveyance"
+      ]
+    },
+    "higher-wizards-support-from-rear": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "lores-spells"
+        }
+      ],
+      "tags": [
+        "enchantment",
+        "conveyance",
+        "wizard-level"
+      ]
+    },
+    "scrolls-contested-hexes-vortexes": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "casting-aids"
+        }
+      ],
+      "tags": [
+        "power-scroll",
+        "dispel",
+        "hex",
+        "vortex"
+      ]
+    },
+    "engage-wizard-before-casting": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "dispelling"
+        },
+        {
+          "thema": "chaff",
+          "subthema": "choosing-chaff"
+        }
+      ],
+      "tags": [
+        "dispel",
+        "sacrifice",
+        "fly"
+      ]
+    },
+    "baggage-placement-after-opponent": {
+      "themas": [
+        {
+          "thema": "scenarios",
+          "subthema": "baggage-train"
+        },
+        {
+          "thema": "deployment",
+          "subthema": "drops-first-turn"
+        }
+      ],
+      "tags": [
+        "baggage-train",
+        "deployment-drops"
+      ]
+    },
+    "vampire-force-necromancer-range": {
+      "themas": [
+        {
+          "thema": "game-plan",
+          "subthema": "concentration"
+        },
+        {
+          "thema": "scenarios",
+          "subthema": "baggage-train"
+        }
+      ],
+      "tags": [
+        "concentration",
+        "necromancy",
+        "conveyance",
+        "baggage-train"
+      ]
+    },
+    "ethereal-coach-shields-bats": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "screens"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "avoiding-fire"
+        }
+      ],
+      "tags": [
+        "screen",
+        "ethereal",
+        "chariots",
+        "fly"
+      ]
+    },
+    "attack-weaker-baggage-side": {
+      "themas": [
+        {
+          "thema": "scenarios",
+          "subthema": "baggage-train"
+        }
+      ],
+      "tags": [
+        "baggage-train",
+        "flanks"
+      ]
+    },
+    "mobile-baggage-train-attackers": {
+      "themas": [
+        {
+          "thema": "scenarios",
+          "subthema": "baggage-train"
+        }
+      ],
+      "tags": [
+        "baggage-train",
+        "charge-range"
+      ]
+    },
+    "two-units-baggage-contact": {
+      "themas": [
+        {
+          "thema": "scenarios",
+          "subthema": "baggage-train"
+        }
+      ],
+      "tags": [
+        "baggage-train",
+        "concentration"
+      ]
+    },
+    "army-plan-every-mission": {
+      "themas": [
+        {
+          "thema": "game-plan",
+          "subthema": "list-building"
+        },
+        {
+          "thema": "scenarios",
+          "subthema": "scenario-plans"
+        }
+      ],
+      "tags": [
+        "tournament",
+        "objectives"
+      ]
+    }
+  },
+  "open": {},
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 35,
+      "sec": 110,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 36150,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 5238,
+        "reasoning_output_tokens": 3106
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

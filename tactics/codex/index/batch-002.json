@@ -1,0 +1,681 @@
+{
+  "batch": 2,
+  "gemaaktOp": "2026-11-25T22:29:04.597Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "ids": [
+    "king-of-the-hill-forfeit",
+    "deploy-defensively-vs-shooting",
+    "deploy-aggressive-when-safe",
+    "check-scenario-deployment-map",
+    "identify-contestable-objectives",
+    "identify-fast-enemy-threats",
+    "locate-magic-before-wizard",
+    "check-intended-ambushers",
+    "check-scouts-vanguard-safety",
+    "fewer-drops-first-turn",
+    "deploy-for-later-positions",
+    "central-deployment-limits-cavalry",
+    "concentrate-against-enemy-part",
+    "shooters-need-time-safe",
+    "protect-main-hammer-flank",
+    "check-first-movement-options",
+    "chaff-retreat-backstop",
+    "chaff-maximise-peril-tests",
+    "chaff-engineered-enemy-retreats",
+    "harpies-mobile-retreat-screens",
+    "ungor-cheap-objective-holders",
+    "gor-chaff-occupies-space",
+    "position-for-next-turn-charges",
+    "check-angles-before-approaching",
+    "coordinate-front-flank-arrival",
+    "decline-charges-for-better-engagements",
+    "move-to-hold-objectives",
+    "men-at-arms-resolution-block",
+    "men-at-arms-skip-stubborn",
+    "monstrous-infantry-death-stars",
+    "death-star-wheel-arc",
+    "death-star-champion-challenge",
+    "sisters-preserve-points-harassment",
+    "sisters-prioritise-valuable-targets",
+    "harassment-infantry-flank-terrain",
+    "grave-guard-great-weapons",
+    "grave-guard-drilled-widen",
+    "illusion-familiar-control-spells",
+    "kiknik-ambushers-score-objectives",
+    "fanatics-essential-offensive-pieces"
+  ],
+  "resultaten": {
+    "king-of-the-hill-forfeit": {
+      "themas": [
+        {
+          "thema": "scenarios",
+          "subthema": "king-of-the-hill"
+        },
+        {
+          "thema": "game-plan",
+          "subthema": "aggression-control"
+        }
+      ],
+      "tags": [
+        "king-of-the-hill",
+        "combined-charge",
+        "bait",
+        "objectives"
+      ]
+    },
+    "deploy-defensively-vs-shooting": {
+      "themas": [
+        {
+          "thema": "deployment",
+          "subthema": "deploying-vs-shooting"
+        }
+      ],
+      "tags": [
+        "gunline",
+        "line-of-sight",
+        "cannons",
+        "missile-troops"
+      ]
+    },
+    "deploy-aggressive-when-safe": {
+      "themas": [
+        {
+          "thema": "deployment",
+          "subthema": "unit-placement"
+        },
+        {
+          "thema": "game-plan",
+          "subthema": "aggression-control"
+        }
+      ],
+      "tags": [
+        "first-turn",
+        "zoning"
+      ]
+    },
+    "check-scenario-deployment-map": {
+      "themas": [
+        {
+          "thema": "deployment",
+          "subthema": "pre-game-checks"
+        }
+      ],
+      "tags": [
+        "flanks",
+        "centre"
+      ]
+    },
+    "identify-contestable-objectives": {
+      "themas": [
+        {
+          "thema": "deployment",
+          "subthema": "pre-game-checks"
+        },
+        {
+          "thema": "scenarios",
+          "subthema": "objectives"
+        }
+      ],
+      "tags": [
+        "objectives",
+        "scoring-units"
+      ]
+    },
+    "identify-fast-enemy-threats": {
+      "themas": [
+        {
+          "thema": "deployment",
+          "subthema": "pre-game-checks"
+        }
+      ],
+      "tags": [
+        "fly",
+        "swiftstride",
+        "charge-range"
+      ]
+    },
+    "locate-magic-before-wizard": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "wizard-placement"
+        },
+        {
+          "thema": "deployment",
+          "subthema": "pre-game-checks"
+        }
+      ],
+      "tags": [
+        "dispel",
+        "magic-items"
+      ]
+    },
+    "check-intended-ambushers": {
+      "themas": [
+        {
+          "thema": "deployment",
+          "subthema": "ambush-scouts-vanguard"
+        }
+      ],
+      "tags": [
+        "ambush",
+        "zoning"
+      ]
+    },
+    "check-scouts-vanguard-safety": {
+      "themas": [
+        {
+          "thema": "deployment",
+          "subthema": "ambush-scouts-vanguard"
+        }
+      ],
+      "tags": [
+        "scouts",
+        "vanguard",
+        "charge-range"
+      ]
+    },
+    "fewer-drops-first-turn": {
+      "themas": [
+        {
+          "thema": "deployment",
+          "subthema": "drops-first-turn"
+        },
+        {
+          "thema": "game-plan",
+          "subthema": "list-building"
+        }
+      ],
+      "tags": [
+        "deployment-drops",
+        "first-turn"
+      ]
+    },
+    "deploy-for-later-positions": {
+      "themas": [
+        {
+          "thema": "deployment",
+          "subthema": "unit-placement"
+        },
+        {
+          "thema": "game-plan",
+          "subthema": "aggression-control"
+        }
+      ],
+      "tags": [
+        "concentration",
+        "charge-range"
+      ]
+    },
+    "central-deployment-limits-cavalry": {
+      "themas": [
+        {
+          "thema": "deployment",
+          "subthema": "unit-placement"
+        }
+      ],
+      "tags": [
+        "heavy-cavalry",
+        "flanks",
+        "centre",
+        "charge-arc"
+      ]
+    },
+    "concentrate-against-enemy-part": {
+      "themas": [
+        {
+          "thema": "game-plan",
+          "subthema": "concentration"
+        },
+        {
+          "thema": "deployment",
+          "subthema": "unit-placement"
+        }
+      ],
+      "tags": [
+        "concentration",
+        "refused-flank"
+      ]
+    },
+    "shooters-need-time-safe": {
+      "themas": [
+        {
+          "thema": "deployment",
+          "subthema": "unit-placement"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "missile-units"
+        }
+      ],
+      "tags": [
+        "missile-troops",
+        "charge-range",
+        "heavy-cavalry"
+      ]
+    },
+    "protect-main-hammer-flank": {
+      "themas": [
+        {
+          "thema": "deployment",
+          "subthema": "unit-placement"
+        },
+        {
+          "thema": "hammers",
+          "subthema": "using-hammers"
+        }
+      ],
+      "tags": [
+        "hammer",
+        "flanks"
+      ]
+    },
+    "check-first-movement-options": {
+      "themas": [
+        {
+          "thema": "deployment",
+          "subthema": "unit-placement"
+        }
+      ],
+      "tags": [
+        "first-turn",
+        "charge-range",
+        "redirect"
+      ]
+    },
+    "chaff-retreat-backstop": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "retreat-paths"
+        },
+        {
+          "thema": "movement",
+          "subthema": "fleeing"
+        }
+      ],
+      "tags": [
+        "skirmishers",
+        "fall-back",
+        "flee",
+        "screen",
+        "pursuit"
+      ]
+    },
+    "chaff-maximise-peril-tests": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "retreat-paths"
+        },
+        {
+          "thema": "movement",
+          "subthema": "fleeing"
+        }
+      ],
+      "tags": [
+        "flee",
+        "skirmishers"
+      ]
+    },
+    "chaff-engineered-enemy-retreats": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "retreat-paths"
+        },
+        {
+          "thema": "movement",
+          "subthema": "fleeing"
+        }
+      ],
+      "tags": [
+        "flee",
+        "board-edge",
+        "skirmishers",
+        "marching-column",
+        "ambush"
+      ]
+    },
+    "harpies-mobile-retreat-screens": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "retreat-paths"
+        }
+      ],
+      "tags": [
+        "fly",
+        "screen",
+        "fall-back",
+        "flee"
+      ]
+    },
+    "ungor-cheap-objective-holders": {
+      "themas": [
+        {
+          "thema": "scenarios",
+          "subthema": "scoring-units"
+        }
+      ],
+      "tags": [
+        "scoring-units",
+        "objectives",
+        "baggage-train",
+        "unit-strength",
+        "skirmishers"
+      ]
+    },
+    "gor-chaff-occupies-space": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "redirecting"
+        }
+      ],
+      "tags": [
+        "delay",
+        "zoning",
+        "reserve-move",
+        "speed-bump"
+      ]
+    },
+    "position-for-next-turn-charges": {
+      "themas": [
+        {
+          "thema": "movement",
+          "subthema": "charge-setup"
+        }
+      ],
+      "tags": [
+        "charge-range",
+        "zoning"
+      ]
+    },
+    "check-angles-before-approaching": {
+      "themas": [
+        {
+          "thema": "movement",
+          "subthema": "charge-setup"
+        }
+      ],
+      "tags": [
+        "charge-arc",
+        "flank-charge",
+        "charge-range"
+      ]
+    },
+    "coordinate-front-flank-arrival": {
+      "themas": [
+        {
+          "thema": "movement",
+          "subthema": "support-countercharge"
+        }
+      ],
+      "tags": [
+        "combined-charge",
+        "flank-charge",
+        "rear-charge",
+        "combat-resolution"
+      ]
+    },
+    "decline-charges-for-better-engagements": {
+      "themas": [
+        {
+          "thema": "movement",
+          "subthema": "charge-setup"
+        }
+      ],
+      "tags": [
+        "charge-range",
+        "delay"
+      ]
+    },
+    "move-to-hold-objectives": {
+      "themas": [
+        {
+          "thema": "scenarios",
+          "subthema": "objectives"
+        },
+        {
+          "thema": "game-plan",
+          "subthema": "aggression-control"
+        }
+      ],
+      "tags": [
+        "objectives",
+        "scoring-units"
+      ]
+    },
+    "men-at-arms-resolution-block": {
+      "themas": [
+        {
+          "thema": "infantry",
+          "subthema": "unit-builds"
+        },
+        {
+          "thema": "characters",
+          "subthema": "challenges"
+        }
+      ],
+      "tags": [
+        "combat-resolution",
+        "champion",
+        "challenge",
+        "warband",
+        "anvil"
+      ]
+    },
+    "men-at-arms-skip-stubborn": {
+      "themas": [
+        {
+          "thema": "infantry",
+          "subthema": "unit-builds"
+        }
+      ],
+      "tags": [
+        "stubborn",
+        "fall-back"
+      ]
+    },
+    "monstrous-infantry-death-stars": {
+      "themas": [
+        {
+          "thema": "infantry",
+          "subthema": "death-stars"
+        }
+      ],
+      "tags": [
+        "death-star",
+        "monstrous-infantry",
+        "centre"
+      ]
+    },
+    "death-star-wheel-arc": {
+      "themas": [
+        {
+          "thema": "movement",
+          "subthema": "wheels-alignment"
+        },
+        {
+          "thema": "infantry",
+          "subthema": "death-stars"
+        }
+      ],
+      "tags": [
+        "death-star",
+        "wheel",
+        "zoning",
+        "charge-range",
+        "centre"
+      ]
+    },
+    "death-star-champion-challenge": {
+      "themas": [
+        {
+          "thema": "characters",
+          "subthema": "challenges"
+        },
+        {
+          "thema": "infantry",
+          "subthema": "death-stars"
+        }
+      ],
+      "tags": [
+        "champion",
+        "challenge",
+        "death-star",
+        "general"
+      ]
+    },
+    "sisters-preserve-points-harassment": {
+      "themas": [
+        {
+          "thema": "shooting-terrain",
+          "subthema": "evasive-skirmish"
+        }
+      ],
+      "tags": [
+        "evasive",
+        "skirmishers",
+        "victory-points",
+        "cover",
+        "missile-troops"
+      ]
+    },
+    "sisters-prioritise-valuable-targets": {
+      "themas": [
+        {
+          "thema": "shooting-terrain",
+          "subthema": "target-priority"
+        }
+      ],
+      "tags": [
+        "armour-piercing",
+        "missile-troops",
+        "heavy-cavalry",
+        "cover"
+      ]
+    },
+    "harassment-infantry-flank-terrain": {
+      "themas": [
+        {
+          "thema": "infantry",
+          "subthema": "infantry-moves"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "terrain-los"
+        },
+        {
+          "thema": "game-plan",
+          "subthema": "flanks-centre"
+        }
+      ],
+      "tags": [
+        "flanks",
+        "cover",
+        "line-of-sight",
+        "delay",
+        "victory-points"
+      ]
+    },
+    "grave-guard-great-weapons": {
+      "themas": [
+        {
+          "thema": "infantry",
+          "subthema": "unit-builds"
+        }
+      ],
+      "tags": [
+        "great-weapons",
+        "hammer"
+      ]
+    },
+    "grave-guard-drilled-widen": {
+      "themas": [
+        {
+          "thema": "movement",
+          "subthema": "reforms-formations"
+        },
+        {
+          "thema": "infantry",
+          "subthema": "holding-combat"
+        }
+      ],
+      "tags": [
+        "drilled",
+        "reform",
+        "fall-back"
+      ]
+    },
+    "illusion-familiar-control-spells": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "casting-aids"
+        }
+      ],
+      "tags": [
+        "lore-familiar",
+        "illusion",
+        "hex",
+        "vortex"
+      ]
+    },
+    "kiknik-ambushers-score-objectives": {
+      "themas": [
+        {
+          "thema": "scenarios",
+          "subthema": "objectives"
+        },
+        {
+          "thema": "deployment",
+          "subthema": "ambush-scouts-vanguard"
+        }
+      ],
+      "tags": [
+        "ambush",
+        "scoring-units",
+        "objectives",
+        "baggage-train",
+        "light-cavalry"
+      ]
+    },
+    "fanatics-essential-offensive-pieces": {
+      "themas": [
+        {
+          "thema": "hammers",
+          "subthema": "random-movers"
+        }
+      ],
+      "tags": [
+        "hammer",
+        "random-movement"
+      ]
+    }
+  },
+  "open": {},
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 35,
+      "sec": 92,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 36023,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 4346,
+        "reasoning_output_tokens": 2333
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

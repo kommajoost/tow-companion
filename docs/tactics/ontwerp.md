@@ -56,7 +56,9 @@ AI-koppeling moet straks bij alle drie.
     id, titel,                // korte stelling, Engels
     tekst,                    // 1 tot 3 zinnen, in eigen woorden, Engels
     fase,                     // één fase-id uit public/tactics/themas.json (army-building, deployment, ...)
-    themas: string[],         // 1 tot 3 thema-ids uit public/tactics/themas.json (flanks, chaff, ...)
+    themas: [{ thema, subthema }], // 1 tot 3 thema's uit public/tactics/themas.json, elk met één
+                              // subthema van dat thema (magic → dispelling); hoofdthema eerst
+    tags: string[],           // 2 tot 6 tag-ids uit public/tactics/tags.json (overrun, march-block, ...)
     leger,                    // null = algemeen, anders de Companion-slug (dark-elves)
     units: string[],          // Companion-unitnamen waar de les over gaat
     bronnen: [{ bronId, url,  // url met tijdstip (&t=123s)
@@ -88,11 +90,16 @@ antwoorden.
 
 Verborgen route in de Companion (alleen via de directe link), drie weergaven:
 
-- **Lessons:** zoekveld en de lijst met thema's (met aantal). Een thema open toont zijn lessen per
-  fase; tijdens het zoeken een platte lijst met treffers. Legerfilter als één keuzelijst, alleen als
-  er lessen voor meer dan één leger zijn. Thema's en fases staan in `public/tactics/themas.json`
-  (bron: `tactics/themas.json`, zie `tactics/README.md`).
-- **Les open:** elke bron met kanaal, titel, datum, citaat en een link naar het moment in de video.
+- **Lessons:** zoekveld en de lijst met thema's (met aantal). Een thema open toont zijn subthema's
+  als secties (kop met aantal, de lessen eronder; bij een lang thema zijn alleen de eerste drie
+  uitgeklapt, een tik klapt een sectie open of dicht). Zoeken doorzoekt titels, teksten, waarom,
+  voorbeeld, wanneer niet, units, tags (met synoniemen) en de namen van thema's en subthema's; de
+  treffers tonen welke tags passen. Legerfilter als één keuzelijst, alleen als er lessen voor meer
+  dan één leger zijn. Thema's, subthema's en fases staan in `public/tactics/themas.json`, tags in
+  `public/tactics/tags.json` (bron: `tactics/`, zie `tactics/README.md`).
+- **Les open:** thema's met subthema (een tik opent het thema bij dat subthema), tags als knoppen
+  (een tik toont alle lessen met die tag; terug keert naar de les), en elke bron met kanaal, titel,
+  datum, citaat en een link naar het moment in de video.
 - **Sources:** kanalen met waardering en aantal lessen; een kanaal open toont de video's, een video
   open toont de lessen die eruit kwamen.
 

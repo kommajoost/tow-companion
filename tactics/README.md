@@ -10,7 +10,8 @@ How `public/tactics/bronnen.json` and `lessen.json` are made. Design: `docs/tact
 | Write the sources file | `npm run tactics:sources` | `public/tactics/bronnen.json` |
 | Glossary from the app data | `npm run tactics:glossary` | `tactics/glossary.json` |
 | Name repair on a transcript | `npm run tactics:transcript -- --convert-only <id> ...` | `tactics/ruw/<id>.fixed.txt` |
-| Validate and recount | `npm run tactics:build` (or `tactics:check`) | counts and status in `bronnen.json`, `public/tactics/themas.json`, lessons per theme and phase |
+| Validate and recount | `npm run tactics:build` (or `tactics:check`) | counts and status in `bronnen.json`, `public/tactics/themas.json` and `tags.json`, lessons per theme, sub-theme, phase and tag |
+| Themes, sub-themes and tags via Codex | `npm run tactics:index` (see "Index") | `tactics/codex/index/`, then `-- --toepassen` writes `lessen.json` |
 
 `tactics/ruw/` and `tactics/cache/` are in `.gitignore`. Transcripts are never published.
 
@@ -35,27 +36,74 @@ the transcript is read the normal way, like a viewer, in the Browser pane:
 Quotes in `lessen.json` are checked against `<id>.fixed.txt` by `tactics:build`: verbatim, at most
 15 words, within 60 seconds of the timestamp. Processed videos are listed in `tactics/verwerkt.json`.
 
-## Themes and phases
+## Themes, sub-themes, tags and phases
 
-Every lesson gets one `fase` (phase) and one to three `themas` (themes). The vocabulary lives in
-`tactics/themas.json` (id, name, one-line description, order); `tactics:build` copies it to
-`public/tactics/themas.json`, which the page and the AI tool read. The Lessons page opens on the
-themes; inside a theme the lessons are grouped by phase.
+Every lesson gets one `fase` (phase), one to three `themas` (themes, main theme first), per theme one
+sub-theme in `subthemas` (same order, so `subthemas[0]` belongs to `themas[0]`) and two to six `tags`:
+
+```json
+"themas": ["chaff", "game-plan"], "subthemas": ["choosing-chaff", "tempo-trading"], "tags": ["delay", "redirect"]
+```
+
+The vocabulary lives in `tactics/themas.json` (themes with their sub-themes: id, name, one-line
+description, order; plus the phases) and `tactics/tags.json` (tag groups, and per tag id, label,
+group and synonyms). `tactics:build` copies both to `public/tactics/`, which the page, the MCP and the
+AI tool read.
 
 - **Phase**: when in the game the advice applies. `army-building` (what to take, how to build or
   equip a unit), `deployment` (where units go before the game), `movement` (manoeuvring, charging,
   redirecting, flank play during the game), `combat` (what happens in close combat), `magic-shooting`,
   `scenarios` (objectives and scenario-specific play). Pick the phase where you act on the advice.
-- **Themes**: what the lesson is about, as a player would browse for it. Read the title, text, why
-  and example. Give a theme only when the lesson is about it, not when it is mentioned in passing:
-  "Flanks" means the lesson is about winning, using or defending a flank of the board (not the flank
-  of a single unit); "Chaff" means cheap units that redirect, delay, screen or distract. Order the
-  themes by weight, main theme first.
-- Keep the theme list short (now 8). A new theme is fine when the round brings at least three lessons
-  that fit no existing theme; `tactics:build` warns (does not fail) while a theme has fewer than 3
-  lessons. Otherwise use the broader theme. Names short and plain, descriptions one factual line.
-- `tactics:build` fails on an unknown phase or theme, on fewer than 1 or more than 3 themes, and on a
-  leftover `onderwerp` field (replaced by `fase` + `themas`).
+- **Themes** (11): what the lesson is about, as a player would browse for it: Game plan, Deployment,
+  Movement & charges, Chaff & screens, Infantry, Hammers & monsters, Characters, Magic, Shooting &
+  terrain, Matchups, Scenarios & objectives. Give a theme only when the lesson is about it, not when
+  it is mentioned in passing. Psychology (terror, fear, frenzy, leadership) has no theme: it is
+  tagged, and the lesson sits where the player acts (frenzy bait under Chaff, a BSB under
+  Characters). The old "Flanks" theme is the sub-theme Game plan / Flanks & centre.
+- **Sub-themes** (3 to 8 per theme): the sections inside a theme on the page. Every lesson has exactly
+  one sub-theme per theme it belongs to. Sub-theme ids are unique over all themes. Matchups has one
+  sub-theme per opposing army that has enough lessons (vs Sky Lanterns, vs Grand Cathay, vs Beastmen,
+  vs Bretonnia, vs Tomb Kings), plus vs Monsters & dragons, vs other armies and Picking fights.
+- **Tags**: short index terms a player searches for: mechanics and rules (overrun, march block,
+  stand and shoot, ward save), concepts (anvil, bait, screen, zoning) and unit types (heavy cavalry,
+  monsters). Unit names stay in `units` and the army in `leger`. Synonyms map to one tag (search for
+  "knights" finds `heavy-cavalry`); a term may belong to only one tag. Keep the list at roughly 60 to
+  120 tags, each used at least 3 times; fold a rare tag into a broader one as a synonym.
+- Growing the vocabulary: a new theme or sub-theme is fine when a round brings at least three lessons
+  that fit nothing existing. `tactics:build` warns (does not fail) for a theme, sub-theme or tag under
+  3 lessons, a theme above about 130 lessons, a theme with fewer than 3 or more than 8 sub-themes and
+  a lesson with fewer than 2 tags. It fails on an unknown phase, theme, sub-theme or tag, a sub-theme
+  under the wrong theme, `subthemas` not matching `themas`, more than 3 themes or 6 tags, a missing
+  `tags` list, a synonym claimed by two tags, and a leftover `onderwerp` field.
+
+## Index (themes, sub-themes and tags via Codex)
+
+`npm run tactics:index` asks Codex to assign themes, sub-themes and tags, 40 lessons per call. Codex
+gets the rules, the vocabulary and per lesson id, title, text, why, phase, army and units; it answers
+`{ lessen: [{ id, themas: [{ thema, subthema }], tags }] }` only. It runs with `--ignore-user-config`,
+`--ephemeral`, sandbox `read-only`, in an empty temporary folder (not the repo) and with
+`--output-schema` (a JSON Schema with the allowed ids, so a sub-theme can only come with its own
+theme). Model `gpt-6.1-sol`; effort `medium` by default, the first full index ran on `high`
+(`TACTICS_INDEX_EFFORT=high`).
+
+| Step | Command |
+|---|---|
+| All lessons without a valid index and without an answer in `tactics/codex/index/` | `npm run tactics:index` |
+| Only some lessons (also re-asks them) / every lesson again | `-- --ids a,b,c` / `-- --alles` |
+| Batch size, at most N batches, show the prompt only | `-- --batch 30`, `-- --max 2`, `-- --droog` |
+| Write the answers into `public/tactics/lessen.json`, then build | `npm run tactics:index -- --toepassen`, `npm run tactics:build` |
+
+Every answer is checked against the vocabulary; an invalid or missing lesson is asked once more with
+the reason, and if it is still invalid it is listed under `open` in its batch file. Fill those in by
+hand in `tactics/codex/index/hand.json` (`{ "<id>": { "themas": [{ "thema", "subthema" }], "tags": [] } }`),
+which always wins over Codex; hand corrections from a spot-check go there too. Each batch is written
+to `tactics/codex/index/batch-NNN.json` as soon as it is done, so an interrupted run continues where it
+stopped. The runner stops at once on a usage limit, login error or unknown model, and after 3 failed
+batches in a row; it never runs two Codex calls at once. Afterwards the temporary folder must be empty
+and `git status` must show no new changes in `tactics/` or `public/` (outside `tactics/codex/index/`);
+anything else is reverted with a copy in `tactics/codex/teruggedraaid/`. New lessons from the
+extraction route already come with sub-themes and tags (see `INSTRUCTIES.md`); `tactics:index` is for
+re-indexing after a vocabulary change or for lessons that came back with too few tags.
 
 One video at a time, with a pause between videos. In the first round a 28-minute video took about
 3 minutes to fetch and 10 to 15 minutes to read and turn into lessons.
@@ -64,9 +112,12 @@ One video at a time, with a pause between videos. In the first round a 28-minute
 
 The reading work runs on the OpenAI Codex CLI (`codex exec`, logged in with the ChatGPT
 subscription), not on Claude. Codex gets `tactics/codex/INSTRUCTIES.md` (the lesson rules, the output
-schema and two example lessons) plus, per video, the video data, the themes and phases, the army
-slugs, the unit names and an index of all existing lessons, so it can add a source to an existing
-lesson instead of writing a duplicate.
+schema and two example lessons) plus, per video, the video data, the phases, the themes with their
+sub-themes, the tags, the army slugs, the unit names and an index of all existing lessons, so it can
+add a source to an existing lesson instead of writing a duplicate. Codex answers themes as
+`[{ thema, subthema }]`; the runner checks them and the tags against the vocabulary (a lesson without
+a valid theme is dropped, unknown tags are left out) and stores `themas` + `subthemas` + `tags`. The
+Codex start and the git guard are shared with the indexer in `tactics/codex/cli.mjs`.
 
 | Step | Command | Output |
 |---|---|---|

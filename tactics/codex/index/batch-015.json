@@ -1,0 +1,700 @@
+{
+  "batch": 15,
+  "gemaaktOp": "2026-11-25T22:51:53.490Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "ids": [
+    "ambushers-target-baggage-trains",
+    "stagger-receivers-for-countercharge",
+    "dragon-ogres-sacrificial-receivers",
+    "flank-charge-free-alignment-wheel",
+    "check-hammer-charge-alignment",
+    "compare-ranges-before-deploying",
+    "deploy-assuming-second-turn",
+    "deploy-beyond-moving-shooters",
+    "wood-elves-clear-mobile-ranged",
+    "treeman-bsb-backline-defence",
+    "two-level-fours-flexibility",
+    "chaos-swap-unhelpful-spells",
+    "chaos-lord-steed-charge-arc",
+    "chaos-knights-war-banner-swap",
+    "gigantic-spawn-pins-for-support",
+    "combo-charge-poison-death-star",
+    "engage-poison-block-early",
+    "skeletons-or-finish-character",
+    "stack-buffs-avoid-fair-fights",
+    "chaff-obstructs-caster-advance",
+    "zone-with-overlapping-threats",
+    "mirage-before-monster-slayer",
+    "reach-tomb-kings-wizard",
+    "maximise-razorgor-core",
+    "sideline-deployment-angle-inward",
+    "razorgor-attempt-long-charges",
+    "razorgor-tuskgor-bait-switch",
+    "razorgor-flee-without-swiftstride",
+    "contain-mobile-units-opposite-directions",
+    "angle-attackers-towards-boundary",
+    "white-sword-doppelganger-archmage",
+    "skycutter-white-sword-mount",
+    "glittering-robe-skycutter-archmage",
+    "lesser-mages-dispel-scrolls",
+    "plan-countermagic-attack-timing",
+    "dragon-charge-arc-redirections",
+    "ambushers-pressure-enemy-movement",
+    "fast-cavalry-ambushers",
+    "ambushers-reserve-move-arrival",
+    "ambushers-banner-combat-resolution"
+  ],
+  "resultaten": {
+    "ambushers-target-baggage-trains": {
+      "themas": [
+        {
+          "thema": "scenarios",
+          "subthema": "baggage-train"
+        },
+        {
+          "thema": "deployment",
+          "subthema": "ambush-scouts-vanguard"
+        }
+      ],
+      "tags": [
+        "ambush",
+        "baggage-train",
+        "objectives"
+      ]
+    },
+    "stagger-receivers-for-countercharge": {
+      "themas": [
+        {
+          "thema": "movement",
+          "subthema": "support-countercharge"
+        }
+      ],
+      "tags": [
+        "countercharge",
+        "fall-back"
+      ]
+    },
+    "dragon-ogres-sacrificial-receivers": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "choosing-chaff"
+        }
+      ],
+      "tags": [
+        "sacrifice",
+        "speed-bump",
+        "monstrous-infantry",
+        "armour",
+        "ward-save"
+      ]
+    },
+    "flank-charge-free-alignment-wheel": {
+      "themas": [
+        {
+          "thema": "movement",
+          "subthema": "wheels-alignment"
+        }
+      ],
+      "tags": [
+        "flank-charge",
+        "wheel",
+        "alignment",
+        "overrun",
+        "charge-arc"
+      ]
+    },
+    "check-hammer-charge-alignment": {
+      "themas": [
+        {
+          "thema": "movement",
+          "subthema": "wheels-alignment"
+        },
+        {
+          "thema": "hammers",
+          "subthema": "using-hammers"
+        }
+      ],
+      "tags": [
+        "alignment",
+        "charge-arc",
+        "line-of-sight",
+        "hammer"
+      ]
+    },
+    "compare-ranges-before-deploying": {
+      "themas": [
+        {
+          "thema": "deployment",
+          "subthema": "pre-game-checks"
+        }
+      ],
+      "tags": [
+        "charge-range",
+        "missile-troops",
+        "magic-missile",
+        "swiftstride"
+      ]
+    },
+    "deploy-assuming-second-turn": {
+      "themas": [
+        {
+          "thema": "deployment",
+          "subthema": "drops-first-turn"
+        }
+      ],
+      "tags": [
+        "first-turn",
+        "missile-troops"
+      ]
+    },
+    "deploy-beyond-moving-shooters": {
+      "themas": [
+        {
+          "thema": "deployment",
+          "subthema": "deploying-vs-shooting"
+        }
+      ],
+      "tags": [
+        "missile-troops",
+        "first-turn"
+      ]
+    },
+    "wood-elves-clear-mobile-ranged": {
+      "themas": [
+        {
+          "thema": "shooting-terrain",
+          "subthema": "target-priority"
+        },
+        {
+          "thema": "game-plan",
+          "subthema": "reading-the-enemy"
+        }
+      ],
+      "tags": [
+        "missile-troops",
+        "concentration"
+      ]
+    },
+    "treeman-bsb-backline-defence": {
+      "themas": [
+        {
+          "thema": "deployment",
+          "subthema": "unit-placement"
+        },
+        {
+          "thema": "characters",
+          "subthema": "bsb"
+        }
+      ],
+      "tags": [
+        "bsb",
+        "monsters",
+        "countercharge"
+      ]
+    },
+    "two-level-fours-flexibility": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "wizard-builds"
+        }
+      ],
+      "tags": [
+        "wizard-level",
+        "dispel"
+      ]
+    },
+    "chaos-swap-unhelpful-spells": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "lores-spells"
+        }
+      ],
+      "tags": [
+        "daemonology",
+        "signature-spell",
+        "magic-items"
+      ]
+    },
+    "chaos-lord-steed-charge-arc": {
+      "themas": [
+        {
+          "thema": "characters",
+          "subthema": "mounts-items"
+        }
+      ],
+      "tags": [
+        "mounts",
+        "charge-arc",
+        "lone-character"
+      ]
+    },
+    "chaos-knights-war-banner-swap": {
+      "themas": [
+        {
+          "thema": "hammers",
+          "subthema": "heavy-cavalry"
+        }
+      ],
+      "tags": [
+        "magic-banner",
+        "combat-resolution",
+        "heavy-cavalry",
+        "hit-penalties"
+      ]
+    },
+    "gigantic-spawn-pins-for-support": {
+      "themas": [
+        {
+          "thema": "hammers",
+          "subthema": "random-movers"
+        },
+        {
+          "thema": "game-plan",
+          "subthema": "threat-zones"
+        }
+      ],
+      "tags": [
+        "random-movement",
+        "tarpit",
+        "monsters",
+        "zoning"
+      ]
+    },
+    "combo-charge-poison-death-star": {
+      "themas": [
+        {
+          "thema": "matchups",
+          "subthema": "vs-tomb-kings"
+        },
+        {
+          "thema": "movement",
+          "subthema": "support-countercharge"
+        },
+        {
+          "thema": "game-plan",
+          "subthema": "concentration"
+        }
+      ],
+      "tags": [
+        "combined-charge",
+        "death-star",
+        "poison",
+        "concentration",
+        "combat-resolution"
+      ]
+    },
+    "engage-poison-block-early": {
+      "themas": [
+        {
+          "thema": "matchups",
+          "subthema": "vs-tomb-kings"
+        },
+        {
+          "thema": "game-plan",
+          "subthema": "aggression-control"
+        }
+      ],
+      "tags": [
+        "death-star",
+        "poison",
+        "concentration"
+      ]
+    },
+    "skeletons-or-finish-character": {
+      "themas": [
+        {
+          "thema": "matchups",
+          "subthema": "vs-tomb-kings"
+        }
+      ],
+      "tags": [
+        "combat-resolution",
+        "death-star",
+        "concentration",
+        "poison"
+      ]
+    },
+    "stack-buffs-avoid-fair-fights": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "buffs-hexes"
+        },
+        {
+          "thema": "game-plan",
+          "subthema": "concentration"
+        }
+      ],
+      "tags": [
+        "enchantment",
+        "concentration"
+      ]
+    },
+    "chaff-obstructs-caster-advance": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "redirecting"
+        },
+        {
+          "thema": "movement",
+          "subthema": "fleeing"
+        }
+      ],
+      "tags": [
+        "delay",
+        "conveyance",
+        "bait",
+        "flee",
+        "swiftstride"
+      ]
+    },
+    "zone-with-overlapping-threats": {
+      "themas": [
+        {
+          "thema": "game-plan",
+          "subthema": "threat-zones"
+        },
+        {
+          "thema": "magic",
+          "subthema": "dispelling"
+        }
+      ],
+      "tags": [
+        "zoning",
+        "charge-range",
+        "dispel"
+      ]
+    },
+    "mirage-before-monster-slayer": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "control-spells"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-monsters"
+        }
+      ],
+      "tags": [
+        "illusion",
+        "hex",
+        "monsters",
+        "dragons",
+        "combat-resolution"
+      ]
+    },
+    "reach-tomb-kings-wizard": {
+      "themas": [
+        {
+          "thema": "matchups",
+          "subthema": "vs-tomb-kings"
+        }
+      ],
+      "tags": [
+        "wizard-level",
+        "bunker"
+      ]
+    },
+    "maximise-razorgor-core": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "choosing-chaff"
+        }
+      ],
+      "tags": [
+        "speed-bump",
+        "impact-hits"
+      ]
+    },
+    "sideline-deployment-angle-inward": {
+      "themas": [
+        {
+          "thema": "deployment",
+          "subthema": "unit-placement"
+        },
+        {
+          "thema": "movement",
+          "subthema": "wheels-alignment"
+        }
+      ],
+      "tags": [
+        "board-edge",
+        "wheel",
+        "alignment",
+        "centre"
+      ]
+    },
+    "razorgor-attempt-long-charges": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "redirecting"
+        }
+      ],
+      "tags": [
+        "charge-range",
+        "speed-bump",
+        "impact-hits",
+        "delay"
+      ]
+    },
+    "razorgor-tuskgor-bait-switch": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "decoys-bait"
+        },
+        {
+          "thema": "movement",
+          "subthema": "support-countercharge"
+        }
+      ],
+      "tags": [
+        "bait",
+        "flee",
+        "chariots",
+        "countercharge",
+        "charge-range"
+      ]
+    },
+    "razorgor-flee-without-swiftstride": {
+      "themas": [
+        {
+          "thema": "movement",
+          "subthema": "fleeing"
+        }
+      ],
+      "tags": [
+        "flee",
+        "swiftstride",
+        "rally",
+        "victory-points"
+      ]
+    },
+    "contain-mobile-units-opposite-directions": {
+      "themas": [
+        {
+          "thema": "game-plan",
+          "subthema": "threat-zones"
+        },
+        {
+          "thema": "movement",
+          "subthema": "charge-setup"
+        }
+      ],
+      "tags": [
+        "zoning",
+        "charge-arc",
+        "concentration",
+        "flanks"
+      ]
+    },
+    "angle-attackers-towards-boundary": {
+      "themas": [
+        {
+          "thema": "movement",
+          "subthema": "charge-setup"
+        },
+        {
+          "thema": "game-plan",
+          "subthema": "threat-zones"
+        }
+      ],
+      "tags": [
+        "charge-arc",
+        "board-edge",
+        "flee",
+        "fall-back",
+        "flanks",
+        "zoning"
+      ]
+    },
+    "white-sword-doppelganger-archmage": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "wizard-builds"
+        },
+        {
+          "thema": "characters",
+          "subthema": "mounts-items"
+        }
+      ],
+      "tags": [
+        "magic-items",
+        "illusion",
+        "armour-piercing"
+      ]
+    },
+    "skycutter-white-sword-mount": {
+      "themas": [
+        {
+          "thema": "characters",
+          "subthema": "mounts-items"
+        }
+      ],
+      "tags": [
+        "mounts",
+        "chariots",
+        "armour"
+      ]
+    },
+    "glittering-robe-skycutter-archmage": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "buffs-hexes"
+        }
+      ],
+      "tags": [
+        "enchantment",
+        "illusion",
+        "chariots"
+      ]
+    },
+    "lesser-mages-dispel-scrolls": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "dispelling"
+        }
+      ],
+      "tags": [
+        "dispel",
+        "wizard-level",
+        "magic-items"
+      ]
+    },
+    "plan-countermagic-attack-timing": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "dispelling"
+        },
+        {
+          "thema": "game-plan",
+          "subthema": "tempo-trading"
+        }
+      ],
+      "tags": [
+        "dispel",
+        "sacrifice",
+        "wizard-level",
+        "zoning"
+      ]
+    },
+    "dragon-charge-arc-redirections": {
+      "themas": [
+        {
+          "thema": "movement",
+          "subthema": "charge-order"
+        },
+        {
+          "thema": "hammers",
+          "subthema": "monsters-dragons"
+        }
+      ],
+      "tags": [
+        "charge-arc",
+        "redirect",
+        "dragons",
+        "flee"
+      ]
+    },
+    "ambushers-pressure-enemy-movement": {
+      "themas": [
+        {
+          "thema": "deployment",
+          "subthema": "ambush-scouts-vanguard"
+        },
+        {
+          "thema": "game-plan",
+          "subthema": "threat-zones"
+        }
+      ],
+      "tags": [
+        "ambush",
+        "zoning",
+        "flanks"
+      ]
+    },
+    "fast-cavalry-ambushers": {
+      "themas": [
+        {
+          "thema": "deployment",
+          "subthema": "ambush-scouts-vanguard"
+        }
+      ],
+      "tags": [
+        "ambush",
+        "light-cavalry"
+      ]
+    },
+    "ambushers-reserve-move-arrival": {
+      "themas": [
+        {
+          "thema": "deployment",
+          "subthema": "ambush-scouts-vanguard"
+        },
+        {
+          "thema": "movement",
+          "subthema": "charge-setup"
+        }
+      ],
+      "tags": [
+        "ambush",
+        "reserve-move",
+        "objectives"
+      ]
+    },
+    "ambushers-banner-combat-resolution": {
+      "themas": [
+        {
+          "thema": "deployment",
+          "subthema": "ambush-scouts-vanguard"
+        },
+        {
+          "thema": "movement",
+          "subthema": "support-countercharge"
+        }
+      ],
+      "tags": [
+        "ambush",
+        "combat-resolution",
+        "magic-banner",
+        "close-order",
+        "flank-charge",
+        "rear-charge"
+      ]
+    }
+  },
+  "open": {},
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 36,
+      "sec": 109,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 36296,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 5214,
+        "reasoning_output_tokens": 3106
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

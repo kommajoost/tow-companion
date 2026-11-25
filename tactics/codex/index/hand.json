@@ -1,0 +1,76 @@
+{
+  "_uitleg": "Met de hand vastgestelde index; wint van de Codex-antwoorden in batch-*.json. Per les: themas [{thema, subthema}] en tags. Spot-check 2026-11-25: twee VC-lessen tegen Beastmen naar vs-beastmen; het subthema leadership is opgegaan in bsb (Battle standard & leadership). Marching-column-les: march-block -> marching-column.",
+  "curse-years-holding-plan": {
+    "themas": [
+      {
+        "thema": "magic",
+        "subthema": "lores-spells"
+      },
+      {
+        "thema": "matchups",
+        "subthema": "vs-beastmen"
+      }
+    ],
+    "tags": [
+      "hex",
+      "delay",
+      "monstrous-infantry"
+    ]
+  },
+  "screams-weaken-dragon-ogres": {
+    "themas": [
+      {
+        "thema": "shooting-terrain",
+        "subthema": "target-priority"
+      },
+      {
+        "thema": "matchups",
+        "subthema": "vs-beastmen"
+      }
+    ],
+    "tags": [
+      "monstrous-infantry",
+      "leadership"
+    ]
+  },
+  "character-leadership-central-anchor": {
+    "themas": [
+      {
+        "thema": "characters",
+        "subthema": "bsb"
+      }
+    ],
+    "tags": [
+      "leadership",
+      "general",
+      "anvil",
+      "centre",
+      "break-test"
+    ]
+  },
+  "ghorros-near-centigor-drunkenness": {
+    "themas": [
+      {
+        "thema": "characters",
+        "subthema": "bsb"
+      }
+    ],
+    "tags": [
+      "leadership",
+      "lone-character"
+    ]
+  },
+  "marching-column-evade-charge-arc": {
+    "themas": [
+      {
+        "thema": "movement",
+        "subthema": "reforms-formations"
+      }
+    ],
+    "tags": [
+      "marching-column",
+      "charge-arc",
+      "reform"
+    ]
+  }
+}

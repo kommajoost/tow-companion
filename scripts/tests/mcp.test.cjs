@@ -129,9 +129,21 @@ test('get_lesson: full lesson, every source and extra quotes with their own time
 
 test('list_tactics_index: themes with counts, phases, armies', async () => {
   const t = await tool('list_tactics_index', {});
-  assert.match(t, /- flanks: Flanks \(\d+\)/);
+  assert.match(t, /- game-plan: Game plan \(\d+\)/);
+  assert.match(t, /· flanks-centre: Flanks & centre \(\d+\)/); // sub-themes since the 26-11-2026 re-index
   assert.match(t, /- army-building: Army building \(\d+\)/);
   assert.match(t, /general: \d+/);
+});
+
+test('real re-indexed library: tag synonyms and sub-theme filters', async () => {
+  // "battle standard bearer" is a synonym of the tag `bsb` in public/tactics/tags.json.
+  const byTag = await tool('search_tactics', { query: '', tag: 'battle standard bearer' });
+  assert.match(byTag, /Showing 1–\d+ of \d+/);
+  assert.doesNotMatch(byTag, /NO LESSONS FOUND/);
+  const lessen = read('public/tactics/lessen.json').lessen;
+  const n = lessen.filter((x) => (x.subthemas ?? []).includes('flanks-centre')).length;
+  const bySub = await tool('search_tactics', { query: '', theme: 'flanks-centre', limit: 50 });
+  assert.match(bySub, new RegExp(`of ${n}\\b`));
 });
 
 test('tags and sub-themes are used when the re-indexed library has them (tolerant shapes)', async () => {
@@ -139,6 +151,10 @@ test('tags and sub-themes are used when the re-indexed library has them (toleran
   fs.mkdirSync(path.join(dir, 'tactics'));
   const lessen = read('public/tactics/lessen.json');
   const themas = read('public/tactics/themas.json');
+  // Since the 26-11-2026 re-index the real library HAS tags and sub-themes; strip them so this test keeps
+  // checking the tolerant reading of a differently shaped (nested) library on its own.
+  for (const l of lessen.lessen) { delete l.tags; delete l.subthemas; }
+  for (const th of themas.themas) delete th.subthemas;
   // Sub-themes nested in a theme; tags as strings on lessons; tags.json as { tags: [...] } with synonyms.
   themas.themas[1].subthemas = [{ id: 'speed-bumps', naam: 'Speed bumps' }];
   const tagged = lessen.lessen.find((x) => x.id === 'speed-bump-close-order');

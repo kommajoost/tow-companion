@@ -1,0 +1,720 @@
+{
+  "batch": 12,
+  "gemaaktOp": "2026-11-25T22:45:44.707Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "ids": [
+    "reconsider-vortexes-in-15",
+    "moving-vortex-in-advance-path",
+    "crystal-column-shelter-charge-choice",
+    "mobile-core-objective-attackers",
+    "combo-charge-objective-defenders",
+    "nomadic-boar-boy-objectives",
+    "ambush-vacated-enemy-objectives",
+    "unbreakable-advance-beyond-capture",
+    "stubborn-shield-wall-scoring",
+    "eternal-guard-charge-for-scoring",
+    "doombull-gor-scoring-attacker",
+    "support-scorers-with-hammers",
+    "screen-block-every-firing-line",
+    "clear-screens-with-cheap-units",
+    "necrosphinx-terror-leadership",
+    "earthen-ramparts-missile-troops",
+    "reposition-shooting-blocks-safely",
+    "urgency-hide-casket",
+    "mortuary-priest-backup-rust",
+    "swarm-battery-healing-cycle",
+    "horse-archers-scouting-bonus",
+    "vanguard-scorpions-fight-chaff",
+    "overlap-necrosphinx-threat-arcs",
+    "prioritise-light-of-protection",
+    "mortuary-cult-refused-flank",
+    "ushabti-arcs-against-flyers",
+    "flying-high-priests-conveyances",
+    "foot-priests-infantry-protection",
+    "advance-before-charge-wheel",
+    "champions-preserve-units-defensively",
+    "pegasus-low-strength-armour-piercing",
+    "sisters-shoot-pegasus-knights",
+    "drilled-narrow-unwanted-contact",
+    "dragon-prince-side-placement",
+    "charge-screen-open-lane",
+    "active-charges-force-pressure",
+    "skycutter-efficient-auto-include",
+    "fleeing-bait-sideways-facing",
+    "temple-guard-core-priority",
+    "marching-column-casualty-margin"
+  ],
+  "resultaten": {
+    "reconsider-vortexes-in-15": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "lores-spells"
+        }
+      ],
+      "tags": [
+        "vortex",
+        "dispel"
+      ]
+    },
+    "moving-vortex-in-advance-path": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "control-spells"
+        }
+      ],
+      "tags": [
+        "vortex",
+        "zoning"
+      ]
+    },
+    "crystal-column-shelter-charge-choice": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "control-spells"
+        }
+      ],
+      "tags": [
+        "vortex",
+        "line-of-sight",
+        "zoning"
+      ]
+    },
+    "mobile-core-objective-attackers": {
+      "themas": [
+        {
+          "thema": "scenarios",
+          "subthema": "scoring-units"
+        },
+        {
+          "thema": "hammers",
+          "subthema": "hammer-basics"
+        }
+      ],
+      "tags": [
+        "objectives",
+        "scoring-units",
+        "hammer",
+        "combined-charge"
+      ]
+    },
+    "combo-charge-objective-defenders": {
+      "themas": [
+        {
+          "thema": "scenarios",
+          "subthema": "objectives"
+        },
+        {
+          "thema": "movement",
+          "subthema": "support-countercharge"
+        }
+      ],
+      "tags": [
+        "combined-charge",
+        "objectives",
+        "combat-resolution",
+        "hammer",
+        "concentration"
+      ]
+    },
+    "nomadic-boar-boy-objectives": {
+      "themas": [
+        {
+          "thema": "scenarios",
+          "subthema": "scoring-units"
+        },
+        {
+          "thema": "hammers",
+          "subthema": "heavy-cavalry"
+        }
+      ],
+      "tags": [
+        "objectives",
+        "countercharge",
+        "heavy-cavalry",
+        "scoring-units",
+        "armour"
+      ]
+    },
+    "ambush-vacated-enemy-objectives": {
+      "themas": [
+        {
+          "thema": "scenarios",
+          "subthema": "objectives"
+        },
+        {
+          "thema": "deployment",
+          "subthema": "ambush-scouts-vanguard"
+        }
+      ],
+      "tags": [
+        "ambush",
+        "objectives"
+      ]
+    },
+    "unbreakable-advance-beyond-capture": {
+      "themas": [
+        {
+          "thema": "scenarios",
+          "subthema": "king-of-the-hill"
+        },
+        {
+          "thema": "infantry",
+          "subthema": "holding-combat"
+        }
+      ],
+      "tags": [
+        "king-of-the-hill",
+        "unbreakable",
+        "fall-back",
+        "scoring-units"
+      ]
+    },
+    "stubborn-shield-wall-scoring": {
+      "themas": [
+        {
+          "thema": "infantry",
+          "subthema": "holding-combat"
+        },
+        {
+          "thema": "scenarios",
+          "subthema": "king-of-the-hill"
+        }
+      ],
+      "tags": [
+        "stubborn",
+        "fall-back",
+        "king-of-the-hill",
+        "scoring-units",
+        "magic-banner",
+        "break-test"
+      ]
+    },
+    "eternal-guard-charge-for-scoring": {
+      "themas": [
+        {
+          "thema": "scenarios",
+          "subthema": "king-of-the-hill"
+        },
+        {
+          "thema": "movement",
+          "subthema": "support-countercharge"
+        }
+      ],
+      "tags": [
+        "king-of-the-hill",
+        "combined-charge",
+        "scoring-units",
+        "objectives"
+      ]
+    },
+    "doombull-gor-scoring-attacker": {
+      "themas": [
+        {
+          "thema": "scenarios",
+          "subthema": "scoring-units"
+        },
+        {
+          "thema": "characters",
+          "subthema": "combat-roles"
+        }
+      ],
+      "tags": [
+        "scoring-units",
+        "hammer"
+      ]
+    },
+    "support-scorers-with-hammers": {
+      "themas": [
+        {
+          "thema": "scenarios",
+          "subthema": "objectives"
+        },
+        {
+          "thema": "hammers",
+          "subthema": "using-hammers"
+        }
+      ],
+      "tags": [
+        "objectives",
+        "hammer",
+        "countercharge"
+      ]
+    },
+    "screen-block-every-firing-line": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "screens"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "avoiding-fire"
+        }
+      ],
+      "tags": [
+        "screen",
+        "line-of-sight",
+        "missile-troops",
+        "magic-missile",
+        "war-machines"
+      ]
+    },
+    "clear-screens-with-cheap-units": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "clearing-chaff"
+        }
+      ],
+      "tags": [
+        "screen",
+        "sacrifice"
+      ]
+    },
+    "necrosphinx-terror-leadership": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "buffs-hexes"
+        },
+        {
+          "thema": "hammers",
+          "subthema": "monsters-dragons"
+        }
+      ],
+      "tags": [
+        "terror",
+        "leadership",
+        "hex",
+        "necromancy",
+        "monsters",
+        "vortex"
+      ]
+    },
+    "earthen-ramparts-missile-troops": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "buffs-hexes"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "missile-units"
+        }
+      ],
+      "tags": [
+        "enchantment",
+        "ward-save",
+        "missile-troops",
+        "regeneration",
+        "monstrous-infantry",
+        "elementalism"
+      ]
+    },
+    "reposition-shooting-blocks-safely": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "control-spells"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "missile-units"
+        }
+      ],
+      "tags": [
+        "conveyance",
+        "elementalism",
+        "charge-arc",
+        "missile-troops",
+        "alignment",
+        "monstrous-infantry"
+      ]
+    },
+    "urgency-hide-casket": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "control-spells"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "terrain-los"
+        }
+      ],
+      "tags": [
+        "reserve-move",
+        "conveyance",
+        "line-of-sight",
+        "hills",
+        "woods"
+      ]
+    },
+    "mortuary-priest-backup-rust": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "lores-spells"
+        }
+      ],
+      "tags": [
+        "elementalism",
+        "hex",
+        "wizard-level"
+      ]
+    },
+    "swarm-battery-healing-cycle": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "casting-aids"
+        }
+      ],
+      "tags": [
+        "sacrifice",
+        "enchantment"
+      ]
+    },
+    "horse-archers-scouting-bonus": {
+      "themas": [
+        {
+          "thema": "deployment",
+          "subthema": "ambush-scouts-vanguard"
+        }
+      ],
+      "tags": [
+        "scouts",
+        "deployment-drops",
+        "first-turn",
+        "light-cavalry"
+      ]
+    },
+    "vanguard-scorpions-fight-chaff": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "clearing-chaff"
+        },
+        {
+          "thema": "deployment",
+          "subthema": "ambush-scouts-vanguard"
+        }
+      ],
+      "tags": [
+        "vanguard",
+        "monsters",
+        "light-cavalry",
+        "regeneration",
+        "armour"
+      ]
+    },
+    "overlap-necrosphinx-threat-arcs": {
+      "themas": [
+        {
+          "thema": "deployment",
+          "subthema": "unit-placement"
+        },
+        {
+          "thema": "game-plan",
+          "subthema": "threat-zones"
+        }
+      ],
+      "tags": [
+        "charge-arc",
+        "zoning",
+        "monsters",
+        "flanks",
+        "centre"
+      ]
+    },
+    "prioritise-light-of-protection": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "buffs-hexes"
+        }
+      ],
+      "tags": [
+        "enchantment",
+        "ward-save",
+        "regeneration",
+        "hit-penalties"
+      ]
+    },
+    "mortuary-cult-refused-flank": {
+      "themas": [
+        {
+          "thema": "deployment",
+          "subthema": "unit-placement"
+        },
+        {
+          "thema": "game-plan",
+          "subthema": "flanks-centre"
+        }
+      ],
+      "tags": [
+        "refused-flank",
+        "tarpit",
+        "flanks",
+        "missile-troops",
+        "monsters"
+      ]
+    },
+    "ushabti-arcs-against-flyers": {
+      "themas": [
+        {
+          "thema": "deployment",
+          "subthema": "unit-placement"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "missile-units"
+        }
+      ],
+      "tags": [
+        "charge-arc",
+        "fly",
+        "missile-troops",
+        "monstrous-infantry"
+      ]
+    },
+    "flying-high-priests-conveyances": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "wizard-placement"
+        }
+      ],
+      "tags": [
+        "fly",
+        "conveyance",
+        "elementalism"
+      ]
+    },
+    "foot-priests-infantry-protection": {
+      "themas": [
+        {
+          "thema": "characters",
+          "subthema": "protecting-characters"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "avoiding-fire"
+        }
+      ],
+      "tags": [
+        "lone-character",
+        "magic-missile",
+        "cannons",
+        "mounts"
+      ]
+    },
+    "advance-before-charge-wheel": {
+      "themas": [
+        {
+          "thema": "movement",
+          "subthema": "wheels-alignment"
+        }
+      ],
+      "tags": [
+        "wheel",
+        "charge-range"
+      ]
+    },
+    "champions-preserve-units-defensively": {
+      "themas": [
+        {
+          "thema": "characters",
+          "subthema": "challenges"
+        },
+        {
+          "thema": "infantry",
+          "subthema": "holding-combat"
+        }
+      ],
+      "tags": [
+        "champion",
+        "challenge",
+        "anvil",
+        "fall-back",
+        "delay",
+        "victory-points"
+      ]
+    },
+    "pegasus-low-strength-armour-piercing": {
+      "themas": [
+        {
+          "thema": "matchups",
+          "subthema": "vs-bretonnia"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "target-priority"
+        }
+      ],
+      "tags": [
+        "armour-piercing",
+        "ward-save",
+        "missile-troops",
+        "fly"
+      ]
+    },
+    "sisters-shoot-pegasus-knights": {
+      "themas": [
+        {
+          "thema": "matchups",
+          "subthema": "vs-bretonnia"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "target-priority"
+        }
+      ],
+      "tags": [
+        "armour-piercing",
+        "missile-troops",
+        "ward-save",
+        "fly"
+      ]
+    },
+    "drilled-narrow-unwanted-contact": {
+      "themas": [
+        {
+          "thema": "movement",
+          "subthema": "reforms-formations"
+        }
+      ],
+      "tags": [
+        "drilled",
+        "reform",
+        "pursuit"
+      ]
+    },
+    "dragon-prince-side-placement": {
+      "themas": [
+        {
+          "thema": "hammers",
+          "subthema": "heavy-cavalry"
+        }
+      ],
+      "tags": [
+        "heavy-cavalry",
+        "flank-charge"
+      ]
+    },
+    "charge-screen-open-lane": {
+      "themas": [
+        {
+          "thema": "movement",
+          "subthema": "charge-order"
+        },
+        {
+          "thema": "chaff",
+          "subthema": "clearing-chaff"
+        }
+      ],
+      "tags": [
+        "screen",
+        "skirmishers",
+        "alignment",
+        "combined-charge",
+        "line-of-sight"
+      ]
+    },
+    "active-charges-force-pressure": {
+      "themas": [
+        {
+          "thema": "game-plan",
+          "subthema": "aggression-control"
+        }
+      ],
+      "tags": [
+        "hammer",
+        "flanks"
+      ]
+    },
+    "skycutter-efficient-auto-include": {
+      "themas": [
+        {
+          "thema": "hammers",
+          "subthema": "chariots"
+        }
+      ],
+      "tags": [
+        "chariots",
+        "fly",
+        "swiftstride",
+        "hammer"
+      ]
+    },
+    "fleeing-bait-sideways-facing": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "decoys-bait"
+        },
+        {
+          "thema": "movement",
+          "subthema": "fleeing"
+        }
+      ],
+      "tags": [
+        "bait",
+        "flee",
+        "alignment",
+        "charge-arc"
+      ]
+    },
+    "temple-guard-core-priority": {
+      "themas": [
+        {
+          "thema": "infantry",
+          "subthema": "unit-builds"
+        }
+      ],
+      "tags": [
+        "renegades",
+        "close-order"
+      ]
+    },
+    "marching-column-casualty-margin": {
+      "themas": [
+        {
+          "thema": "movement",
+          "subthema": "reforms-formations"
+        }
+      ],
+      "tags": [
+        "marching-column",
+        "reform",
+        "close-order"
+      ]
+    }
+  },
+  "open": {},
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 36,
+      "sec": 145,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 36331,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 7052,
+        "reasoning_output_tokens": 3902
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

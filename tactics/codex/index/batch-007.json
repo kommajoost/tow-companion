@@ -1,0 +1,696 @@
+{
+  "batch": 7,
+  "gemaaktOp": "2026-11-25T22:37:12.359Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "ids": [
+    "commit-minimum-winning-force",
+    "prepare-for-local-opponents",
+    "avoid-single-matchup-tech",
+    "vampire-bsb-healing-rerolls",
+    "horde-bsb-break-rerolls",
+    "leadership-ten-bsb-savings",
+    "upgrade-existing-combat-bsb",
+    "unit-carries-magic-banner",
+    "bsb-host-before-mount",
+    "empire-infantry-bsb-foot",
+    "captain-bsb-defensive-investment",
+    "veteran-state-griffin-banner",
+    "bsb-joins-elite-troops",
+    "avoid-redundant-bsb-banner",
+    "captain-witch-hunters-ward",
+    "state-troops-monster-tapestry",
+    "captain-pistol-charge-reaction",
+    "necromancy-supports-state-troops",
+    "archer-screen-state-troops-trap",
+    "cheap-bsb-outside-combat",
+    "match-screen-advance-speed",
+    "magic-missiles-bypass-cover",
+    "woods-block-attack-lanes",
+    "endgame-hide-save-points",
+    "concentrate-points-death-star",
+    "dragon-hunt-largest-vulnerable-unit",
+    "grave-guard-battle-lust-mirror",
+    "gor-death-star-infantry-choice",
+    "death-star-missile-support",
+    "vile-tide-large-wound-targets",
+    "summoning-pick-off-light-cavalry",
+    "central-anvil-all-round-wings",
+    "beastmen-death-star-chaff-wings",
+    "thin-formations-against-bombing",
+    "stone-throwers-against-lanterns",
+    "rangers-skirmish-versus-cathay",
+    "spread-skirmishers-with-casualties",
+    "scouts-deny-lantern-deployment",
+    "flaming-defence-against-lanterns",
+    "spellbreaking-stop-plague-rust"
+  ],
+  "resultaten": {
+    "commit-minimum-winning-force": {
+      "themas": [
+        {
+          "thema": "game-plan",
+          "subthema": "concentration"
+        },
+        {
+          "thema": "movement",
+          "subthema": "overrun-pursuit"
+        }
+      ],
+      "tags": [
+        "concentration",
+        "combined-charge",
+        "pursuit",
+        "fall-back"
+      ]
+    },
+    "prepare-for-local-opponents": {
+      "themas": [
+        {
+          "thema": "game-plan",
+          "subthema": "list-building"
+        }
+      ],
+      "tags": [
+        "tournament",
+        "victory-points"
+      ]
+    },
+    "avoid-single-matchup-tech": {
+      "themas": [
+        {
+          "thema": "game-plan",
+          "subthema": "list-building"
+        }
+      ],
+      "tags": [
+        "tournament",
+        "victory-points"
+      ]
+    },
+    "vampire-bsb-healing-rerolls": {
+      "themas": [
+        {
+          "thema": "characters",
+          "subthema": "bsb"
+        }
+      ],
+      "tags": [
+        "bsb",
+        "leadership"
+      ]
+    },
+    "horde-bsb-break-rerolls": {
+      "themas": [
+        {
+          "thema": "characters",
+          "subthema": "bsb"
+        }
+      ],
+      "tags": [
+        "bsb",
+        "break-test",
+        "leadership",
+        "horde"
+      ]
+    },
+    "leadership-ten-bsb-savings": {
+      "themas": [
+        {
+          "thema": "characters",
+          "subthema": "bsb"
+        }
+      ],
+      "tags": [
+        "bsb",
+        "leadership",
+        "general"
+      ]
+    },
+    "upgrade-existing-combat-bsb": {
+      "themas": [
+        {
+          "thema": "characters",
+          "subthema": "bsb"
+        }
+      ],
+      "tags": [
+        "bsb",
+        "combat-resolution"
+      ]
+    },
+    "unit-carries-magic-banner": {
+      "themas": [
+        {
+          "thema": "characters",
+          "subthema": "bsb"
+        }
+      ],
+      "tags": [
+        "magic-banner",
+        "bsb"
+      ]
+    },
+    "bsb-host-before-mount": {
+      "themas": [
+        {
+          "thema": "characters",
+          "subthema": "bsb"
+        }
+      ],
+      "tags": [
+        "bsb",
+        "mounts"
+      ]
+    },
+    "empire-infantry-bsb-foot": {
+      "themas": [
+        {
+          "thema": "characters",
+          "subthema": "bsb"
+        }
+      ],
+      "tags": [
+        "bsb",
+        "mounts",
+        "cannons"
+      ]
+    },
+    "captain-bsb-defensive-investment": {
+      "themas": [
+        {
+          "thema": "characters",
+          "subthema": "bsb"
+        }
+      ],
+      "tags": [
+        "bsb",
+        "magic-items",
+        "victory-points"
+      ]
+    },
+    "veteran-state-griffin-banner": {
+      "themas": [
+        {
+          "thema": "infantry",
+          "subthema": "unit-builds"
+        }
+      ],
+      "tags": [
+        "magic-banner",
+        "combat-resolution",
+        "close-order"
+      ]
+    },
+    "bsb-joins-elite-troops": {
+      "themas": [
+        {
+          "thema": "characters",
+          "subthema": "bsb"
+        },
+        {
+          "thema": "deployment",
+          "subthema": "unit-placement"
+        }
+      ],
+      "tags": [
+        "bsb",
+        "leadership"
+      ]
+    },
+    "avoid-redundant-bsb-banner": {
+      "themas": [
+        {
+          "thema": "characters",
+          "subthema": "bsb"
+        }
+      ],
+      "tags": [
+        "magic-banner",
+        "bsb",
+        "leadership",
+        "break-test"
+      ]
+    },
+    "captain-witch-hunters-ward": {
+      "themas": [
+        {
+          "thema": "characters",
+          "subthema": "bsb"
+        }
+      ],
+      "tags": [
+        "bsb",
+        "magic-items",
+        "armour"
+      ]
+    },
+    "state-troops-monster-tapestry": {
+      "themas": [
+        {
+          "thema": "infantry",
+          "subthema": "holding-combat"
+        },
+        {
+          "thema": "characters",
+          "subthema": "bsb"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-monsters"
+        }
+      ],
+      "tags": [
+        "magic-banner",
+        "monsters",
+        "bsb",
+        "combat-resolution"
+      ]
+    },
+    "captain-pistol-charge-reaction": {
+      "themas": [
+        {
+          "thema": "characters",
+          "subthema": "mounts-items"
+        }
+      ],
+      "tags": [
+        "stand-and-shoot",
+        "bsb",
+        "combat-resolution"
+      ]
+    },
+    "necromancy-supports-state-troops": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "buffs-hexes"
+        },
+        {
+          "thema": "infantry",
+          "subthema": "holding-combat"
+        }
+      ],
+      "tags": [
+        "necromancy",
+        "hex",
+        "leadership",
+        "combat-resolution",
+        "break-test"
+      ]
+    },
+    "archer-screen-state-troops-trap": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "screens"
+        },
+        {
+          "thema": "movement",
+          "subthema": "fleeing"
+        }
+      ],
+      "tags": [
+        "screen",
+        "bait",
+        "flee",
+        "overrun",
+        "combat-resolution"
+      ]
+    },
+    "cheap-bsb-outside-combat": {
+      "themas": [
+        {
+          "thema": "characters",
+          "subthema": "bsb"
+        }
+      ],
+      "tags": [
+        "bsb",
+        "lone-character",
+        "leadership",
+        "horde",
+        "armour"
+      ]
+    },
+    "match-screen-advance-speed": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "screens"
+        }
+      ],
+      "tags": [
+        "screen",
+        "delay"
+      ]
+    },
+    "magic-missiles-bypass-cover": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "magic-missiles"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "terrain-los"
+        }
+      ],
+      "tags": [
+        "magic-missile",
+        "cover",
+        "hit-penalties",
+        "line-of-sight"
+      ]
+    },
+    "woods-block-attack-lanes": {
+      "themas": [
+        {
+          "thema": "shooting-terrain",
+          "subthema": "terrain-los"
+        }
+      ],
+      "tags": [
+        "woods",
+        "line-of-sight",
+        "zoning"
+      ]
+    },
+    "endgame-hide-save-points": {
+      "themas": [
+        {
+          "thema": "scenarios",
+          "subthema": "late-game"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "avoiding-fire"
+        }
+      ],
+      "tags": [
+        "victory-points",
+        "cover",
+        "flanks",
+        "line-of-sight",
+        "tournament"
+      ]
+    },
+    "concentrate-points-death-star": {
+      "themas": [
+        {
+          "thema": "infantry",
+          "subthema": "death-stars"
+        },
+        {
+          "thema": "game-plan",
+          "subthema": "concentration"
+        }
+      ],
+      "tags": [
+        "death-star",
+        "concentration",
+        "enchantment",
+        "victory-points"
+      ]
+    },
+    "dragon-hunt-largest-vulnerable-unit": {
+      "themas": [
+        {
+          "thema": "hammers",
+          "subthema": "monsters-dragons"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "picking-fights"
+        }
+      ],
+      "tags": [
+        "dragons",
+        "hammer",
+        "victory-points"
+      ]
+    },
+    "grave-guard-battle-lust-mirror": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "buffs-hexes"
+        },
+        {
+          "thema": "infantry",
+          "subthema": "death-stars"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-other"
+        }
+      ],
+      "tags": [
+        "dark-magic",
+        "enchantment",
+        "frenzy",
+        "death-star"
+      ]
+    },
+    "gor-death-star-infantry-choice": {
+      "themas": [
+        {
+          "thema": "infantry",
+          "subthema": "death-stars"
+        },
+        {
+          "thema": "game-plan",
+          "subthema": "list-building"
+        }
+      ],
+      "tags": [
+        "death-star",
+        "close-order",
+        "combat-resolution"
+      ]
+    },
+    "death-star-missile-support": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "magic-missiles"
+        },
+        {
+          "thema": "chaff",
+          "subthema": "clearing-chaff"
+        },
+        {
+          "thema": "infantry",
+          "subthema": "death-stars"
+        }
+      ],
+      "tags": [
+        "magic-missile",
+        "death-star",
+        "speed-bump",
+        "unbreakable"
+      ]
+    },
+    "vile-tide-large-wound-targets": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "magic-missiles"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-monsters"
+        }
+      ],
+      "tags": [
+        "magic-missile",
+        "monsters",
+        "large-target"
+      ]
+    },
+    "summoning-pick-off-light-cavalry": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "magic-missiles"
+        }
+      ],
+      "tags": [
+        "magic-missile",
+        "light-cavalry",
+        "death-star"
+      ]
+    },
+    "central-anvil-all-round-wings": {
+      "themas": [
+        {
+          "thema": "game-plan",
+          "subthema": "flanks-centre"
+        },
+        {
+          "thema": "deployment",
+          "subthema": "unit-placement"
+        }
+      ],
+      "tags": [
+        "anvil",
+        "centre",
+        "flanks",
+        "skirmishers"
+      ]
+    },
+    "beastmen-death-star-chaff-wings": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "choosing-chaff"
+        },
+        {
+          "thema": "game-plan",
+          "subthema": "flanks-centre"
+        }
+      ],
+      "tags": [
+        "death-star",
+        "flanks"
+      ]
+    },
+    "thin-formations-against-bombing": {
+      "themas": [
+        {
+          "thema": "matchups",
+          "subthema": "vs-sky-lanterns"
+        },
+        {
+          "thema": "movement",
+          "subthema": "reforms-formations"
+        }
+      ],
+      "tags": [
+        "marching-column",
+        "drilled",
+        "reform"
+      ]
+    },
+    "stone-throwers-against-lanterns": {
+      "themas": [
+        {
+          "thema": "matchups",
+          "subthema": "vs-sky-lanterns"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "war-machines"
+        }
+      ],
+      "tags": [
+        "stone-throwers",
+        "cannons",
+        "war-machines",
+        "line-of-sight"
+      ]
+    },
+    "rangers-skirmish-versus-cathay": {
+      "themas": [
+        {
+          "thema": "matchups",
+          "subthema": "vs-grand-cathay"
+        },
+        {
+          "thema": "deployment",
+          "subthema": "deploying-vs-shooting"
+        }
+      ],
+      "tags": [
+        "skirmishers",
+        "hit-penalties",
+        "missile-troops"
+      ]
+    },
+    "spread-skirmishers-with-casualties": {
+      "themas": [
+        {
+          "thema": "matchups",
+          "subthema": "vs-sky-lanterns"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "avoiding-fire"
+        }
+      ],
+      "tags": [
+        "skirmishers",
+        "fly"
+      ]
+    },
+    "scouts-deny-lantern-deployment": {
+      "themas": [
+        {
+          "thema": "deployment",
+          "subthema": "ambush-scouts-vanguard"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-sky-lanterns"
+        }
+      ],
+      "tags": [
+        "scouts",
+        "zoning",
+        "delay"
+      ]
+    },
+    "flaming-defence-against-lanterns": {
+      "themas": [
+        {
+          "thema": "matchups",
+          "subthema": "vs-sky-lanterns"
+        }
+      ],
+      "tags": [
+        "ward-save",
+        "flaming"
+      ]
+    },
+    "spellbreaking-stop-plague-rust": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "dispelling"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-grand-cathay"
+        }
+      ],
+      "tags": [
+        "dispel",
+        "hex",
+        "armour",
+        "magic-items"
+      ]
+    }
+  },
+  "open": {},
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 36,
+      "sec": 92,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 36382,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 4371,
+        "reasoning_output_tokens": 2276
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

@@ -60,8 +60,9 @@ Strict rules. Every lesson must satisfy all of them:
    quotes may support the why or the example. Choose passages that read cleanly.
 6. **Timestamps.** `tijd` is the timestamp, in whole seconds, of the transcript line where the quote
    STARTS (`[2:51]` = 171, `[1:02:05]` = 3725). Never estimate: take it from the line.
-7. **Phase and themes** come only from the vocabulary under "Vocabulary" below (1 phase, 1 to 3
-   themes, main theme first).
+7. **Phase, themes, sub-themes and tags** come only from the vocabulary under "Vocabulary" below:
+   1 phase; 1 to 3 themes, main theme first, each with exactly one sub-theme OF THAT THEME; 2 to 6
+   tags.
 8. **`leger`** (army) is `null` for general advice, even when he illustrates it with his own army.
    Use an army slug from "Army slugs" only when the advice is specific to that army (its units, its
    rules, how that army should play).
@@ -89,12 +90,40 @@ Strict rules. Every lesson must satisfy all of them:
 game), `movement` (manoeuvring, charging, redirecting, flank play during the game), `combat` (what
 happens in close combat), `magic-shooting`, `scenarios` (objectives and scenario-specific play).
 
-### Themes (what the lesson is about, as a player would browse for it)
+### Themes and sub-themes (what the lesson is about, as a player would browse for it)
 
-Give a theme only when the lesson is ABOUT it, not when it is mentioned in passing. "flanks" means
-winning, using or defending a flank of the board (not the flank of a single unit); "chaff" means cheap
-units that redirect, delay, screen or distract. Order by weight, main theme first. The full list with
-descriptions is under "Vocabulary".
+Give a theme only when the lesson is ABOUT it, not when it is mentioned in passing. Order by weight,
+main theme first. For every theme pick the ONE sub-theme of that theme that fits best. The full list
+with descriptions is under "Vocabulary". How to choose:
+
+- `game-plan`: army-wide strategy (who is the aggressor, how the enemy wins, board thirds and flanks
+  of the board, concentrating force, tempo, what to sacrifice, threat ranges, aggression versus
+  control) and general list-building principles. Not for a single unit's movement trick.
+- `deployment`: advice acted on before or during deployment (pre-game checks, drops and the first
+  turn, where units start, deploying out of enemy fire) and using or countering Ambush, Scouts and
+  Vanguard.
+- `movement`: in-game manoeuvre technique: charge setup, charge order and redirects, wheels,
+  overruns and pursuit, reforms and formations, fleeing as a tool, supporting charges.
+- `chaff`: cheap units that redirect, delay, screen, bait or distract, and clearing enemy chaff.
+- `infantry`, `hammers` (cavalry, chariots, monsters, random movers and how to use them),
+  `characters` (combat roles, BSB and leadership, mounts and items, challenges, protecting
+  characters; a wizard's lore, spells and arcane items are `magic`), `magic`, `shooting-terrain`.
+- `matchups`: advice about facing ONE specific enemy army or enemy unit (the matching `vs-`
+  sub-theme; Sky Lanterns go to `vs-sky-lanterns`, other Grand Cathay advice to `vs-grand-cathay`,
+  an army without its own sub-theme to `vs-other`, big monsters to `vs-monsters`), or general advice
+  about putting units opposite what they beat (`picking-fights`). `leger` is the speaker's OWN army,
+  not the opponent.
+- `scenarios`: scoring units, objectives, baggage trains, King of the Hill, other named scenarios,
+  the last turns of a game.
+- Terror, fear, frenzy and leadership have no theme of their own: tag them and use the theme where
+  the player acts (frenzy bait: `chaff`/`decoys-bait`; a BSB: `characters`/`bsb`; leadership debuff
+  spells: `magic`/`buffs-hexes`; terror-causing monsters: `hammers`/`monsters-dragons`).
+
+### Tags (index terms a player would search for)
+
+2 to 6 tag ids from the tag list under "Vocabulary", most important first: the mechanics, rules and
+concepts the lesson is about, and the unit type it concerns. Do not tag what is only mentioned in
+passing. Unit names and armies are not tags (they have their own fields). Use the id, not a synonym.
 
 ## Same advice already in the database: an ADDITION, not a duplicate
 
@@ -129,7 +158,8 @@ Write exactly this JSON structure (and nothing else) to the output path:
       "voorbeeld": "string or null",
       "wanneerNiet": "string or null",
       "fase": "one phase id",
-      "themas": ["one to three theme ids"],
+      "themas": [{ "thema": "theme id", "subthema": "sub-theme id of that theme" }],
+      "tags": ["two to six tag ids"],
       "leger": null,
       "units": [],
       "bron": {
@@ -155,7 +185,8 @@ Write exactly this JSON structure (and nothing else) to the output path:
 
 Field rules: `extraCitaten` may be an empty list; main quote plus extra quotes is at most 3 per lesson
 (at most 2 for an addition). `waarom`, `voorbeeld`, `wanneerNiet` are a non-empty string or `null`.
-`units` is a list (usually empty). Do not add other fields to a lesson. The runner adds the source id,
+`units` is a list (usually empty). `themas` has 1 to 3 entries, each `{ "thema", "subthema" }` with a
+sub-theme listed under that theme; `tags` has 2 to 6 tag ids. Do not add other fields to a lesson. The runner adds the source id,
 the link with the timestamp, the date and the checks; every quote is checked automatically against
 the transcript (verbatim, within 60 seconds of its timestamp) and a lesson whose quote is not found
 is thrown away.
@@ -176,7 +207,8 @@ General advice (no army, no units):
   "voorbeeld": "Against Alex's Beastmen his block of Black Orcs with a Shaman and battle standard, about 700 points, held the centre. His stacked right flank won, then his Squig Hoppers and Wolf Riders charged into the central combat and turned it.",
   "wanneerNiet": "With Wood Elves, which he also plays, he thinks you win by winning the flanks and creating space, because winning the centre alone is very hard.",
   "fase": "movement",
-  "themas": ["flanks", "game-plan"],
+  "themas": [{ "thema": "game-plan", "subthema": "flanks-centre" }],
+  "tags": ["flanks", "centre", "anvil", "concentration"],
   "leger": null,
   "units": [],
   "bron": {
@@ -200,7 +232,8 @@ Army-specific advice about one unit:
   "voorbeeld": "A big unit of Chaos Knights charged his 14 Black Orcs: he lost two and killed three in return. The combat tied, the knights lost their lance bonus the next turn and the Black Orcs cleaned house.",
   "wanneerNiet": "They are expensive.",
   "fase": "army-building",
-  "themas": ["infantry"],
+  "themas": [{ "thema": "infantry", "subthema": "unit-builds" }],
+  "tags": ["great-weapons", "stubborn", "armour-piercing", "countercharge"],
   "leger": "orc-and-goblin-tribes",
   "units": ["Black Orc Mob"],
   "bron": {
@@ -221,8 +254,8 @@ Army-specific advice about one unit:
 - An example you made up, or one taken from another part of the video that belongs to other advice.
 - A quote with a single word changed, a paraphrased quote, a quote over 15 words, or a timestamp of
   the wrong line.
-- A theme given because the topic is mentioned in passing; a unit listed because it appears only in
-  the example.
+- A theme or tag given because the topic is mentioned in passing; a sub-theme that belongs to another
+  theme; a unit listed because it appears only in the example.
 - A duplicate of an existing lesson instead of an addition.
 
 ## Final check before writing the file

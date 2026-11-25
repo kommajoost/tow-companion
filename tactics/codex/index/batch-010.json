@@ -1,0 +1,712 @@
+{
+  "batch": 10,
+  "gemaaktOp": "2026-11-25T22:42:03.700Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "ids": [
+    "necromancy-level-four-investment",
+    "spectral-steed-caster-protection",
+    "prefer-orc-goblin-signatures",
+    "vindictive-glare-elite-cavalry",
+    "hand-gork-rescue-character",
+    "bad-moon-itchy-nuisance",
+    "evil-sun-spear-blocks",
+    "summoning-or-ruby-ring",
+    "reconsider-warriors-blue-fire",
+    "ruby-ring-unit-champions",
+    "respect-unreliable-missile-threats",
+    "wind-blast-shorten-charges",
+    "wind-blast-objective-distance",
+    "vile-tide-armoured-knights",
+    "multiple-vile-tide-casters",
+    "bray-shaman-missile-choice",
+    "evasive-limit-fireball-reach",
+    "close-range-against-evasive",
+    "evasive-retreat-behind-hill",
+    "evasive-reform-escape-facing",
+    "poison-prioritise-attack-volume",
+    "poison-target-toughness-low-armour",
+    "poison-scouts-clear-cannon",
+    "poison-faster-threats-first",
+    "retreat-poison-slow-monsters",
+    "missiles-deny-terrain-scoring",
+    "orderly-retreat-widen-fighting-rank",
+    "reform-deny-followup-impact-hits",
+    "orderly-retreat-open-order-redirect",
+    "offset-support-beyond-overruns",
+    "eagle-skycutter-flank-pair",
+    "choose-side-for-armies",
+    "movement-spells-early-aggression",
+    "accept-shooting-risk-advancing",
+    "imperfect-target-escape-shooting",
+    "great-eagle-redirection-role",
+    "flee-redirector-off-board",
+    "reform-screen-flank-countercharge",
+    "avoid-charges-unlocking-enemy-reforms",
+    "anvil-next-turn-combat-choices"
+  ],
+  "resultaten": {
+    "necromancy-level-four-investment": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "wizard-builds"
+        }
+      ],
+      "tags": [
+        "necromancy",
+        "wizard-level"
+      ]
+    },
+    "spectral-steed-caster-protection": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "control-spells"
+        },
+        {
+          "thema": "characters",
+          "subthema": "protecting-characters"
+        }
+      ],
+      "tags": [
+        "ethereal",
+        "fly",
+        "conveyance"
+      ]
+    },
+    "prefer-orc-goblin-signatures": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "lores-spells"
+        }
+      ],
+      "tags": [
+        "signature-spell",
+        "magic-missile"
+      ]
+    },
+    "vindictive-glare-elite-cavalry": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "magic-missiles"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "picking-fights"
+        }
+      ],
+      "tags": [
+        "magic-missile",
+        "heavy-cavalry",
+        "armour"
+      ]
+    },
+    "hand-gork-rescue-character": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "control-spells"
+        },
+        {
+          "thema": "characters",
+          "subthema": "protecting-characters"
+        }
+      ],
+      "tags": [
+        "conveyance",
+        "lone-character"
+      ]
+    },
+    "bad-moon-itchy-nuisance": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "buffs-hexes"
+        }
+      ],
+      "tags": [
+        "hex",
+        "vortex"
+      ]
+    },
+    "evil-sun-spear-blocks": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "buffs-hexes"
+        }
+      ],
+      "tags": [
+        "enchantment",
+        "armour-piercing",
+        "close-order"
+      ]
+    },
+    "summoning-or-ruby-ring": {
+      "themas": [
+        {
+          "thema": "game-plan",
+          "subthema": "list-building"
+        },
+        {
+          "thema": "magic",
+          "subthema": "magic-missiles"
+        },
+        {
+          "thema": "chaff",
+          "subthema": "clearing-chaff"
+        }
+      ],
+      "tags": [
+        "magic-missile",
+        "magic-items",
+        "scoring-units",
+        "lone-character"
+      ]
+    },
+    "reconsider-warriors-blue-fire": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "lores-spells"
+        },
+        {
+          "thema": "game-plan",
+          "subthema": "list-building"
+        }
+      ],
+      "tags": [
+        "magic-missile",
+        "signature-spell",
+        "wizard-level",
+        "armour-piercing"
+      ]
+    },
+    "ruby-ring-unit-champions": {
+      "themas": [
+        {
+          "thema": "characters",
+          "subthema": "mounts-items"
+        },
+        {
+          "thema": "magic",
+          "subthema": "magic-missiles"
+        }
+      ],
+      "tags": [
+        "magic-items",
+        "champion",
+        "magic-missile"
+      ]
+    },
+    "respect-unreliable-missile-threats": {
+      "themas": [
+        {
+          "thema": "shooting-terrain",
+          "subthema": "avoiding-fire"
+        },
+        {
+          "thema": "magic",
+          "subthema": "magic-missiles"
+        }
+      ],
+      "tags": [
+        "magic-missile",
+        "dispel"
+      ]
+    },
+    "wind-blast-shorten-charges": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "control-spells"
+        }
+      ],
+      "tags": [
+        "charge-range",
+        "fall-back"
+      ]
+    },
+    "wind-blast-objective-distance": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "control-spells"
+        },
+        {
+          "thema": "scenarios",
+          "subthema": "objectives"
+        }
+      ],
+      "tags": [
+        "objectives",
+        "fall-back"
+      ]
+    },
+    "vile-tide-armoured-knights": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "magic-missiles"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "picking-fights"
+        }
+      ],
+      "tags": [
+        "magic-missile",
+        "heavy-cavalry",
+        "armour"
+      ]
+    },
+    "multiple-vile-tide-casters": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "wizard-builds"
+        }
+      ],
+      "tags": [
+        "signature-spell",
+        "wizard-level",
+        "magic-missile"
+      ]
+    },
+    "bray-shaman-missile-choice": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "lores-spells"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "picking-fights"
+        }
+      ],
+      "tags": [
+        "magic-missile",
+        "daemonology",
+        "signature-spell",
+        "armour",
+        "wizard-level"
+      ]
+    },
+    "evasive-limit-fireball-reach": {
+      "themas": [
+        {
+          "thema": "shooting-terrain",
+          "subthema": "evasive-skirmish"
+        }
+      ],
+      "tags": [
+        "evasive",
+        "magic-missile"
+      ]
+    },
+    "close-range-against-evasive": {
+      "themas": [
+        {
+          "thema": "shooting-terrain",
+          "subthema": "evasive-skirmish"
+        }
+      ],
+      "tags": [
+        "evasive",
+        "missile-troops"
+      ]
+    },
+    "evasive-retreat-behind-hill": {
+      "themas": [
+        {
+          "thema": "shooting-terrain",
+          "subthema": "evasive-skirmish"
+        }
+      ],
+      "tags": [
+        "evasive",
+        "line-of-sight",
+        "hills",
+        "swiftstride"
+      ]
+    },
+    "evasive-reform-escape-facing": {
+      "themas": [
+        {
+          "thema": "shooting-terrain",
+          "subthema": "evasive-skirmish"
+        },
+        {
+          "thema": "movement",
+          "subthema": "reforms-formations"
+        }
+      ],
+      "tags": [
+        "evasive",
+        "reform",
+        "close-order"
+      ]
+    },
+    "poison-prioritise-attack-volume": {
+      "themas": [
+        {
+          "thema": "game-plan",
+          "subthema": "list-building"
+        }
+      ],
+      "tags": [
+        "poison",
+        "missile-troops"
+      ]
+    },
+    "poison-target-toughness-low-armour": {
+      "themas": [
+        {
+          "thema": "shooting-terrain",
+          "subthema": "target-priority"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "picking-fights"
+        }
+      ],
+      "tags": [
+        "poison",
+        "armour",
+        "monsters"
+      ]
+    },
+    "poison-scouts-clear-cannon": {
+      "themas": [
+        {
+          "thema": "shooting-terrain",
+          "subthema": "hunting-shooters"
+        }
+      ],
+      "tags": [
+        "poison",
+        "cannons",
+        "scouts",
+        "concentration",
+        "missile-troops",
+        "monsters"
+      ]
+    },
+    "poison-faster-threats-first": {
+      "themas": [
+        {
+          "thema": "shooting-terrain",
+          "subthema": "target-priority"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-beastmen"
+        }
+      ],
+      "tags": [
+        "poison",
+        "missile-troops",
+        "monsters",
+        "concentration"
+      ]
+    },
+    "retreat-poison-slow-monsters": {
+      "themas": [
+        {
+          "thema": "shooting-terrain",
+          "subthema": "evasive-skirmish"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-monsters"
+        }
+      ],
+      "tags": [
+        "poison",
+        "monsters",
+        "missile-troops"
+      ]
+    },
+    "missiles-deny-terrain-scoring": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "magic-missiles"
+        },
+        {
+          "thema": "scenarios",
+          "subthema": "late-game"
+        }
+      ],
+      "tags": [
+        "magic-missile",
+        "scoring-units",
+        "victory-points",
+        "objectives"
+      ]
+    },
+    "orderly-retreat-widen-fighting-rank": {
+      "themas": [
+        {
+          "thema": "infantry",
+          "subthema": "holding-combat"
+        },
+        {
+          "thema": "movement",
+          "subthema": "reforms-formations"
+        }
+      ],
+      "tags": [
+        "fall-back",
+        "reform",
+        "great-weapons",
+        "armour",
+        "close-order"
+      ]
+    },
+    "reform-deny-followup-impact-hits": {
+      "themas": [
+        {
+          "thema": "movement",
+          "subthema": "reforms-formations"
+        }
+      ],
+      "tags": [
+        "reform",
+        "fall-back",
+        "pursuit",
+        "impact-hits"
+      ]
+    },
+    "orderly-retreat-open-order-redirect": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "redirecting"
+        },
+        {
+          "thema": "movement",
+          "subthema": "reforms-formations"
+        }
+      ],
+      "tags": [
+        "redirect",
+        "reform",
+        "open-order",
+        "skirmishers",
+        "fall-back",
+        "pursuit"
+      ]
+    },
+    "offset-support-beyond-overruns": {
+      "themas": [
+        {
+          "thema": "deployment",
+          "subthema": "unit-placement"
+        },
+        {
+          "thema": "chaff",
+          "subthema": "retreat-paths"
+        }
+      ],
+      "tags": [
+        "overrun",
+        "bait",
+        "charge-arc"
+      ]
+    },
+    "eagle-skycutter-flank-pair": {
+      "themas": [
+        {
+          "thema": "game-plan",
+          "subthema": "flanks-centre"
+        },
+        {
+          "thema": "deployment",
+          "subthema": "unit-placement"
+        }
+      ],
+      "tags": [
+        "flanks",
+        "fly",
+        "chariots"
+      ]
+    },
+    "choose-side-for-armies": {
+      "themas": [
+        {
+          "thema": "deployment",
+          "subthema": "pre-game-checks"
+        }
+      ],
+      "tags": [
+        "line-of-sight",
+        "cover"
+      ]
+    },
+    "movement-spells-early-aggression": {
+      "themas": [
+        {
+          "thema": "game-plan",
+          "subthema": "aggression-control"
+        },
+        {
+          "thema": "magic",
+          "subthema": "control-spells"
+        }
+      ],
+      "tags": [
+        "conveyance",
+        "fly",
+        "drilled"
+      ]
+    },
+    "accept-shooting-risk-advancing": {
+      "themas": [
+        {
+          "thema": "game-plan",
+          "subthema": "aggression-control"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "avoiding-fire"
+        }
+      ],
+      "tags": [
+        "missile-troops",
+        "gunline"
+      ]
+    },
+    "imperfect-target-escape-shooting": {
+      "themas": [
+        {
+          "thema": "shooting-terrain",
+          "subthema": "hunting-shooters"
+        },
+        {
+          "thema": "hammers",
+          "subthema": "using-hammers"
+        }
+      ],
+      "tags": [
+        "heavy-cavalry",
+        "missile-troops",
+        "hammer"
+      ]
+    },
+    "great-eagle-redirection-role": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "redirecting"
+        },
+        {
+          "thema": "movement",
+          "subthema": "wheels-alignment"
+        }
+      ],
+      "tags": [
+        "redirect",
+        "fly",
+        "alignment",
+        "close-order",
+        "march-block"
+      ]
+    },
+    "flee-redirector-off-board": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "redirecting"
+        },
+        {
+          "thema": "movement",
+          "subthema": "fleeing"
+        }
+      ],
+      "tags": [
+        "flee",
+        "board-edge",
+        "redirect",
+        "delay",
+        "sacrifice"
+      ]
+    },
+    "reform-screen-flank-countercharge": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "screens"
+        },
+        {
+          "thema": "movement",
+          "subthema": "support-countercharge"
+        }
+      ],
+      "tags": [
+        "screen",
+        "reform",
+        "flank-charge",
+        "countercharge",
+        "fall-back",
+        "pursuit"
+      ]
+    },
+    "avoid-charges-unlocking-enemy-reforms": {
+      "themas": [
+        {
+          "thema": "movement",
+          "subthema": "reforms-formations"
+        }
+      ],
+      "tags": [
+        "reform",
+        "restrain",
+        "fall-back"
+      ]
+    },
+    "anvil-next-turn-combat-choices": {
+      "themas": [
+        {
+          "thema": "infantry",
+          "subthema": "anchors"
+        },
+        {
+          "thema": "movement",
+          "subthema": "support-countercharge"
+        }
+      ],
+      "tags": [
+        "anvil",
+        "pursuit",
+        "countercharge",
+        "charge-range"
+      ]
+    }
+  },
+  "open": {},
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 35,
+      "sec": 120,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 36127,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 5782,
+        "reasoning_output_tokens": 3594
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

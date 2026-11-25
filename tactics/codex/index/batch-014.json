@@ -1,0 +1,734 @@
+{
+  "batch": 14,
+  "gemaaktOp": "2026-11-25T22:49:55.921Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "ids": [
+    "flee-behind-fallback-unit",
+    "high-elves-flee-reposition",
+    "flee-deny-enemy-reforms",
+    "marching-column-evade-charge-arc",
+    "risk-cleanup-preserve-tempo",
+    "pink-horrors-reform-shooting",
+    "prioritise-emphasise-neutralise-negate",
+    "screams-weaken-dragon-ogres",
+    "large-targets-avoid-vile-tide",
+    "corner-models-deny-ambushes",
+    "skeletons-twenty-five-thirty",
+    "undead-wall-protect-flanks",
+    "banshees-behind-closest-infantry",
+    "curse-years-holding-plan",
+    "terrain-low-roll-charges",
+    "undead-infantry-receive-charges",
+    "save-scroll-decisive-control",
+    "scream-exposed-bray-shaman",
+    "resurrect-outnumber-central-objective",
+    "herdstone-after-main-battle",
+    "forest-bunker-cover",
+    "move-only-needed-skirmishers",
+    "reform-line-clear-shooting",
+    "ungor-switch-defensive-formations",
+    "reform-footprint-objective-control",
+    "wait-before-contesting-centre",
+    "reconsider-infantry-charging-infantry",
+    "infantry-ten-after-challenge",
+    "infantry-overwhelm-dragon-numbers",
+    "monster-charge-challenge-support",
+    "first-charge-infantry-ranks",
+    "position-fast-monster-pursuers",
+    "infantry-character-flank-challenge",
+    "substantial-core-scenario-scorers",
+    "claim-objectives-against-gunlines",
+    "field-glory-wide-deployment",
+    "vanguard-temporary-objective-control",
+    "king-hill-concentrate-centre",
+    "close-quarter-defensive-shooting",
+    "chance-encounter-patient-play"
+  ],
+  "resultaten": {
+    "flee-behind-fallback-unit": {
+      "themas": [
+        {
+          "thema": "movement",
+          "subthema": "fleeing"
+        }
+      ],
+      "tags": [
+        "flee",
+        "screen"
+      ]
+    },
+    "high-elves-flee-reposition": {
+      "themas": [
+        {
+          "thema": "movement",
+          "subthema": "fleeing"
+        },
+        {
+          "thema": "game-plan",
+          "subthema": "flanks-centre"
+        }
+      ],
+      "tags": [
+        "flee",
+        "rally",
+        "flanks"
+      ]
+    },
+    "flee-deny-enemy-reforms": {
+      "themas": [
+        {
+          "thema": "movement",
+          "subthema": "fleeing"
+        }
+      ],
+      "tags": [
+        "flee",
+        "reform",
+        "restrain",
+        "bait",
+        "delay"
+      ]
+    },
+    "marching-column-evade-charge-arc": {
+      "themas": [
+        {
+          "thema": "movement",
+          "subthema": "reforms-formations"
+        }
+      ],
+      "tags": [
+        "marching-column",
+        "charge-arc",
+        "reform",
+        "march-block"
+      ]
+    },
+    "risk-cleanup-preserve-tempo": {
+      "themas": [
+        {
+          "thema": "game-plan",
+          "subthema": "tempo-trading"
+        }
+      ],
+      "tags": [
+        "hammer",
+        "delay",
+        "flanks",
+        "centre"
+      ]
+    },
+    "pink-horrors-reform-shooting": {
+      "themas": [
+        {
+          "thema": "movement",
+          "subthema": "reforms-formations"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "missile-units"
+        }
+      ],
+      "tags": [
+        "reform",
+        "open-order",
+        "missile-troops",
+        "hit-penalties"
+      ]
+    },
+    "prioritise-emphasise-neutralise-negate": {
+      "themas": [
+        {
+          "thema": "game-plan",
+          "subthema": "reading-the-enemy"
+        }
+      ],
+      "tags": [
+        "zoning",
+        "concentration",
+        "delay"
+      ]
+    },
+    "screams-weaken-dragon-ogres": {
+      "themas": [
+        {
+          "thema": "shooting-terrain",
+          "subthema": "target-priority"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-other"
+        }
+      ],
+      "tags": [
+        "monstrous-infantry",
+        "leadership"
+      ]
+    },
+    "large-targets-avoid-vile-tide": {
+      "themas": [
+        {
+          "thema": "shooting-terrain",
+          "subthema": "avoiding-fire"
+        }
+      ],
+      "tags": [
+        "large-target",
+        "magic-missile",
+        "monsters",
+        "delay"
+      ]
+    },
+    "corner-models-deny-ambushes": {
+      "themas": [
+        {
+          "thema": "deployment",
+          "subthema": "ambush-scouts-vanguard"
+        }
+      ],
+      "tags": [
+        "ambush",
+        "board-edge",
+        "zoning",
+        "deployment-drops"
+      ]
+    },
+    "skeletons-twenty-five-thirty": {
+      "themas": [
+        {
+          "thema": "infantry",
+          "subthema": "unit-builds"
+        }
+      ],
+      "tags": [
+        "horde",
+        "combat-resolution"
+      ]
+    },
+    "undead-wall-protect-flanks": {
+      "themas": [
+        {
+          "thema": "deployment",
+          "subthema": "unit-placement"
+        },
+        {
+          "thema": "infantry",
+          "subthema": "anchors"
+        }
+      ],
+      "tags": [
+        "flanks",
+        "anvil",
+        "flank-charge",
+        "combined-charge",
+        "impassable"
+      ]
+    },
+    "banshees-behind-closest-infantry": {
+      "themas": [
+        {
+          "thema": "characters",
+          "subthema": "protecting-characters"
+        }
+      ],
+      "tags": [
+        "lone-character",
+        "screen",
+        "overrun",
+        "centre",
+        "magic-missile"
+      ]
+    },
+    "curse-years-holding-plan": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "lores-spells"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-other"
+        }
+      ],
+      "tags": [
+        "hex",
+        "delay",
+        "monstrous-infantry"
+      ]
+    },
+    "terrain-low-roll-charges": {
+      "themas": [
+        {
+          "thema": "shooting-terrain",
+          "subthema": "terrain-los"
+        }
+      ],
+      "tags": [
+        "charge-range",
+        "woods",
+        "delay",
+        "bait"
+      ]
+    },
+    "undead-infantry-receive-charges": {
+      "themas": [
+        {
+          "thema": "infantry",
+          "subthema": "infantry-moves"
+        }
+      ],
+      "tags": [
+        "charge-range",
+        "anvil",
+        "tarpit"
+      ]
+    },
+    "save-scroll-decisive-control": {
+      "themas": [
+        {
+          "thema": "magic",
+          "subthema": "casting-aids"
+        }
+      ],
+      "tags": [
+        "power-scroll",
+        "zoning",
+        "delay"
+      ]
+    },
+    "scream-exposed-bray-shaman": {
+      "themas": [
+        {
+          "thema": "shooting-terrain",
+          "subthema": "target-priority"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-beastmen"
+        }
+      ],
+      "tags": [
+        "lone-character",
+        "wizard-level",
+        "monsters"
+      ]
+    },
+    "resurrect-outnumber-central-objective": {
+      "themas": [
+        {
+          "thema": "scenarios",
+          "subthema": "objectives"
+        }
+      ],
+      "tags": [
+        "objectives",
+        "unit-strength",
+        "centre"
+      ]
+    },
+    "herdstone-after-main-battle": {
+      "themas": [
+        {
+          "thema": "scenarios",
+          "subthema": "objectives"
+        },
+        {
+          "thema": "game-plan",
+          "subthema": "aggression-control"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-beastmen"
+        }
+      ],
+      "tags": [
+        "objectives",
+        "centre",
+        "fly",
+        "victory-points"
+      ]
+    },
+    "forest-bunker-cover": {
+      "themas": [
+        {
+          "thema": "deployment",
+          "subthema": "deploying-vs-shooting"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "avoiding-fire"
+        }
+      ],
+      "tags": [
+        "woods",
+        "cover",
+        "bunker"
+      ]
+    },
+    "move-only-needed-skirmishers": {
+      "themas": [
+        {
+          "thema": "shooting-terrain",
+          "subthema": "evasive-skirmish"
+        },
+        {
+          "thema": "magic",
+          "subthema": "wizard-placement"
+        }
+      ],
+      "tags": [
+        "skirmishers",
+        "hit-penalties",
+        "bunker",
+        "line-of-sight"
+      ]
+    },
+    "reform-line-clear-shooting": {
+      "themas": [
+        {
+          "thema": "movement",
+          "subthema": "reforms-formations"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "terrain-los"
+        }
+      ],
+      "tags": [
+        "reform",
+        "line-of-sight",
+        "skirmishers",
+        "cover",
+        "missile-troops"
+      ]
+    },
+    "ungor-switch-defensive-formations": {
+      "themas": [
+        {
+          "thema": "movement",
+          "subthema": "reforms-formations"
+        },
+        {
+          "thema": "infantry",
+          "subthema": "holding-combat"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "avoiding-fire"
+        }
+      ],
+      "tags": [
+        "reform",
+        "skirmishers",
+        "open-order",
+        "combat-resolution",
+        "warband",
+        "horde"
+      ]
+    },
+    "reform-footprint-objective-control": {
+      "themas": [
+        {
+          "thema": "movement",
+          "subthema": "reforms-formations"
+        },
+        {
+          "thema": "scenarios",
+          "subthema": "objectives"
+        }
+      ],
+      "tags": [
+        "reform",
+        "objectives",
+        "zoning"
+      ]
+    },
+    "wait-before-contesting-centre": {
+      "themas": [
+        {
+          "thema": "scenarios",
+          "subthema": "scoring-units"
+        }
+      ],
+      "tags": [
+        "scoring-units",
+        "objectives",
+        "centre",
+        "delay"
+      ]
+    },
+    "reconsider-infantry-charging-infantry": {
+      "themas": [
+        {
+          "thema": "infantry",
+          "subthema": "infantry-moves"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "picking-fights"
+        }
+      ],
+      "tags": [
+        "close-order",
+        "combat-resolution"
+      ]
+    },
+    "infantry-ten-after-challenge": {
+      "themas": [
+        {
+          "thema": "infantry",
+          "subthema": "unit-builds"
+        },
+        {
+          "thema": "characters",
+          "subthema": "challenges"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-monsters"
+        }
+      ],
+      "tags": [
+        "unit-strength",
+        "challenge",
+        "champion",
+        "close-order",
+        "combat-resolution",
+        "dragons"
+      ]
+    },
+    "infantry-overwhelm-dragon-numbers": {
+      "themas": [
+        {
+          "thema": "infantry",
+          "subthema": "unit-builds"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-monsters"
+        }
+      ],
+      "tags": [
+        "unit-strength",
+        "dragons",
+        "break-test",
+        "challenge",
+        "pursuit",
+        "combat-resolution"
+      ]
+    },
+    "monster-charge-challenge-support": {
+      "themas": [
+        {
+          "thema": "movement",
+          "subthema": "support-countercharge"
+        },
+        {
+          "thema": "characters",
+          "subthema": "challenges"
+        },
+        {
+          "thema": "hammers",
+          "subthema": "monsters-dragons"
+        }
+      ],
+      "tags": [
+        "combined-charge",
+        "challenge",
+        "dragons"
+      ]
+    },
+    "first-charge-infantry-ranks": {
+      "themas": [
+        {
+          "thema": "matchups",
+          "subthema": "picking-fights"
+        }
+      ],
+      "tags": [
+        "first-charge",
+        "combat-resolution",
+        "close-order"
+      ]
+    },
+    "position-fast-monster-pursuers": {
+      "themas": [
+        {
+          "thema": "movement",
+          "subthema": "charge-setup"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-monsters"
+        }
+      ],
+      "tags": [
+        "charge-range",
+        "flee",
+        "monsters"
+      ]
+    },
+    "infantry-character-flank-challenge": {
+      "themas": [
+        {
+          "thema": "characters",
+          "subthema": "challenges"
+        },
+        {
+          "thema": "infantry",
+          "subthema": "unit-builds"
+        }
+      ],
+      "tags": [
+        "challenge",
+        "flank-charge",
+        "champion"
+      ]
+    },
+    "substantial-core-scenario-scorers": {
+      "themas": [
+        {
+          "thema": "scenarios",
+          "subthema": "scoring-units"
+        },
+        {
+          "thema": "game-plan",
+          "subthema": "list-building"
+        }
+      ],
+      "tags": [
+        "scoring-units",
+        "unit-strength",
+        "objectives",
+        "victory-points"
+      ]
+    },
+    "claim-objectives-against-gunlines": {
+      "themas": [
+        {
+          "thema": "scenarios",
+          "subthema": "objectives"
+        },
+        {
+          "thema": "game-plan",
+          "subthema": "aggression-control"
+        }
+      ],
+      "tags": [
+        "objectives",
+        "gunline"
+      ]
+    },
+    "field-glory-wide-deployment": {
+      "themas": [
+        {
+          "thema": "scenarios",
+          "subthema": "scenario-plans"
+        },
+        {
+          "thema": "deployment",
+          "subthema": "unit-placement"
+        }
+      ],
+      "tags": [
+        "objectives",
+        "scoring-units",
+        "flanks",
+        "centre"
+      ]
+    },
+    "vanguard-temporary-objective-control": {
+      "themas": [
+        {
+          "thema": "scenarios",
+          "subthema": "objectives"
+        },
+        {
+          "thema": "deployment",
+          "subthema": "ambush-scouts-vanguard"
+        }
+      ],
+      "tags": [
+        "vanguard",
+        "objectives",
+        "sacrifice",
+        "scoring-units"
+      ]
+    },
+    "king-hill-concentrate-centre": {
+      "themas": [
+        {
+          "thema": "scenarios",
+          "subthema": "king-of-the-hill"
+        },
+        {
+          "thema": "game-plan",
+          "subthema": "concentration"
+        }
+      ],
+      "tags": [
+        "king-of-the-hill",
+        "concentration",
+        "centre",
+        "objectives"
+      ]
+    },
+    "close-quarter-defensive-shooting": {
+      "themas": [
+        {
+          "thema": "scenarios",
+          "subthema": "scenario-plans"
+        },
+        {
+          "thema": "game-plan",
+          "subthema": "aggression-control"
+        }
+      ],
+      "tags": [
+        "gunline",
+        "objectives"
+      ]
+    },
+    "chance-encounter-patient-play": {
+      "themas": [
+        {
+          "thema": "scenarios",
+          "subthema": "scenario-plans"
+        },
+        {
+          "thema": "game-plan",
+          "subthema": "aggression-control"
+        }
+      ],
+      "tags": [
+        "delay",
+        "objectives",
+        "flanks",
+        "centre",
+        "victory-points"
+      ]
+    }
+  },
+  "open": {},
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 35,
+      "sec": 113,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 36106,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 5409,
+        "reasoning_output_tokens": 3205
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

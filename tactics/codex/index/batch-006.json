@@ -1,0 +1,696 @@
+{
+  "batch": 6,
+  "gemaaktOp": "2026-11-25T22:35:46.281Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "ids": [
+    "warriors-beginner-direct-combat",
+    "ghorros-near-centigor-drunkenness",
+    "random-movement-catches-shooters",
+    "random-movement-denies-countercharge",
+    "exploit-random-movement-variance",
+    "random-movement-unseen-targets",
+    "prefer-three-dice-random-movement",
+    "squig-hoppers-hunt-chaff",
+    "hell-pit-utility-monster",
+    "mangler-efficient-random-mover",
+    "hide-mangler-from-cannons",
+    "focus-combat-character-role",
+    "tank-buys-flanking-time",
+    "tank-layer-three-saves",
+    "orc-wyvern-layered-tank",
+    "tank-nearby-bsb-support",
+    "blenders-break-and-reform",
+    "blender-volume-and-accuracy",
+    "blender-first-round-targets",
+    "baron-royal-pegasus-blender",
+    "assassins-all-round-movement",
+    "protect-assassins-from-range",
+    "assassins-hunt-valuable-targets",
+    "tomb-banshee-budget-assassin",
+    "griffon-bsb-rear-charge",
+    "prefer-equipped-generic-characters",
+    "lumbering-perpendicular-charge-options",
+    "black-coach-mobile-backline-hunter",
+    "bsb-restraint-reform-support",
+    "dragon-first-turn-march",
+    "deploy-heavy-chariots-back",
+    "black-orc-chariot-standard",
+    "screen-frenzy-compulsory-charges",
+    "skirmishers-for-frenzy-screens",
+    "screeners-evasive-feigned-flight",
+    "flee-screen-prevent-overrun",
+    "warhawk-riders-evasive-screen",
+    "screened-frenzy-reliable-charge",
+    "wild-hunt-combat-choice",
+    "prefer-familiar-tournament-armies"
+  ],
+  "resultaten": {
+    "warriors-beginner-direct-combat": {
+      "themas": [
+        {
+          "thema": "game-plan",
+          "subthema": "list-building"
+        }
+      ],
+      "tags": [
+        "hammer",
+        "armour"
+      ]
+    },
+    "ghorros-near-centigor-drunkenness": {
+      "themas": [
+        {
+          "thema": "characters",
+          "subthema": "leadership"
+        }
+      ],
+      "tags": [
+        "leadership",
+        "lone-character"
+      ]
+    },
+    "random-movement-catches-shooters": {
+      "themas": [
+        {
+          "thema": "hammers",
+          "subthema": "random-movers"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "hunting-shooters"
+        }
+      ],
+      "tags": [
+        "random-movement",
+        "missile-troops",
+        "stand-and-shoot",
+        "flee"
+      ]
+    },
+    "random-movement-denies-countercharge": {
+      "themas": [
+        {
+          "thema": "hammers",
+          "subthema": "random-movers"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "picking-fights"
+        }
+      ],
+      "tags": [
+        "random-movement",
+        "countercharge",
+        "heavy-cavalry"
+      ]
+    },
+    "exploit-random-movement-variance": {
+      "themas": [
+        {
+          "thema": "hammers",
+          "subthema": "random-movers"
+        }
+      ],
+      "tags": [
+        "random-movement",
+        "charge-range",
+        "zoning"
+      ]
+    },
+    "random-movement-unseen-targets": {
+      "themas": [
+        {
+          "thema": "hammers",
+          "subthema": "random-movers"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "terrain-los"
+        }
+      ],
+      "tags": [
+        "random-movement",
+        "line-of-sight"
+      ]
+    },
+    "prefer-three-dice-random-movement": {
+      "themas": [
+        {
+          "thema": "hammers",
+          "subthema": "random-movers"
+        }
+      ],
+      "tags": [
+        "random-movement",
+        "charge-range"
+      ]
+    },
+    "squig-hoppers-hunt-chaff": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "clearing-chaff"
+        },
+        {
+          "thema": "hammers",
+          "subthema": "random-movers"
+        }
+      ],
+      "tags": [
+        "random-movement",
+        "hammer"
+      ]
+    },
+    "hell-pit-utility-monster": {
+      "themas": [
+        {
+          "thema": "hammers",
+          "subthema": "random-movers"
+        }
+      ],
+      "tags": [
+        "random-movement",
+        "monsters",
+        "zoning"
+      ]
+    },
+    "mangler-efficient-random-mover": {
+      "themas": [
+        {
+          "thema": "hammers",
+          "subthema": "random-movers"
+        }
+      ],
+      "tags": [
+        "random-movement",
+        "hammer"
+      ]
+    },
+    "hide-mangler-from-cannons": {
+      "themas": [
+        {
+          "thema": "deployment",
+          "subthema": "deploying-vs-shooting"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "avoiding-fire"
+        }
+      ],
+      "tags": [
+        "cannons",
+        "line-of-sight",
+        "random-movement",
+        "first-turn"
+      ]
+    },
+    "focus-combat-character-role": {
+      "themas": [
+        {
+          "thema": "characters",
+          "subthema": "combat-roles"
+        },
+        {
+          "thema": "game-plan",
+          "subthema": "list-building"
+        }
+      ],
+      "tags": [
+        "victory-points",
+        "hammer"
+      ]
+    },
+    "tank-buys-flanking-time": {
+      "themas": [
+        {
+          "thema": "characters",
+          "subthema": "combat-roles"
+        },
+        {
+          "thema": "game-plan",
+          "subthema": "tempo-trading"
+        }
+      ],
+      "tags": [
+        "tarpit",
+        "delay",
+        "flanks",
+        "anvil"
+      ]
+    },
+    "tank-layer-three-saves": {
+      "themas": [
+        {
+          "thema": "characters",
+          "subthema": "combat-roles"
+        }
+      ],
+      "tags": [
+        "armour",
+        "regeneration",
+        "ward-save",
+        "mounts",
+        "victory-points"
+      ]
+    },
+    "orc-wyvern-layered-tank": {
+      "themas": [
+        {
+          "thema": "characters",
+          "subthema": "mounts-items"
+        }
+      ],
+      "tags": [
+        "armour",
+        "regeneration",
+        "ward-save",
+        "magic-items",
+        "mounts",
+        "monsters"
+      ]
+    },
+    "tank-nearby-bsb-support": {
+      "themas": [
+        {
+          "thema": "characters",
+          "subthema": "bsb"
+        }
+      ],
+      "tags": [
+        "bsb",
+        "leadership",
+        "break-test",
+        "fall-back",
+        "tarpit"
+      ]
+    },
+    "blenders-break-and-reform": {
+      "themas": [
+        {
+          "thema": "characters",
+          "subthema": "combat-roles"
+        },
+        {
+          "thema": "movement",
+          "subthema": "overrun-pursuit"
+        }
+      ],
+      "tags": [
+        "break-test",
+        "combat-resolution",
+        "pursuit",
+        "restrain",
+        "reform",
+        "hammer"
+      ]
+    },
+    "blender-volume-and-accuracy": {
+      "themas": [
+        {
+          "thema": "characters",
+          "subthema": "combat-roles"
+        }
+      ],
+      "tags": [
+        "hammer",
+        "armour-piercing"
+      ]
+    },
+    "blender-first-round-targets": {
+      "themas": [
+        {
+          "thema": "characters",
+          "subthema": "combat-roles"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "picking-fights"
+        }
+      ],
+      "tags": [
+        "hammer",
+        "combat-resolution"
+      ]
+    },
+    "baron-royal-pegasus-blender": {
+      "themas": [
+        {
+          "thema": "characters",
+          "subthema": "mounts-items"
+        }
+      ],
+      "tags": [
+        "mounts",
+        "magic-items",
+        "fly",
+        "hammer",
+        "charge-arc"
+      ]
+    },
+    "assassins-all-round-movement": {
+      "themas": [
+        {
+          "thema": "characters",
+          "subthema": "combat-roles"
+        }
+      ],
+      "tags": [
+        "skirmishers",
+        "charge-arc"
+      ]
+    },
+    "protect-assassins-from-range": {
+      "themas": [
+        {
+          "thema": "characters",
+          "subthema": "protecting-characters"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "avoiding-fire"
+        }
+      ],
+      "tags": [
+        "lone-character",
+        "cannons"
+      ]
+    },
+    "assassins-hunt-valuable-targets": {
+      "themas": [
+        {
+          "thema": "characters",
+          "subthema": "combat-roles"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "picking-fights"
+        }
+      ],
+      "tags": [
+        "victory-points",
+        "magic-items",
+        "combat-resolution"
+      ]
+    },
+    "tomb-banshee-budget-assassin": {
+      "themas": [
+        {
+          "thema": "characters",
+          "subthema": "combat-roles"
+        },
+        {
+          "thema": "matchups",
+          "subthema": "vs-monsters"
+        }
+      ],
+      "tags": [
+        "leadership",
+        "dragons",
+        "victory-points"
+      ]
+    },
+    "griffon-bsb-rear-charge": {
+      "themas": [
+        {
+          "thema": "characters",
+          "subthema": "bsb"
+        },
+        {
+          "thema": "movement",
+          "subthema": "charge-setup"
+        }
+      ],
+      "tags": [
+        "rear-charge",
+        "combat-resolution",
+        "bsb",
+        "magic-banner",
+        "mounts",
+        "terror"
+      ]
+    },
+    "prefer-equipped-generic-characters": {
+      "themas": [
+        {
+          "thema": "characters",
+          "subthema": "mounts-items"
+        }
+      ],
+      "tags": [
+        "magic-items",
+        "armour"
+      ]
+    },
+    "lumbering-perpendicular-charge-options": {
+      "themas": [
+        {
+          "thema": "movement",
+          "subthema": "wheels-alignment"
+        },
+        {
+          "thema": "hammers",
+          "subthema": "chariots"
+        }
+      ],
+      "tags": [
+        "wheel",
+        "charge-arc",
+        "reserve-move",
+        "charge-range",
+        "chariots",
+        "alignment"
+      ]
+    },
+    "black-coach-mobile-backline-hunter": {
+      "themas": [
+        {
+          "thema": "shooting-terrain",
+          "subthema": "hunting-shooters"
+        },
+        {
+          "thema": "hammers",
+          "subthema": "chariots"
+        }
+      ],
+      "tags": [
+        "fly",
+        "reserve-move",
+        "ethereal",
+        "chariots",
+        "war-machines",
+        "armour"
+      ]
+    },
+    "bsb-restraint-reform-support": {
+      "themas": [
+        {
+          "thema": "characters",
+          "subthema": "bsb"
+        },
+        {
+          "thema": "movement",
+          "subthema": "reforms-formations"
+        }
+      ],
+      "tags": [
+        "bsb",
+        "restrain",
+        "reform"
+      ]
+    },
+    "dragon-first-turn-march": {
+      "themas": [
+        {
+          "thema": "hammers",
+          "subthema": "monsters-dragons"
+        }
+      ],
+      "tags": [
+        "dragons",
+        "first-turn",
+        "fly"
+      ]
+    },
+    "deploy-heavy-chariots-back": {
+      "themas": [
+        {
+          "thema": "deployment",
+          "subthema": "unit-placement"
+        },
+        {
+          "thema": "hammers",
+          "subthema": "chariots"
+        }
+      ],
+      "tags": [
+        "chariots",
+        "delay",
+        "charge-range",
+        "swiftstride"
+      ]
+    },
+    "black-orc-chariot-standard": {
+      "themas": [
+        {
+          "thema": "hammers",
+          "subthema": "chariots"
+        },
+        {
+          "thema": "movement",
+          "subthema": "support-countercharge"
+        }
+      ],
+      "tags": [
+        "chariots",
+        "combat-resolution",
+        "flank-charge",
+        "combined-charge",
+        "impact-hits"
+      ]
+    },
+    "screen-frenzy-compulsory-charges": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "screens"
+        }
+      ],
+      "tags": [
+        "screen",
+        "frenzy",
+        "cover"
+      ]
+    },
+    "skirmishers-for-frenzy-screens": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "screens"
+        }
+      ],
+      "tags": [
+        "skirmishers",
+        "screen",
+        "frenzy",
+        "line-of-sight"
+      ]
+    },
+    "screeners-evasive-feigned-flight": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "choosing-chaff"
+        }
+      ],
+      "tags": [
+        "screen",
+        "evasive",
+        "feigned-flight",
+        "flee",
+        "rally",
+        "fall-back"
+      ]
+    },
+    "flee-screen-prevent-overrun": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "retreat-paths"
+        },
+        {
+          "thema": "movement",
+          "subthema": "fleeing"
+        }
+      ],
+      "tags": [
+        "flee",
+        "screen",
+        "overrun"
+      ]
+    },
+    "warhawk-riders-evasive-screen": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "screens"
+        },
+        {
+          "thema": "shooting-terrain",
+          "subthema": "avoiding-fire"
+        }
+      ],
+      "tags": [
+        "screen",
+        "evasive",
+        "fall-back",
+        "fly",
+        "line-of-sight"
+      ]
+    },
+    "screened-frenzy-reliable-charge": {
+      "themas": [
+        {
+          "thema": "chaff",
+          "subthema": "screens"
+        },
+        {
+          "thema": "movement",
+          "subthema": "charge-setup"
+        }
+      ],
+      "tags": [
+        "screen",
+        "frenzy",
+        "charge-range",
+        "bait"
+      ]
+    },
+    "wild-hunt-combat-choice": {
+      "themas": [
+        {
+          "thema": "game-plan",
+          "subthema": "aggression-control"
+        }
+      ],
+      "tags": [
+        "frenzy",
+        "hammer"
+      ]
+    },
+    "prefer-familiar-tournament-armies": {
+      "themas": [
+        {
+          "thema": "game-plan",
+          "subthema": "list-building"
+        }
+      ],
+      "tags": [
+        "tournament",
+        "victory-points"
+      ]
+    }
+  },
+  "open": {},
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 36,
+      "sec": 82,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 36382,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 3869,
+        "reasoning_output_tokens": 1819
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}
