@@ -1,7 +1,7 @@
 {
   "name": "tow-companion",
   "private": true,
-  "version": "0.1.492",
+  "version": "0.1.491",
   "type": "module",
   "description": "Warhammer: The Old World turn companion - mobile PWA",
   "scripts": {
@@ -32,6 +32,9 @@
     "sync-new-recruit-items": "node scripts/sync-new-recruit-items.mjs",
     "sync-owb": "node scripts/sync-owb.mjs && node scripts/patch-owb-magic-items.mjs && node scripts/patch-owb-army-fixes.mjs",
     "stamp-version": "node scripts/stamp-version.mjs",
+    "typecheck:mcp": "tsc -p tsconfig.mcp.json --noEmit",
+    "build:mcp": "node scripts/build-mcp.mjs",
+    "test:mcp": "node scripts/build-mcp.mjs --check && node --test scripts/tests/mcp.test.cjs",
     "render-brand": "node scripts/render-brand.mjs",
     "dev:test": "vite --mode test",
     "build:test": "vite build --mode test",
