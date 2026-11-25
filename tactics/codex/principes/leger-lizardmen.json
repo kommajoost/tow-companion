@@ -1,0 +1,41 @@
+{
+  "scope": "leger-lizardmen",
+  "soort": "leger",
+  "sleutel": "lizardmen",
+  "gemaaktOp": "2026-11-25T23:31:58.259Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "invoerHash": "5ccdb9f86a9a",
+  "invoer": [
+    "jungle-swarms-disposable-anvil",
+    "skinks-screen-cannon-sight",
+    "kroxigor-mixed-skink-unit",
+    "cohort-javelins-and-shields",
+    "saurus-anvil-takes-charges",
+    "cohort-raids-through-terrain",
+    "temple-guard-core-priority",
+    "power-scrolls-critical-ethereal-turns"
+  ],
+  "principes": [],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 8,
+      "sec": 6,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 28737,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 70,
+        "reasoning_output_tokens": 52
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

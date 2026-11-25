@@ -1,0 +1,42 @@
+{
+  "scope": "leger-grand-cathay",
+  "soort": "leger",
+  "sleutel": "grand-cathay",
+  "gemaaktOp": "2026-11-25T23:31:20.576Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "invoerHash": "91ee5a0fe03f",
+  "invoer": [
+    "jade-lancers-ambush-cannons",
+    "jade-fleet-allied-outriders",
+    "ignore-single-lantern-matchup",
+    "reliable-strength-against-cathay",
+    "multiple-wounds-cathay-lantern",
+    "ap-three-cathay-threats",
+    "miao-ying-hunts-lanterns",
+    "prefer-granite-sentinel-durability",
+    "jade-warriors-deny-scoring"
+  ],
+  "principes": [],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 8,
+      "sec": 8,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 28698,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 156,
+        "reasoning_output_tokens": 138
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

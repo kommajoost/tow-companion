@@ -8,9 +8,11 @@
 // schrijft van beide een kopie naar public/tactics/ en toont per thema, subthema, fase en tag het
 // aantal lessen. Elke les heeft themas (1 tot 3 ids), subthemas (per thema een subthema van dat
 // thema, zelfde volgorde) en tags (tag-ids, hooguit 6; minder dan 2 is een waarschuwing).
+// Bestaat public/tactics/principes.json, dan wordt dat ook gecontroleerd (tactics/principes-lib.mjs).
 import fs from 'node:fs';
 import path from 'node:path';
 import { CACHE, PUB, ROOT, RUW, TDIR, leesJson, schrijfJson, schrijfJsonRegels } from './lib.mjs';
+import { controleerPrincipes } from './principes-lib.mjs';
 
 const alleenCheck = process.argv.includes('--check');
 const bronnenPad = path.join(PUB, 'bronnen.json');
@@ -235,6 +237,30 @@ if (alleenCheck && !vocabGelijk) fout('public/tactics/themas.json wijkt af van t
 const tagsGelijk = JSON.stringify(leesJson(tagsPubPad)) === JSON.stringify(tagsVocab);
 if (alleenCheck && !tagsGelijk) fout('public/tactics/tags.json wijkt af van tactics/tags.json (draai npm run tactics:build)');
 
+// ── Principes ──────────────────────────────────────────────────────────────
+// public/tactics/principes.json (gemaakt door npm run tactics:principles) mag ontbreken. Bestaat het,
+// dan moet elke les bestaan en elk principe de drempel halen; de tellingen en lijsten worden opnieuw
+// berekend (--check: moeten gelijk zijn; anders schrijft de bouw ze bij).
+const principesPad = path.join(PUB, 'principes.json');
+const principesBestand = leesJson(principesPad);
+let principesNieuw = null;
+if (principesBestand) {
+  const ctx = {
+    lesIndex: new Map(lessen.lessen.map((l) => [l.id, l])),
+    bronIndex,
+    themaVolgorde: [...THEMAS.values()].sort((a, b) => a.volgorde - b.volgorde).map((t) => t.id),
+    legers,
+  };
+  const c = controleerPrincipes(principesBestand, ctx);
+  const telFout = (m) => /klopt niet met de lessen/.test(m);
+  for (const m of c.fouten) if (alleenCheck || !telFout(m)) fout(`principes.json: ${m}`);
+  if (!alleenCheck && c.herberekend && c.fouten.some(telFout)) {
+    principesNieuw = { ...principesBestand, principes: c.herberekend.principes, top10: c.herberekend.top10, debat: c.herberekend.debat, perThema: c.herberekend.perThema, perLeger: c.herberekend.perLeger };
+    const opnieuw = controleerPrincipes(principesNieuw, ctx);
+    for (const m of opnieuw.fouten) fout(`principes.json (na hertellen): ${m}`);
+  }
+}
+
 if (fouten.length) {
   console.error(`${fouten.length} fout(en):\n- ` + fouten.join('\n- '));
   process.exit(1);
@@ -250,6 +276,10 @@ for (const t of opVolgorde(THEMAS)) {
 console.log('Fases:');
 for (const f of opVolgorde(FASES)) console.log(`  ${f.naam.padEnd(breedte)}  ${perFase.get(f.id)}`);
 const tagTop = [...perTag].sort((a, b) => b[1] - a[1]);
+if (principesBestand) {
+  const p = principesNieuw ?? principesBestand;
+  console.log(`Principes: ${p.principes.length} (top 10: ${p.top10.length}, debat: ${p.debat.length}, thema's: ${Object.keys(p.perThema).length}, legers: ${Object.keys(p.perLeger).length})${principesNieuw ? ', tellingen opnieuw berekend' : ''}.`);
+}
 console.log(`Tags: ${TAGS.size}, ${tagTop.filter(([, n]) => n > 0).length} in gebruik. Meest gebruikt: ${tagTop.slice(0, 20).map(([id, n]) => `${id} ${n}`).join(', ')}`);
 if (waarschuwingen.length) console.warn(`${waarschuwingen.length} waarschuwing(en):\n- ` + waarschuwingen.join('\n- '));
 
@@ -257,6 +287,7 @@ if (alleenCheck) process.exit(0);
 
 if (!vocabGelijk) schrijfJson(themasPubPad, vocab);
 if (!tagsGelijk) fs.copyFileSync(tagsBronPad, tagsPubPad); // kopie met dezelfde opmaak (een tag per regel)
+if (principesNieuw) schrijfJson(principesPad, principesNieuw);
 
 // ── Tellingen en status herberekenen ───────────────────────────────────────
 let gewijzigd = 0;

@@ -1,0 +1,84 @@
+{
+  "scope": "leger-orc-and-goblin-tribes",
+  "soort": "leger",
+  "sleutel": "orc-and-goblin-tribes",
+  "gemaaktOp": "2026-11-25T23:32:38.013Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "invoerHash": "8bfbe2f65aaf",
+  "invoer": [
+    "ambushing-wolves-artillery-blind-spots",
+    "deploy-wolves-earlier-artillery-charge",
+    "central-night-goblin-fanatics",
+    "hide-mangler-from-cannons",
+    "support-wyvern-against-shugengan",
+    "close-order-wolves-ambush-support",
+    "mangler-squig-decoy",
+    "light-chariot-artillery-hunter",
+    "manglers-shield-doom-divers",
+    "squig-hoppers-hunt-chaff",
+    "black-orcs-great-weapons",
+    "night-goblins-netters-robe",
+    "fanatics-essential-offensive-pieces",
+    "pair-manglers-reduce-randomness",
+    "mangler-efficient-random-mover",
+    "black-orc-chariot-standard",
+    "release-fanatics-before-bombardment",
+    "orc-wyvern-layered-tank",
+    "black-orcs-rust-jade-warriors",
+    "orc-anchor-defensive-magic",
+    "tmp-fanatic-release-range",
+    "prefer-orc-goblin-signatures",
+    "vindictive-glare-elite-cavalry",
+    "hand-gork-rescue-character",
+    "bad-moon-itchy-nuisance",
+    "evil-sun-spear-blocks",
+    "infantry-combat-escapes-bombardment",
+    "doom-divers-opening-artillery-volley",
+    "kiknik-wolves-cathayan-artillery",
+    "wyvern-against-unbuffed-warpfire",
+    "arachnarok-avoid-ogre-blade",
+    "doom-divers-against-cathay",
+    "fanatics-cathay-large-targets",
+    "wolf-riders-selective-fights",
+    "kiknik-ambushers-score-objectives",
+    "nomadic-boar-boy-objectives"
+  ],
+  "principes": [
+    {
+      "id": "soften-shugengan-lord-with-doom-divers",
+      "titel": "Soften the Shugengan Lord with Doom Divers",
+      "tekst": "Shoot Cathay's Shugengan Lord with Doom Divers to damage it before your Wyvern attacks.",
+      "soort": "principe",
+      "thema": "matchups",
+      "leger": "orc-and-goblin-tribes",
+      "lessen": [
+        "support-wyvern-against-shugengan",
+        "doom-divers-opening-artillery-volley",
+        "doom-divers-against-cathay"
+      ],
+      "kanten": null
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 26,
+      "sec": 36,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 33537,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1442,
+        "reasoning_output_tokens": 1314
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

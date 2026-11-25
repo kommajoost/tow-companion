@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
 import { TOW, towFont } from '../../design/tow';
 import {
-  lesThemas, tijdLabel, type Bron, type BronnenBestand, type Fase, type Kanaal, type Les, type LesMarkering, type Subthema, type Tag,
-  type Thema, type ThemasBestand,
+  lesThemas, tijdLabel, type Bron, type BronnenBestand, type Fase, type Kanaal, type Les, type LesMarkering, type Principe,
+  type PrincipesBestand, type Subthema, type Tag, type Thema, type ThemasBestand,
 } from '../../lib/tactics';
 import {
   BackButton, Badge, EmptyLine, Meta, bodyText, clamp2, inputStyle,
@@ -24,9 +24,10 @@ const OVERIG = '~other';
 const LANG_THEMA = 24;
 const OPEN_SECTIES = 3;
 
-/** Een laag boven de themalijst: een thema (eventueel met het subthema waarop het opende), de lessen
- *  met een tag, of een les. TacticsPage beheert de stapel; de bovenste laag is wat je ziet. */
+/** Een laag boven de lijst: een principe, een thema (eventueel met het subthema waarop het opende), de
+ *  lessen met een tag, of een les. TacticsPage beheert de stapel; de bovenste laag is wat je ziet. */
 export type Laag =
+  | { soort: 'principe'; id: string }
   | { soort: 'thema'; id: string; sub?: string | null }
   | { soort: 'tag'; id: string }
   | { soort: 'les'; id: string };
@@ -36,8 +37,11 @@ interface Props {
   vocab: ThemasBestand;
   tags: Tag[];
   bronnen: BronnenBestand | null;
+  principes: PrincipesBestand;
   wide: boolean;
   lagen: Laag[];
+  /** vanuitLijst: geopend uit de lijst (vervangt de stapel), anders bovenop de huidige laag. */
+  onOpenPrincipe: (id: string, vanuitLijst: boolean) => void;
   /** Een thema openen vanuit de lijst of vanuit een les (vervangt de stapel). */
   onOpenThema: (id: string, sub?: string | null) => void;
   /** vanuitLijst: geopend uit de zoektreffers (vervangt de stapel), anders bovenop de huidige laag. */
@@ -60,10 +64,12 @@ const tagTermen = (t: Tag) => [t.label, t.id.replace(/-/g, ' '), ...t.synonyms].
 /** Past een zoekwoord op een tag (label, id of synoniem)? */
 const tagPast = (t: Tag, woord: string) => tagTermen(t).some((x) => x === woord || (woord.length >= 3 && x.includes(woord)));
 
-// Lessons: zoekveld + thema's. Een thema open toont zijn subthema's als secties met de lessen eronder;
-// een tag open toont alle lessen met die tag; tijdens het zoeken staat er een platte lijst met
-// treffers. Breed staat de lijst links en de bovenste laag (thema, tag of les) rechts.
-export function TacticsLessons({ lessen, vocab, tags, bronnen, wide, lagen, onOpenThema, onOpenLes, onOpenTag, onTerug }: Props) {
+// Lessons: zoekveld, dan Essentials (de top 10 principes en de debatten), dan de thema's. Met een
+// legerfilter staan de principes van dat leger bovenaan. Een principe open toont de samenvatting en de
+// lessen eronder; een thema open toont eerst zijn kernprincipes en dan zijn subthema's als secties met
+// de lessen eronder; een tag open toont alle lessen met die tag; tijdens het zoeken staat er een platte
+// lijst met treffers. Breed staat de lijst links en de bovenste laag rechts.
+export function TacticsLessons({ lessen, vocab, tags, bronnen, principes, wide, lagen, onOpenPrincipe, onOpenThema, onOpenLes, onOpenTag, onTerug }: Props) {
   const [query, setQuery] = useState('');
   const [leger, setLeger] = useState<string>(ALLE);
   // Uit- of ingeklapte secties per thema ("thema:subthema" -> open), alleen waar de gebruiker tikte.
@@ -75,6 +81,12 @@ export function TacticsLessons({ lessen, vocab, tags, bronnen, wide, lagen, onOp
   const themaIndex = useMemo(() => new Map<string, Thema>(vocab.themas.map((t) => [t.id, t])), [vocab]);
   const faseIndex = useMemo(() => new Map<string, Fase>(vocab.fases.map((f) => [f.id, f])), [vocab]);
   const tagIndex = useMemo(() => new Map<string, Tag>(tags.map((t) => [t.id, t])), [tags]);
+  const principeIndex = useMemo(() => new Map<string, Principe>(principes.principes.map((p) => [p.id, p])), [principes]);
+  const lesIndex = useMemo(() => new Map<string, Les>(lessen.map((l) => [l.id, l])), [lessen]);
+  const principesVan = (ids: string[] | undefined) => (ids ?? []).map((id) => principeIndex.get(id)).filter((p): p is Principe => !!p);
+  /** Kanaalnamen van een les (uniek), voor de regel onder een les in een principe. */
+  const lesKanalen = (l: Les) => [...new Set(l.bronnen.map((b) => bronIndex.get(b.bronId)?.kanaalId).filter((k): k is string => !!k))]
+    .map((k) => kanaalIndex.get(k)?.naam ?? k).join(', ');
   const faseVolgorde = (id: string) => faseIndex.get(id)?.volgorde ?? 1000;
   const subNaam = (thema: string, sub: string | null) =>
     (sub && themaIndex.get(thema)?.subthemas.find((s) => s.id === sub)?.naam) || null;
@@ -117,6 +129,15 @@ export function TacticsLessons({ lessen, vocab, tags, bronnen, wide, lagen, onOp
       .map((x) => x.l)
     : [];
 
+  // Principes die bij het legerfilter passen: algemene altijd, een legerprincipe alleen bij dat leger.
+  const principePast = (p: Principe) => p.leger == null || leger === ALLE || p.leger === leger;
+  const principeTreffers = woorden.length
+    ? principes.principes.filter((p) => principePast(p) && woorden.every((w) => bevat(kleine(`${p.titel} ${p.tekst}`), w)))
+    : [];
+  const legerPrincipes = leger !== ALLE && leger !== ALGEMEEN ? principesVan(principes.perLeger[leger]) : [];
+  const essentials = principesVan(principes.top10);
+  const debatten = principesVan(principes.debat);
+
   const themas = vocab.themas
     .map((t) => ({ t, n: gefilterd.filter((l) => l.themas.includes(t.id)).length }))
     .filter((x) => x.n > 0);
@@ -153,6 +174,42 @@ export function TacticsLessons({ lessen, vocab, tags, bronnen, wide, lagen, onOp
       </li>
     );
   };
+
+  const bewijs = (p: { aantalLessen: number; aantalKanalen: number }) =>
+    [meervoud(p.aantalLessen, 'lesson', 'lessons'), meervoud(p.aantalKanalen, 'channel', 'channels')];
+
+  /** Een principe als kaart (titel, uitleg, bewijs) of compact (titel, bewijs). rang = plaats in de top 10. */
+  const principeRij = (p: Principe, opties: { rang?: number; compact?: boolean; vanuitLijst: boolean }) => {
+    const actief = wide && opties.vanuitLijst && lagen[0]?.soort === 'principe' && lagen[0].id === p.id;
+    return (
+      <li key={p.id} style={{ ...rowCard, borderColor: actief ? TOW.goldDeep : TOW.line, background: actief ? 'rgba(138,108,48,0.10)' : TOW.panel2 }}>
+        <button
+          type="button"
+          onClick={() => onOpenPrincipe(p.id, opties.vanuitLijst)}
+          aria-current={actief ? 'true' : undefined}
+          style={{ ...rowButton, flexDirection: 'row', alignItems: 'flex-start', gap: 10 }}
+        >
+          {opties.rang != null && (
+            <span aria-hidden style={{ flexShrink: 0, minWidth: 16, fontFamily: towFont.display, fontWeight: 700, fontSize: 15, lineHeight: 1.3, color: TOW.goldDeep }}>
+              {opties.rang}
+            </span>
+          )}
+          <span style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 3 }}>
+            <span style={titleText}>{p.titel}</span>
+            {!opties.compact && p.tekst && <span style={{ ...bodyText, fontSize: 13.5, ...clamp2 }}>{p.tekst}</span>}
+            <Meta parts={[...bewijs(p), p.soort === 'debat' ? meervoud(p.kanten?.length ?? 0, 'side', 'sides') : null]} />
+          </span>
+        </button>
+      </li>
+    );
+  };
+
+  const lijstKop = (tekst: string, n: number | null, eerste = false) => (
+    <h3 style={{ ...sectionHead, ...(eerste ? { marginTop: 4 } : {}) }}>
+      <span style={{ flex: 1, minWidth: 0 }}>{tekst}</span>
+      {n != null && <span style={{ color: TOW.muted }}>{n}</span>}
+    </h3>
+  );
 
   const filterLabel = leger !== ALLE ? (leger === ALGEMEEN ? 'General only' : legerLabel(leger)) : null;
   const kop = (tekst: string, ondertitel?: string | null) => (
@@ -194,6 +251,12 @@ export function TacticsLessons({ lessen, vocab, tags, bronnen, wide, lagen, onOp
 
       {woorden.length ? (
         <>
+          {principeTreffers.length > 0 && (
+            <>
+              {lijstKop('Principles', principeTreffers.length, true)}
+              <ul style={{ ...lijstStijl, marginBottom: 12 }}>{principeTreffers.map((p) => principeRij(p, { compact: true, vanuitLijst: true }))}</ul>
+            </>
+          )}
           <div style={{ ...bodyText, fontSize: 13, color: TOW.muted, margin: '0 2px 8px' }}>
             {meervoud(treffers.length, 'lesson', 'lessons')}
           </div>
@@ -212,28 +275,96 @@ export function TacticsLessons({ lessen, vocab, tags, bronnen, wide, lagen, onOp
       ) : themas.length === 0 ? (
         <EmptyLine>No lessons for this army.</EmptyLine>
       ) : (
-        <ul style={lijstStijl}>
-          {themas.map(({ t, n }) => {
-            const actief = wide && lagen[0]?.soort === 'thema' && lagen[0].id === t.id;
-            return (
-              <li key={t.id} style={{ ...rowCard, borderColor: actief ? TOW.goldDeep : TOW.line, background: actief ? 'rgba(138,108,48,0.10)' : TOW.panel2 }}>
-                <button
-                  type="button"
-                  onClick={() => onOpenThema(t.id)}
-                  aria-current={actief ? 'true' : undefined}
-                  style={{ ...rowButton, flexDirection: 'row', alignItems: 'center', gap: 10, minHeight: 50 }}
-                >
-                  <span style={{ ...titleText, flex: 1, minWidth: 0 }}>{t.naam}</span>
-                  <span style={{ ...bodyText, fontSize: 14, color: TOW.muted }}>{n}</span>
-                  <span aria-hidden style={{ color: TOW.muted, fontSize: 18, lineHeight: 1 }}>›</span>
-                </button>
-              </li>
-            );
-          })}
-        </ul>
+        <>
+          {legerPrincipes.length > 0 && (
+            <>
+              {lijstKop(`${legerLabel(leger)} principles`, legerPrincipes.length, true)}
+              <ul style={lijstStijl}>{legerPrincipes.map((p) => principeRij(p, { vanuitLijst: true }))}</ul>
+            </>
+          )}
+          {essentials.length > 0 && (
+            <>
+              {lijstKop('Essentials', null, legerPrincipes.length === 0)}
+              <ul style={lijstStijl}>{essentials.map((p, i) => principeRij(p, { rang: i + 1, vanuitLijst: true }))}</ul>
+            </>
+          )}
+          {debatten.length > 0 && (
+            <>
+              {lijstKop('Debated', debatten.length)}
+              <ul style={lijstStijl}>{debatten.map((p) => principeRij(p, { compact: true, vanuitLijst: true }))}</ul>
+            </>
+          )}
+          {(essentials.length > 0 || legerPrincipes.length > 0) && lijstKop('Themes', themas.length)}
+          <ul style={lijstStijl}>
+            {themas.map(({ t, n }) => {
+              const actief = wide && lagen[0]?.soort === 'thema' && lagen[0].id === t.id;
+              return (
+                <li key={t.id} style={{ ...rowCard, borderColor: actief ? TOW.goldDeep : TOW.line, background: actief ? 'rgba(138,108,48,0.10)' : TOW.panel2 }}>
+                  <button
+                    type="button"
+                    onClick={() => onOpenThema(t.id)}
+                    aria-current={actief ? 'true' : undefined}
+                    style={{ ...rowButton, flexDirection: 'row', alignItems: 'center', gap: 10, minHeight: 50 }}
+                  >
+                    <span style={{ ...titleText, flex: 1, minWidth: 0 }}>{t.naam}</span>
+                    <span style={{ ...bodyText, fontSize: 14, color: TOW.muted }}>{n}</span>
+                    <span aria-hidden style={{ color: TOW.muted, fontSize: 18, lineHeight: 1 }}>›</span>
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+        </>
       )}
     </div>
   );
+
+  // ── Principe open: samenvatting en de lessen eronder (bij een debat per kant) ───
+  const principeView = (id: string) => {
+    const p = principeIndex.get(id);
+    if (!p) return <EmptyLine>Principle not found.</EmptyLine>;
+    const thema = themaIndex.get(p.thema);
+    const rijen = (ids: string[]) => ids.map((x) => lesIndex.get(x)).filter((l): l is Les => !!l)
+      .map((l) => lesRij(l, [lesKanalen(l), faseNaam(l.fase), specifiekLeger(l)], false));
+    const soortLabel = p.soort === 'debat' ? 'Debated' : p.leger ? `${legerLabel(p.leger)} principle` : 'Principle';
+    return (
+      <article style={{ maxWidth: 680, minWidth: 0 }}>
+        {kop(p.titel, soortLabel)}
+        <Meta parts={bewijs(p)} />
+        <p style={{ ...bodyText, fontSize: 12.5, color: TOW.muted, margin: 0 }}>{p.kanalen.map((k) => kanaalIndex.get(k)?.naam ?? k).join(', ')}</p>
+        {thema && (
+          <button
+            type="button"
+            onClick={() => onOpenThema(thema.id)}
+            style={{
+              minHeight: 36, padding: 0, border: 'none', background: 'none', cursor: 'pointer', textAlign: 'left', maxWidth: '100%',
+              color: TOW.goldDeep, fontFamily: towFont.display, fontWeight: 600, fontSize: 13, overflowWrap: 'anywhere',
+              textDecoration: 'underline', textDecorationColor: TOW.line, textUnderlineOffset: 3,
+            }}
+          >
+            {thema.naam}
+          </button>
+        )}
+        <p style={{ ...bodyText, color: TOW.ink, fontSize: 15, margin: '6px 0 2px' }}>{p.tekst}</p>
+        <p style={{ ...bodyText, fontSize: 12, color: TOW.muted, margin: 0 }}>Summary of the lessons below</p>
+        {p.soort === 'debat' && p.kanten?.length ? p.kanten.map((k, i) => (
+          <section key={i}>
+            <h3 style={{ ...titleText, fontSize: 14.5, margin: '18px 2px 2px' }}>{k.standpunt}</h3>
+            <Meta style={{ margin: '0 2px 8px' }} parts={bewijs(k)} />
+            <ul style={lijstStijl}>{rijen(k.lessen)}</ul>
+          </section>
+        )) : (
+          <>
+            <h3 style={sectionHead}>
+              <span>Lessons</span>
+              <span style={{ color: TOW.muted }}>{p.lessen.length}</span>
+            </h3>
+            <ul style={lijstStijl}>{rijen(p.lessen)}</ul>
+          </>
+        )}
+      </article>
+    );
+  };
 
   // ── Thema open: subthema's als secties ─────────────────────────────────────
   const themaView = (laag: Extract<Laag, { soort: 'thema' }>) => {
@@ -258,6 +389,11 @@ export function TacticsLessons({ lessen, vocab, tags, bronnen, wide, lagen, onOp
         opgeteld += g.lessen.length;
       }
     });
+    // Kernprincipes: met een legerfilter eerst die van het leger in dit thema, dan de algemene.
+    const kern = [
+      ...legerPrincipes.filter((p) => p.thema === thema.id),
+      ...principesVan(principes.perThema[thema.id]),
+    ];
     const isOpen = (key: string, _i: number) => klap.get(`${thema.id}:${key}`) ?? (standaardOpen.has(key) || key === laag.sub);
     const wissel = (key: string, i: number) => setKlap((m) => new Map(m).set(`${thema.id}:${key}`, !isOpen(key, i)));
     return (
@@ -265,6 +401,15 @@ export function TacticsLessons({ lessen, vocab, tags, bronnen, wide, lagen, onOp
         {kop(thema.naam)}
         {thema.omschrijving && <p style={{ ...bodyText, margin: '0 0 4px' }}>{thema.omschrijving}</p>}
         <Meta parts={[meervoud(van.length, 'lesson', 'lessons'), meervoud(secties.length, 'section', 'sections'), filterLabel]} />
+        {kern.length > 0 && (
+          <>
+            <h3 style={sectionHead}>
+              <span>Key principles</span>
+              <span style={{ color: TOW.muted }}>{kern.length}</span>
+            </h3>
+            <ul style={lijstStijl}>{kern.map((p) => principeRij(p, { compact: true, vanuitLijst: false }))}</ul>
+          </>
+        )}
         {van.length === 0 && <EmptyLine>No lessons for this army.</EmptyLine>}
         {secties.map((g, i) => {
           const open = isOpen(g.key, i);
@@ -335,13 +480,15 @@ export function TacticsLessons({ lessen, vocab, tags, bronnen, wide, lagen, onOp
   };
 
   const laagView = (laag: Laag) => (laag.soort === 'thema' ? <ThemaScroll laag={laag}>{themaView(laag)}</ThemaScroll>
-    : laag.soort === 'tag' ? tagView(laag.id) : lesView(laag.id));
+    : laag.soort === 'principe' ? principeView(laag.id)
+      : laag.soort === 'tag' ? tagView(laag.id) : lesView(laag.id));
 
   /** Naam van de laag onder de bovenste (voor de terugknop). */
   const laagNaam = (laag: Laag | undefined): string => {
     if (!laag) return 'Lessons';
     if (laag.soort === 'thema') return themaIndex.get(laag.id)?.naam ?? 'Theme';
     if (laag.soort === 'tag') return tagIndex.get(laag.id)?.label ?? 'Tag';
+    if (laag.soort === 'principe') return 'Principle';
     return 'Lesson';
   };
 
@@ -357,7 +504,7 @@ export function TacticsLessons({ lessen, vocab, tags, bronnen, wide, lagen, onOp
               {lagen.length > 1 && <div style={{ margin: '0 0 6px -4px' }}><BackButton onClick={onTerug} label={laagNaam(lagen[lagen.length - 2])} /></div>}
               {laagView(top)}
             </>
-          ) : <EmptyLine>Select a theme.</EmptyLine>}
+          ) : <EmptyLine>{essentials.length ? 'Select a principle or theme.' : 'Select a theme.'}</EmptyLine>}
         </div>
       </div>
     );

@@ -1,0 +1,82 @@
+{
+  "scope": "leger-wood-elf-realms",
+  "soort": "leger",
+  "sleutel": "wood-elf-realms",
+  "gemaaktOp": "2026-11-25T23:35:20.870Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "invoerHash": "edac9652cdb3",
+  "invoer": [
+    "wood-elves-spread-opponents",
+    "wild-hunt-combat-choice",
+    "deploy-defensively-vs-shooting",
+    "glade-riders-shoot-withdraw",
+    "treeman-bsb-backline-defence",
+    "warhawk-riders-evasive-screen",
+    "eternal-guard-anchor-trap",
+    "tree-kin-wood-elf-anchor",
+    "forest-dragon-threatens-lanterns",
+    "wilds-missile-against-lanterns",
+    "wood-elf-reserve-blaster",
+    "combine-wood-elf-forests",
+    "wood-elves-reconsider-poison",
+    "bodkins-remove-lantern-armour",
+    "evasive-push-bombs-long-range",
+    "forest-dragon-evade-reform",
+    "poison-scouts-clear-cannon",
+    "wood-elves-outrange-dwarf-shooting",
+    "wood-elves-clear-mobile-ranged",
+    "eternal-guard-charge-for-scoring"
+  ],
+  "principes": [
+    {
+      "id": "use-evasive-to-retreat-when-targeted-by-shooting",
+      "titel": "Use Evasive to retreat when targeted by shooting",
+      "tekst": "When an enemy targets you with shooting, use Evasive to move away. Your retreat can reduce the effectiveness of that shooting.",
+      "soort": "principe",
+      "thema": "movement",
+      "leger": "wood-elf-realms",
+      "lessen": [
+        "warhawk-riders-evasive-screen",
+        "evasive-push-bombs-long-range",
+        "forest-dragon-evade-reform"
+      ],
+      "kanten": null
+    },
+    {
+      "id": "deploy-units-out-of-sight-of-enemy-shooting",
+      "titel": "Deploy units out of sight of enemy shooting",
+      "tekst": "Hide your units during deployment to protect them from enemy shooting, especially when your opponent could go first.",
+      "soort": "principe",
+      "thema": "deployment",
+      "leger": "wood-elf-realms",
+      "lessen": [
+        "deploy-defensively-vs-shooting",
+        "glade-riders-shoot-withdraw",
+        "combine-wood-elf-forests"
+      ],
+      "kanten": null
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 16,
+      "sec": 37,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 30683,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1639,
+        "reasoning_output_tokens": 1407
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

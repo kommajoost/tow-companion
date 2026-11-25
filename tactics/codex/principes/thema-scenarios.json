@@ -1,0 +1,141 @@
+{
+  "scope": "thema-scenarios",
+  "soort": "thema",
+  "sleutel": "scenarios",
+  "gemaaktOp": "2026-11-25T23:30:02.434Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "invoerHash": "9a6e0dafed59",
+  "invoer": [
+    "mobile-core-objective-attackers",
+    "cheap-area-capture-units",
+    "maintain-cover-for-scorers",
+    "wait-before-contesting-centre",
+    "substantial-core-scenario-scorers",
+    "ungor-cheap-objective-holders",
+    "doombull-gor-scoring-attacker",
+    "seekers-mobile-core-scorers",
+    "nomadic-boar-boy-objectives",
+    "hybrid-hammer-objectives",
+    "identify-contestable-objectives",
+    "move-to-hold-objectives",
+    "anchor-core-objective-threat",
+    "wind-blast-objective-distance",
+    "combo-charge-objective-defenders",
+    "ambush-vacated-enemy-objectives",
+    "support-scorers-with-hammers",
+    "clear-route-for-scorers",
+    "reform-footprint-objective-control",
+    "claim-objectives-against-gunlines",
+    "vanguard-temporary-objective-control",
+    "beastmen-infantry-safe-ambush",
+    "jade-warriors-deny-scoring",
+    "kiknik-ambushers-score-objectives",
+    "resurrect-outnumber-central-objective",
+    "herdstone-after-main-battle",
+    "chaos-warriors-defensive-attrition",
+    "baggage-placement-after-opponent",
+    "attack-weaker-baggage-side",
+    "mobile-baggage-train-attackers",
+    "two-units-baggage-contact",
+    "ambushers-target-baggage-trains",
+    "fell-bats-scenario-pairs",
+    "vampire-force-necromancer-range",
+    "king-of-the-hill-forfeit",
+    "unbreakable-advance-beyond-capture",
+    "stubborn-shield-wall-scoring",
+    "king-hill-concentrate-centre",
+    "eternal-guard-charge-for-scoring",
+    "encirclement-protect-vulnerable-scorer",
+    "army-plan-every-mission",
+    "field-glory-wide-deployment",
+    "close-quarter-defensive-shooting",
+    "chance-encounter-patient-play",
+    "reavers-marching-column-breakthrough",
+    "reavers-widen-clear-breakthrough",
+    "hidden-mobile-objective-grabs",
+    "endgame-hide-save-points",
+    "mobile-blaster-late-points",
+    "missiles-deny-terrain-scoring"
+  ],
+  "principes": [
+    {
+      "id": "use-ambushers-to-claim-unguarded-objectives",
+      "titel": "Use ambushers to claim unguarded objectives",
+      "tekst": "Bring ambushers into open space to take objectives. Look for gaps left as enemy units advance to score.",
+      "soort": "principe",
+      "thema": "scenarios",
+      "leger": null,
+      "lessen": [
+        "ambush-vacated-enemy-objectives",
+        "beastmen-infantry-safe-ambush",
+        "kiknik-ambushers-score-objectives",
+        "ambushers-target-baggage-trains"
+      ],
+      "kanten": null
+    },
+    {
+      "id": "position-units-to-claim-endgame-objectives",
+      "titel": "Position your units to claim objectives at the end",
+      "tekst": "Plan your movement to claim objectives at the end of the game. Keep the units you need alive to make those claims.",
+      "soort": "principe",
+      "thema": "scenarios",
+      "leger": null,
+      "lessen": [
+        "move-to-hold-objectives",
+        "chance-encounter-patient-play",
+        "hidden-mobile-objective-grabs"
+      ],
+      "kanten": null
+    },
+    {
+      "id": "position-your-force-around-scoring-locations",
+      "titel": "Position your force around the mission's scoring locations",
+      "tekst": "Use the location of objectives to decide where to commit your force, so your units can contest the places that offer points.",
+      "soort": "principe",
+      "thema": "scenarios",
+      "leger": null,
+      "lessen": [
+        "identify-contestable-objectives",
+        "king-hill-concentrate-centre",
+        "field-glory-wide-deployment"
+      ],
+      "kanten": null
+    },
+    {
+      "id": "delay-objective-commitment-to-prepare-your-position",
+      "titel": "Delay objective commitment when you need time to prepare",
+      "tekst": "Consider delaying your commitment to an objective so you can prepare your position before contesting it.",
+      "soort": "principe",
+      "thema": "scenarios",
+      "leger": null,
+      "lessen": [
+        "wait-before-contesting-centre",
+        "king-of-the-hill-forfeit",
+        "chance-encounter-patient-play"
+      ],
+      "kanten": null
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 33,
+      "sec": 78,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 35199,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 3645,
+        "reasoning_output_tokens": 3224
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

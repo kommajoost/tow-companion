@@ -1,0 +1,38 @@
+{
+  "scope": "leger-skaven",
+  "soort": "leger",
+  "sleutel": "skaven",
+  "gemaaktOp": "2026-11-25T23:32:48.200Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "invoerHash": "29852df5c879",
+  "invoer": [
+    "jezzails-hidden-lantern-kill-lanes",
+    "giant-rats-absorb-first-charge",
+    "stormvermin-ten-wide",
+    "hell-pit-utility-monster",
+    "warp-lightning-cannons-lanterns"
+  ],
+  "principes": [],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 7,
+      "sec": 6,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 28250,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 50,
+        "reasoning_output_tokens": 32
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

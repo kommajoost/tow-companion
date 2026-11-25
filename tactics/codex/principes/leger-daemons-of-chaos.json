@@ -1,0 +1,40 @@
+{
+  "scope": "leger-daemons-of-chaos",
+  "soort": "leger",
+  "sleutel": "daemons-of-chaos",
+  "gemaaktOp": "2026-11-25T23:30:51.634Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "invoerHash": "a4405cb1688c",
+  "invoer": [
+    "mixed-daemon-gods-lanterns",
+    "pink-horrors-reform-shooting",
+    "seekers-spread-against-shooting",
+    "larger-khorne-fury-units",
+    "plague-drones-fight-lanterns",
+    "bloodthirster-needs-lantern-support",
+    "seekers-mobile-core-scorers"
+  ],
+  "principes": [],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 7,
+      "sec": 6,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 28480,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 79,
+        "reasoning_output_tokens": 61
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

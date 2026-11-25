@@ -144,9 +144,48 @@ export interface LessenBestand {
   lessen: Les[];
 }
 
+/** Eén kant van een debat: een standpunt met de lessen die het innemen. */
+export interface PrincipeKant {
+  standpunt: string;
+  aantalLessen: number;
+  aantalKanalen: number;
+  lessen: string[];
+}
+
+/** Een overkoepelend inzicht dat meerdere spelers los van elkaar geven (tactics/codex/principes.mjs).
+ *  Titel en tekst zijn een AI-samenvatting van de lessen eronder; de tellingen komen uit de gegevens. */
+export interface Principe {
+  id: string;
+  titel: string;
+  tekst: string;
+  /** 'debat' = spelers zijn het oneens; dan staan de kanten in `kanten`. */
+  soort: 'principe' | 'debat';
+  thema: string;
+  /** null = algemeen, anders het leger waar het principe over gaat (spelen of tegenover staan). */
+  leger: string | null;
+  aantalLessen: number;
+  /** Aantal verschillende kanalen onder de lessen: de maat voor "onafhankelijk". */
+  aantalKanalen: number;
+  kanalen: string[];
+  lessen: string[];
+  kanten?: PrincipeKant[];
+}
+
+/** public/tactics/principes.json. Lijsten zijn principe-ids, op rangorde (meeste kanalen, dan lessen). */
+export interface PrincipesBestand {
+  bijgewerkt: string | null;
+  principes: Principe[];
+  top10: string[];
+  debat: string[];
+  perThema: Record<string, string[]>;
+  perLeger: Record<string, string[]>;
+}
+
 export interface TacticsData {
   /** null = bronnen.json ontbreekt of is onleesbaar. */
   bronnen: BronnenBestand | null;
+  /** Ontbreekt principes.json, dan leeg (de pagina toont dan alleen de thema's). */
+  principes: PrincipesBestand;
   /** Ontbreekt lessen.json, dan een lege lijst: dat is gewoon "nog geen lessen". */
   lessen: LessenBestand;
   /** Thema's en fases. Ontbreekt themas.json, dan afgeleid uit de ids in de lessen. */
@@ -275,6 +314,50 @@ function leesTags(v: unknown, lessen: Les[]): Tag[] {
   return tags;
 }
 
+const strings = (v: unknown): string[] => (Array.isArray(v) ? v.filter((x): x is string => typeof x === 'string') : []);
+
+/** Leest principes.json; alleen principes met geldige lessen blijven, lijsten verwijzen alleen naar
+ *  principes die er zijn. */
+function leesPrincipes(v: unknown, lessen: Les[]): PrincipesBestand {
+  const leeg: PrincipesBestand = { bijgewerkt: null, principes: [], top10: [], debat: [], perThema: {}, perLeger: {} };
+  if (!isObj(v) || !Array.isArray(v.principes)) return leeg;
+  const lesIds = new Set(lessen.map((l) => l.id));
+  const principes: Principe[] = (v.principes as unknown[])
+    .filter((p): p is Record<string, unknown> & { id: string; titel: string } => isObj(p) && typeof p.id === 'string' && typeof p.titel === 'string')
+    .map((p) => ({
+      id: p.id,
+      titel: p.titel,
+      tekst: typeof p.tekst === 'string' ? p.tekst : '',
+      soort: p.soort === 'debat' ? 'debat' as const : 'principe' as const,
+      thema: typeof p.thema === 'string' ? p.thema : '',
+      leger: typeof p.leger === 'string' ? p.leger : null,
+      aantalLessen: typeof p.aantalLessen === 'number' ? p.aantalLessen : 0,
+      aantalKanalen: typeof p.aantalKanalen === 'number' ? p.aantalKanalen : 0,
+      kanalen: strings(p.kanalen),
+      lessen: strings(p.lessen).filter((id) => lesIds.has(id)),
+      kanten: Array.isArray(p.kanten)
+        ? (p.kanten as unknown[]).filter(isObj).map((k) => ({
+          standpunt: typeof k.standpunt === 'string' ? k.standpunt : '',
+          aantalLessen: typeof k.aantalLessen === 'number' ? k.aantalLessen : 0,
+          aantalKanalen: typeof k.aantalKanalen === 'number' ? k.aantalKanalen : 0,
+          lessen: strings(k.lessen).filter((id) => lesIds.has(id)),
+        }))
+        : undefined,
+    }))
+    .filter((p) => p.lessen.length > 0);
+  const ids = new Set(principes.map((p) => p.id));
+  const lijst = (x: unknown) => strings(x).filter((id) => ids.has(id));
+  const perSleutel = (x: unknown) => (isObj(x) ? Object.fromEntries(Object.entries(x).map(([k, l]) => [k, lijst(l)]).filter(([, l]) => l.length)) : {});
+  return {
+    bijgewerkt: typeof v.bijgewerkt === 'string' ? v.bijgewerkt : null,
+    principes,
+    top10: lijst(v.top10),
+    debat: lijst(v.debat),
+    perThema: perSleutel(v.perThema),
+    perLeger: perSleutel(v.perLeger),
+  };
+}
+
 let cache: Promise<TacticsData> | null = null;
 
 /** Haalt de bestanden één keer op. Mislukt bronnen.json (offline, ontbreekt), dan wordt de
@@ -283,10 +366,14 @@ export function laadTactics(): Promise<TacticsData> {
   if (cache) return cache;
   const p = Promise.all([
     haalJson('tactics/bronnen.json'), haalJson('tactics/lessen.json'), haalJson('tactics/themas.json'), haalJson('tactics/tags.json'),
+    haalJson('tactics/principes.json'),
   ])
-    .then(([b, l, t, g]) => {
+    .then(([b, l, t, g, p]) => {
       const lessen = leesLessen(l);
-      return { bronnen: leesBronnen(b), lessen, vocab: leesVocab(t, lessen.lessen), tags: leesTags(g, lessen.lessen) };
+      return {
+        bronnen: leesBronnen(b), lessen, vocab: leesVocab(t, lessen.lessen), tags: leesTags(g, lessen.lessen),
+        principes: leesPrincipes(p, lessen.lessen),
+      };
     });
   cache = p;
   void p.then((d) => { if (!d.bronnen && cache === p) cache = null; });

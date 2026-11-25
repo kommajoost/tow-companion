@@ -1,0 +1,102 @@
+{
+  "gemaaktOp": "2026-11-25T23:38:07.210Z",
+  "ontbreekt": [],
+  "verouderd": [],
+  "hernoemd": [],
+  "samengevoegd": [
+    "screen-units-from-enemy-shooting (thema-shooting-terrain) -> screen-valuable-units-from-shooting (thema-chaff), overlap 86%",
+    "position-screens-to-keep-overruns-away (thema-chaff) -> position-screens-to-keep-overruns-away-from-valuable-units (thema-movement), overlap 83%",
+    "deploy-out-of-enemy-firing-lines (thema-shooting-terrain) -> hide-vulnerable-units-from-shooting (thema-deployment), overlap 83%",
+    "concentrate-fire-to-finish-priority-targets (thema-matchups) -> concentrate-ranged-damage (thema-shooting-terrain), overlap 80%",
+    "reserve-move-cast-and-withdraw (thema-magic) -> keep-casters-outside-dispel-range (thema-magic), overlap 75%",
+    "concentrate-against-part-of-enemy (thema-deployment) -> concentrate-against-part (thema-game-plan), overlap 67%",
+    "ambush-into-vacated-scoring-space (thema-deployment) -> use-ambushers-to-claim-unguarded-objectives (thema-scenarios), overlap 100%",
+    "place-fleeing-bait-to-set-up-countercharges (thema-chaff) -> use-bait-to-draw-enemies-towards-waiting-units (thema-movement), overlap 100%",
+    "shelter-missile-wizards-in-skirmishers (thema-magic) -> skirmish-to-reduce-incoming-shooting (thema-shooting-terrain), overlap 67%",
+    "ambush-enemy-war-machines (thema-shooting-terrain) -> ambushers-hunt-war-machines (thema-deployment), overlap 100%",
+    "against-cathay-send-cannon-hunters-that-can-handle-ogre-crews (thema-matchups) -> cathay-cannon-hunters-handle-ogre-crews (thema-shooting-terrain), overlap 100%",
+    "position-units-to-claim-endgame-objectives (thema-scenarios) -> plan-endgame-objective-movement (thema-game-plan), overlap 67%"
+  ],
+  "hand": [
+    "samengevoegd: exploit-won-flanks -> hold-centre-mobile-flanks",
+    "weg: exploit-leadership-debuffs",
+    "gewijzigd: screen-valuable-units-from-shooting (lessenEraf)",
+    "gewijzigd: lower-leadership-before-tests-or-damage (titel, tekst)",
+    "gewijzigd: concentrate-against-part (lessenEraf)",
+    "gewijzigd: protect-lone-characters-with-nearby-troops (titel, tekst)",
+    "gewijzigd: weigh-first-turn-bonus (tekst)",
+    "gewijzigd: keep-casters-outside-dispel-range (lessenEraf, tekst)",
+    "gewijzigd: shoot-while-delaying-combat (titel, tekst, thema, lessenEraf)",
+    "gewijzigd: plan-endgame-objective-movement (titel, tekst, thema, lessenEraf)",
+    "gewijzigd: skirmish-to-reduce-incoming-shooting (lessenEraf, thema, tekst)",
+    "gewijzigd: against-cathay-use-multiple-wound-attacks-against-sky-lanterns (lessenEraf)",
+    "gewijzigd: use-bait-to-draw-enemies-towards-waiting-units (lessenEraf)",
+    "gewijzigd: repeat-signatures-with-low-level-casters (lessenEraf)",
+    "gewijzigd: hold-centre-mobile-flanks (titel, tekst, lessenEraf)",
+    "gewijzigd: build-infantry-for-static-combat-resolution (lessenEraf)",
+    "gewijzigd: choose-hammers-that-survive-shooting (lessenEraf, tekst)",
+    "gewijzigd: give-combat-characters-all-round-charge-options (lessenEraf)",
+    "gewijzigd: position-screens-to-keep-overruns-away-from-valuable-units (lessenEraf)",
+    "gewijzigd: accept-calculated-combat-risks (lessenEraf)",
+    "gewijzigd: against-cathay-aim-for-ap3-against-sky-lanterns (lessenEraf)",
+    "gewijzigd: deny-charge-reactions-with-random-movement (lessenEraf)",
+    "gewijzigd: leave-evasive-units-an-escape (lessenEraf)",
+    "gewijzigd: pressure-positioning-with-random-movement (lessenEraf)",
+    "gewijzigd: support-holding-units-with-a-nearby-bsb (lessenEraf)",
+    "gewijzigd: place-vortexes-in-enemy-routes (titel, tekst)",
+    "gewijzigd: soften-shugengan-lord-with-doom-divers (titel, tekst)",
+    "gewijzigd: use-ethereal-protection-against-enemy-shooting (lessenEraf)",
+    "gewijzigd: lower-enemy-leadership-to-strengthen-your-threats (titel, tekst)"
+  ],
+  "afgevallen": [
+    {
+      "id": "against-cathay-aim-for-ap3-against-sky-lanterns",
+      "titel": "Against Cathay, aim for AP3 against Sky Lanterns",
+      "leger": "grand-cathay",
+      "aantalLessen": 2,
+      "aantalKanalen": 2
+    },
+    {
+      "id": "use-ethereal-protection-against-enemy-shooting",
+      "titel": "Use Ethereal protection against enemy shooting",
+      "leger": "vampire-counts",
+      "aantalLessen": 2,
+      "aantalKanalen": 2
+    },
+    {
+      "id": "position-screens-to-keep-overruns-away-from-valuable-units",
+      "titel": "Position screens to keep overruns away from valuable units",
+      "leger": null,
+      "aantalLessen": 5,
+      "aantalKanalen": 1
+    },
+    {
+      "id": "accept-calculated-combat-risks",
+      "titel": "Accept calculated risks when your plan requires combat",
+      "leger": null,
+      "aantalLessen": 3,
+      "aantalKanalen": 1
+    },
+    {
+      "id": "deny-charge-reactions-with-random-movement",
+      "titel": "Use random movement to deny enemy charge reactions",
+      "leger": null,
+      "aantalLessen": 3,
+      "aantalKanalen": 1
+    },
+    {
+      "id": "deploy-units-out-of-sight-of-enemy-shooting",
+      "titel": "Deploy units out of sight of enemy shooting",
+      "leger": "wood-elf-realms",
+      "aantalLessen": 3,
+      "aantalKanalen": 1
+    },
+    {
+      "id": "leave-evasive-units-an-escape",
+      "titel": "Leave Evasive units an escape beyond enemy range or sight",
+      "leger": null,
+      "aantalLessen": 3,
+      "aantalKanalen": 1
+    }
+  ]
+}

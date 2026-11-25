@@ -1,0 +1,88 @@
+{
+  "scope": "leger-vampire-counts",
+  "soort": "leger",
+  "sleutel": "vampire-counts",
+  "gemaaktOp": "2026-11-25T23:34:24.105Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "invoerHash": "bc33e0356140",
+  "invoer": [
+    "vampire-force-necromancer-range",
+    "undead-wall-protect-flanks",
+    "grave-guard-drilled-widen",
+    "hexwraith-marching-column-attacks",
+    "repeated-terror-charges-lanterns",
+    "ethereal-coach-shields-bats",
+    "grave-guard-great-weapons",
+    "skeletons-twenty-five-thirty",
+    "undead-infantry-receive-charges",
+    "tomb-banshee-budget-assassin",
+    "vampire-bsb-healing-rerolls",
+    "banshees-behind-closest-infantry",
+    "grave-guard-battle-lust-mirror",
+    "lower-lantern-leadership-screams",
+    "curse-years-holding-plan",
+    "black-coach-mobile-backline-hunter",
+    "six-fell-bats-cannons",
+    "screams-weaken-dragon-ogres",
+    "large-targets-avoid-vile-tide",
+    "scream-exposed-bray-shaman",
+    "vampire-ethereal-lantern-control",
+    "avoid-blood-knights-lanterns",
+    "avoid-vargheists-lantern-matchup",
+    "fell-bats-scenario-pairs",
+    "resurrect-outnumber-central-objective",
+    "herdstone-after-main-battle"
+  ],
+  "principes": [
+    {
+      "id": "use-ethereal-protection-against-enemy-shooting",
+      "titel": "Use Ethereal protection against enemy shooting",
+      "tekst": "Use Ethereal units where enemy shooting cannot hurt them. Their protection lets them operate safely against those weapons.",
+      "soort": "principe",
+      "thema": "shooting-terrain",
+      "leger": "vampire-counts",
+      "lessen": [
+        "hexwraith-marching-column-attacks",
+        "ethereal-coach-shields-bats",
+        "vampire-ethereal-lantern-control"
+      ],
+      "kanten": null
+    },
+    {
+      "id": "lower-enemy-leadership-to-strengthen-your-threats",
+      "titel": "Lower enemy Leadership to strengthen your Leadership-based threats",
+      "tekst": "Support threats that exploit enemy Leadership with Leadership-reducing spells, making your target more vulnerable.",
+      "soort": "principe",
+      "thema": "magic",
+      "leger": "vampire-counts",
+      "lessen": [
+        "repeated-terror-charges-lanterns",
+        "tomb-banshee-budget-assassin",
+        "lower-lantern-leadership-screams"
+      ],
+      "kanten": null
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 19,
+      "sec": 34,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 31599,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1433,
+        "reasoning_output_tokens": 1198
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

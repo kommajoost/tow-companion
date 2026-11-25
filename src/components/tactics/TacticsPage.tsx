@@ -13,8 +13,9 @@ type Tab = 'lessons' | 'sources';
 const MAX_LAGEN = 6;
 
 // De tactiekdatabank (docs/tactics/ontwerp.md). Nog geen hoofdtab: geopend vanuit Settings of via
-// `?tactics`. Twee weergaven: Lessons (thema's met subthema's, tags, lessen) en Sources. In Lessons
-// staan de geopende lagen op een stapel: thema, les, de lessen met een tag, weer een les. Op de
+// `?tactics`. Twee weergaven: Lessons (Essentials met de principes, thema's met subthema's, tags,
+// lessen) en Sources. In Lessons staan de geopende lagen op een stapel: principe of thema, les, de
+// lessen met een tag, weer een les. Op de
 // telefoon is elke laag een eigen scherm (Back haalt de bovenste weg); vanaf ~760 px staat de lijst
 // links en de bovenste laag rechts, en is de onderste laag rechts geen aparte Back-stap.
 export function TacticsPage({ onClose }: { onClose: () => void }) {
@@ -65,7 +66,7 @@ export function TacticsPage({ onClose }: { onClose: () => void }) {
     // Wat op de andere tab open stond gaat dicht, zodat Back niet iets onzichtbaars sluit. Een geopend
     // thema blijft bewaard (de lagen tellen alleen op de Lessons-tab); wat erboven lag gaat dicht.
     if (t === 'lessons') setSelKanaal(null);
-    else { setLagen((l) => (l[0]?.soort === 'thema' ? [l[0]] : [])); setLesVanuitBronnen(false); }
+    else { setLagen((l) => (l[0]?.soort === 'thema' || l[0]?.soort === 'principe' ? [l[0]] : [])); setLesVanuitBronnen(false); }
     setTab(t);
   };
 
@@ -88,6 +89,13 @@ export function TacticsPage({ onClose }: { onClose: () => void }) {
 
   const openTag = (id: string) => duw({ soort: 'tag', id });
 
+  // Een principe uit de lijst begint de stapel opnieuw (zoals een thema); uit een thema komt het erbovenop.
+  const openPrincipe = (id: string, vanuitLijst: boolean) => {
+    if (!vanuitLijst) { duw({ soort: 'principe', id }); return; }
+    setLagen([{ soort: 'principe', id }]);
+    if (vanuitRef.current) { setLesVanuitBronnen(false); setSelKanaal(null); }
+  };
+
   // Een thema openen (uit de lijst of uit een les) begint de stapel opnieuw. Kwam de les uit Sources,
   // dan gaat ook het kanaal dicht: terug loopt vanaf hier door Lessons.
   const openThema = (id: string, sub?: string | null) => {
@@ -102,6 +110,7 @@ export function TacticsPage({ onClose }: { onClose: () => void }) {
     if (!laag) return lesVanuitBronnen ? 'Sources' : 'Lessons';
     if (laag.soort === 'thema') return data?.vocab.themas.find((t) => t.id === laag.id)?.naam ?? 'Theme';
     if (laag.soort === 'tag') return data?.tags.find((t) => t.id === laag.id)?.label ?? 'Tag';
+    if (laag.soort === 'principe') return 'Principle';
     return 'Lesson';
   };
   const terug = () => {
@@ -160,8 +169,10 @@ export function TacticsPage({ onClose }: { onClose: () => void }) {
         vocab={data.vocab}
         tags={data.tags}
         bronnen={data.bronnen}
+        principes={data.principes}
         wide={wide}
         lagen={lagen}
+        onOpenPrincipe={openPrincipe}
         onOpenThema={openThema}
         onOpenLes={openLes}
         onOpenTag={openTag}

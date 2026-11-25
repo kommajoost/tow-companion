@@ -1,0 +1,54 @@
+{
+  "scope": "leger-empire-of-man",
+  "soort": "leger",
+  "sleutel": "empire-of-man",
+  "gemaaktOp": "2026-11-25T23:31:08.853Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "invoerHash": "76d6ae307db0",
+  "invoer": [
+    "cannons-behind-vanguarding-outriders",
+    "empire-knights-support-combats",
+    "archer-screen-state-troops-trap",
+    "flagellants-wood-roadblock",
+    "veteran-state-griffin-banner",
+    "state-troops-monster-tapestry",
+    "white-wolf-knights-charge-lanterns",
+    "empire-infantry-bsb-foot",
+    "captain-bsb-defensive-investment",
+    "captain-witch-hunters-ward",
+    "captain-pistol-charge-reaction",
+    "empire-level-one-doombolt",
+    "necromancy-supports-state-troops",
+    "sigmar-prayer-shooting-ward",
+    "helblaster-entire-base-cover",
+    "empire-double-missile-blocks",
+    "share-engineer-between-artillery",
+    "cannon-bounce-multiple-lanterns",
+    "road-wardens-shooting-ambush",
+    "war-wagon-light-cavalry-matchup",
+    "blazing-sun-order-versus-cathay"
+  ],
+  "principes": [],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 16,
+      "sec": 13,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 30811,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 389,
+        "reasoning_output_tokens": 371
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

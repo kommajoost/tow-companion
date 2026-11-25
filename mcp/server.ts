@@ -9,7 +9,7 @@
 
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import { dataBase, loadLog, setBaseFromHost } from './data';
-import { getLesson, listTacticsIndex, rankLessons, searchTactics, library } from './tactics';
+import { getLesson, listPrinciples, listTacticsIndex, principles, principleText, rankLessons, searchTactics, library } from './tactics';
 import { getNote, getRule, ruleHits, searchRules } from './rules';
 import { getArmy, getUnit, listArmies } from './armies';
 import { calculateAttack } from './calc';
@@ -18,7 +18,7 @@ export const SERVER_INFO = { name: 'old-world-companion', title: 'Old World Comp
 const PROTOCOLS = ['2025-11-25', '2025-06-18', '2025-03-26', '2024-11-05'];
 
 export const INSTRUCTIONS = `Old World Companion: Warhammer: The Old World knowledge for tactical advice. Follow these rules in every answer about the game.
-1. Library first: before any tactical, list-building, matchup or army advice, call search_tactics (and get_lesson for detail). For each piece of advice taken from it, cite the channel, video title and timestamped link.
+1. Library first: before any tactical, list-building, matchup or army advice, call search_tactics (it lists matching principles above the lessons) or list_principles, and get_lesson for detail. Start from the principles, then the lessons: a principle is a summary of several lessons, so for each piece of advice cite the lessons' channel, video title and timestamped link.
 2. Mark your own reasoning separately, e.g. "Own assessment: …". Never blend it into what the sources say.
 3. Never use memory for game data: check every unit, weapon, points value, statline and rule you mention with get_unit, get_army, get_rule or search_rules. Quote rule text verbatim; never present your own interpretation as the rule.
 4. If the library has nothing relevant, say so plainly.
@@ -76,6 +76,17 @@ export const TOOLS: Tool[] = [
     description: 'Themes, sub-themes, phases, armies and tags of the tactics library with lesson counts, to browse or pick filters for search_tactics.',
     inputSchema: obj({}),
     run: () => listTacticsIndex(),
+  },
+  {
+    name: 'list_principles',
+    title: 'Key principles of the tactics library',
+    description: 'The overarching principles above the lessons: advice several players give independently, each an AI summary of the lessons under it with the number of lessons and distinct channels and the lesson ids. No filter: the top 10 essentials and the debated points. Filter by theme and/or army. Start here, then open the lessons with get_lesson.',
+    inputSchema: obj({
+      theme: s('Theme id or name from list_tactics_index (e.g. "chaff", "magic").'),
+      army: ARMY,
+      limit: n('Principles per list (default 10, max 30).', 1, 30),
+    }),
+    run: (a) => listPrinciples({ theme: str(a.theme), army: str(a.army), limit: int(a.limit) }),
   },
   {
     name: 'search_rules',
@@ -166,7 +177,11 @@ export const TOOLS: Tool[] = [
       const q = str(a.query) ?? '';
       const { hits } = await rankLessons({ query: q });
       const rules = await ruleHits(q, 5);
+      const pr = await principles();
+      const terms = q.toLowerCase().split(/\s+/).filter((w) => w.length > 2);
+      const prHits = terms.length ? pr.list.filter((p) => terms.every((w) => `${p.titel} ${p.tekst}`.toLowerCase().includes(w))).slice(0, 3) : [];
       const results = [
+        ...prHits.map((p) => ({ id: `principle:${p.id}`, title: `Principle: ${p.titel}`, url: null })),
         ...hits.slice(0, 8).map(({ l }) => ({ id: `lesson:${l.id}`, title: `Lesson: ${l.titel}`, url: l.bronnen[0]?.url ?? null })),
         ...rules.map((r) => ({ id: `${r.kind}:${r.slug}`, title: `${r.kind === 'rule' ? 'Rule' : r.kind === 'faq' ? 'FAQ' : 'Errata'}: ${r.name}`, url: r.url })),
       ];
@@ -176,12 +191,16 @@ export const TOOLS: Tool[] = [
   {
     name: 'fetch',
     title: 'Fetch (generic)',
-    description: 'Fetch a document from the generic search by id ("lesson:<id>", "rule:<slug>", "faq:<slug>", "errata:<slug>"). Returns JSON {id,title,text,url,metadata}.',
+    description: 'Fetch a document from the generic search by id ("principle:<id>", "lesson:<id>", "rule:<slug>", "faq:<slug>", "errata:<slug>"). Returns JSON {id,title,text,url,metadata}.',
     inputSchema: obj({ id: s('Id from search.') }, ['id']),
     run: async (a) => {
       const id = str(a.id) ?? '';
       const [kind, ...rest] = id.split(':');
       const key = rest.join(':');
+      if (kind === 'principle') {
+        const p = await principleText(key);
+        return JSON.stringify({ id, title: p?.title ?? key, text: p?.text ?? `No principle "${key}". Use list_principles.`, url: null, metadata: { type: 'principle' } });
+      }
       if (kind === 'lesson') {
         const lib = await library();
         const l = lib.byId.get(key);

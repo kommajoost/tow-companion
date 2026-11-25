@@ -1,0 +1,54 @@
+{
+  "scope": "leger-warriors-of-chaos",
+  "soort": "leger",
+  "sleutel": "warriors-of-chaos",
+  "gemaaktOp": "2026-11-25T23:34:39.276Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "invoerHash": "25c35bec4406",
+  "invoer": [
+    "warriors-beginner-direct-combat",
+    "chaos-core-choose-focus",
+    "consider-larger-forsaken-unit",
+    "chaos-warriors-defensive-attrition",
+    "chaos-warriors-shields-great-weapons",
+    "warriors-monster-hunter-tapestry",
+    "nurgle-spawn-against-lanterns",
+    "spawn-catch-fleeing-targets",
+    "chaos-knights-war-banner-swap",
+    "gigantic-spawn-pins-for-support",
+    "flying-daemon-prince-hunter",
+    "daemon-prince-plate-against-bombs",
+    "chaos-lord-steed-charge-arc",
+    "hide-marauder-missile-bunker",
+    "skirmishing-marauders-alternative-bunker",
+    "central-warriors-foot-wizard-bunker",
+    "warriors-bunker-wizard-daemonology",
+    "reconsider-warriors-blue-fire",
+    "chaos-swap-unhelpful-spells",
+    "chaos-stack-shooting-hit-penalties",
+    "warpfire-aura-remove-lantern-ward"
+  ],
+  "principes": [],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 16,
+      "sec": 11,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 31403,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 234,
+        "reasoning_output_tokens": 216
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

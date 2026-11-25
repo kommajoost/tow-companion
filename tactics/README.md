@@ -1,6 +1,6 @@
 # Tactics pipeline
 
-How `public/tactics/bronnen.json` and `lessen.json` are made. Design: `docs/tactics/ontwerp.md`.
+How `public/tactics/bronnen.json`, `lessen.json` and `principes.json` are made. Design: `docs/tactics/ontwerp.md`.
 
 | Step | Command | Output |
 |---|---|---|
@@ -12,6 +12,7 @@ How `public/tactics/bronnen.json` and `lessen.json` are made. Design: `docs/tact
 | Name repair on a transcript | `npm run tactics:transcript -- --convert-only <id> ...` | `tactics/ruw/<id>.fixed.txt` |
 | Validate and recount | `npm run tactics:build` (or `tactics:check`) | counts and status in `bronnen.json`, `public/tactics/themas.json` and `tags.json`, lessons per theme, sub-theme, phase and tag |
 | Themes, sub-themes and tags via Codex | `npm run tactics:index` (see "Index") | `tactics/codex/index/`, then `-- --toepassen` writes `lessen.json` |
+| Key principles above the lessons via Codex | `npm run tactics:principles` (see "Principles") | `tactics/codex/principes/`, `public/tactics/principes.json` |
 
 `tactics/ruw/` and `tactics/cache/` are in `.gitignore`. Transcripts are never published.
 
@@ -107,6 +108,75 @@ re-indexing after a vocabulary change or for lessons that came back with too few
 
 One video at a time, with a pause between videos. In the first round a 28-minute video took about
 3 minutes to fetch and 10 to 15 minutes to read and turn into lessons.
+
+## Principles
+
+A layer above the lessons, so a player can start from a top 10 instead of hundreds of specific tips.
+A **principle** is one overarching piece of advice that several players give independently: a short
+claim (`titel`), one or two sentences of explanation (`tekst`) and the lessons that back it. Where
+players clearly disagree, it is a **debate** (`soort: "debat"`) with each side (`kanten`: `standpunt`
+plus its lessons). Titles and texts are AI summaries of the lessons under them: no new claims, no
+rules knowledge of their own, every claim traceable to those lessons. The page marks them as a
+summary; the MCP tells clients to cite the lessons, not the principle.
+
+Ranking is evidence, not model opinion. Per principle the script counts the supporting lessons and
+the **distinct channels** among their sources (lesson, `bronnen[].bronId`, `bronnen.json` `kanaalId`).
+A principle exists only with at least 3 lessons from at least 2 channels; it is ranked by channels,
+then lessons. Lists in `public/tactics/principes.json`:
+
+- `top10`: the 10 best-backed general principles (army `null`, not a debate): the Essentials view;
+- `debat`: the general debates;
+- `perThema`: per theme at most 5 general principles whose theme is that theme (shown above its
+  sub-themes);
+- `perLeger`: per army all principles specific to that army (playing it or facing it).
+
+```json
+{ "bijgewerkt": "2026-11-26", "drempel": { "lessen": 3, "kanalen": 2 },
+  "principes": [{ "id", "titel", "tekst", "soort": "principe|debat", "thema", "leger": null,
+    "aantalLessen", "aantalKanalen", "kanalen": [], "lessen": [], "kanten?": [{ "standpunt", "aantalLessen", "aantalKanalen", "lessen" }] }],
+  "top10": [], "debat": [], "perThema": {}, "perLeger": {} }
+```
+
+| Step | Command |
+|---|---|
+| Ask Codex for every scope without an answer, then assemble | `npm run tactics:principles` |
+| Only some scopes (also re-asks them) / all again | `-- --scope thema-chaff,leger-skaven` / `-- --opnieuw` |
+| Show the prompt and schema of one scope | `-- --droog thema-magic` |
+| Assemble only (after editing `hand.json`) | `npm run tactics:principles -- --samenstellen` |
+
+**Codex step.** One call per theme (all lessons with that theme, army lessons included) and one per
+army that can reach the threshold at all. Codex gets per lesson id, title, text, why, when not,
+sub-theme or themes, tags, army and channel names, and clusters lessons that give the SAME advice
+(not just the same topic) into principles or debates. Same set-up as `tactics:index`: model
+`gpt-6.1-sol`, effort `high` (`--effort` or `TACTICS_PRINCIPLES_EFFORT`), `--ignore-user-config`,
+`--ephemeral`, sandbox `read-only` in an empty temporary folder, `--output-schema` with the lesson ids
+of the call as an enum. Each answer goes straight to `tactics/codex/principes/<scope>.json`, so a
+stopped run continues where it was; it stops at once on a usage limit, login error or unknown model
+and after 3 failed calls in a row, and never runs two calls at once. When the lessons of a scope
+change, assembling warns that the scope is stale (re-ask it with `--scope`).
+
+**Assembling (deterministic).** Duplicates across scopes are merged: same army (or both general), both
+principles, and at least 60% of the smaller one's lessons in the other: the bigger one stays with the
+lessons of both, listed under the theme where most of its lessons have their main theme. Then the hand
+corrections, the counts, the threshold and the ranking. What was merged or fell below the threshold is
+in `tactics/codex/principes/samengesteld.json`.
+
+**Hand corrections** live in `tactics/codex/principes/hand.json` and always win, so a rerun keeps them:
+
+```json
+{ "nietSamenvoegen": [["a", "b"]],
+  "samenvoegen": [{ "in": "a", "uit": ["b"], "thema": "chaff" }],
+  "weg": ["c"],
+  "wijzig": { "d": { "titel": "...", "tekst": "...", "thema": "...", "lessenErbij": [], "lessenEraf": [] } },
+  "nieuw": [{ "id", "titel", "tekst", "soort", "thema", "leger", "lessen", "kanten" }] }
+```
+
+**Checks.** `tactics:build` validates `principes.json` (via `tactics/principes-lib.mjs`, shared with the
+script): unique kebab-case ids, every lesson id exists, a debate has at least 2 sides and every lesson
+on a side, no em or en dashes, at most 2 sentences, known theme and army, and the threshold. It
+recounts lessons and channels and redoes the lists; `tactics:check` fails when the file differs from
+that recount. A lesson change that drops a principle below the threshold fails the build: re-run
+`npm run tactics:principles` (or fix it in `hand.json`).
 
 ## Codex route (round 2 onwards)
 

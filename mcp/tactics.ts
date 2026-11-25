@@ -1,8 +1,10 @@
-// Tactics library tools: search_tactics, get_lesson, list_tactics_index.
+// Tactics library tools: search_tactics, get_lesson, list_tactics_index, list_principles.
 //
 // Data: public/tactics/lessen.json, bronnen.json, themas.json, and (when the re-index has landed)
 // public/tactics/tags.json plus a `tags` field and sub-themes on the lessons. Everything about tags and
 // sub-themes is read tolerantly: absent → ignored, present in any of the plausible shapes → used.
+// public/tactics/principes.json (optional): principles above the lessons, each an AI summary of the
+// lessons under it, ranked by distinct channels then lessons (tactics/codex/principes.mjs).
 
 import type { Bron, Kanaal, Les, LesBron } from '../src/lib/tactics';
 import { derived, loadJson, need } from './data';
@@ -264,14 +266,155 @@ export async function rankLessons(a: SearchArgs): Promise<{ lib: Library; hits: 
   return { lib, hits, notes, armySlug };
 }
 
+// ── principles ────────────────────────────────────────────────────────────────────────────────────
+
+export interface PrincipleSide { standpunt: string; aantalLessen: number; aantalKanalen: number; lessen: string[] }
+export interface Principle {
+  id: string; titel: string; tekst: string; soort: 'principe' | 'debat'; thema: string; leger: string | null;
+  aantalLessen: number; aantalKanalen: number; kanalen: string[]; lessen: string[]; kanten?: PrincipleSide[];
+}
+export interface Principles {
+  list: Principle[]; byId: Map<string, Principle>; top10: string[]; debat: string[];
+  perThema: Record<string, string[]>; perLeger: Record<string, string[]>; updated: string | null;
+}
+
+const EMPTY_PRINCIPLES: Principles = { list: [], byId: new Map(), top10: [], debat: [], perThema: {}, perLeger: {}, updated: null };
+const prCache = new WeakMap<Raw, Principles>();
+const num = (v: unknown): number => (typeof v === 'number' && Number.isFinite(v) ? v : 0);
+
+/** public/tactics/principes.json, or an empty set when it is not there (older deploys). */
+export async function principles(): Promise<Principles> {
+  const raw = await loadJson<Raw>('tactics/principes.json');
+  if (!raw || !Array.isArray(raw.principes)) return EMPTY_PRINCIPLES;
+  return derived(prCache, raw, () => {
+    const list: Principle[] = (raw.principes as unknown[]).filter((p): p is Raw => isObj(p) && !!str(p.id) && !!str(p.titel)).map((p) => ({
+      id: String(p.id), titel: String(p.titel), tekst: str(p.tekst) ?? '', soort: p.soort === 'debat' ? 'debat' : 'principe',
+      thema: str(p.thema) ?? '', leger: str(p.leger) ?? null, aantalLessen: num(p.aantalLessen), aantalKanalen: num(p.aantalKanalen),
+      kanalen: strList(p.kanalen), lessen: strList(p.lessen),
+      ...(Array.isArray(p.kanten) ? { kanten: (p.kanten as unknown[]).filter(isObj).map((k) => ({ standpunt: str(k.standpunt) ?? '', aantalLessen: num(k.aantalLessen), aantalKanalen: num(k.aantalKanalen), lessen: strList(k.lessen) })) } : {}),
+    }));
+    const byId = new Map(list.map((p) => [p.id, p]));
+    const ids = (v: unknown) => strList(v).filter((id) => byId.has(id));
+    const per = (v: unknown) => (isObj(v) ? Object.fromEntries(Object.entries(v).map(([k, x]) => [k, ids(x)])) : {});
+    return { list, byId, top10: ids(raw.top10), debat: ids(raw.debat), perThema: per(raw.perThema), perLeger: per(raw.perLeger), updated: str(raw.bijgewerkt) ?? null };
+  });
+}
+
+const PRINCIPLE_NOTE = 'Each principle is a short AI summary of the lessons listed under it (advice several players give independently), ranked by distinct channels, then lessons. Start from the principles, then cite the lessons (get_lesson) and their sources, not the principle text.';
+
+function principleBlock(lib: Library, p: Principle, n: number | null, opts: { maxIds?: number; titles?: boolean } = {}): string {
+  const channels = p.kanalen.map((k) => lib.channels.get(k)?.naam ?? k);
+  const ids = (list: string[]) => {
+    const shown = opts.maxIds ? list.slice(0, opts.maxIds) : list;
+    const more = list.length - shown.length;
+    return `${shown.join(', ')}${more > 0 ? ` (+${more} more: list_principles)` : ''}`;
+  };
+  const lessonLine = (id: string) => `     - ${id}: ${lib.byId.get(id)?.titel ?? '(unknown lesson)'}`;
+  const out = [
+    `${n != null ? `${n}. ` : ''}${p.soort === 'debat' ? 'DEBATED: ' : ''}${p.titel}  [principle: ${p.id}]`,
+    `   ${p.tekst}`,
+    `   Backed by ${p.aantalLessen} lessons from ${p.aantalKanalen} channels (${channels.join(', ')}) · Theme: ${vocabName(lib.themes, p.thema)} · Army: ${p.leger ? armyName(p.leger) : 'general'}`,
+  ];
+  if (p.soort === 'debat' && p.kanten?.length) {
+    p.kanten.forEach((k, i) => {
+      out.push(`   Side ${i + 1}: ${k.standpunt} (${k.aantalLessen} lessons, ${k.aantalKanalen} channels)`);
+      if (opts.titles) out.push(...k.lessen.map(lessonLine));
+      else out.push(`     Lessons: ${ids(k.lessen)}`);
+    });
+  } else if (opts.titles) {
+    out.push('   Lessons:', ...p.lessen.map(lessonLine));
+  } else out.push(`   Lessons: ${ids(p.lessen)}`);
+  return out.join('\n');
+}
+
+/** Principles that fit a search: the words of the query in the principle's title or text, or several of
+ *  its lessons among the top hits. Army filter: general principles plus that army's. */
+function principleHits(pr: Principles, q: string, hits: Hit[], armySlug: string | null, themeId: string | null): Principle[] {
+  const terms = [...new Set(tokens(q, true))];
+  const top = new Set(hits.slice(0, 10).map((h) => h.l.id));
+  const rank = new Map(pr.list.map((p, i) => [p.id, i]));
+  const scored = pr.list
+    .filter((p) => (p.leger == null || p.leger === armySlug) && (!themeId || p.thema === themeId))
+    .map((p) => {
+      const b = bag(`${p.titel} ${p.tekst}`);
+      const matched = terms.filter((t) => b.has(t)).length;
+      const support = p.lessen.filter((id) => top.has(id)).length;
+      const own = armySlug != null && p.leger === armySlug;
+      const fits = terms.length ? matched === terms.length || support >= 2 : own || (!armySlug && !!themeId);
+      return { p, fits, score: (terms.length ? (2 * matched) / terms.length : 0) + 0.5 * support + (own ? 0.5 : 0) };
+    })
+    .filter((x) => x.fits)
+    .sort((x, y) => y.score - x.score || (rank.get(x.p.id) ?? 0) - (rank.get(y.p.id) ?? 0));
+  return scored.slice(0, 3).map((x) => x.p);
+}
+
+export interface PrincipleArgs { theme?: string; army?: string; limit?: number }
+
+export async function listPrinciples(a: PrincipleArgs): Promise<string> {
+  const [lib, pr] = await Promise.all([library(), principles()]);
+  if (!pr.list.length) return 'The tactics library has no principles yet. Use search_tactics for the lessons.';
+  const limit = Math.min(30, Math.max(1, Math.floor(a.limit ?? 10)));
+  const notes: string[] = [];
+  let armySlug: string | null = null;
+  if (a.army) {
+    armySlug = await resolveArmy(a.army);
+    if (!armySlug) notes.push(`Unknown army "${a.army}"; showing general principles.`);
+  }
+  let themeId: string | null = null;
+  if (a.theme) {
+    const v = matchVocab(lib.themes, a.theme) ?? matchVocab(lib.subthemes, a.theme);
+    themeId = v ? (lib.themes.some((t) => t.id === v.id) ? v.id : v.parent ?? null) : null;
+    if (!themeId) notes.push(`Unknown theme "${a.theme}" (see list_tactics_index); not filtered on it.`);
+  }
+  const head = [`Tactics principles (${pr.list.length}${pr.updated ? `, updated ${pr.updated}` : ''}). ${PRINCIPLE_NOTE}`, ...notes, ''];
+  const block = (list: Principle[], start = 1) => list.slice(0, limit).map((p, i) => principleBlock(lib, p, start + i, { maxIds: 15 }));
+  const get = (ids: string[]) => ids.map((id) => pr.byId.get(id)).filter((p): p is Principle => !!p);
+
+  if (!armySlug && !themeId) {
+    const out = [...head, 'Essentials (the most widely backed general principles):', ...block(get(pr.top10))];
+    const debated = get(pr.debat);
+    if (debated.length) out.push('', 'Debated (players disagree; give both sides):', ...debated.map((p) => principleBlock(lib, p, null, { maxIds: 10 })));
+    const themes = lib.themes.map((t) => `${t.id} (${pr.list.filter((p) => p.leger == null && p.thema === t.id).length})`).join(', ');
+    const armies = Object.entries(pr.perLeger).map(([k, ids]) => `${k} (${ids.length})`).join(', ');
+    out.push('', `By theme (list_principles theme=<id>): ${themes}`, `By army (list_principles army=<slug>): ${armies || 'none yet'}`);
+    return out.join('\n');
+  }
+  const inTheme = (p: Principle) => !themeId || p.thema === themeId;
+  const out = [...head];
+  if (armySlug) {
+    const own = pr.list.filter((p) => p.leger === armySlug && inTheme(p));
+    out.push(own.length ? `${armyName(armySlug)} principles:` : `No ${armyName(armySlug)} principles${themeId ? ' in this theme' : ''} yet (too few players repeat the same advice); the general principles below still apply.`, ...block(own));
+    out.push('');
+  }
+  const general = pr.list.filter((p) => p.leger == null && inTheme(p));
+  out.push(`General principles${themeId ? ` in ${vocabName(lib.themes, themeId)}` : ''}:`, ...(general.length ? block(general) : ['(none)']));
+  if (general.length > limit) out.push(`(${general.length - limit} more: raise limit)`);
+  return out.join('\n').trimEnd();
+}
+
+/** One principle with the titles of its lessons (for the generic fetch). */
+export async function principleText(id: string): Promise<{ title: string; text: string } | null> {
+  const [lib, pr] = await Promise.all([library(), principles()]);
+  const p = pr.byId.get(id);
+  if (!p) return null;
+  return { title: `Principle: ${p.titel}`, text: `${principleBlock(lib, p, null, { titles: true })}\n\n${PRINCIPLE_NOTE}` };
+}
+
 export async function searchTactics(a: SearchArgs): Promise<string> {
   const limit = Math.min(25, Math.max(1, Math.floor(a.limit ?? 8)));
   const offset = Math.max(0, Math.floor(a.offset ?? 0));
-  const { lib, hits, notes, armySlug } = await rankLessons(a);
+  const [{ lib, hits, notes, armySlug }, pr] = await Promise.all([rankLessons(a), principles()]);
   const page = hits.slice(offset, offset + limit);
   const head = [`Tactics library (${lib.lessons.length} lessons${lib.updated ? `, updated ${lib.updated}` : ''}).`,
     `Query: "${a.query ?? ''}"${armySlug ? ` · army: ${armyName(armySlug)}${a.only_army ? ' only' : ' + general lessons'}` : ''}${a.theme ? ` · theme: ${a.theme}` : ''}${a.tag ? ` · tag: ${a.tag}` : ''}${a.phase ? ` · phase: ${a.phase}` : ''}`,
     ...notes];
+  // Matching principles first (first page only).
+  if (offset === 0 && pr.list.length) {
+    const tv = a.theme ? matchVocab(lib.themes, a.theme) ?? matchVocab(lib.subthemes, a.theme) : undefined;
+    const themeId = tv ? (lib.themes.some((t) => t.id === tv.id) ? tv.id : tv.parent ?? null) : null;
+    const ph = principleHits(pr, `${a.query ?? ''} ${a.tag ?? ''}`, hits, armySlug, themeId);
+    if (ph.length) head.push('', 'Principles that match (start here; each summarises the lessons listed under it, cite those lessons):', ...ph.map((p, i) => principleBlock(lib, p, null, { maxIds: 12 }).replace(/^/, `P${i + 1}. `)), '', 'Lessons:');
+  }
   if (!page.length) {
     return [...head, '',
       offset > 0 && hits.length ? `No more results (total ${hits.length}).` :

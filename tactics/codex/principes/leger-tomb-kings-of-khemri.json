@@ -1,0 +1,73 @@
+{
+  "scope": "leger-tomb-kings-of-khemri",
+  "soort": "leger",
+  "sleutel": "tomb-kings-of-khemri",
+  "gemaaktOp": "2026-11-25T23:33:46.176Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "invoerHash": "efaf35982cd2",
+  "invoer": [
+    "horse-archers-scouting-bonus",
+    "overlap-necrosphinx-threat-arcs",
+    "mortuary-cult-refused-flank",
+    "ushabti-arcs-against-flyers",
+    "tomb-scorpion-dangerous-chaff",
+    "vanguard-scorpions-fight-chaff",
+    "necrosphinx-zone-sky-lanterns",
+    "tomb-king-dragon-armour-ages",
+    "foot-priests-infantry-protection",
+    "light-death-leadership-debuffs",
+    "bone-dragon-control-priest",
+    "necrosphinx-terror-leadership",
+    "earthen-ramparts-missile-troops",
+    "reposition-shooting-blocks-safely",
+    "urgency-hide-casket",
+    "mortuary-priest-backup-rust",
+    "swarm-battery-healing-cycle",
+    "prioritise-light-of-protection",
+    "flying-high-priests-conveyances",
+    "ushabti-great-bows-lanterns",
+    "skeleton-archers-poison-volume",
+    "combo-charge-poison-death-star",
+    "engage-poison-block-early",
+    "skeletons-or-finish-character",
+    "reach-tomb-kings-wizard"
+  ],
+  "principes": [
+    {
+      "id": "exploit-leadership-debuffs",
+      "titel": "Pair leadership debuffs with threats that exploit low leadership",
+      "tekst": "Combine leadership penalties with threats that benefit from low leadership. The penalty makes those threats more likely to work.",
+      "soort": "principe",
+      "thema": "magic",
+      "leger": "tomb-kings-of-khemri",
+      "lessen": [
+        "light-death-leadership-debuffs",
+        "necrosphinx-terror-leadership",
+        "prioritise-light-of-protection"
+      ],
+      "kanten": null
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 19,
+      "sec": 54,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 31659,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 2456,
+        "reasoning_output_tokens": 2333
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "scope": "leger-high-elf-realms",
+  "soort": "leger",
+  "sleutel": "high-elf-realms",
+  "gemaaktOp": "2026-11-25T23:31:34.904Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "invoerHash": "84aae6456e41",
+  "invoer": [
+    "eagle-skycutter-flank-pair",
+    "reavers-widen-clear-breakthrough",
+    "high-elves-flee-reposition",
+    "great-eagle-redirection-role",
+    "dragon-prince-side-placement",
+    "skycutter-efficient-auto-include",
+    "griffon-bsb-rear-charge",
+    "skycutter-white-sword-mount",
+    "mirage-before-monster-slayer",
+    "white-sword-doppelganger-archmage",
+    "glittering-robe-skycutter-archmage",
+    "sisters-preserve-points-harassment",
+    "sisters-prioritise-valuable-targets",
+    "skycutter-over-stationary-bolt-thrower",
+    "reavers-question-bow-upgrade",
+    "sisters-shoot-pegasus-knights",
+    "reavers-marching-column-breakthrough"
+  ],
+  "principes": [],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 14,
+      "sec": 10,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 30266,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 242,
+        "reasoning_output_tokens": 224
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

@@ -36,7 +36,7 @@ test('initialize: protocol version, server info, instructions with the six rules
   assert.equal(res.protocolVersion, '2025-06-18');
   assert.equal(res.serverInfo.name, 'old-world-companion');
   assert.ok(res.capabilities.tools);
-  for (const needle of [/search_tactics/, /own assessment/i, /never use memory/i, /nothing relevant/i, /Renegade V2/, /damage maths only/i]) assert.match(res.instructions, needle);
+  for (const needle of [/search_tactics/, /own assessment/i, /never use memory/i, /nothing relevant/i, /Renegade V2/, /damage maths only/i, /start from the principles, then the lessons/i, /list_principles/]) assert.match(res.instructions, needle);
   // unknown version → the newest we speak
   const r2 = await h.rpc('initialize', { protocolVersion: '1999-01-01' });
   assert.equal(r2.json.result.protocolVersion, '2025-11-25');
@@ -68,9 +68,9 @@ test('GET → 405 with an info document; OPTIONS → CORS preflight', async () =
   assert.match(o.headers.get('access-control-allow-headers'), /Mcp-Protocol-Version/);
 });
 
-test('tools/list: 11 read-only tools with object schemas', async () => {
+test('tools/list: 12 read-only tools with object schemas', async () => {
   const { tools } = (await h.rpc('tools/list', {})).json.result;
-  assert.deepEqual(tools.map((t) => t.name), ['search_tactics', 'get_lesson', 'list_tactics_index', 'search_rules', 'get_rule', 'list_armies', 'get_army', 'get_unit', 'calculate_attack', 'search', 'fetch']);
+  assert.deepEqual(tools.map((t) => t.name), ['search_tactics', 'get_lesson', 'list_tactics_index', 'list_principles', 'search_rules', 'get_rule', 'list_armies', 'get_army', 'get_unit', 'calculate_attack', 'search', 'fetch']);
   for (const t of tools) {
     assert.equal(t.inputSchema.type, 'object');
     assert.equal(t.annotations.readOnlyHint, true);
@@ -175,10 +175,66 @@ test('tags and sub-themes are used when the re-indexed library has them (toleran
     assert.match(byTag, /Showing 1–1 of 1/);
     const bySub = await tool('search_tactics', { query: '', theme: 'speed-bumps' });
     assert.match(bySub, /Showing 1–1 of 1/);
+    // No principes.json in this folder: the tool says so, search still works without a principles block.
+    assert.match(await tool('list_principles', {}), /no principles yet/);
+    assert.doesNotMatch(bySub, /Principles that match/);
   } finally {
     delete process.env.TOW_MCP_DATA_DIR;
     fs.rmSync(dir, { recursive: true, force: true });
   }
+});
+
+test('list_principles: essentials with counts and lesson ids, theme and army filters; search_tactics and fetch show principles', async () => {
+  const pr = read('public/tactics/principes.json');
+  const byId = new Map(pr.principes.map((p) => [p.id, p]));
+  const lessonIds = new Set(read('public/tactics/lessen.json').lessen.map((l) => l.id));
+  for (const p of pr.principes) for (const id of p.lessen) assert.ok(lessonIds.has(id), `${p.id}: ${id}`);
+  assert.ok(pr.top10.length > 0);
+
+  // No filter: the top 10 in order, each with its counts, channels and lesson ids; then the debates.
+  const all = await tool('list_principles', {});
+  assert.match(all, /Start from the principles, then cite the lessons/);
+  let last = -1;
+  for (const id of pr.top10) {
+    const at = all.indexOf(`[principle: ${id}]`);
+    assert.ok(at > last, `top10 order: ${id}`);
+    last = at;
+  }
+  const first = byId.get(pr.top10[0]);
+  assert.ok(all.includes(first.titel));
+  assert.ok(all.includes(`Backed by ${first.aantalLessen} lessons from ${first.aantalKanalen} channels`));
+  assert.ok(all.includes(first.lessen[0]));
+  for (const id of pr.debat) assert.ok(all.includes(`DEBATED: ${byId.get(id).titel}  [principle: ${id}]`), id);
+
+  // Theme filter: that theme's general principles only.
+  const [themeId, themeIds] = Object.entries(pr.perThema)[0];
+  const byTheme = await tool('list_principles', { theme: themeId, limit: 30 });
+  for (const id of themeIds) assert.ok(byTheme.includes(`[principle: ${id}]`), id);
+  const other = pr.principes.find((p) => p.leger == null && p.thema !== themeId);
+  if (other) assert.ok(!byTheme.includes(`[principle: ${other.id}]`), other.id);
+
+  // Army filter: the army's own principles first, then the general ones.
+  const armyEntry = Object.entries(pr.perLeger)[0];
+  if (armyEntry) {
+    const [army, armyIds] = armyEntry;
+    const byArmy = await tool('list_principles', { army, limit: 30 });
+    for (const id of armyIds) assert.ok(byArmy.includes(`[principle: ${id}]`), id);
+    assert.ok(byArmy.indexOf(`[principle: ${armyIds[0]}]`) < byArmy.indexOf('General principles'));
+  }
+
+  // search_tactics puts a matching principle above the lessons (first page only).
+  const s = await tool('search_tactics', { query: first.titel });
+  const at = s.indexOf(`[principle: ${first.id}]`);
+  assert.ok(at > -1 && at < s.indexOf('\nLessons:'), s.slice(0, 600));
+  const page2 = await tool('search_tactics', { query: first.titel, offset: 2 });
+  assert.doesNotMatch(page2, /Principles that match/);
+
+  // Generic search/fetch know principles too.
+  const gs = JSON.parse(await tool('search', { query: first.titel }));
+  assert.ok(gs.results.some((r) => r.id === `principle:${first.id}`));
+  const f = JSON.parse(await tool('fetch', { id: `principle:${first.id}` }));
+  assert.equal(f.metadata.type, 'principle');
+  assert.ok(f.text.includes(first.lessen[0]) && f.text.includes(first.tekst));
 });
 
 // ─────────────────────────── rules ───────────────────────────
@@ -285,7 +341,8 @@ test('search / fetch (ChatGPT-style): JSON results and documents', async () => {
   const s = JSON.parse(await tool('search', { query: 'chaff' }));
   assert.ok(s.results.length >= 5);
   assert.ok(s.results.some((r) => r.id.startsWith('lesson:')));
-  const f = JSON.parse(await tool('fetch', { id: s.results[0].id }));
+  // Matching principles come first (start from the principles); lessons follow.
+  const f = JSON.parse(await tool('fetch', { id: s.results.find((x) => x.id.startsWith('lesson:')).id }));
   assert.ok(f.text.includes('Sources'));
   const r = JSON.parse(await tool('fetch', { id: 'rule:armour-bane' }));
   assert.equal(r.url, 'https://tow.whfb.app/special-rules/armour-bane');

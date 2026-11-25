@@ -1,0 +1,283 @@
+{
+  "scope": "thema-deployment",
+  "soort": "thema",
+  "sleutel": "deployment",
+  "gemaaktOp": "2026-11-25T23:15:23.303Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "invoerHash": "732968877218",
+  "invoer": [
+    "deploy-who-is-beatdown",
+    "check-scenario-deployment-map",
+    "identify-contestable-objectives",
+    "identify-fast-enemy-threats",
+    "locate-magic-before-wizard",
+    "choose-side-for-armies",
+    "mark-threat-ranges-dice",
+    "compare-ranges-before-deploying",
+    "chaff-scouts-deployment",
+    "fewer-drops-first-turn",
+    "delay-vulnerable-artillery-deployment",
+    "baggage-placement-after-opponent",
+    "equal-drops-deploy-first",
+    "deploy-obvious-positions-early",
+    "deploy-assuming-second-turn",
+    "flank-not-point-and-click",
+    "deploy-read-terrain",
+    "deploy-slow-army-compact",
+    "deploy-for-matchups",
+    "deploy-aggressive-when-safe",
+    "deploy-for-later-positions",
+    "central-deployment-limits-cavalry",
+    "concentrate-against-enemy-part",
+    "shooters-need-time-safe",
+    "protect-main-hammer-flank",
+    "check-first-movement-options",
+    "encirclement-protect-vulnerable-scorer",
+    "hide-artillery-waste-hunters-time",
+    "fast-armies-deploy-deeper",
+    "anticipate-enemy-deployment-pattern",
+    "commit-slow-infantry-plan",
+    "central-protected-dispeller",
+    "opening-outside-dispel-range",
+    "deploy-heavy-chariots-back",
+    "bsb-joins-elite-troops",
+    "central-anvil-all-round-wings",
+    "spread-artillery-create-crossfire",
+    "offset-support-beyond-overruns",
+    "choose-dragon-role-early",
+    "deploy-for-unit-synergy",
+    "combat-units-guard-artillery",
+    "deploy-early-ensure-fit",
+    "layer-resilient-units-retreat-trap",
+    "field-glory-wide-deployment",
+    "sideline-deployment-angle-inward",
+    "central-iron-daemon-dragon-bait",
+    "flagellants-wood-roadblock",
+    "helblaster-entire-base-cover",
+    "eagle-skycutter-flank-pair",
+    "arachnarok-avoid-ogre-blade",
+    "central-night-goblin-fanatics",
+    "overlap-necrosphinx-threat-arcs",
+    "mortuary-cult-refused-flank",
+    "ushabti-arcs-against-flyers",
+    "undead-wall-protect-flanks",
+    "central-warriors-foot-wizard-bunker",
+    "glade-riders-shoot-withdraw",
+    "wood-elves-spread-opponents",
+    "treeman-bsb-backline-defence",
+    "shelter-monsters-from-cannons",
+    "forest-bunker-cover",
+    "deploy-beyond-moving-shooters",
+    "rangers-skirmish-versus-cathay",
+    "manglers-shield-doom-divers",
+    "hide-mangler-from-cannons",
+    "jezzails-hidden-lantern-kill-lanes",
+    "deploy-defensively-vs-shooting",
+    "combine-wood-elf-forests",
+    "check-intended-ambushers",
+    "check-scouts-vanguard-safety",
+    "scouts-deny-lantern-deployment",
+    "ambush-vacated-enemy-objectives",
+    "channel-ambushers-into-charges",
+    "corner-models-deny-ambushes",
+    "vanguard-temporary-objective-control",
+    "ambushers-target-baggage-trains",
+    "ambushers-pressure-enemy-movement",
+    "fast-cavalry-ambushers",
+    "ambushers-reserve-move-arrival",
+    "ambushers-banner-combat-resolution",
+    "shooting-ambushers-immediate-impact",
+    "respect-successful-ambush-arrivals",
+    "ambush-protects-fragile-flex-units",
+    "ambushers-support-flank-rear-charges",
+    "disperse-enemies-open-ambush-space",
+    "beastmen-infantry-safe-ambush",
+    "sneaky-gits-backline-volley",
+    "cannons-behind-vanguarding-outriders",
+    "road-wardens-shooting-ambush",
+    "jade-lancers-ambush-cannons",
+    "gorgers-hunt-cathayan-cannons",
+    "ogre-vanguard-threat-overload",
+    "kiknik-ambushers-score-objectives",
+    "ambushing-wolves-artillery-blind-spots",
+    "deploy-wolves-earlier-artillery-charge",
+    "close-order-wolves-ambush-support",
+    "horse-archers-scouting-bonus",
+    "vanguard-scorpions-fight-chaff"
+  ],
+  "principes": [
+    {
+      "id": "check-enemy-reach-before-deploying",
+      "titel": "Check enemy reach before choosing safe deployment positions",
+      "tekst": "Check enemy charge and shooting reach before placing vulnerable units. Account for Scouts and Vanguard that can bring opening threats closer.",
+      "soort": "principe",
+      "thema": "deployment",
+      "leger": null,
+      "lessen": [
+        "identify-fast-enemy-threats",
+        "mark-threat-ranges-dice",
+        "compare-ranges-before-deploying",
+        "shooters-need-time-safe",
+        "deploy-beyond-moving-shooters",
+        "check-scouts-vanguard-safety"
+      ],
+      "kanten": null
+    },
+    {
+      "id": "hide-vulnerable-units-from-shooting",
+      "titel": "Hide vulnerable units from enemy shooting during deployment",
+      "tekst": "Deploy important or fragile units out of enemy shooting sight. Concealed positions protect them from opening fire.",
+      "soort": "principe",
+      "thema": "deployment",
+      "leger": null,
+      "lessen": [
+        "glade-riders-shoot-withdraw",
+        "shelter-monsters-from-cannons",
+        "hide-mangler-from-cannons",
+        "jezzails-hidden-lantern-kill-lanes",
+        "deploy-defensively-vs-shooting",
+        "combine-wood-elf-forests"
+      ],
+      "kanten": null
+    },
+    {
+      "id": "deploy-for-working-support",
+      "titel": "Deploy units so their planned support can work",
+      "tekst": "Deploy units that need to work together in supporting positions. Plan ahead so an early advance or charge does not leave a fighting unit unsupported.",
+      "soort": "principe",
+      "thema": "deployment",
+      "leger": null,
+      "lessen": [
+        "flank-not-point-and-click",
+        "deploy-for-later-positions",
+        "deploy-for-unit-synergy",
+        "deploy-early-ensure-fit",
+        "eagle-skycutter-flank-pair"
+      ],
+      "kanten": null
+    },
+    {
+      "id": "weigh-first-turn-bonus",
+      "titel": "Weigh the first-turn bonus when choosing deployment drops",
+      "tekst": "If going first matters, favour finishing deployment first when that earns a roll bonus. Balance this against the information you gain from later placements.",
+      "soort": "principe",
+      "thema": "deployment",
+      "leger": null,
+      "lessen": [
+        "chaff-scouts-deployment",
+        "fewer-drops-first-turn",
+        "equal-drops-deploy-first",
+        "horse-archers-scouting-bonus"
+      ],
+      "kanten": null
+    },
+    {
+      "id": "protect-key-unit-flanks",
+      "titel": "Protect your key units' flanks during deployment",
+      "tekst": "Use positioning and supporting units to limit enemy routes around your key units. Keep their flanks protected when arranging your deployment.",
+      "soort": "principe",
+      "thema": "deployment",
+      "leger": null,
+      "lessen": [
+        "central-deployment-limits-cavalry",
+        "protect-main-hammer-flank",
+        "mortuary-cult-refused-flank",
+        "undead-wall-protect-flanks"
+      ],
+      "kanten": null
+    },
+    {
+      "id": "delay-key-placements-for-information",
+      "titel": "Delay key placements until relevant enemy units are committed",
+      "tekst": "Where possible, let your opponent place the relevant pieces first. Use that information to choose your own positions and favourable matchups.",
+      "soort": "principe",
+      "thema": "deployment",
+      "leger": null,
+      "lessen": [
+        "chaff-scouts-deployment",
+        "delay-vulnerable-artillery-deployment",
+        "baggage-placement-after-opponent",
+        "deploy-for-matchups"
+      ],
+      "kanten": null
+    },
+    {
+      "id": "concentrate-against-part-of-enemy",
+      "titel": "Concentrate deployment against only part of the enemy army",
+      "tekst": "Concentrate your units in part of the battlefield instead of spreading evenly. This lets you focus your strength against only part of the enemy army.",
+      "soort": "principe",
+      "thema": "deployment",
+      "leger": null,
+      "lessen": [
+        "deploy-slow-army-compact",
+        "concentrate-against-enemy-part",
+        "mortuary-cult-refused-flank"
+      ],
+      "kanten": null
+    },
+    {
+      "id": "ambush-into-vacated-scoring-space",
+      "titel": "Use ambushers to score in space advancing enemies leave behind",
+      "tekst": "Look for open entry space as enemy units advance towards objectives. Send ambushers into that space to capture objectives or attack baggage trains.",
+      "soort": "principe",
+      "thema": "deployment",
+      "leger": null,
+      "lessen": [
+        "ambush-vacated-enemy-objectives",
+        "ambushers-target-baggage-trains",
+        "kiknik-ambushers-score-objectives"
+      ],
+      "kanten": null
+    },
+    {
+      "id": "deny-useful-ambush-entry-space",
+      "titel": "Deny enemy ambushers useful entry space with your unit positions",
+      "tekst": "Use your models' positions and the ambush entry restrictions to block useful arrival areas.",
+      "soort": "principe",
+      "thema": "deployment",
+      "leger": null,
+      "lessen": [
+        "channel-ambushers-into-charges",
+        "corner-models-deny-ambushes",
+        "respect-successful-ambush-arrivals"
+      ],
+      "kanten": null
+    },
+    {
+      "id": "ambushers-hunt-war-machines",
+      "titel": "Use suitable ambushers to hunt enemy war machines",
+      "tekst": "Give suitable ambushing units the job of attacking and destroying enemy war machines.",
+      "soort": "principe",
+      "thema": "deployment",
+      "leger": null,
+      "lessen": [
+        "sneaky-gits-backline-volley",
+        "jade-lancers-ambush-cannons",
+        "gorgers-hunt-cathayan-cannons"
+      ],
+      "kanten": null
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 60,
+      "sec": 158,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 42537,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 7664,
+        "reasoning_output_tokens": 6214
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}
