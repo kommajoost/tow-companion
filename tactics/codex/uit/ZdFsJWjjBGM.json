@@ -1,0 +1,129 @@
+{
+  "videoId": "ZdFsJWjjBGM",
+  "bronId": "yt-ZdFsJWjjBGM",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T23:10:13.810Z",
+  "nieuw": [
+    {
+      "id": "judge-units-by-points-role",
+      "titel": "Judge units by how they earn or preserve points",
+      "tekst": "When comparing units and army entries, decide what each unit will do on the battlefield and how it helps kill enemy units or keep your own alive.",
+      "waarom": null,
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-ZdFsJWjjBGM",
+          "url": "https://www.youtube.com/watch?v=ZdFsJWjjBGM&t=435s",
+          "tijd": 438,
+          "citaat": "just ask yourself what will this unit do on the battlefield",
+          "extraCitaten": [
+            {
+              "tijd": 446,
+              "citaat": "units and keep my stuff alive"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-01-05",
+      "markeringen": []
+    },
+    {
+      "id": "gunlines-score-without-contact",
+      "titel": "Use gunlines to score while denying enemy contact",
+      "tekst": "Use a gunline's missile attacks and artillery to earn victory points from across the board while keeping the enemy from engaging your units.",
+      "waarom": "He calls preventing enemy contact the best way to deny points, and says scoring at range forces the opponent to rush towards you.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "magic-shooting",
+      "themas": [
+        "shooting-terrain",
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-ZdFsJWjjBGM",
+          "url": "https://www.youtube.com/watch?v=ZdFsJWjjBGM&t=355s",
+          "tijd": 358,
+          "citaat": "use your artillery pieces to take out units from across the board",
+          "extraCitaten": [
+            {
+              "tijd": 350,
+              "citaat": "denying your opponent points is to not let them ever touch you"
+            },
+            {
+              "tijd": 367,
+              "citaat": "your opponent immediately has to start rushing towards you"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-01-05",
+      "markeringen": []
+    },
+    {
+      "id": "fast-armies-close-gunlines",
+      "titel": "Use speed to shut gunlines down quickly",
+      "tekst": "Against a gunline, use a fast army to cross the board and close it down before it does too much damage.",
+      "waarom": "He says an army that can reach and shut down a gunline quickly will be good against it.",
+      "voorbeeld": null,
+      "wanneerNiet": "He cautions that the same fast armies probably lack the durability and hitting power of infantry units.",
+      "fase": "movement",
+      "themas": [
+        "matchups",
+        "shooting-terrain"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-ZdFsJWjjBGM",
+          "url": "https://www.youtube.com/watch?v=ZdFsJWjjBGM&t=371s",
+          "tijd": 374,
+          "citaat": "get across the board fast and close a gun line down",
+          "extraCitaten": [
+            {
+              "tijd": 382,
+              "citaat": "those same fast armies probably aren't going to be as survivable as Punchy"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-01-05",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "chaff-speed-bumps",
+      "bron": {
+        "bronId": "yt-ZdFsJWjjBGM",
+        "url": "https://www.youtube.com/watch?v=ZdFsJWjjBGM&t=324s",
+        "tijd": 327,
+        "citaat": "they might be able to redirect them",
+        "extraCitaten": [
+          {
+            "tijd": 312,
+            "citaat": "use their big expensive units to kill little things that aren't very valuable"
+          }
+        ]
+      },
+      "toelichting": "He likewise recommends using cheap chaff to occupy and redirect expensive enemy units, creating more favourable engagements."
+    }
+  ],
+  "overgeslagen": "Skipped the victory-point rules readout, descriptive unit archetypes without separate recommendations, speculative army previews, general fun and community remarks, and channel promotion.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

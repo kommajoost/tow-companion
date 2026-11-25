@@ -1,0 +1,202 @@
+{
+  "videoId": "wtgdaifcZOc",
+  "bronId": "yt-wtgdaifcZOc",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-25T00:42:58.968Z",
+  "nieuw": [
+    {
+      "id": "white-sword-doppelganger-archmage",
+      "titel": "Consider White Sword for a Spectral Doppelganger Archmage",
+      "tekst": "For a High Elf Spectral Doppelganger build, he favours the White Sword for its usefulness against a wider range of units than the Dragon Slaying Sword.",
+      "waarom": "He says the White Sword adds three Strength and AP minus two, making Spectral Doppelganger effective at inflicting wounds and winning combats against different units rather than serving only a narrow monster-killing role.",
+      "voorbeeld": null,
+      "wanneerNiet": "He says the White Sword requires its bearer to be on foot or a chariot.",
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": "high-elf-realms",
+      "units": [
+        "Archmage"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-wtgdaifcZOc",
+          "url": "https://www.youtube.com/watch?v=wtgdaifcZOc&t=141s",
+          "tijd": 144,
+          "citaat": "this means that in general that unit like rolling the doppelganger is great",
+          "extraCitaten": [
+            {
+              "tijd": 135,
+              "citaat": "gives you plus three strength and AP minus two"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "skycutter-white-sword-mount",
+      "titel": "Mount the White Sword Archmage on a Skycutter",
+      "tekst": "He recommends the Lothern Skycutter as a mount for the White Sword and Spectral Doppelganger Archmage.",
+      "waarom": "He values the protection from Killing Blow and Monster Slayer, together with the combined seven wounds and four-plus armour save.",
+      "voorbeeld": null,
+      "wanneerNiet": "He says taking Lore Familiar to guarantee Spectral Doppelganger uses up the build's 100-point magic-item allowance.",
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": "high-elf-realms",
+      "units": [
+        "Archmage",
+        "Lothern Skycutter"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-wtgdaifcZOc",
+          "url": "https://www.youtube.com/watch?v=wtgdaifcZOc&t=175s",
+          "tijd": 178,
+          "citaat": "it means that you can't be killing blowed and you can't be monster slayed",
+          "extraCitaten": [
+            {
+              "tijd": 187,
+              "citaat": "seven wound unit with a four plus armor save"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "glittering-robe-skycutter-archmage",
+      "titel": "Choose Glittering Robe to protect the Skycutter Archmage",
+      "tekst": "He likes taking Glittering Robe alongside Spectral Doppelganger for his Skycutter-mounted Archmage, to help defend the chariot against shooting and close-combat attacks.",
+      "waarom": "He says the chariot is vulnerable to hits in both the shooting and combat phases.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": "high-elf-realms",
+      "units": [
+        "Archmage",
+        "Lothern Skycutter"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-wtgdaifcZOc",
+          "url": "https://www.youtube.com/watch?v=wtgdaifcZOc&t=200s",
+          "tijd": 203,
+          "citaat": "I've been a big fan of glittering robe on top of that",
+          "extraCitaten": [
+            {
+              "tijd": 228,
+              "citaat": "not just missile fire but in the combat phase where it needs to be defensive"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "lesser-mages-dispel-scrolls",
+      "titel": "Consider lesser wizards carrying Dispel Scrolls for critical spells",
+      "tekst": "He has had some success using lesser wizards with Dispel Scrolls to stop a critical opposing spell on turn two or three.",
+      "waarom": "He explains that spells have different values at different stages of the game, making the timing of magical defence important.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-wtgdaifcZOc",
+          "url": "https://www.youtube.com/watch?v=wtgdaifcZOc&t=545s",
+          "tijd": 548,
+          "citaat": "lesser majes carrying dispel Scrolls",
+          "extraCitaten": [
+            {
+              "tijd": 555,
+              "citaat": "you sort of want to dispel that critical spell on turn two or turn three"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "plan-countermagic-attack-timing",
+      "titel": "Plan when to attack the opposing wizard",
+      "tekst": "During deployment, decide whether to avoid the opposing level-four wizard's dispel bubble or attack the wizard, and on which turn. Judge the timing against its magic's range, the risks you accept and the units you are willing to sacrifice.",
+      "waarom": "He says magic's importance changes over the game, and sacrificing units can be worthwhile if it prevents the opposing wizard from influencing the battle.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-wtgdaifcZOc",
+          "url": "https://www.youtube.com/watch?v=wtgdaifcZOc&t=591s",
+          "tijd": 594,
+          "citaat": "at what turn when you start to deploy against particular types of magics",
+          "extraCitaten": [
+            {
+              "tijd": 618,
+              "citaat": "what units you're willing to give up to make that happen"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "engage-wizard-before-casting",
+      "bron": {
+        "bronId": "yt-wtgdaifcZOc",
+        "url": "https://www.youtube.com/watch?v=wtgdaifcZOc&t=293s",
+        "tijd": 296,
+        "citaat": "you can tie down the wizard and when the wizard is in combat",
+        "extraCitaten": [
+          {
+            "tijd": 446,
+            "citaat": "I also carry an eagle at the moment for that purpose"
+          }
+        ]
+      },
+      "voorbeeld": "His Griffon restrained and reformed after an opposing unit gave ground, then charged the enemy wizard. This stopped the wizard dispelling while his Archmage cast Spectral Doppelganger and killed the enemy general.",
+      "toelichting": "The same recommendation to engage the opposing wizard before casting a crucial spell, including using an expendable mobile attacker."
+    },
+    {
+      "lesId": "central-protected-dispeller",
+      "bron": {
+        "bronId": "yt-wtgdaifcZOc",
+        "url": "https://www.youtube.com/watch?v=wtgdaifcZOc&t=404s",
+        "tijd": 407,
+        "citaat": "you want that level four to be Central and to be defensive"
+      },
+      "toelichting": "The same recommendation to position a defensive dispelling wizard centrally to use its dispel bubble."
+    }
+  ],
+  "overgeslagen": "Skipped the introduction, tournament placements, rules explanations without advice, closing remarks and uncertain caption details about signature-spell selection. Treated the Griffon combat as an example of engaging a wizard before casting, rather than a separate lesson.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

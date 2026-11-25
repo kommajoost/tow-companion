@@ -1,0 +1,77 @@
+{
+  "videoId": "bN6ghmremp4",
+  "bronId": "yt-bN6ghmremp4",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-25T00:15:30.960Z",
+  "nieuw": [
+    {
+      "id": "hide-random-movers-behind-hills",
+      "titel": "Hide random movers behind hills to threaten unseen targets",
+      "tekst": "Consider hiding a random-movement unit behind a hill that blocks line of sight, then moving over it into an enemy unit. He suggests this can threaten several targets and potentially control a whole flank without first exposing the unit to shooting.",
+      "waarom": "He explains that the hill hides the unit from some shooting while random movement lets it reach targets it cannot see. In his view, its variable movement range can threaten opponents whether they advance or stay back.",
+      "voorbeeld": "He positioned his Spawn behind the central hill and rolled high enough to choose between several enemy units, even though his opponent stayed back.",
+      "wanneerNiet": "He stresses that his high movement rolls were lucky and that the unit must still obey its other normal movement rules.",
+      "fase": "movement",
+      "themas": [
+        "shooting-terrain",
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-bN6ghmremp4",
+          "url": "https://www.youtube.com/watch?v=bN6ghmremp4&t=207s",
+          "tijd": 210,
+          "citaat": "if you're carrying around items with random movement",
+          "extraCitaten": [
+            {
+              "tijd": 210,
+              "citaat": "think about hiding it behind a Terrain feature such as a hill"
+            },
+            {
+              "tijd": 100,
+              "citaat": "it is being hidden from some of the shooting by the rules of the hill"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "spawn-catch-fleeing-targets",
+      "titel": "Use the Spawn against enemies that want to flee",
+      "tekst": "He has found the Gigantic Spawn of Chaos most useful for entering combats against enemies that would want to flee from a normal charge. Use its random movement to deny that charge reaction.",
+      "waarom": "He explains that an opponent cannot make that charge reaction against the Spawn's random movement as it could against an otherwise declared charge.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "matchups"
+      ],
+      "leger": "warriors-of-chaos",
+      "units": [
+        "Gigantic Spawn of Chaos"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-bN6ghmremp4",
+          "url": "https://www.youtube.com/watch?v=bN6ghmremp4&t=38s",
+          "tijd": 41,
+          "citaat": "with its random movement into combats where the opponent might want to fled and can't"
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [],
+  "overgeslagen": "Skipped the introduction, the Razorgor aside and the failed target choice, which he explicitly calls poor. Kept the unseen-target rule within the hill tactic rather than treating the rule explanation as separate advice.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

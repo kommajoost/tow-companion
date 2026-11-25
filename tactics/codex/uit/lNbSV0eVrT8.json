@@ -1,0 +1,78 @@
+{
+  "videoId": "lNbSV0eVrT8",
+  "bronId": "yt-lNbSV0eVrT8",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T23:22:24.556Z",
+  "nieuw": [
+    {
+      "id": "plan-overruns-repeat-combats",
+      "titel": "Plan overrun paths to keep combat units fighting",
+      "tekst": "For an aggressive combat army, set up overrun paths and opportunities to restrain and reform so its units can get into combat repeatedly. The speaker considers setting up these repeated fights the most important skill for a combat army.",
+      "waarom": null,
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-lNbSV0eVrT8",
+          "url": "https://www.youtube.com/watch?v=lNbSV0eVrT8&t=622s",
+          "tijd": 625,
+          "citaat": "setting up ways to stay in combat repeatedly",
+          "extraCitaten": [
+            {
+              "tijd": 633,
+              "citaat": "through overruns and restraining and reforming."
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "check-angles-before-approaching",
+      "bron": {
+        "bronId": "yt-lNbSV0eVrT8",
+        "url": "https://www.youtube.com/watch?v=lNbSV0eVrT8&t=293s",
+        "tijd": 296,
+        "citaat": "I probably should have measured it."
+      },
+      "toelichting": "His admitted mistake reinforces checking charge angles and distances when moving closer to an enemy."
+    },
+    {
+      "lesId": "offset-skirmisher-charge-contact",
+      "bron": {
+        "bronId": "yt-lNbSV0eVrT8",
+        "url": "https://www.youtube.com/watch?v=lNbSV0eVrT8&t=645s",
+        "tijd": 648,
+        "citaat": "leave a model out who's now closest",
+        "extraCitaten": [
+          {
+            "tijd": 656,
+            "citaat": "for a much smaller cost you can do things like redirect death stars"
+          }
+        ]
+      },
+      "toelichting": "Leaving a skirmisher closest to the charger uses the initial contact point to influence the enemy's overrun path, the same positioning technique."
+    }
+  ],
+  "overgeslagen": "Skipped sponsorship, channel announcements, opinions about game design, and the charge-alignment and post-overrun reform rules explanations without separate tactical advice. The proposed extra wheel towards the Bloodcrushers was rejected, so it is not presented as advice.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": [
+      {
+        "wie": "aanvulling check-angles-before-approaching",
+        "wat": "voorbeeld weggelaten: de les heeft dat veld al"
+      }
+    ]
+  }
+}

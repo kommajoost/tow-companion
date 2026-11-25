@@ -1,0 +1,329 @@
+{
+  "videoId": "hmY_iMNrcNU",
+  "bronId": "yt-hmY_iMNrcNU",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-25T01:09:03.401Z",
+  "nieuw": [
+    {
+      "id": "equal-drops-deploy-first",
+      "titel": "With equal drops, consider deploying first for the opening turn",
+      "tekst": "If both armies have the same number of deployment drops and you want the first turn, consider choosing to place the first unit. The speaker suggests doing the opposite if you do not want the first turn.",
+      "waarom": "He says placing first with equal drops lets you finish deployment first and gain the bonus to the first-turn roll.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-hmY_iMNrcNU",
+          "url": "https://www.youtube.com/watch?v=hmY_iMNrcNU&t=88s",
+          "tijd": 91,
+          "citaat": "put the first unit down in order to then have an advantage",
+          "extraCitaten": [
+            {
+              "tijd": 84,
+              "citaat": "if your two armies have the the same number of drops"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "channel-ambushers-into-charges",
+      "titel": "Restrict ambush entry and cover the remaining approach",
+      "tekst": "Use your deployment to deny an ambusher an entry area and position a unit to threaten a charge into the area where it can still arrive.",
+      "waarom": "In his example, restricting the ambushers' arrival area lets him anticipate where they will enter and prepare to charge them.",
+      "voorbeeld": "In Mountain Pass, he places Silver Helms within eight inches of the board edge to prevent Wolf Riders entering there. He expects the Silver Helms to be able to charge the Wolf Riders where they must arrive instead.",
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-hmY_iMNrcNU",
+          "url": "https://www.youtube.com/watch?v=hmY_iMNrcNU&t=271s",
+          "tijd": 274,
+          "citaat": "they're within 8 in of the board Edge so we can't come on here",
+          "extraCitaten": [
+            {
+              "tijd": 281,
+              "citaat": "these silver Helm should be able to charge"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "mark-threat-ranges-dice",
+      "titel": "Mark opening threat ranges with dice during deployment",
+      "tekst": "Use dice to mark relevant ranges as you deploy: possible first-turn charges, missile weapons and spells. Include the effect of Vanguard moves when judging those opening threats.",
+      "waarom": null,
+      "voorbeeld": "He considers the reach of longbow shooting and a possible opening Plague of Rust after the enemy's Vanguard move.",
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "game-plan",
+        "shooting-terrain"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-hmY_iMNrcNU",
+          "url": "https://www.youtube.com/watch?v=hmY_iMNrcNU&t=308s",
+          "tijd": 311,
+          "citaat": "I like to put out uh dice to Mark where",
+          "extraCitaten": [
+            {
+              "tijd": 320,
+              "citaat": "the possibility of first turn charges"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "deploy-for-unit-synergy",
+      "titel": "Deploy units so their support works together",
+      "tekst": "Decide which units need to work together and deploy them accordingly, including screens and units providing leadership or magical buffs. Keep your own support arrangements in mind rather than focusing so much on enemy threats that your units stop working together.",
+      "waarom": "He thinks players sometimes spoil their deployment by concentrating on the opponent's threats and neglecting their own synergies and buffs.",
+      "voorbeeld": "He puts a Mage with Travel Mystical Pathways and Plague of Rust in Sisters of Avelorn so they can move and shoot more effectively.",
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-hmY_iMNrcNU",
+          "url": "https://www.youtube.com/watch?v=hmY_iMNrcNU&t=733s",
+          "tijd": 736,
+          "citaat": "deploying units that you know are going to work together"
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "combat-units-guard-artillery",
+      "titel": "Deploy combat units in front of your artillery",
+      "tekst": "Place protecting combat units directly in front of your artillery, rather than off to the side where an attacker can run past them.",
+      "waarom": "He explains that this makes an approaching enemy fight through the combat units to reach the cannons.",
+      "voorbeeld": "His opponent deploys two cannons on a hill with combat units directly in front of them.",
+      "wanneerNiet": "He notes that his flying chariots can bypass this protection.",
+      "fase": "deployment",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-hmY_iMNrcNU",
+          "url": "https://www.youtube.com/watch?v=hmY_iMNrcNU&t=826s",
+          "tijd": 829,
+          "citaat": "his combat units are directly in front",
+          "extraCitaten": [
+            {
+              "tijd": 837,
+              "citaat": "to fight through them to get to his cannons"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "deploy-early-ensure-fit",
+      "titel": "Place a key unit early when its neighbours must fit",
+      "tekst": "If a unit has a definite protective position and other supporting units must fit beside it, consider placing it early even if you would normally save it until last.",
+      "waarom": "He wants to ensure the units fit alongside one another and receive the intended leadership buff.",
+      "voorbeeld": "He describes placing a unit to protect his shooters while leaving space beside it for a Lion Chariot and a Griffon within the leadership bubble.",
+      "wanneerNiet": "He says a pre-planned deployment can let you wait until the end if you already know how much space the unit takes up.",
+      "fase": "deployment",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-hmY_iMNrcNU",
+          "url": "https://www.youtube.com/watch?v=hmY_iMNrcNU&t=991s",
+          "tijd": 994,
+          "citaat": "so that I know that it fits in here"
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "deploy-obvious-positions-early",
+      "titel": "Deploy units with obvious positions early",
+      "tekst": "If an important unit already has an obvious deployment position, there is little benefit in saving it until last. Shooting units destined for a particular hill can go down early.",
+      "waarom": "He says delaying these units does not really conceal where they are going to be placed.",
+      "voorbeeld": "He describes enemy cannons whose obvious position is a hill in a corner behind a river, so he sees no point in holding their deployment until last.",
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "shooting-terrain",
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-hmY_iMNrcNU",
+          "url": "https://www.youtube.com/watch?v=hmY_iMNrcNU&t=1017s",
+          "tijd": 1020,
+          "citaat": "there's not really any point in Saving it to last",
+          "extraCitaten": [
+            {
+              "tijd": 1084,
+              "citaat": "shooting units on Hills go down"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "chaff-scouts-deployment",
+      "bron": {
+        "bronId": "yt-hmY_iMNrcNU",
+        "url": "https://www.youtube.com/watch?v=hmY_iMNrcNU&t=864s",
+        "tijd": 867,
+        "citaat": "generally you're going to deploy your sort of least important units first",
+        "extraCitaten": [
+          {
+            "tijd": 926,
+            "citaat": "keeping that threat uh Until the End lets me commit to this flank"
+          }
+        ]
+      },
+      "toelichting": "He likewise recommends early expendable drops to see the enemy deployment before committing important threats."
+    },
+    {
+      "lesId": "check-scouts-vanguard-safety",
+      "bron": {
+        "bronId": "yt-hmY_iMNrcNU",
+        "url": "https://www.youtube.com/watch?v=hmY_iMNrcNU&t=249s",
+        "tijd": 252,
+        "citaat": "I know that they can't get a first turn charge"
+      },
+      "voorbeeld": "He asks about the opposing Boar Boyz and deploys his archers beyond their combined Vanguard move and charge reach, so they cannot charge the archers on turn one regardless of who goes first.",
+      "toelichting": "He checks the enemy's Vanguard capability before deciding that his deployment is safe."
+    },
+    {
+      "lesId": "deploy-who-is-beatdown",
+      "bron": {
+        "bronId": "yt-hmY_iMNrcNU",
+        "url": "https://www.youtube.com/watch?v=hmY_iMNrcNU&t=366s",
+        "tijd": 369,
+        "citaat": "who is going to be the attacker",
+        "extraCitaten": [
+          {
+            "tijd": 482,
+            "citaat": "that's sort of going to shape how you deploy in my mind"
+          }
+        ]
+      },
+      "toelichting": "He recommends identifying the aggressive and defensive armies before shaping deployment."
+    },
+    {
+      "lesId": "hold-centre-win-flanks",
+      "bron": {
+        "bronId": "yt-hmY_iMNrcNU",
+        "url": "https://www.youtube.com/watch?v=hmY_iMNrcNU&t=496s",
+        "tijd": 499,
+        "citaat": "destroy his flanking force and",
+        "extraCitaten": [
+          {
+            "tijd": 508,
+            "citaat": "then turn and then flank charge his combat units as they move forward"
+          }
+        ]
+      },
+      "toelichting": "His plan similarly uses a flank victory to turn combat units into the advancing enemy centre."
+    },
+    {
+      "lesId": "screening-chaff",
+      "bron": {
+        "bronId": "yt-hmY_iMNrcNU",
+        "url": "https://www.youtube.com/watch?v=hmY_iMNrcNU&t=562s",
+        "tijd": 565,
+        "citaat": "the wolves are going to give him cover"
+      },
+      "toelichting": "He endorses Wolf Riders screening a chariot from shooting while the chariot can still see through them."
+    },
+    {
+      "lesId": "screen-frenzy-compulsory-charges",
+      "bron": {
+        "bronId": "yt-hmY_iMNrcNU",
+        "url": "https://www.youtube.com/watch?v=hmY_iMNrcNU&t=717s",
+        "tijd": 720,
+        "citaat": "I'm controlling them by putting a unit in front"
+      },
+      "voorbeeld": "He deploys a Griffon directly in front of his impetuous Dragon Princes, preventing them from declaring a charge unless the Griffon also charges.",
+      "toelichting": "He uses a physical screen to prevent unwanted compulsory charges."
+    },
+    {
+      "lesId": "deploy-read-terrain",
+      "bron": {
+        "bronId": "yt-hmY_iMNrcNU",
+        "url": "https://www.youtube.com/watch?v=hmY_iMNrcNU&t=601s",
+        "tijd": 604,
+        "citaat": "look at the terrain",
+        "extraCitaten": [
+          {
+            "tijd": 638,
+            "citaat": "you can deploy it behind Hills you can't be seen"
+          }
+        ]
+      },
+      "toelichting": "He recommends using known terrain, including hills and choke points, to guide deployment."
+    },
+    {
+      "lesId": "shift-lone-character-protection",
+      "bron": {
+        "bronId": "yt-hmY_iMNrcNU",
+        "url": "https://www.youtube.com/watch?v=hmY_iMNrcNU&t=755s",
+        "tijd": 758,
+        "citaat": "Mage is 3 in from both infantry units so we can't be targeted",
+        "extraCitaten": [
+          {
+            "tijd": 766,
+            "citaat": "I actually move these units and don't move the Mage"
+          }
+        ]
+      },
+      "toelichting": "He positions a lone Mage near protective infantry and warns through his mistake that moving the infantry without him loses that protection."
+    }
+  ],
+  "overgeslagen": "Skipped introductions, closing remarks, deployment-rule readouts and unresolved rules discussions. Omitted garbled names and speculative feints; used only the clear parts of game examples.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

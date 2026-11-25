@@ -1,0 +1,520 @@
+{
+  "videoId": "NUfvfvASSTg",
+  "bronId": "yt-NUfvfvASSTg",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T23:08:16.122Z",
+  "nieuw": [
+    {
+      "id": "necrosphinx-terror-leadership",
+      "titel": "Debuff leadership before a Necrosphinx terror charge",
+      "tekst": "Use Necromancy's leadership debuffs before charging with a Necrosphinx to try to make the enemy flee from terror.",
+      "waarom": "He wants Spirit Leech and Spiritual Vortex for their leadership penalties, which support this attempt to make the target run away.",
+      "voorbeeld": null,
+      "wanneerNiet": "He warns that rolling the desired Necromancy spells is unreliable.",
+      "fase": "magic-shooting",
+      "themas": [
+        "psychology"
+      ],
+      "leger": "tomb-kings-of-khemri",
+      "units": [
+        "Necrosphinx"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-NUfvfvASSTg",
+          "url": "https://www.youtube.com/watch?v=NUfvfvASSTg&t=861s",
+          "tijd": 864,
+          "citaat": "If you get the spirit leech off, then they can go in.",
+          "extraCitaten": [
+            {
+              "tijd": 132,
+              "citaat": "Try and make it run away."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-05-30",
+      "markeringen": []
+    },
+    {
+      "id": "earthen-ramparts-missile-troops",
+      "titel": "Protect the missile troops with Earthen Ramparts",
+      "tekst": "Use Earthen Ramparts to protect this list's missile troops, including the Ushabti.",
+      "waarom": "He values the five-plus ward alongside regeneration. He says the defended-obstacle effect disrupts attackers and prevents stomps and impact hits.",
+      "voorbeeld": null,
+      "wanneerNiet": "The spell prevents marching; he considers this irrelevant for his army and does not intend to charge with its missile troops.",
+      "fase": "magic-shooting",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "leger": "tomb-kings-of-khemri",
+      "units": [
+        "Ushabti"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-NUfvfvASSTg",
+          "url": "https://www.youtube.com/watch?v=NUfvfvASSTg&t=229s",
+          "tijd": 232,
+          "citaat": "it gives you a five up ward.",
+          "extraCitaten": [
+            {
+              "tijd": 250,
+              "citaat": "get disrupted, so no rank bonuses."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-05-30",
+      "markeringen": []
+    },
+    {
+      "id": "reposition-shooting-blocks-safely",
+      "titel": "Relocate shooting blocks out of enemy charge arcs",
+      "tekst": "Use the Elementalism repositioning spell to move and reface an Ushabti or Skeleton Archer block out of danger, or rebuild the battle line when a flank is collapsing.",
+      "waarom": "He stresses that measuring to a point of a long unit lets it relocate a considerable distance and choose a new facing while still shooting.",
+      "voorbeeld": "When a dragon flew in front of his Ushabti, he relocated them so the dragon could no longer see or charge them, then shot it.",
+      "wanneerNiet": "He says the new position cannot be within six inches of any models.",
+      "fase": "movement",
+      "themas": [
+        "shooting-terrain",
+        "game-plan"
+      ],
+      "leger": "tomb-kings-of-khemri",
+      "units": [
+        "Ushabti",
+        "Skeleton Archers"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-NUfvfvASSTg",
+          "url": "https://www.youtube.com/watch?v=NUfvfvASSTg&t=1920s",
+          "tijd": 1923,
+          "citaat": "put it so you can't see it. Can't can't charge it.",
+          "extraCitaten": [
+            {
+              "tijd": 1714,
+              "citaat": "you suddenly readress your battle line."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-05-30",
+      "markeringen": []
+    },
+    {
+      "id": "urgency-hide-casket",
+      "titel": "Use Urgency to withdraw the Casket behind terrain",
+      "tekst": "Give the Elementalism High Priest Urgency so he can Reserve Move the Casket of Souls. Near a hill or wood, use that move to take the Casket out of sight when a charge threatens it.",
+      "waarom": "He says this lets the Casket move even though it normally cannot.",
+      "voorbeeld": null,
+      "wanneerNiet": "He presents the hiding trick as an option when a hill or wood is available.",
+      "fase": "movement",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "leger": "tomb-kings-of-khemri",
+      "units": [
+        "Casket of Souls",
+        "High Priest"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-NUfvfvASSTg",
+          "url": "https://www.youtube.com/watch?v=NUfvfvASSTg&t=1152s",
+          "tijd": 1155,
+          "citaat": "move it off the hill and suddenly it can't be seen.",
+          "extraCitaten": [
+            {
+              "tijd": 337,
+              "citaat": "I also like to give this lich the um reserve move spell."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-05-30",
+      "markeringen": []
+    },
+    {
+      "id": "mortuary-priest-backup-rust",
+      "titel": "Give the level-one priest a backup Plague of Rust roll",
+      "tekst": "Consider Elementalism on the level-one Mortuary Priest as a backup roll for Plague of Rust if the level four misses it. If he rolls it, the speaker would probably take it over Cursed Blades.",
+      "waarom": "He notes that Mortuary Cult's swarm sacrifices and the Casket's casting bonus can help the level one resolve spells.",
+      "voorbeeld": null,
+      "wanneerNiet": "The backup is only a one-in-six roll.",
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": "tomb-kings-of-khemri",
+      "units": [
+        "Mortuary Priest"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-NUfvfvASSTg",
+          "url": "https://www.youtube.com/watch?v=NUfvfvASSTg&t=442s",
+          "tijd": 445,
+          "citaat": "It gives you another chance to roll plague of rust."
+        }
+      ],
+      "datum": "2025-05-30",
+      "markeringen": []
+    },
+    {
+      "id": "swarm-battery-healing-cycle",
+      "titel": "Cycle swarm sacrifices and healing across turns",
+      "tekst": "Use Tomb Swarms as a renewable casting battery: damage them for Mortuary Cult casting bonuses, then restore those wounds at the start of the following turn. Keep them in range to be sacrificed and near the Casket.",
+      "waarom": "He treats the two swarms as ten wounds available to boost spellcasting.",
+      "voorbeeld": null,
+      "wanneerNiet": "Healing happens before the sacrifices, so it cannot immediately repair damage taken for that turn's casting bonus.",
+      "fase": "magic-shooting",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": "tomb-kings-of-khemri",
+      "units": [
+        "Tomb Swarms"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-NUfvfvASSTg",
+          "url": "https://www.youtube.com/watch?v=NUfvfvASSTg&t=580s",
+          "tijd": 583,
+          "citaat": "They're the things you kill then summon back.",
+          "extraCitaten": [
+            {
+              "tijd": 599,
+              "citaat": "The heal happens first. So you're healing the next turn."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-05-30",
+      "markeringen": []
+    },
+    {
+      "id": "horse-archers-scouting-bonus",
+      "titel": "Scout Horse Archers when fewer drops cost you the bonus",
+      "tekst": "Scouting Skeleton Horse Archers is more attractive when the opponent also has scouts. If the opponent has fewer deployment drops than this list, he says you might as well scout.",
+      "waarom": "He says scouting gives up the plus-one bonus to go first, so the opponent's scouts and deployment drops affect the decision.",
+      "voorbeeld": null,
+      "wanneerNiet": "Scouting costs the first-turn bonus when you could otherwise have kept it.",
+      "fase": "deployment",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": "tomb-kings-of-khemri",
+      "units": [
+        "Skeleton Horse Archers"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-NUfvfvASSTg",
+          "url": "https://www.youtube.com/watch?v=NUfvfvASSTg&t=634s",
+          "tijd": 637,
+          "citaat": "In that case, scouting doesn't matter, you might as well scout.",
+          "extraCitaten": [
+            {
+              "tijd": 628,
+              "citaat": "you give up the plus one to go first if you scout."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-05-30",
+      "markeringen": []
+    },
+    {
+      "id": "vanguard-scorpions-fight-chaff",
+      "titel": "Vanguard Tomb Scorpions to contest enemy chaff",
+      "tekst": "Vanguard Tomb Scorpions forward as chaff that can also fight enemy chaff, particularly light cavalry or dogs.",
+      "waarom": "He values their stomps for getting hits through and doing enough damage to avoid crumbling against these targets. He also expects their toughness, regeneration and heavy armour to hold up against Strength 3 light cavalry.",
+      "voorbeeld": null,
+      "wanneerNiet": "He identifies their three wounds as their biggest problem and says their performance in his games left him underwhelmed.",
+      "fase": "movement",
+      "themas": [
+        "chaff",
+        "matchups"
+      ],
+      "leger": "tomb-kings-of-khemri",
+      "units": [
+        "Tomb Scorpion"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-NUfvfvASSTg",
+          "url": "https://www.youtube.com/watch?v=NUfvfvASSTg&t=754s",
+          "tijd": 757,
+          "citaat": "I vanguard them up and they're kind of like chaff plus two.",
+          "extraCitaten": [
+            {
+              "tijd": 767,
+              "citaat": "They're pretty good at fighting other chaff units."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-05-30",
+      "markeringen": []
+    },
+    {
+      "id": "overlap-necrosphinx-threat-arcs",
+      "titel": "Overlap Necrosphinx threat arcs to protect the shooting line",
+      "tekst": "Deploy the two Necrosphinxes with overlapping threat coverage across the flank and centre. Check terrain and charge arcs so an enemy cannot land in a gap and threaten your main shooting units without being chargeable.",
+      "waarom": "He uses them to control board space and cover the area occupied by his shooting units.",
+      "voorbeeld": null,
+      "wanneerNiet": "He warns that Necrosphinxes struggle against dragon lords and that their killing attack is only one attack.",
+      "fase": "deployment",
+      "themas": [
+        "game-plan",
+        "shooting-terrain",
+        "flanks"
+      ],
+      "leger": "tomb-kings-of-khemri",
+      "units": [
+        "Necrosphinx"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-NUfvfvASSTg",
+          "url": "https://www.youtube.com/watch?v=NUfvfvASSTg&t=1648s",
+          "tijd": 1651,
+          "citaat": "using these to zone out and cover the area for your shooting.",
+          "extraCitaten": [
+            {
+              "tijd": 1418,
+              "citaat": "There's there's a slight gap here. There's no overlap."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-05-30",
+      "markeringen": []
+    },
+    {
+      "id": "prioritise-light-of-protection",
+      "titel": "Prioritise Light of Protection over Light of Death",
+      "tekst": "Usually keep the Casket's Light of Protection buff active rather than choosing Light of Death.",
+      "waarom": "He values the six-plus ward within 18 inches alongside regeneration and the enemy's minus one to hit. He especially praises the protection it gives low-Weapon-Skill infantry.",
+      "voorbeeld": null,
+      "wanneerNiet": "He would choose Light of Death against a leadership-debuffed target or a low-leadership enemy he needs to kill. If Light of Protection fails to cast, he says to try Light of Death anyway.",
+      "fase": "magic-shooting",
+      "themas": [
+        "game-plan",
+        "infantry"
+      ],
+      "leger": "tomb-kings-of-khemri",
+      "units": [
+        "Casket of Souls"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-NUfvfvASSTg",
+          "url": "https://www.youtube.com/watch?v=NUfvfvASSTg&t=945s",
+          "tijd": 948,
+          "citaat": "I'd rather keep the buff up.",
+          "extraCitaten": [
+            {
+              "tijd": 909,
+              "citaat": "all units within 18 have a six up ward"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-05-30",
+      "markeringen": []
+    },
+    {
+      "id": "mortuary-cult-refused-flank",
+      "titel": "Refuse a flank with the Mortuary Cult shooting list",
+      "tekst": "Deploy this list in roughly half your deployment zone as a refused flank. Use the Skeleton Archer block as a tarpit on the flank, anchored by a Necrosphinx.",
+      "waarom": "He wants to control a restricted area and have an answer to enemies sweeping around the flank.",
+      "voorbeeld": null,
+      "wanneerNiet": "He notes that the demonstrated hill may not be available and that deployment depends partly on the opposing army.",
+      "fase": "deployment",
+      "themas": [
+        "game-plan",
+        "flanks"
+      ],
+      "leger": "tomb-kings-of-khemri",
+      "units": [
+        "Skeleton Archers",
+        "Necrosphinx"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-NUfvfvASSTg",
+          "url": "https://www.youtube.com/watch?v=NUfvfvASSTg&t=1550s",
+          "tijd": 1553,
+          "citaat": "That's what I'd say is like a refuse flank.",
+          "extraCitaten": [
+            {
+              "tijd": 1565,
+              "citaat": "you want to play in like half your deployment zone."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-05-30",
+      "markeringen": []
+    },
+    {
+      "id": "ushabti-arcs-against-flyers",
+      "titel": "Keep flyers from landing outside your Ushabti firing arc",
+      "tekst": "Avoid angling Ushabti so a flyer can land outside their firing arc and threaten a charge. Deploy them further back if needed.",
+      "waarom": "He says they can move and shoot without modifiers, so he is happy to deploy them further back.",
+      "voorbeeld": "He demonstrates a flyer moving 20 inches from the deployment line into the space outside an angled Ushabti unit's arc.",
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "leger": "tomb-kings-of-khemri",
+      "units": [
+        "Ushabti"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-NUfvfvASSTg",
+          "url": "https://www.youtube.com/watch?v=NUfvfvASSTg&t=1359s",
+          "tijd": 1362,
+          "citaat": "that flyer can get outside of their arc",
+          "extraCitaten": [
+            {
+              "tijd": 1378,
+              "citaat": "you can move and shoot and you got no modifiers."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-05-30",
+      "markeringen": []
+    },
+    {
+      "id": "flying-high-priests-conveyances",
+      "titel": "Give the High Priests flight for mobile spellcasting",
+      "tekst": "Give the High Priests flight so they can reach the required casting position before resolving the Elementalism repositioning conveyance.",
+      "waarom": "He says flying lets them march in the Tomb Kings army and reach the positions they need before casting the conveyance.",
+      "voorbeeld": null,
+      "wanneerNiet": "He warns that the Bretonnian horn can interfere with their flying movement.",
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": "tomb-kings-of-khemri",
+      "units": [
+        "High Priest"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-NUfvfvASSTg",
+          "url": "https://www.youtube.com/watch?v=NUfvfvASSTg&t=1929s",
+          "tijd": 1932,
+          "citaat": "being flying allows you to get to where they need to be",
+          "extraCitaten": [
+            {
+              "tijd": 840,
+              "citaat": "the same reason why you give your hierofphants fly."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-05-30",
+      "markeringen": []
+    },
+    {
+      "id": "foot-priests-infantry-protection",
+      "titel": "Keep foot High Priests near infantry against ranged attacks",
+      "tekst": "Keep the flying foot High Priests near infantry blocks to help protect them from magic missiles and shooting, including cannonballs.",
+      "waarom": "He says a horse-mounted version was harder to protect because most units in the army are infantry.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "leger": "tomb-kings-of-khemri",
+      "units": [
+        "High Priest"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-NUfvfvASSTg",
+          "url": "https://www.youtube.com/watch?v=NUfvfvASSTg&t=1968s",
+          "tijd": 1971,
+          "citaat": "you can use the infantry blocks with your infantry characters to try and dodge those."
+        }
+      ],
+      "datum": "2025-05-30",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "skeleton-archers-poison-volume",
+      "bron": {
+        "bronId": "yt-NUfvfvASSTg",
+        "url": "https://www.youtube.com/watch?v=NUfvfvASSTg&t=683s",
+        "tijd": 686,
+        "citaat": "gives them poison shots",
+        "extraCitaten": [
+          {
+            "tijd": 701,
+            "citaat": "it's really good at chipping wounds off large targets"
+          }
+        ]
+      },
+      "toelichting": "This is the same recommendation to give a large Skeleton Archer unit poisoned shooting through its accompanying priest, here discussed against large targets generally."
+    },
+    {
+      "lesId": "ushabti-great-bows-lanterns",
+      "bron": {
+        "bronId": "yt-NUfvfvASSTg",
+        "url": "https://www.youtube.com/watch?v=NUfvfvASSTg&t=527s",
+        "tijd": 530,
+        "citaat": "you've got like the plague of rust as well",
+        "extraCitaten": [
+          {
+            "tijd": 542,
+            "citaat": "and then they're at minus three armor save"
+          }
+        ]
+      },
+      "toelichting": "The same Ushabti great-bow shooting and Plague of Rust combination is recommended, with dragons rather than Sky Lanterns as the target."
+    },
+    {
+      "lesId": "reserve-move-blaster-withdrawal",
+      "bron": {
+        "bronId": "yt-NUfvfvASSTg",
+        "url": "https://www.youtube.com/watch?v=NUfvfvASSTg&t=351s",
+        "tijd": 354,
+        "citaat": "move forward, do your magic missile shooting, move back again."
+      },
+      "toelichting": "He recommends the same Reserve Move sequence of advancing, using magic missiles, and withdrawing."
+    },
+    {
+      "lesId": "after-the-flank",
+      "bron": {
+        "bronId": "yt-NUfvfvASSTg",
+        "url": "https://www.youtube.com/watch?v=NUfvfvASSTg&t=1608s",
+        "tijd": 1611,
+        "citaat": "your shabi are free to are free to wheel this way. Move up.",
+        "extraCitaten": [
+          {
+            "tijd": 1597,
+            "citaat": "use this firepower to to eliminate anything here"
+          }
+        ]
+      },
+      "toelichting": "Clearing the flank releases the Ushabti and supporting pieces to wheel inward, matching the existing advice to exploit a won flank."
+    }
+  ],
+  "overgeslagen": "Skipped the introductory list and stat readouts without recommendations, software demonstrations and technical difficulties, channel plans and closing talk. Omitted unclear caption fragments and optional equipment alternatives without a clear recommendation.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

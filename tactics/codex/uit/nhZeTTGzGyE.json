@@ -1,0 +1,216 @@
+{
+  "videoId": "nhZeTTGzGyE",
+  "bronId": "yt-nhZeTTGzGyE",
+  "model": "GPT-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T23:34:41.162Z",
+  "nieuw": [
+    {
+      "id": "forest-bunker-cover",
+      "titel": "Keep enough of your forest bunker in cover",
+      "tekst": "When deploying a bunker with Move Through Cover in a forest, position enough of its models inside to gain cover as it advances through the terrain.",
+      "waarom": "He considers the risk of moving through the forest negligible when the unit has Move Through Cover.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-nhZeTTGzGyE",
+          "url": "https://www.youtube.com/watch?v=nhZeTTGzGyE&t=193s",
+          "tijd": 196,
+          "citaat": "just 50% of the unit to gain the most access to cover"
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "move-only-needed-skirmishers",
+      "titel": "Move only the skirmishers that need to reposition",
+      "tekst": "Reposition only the models needed to bring a skirmishing bunker into spell range or move it clear of a charge threat, while maintaining the wizard's line of sight.",
+      "waarom": "He says shooting penalties apply only to the models that moved, so moving part of the unit minimises the impact on the rest.",
+      "voorbeeld": "He moved five models forward to bring his Shaman into range for The Summoning while keeping him inside the unit, protected from shooting and magic missiles.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-nhZeTTGzGyE",
+          "url": "https://www.youtube.com/watch?v=nhZeTTGzGyE&t=325s",
+          "tijd": 328,
+          "citaat": "you don't have to move all of them. You can just move some of them.",
+          "extraCitaten": [
+            {
+              "tijd": 548,
+              "citaat": "minimizing the impact to the unit to get into range."
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "reform-line-clear-shooting",
+      "titel": "Reform into a line to clear shooting lanes",
+      "tekst": "When models in a skirmishing missile unit give its targets cover, consider reforming into a line to improve its shooting lanes.",
+      "waarom": "He explains that seeing enough of an enemy base through the unit becomes difficult with more than about ten skirmishers.",
+      "voorbeeld": "After the Wild Riders killed his Razorgor and reformed, he reformed his Ungor into a line to shoot them.",
+      "wanneerNiet": "He says the reform must respect each model's movement allowance and makes every model count as moving. He had to roll Move Through Cover for all of them, and his Shaman took a wound.",
+      "fase": "movement",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-nhZeTTGzGyE",
+          "url": "https://www.youtube.com/watch?v=nhZeTTGzGyE&t=595s",
+          "tijd": 598,
+          "citaat": "I reform into a line.",
+          "extraCitaten": [
+            {
+              "tijd": 675,
+              "citaat": "It does mean that all my models have count as moving."
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "ungor-switch-defensive-formations",
+      "titel": "Switch Ungor formations to suit the threat",
+      "tekst": "Use Skirmish for Ungor when protection from shooting matters, then reform into Open Order ranks when preparing to withstand an attack.",
+      "waarom": "He values the shooting penalty against skirmishing infantry, while ranks give his Ungor combat resolution and help their leadership through Warband and Horde.",
+      "voorbeeld": "Against Wood Elves he wanted his Ungor in Skirmish at the start, then reformed them into a ranked block towards the end.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "infantry",
+        "shooting-terrain"
+      ],
+      "leger": "beastmen-brayherds",
+      "units": [
+        "Ungor Herd"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-nhZeTTGzGyE",
+          "url": "https://www.youtube.com/watch?v=nhZeTTGzGyE&t=757s",
+          "tijd": 760,
+          "citaat": "why not just put them into this rank because these ranks",
+          "extraCitaten": [
+            {
+              "tijd": 768,
+              "citaat": "give them combat resolution again if anything tries to attack them."
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "reform-footprint-objective-control",
+      "titel": "Use reforms to gain space while retaining objective control",
+      "tekst": "Use reforms to expand or contract a unit's footprint and occupy the space you need. Keep the required proximity to an objective when changing the formation.",
+      "waarom": "He emphasises that gaining space through reforms is a significant part of manoeuvring.",
+      "voorbeeld": "His Ungor stayed barely within the six inches needed to control the Herdstone, preserving his Shaman's plus one to cast.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-nhZeTTGzGyE",
+          "url": "https://www.youtube.com/watch?v=nhZeTTGzGyE&t=816s",
+          "tijd": 819,
+          "citaat": "gaining space with reforms is a really big deal",
+          "extraCitaten": [
+            {
+              "tijd": 827,
+              "citaat": "contract or expand, take up a lot of space"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "bray-shaman-missile-choice",
+      "bron": {
+        "bronId": "yt-nhZeTTGzGyE",
+        "url": "https://www.youtube.com/watch?v=nhZeTTGzGyE&t=170s",
+        "tijd": 173,
+        "citaat": "typically vile tide against armored targets and summoning against things like elves"
+      },
+      "toelichting": "He again recommends choosing the Bray-Shaman's missile for the opponent: Vile Tide against armour and The Summoning against elves."
+    },
+    {
+      "lesId": "terrain-low-roll-charges",
+      "bron": {
+        "bronId": "yt-nhZeTTGzGyE",
+        "url": "https://www.youtube.com/watch?v=nhZeTTGzGyE&t=220s",
+        "tijd": 223,
+        "citaat": "they've got to take the low dice when they charge in"
+      },
+      "toelichting": "He again advocates using terrain to hinder an enemy charge by making it take the low die."
+    },
+    {
+      "lesId": "speed-bump-close-order",
+      "bron": {
+        "bronId": "yt-nhZeTTGzGyE",
+        "url": "https://www.youtube.com/watch?v=nhZeTTGzGyE&t=390s",
+        "tijd": 393,
+        "citaat": "those wild riders are going to be facing away.",
+        "extraCitaten": [
+          {
+            "tijd": 402,
+            "citaat": "they're not going to come into contact the Ungor."
+          }
+        ]
+      },
+      "toelichting": "His angled Razorgor illustrates the same redirection advice: closing the door turns the charger so its overrun misses the protected unit."
+    },
+    {
+      "lesId": "ungor-cheap-objective-holders",
+      "bron": {
+        "bronId": "yt-nhZeTTGzGyE",
+        "url": "https://www.youtube.com/watch?v=nhZeTTGzGyE&t=235s",
+        "tijd": 238,
+        "citaat": "while maintaining control of the herd stone for the rest of my army."
+      },
+      "voorbeeld": "His Ungor held the Herdstone while providing a bunker for a Shaman casting The Summoning.",
+      "toelichting": "He again uses Ungor to maintain control of the Herdstone, illustrating their objective-holding role."
+    }
+  ],
+  "overgeslagen": "Skipped channel support, list readouts, results, speculative rules comments and local cover-ruling debate. Omitted garbled unit references around 1:41–2:30 and 5:54–6:02, and the corrected vortex incident at 6:49–7:03.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": [
+      {
+        "wie": "aanvulling terrain-low-roll-charges",
+        "wat": "voorbeeld weggelaten: de les heeft dat veld al"
+      }
+    ]
+  }
+}

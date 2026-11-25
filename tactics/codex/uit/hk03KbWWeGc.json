@@ -1,0 +1,106 @@
+{
+  "videoId": "hk03KbWWeGc",
+  "bronId": "yt-hk03KbWWeGc",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-25T00:17:36.437Z",
+  "nieuw": [
+    {
+      "id": "shift-lone-character-protection",
+      "titel": "Move lone characters between nearby protective units",
+      "tekst": "Keep a lone character within three inches of a friendly unit containing at least five models of the same troop type, without making the character the closest target. Move the character between suitable units as the battle develops to maintain that protection.",
+      "waarom": "He was unable to target the Sorceress with Vile Tide because she was within three inches of another cavalry unit and was not the closest target.",
+      "voorbeeld": "John initially protected his mounted Sorceress near Dark Riders, then moved her behind his Cold One Knights after the first turn.",
+      "wanneerNiet": "He says the nearby Spawn could still threaten the Sorceress after winning combat; it eventually caught and killed her.",
+      "fase": "movement",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-hk03KbWWeGc",
+          "url": "https://www.youtube.com/watch?v=hk03KbWWeGc&t=187s",
+          "tijd": 190,
+          "citaat": "I wanted to Target his sorceress but I couldn't",
+          "extraCitaten": [
+            {
+              "tijd": 159,
+              "citaat": "now it's behind the cold ones"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "screen-pursuit-misses-character",
+      "titel": "Position protective units so pursuit misses your lone character",
+      "tekst": "When positioning a unit to protect a lone character, consider where an enemy would pursue if that unit lost combat. Arrange the positions so that pursuing straight ahead would take the enemy past the character's base.",
+      "waarom": "He explains that the Dragon Ogres would have to pursue directly ahead if the Dark Riders lost.",
+      "voorbeeld": "John positioned his Dark Riders so that a Dragon Ogre pursuing them would probably pass outside the Sorceress's base. The speaker says they communicated and arranged the positions for that intended outcome in advance.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-hk03KbWWeGc",
+          "url": "https://www.youtube.com/watch?v=hk03KbWWeGc&t=245s",
+          "tijd": 248,
+          "citaat": "that Dragon ogre is going to have to pursue directly ahead",
+          "extraCitaten": [
+            {
+              "tijd": 256,
+              "citaat": "probably go outside the base of this sorceress"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "characters-improve-ordinary-troops",
+      "titel": "Support infantry and basic cavalry with characters",
+      "tekst": "Consider a character leading your infantry or basic cavalry to improve its combat performance. He sees buffs and characters providing either supporting spells or extra combat punch as the route to making these units better in combat.",
+      "waarom": null,
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "infantry"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-hk03KbWWeGc",
+          "url": "https://www.youtube.com/watch?v=hk03KbWWeGc&t=393s",
+          "tijd": 396,
+          "citaat": "I think the pathway to them to being better in combat is through Buffs",
+          "extraCitaten": [
+            {
+              "tijd": 404,
+              "citaat": "them either casting spells on them or adding that level of combat punch"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [],
+  "overgeslagen": "Skipped channel and tournament background, general commentary about immersion and rules design, rules explanation without separate advice, unclear charge details around 3:27-3:54, and tentative army-building ideas with garbled names around 5:38-6:27.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

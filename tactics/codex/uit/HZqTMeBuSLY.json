@@ -1,0 +1,81 @@
+{
+  "videoId": "HZqTMeBuSLY",
+  "bronId": "yt-HZqTMeBuSLY",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-25T00:23:37.835Z",
+  "nieuw": [
+    {
+      "id": "flying-large-target-charge-access",
+      "titel": "Use flying large targets to reach charges over smaller units",
+      "tekst": "Use a flying large target's ability to see and move over smaller units to reach the charges you want. Check that there is landing space for its base.",
+      "waarom": "He highlights the advantage flying large targets have in reaching their preferred charges despite intervening units.",
+      "voorbeeld": "He had landing space for his flying large target to charge the enemy cavalry over the intervening units.",
+      "wanneerNiet": "He warns that large targets also need protection from missile troops.",
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-HZqTMeBuSLY",
+          "url": "https://www.youtube.com/watch?v=HZqTMeBuSLY&t=87s",
+          "tijd": 90,
+          "citaat": "the Griffin is able to go over the top",
+          "extraCitaten": [
+            {
+              "tijd": 73,
+              "citaat": "also there's Landing space for this Griffin"
+            },
+            {
+              "tijd": 226,
+              "citaat": "with flying large targets is big in being able to get the charges you want"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "large-target-pursuit-order",
+      "titel": "Clear following units' pursuit routes with your large target first",
+      "tekst": "Before resolving pursuits and overruns, check angles, base sizes and which units are large targets or flying. Move the flying large target first when this clears the route for following units.",
+      "waarom": "He wanted to avoid a following unit stopping against the back of his large target.",
+      "voorbeeld": "With a Doom Diver and archers able to see his Griffon, he overran it behind impassable terrain first. He then pursued with the Mage and finally the Skycutter, leaving the last unit a safer stopping position if it could not clear a base.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "game-plan",
+        "shooting-terrain"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-HZqTMeBuSLY",
+          "url": "https://www.youtube.com/watch?v=HZqTMeBuSLY&t=167s",
+          "tijd": 170,
+          "citaat": "I choose with the Griffin to go first",
+          "extraCitaten": [
+            {
+              "tijd": 145,
+              "citaat": "it's going to hit the back of this Griffin and stop"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [],
+  "overgeslagen": "Skipped the introduction, channel news, unclear charge details around 1:54, and the speaker's uncertain rules discussion about flying pursuers around 2:25. The missile-protection warning is retained only as a limit on flying large targets, rather than expanded into unsupported advice.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

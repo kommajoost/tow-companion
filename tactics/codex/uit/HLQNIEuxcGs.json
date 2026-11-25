@@ -1,0 +1,110 @@
+{
+  "videoId": "HLQNIEuxcGs",
+  "bronId": "yt-HLQNIEuxcGs",
+  "model": "GPT-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T23:40:27.594Z",
+  "nieuw": [
+    {
+      "id": "avoid-charges-unlocking-enemy-reforms",
+      "titel": "Avoid charges that give the enemy a winning reform",
+      "tekst": "Before committing to a charge, make sure you expect to win the combat. Even a loss that only makes you give ground can let the opponent restrain and reform, opening new moves on their turn.",
+      "waarom": "He warns that the opponent can reform to face another direction, then charge elsewhere or march out of trouble on their own turn.",
+      "voorbeeld": "His sacrificial Razorgor lost its combat, letting the opponent reform past his waiting Shaggoth and charge his Dragon Ogres next turn.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-HLQNIEuxcGs",
+          "url": "https://www.youtube.com/watch?v=HLQNIEuxcGs&t=254s",
+          "tijd": 257,
+          "citaat": "you need to make sure you win combat",
+          "extraCitaten": [
+            {
+              "tijd": 220,
+              "citaat": "they're going to be able to restrain and reform."
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "anvil-next-turn-combat-choices",
+      "titel": "Receive charges to preserve next-turn combat choices",
+      "tekst": "Use an anvil to take a charge and survive the first turn, preserving the choice of whether to follow up or pursue. Make that choice with your own close-range charges coming on the next turn.",
+      "waarom": "He considers this especially valuable for combat armies, because those next-turn close-range charges can decide the game.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "combat",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-HLQNIEuxcGs",
+          "url": "https://www.youtube.com/watch?v=HLQNIEuxcGs&t=605s",
+          "tijd": 608,
+          "citaat": "if you can just survive for one turn",
+          "extraCitaten": [
+            {
+              "tijd": 616,
+              "citaat": "with the knowledge that you have the close range charges coming next turn"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "death-star-wheel-arc",
+      "bron": {
+        "bronId": "yt-HLQNIEuxcGs",
+        "url": "https://www.youtube.com/watch?v=HLQNIEuxcGs&t=429s",
+        "tijd": 432,
+        "citaat": "So the trick is to march within the wheel arc",
+        "extraCitaten": [
+          {
+            "tijd": 549,
+            "citaat": "should have marched with that razor gore"
+          }
+        ]
+      },
+      "voorbeeld": "He marched his Shaggoth into the enemy's wheel arc, but charging with his Razorgor let the enemy win and reform away. He says he should also have moved the Razorgor as close as possible into the enemy's wheel arc instead of charging.",
+      "toelichting": "The same recommendation is to march close into an enemy's wheel arc to restrict its escape, illustrated here with a Shaggoth and Razorgor."
+    },
+    {
+      "lesId": "terrain-low-roll-charges",
+      "bron": {
+        "bronId": "yt-HLQNIEuxcGs",
+        "url": "https://www.youtube.com/watch?v=HLQNIEuxcGs&t=141s",
+        "tijd": 144,
+        "citaat": "improve the chances of your opponent getting a failed charge",
+        "extraCitaten": [
+          {
+            "tijd": 152,
+            "citaat": "have to go through difficult or dangerous terrain."
+          }
+        ]
+      },
+      "toelichting": "He likewise recommends exploiting difficult or dangerous terrain to make an opponent's charge fail by forcing the low roll."
+    }
+  ],
+  "overgeslagen": "Skipped historical rules commentary, standalone movement and reform rules explanations, channel sign-off, and unclear captioned unit names. Retained only the clear tactical decisions and lessons.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

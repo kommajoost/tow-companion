@@ -1,0 +1,64 @@
+{
+  "videoId": "uVe6GeW3SJg",
+  "bronId": "yt-uVe6GeW3SJg",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T23:35:55.474Z",
+  "nieuw": [
+    {
+      "id": "chaff-obstructs-caster-advance",
+      "titel": "Make advancing casters choose between charging and conveyance magic",
+      "tekst": "Position chaff so that an advancing casting unit must charge it to continue forward, at the cost of casting its conveyance spell. The speaker praises this as a way to delay that unit.",
+      "waarom": "He explains that declaring the charge would prevent Walk Between Worlds, while the Outriders' Fire and Flee and Swiftstride made catching them unlikely.",
+      "voorbeeld": "His opponent's Outriders shot at his Phoenix Guard while obstructing his Lothern Sea Guard's advance. He cast Walk Between Worlds and removed the Outriders with unusually successful shooting, but his Sea Guard stayed further back than he wanted, buying time for his opponent to improve his position and keep his Sorcerers active.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "chaff",
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-uVe6GeW3SJg",
+          "url": "https://www.youtube.com/watch?v=uVe6GeW3SJg&t=225s",
+          "tijd": 228,
+          "citaat": "if I want to continue to advance, I'm going to have to charge",
+          "extraCitaten": [
+            {
+              "tijd": 314,
+              "citaat": "I won't be able to cast walk between worlds in the conveyance phase"
+            },
+            {
+              "tijd": 407,
+              "citaat": "But it did keep my seag unit back further than I'd like."
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "chaff-safe-charge-pockets",
+      "bron": {
+        "bronId": "yt-uVe6GeW3SJg",
+        "url": "https://www.youtube.com/watch?v=uVe6GeW3SJg&t=217s",
+        "tijd": 220,
+        "citaat": "they're out of the arc of all of those units."
+      },
+      "voorbeeld": "His opponent moved Outriders outside the charge arcs of his Phoenix Guard, dragon, Griffon and probably Dragon Princes, preventing those units from charging them.",
+      "wanneerNiet": "He notes that an all-round charge arc or a charge method such as random movement can still threaten units manoeuvring this way.",
+      "toelichting": "This is the same advice to place mobile chaff in safe pockets beyond enemy charge threats."
+    }
+  ],
+  "overgeslagen": "Skipped channel support and future-video discussion, introductory role descriptions without a distinct recommendation, and points and Core allowance remarks without a clear build recommendation. Treated the Outriders' shooting and Fire and Flee as parts of the demonstrated delaying manoeuvre rather than separate lessons.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

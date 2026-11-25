@@ -1,0 +1,130 @@
+{
+  "videoId": "FnXeHFmWa0A",
+  "bronId": "yt-FnXeHFmWa0A",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T23:48:56.660Z",
+  "nieuw": [
+    {
+      "id": "great-eagle-redirection-role",
+      "titel": "Use Great Eagles for redirection and movement blocking",
+      "tekst": "He considers redirection and movement blocking the Great Eagle's ideal role in this edition. Use its mobility to angle its Close Order base so that an enemy charging it ends up in a disadvantageous position.",
+      "waarom": "He says its 20-inch flying march needs no Enemy Sighted test, avoiding a problem caused by its low leadership. Its Close Order formation makes the charger align to the eagle.",
+      "voorbeeld": "His Great Eagle wheeled around from facing the opposite flank and marched into position to redirect his brother's large Orc Boar Boy Mob towards the board edge.",
+      "wanneerNiet": "He is less convinced by its former war-machine-hunting role because it is too vulnerable to guarantee a victory even against a cannon crew. He also notes that Great Eagles compete with other desirable choices in High Elf rare slots, whereas his Sea Guard list allows them in special.",
+      "fase": "movement",
+      "themas": [
+        "chaff"
+      ],
+      "leger": "high-elf-realms",
+      "units": [
+        "Great Eagle"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-FnXeHFmWa0A",
+          "url": "https://www.youtube.com/watch?v=FnXeHFmWa0A&t=406s",
+          "tijd": 409,
+          "citaat": "much narrowed to being ideal in the Chaffrey direction or blocking movement",
+          "extraCitaten": [
+            {
+              "tijd": 171,
+              "citaat": "with a march move of 20 in"
+            },
+            {
+              "tijd": 141,
+              "citaat": "without having to test for enemy sighted."
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "flee-redirector-off-board",
+      "titel": "Flee off the board to draw a charger off",
+      "tekst": "When a redirector is close enough to the board edge for the enemy's full charge move to carry it off, consider deliberately fleeing off the board. He uses this to buy two turns rather than standing and letting the enemy restrain and reform after killing the redirector.",
+      "waarom": "He says the successful charge takes the enemy off the board, costing it the charging turn and the following turn, when it returns but cannot charge. Standing instead would let the enemy attempt to restrain and reform, ready to charge something else next turn.",
+      "voorbeeld": "His 60-point Great Eagle fled off the board in front of a large Orc Boar Boy Mob. He describes this as buying two turns for 60 points, with the enemy returning at the board edge.",
+      "wanneerNiet": "The redirector is lost when it flees off the board. His manoeuvre depended on being close enough to the edge for the enemy's charge move to take at least one model off the board.",
+      "fase": "movement",
+      "themas": [
+        "chaff"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-FnXeHFmWa0A",
+          "url": "https://www.youtube.com/watch?v=FnXeHFmWa0A&t=313s",
+          "tijd": 316,
+          "citaat": "What I'm able to do is flee deliberately.",
+          "extraCitaten": [
+            {
+              "tijd": 372,
+              "citaat": "it then gains me two turns for 60 points."
+            },
+            {
+              "tijd": 336,
+              "citaat": "he could have a restrain and reform test"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "speed-bump-close-order",
+      "bron": {
+        "bronId": "yt-FnXeHFmWa0A",
+        "url": "https://www.youtube.com/watch?v=FnXeHFmWa0A&t=421s",
+        "tijd": 424,
+        "citaat": "closed order to get in the charge arc",
+        "extraCitaten": [
+          {
+            "tijd": 432,
+            "citaat": "You don't want them to be skirmish because then that will change the alignment."
+          }
+        ]
+      },
+      "toelichting": "He repeats that a redirector needs a ranked formation so the charger aligns to it, rather than using skirmishers whose alignment works differently."
+    },
+    {
+      "lesId": "chaff-must-be-fast",
+      "bron": {
+        "bronId": "yt-FnXeHFmWa0A",
+        "url": "https://www.youtube.com/watch?v=FnXeHFmWa0A&t=421s",
+        "tijd": 424,
+        "citaat": "have enough move to orient your base in a way"
+      },
+      "toelichting": "He repeats the need for enough mobility to get a redirector into position and angle it to disadvantage the opponent."
+    },
+    {
+      "lesId": "anvil-next-turn-combat-choices",
+      "bron": {
+        "bronId": "yt-FnXeHFmWa0A",
+        "url": "https://www.youtube.com/watch?v=FnXeHFmWa0A&t=277s",
+        "tijd": 280,
+        "citaat": "for a lot of units, it's better just to march into the charge range.",
+        "extraCitaten": [
+          {
+            "tijd": 310,
+            "citaat": "escape from combat on their own turn and potentially even move away."
+          }
+        ]
+      },
+      "wanneerNiet": "He says the receiving anvil or infantry unit needs to fall back in good order or otherwise survive the charge reasonably well.",
+      "toelichting": "He recommends receiving a charge with a surviving anvil so that the unit can leave combat on its own turn, preserving its next-turn choices."
+    }
+  ],
+  "overgeslagen": "Skipped the introduction, list background without advice, standalone rules explanations and the battle outcome. The garbled description at 5:27 was not used as evidence for who moved off the board; the clearer explanation at 5:58–6:21 supplies that detail.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

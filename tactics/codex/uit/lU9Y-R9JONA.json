@@ -1,0 +1,57 @@
+{
+  "videoId": "lU9Y-R9JONA",
+  "bronId": "yt-lU9Y-R9JONA",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T23:43:23.382Z",
+  "nieuw": [
+    {
+      "id": "swiftstride-extend-orderly-retreats",
+      "titel": "Consider Swiftstride when falling back in good order",
+      "tekst": "Consider adding Swiftstride to a Fall Back in Good Order move to put more distance between your losing unit and its pursuer.",
+      "waarom": "He says the extra distance increases the chance that the opponent will not catch the unit with its pursuit roll.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-lU9Y-R9JONA",
+          "url": "https://www.youtube.com/watch?v=lU9Y-R9JONA&t=158s",
+          "tijd": 161,
+          "citaat": "You can add swift stride to a fallback in good order"
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "stubborn-anchor-countercharge",
+      "bron": {
+        "bronId": "yt-lU9Y-R9JONA",
+        "url": "https://www.youtube.com/watch?v=lU9Y-R9JONA&t=230s",
+        "tijd": 233,
+        "citaat": "creating a flank for a unit like this chariot.",
+        "extraCitaten": [
+          {
+            "tijd": 393,
+            "citaat": "stubborn which creates a fallback in order for you to reform"
+          }
+        ]
+      },
+      "toelichting": "Both recommend reforming after falling back in good order to expose the pursuing enemy to a supporting flank charge; he also names Stubborn as a way to obtain this reform."
+    }
+  ],
+  "overgeslagen": "Skipped promotion, introductory commentary, rules explanations without additional advice, and the chariot duel chosen for spectacle. The alternative charge lanes are another benefit of the same retreat-and-reform manoeuvre, not a separate lesson. Omitted uncertain chariot flank-arc interpretation and speculative game details.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

@@ -1,0 +1,362 @@
+{
+  "videoId": "tyEgpt0Rjeg",
+  "bronId": "yt-tyEgpt0Rjeg",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-25T00:33:04.269Z",
+  "nieuw": [
+    {
+      "id": "two-level-fours-flexibility",
+      "titel": "Consider two level-four wizards for spell flexibility",
+      "tekst": "He likes taking two level-four wizards when he can fit them into a list, for a broad and flexible selection of spells.",
+      "waarom": "He thinks access to a wide selection of spells can be powerful and flexible.",
+      "voorbeeld": "His Chaos list can choose five or six magic missiles for a gunline approach, or concentrate on combat buffs, as he did against James's Tomb Kings block.",
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-tyEgpt0Rjeg",
+          "url": "https://www.youtube.com/watch?v=tyEgpt0Rjeg&t=338s",
+          "tijd": 341,
+          "citaat": "I quite like two level fours in it if I can",
+          "extraCitaten": [
+            {
+              "tijd": 356,
+              "citaat": "selection of spells is um can be really Qui powerful and flexible"
+            },
+            {
+              "tijd": 379,
+              "citaat": "or you can just go back to like more of a combat buff"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "chaos-swap-unhelpful-spells",
+      "titel": "Swap unwanted Daemonology spells for useful Chaos signatures",
+      "tekst": "He recommends the Arcane Journal item that lets his Daemonology Sorcerer Lord replace unwanted spells with Chaos signature spells. Use the swaps to retain a useful spell selection for the matchup.",
+      "waarom": "He finds that rolling five spells and replacing the poor results prevents a bad spell selection.",
+      "voorbeeld": "He replaces Steed of Shadows because his list has no infantry, and sometimes replaces another spell when it is not needed for the matchup. He has taken Fleshy Abundance, Blue Fire and The Summoning through these swaps.",
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": "warriors-of-chaos",
+      "units": [
+        "Sorcerer Lord"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-tyEgpt0Rjeg",
+          "url": "https://www.youtube.com/watch?v=tyEgpt0Rjeg&t=465s",
+          "tijd": 468,
+          "citaat": "you just swap them out for the nice lore of chaos signature spells",
+          "extraCitaten": [
+            {
+              "tijd": 460,
+              "citaat": "it essentially means you never have a bad selection of spells"
+            },
+            {
+              "tijd": 500,
+              "citaat": "for my list Steed of Shadows is useless I have no infantry"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "chaos-lord-steed-charge-arc",
+      "titel": "Consider a steed for the Chaos Lord's all-round charges",
+      "tekst": "Against Bretonnian Pegasus Knights and evasive Wood Elves, he chooses a steed rather than a Daemonic Mount for his Chaos Lord. He wants the Lord to leave his unit and threaten charges in any direction.",
+      "waarom": "He chose the steed for its 360-degree line of sight and charge options when those opponents manoeuvre around him.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "matchups",
+        "game-plan"
+      ],
+      "leger": "warriors-of-chaos",
+      "units": [
+        "Chaos Lord"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-tyEgpt0Rjeg",
+          "url": "https://www.youtube.com/watch?v=tyEgpt0Rjeg&t=566s",
+          "tijd": 569,
+          "citaat": "a steed rather than a demonic Mount or anything else is the 360",
+          "extraCitaten": [
+            {
+              "tijd": 586,
+              "citaat": "can come out and and basically threaten to charge things"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "chaos-knights-war-banner-swap",
+      "titel": "Consider War Banner when Icon of Darkness has little effect",
+      "tekst": "For his Chaos Knights, he would probably replace Icon of Darkness with War Banner after finding that the shooting penalty mattered little against the lists he faced.",
+      "waarom": "He found that Tomb Kings and several other opponents did not care about the minus-one shooting penalty, so he considered the banner choice a mistake.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "matchups"
+      ],
+      "leger": "warriors-of-chaos",
+      "units": [
+        "Chaos Knights"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-tyEgpt0Rjeg",
+          "url": "https://www.youtube.com/watch?v=tyEgpt0Rjeg&t=631s",
+          "tijd": 634,
+          "citaat": "I'd probably swap that out for a war Banner",
+          "extraCitaten": [
+            {
+              "tijd": 627,
+              "citaat": "the lists that I faced haven't really cared about that"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "gigantic-spawn-pins-for-support",
+      "titel": "Use a Gigantic Spawn to pin enemies for support",
+      "tekst": "He uses a Gigantic Spawn of Chaos as a tarpit, pinning enemy units so the rest of his force can join the fight. After trying two, he found one enough for his list.",
+      "waarom": "He values its unpredictable random movement for threatening nearby units in any direction, making the area around it difficult for opponents to enter safely.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": "warriors-of-chaos",
+      "units": [
+        "Gigantic Spawn of Chaos"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-tyEgpt0Rjeg",
+          "url": "https://www.youtube.com/watch?v=tyEgpt0Rjeg&t=720s",
+          "tijd": 723,
+          "citaat": "you can just pin units",
+          "extraCitaten": [
+            {
+              "tijd": 700,
+              "citaat": "I found that one was enough"
+            },
+            {
+              "tijd": 716,
+              "citaat": "it can just charge you whichever"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "combo-charge-poison-death-star",
+      "titel": "Combo-charge the poison block with as many units as possible",
+      "tekst": "He considers a coordinated charge with as many units as possible in the same turn the best, and in his view only, way to defeat this poison Death Star. Commit enough force to keep winning combats and grind the block down.",
+      "waarom": "He explains that the skeletons can be surprisingly difficult to hit because of their stacked abilities and spells. The block also inflicts substantial damage in return while he grinds it down.",
+      "voorbeeld": "His Chaos Knights and surviving Dragon Ogres were among the units that charged James's block on turn two, before several turns of grinding combat.",
+      "wanneerNiet": "He warns that some armies lack the tools for this matchup and may need considerable luck even to win.",
+      "fase": "movement",
+      "themas": [
+        "matchups",
+        "game-plan"
+      ],
+      "leger": "tomb-kings-of-khemri",
+      "units": [
+        "Skeleton Archers"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-tyEgpt0Rjeg",
+          "url": "https://www.youtube.com/watch?v=tyEgpt0Rjeg&t=1383s",
+          "tijd": 1386,
+          "citaat": "the only way to defeat this sort of list is to uh combo charge it",
+          "extraCitaten": [
+            {
+              "tijd": 1395,
+              "citaat": "units as he can all in one turn and just try and grind it out"
+            },
+            {
+              "tijd": 1110,
+              "citaat": "make sure that you're winning combats constantly"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "engage-poison-block-early",
+      "titel": "Reach the poison block early enough to grind it down",
+      "tekst": "Against this poison Death Star, engage as soon as you can with as many of your grinding units surviving as possible. Do not spend several turns hesitating or dancing around it before committing.",
+      "waarom": "He warns that the block can delete or cripple a unit each turn. He also says a late engagement may leave too few combat rounds to grind through it.",
+      "voorbeeld": "His engagement began on turn two; he says that starting the same fight on turn four would not have left enough turns to get through the block.",
+      "wanneerNiet": "He says the early commitment still needs enough force to avoid being steamrolled.",
+      "fase": "movement",
+      "themas": [
+        "game-plan",
+        "matchups"
+      ],
+      "leger": "tomb-kings-of-khemri",
+      "units": [
+        "Skeleton Archers"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-tyEgpt0Rjeg",
+          "url": "https://www.youtube.com/watch?v=tyEgpt0Rjeg&t=1100s",
+          "tijd": 1103,
+          "citaat": "you have to commit to engaging that unit as soon as you can",
+          "extraCitaten": [
+            {
+              "tijd": 1566,
+              "citaat": "there's not enough turns in the game for for me to grind through that unit"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "skeletons-or-finish-character",
+      "titel": "Attack skeletons unless you can finish a character",
+      "tekst": "Against the poison block, attack skeletons to build combat resolution rather than spreading a few wounds onto protected characters. If you choose to attack a character, commit enough attacks to try to kill it outright.",
+      "waarom": "He explains that wounds on the Tomb King can be passed to the Heralds and that nearby priests can heal damage back, so a few wounds achieve little.",
+      "voorbeeld": "He directed all his Dragon Ogres' attacks at the Illusion priest rather than the other character they could attack. Killing that priest removed Glittering Robe from the fight.",
+      "wanneerNiet": "He notes that the skeletons, although easier to kill, are not always the easiest models to direct attacks against.",
+      "fase": "combat",
+      "themas": [
+        "matchups"
+      ],
+      "leger": "tomb-kings-of-khemri",
+      "units": [
+        "Skeleton Archers"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-tyEgpt0Rjeg",
+          "url": "https://www.youtube.com/watch?v=tyEgpt0Rjeg&t=1431s",
+          "tijd": 1434,
+          "citaat": "attack the skeletons as much as you can",
+          "extraCitaten": [
+            {
+              "tijd": 1426,
+              "citaat": "that's not enough he'll just raise them back"
+            },
+            {
+              "tijd": 1474,
+              "citaat": "I need to put everything to it"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "stack-buffs-avoid-fair-fights",
+      "titel": "Stack buffs rather than seek fair fights",
+      "tekst": "Avoid fair fights when you can and try to overwhelm the opponent. Stack as many buffs as you can on the attacking unit without taking too much risk, so a little bad luck does not ruin the attack.",
+      "waarom": "He says this stacks the odds in your favour even though you cannot control the dice.",
+      "voorbeeld": "When his Knights lost four models to James's Stand and Shoot, he felt the rest of their buffs compensated for those losses.",
+      "wanneerNiet": null,
+      "fase": "magic-shooting",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-tyEgpt0Rjeg",
+          "url": "https://www.youtube.com/watch?v=tyEgpt0Rjeg&t=3032s",
+          "tijd": 3035,
+          "citaat": "you don't really want to pick Fair fights if you can avoid it",
+          "extraCitaten": [
+            {
+              "tijd": 3035,
+              "citaat": "stacking all the Buffs that you can onto your unit"
+            },
+            {
+              "tijd": 3043,
+              "citaat": "without risking it too much"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "avoid-single-matchup-tech",
+      "bron": {
+        "bronId": "yt-tyEgpt0Rjeg",
+        "url": "https://www.youtube.com/watch?v=tyEgpt0Rjeg&t=1933s",
+        "tijd": 1936,
+        "citaat": "I wouldn't build towards exclusively",
+        "extraCitaten": [
+          {
+            "tijd": 1927,
+            "citaat": "if I face it I need a plan against that"
+          }
+        ]
+      },
+      "voorbeeld": "He advises having a plan for the large Tomb Kings poison block without building exclusively to face it, since he does not expect everyone to run that list.",
+      "toelichting": "He likewise advises considering a dangerous matchup without tailoring the entire army to it."
+    },
+    {
+      "lesId": "prepare-for-local-opponents",
+      "bron": {
+        "bronId": "yt-tyEgpt0Rjeg",
+        "url": "https://www.youtube.com/watch?v=tyEgpt0Rjeg&t=2434s",
+        "tijd": 2437,
+        "citaat": "the meta online is very different to The Meta in real life",
+        "extraCitaten": [
+          {
+            "tijd": 2494,
+            "citaat": "don't know how to how it works because it's not something you've come up against"
+          }
+        ]
+      },
+      "wanneerNiet": "He warns that practising against efficient online lists can leave you unfamiliar with other armies that people bring to physical events.",
+      "toelichting": "His warning likewise calls for preparation based on the actual event field rather than assuming the online metagame applies."
+    }
+  ],
+  "overgeslagen": "Skipped introductions, player history, tournament standings, rules and list readouts without clear advice, community-comp discussion, online-platform and clock explanations, general practice advice, and predictions about future armies. Omitted unclear captioned names for the small Dragon Ogre support models rather than identifying them by guesswork.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

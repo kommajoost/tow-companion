@@ -727,5 +727,1054 @@
       "control-spells-block-lanes (+voorbeeld)"
     ],
     "opmerkingen": []
+  },
+  "-X-MTgECw6Q": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/-X-MTgECw6Q.json",
+    "nieuw": [
+      "scale-buffs-across-attacks",
+      "debuff-strongest-enemy-unit",
+      "plan-around-guaranteed-signatures",
+      "skirmishing-missile-wizard-bunker",
+      "fated-dispel-low-roll",
+      "multiple-low-level-signature-casters",
+      "casting-bonuses-magic-investment",
+      "battle-magic-ward-block",
+      "arrow-attraction-concentrated-fire",
+      "arcane-urgency-escape-charge-arcs",
+      "gathering-darkness-terror-combination",
+      "daemonic-vessel-basic-infantry",
+      "daemonic-vigour-defensive-priority",
+      "infernal-gateway-save-character",
+      "phantasmagoria-force-bad-charges",
+      "plague-rust-armoured-targets",
+      "earthen-ramparts-shooting-defence",
+      "mystical-pathways-change-attack-angle",
+      "mystical-pathways-open-shooting",
+      "drain-magic-low-level-casters",
+      "shimmering-dragon-backline-hunter",
+      "crystal-column-block-artillery",
+      "preserve-vortex-outside-dispel-range",
+      "doppelganger-needs-combat-caster",
+      "necromancy-level-four-investment",
+      "spectral-steed-caster-protection",
+      "prefer-orc-goblin-signatures",
+      "vindictive-glare-elite-cavalry",
+      "hand-gork-rescue-character",
+      "bad-moon-itchy-nuisance",
+      "evil-sun-spear-blocks"
+    ],
+    "aanvullingen": [
+      "engage-wizard-before-casting",
+      "shift-lone-character-protection",
+      "magic-missiles-bypass-cover",
+      "control-spells-block-lanes (+wanneerNiet)",
+      "battle-lust-before-charge (+wanneerNiet)",
+      "illusion-needs-casting-bonuses",
+      "necromancy-leadership-control"
+    ],
+    "opmerkingen": [
+      "aanvulling op control-spells-block-lanes: extra citaat van yt-yA48rL-yKxo weggehaald voor de nieuwe bron (\"make your opponent take the low role on a charge\")"
+    ]
+  },
+  "25BawgUHbZQ": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/25BawgUHbZQ.json",
+    "nieuw": [
+      "summoning-or-ruby-ring",
+      "reconsider-warriors-blue-fire",
+      "ruby-ring-unit-champions",
+      "respect-unreliable-missile-threats",
+      "wind-blast-shorten-charges",
+      "wind-blast-objective-distance",
+      "vile-tide-armoured-knights",
+      "multiple-vile-tide-casters",
+      "bray-shaman-missile-choice"
+    ],
+    "aanvullingen": [
+      "vile-tide-large-wound-targets (+waarom)"
+    ],
+    "opmerkingen": []
+  },
+  "2YXd1POAWWk": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/2YXd1POAWWk.json",
+    "nieuw": [],
+    "aanvullingen": [
+      "layer-resilient-units-retreat-trap"
+    ],
+    "opmerkingen": [
+      "aanvulling op layer-resilient-units-retreat-trap: extra citaat van yt-kPEFkQepMuw weggehaald voor de nieuwe bron (\"have something that can run the hold the middle of the board\")"
+    ]
+  },
+  "2yxaFqlrg4U": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/2yxaFqlrg4U.json",
+    "nieuw": [
+      "evasive-limit-fireball-reach",
+      "close-range-against-evasive",
+      "evasive-retreat-behind-hill",
+      "evasive-reform-escape-facing"
+    ],
+    "aanvullingen": [],
+    "opmerkingen": []
+  },
+  "7XuBN5nFkJo": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/7XuBN5nFkJo.json",
+    "nieuw": [
+      "poison-prioritise-attack-volume",
+      "poison-target-toughness-low-armour",
+      "poison-scouts-clear-cannon",
+      "poison-faster-threats-first",
+      "retreat-poison-slow-monsters"
+    ],
+    "aanvullingen": [],
+    "opmerkingen": []
+  },
+  "8zCPTomDOGg": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/8zCPTomDOGg.json",
+    "nieuw": [
+      "missiles-deny-terrain-scoring"
+    ],
+    "aanvullingen": [
+      "mobile-blaster-late-points",
+      "magic-missiles-bypass-cover",
+      "summoning-or-ruby-ring"
+    ],
+    "opmerkingen": [
+      "aanvulling op mobile-blaster-late-points: extra citaat van yt-yA48rL-yKxo weggehaald voor de nieuwe bron (\"cleaned up about 300 points in the late game\")",
+      "aanvulling op magic-missiles-bypass-cover: extra citaat van yt-jQeYrEiM050 weggehaald voor de nieuwe bron (\"You cannot get cover from a magic missile.\")"
+    ]
+  },
+  "CbN6ZFthII0": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/CbN6ZFthII0.json",
+    "nieuw": [
+      "orderly-retreat-widen-fighting-rank",
+      "reform-deny-followup-impact-hits",
+      "orderly-retreat-open-order-redirect"
+    ],
+    "aanvullingen": [
+      "swiftstride-extend-orderly-retreats"
+    ],
+    "opmerkingen": []
+  },
+  "DsFTlB8l-to": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/DsFTlB8l-to.json",
+    "nieuw": [
+      "offset-support-beyond-overruns",
+      "eagle-skycutter-flank-pair"
+    ],
+    "aanvullingen": [
+      "sideline-deployment-angle-inward"
+    ],
+    "opmerkingen": []
+  },
+  "EOjTbmlZ9o4": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/EOjTbmlZ9o4.json",
+    "nieuw": [
+      "choose-side-for-armies"
+    ],
+    "aanvullingen": [],
+    "opmerkingen": []
+  },
+  "E_iHOsMfK54": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/E_iHOsMfK54.json",
+    "nieuw": [
+      "movement-spells-early-aggression",
+      "accept-shooting-risk-advancing",
+      "imperfect-target-escape-shooting"
+    ],
+    "aanvullingen": [
+      "fast-armies-close-gunlines (+voorbeeld)",
+      "chaff-kills-are-bonuses (+waarom, voorbeeld)",
+      "concentrate-against-enemy-part"
+    ],
+    "opmerkingen": [
+      "aanvulling op screening-chaff: les heeft al 3 bronnen, overgeslagen",
+      "aanvulling op concentrate-against-enemy-part: extra citaat van yt-H8Lmv6tOLCI weggehaald voor de nieuwe bron (\"I killed that unit of five iron drakes.\")"
+    ]
+  },
+  "FnXeHFmWa0A": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/FnXeHFmWa0A.json",
+    "nieuw": [
+      "great-eagle-redirection-role",
+      "flee-redirector-off-board"
+    ],
+    "aanvullingen": [
+      "chaff-must-be-fast",
+      "anvil-next-turn-combat-choices (+wanneerNiet)"
+    ],
+    "opmerkingen": [
+      "aanvulling op speed-bump-close-order: les heeft al 3 bronnen, overgeslagen",
+      "aanvulling op chaff-must-be-fast: extra citaat van yt-w5Uye9wgycA weggehaald voor de nieuwe bron (\"The speed and the mobility of the speed bump is very very important\")"
+    ]
+  },
+  "FssJG1lIsXI": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/FssJG1lIsXI.json",
+    "nieuw": [
+      "reform-screen-flank-countercharge"
+    ],
+    "aanvullingen": [
+      "check-angles-before-approaching (+wanneerNiet)",
+      "decoys-set-up-countercharges (+waarom, voorbeeld, wanneerNiet)",
+      "screeners-evasive-feigned-flight (+wanneerNiet)"
+    ],
+    "opmerkingen": []
+  },
+  "HLQNIEuxcGs": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/HLQNIEuxcGs.json",
+    "nieuw": [
+      "avoid-charges-unlocking-enemy-reforms",
+      "anvil-next-turn-combat-choices"
+    ],
+    "aanvullingen": [
+      "death-star-wheel-arc (+voorbeeld)",
+      "terrain-low-roll-charges"
+    ],
+    "opmerkingen": []
+  },
+  "HZqTMeBuSLY": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/HZqTMeBuSLY.json",
+    "nieuw": [
+      "flying-large-target-charge-access",
+      "large-target-pursuit-order"
+    ],
+    "aanvullingen": [],
+    "opmerkingen": []
+  },
+  "HgQRV1-Z32o": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/HgQRV1-Z32o.json",
+    "nieuw": [
+      "reavers-marching-column-breakthrough",
+      "reavers-widen-clear-breakthrough",
+      "reavers-question-bow-upgrade"
+    ],
+    "aanvullingen": [],
+    "opmerkingen": []
+  },
+  "HibjCFdy04Y": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/HibjCFdy04Y.json",
+    "nieuw": [
+      "concentrate-fire-finish-lanterns",
+      "infernal-guard-fireglaive-armour",
+      "skullcracker-iron-daemon-lanterns",
+      "larger-khorne-fury-units",
+      "small-units-waste-lantern-shots",
+      "plague-drones-fight-lanterns",
+      "bloodthirster-needs-lantern-support",
+      "mixed-daemon-gods-lanterns",
+      "black-staff-focus-familiars",
+      "avoid-column-dependent-strategy",
+      "scourgerunner-over-reaper",
+      "deny-lantern-rear-landings",
+      "dark-riders-trap-disengagement",
+      "power-scrolls-critical-ethereal-turns",
+      "hills-reduce-cannon-bounces",
+      "skinks-screen-cannon-sight",
+      "multiple-stonehorns-against-cathay",
+      "gorgers-hunt-cathayan-cannons",
+      "mournfang-impact-wound-rerolls",
+      "time-stonehorn-pressure-turn",
+      "ogre-vanguard-threat-overload",
+      "warp-lightning-cannons-lanterns",
+      "jezzails-hidden-lantern-kill-lanes",
+      "lower-lantern-leadership-screams",
+      "vampire-ethereal-lantern-control",
+      "avoid-blood-knights-lanterns",
+      "hexwraith-marching-column-attacks",
+      "six-fell-bats-cannons",
+      "avoid-vargheists-lantern-matchup",
+      "repeated-terror-charges-lanterns",
+      "miao-ying-hunts-lanterns",
+      "prefer-granite-sentinel-durability",
+      "jade-lancers-ambush-cannons",
+      "jade-fleet-allied-outriders"
+    ],
+    "aanvullingen": [
+      "thin-formations-against-bombing",
+      "scouts-deny-lantern-deployment",
+      "ethereal-bunker-against-lanterns (+voorbeeld)",
+      "evasive-push-bombs-long-range",
+      "bait-lanterns-into-concentrated-fire",
+      "hide-random-movers-behind-hills",
+      "tank-layer-three-saves",
+      "cannon-bounce-multiple-lanterns"
+    ],
+    "opmerkingen": [
+      "aanvulling op thin-formations-against-bombing: extra citaat van yt-pElilulzeF8 weggehaald voor de nieuwe bron (\"The worst thing you can do is be five models wide, five models deep.\")",
+      "aanvulling op scouts-deny-lantern-deployment: extra citaat van yt-pElilulzeF8 weggehaald voor de nieuwe bron (\"you can put more archers on the second side over here.\")",
+      "aanvulling op ethereal-bunker-against-lanterns: extra citaat van yt-pElilulzeF8 weggehaald voor de nieuwe bron (\"this spell just doesn't go off every single turn\")",
+      "aanvulling op evasive-push-bombs-long-range: extra citaat van yt-pElilulzeF8 weggehaald voor de nieuwe bron (\"if every single unit in your army is skirmishing, another minus one to hit.\")",
+      "aanvulling op hide-random-movers-behind-hills: extra citaat van yt-bN6ghmremp4 weggehaald voor de nieuwe bron (\"it is being hidden from some of the shooting by the rules of the hill\")",
+      "aanvulling op tank-layer-three-saves: extra citaat van yt-RFTZBd8s3bI weggehaald voor de nieuwe bron (\"all three if you can.\")"
+    ]
+  },
+  "Hp4zVz36yQQ": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/Hp4zVz36yQQ.json",
+    "nieuw": [
+      "align-sacrifices-for-empty-overruns"
+    ],
+    "aanvullingen": [
+      "chaff-decoys"
+    ],
+    "opmerkingen": [
+      "aanvulling op chaff-decoys: extra citaat van yt-w5Uye9wgycA weggehaald voor de nieuwe bron (\"point mangler, which buys time for your win potential\")"
+    ]
+  },
+  "J076S9O3mYA": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/J076S9O3mYA.json",
+    "nieuw": [
+      "reconsider-vortexes-in-15",
+      "moving-vortex-in-advance-path",
+      "crystal-column-shelter-charge-choice"
+    ],
+    "aanvullingen": [],
+    "opmerkingen": [
+      "aanvulling op control-spells-block-lanes: les heeft al 3 bronnen, overgeslagen"
+    ]
+  },
+  "MBQ_7ffnuxM": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/MBQ_7ffnuxM.json",
+    "nieuw": [
+      "mobile-core-objective-attackers",
+      "combo-charge-objective-defenders",
+      "nomadic-boar-boy-objectives",
+      "ambush-vacated-enemy-objectives",
+      "unbreakable-advance-beyond-capture",
+      "stubborn-shield-wall-scoring",
+      "eternal-guard-charge-for-scoring",
+      "doombull-gor-scoring-attacker",
+      "support-scorers-with-hammers"
+    ],
+    "aanvullingen": [
+      "anchor-core-objective-threat (+voorbeeld)",
+      "hybrid-hammer-objectives (+voorbeeld)",
+      "hidden-mobile-objective-grabs (+waarom)",
+      "jade-warriors-deny-scoring"
+    ],
+    "opmerkingen": [
+      "aanvulling op anchor-core-objective-threat: extra citaat van yt-3L00jVNHOfg weggehaald voor de nieuwe bron (\"It's really great if it's over unit strength 10.\")",
+      "aanvulling op jade-warriors-deny-scoring: extra citaat van yt-1vg-r1tlTxA weggehaald voor de nieuwe bron (\"unit strength nine, which means they can't score an objective.\")"
+    ]
+  },
+  "N9OUoFaP8Bw": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/N9OUoFaP8Bw.json",
+    "nieuw": [
+      "screen-block-every-firing-line",
+      "clear-screens-with-cheap-units"
+    ],
+    "aanvullingen": [
+      "decoys-set-up-countercharges"
+    ],
+    "opmerkingen": [
+      "aanvulling op chaff-under-100-points: les heeft al 3 bronnen, overgeslagen",
+      "aanvulling op chaff-must-be-fast: les heeft al 3 bronnen, overgeslagen",
+      "aanvulling op chaff-decoys: les heeft al 3 bronnen, overgeslagen",
+      "aanvulling op decoys-set-up-countercharges: extra citaat van yt-AnCRVjL8dJg weggehaald voor de nieuwe bron (\"Set up countercharges of your own.\")"
+    ]
+  },
+  "NUfvfvASSTg": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/NUfvfvASSTg.json",
+    "nieuw": [
+      "necrosphinx-terror-leadership",
+      "earthen-ramparts-missile-troops",
+      "reposition-shooting-blocks-safely",
+      "urgency-hide-casket",
+      "mortuary-priest-backup-rust",
+      "swarm-battery-healing-cycle",
+      "horse-archers-scouting-bonus",
+      "vanguard-scorpions-fight-chaff",
+      "overlap-necrosphinx-threat-arcs",
+      "prioritise-light-of-protection",
+      "mortuary-cult-refused-flank",
+      "ushabti-arcs-against-flyers",
+      "flying-high-priests-conveyances",
+      "foot-priests-infantry-protection"
+    ],
+    "aanvullingen": [
+      "skeleton-archers-poison-volume",
+      "ushabti-great-bows-lanterns",
+      "reserve-move-blaster-withdrawal",
+      "after-the-flank"
+    ],
+    "opmerkingen": [
+      "aanvulling op skeleton-archers-poison-volume: extra citaat van yt-pElilulzeF8 weggehaald voor de nieuwe bron (\"a big skeleton archer unit with volley fire\")",
+      "aanvulling op reserve-move-blaster-withdrawal: extra citaat van yt-yA48rL-yKxo weggehaald voor de nieuwe bron (\"out again so that the blaster mage can survive\")"
+    ]
+  },
+  "QFdsSZRUPjc": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/QFdsSZRUPjc.json",
+    "nieuw": [
+      "advance-before-charge-wheel"
+    ],
+    "aanvullingen": [],
+    "opmerkingen": []
+  },
+  "QJlDEF8Yl5w": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/QJlDEF8Yl5w.json",
+    "nieuw": [
+      "champions-preserve-units-defensively",
+      "pegasus-low-strength-armour-piercing",
+      "sisters-shoot-pegasus-knights"
+    ],
+    "aanvullingen": [
+      "stubborn-anchor-countercharge"
+    ],
+    "opmerkingen": [
+      "aanvulling op stubborn-anchor-countercharge: extra citaat van yt-3L00jVNHOfg weggehaald voor de nieuwe bron (\"set up a flank charge for your hammers coming in if your opponent follows through.\")",
+      "aanvulling op chaff-speed-bumps: les heeft al 3 bronnen, overgeslagen"
+    ]
+  },
+  "Rob7a4n3SgE": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/Rob7a4n3SgE.json",
+    "nieuw": [
+      "drilled-narrow-unwanted-contact",
+      "dragon-prince-side-placement"
+    ],
+    "aanvullingen": [
+      "reform-for-future-targets"
+    ],
+    "opmerkingen": [
+      "aanvulling op reform-for-future-targets: extra citaat van yt-2rb8YOkXY0w weggehaald voor de nieuwe bron (\"you need to make sure that you have multiple targets\")"
+    ]
+  },
+  "SeWud8kexJQ": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/SeWud8kexJQ.json",
+    "nieuw": [
+      "charge-screen-open-lane"
+    ],
+    "aanvullingen": [],
+    "opmerkingen": []
+  },
+  "TFlIcp0gNlE": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/TFlIcp0gNlE.json",
+    "nieuw": [
+      "active-charges-force-pressure"
+    ],
+    "aanvullingen": [],
+    "opmerkingen": []
+  },
+  "YCaq4YyMFFU": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/YCaq4YyMFFU.json",
+    "nieuw": [
+      "skycutter-efficient-auto-include",
+      "fleeing-bait-sideways-facing"
+    ],
+    "aanvullingen": [
+      "lumbering-perpendicular-charge-options"
+    ],
+    "opmerkingen": [
+      "aanvulling op lumbering-perpendicular-charge-options: extra citaat van yt-WiPvn9BMDyQ weggehaald voor de nieuwe bron (\"reserve move makes this a lot easier\")"
+    ]
+  },
+  "YKz1OGpb4e8": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/YKz1OGpb4e8.json",
+    "nieuw": [
+      "temple-guard-core-priority",
+      "marching-column-casualty-margin",
+      "marching-column-anvil-advance"
+    ],
+    "aanvullingen": [
+      "orderly-retreat-widen-fighting-rank"
+    ],
+    "opmerkingen": [
+      "aanvulling op orderly-retreat-widen-fighting-rank: extra citaat van yt-CbN6ZFthII0 weggehaald voor de nieuwe bron (\"this is very, very strong for units with great weapons\")"
+    ]
+  },
+  "ZdFsJWjjBGM": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/ZdFsJWjjBGM.json",
+    "nieuw": [
+      "judge-units-by-points-role",
+      "gunlines-score-without-contact",
+      "fast-armies-close-gunlines"
+    ],
+    "aanvullingen": [],
+    "opmerkingen": [
+      "aanvulling op chaff-speed-bumps: les heeft al 3 bronnen, overgeslagen"
+    ]
+  },
+  "_enmI-Nb1rw": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/_enmI-Nb1rw.json",
+    "nieuw": [
+      "charge-weak-target-then-redirect",
+      "redirect-deny-stand-shoot"
+    ],
+    "aanvullingen": [],
+    "opmerkingen": []
+  },
+  "aAYhrGdShpY": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/aAYhrGdShpY.json",
+    "nieuw": [
+      "choose-dragon-role-early",
+      "dragon-threatens-mobile-duke",
+      "commit-dragon-accept-risk"
+    ],
+    "aanvullingen": [
+      "dragon-first-turn-march (+voorbeeld)"
+    ],
+    "opmerkingen": []
+  },
+  "bN6ghmremp4": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/bN6ghmremp4.json",
+    "nieuw": [
+      "hide-random-movers-behind-hills",
+      "spawn-catch-fleeing-targets"
+    ],
+    "aanvullingen": [],
+    "opmerkingen": []
+  },
+  "eDPQEPZPE8U": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/eDPQEPZPE8U.json",
+    "nieuw": [],
+    "aanvullingen": [
+      "terrain-low-roll-charges"
+    ],
+    "opmerkingen": [
+      "aanvulling op terrain-low-roll-charges: extra citaat van yt-nVEV8ES5NWE weggehaald voor de nieuwe bron (\"I achieve my goal of winning another turn\")"
+    ]
+  },
+  "e__Az4RtmK0": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/e__Az4RtmK0.json",
+    "nieuw": [
+      "charge-adjacent-targets-together"
+    ],
+    "aanvullingen": [],
+    "opmerkingen": []
+  },
+  "fAZfkonBGpA": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/fAZfkonBGpA.json",
+    "nieuw": [
+      "cheap-area-capture-units",
+      "maintain-cover-for-scorers",
+      "clear-route-for-scorers"
+    ],
+    "aanvullingen": [
+      "move-to-hold-objectives"
+    ],
+    "opmerkingen": []
+  },
+  "fWAVzuC0BOw": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/fWAVzuC0BOw.json",
+    "nieuw": [
+      "resolve-overrun-feeder-first",
+      "drilled-widen-overrun-contact"
+    ],
+    "aanvullingen": [
+      "drilled-narrow-unwanted-contact"
+    ],
+    "opmerkingen": []
+  },
+  "hk03KbWWeGc": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/hk03KbWWeGc.json",
+    "nieuw": [
+      "shift-lone-character-protection",
+      "screen-pursuit-misses-character",
+      "characters-improve-ordinary-troops"
+    ],
+    "aanvullingen": [],
+    "opmerkingen": []
+  },
+  "hmY_iMNrcNU": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/hmY_iMNrcNU.json",
+    "nieuw": [
+      "equal-drops-deploy-first",
+      "channel-ambushers-into-charges",
+      "mark-threat-ranges-dice",
+      "deploy-for-unit-synergy",
+      "combat-units-guard-artillery",
+      "deploy-early-ensure-fit",
+      "deploy-obvious-positions-early"
+    ],
+    "aanvullingen": [
+      "check-scouts-vanguard-safety (+voorbeeld)",
+      "hold-centre-win-flanks",
+      "screen-frenzy-compulsory-charges (+voorbeeld)",
+      "shift-lone-character-protection"
+    ],
+    "opmerkingen": [
+      "aanvulling op chaff-scouts-deployment: les heeft al 3 bronnen, overgeslagen",
+      "aanvulling op deploy-who-is-beatdown: les heeft al 3 bronnen, overgeslagen",
+      "aanvulling op hold-centre-win-flanks: extra citaat van yt-bbn2DD5MoUk weggehaald voor de nieuwe bron (\"if your flanking units don't get unlocked, then you can't win the center\")",
+      "aanvulling op screening-chaff: les heeft al 3 bronnen, overgeslagen",
+      "aanvulling op screen-frenzy-compulsory-charges: extra citaat van yt-bmIXdCKnW14 weggehaald voor de nieuwe bron (\"if they die, it won't cause a panic test in the frenzied unit\")",
+      "aanvulling op deploy-read-terrain: les heeft al 3 bronnen, overgeslagen",
+      "aanvulling op shift-lone-character-protection: extra citaat van yt-hk03KbWWeGc weggehaald voor de nieuwe bron (\"now it's behind the cold ones\")"
+    ]
+  },
+  "ijahRtTQylk": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/ijahRtTQylk.json",
+    "nieuw": [
+      "wood-elves-outrange-dwarf-shooting"
+    ],
+    "aanvullingen": [
+      "deploy-defensively-vs-shooting",
+      "commit-dragon-accept-risk (+waarom, voorbeeld)"
+    ],
+    "opmerkingen": [
+      "aanvulling op deploy-defensively-vs-shooting: extra citaat van yt-RADUmyzpdmc weggehaald voor de nieuwe bron (\"then his cannons would have nothing to shoot\")",
+      "aanvulling op commit-dragon-accept-risk: extra citaat van yt-aAYhrGdShpY weggehaald voor de nieuwe bron (\"you're going to have to take that chance\")"
+    ]
+  },
+  "jO-rEVzf_Ks": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/jO-rEVzf_Ks.json",
+    "nieuw": [
+      "split-units-limit-dragon-targets",
+      "angle-skirmisher-dragon-overrun",
+      "delay-dragon-score-elsewhere"
+    ],
+    "aanvullingen": [
+      "skirmishers-kite-ranked-pursuers"
+    ],
+    "opmerkingen": [
+      "aanvulling op skirmishers-kite-ranked-pursuers: extra citaat van yt-9gZfGdyZ1wg weggehaald voor de nieuwe bron (\"going to preserve their points, which is what wins in the game.\")"
+    ]
+  },
+  "jlE502YKVOQ": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/jlE502YKVOQ.json",
+    "nieuw": [
+      "fast-cavalry-skirmish-marching",
+      "seekers-mobile-core-scorers",
+      "seekers-spread-against-shooting"
+    ],
+    "aanvullingen": [
+      "hidden-mobile-objective-grabs",
+      "chaff-maximise-peril-tests"
+    ],
+    "opmerkingen": [
+      "aanvulling op skirmishers-kite-ranked-pursuers: les heeft al 3 bronnen, overgeslagen",
+      "aanvulling op hidden-mobile-objective-grabs: extra citaat van yt-MBQ_7ffnuxM weggehaald voor de nieuwe bron (\"if you protect your fast cav\")",
+      "aanvulling op chaff-maximise-peril-tests: extra citaat van yt-PTlZU04Hjw4 weggehaald voor de nieuwe bron (\"I'm going to add more wounds to the table.\")",
+      "aanvulling op chaff-engineered-enemy-retreats: les heeft al 3 bronnen, overgeslagen"
+    ]
+  },
+  "kI11Lp5K5cs": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/kI11Lp5K5cs.json",
+    "nieuw": [
+      "angle-charges-avoid-characters"
+    ],
+    "aanvullingen": [],
+    "opmerkingen": []
+  },
+  "kPEFkQepMuw": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/kPEFkQepMuw.json",
+    "nieuw": [
+      "layer-resilient-units-retreat-trap"
+    ],
+    "aanvullingen": [
+      "endgame-hide-save-points"
+    ],
+    "opmerkingen": []
+  },
+  "kgIiwDe5MLY": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/kgIiwDe5MLY.json",
+    "nieuw": [
+      "double-hammer-consecutive-waves"
+    ],
+    "aanvullingen": [],
+    "opmerkingen": []
+  },
+  "lNbSV0eVrT8": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/lNbSV0eVrT8.json",
+    "nieuw": [
+      "plan-overruns-repeat-combats"
+    ],
+    "aanvullingen": [
+      "check-angles-before-approaching",
+      "offset-skirmisher-charge-contact"
+    ],
+    "opmerkingen": [
+      "aanvulling op check-angles-before-approaching: extra citaat van yt-alCIWRq-CsY weggehaald voor de nieuwe bron (\"you have also exposed your flank\")"
+    ]
+  },
+  "lU9Y-R9JONA": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/lU9Y-R9JONA.json",
+    "nieuw": [
+      "swiftstride-extend-orderly-retreats"
+    ],
+    "aanvullingen": [],
+    "opmerkingen": [
+      "aanvulling op stubborn-anchor-countercharge: les heeft al 3 bronnen, overgeslagen"
+    ]
+  },
+  "mZEWxBsKUDc": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/mZEWxBsKUDc.json",
+    "nieuw": [
+      "budget-safe-flee-distance",
+      "flee-behind-fallback-unit",
+      "high-elves-flee-reposition",
+      "flee-deny-enemy-reforms"
+    ],
+    "aanvullingen": [],
+    "opmerkingen": [
+      "aanvulling op decoys-set-up-countercharges: les heeft al 3 bronnen, overgeslagen",
+      "aanvulling op chaff-decoys: les heeft al 3 bronnen, overgeslagen"
+    ]
+  },
+  "mcBc0gbwyQM": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/mcBc0gbwyQM.json",
+    "nieuw": [
+      "marching-column-evade-charge-arc"
+    ],
+    "aanvullingen": [],
+    "opmerkingen": [
+      "aanvulling op skirmishers-kite-ranked-pursuers: les heeft al 3 bronnen, overgeslagen"
+    ]
+  },
+  "nGqCpuxp85s": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/nGqCpuxp85s.json",
+    "nieuw": [
+      "risk-cleanup-preserve-tempo",
+      "pink-horrors-reform-shooting"
+    ],
+    "aanvullingen": [
+      "flank-who-benefited",
+      "after-the-flank"
+    ],
+    "opmerkingen": [
+      "aanvulling op after-the-flank: extra citaat van yt-NUfvfvASSTg weggehaald voor de nieuwe bron (\"use this firepower to to eliminate anything here\")"
+    ]
+  },
+  "nVEV8ES5NWE": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/nVEV8ES5NWE.json",
+    "nieuw": [
+      "prioritise-emphasise-neutralise-negate",
+      "screams-weaken-dragon-ogres",
+      "large-targets-avoid-vile-tide",
+      "corner-models-deny-ambushes",
+      "skeletons-twenty-five-thirty",
+      "undead-wall-protect-flanks",
+      "banshees-behind-closest-infantry",
+      "curse-years-holding-plan",
+      "terrain-low-roll-charges",
+      "undead-infantry-receive-charges",
+      "save-scroll-decisive-control",
+      "scream-exposed-bray-shaman",
+      "resurrect-outnumber-central-objective",
+      "herdstone-after-main-battle"
+    ],
+    "aanvullingen": [
+      "control-with-ranged-firepower (+waarom)"
+    ],
+    "opmerkingen": [
+      "aanvulling op hidden-mobile-objective-grabs: les heeft al 3 bronnen, overgeslagen"
+    ]
+  },
+  "nhZeTTGzGyE": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/nhZeTTGzGyE.json",
+    "nieuw": [
+      "forest-bunker-cover",
+      "move-only-needed-skirmishers",
+      "reform-line-clear-shooting",
+      "ungor-switch-defensive-formations",
+      "reform-footprint-objective-control"
+    ],
+    "aanvullingen": [
+      "bray-shaman-missile-choice",
+      "ungor-cheap-objective-holders (+voorbeeld)"
+    ],
+    "opmerkingen": [
+      "aanvulling op terrain-low-roll-charges: les heeft al 3 bronnen, overgeslagen",
+      "aanvulling op speed-bump-close-order: les heeft al 3 bronnen, overgeslagen",
+      "aanvulling op ungor-cheap-objective-holders: extra citaat van yt-PTlZU04Hjw4 weggehaald voor de nieuwe bron (\"You're getting 10 unit strength.\")"
+    ]
+  },
+  "qok5TcUAoYc": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/qok5TcUAoYc.json",
+    "nieuw": [
+      "wait-before-contesting-centre"
+    ],
+    "aanvullingen": [],
+    "opmerkingen": []
+  },
+  "rOcYosnMD7M": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/rOcYosnMD7M.json",
+    "nieuw": [
+      "reconsider-infantry-charging-infantry",
+      "infantry-ten-after-challenge",
+      "infantry-overwhelm-dragon-numbers",
+      "monster-charge-challenge-support",
+      "first-charge-infantry-ranks",
+      "position-fast-monster-pursuers",
+      "infantry-character-flank-challenge"
+    ],
+    "aanvullingen": [
+      "anchor-challenges-against-dragons"
+    ],
+    "opmerkingen": [
+      "aanvulling op anchor-challenges-against-dragons: extra citaat van yt-FWUiFk5AOjg weggehaald voor de nieuwe bron (\"I can challenge out a monster and survive around\")"
+    ]
+  },
+  "reElmglMxhU": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/reElmglMxhU.json",
+    "nieuw": [
+      "substantial-core-scenario-scorers",
+      "claim-objectives-against-gunlines",
+      "field-glory-wide-deployment",
+      "vanguard-temporary-objective-control",
+      "king-hill-concentrate-centre",
+      "close-quarter-defensive-shooting",
+      "chance-encounter-patient-play",
+      "ambushers-target-baggage-trains"
+    ],
+    "aanvullingen": [
+      "move-to-hold-objectives"
+    ],
+    "opmerkingen": [
+      "aanvulling op move-to-hold-objectives: extra citaat van yt-alCIWRq-CsY weggehaald voor de nieuwe bron (\"controlling objectives, protecting key units, and refusing fights that didn't matter.\")",
+      "aanvulling op hidden-mobile-objective-grabs: les heeft al 3 bronnen, overgeslagen"
+    ]
+  },
+  "sjKsZiFRnaE": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/sjKsZiFRnaE.json",
+    "nieuw": [
+      "stagger-receivers-for-countercharge",
+      "dragon-ogres-sacrificial-receivers",
+      "flank-charge-free-alignment-wheel",
+      "check-hammer-charge-alignment"
+    ],
+    "aanvullingen": [],
+    "opmerkingen": [
+      "aanvulling op speed-bump-close-order: les heeft al 3 bronnen, overgeslagen"
+    ]
+  },
+  "tRulkCymUfY": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/tRulkCymUfY.json",
+    "nieuw": [
+      "compare-ranges-before-deploying",
+      "deploy-assuming-second-turn",
+      "deploy-beyond-moving-shooters",
+      "wood-elves-clear-mobile-ranged",
+      "treeman-bsb-backline-defence"
+    ],
+    "aanvullingen": [
+      "identify-expendable-units",
+      "woods-block-attack-lanes"
+    ],
+    "opmerkingen": [
+      "aanvulling op deploy-defensively-vs-shooting: les heeft al 3 bronnen, overgeslagen"
+    ]
+  },
+  "tyEgpt0Rjeg": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/tyEgpt0Rjeg.json",
+    "nieuw": [
+      "two-level-fours-flexibility",
+      "chaos-swap-unhelpful-spells",
+      "chaos-lord-steed-charge-arc",
+      "chaos-knights-war-banner-swap",
+      "gigantic-spawn-pins-for-support",
+      "combo-charge-poison-death-star",
+      "engage-poison-block-early",
+      "skeletons-or-finish-character",
+      "stack-buffs-avoid-fair-fights"
+    ],
+    "aanvullingen": [
+      "avoid-single-matchup-tech (+voorbeeld)",
+      "prepare-for-local-opponents (+wanneerNiet)"
+    ],
+    "opmerkingen": [
+      "aanvulling op avoid-single-matchup-tech: extra citaat van yt-dtzobjI1eTs weggehaald voor de nieuwe bron (\"instead focus on the micro skills of movement and\")",
+      "aanvulling op prepare-for-local-opponents: extra citaat van yt-dtzobjI1eTs weggehaald voor de nieuwe bron (\"what people are seeing online is not always what people are painting up to play\")"
+    ]
+  },
+  "uVe6GeW3SJg": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/uVe6GeW3SJg.json",
+    "nieuw": [
+      "chaff-obstructs-caster-advance"
+    ],
+    "aanvullingen": [
+      "chaff-safe-charge-pockets (+voorbeeld, wanneerNiet)"
+    ],
+    "opmerkingen": []
+  },
+  "v-wzGw_P7zc": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/v-wzGw_P7zc.json",
+    "nieuw": [],
+    "aanvullingen": [],
+    "opmerkingen": []
+  },
+  "v82EA60pzII": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/v82EA60pzII.json",
+    "nieuw": [
+      "zone-with-overlapping-threats",
+      "mirage-before-monster-slayer",
+      "reach-tomb-kings-wizard"
+    ],
+    "aanvullingen": [],
+    "opmerkingen": []
+  },
+  "vYjV7Pl24ig": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/vYjV7Pl24ig.json",
+    "nieuw": [],
+    "aanvullingen": [],
+    "opmerkingen": []
+  },
+  "v_qINsMBeEQ": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/v_qINsMBeEQ.json",
+    "nieuw": [
+      "maximise-razorgor-core",
+      "sideline-deployment-angle-inward",
+      "razorgor-attempt-long-charges",
+      "razorgor-tuskgor-bait-switch",
+      "razorgor-flee-without-swiftstride"
+    ],
+    "aanvullingen": [
+      "chaff-kills-are-bonuses"
+    ],
+    "opmerkingen": [
+      "aanvulling op chaff-kills-are-bonuses: extra citaat van yt-E_iHOsMfK54 weggehaald voor de nieuwe bron (\"if they're dying instead of your good things then they've done their job\")"
+    ]
+  },
+  "vdS63XDFSlY": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/vdS63XDFSlY.json",
+    "nieuw": [
+      "contain-mobile-units-opposite-directions",
+      "angle-attackers-towards-boundary"
+    ],
+    "aanvullingen": [],
+    "opmerkingen": []
+  },
+  "wtgdaifcZOc": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/wtgdaifcZOc.json",
+    "nieuw": [
+      "white-sword-doppelganger-archmage",
+      "skycutter-white-sword-mount",
+      "glittering-robe-skycutter-archmage",
+      "lesser-mages-dispel-scrolls",
+      "plan-countermagic-attack-timing"
+    ],
+    "aanvullingen": [
+      "engage-wizard-before-casting (+voorbeeld)",
+      "central-protected-dispeller"
+    ],
+    "opmerkingen": [
+      "aanvulling op engage-wizard-before-casting: extra citaat van yt-PTzfN_o2UJo weggehaald voor de nieuwe bron (\"really need flyers to pull it off\")"
+    ]
+  },
+  "x_dED7TCT9M": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/x_dED7TCT9M.json",
+    "nieuw": [
+      "dragon-charge-arc-redirections"
+    ],
+    "aanvullingen": [
+      "plan-overruns-repeat-combats (+voorbeeld)",
+      "reform-for-future-targets",
+      "high-leadership-charge-control (+wanneerNiet)",
+      "blenders-break-and-reform"
+    ],
+    "opmerkingen": [
+      "aanvulling op reform-for-future-targets: extra citaat van yt-2rb8YOkXY0w weggehaald voor de nieuwe bron (\"make sure that you are angling in a way that you're still a threat\")",
+      "aanvulling op high-leadership-charge-control: extra citaat van yt-Fw4DRqs5aV0 weggehaald voor de nieuwe bron (\"it's nothing like rolling on tens.\")"
+    ]
+  },
+  "xdI1oppLbK4": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/xdI1oppLbK4.json",
+    "nieuw": [
+      "ambushers-pressure-enemy-movement",
+      "fast-cavalry-ambushers",
+      "ambushers-reserve-move-arrival",
+      "ambushers-banner-combat-resolution",
+      "shooting-ambushers-immediate-impact",
+      "sneaky-gits-backline-volley",
+      "beastmen-infantry-safe-ambush",
+      "road-wardens-shooting-ambush",
+      "respect-successful-ambush-arrivals",
+      "wolf-riders-selective-fights",
+      "ambush-protects-fragile-flex-units"
+    ],
+    "aanvullingen": [
+      "kiknik-ambushers-score-objectives"
+    ],
+    "opmerkingen": []
+  },
+  "xsAHWFHMQ_k": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/xsAHWFHMQ_k.json",
+    "nieuw": [
+      "bait-compulsory-charges-maximum-range",
+      "angle-compulsory-charge-bait-outward"
+    ],
+    "aanvullingen": [],
+    "opmerkingen": []
+  },
+  "ywxRjssJzE8": {
+    "op": "2026-11-25",
+    "bestand": "tactics/codex/uit/ywxRjssJzE8.json",
+    "nieuw": [
+      "ambushers-support-flank-rear-charges",
+      "disperse-enemies-open-ambush-space",
+      "close-order-wolves-ambush-support"
+    ],
+    "aanvullingen": [
+      "fast-cavalry-ambushers",
+      "ambushers-reserve-move-arrival (+wanneerNiet)",
+      "ambushers-banner-combat-resolution",
+      "shooting-ambushers-immediate-impact (+voorbeeld)",
+      "skirmishers-pursue-block-reforms (+voorbeeld)"
+    ],
+    "opmerkingen": [
+      "aanvulling op ambushers-banner-combat-resolution: extra citaat van yt-xdI1oppLbK4 weggehaald voor de nieuwe bron (\"with them it was a certainty.\")"
+    ]
   }
 }

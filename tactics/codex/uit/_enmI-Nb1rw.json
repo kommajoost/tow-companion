@@ -1,0 +1,87 @@
+{
+  "videoId": "_enmI-Nb1rw",
+  "bronId": "yt-_enmI-Nb1rw",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-25T00:43:55.950Z",
+  "nieuw": [
+    {
+      "id": "charge-weak-target-then-redirect",
+      "titel": "Charge a weaker unit before redirecting into your intended target",
+      "tekst": "When you have two possible charge targets, declare against the weaker unit first to force or tempt it to flee, then redirect into the unit you actually want to attack. He particularly recommends Terror or Swiftstride for this tactic.",
+      "waarom": "He says Terror can force the weaker unit to flee without its opponent choosing to do so, while Swiftstride makes long charges possible.",
+      "voorbeeld": "He charged his Forest Dragon at Skinks first, made them flee through Terror, then redirected into his intended target in a forest 19 inches away. He acknowledges that his successful charge roll was lucky.",
+      "wanneerNiet": "He says you need two possible charge targets and can only redirect once.",
+      "fase": "movement",
+      "themas": [
+        "game-plan",
+        "psychology"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-_enmI-Nb1rw",
+          "url": "https://www.youtube.com/watch?v=_enmI-Nb1rw&t=454s",
+          "tijd": 457,
+          "citaat": "declare your charge against the weaker unit",
+          "extraCitaten": [
+            {
+              "tijd": 464,
+              "citaat": "and then redirect into the unit you actually want to charge"
+            },
+            {
+              "tijd": 416,
+              "citaat": "ideally you have a unit that has either Terror or swis Swift stride"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "redirect-deny-stand-shoot",
+      "titel": "Redirect into shooters to avoid Stand and Shoot",
+      "tekst": "If your intended target is shooting infantry, first charge another unit that you can make flee, then redirect into the shooters to deny their Stand and Shoot reaction.",
+      "waarom": "He expects a heavy melee-focused unit to come out on top once it reaches the shooting infantry.",
+      "voorbeeld": "He describes making Empire Archers flee from Terror, then redirecting into a line of 20 handgunners so they cannot Stand and Shoot.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "shooting-terrain",
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-_enmI-Nb1rw",
+          "url": "https://www.youtube.com/watch?v=_enmI-Nb1rw&t=469s",
+          "tijd": 472,
+          "citaat": "if you redirect your charge into a shooting infantry unit",
+          "extraCitaten": [
+            {
+              "tijd": 482,
+              "citaat": "they don't have time to stand and shoot"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [],
+  "overgeslagen": "Skipped the introduction, battlefield and rules readouts, the game result and closing remarks. Unclear captioned unit names were not reconstructed. The dragon's later reform and pursuit were treated as the game narrative rather than separate recommendations.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": [
+      {
+        "wie": "charge-weak-target-then-redirect",
+        "wat": "extra tijd 424 -> 416"
+      }
+    ]
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "videoId": "vdS63XDFSlY",
+  "bronId": "yt-vdS63XDFSlY",
+  "model": "GPT-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-25T00:34:12.057Z",
+  "nieuw": [
+    {
+      "id": "contain-mobile-units-opposite-directions",
+      "titel": "Contain mobile enemies with threats from opposite directions",
+      "tekst": "When trying to contain mobile enemy units, approach from opposite sides while another threat keeps the same enemy units in its charge arc. Coordinate these threats to stop the enemy simply slipping away sideways.",
+      "waarom": "He needed to reach the units sheltering behind terrain while also keeping them there. He found that the Star Dragon exerted significant influence even without fighting, because the enemy avoided it and took chances against his other units instead.",
+      "voorbeeld": "His Skycutter attacked from the left, his Dragon Princes approached from the opposite side, and his Star Dragon threatened the group. He says the coordinated effort let the Skycutter tear through three units.",
+      "wanneerNiet": "He notes that two enemy units still escaped despite this arrangement.",
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-vdS63XDFSlY",
+          "url": "https://www.youtube.com/watch?v=vdS63XDFSlY&t=161s",
+          "tijd": 164,
+          "citaat": "I had to enter from one side have the dragon princes diametrically opposed",
+          "extraCitaten": [
+            {
+              "tijd": 173,
+              "citaat": "the Star Dragon threatening all of those units at the same time"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "angle-attackers-towards-boundary",
+      "titel": "Angle side attackers towards the boundary to cover escapes",
+      "tekst": "Consider facing the units approaching from the sides about 45 to 60 degrees towards the board boundary. Aim to keep enemies inside another unit's charge arc when they fall back in good order, flee voluntarily or move sideways.",
+      "waarom": "He says this herds enemies towards the back boundary, which they cannot cross without being lost, while keeping their escape routes covered by another unit's charge arc.",
+      "voorbeeld": "He thought his Dragon Princes could have lined up at an angle that brought more of the enemy's escape space into their front arc.",
+      "wanneerNiet": "He says his Skycutter had little choice of angle because it had to charge to get behind the enemy.",
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-vdS63XDFSlY",
+          "url": "https://www.youtube.com/watch?v=vdS63XDFSlY&t=273s",
+          "tijd": 276,
+          "citaat": "have them face perhaps 45 degrees towards the boundary or even 60 degrees",
+          "extraCitaten": [
+            {
+              "tijd": 323,
+              "citaat": "they're still going to be in the charge like of another unit"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [],
+  "overgeslagen": "Skipped the introduction, game and damage readouts without advice, the garbled account of which shooting units retreated through each other, and the closing commentary. General comments about considering charge arcs are retained within the concrete containment advice rather than repeated separately.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

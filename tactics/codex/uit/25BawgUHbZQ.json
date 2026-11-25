@@ -1,0 +1,305 @@
+{
+  "videoId": "25BawgUHbZQ",
+  "bronId": "yt-25BawgUHbZQ",
+  "model": "GPT-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T23:16:21.554Z",
+  "nieuw": [
+    {
+      "id": "summoning-or-ruby-ring",
+      "titel": "Bring The Summoning or Ruby Ring for ranged threats",
+      "tekst": "For an army facing a general field, he recommends access to The Summoning or Ruby Ring. If you already have The Summoning, he thinks you may not need Ruby Ring as well.",
+      "waarom": "He says mobile scoring units and skilfully played solo characters can be impossible to catch, while magic missiles also help win the chaff war. Without ranged threats, he thinks you let the opponent dictate too much of the game.",
+      "voorbeeld": null,
+      "wanneerNiet": "He notes that specialised matchup lists, such as some Worlds lists, may omit these tools.",
+      "fase": "army-building",
+      "themas": [
+        "game-plan",
+        "chaff"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-25BawgUHbZQ",
+          "url": "https://www.youtube.com/watch?v=25BawgUHbZQ&t=1058s",
+          "tijd": 1061,
+          "citaat": "I think you sort of want one or the other still in this format",
+          "extraCitaten": [
+            {
+              "tijd": 1069,
+              "citaat": "you're coming to the game with no ranged attacks, you're in a lot of trouble"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "reconsider-warriors-blue-fire",
+      "titel": "Reconsider Blue Fire for Warriors of Chaos",
+      "tekst": "He thinks Blue Fire deserves another look when building Warriors of Chaos armies. Consider it as a reason to explore builds beyond simply taking three dragons.",
+      "waarom": "He values its 18-inch range, achievable casting roll and high armour piercing. As a signature spell that a level-one caster can use, it also allows multiple casters to bring the same spell.",
+      "voorbeeld": null,
+      "wanneerNiet": "He thinks Tzeentch blaster armies are probably weaker than before because Pillar of Fire is no longer as good.",
+      "fase": "army-building",
+      "themas": [
+        "matchups"
+      ],
+      "leger": "warriors-of-chaos",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-25BawgUHbZQ",
+          "url": "https://www.youtube.com/watch?v=25BawgUHbZQ&t=273s",
+          "tijd": 276,
+          "citaat": "I think it should come back.",
+          "extraCitaten": [
+            {
+              "tijd": 276,
+              "citaat": "The high AP is a really big deal."
+            },
+            {
+              "tijd": 324,
+              "citaat": "reasons that you might want to start building a Warriors of Chaos army"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "ruby-ring-unit-champions",
+      "titel": "Consider Ruby Ring on eligible unit champions",
+      "tekst": "He particularly rates putting Ruby Ring on a unit champion who can take 50-point magic items.",
+      "waarom": "He values being able to obtain Fireball through the ring, its 24-inch range and its Strength 4 damage, especially against Toughness 3 targets.",
+      "voorbeeld": "He singles out putting the ring on Sisters of Avelorn as an excellent option.",
+      "wanneerNiet": "He acknowledges that the increased casting cost hurts.",
+      "fase": "army-building",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-25BawgUHbZQ",
+          "url": "https://www.youtube.com/watch?v=25BawgUHbZQ&t=429s",
+          "tijd": 432,
+          "citaat": "some armies are able to put them on unit champs",
+          "extraCitaten": [
+            {
+              "tijd": 440,
+              "citaat": "champs that can take 50 point items and they're incredible"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "respect-unreliable-missile-threats",
+      "titel": "Manage missile threats instead of trusting failed casts",
+      "tekst": "Do not leave vulnerable units exposed to a magic missile simply because its casting or dispelling odds might save them. He recommends managing the threat even when the spell is not reliable.",
+      "waarom": "He says good players mitigate losses and manage the odds rather than relying on the missile not going off.",
+      "voorbeeld": "He describes the threat to Hexwraiths: merely being within magic missile range can put the whole unit at risk.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-25BawgUHbZQ",
+          "url": "https://www.youtube.com/watch?v=25BawgUHbZQ&t=198s",
+          "tijd": 201,
+          "citaat": "They tend to mitigate their losses and manage those odds.",
+          "extraCitaten": [
+            {
+              "tijd": 194,
+              "citaat": "relying on it not going off is not what good players do."
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "wind-blast-shorten-charges",
+      "titel": "Use Wind Blast to make enemy charges harder",
+      "tekst": "Use Wind Blast's Give Ground effect to push an enemy back and reduce its effective charge reach. He values turning an apparently manageable charge into a difficult one.",
+      "waarom": "He describes the pushback as effectively a two-inch movement penalty.",
+      "voorbeeld": null,
+      "wanneerNiet": "He says access to Wind Blast is often unreliable because other items compete with Lore Familiar, leaving you to roll for the spell.",
+      "fase": "magic-shooting",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-25BawgUHbZQ",
+          "url": "https://www.youtube.com/watch?v=25BawgUHbZQ&t=644s",
+          "tijd": 647,
+          "citaat": "That can be really good in just reducing maximum charge ranges"
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "wind-blast-objective-distance",
+      "titel": "Push enemies back from contested objectives with Wind Blast",
+      "tekst": "Consider Wind Blast when pushing an enemy back two inches would leave your unit closest to an objective. He thinks that small displacement can decide a closely contested objective.",
+      "waarom": "He says games with central or secondary objectives often end with two units still nearby, making a small difference in distance important.",
+      "voorbeeld": null,
+      "wanneerNiet": "He notes that you will not reliably have Wind Blast every game if you are rolling for spells.",
+      "fase": "scenarios",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-25BawgUHbZQ",
+          "url": "https://www.youtube.com/watch?v=25BawgUHbZQ&t=660s",
+          "tijd": 663,
+          "citaat": "pushing a unit back two inches could be really good.",
+          "extraCitaten": [
+            {
+              "tijd": 679,
+              "citaat": "being able to be the closest and outright win that objective"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "vile-tide-armoured-knights",
+      "titel": "Use Vile Tide against heavily armoured one-wound knights",
+      "tekst": "He particularly rates Vile Tide against knights with lots of armour but only one wound. Use it to threaten these high-value targets.",
+      "waarom": "He says Vile Tide does a better job against high-value targets and has deleted many knight units for him, particularly when rolling well with Hagtree.",
+      "voorbeeld": null,
+      "wanneerNiet": "He notes that targets can still make ward saves.",
+      "fase": "magic-shooting",
+      "themas": [
+        "matchups"
+      ],
+      "leger": "beastmen-brayherds",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-25BawgUHbZQ",
+          "url": "https://www.youtube.com/watch?v=25BawgUHbZQ&t=797s",
+          "tijd": 800,
+          "citaat": "knights that have a lot of armor but only one wound.",
+          "extraCitaten": [
+            {
+              "tijd": 807,
+              "citaat": "I have deleted many units of knights"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "multiple-vile-tide-casters",
+      "titel": "Consider multiple Vile Tide casters",
+      "tekst": "Consider taking multiple Vile Tide casters in Beastmen. He highlights a level-one caster supported by a Herdstone as an accessible way to cast it.",
+      "waarom": "He values Vile Tide being a cheap signature spell that can be repeated across casters. He says a level one with the Herdstone's plus two needs to roll only a six to cast it.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": "beastmen-brayherds",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-25BawgUHbZQ",
+          "url": "https://www.youtube.com/watch?v=25BawgUHbZQ&t=834s",
+          "tijd": 837,
+          "citaat": "it's very spammable and you can take multiple V tide casters",
+          "extraCitaten": [
+            {
+              "tijd": 853,
+              "citaat": "Herdstone plus two to cast only needs to roll a six to get it off."
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "bray-shaman-missile-choice",
+      "titel": "Choose the Bray-Shaman's missile to suit the opponent",
+      "tekst": "He highlights taking Daemonology on a level-one Bray-Shaman while retaining access to the army's signature spell. At the start of the game, choose Vile Tide against heavily armoured targets or dragons, or The Summoning for broader damage against targets such as elves.",
+      "waarom": "He values being able to choose between concentrated damage against those high-value targets and spreading damage more broadly.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "matchups"
+      ],
+      "leger": "beastmen-brayherds",
+      "units": [
+        "Bray-Shaman"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-25BawgUHbZQ",
+          "url": "https://www.youtube.com/watch?v=25BawgUHbZQ&t=1032s",
+          "tijd": 1035,
+          "citaat": "you need the vile tide against lots of heavily armored targets or dragons",
+          "extraCitaten": [
+            {
+              "tijd": 1043,
+              "citaat": "ecumenical damage against like elves for example"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "vile-tide-large-wound-targets",
+      "bron": {
+        "bronId": "yt-25BawgUHbZQ",
+        "url": "https://www.youtube.com/watch?v=25BawgUHbZQ&t=789s",
+        "tijd": 792,
+        "citaat": "things like dragons and combined profile units where you can peel wounds",
+        "extraCitaten": [
+          {
+            "tijd": 823,
+            "citaat": "that might take three V tides to drop a dragon"
+          }
+        ]
+      },
+      "waarom": "He says access to Vile Tide helps Beastmen keep larger, more mobile threats honest when they are likely to be charged.",
+      "toelichting": "This repeats the recommendation to use Vile Tide to strip wounds from large targets, specifically dragons and combined-profile units."
+    }
+  ],
+  "overgeslagen": "Skipped sponsorship, channel discussion, introductory rules changes and spell statistics without advice. Omitted uncertain caption details about named casting upgrades, speculative line-spell builds, and the closing discussion of spells he did not select.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

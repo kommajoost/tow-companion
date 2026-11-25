@@ -1,0 +1,118 @@
+{
+  "videoId": "x_dED7TCT9M",
+  "bronId": "yt-x_dED7TCT9M",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T23:57:05.547Z",
+  "nieuw": [
+    {
+      "id": "dragon-charge-arc-redirections",
+      "titel": "Position your dragon to threaten several charge targets",
+      "tekst": "Position a dragon or other hammer so its charge arc covers as many targets as possible. Keep alternative targets available for redirecting the charge if the first target flees.",
+      "waarom": "He says units often flee from a dragon, and he values redirection because the new target has a limited set of charge reactions.",
+      "voorbeeld": "His dragon's position threatened bolt throwers, a crossbow unit, a Pegasus-mounted sorcerer and Dark Riders.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "hammers",
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-x_dED7TCT9M",
+          "url": "https://www.youtube.com/watch?v=x_dED7TCT9M&t=144s",
+          "tijd": 147,
+          "citaat": "make sure that you're maximizing ing the charge AR",
+          "extraCitaten": [
+            {
+              "tijd": 154,
+              "citaat": "units will often flee from something like a dragon"
+            },
+            {
+              "tijd": 169,
+              "citaat": "limited set of charge reactions on that redirection"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "plan-overruns-repeat-combats",
+      "bron": {
+        "bronId": "yt-x_dED7TCT9M",
+        "url": "https://www.youtube.com/watch?v=x_dED7TCT9M&t=199s",
+        "tijd": 202,
+        "citaat": "having an overrun path",
+        "extraCitaten": [
+          {
+            "tijd": 202,
+            "citaat": "by hitting that crossbow group I can overrun in into these bolt"
+          }
+        ]
+      },
+      "voorbeeld": "He charged a crossbow unit intending to overrun into nearby bolt throwers if they were close enough. He did not wipe out the crossbow unit, so he had to pursue instead.",
+      "toelichting": "He recommends choosing the dragon's attack with an overrun path into another combat in mind."
+    },
+    {
+      "lesId": "reform-for-future-targets",
+      "bron": {
+        "bronId": "yt-x_dED7TCT9M",
+        "url": "https://www.youtube.com/watch?v=x_dED7TCT9M&t=245s",
+        "tijd": 248,
+        "citaat": "being able to restrain and then position again",
+        "extraCitaten": [
+          {
+            "tijd": 248,
+            "citaat": "once again expanding The Arc to be able to threaten all of these"
+          }
+        ]
+      },
+      "toelichting": "He recommends restraining and reforming the dragon to reopen its arc and threaten several future targets."
+    },
+    {
+      "lesId": "high-leadership-charge-control",
+      "bron": {
+        "bronId": "yt-x_dED7TCT9M",
+        "url": "https://www.youtube.com/watch?v=x_dED7TCT9M&t=254s",
+        "tijd": 257,
+        "citaat": "you really need to have that leadership as high as possible",
+        "extraCitaten": [
+          {
+            "tijd": 240,
+            "citaat": "often better because it has greater leadership"
+          }
+        ]
+      },
+      "wanneerNiet": "He warns that a Leadership 8 Archmage will not pass every restraint-and-reform test.",
+      "toelichting": "He values high leadership on dragon riders to make restraint and reform more reliable."
+    },
+    {
+      "lesId": "blenders-break-and-reform",
+      "bron": {
+        "bronId": "yt-x_dED7TCT9M",
+        "url": "https://www.youtube.com/watch?v=x_dED7TCT9M&t=303s",
+        "tijd": 306,
+        "citaat": "make sure that you are winning and moving on as well",
+        "extraCitaten": [
+          {
+            "tijd": 306,
+            "citaat": "getting bogged down for these units"
+          }
+        ]
+      },
+      "toelichting": "He likewise recommends winning fights and moving on with the dragon, because getting bogged down loses time."
+    }
+  ],
+  "overgeslagen": "Skipped the channel introduction, broad unit categories without concrete advice, game results and closing remarks. The opening deployment account describes his choices rather than giving a clear additional recommendation.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

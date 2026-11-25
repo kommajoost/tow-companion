@@ -1,0 +1,75 @@
+{
+  "videoId": "ijahRtTQylk",
+  "bronId": "yt-ijahRtTQylk",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-25T00:05:25.088Z",
+  "nieuw": [
+    {
+      "id": "wood-elves-outrange-dwarf-shooting",
+      "titel": "Use Wood Elf range to keep Dwarf shooters away",
+      "tekst": "Against short-ranged Dwarf shooting, keep your Wood Elves far enough away to exploit their range advantage. If the Dwarfs advance to shoot, move further away again.",
+      "waarom": "He says his 32-inch range against the Irondrakes' 18-inch range let him sit far away and force them to move to shoot him.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "leger": "wood-elf-realms",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-ijahRtTQylk",
+          "url": "https://www.youtube.com/watch?v=ijahRtTQylk&t=110s",
+          "tijd": 113,
+          "citaat": "I could just sit far away",
+          "extraCitaten": [
+            {
+              "tijd": 113,
+              "citaat": "if he did move I could move further away"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "deploy-defensively-vs-shooting",
+      "bron": {
+        "bronId": "yt-ijahRtTQylk",
+        "url": "https://www.youtube.com/watch?v=ijahRtTQylk&t=71s",
+        "tijd": 74,
+        "citaat": "I had to whittle down uh his range shooting and deploy defensively"
+      },
+      "toelichting": "He likewise recommends defensive Wood Elf deployment against dangerous enemy shooting while buying time to use his dragon."
+    },
+    {
+      "lesId": "commit-dragon-accept-risk",
+      "bron": {
+        "bronId": "yt-ijahRtTQylk",
+        "url": "https://www.youtube.com/watch?v=ijahRtTQylk&t=253s",
+        "tijd": 256,
+        "citaat": "where it's going to take some damage but it can take some damage",
+        "extraCitaten": [
+          {
+            "tijd": 240,
+            "citaat": "but I only had to poke my head out for one turn"
+          }
+        ]
+      },
+      "waarom": "He judged that his dragon could survive the damage from one exposed turn. Emerging earlier against three Trollhammer Torpedoes could have cost him the dragon.",
+      "voorbeeld": "He cleared the right-hand Irondrakes with Wild Riders and tied up the middle unit with a charge by his Dryads and Glade Captain. When the Royal Warriors turned towards the Wild Riders, he marched his dragon out of the woods into the open centre, took three wounds from the remaining Trollhammer Torpedo, and then charged the Anvil of Doom.",
+      "toelichting": "He commits his dragon when the opening appears and accepts survivable shooting damage so it can enter combat."
+    }
+  ],
+  "overgeslagen": "Skipped the introduction, army and equipment readouts, closing promotion and joke. Kept the battle sequence as support for the advice rather than turning every move into a separate lesson.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

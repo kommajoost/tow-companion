@@ -1,0 +1,106 @@
+{
+  "videoId": "HgQRV1-Z32o",
+  "bronId": "yt-HgQRV1-Z32o",
+  "model": "GPT-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-25T00:04:25.510Z",
+  "nieuw": [
+    {
+      "id": "reavers-marching-column-breakthrough",
+      "titel": "Consider marching-column Reavers for Breakthrough",
+      "tekst": "In Breakthrough, consider five-model units of Ellyrian Reavers in marching column to reach the opponent's board edge and leave the board for bonus points.",
+      "waarom": "He says their movement of nine allows a 27-inch triple march in marching column, covering a large part of the board.",
+      "voorbeeld": "Having to deploy first, he placed two units of five Ellyrian Reavers at opposite extremes of his deployment zone because he did not know where his opponent would deploy.",
+      "wanneerNiet": "His opponent stacked both flanks to block a direct run. He abandoned that approach on the left and reformed the Reavers behind his Sisters of Avelorn.",
+      "fase": "scenarios",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": "high-elf-realms",
+      "units": [
+        "Ellyrian Reavers"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-HgQRV1-Z32o",
+          "url": "https://www.youtube.com/watch?v=HgQRV1-Z32o&t=130s",
+          "tijd": 133,
+          "citaat": "units of five reavers and deployed them in marching column",
+          "extraCitaten": [
+            {
+              "tijd": 187,
+              "citaat": "27 inches which is crazy it's like a vast majority of the board"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "reavers-widen-clear-breakthrough",
+      "titel": "Widen Reavers to fight through a blocked Breakthrough route",
+      "tekst": "When Scouts blocked his Reavers' Breakthrough route, he redressed the marching column into a five-wide formation to prepare a charge. Consider this approach to clear the blocker and overrun towards the exit, subject to his uncertainty about the precise redressing movement.",
+      "waarom": "He needed to break through the Scouts and reach the board edge before the nearby Knights could intercept him.",
+      "voorbeeld": "He widened the Reavers, destroyed the Scouts with a charge the following turn and overran beyond the Knights' charge arc. He then took the Reavers off the board on the next turn.",
+      "wanneerNiet": "He had to endure a turn of Scout shooting after widening. He questions whether all models can redress to one side and says he would have left more space if redressing had to be centred; he and his opponent thought the movement worked, but he asks for clarification.",
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": "high-elf-realms",
+      "units": [
+        "Ellyrian Reavers"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-HgQRV1-Z32o",
+          "url": "https://www.youtube.com/watch?v=HgQRV1-Z32o&t=224s",
+          "tijd": 227,
+          "citaat": "I redressed them into a unit of five wide",
+          "extraCitaten": [
+            {
+              "tijd": 307,
+              "citaat": "overrun and then I was able to break through past these Knights"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "reavers-question-bow-upgrade",
+      "titel": "Question bows on Reavers that spend their time marching",
+      "tekst": "Consider leaving bows off Ellyrian Reavers that spend much of their time marching. He is unsure whether bows are worth taking and does not think they add much.",
+      "waarom": "He says the Reavers spend a lot of time marching.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "leger": "high-elf-realms",
+      "units": [
+        "Ellyrian Reavers"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-HgQRV1-Z32o",
+          "url": "https://www.youtube.com/watch?v=HgQRV1-Z32o&t=241s",
+          "tijd": 244,
+          "citaat": "I don't think they really add much"
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [],
+  "overgeslagen": "Skipped introductory rules explanations without a separate recommendation, speculative rule interpretation as a settled movement entitlement, tournament command-upgrade requirements, channel discussion and requests for comments. The redressing example retains his stated uncertainty.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

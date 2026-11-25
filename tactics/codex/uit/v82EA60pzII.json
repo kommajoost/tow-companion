@@ -1,0 +1,114 @@
+{
+  "videoId": "v82EA60pzII",
+  "bronId": "yt-v82EA60pzII",
+  "model": "GPT-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-25T00:25:03.263Z",
+  "nieuw": [
+    {
+      "id": "zone-with-overlapping-threats",
+      "titel": "Zone enemies with overlapping threats",
+      "tekst": "Use your pieces' threat ranges to restrict the opponent's choices without committing to an attack. Look for positions where a piece can threaten a charge while also contesting enemy magic.",
+      "waarom": "He says putting the opponent in two minds gives them more opportunities to make mistakes or roll poorly.",
+      "voorbeeld": "His Mage needed to stay within 19 inches of the Necrosphinx to threaten a charge and within 24 inches of the enemy wizard to contest its magic. He later withdrew behind cover without affecting his dispel range, and found that his 375-point piece had negated about 500 points of the opposing army.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-v82EA60pzII",
+          "url": "https://www.youtube.com/watch?v=v82EA60pzII&t=263s",
+          "tijd": 266,
+          "citaat": "about the threat range of your pieces",
+          "extraCitaten": [
+            {
+              "tijd": 218,
+              "citaat": "it's got to stay within 24 inches of this wizard to contest all its magic"
+            },
+            {
+              "tijd": 315,
+              "citaat": "put your opponent in two minds"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "mirage-before-monster-slayer",
+      "titel": "Prefer Mirage to a last-ditch Monster Slayer attempt",
+      "tekst": "For the Mage setup he describes, use Miasmic Mirage as the primary plan against large targets. Keep the Monster Slayer and Doppelganger combination as a last-ditch attempt.",
+      "waarom": "He believes beating a dragon through combat resolution is better than gambling on Monster Slayer.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "magic-shooting",
+      "themas": [
+        "matchups",
+        "game-plan"
+      ],
+      "leger": "high-elf-realms",
+      "units": [
+        "Mage"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-v82EA60pzII",
+          "url": "https://www.youtube.com/watch?v=v82EA60pzII&t=123s",
+          "tijd": 126,
+          "citaat": "mymic Mirage which is actually like plan a versus large targets",
+          "extraCitaten": [
+            {
+              "tijd": 118,
+              "citaat": "it's there to have a last ditch attempt at these large Targets"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "reach-tomb-kings-wizard",
+      "titel": "Prioritise reaching the Tomb Kings' wizard",
+      "tekst": "Against Tomb Kings, treat getting to their protected level-four wizard as a primary objective if you can reach it.",
+      "waarom": "He describes the wizard sitting in a block resurrecting models while also having a couple of magic missiles.",
+      "voorbeeld": "His opponent's wizard restored six skeletons after he had chipped them down.",
+      "wanneerNiet": "He says the level-four wizard in its block is very hard to access.",
+      "fase": "movement",
+      "themas": [
+        "matchups",
+        "game-plan"
+      ],
+      "leger": "tomb-kings-of-khemri",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-v82EA60pzII",
+          "url": "https://www.youtube.com/watch?v=v82EA60pzII&t=181s",
+          "tijd": 184,
+          "citaat": "your primary objective versus Tom Kings to see if you can get in there",
+          "extraCitaten": [
+            {
+              "tijd": 175,
+              "citaat": "it brought back six skeletons"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [],
+  "overgeslagen": "Skipped the introduction, battle-report promotion, points-format opinions and unclear equipment names around 1:50. Omitted the tentative initiative and Doppelganger rules discussion around 0:42 because the speaker says it needs checking.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

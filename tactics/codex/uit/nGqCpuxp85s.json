@@ -1,0 +1,119 @@
+{
+  "videoId": "nGqCpuxp85s",
+  "bronId": "yt-nGqCpuxp85s",
+  "model": "GPT-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T23:17:42.185Z",
+  "nieuw": [
+    {
+      "id": "risk-cleanup-preserve-tempo",
+      "titel": "Risk a cleanup shot to keep your main threat moving",
+      "tekst": "When keeping a major threat on a flank would waste another turn while the centre is losing, consider moving it on and leaving a weaker unit to attempt the cleanup. He recommends taking that chance when the potential gain in tempo is worth the poor odds.",
+      "waarom": "He felt that delaying further favoured his opponent: the enemy Wyvern could act elsewhere and the Boar Boyz were cutting through the rest of his army.",
+      "voorbeeld": "He flew his Bloodthirster onwards rather than attacking a one-wound chariot and ending up behind impassable terrain. He left 15 Pink Horrors to try to shoot off the last wound despite their poor odds, and they succeeded.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-nGqCpuxp85s",
+          "url": "https://www.youtube.com/watch?v=nGqCpuxp85s&t=725s",
+          "tijd": 728,
+          "citaat": "Sometimes you just got to try to roll the six.",
+          "extraCitaten": [
+            {
+              "tijd": 704,
+              "citaat": "because of tempo, I got to do something about it."
+            },
+            {
+              "tijd": 773,
+              "citaat": "having the blood thirst to do something more efficient in the interim"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "pink-horrors-reform-shooting",
+      "titel": "Reform Pink Horrors into a line to shoot",
+      "tekst": "Use an Open Order reform to put Pink Horrors into a line while keeping the centre model in place, allowing them all to shoot. After the shooting opportunity, they can reform back into a rectangular formation.",
+      "waarom": "He explains that they can all still shoot after reforming, and their Quick Shots avoid the shooting penalty for moving.",
+      "voorbeeld": "He used this reform when his Pink Horrors attempted to remove the last wound from a chariot, allowing his Bloodthirster to move on.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "leger": "daemons-of-chaos",
+      "units": [
+        "Pink Horrors of Tzeentch"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-nGqCpuxp85s",
+          "url": "https://www.youtube.com/watch?v=nGqCpuxp85s&t=552s",
+          "tijd": 555,
+          "citaat": "I can reform this unit into a line",
+          "extraCitaten": [
+            {
+              "tijd": 562,
+              "citaat": "I can still shoot with all them though they count as having moved."
+            },
+            {
+              "tijd": 831,
+              "citaat": "reform back into that square into the um rectangle shape."
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "flank-who-benefited",
+      "bron": {
+        "bronId": "yt-nGqCpuxp85s",
+        "url": "https://www.youtube.com/watch?v=nGqCpuxp85s&t=469s",
+        "tijd": 472,
+        "citaat": "I don't get his points, but I've won the time there.",
+        "extraCitaten": [
+          {
+            "tijd": 472,
+            "citaat": "It probably gains me a couple of turns"
+          }
+        ]
+      },
+      "toelichting": "He judges the flank threat as successful because it makes a chariot waste turns avoiding his Bloodthirster, even without earning its points."
+    },
+    {
+      "lesId": "after-the-flank",
+      "bron": {
+        "bronId": "yt-nGqCpuxp85s",
+        "url": "https://www.youtube.com/watch?v=nGqCpuxp85s&t=384s",
+        "tijd": 387,
+        "citaat": "cut back across into the middle from the rear.",
+        "extraCitaten": [
+          {
+            "tijd": 380,
+            "citaat": "the blood thirst would try to hit something easy, gain"
+          }
+        ]
+      },
+      "toelichting": "His plan is to collect easy points on the flank and then bring the Bloodthirster into the centre from behind."
+    }
+  ],
+  "overgeslagen": "Skipped sponsorship, channel and hobby talk, unit and rule descriptions without recommendations, and unclear names in the captions. Kept the tempo decision as one lesson rather than splitting its discussion of odds into repeated advice.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

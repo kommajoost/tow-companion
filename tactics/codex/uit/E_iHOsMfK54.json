@@ -1,0 +1,175 @@
+{
+  "videoId": "E_iHOsMfK54",
+  "bronId": "yt-E_iHOsMfK54",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-25T00:09:32.169Z",
+  "nieuw": [
+    {
+      "id": "movement-spells-early-aggression",
+      "titel": "Support early aggression with movement spells",
+      "tekst": "For an early-aggression plan with a combat-focused army, consider Steed of Shadows or Arcane Urgency to accelerate the advance.",
+      "waarom": "He says double marching or giving an infantry unit flight provides a huge movement advantage, particularly with Drilled.",
+      "voorbeeld": null,
+      "wanneerNiet": "He says these spells help but are not always essential to making the plan work.",
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-E_iHOsMfK54",
+          "url": "https://www.youtube.com/watch?v=E_iHOsMfK54&t=230s",
+          "tijd": 233,
+          "citaat": "Steed of Shadows and Arcane urgency the movement Boost from that is huge",
+          "extraCitaten": [
+            {
+              "tijd": 241,
+              "citaat": "it's not pivotal but it helps"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "accept-shooting-risk-advancing",
+      "titel": "Accept calculated shooting risks to reach combat",
+      "tekst": "When your combat-focused army needs to fight to win, accept a calculated shooting risk as you advance. Judge the likely casualties rather than treating every exposed approach as unacceptable.",
+      "waarom": "He accepts the risk because he does not expect to win this game unless he gets into combat.",
+      "voorbeeld": "He advanced his Chosen Chaos Knights directly in front of a Dwarf cannon after assessing its likely damage and their saves. He lost one model on the approach and charged the cannon next turn.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "game-plan",
+        "shooting-terrain"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-E_iHOsMfK54",
+          "url": "https://www.youtube.com/watch?v=E_iHOsMfK54&t=418s",
+          "tijd": 421,
+          "citaat": "this is just a calculated risk that I have to make",
+          "extraCitaten": [
+            {
+              "tijd": 421,
+              "citaat": "I'm not going to win this game unless I'm in combat"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "imperfect-target-escape-shooting",
+      "titel": "Take an imperfect target to escape shooting",
+      "tekst": "In an early-aggression plan, consider charging a shooting threat even if it is not your attacker's ideal target. Getting into combat can protect the attacker from further shooting while removing a threat to it.",
+      "waarom": "He values getting his knights into combat where they cannot be shot, while removing a weapon that can kill them.",
+      "voorbeeld": "His Chosen Chaos Knights charged a cannon. He acknowledged that it might not be their prime target but considered the protection from shooting and removal of the threat worthwhile.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "game-plan",
+        "shooting-terrain"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-E_iHOsMfK54",
+          "url": "https://www.youtube.com/watch?v=E_iHOsMfK54&t=465s",
+          "tijd": 468,
+          "citaat": "at least they're in combat and not getting shot at",
+          "extraCitaten": [
+            {
+              "tijd": 476,
+              "citaat": "removing one of threats that can kill them"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "fast-armies-close-gunlines",
+      "bron": {
+        "bronId": "yt-E_iHOsMfK54",
+        "url": "https://www.youtube.com/watch?v=E_iHOsMfK54&t=116s",
+        "tijd": 119,
+        "citaat": "I need to rush them",
+        "extraCitaten": [
+          {
+            "tijd": 325,
+            "citaat": "send everything as far forward as possible and try and force the issue"
+          }
+        ]
+      },
+      "voorbeeld": "Against Dwarfs with substantial shooting, he marched his combat army forward to set up charges on his next turn. His knights reached the cannon, his Marauder Horsemen reached the Organ Gun, and two units flank-charged the Longbeards.",
+      "toelichting": "The same recommendation to cross the board quickly and shut down enemy shooting before it weakens the combat army."
+    },
+    {
+      "lesId": "chaff-kills-are-bonuses",
+      "bron": {
+        "bronId": "yt-E_iHOsMfK54",
+        "url": "https://www.youtube.com/watch?v=E_iHOsMfK54&t=167s",
+        "tijd": 170,
+        "citaat": "some things their role is literally to die if they do damage that's a bonus",
+        "extraCitaten": [
+          {
+            "tijd": 179,
+            "citaat": "if they're dying instead of your good things then they've done their job"
+          }
+        ]
+      },
+      "waarom": "He says expendable units have done their job if they die instead of the army's valuable units.",
+      "voorbeeld": "His Marauder Horsemen were intended to die, but reached the Organ Gun without losing another model and subsequently pushed it back.",
+      "toelichting": "The same advice to treat damage from expendable chaff as a bonus rather than its expected contribution."
+    },
+    {
+      "lesId": "screening-chaff",
+      "bron": {
+        "bronId": "yt-E_iHOsMfK54",
+        "url": "https://www.youtube.com/watch?v=E_iHOsMfK54&t=394s",
+        "tijd": 397,
+        "citaat": "he has to kill some chaff to get to my big stuff"
+      },
+      "toelichting": "The same recommendation to protect advancing combat units with cheap screening chaff."
+    },
+    {
+      "lesId": "concentrate-against-enemy-part",
+      "bron": {
+        "bronId": "yt-E_iHOsMfK54",
+        "url": "https://www.youtube.com/watch?v=E_iHOsMfK54&t=297s",
+        "tijd": 300,
+        "citaat": "this is what I can kill so this is what I'll go for",
+        "extraCitaten": [
+          {
+            "tijd": 284,
+            "citaat": "if I'm chasing things I'm getting shot at"
+          }
+        ]
+      },
+      "toelichting": "He concentrates his advance against the killable part of the enemy army while ignoring the other side, matching the existing recommendation."
+    }
+  ],
+  "overgeslagen": "Skipped army and stat readouts, banter, the uncertain rules details, and incidental remarks about spell-facing changes and a forgotten Power Scroll. Did not infer tactics from unclear captions or unseen board positions.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": [
+      {
+        "wie": "aanvulling screening-chaff",
+        "wat": "voorbeeld weggelaten: de les heeft dat veld al"
+      }
+    ]
+  }
+}

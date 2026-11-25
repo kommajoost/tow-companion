@@ -1,0 +1,197 @@
+{
+  "videoId": "v_qINsMBeEQ",
+  "bronId": "yt-v_qINsMBeEQ",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T23:42:11.775Z",
+  "nieuw": [
+    {
+      "id": "maximise-razorgor-core",
+      "titel": "Take as many Razorgors as you can",
+      "tekst": "He suggests probably taking as many Razorgors as you can when choosing Beastmen core units.",
+      "waarom": "He considers them one of the best core units in the game point for point.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "chaff"
+      ],
+      "leger": "beastmen-brayherds",
+      "units": [
+        "Razorgor Herd"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-v_qINsMBeEQ",
+          "url": "https://www.youtube.com/watch?v=v_qINsMBeEQ&t=118s",
+          "tijd": 121,
+          "citaat": "you really want to probably take as many Razorgors as you can get.",
+          "extraCitaten": [
+            {
+              "tijd": 100,
+              "citaat": "think point for point one of the best core units in the game"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "sideline-deployment-angle-inward",
+      "titel": "Angle units near the board edge towards the centre",
+      "tekst": "When deploying along the sideline, angle units slightly towards the centre. Leave room to wheel inward if the opponent does not deploy opposite them.",
+      "waarom": "He says starting perpendicular to the board edge makes you run out of room more quickly and risks being pushed over the edge.",
+      "voorbeeld": "He deploys a Razorgor and a Tuskgor Chariot on an extreme flank, angled slightly towards the centre.",
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "flanks"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-v_qINsMBeEQ",
+          "url": "https://www.youtube.com/watch?v=v_qINsMBeEQ&t=167s",
+          "tijd": 170,
+          "citaat": "the Razorgor and the chariot angled slightly into the center.",
+          "extraCitaten": [
+            {
+              "tijd": 179,
+              "citaat": "you're going to want to wheel back to the center"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "razorgor-attempt-long-charges",
+      "titel": "Attempt long Razorgor charges to threaten and obstruct",
+      "tekst": "After advancing a Razorgor into mutual charge range, he recommends attempting the charge even at its stated maximum range of 16 inches.",
+      "waarom": "He says a failed charge still leaves it in front of the enemy, while a successful charge brings dangerous impact hits and potentially Primal Fury. Its underlying job is to clog up the enemy anyway.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "chaff"
+      ],
+      "leger": "beastmen-brayherds",
+      "units": [
+        "Razorgor Herd"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-v_qINsMBeEQ",
+          "url": "https://www.youtube.com/watch?v=v_qINsMBeEQ&t=217s",
+          "tijd": 220,
+          "citaat": "maximum charge range of 16 and I think you should probably go for it",
+          "extraCitaten": [
+            {
+              "tijd": 220,
+              "citaat": "even if it fails a charge, it's going to end up in front of them."
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "razorgor-tuskgor-bait-switch",
+      "titel": "Bait with a Razorgor and follow with a Tuskgor Chariot",
+      "tekst": "Advance a Razorgor ahead of a trailing Tuskgor Chariot, then flee the enemy charge and charge the chariot into that area. Position the chariot so it can reach the area while staying outside the enemy unit's charge range.",
+      "waarom": "He says chariots are useless when charged but devastating when they charge. Staggering the threats lets combat units threaten space and make mobile opponents take bad decisions instead of simply moving away.",
+      "voorbeeld": "His Razorgor fled from frenzied Vargheists and the Tuskgor Chariot charged them. The ensuing combat distracted them and prevented them from accessing a scenario tower.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "chaff",
+        "flanks"
+      ],
+      "leger": "beastmen-brayherds",
+      "units": [
+        "Razorgor Herd",
+        "Tuskgor Chariot"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-v_qINsMBeEQ",
+          "url": "https://www.youtube.com/watch?v=v_qINsMBeEQ&t=313s",
+          "tijd": 316,
+          "citaat": "the Tuskgor is going to charge that zone.",
+          "extraCitaten": [
+            {
+              "tijd": 316,
+              "citaat": "I'm going to flee with this razor"
+            },
+            {
+              "tijd": 323,
+              "citaat": "you sort of want to know that your Tuskgor can hit that area"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "razorgor-flee-without-swiftstride",
+      "titel": "Decline Swiftstride to preserve a fleeing Razorgor's rally chances",
+      "tekst": "With a fleeing Razorgor already well across the board, consider declining Swiftstride and rolling 2D6 for its subsequent flee moves.",
+      "waarom": "He says this leaves several turns to rally the Razorgor and save its points, typically giving him three or four chances at its leadership-six test.",
+      "voorbeeld": "In the game he describes, the Razorgor survived after failing two rally tests and passing the last one.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "chaff"
+      ],
+      "leger": "beastmen-brayherds",
+      "units": [
+        "Razorgor Herd"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-v_qINsMBeEQ",
+          "url": "https://www.youtube.com/watch?v=v_qINsMBeEQ&t=385s",
+          "tijd": 388,
+          "citaat": "I just choose not to use swift stride. And I'm just rolling that 2d6.",
+          "extraCitaten": [
+            {
+              "tijd": 395,
+              "citaat": "give me a number of turns to rally that razor goore and save its points."
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "chaff-kills-are-bonuses",
+      "bron": {
+        "bronId": "yt-v_qINsMBeEQ",
+        "url": "https://www.youtube.com/watch?v=v_qINsMBeEQ&t=281s",
+        "tijd": 284,
+        "citaat": "it's not about what you kill, it's about the time you buy with chaff"
+      },
+      "waarom": "He says chaff buys time for other things to kill.",
+      "toelichting": "He repeats that chaff should buy time for other units rather than be judged by its own kills."
+    }
+  ],
+  "overgeslagen": "Skipped the opening terminology discussion, hobby and channel updates, core-unit comparisons without clear recommendations, raw attack readouts, and uncertain damage totals. Kept the bait-and-switch sequence as one unit-specific tactic.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": [
+      {
+        "wie": "razorgor-attempt-long-charges",
+        "wat": "extra tijd 228 -> 220"
+      }
+    ]
+  }
+}

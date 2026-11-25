@@ -1,0 +1,125 @@
+{
+  "videoId": "J076S9O3mYA",
+  "bronId": "yt-J076S9O3mYA",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T23:25:34.491Z",
+  "nieuw": [
+    {
+      "id": "reconsider-vortexes-in-15",
+      "titel": "Reconsider vortex spells in Old World 1.5",
+      "tekst": "Take another look at vortex spells when choosing your magic in Old World 1.5. The speaker has been surprised by their effectiveness in his first three games under the new format.",
+      "waarom": "He says reduced dispelling bonuses make vortexes harder to remove, particularly those with high minimum casting values. Remaining in play gives even randomly moving vortexes more opportunities to reach useful positions.",
+      "voorbeeld": null,
+      "wanneerNiet": "He notes that low minimum casting values, such as Tree Singing's, make some spells less effective in this respect.",
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-J076S9O3mYA",
+          "url": "https://www.youtube.com/watch?v=J076S9O3mYA&t=834s",
+          "tijd": 837,
+          "citaat": "I think people should take a second look at all of the vortexes",
+          "extraCitaten": [
+            {
+              "tijd": 102,
+              "citaat": "it's very hard to dispel the vortex"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "moving-vortex-in-advance-path",
+      "titel": "Place moving vortexes directly across the enemy's intended route",
+      "tekst": "Place a moving vortex right against an enemy unit where continuing its advance would mean moving through it. The speaker stresses that initial placement matters: a well-placed vortex can hit the unit and keep interfering with its route on later turns.",
+      "waarom": "He says good placement can give the vortex roughly a half chance of moving through the unit. Other movement directions can also interrupt play over subsequent turns, and the vortex moves before the opponent gets a chance to dispel it.",
+      "voorbeeld": "His opponent placed Foot of Gork against his advancing Bloodcrushers of Khorne beside a forest. It killed one model, and the surviving unit turned away and had to detour around the forest and vortex, losing time and abandoning its original plan.",
+      "wanneerNiet": "He acknowledges that the vortex's random direction still requires some luck.",
+      "fase": "magic-shooting",
+      "themas": [
+        "shooting-terrain",
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-J076S9O3mYA",
+          "url": "https://www.youtube.com/watch?v=J076S9O3mYA&t=428s",
+          "tijd": 431,
+          "citaat": "he's able to put it right up against me.",
+          "extraCitaten": [
+            {
+              "tijd": 185,
+              "citaat": "the reality is that the initial placement is going to matter."
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "crystal-column-shelter-charge-choice",
+      "titel": "Shelter behind Crystal Column until a favourable charge opens",
+      "tekst": "Use Crystal Column to shelter a unit while preserving the option to remove the spell before declaring charges. If the opponent manoeuvres into a favourable position, remove it and attack; otherwise remain sheltered, cast spells and improve your position.",
+      "waarom": "He says the opponent does not know whether he will remove the column or leave it in place.",
+      "voorbeeld": "He moved his Keeper of Secrets into a pocket between terrain and Crystal Column while bringing his Bloodthirster over to seek the fight with the enemy Wyvern instead.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "shooting-terrain",
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-J076S9O3mYA",
+          "url": "https://www.youtube.com/watch?v=J076S9O3mYA&t=682s",
+          "tijd": 685,
+          "citaat": "can just pick it up if I want on my turn before I declare charges.",
+          "extraCitaten": [
+            {
+              "tijd": 693,
+              "citaat": "I'm just going to stay behind here and keep casting spells"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "control-spells-block-lanes",
+      "bron": {
+        "bronId": "yt-J076S9O3mYA",
+        "url": "https://www.youtube.com/watch?v=J076S9O3mYA&t=778s",
+        "tijd": 781,
+        "citaat": "has to go around it",
+        "extraCitaten": [
+          {
+            "tijd": 790,
+            "citaat": "the crystal column, which you couldn't dispel"
+          }
+        ]
+      },
+      "toelichting": "His account of Crystal Column forcing the Giant to detour and buying a turn supports the existing advice to obstruct movement and charging lanes with control spells."
+    }
+  ],
+  "overgeslagen": "Skipped sponsorship, hobby and channel updates, historical spell-use discussion, rules explanations without separate advice, and garbled army, equipment and unit references. The difficult-terrain charge-dice explanation was not extracted as a separate recommendation.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

@@ -1,0 +1,165 @@
+{
+  "videoId": "jlE502YKVOQ",
+  "bronId": "yt-jlE502YKVOQ",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T23:28:41.944Z",
+  "nieuw": [
+    {
+      "id": "fast-cavalry-skirmish-marching",
+      "titel": "Generally use fast cavalry in skirmish formation",
+      "tekst": "Generally use fast cavalry in skirmish formation rather than Open Order to exploit marching and movement in any direction.",
+      "waarom": "He finds the Open Order quick turn insufficient because it cannot be combined with marching.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-jlE502YKVOQ",
+          "url": "https://www.youtube.com/watch?v=jlE502YKVOQ&t=220s",
+          "tijd": 223,
+          "citaat": "not being able to march and do that",
+          "extraCitaten": [
+            {
+              "tijd": 230,
+              "citaat": "So generally you're playing these guys in skirmish formation"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "seekers-mobile-core-scorers",
+      "titel": "Consider Seekers as mobile core scorers in Renegades",
+      "tekst": "When Seekers of Slaanesh are available in core under Renegades, consider them as mobile scoring units.",
+      "waarom": "He values their movement nine, Swiftstride and bonus to charge rolls for covering long distances. He notes that taking them in core makes them a scoring unit.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": "daemons-of-chaos",
+      "units": [
+        "Seekers of Slaanesh"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-jlE502YKVOQ",
+          "url": "https://www.youtube.com/watch?v=jlE502YKVOQ&t=178s",
+          "tijd": 181,
+          "citaat": "So I think these are a really good unit.",
+          "extraCitaten": [
+            {
+              "tijd": 252,
+              "citaat": "if they're in core, they're going to be a scoring unit."
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "seekers-spread-against-shooting",
+      "titel": "Spread Seekers wide to reduce exposure to shooting",
+      "tekst": "Spread skirmishing Seekers of Slaanesh wide; he says this makes them less likely to be shot up.",
+      "waarom": null,
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "leger": "daemons-of-chaos",
+      "units": [
+        "Seekers of Slaanesh"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-jlE502YKVOQ",
+          "url": "https://www.youtube.com/watch?v=jlE502YKVOQ&t=256s",
+          "tijd": 259,
+          "citaat": "run them wide enough, they're going to be less likely to be shot up."
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "skirmishers-kite-ranked-pursuers",
+      "bron": {
+        "bronId": "yt-jlE502YKVOQ",
+        "url": "https://www.youtube.com/watch?v=jlE502YKVOQ&t=291s",
+        "tijd": 294,
+        "citaat": "I would just move outside of their charge up to the right.",
+        "extraCitaten": [
+          {
+            "tijd": 393,
+            "citaat": "the 360 move and the march"
+          }
+        ]
+      },
+      "wanneerNiet": "He notes that enemies with ranged attacks are an exception to his claim that these skirmishers can keep evading them.",
+      "toelichting": "Both recommend using skirmishers' all-round movement to stay outside a ranked pursuer's charge arc."
+    },
+    {
+      "lesId": "hidden-mobile-objective-grabs",
+      "bron": {
+        "bronId": "yt-jlE502YKVOQ",
+        "url": "https://www.youtube.com/watch?v=jlE502YKVOQ&t=413s",
+        "tijd": 416,
+        "citaat": "just come in at the end and land on your objective in that last turn."
+      },
+      "toelichting": "Both recommend using fast mobile units to grab an objective late in the game."
+    },
+    {
+      "lesId": "chaff-maximise-peril-tests",
+      "bron": {
+        "bronId": "yt-jlE502YKVOQ",
+        "url": "https://www.youtube.com/watch?v=jlE502YKVOQ&t=556s",
+        "tijd": 559,
+        "citaat": "which means they'll take a peril test.",
+        "extraCitaten": [
+          {
+            "tijd": 537,
+            "citaat": "by putting this these units behind these guys"
+          }
+        ]
+      },
+      "toelichting": "Both recommend placing mobile skirmishers behind engaged enemies so retreats pass through them and trigger peril tests."
+    },
+    {
+      "lesId": "chaff-engineered-enemy-retreats",
+      "bron": {
+        "bronId": "yt-jlE502YKVOQ",
+        "url": "https://www.youtube.com/watch?v=jlE502YKVOQ&t=582s",
+        "tijd": 585,
+        "citaat": "Then you can put them in a line",
+        "extraCitaten": [
+          {
+            "tijd": 593,
+            "citaat": "part of your base is over the edge of the board"
+          }
+        ]
+      },
+      "wanneerNiet": "He says he lacked the movement to arrange the full line that turn.",
+      "toelichting": "Both recommend arranging skirmishers to extend an enemy retreat through successive units, potentially off the board."
+    }
+  ],
+  "overgeslagen": "Skipped sponsorship, channel news, hobby talk, army-strength opinions, stat readouts without separate advice, movement-measurement procedure and rules commentary. Skipped the garbled early unit and general names and uncertainty over the pursuit bonus.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

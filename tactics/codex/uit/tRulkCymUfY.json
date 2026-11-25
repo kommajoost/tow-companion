@@ -1,0 +1,211 @@
+{
+  "videoId": "tRulkCymUfY",
+  "bronId": "yt-tRulkCymUfY",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-25T00:22:36.359Z",
+  "nieuw": [
+    {
+      "id": "compare-ranges-before-deploying",
+      "titel": "Compare both armies' ranges before deploying defensively",
+      "tekst": "Know how far your own army can move and shoot, and compare its shooting range with the enemy's, including magic missiles. Check enemy charge distances and whether their chargers have Swiftstride.",
+      "waarom": "He says that without knowing enemy charge ranges, you will struggle to deploy to avoid those threats or whittle them down before they reach you.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "game-plan",
+        "shooting-terrain"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-tRulkCymUfY",
+          "url": "https://www.youtube.com/watch?v=tRulkCymUfY&t=56s",
+          "tijd": 59,
+          "citaat": "how far you can move uh how far you can shoot",
+          "extraCitaten": [
+            {
+              "tijd": 73,
+              "citaat": "the same goes for your enemy"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "deploy-assuming-second-turn",
+      "titel": "Deploy as though you will go second",
+      "tekst": "When the first turn is still unknown, deploy defensively as though the opponent will act first. Protect the important parts of your army and leave few worthwhile opening targets.",
+      "waarom": "He has been caught out too often by losing the first turn. He says that knowing he would go first would let him deploy more aggressively and remove threats before they could return fire.",
+      "voorbeeld": "Against High Elves, he hid most of his army and left only a few shooting targets. His important units survived the opening turn, then moved out to remove an archer unit and a bolt thrower.",
+      "wanneerNiet": "He says he could deploy much more aggressively if he knew he was going first.",
+      "fase": "deployment",
+      "themas": [
+        "game-plan",
+        "shooting-terrain"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-tRulkCymUfY",
+          "url": "https://www.youtube.com/watch?v=tRulkCymUfY&t=385s",
+          "tijd": 388,
+          "citaat": "not knowing that means that I have to take the defensive deployment stance",
+          "extraCitaten": [
+            {
+              "tijd": 403,
+              "citaat": "he only has a few targets to shoot at"
+            },
+            {
+              "tijd": 434,
+              "citaat": "I was able to move out wipe out one of these units"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "deploy-beyond-moving-shooters",
+      "titel": "Deploy beyond enemy movement plus shooting range",
+      "tekst": "To avoid opening shooting losses, deploy far enough away that enemy shooters cannot reach you even after moving. Measure their movement and shooting reach together.",
+      "waarom": "He wants to avoid taking losses before his own first turn.",
+      "voorbeeld": "He deployed his Glade Riders beyond the Outriders' combined movement and shooting reach. If he went second they could not move and shoot him; if he went first he could move up and shoot them.",
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-tRulkCymUfY",
+          "url": "https://www.youtube.com/watch?v=tRulkCymUfY&t=909s",
+          "tijd": 912,
+          "citaat": "whatever their movement is plus their shooting range",
+          "extraCitaten": [
+            {
+              "tijd": 912,
+              "citaat": "so that if I go second he can't move and shoot them"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "wood-elves-clear-mobile-ranged",
+      "titel": "Clear fast and ranged threats with Wood Elves",
+      "tekst": "With Wood Elves, prioritise removing the enemy's fast and ranged threats. Use that clearance to bring your mobility advantage into play against the remaining army.",
+      "waarom": "He says even enemy dogs can kill his Toughness 3 troops. Against the infantry-heavy High Elf army, removing ranged threats made his mobility the biggest factor in the game.",
+      "voorbeeld": "Against High Elves, his protected army moved out after the opening turn and removed an archer unit and a bolt thrower. He believes this defensive deployment gave him the advantage by about turn two.",
+      "wanneerNiet": "He wanted to remove the Skin Wolves early, but found that difficult because they were quick and reached combat, where he struggled to shoot them.",
+      "fase": "magic-shooting",
+      "themas": [
+        "matchups",
+        "shooting-terrain",
+        "game-plan"
+      ],
+      "leger": "wood-elf-realms",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-tRulkCymUfY",
+          "url": "https://www.youtube.com/watch?v=tRulkCymUfY&t=652s",
+          "tijd": 655,
+          "citaat": "clear the fast and the ranged threats",
+          "extraCitaten": [
+            {
+              "tijd": 449,
+              "citaat": "my Mobility becomes the biggest factor in the game"
+            },
+            {
+              "tijd": 673,
+              "citaat": "skin wolves I would have loved to deal with early"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "treeman-bsb-backline-defence",
+      "titel": "Keep a Treeman and BSB ready for backline threats",
+      "tekst": "In the Wood Elf defensive setup he describes, position the Treeman and battle standard bearer to deal with enemies that reach the back lines.",
+      "waarom": null,
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": "wood-elf-realms",
+      "units": [
+        "Treeman"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-tRulkCymUfY",
+          "url": "https://www.youtube.com/watch?v=tRulkCymUfY&t=868s",
+          "tijd": 871,
+          "citaat": "to deal with any threats who get into the back lines"
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "identify-expendable-units",
+      "bron": {
+        "bronId": "yt-tRulkCymUfY",
+        "url": "https://www.youtube.com/watch?v=tRulkCymUfY&t=169s",
+        "tijd": 172,
+        "citaat": "identify what those things are in your list and be willing to sacrifice them"
+      },
+      "toelichting": "He gives the same recommendation to identify expendable units and accept sacrificing them."
+    },
+    {
+      "lesId": "deploy-defensively-vs-shooting",
+      "bron": {
+        "bronId": "yt-tRulkCymUfY",
+        "url": "https://www.youtube.com/watch?v=tRulkCymUfY&t=311s",
+        "tijd": 314,
+        "citaat": "my deployment I hid my most of my Army",
+        "extraCitaten": [
+          {
+            "tijd": 331,
+            "citaat": "deepwood Scouts were hidden from the range threats"
+          }
+        ]
+      },
+      "toelichting": "His Wood Elf example repeats the advice to hide fragile units from enemy shooting during deployment."
+    },
+    {
+      "lesId": "woods-block-attack-lanes",
+      "bron": {
+        "bronId": "yt-tRulkCymUfY",
+        "url": "https://www.youtube.com/watch?v=tRulkCymUfY&t=859s",
+        "tijd": 862,
+        "citaat": "I can just move them out of the forest he can no longer see me"
+      },
+      "toelichting": "He again uses a forest to remove enemy line of sight, here by moving Glade Guard when an enemy approaches."
+    }
+  ],
+  "overgeslagen": "Skipped channel promotion, list readouts, tournament context and battle-report announcements. Omitted uncertain ranges, unclear scenario names and garbled unit details. Did not turn the admitted Waystalker deployment mistake or the tentative Wild Rider experiment into recommendations.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

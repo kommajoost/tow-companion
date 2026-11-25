@@ -1,0 +1,1204 @@
+{
+  "videoId": "HibjCFdy04Y",
+  "bronId": "yt-HibjCFdy04Y",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-25T01:05:39.268Z",
+  "nieuw": [
+    {
+      "id": "concentrate-fire-finish-lanterns",
+      "titel": "Concentrate fire to finish Sky Lanterns",
+      "tekst": "Combine damage sources in a decisive turn to try to bring down one or two Sky Lanterns. Use casting aids to help a crucial magic missile supply the last wounds, rather than expecting reliable missiles every turn.",
+      "waarom": "He says one damage source is not enough, and a missile contributing one or two wounds can make the difference between finishing a Lantern and leaving it alive.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "magic-shooting",
+      "themas": [
+        "shooting-terrain",
+        "matchups"
+      ],
+      "leger": null,
+      "units": [
+        "Sky Lantern"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-HibjCFdy04Y",
+          "url": "https://www.youtube.com/watch?v=HibjCFdy04Y&t=333s",
+          "tijd": 336,
+          "citaat": "that you can focus fire and ideally",
+          "extraCitaten": [
+            {
+              "tijd": 344,
+              "citaat": "try to pull down one, if not two lanterns in the same turn."
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "infernal-guard-fireglaive-armour",
+      "titel": "Equip Infernal Guard with Blackshard armour and fireglaives",
+      "tekst": "Against Sky Lanterns, he suggests buying Blackshard armour and taking fireglaives on Infernal Guard. Keep shooting the Lanterns, turning around if they fly behind the unit.",
+      "waarom": "He sees this as a durable shooting unit whose additional save against flaming attacks weakens Dragonfire Bombs.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "shooting-terrain",
+        "infantry"
+      ],
+      "leger": "chaos-dwarfs",
+      "units": [
+        "Infernal Guard"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-HibjCFdy04Y",
+          "url": "https://www.youtube.com/watch?v=HibjCFdy04Y&t=466s",
+          "tijd": 469,
+          "citaat": "you probably buy the blackshot armor",
+          "extraCitaten": [
+            {
+              "tijd": 477,
+              "citaat": "a unit that's pretty durable, has a ward safe now, and just shoots."
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "skullcracker-iron-daemon-lanterns",
+      "titel": "Consider a Skullcracker Iron Daemon against Sky Lanterns",
+      "tekst": "Consider keeping the Skullcracker on an Iron Daemon and charging Sky Lanterns for impact damage. If a surviving Lantern escapes, follow up with shooting.",
+      "waarom": "He considers the Iron Daemon durable enough to take very little damage from a single Lantern's Stand and Shoot, while delivering impact hits and further combat damage.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "matchups",
+        "hammers"
+      ],
+      "leger": "chaos-dwarfs",
+      "units": [
+        "Iron Daemon"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-HibjCFdy04Y",
+          "url": "https://www.youtube.com/watch?v=HibjCFdy04Y&t=641s",
+          "tijd": 644,
+          "citaat": "charge this thing at sky lanterns and get those impact hits",
+          "extraCitaten": [
+            {
+              "tijd": 636,
+              "citaat": "keeping the skull cracker for those like a bajillion"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "larger-khorne-fury-units",
+      "titel": "Consider larger Khorne Fury units against Sky Lanterns",
+      "tekst": "He would consider larger units of Chaos Furies rather than five-model units for attacking Sky Lanterns, especially Khorne Furies.",
+      "waarom": "He says skirmishing reduces incoming Stand and Shoot hits, while Khorne Furies can reach Strength 5 on the charge and throw enough attacks at the target.",
+      "voorbeeld": null,
+      "wanneerNiet": "He notes that their attacks have no armour piercing.",
+      "fase": "army-building",
+      "themas": [
+        "matchups"
+      ],
+      "leger": "daemons-of-chaos",
+      "units": [
+        "Chaos Furies"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-HibjCFdy04Y",
+          "url": "https://www.youtube.com/watch?v=HibjCFdy04Y&t=785s",
+          "tijd": 788,
+          "citaat": "some larger blocks of furies, especially if they're corn furies.",
+          "extraCitaten": [
+            {
+              "tijd": 780,
+              "citaat": "not some fiveman blocks of furies, but"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "small-units-waste-lantern-shots",
+      "titel": "Use small units to waste excess Lantern damage",
+      "tekst": "Consider multiple small units rather than giving Sky Lanterns a large block to destroy. Make their excess damage go to waste on fewer models.",
+      "waarom": "He argues that a Lantern can do more damage than a small unit has models, while two Lanterns using Dragonfire Bombs can only attack two units at a time.",
+      "voorbeeld": "He describes Andreas losing more than 20 Tomb Guard in one turn to two Lanterns.",
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "shooting-terrain",
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [
+        "Sky Lantern"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-HibjCFdy04Y",
+          "url": "https://www.youtube.com/watch?v=HibjCFdy04Y&t=819s",
+          "tijd": 822,
+          "citaat": "So why not lean into that by taking small units?",
+          "extraCitaten": [
+            {
+              "tijd": 839,
+              "citaat": "they can only dragonf fire two units at a time"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "plague-drones-fight-lanterns",
+      "titel": "Consider Plague Drones for fighting Sky Lanterns",
+      "tekst": "He considers Plague Drones of Nurgle one of the better units for fighting Sky Lanterns.",
+      "waarom": "He points to their Toughness 5, flying speed and ability to keep attacking.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "matchups"
+      ],
+      "leger": "daemons-of-chaos",
+      "units": [
+        "Plague Drones of Nurgle"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-HibjCFdy04Y",
+          "url": "https://www.youtube.com/watch?v=HibjCFdy04Y&t=886s",
+          "tijd": 889,
+          "citaat": "plague drones are actually one of the best units",
+          "extraCitaten": [
+            {
+              "tijd": 897,
+              "citaat": "they're reasonable speed because they fly."
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "bloodthirster-needs-lantern-support",
+      "titel": "Support a Bloodthirster attacking a Sky Lantern",
+      "tekst": "Send a Bloodthirster into a Sky Lantern with something else, ideally something that can absorb the shooting.",
+      "waarom": "He says the Bloodthirster hits hard but lacks the armour and wound pool to comfortably absorb the volume of shots.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "matchups",
+        "hammers"
+      ],
+      "leger": "daemons-of-chaos",
+      "units": [
+        "Bloodthirster"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-HibjCFdy04Y",
+          "url": "https://www.youtube.com/watch?v=HibjCFdy04Y&t=924s",
+          "tijd": 927,
+          "citaat": "he really needs to go in with something else."
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "mixed-daemon-gods-lanterns",
+      "titel": "Consider mixing Daemon gods while Lanterns dominate",
+      "tekst": "He recommends considering a temporary alliance between Daemon gods while Sky Lanterns are prevalent. Combine Furies, one or two greater Daemon threats, cannons and magic missiles rather than relying on a single tool.",
+      "waarom": "He says sticking to one god makes this matchup particularly challenging and one approach alone will not be enough.",
+      "voorbeeld": null,
+      "wanneerNiet": "He notes the difficulty of fitting all the tools into the points allowance and that many players only own one god's models.",
+      "fase": "army-building",
+      "themas": [
+        "game-plan",
+        "matchups"
+      ],
+      "leger": "daemons-of-chaos",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-HibjCFdy04Y",
+          "url": "https://www.youtube.com/watch?v=HibjCFdy04Y&t=1081s",
+          "tijd": 1084,
+          "citaat": "you consider a temporary chaos god alliance",
+          "extraCitaten": [
+            {
+              "tijd": 1068,
+              "citaat": "if you only choose one god, you're going to you're"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "black-staff-focus-familiars",
+      "titel": "Consider Black Staff and Focus Familiars for Illusion",
+      "tekst": "He highlights a Supreme Sorceress with Illusion, Black Staff and multiple Focus Familiars as a Dark Elf option against Sky Lanterns.",
+      "waarom": "He says the familiars let her cast from 12 inches farther away, while Black Staff improves her casting attempts.",
+      "voorbeeld": null,
+      "wanneerNiet": "He warns that Black Staff brings more opportunities to miscast and that rolling the useful spells is uncertain.",
+      "fase": "army-building",
+      "themas": [
+        "game-plan",
+        "matchups"
+      ],
+      "leger": "dark-elves",
+      "units": [
+        "Supreme Sorceress"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-HibjCFdy04Y",
+          "url": "https://www.youtube.com/watch?v=HibjCFdy04Y&t=1104s",
+          "tijd": 1107,
+          "citaat": "supreme sorceress with the black staff and illusion",
+          "extraCitaten": [
+            {
+              "tijd": 1116,
+              "citaat": "of focus familiars which gives you the ability"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "avoid-column-dependent-strategy",
+      "titel": "Avoid depending entirely on Column of Crystal",
+      "tekst": "He would not build an entire strategy around Column of Crystal. Treat its power cautiously rather than relying on it as your sole answer.",
+      "waarom": "He says the spell is hard to cast, costs a substantial investment and can still be dispelled after being placed.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-HibjCFdy04Y",
+          "url": "https://www.youtube.com/watch?v=HibjCFdy04Y&t=1240s",
+          "tijd": 1243,
+          "citaat": "It's just not reliable enough in my opinion",
+          "extraCitaten": [
+            {
+              "tijd": 1243,
+              "citaat": "I wouldn't build a a strategy around it."
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "scourgerunner-over-reaper",
+      "titel": "Prefer a Scourgerunner for a Dark Elf bolt thrower",
+      "tekst": "If you want a Dark Elf bolt thrower, he suggests taking a Scourgerunner Chariot rather than the stationary version.",
+      "waarom": "He says it costs only about 20 points more and is much harder to kill.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "leger": "dark-elves",
+      "units": [
+        "Scourgerunner Chariot",
+        "Reaper Bolt Thrower"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-HibjCFdy04Y",
+          "url": "https://www.youtube.com/watch?v=HibjCFdy04Y&t=1390s",
+          "tijd": 1393,
+          "citaat": "you can take a scourge runner chariots and have bolt throwers on them."
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "deny-lantern-rear-landings",
+      "titel": "Block Sky Lantern landing space behind your army",
+      "tekst": "Use cheap fast cavalry or spread-out skirmishers behind your units to deny Sky Lanterns room to land. Occupy the space their large bases would need to fly over your army.",
+      "waarom": "He says Lanterns getting behind the army is especially difficult to handle, and shooting the cheap blockers instead of important units is a favourable outcome.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "chaff",
+        "shooting-terrain"
+      ],
+      "leger": null,
+      "units": [
+        "Sky Lantern"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-HibjCFdy04Y",
+          "url": "https://www.youtube.com/watch?v=HibjCFdy04Y&t=1433s",
+          "tijd": 1436,
+          "citaat": "Block off the sky lanterns from being able to fly behind",
+          "extraCitaten": [
+            {
+              "tijd": 588,
+              "citaat": "you could actually block them out from being able to fly over your units."
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "dark-riders-trap-disengagement",
+      "titel": "Use Dark Riders to trap a Lantern's disengagement",
+      "tekst": "After engaging a Sky Lantern with a dragon, arrange Dark Riders in a conga line behind the Lantern so disengaging would take it off the table. Force it to choose between remaining in combat and escaping off the battlefield.",
+      "waarom": "He says trapping it in combat prevents its shooting and lets the dragon damage it in the opponent's turn as well.",
+      "voorbeeld": null,
+      "wanneerNiet": "He cautions that setting up the conga line is easier said than done.",
+      "fase": "movement",
+      "themas": [
+        "chaff",
+        "matchups"
+      ],
+      "leger": "dark-elves",
+      "units": [
+        "Dark Riders",
+        "Black Dragon"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-HibjCFdy04Y",
+          "url": "https://www.youtube.com/watch?v=HibjCFdy04Y&t=1478s",
+          "tijd": 1481,
+          "citaat": "as soon as it chooses to disengage, it pops off the table.",
+          "extraCitaten": [
+            {
+              "tijd": 1472,
+              "citaat": "you just put your dark riders"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "power-scrolls-critical-ethereal-turns",
+      "titel": "Consider Power Scrolls for critical Ethereal turns",
+      "tekst": "For the Slann's Ethereal-block plan, take Power Scrolls seriously as protection against Lantern shooting. Aim to get the spell through on the two key turns rather than expecting it every turn.",
+      "waarom": "He considers the one-use cost worthwhile if it prevents the loss of half the unit, and says the protection need not last all six turns.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "shooting-terrain",
+        "game-plan"
+      ],
+      "leger": "lizardmen",
+      "units": [
+        "Slann Mage-Priest"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-HibjCFdy04Y",
+          "url": "https://www.youtube.com/watch?v=HibjCFdy04Y&t=1689s",
+          "tijd": 1692,
+          "citaat": "just taking power scrolls",
+          "extraCitaten": [
+            {
+              "tijd": 1714,
+              "citaat": "two key turns is when you need to go off."
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "hills-reduce-cannon-bounces",
+      "titel": "Look for hills to reduce cannon-bounce exposure",
+      "tekst": "Consider using hills to help protect units from cannons.",
+      "waarom": "He says a cannon must be more accurate against a target on a hill, which is less susceptible to its bounce.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-HibjCFdy04Y",
+          "url": "https://www.youtube.com/watch?v=HibjCFdy04Y&t=1828s",
+          "tijd": 1831,
+          "citaat": "Also, look for again hills, right?",
+          "extraCitaten": [
+            {
+              "tijd": 1848,
+              "citaat": "You're a lot less susceptible to the bounce if you're on the hill."
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "skinks-screen-cannon-sight",
+      "titel": "Use Skink Skirmishers to block cannon sight",
+      "tekst": "He suggests advancing cheap Skink Skirmishers quickly into a long line that blocks a cannon's sight of the ground where it wants to aim. Remove casualties elsewhere in the unit to keep that firing lane blocked, and replace a destroyed screen with the next ten-model unit.",
+      "waarom": "He says shots spent on these cheap Skinks are shots not spent on more valuable targets behind them.",
+      "voorbeeld": null,
+      "wanneerNiet": "He conditions this on the cannon not already being on a hill.",
+      "fase": "movement",
+      "themas": [
+        "chaff",
+        "shooting-terrain"
+      ],
+      "leger": "lizardmen",
+      "units": [
+        "Skink Skirmishers"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-HibjCFdy04Y",
+          "url": "https://www.youtube.com/watch?v=HibjCFdy04Y&t=1981s",
+          "tijd": 1984,
+          "citaat": "my skink skirmishers to just block the line of sight of your cannon",
+          "extraCitaten": [
+            {
+              "tijd": 2017,
+              "citaat": "not even let them have a firing lane open up for that second shot"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "multiple-stonehorns-against-cathay",
+      "titel": "Consider multiple Stonehorns against Cathay",
+      "tekst": "He is exploring multiple Stonehorns, including Tyrant mounts and additional rare choices, against Cathay.",
+      "waarom": "He says Toughness 6 makes Lantern shooting much less effective, while reducing multiple-wound damage helps against cannons.",
+      "voorbeeld": null,
+      "wanneerNiet": "He warns that local composition rules combining mounts and rare choices under one limit can prevent this build.",
+      "fase": "army-building",
+      "themas": [
+        "matchups",
+        "hammers"
+      ],
+      "leger": "ogre-kingdoms",
+      "units": [
+        "Stonehorn",
+        "Tyrant"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-HibjCFdy04Y",
+          "url": "https://www.youtube.com/watch?v=HibjCFdy04Y&t=2226s",
+          "tijd": 2229,
+          "citaat": "have a lot of stone horns",
+          "extraCitaten": [
+            {
+              "tijd": 2195,
+              "citaat": "stone horns have the I take one less wound from multi- wounds ability"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "gorgers-hunt-cathayan-cannons",
+      "titel": "Use ambushing Gorgers against Cathayan cannons",
+      "tekst": "He considers Gorgers particularly good ambushers for killing Cathayan cannons, even those with an Ogre crew member.",
+      "waarom": "He says Cathay lacks enough screening units to distract them or block their arrival, and a Gorger can beat the Ogre crew. Cannon shots spent killing it spare the Tyrants on Stonehorns.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "matchups",
+        "game-plan"
+      ],
+      "leger": "ogre-kingdoms",
+      "units": [
+        "Gorger"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-HibjCFdy04Y",
+          "url": "https://www.youtube.com/watch?v=HibjCFdy04Y&t=2318s",
+          "tijd": 2321,
+          "citaat": "one of the best ambushing type of units to kill cafe cannons"
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "mournfang-impact-wound-rerolls",
+      "titel": "Consider Mournfangs with wound rerolls against Lanterns",
+      "tekst": "He suggests three or four Mournfang Cavalry with the banner that rerolls wounds on impact hits as a threat to Sky Lanterns.",
+      "waarom": "He says they can still deliver their impact hits if they catch a Lantern using Feigned Flight, potentially producing enough damage to kill it.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "matchups",
+        "hammers"
+      ],
+      "leger": "ogre-kingdoms",
+      "units": [
+        "Mournfang Cavalry"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-HibjCFdy04Y",
+          "url": "https://www.youtube.com/watch?v=HibjCFdy04Y&t=2400s",
+          "tijd": 2403,
+          "citaat": "three or four of those guys with that like reroll a wound banner",
+          "extraCitaten": [
+            {
+              "tijd": 2415,
+              "citaat": "just do enough damage to kill them."
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "time-stonehorn-pressure-turn",
+      "titel": "Time a coordinated Stonehorn pressure turn",
+      "tekst": "Choose a prepared turn to pressure Sky Lanterns with Stonehorns and Mournfangs rather than automatically pushing on turn one. Position Gnoblars behind the attackers so the Lanterns cannot fly over them.",
+      "waarom": "He says the attackers' durability, range and forward threat give Ogres a better chance of applying this pressure than most armies.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "game-plan",
+        "hammers"
+      ],
+      "leger": "ogre-kingdoms",
+      "units": [
+        "Stonehorn",
+        "Mournfang Cavalry",
+        "Gnoblar Fighters"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-HibjCFdy04Y",
+          "url": "https://www.youtube.com/watch?v=HibjCFdy04Y&t=2450s",
+          "tijd": 2453,
+          "citaat": "don't just do it turn one.",
+          "extraCitaten": [
+            {
+              "tijd": 2461,
+              "citaat": "I have my knobblars behind me. They can't fly over my stone hordes."
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "ogre-vanguard-threat-overload",
+      "titel": "Consider Vanguard threat overload when Ogres go first",
+      "tekst": "If going first with Vanguard units, consider pushing many Ogre threats forward together to set up several turn-two charges into cannons and Lanterns. He mentions Maneaters and Yhetees as Vanguard options.",
+      "waarom": "He says overwhelming the opponent with targets means accepting one shooting turn but still having four or five things charging on turn two.",
+      "voorbeeld": null,
+      "wanneerNiet": "He calls this risky, with high potential reward, and warns that going second lets Lanterns move directly in front of the army and obstruct its advance.",
+      "fase": "movement",
+      "themas": [
+        "game-plan",
+        "hammers"
+      ],
+      "leger": "ogre-kingdoms",
+      "units": [
+        "Maneaters",
+        "Yhetees"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-HibjCFdy04Y",
+          "url": "https://www.youtube.com/watch?v=HibjCFdy04Y&t=2535s",
+          "tijd": 2538,
+          "citaat": "you shove so many units in his face.",
+          "extraCitaten": [
+            {
+              "tijd": 2549,
+              "citaat": "Ideally, his cannons and his lanterns."
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "warp-lightning-cannons-lanterns",
+      "titel": "Consider Warp Lightning Cannons against Sky Lanterns",
+      "tekst": "He rates the Warp Lightning Cannon as probably Skaven's best shooting option against Sky Lanterns.",
+      "waarom": "He values drawing a line through multiple targets, friendly models and terrain without needing a clear conventional firing lane.",
+      "voorbeeld": null,
+      "wanneerNiet": "He stresses the unreliable range and Strength rolls, and says multiple-wound damage depends on the local FAQ rather than the printed Legacy rules.",
+      "fase": "army-building",
+      "themas": [
+        "matchups",
+        "shooting-terrain"
+      ],
+      "leger": "skaven",
+      "units": [
+        "Warp Lightning Cannon"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-HibjCFdy04Y",
+          "url": "https://www.youtube.com/watch?v=HibjCFdy04Y&t=2657s",
+          "tijd": 2660,
+          "citaat": "the warp lighting can is probably the best",
+          "extraCitaten": [
+            {
+              "tijd": 2668,
+              "citaat": "You can shoot through your own guys. You can shoot through terrain."
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "jezzails-hidden-lantern-kill-lanes",
+      "titel": "Set up concealed Jezzail kill lanes",
+      "tekst": "Do not automatically deploy Warplock Jezzails on a hill. Look for hidden positions, including on the flanks, that create firing lanes into the places Sky Lanterns can reach.",
+      "waarom": "He says Jezzails are fragile and can be destroyed once a Lantern gets into range, so an exposed hill position can make them an easy target.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "shooting-terrain",
+        "matchups"
+      ],
+      "leger": "skaven",
+      "units": [
+        "Warplock Jezzails"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-HibjCFdy04Y",
+          "url": "https://www.youtube.com/watch?v=HibjCFdy04Y&t=2976s",
+          "tijd": 2979,
+          "citaat": "don't just deploy your gazels on the hill just because there's a hill.",
+          "extraCitaten": [
+            {
+              "tijd": 2996,
+              "citaat": "look to put your gazels on the flanks"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "lower-lantern-leadership-screams",
+      "titel": "Lower Lantern Leadership before concentrating screams",
+      "tekst": "Use Necromancy to reduce a Sky Lantern's Leadership, then attack it with screams from multiple sources.",
+      "waarom": "He says this has been effective in games he has seen. Although screams have short range, Lanterns must also come close to use their weapons.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "magic-shooting",
+      "themas": [
+        "psychology",
+        "matchups"
+      ],
+      "leger": "vampire-counts",
+      "units": [
+        "Sky Lantern"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-HibjCFdy04Y",
+          "url": "https://www.youtube.com/watch?v=HibjCFdy04Y&t=3142s",
+          "tijd": 3145,
+          "citaat": "bringing the leadership down of the sky lanterns and then screaming at them"
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "vampire-ethereal-lantern-control",
+      "titel": "Use Ethereal units for control against Cathay",
+      "tekst": "Reconsider Vampire Counts' Ethereal units, including Tomb Banshees and Hexwraiths, for board control against Cathayan cannons and Sky Lanterns.",
+      "waarom": "He says their Ethereal protection makes the cannons and Lanterns unable to hurt them.",
+      "voorbeeld": null,
+      "wanneerNiet": "He notes that Ring of Jet gives Cathay an answer to Ethereal units.",
+      "fase": "army-building",
+      "themas": [
+        "shooting-terrain",
+        "matchups"
+      ],
+      "leger": "vampire-counts",
+      "units": [
+        "Tomb Banshee",
+        "Hexwraiths"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-HibjCFdy04Y",
+          "url": "https://www.youtube.com/watch?v=HibjCFdy04Y&t=3181s",
+          "tijd": 3184,
+          "citaat": "you take those etheral units and suddenly, hey,",
+          "extraCitaten": [
+            {
+              "tijd": 3192,
+              "citaat": "cannons and lanterns, I don't care. You can't hurt me."
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "avoid-blood-knights-lanterns",
+      "titel": "Do not rely on Blood Knights against Lanterns",
+      "tekst": "Do not assume Blood Knights will remain an effective threat against Sky Lanterns.",
+      "waarom": "He says their two-plus armour save cannot compensate for having only one wound against the Lanterns' volume of shooting.",
+      "voorbeeld": null,
+      "wanneerNiet": "He says they become still worse if the local interpretation allows even a non-character Lantern to issue challenges.",
+      "fase": "army-building",
+      "themas": [
+        "matchups",
+        "shooting-terrain"
+      ],
+      "leger": "vampire-counts",
+      "units": [
+        "Blood Knights"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-HibjCFdy04Y",
+          "url": "https://www.youtube.com/watch?v=HibjCFdy04Y&t=3279s",
+          "tijd": 3282,
+          "citaat": "Don't assume your blood knights are going to work.",
+          "extraCitaten": [
+            {
+              "tijd": 3289,
+              "citaat": "They have one wound though"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "hexwraith-marching-column-attacks",
+      "titel": "Consider six Hexwraiths in marching column",
+      "tekst": "He highlights six Hexwraiths in marching column, moving over Sky Lanterns to deliver their pass-over attack.",
+      "waarom": "He says this lets them damage a Lantern without being hit back, while their Ethereal protection helps keep them safe.",
+      "voorbeeld": null,
+      "wanneerNiet": "He warns that Ring of Jet gives Cathay a way to answer them.",
+      "fase": "army-building",
+      "themas": [
+        "matchups",
+        "game-plan"
+      ],
+      "leger": "vampire-counts",
+      "units": [
+        "Hexwraiths"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-HibjCFdy04Y",
+          "url": "https://www.youtube.com/watch?v=HibjCFdy04Y&t=3312s",
+          "tijd": 3315,
+          "citaat": "they actually just take a unit of six in marching column.",
+          "extraCitaten": [
+            {
+              "tijd": 3323,
+              "citaat": "do something to the lantern without getting hit back"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "six-fell-bats-cannons",
+      "titel": "Consider at least six Fell Bats for cannon hunting",
+      "tekst": "Consider at least six Fell Bats in a unit when trying to reach and tie up Cathayan cannons.",
+      "waarom": "He says a small unit, even with a fourth bat, can crumble away over a round or two against the cannon with an Ogre.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "chaff",
+        "matchups"
+      ],
+      "leger": "vampire-counts",
+      "units": [
+        "Fell Bats"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-HibjCFdy04Y",
+          "url": "https://www.youtube.com/watch?v=HibjCFdy04Y&t=3444s",
+          "tijd": 3447,
+          "citaat": "at least six models in the fell bat unit"
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "avoid-vargheists-lantern-matchup",
+      "titel": "Avoid relying on Vargheists against Sky Lanterns",
+      "tekst": "He considers Vargheists a particularly poor choice in the Sky Lantern matchup.",
+      "waarom": "He says a Lantern can move into their charge range, force them to charge and shoot them again. Their Toughness 4 leaves them too vulnerable to survive this.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "matchups",
+        "shooting-terrain"
+      ],
+      "leger": "vampire-counts",
+      "units": [
+        "Vargheists"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-HibjCFdy04Y",
+          "url": "https://www.youtube.com/watch?v=HibjCFdy04Y&t=3494s",
+          "tijd": 3497,
+          "citaat": "one of the worst units in the game in that matchup",
+          "extraCitaten": [
+            {
+              "tijd": 3497,
+              "citaat": "and now they have to charge it and then I get to shoot again."
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "repeated-terror-charges-lanterns",
+      "titel": "Force repeated Terror tests on one Sky Lantern",
+      "tekst": "Lower one Sky Lantern's Leadership with Spirit Leech, then declare charges with five or six Terror-causing units in the same turn. Once it flees, let the closest unit chase and try redirecting the remaining chargers into a second Lantern.",
+      "waarom": "He says the Lantern must pass each Terror test despite being Unbreakable. A failed test also prevents Stand and Shoot, even if the attackers do not catch it.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "psychology",
+        "matchups"
+      ],
+      "leger": "vampire-counts",
+      "units": [
+        "Sky Lantern"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-HibjCFdy04Y",
+          "url": "https://www.youtube.com/watch?v=HibjCFdy04Y&t=3527s",
+          "tijd": 3530,
+          "citaat": "then charge them with five or six terrorcausing units in the same turn.",
+          "extraCitaten": [
+            {
+              "tijd": 3550,
+              "citaat": "Whatever unit's closest that one chases the rest try to redirect into the second one."
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "miao-ying-hunts-lanterns",
+      "titel": "Consider Miao Ying against Sky Lanterns",
+      "tekst": "He considers Miao Ying a strong option for destroying Sky Lanterns in combat.",
+      "waarom": "He points to her dragon form's Strength 7 attacks and Strikes First.",
+      "voorbeeld": "He describes her killing three of four charging Demigryph Knights before they could attack.",
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "matchups",
+        "hammers"
+      ],
+      "leger": "grand-cathay",
+      "units": [
+        "Miao Ying"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-HibjCFdy04Y",
+          "url": "https://www.youtube.com/watch?v=HibjCFdy04Y&t=3910s",
+          "tijd": 3913,
+          "citaat": "The dragon absolutely can eat Sky Lanterns, no problem."
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "prefer-granite-sentinel-durability",
+      "titel": "Prefer the Granite Sentinel for durability",
+      "tekst": "He currently prefers the Granite Sentinel option over the Jade Sentinel when preparing for Sky Lanterns. Use its durability to reach combat and deliver multiple-wound attacks.",
+      "waarom": "He values surviving both cannonballs and Lantern shooting, and sees less reason to buy another Fireball source when Lanterns already provide shooting.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "matchups",
+        "hammers"
+      ],
+      "leger": "grand-cathay",
+      "units": [
+        "Cathayan Sentinel"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-HibjCFdy04Y",
+          "url": "https://www.youtube.com/watch?v=HibjCFdy04Y&t=3955s",
+          "tijd": 3958,
+          "citaat": "I personally like the Granite Sentinels right now.",
+          "extraCitaten": [
+            {
+              "tijd": 3966,
+              "citaat": "Granite Sentinel, very durable, can survive the cannonballs"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "jade-lancers-ambush-cannons",
+      "titel": "Ambush Jade Lancers to attack Cathayan cannons",
+      "tekst": "In the Cathay mirror matchup, he recommends at least two ambushing Jade Lancer units to try to destroy cannons.",
+      "waarom": "He says leaving them in the middle of the field exposes them to being destroyed by the opponent's other units.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "matchups",
+        "game-plan"
+      ],
+      "leger": "grand-cathay",
+      "units": [
+        "Jade Lancers"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-HibjCFdy04Y",
+          "url": "https://www.youtube.com/watch?v=HibjCFdy04Y&t=4030s",
+          "tijd": 4033,
+          "citaat": "take at least two of them ambushing to try and take out some cannons."
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "jade-fleet-allied-outriders",
+      "titel": "Consider allied Outriders for Jade Fleet",
+      "tekst": "For Jade Fleet facing Sky Lanterns, he highlights allied Empire Outriders with a grenade-launching blunderbuss and repeater guns.",
+      "waarom": "He values their Strength 4 shooting and is happy if a Lantern spends its attacks destroying this small unit.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "shooting-terrain",
+        "matchups"
+      ],
+      "leger": "grand-cathay",
+      "units": [
+        "Outriders"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-HibjCFdy04Y",
+          "url": "https://www.youtube.com/watch?v=HibjCFdy04Y&t=4038s",
+          "tijd": 4041,
+          "citaat": "Outriders are probably the main thing that you would want",
+          "extraCitaten": [
+            {
+              "tijd": 4057,
+              "citaat": "you can have a grenade launching blunderbust guy and some repeater guns."
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "thin-formations-against-bombing",
+      "bron": {
+        "bronId": "yt-HibjCFdy04Y",
+        "url": "https://www.youtube.com/watch?v=HibjCFdy04Y&t=302s",
+        "tijd": 305,
+        "citaat": "to again spread out.",
+        "extraCitaten": [
+          {
+            "tijd": 3264,
+            "citaat": "if you're in a narrower formation, you have a much better chance"
+          }
+        ]
+      },
+      "toelichting": "He again recommends spreading into thinner formations to reduce Sky Lantern bombing damage."
+    },
+    {
+      "lesId": "scouts-deny-lantern-deployment",
+      "bron": {
+        "bronId": "yt-HibjCFdy04Y",
+        "url": "https://www.youtube.com/watch?v=HibjCFdy04Y&t=1409s",
+        "tijd": 1412,
+        "citaat": "Just giving yourself one additional turn",
+        "extraCitaten": [
+          {
+            "tijd": 1421,
+            "citaat": "I recommend two units of scouts."
+          }
+        ]
+      },
+      "toelichting": "He again recommends scouts to zone space and delay the Lanterns reaching the main army."
+    },
+    {
+      "lesId": "ethereal-bunker-against-lanterns",
+      "bron": {
+        "bronId": "yt-HibjCFdy04Y",
+        "url": "https://www.youtube.com/watch?v=HibjCFdy04Y&t=1660s",
+        "tijd": 1663,
+        "citaat": "you just make that whole block ethereal",
+        "extraCitaten": [
+          {
+            "tijd": 1663,
+            "citaat": "nothing in the cafe list except ring of jet has magical attacks."
+          }
+        ]
+      },
+      "voorbeeld": "He proposes a Slann Mage-Priest in Temple Guard, making the whole block Ethereal so it can advance without taking damage while the spell remains active.",
+      "toelichting": "This is the same High Magic plan of making a vulnerable bunker Ethereal against Cathay."
+    },
+    {
+      "lesId": "evasive-push-bombs-long-range",
+      "bron": {
+        "bronId": "yt-HibjCFdy04Y",
+        "url": "https://www.youtube.com/watch?v=HibjCFdy04Y&t=1592s",
+        "tijd": 1595,
+        "citaat": "into long range against the dragonfire bomb shots."
+      },
+      "toelichting": "He recommends the same Evasive retreat to push Dragonfire Bomb shooting into long range, here discussing Dark Elf Shades."
+    },
+    {
+      "lesId": "bait-lanterns-into-concentrated-fire",
+      "bron": {
+        "bronId": "yt-HibjCFdy04Y",
+        "url": "https://www.youtube.com/watch?v=HibjCFdy04Y&t=2632s",
+        "tijd": 2635,
+        "citaat": "feed them clan rats.",
+        "extraCitaten": [
+          {
+            "tijd": 2643,
+            "citaat": "You need three good turns of shooting."
+          }
+        ]
+      },
+      "toelichting": "He again recommends feeding expendable units to Lanterns to buy time for the guns to destroy them."
+    },
+    {
+      "lesId": "hide-random-movers-behind-hills",
+      "bron": {
+        "bronId": "yt-HibjCFdy04Y",
+        "url": "https://www.youtube.com/watch?v=HibjCFdy04Y&t=2783s",
+        "tijd": 2786,
+        "citaat": "hiding behind the hill.",
+        "extraCitaten": [
+          {
+            "tijd": 2794,
+            "citaat": "I don't need blind of sight to charge you and you can't stand and shoot."
+          }
+        ]
+      },
+      "toelichting": "He recommends the same hidden random-movement counterattack, using a Hell Pit Abomination against Lanterns."
+    },
+    {
+      "lesId": "tank-layer-three-saves",
+      "bron": {
+        "bronId": "yt-HibjCFdy04Y",
+        "url": "https://www.youtube.com/watch?v=HibjCFdy04Y&t=3118s",
+        "tijd": 3121,
+        "citaat": "a regen save and the ward save and the good armor"
+      },
+      "toelichting": "He again recommends combining armour, regeneration and a ward save, here for a defensive dragon-mounted Vampire."
+    },
+    {
+      "lesId": "cannon-bounce-multiple-lanterns",
+      "bron": {
+        "bronId": "yt-HibjCFdy04Y",
+        "url": "https://www.youtube.com/watch?v=HibjCFdy04Y&t=3826s",
+        "tijd": 3829,
+        "citaat": "the cannons that fire twice and bounce through multiple sky lanterns."
+      },
+      "toelichting": "He recommends the same cannon bounce through multiple Lanterns, here with Cathayan cannons."
+    }
+  ],
+  "overgeslagen": "Skipped introductions, closing banter, hobby advice, predictions about future balance changes, tournament results, unsupported list readouts and uncertain equipment details. Omitted the withdrawn Beasts of Nurgle random-movement claim at 16:42–17:14 and unresolved Lantern challenge interpretations. Retained local-FAQ caveats where they materially limit advice.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

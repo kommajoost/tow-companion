@@ -1,0 +1,181 @@
+{
+  "videoId": "7XuBN5nFkJo",
+  "bronId": "yt-7XuBN5nFkJo",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-25T00:12:57.923Z",
+  "nieuw": [
+    {
+      "id": "poison-prioritise-attack-volume",
+      "titel": "Prioritise attack volume when choosing poisoned attacks",
+      "tekst": "Choose a high quantity of poisoned attacks rather than prioritising attack quality. The speaker describes this as fishing for sixes.",
+      "waarom": "He explains that natural sixes to hit wound automatically, making poison particularly useful for low-Strength models.",
+      "voorbeeld": null,
+      "wanneerNiet": "He notes that poison cannot be used when an attack needs a seven to hit or hits automatically.",
+      "fase": "army-building",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-7XuBN5nFkJo",
+          "url": "https://www.youtube.com/watch?v=7XuBN5nFkJo&t=56s",
+          "tijd": 59,
+          "citaat": "poison attacks works best when you have a high quantity of attacks",
+          "extraCitaten": [
+            {
+              "tijd": 66,
+              "citaat": "it's about quantity rather than quality of attacks"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "poison-target-toughness-low-armour",
+      "titel": "Aim poison at high Toughness and low armour",
+      "tekst": "Look for high-Toughness targets and targets with little armour when choosing where to direct poisoned attacks. Having both makes an ideal target, but low-armour targets can be worthwhile even without high Toughness.",
+      "waarom": "He explains that poison lets low-Strength units damage large, tough enemies, while weak armour gives the opponent little chance of saving the resulting wounds.",
+      "voorbeeld": "He names lightly armoured war machines, Razorgor Herd, Ghorgon and Giant as suitable targets. He also describes his brother's Skinks inflicting heavy shooting casualties on his largely unarmoured Wood Elves.",
+      "wanneerNiet": null,
+      "fase": "magic-shooting",
+      "themas": [
+        "matchups",
+        "shooting-terrain"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-7XuBN5nFkJo",
+          "url": "https://www.youtube.com/watch?v=7XuBN5nFkJo&t=413s",
+          "tijd": 416,
+          "citaat": "high toughness low armor or ideally both",
+          "extraCitaten": [
+            {
+              "tijd": 360,
+              "citaat": "really poison shooting is super effective against no armor like wood elves"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "poison-scouts-clear-cannon",
+      "titel": "Concentrate poisoned Scout shooting on a cannon early",
+      "tekst": "When cannons force your monsters to stay defensive, advance Deepwood Scouts aggressively enough to concentrate their poisoned shooting on one cannon. Aim to remove at least one cannon early so the monsters can operate more freely.",
+      "waarom": "He wanted to free his monsters from the cannon threat, explaining that even a slim chance of taking D3 plus one wounds was significant.",
+      "voorbeeld": "Going first against two cannons and an Empire Steam Tank, his Scouts removed one cannon with 16 shots, opening the board for his monsters.",
+      "wanneerNiet": null,
+      "fase": "magic-shooting",
+      "themas": [
+        "shooting-terrain",
+        "game-plan"
+      ],
+      "leger": "wood-elf-realms",
+      "units": [
+        "Deepwood Scouts"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-7XuBN5nFkJo",
+          "url": "https://www.youtube.com/watch?v=7XuBN5nFkJo&t=221s",
+          "tijd": 224,
+          "citaat": "Focus fire at one Cannon",
+          "extraCitaten": [
+            {
+              "tijd": 224,
+              "citaat": "be aggressive with my Scouts"
+            },
+            {
+              "tijd": 247,
+              "citaat": "allowed my my monsters to roam free"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "poison-faster-threats-first",
+      "titel": "Focus poison on faster threats before slower monsters",
+      "tekst": "Against the Razorgor-heavy Beastmen force he describes, focus poisoned shooting on the faster Razorgor Herd first. Then concentrate on one Ghorgon at a time.",
+      "waarom": "He prioritised the Razorgor Herd because they were faster, and warned that his Strength 3, Toughness 3 elves would suffer badly if the enemy reached his lines.",
+      "voorbeeld": "His opponent fielded roughly eleven Razorgors and two Ghorgons, giving him many suitable poison targets.",
+      "wanneerNiet": null,
+      "fase": "magic-shooting",
+      "themas": [
+        "matchups",
+        "shooting-terrain"
+      ],
+      "leger": null,
+      "units": [
+        "Razorgor Herd",
+        "Ghorgon"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-7XuBN5nFkJo",
+          "url": "https://www.youtube.com/watch?v=7XuBN5nFkJo&t=300s",
+          "tijd": 303,
+          "citaat": "first off his Razorgors because they're faster",
+          "extraCitaten": [
+            {
+              "tijd": 303,
+              "citaat": "then I was hoping to focus fire down one Gorgon at a time"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "retreat-poison-slow-monsters",
+      "titel": "Back away while poisoning advancing monsters",
+      "tekst": "Against monsters that must march forward to reach your shooters, back away and keep shooting them with poison. In his Beastmen game, this let him bring down the Ghorgons before they contacted his elves.",
+      "waarom": null,
+      "voorbeeld": "He repeatedly withdrew while continuing to shoot the advancing Ghorgons, killing them before they reached his elves.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "shooting-terrain",
+        "matchups"
+      ],
+      "leger": null,
+      "units": [
+        "Ghorgon"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-7XuBN5nFkJo",
+          "url": "https://www.youtube.com/watch?v=7XuBN5nFkJo&t=332s",
+          "tijd": 335,
+          "citaat": "I backed off backed off backed off and just kept peppering these Gorgons",
+          "extraCitaten": [
+            {
+              "tijd": 335,
+              "citaat": "brought them down before they were able to make contact with my"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [],
+  "overgeslagen": "Skipped the introductory rule readout except where it explains explicit advice, channel promotion, and the garbled enumeration of panic results. Kept the battle examples tied to the tactics the speaker explicitly describes.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

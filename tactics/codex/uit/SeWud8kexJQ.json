@@ -1,0 +1,50 @@
+{
+  "videoId": "SeWud8kexJQ",
+  "bronId": "yt-SeWud8kexJQ",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-25T00:07:45.412Z",
+  "nieuw": [
+    {
+      "id": "charge-screen-open-lane",
+      "titel": "Charge skirmishing screens to open lanes for other attackers",
+      "tekst": "Charge a skirmishing screen where forming its fighting rank will pull models out of another attacker's path. Coordinate the attacks so that the other unit can reach the target behind the screen; for a declared charge, it must have line of sight to that target.",
+      "waarom": "He explains that charging a widely dispersed screen forces it to tighten into a fighting rank, pulling models away from the space they were screening.",
+      "voorbeeld": "His opponent charged his Sisters of Avelorn with Dragon Ogres, pulling the screen together and opening a route for a Nurgle Gigantic Spawn of Chaos to reach his Silver Helms. The spawn then killed his poorly defended Archmage.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "chaff"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-SeWud8kexJQ",
+          "url": "https://www.youtube.com/watch?v=SeWud8kexJQ&t=77s",
+          "tijd": 80,
+          "citaat": "by charging in the right spot you can manipulate that screen to open",
+          "extraCitaten": [
+            {
+              "tijd": 184,
+              "citaat": "I had to pull in all of my sisters and create this combat here"
+            },
+            {
+              "tijd": 231,
+              "citaat": "it could draw a line of sight to the silver Helms"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [],
+  "overgeslagen": "Skipped the introductory rules explanation as standalone advice, the incomplete screen-repositioning suggestion at 4:23, uncertain points costs, and closing tournament remarks.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

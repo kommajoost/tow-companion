@@ -1,0 +1,32 @@
+{
+  "videoId": "2YXd1POAWWk",
+  "bronId": "yt-2YXd1POAWWk",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-25T00:13:38.461Z",
+  "nieuw": [],
+  "aanvullingen": [
+    {
+      "lesId": "layer-resilient-units-retreat-trap",
+      "bron": {
+        "bronId": "yt-2YXd1POAWWk",
+        "url": "https://www.youtube.com/watch?v=2YXd1POAWWk&t=463s",
+        "tijd": 466,
+        "citaat": "you can line up units behind your good units",
+        "extraCitaten": [
+          {
+            "tijd": 330,
+            "citaat": "so it pops through its own unit"
+          }
+        ]
+      },
+      "toelichting": "He recommends the same layered positioning: a surviving front unit retreats through a friendly unit behind it, which intercepts pursuit."
+    }
+  ],
+  "overgeslagen": "Skipped introductory commentary, rules explanations without separate advice, and the detailed combat account except as support for the existing layered-retreat lesson. Brief mentions of leadership, Stubborn and Shield Wall do not give separate actionable recommendations.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

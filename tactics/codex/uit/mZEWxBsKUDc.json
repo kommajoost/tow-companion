@@ -1,0 +1,176 @@
+{
+  "videoId": "mZEWxBsKUDc",
+  "bronId": "yt-mZEWxBsKUDc",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-25T00:41:06.685Z",
+  "nieuw": [
+    {
+      "id": "budget-safe-flee-distance",
+      "titel": "Leave enough retreat distance to escape the charge",
+      "tekst": "Before baiting a charge with a unit that will flee, position it so its retreat can carry it beyond the charger's reach, allowing for Swiftstride. Check the retreat angle and the nearby board edge.",
+      "waarom": "He considers a strong Swiftstride charge roll plausible enough that he wants more clearance than the estimated average charge distance.",
+      "voorbeeld": "Against Movement 7 Demigryph Knights with Swiftstride, he wanted the Ellyrian Reavers 18 inches clear after fleeing and needed a retreat of at least six inches.",
+      "wanneerNiet": "His retreat brought the Ellyrian Reavers closer to the board edge, which he identifies as an issue.",
+      "fase": "movement",
+      "themas": [
+        "chaff",
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-mZEWxBsKUDc",
+          "url": "https://www.youtube.com/watch?v=mZEWxBsKUDc&t=299s",
+          "tijd": 302,
+          "citaat": "I want to be 18 in in the clear",
+          "extraCitaten": [
+            {
+              "tijd": 302,
+              "citaat": "I need to be able to get 6 in back at least"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "flee-behind-fallback-unit",
+      "titel": "Flee through a fallback unit to protect the fleeing piece",
+      "tekst": "Position another unit behind a piece you plan to flee with, so the fleeing piece can pass through it to safety. The rear unit can receive a charger that would otherwise reach the fleeing piece.",
+      "waarom": null,
+      "voorbeeld": "His Lothern Skycutter fled through the Swordmasters of Hoeth. He explains that Demigryph Knights reaching far enough would have hit the Swordmasters of Hoeth instead.",
+      "wanneerNiet": "He expects the Swordmasters of Hoeth could take the punishment and be overrun.",
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-mZEWxBsKUDc",
+          "url": "https://www.youtube.com/watch?v=mZEWxBsKUDc&t=522s",
+          "tijd": 525,
+          "citaat": "flee past the sword Masters here to safety",
+          "extraCitaten": [
+            {
+              "tijd": 534,
+              "citaat": "they would have hit the sword Masters instead"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "high-elves-flee-reposition",
+      "titel": "Use High Elf mobility to flee and change the attack",
+      "tekst": "Use High Elf speed and tactical fleeing to change the point of attack as the game develops. Rally surviving units and manoeuvre them back into useful positions.",
+      "waarom": "He regards the ability to move quickly between flanks as a major advantage for fragile Elf armies. He says the options this creates can confuse the opponent and lead to mistakes.",
+      "voorbeeld": "His Ellyrian Reavers fled twice, disrupted the stronger enemy flank and preserved their points. His Lothern Skycutter rallied, returned to the centre and later attacked the crossbowmen and cannon.",
+      "wanneerNiet": "He notes that Leadership 8 rallies are probable, but he would not want to make too many of them.",
+      "fase": "movement",
+      "themas": [
+        "game-plan",
+        "flanks"
+      ],
+      "leger": "high-elf-realms",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-mZEWxBsKUDc",
+          "url": "https://www.youtube.com/watch?v=mZEWxBsKUDc&t=681s",
+          "tijd": 684,
+          "citaat": "change the point of attack in the game",
+          "extraCitaten": [
+            {
+              "tijd": 618,
+              "citaat": "all they've done in the game is flee twice"
+            },
+            {
+              "tijd": 625,
+              "citaat": "preserve their points so I didn't lose anything from them"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "flee-deny-enemy-reforms",
+      "titel": "Use fleeing to deny powerful chargers a reform",
+      "tekst": "Draw powerful enemy units into charges that end without combat by fleeing. He highlights that this denies them a restrain-and-reform opportunity and can leave them unable to turn towards the fight where they are needed.",
+      "waarom": "He sees this as a way to control big hitters that are otherwise highly manoeuvrable.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-mZEWxBsKUDc",
+          "url": "https://www.youtube.com/watch?v=mZEWxBsKUDc&t=714s",
+          "tijd": 717,
+          "citaat": "completing charges that don't result in combat don't allow you to restrain a reform",
+          "extraCitaten": [
+            {
+              "tijd": 726,
+              "citaat": "they're not able to then pivot and Enter The Fray"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "decoys-set-up-countercharges",
+      "bron": {
+        "bronId": "yt-mZEWxBsKUDc",
+        "url": "https://www.youtube.com/watch?v=mZEWxBsKUDc&t=333s",
+        "tijd": 336,
+        "citaat": "hit him on that first combat and then win this flank pretty decisively",
+        "extraCitaten": [
+          {
+            "tijd": 336,
+            "citaat": "he doesn't want his demig to come too far forward"
+          }
+        ]
+      },
+      "voorbeeld": "He used Ellyrian Reavers as fleeing bait for Demigryph Knights, with a Lothern Skycutter positioned to attack if the Demigryph Knights came too far forward.",
+      "toelichting": "The same recommendation to position a decoy so an enemy charging it risks a supporting countercharge."
+    },
+    {
+      "lesId": "chaff-decoys",
+      "bron": {
+        "bronId": "yt-mZEWxBsKUDc",
+        "url": "https://www.youtube.com/watch?v=mZEWxBsKUDc&t=364s",
+        "tijd": 367,
+        "citaat": "they can duck behind it they can draw its attention",
+        "extraCitaten": [
+          {
+            "tijd": 375,
+            "citaat": "dealing with this uh lesser pointed threat"
+          }
+        ]
+      },
+      "toelichting": "The same recommendation to use mobile chaff threatening the backline to draw attention away from the main force."
+    }
+  ],
+  "overgeslagen": "Skipped the introduction, tournament preparations, champion-cost trivia, general board-thirds framing already covered by the index, rules commentary without a separate recommendation, and the closing channel discussion. Omitted unclear caption passages and speculation about Daemons.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

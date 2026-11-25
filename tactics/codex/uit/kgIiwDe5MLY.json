@@ -1,0 +1,50 @@
+{
+  "videoId": "kgIiwDe5MLY",
+  "bronId": "yt-kgIiwDe5MLY",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T23:52:47.489Z",
+  "nieuw": [
+    {
+      "id": "double-hammer-consecutive-waves",
+      "titel": "Attack in waves with two glass cannon units",
+      "tekst": "Use two glass cannon units to attack a tough enemy in consecutive waves: send the first to weaken it and the second to finish it on your next turn. Position the second unit so it can finish the fight if the first fails, while retaining other charge options if the first succeeds.",
+      "waarom": "He uses this approach with Wild Riders because they hit hard for one round but lose their hunting spear benefit if the enemy Gives Ground. He also finds that casualties in the first round reduce their subsequent attacks.",
+      "voorbeeld": "Against Dwarfs, he sent five Wild Riders into Hammerers. After the first unit was wiped out, his second five-model unit charged the depleted Hammerers, broke them and caught them, clearing the right flank.",
+      "wanneerNiet": "He warns that Frenzy makes these units difficult to control and that they need to withstand shooting to deliver the combination. His example also used an agreed, mistaken initiative value for the Wild Riders.",
+      "fase": "movement",
+      "themas": [
+        "hammers"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-kgIiwDe5MLY",
+          "url": "https://www.youtube.com/watch?v=kgIiwDe5MLY&t=210s",
+          "tijd": 213,
+          "citaat": "send one forward, weaken an enemy if it's something as tough as this, and",
+          "extraCitaten": [
+            {
+              "tijd": 222,
+              "citaat": "then finish them off with the second one"
+            },
+            {
+              "tijd": 284,
+              "citaat": "If they do win this combat, I have multiple options to charge."
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [],
+  "overgeslagen": "Skipped promotion, deployment and army readouts, combat arithmetic, uncertain rune names and incidental unit remarks. The flank-clearing comments provide context for the demonstrated tactic rather than a separate lesson.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

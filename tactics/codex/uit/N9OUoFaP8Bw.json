@@ -1,0 +1,120 @@
+{
+  "videoId": "N9OUoFaP8Bw",
+  "bronId": "yt-N9OUoFaP8Bw",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-25T00:11:46.787Z",
+  "nieuw": [
+    {
+      "id": "screen-block-every-firing-line",
+      "titel": "Block every firing line with your screen",
+      "tekst": "Keep the screen between the shooters and the unit you want to protect, blocking line of sight completely as you advance. Take enough screening models to cover the protected unit.",
+      "waarom": "He points out that magic missiles and war machines such as the Helblaster Volley Gun only need to see a small part of the protected unit to damage it.",
+      "voorbeeld": "He took seven Warhounds to screen seven Forsaken and kept the Warhounds blocking the Helblaster Volley Gun as they advanced.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "chaff",
+        "shooting-terrain"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-N9OUoFaP8Bw",
+          "url": "https://www.youtube.com/watch?v=N9OUoFaP8Bw&t=356s",
+          "tijd": 359,
+          "citaat": "making sure that you block those lines of sight",
+          "extraCitaten": [
+            {
+              "tijd": 130,
+              "citaat": "only need to be able to see a small amount of the unit"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "clear-screens-with-cheap-units",
+      "titel": "Consider clearing enemy screens with a cheap unit",
+      "tekst": "Against a screen like the Warhounds in this game, consider using a cheap unit of your own to clear it away.",
+      "waarom": "He thinks this would have cleared the way and forced the screening player to respond.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "chaff"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-N9OUoFaP8Bw",
+          "url": "https://www.youtube.com/watch?v=N9OUoFaP8Bw&t=379s",
+          "tijd": 382,
+          "citaat": "having some other cheap unit that my opponent could throw at the warhounds"
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "chaff-under-100-points",
+      "bron": {
+        "bronId": "yt-N9OUoFaP8Bw",
+        "url": "https://www.youtube.com/watch?v=N9OUoFaP8Bw&t=46s",
+        "tijd": 49,
+        "citaat": "what's important is that you pick a unit that's cheap"
+      },
+      "toelichting": "He gives the same recommendation to keep expendable chaff cheap, here when selecting a screening unit."
+    },
+    {
+      "lesId": "chaff-must-be-fast",
+      "bron": {
+        "bronId": "yt-N9OUoFaP8Bw",
+        "url": "https://www.youtube.com/watch?v=N9OUoFaP8Bw&t=53s",
+        "tijd": 56,
+        "citaat": "faster than the unit that's behind what you're trying to protect"
+      },
+      "toelichting": "He repeats the need for fast chaff that can get ahead, specifying that a screen should be faster than the unit it protects."
+    },
+    {
+      "lesId": "chaff-decoys",
+      "bron": {
+        "bronId": "yt-N9OUoFaP8Bw",
+        "url": "https://www.youtube.com/watch?v=N9OUoFaP8Bw&t=363s",
+        "tijd": 366,
+        "citaat": "also having some ability to threaten and put your opponent in two minds",
+        "extraCitaten": [
+          {
+            "tijd": 163,
+            "citaat": "soft targets like War Machine Crews"
+          }
+        ]
+      },
+      "wanneerNiet": "If the screen attacks a target that easily destroys it, he warns that the enemy may get a free overrun in the screening player's own turn.",
+      "toelichting": "The screen uses a credible threat against soft backline targets to draw enemy resources away from the protected unit, matching the decoy advice."
+    },
+    {
+      "lesId": "decoys-set-up-countercharges",
+      "bron": {
+        "bronId": "yt-N9OUoFaP8Bw",
+        "url": "https://www.youtube.com/watch?v=N9OUoFaP8Bw&t=322s",
+        "tijd": 325,
+        "citaat": "that meant that my forsaken then had time to hit this unit in the side"
+      },
+      "voorbeeld": "His opponent charged the Warhounds with Greatswords. The Warhounds lost and fled to the right, giving his Forsaken time to attack the Greatswords in the side, which he says was the point of the setup.",
+      "toelichting": "He draws the same lesson about using an expendable unit to draw an enemy into a supporting countercharge."
+    }
+  ],
+  "overgeslagen": "Skipped the introduction, points and combat-stat readouts, broader commentary on equal-skill games, and the garbled account of lost contact around 5:09-5:25. Retained only clearly stated screening advice and its supported example.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

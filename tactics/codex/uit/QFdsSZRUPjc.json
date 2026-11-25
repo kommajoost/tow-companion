@@ -1,0 +1,41 @@
+{
+  "videoId": "QFdsSZRUPjc",
+  "bronId": "yt-QFdsSZRUPjc",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T23:49:40.340Z",
+  "nieuw": [
+    {
+      "id": "advance-before-charge-wheel",
+      "titel": "Advance before wheeling to reach an obstructed charge target",
+      "tekst": "Consider advancing straight before wheeling during a charge when wheeling immediately would leave the route blocked by a model or terrain.",
+      "waarom": null,
+      "voorbeeld": "In his game against Wood Elves, the Wild Riders advanced about five inches before wheeling to reach his Shaman beside a tower. He had thought an immediate wheel would leave their charge blocked, but this approach forced him to flee.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "game-plan",
+        "shooting-terrain"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-QFdsSZRUPjc",
+          "url": "https://www.youtube.com/watch?v=QFdsSZRUPjc&t=195s",
+          "tijd": 198,
+          "citaat": "So remember that you can wheel at any time during the charge"
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [],
+  "overgeslagen": "Skipped the introduction, spell and rally outcomes, and rules commentary except where needed to explain the delayed-wheel example.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

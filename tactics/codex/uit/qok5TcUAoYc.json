@@ -1,0 +1,50 @@
+{
+  "videoId": "qok5TcUAoYc",
+  "bronId": "yt-qok5TcUAoYc",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T23:23:23.942Z",
+  "nieuw": [
+    {
+      "id": "wait-before-contesting-centre",
+      "titel": "Wait before exposing a light scorer on the central objective",
+      "tekst": "If claiming the central objective would expose a light scoring unit, consider leaving it until other units can come across. The speaker thinks he should have waited rather than trying to collect cheap early points.",
+      "waarom": "He considers the central objective particularly vulnerable. His attempt to claim it exposed his scoring unit to Ruby Ring, which reduced it below scoring strength.",
+      "voorbeeld": "He moved a light unit forward to claim the other objective and draw the opponent towards him. Ruby Ring killed four models, leaving two that could no longer score; it killed the remainder the following turn.",
+      "wanneerNiet": null,
+      "fase": "scenarios",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-qok5TcUAoYc",
+          "url": "https://www.youtube.com/watch?v=qok5TcUAoYc&t=407s",
+          "tijd": 410,
+          "citaat": "I should have probably left it and waited until other units had come across",
+          "extraCitaten": [
+            {
+              "tijd": 361,
+              "citaat": "I'm now no longer even scoring the objective and they're stuck in the middle."
+            },
+            {
+              "tijd": 616,
+              "citaat": "more patient to be able to hang on to create the type of combat"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [],
+  "overgeslagen": "Skipped the introduction, event scoring explanation, sponsorship and channel news. The Boar Boyz example and discussion of objectives attracting supporting units describe combat consequences without a separate clear recommendation. The scoring unit is named inconsistently in the captions, so its identity is not inferred.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

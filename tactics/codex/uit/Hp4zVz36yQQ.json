@@ -1,0 +1,64 @@
+{
+  "videoId": "Hp4zVz36yQQ",
+  "bronId": "yt-Hp4zVz36yQQ",
+  "model": "GPT-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-25T00:20:26.077Z",
+  "nieuw": [
+    {
+      "id": "align-sacrifices-for-empty-overruns",
+      "titel": "Position sacrifices so enemy overruns reach empty space",
+      "tekst": "Place a sacrificial unit precisely so that maximising contact leaves the enemy overrunning into empty space rather than another friendly unit. Use the units' base sizes to work out how many enemy models must make contact and where that leaves the charger facing.",
+      "waarom": "He explains that overrunning into another unit can let the enemy win a favourable combat during his turn, restrain and reform, then charge again on its own turn. Sending the overrun into empty space instead buys his other units time while the enemy waits to charge again.",
+      "voorbeeld": "He placed a 52-point Razorgor Herd to delay a roughly 500-point knight unit on turn two, when the key combats were forming. He says the delay gave his main unit time to whittle down the Empire Steam Tank.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "chaff",
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-Hp4zVz36yQQ",
+          "url": "https://www.youtube.com/watch?v=Hp4zVz36yQQ&t=182s",
+          "tijd": 185,
+          "citaat": "position this in a way where when he charges he has to maximize",
+          "extraCitaten": [
+            {
+              "tijd": 209,
+              "citaat": "straightforward into empty space"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "chaff-decoys",
+      "bron": {
+        "bronId": "yt-Hp4zVz36yQQ",
+        "url": "https://www.youtube.com/watch?v=Hp4zVz36yQQ&t=447s",
+        "tijd": 450,
+        "citaat": "spells so good that he can't just leave my Chariot out there doing nothing",
+        "extraCitaten": [
+          {
+            "tijd": 474,
+            "citaat": "spending a few turns chasing the um Shaman around"
+          }
+        ]
+      },
+      "toelichting": "The chariot's Vile Tide threat makes it too dangerous to ignore, drawing the Demigryphs away from the central fighting, as in the existing advice about threatening decoys."
+    }
+  ],
+  "overgeslagen": "Skipped the introduction, list and stat readouts, channel news, and unclear details of the later chariot and Shaman sequence. Used the knight and chariot sequences as evidence for precise sacrificial placement and threatening decoys rather than separate lessons for each example.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

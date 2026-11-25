@@ -1,0 +1,78 @@
+{
+  "videoId": "xsAHWFHMQ_k",
+  "bronId": "yt-xsAHWFHMQ_k",
+  "model": "GPT-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-25T00:46:19.715Z",
+  "nieuw": [
+    {
+      "id": "bait-compulsory-charges-maximum-range",
+      "titel": "Bait compulsory charges just inside maximum range",
+      "tekst": "Place bait just inside the maximum charge range of a frenzied unit, or an impetuous unit that is forced to charge. Aim to give it the greatest possible chance of failing its charge.",
+      "waarom": "He explains that a failed charge delays the enemy's advance.",
+      "voorbeeld": "He placed his bait 15 inches from knights with a stated maximum charge range of 16 inches. The knights failed to reach it.",
+      "wanneerNiet": "He warns that if the knights reach and destroy the bait, they can get a free reform, which makes redirection less effective.",
+      "fase": "movement",
+      "themas": [
+        "chaff",
+        "psychology"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-xsAHWFHMQ_k",
+          "url": "https://www.youtube.com/watch?v=xsAHWFHMQ_k&t=163s",
+          "tijd": 166,
+          "citaat": "move to just inside the maximum charge range",
+          "extraCitaten": [
+            {
+              "tijd": 106,
+              "citaat": "you want the biggest possible chance for it to fail the charge"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "angle-compulsory-charge-bait-outward",
+      "titel": "Angle compulsory-charge bait away from the centre",
+      "tekst": "Angle bait at least 45 degrees so that the charging unit is drawn to face off the board or away from its centre. Use this to distract powerful enemy units, especially frenzied ones.",
+      "waarom": "He explains that even a failed charger must move towards the bait and orient its facing. A successful charger wheels into contact and aligns with the bait.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "chaff",
+        "psychology"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-xsAHWFHMQ_k",
+          "url": "https://www.youtube.com/watch?v=xsAHWFHMQ_k&t=171s",
+          "tijd": 174,
+          "citaat": "and to then angle at 45 degrees",
+          "extraCitaten": [
+            {
+              "tijd": 182,
+              "citaat": "away from the center of the board at a minimum"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [],
+  "overgeslagen": "Skipped the channel introduction and standalone movement and charge-rule explanations. The marching-column archers are an example of reaching the baiting position, not a separate recommendation. Existing general redirection lessons do not give these specific recommendations about maximum-range compulsory charges and outward bait angles.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

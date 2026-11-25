@@ -1,0 +1,118 @@
+{
+  "videoId": "fAZfkonBGpA",
+  "bronId": "yt-fAZfkonBGpA",
+  "model": "GPT-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T23:45:49.356Z",
+  "nieuw": [
+    {
+      "id": "cheap-area-capture-units",
+      "titel": "Use cheap units to capture scoring areas",
+      "tekst": "For scenarios that award bonus points for occupying particular parts of the board, he generally wants the cheapest units to perform that job.",
+      "waarom": null,
+      "voorbeeld": "He took two Marauder Horsemen units for a scenario requiring them to preserve their standards and finish in the relevant deployment zones.",
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-fAZfkonBGpA",
+          "url": "https://www.youtube.com/watch?v=fAZfkonBGpA&t=45s",
+          "tijd": 48,
+          "citaat": "you often want the cheapest units to do so."
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "maintain-cover-for-scorers",
+      "titel": "Keep fragile scorers covered throughout their advance",
+      "tekst": "Start a fragile scoring unit in cover and maintain that protection as it crosses the board. Use faster units in front to shield it from missile fire while it advances towards its scoring zone.",
+      "waarom": "He says Marauder Horsemen are not resilient against sustained fire, even with light armour and shields. His faster leading units could advance while leaving the Horsemen protected behind them.",
+      "voorbeeld": "Against a missile-heavy Empire army, he squeezed Marauder Horsemen behind his Chosen Chaos Knights and Warpfire Dragon so enemy units could not shoot them.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "shooting-terrain",
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-fAZfkonBGpA",
+          "url": "https://www.youtube.com/watch?v=fAZfkonBGpA&t=319s",
+          "tijd": 322,
+          "citaat": "starting in a position in cover, but then maintaining that cover",
+          "extraCitaten": [
+            {
+              "tijd": 210,
+              "citaat": "the trick here is that having a faster unit in front"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "clear-route-for-scorers",
+      "titel": "Push enemies back to make space for scorers",
+      "tekst": "Use your other units to push enemy threats out of the way and create space for a scoring unit to reach its objective. Plan this shepherding as part of your strategy for the scenario.",
+      "waarom": null,
+      "voorbeeld": "He dominated one flank and pushed the Empire units back to make space for his Marauder Horsemen to reach the opponent's deployment zone.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-fAZfkonBGpA",
+          "url": "https://www.youtube.com/watch?v=fAZfkonBGpA&t=336s",
+          "tijd": 339,
+          "citaat": "push units out of the way that can shepherd the scoring unit into place",
+          "extraCitaten": [
+            {
+              "tijd": 306,
+              "citaat": "push those empire units back and then create space"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "move-to-hold-objectives",
+      "bron": {
+        "bronId": "yt-fAZfkonBGpA",
+        "url": "https://www.youtube.com/watch?v=fAZfkonBGpA&t=256s",
+        "tijd": 259,
+        "citaat": "have these two marauder horse units be alive at the end of the game,",
+        "extraCitaten": [
+          {
+            "tijd": 360,
+            "citaat": "these two Marauder Horseman units didn't kill anything in the game,"
+          }
+        ]
+      },
+      "toelichting": "The same advice to keep units alive in their scoring positions at the end of an objective-based battle, even when they kill nothing."
+    }
+  ],
+  "overgeslagen": "Skipped the introduction, tournament references, victory-point conversion, and incidental formation and line-of-sight observations without a clear recommendation.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

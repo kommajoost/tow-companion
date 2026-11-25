@@ -1,0 +1,46 @@
+{
+  "videoId": "EOjTbmlZ9o4",
+  "bronId": "yt-EOjTbmlZ9o4",
+  "model": "GPT-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T23:08:58.367Z",
+  "nieuw": [
+    {
+      "id": "choose-side-for-armies",
+      "titel": "Choose your table side with both armies in mind",
+      "tekst": "On an asymmetrical table, assess the terrain on each side alongside your army and your opponent's army. Choose the side you think gives you an advantage.",
+      "waarom": null,
+      "voorbeeld": null,
+      "wanneerNiet": "He notes that the roll-off means you will not always get the side you want.",
+      "fase": "deployment",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-EOjTbmlZ9o4",
+          "url": "https://www.youtube.com/watch?v=EOjTbmlZ9o4&t=850s",
+          "tijd": 853,
+          "citaat": "look at your army and your opponent's Army and make a judgment call",
+          "extraCitaten": [
+            {
+              "tijd": 853,
+              "citaat": "hey this side might have more Hills this side might have more ruins"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-02-15",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [],
+  "overgeslagen": "Most of the video concerns event organisation, terrain placement formats, terrain construction and immersion rather than player tactics. Skipped those discussions, channel plans, banter and descriptions of road and bridge rules without tactical advice.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

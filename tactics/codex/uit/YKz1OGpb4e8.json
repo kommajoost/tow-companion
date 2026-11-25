@@ -1,0 +1,130 @@
+{
+  "videoId": "YKz1OGpb4e8",
+  "bronId": "yt-YKz1OGpb4e8",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-25T00:47:30.517Z",
+  "nieuw": [
+    {
+      "id": "temple-guard-core-priority",
+      "titel": "Consider Temple Guard for remaining core points",
+      "tekst": "For Legacy Lizardmen, he thinks Temple Guard may be the next best use of core points after Skinks and the ten mandatory Saurus Warriors.",
+      "waarom": "He says he has tried many configurations and found few good alternatives.",
+      "voorbeeld": null,
+      "wanneerNiet": "He warns that these infantry units become expensive quickly and sees units costing over 200 points as targets for ridden monsters trying to recover their investment.",
+      "fase": "army-building",
+      "themas": [
+        "infantry"
+      ],
+      "leger": "lizardmen",
+      "units": [
+        "Temple Guard"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-YKz1OGpb4e8",
+          "url": "https://www.youtube.com/watch?v=YKz1OGpb4e8&t=70s",
+          "tijd": 73,
+          "citaat": "Temple guard might be the next best way to spend core points",
+          "extraCitaten": [
+            {
+              "tijd": 83,
+              "citaat": "I've tried a lot of different configurations and there aren't great options"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "marching-column-casualty-margin",
+      "titel": "Leave room for casualties in your marching column",
+      "tekst": "Avoid a marching column that loses its formation after a single casualty. He uses five ranks of two rather than a 2-2-1 formation.",
+      "waarom": "He warns that losing the rear model from a 2-2-1 formation ends its marching-column movement benefit and leaves the unit vulnerable.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-YKz1OGpb4e8",
+          "url": "https://www.youtube.com/watch?v=YKz1OGpb4e8&t=198s",
+          "tijd": 201,
+          "citaat": "if you set up in 221 and lose that back guy",
+          "extraCitaten": [
+            {
+              "tijd": 209,
+              "citaat": "marching column and you lose that ability and leave your unit in a vulnerable position"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "marching-column-anvil-advance",
+      "titel": "Try advancing slow anvils in marching column",
+      "tekst": "Consider marching slow infantry forward in marching column and accepting the first charge, particularly with Stubborn. He suggests this for an anvil that can survive the hit and fall back in good order.",
+      "waarom": "He uses the triple-speed march to move his infantry 12 inches and sees Fall Back in Good Order as a source of resilience after taking the charge.",
+      "voorbeeld": null,
+      "wanneerNiet": "He says to avoid being doubly outnumbered and losing access to Fall Back in Good Order. His successful demonstration used Temple Guard; he has not yet established that Saurus Warriors can replicate it.",
+      "fase": "movement",
+      "themas": [
+        "infantry",
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-YKz1OGpb4e8",
+          "url": "https://www.youtube.com/watch?v=YKz1OGpb4e8&t=166s",
+          "tijd": 169,
+          "citaat": "I've set them up in marching column",
+          "extraCitaten": [
+            {
+              "tijd": 466,
+              "citaat": "maybe consider just taking that hit with your Anvil unit"
+            },
+            {
+              "tijd": 481,
+              "citaat": "as long as you can avoid that double out number elimination of that rule"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "orderly-retreat-widen-fighting-rank",
+      "bron": {
+        "bronId": "yt-YKz1OGpb4e8",
+        "url": "https://www.youtube.com/watch?v=YKz1OGpb4e8&t=415s",
+        "tijd": 418,
+        "citaat": "the temple guard moved back they were able to reform into a line",
+        "extraCitaten": [
+          {
+            "tijd": 427,
+            "citaat": "from there they be began to win these combats over and over and over"
+          }
+        ]
+      },
+      "toelichting": "He illustrates the same advice by widening Temple Guard into a fighting line with the free reform after falling back in good order."
+    }
+  ],
+  "overgeslagen": "Skipped the channel introduction, general complaints about infantry, equipment and stat readouts without recommendations, the Drilled rules explanation, and battle-report teasers. Omitted unclear passages about the other combat and spellcasting.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

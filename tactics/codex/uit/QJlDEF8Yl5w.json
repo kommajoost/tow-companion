@@ -1,0 +1,134 @@
+{
+  "videoId": "QJlDEF8Yl5w",
+  "bronId": "yt-QJlDEF8Yl5w",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-25T00:07:00.617Z",
+  "nieuw": [
+    {
+      "id": "champions-preserve-units-defensively",
+      "titel": "Buy champions to preserve units through defensive challenges",
+      "tekst": "Include champions so their defensive challenges can preserve the rest of a unit. He recommends designing anvils around this: surviving models get a chance to fall back in good order, buying another combat and potentially denying the opponent the unit's full points.",
+      "waarom": "He explains that the champion absorbs attacks that would otherwise remove more models. In his view, falling back in good order and the difficulty of destroying every model make challenges useful for preserving both tempo and points.",
+      "voorbeeld": "His Sisters of Avelorn champion challenged a charging mounted sorcerer, leaving seven models alive with a chance to fall back in good order.",
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-QJlDEF8Yl5w",
+          "url": "https://www.youtube.com/watch?v=QJlDEF8Yl5w&t=433s",
+          "tijd": 436,
+          "citaat": "the champion preserving the unit for an extra turn",
+          "extraCitaten": [
+            {
+              "tijd": 382,
+              "citaat": "what you're really doing is preserving bodies for your unit"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "pegasus-low-strength-armour-piercing",
+      "titel": "Use low-strength, high-armour-piercing shooting against Pegasus Knights",
+      "tekst": "Against Pegasus Knights, look for shooting that combines low Strength with high armour piercing.",
+      "waarom": "He recommends this combination to get around the Lady's Blessing.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "magic-shooting",
+      "themas": [
+        "matchups",
+        "shooting-terrain"
+      ],
+      "leger": "kingdom-of-bretonnia",
+      "units": [
+        "Pegasus Knights"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-QJlDEF8Yl5w",
+          "url": "https://www.youtube.com/watch?v=QJlDEF8Yl5w&t=206s",
+          "tijd": 209,
+          "citaat": "you want low strength High armor piecing shooting",
+          "extraCitaten": [
+            {
+              "tijd": 217,
+              "citaat": "around the lady's blessing"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "sisters-shoot-pegasus-knights",
+      "titel": "Consider Sisters of Avelorn for shooting Pegasus Knights",
+      "tekst": "He thinks Sisters of Avelorn might be the best unit in the game for the low-Strength, high-armour-piercing shooting he recommends against Pegasus Knights.",
+      "waarom": "He values that shooting profile for getting around the Lady's Blessing.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "matchups",
+        "shooting-terrain"
+      ],
+      "leger": "high-elf-realms",
+      "units": [
+        "Sisters of Avelorn",
+        "Pegasus Knights"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-QJlDEF8Yl5w",
+          "url": "https://www.youtube.com/watch?v=QJlDEF8Yl5w&t=214s",
+          "tijd": 217,
+          "citaat": "sisters of avalor might be the best unit in the game"
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "stubborn-anchor-countercharge",
+      "bron": {
+        "bronId": "yt-QJlDEF8Yl5w",
+        "url": "https://www.youtube.com/watch?v=QJlDEF8Yl5w&t=65s",
+        "tijd": 68,
+        "citaat": "stubborn and a character being a great combination",
+        "extraCitaten": [
+          {
+            "tijd": 81,
+            "citaat": "will buy you two turns ultimately or two combats"
+          }
+        ]
+      },
+      "toelichting": "He likewise recommends using Stubborn to survive the initial hit and hold the enemy for a subsequent supporting charge."
+    },
+    {
+      "lesId": "chaff-speed-bumps",
+      "bron": {
+        "bronId": "yt-QJlDEF8Yl5w",
+        "url": "https://www.youtube.com/watch?v=QJlDEF8Yl5w&t=253s",
+        "tijd": 256,
+        "citaat": "create an overrun pathway away from the other units"
+      },
+      "toelichting": "His Reavers draw a charge and direct the expected overrun away from protected units, applying the same speed-bump redirection advice."
+    }
+  ],
+  "overgeslagen": "Skipped introductory rules explanations without separate advice, tournament context, proposed rules changes, and the lucky Grail Knight combat as an anecdote illustrating defensive challenges rather than a separate recommendation.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

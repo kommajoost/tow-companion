@@ -1,0 +1,141 @@
+{
+  "videoId": "2yxaFqlrg4U",
+  "bronId": "yt-2yxaFqlrg4U",
+  "model": "GPT-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-25T00:19:05.445Z",
+  "nieuw": [
+    {
+      "id": "evasive-limit-fireball-reach",
+      "titel": "Stay at the limit of a Fireball caster's reach",
+      "tekst": "Against a Fireball caster, judge how far it can move and still reach your Evasive unit, then sit at that limit so you can evade out of range. Make it choose between moving and attempting the shot or marching into a better position for next turn.",
+      "waarom": null,
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "shooting-terrain",
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-2yxaFqlrg4U",
+          "url": "https://www.youtube.com/watch?v=2yxaFqlrg4U&t=110s",
+          "tijd": 113,
+          "citaat": "sit at that range so then they have to decide",
+          "extraCitaten": [
+            {
+              "tijd": 121,
+              "citaat": "they march to try and get into a better position for next turn"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "close-range-against-evasive",
+      "titel": "Move closer before shooting an Evasive target",
+      "tekst": "When approaching an Evasive target to shoot it, move closer than you need merely to bring it into range. Leave enough reach that its retreat cannot take it out of shooting range.",
+      "waarom": "He explains that if the target evades out of range, the shooter cannot choose another target and loses its shooting.",
+      "voorbeeld": "His Deepwood Scouts evaded out of an Empire Steam Tank's grapeshot range, leaving it unable to shoot anything.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-2yxaFqlrg4U",
+          "url": "https://www.youtube.com/watch?v=2yxaFqlrg4U&t=221s",
+          "tijd": 224,
+          "citaat": "you want to get further than you need to closer to them",
+          "extraCitaten": [
+            {
+              "tijd": 208,
+              "citaat": "he cannot shoot the original Target which means he cannot shoot anything"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "evasive-retreat-behind-hill",
+      "titel": "Evade behind terrain to stop further shooting",
+      "tekst": "Use an Evasive retreat to get behind a hill that blocks the enemy's line of sight. Where available, add Swiftstride to reach that shelter and prevent other shooters from targeting the unit too.",
+      "waarom": "He explains that moving his Forest Dragon off the hill put the hill between it and both enemy units, preventing them from seeing or targeting it.",
+      "voorbeeld": "His Glade Lord on a Forest Dragon had one wound left and faced two Fireball threats. He used Evasive with extra distance from Swiftstride to leave the hill and avoid both spells.",
+      "wanneerNiet": "His escape depended on rolling enough distance to get off the hill.",
+      "fase": "movement",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-2yxaFqlrg4U",
+          "url": "https://www.youtube.com/watch?v=2yxaFqlrg4U&t=408s",
+          "tijd": 411,
+          "citaat": "they can no longer see the forest dragon meaning they can no longer Target it",
+          "extraCitaten": [
+            {
+              "tijd": 403,
+              "citaat": "then I was able to add my Swift stride for another 4 in"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "evasive-reform-escape-facing",
+      "titel": "Reform after evading to prepare your next escape",
+      "tekst": "After an Evasive retreat, use the free reform to face away from danger. For a Close Order unit, choose a facing that lets it march farther to safety on your own turn.",
+      "waarom": "He considers moving and reforming on the opponent's turn extremely powerful for keeping a unit safe.",
+      "voorbeeld": "He says he should have turned his Forest Dragon farther towards the forest after escaping behind the hill.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-2yxaFqlrg4U",
+          "url": "https://www.youtube.com/watch?v=2yxaFqlrg4U&t=313s",
+          "tijd": 316,
+          "citaat": "get a free turn to look away from the danger",
+          "extraCitaten": [
+            {
+              "tijd": 300,
+              "citaat": "you can change your facing facing and rearrange your ranks"
+            },
+            {
+              "tijd": 428,
+              "citaat": "I should have turned it even more facing that way to get into the forest"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [],
+  "overgeslagen": "Skipped the introduction, rules-reference recommendation, unit catalogue, standalone rules explanations and closing channel promotion. Kept the practical Evasive positioning and escape advice; the supplied index contains related advice but not these same recommendations.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

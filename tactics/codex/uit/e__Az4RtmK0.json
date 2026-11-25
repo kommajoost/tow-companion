@@ -1,0 +1,46 @@
+{
+  "videoId": "e__Az4RtmK0",
+  "bronId": "yt-e__Az4RtmK0",
+  "model": "GPT-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-25T00:27:17.037Z",
+  "nieuw": [
+    {
+      "id": "charge-adjacent-targets-together",
+      "titel": "Engage adjacent weak targets together to save a turn",
+      "tekst": "When a charger has enough hitting power to destroy two adjacent enemy units in one turn, he prefers engaging both together rather than destroying one and overrunning into the other. This depends on being able to make the charge legally; he is unsure whether his proposed procedure is correct.",
+      "waarom": "He says fighting the second unit on the opponent's turn would leave him a turn behind compared with destroying both immediately and testing to reform towards his next target.",
+      "voorbeeld": "He wants his Silver Helms to engage both adjacent bolt throwers, destroy them in one turn, then test to reform towards the crossbow unit's flank.",
+      "wanneerNiet": "He believes his proposed charge movement is possible but asks viewers to check whether he has resolved it correctly.",
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-e__Az4RtmK0",
+          "url": "https://www.youtube.com/watch?v=e__Az4RtmK0&t=117s",
+          "tijd": 120,
+          "citaat": "engage both at once",
+          "extraCitaten": [
+            {
+              "tijd": 144,
+              "citaat": "so I'd rather have the extra turn of Advantage"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [],
+  "overgeslagen": "Skipped the introduction and rules-only discussion of base contact and charge alignment. The tactical preference is retained with his uncertainty about the charge procedure made explicit.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

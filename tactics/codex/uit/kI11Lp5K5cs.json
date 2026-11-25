@@ -1,0 +1,46 @@
+{
+  "videoId": "kI11Lp5K5cs",
+  "bronId": "yt-kI11Lp5K5cs",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-25T00:14:20.677Z",
+  "nieuw": [
+    {
+      "id": "angle-charges-avoid-characters",
+      "titel": "Angle charges to keep enemy characters out of base contact",
+      "tekst": "Position your charger so it can maximise contact with ordinary models without touching the enemy character. Under the interpretation he is using, a character already in the fighting rank cannot shift sideways to meet the charger and is limited to one attack without base contact.",
+      "waarom": "He found that careful positioning let his relatively weak unit beat the ordinary troops while minimising the stronger character's attacks.",
+      "voorbeeld": "His Razorgor Herd charged Hobgoblin Wolf Riders without contacting their Hobgoblin Khan. He killed two or three riders, made the unit flee and ran it down.",
+      "wanneerNiet": "He says the character-placement rules are hazy and acknowledges that other groups may play this differently.",
+      "fase": "movement",
+      "themas": [
+        "matchups"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-kI11Lp5K5cs",
+          "url": "https://www.youtube.com/watch?v=kI11Lp5K5cs&t=325s",
+          "tijd": 328,
+          "citaat": "the key to all of this is the angle at which you position your model",
+          "extraCitaten": [
+            {
+              "tijd": 319,
+              "citaat": "really minimized the ability of the character strike back"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [],
+  "overgeslagen": "Skipped introductory rules explanation and command-group placement ambiguities as standalone lessons, game-result remarks, and the unclear closing phrase about angling a return charge.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

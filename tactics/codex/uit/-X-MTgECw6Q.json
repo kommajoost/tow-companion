@@ -1,0 +1,1054 @@
+{
+  "videoId": "-X-MTgECw6Q",
+  "bronId": "yt--X-MTgECw6Q",
+  "model": "GPT-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-25T00:54:49.035Z",
+  "nieuw": [
+    {
+      "id": "scale-buffs-across-attacks",
+      "titel": "Apply attack buffs where they affect more attacks",
+      "tekst": "Apply a combat buff to the unit that gets more out of it rather than treating every recipient as equally valuable.",
+      "waarom": "He argues that adding Strength to twenty front-rank attacks is better than adding it to ten.",
+      "voorbeeld": "He compares giving plus one Strength to a unit with twenty front-rank attacks and one with ten.",
+      "wanneerNiet": null,
+      "fase": "magic-shooting",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt--X-MTgECw6Q",
+          "url": "https://www.youtube.com/watch?v=-X-MTgECw6Q&t=383s",
+          "tijd": 386,
+          "citaat": "for instance if I can add plus one strength to a unit",
+          "extraCitaten": [
+            {
+              "tijd": 393,
+              "citaat": "versus 10 attacks from the front rank it's much better"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "debuff-strongest-enemy-unit",
+      "titel": "Debuff the strongest enemy unit",
+      "tekst": "Use hexes to reduce the effectiveness of the opponent's strongest unit.",
+      "waarom": "He presents weakening the strongest enemy unit as the corresponding use of debuffs alongside concentrating buffs.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "magic-shooting",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt--X-MTgECw6Q",
+          "url": "https://www.youtube.com/watch?v=-X-MTgECw6Q&t=399s",
+          "tijd": 402,
+          "citaat": "you take the strongest enemy unit effectively and you debuff it"
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "plan-around-guaranteed-signatures",
+      "titel": "Build low-level magic plans around signature spells",
+      "tekst": "When choosing magic for a specific job, favour a useful signature spell that you can count on. Do not assume a low-level wizard will roll the particular numbered spell your plan needs.",
+      "waarom": "He values signature spells because they are guaranteed, whereas random spell generation makes particular spells unreliable on lower-level wizards.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt--X-MTgECw6Q",
+          "url": "https://www.youtube.com/watch?v=-X-MTgECw6Q&t=1006s",
+          "tijd": 1009,
+          "citaat": "signature spells are the thing that you can count on",
+          "extraCitaten": [
+            {
+              "tijd": 4332,
+              "citaat": "I'm looking for a signature spell probably"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "skirmishing-missile-wizard-bunker",
+      "titel": "Consider a skirmishing bunker for a missile wizard",
+      "tekst": "Consider putting a wizard who needs shooting targets in a skirmishing unit.",
+      "waarom": "He favours the protection from shooting and the all-round arc of sight, while burying the wizard in a unit protects it from being targeted individually.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt--X-MTgECw6Q",
+          "url": "https://www.youtube.com/watch?v=-X-MTgECw6Q&t=2059s",
+          "tijd": 2062,
+          "citaat": "probably inside Skirmish units cuz they already get a natural minus one",
+          "extraCitaten": [
+            {
+              "tijd": 2090,
+              "citaat": "a skirmish unit makes more sense cuz you're burying it inside of a unit"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "fated-dispel-low-roll",
+      "titel": "Consider a Fated Dispel against a low casting roll",
+      "tekst": "When an opposing spell succeeds on a low roll, consider using your Fated Dispel rather than risking your wizard on the dispel attempt.",
+      "waarom": "He says you know the casting result before choosing and can avoid the wizard's risk of a miscast.",
+      "voorbeeld": null,
+      "wanneerNiet": "He notes that a Fated Dispel has no wizard-level bonus, making it much less promising against a level-four caster.",
+      "fase": "magic-shooting",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt--X-MTgECw6Q",
+          "url": "https://www.youtube.com/watch?v=-X-MTgECw6Q&t=2832s",
+          "tijd": 2835,
+          "citaat": "if they get the spell off but it's a low dice roll",
+          "extraCitaten": [
+            {
+              "tijd": 2841,
+              "citaat": "you could use your faded"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "multiple-low-level-signature-casters",
+      "titel": "Consider several low-level casters for cheap signature spells",
+      "tekst": "Consider multiple lower-level wizards when you want repeated attempts at a useful signature missile or vortex. He sees this as a possible alternative to a single level-four wizard.",
+      "waarom": "He argues that more casting attempts give more chances to roll high or get a perfect invocation, and discusses two level-two casters trying the same spell against a level-four dispeller.",
+      "voorbeeld": null,
+      "wanneerNiet": "He limits the idea to relatively low casting values, around five to seven, rather than an eleven-plus spell.",
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt--X-MTgECw6Q",
+          "url": "https://www.youtube.com/watch?v=-X-MTgECw6Q&t=3603s",
+          "tijd": 3606,
+          "citaat": "it may not be a bad call uh to actually go with",
+          "extraCitaten": [
+            {
+              "tijd": 3615,
+              "citaat": "multiple lower level Wizards"
+            },
+            {
+              "tijd": 3654,
+              "citaat": "but if it's around the 567"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "casting-bonuses-magic-investment",
+      "titel": "Seek casting bonuses when investing in magical dominance",
+      "tekst": "If building for magical dominance, look for additional casting bonuses rather than considering wizard level alone.",
+      "waarom": "He regards even another plus one on a level-four wizard as very valuable, and also discusses getting better value from bonuses on cheaper wizards.",
+      "voorbeeld": "He points to Warriors of Chaos combining the Mark of Tzeentch with an item for additional casting bonuses.",
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt--X-MTgECw6Q",
+          "url": "https://www.youtube.com/watch?v=-X-MTgECw6Q&t=3790s",
+          "tijd": 3793,
+          "citaat": "any plus one to cast if you want to be a magic Dom"
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "battle-magic-ward-block",
+      "titel": "Consider a level-four Battle Mage for a protected block",
+      "tekst": "Consider a level-four Battle Magic wizard when your plan wants Oaken Shield on a combat block. He likes combining that protection with the lore's missile and vortex options.",
+      "waarom": "He values giving a whole unit a five-plus ward save, including during combat, and having protection without buying a ward-save item.",
+      "voorbeeld": null,
+      "wanneerNiet": "He acknowledges that you must generate the spell and successfully cast it.",
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt--X-MTgECw6Q",
+          "url": "https://www.youtube.com/watch?v=-X-MTgECw6Q&t=4921s",
+          "tijd": 4924,
+          "citaat": "I'm basically taking a level four to get that five up board safe",
+          "extraCitaten": [
+            {
+              "tijd": 4671,
+              "citaat": "I'm just giving what is already a combat unit pretty survivable a five up Ward"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "arrow-attraction-concentrated-fire",
+      "titel": "Use Curse of Arrow Attraction for concentrated shooting",
+      "tekst": "Use Curse of Arrow Attraction when a shooting-heavy army intends to concentrate fire on one enemy unit.",
+      "waarom": "He likes that the whole army can benefit against the target, without needing its shooters to be near the caster.",
+      "voorbeeld": null,
+      "wanneerNiet": "He makes its value dependent on having substantial ballistic shooting.",
+      "fase": "magic-shooting",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt--X-MTgECw6Q",
+          "url": "https://www.youtube.com/watch?v=-X-MTgECw6Q&t=4389s",
+          "tijd": 4392,
+          "citaat": "if you know you're going to be concentrating your fire on a",
+          "extraCitaten": [
+            {
+              "tijd": 4400,
+              "citaat": "particular unit this is a great example of economies of scale"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "arcane-urgency-escape-charge-arcs",
+      "titel": "Use Arcane Urgency to escape enemy charge arcs",
+      "tekst": "Use Arcane Urgency's additional movement to move past the opponent's arcs and avoid their charges next turn.",
+      "waarom": null,
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt--X-MTgECw6Q",
+          "url": "https://www.youtube.com/watch?v=-X-MTgECw6Q&t=4618s",
+          "tijd": 4621,
+          "citaat": "you can just move past your opponent's arcs"
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "gathering-darkness-terror-combination",
+      "titel": "Combine Gathering Darkness with Terror",
+      "tekst": "Combine Gathering Darkness with a Terror-causing attacker to make the enemy more likely to fail its Leadership test.",
+      "waarom": "He highlights the Leadership reduction together with losing Inspiring Presence, then adding Terror's penalty.",
+      "voorbeeld": "He describes a caster riding a Terror-causing dragon applying the spell before the enemy faces the Terror test.",
+      "wanneerNiet": "He stresses the spell's twelve-inch range and that the caster cannot cast it while in combat.",
+      "fase": "magic-shooting",
+      "themas": [
+        "psychology"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt--X-MTgECw6Q",
+          "url": "https://www.youtube.com/watch?v=-X-MTgECw6Q&t=5214s",
+          "tijd": 5217,
+          "citaat": "let's just talk about like this plus just Terror",
+          "extraCitaten": [
+            {
+              "tijd": 5225,
+              "citaat": "now they're taking a Terra check minus three with no inspiring pres"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "daemonic-vessel-basic-infantry",
+      "titel": "Use Daemonic Vessel to improve basic infantry",
+      "tekst": "Consider Daemonic Vessel for ordinary infantry rather than only using it to improve already strong troops.",
+      "waarom": "He particularly values the extra attack because much basic infantry has only one attack, making the increase substantial.",
+      "voorbeeld": "He suggests Empire halberdiers as recipients rather than thinking only about Warriors of Chaos.",
+      "wanneerNiet": "He notes that the attack increase does not increase supporting attacks; basic troops need enough frontage to leave survivors able to fight.",
+      "fase": "magic-shooting",
+      "themas": [
+        "infantry"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt--X-MTgECw6Q",
+          "url": "https://www.youtube.com/watch?v=-X-MTgECw6Q&t=5433s",
+          "tijd": 5436,
+          "citaat": "don't only think about this on Warriors of chaos",
+          "extraCitaten": [
+            {
+              "tijd": 5445,
+              "citaat": "making a bunch of halers all hopped up on demons"
+            },
+            {
+              "tijd": 5502,
+              "citaat": "that's not going to double uh attacks on supporting attacks"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "daemonic-vigour-defensive-priority",
+      "titel": "Consider Daemonic Vigour when survival matters",
+      "tekst": "The speaker would favour Daemonic Vigour over the offensive Daemonic Vessel buff when weighing resilience against damage output.",
+      "waarom": "He values the improved Movement, being harder to wound when charged, and the possibility of striking first through higher Initiative.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "magic-shooting",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt--X-MTgECw6Q",
+          "url": "https://www.youtube.com/watch?v=-X-MTgECw6Q&t=5760s",
+          "tijd": 5763,
+          "citaat": "resiliency versus output and kill points I'm giving the edge to demonic Vigor"
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "infernal-gateway-save-character",
+      "titel": "Use Infernal Gateway to rescue an endangered character",
+      "tekst": "Use Infernal Gateway to move an endangered character out of combat or away from danger and preserve its points.",
+      "waarom": "He values keeping a battle standard bearer, a wounded character or a caught wizard alive.",
+      "voorbeeld": "He suggests rescuing a character with only one wound remaining.",
+      "wanneerNiet": "He points out that the character must survive until the Remaining Moves sub-phase; the spell also has a twelve-inch range and an enemy-distance restriction.",
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt--X-MTgECw6Q",
+          "url": "https://www.youtube.com/watch?v=-X-MTgECw6Q&t=6162s",
+          "tijd": 6165,
+          "citaat": "this is get out of Dodge",
+          "extraCitaten": [
+            {
+              "tijd": 6173,
+              "citaat": "or a wizard who wound up in combat that"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "phantasmagoria-force-bad-charges",
+      "titel": "Put Phantasmagoria in front of carefully positioned enemies",
+      "tekst": "Place Phantasmagoria in front of an enemy unit whose positioning matters. Even if it passes the Panic test, becoming Impetuous can draw it into an unwanted charge through the spell's dangerous terrain.",
+      "waarom": "He likes that this can disrupt several units, and that a failed charge can bring the enemy closer on its own turn.",
+      "voorbeeld": null,
+      "wanneerNiet": "He says the spell can be dispelled and its effectiveness depends on the opponent; Impetuous and Panic effects are not guaranteed.",
+      "fase": "magic-shooting",
+      "themas": [
+        "psychology",
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt--X-MTgECw6Q",
+          "url": "https://www.youtube.com/watch?v=-X-MTgECw6Q&t=6352s",
+          "tijd": 6355,
+          "citaat": "you put this in front of a a unit",
+          "extraCitaten": [
+            {
+              "tijd": 6370,
+              "citaat": "but now they're impetuous and they have to charge through dangerous terrain"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "plague-rust-armoured-targets",
+      "titel": "Use Plague of Rust to open heavily armoured targets",
+      "tekst": "Use Plague of Rust against heavily armoured enemies, combining its armour reduction with the armour piercing your attacks already have.",
+      "waarom": "He values adding the spell's armour reduction to existing armour piercing.",
+      "voorbeeld": "He names Empire Steam Tank and Empire Knights as targets that become easier to crack.",
+      "wanneerNiet": null,
+      "fase": "magic-shooting",
+      "themas": [
+        "matchups"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt--X-MTgECw6Q",
+          "url": "https://www.youtube.com/watch?v=-X-MTgECw6Q&t=6882s",
+          "tijd": 6885,
+          "citaat": "add ap2 in there minus four steam tanks are just popping open",
+          "extraCitaten": [
+            {
+              "tijd": 6904,
+              "citaat": "that's in addition to whatever AP you already have too"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "earthen-ramparts-shooting-defence",
+      "titel": "Protect threatened shooters with Earthen Ramparts",
+      "tekst": "Consider Earthen Ramparts for a shooting unit that is about to receive a charge.",
+      "waarom": "He values the ward save and defended obstacle effect, later pointing out that a disordered charge removes the charger's Initiative bonus.",
+      "voorbeeld": null,
+      "wanneerNiet": "He says it prevents marching and charging and cannot be applied once the recipient is in combat.",
+      "fase": "magic-shooting",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt--X-MTgECw6Q",
+          "url": "https://www.youtube.com/watch?v=-X-MTgECw6Q&t=7097s",
+          "tijd": 7100,
+          "citaat": "something you're putting on a shooting unit",
+          "extraCitaten": [
+            {
+              "tijd": 7213,
+              "citaat": "if a unit charges an enemy behind a defended obstacle"
+            },
+            {
+              "tijd": 7221,
+              "citaat": "makes a disordered charge which means they do not get initiative bonuses"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "mystical-pathways-change-attack-angle",
+      "titel": "Use Travel Mystical Pathways to change a unit's facing",
+      "tekst": "Use Travel Mystical Pathways to reposition and reface a powerful unit for a flank or rear approach, or to leave an enemy's charge arc.",
+      "waarom": "He emphasises how valuable this is when ordinary movement makes changing facing inefficient.",
+      "voorbeeld": null,
+      "wanneerNiet": "He warns that the requirement to remain six inches from enemies may make a useful destination hard to find.",
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt--X-MTgECw6Q",
+          "url": "https://www.youtube.com/watch?v=-X-MTgECw6Q&t=7382s",
+          "tijd": 7385,
+          "citaat": "being able to pick up and plop down a unit that's very very powerful",
+          "extraCitaten": [
+            {
+              "tijd": 7371,
+              "citaat": "12 Ines and make a left turn"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "mystical-pathways-open-shooting",
+      "titel": "Teleport shooters into a clear firing position",
+      "tekst": "Consider using Travel Mystical Pathways to move a shooting unit into a position where it can see a previously hidden target.",
+      "waarom": "He notes that the spell happens before shooting, allowing a screened unit to move to the side and gain a firing lane.",
+      "voorbeeld": "He describes a shooting unit screened from danger moving beside its protecting unit to see a target.",
+      "wanneerNiet": "He rules out using this trick with a cannon because the teleport counts as movement.",
+      "fase": "movement",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt--X-MTgECw6Q",
+          "url": "https://www.youtube.com/watch?v=-X-MTgECw6Q&t=7477s",
+          "tijd": 7480,
+          "citaat": "I might do it with a shooting unit that previously couldn't draw line of sight",
+          "extraCitaten": [
+            {
+              "tijd": 7487,
+              "citaat": "move it around so now it can draw line of site"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "drain-magic-low-level-casters",
+      "titel": "Choose Drain Magic against many low-level casters",
+      "tekst": "Consider exchanging a spell for Drain Magic when facing a magic gunline built around multiple low-level casters.",
+      "waarom": "He regards its casting-value increase as especially damaging to low-level casters, and values choosing the signature spell to suit the opponent.",
+      "voorbeeld": null,
+      "wanneerNiet": "He thinks strong level-four casters with casting bonuses can cope better, and says he would not choose it against Dwarfs.",
+      "fase": "army-building",
+      "themas": [
+        "matchups",
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt--X-MTgECw6Q",
+          "url": "https://www.youtube.com/watch?v=-X-MTgECw6Q&t=7955s",
+          "tijd": 7958,
+          "citaat": "not as effective uh as being into a multi a series of multiple lowc casters",
+          "extraCitaten": [
+            {
+              "tijd": 7965,
+              "citaat": "at which it's devastating as an effect"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "shimmering-dragon-backline-hunter",
+      "titel": "Use Shimmering Dragon to launch a character hunter",
+      "tekst": "Consider Shimmering Dragon to send a suitably equipped hero towards enemy war machines, or to position it for a later flank or rear charge.",
+      "waarom": "He sees a sudden flying move as a way to put a character where the opponent was not expecting it.",
+      "voorbeeld": null,
+      "wanneerNiet": "The speakers remain unsure about how freely a flying mounted character can pivot, which affects the usefulness of the manoeuvre.",
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt--X-MTgECw6Q",
+          "url": "https://www.youtube.com/watch?v=-X-MTgECw6Q&t=8831s",
+          "tijd": 8834,
+          "citaat": "their job is going to be like War Machine hunting",
+          "extraCitaten": [
+            {
+              "tijd": 8851,
+              "citaat": "doing a flank charge middle of the game"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "crystal-column-block-artillery",
+      "titel": "Block war machines with Column of Crystal",
+      "tekst": "Consider approaching a flank and placing Column of Crystal in front of enemy war machines to block their line of sight.",
+      "waarom": "He values the stationary five-inch area of impassable terrain as a way to shut down their shooting.",
+      "voorbeeld": null,
+      "wanneerNiet": "He notes that the opponent can try to dispel it.",
+      "fase": "magic-shooting",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt--X-MTgECw6Q",
+          "url": "https://www.youtube.com/watch?v=-X-MTgECw6Q&t=9060s",
+          "tijd": 9063,
+          "citaat": "coming up a flank parking this in front of their war machines",
+          "extraCitaten": [
+            {
+              "tijd": 9071,
+              "citaat": "shut them down"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "preserve-vortex-outside-dispel-range",
+      "titel": "Keep your caster away to preserve an important vortex",
+      "tekst": "When an important remains-in-play spell needs to stay on the board, keep its caster beyond the enemy wizard's dispel range.",
+      "waarom": "He stresses that dispelling the ongoing spell depends on reaching the caster, rather than reaching or seeing the template.",
+      "voorbeeld": null,
+      "wanneerNiet": "He corrects an attempted move-after-casting sequence because conveyance spells happen before the vortex is cast.",
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt--X-MTgECw6Q",
+          "url": "https://www.youtube.com/watch?v=-X-MTgECw6Q&t=9101s",
+          "tijd": 9104,
+          "citaat": "you can stop some someone from from removing remains in play",
+          "extraCitaten": [
+            {
+              "tijd": 9112,
+              "citaat": "you just make sure your cter is just not in range"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "doppelganger-needs-combat-caster",
+      "titel": "Build Spectral Doppelganger around a combat-capable caster",
+      "tekst": "If planning around Spectral Doppelganger, use a caster that can function in combat and consider a weapon whose bonuses the spell can use.",
+      "waarom": "He highlights that the spell resolves its hits using the caster's characteristics and the weapon carried.",
+      "voorbeeld": null,
+      "wanneerNiet": "He says this requires investing in a combat caster.",
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt--X-MTgECw6Q",
+          "url": "https://www.youtube.com/watch?v=-X-MTgECw6Q&t=9237s",
+          "tijd": 9240,
+          "citaat": "you need something that can be a combat Caster",
+          "extraCitaten": [
+            {
+              "tijd": 9167,
+              "citaat": "any weapon that they carry"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "necromancy-level-four-investment",
+      "titel": "Use a level-four wizard for Necromancy's demanding spells",
+      "tekst": "He thinks Necromancy's high casting values call for a level-four wizard with further investment in casting ability.",
+      "waarom": null,
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt--X-MTgECw6Q",
+          "url": "https://www.youtube.com/watch?v=-X-MTgECw6Q&t=10046s",
+          "tijd": 10049,
+          "citaat": "you need a level four for necromancy"
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "spectral-steed-caster-protection",
+      "titel": "Use Spectral Steed to protect the caster",
+      "tekst": "Consider Spectral Steed on the caster himself to gain protection and the mobility to move away after placing a vortex.",
+      "waarom": "He particularly values using the spell's Ethereal and flying effects to protect the caster.",
+      "voorbeeld": null,
+      "wanneerNiet": "He notes that the spell is limited to infantry characters.",
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt--X-MTgECw6Q",
+          "url": "https://www.youtube.com/watch?v=-X-MTgECw6Q&t=9963s",
+          "tijd": 9966,
+          "citaat": "I think this is particularly useful for the Caster themselves",
+          "extraCitaten": [
+            {
+              "tijd": 9957,
+              "citaat": "gives you the opportunity to place that Vortex"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "prefer-orc-goblin-signatures",
+      "titel": "Prefer the Orc and Goblin army signature options",
+      "tekst": "For Orcs and Goblins, he expects the army-list signature options to be better choices than Fist of Gork or Mork.",
+      "waarom": "He warns that the spell's large template and scatter can hit the caster's own unit, especially when fighting a wide, shallow enemy unit.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt--X-MTgECw6Q",
+          "url": "https://www.youtube.com/watch?v=-X-MTgECw6Q&t=10205s",
+          "tijd": 10208,
+          "citaat": "both Orcs and goblins have much better signature spells available to them",
+          "extraCitaten": [
+            {
+              "tijd": 10217,
+              "citaat": "they're probably going to go with one of them"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "vindictive-glare-elite-cavalry",
+      "titel": "Aim Vindictive Glare at expensive elite cavalry",
+      "tekst": "Use Vindictive Glare to remove expensive elite cavalry models; he considers trading a successful cast for one such model worthwhile.",
+      "waarom": "He values the high Strength and lack of armour saves against costly single-wound cavalry.",
+      "voorbeeld": "He names Dragon Princes and Grail Knights as examples of valuable targets.",
+      "wanneerNiet": "He notes that it is not a signature spell, so taking several cheap casters does not guarantee repeated access.",
+      "fase": "magic-shooting",
+      "themas": [
+        "matchups"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt--X-MTgECw6Q",
+          "url": "https://www.youtube.com/watch?v=-X-MTgECw6Q&t=10240s",
+          "tijd": 10243,
+          "citaat": "that's just punking a high value Elite Cavalry",
+          "extraCitaten": [
+            {
+              "tijd": 10291,
+              "citaat": "that's great that is a good trade"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "hand-gork-rescue-character",
+      "titel": "Use Hand of Gork to rescue a threatened caster",
+      "tekst": "Consider Hand of Gork to move an endangered caster, or another character you want to preserve, out of danger.",
+      "waarom": "He sees rescuing a vulnerable character as its useful role.",
+      "voorbeeld": null,
+      "wanneerNiet": "He dislikes the random distance, risk of losing a wound and inability to charge afterwards, and would not choose the lore just to get this spell.",
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt--X-MTgECw6Q",
+          "url": "https://www.youtube.com/watch?v=-X-MTgECw6Q&t=10362s",
+          "tijd": 10365,
+          "citaat": "this is useful I'd say to a Caster in danger",
+          "extraCitaten": [
+            {
+              "tijd": 10381,
+              "citaat": "get a character out of danger you don't want to die"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "bad-moon-itchy-nuisance",
+      "titel": "Combine Bad Moon Risen with Itchy Nuisance",
+      "tekst": "Consider combining Bad Moon Risen with Itchy Nuisance to stack their Initiative reductions against the same enemy.",
+      "waarom": "He highlights the potential for a combined reduction of six Initiative.",
+      "voorbeeld": "He specifically welcomes the combination against Elves.",
+      "wanneerNiet": "He says the hex combination lasts for only one turn and cannot be reapplied into combat.",
+      "fase": "magic-shooting",
+      "themas": [
+        "matchups"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt--X-MTgECw6Q",
+          "url": "https://www.youtube.com/watch?v=-X-MTgECw6Q&t=10500s",
+          "tijd": 10503,
+          "citaat": "so you could combo that",
+          "extraCitaten": [
+            {
+              "tijd": 10511,
+              "citaat": "minus six to an initiative characteristic potentially"
+            },
+            {
+              "tijd": 10656,
+              "citaat": "you can't cast in combat so you kind of have to do it"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "evil-sun-spear-blocks",
+      "titel": "Use Evil Sun Shinin' to enhance large spear blocks",
+      "tekst": "Consider Evil Sun Shinin' to improve the damage output of large Goblin spear blocks within the caster's command range.",
+      "waarom": "He values an area effect that grants hit rerolls of one and improved armour piercing across units with many attacks.",
+      "voorbeeld": "He points to large Goblin spear blocks fighting in two ranks.",
+      "wanneerNiet": null,
+      "fase": "magic-shooting",
+      "themas": [
+        "infantry"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt--X-MTgECw6Q",
+          "url": "https://www.youtube.com/watch?v=-X-MTgECw6Q&t=10585s",
+          "tijd": 10588,
+          "citaat": "I like evil sun shining",
+          "extraCitaten": [
+            {
+              "tijd": 10588,
+              "citaat": "your big blocks of gobos with Spears who've got a lot of attacks"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "engage-wizard-before-casting",
+      "bron": {
+        "bronId": "yt--X-MTgECw6Q",
+        "url": "https://www.youtube.com/watch?v=-X-MTgECw6Q&t=3096s",
+        "tijd": 3099,
+        "citaat": "just locking them up with",
+        "extraCitaten": [
+          {
+            "tijd": 3107,
+            "citaat": "a chaff unit means that they can't dispel"
+          }
+        ]
+      },
+      "toelichting": "The same recommendation uses chaff to engage an opposing wizard and remove its ability to dispel."
+    },
+    {
+      "lesId": "shift-lone-character-protection",
+      "bron": {
+        "bronId": "yt--X-MTgECw6Q",
+        "url": "https://www.youtube.com/watch?v=-X-MTgECw6Q&t=2138s",
+        "tijd": 2141,
+        "citaat": "you could have a wizard behind a unit",
+        "extraCitaten": [
+          {
+            "tijd": 2149,
+            "citaat": "tucked in between two units so that they're kind of protected"
+          }
+        ]
+      },
+      "toelichting": "The same positioning advice protects a lone character by keeping it close to friendly units rather than joining them."
+    },
+    {
+      "lesId": "magic-missiles-bypass-cover",
+      "bron": {
+        "bronId": "yt--X-MTgECw6Q",
+        "url": "https://www.youtube.com/watch?v=-X-MTgECw6Q&t=2171s",
+        "tijd": 2174,
+        "citaat": "magic Missile is is not going to suffer any minuses to here",
+        "extraCitaten": [
+          {
+            "tijd": 5037,
+            "citaat": "a skirmishing unit that's actually already in hard cover"
+          }
+        ]
+      },
+      "toelichting": "The same advice uses magic missiles against shooting protection such as skirmishing and hard cover."
+    },
+    {
+      "lesId": "control-spells-block-lanes",
+      "bron": {
+        "bronId": "yt--X-MTgECw6Q",
+        "url": "https://www.youtube.com/watch?v=-X-MTgECw6Q&t=5646s",
+        "tijd": 5649,
+        "citaat": "plopping this in a place where it might get in the way",
+        "extraCitaten": [
+          {
+            "tijd": 5656,
+            "citaat": "much more useful I think for board"
+          }
+        ]
+      },
+      "wanneerNiet": "He notes that Vortex of Chaos moves in a random direction.",
+      "toelichting": "The same recommendation places a dangerous-terrain spell between units to interfere with enemy charges."
+    },
+    {
+      "lesId": "battle-lust-before-charge",
+      "bron": {
+        "bronId": "yt--X-MTgECw6Q",
+        "url": "https://www.youtube.com/watch?v=-X-MTgECw6Q&t=6495s",
+        "tijd": 6498,
+        "citaat": "this would be something that",
+        "extraCitaten": [
+          {
+            "tijd": 6506,
+            "citaat": "you would do before you charge"
+          }
+        ]
+      },
+      "wanneerNiet": "He notes that it cannot target a unit already in combat and therefore normally benefits only one turn.",
+      "toelichting": "The same recommendation applies Battle Lust immediately before an intended charge, when compulsory charging is welcome."
+    },
+    {
+      "lesId": "illusion-needs-casting-bonuses",
+      "bron": {
+        "bronId": "yt--X-MTgECw6Q",
+        "url": "https://www.youtube.com/watch?v=-X-MTgECw6Q&t=9308s",
+        "tijd": 9311,
+        "citaat": "you're probably going to want help",
+        "extraCitaten": [
+          {
+            "tijd": 9336,
+            "citaat": "a beefy level four"
+          }
+        ]
+      },
+      "toelichting": "The same recommendation seeks casting assistance for demanding Illusion control spells, here Miasmic Mirage."
+    },
+    {
+      "lesId": "necromancy-leadership-control",
+      "bron": {
+        "bronId": "yt--X-MTgECw6Q",
+        "url": "https://www.youtube.com/watch?v=-X-MTgECw6Q&t=10014s",
+        "tijd": 10017,
+        "citaat": "minus three that's wild that's very good",
+        "extraCitaten": [
+          {
+            "tijd": 10025,
+            "citaat": "that is a recipe to break and uh and cause people to flee"
+          }
+        ]
+      },
+      "toelichting": "The same advice uses Necromancy's Leadership reductions to break enemies, here combining Spirit Leech, Spiritual Vortex and Terror."
+    }
+  ],
+  "overgeslagen": "Skipped introductions, banter, subscriptions and Patreon talk, hobby discussion, lore-access lists, spell and rules readouts without tactical recommendations, disputed probability calculations, unresolved stacking and teleport interpretations, and the Treeman Ancient Illusion build that the speakers subsequently rule out. Spell assessments are early theoretical opinions, not reported playtesting.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": [
+      {
+        "wie": "aanvulling necromancy-leadership-control",
+        "wat": "waarom weggelaten: de les heeft dat veld al"
+      }
+    ]
+  }
+}

@@ -1,0 +1,95 @@
+{
+  "videoId": "8zCPTomDOGg",
+  "bronId": "yt-8zCPTomDOGg",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T23:51:43.623Z",
+  "nieuw": [
+    {
+      "id": "missiles-deny-terrain-scoring",
+      "titel": "Use magic missiles to deny late scoring from terrain",
+      "tekst": "Use magic missiles to eliminate surviving units in scoring terrain late in the game, collecting their points and denying the points they would score for holding it.",
+      "waarom": "He says this can earn the target unit's points while also saving the points the opponent would have won from the terrain.",
+      "voorbeeld": "His brother used Wind Blast to eliminate his three remaining Gor Herd models in a tower. This earned the unit's points and prevented the speaker from scoring 200 battle points for the tower at the end of the game.",
+      "wanneerNiet": null,
+      "fase": "magic-shooting",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-8zCPTomDOGg",
+          "url": "https://www.youtube.com/watch?v=8zCPTomDOGg&t=241s",
+          "tijd": 244,
+          "citaat": "save the points that I would have won for the tower.",
+          "extraCitaten": [
+            {
+              "tijd": 228,
+              "citaat": "to score 200 battle points at the end of the game."
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "mobile-blaster-late-points",
+      "bron": {
+        "bronId": "yt-8zCPTomDOGg",
+        "url": "https://www.youtube.com/watch?v=8zCPTomDOGg&t=300s",
+        "tijd": 303,
+        "citaat": "That magic missile attack can be one way of finishing off the game",
+        "extraCitaten": [
+          {
+            "tijd": 255,
+            "citaat": "that runs around the outside"
+          }
+        ]
+      },
+      "toelichting": "He likewise recommends mobile missile casters for reaching surviving units and collecting points in the last turns."
+    },
+    {
+      "lesId": "magic-missiles-bypass-cover",
+      "bron": {
+        "bronId": "yt-8zCPTomDOGg",
+        "url": "https://www.youtube.com/watch?v=8zCPTomDOGg&t=309s",
+        "tijd": 312,
+        "citaat": "magic missiles are not going to have to worry about hitting.",
+        "extraCitaten": [
+          {
+            "tijd": 312,
+            "citaat": "You only have to see one model to be able to target them."
+          }
+        ]
+      },
+      "toelichting": "He likewise recommends missiles against units in forests because they avoid shooting's hit rolls and cover issues."
+    },
+    {
+      "lesId": "summoning-or-ruby-ring",
+      "bron": {
+        "bronId": "yt-8zCPTomDOGg",
+        "url": "https://www.youtube.com/watch?v=8zCPTomDOGg&t=327s",
+        "tijd": 330,
+        "citaat": "Ruby ring particularly, which is available to every army, can be used",
+        "extraCitaten": [
+          {
+            "tijd": 338,
+            "citaat": "can be used to just mop up points more than anything else"
+          }
+        ]
+      },
+      "toelichting": "He likewise recommends including Ruby Ring as an accessible ranged threat, stressing its late-game points collection."
+    }
+  ],
+  "overgeslagen": "Skipped the introduction and sign-off, standalone casting odds and spell-stat explanations, and garbled unit and scoring-rule passages around 3:14 and 4:44. Late-game cleanup, mobility and cover advice is recorded as additions to existing lessons.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

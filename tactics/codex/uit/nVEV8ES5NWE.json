@@ -1,0 +1,464 @@
+{
+  "videoId": "nVEV8ES5NWE",
+  "bronId": "yt-nVEV8ES5NWE",
+  "model": "GPT-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T22:57:25.208Z",
+  "nieuw": [
+    {
+      "id": "prioritise-emphasise-neutralise-negate",
+      "titel": "Decide what to emphasise, neutralise and negate",
+      "tekst": "Use your default strategy, the opposing army and the map to decide which threats to focus on, which to contain, and which to keep out of the game for as long as possible.",
+      "waarom": "He says you cannot do everything and must decide which strategic advantages are worth pursuing.",
+      "voorbeeld": "He plans to weaken the Dragon Ogres with screams, hold other combat threats with infantry, and avoid exposing valuable targets to Vile Tide.",
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "game-plan",
+        "matchups"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-nVEV8ES5NWE",
+          "url": "https://www.youtube.com/watch?v=nVEV8ES5NWE&t=137s",
+          "tijd": 140,
+          "citaat": "what you emphasize, what you try to neutralize, and what you negate."
+        }
+      ],
+      "datum": "2025-09-19",
+      "markeringen": []
+    },
+    {
+      "id": "screams-weaken-dragon-ogres",
+      "titel": "Weaken Dragon Ogres with screams before infantry fights them",
+      "tekst": "In this Vampire Counts matchup, focus screams on the Dragon Ogre blocks to remove about two models from each. He wants to weaken them enough for his infantry to handle, rather than wipe them out immediately.",
+      "waarom": "He expects intact Dragon Ogre blocks to destroy his undead infantry through their attacks and stomps. He also points to their Leadership 8, compared with the Leadership 10 threats elsewhere in the army.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "magic-shooting",
+      "themas": [
+        "matchups",
+        "infantry"
+      ],
+      "leger": "vampire-counts",
+      "units": [
+        "Dragon Ogres"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-nVEV8ES5NWE",
+          "url": "https://www.youtube.com/watch?v=nVEV8ES5NWE&t=1017s",
+          "tijd": 1020,
+          "citaat": "what I want to emphasize is screaming against the dragon ogre blocks",
+          "extraCitaten": [
+            {
+              "tijd": 1030,
+              "citaat": "Two models each would be great."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-09-19",
+      "markeringen": []
+    },
+    {
+      "id": "large-targets-avoid-vile-tide",
+      "titel": "Keep vulnerable large targets beyond Vile Tide's reach",
+      "tekst": "In this matchup, keep the Mortis Engine and Terrorgheist out of Vile Tide's 20-inch reach for as long as possible, until the board starts to disperse. He would rather keep them back than immediately try to attack the spell's source.",
+      "waarom": "He says Vile Tide can inflict six or seven wounds, and these large targets cannot rely on the infantry's protection from targeting.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "shooting-terrain",
+        "game-plan"
+      ],
+      "leger": "vampire-counts",
+      "units": [
+        "Mortis Engine",
+        "Terrorgheist"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-nVEV8ES5NWE",
+          "url": "https://www.youtube.com/watch?v=nVEV8ES5NWE&t=1471s",
+          "tijd": 1474,
+          "citaat": "negate V tide by staying out of 20 in range"
+        }
+      ],
+      "datum": "2025-09-19",
+      "markeringen": []
+    },
+    {
+      "id": "corner-models-deny-ambushes",
+      "titel": "Deny corner entry with carefully placed deployment drops",
+      "tekst": "Place a model just under eight inches from a corner to prevent ambushers entering there. Tell your opponent that this is the intent of the placement.",
+      "waarom": "He explains that ambushers must enter at least eight inches from any model.",
+      "voorbeeld": "He plans to deploy his two Fell Bat units first, seven inches from the corners, to keep Leering Spirit out of the rear of his deployment zone.",
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-nVEV8ES5NWE",
+          "url": "https://www.youtube.com/watch?v=nVEV8ES5NWE&t=1653s",
+          "tijd": 1656,
+          "citaat": "I'm putting it here 7.99 in away conceptually to prevent ambushes",
+          "extraCitaten": [
+            {
+              "tijd": 1641,
+              "citaat": "they have to come on no closer than 8 in of any model."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-09-19",
+      "markeringen": []
+    },
+    {
+      "id": "skeletons-twenty-five-thirty",
+      "titel": "Take roughly 25 to 30 Skeleton Warriors",
+      "tekst": "If running Skeleton Warriors, he recommends roughly 25 to 30 models so their Horde bonus lasts longer.",
+      "waarom": "He wants to retain the Horde contribution to the unit's static combat resolution.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "infantry"
+      ],
+      "leger": "vampire-counts",
+      "units": [
+        "Skeleton Warriors Vampire Counts"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-nVEV8ES5NWE",
+          "url": "https://www.youtube.com/watch?v=nVEV8ES5NWE&t=1765s",
+          "tijd": 1768,
+          "citaat": "I think you want sort of 25 to 30 really."
+        }
+      ],
+      "datum": "2025-09-19",
+      "markeringen": []
+    },
+    {
+      "id": "undead-wall-protect-flanks",
+      "titel": "Protect the flanks of your undead infantry wall",
+      "tekst": "Protect the Grave Guard's flanks when arranging the infantry wall. In his planned deployment beside impassable terrain, Skeleton Warriors and the Black Coach guard the flanks of the Grave Guard and Zombies against combined enemy charges.",
+      "waarom": "He expects the Grave Guard to survive frontal fighting, but wants to prevent flanking and multiple charges that could destroy an undead unit before it can be resurrected.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "infantry",
+        "game-plan"
+      ],
+      "leger": "vampire-counts",
+      "units": [
+        "Grave Guard",
+        "Zombies",
+        "Skeleton Warriors Vampire Counts",
+        "Black Coach"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-nVEV8ES5NWE",
+          "url": "https://www.youtube.com/watch?v=nVEV8ES5NWE&t=1813s",
+          "tijd": 1816,
+          "citaat": "I don't want them to get flanked,",
+          "extraCitaten": [
+            {
+              "tijd": 1825,
+              "citaat": "set up the skeletons and the black coach next as defenders of their flanks."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-09-19",
+      "markeringen": []
+    },
+    {
+      "id": "banshees-behind-closest-infantry",
+      "titel": "Keep screamers forward but behind a closer infantry target",
+      "tekst": "Position the Tomb Banshees and general centrally, as far forward as possible while keeping an infantry block closer to the enemy. Keep them clear of possible overruns and able to reach either side if Hellish Vigour succeeds.",
+      "waarom": "He wants positions that let the characters scream while preserving lone-character targeting protection against Vile Tide.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "shooting-terrain",
+        "game-plan"
+      ],
+      "leger": "vampire-counts",
+      "units": [
+        "Tomb Banshee",
+        "Master Necromancer"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-nVEV8ES5NWE",
+          "url": "https://www.youtube.com/watch?v=nVEV8ES5NWE&t=1933s",
+          "tijd": 1936,
+          "citaat": "they just need to not be the closest target to V tide.",
+          "extraCitaten": [
+            {
+              "tijd": 1945,
+              "citaat": "We're going to keep them as forward as possible"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-09-19",
+      "markeringen": []
+    },
+    {
+      "id": "curse-years-holding-plan",
+      "titel": "Choose Curse of Years for this holding plan",
+      "tekst": "For this matchup, he chooses Curse of Years over Unquiet Spirits. Use its movement reduction to delay the enemy, or its Weapon Skill reduction to make Dragon Ogres less effective against the infantry.",
+      "waarom": "He says Unquiet Spirits has only one decent target here, the Ungor, and relies too much on fishing for sixes. Curse of Years fits his wider strategy; lowering the Dragon Ogres' Weapon Skill could save two or three infantry models.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "game-plan",
+        "matchups"
+      ],
+      "leger": "vampire-counts",
+      "units": [
+        "Dragon Ogres"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-nVEV8ES5NWE",
+          "url": "https://www.youtube.com/watch?v=nVEV8ES5NWE&t=2092s",
+          "tijd": 2095,
+          "citaat": "I'm going to be taking curse of years instead of unquite spirits."
+        }
+      ],
+      "datum": "2025-09-19",
+      "markeringen": []
+    },
+    {
+      "id": "terrain-low-roll-charges",
+      "titel": "Force terrain penalties to buy another turn",
+      "tekst": "Use forests and terrain created by spells to force the enemy to take the low charge die. Position around the resulting shorter charge ranges to tempt risky charges and buy time.",
+      "waarom": "He says a failed charge with a low roll of one leaves the enemy moving only one inch. That can give him another turn to scream at targets or improve his position.",
+      "voorbeeld": "He estimates Dragon Ogres normally charge about 12 inches, but terrain could reduce the expected distance to nine or ten.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "shooting-terrain",
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-nVEV8ES5NWE",
+          "url": "https://www.youtube.com/watch?v=nVEV8ES5NWE&t=2701s",
+          "tijd": 2704,
+          "citaat": "anything I can do to make him take the low roll is a big deal.",
+          "extraCitaten": [
+            {
+              "tijd": 2733,
+              "citaat": "I achieve my goal of winning another turn"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-09-19",
+      "markeringen": []
+    },
+    {
+      "id": "undead-infantry-receive-charges",
+      "titel": "Advance undead infantry close instead of charging",
+      "tekst": "In this matchup, he plans to advance the infantry rather than charge with it. If an enemy charge next turn cannot be avoided, move close enough to reduce the enemy's charge initiative bonus as much as possible.",
+      "waarom": "He wants the infantry to take the initial hit, resurrect its losses, and then survive while whittling the enemy down.",
+      "voorbeeld": null,
+      "wanneerNiet": "He will still charge with his flyers when that is advantageous.",
+      "fase": "movement",
+      "themas": [
+        "infantry",
+        "game-plan"
+      ],
+      "leger": "vampire-counts",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-nVEV8ES5NWE",
+          "url": "https://www.youtube.com/watch?v=nVEV8ES5NWE&t=2600s",
+          "tijd": 2603,
+          "citaat": "units will march up as close as possible that I can get away with.",
+          "extraCitaten": [
+            {
+              "tijd": 2612,
+              "citaat": "their initiative bonus as greatly as I can"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-09-19",
+      "markeringen": []
+    },
+    {
+      "id": "save-scroll-decisive-control",
+      "titel": "Save a Power Scroll for a decisive control spell",
+      "tekst": "When playing this patient control plan, save the Power Scroll for a later Crystal Column or Miasmic Mirage at the right moment.",
+      "waarom": "He thinks Crystal Column may be the better option here because the opponent needs a nine or more to remove it on the following turn.",
+      "voorbeeld": null,
+      "wanneerNiet": "He normally uses the scroll to help cast Hellish Vigour on turn one if he needs to advance, but that is not his strategy in this game.",
+      "fase": "magic-shooting",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-nVEV8ES5NWE",
+          "url": "https://www.youtube.com/watch?v=nVEV8ES5NWE&t=2800s",
+          "tijd": 2803,
+          "citaat": "I'm keeping it for crystal column or mirage later on"
+        }
+      ],
+      "datum": "2025-09-19",
+      "markeringen": []
+    },
+    {
+      "id": "scream-exposed-bray-shaman",
+      "titel": "Scream down an exposed level-one Bray-Shaman",
+      "tekst": "In this matchup, take an opportunity to scream down the level-one Bray-Shaman if the opponent leaves him vulnerable under the lone-character targeting restrictions.",
+      "waarom": "He says removing that wizard would let his large targets operate more freely across the board with their long threat ranges.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "magic-shooting",
+      "themas": [
+        "matchups",
+        "game-plan"
+      ],
+      "leger": "vampire-counts",
+      "units": [
+        "Bray-Shaman"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-nVEV8ES5NWE",
+          "url": "https://www.youtube.com/watch?v=nVEV8ES5NWE&t=2481s",
+          "tijd": 2484,
+          "citaat": "scream down particularly his level one",
+          "extraCitaten": [
+            {
+              "tijd": 2498,
+              "citaat": "it opens up for my large targets to start to operate"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-09-19",
+      "markeringen": []
+    },
+    {
+      "id": "resurrect-outnumber-central-objective",
+      "titel": "Resurrect to outnumber the enemy on the objective",
+      "tekst": "If both sides remain on the central objective, restore your undead unit's numbers and aim to finish with the higher unit strength. He does not need to destroy the opposing unit to win that contest.",
+      "waarom": null,
+      "voorbeeld": "He imagines restoring his unit to 20 or 21 models while the opponent has 15 Gor and the accompanying character left.",
+      "wanneerNiet": null,
+      "fase": "scenarios",
+      "themas": [
+        "game-plan",
+        "infantry"
+      ],
+      "leger": "vampire-counts",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-nVEV8ES5NWE",
+          "url": "https://www.youtube.com/watch?v=nVEV8ES5NWE&t=2873s",
+          "tijd": 2876,
+          "citaat": "I just have to have the highest unit strength"
+        }
+      ],
+      "datum": "2025-09-19",
+      "markeringen": []
+    },
+    {
+      "id": "herdstone-after-main-battle",
+      "titel": "Leave the Herdstone until the main battle is won",
+      "tekst": "In this matchup, prioritise holding table quarters and contesting the centre rather than sending flyers straight at the Herdstone's defenders. Treat taking the Herdstone as a chance for a bigger win only after decisively winning the main fight.",
+      "waarom": "He says flyers sent after the Ungor early could be killed by Vile Tide without a chance to escape or be resurrected, losing him the game.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "scenarios",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": "vampire-counts",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-nVEV8ES5NWE",
+          "url": "https://www.youtube.com/watch?v=nVEV8ES5NWE&t=2256s",
+          "tijd": 2259,
+          "citaat": "then maybe I can go for a big win on the herdstone,",
+          "extraCitaten": [
+            {
+              "tijd": 2351,
+              "citaat": "negating the Curtstone will be only be there if I smash completely."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-09-19",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "control-with-ranged-firepower",
+      "bron": {
+        "bronId": "yt-nVEV8ES5NWE",
+        "url": "https://www.youtube.com/watch?v=nVEV8ES5NWE&t=1439s",
+        "tijd": 1442,
+        "citaat": "I should spend more of my resources making time",
+        "extraCitaten": [
+          {
+            "tijd": 1458,
+            "citaat": "emphasize those screams and buy as much time as possible."
+          }
+        ]
+      },
+      "waarom": "He identifies Beastmen as the beatdown because repeated screams will destroy their Dragon Ogres if they take too long to cross the board.",
+      "toelichting": "The same control plan: use time and superior ranged pressure to prepare the combats rather than rush forward."
+    },
+    {
+      "lesId": "hidden-mobile-objective-grabs",
+      "bron": {
+        "bronId": "yt-nVEV8ES5NWE",
+        "url": "https://www.youtube.com/watch?v=nVEV8ES5NWE&t=1590s",
+        "tijd": 1593,
+        "citaat": "you can hide them behind things and then launch them",
+        "extraCitaten": [
+          {
+            "tijd": 1587,
+            "citaat": "they can jump into a quadrant and add unit strength nine"
+          }
+        ]
+      },
+      "waarom": "He notes that three Fell Bats contribute unit strength nine to a table quarter, which can be substantial at the end of the game.",
+      "toelichting": "The same recommendation to hide fast units and release them late to claim objectives."
+    }
+  ],
+  "overgeslagen": "Skipped the introduction, sponsorship, hobby discussion, list and scenario scoring readouts without advice, speculative opponent choices, unclear caption names, and the uncertain Mortis Engine base-size calculation. Broader deployment and magic advice already covered by the supplied index was omitted where it added no distinct recommendation.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

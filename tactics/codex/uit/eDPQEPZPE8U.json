@@ -1,0 +1,32 @@
+{
+  "videoId": "eDPQEPZPE8U",
+  "bronId": "yt-eDPQEPZPE8U",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T23:53:33.276Z",
+  "nieuw": [],
+  "aanvullingen": [
+    {
+      "lesId": "terrain-low-roll-charges",
+      "bron": {
+        "bronId": "yt-eDPQEPZPE8U",
+        "url": "https://www.youtube.com/watch?v=eDPQEPZPE8U&t=357s",
+        "tijd": 360,
+        "citaat": "Anyone can sit in a forest and tease the enemy to come and charge you.",
+        "extraCitaten": [
+          {
+            "tijd": 335,
+            "citaat": "it also wasted this uh Shaggoth's turn."
+          }
+        ]
+      },
+      "toelichting": "He likewise recommends using terrain to make enemy charges harder and buy time, explaining that a failed charge through it also uses the lower die and can waste the charger's turn."
+    }
+  ],
+  "overgeslagen": "Skipped channel promotion and standalone rules explanations. The Tree Kin counterattack illustrates the terrain advice rather than establishing a separate recommendation.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

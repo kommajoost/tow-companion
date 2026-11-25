@@ -1,0 +1,62 @@
+{
+  "videoId": "kPEFkQepMuw",
+  "bronId": "yt-kPEFkQepMuw",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T23:44:34.139Z",
+  "nieuw": [
+    {
+      "id": "layer-resilient-units-retreat-trap",
+      "titel": "Layer resilient units to trap pursuing chargers",
+      "tekst": "Deploy survivable units one behind another so the front unit can absorb a charge and retreat through the next line, leaving pursuing attackers to hit that second unit. He recommends this setup for holding the centre with infantry, with a supporting countercharge as shown in his game.",
+      "waarom": "He says a front unit with high leadership will most likely fall back in good order if it is not broken automatically, limiting the cost while the attackers meet the next line. In his view, survivable infantry is difficult to wipe out because attacks must pass through rolls to hit, rolls to wound and saves.",
+      "voorbeeld": "His Dragon Ogres shielded Chaos Warriors from shooting and took a charge from White Wolf knights. The surviving Dragon Ogre fled through the Warriors, the knights pursued into them, and his Daemon Prince charged into that combat on his turn and helped defeat the knights.",
+      "wanneerNiet": "His front unit broke automatically after being reduced to one Dragon Ogre and being outnumbered two to one. Under the scoring rules used in that game, losing at least half its wounds also conceded half its points.",
+      "fase": "deployment",
+      "themas": [
+        "game-plan",
+        "infantry"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-kPEFkQepMuw",
+          "url": "https://www.youtube.com/watch?v=kPEFkQepMuw&t=288s",
+          "tijd": 291,
+          "citaat": "dragon ogres shielded the warriors, took a whole bunch of wounds, took the hit",
+          "extraCitaten": [
+            {
+              "tijd": 343,
+              "citaat": "you're going to most likely be falling back in good order"
+            },
+            {
+              "tijd": 390,
+              "citaat": "have something that can run the hold the middle of the board"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "endgame-hide-save-points",
+      "bron": {
+        "bronId": "yt-kPEFkQepMuw",
+        "url": "https://www.youtube.com/watch?v=kPEFkQepMuw&t=303s",
+        "tijd": 306,
+        "citaat": "hiding behind that house to your right, saving a number of points."
+      },
+      "toelichting": "He suggests hiding the surviving Dragon Ogre for the rest of the game to preserve its remaining points."
+    }
+  ],
+  "overgeslagen": "Skipped the introduction, failed-charge narration, equipment and combat-buff readouts, rules explanations without separate advice, the game result and closing remarks. Kept the screening and successive retreat lines together as one tactic.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

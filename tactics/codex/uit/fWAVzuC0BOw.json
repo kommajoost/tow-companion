@@ -1,0 +1,93 @@
+{
+  "videoId": "fWAVzuC0BOw",
+  "bronId": "yt-fWAVzuC0BOw",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-25T01:10:44.432Z",
+  "nieuw": [
+    {
+      "id": "resolve-overrun-feeder-first",
+      "titel": "Resolve the overrun combat before the fight it could join",
+      "tekst": "Resolve a combat that could produce an overrun before the combat it could join. If the attacker destroys its opponent and overruns into that unresolved fight, it can fight again.",
+      "waarom": "He calls fighting again extremely powerful, particularly for a mobile dragon that can chain combats down a flank.",
+      "voorbeeld": "He shows Dragon Princes destroying Skeleton Horsemen and overrunning into chariots already fighting another High Elf unit, before that second combat has been resolved.",
+      "wanneerNiet": null,
+      "fase": "combat",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-fWAVzuC0BOw",
+          "url": "https://www.youtube.com/watch?v=fWAVzuC0BOw&t=499s",
+          "tijd": 502,
+          "citaat": "the high Al player gets to pick the order of combat",
+          "extraCitaten": [
+            {
+              "tijd": 535,
+              "citaat": "princes now get to fight again which can be extremely powerful"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "drilled-widen-overrun-contact",
+      "titel": "Widen with Drilled to reach an overrun target",
+      "tekst": "Before an overrun that would miss an enemy unit, use Drilled to widen your frontage so the move makes contact and takes you into another combat.",
+      "waarom": null,
+      "voorbeeld": "He shows Dragon Princes widening after destroying skeleton archers so their overrun reaches the chariots.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-fWAVzuC0BOw",
+          "url": "https://www.youtube.com/watch?v=fWAVzuC0BOw&t=601s",
+          "tijd": 604,
+          "citaat": "they can also use drill here to expand their Frontage and",
+          "extraCitaten": [
+            {
+              "tijd": 613,
+              "citaat": "now contact the Chariots to get into another combat"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "drilled-narrow-unwanted-contact",
+      "bron": {
+        "bronId": "yt-fWAVzuC0BOw",
+        "url": "https://www.youtube.com/watch?v=fWAVzuC0BOw&t=314s",
+        "tijd": 317,
+        "citaat": "is going to use drill to decrease his",
+        "extraCitaten": [
+          {
+            "tijd": 332,
+            "citaat": "they're now not going to contact the Chariot unit"
+          }
+        ]
+      },
+      "toelichting": "The same recommendation to narrow with Drilled before a follow-up move to avoid unwanted contact is demonstrated here during an overrun."
+    }
+  ],
+  "overgeslagen": "Skipped the introduction and closing, rules-only explanations of overrun eligibility, alignment, charge reactions, crumble and lone-character evasion, and uncertain character names.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

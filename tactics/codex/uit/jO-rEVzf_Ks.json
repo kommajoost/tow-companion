@@ -1,0 +1,117 @@
+{
+  "videoId": "jO-rEVzf_Ks",
+  "bronId": "yt-jO-rEVzf_Ks",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T23:59:09.562Z",
+  "nieuw": [
+    {
+      "id": "split-units-limit-dragon-targets",
+      "titel": "Split units to limit a dragon's charge targets",
+      "tekst": "If a dragon regains sight of several of your units, split them up and move units out of its reach. Minimise the number of units it can charge.",
+      "waarom": "He wants to reduce the dragon's available targets when it can threaten all four nearby units.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-jO-rEVzf_Ks",
+          "url": "https://www.youtube.com/watch?v=jO-rEVzf_Ks&t=181s",
+          "tijd": 184,
+          "citaat": "need to split them up.",
+          "extraCitaten": [
+            {
+              "tijd": 215,
+              "citaat": "the other units have moved out of the range of the dragon as well."
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "angle-skirmisher-dragon-overrun",
+      "titel": "Angle the front skirmisher to steer the dragon's overrun",
+      "tekst": "Angle the front skirmisher of the unit you expect the dragon to charge so that forming ranks sends the dragon along your chosen overrun direction.",
+      "waarom": "He says to make the dragon's overrun path harder to achieve.",
+      "voorbeeld": "He leaves one unit very close to the dragon and angles its front skirmisher to send the dragon in a chosen direction when the unit forms ranks.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-jO-rEVzf_Ks",
+          "url": "https://www.youtube.com/watch?v=jO-rEVzf_Ks&t=289s",
+          "tijd": 292,
+          "citaat": "angle the unit that's going to be charged",
+          "extraCitaten": [
+            {
+              "tijd": 200,
+              "citaat": "he'll hit that front skirmisher and I'll rank up"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "delay-dragon-score-elsewhere",
+      "titel": "Delay the dragon while scoring elsewhere",
+      "tekst": "When you cannot beat an enemy dragon, buy time and limit the points it collects while your own force scores on the other side of the board. Aim to win that race for points.",
+      "waarom": null,
+      "voorbeeld": "He describes the enemy dragon taking three turns to get into position and attacking one roughly 150-point unit on turn four. He estimates the dragon costs about 500 points, while his own dragon attacks the opposing forces elsewhere.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-jO-rEVzf_Ks",
+          "url": "https://www.youtube.com/watch?v=jO-rEVzf_Ks&t=237s",
+          "tijd": 240,
+          "citaat": "what you're really doing when you're playing against a dragon is buying time.",
+          "extraCitaten": [
+            {
+              "tijd": 286,
+              "citaat": "points and just win that race."
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "skirmishers-kite-ranked-pursuers",
+      "bron": {
+        "bronId": "yt-jO-rEVzf_Ks",
+        "url": "https://www.youtube.com/watch?v=jO-rEVzf_Ks&t=118s",
+        "tijd": 121,
+        "citaat": "figure out the charark and then get all your units out of that char."
+      },
+      "toelichting": "He demonstrates the same advice of moving skirmishers outside a pursuer's charge arc to prevent its next charge."
+    }
+  ],
+  "overgeslagen": "Skipped the introductory series discussion, unit-count readout, incidental shooting and breath-weapon damage, and the dragon's restraint mechanics. Forest cover illustrates the evasion rather than supplying a separate lesson.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

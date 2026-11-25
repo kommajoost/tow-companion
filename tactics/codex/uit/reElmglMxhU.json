@@ -1,0 +1,278 @@
+{
+  "videoId": "reElmglMxhU",
+  "bronId": "yt-reElmglMxhU",
+  "model": "GPT-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T23:01:19.793Z",
+  "nieuw": [
+    {
+      "id": "substantial-core-scenario-scorers",
+      "titel": "Take substantial core units for objective scoring",
+      "tekst": "When playing with the matched-play secondaries, include core units with high unit strength. Give them scoring jobs even if they are not good at killing enemies.",
+      "waarom": "He says several objectives require substantial core units. A core unit that scores while surviving also avoids giving up its own points.",
+      "voorbeeld": null,
+      "wanneerNiet": "He notes that not every mission includes the same objectives.",
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-reElmglMxhU",
+          "url": "https://www.youtube.com/watch?v=reElmglMxhU&t=1243s",
+          "tijd": 1246,
+          "citaat": "you need core units with a high unit strength",
+          "extraCitaten": [
+            {
+              "tijd": 944,
+              "citaat": "it can definitely score you points at the end of the game."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-06-30",
+      "markeringen": []
+    },
+    {
+      "id": "claim-objectives-against-gunlines",
+      "titel": "Claim progressive objectives against a defensive gunline",
+      "tekst": "If the opponent deploys defensively near the back of the board, move onto the strategic locations and start scoring. Holding the two side objectives and your middle objective can put pressure on the opponent to come and fight you there.",
+      "waarom": "He points out that these objectives score each player's turn, so an early lead can accumulate while the opponent stays back.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "scenarios",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-reElmglMxhU",
+          "url": "https://www.youtube.com/watch?v=reElmglMxhU&t=1126s",
+          "tijd": 1129,
+          "citaat": "Then you jump on a bunch of objectives,",
+          "extraCitaten": [
+            {
+              "tijd": 1488,
+              "citaat": "Now your opponent, uh now my opponent needs to start fighting me on those objectives."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-06-30",
+      "markeringen": []
+    },
+    {
+      "id": "field-glory-wide-deployment",
+      "titel": "Deploy widely for Field of Glory's distributed objectives",
+      "tekst": "In Upon the Field of Glory with Strategic Locations Four and the other secondaries, deploy to reach the side objectives as well as the middle. Use separate core units to cover scoring locations rather than relying on one central block.",
+      "waarom": "He says a single large block cannot hold the middle and both flanks. A corner castle cuts itself off from portions of the board that offer points.",
+      "voorbeeld": null,
+      "wanneerNiet": "He acknowledges that some armies find deploying this widely difficult.",
+      "fase": "deployment",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-reElmglMxhU",
+          "url": "https://www.youtube.com/watch?v=reElmglMxhU&t=1374s",
+          "tijd": 1377,
+          "citaat": "This means we got to deploy really really wide.",
+          "extraCitaten": [
+            {
+              "tijd": 1083,
+              "citaat": "they can't hold either of the two flanks"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-06-30",
+      "markeringen": []
+    },
+    {
+      "id": "vanguard-temporary-objective-control",
+      "titel": "Consider trading a small Vanguard unit for early scoring",
+      "tekst": "Consider sending a small unit forward with Vanguard to hold an objective temporarily, accepting that the opponent may eventually destroy it.",
+      "waarom": null,
+      "voorbeeld": null,
+      "wanneerNiet": "He describes this as a trade in which the unit can eventually be smashed by the opponent.",
+      "fase": "scenarios",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-reElmglMxhU",
+          "url": "https://www.youtube.com/watch?v=reElmglMxhU&t=1453s",
+          "tijd": 1456,
+          "citaat": "You can have a small unit uh the vanguards up,",
+          "extraCitaten": [
+            {
+              "tijd": 1456,
+              "citaat": "holds this objective for a bit, and eventually your opponent goes and smashes."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-06-30",
+      "markeringen": []
+    },
+    {
+      "id": "king-hill-concentrate-centre",
+      "titel": "Concentrate centrally in King of the Hill",
+      "tekst": "In King of the Hill with a special feature on the hill, focus your force on the centre. He sees this as a mission for a central fight.",
+      "waarom": "He says the hill and special feature together make the centre especially valuable, with fewer other scoring opportunities than in Upon the Field of Glory.",
+      "voorbeeld": null,
+      "wanneerNiet": "He warns that the special feature is impassable and that the hill obstructs sight, making charges and shooting difficult.",
+      "fase": "deployment",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-reElmglMxhU",
+          "url": "https://www.youtube.com/watch?v=reElmglMxhU&t=1645s",
+          "tijd": 1648,
+          "citaat": "This one you just go very central.",
+          "extraCitaten": [
+            {
+              "tijd": 1578,
+              "citaat": "claiming the center of the board is super valuable."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-06-30",
+      "markeringen": []
+    },
+    {
+      "id": "close-quarter-defensive-shooting",
+      "titel": "Consider defensive shooting in Close Quarter",
+      "tekst": "In Close Quarter, a shooting army can sit on its own strategic location and shoot the opponent. He considers a more defensive approach workable here because the mission does not force you towards the flanks or a central terrain objective.",
+      "waarom": null,
+      "voorbeeld": null,
+      "wanneerNiet": "He says a similarly passive shooting list misses many points in other missions. Even here, Domination requires planning moves into table quarters later.",
+      "fase": "scenarios",
+      "themas": [
+        "game-plan",
+        "shooting-terrain"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-reElmglMxhU",
+          "url": "https://www.youtube.com/watch?v=reElmglMxhU&t=1823s",
+          "tijd": 1826,
+          "citaat": "you can kind of sit like on your objective.",
+          "extraCitaten": [
+            {
+              "tijd": 1818,
+              "citaat": "You're not forced to try and go grab like a center piece of terrain."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-06-30",
+      "markeringen": []
+    },
+    {
+      "id": "chance-encounter-patient-play",
+      "titel": "Delay commitment in A Chance Encounter",
+      "tekst": "In A Chance Encounter, you can wait, shoot at long range or work around a flank before committing. Plan to claim the central special feature and table quarters at the end.",
+      "waarom": "He says this mission lacks progressive strategic-location scoring, so there is no need to engage early to collect those points.",
+      "voorbeeld": null,
+      "wanneerNiet": "He stresses that the endgame objectives still need attention.",
+      "fase": "scenarios",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-reElmglMxhU",
+          "url": "https://www.youtube.com/watch?v=reElmglMxhU&t=1984s",
+          "tijd": 1987,
+          "citaat": "So you can wait, you can do some long range shooting,"
+        }
+      ],
+      "datum": "2025-06-30",
+      "markeringen": []
+    },
+    {
+      "id": "ambushers-target-baggage-trains",
+      "titel": "Use ambushers to attack baggage trains",
+      "tekst": "When baggage trains are in play, give ambushing units the job of destroying the enemy baggage train. Consider the opportunities left behind as enemy units move forward onto objectives.",
+      "waarom": "He says objective play opens up the back of the board for ambushers and gives them a clear scoring role.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "scenarios",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-reElmglMxhU",
+          "url": "https://www.youtube.com/watch?v=reElmglMxhU&t=2083s",
+          "tijd": 2086,
+          "citaat": "Their job ro is to go smash up your baggage trains.",
+          "extraCitaten": [
+            {
+              "tijd": 2094,
+              "citaat": "you leave a lot of the backboard open for your opponent"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-06-30",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "move-to-hold-objectives",
+      "bron": {
+        "bronId": "yt-reElmglMxhU",
+        "url": "https://www.youtube.com/watch?v=reElmglMxhU&t=694s",
+        "tijd": 697,
+        "citaat": "models, you know, turns five and six into different quarters of the board"
+      },
+      "toelichting": "He gives the same advice to position units for end-of-battle scoring, specifically moving into Domination quarters on turns five and six."
+    },
+    {
+      "lesId": "hidden-mobile-objective-grabs",
+      "bron": {
+        "bronId": "yt-reElmglMxhU",
+        "url": "https://www.youtube.com/watch?v=reElmglMxhU&t=718s",
+        "tijd": 721,
+        "citaat": "their job will be to late game ambush.",
+        "extraCitaten": [
+          {
+            "tijd": 1925,
+            "citaat": "You could deploy something very deep and just pop on that turn five and six"
+          }
+        ]
+      },
+      "toelichting": "He likewise suggests keeping small units sheltered or deployed deep so they can claim scoring areas late."
+    }
+  ],
+  "overgeslagen": "Skipped introductions, event and product promotion, hobby talk, scoring and rules readouts without tactical advice, and recommendations about organising events or revealing secret objectives. Omitted map-dependent passages where references to unseen positions were unclear, and uncertain or contradictory points totals.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

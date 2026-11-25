@@ -1,0 +1,243 @@
+{
+  "videoId": "rOcYosnMD7M",
+  "bronId": "yt-rOcYosnMD7M",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T23:12:40.101Z",
+  "nieuw": [
+    {
+      "id": "reconsider-infantry-charging-infantry",
+      "titel": "Reconsider charging infantry with infantry",
+      "tekst": "He thinks charging infantry with your own infantry may not be worthwhile without Furious Charge, unless your unit is much stronger than its target.",
+      "waarom": "He explains that Press of Battle gives infantry additional attacks when receiving a charge.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "infantry"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-rOcYosnMD7M",
+          "url": "https://www.youtube.com/watch?v=rOcYosnMD7M&t=226s",
+          "tijd": 229,
+          "citaat": "I think without furious charge, it might not be worth it unless",
+          "extraCitaten": [
+            {
+              "tijd": 236,
+              "citaat": "you're extremely um stronger than who you are charging."
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "infantry-ten-after-challenge",
+      "titel": "Keep at least unit strength ten after a challenge",
+      "tekst": "Size your Close Order infantry so that at least unit strength ten remains after its champion dies in a challenge against a dragon.",
+      "waarom": "He explains that the remaining infantry can retain Close Order and claim Massed Infantry against the dragon, contributing two combat resolution.",
+      "voorbeeld": "He initially ran ten Black Orcs to capture objectives and found that was not enough.",
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "infantry"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-rOcYosnMD7M",
+          "url": "https://www.youtube.com/watch?v=rOcYosnMD7M&t=316s",
+          "tijd": 319,
+          "citaat": "To have unit strength 10 remaining in your infantry",
+          "extraCitaten": [
+            {
+              "tijd": 328,
+              "citaat": "having 10 unit strength of infantry against a dragon"
+            },
+            {
+              "tijd": 254,
+              "citaat": "That wasn't enough."
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "infantry-overwhelm-dragon-numbers",
+      "titel": "Build infantry to more than double a dragon's unit strength",
+      "tekst": "For an infantry block intended to face a dragon, aim to retain more than twice its unit strength after the challenge. He describes a champion and roughly 25 infantry as making this relatively easy to achieve.",
+      "waarom": "He explains that if the infantry wins combat with that numerical advantage, a dragon that rolls a fall back in good order result breaks instead, giving the infantry a chance to run it down.",
+      "voorbeeld": null,
+      "wanneerNiet": "He stresses that the winning side needs more than twice the opposing unit strength; exactly double is insufficient.",
+      "fase": "army-building",
+      "themas": [
+        "infantry"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-rOcYosnMD7M",
+          "url": "https://www.youtube.com/watch?v=rOcYosnMD7M&t=503s",
+          "tijd": 506,
+          "citaat": "is relatively easy to achieve with a champion and 25 infantry",
+          "extraCitaten": [
+            {
+              "tijd": 491,
+              "citaat": "more than twice more than twice, not double"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "monster-charge-challenge-support",
+      "titel": "Support a dragon charge with another challenge taker",
+      "tekst": "When charging with a dragon, combine its charge with another unit that can take the challenge.",
+      "waarom": null,
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "hammers",
+        "infantry"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-rOcYosnMD7M",
+          "url": "https://www.youtube.com/watch?v=rOcYosnMD7M&t=89s",
+          "tijd": 92,
+          "citaat": "you can combo charge with your big scary dragon.",
+          "extraCitaten": [
+            {
+              "tijd": 100,
+              "citaat": "something else takes the challenge."
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "first-charge-infantry-ranks",
+      "titel": "Use First Charge to remove infantry rank bonuses",
+      "tekst": "He particularly recommends First Charge when trying to beat infantry, to remove their rank bonuses.",
+      "waarom": null,
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "infantry",
+        "matchups"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-rOcYosnMD7M",
+          "url": "https://www.youtube.com/watch?v=rOcYosnMD7M&t=752s",
+          "tijd": 755,
+          "citaat": "first charge in particular to get rid of their rank bonuses."
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "position-fast-monster-pursuers",
+      "titel": "Position fast units to catch fleeing monsters",
+      "tekst": "Position fast units so they can charge and potentially catch a monster that breaks from an infantry fight on the following turn.",
+      "waarom": "He points out that the long charge range of Pegasus Knights could catch his Wyvern despite its 3D6 flee move.",
+      "voorbeeld": "After his Orc Warboss on a Wyvern fled from Knights of the Realm on Foot, he describes how differently positioned Pegasus Knights could have run it down.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-rOcYosnMD7M",
+          "url": "https://www.youtube.com/watch?v=rOcYosnMD7M&t=673s",
+          "tijd": 676,
+          "citaat": "if he had his pegs over here and charged over here",
+          "extraCitaten": [
+            {
+              "tijd": 684,
+              "citaat": "their ginormous charge range that they'd run him down"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "infantry-character-flank-challenge",
+      "titel": "Add a character to answer flank-charge challenges",
+      "tekst": "Include a character in an infantry block so that, when outside the fighting rank, it can move into that rank and accept a challenge after a flank charge.",
+      "waarom": "He explains that a unit champion outside the fighting rank cannot move through the ranks to accept the challenge.",
+      "voorbeeld": "His Night Goblin Bigboss moved into the fighting rank to face a Duke charging the Night Goblins' flank. The Bigboss died after taking two wounds, but the block won by three and the Duke broke.",
+      "wanneerNiet": "He explains that a character already in one fighting rank cannot move through the ranks to another fighting rank.",
+      "fase": "army-building",
+      "themas": [
+        "infantry"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-rOcYosnMD7M",
+          "url": "https://www.youtube.com/watch?v=rOcYosnMD7M&t=820s",
+          "tijd": 823,
+          "citaat": "But a character can freely move in to accept the challenge.",
+          "extraCitaten": [
+            {
+              "tijd": 1139,
+              "citaat": "he can't move through the rank from a fighting rank to another fighting rank."
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "anchor-challenges-against-dragons",
+      "bron": {
+        "bronId": "yt-rOcYosnMD7M",
+        "url": "https://www.youtube.com/watch?v=rOcYosnMD7M&t=604s",
+        "tijd": 607,
+        "citaat": "challenge with his um champion.",
+        "extraCitaten": [
+          {
+            "tijd": 614,
+            "citaat": "He had seven. So he wins by four"
+          }
+        ]
+      },
+      "toelichting": "The speaker again shows a champion's challenge limiting a ridden monster's damage so infantry can win through static combat resolution."
+    }
+  ],
+  "overgeslagen": "Skipped sponsorship and channel promotion, rules readouts without advice, and uncertain details about rear-rank positioning and spear attacks around 17:20–18:41. Omitted the unclear rear/flank charge-bonus wording at 19:49 and uncertain combat-result totals.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

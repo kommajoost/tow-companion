@@ -1,0 +1,160 @@
+{
+  "videoId": "sjKsZiFRnaE",
+  "bronId": "yt-sjKsZiFRnaE",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T23:38:26.237Z",
+  "nieuw": [
+    {
+      "id": "stagger-receivers-for-countercharge",
+      "titel": "Stagger neighbouring charge receivers to enable a countercharge",
+      "tekst": "Stagger neighbouring units rather than putting them in one line when a wide enemy charger could contact both. Arrange them so that one can fall back while the other catches the enemy, allowing the first to charge back in.",
+      "waarom": null,
+      "voorbeeld": "He placed his Dragon Ogre Shaggoth ahead of his Gigantic Spawn of Chaos. When the enemy won combat, the Shaggoth fell back in good order while the spawn held the enemy, letting the Shaggoth charge back next turn.",
+      "wanneerNiet": "He says this depends on the units not fleeing.",
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-sjKsZiFRnaE",
+          "url": "https://www.youtube.com/watch?v=sjKsZiFRnaE&t=311s",
+          "tijd": 314,
+          "citaat": "You don't want them in one line. You want to stagger one",
+          "extraCitaten": [
+            {
+              "tijd": 340,
+              "citaat": "the other unit can come back in"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "dragon-ogres-sacrificial-receivers",
+      "titel": "Use Dragon Ogres as durable sacrificial units",
+      "tekst": "He recommends Dragon Ogres as sacrificial units that are difficult to wipe out in one go.",
+      "waarom": "He points to their many wounds, three-plus armour save and sometimes a five-plus ward save as reasons they take so much to kill.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": "beastmen-brayherds",
+      "units": [
+        "Dragon Ogres"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-sjKsZiFRnaE",
+          "url": "https://www.youtube.com/watch?v=sjKsZiFRnaE&t=265s",
+          "tijd": 268,
+          "citaat": "The dragon ogres are a great sacrificial unit",
+          "extraCitaten": [
+            {
+              "tijd": 284,
+              "citaat": "they're very difficult to wipe out in one go"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "flank-charge-free-alignment-wheel",
+      "titel": "Use free alignment wheels when planning flank charges",
+      "tekst": "When charging from an enemy's flank arc, plan a small wheel to make contact and let closing the door complete the alignment for free. Use the resulting facing to set the direction of a later enemy overrun into the charging unit.",
+      "waarom": null,
+      "voorbeeld": "His Dragon Ogres wheeled into the flank of the Cold One Knights and finished perpendicular to them. When the Witch Elves later charged the Dragon Ogres and closed the door, their overrun path pointed towards the board edge.",
+      "wanneerNiet": "He specifies that the charging unit must be in the enemy's flank arc.",
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-sjKsZiFRnaE",
+          "url": "https://www.youtube.com/watch?v=sjKsZiFRnaE&t=366s",
+          "tijd": 369,
+          "citaat": "they wheel a tiny bit to make contact",
+          "extraCitaten": [
+            {
+              "tijd": 369,
+              "citaat": "the rest of the wheel is free in closing the door"
+            },
+            {
+              "tijd": 605,
+              "citaat": "when those witch elves hit and closed the door on the dragon ogres"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "check-hammer-charge-alignment",
+      "titel": "Check where charge alignment will leave your hammer facing",
+      "tekst": "Be careful about how your hammer enters a combat and where alignment will leave it facing. Choose an approach that keeps the later combats you want within its front arc and line of sight.",
+      "waarom": "He warns that otherwise a hammer can be led around the board or miss intended combats because it no longer has line of sight to the targets it wants to charge.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "hammers",
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-sjKsZiFRnaE",
+          "url": "https://www.youtube.com/watch?v=sjKsZiFRnaE&t=627s",
+          "tijd": 630,
+          "citaat": "you got to be very careful with your hammer units",
+          "extraCitaten": [
+            {
+              "tijd": 638,
+              "citaat": "you're going to end up being led around the board"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "speed-bump-close-order",
+      "bron": {
+        "bronId": "yt-sjKsZiFRnaE",
+        "url": "https://www.youtube.com/watch?v=sjKsZiFRnaE&t=563s",
+        "tijd": 566,
+        "citaat": "when a unit has to close the door, it's oriented to the way you want",
+        "extraCitaten": [
+          {
+            "tijd": 534,
+            "citaat": "best thing was for the witch to continue to go towards the board edge"
+          }
+        ]
+      },
+      "toelichting": "He gives the same advice to angle a Close Order sacrifice so that the enemy aligns to it and overruns in the intended direction."
+    }
+  ],
+  "overgeslagen": "Skipped the introduction, channel news, standalone charge and FAQ explanations, speculative comments about defensive play, and garbled combat details around 6:40. Game events were used only where they illustrate advice he explicitly draws from the positioning.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

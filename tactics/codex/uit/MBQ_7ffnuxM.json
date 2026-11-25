@@ -1,0 +1,362 @@
+{
+  "videoId": "MBQ_7ffnuxM",
+  "bronId": "yt-MBQ_7ffnuxM",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T23:32:08.028Z",
+  "nieuw": [
+    {
+      "id": "mobile-core-objective-attackers",
+      "titel": "Choose mobile, hard-hitting core units to attack objectives",
+      "tekst": "When choosing attackers to dislodge objective defenders, look for core units with both mobility and hitting power.",
+      "waarom": "He says mobility and punch in core units help arrange combined charges and push defenders off objectives.",
+      "voorbeeld": null,
+      "wanneerNiet": "He says attackers do not have to be core; Special and Rare also offer good hammers.",
+      "fase": "army-building",
+      "themas": [
+        "hammers",
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-MBQ_7ffnuxM",
+          "url": "https://www.youtube.com/watch?v=MBQ_7ffnuxM&t=437s",
+          "tijd": 440,
+          "citaat": "any way you can get mobility and punch in a unit that is core"
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "combo-charge-objective-defenders",
+      "titel": "Use combined charges to dislodge objective defenders",
+      "tekst": "Coordinate several attackers against an established objective defender rather than sending one small hammer in alone. Charge to gain a combat advantage, rather than simply because a charge is available.",
+      "waarom": "In his view, defenders have a defensive advantage and enough static combat resolution to defeat an unsupported attacker.",
+      "voorbeeld": "He says five Chaos Knights will not beat State Troops with ten static combat resolution, but adding a Gigantic Spawn of Chaos and a chariot will probably win.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "hammers",
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-MBQ_7ffnuxM",
+          "url": "https://www.youtube.com/watch?v=MBQ_7ffnuxM&t=390s",
+          "tijd": 393,
+          "citaat": "the way that you make this work so well is by combo charging.",
+          "extraCitaten": [
+            {
+              "tijd": 407,
+              "citaat": "Chaos Knights and a gigantic spawn and a chariot in"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "nomadic-boar-boy-objectives",
+      "titel": "Use Boar Boyz to both defend and attack objectives",
+      "tekst": "In the Nomadic army he discusses, consider Orc Boar Boy Mob as a core unit that can both hold objectives and attack. Countercharge lets it threaten damage when an opponent tries to dislodge it.",
+      "waarom": "He points to Toughness four, a three-plus save and Countercharge. He says this makes opponents less willing to charge casually, while the unit can attack as they try to arrange a favourable charge.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "game-plan",
+        "hammers"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Orc Boar Boy Mob"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-MBQ_7ffnuxM",
+          "url": "https://www.youtube.com/watch?v=MBQ_7ffnuxM&t=477s",
+          "tijd": 480,
+          "citaat": "they can countercharge out and have the chance to do some damage back.",
+          "extraCitaten": [
+            {
+              "tijd": 457,
+              "citaat": "I think can do both of these things defend and attack"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "ambush-vacated-enemy-objectives",
+      "titel": "Ambush into space left by advancing enemy scorers",
+      "tekst": "Use ambushers to capture objectives near the opponent's deployment zone as their army advances out to score. Look for the entry positions and open space that advance creates.",
+      "waarom": "He thinks objective play draws armies out of their deployment zones, leaving more room for ambushers to enter and capture objectives.",
+      "voorbeeld": "He describes core Goblin Wolf Riders arriving on turn four after threats have died, then using movement and Reserve Move to reach, contest or steal an objective the opponent has left.",
+      "wanneerNiet": null,
+      "fase": "scenarios",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-MBQ_7ffnuxM",
+          "url": "https://www.youtube.com/watch?v=MBQ_7ffnuxM&t=557s",
+          "tijd": 560,
+          "citaat": "more room for ambushes to move into space and capture objectives",
+          "extraCitaten": [
+            {
+              "tijd": 599,
+              "citaat": "they have reserve moves so they can move again."
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "unbreakable-advance-beyond-capture",
+      "titel": "Advance Unbreakable scorers beyond the capture point",
+      "tekst": "In King of the Hill, advance an Unbreakable scoring block roughly six inches beyond the position needed to capture the hill. Use that buffer to keep scoring as it Gives Ground after losing combats.",
+      "waarom": "He says retreating only two inches each time lets the unit remain closest to the capture point despite losing combats.",
+      "voorbeeld": "He describes a large block of Zombies or skeletons holding the hill while casualties are repeatedly resurrected.",
+      "wanneerNiet": null,
+      "fase": "scenarios",
+      "themas": [
+        "game-plan",
+        "infantry"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-MBQ_7ffnuxM",
+          "url": "https://www.youtube.com/watch?v=MBQ_7ffnuxM&t=649s",
+          "tijd": 652,
+          "citaat": "go six or so inches ahead of the point that allows you to capture.",
+          "extraCitaten": [
+            {
+              "tijd": 652,
+              "citaat": "each turn you lose, you're only going back 2 in."
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "stubborn-shield-wall-scoring",
+      "titel": "Combine Stubborn and Shield Wall to retain objective position",
+      "tekst": "Use Stubborn to replace the break test with a Fall Back in Good Order, then Shield Wall to Give Ground instead. For a Shield Wall unit without Stubborn, consider adding it through the magic standard he discusses.",
+      "waarom": "He values the two-inch retreat instead of a retreat of up to six inches. He thinks the investment can be worthwhile when holding the hill earns 100 points.",
+      "voorbeeld": null,
+      "wanneerNiet": "Both abilities are one-use, and he considers the 50-point standard a large investment.",
+      "fase": "combat",
+      "themas": [
+        "game-plan",
+        "infantry"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-MBQ_7ffnuxM",
+          "url": "https://www.youtube.com/watch?v=MBQ_7ffnuxM&t=725s",
+          "tijd": 728,
+          "citaat": "you can use both stubborn and shield wall",
+          "extraCitaten": [
+            {
+              "tijd": 743,
+              "citaat": "use your shield wall to forego the fallback in good order and give ground instead."
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "eternal-guard-charge-for-scoring",
+      "titel": "Consider charging with Eternal Guard to keep scoring",
+      "tekst": "In King of the Hill, consider a combined Eternal Guard and Glade Lord charge when it can push the enemy off the hill and prevent their combined assault. He judged this worthwhile to preserve his objective scoring.",
+      "waarom": "He did not want his opponent to combo-charge the Eternal Guard on the following turn.",
+      "voorbeeld": "He charged the Minotaur Herd in the front with Eternal Guard and in the flank with his Glade Lord, pushing it off the hill and keeping his own unit scoring.",
+      "wanneerNiet": "He says charging with Eternal Guard is normally outside his playbook.",
+      "fase": "scenarios",
+      "themas": [
+        "game-plan",
+        "infantry"
+      ],
+      "leger": "wood-elf-realms",
+      "units": [
+        "Eternal Guard",
+        "Glade Lord"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-MBQ_7ffnuxM",
+          "url": "https://www.youtube.com/watch?v=MBQ_7ffnuxM&t=944s",
+          "tijd": 947,
+          "citaat": "I thought it was worth it. And the objective points made me do that.",
+          "extraCitaten": [
+            {
+              "tijd": 926,
+              "citaat": "I combo charged my Glade Lord over here into the flank of the Minotaurs."
+            },
+            {
+              "tijd": 940,
+              "citaat": "Charging with eternal guard is never in the playbook"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "doombull-gor-scoring-attacker",
+      "titel": "Add a Doombull to give scoring Gor offensive punch",
+      "tekst": "Consider putting a Doombull in a scoring Gor Herd to give the unit the punch for an attacking role.",
+      "waarom": "He considers Gor fairly average in his experience, but cheap and able to score. He says adding a strong character supplies the hitting power.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "infantry",
+        "hammers"
+      ],
+      "leger": "beastmen-brayherds",
+      "units": [
+        "Gor Herd",
+        "Doombull"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-MBQ_7ffnuxM",
+          "url": "https://www.youtube.com/watch?v=MBQ_7ffnuxM&t=993s",
+          "tijd": 996,
+          "citaat": "made them an attacker by putting a doom bull in there",
+          "extraCitaten": [
+            {
+              "tijd": 1003,
+              "citaat": "but they are cheap. They score."
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "support-scorers-with-hammers",
+      "titel": "Keep supporting hammers ready behind your objective holder",
+      "tekst": "When an attacking unit becomes the defender of a captured objective, keep hammers waiting nearby to support it.",
+      "waarom": null,
+      "voorbeeld": "He points to Alex's Ghorgon waiting near the hill while the scoring unit held it. The Ghorgon later fought and killed his Glade Lord.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "hammers",
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-MBQ_7ffnuxM",
+          "url": "https://www.youtube.com/watch?v=MBQ_7ffnuxM&t=1135s",
+          "tijd": 1138,
+          "citaat": "he's m made sure that he's got some hammers waiting in the wings"
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "anchor-core-objective-threat",
+      "bron": {
+        "bronId": "yt-MBQ_7ffnuxM",
+        "url": "https://www.youtube.com/watch?v=MBQ_7ffnuxM&t=318s",
+        "tijd": 321,
+        "citaat": "infantry in my mind are the best defenders.",
+        "extraCitaten": [
+          {
+            "tijd": 328,
+            "citaat": "a sturdy brick of infantry to just sit on an objective"
+          }
+        ]
+      },
+      "voorbeeld": "His Eternal Guard held the hill across three player turns and earned back their points through objective scoring.",
+      "toelichting": "He recommends the same objective-threatening infantry anchor: a sturdy scoring block that sits on an objective and makes the enemy come to it."
+    },
+    {
+      "lesId": "hybrid-hammer-objectives",
+      "bron": {
+        "bronId": "yt-MBQ_7ffnuxM",
+        "url": "https://www.youtube.com/watch?v=MBQ_7ffnuxM&t=820s",
+        "tijd": 823,
+        "citaat": "You don't have to move this unit off the objective",
+        "extraCitaten": [
+          {
+            "tijd": 832,
+            "citaat": "your opponent's worried about charging them because they will charge you back."
+          }
+        ]
+      },
+      "voorbeeld": "He describes moving Chaos Knights onto an objective early, then leaving them there to score while Countercharge makes the opponent cautious about attacking.",
+      "toelichting": "He recommends the same dual-purpose objective holder that can stay on the objective and threaten to kill attackers."
+    },
+    {
+      "lesId": "hidden-mobile-objective-grabs",
+      "bron": {
+        "bronId": "yt-MBQ_7ffnuxM",
+        "url": "https://www.youtube.com/watch?v=MBQ_7ffnuxM&t=542s",
+        "tijd": 545,
+        "citaat": "pinch objectives off your opponent wherever the spaces they move to",
+        "extraCitaten": [
+          {
+            "tijd": 1348,
+            "citaat": "if you protect your fast cav"
+          }
+        ]
+      },
+      "waarom": "He found that once the other scoring units had died, protected fast cavalry could use their mobility to reach the uncontested hill and keep scoring.",
+      "toelichting": "He gives the same advice to preserve fast cavalry for a late objective grab after the main fighting has cleared space."
+    },
+    {
+      "lesId": "jade-warriors-deny-scoring",
+      "bron": {
+        "bronId": "yt-MBQ_7ffnuxM",
+        "url": "https://www.youtube.com/watch?v=MBQ_7ffnuxM&t=1119s",
+        "tijd": 1122,
+        "citaat": "I want to whittle it down to unit strength nine.",
+        "extraCitaten": [
+          {
+            "tijd": 1122,
+            "citaat": "so that Alex stops scoring points."
+          }
+        ]
+      },
+      "toelichting": "He uses the same scoring-denial recommendation with another enemy unit: reduce it below the scoring threshold rather than needing to destroy it."
+    }
+  ],
+  "overgeslagen": "Skipped introductions, supporter and channel promotion, software discussion, the admitted deployment error, speculative initiative comparisons, uncertain lists of units with Shield Wall, and battle-report details without a tactical recommendation.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

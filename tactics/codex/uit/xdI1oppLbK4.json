@@ -1,0 +1,352 @@
+{
+  "videoId": "xdI1oppLbK4",
+  "bronId": "yt-xdI1oppLbK4",
+  "model": "GPT-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T23:21:08.061Z",
+  "nieuw": [
+    {
+      "id": "ambushers-pressure-enemy-movement",
+      "titel": "Use ambushers to pressure enemy movement before they arrive",
+      "tekst": "Consider ambushers to make opponents reconsider aggressive advances and the space they leave behind. In his experience, a unit held in reserve can influence the battlefield before it arrives.",
+      "waarom": "He found that opponents must consider where ambushers could enter when deciding whether to push forward or advance aggressively down a flank. Ignoring them can expose an otherwise secure backline.",
+      "voorbeeld": null,
+      "wanneerNiet": "He does not consider ambushing worthwhile for every unit.",
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-xdI1oppLbK4",
+          "url": "https://www.youtube.com/watch?v=xdI1oppLbK4&t=259s",
+          "tijd": 262,
+          "citaat": "It affects whether they go aggressively down a flank or push aggressively straight forward."
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "fast-cavalry-ambushers",
+      "titel": "Favour fast cavalry with high movement as ambushers",
+      "tekst": "He thinks fast cavalry with high movement make the best ambushers.",
+      "waarom": "He values their ability to reach objectives, pressure the backline or threaten charges after arriving.",
+      "voorbeeld": null,
+      "wanneerNiet": "He does not think ambushing is very useful for many slow infantry units.",
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-xdI1oppLbK4",
+          "url": "https://www.youtube.com/watch?v=xdI1oppLbK4&t=417s",
+          "tijd": 420,
+          "citaat": "think the best ones are fast cavalry with high movement."
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "ambushers-reserve-move-arrival",
+      "titel": "Use Reserve Move to reposition ambushers on arrival",
+      "tekst": "Value Reserve Move on ambushers and use the extra move on the turn they arrive. It lets them move again after their normal movement, despite being unable to march.",
+      "waarom": "He says the two moves effectively provide a march, letting mobile ambushers reach objectives or set up threats for the following turn.",
+      "voorbeeld": "He describes skirmishing Glade Riders and nomadic Wolf Riders moving 18 inches in their chosen direction after arriving.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-xdI1oppLbK4",
+          "url": "https://www.youtube.com/watch?v=xdI1oppLbK4&t=417s",
+          "tijd": 420,
+          "citaat": "An added bonus to that is reserve move",
+          "extraCitaten": [
+            {
+              "tijd": 438,
+              "citaat": "at the end of your shooting phase you get to move again"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "ambushers-banner-combat-resolution",
+      "titel": "Give ambushers banners for combat-resolution support",
+      "tekst": "Consider banners when building ambushers to help swing a stalled combat. He highlights a standard with Close Order, or a standard and War Banner in a skirmishing unit, with a flank or rear charge adding further combat resolution.",
+      "waarom": "He says this static combat resolution can turn a stalemate or help break the opponent.",
+      "voorbeeld": "He used five Wolf Riders with a standard and War Banner to rear-charge Chosen Chaos Knights alongside a chariot. He says their added combat resolution made winning certain where the chariot alone might not have been enough.",
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-xdI1oppLbK4",
+          "url": "https://www.youtube.com/watch?v=xdI1oppLbK4&t=488s",
+          "tijd": 491,
+          "citaat": "Static combat res is great if you have a banner and close order",
+          "extraCitaten": [
+            {
+              "tijd": 491,
+              "citaat": "If you have the war banner in there with your banner on a skirmishing unit,"
+            },
+            {
+              "tijd": 1428,
+              "citaat": "with them it was a certainty."
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "shooting-ambushers-immediate-impact",
+      "titel": "Consider shooting ambushers for immediate impact",
+      "tekst": "Consider shooting when choosing ambushers so they can affect a target immediately on arrival. Move them into short range where possible before firing.",
+      "waarom": "He values being able to deliver a volley at a location of his choice without waiting for a later charge.",
+      "voorbeeld": null,
+      "wanneerNiet": "He notes that arriving counts as moving and describes a minus-one shooting penalty.",
+      "fase": "army-building",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-xdI1oppLbK4",
+          "url": "https://www.youtube.com/watch?v=xdI1oppLbK4&t=548s",
+          "tijd": 551,
+          "citaat": "shooting just allows that instant impact at a at a location of your choice.",
+          "extraCitaten": [
+            {
+              "tijd": 551,
+              "citaat": "you might be able to get into close range which negates that minus one."
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "sneaky-gits-backline-volley",
+      "titel": "Consider 20 Sneaky Gits for backline shooting",
+      "tekst": "Consider 20 ambushing Sneaky Gits to deliver 40 throwing-weapon shots into the enemy backline. He thinks that volume will most likely kill a war machine even at Strength 3.",
+      "waarom": "He highlights their multiple-shot throwing weapons as a way to make the ambush useful immediately.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "leger": "chaos-dwarfs",
+      "units": [
+        "Sneaky Gits"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-xdI1oppLbK4",
+          "url": "https://www.youtube.com/watch?v=xdI1oppLbK4&t=573s",
+          "tijd": 576,
+          "citaat": "have 20 of them throw 40 shots into your opponent's backline."
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "beastmen-infantry-safe-ambush",
+      "titel": "Consider Beastmen infantry ambushers for idle objectives",
+      "tekst": "He considers Beastmen an exception to his doubts about infantry ambushers. Bring them on in a safe area and send them to capture an idle objective.",
+      "waarom": "He cites an ability improving their arrival roll, sufficient mobility, their desire to avoid shooting and their Core status.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "scenarios",
+      "themas": [
+        "game-plan",
+        "infantry"
+      ],
+      "leger": "beastmen-brayherds",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-xdI1oppLbK4",
+          "url": "https://www.youtube.com/watch?v=xdI1oppLbK4&t=615s",
+          "tijd": 618,
+          "citaat": "put them on in a in a safe zone and go and capture"
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "road-wardens-shooting-ambush",
+      "titel": "Consider Road Wardens for a shooting ambush",
+      "tekst": "He rates Empire Road Wardens as potentially the best shooting ambushers. Use their arrival move to get close to a vulnerable target and fire.",
+      "waarom": "He highlights the combination of movement and repeater pistols, allowing them to arrive and immediately threaten targets with shooting.",
+      "voorbeeld": "His opponent brought on nine Road Wardens, moved into short range and destroyed his Glade Riders in one volley. They then pressured his left flank.",
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "leger": "empire-of-man",
+      "units": [
+        "Empire Road Wardens"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-xdI1oppLbK4",
+          "url": "https://www.youtube.com/watch?v=xdI1oppLbK4&t=992s",
+          "tijd": 995,
+          "citaat": "I think maybe the best shooting ambushes in the game",
+          "extraCitaten": [
+            {
+              "tijd": 954,
+              "citaat": "Gets right up close to be short range"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "respect-successful-ambush-arrivals",
+      "titel": "Account for successful ambush rolls when moving vulnerable units",
+      "tekst": "Do not position vulnerable units on the assumption that enemy ambushers will fail their arrival roll. Consider the eight-inch entry restriction when leaving space near those units.",
+      "waarom": "He warns that an opponent who relies on the arrival roll failing can leave a perfect entry point for the ambushers.",
+      "voorbeeld": "He moved his Glade Riders out of a wood to protect them from cannons, overlooking the space left for enemy Road Wardens. The ambushers arrived and destroyed them.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "game-plan",
+        "shooting-terrain"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-xdI1oppLbK4",
+          "url": "https://www.youtube.com/watch?v=xdI1oppLbK4&t=866s",
+          "tijd": 869,
+          "citaat": "if your opponent is thinking you are going to fail them that roll",
+          "extraCitaten": [
+            {
+              "tijd": 913,
+              "citaat": "not considering the 8 in range. I could have played around this."
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "wolf-riders-selective-fights",
+      "titel": "Choose advantageous fights for ambushing Wolf Riders",
+      "tekst": "Be selective about what ambushing Wolf Riders fight and seek an advantage. Do not charge something head-on simply because it is in the way.",
+      "waarom": "He says Wolf Riders are not good in combat and need favourable engagements.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "matchups"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Goblin Wolf Rider Mob"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-xdI1oppLbK4",
+          "url": "https://www.youtube.com/watch?v=xdI1oppLbK4&t=1074s",
+          "tijd": 1077,
+          "citaat": "selective on who they fight because they're not good in combat.",
+          "extraCitaten": [
+            {
+              "tijd": 1053,
+              "citaat": "There's no point in me front on charging something just because they're in the way."
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "ambush-protects-fragile-flex-units",
+      "titel": "Keep fragile flex units safe in ambush reserve",
+      "tekst": "Consider holding a lightly armoured flex unit in ambush reserve to keep it safe from shooting. Bring it on in a safe area from which it can threaten the opponent.",
+      "waarom": "He says these units cannot be shot while off the board and can enter somewhere safe before springing a trap.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "shooting-terrain",
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-xdI1oppLbK4",
+          "url": "https://www.youtube.com/watch?v=xdI1oppLbK4&t=325s",
+          "tijd": 328,
+          "citaat": "when they're not on the board they're not getting shot.",
+          "extraCitaten": [
+            {
+              "tijd": 358,
+              "citaat": "come on in an area that is again safe"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "kiknik-ambushers-score-objectives",
+      "bron": {
+        "bronId": "yt-xdI1oppLbK4",
+        "url": "https://www.youtube.com/watch?v=xdI1oppLbK4&t=1187s",
+        "tijd": 1190,
+        "citaat": "They can move 18 inches in close order and they can score objectives",
+        "extraCitaten": [
+          {
+            "tijd": 1022,
+            "citaat": "I've got uh 15 of them with Kicknik in it"
+          }
+        ]
+      },
+      "toelichting": "He again recommends ambushing Wolf Riders with Kiknik as mobile Core objective scorers."
+    }
+  ],
+  "overgeslagen": "Skipped sponsorship, channel promotion, rules-only explanations and uncertain weapon details. Used the game examples only where they supported clear advice; omitted speculative movement shown only in pictures and garbled combat-description details.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

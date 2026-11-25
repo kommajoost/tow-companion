@@ -1,0 +1,115 @@
+{
+  "videoId": "CbN6ZFthII0",
+  "bronId": "yt-CbN6ZFthII0",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T23:47:10.345Z",
+  "nieuw": [
+    {
+      "id": "orderly-retreat-widen-fighting-rank",
+      "titel": "Widen your fighting rank after falling back in good order",
+      "tekst": "Use the free reform after falling back in good order to spread infantry into a wider fighting rank and bring more attacks into the next round. He highlights this as particularly strong with great weapons.",
+      "waarom": "He explains that everyone in the fighting rank can attack, even without base contact, and that great weapons can always be used. He highlights heavily armoured infantry with great weapons as suitable for this manoeuvre.",
+      "voorbeeld": "After his Chaos Warriors lost to a Stegadon, he reformed the 11 survivors from a six-model frontage into one line. The Stegadon killed four, but the seven remaining Warriors inflicted three wounds and won the next round.",
+      "wanneerNiet": "He did not have the initiative when the Stegadon followed up, so he relied on having enough bodies and Weapon Skill 5 to take its attacks before striking back.",
+      "fase": "combat",
+      "themas": [
+        "infantry"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-CbN6ZFthII0",
+          "url": "https://www.youtube.com/watch?v=CbN6ZFthII0&t=247s",
+          "tijd": 250,
+          "citaat": "I have 11 left and I fan out in a line",
+          "extraCitaten": [
+            {
+              "tijd": 190,
+              "citaat": "The important part here is that the unit can perform a free reform."
+            },
+            {
+              "tijd": 267,
+              "citaat": "this is very, very strong for units with great weapons"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "reform-deny-followup-impact-hits",
+      "titel": "Shorten the follow-up with your reform to deny impact hits",
+      "tekst": "When falling back in good order, look for a reform that leaves the enemy following up less than three inches. He used this to deny the Stegadon's impact hits in the next combat.",
+      "waarom": null,
+      "voorbeeld": "He reformed his Chaos Warriors so the Stegadon followed up just under three inches. He says its impact hits did not count, although it still had the initiative.",
+      "wanneerNiet": null,
+      "fase": "combat",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-CbN6ZFthII0",
+          "url": "https://www.youtube.com/watch?v=CbN6ZFthII0&t=308s",
+          "tijd": 311,
+          "citaat": "to reform to just under 3 in. So, the impact hits didn't count."
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "orderly-retreat-open-order-redirect",
+      "titel": "Reform retreating skirmishers into Open Order to redirect pursuit",
+      "tekst": "After skirmishers fall back in good order, reform them into Open Order to create a redirection if the opponent follows up.",
+      "waarom": null,
+      "voorbeeld": "He describes Dryads using Stubborn after losing combat to fall back in good order, then reforming into Open Order to redirect an enemy that follows up.",
+      "wanneerNiet": null,
+      "fase": "combat",
+      "themas": [
+        "chaff"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-CbN6ZFthII0",
+          "url": "https://www.youtube.com/watch?v=CbN6ZFthII0&t=452s",
+          "tijd": 455,
+          "citaat": "they can fall back in good order reform into open order",
+          "extraCitaten": [
+            {
+              "tijd": 464,
+              "citaat": "creating a redirection if your opponent wants to follow up."
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "swiftstride-extend-orderly-retreats",
+      "bron": {
+        "bronId": "yt-CbN6ZFthII0",
+        "url": "https://www.youtube.com/watch?v=CbN6ZFthII0&t=427s",
+        "tijd": 430,
+        "citaat": "can also add a swift stride to fall back in good order"
+      },
+      "toelichting": "He likewise recommends adding Swiftstride to a Fall Back in Good Order move to manipulate battlefield positioning after losing combat."
+    }
+  ],
+  "overgeslagen": "Skipped channel promotion, standalone rules explanations and combat rolls except where they support the demonstrated manoeuvres. The opening charge and terrain bait are game narration rather than separate recommendations.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

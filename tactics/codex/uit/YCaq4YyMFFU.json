@@ -1,0 +1,101 @@
+{
+  "videoId": "YCaq4YyMFFU",
+  "bronId": "yt-YCaq4YyMFFU",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-25T00:26:25.190Z",
+  "nieuw": [
+    {
+      "id": "skycutter-efficient-auto-include",
+      "titel": "Include Skycutters for their points efficiency",
+      "tekst": "He considers the Lothern Skycutter an automatic inclusion in his High Elf list because of its points efficiency.",
+      "waarom": "He highlights a 90-point heavy chariot with flight and Swiftstride as an exceptionally good deal.",
+      "voorbeeld": null,
+      "wanneerNiet": "He finds its 60-by-100 base cumbersome in practice: it can obstruct line of sight, and getting a target into its charge arc can be difficult.",
+      "fase": "army-building",
+      "themas": [
+        "hammers"
+      ],
+      "leger": "high-elf-realms",
+      "units": [
+        "Lothern Skycutter"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-YCaq4YyMFFU",
+          "url": "https://www.youtube.com/watch?v=YCaq4YyMFFU&t=24s",
+          "tijd": 27,
+          "citaat": "is probably the most point efficient unit there is",
+          "extraCitaten": [
+            {
+              "tijd": 34,
+              "citaat": "it's definitely the best deal and I think an automatic inclusion in the list"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "fleeing-bait-sideways-facing",
+      "titel": "Charge bait need not face the charger",
+      "tekst": "When a large-based unit is baiting a charge and you intend to flee, it need not face the charger head-on. You can keep it perpendicular for other charge options, since fleeing will pivot it away from the attacker anyway.",
+      "waarom": "He says receiving the charge in the flank would not have mattered because he intended to flee; the fleeing pivot would still send the unit in the direction he wanted.",
+      "voorbeeld": "He offered a Lothern Skycutter as bait for the Duke, intending to flee and rally, but later realised he should have angled it rather than leaving it facing forwards.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "chaff",
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-YCaq4YyMFFU",
+          "url": "https://www.youtube.com/watch?v=YCaq4YyMFFU&t=345s",
+          "tijd": 348,
+          "citaat": "didn't need to be front on",
+          "extraCitaten": [
+            {
+              "tijd": 348,
+              "citaat": "remember I was fleeing anyway it would have pivoted"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "lumbering-perpendicular-charge-options",
+      "bron": {
+        "bronId": "yt-YCaq4YyMFFU",
+        "url": "https://www.youtube.com/watch?v=YCaq4YyMFFU&t=263s",
+        "tijd": 266,
+        "citaat": "hooked it around and faced it perpendicular",
+        "extraCitaten": [
+          {
+            "tijd": 339,
+            "citaat": "you want to face them perpendicular"
+          }
+        ]
+      },
+      "toelichting": "Both recommend planning movement and wheels to finish perpendicular, maximising subsequent charge options."
+    }
+  ],
+  "overgeslagen": "Skipped the tournament introduction and channel news, garbled equipment and unit-name passages, and incidental reports of spells, combat results and a peril test that did not clearly give separate advice.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": [
+      {
+        "wie": "aanvulling lumbering-perpendicular-charge-options",
+        "wat": "voorbeeld weggelaten: de les heeft dat veld al"
+      }
+    ]
+  }
+}

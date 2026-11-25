@@ -1,0 +1,50 @@
+{
+  "videoId": "TFlIcp0gNlE",
+  "bronId": "yt-TFlIcp0gNlE",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-25T00:35:13.307Z",
+  "nieuw": [
+    {
+      "id": "active-charges-force-pressure",
+      "titel": "Use active charges to make a substantial unit investment count",
+      "tekst": "With a substantial investment in infantry or cavalry, try to make it count through active play. Weigh the consequences of charging, but consider accepting an exposed flank or rear to pressure the opponent rather than waiting passively.",
+      "waarom": "He says waiting would let crossbow fire gradually wear his unit down. He argues that applying pressure can force an unlucky result for the opponent, whereas passive play lets the opponent keep rolling favourable dice.",
+      "voorbeeld": "He charged Dark Riders with his Silver Helms despite risking a flank or rear countercharge. The Dark Riders fled off the board after needing an 11 or 12 to do so; he thought his combat resolution could then let him hold for a turn or fall back in good order and reform if the enemy cavalry charged his rear.",
+      "wanneerNiet": "He says a cagey approach is possible with multiple small units or something like a dragon.",
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-TFlIcp0gNlE",
+          "url": "https://www.youtube.com/watch?v=TFlIcp0gNlE&t=208s",
+          "tijd": 211,
+          "citaat": "you should also try to be active where possible",
+          "extraCitaten": [
+            {
+              "tijd": 108,
+              "citaat": "if you've made a points investment like this you really have to make it count"
+            },
+            {
+              "tijd": 187,
+              "citaat": "just by putting pressure on forcing something somewhat unlucky to happen"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [],
+  "overgeslagen": "Skipped the opening unit and character readout and the closing channel remarks. The charge alternatives and subsequent flee result are retained only as context for the speaker's recommendation to play actively.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

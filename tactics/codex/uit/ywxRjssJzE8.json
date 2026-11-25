@@ -1,0 +1,200 @@
+{
+  "videoId": "ywxRjssJzE8",
+  "bronId": "yt-ywxRjssJzE8",
+  "model": "GPT-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-25T00:03:17.885Z",
+  "nieuw": [
+    {
+      "id": "ambushers-support-flank-rear-charges",
+      "titel": "Use ambushers for supporting flank or rear charges",
+      "tekst": "Use ambushers as flank or rear support chargers for a combat elsewhere on the battlefield. Bring them on somewhere protected, then move them into position for a later turn.",
+      "waarom": "He regards most ambushers as utility pieces rather than heavy hitters, there to assist rather than deal much damage themselves.",
+      "voorbeeld": "His Glade Riders arrived on turn four, moved into position and later flank-charged Longbeards while his dragon charged their rear. Their banner and flank charge added two static combat resolution even though he does not think they caused any wounds.",
+      "wanneerNiet": "He notes that ambushers cannot charge on the turn they arrive, and their arrival depends on a roll until round five. His Glade Riders failed to arrive on turns two and three, when they could at least have distracted the enemy or caused some shooting damage.",
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-ywxRjssJzE8",
+          "url": "https://www.youtube.com/watch?v=ywxRjssJzE8&t=163s",
+          "tijd": 166,
+          "citaat": "using this unit as a flank or rear support charger.",
+          "extraCitaten": [
+            {
+              "tijd": 172,
+              "citaat": "you can bring them on in an area that's protected"
+            },
+            {
+              "tijd": 548,
+              "citaat": "They're there to just be a utility piece and assist."
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "disperse-enemies-open-ambush-space",
+      "titel": "Make the enemy spread out to open ambush space",
+      "tekst": "When planning an ambush against a tightly grouped enemy, make it move and spread out to create useful entry space for your ambushers.",
+      "waarom": "He found the closely grouped Dwarfs initially left only limited entry pockets, one of which was blocked by a large rock. As they dispersed and changed facing, useful space opened for his Glade Riders.",
+      "voorbeeld": "In his Wood Elf game against Dwarfs, his Wild Riders advanced down the right flank and his dragon fought through the middle and backline. The Dwarf formation spread out as the game developed, opening a beneficial arrival area for his Glade Riders.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-ywxRjssJzE8",
+          "url": "https://www.youtube.com/watch?v=ywxRjssJzE8&t=291s",
+          "tijd": 294,
+          "citaat": "make them move, so there's space for my glade riders to come on.",
+          "extraCitaten": [
+            {
+              "tijd": 334,
+              "citaat": "he's already started to disperse"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "close-order-wolves-ambush-support",
+      "titel": "Consider Close Order Wolf Riders for ambush support",
+      "tekst": "He wants to explore ambushing with Close Order Goblin Wolf Riders in the Nomadic army. With a banner, he sees five of them rear-charging as a way to bring four static combat resolution into a fight.",
+      "waarom": "He thinks static combat resolution arriving behind the opponent is valuable. He also recalls fights where his attacks against war machines failed and thinks two combat resolution would probably be enough to break them.",
+      "voorbeeld": null,
+      "wanneerNiet": "He presents this as something he intends to explore once his Orcs and Goblins are painted, rather than a combination he has demonstrated in this game.",
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Goblin Wolf Rider Mob"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-ywxRjssJzE8",
+          "url": "https://www.youtube.com/watch?v=ywxRjssJzE8&t=260s",
+          "tijd": 263,
+          "citaat": "those wolf riders can be close order, which is a big deal.",
+          "extraCitaten": [
+            {
+              "tijd": 269,
+              "citaat": "That's four static combat ress from five wolf riders with a banner."
+            },
+            {
+              "tijd": 587,
+              "citaat": "static combat res arriving on your opponent's back end is very valuable"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "fast-cavalry-ambushers",
+      "bron": {
+        "bronId": "yt-ywxRjssJzE8",
+        "url": "https://www.youtube.com/watch?v=ywxRjssJzE8&t=176s",
+        "tijd": 179,
+        "citaat": "To make that work, you need high mobility.",
+        "extraCitaten": [
+          {
+            "tijd": 187,
+            "citaat": "my opinion, light cavalry is fantastic at it."
+          }
+        ]
+      },
+      "toelichting": "He likewise recommends highly mobile light cavalry for ambushing, naming skirmishing Glade Riders and Wolf Riders."
+    },
+    {
+      "lesId": "ambushers-reserve-move-arrival",
+      "bron": {
+        "bronId": "yt-ywxRjssJzE8",
+        "url": "https://www.youtube.com/watch?v=ywxRjssJzE8&t=191s",
+        "tijd": 194,
+        "citaat": "they both have reserve move which is where you can get really cheeky with it",
+        "extraCitaten": [
+          {
+            "tijd": 203,
+            "citaat": "you get to move shoot. Sure, you take the penalty but then"
+          }
+        ]
+      },
+      "wanneerNiet": "He notes that high mobility combined with Reserve Move is not especially common.",
+      "toelichting": "He recommends the same extra arrival-turn movement from Reserve Move to position ambushers for a later charge."
+    },
+    {
+      "lesId": "ambushers-banner-combat-resolution",
+      "bron": {
+        "bronId": "yt-ywxRjssJzE8",
+        "url": "https://www.youtube.com/watch?v=ywxRjssJzE8&t=253s",
+        "tijd": 256,
+        "citaat": "opinion, banners are necessary.",
+        "extraCitaten": [
+          {
+            "tijd": 499,
+            "citaat": "a banner here providing two static combat res to a combat"
+          }
+        ]
+      },
+      "toelichting": "He gives the same recommendation to equip supporting ambushers with banners for static combat resolution."
+    },
+    {
+      "lesId": "shooting-ambushers-immediate-impact",
+      "bron": {
+        "bronId": "yt-ywxRjssJzE8",
+        "url": "https://www.youtube.com/watch?v=ywxRjssJzE8&t=299s",
+        "tijd": 302,
+        "citaat": "they could come on, pepper something with poison, move, and move again.",
+        "extraCitaten": [
+          {
+            "tijd": 431,
+            "citaat": "they can shoot with their poison bows and then reserve move again"
+          }
+        ]
+      },
+      "voorbeeld": "He gave his ambushing Glade Riders Hackbane Tips so they could arrive, shoot poisoned arrows and reposition with Reserve Move while preparing a supporting charge.",
+      "toelichting": "His Glade Rider plan illustrates the same recommendation to give ambushers shooting they can use on arrival."
+    },
+    {
+      "lesId": "skirmishers-pursue-block-reforms",
+      "bron": {
+        "bronId": "yt-ywxRjssJzE8",
+        "url": "https://www.youtube.com/watch?v=ywxRjssJzE8&t=551s",
+        "tijd": 554,
+        "citaat": "The glade riders are then able to overrun into the fleeing",
+        "extraCitaten": [
+          {
+            "tijd": 563,
+            "citaat": "the dragon is able to not commit to that overrun turn and face"
+          }
+        ]
+      },
+      "voorbeeld": "After winning the Longbeard combat without wiping the unit out, his Glade Riders ran down the fleeing survivors. This freed his dragon to turn towards the remaining backline targets.",
+      "toelichting": "The same division of jobs lets mobile support catch the fleeing enemy while the main combat threat turns to new targets."
+    }
+  ],
+  "overgeslagen": "Skipped membership promotion, channel introductions and closing announcements, standalone rules explanations, and battle narration without a tactical recommendation. Did not treat the speculative Close Order Wolf Rider plan as a tested result.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

@@ -1,0 +1,95 @@
+{
+  "videoId": "Rob7a4n3SgE",
+  "bronId": "yt-Rob7a4n3SgE",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-25T00:45:16.776Z",
+  "nieuw": [
+    {
+      "id": "drilled-narrow-unwanted-contact",
+      "titel": "Use Drilled to narrow a follow-up and avoid unwanted contact",
+      "tekst": "Consider using Drilled to shorten your formation before following up if that would avoid contact with another enemy unit.",
+      "waarom": null,
+      "voorbeeld": "He says his Dragon Princes could have narrowed their formation to avoid contacting the Daemon Prince, although he chose to engage it instead.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-Rob7a4n3SgE",
+          "url": "https://www.youtube.com/watch?v=Rob7a4n3SgE&t=65s",
+          "tijd": 68,
+          "citaat": "I had the option to drill back into a shorter formation",
+          "extraCitaten": [
+            {
+              "tijd": 76,
+              "citaat": "to avoid making contact with that demon Prince"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "dragon-prince-side-placement",
+      "titel": "Place the rear Dragon Prince to fight the flank attackers",
+      "tekst": "In the combat he describes, he would place the Dragon Prince at the back of the unit on its left side instead, giving it attacks against the Marauders attacking that side.",
+      "waarom": "He says that placement would have given him more attacks back against the Marauders.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "combat",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": "high-elf-realms",
+      "units": [
+        "Dragon Princes"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-Rob7a4n3SgE",
+          "url": "https://www.youtube.com/watch?v=Rob7a4n3SgE&t=248s",
+          "tijd": 251,
+          "citaat": "that Dragon Prince I had at the back of the unit to the leftand side",
+          "extraCitaten": [
+            {
+              "tijd": 251,
+              "citaat": "given me more attacks back against the Marauders"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "reform-for-future-targets",
+      "bron": {
+        "bronId": "yt-Rob7a4n3SgE",
+        "url": "https://www.youtube.com/watch?v=Rob7a4n3SgE&t=156s",
+        "tijd": 159,
+        "citaat": "I'm able to then reform my dragon princess facing another Direction",
+        "extraCitaten": [
+          {
+            "tijd": 185,
+            "citaat": "what I've got here is the choice to charge I can March"
+          }
+        ]
+      },
+      "toelichting": "He recommends reforming after victory to change facing and preserve subsequent charge options, illustrating the existing advice with Dragon Princes."
+    }
+  ],
+  "overgeslagen": "Skipped the introduction and battle-report promotion, combat outcomes without advice, and the charge-redirection sequence presented as a game account. Omitted the model-clearance passage at 1:33–1:40 because the captions do not clearly identify which model moved. The importance of winning on the opponent's turn supports the reform advice rather than a separate lesson.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

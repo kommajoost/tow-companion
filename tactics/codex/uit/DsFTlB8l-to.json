@@ -1,0 +1,96 @@
+{
+  "videoId": "DsFTlB8l-to",
+  "bronId": "yt-DsFTlB8l-to",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-25T00:38:00.972Z",
+  "nieuw": [
+    {
+      "id": "offset-support-beyond-overruns",
+      "titel": "Offset supporting units beyond the bait's overrun path",
+      "tekst": "When deploying a supporting unit behind bait, leave enough sideways separation that an enemy charging the bait cannot overrun into the support. Use the supporting unit's wider field of view from further back when choosing that spacing.",
+      "waarom": "He explains that pulling a unit back widens its field of view, allowing greater separation. His support was too close to the bait and lay directly in the enemy's overrun path.",
+      "voorbeeld": "His Great Eagle baited Wild Riders, but their overrun could also reach his Lothern Skycutter. He says the Skycutter could have been further sideways while still sheltering behind the woods; only a short overrun roll allowed it to escape next turn.",
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "chaff",
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-DsFTlB8l-to",
+          "url": "https://www.youtube.com/watch?v=DsFTlB8l-to&t=226s",
+          "tijd": 229,
+          "citaat": "these guys to be further apart",
+          "extraCitaten": [
+            {
+              "tijd": 169,
+              "citaat": "they're certainly going to overrun regardless where they had frenzy"
+            },
+            {
+              "tijd": 238,
+              "citaat": "you pull back The Wider your line of vision"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "eagle-skycutter-flank-pair",
+      "titel": "Pair a Great Eagle with a supporting Skycutter",
+      "tekst": "He thinks pairing a Great Eagle with a supporting Lothern Skycutter is a good idea for a flank without much going on. Use their shared mobility to move quickly up that flank.",
+      "waarom": "He describes the pair as inexpensive and says both have movement ten, letting them move quickly up a quiet flank.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "flanks",
+        "chaff"
+      ],
+      "leger": "high-elf-realms",
+      "units": [
+        "Great Eagle",
+        "Lothern Skycutter"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-DsFTlB8l-to",
+          "url": "https://www.youtube.com/watch?v=DsFTlB8l-to&t=291s",
+          "tijd": 294,
+          "citaat": "I think it's the right idea to have the sky cutter and the eagle",
+          "extraCitaten": [
+            {
+              "tijd": 303,
+              "citaat": "they both can just whip up a flank that doesn't have much going on"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "sideline-deployment-angle-inward",
+      "bron": {
+        "bronId": "yt-DsFTlB8l-to",
+        "url": "https://www.youtube.com/watch?v=DsFTlB8l-to&t=357s",
+        "tijd": 360,
+        "citaat": "facing into the middle then I've got a much wider wider View"
+      },
+      "toelichting": "He likewise recommends deploying the flank unit facing towards the middle to improve its charge coverage."
+    }
+  ],
+  "overgeslagen": "Skipped the tournament introduction, battle-report promotion, combat and shooting outcome without separate advice, and garbled charge-penalty details around 2:27–2:49.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

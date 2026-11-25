@@ -1,0 +1,99 @@
+{
+  "videoId": "FssJG1lIsXI",
+  "bronId": "yt-FssJG1lIsXI",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-25T01:13:03.432Z",
+  "nieuw": [
+    {
+      "id": "reform-screen-flank-countercharge",
+      "titel": "Reform a retreating screen to expose the enemy's flank",
+      "tekst": "If your screen survives and falls back in good order, use its free reform to turn it so the enemy's follow-up exposes a flank to your supporting unit. This can turn your next countercharge into a flank charge.",
+      "waarom": null,
+      "voorbeeld": "He shows Ellyrian Reavers falling back nine inches and pivoting so that Skeleton Chariots following up expose their flank to Silver Helms.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "chaff",
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-FssJG1lIsXI",
+          "url": "https://www.youtube.com/watch?v=FssJG1lIsXI&t=599s",
+          "tijd": 602,
+          "citaat": "pivoting like so so that when the Chariots make their follow-up move",
+          "extraCitaten": [
+            {
+              "tijd": 593,
+              "citaat": "make a free reform move"
+            },
+            {
+              "tijd": 618,
+              "citaat": "the silver Helms is now into the chariot's flank"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "check-angles-before-approaching",
+      "bron": {
+        "bronId": "yt-FssJG1lIsXI",
+        "url": "https://www.youtube.com/watch?v=FssJG1lIsXI&t=180s",
+        "tijd": 183,
+        "citaat": "measuring charge arcs and getting out of them is a huge part of"
+      },
+      "wanneerNiet": "He notes that manoeuvring out of enemy charge arcs becomes much more complicated with more units on the board.",
+      "toelichting": "He recommends checking charge arcs while advancing and wheeling to avoid an enemy charge while preparing your own next turn."
+    },
+    {
+      "lesId": "decoys-set-up-countercharges",
+      "bron": {
+        "bronId": "yt-FssJG1lIsXI",
+        "url": "https://www.youtube.com/watch?v=FssJG1lIsXI&t=335s",
+        "tijd": 338,
+        "citaat": "having your skirmishing chaff unit move up in front and then flee",
+        "extraCitaten": [
+          {
+            "tijd": 560,
+            "citaat": "die and position use that to position the enemy where you want them to be"
+          }
+        ]
+      },
+      "waarom": "He explains that fleeing bait can draw the enemy forward when no alternative charge target is available. A sacrificial screen can also leave the enemy exposed, whether it restrains or makes an overrun that falls short of the supporting unit.",
+      "voorbeeld": "He shows Ellyrian Reavers fleeing through supporting Silver Helms so the advancing chariots can be charged next turn. In another setup, the Reavers stand an inch in front of the chariots, with the Silver Helms far enough away that reaching them by overrun is unlikely but their own charge remains achievable.",
+      "wanneerNiet": "He warns that fleeing through the supporting unit causes a panic test and requires the fleeing unit to rally. In the sacrificial-screen setup, a high overrun could reach the support, and the supporting unit could roll too low for its charge.",
+      "toelichting": "Both demonstrations position expendable bait so that an enemy charging it becomes a target for a supporting unit's countercharge."
+    },
+    {
+      "lesId": "screeners-evasive-feigned-flight",
+      "bron": {
+        "bronId": "yt-FssJG1lIsXI",
+        "url": "https://www.youtube.com/watch?v=FssJG1lIsXI&t=344s",
+        "tijd": 347,
+        "citaat": "some units are very good at this",
+        "extraCitaten": [
+          {
+            "tijd": 355,
+            "citaat": "the Fain flight Rule because they'll automatically rally after they've made their flea move"
+          }
+        ]
+      },
+      "wanneerNiet": "He says Ellyrian Reavers lack Feigned Flight, so they do not get the automatic rally he values for this tactic.",
+      "toelichting": "He identifies Feigned Flight as particularly useful on a screen that flees to set up a countercharge."
+    }
+  ],
+  "overgeslagen": "Skipped introductions, sign-offs and charge-distance rules without separate advice. Omitted garbled unit labels and inconsistent movement totals; retained only clearly explained tactical setups. The final diagram's angles are described as approximate.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

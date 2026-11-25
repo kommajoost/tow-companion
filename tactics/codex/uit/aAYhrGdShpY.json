@@ -1,0 +1,133 @@
+{
+  "videoId": "aAYhrGdShpY",
+  "bronId": "yt-aAYhrGdShpY",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-24T23:55:51.378Z",
+  "nieuw": [
+    {
+      "id": "choose-dragon-role-early",
+      "titel": "Choose your dragon's role before deploying",
+      "tekst": "Decide early whether your dragon will collect points or try to neutralise the opponent's biggest threat. Let that choice guide its deployment.",
+      "waarom": null,
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "game-plan",
+        "matchups"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-aAYhrGdShpY",
+          "url": "https://www.youtube.com/watch?v=aAYhrGdShpY&t=396s",
+          "tijd": 399,
+          "citaat": "make the decision early deployment is going to be a factor",
+          "extraCitaten": [
+            {
+              "tijd": 392,
+              "citaat": "scores points or you can play it to try to negate the biggest thing"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "dragon-threatens-mobile-duke",
+      "titel": "Keep your dragon threatening the mobile Duke",
+      "tekst": "Against a highly mobile Duke, keep your dragon threatening him rather than chasing chaff while he attacks your army. The speaker thinks you need to go after this threat even when it carries an Ogre Blade.",
+      "waarom": "He worries that the Duke can hit one unit and then use its all-round movement to attack another. Although the Duke is less resilient than a dragon, he thinks its Ogre Blade and Virtue of Knightly Temper can give it as much or more damage output.",
+      "voorbeeld": "He kept his dragon threatening the key enemy units despite a Crystal Column obstructing its sight. He removed the column, reached the Duke and killed him after chasing him over a couple of turns.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "matchups",
+        "hammers"
+      ],
+      "leger": "kingdom-of-bretonnia",
+      "units": [
+        "Duke"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-aAYhrGdShpY",
+          "url": "https://www.youtube.com/watch?v=aAYhrGdShpY&t=315s",
+          "tijd": 318,
+          "citaat": "I think you have to try to go after it",
+          "extraCitaten": [
+            {
+              "tijd": 327,
+              "citaat": "it has the same probably even better output"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    },
+    {
+      "id": "commit-dragon-accept-risk",
+      "titel": "Accept the risk when your dragon needs to fight",
+      "tekst": "When your plan requires the dragon to engage, commit it to combat and accept the risk. The speaker says you have to take that chance even though Monster Slayer or an Ogre Blade might kill it.",
+      "waarom": null,
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "hammers",
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-aAYhrGdShpY",
+          "url": "https://www.youtube.com/watch?v=aAYhrGdShpY&t=396s",
+          "tijd": 399,
+          "citaat": "make sure that you just get stuck in",
+          "extraCitaten": [
+            {
+              "tijd": 407,
+              "citaat": "your dragon might die to something like monster Slayer or the ogre blade"
+            },
+            {
+              "tijd": 407,
+              "citaat": "you're going to have to take that chance"
+            }
+          ]
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "dragon-first-turn-march",
+      "bron": {
+        "bronId": "yt-aAYhrGdShpY",
+        "url": "https://www.youtube.com/watch?v=aAYhrGdShpY&t=139s",
+        "tijd": 142,
+        "citaat": "forward 20 in on a March is the strategy",
+        "extraCitaten": [
+          {
+            "tijd": 165,
+            "citaat": "I have a huge advantage and I should press it"
+          }
+        ]
+      },
+      "voorbeeld": "Against Wood Elves with a Treeman Ancient as their level-four wizard, no Forest Dragon and little chaff, he won the first turn and marched his dragon 20 inches into a forest, where it could see beyond the trees. He advanced straight at the slower Ancient to keep it in his arc and shut down its dispelling in combat. The Ancient's defensive saves made the fight lengthy, but he eventually won, restrained and reformed to attack another unit.",
+      "toelichting": "This is another example of using a dragon's first turn to march forward towards the opponent."
+    }
+  ],
+  "overgeslagen": "Skipped the introduction and references to earlier videos, general commentary about dragons and competitive formats, and the garbled spell name around 1:57. Defensive saves and character equipment were retained only as context for the speaker's tactical examples, not as separate recommendations.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

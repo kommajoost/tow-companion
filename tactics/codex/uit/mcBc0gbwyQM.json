@@ -1,0 +1,58 @@
+{
+  "videoId": "mcBc0gbwyQM",
+  "bronId": "yt-mcBc0gbwyQM",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-25T00:36:14.121Z",
+  "nieuw": [
+    {
+      "id": "marching-column-evade-charge-arc",
+      "titel": "Use marching column to escape an enemy charge arc",
+      "tekst": "Consider changing into marching column to move a unit's footprint outside an enemy's charge arc instead of relying on a march test.",
+      "waarom": "He feared that failing the march test would leave him unable to manoeuvre at a pivotal moment.",
+      "voorbeeld": "He changed the Sisters into marching column, leaving them just outside the Griffon BSB's charge arc. The Griffon went elsewhere the following turn, and the Sisters survived to the end of the game.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-mcBc0gbwyQM",
+          "url": "https://www.youtube.com/watch?v=mcBc0gbwyQM&t=286s",
+          "tijd": 289,
+          "citaat": "them out of his charge AR by putting them into marching column"
+        }
+      ],
+      "datum": null,
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "skirmishers-kite-ranked-pursuers",
+      "bron": {
+        "bronId": "yt-mcBc0gbwyQM",
+        "url": "https://www.youtube.com/watch?v=mcBc0gbwyQM&t=305s",
+        "tijd": 308,
+        "citaat": "the deepwood scouts managed to March out of there",
+        "extraCitaten": [
+          {
+            "tijd": 315,
+            "citaat": "to shoot which is fine it's better than them dying"
+          }
+        ]
+      },
+      "wanneerNiet": "Marching the Scouts out of the charge arc meant forfeiting their shooting that turn.",
+      "toelichting": "He uses skirmishing Scouts to escape a ranked pursuer's charge arc, matching the existing recommendation."
+    }
+  ],
+  "overgeslagen": "Skipped the introduction, closing channel talk, Eagle combat recap and uncertain rules discussion. Kept the marching-column manoeuvre and added the Scouts' escape to the existing skirmisher advice.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}
