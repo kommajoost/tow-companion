@@ -1,0 +1,75 @@
+{
+  "subthema": "retreat-paths",
+  "thema": "chaff",
+  "gemaaktOp": "2026-11-26T15:55:50.210Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "chaff: choosing-chaff,redirecting,decoys-bait,screens,retreat-paths,clearing-chaff",
+  "invoerHash": "67f24beeef2e",
+  "invoer": [
+    "offset-support-beyond-overruns",
+    "chaff-retreat-backstop",
+    "chaff-maximise-peril-tests",
+    "chaff-engineered-enemy-retreats",
+    "charge-enemy-retreat-backstops",
+    "flee-screen-prevent-overrun",
+    "chaff-flee-panic-risk",
+    "harpies-mobile-retreat-screens",
+    "dark-riders-trap-disengagement",
+    "lantern-disengage-through-friendly-unit"
+  ],
+  "kernpunten": [
+    {
+      "id": "use-friendly-units-as-retreat-backstops",
+      "titel": "Use friendly units as retreat backstops",
+      "tekst": "Use friendly units behind a fight so withdrawing through them leaves your unit protected behind your line.",
+      "lessen": [
+        "chaff-retreat-backstop",
+        "harpies-mobile-retreat-screens",
+        "lantern-disengage-through-friendly-unit"
+      ],
+      "principe": null
+    },
+    {
+      "id": "block-enemy-retreats-towards-the-board-edge",
+      "titel": "Block enemy retreats towards the board edge",
+      "tekst": "Place models behind an enemy so withdrawing through them can carry that enemy off the board.",
+      "lessen": [
+        "chaff-engineered-enemy-retreats",
+        "dark-riders-trap-disengagement"
+      ],
+      "principe": null
+    },
+    {
+      "id": "put-chaff-behind-enemies-to-cause-peril-tests",
+      "titel": "Put chaff behind enemies to cause peril tests",
+      "tekst": "Place chaff behind enemies you expect to flee so retreating through it causes peril tests.",
+      "lessen": [
+        "chaff-maximise-peril-tests",
+        "harpies-mobile-retreat-screens"
+      ],
+      "principe": null
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 88,
+      "sec": 195,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 48915,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 8529,
+        "reasoning_output_tokens": 6214
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

@@ -1,0 +1,119 @@
+{
+  "subthema": "screens",
+  "thema": "chaff",
+  "gemaaktOp": "2026-11-26T15:55:50.210Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "chaff: choosing-chaff,redirecting,decoys-bait,screens,retreat-paths,clearing-chaff",
+  "invoerHash": "2b00e18a381e",
+  "invoer": [
+    "skirmishers-for-frenzy-screens",
+    "screen-dragon-landing-space",
+    "general-supports-screen-marching",
+    "rangers-screen-helblaster-fire",
+    "manglers-shield-doom-divers",
+    "screening-chaff",
+    "horizontal-skirmisher-cover",
+    "offset-skirmisher-charge-contact",
+    "chaff-intercept-overruns",
+    "screen-frenzy-compulsory-charges",
+    "screened-frenzy-reliable-charge",
+    "match-screen-advance-speed",
+    "reform-screen-flank-countercharge",
+    "screen-block-every-firing-line",
+    "maintain-cover-for-scorers",
+    "chaff-preserve-friendly-lanes",
+    "impetuous-chaff-limit-sight",
+    "chaff-absorbs-cavalry-first-charge",
+    "archer-screen-state-troops-trap",
+    "skinks-screen-cannon-sight",
+    "giant-rats-absorb-first-charge",
+    "ethereal-coach-shields-bats",
+    "warhawk-riders-evasive-screen"
+  ],
+  "kernpunten": [
+    {
+      "id": "screen-your-important-units-from-enemy-shooting",
+      "titel": "Screen your important units from enemy shooting",
+      "tekst": "Keep a screen between enemy shooters and important units so it absorbs fire, blocks shots or provides cover.",
+      "lessen": [
+        "rangers-screen-helblaster-fire",
+        "manglers-shield-doom-divers",
+        "screening-chaff",
+        "horizontal-skirmisher-cover",
+        "screen-frenzy-compulsory-charges",
+        "match-screen-advance-speed",
+        "screen-block-every-firing-line",
+        "maintain-cover-for-scorers",
+        "skinks-screen-cannon-sight",
+        "ethereal-coach-shields-bats",
+        "warhawk-riders-evasive-screen"
+      ],
+      "principe": "screen-important-units-from-shooting"
+    },
+    {
+      "id": "clear-screens-from-your-combat-units-attack-routes",
+      "titel": "Clear screens from your combat units' attack routes",
+      "tekst": "Plan how your screen will clear the route so your combat units can make their intended attacks.",
+      "lessen": [
+        "screening-chaff",
+        "screened-frenzy-reliable-charge",
+        "chaff-preserve-friendly-lanes",
+        "warhawk-riders-evasive-screen"
+      ],
+      "principe": null
+    },
+    {
+      "id": "screen-frenzied-units-until-you-want-them-to-charge",
+      "titel": "Screen frenzied units until you want them to charge",
+      "tekst": "Keep a screen in front of frenzied troops so you can position them before committing to your chosen charge.",
+      "lessen": [
+        "skirmishers-for-frenzy-screens",
+        "screen-frenzy-compulsory-charges",
+        "screened-frenzy-reliable-charge"
+      ],
+      "principe": "screen-frenzied-units-until-ready"
+    },
+    {
+      "id": "position-chaff-to-keep-overruns-away-from-valuable-units",
+      "titel": "Position chaff to keep overruns away from valuable units",
+      "tekst": "Position your chaff so an enemy overrun cannot carry straight into a valuable unit.",
+      "lessen": [
+        "offset-skirmisher-charge-contact",
+        "chaff-intercept-overruns"
+      ],
+      "principe": null
+    },
+    {
+      "id": "use-chaff-to-absorb-first-charge",
+      "titel": "Use chaff to absorb First Charge",
+      "tekst": "Put expendable chaff in front of important units so the enemy spends its First Charge on the chaff.",
+      "lessen": [
+        "chaff-absorbs-cavalry-first-charge",
+        "giant-rats-absorb-first-charge"
+      ],
+      "principe": null
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 88,
+      "sec": 195,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 48915,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 8529,
+        "reasoning_output_tokens": 6214
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

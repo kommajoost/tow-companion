@@ -1,0 +1,105 @@
+{
+  "subthema": "combat-roles",
+  "thema": "characters",
+  "gemaaktOp": "2026-11-26T16:06:02.969Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "characters: combat-roles,bsb,mounts-items,challenges,protecting-characters",
+  "invoerHash": "559044948e4a",
+  "invoer": [
+    "skirmisher-hunter-minimum-speed",
+    "focus-combat-character-role",
+    "tank-layer-three-saves",
+    "blender-volume-and-accuracy",
+    "assassins-all-round-movement",
+    "doppelganger-needs-combat-caster",
+    "characters-improve-ordinary-troops",
+    "steed-shadows-melee-character-block",
+    "inexpensive-durable-unit-characters",
+    "narrow-frontage-drop-musician",
+    "try-solitary-doombull",
+    "doombull-gor-scoring-attacker",
+    "duke-threatens-both-miao-forms",
+    "skeletons-necrotects-prince-punch",
+    "tomb-banshee-budget-assassin",
+    "flying-daemon-prince-hunter",
+    "melee-character-central-attack-side",
+    "melee-character-clear-outer-files",
+    "skirmish-blender-character",
+    "tank-buys-flanking-time",
+    "blender-first-round-targets",
+    "remove-runesmith-flaming-wards",
+    "dragon-slayer-backfield-charge",
+    "empire-griffon-central-support",
+    "duke-monster-slayer-zoning",
+    "bone-dragon-neutralises-monsters",
+    "blenders-break-and-reform",
+    "assassins-hunt-valuable-targets"
+  ],
+  "kernpunten": [
+    {
+      "id": "choose-combat-characters-with-all-round-charge-options",
+      "titel": "Choose combat characters with all-round charge options",
+      "tekst": "Choose characters that can threaten charges in every direction so you have more freedom to pick their fights.",
+      "lessen": [
+        "assassins-all-round-movement",
+        "try-solitary-doombull",
+        "skirmish-blender-character"
+      ],
+      "principe": "choose-all-round-charge-options"
+    },
+    {
+      "id": "add-characters-to-give-basic-units-more-combat-punch",
+      "titel": "Add characters to give basic units more combat punch",
+      "tekst": "Add fighting characters or character buffs to basic units so they become more threatening in combat.",
+      "lessen": [
+        "characters-improve-ordinary-troops",
+        "inexpensive-durable-unit-characters",
+        "doombull-gor-scoring-attacker",
+        "skeletons-necrotects-prince-punch"
+      ],
+      "principe": "strengthen-basic-units-with-characters"
+    },
+    {
+      "id": "threaten-monsters-with-monster-slayer-characters",
+      "titel": "Threaten monsters with Monster Slayer characters",
+      "tekst": "Use a Monster Slayer character to make enemy monsters wary of approaching.",
+      "lessen": [
+        "duke-threatens-both-miao-forms",
+        "duke-monster-slayer-zoning"
+      ],
+      "principe": "threaten-monsters-with-monster-slayer-characters"
+    },
+    {
+      "id": "use-durable-characters-to-keep-enemy-threats-occupied",
+      "titel": "Use durable characters to keep enemy threats occupied",
+      "tekst": "Use a tank character's durability to hold enemy threats in place.",
+      "lessen": [
+        "tank-buys-flanking-time",
+        "bone-dragon-neutralises-monsters"
+      ],
+      "principe": null
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 79,
+      "sec": 95,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 46244,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 4486,
+        "reasoning_output_tokens": 2675
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

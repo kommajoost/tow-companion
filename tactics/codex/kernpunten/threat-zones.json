@@ -1,0 +1,102 @@
+{
+  "subthema": "threat-zones",
+  "thema": "game-plan",
+  "gemaaktOp": "2026-11-26T15:44:28.179Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "game-plan: reading-the-enemy,flanks-centre,concentration,tempo-trading,threat-zones,aggression-control,list-building",
+  "invoerHash": "bacc5c0cad09",
+  "invoer": [
+    "ambushers-pressure-enemy-movement",
+    "goblin-chariot-dragon-deterrent",
+    "vampire-ethereal-lantern-control",
+    "central-mobile-response-threats",
+    "shooting-zones-against-dragons",
+    "dragon-facing-deters-advance",
+    "overlap-necrosphinx-threat-arcs",
+    "clear-route-for-scorers",
+    "split-units-limit-dragon-targets",
+    "zone-with-overlapping-threats",
+    "contain-mobile-units-opposite-directions",
+    "angle-attackers-towards-boundary",
+    "measure-charges-every-turn",
+    "occupy-mystical-pathways-destinations",
+    "dragon-secondary-escape-coverage",
+    "urgency-rescue-exposes-wizard",
+    "regular-cavalry-earlier-pressure",
+    "stay-beyond-known-charge-reach",
+    "cavalry-flank-threat-choices",
+    "duke-monster-slayer-zoning",
+    "fanatic-casters-two-turns",
+    "gigantic-spawn-pins-for-support",
+    "banshee-double-engine-reach"
+  ],
+  "kernpunten": [
+    {
+      "id": "use-threats-to-restrict-movement-without-committing-to-comba",
+      "titel": "Use threats to restrict movement without committing to combat",
+      "tekst": "Position your threats to make the opponent avoid useful areas or change their moves without needing to fight.",
+      "lessen": [
+        "ambushers-pressure-enemy-movement",
+        "goblin-chariot-dragon-deterrent",
+        "shooting-zones-against-dragons",
+        "dragon-facing-deters-advance",
+        "overlap-necrosphinx-threat-arcs",
+        "zone-with-overlapping-threats",
+        "contain-mobile-units-opposite-directions",
+        "angle-attackers-towards-boundary",
+        "dragon-secondary-escape-coverage",
+        "regular-cavalry-earlier-pressure",
+        "cavalry-flank-threat-choices",
+        "duke-monster-slayer-zoning",
+        "fanatic-casters-two-turns",
+        "gigantic-spawn-pins-for-support",
+        "banshee-double-engine-reach"
+      ],
+      "principe": "restrict-movement-with-threats"
+    },
+    {
+      "id": "keep-threatened-units-outside-enemy-charge-reach",
+      "titel": "Keep threatened units outside enemy charge reach",
+      "tekst": "Check enemy charge reach and move threatened units beyond it to deny easy charges.",
+      "lessen": [
+        "split-units-limit-dragon-targets",
+        "measure-charges-every-turn",
+        "stay-beyond-known-charge-reach"
+      ],
+      "principe": "avoid-enemy-charge-threats"
+    },
+    {
+      "id": "cover-escape-routes-with-overlapping-charge-arcs",
+      "titel": "Cover escape routes with overlapping charge arcs",
+      "tekst": "Coordinate several charge arcs so mobile enemies cannot simply slip away from a single threat.",
+      "lessen": [
+        "contain-mobile-units-opposite-directions",
+        "angle-attackers-towards-boundary",
+        "dragon-secondary-escape-coverage"
+      ],
+      "principe": null
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 100,
+      "sec": 218,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 51144,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 10350,
+        "reasoning_output_tokens": 7714
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

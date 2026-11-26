@@ -1,0 +1,133 @@
+{
+  "subthema": "target-priority",
+  "thema": "shooting-terrain",
+  "gemaaktOp": "2026-11-26T16:16:23.610Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "shooting-terrain: war-machines,missile-units,target-priority,avoiding-fire,evasive-skirmish,terrain-los,hunting-shooters",
+  "invoerHash": "e65b93ec0828",
+  "invoer": [
+    "sisters-shoot-pegasus-knights",
+    "war-wagon-light-cavalry-matchup",
+    "shoot-diverters-out-early",
+    "weaken-giant-before-infantry",
+    "arrow-attraction-concentrated-fire",
+    "poison-target-toughness-low-armour",
+    "poison-faster-threats-first",
+    "concentrate-fire-finish-lanterns",
+    "grapeshot-force-panic-test",
+    "cannons-counter-evasive-penalties",
+    "cannons-strip-lantern-wounds",
+    "shoot-cathayan-cannons-first",
+    "soften-dragons-early-shooting",
+    "artillery-remove-counters-first",
+    "artillery-opportunistic-late-points",
+    "cannon-flying-character-opportunities",
+    "crossfire-constrains-evasive-retreats",
+    "cannon-grapeshot-close-hunters",
+    "grudge-bombard-hidden-survivors",
+    "organ-guns-light-armour-targets",
+    "organ-guns-avoid-hit-penalties",
+    "strength-eight-armour-ages",
+    "great-cannon-counterbattery-fire",
+    "outriders-thin-infantry-numbers",
+    "cannon-deep-elite-formations",
+    "cannon-ranked-bodies-over-shallow-elites",
+    "ignore-single-lantern-matchup",
+    "reliable-strength-against-cathay",
+    "sisters-prioritise-valuable-targets",
+    "pegasus-low-strength-armour-piercing",
+    "doom-divers-opening-artillery-volley",
+    "ushabti-shoot-monsters-ogres",
+    "kharibdyss-before-cold-ones",
+    "focus-mournfangs-before-contact",
+    "lower-lantern-leadership-screams",
+    "screams-weaken-dragon-ogres",
+    "scream-exposed-bray-shaman",
+    "dirge-picks-lone-support",
+    "zombies-pin-scream-targets",
+    "wood-elves-clear-mobile-ranged",
+    "wood-elves-concentrate-bow-fire"
+  ],
+  "kernpunten": [
+    {
+      "id": "weaken-dangerous-enemies-with-shooting-before-your-troops-fi",
+      "titel": "Weaken dangerous enemies with shooting before your troops fight them",
+      "tekst": "Remove wounds or models from dangerous enemies before combat so your troops have a more manageable fight.",
+      "lessen": [
+        "weaken-giant-before-infantry",
+        "soften-dragons-early-shooting",
+        "cannon-deep-elite-formations",
+        "doom-divers-opening-artillery-volley",
+        "focus-mournfangs-before-contact",
+        "screams-weaken-dragon-ogres"
+      ],
+      "principe": "weaken-dangerous-enemies-before-combat"
+    },
+    {
+      "id": "concentrate-ranged-attacks-to-finish-targets",
+      "titel": "Concentrate ranged attacks to finish targets",
+      "tekst": "Focus your ranged attacks on one target at a time so you remove it instead of spreading damage.",
+      "lessen": [
+        "poison-faster-threats-first",
+        "concentrate-fire-finish-lanterns",
+        "focus-mournfangs-before-contact",
+        "lower-lantern-leadership-screams",
+        "wood-elves-concentrate-bow-fire"
+      ],
+      "principe": "concentrate-fire-to-finish-targets"
+    },
+    {
+      "id": "remove-enemy-artillery-early-to-protect-your-important-units",
+      "titel": "Remove enemy artillery early to protect your important units",
+      "tekst": "Shoot enemy artillery early so it cannot damage the units you need.",
+      "lessen": [
+        "shoot-cathayan-cannons-first",
+        "cannon-deep-elite-formations",
+        "doom-divers-opening-artillery-volley"
+      ],
+      "principe": "remove-enemy-artillery-early"
+    },
+    {
+      "id": "use-volume-fire-against-lightly-armoured-infantry",
+      "titel": "Use volume fire against lightly armoured infantry",
+      "tekst": "Aim high-volume shooting at lightly armoured infantry to remove models effectively.",
+      "lessen": [
+        "organ-guns-light-armour-targets",
+        "outriders-thin-infantry-numbers"
+      ],
+      "principe": null
+    },
+    {
+      "id": "pick-off-vulnerable-lone-wizards-with-screams",
+      "titel": "Pick off vulnerable lone wizards with screams",
+      "tekst": "Use screams against targetable lone wizards to remove enemy support.",
+      "lessen": [
+        "scream-exposed-bray-shaman",
+        "dirge-picks-lone-support"
+      ],
+      "principe": null
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 137,
+      "sec": 347,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 61831,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 16160,
+        "reasoning_output_tokens": 12948
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

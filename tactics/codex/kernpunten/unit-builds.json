@@ -1,0 +1,115 @@
+{
+  "subthema": "unit-builds",
+  "thema": "infantry",
+  "gemaaktOp": "2026-11-26T16:01:39.814Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "infantry: anchors,death-stars,unit-builds,holding-combat,infantry-moves",
+  "invoerHash": "bf18b8dccf18",
+  "invoer": [
+    "anchor-static-combat-resolution",
+    "anchor-heavy-armour-parry",
+    "characters-improve-ordinary-troops",
+    "infantry-ten-after-challenge",
+    "infantry-overwhelm-dragon-numbers",
+    "infantry-character-flank-challenge",
+    "fourteen-skirmishing-infantry-scorers",
+    "cheap-infantry-thirty-thirty-six",
+    "narrow-frontage-drop-musician",
+    "avoid-linehammer-dragon-counter",
+    "bray-shaman-gor-buffer",
+    "infernal-guard-fireglaive-armour",
+    "rangers-consider-open-order",
+    "empire-double-missile-blocks",
+    "veteran-state-griffin-banner",
+    "men-at-arms-resolution-block",
+    "men-at-arms-skip-stubborn",
+    "kroxigor-mixed-skink-unit",
+    "cohort-javelins-and-shields",
+    "temple-guard-core-priority",
+    "saurus-sixteen-twenty-models",
+    "black-orcs-great-weapons",
+    "night-goblins-netters-robe",
+    "stormvermin-ten-wide",
+    "necrotect-poison-skeleton-attacks",
+    "tomb-guard-death-mask",
+    "skeletons-necrotects-prince-punch",
+    "grave-guard-great-weapons",
+    "skeletons-twenty-five-thirty",
+    "consider-larger-forsaken-unit",
+    "chaos-warriors-shields-great-weapons",
+    "warriors-monster-hunter-tapestry",
+    "chaos-warriors-halberd-charge",
+    "hybrid-hammer-ap"
+  ],
+  "kernpunten": [
+    {
+      "id": "build-infantry-blocks-to-win-through-static-combat-resolutio",
+      "titel": "Build infantry blocks to win through static combat resolution",
+      "tekst": "Use ranks and banners to raise your infantry's combat result without relying entirely on inflicted wounds.",
+      "lessen": [
+        "anchor-static-combat-resolution",
+        "cheap-infantry-thirty-thirty-six",
+        "veteran-state-griffin-banner",
+        "men-at-arms-resolution-block",
+        "skeletons-twenty-five-thirty"
+      ],
+      "principe": "build-infantry-for-static-combat-resolution"
+    },
+    {
+      "id": "add-characters-to-give-basic-units-more-combat-punch",
+      "titel": "Add characters to give basic units more combat punch",
+      "tekst": "Add fighting characters or character buffs to increase your basic infantry's damage output.",
+      "lessen": [
+        "characters-improve-ordinary-troops",
+        "necrotect-poison-skeleton-attacks",
+        "skeletons-necrotects-prince-punch"
+      ],
+      "principe": "strengthen-basic-units-with-characters"
+    },
+    {
+      "id": "use-challenges-to-help-infantry-hold-against-dragons",
+      "titel": "Use challenges to help infantry hold against dragons",
+      "tekst": "Use a challenger while your infantry supplies combat resolution to hold or beat a dragon.",
+      "lessen": [
+        "anchor-static-combat-resolution",
+        "infantry-ten-after-challenge",
+        "infantry-overwhelm-dragon-numbers",
+        "men-at-arms-resolution-block"
+      ],
+      "principe": "challenge-dragons-with-infantry"
+    },
+    {
+      "id": "use-armour-piercing-weapons-to-improve-infantry-damage",
+      "titel": "Use armour-piercing weapons to improve infantry damage",
+      "tekst": "Give combat infantry armour-piercing weapons to improve its damage output.",
+      "lessen": [
+        "black-orcs-great-weapons",
+        "chaos-warriors-halberd-charge",
+        "hybrid-hammer-ap"
+      ],
+      "principe": null
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 60,
+      "sec": 345,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 41451,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 14480,
+        "reasoning_output_tokens": 12948
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

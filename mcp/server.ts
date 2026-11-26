@@ -9,7 +9,7 @@
 
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import { dataBase, loadLog, setBaseFromHost } from './data';
-import { getLesson, listPrinciples, listTacticsIndex, principles, principleText, rankLessons, searchTactics, library } from './tactics';
+import { getLesson, getSection, listPrinciples, listTacticsIndex, principles, principleText, rankLessons, searchTactics, library } from './tactics';
 import { getNote, getRule, ruleHits, searchRules } from './rules';
 import { getArmy, getUnit, listArmies } from './armies';
 import { calculateAttack } from './calc';
@@ -18,7 +18,7 @@ export const SERVER_INFO = { name: 'old-world-companion', title: 'Old World Comp
 const PROTOCOLS = ['2025-11-25', '2025-06-18', '2025-03-26', '2024-11-05'];
 
 export const INSTRUCTIONS = `Old World Companion: Warhammer: The Old World knowledge for tactical advice. Follow these rules in every answer about the game.
-1. Library first: before any tactical, list-building, matchup or army advice, call search_tactics (it lists matching principles above the lessons) or list_principles, and get_lesson for detail. Start from the principles, then the lessons: a principle is a summary of several lessons, so for each piece of advice cite the lessons' channel, video title and timestamped link.
+1. Library first: before any tactical, list-building, matchup or army advice, call search_tactics (it lists matching principles above the lessons), list_principles or get_section (a section's key points), and get_lesson for detail. Start from the principles, then the lessons: a principle is a summary of several lessons, so for each piece of advice cite the lessons' channel, video title and timestamped link.
 2. Mark your own reasoning separately, e.g. "Own assessment: …". Never blend it into what the sources say.
 3. Never use memory for game data: check every unit, weapon, points value, statline and rule you mention with get_unit, get_army, get_rule or search_rules. Quote rule text verbatim; never present your own interpretation as the rule.
 4. If the library has nothing relevant, say so plainly.
@@ -73,9 +73,16 @@ export const TOOLS: Tool[] = [
   {
     name: 'list_tactics_index',
     title: 'Browse the tactics library',
-    description: 'Themes, sub-themes, phases, armies and tags of the tactics library with lesson counts, to browse or pick filters for search_tactics.',
+    description: 'Themes, sub-themes (sections) with their key point titles, phases, armies and tags of the tactics library with lesson counts, to browse or pick filters for search_tactics.',
     inputSchema: obj({}),
     run: () => listTacticsIndex(),
+  },
+  {
+    name: 'get_section',
+    title: 'Key points of one section',
+    description: 'One section (sub-theme) of the tactics library: its 3 to 5 key points (advice several of its lessons give, each an AI summary with lesson and channel counts and the lesson ids) and its first lessons. A theme id lists its sections with their key point titles.',
+    inputSchema: obj({ subtheme: s('Sub-theme id or name from list_tactics_index (e.g. "reading-the-enemy", "screens"), or a theme id.') }, ['subtheme']),
+    run: (a) => getSection({ subtheme: str(a.subtheme) }),
   },
   {
     name: 'list_principles',

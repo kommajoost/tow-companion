@@ -1,0 +1,90 @@
+{
+  "subthema": "clearing-chaff",
+  "thema": "chaff",
+  "gemaaktOp": "2026-11-26T15:55:50.211Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "chaff: choosing-chaff,redirecting,decoys-bait,screens,retreat-paths,clearing-chaff",
+  "invoerHash": "65dd77aaad79",
+  "invoer": [
+    "skirmisher-hunter-minimum-speed",
+    "mounted-hunter-fortitude",
+    "death-star-missile-support",
+    "mobile-blaster-late-points",
+    "summoning-or-ruby-ring",
+    "flying-daemon-prince-hunter",
+    "fanatics-guard-artillery-flanks",
+    "avoid-ranked-skirmisher-pursuit",
+    "clear-blockers-before-pursuing-fugitives",
+    "clear-screens-with-cheap-units",
+    "charge-screen-open-lane",
+    "light-cavalry-clear-redirectors",
+    "light-missile-cavalry-shoot-chaff",
+    "squig-hoppers-hunt-chaff",
+    "vanguard-scorpions-fight-chaff",
+    "horse-archers-isolated-skirmishers",
+    "terrorgheist-scream-screen-gap",
+    "shoot-diverters-out-early"
+  ],
+  "kernpunten": [
+    {
+      "id": "use-ranged-attacks-to-clear-enemy-chaff",
+      "titel": "Use ranged attacks to clear enemy chaff",
+      "tekst": "Use ranged attacks to remove enemy chaff without having to catch it in combat.",
+      "lessen": [
+        "death-star-missile-support",
+        "mobile-blaster-late-points",
+        "summoning-or-ruby-ring",
+        "light-missile-cavalry-shoot-chaff",
+        "terrorgheist-scream-screen-gap",
+        "shoot-diverters-out-early"
+      ],
+      "principe": "clear-chaff-with-ranged-attacks"
+    },
+    {
+      "id": "use-supporting-units-to-clear-your-main-attackers-paths",
+      "titel": "Use supporting units to clear your main attackers' paths",
+      "tekst": "Use another unit to clear or displace blockers so your main attacker can reach its intended target.",
+      "lessen": [
+        "clear-blockers-before-pursuing-fugitives",
+        "clear-screens-with-cheap-units",
+        "charge-screen-open-lane",
+        "light-cavalry-clear-redirectors"
+      ],
+      "principe": null
+    },
+    {
+      "id": "give-skirmisher-hunters-enough-mobility-to-reach-their-targe",
+      "titel": "Give skirmisher hunters enough mobility to reach their targets",
+      "tekst": "Choose mobile hunters so they can reach skirmishers despite those targets' freedom to reposition.",
+      "lessen": [
+        "skirmisher-hunter-minimum-speed",
+        "mounted-hunter-fortitude",
+        "mobile-blaster-late-points",
+        "avoid-ranked-skirmisher-pursuit"
+      ],
+      "principe": null
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 88,
+      "sec": 195,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 48915,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 8529,
+        "reasoning_output_tokens": 6214
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

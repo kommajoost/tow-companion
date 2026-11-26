@@ -1,0 +1,89 @@
+{
+  "subthema": "scoring-units",
+  "thema": "scenarios",
+  "gemaaktOp": "2026-11-26T16:22:41.021Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "scenarios: scoring-units,objectives,baggage-train,king-of-the-hill,scenario-plans,late-game",
+  "invoerHash": "12da236f731d",
+  "invoer": [
+    "mobile-core-objective-attackers",
+    "cheap-area-capture-units",
+    "substantial-core-scenario-scorers",
+    "fourteen-skirmishing-infantry-scorers",
+    "light-cavalry-scoring-unit-sizes",
+    "cheap-infantry-thirty-thirty-six",
+    "doombull-gor-scoring-attacker",
+    "seekers-mobile-core-scorers",
+    "nomadic-boar-boy-objectives",
+    "allocate-scorers-by-contest",
+    "slow-scorers-front-centre",
+    "maintain-cover-for-scorers",
+    "wait-before-contesting-centre",
+    "ungor-cheap-objective-holders"
+  ],
+  "kernpunten": [
+    {
+      "id": "use-cheap-units-to-hold-objectives-and-scoring-areas",
+      "titel": "Use cheap units to hold objectives and scoring areas",
+      "tekst": "Assign inexpensive units to scoring positions so you can secure them with a small investment.",
+      "lessen": [
+        "cheap-area-capture-units",
+        "ungor-cheap-objective-holders"
+      ],
+      "principe": "use-cheap-units-for-scoring"
+    },
+    {
+      "id": "use-fast-cavalry-to-reach-scoring-positions",
+      "titel": "Use fast cavalry to reach scoring positions",
+      "tekst": "Choose mobile cavalry scorers so you can cover the board and reach scoring positions.",
+      "lessen": [
+        "light-cavalry-scoring-unit-sizes",
+        "seekers-mobile-core-scorers"
+      ],
+      "principe": null
+    },
+    {
+      "id": "keep-fragile-scorers-protected-from-ranged-fire",
+      "titel": "Keep fragile scorers protected from ranged fire",
+      "tekst": "Avoid exposing fragile scorers to ranged damage so you can preserve their ability to score.",
+      "lessen": [
+        "maintain-cover-for-scorers",
+        "wait-before-contesting-centre"
+      ],
+      "principe": null
+    },
+    {
+      "id": "give-scoring-units-spare-bodies",
+      "titel": "Give scoring units spare bodies",
+      "tekst": "Include extra models in your scoring units so casualties do not immediately remove their scoring status.",
+      "lessen": [
+        "fourteen-skirmishing-infantry-scorers",
+        "light-cavalry-scoring-unit-sizes",
+        "cheap-infantry-thirty-thirty-six"
+      ],
+      "principe": null
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 57,
+      "sec": 125,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 40537,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 5975,
+        "reasoning_output_tokens": 4104
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

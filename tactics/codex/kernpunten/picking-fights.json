@@ -1,0 +1,90 @@
+{
+  "subthema": "picking-fights",
+  "thema": "matchups",
+  "gemaaktOp": "2026-11-26T16:20:32.052Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "matchups: picking-fights,vs-sky-lanterns,vs-grand-cathay,vs-beastmen,vs-bretonnia,vs-tomb-kings,vs-monsters,vs-other",
+  "invoerHash": "3ee0cb4b3483",
+  "invoer": [
+    "small-cavalry-counters-msu",
+    "bray-shaman-missile-choice",
+    "flank-not-point-and-click",
+    "hammer-matchups",
+    "deploy-for-matchups",
+    "war-wagon-light-cavalry-matchup",
+    "chaff-attack-weak-targets",
+    "save-vulnerable-valuable-units",
+    "random-movement-denies-countercharge",
+    "blender-first-round-targets",
+    "dragon-hunt-largest-vulnerable-unit",
+    "angle-charges-avoid-characters",
+    "reconsider-infantry-charging-infantry",
+    "first-charge-infantry-ranks",
+    "light-cavalry-hunt-wizards",
+    "heavy-cavalry-avoid-prolonged-grinds",
+    "monstrous-cavalry-grinding-role",
+    "dwarf-deathstar-meets-deathstar",
+    "wolf-riders-selective-fights",
+    "elf-rider-combat-restraint",
+    "wood-elves-avoid-receiving-charges",
+    "assassins-hunt-valuable-targets",
+    "poison-target-toughness-low-armour",
+    "vile-tide-armoured-knights",
+    "vindictive-glare-elite-cavalry"
+  ],
+  "kernpunten": [
+    {
+      "id": "choose-fights-you-can-win-in-the-first-round",
+      "titel": "Choose fights you can win in the first round",
+      "tekst": "Pick targets your attacker can beat in the first round rather than relying on it to grind through them.",
+      "lessen": [
+        "blender-first-round-targets",
+        "heavy-cavalry-avoid-prolonged-grinds"
+      ],
+      "principe": null
+    },
+    {
+      "id": "aim-magic-missiles-at-valuable-single-wound-cavalry",
+      "titel": "Aim magic missiles at valuable single-wound cavalry",
+      "tekst": "Use magic missiles against valuable single-wound cavalry because removing those models makes the cast worthwhile.",
+      "lessen": [
+        "vile-tide-armoured-knights",
+        "vindictive-glare-elite-cavalry"
+      ],
+      "principe": null
+    },
+    {
+      "id": "deploy-your-hammers-opposite-targets-they-can-beat",
+      "titel": "Deploy your hammers opposite targets they can beat",
+      "tekst": "Set up favourable matchups during deployment so your hammers fight enemies they can defeat.",
+      "lessen": [
+        "flank-not-point-and-click",
+        "hammer-matchups",
+        "deploy-for-matchups"
+      ],
+      "principe": null
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 140,
+      "sec": 244,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 62238,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 11351,
+        "reasoning_output_tokens": 8207
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

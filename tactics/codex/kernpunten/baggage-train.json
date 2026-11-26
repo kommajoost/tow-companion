@@ -1,0 +1,63 @@
+{
+  "subthema": "baggage-train",
+  "thema": "scenarios",
+  "gemaaktOp": "2026-11-26T16:22:41.023Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "scenarios: scoring-units,objectives,baggage-train,king-of-the-hill,scenario-plans,late-game",
+  "invoerHash": "88c67b0972cd",
+  "invoer": [
+    "mobile-baggage-train-attackers",
+    "fell-bats-scenario-pairs",
+    "baggage-placement-after-opponent",
+    "baggage-cheap-home-scorer",
+    "aggressive-baggage-forward-placement",
+    "vampire-force-necromancer-range",
+    "attack-weaker-baggage-side",
+    "two-units-baggage-contact",
+    "ambushers-target-baggage-trains"
+  ],
+  "kernpunten": [
+    {
+      "id": "use-highly-mobile-units-to-reach-enemy-baggage",
+      "titel": "Use highly mobile units to reach enemy baggage",
+      "tekst": "Bring highly mobile units so you can reach the enemy baggage train.",
+      "lessen": [
+        "mobile-baggage-train-attackers",
+        "fell-bats-scenario-pairs"
+      ],
+      "principe": null
+    },
+    {
+      "id": "place-baggage-where-your-planned-positions-can-secure-it",
+      "titel": "Place baggage where your planned positions can secure it",
+      "tekst": "Match your baggage placement to where your units will be so they can secure it later.",
+      "lessen": [
+        "baggage-cheap-home-scorer",
+        "aggressive-baggage-forward-placement"
+      ],
+      "principe": null
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 57,
+      "sec": 125,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 40537,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 5975,
+        "reasoning_output_tokens": 4104
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

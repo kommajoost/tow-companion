@@ -1,0 +1,113 @@
+{
+  "subthema": "monsters-dragons",
+  "thema": "hammers",
+  "gemaaktOp": "2026-11-26T16:04:23.426Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "hammers: hammer-basics,heavy-cavalry,chariots,monsters-dragons,random-movers,using-hammers",
+  "invoerHash": "349391276980",
+  "invoer": [
+    "answer-dragons-with-dragons",
+    "miao-ying-hunts-lanterns",
+    "prefer-granite-sentinel-durability",
+    "defensive-jade-sentinel-ramparts",
+    "scar-veteran-carnosaur-competitive",
+    "ancient-stegadon-central-cornerstone",
+    "lizardmen-multiple-terror-causers",
+    "multiple-stonehorns-against-cathay",
+    "giant-finishes-boar-combats",
+    "forest-dragon-threatens-lanterns",
+    "choose-dragon-role-early",
+    "dragon-first-turn-march",
+    "dragon-hunt-largest-vulnerable-unit",
+    "commit-dragon-accept-risk",
+    "monster-charge-challenge-support",
+    "dragon-charge-arc-redirections",
+    "own-dragon-pressure-miao",
+    "bloodthirster-needs-lantern-support",
+    "dragon-threatens-mobile-duke",
+    "wyvern-against-unbuffed-warpfire",
+    "giant-advance-threat-priority",
+    "necrosphinx-zone-sky-lanterns",
+    "warpfire-aura-remove-lantern-ward",
+    "terror-on-flanks",
+    "behemoth-hammers",
+    "behemoth-unbreakable",
+    "necrosphinx-terror-leadership"
+  ],
+  "kernpunten": [
+    {
+      "id": "choose-hammers-that-can-survive-shooting-on-the-way-in",
+      "titel": "Choose hammers that can survive shooting on the way in",
+      "tekst": "Choose durable monsters so you can survive enemy shooting and reach combat.",
+      "lessen": [
+        "prefer-granite-sentinel-durability",
+        "ancient-stegadon-central-cornerstone",
+        "multiple-stonehorns-against-cathay"
+      ],
+      "principe": "choose-hammers-that-survive-shooting"
+    },
+    {
+      "id": "use-monsters-as-flank-hammers",
+      "titel": "Use monsters as flank hammers",
+      "tekst": "Use monsters on the flanks so you can bring their stomps and combat power into the fight.",
+      "lessen": [
+        "giant-finishes-boar-combats",
+        "terror-on-flanks",
+        "behemoth-hammers"
+      ],
+      "principe": null
+    },
+    {
+      "id": "counter-enemy-dragons-with-a-dragon-of-your-own",
+      "titel": "Counter enemy dragons with a dragon of your own",
+      "tekst": "Consider bringing your own dragon so you have another way to fight an enemy dragon.",
+      "lessen": [
+        "answer-dragons-with-dragons",
+        "own-dragon-pressure-miao"
+      ],
+      "principe": "counter-dragons-with-your-own"
+    },
+    {
+      "id": "support-your-monster-s-charge-with-another-unit",
+      "titel": "Support your monster's charge with another unit",
+      "tekst": "Charge another unit alongside your monster to support its attack.",
+      "lessen": [
+        "monster-charge-challenge-support",
+        "bloodthirster-needs-lantern-support"
+      ],
+      "principe": null
+    },
+    {
+      "id": "use-terror-to-exploit-weaker-enemy-leadership",
+      "titel": "Use Terror to exploit weaker enemy Leadership",
+      "tekst": "Use Terror where enemy Leadership is weaker so you have a better chance of making units flee.",
+      "lessen": [
+        "terror-on-flanks",
+        "necrosphinx-terror-leadership"
+      ],
+      "principe": null
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 72,
+      "sec": 159,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 44761,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 7397,
+        "reasoning_output_tokens": 5554
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

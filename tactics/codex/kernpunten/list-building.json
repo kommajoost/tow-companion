@@ -1,0 +1,128 @@
+{
+  "subthema": "list-building",
+  "thema": "game-plan",
+  "gemaaktOp": "2026-11-26T15:44:28.186Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "game-plan: reading-the-enemy,flanks-centre,concentration,tempo-trading,threat-zones,aggression-control,list-building",
+  "invoerHash": "0bacb95aab82",
+  "invoer": [
+    "fewer-drops-first-turn",
+    "army-plan-every-mission",
+    "focus-combat-character-role",
+    "prefer-familiar-tournament-armies",
+    "prepare-for-local-opponents",
+    "avoid-single-matchup-tech",
+    "summoning-or-ruby-ring",
+    "poison-prioritise-attack-volume",
+    "small-units-waste-lantern-shots",
+    "avoid-column-dependent-strategy",
+    "judge-units-by-points-role",
+    "substantial-core-scenario-scorers",
+    "drawn-lines-reserve-backup",
+    "many-small-units-poison-block",
+    "avoid-chariots-congested-map-packs",
+    "practice-same-tournament-list",
+    "mobile-armies-reward-movement",
+    "deny-cathay-valuable-cannon-targets",
+    "defensive-builds-weather-cathay",
+    "hordes-bog-down-cathay",
+    "plan-small-unit-groups",
+    "build-backup-key-pieces",
+    "write-phase-reminder-sheet",
+    "simplify-unfamiliar-tournament-armies",
+    "gor-death-star-infantry-choice",
+    "mixed-daemon-gods-lanterns",
+    "three-four-model-pegasus-units",
+    "replace-excess-skirmishers-chariots",
+    "six-screamer-army-core",
+    "warriors-beginner-direct-combat",
+    "chaos-core-choose-focus",
+    "reconsider-warriors-blue-fire"
+  ],
+  "kernpunten": [
+    {
+      "id": "build-your-list-to-meet-the-tournament-s-mission-requirement",
+      "titel": "Build your list to meet the tournament's mission requirements",
+      "tekst": "Check the tournament missions when choosing units so your army has a workable plan for their requirements.",
+      "lessen": [
+        "army-plan-every-mission",
+        "substantial-core-scenario-scorers",
+        "drawn-lines-reserve-backup"
+      ],
+      "principe": "build-for-mission-requirements"
+    },
+    {
+      "id": "give-your-units-and-characters-defined-battlefield-jobs",
+      "titel": "Give your units and characters defined battlefield jobs",
+      "tekst": "Assign your units, characters or small groups specific jobs so you can judge how they contribute to your plan.",
+      "lessen": [
+        "focus-combat-character-role",
+        "judge-units-by-points-role",
+        "plan-small-unit-groups"
+      ],
+      "principe": "assign-defined-battlefield-jobs"
+    },
+    {
+      "id": "practise-with-the-army-you-will-take-to-events",
+      "titel": "Practise with the army you will take to events",
+      "tekst": "Play repeated games with your tournament list so you remember its abilities and make decisions more quickly.",
+      "lessen": [
+        "prefer-familiar-tournament-armies",
+        "practice-same-tournament-list"
+      ],
+      "principe": null
+    },
+    {
+      "id": "use-small-units-to-limit-concentrated-enemy-damage",
+      "titel": "Use small units to limit concentrated enemy damage",
+      "tekst": "Consider multiple small units to limit how much of your army a powerful enemy can destroy each turn.",
+      "lessen": [
+        "small-units-waste-lantern-shots",
+        "many-small-units-poison-block"
+      ],
+      "principe": null
+    },
+    {
+      "id": "avoid-making-your-whole-plan-depend-on-one-tool",
+      "titel": "Avoid making your whole plan depend on one tool",
+      "tekst": "Include alternatives so a failed or lost key piece does not leave you without a plan.",
+      "lessen": [
+        "avoid-column-dependent-strategy",
+        "build-backup-key-pieces"
+      ],
+      "principe": null
+    },
+    {
+      "id": "choose-a-straightforward-army-while-learning-the-game",
+      "titel": "Choose a straightforward army while learning the game",
+      "tekst": "When you are learning, choose a straightforward army so it is easier to manage.",
+      "lessen": [
+        "simplify-unfamiliar-tournament-armies",
+        "warriors-beginner-direct-combat"
+      ],
+      "principe": null
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 100,
+      "sec": 218,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 51144,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 10350,
+        "reasoning_output_tokens": 7714
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

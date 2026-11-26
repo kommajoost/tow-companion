@@ -1,0 +1,167 @@
+{
+  "_uitleg": "Handcorrecties op de Codex-kernpunten per subthema (npm run tactics:keypoints). Per subthema-id: nietSamenvoegen [[a, b]], samenvoegen [{ in, uit: [] }], weg [id], wijzig { id: { titel, tekst, lessen, lessenErbij, lessenEraf, principe } }, nieuw [{ id, titel, tekst, lessen }]. Volgorde: nietSamenvoegen (bij het automatisch samenvoegen), dan samenvoegen, weg, wijzig, nieuw; daarna het koppelen aan principes en de keuze van de top 3 tot 5. Review 26-11-2026.",
+  "threat-zones": {
+    "_waarom": "vluchtroutes afdekken is specifieker advies dan het brede principe en verdween door het automatisch samenvoegen",
+    "nietSamenvoegen": [["use-threats-to-restrict-movement-without-committing-to-comba", "cover-escape-routes-with-overlapping-charge-arcs"]]
+  },
+  "drops-first-turn": {
+    "wijzig": {
+      "delay-key-placements-until-relevant-enemy-units-are-committe": {
+        "_waarom": "zelfde advies en titel als het principe; de koppeling viel net onder 60% omdat Codex er lessen bij vond",
+        "principe": "delay-key-placements-for-information"
+      }
+    }
+  },
+  "redirecting": {
+    "wijzig": {
+      "use-expendable-units-to-buy-time-for-wins-elsewhere": {
+        "_waarom": "zelfde advies en titel als het principe (chaff die tijd verspilt); koppelen zodat er geen tweede versie zonder link staat",
+        "principe": "expendable-units-buy-time"
+      }
+    }
+  },
+  "unit-builds": {
+    "wijzig": {
+      "use-challenges-to-help-infantry-hold-against-dragons": {
+        "_waarom": "zelfde advies en titel als het principe",
+        "principe": "challenge-dragons-with-infantry"
+      }
+    }
+  },
+  "heavy-cavalry": {
+    "wijzig": {
+      "use-threats-to-restrict-movement-without-committing-to-comba": {
+        "_waarom": "zelfde advies en titel als het principe",
+        "principe": "restrict-movement-with-threats"
+      }
+    }
+  },
+  "overrun-pursuit": {
+    "_waarom": "achtervolgen en omvormen verdelen is een ander advies (ander principe) dan omvormen naar het volgende gevecht",
+    "nietSamenvoegen": [["reform-victorious-units-towards-their-next-useful-fight", "let-another-unit-chase-fugitives-while-your-main-unit-stays"]]
+  },
+  "target-priority": {
+    "_waarom": "eerst de vijandelijke artillerie is een ander advies dan gevaarlijke vijanden verzwakken; dat laatste is wel hetzelfde als het principe",
+    "nietSamenvoegen": [["weaken-dangerous-enemies-with-shooting-before-your-troops-fi", "remove-enemy-artillery-early-to-protect-your-important-units"]],
+    "wijzig": {
+      "weaken-dangerous-enemies-with-shooting-before-your-troops-fi": {
+        "principe": "weaken-dangerous-enemies-before-combat"
+      }
+    }
+  },
+  "scenario-plans": {
+    "nietSamenvoegen": [["plan-late-moves-into-table-quarters", "with-the-stronger-shooting-army-shoot-first-and-fight-later"]],
+    "wijzig": {
+      "plan-late-moves-into-table-quarters": {
+        "_waarom": "close-quarter-defensive-shooting gaat over op de eigen locatie blijven schieten, niet over tafelkwarten",
+        "lessenEraf": ["close-quarter-defensive-shooting"]
+      }
+    }
+  },
+  "anchors": {
+    "nietSamenvoegen": [["build-your-anchor-s-combat-resolution", "prioritise-defence-over-damage-when-building-an-anchor"]],
+    "wijzig": {
+      "build-your-anchor-s-combat-resolution": {
+        "_waarom": "flank-units-not-infantry en chaos-warriors-defensive-attrition zeggen niets over combat resolution",
+        "lessenEraf": ["flank-units-not-infantry", "chaos-warriors-defensive-attrition"]
+      }
+    }
+  },
+  "charge-setup": {
+    "wijzig": {
+      "use-threats-to-restrict-movement-without-committing-to-comba": {
+        "_waarom": "de drie lessen gaan over vluchtroutes afdekken met overlappende charge-bogen, niet over het bredere principe; eigen titel zoals in threat-zones",
+        "principe": null,
+        "titel": "Cover escape routes with overlapping charge arcs",
+        "tekst": "Coordinate several charge arcs so mobile enemies cannot simply slip away from a single threat."
+      }
+    }
+  },
+  "charge-order": {
+    "wijzig": {
+      "make-one-target-flee-before-redirecting-into-another": {
+        "_waarom": "repeated-terror-charges-lanterns gaat over herhaalde Terror-tests, niet over omleiden naar een tweede doel",
+        "lessenEraf": ["repeated-terror-charges-lanterns"]
+      }
+    }
+  },
+  "choosing-chaff": {
+    "_waarom": "de twee Fell Bat-lessen geven ander advies (twee units voor scenario's, zes modellen tegen kanonnen); de uitleg over verliezen staat in geen van beide",
+    "weg": ["use-larger-fell-bat-units-against-war-machine-crews"]
+  },
+  "clearing-chaff": {
+    "wijzig": {
+      "use-ranged-attacks-to-clear-enemy-chaff": {
+        "_waarom": "summoning-or-ruby-ring gaat over toegang tot een spreuk, niet over chaff opruimen",
+        "lessenEraf": ["summoning-or-ruby-ring"]
+      },
+      "give-skirmisher-hunters-enough-mobility-to-reach-their-targe": {
+        "_waarom": "mobile-blaster-late-points gaat over punten scoren met een blaster, niet over skirmishers vangen",
+        "lessenEraf": ["mobile-blaster-late-points"]
+      }
+    }
+  },
+  "vs-sky-lanterns": {
+    "wijzig": {
+      "draw-sky-lanterns-into-prepared-attacks-with-bait": {
+        "_waarom": "pegasus-overrun-second-lantern gaat over doorstoten naar een tweede Lantern, er komt geen lokaas in voor",
+        "lessenEraf": ["pegasus-overrun-second-lantern"]
+      }
+    }
+  },
+  "wizard-placement": {
+    "wijzig": {
+      "position-dispellers-to-cover-enemy-casters": {
+        "_waarom": "dark-magic-reserve-bunker gaat over een eigen caster beschermen en verplaatsen, niet over dispel-bereik",
+        "lessenEraf": ["dark-magic-reserve-bunker"]
+      }
+    }
+  },
+  "magic-missiles": {
+    "wijzig": {
+      "use-magic-missiles-against-enemies-that-evade-combat": {
+        "_waarom": "mobile-blaster-late-points gaat over punten scoren, summoning-or-ruby-ring over een spreuk meenemen in het algemeen; geen van beide over ontwijkende vijanden",
+        "lessenEraf": ["mobile-blaster-late-points", "summoning-or-ruby-ring"]
+      }
+    }
+  },
+  "random-movers": {
+    "wijzig": {
+      "use-unpredictable-random-movement-to-restrict-enemy-position": {
+        "_waarom": "gigantic-spawn-pins-for-support gaat over vastpinnen als tarpit, niet over dreiging met willekeurige beweging",
+        "lessenEraf": ["gigantic-spawn-pins-for-support"]
+      }
+    }
+  },
+  "using-hammers": {
+    "_waarom": "boar-boyz-take-bait gaat over een frontale charge aannemen (ook bij de principes zo gehaald), dan blijft er een les over; hammer-matchups gaat over doelkeuze, niet over afschermen",
+    "weg": ["flank-enemies-already-fighting-your-main-unit"],
+    "wijzig": {
+      "screen-your-hammers-with-chaff-while-setting-up-favourable-c": {
+        "lessenEraf": ["hammer-matchups"]
+      }
+    }
+  },
+  "support-countercharge": {
+    "nietSamenvoegen": [
+      ["reinforce-your-main-fight-with-flank-or-rear-charges", "give-supporting-chargers-banners-for-extra-combat-resolution"]
+    ]
+  },
+  "tempo-trading": {
+    "wijzig": {
+      "use-expendable-units-to-buy-time-for-wins-elsewhere": {
+        "_waarom": "identify-expendable-units (2 kanalen) geeft hetzelfde advies maar stond er niet bij",
+        "lessenErbij": ["identify-expendable-units"]
+      }
+    },
+    "nieuw": [
+      {
+        "_waarom": "twee lessen uit drie kanalen geven dit specifieke advies; Codex had het niet als eigen punt",
+        "id": "use-up-a-dragons-turns-when-you-cannot-beat-it",
+        "titel": "Use up a dragon's turns when you cannot beat it",
+        "tekst": "When you cannot beat an enemy dragon, use up its limited turns so it collects fewer points.",
+        "lessen": ["delay-dragon-score-elsewhere", "let-dragon-charge-first"]
+      }
+    ]
+  }
+}

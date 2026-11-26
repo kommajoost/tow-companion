@@ -1,0 +1,62 @@
+{
+  "subthema": "late-game",
+  "thema": "scenarios",
+  "gemaaktOp": "2026-11-26T16:22:41.024Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "scenarios: scoring-units,objectives,baggage-train,king-of-the-hill,scenario-plans,late-game",
+  "invoerHash": "8fafe0309f3b",
+  "invoer": [
+    "mobile-blaster-late-points",
+    "endgame-hide-save-points",
+    "missiles-deny-terrain-scoring",
+    "hidden-mobile-objective-grabs",
+    "block-final-objective-approach",
+    "ambush-late-domination-quarters",
+    "preserve-cavalry-domination-scoring",
+    "finish-six-turns-vampires"
+  ],
+  "kernpunten": [
+    {
+      "id": "keep-mobile-scorers-safe-for-later-scoring",
+      "titel": "Keep mobile scorers safe for later scoring",
+      "tekst": "Protect your mobile scorers until later turns so they can use their speed to claim scoring positions.",
+      "lessen": [
+        "hidden-mobile-objective-grabs",
+        "preserve-cavalry-domination-scoring"
+      ],
+      "principe": "preserve-mobile-scorers-for-later"
+    },
+    {
+      "id": "finish-surviving-units-with-late-magic-missiles",
+      "titel": "Finish surviving units with late magic missiles",
+      "tekst": "Use your magic missiles to finish surviving enemy units late in the game and collect their points.",
+      "lessen": [
+        "mobile-blaster-late-points",
+        "missiles-deny-terrain-scoring"
+      ],
+      "principe": null
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 57,
+      "sec": 125,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 40537,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 5975,
+        "reasoning_output_tokens": 4104
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

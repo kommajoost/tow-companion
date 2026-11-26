@@ -1,0 +1,99 @@
+{
+  "subthema": "reforms-formations",
+  "thema": "movement",
+  "gemaaktOp": "2026-11-26T15:52:31.236Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "movement: charge-setup,charge-order,wheels-alignment,overrun-pursuit,reforms-formations,fleeing,support-countercharge",
+  "invoerHash": "8c4c43b18085",
+  "invoer": [
+    "hexwraith-marching-column-attacks",
+    "wide-deployment-against-cannons",
+    "vanguard-boars-column-flank-march",
+    "reform-for-future-targets",
+    "thin-formations-against-bombing",
+    "evasive-reform-escape-facing",
+    "avoid-charges-unlocking-enemy-reforms",
+    "drilled-narrow-unwanted-contact",
+    "marching-column-casualty-margin",
+    "marching-column-anvil-advance",
+    "fast-cavalry-skirmish-marching",
+    "marching-column-evade-charge-arc",
+    "reform-line-clear-shooting",
+    "reform-footprint-objective-control",
+    "reposition-characters-before-enemy-charge",
+    "compact-five-model-skirmisher-groups",
+    "ungor-switch-defensive-formations",
+    "pink-horrors-reform-shooting",
+    "rapid-dwarf-mortuary-advance",
+    "reavers-widen-clear-breakthrough",
+    "wolf-column-early-chaff",
+    "fanatic-carriers-marching-column",
+    "forest-dragon-evade-reform",
+    "bsb-restraint-reform-support",
+    "orderly-retreat-widen-fighting-rank",
+    "reform-deny-followup-impact-hits",
+    "orderly-retreat-open-order-redirect",
+    "grave-guard-drilled-widen",
+    "reavers-marching-column-breakthrough",
+    "wolf-column-retain-objectives"
+  ],
+  "kernpunten": [
+    {
+      "id": "use-marching-column-to-reach-useful-positions-quickly",
+      "titel": "Use marching column to reach useful positions quickly",
+      "tekst": "Use marching column's extra march distance to reach objectives, blocking positions or approaches for later attacks.",
+      "lessen": [
+        "vanguard-boars-column-flank-march",
+        "marching-column-anvil-advance",
+        "rapid-dwarf-mortuary-advance",
+        "wolf-column-early-chaff",
+        "fanatic-carriers-marching-column",
+        "reavers-marching-column-breakthrough",
+        "wolf-column-retain-objectives"
+      ],
+      "principe": "use-marching-column-to-reach-positions-quickly"
+    },
+    {
+      "id": "arrange-shooting-units-to-prevent-models-blocking-shots",
+      "titel": "Arrange shooting units to prevent models blocking shots",
+      "tekst": "Adjust your missile unit's formation so its own models do not obstruct sight to the target.",
+      "lessen": [
+        "reform-line-clear-shooting",
+        "compact-five-model-skirmisher-groups"
+      ],
+      "principe": null
+    },
+    {
+      "id": "use-evasive-to-reface-on-the-opponent-s-turn",
+      "titel": "Use Evasive to reface on the opponent's turn",
+      "tekst": "Take the free reform after an Evasive retreat so your unit has a useful facing before your own turn.",
+      "lessen": [
+        "evasive-reform-escape-facing",
+        "forest-dragon-evade-reform"
+      ],
+      "principe": null
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 106,
+      "sec": 311,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 52686,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 13390,
+        "reasoning_output_tokens": 10876
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

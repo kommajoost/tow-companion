@@ -1,0 +1,84 @@
+{
+  "subthema": "drops-first-turn",
+  "thema": "deployment",
+  "gemaaktOp": "2026-11-26T15:47:16.124Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "deployment: pre-game-checks,drops-first-turn,unit-placement,deploying-vs-shooting,ambush-scouts-vanguard",
+  "invoerHash": "ac61a57daf95",
+  "invoer": [
+    "fewer-drops-first-turn",
+    "wolves-berserkers-delay-important-drops",
+    "chaff-scouts-deployment",
+    "delay-vulnerable-artillery-deployment",
+    "baggage-placement-after-opponent",
+    "equal-drops-deploy-first",
+    "deploy-obvious-positions-early",
+    "deploy-assuming-second-turn",
+    "special-feature-choose-second",
+    "chance-encounter-late-aggressor",
+    "ambush-reduce-deployment-drops",
+    "disguise-refused-flank-mobile-drops",
+    "wood-elves-prefer-second-turn"
+  ],
+  "kernpunten": [
+    {
+      "id": "weigh-the-first-turn-bonus-when-choosing-deployment-drops",
+      "titel": "Weigh the first-turn bonus when choosing deployment drops",
+      "tekst": "Consider how your deployment drops affect the first-turn bonus so you can favour going first when it matters.",
+      "lessen": [
+        "fewer-drops-first-turn",
+        "wolves-berserkers-delay-important-drops",
+        "chaff-scouts-deployment",
+        "equal-drops-deploy-first",
+        "ambush-reduce-deployment-drops"
+      ],
+      "principe": "weigh-first-turn-bonus"
+    },
+    {
+      "id": "delay-key-placements-until-relevant-enemy-units-are-committe",
+      "titel": "Delay key placements until relevant enemy units are committed",
+      "tekst": "Wait for relevant enemy placements before choosing your own positions so you can use that information.",
+      "lessen": [
+        "wolves-berserkers-delay-important-drops",
+        "chaff-scouts-deployment",
+        "delay-vulnerable-artillery-deployment",
+        "baggage-placement-after-opponent",
+        "chance-encounter-late-aggressor",
+        "disguise-refused-flank-mobile-drops"
+      ],
+      "principe": "delay-key-placements-for-information"
+    },
+    {
+      "id": "deploy-defensively-when-preparing-to-go-second",
+      "titel": "Deploy defensively when preparing to go second",
+      "tekst": "Use a defensive deployment when preparing to go second so your important units are protected during the opponent's opening.",
+      "lessen": [
+        "deploy-assuming-second-turn",
+        "wood-elves-prefer-second-turn"
+      ],
+      "principe": null
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 105,
+      "sec": 164,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 52837,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 7481,
+        "reasoning_output_tokens": 5178
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

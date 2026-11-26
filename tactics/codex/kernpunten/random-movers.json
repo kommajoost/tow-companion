@@ -1,0 +1,89 @@
+{
+  "subthema": "random-movers",
+  "thema": "hammers",
+  "gemaaktOp": "2026-11-26T16:04:23.426Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "hammers: hammer-basics,heavy-cavalry,chariots,monsters-dragons,random-movers,using-hammers",
+  "invoerHash": "39ca1eb95ba5",
+  "invoer": [
+    "prefer-three-dice-random-movement",
+    "fanatics-essential-offensive-pieces",
+    "fanatics-cathay-large-targets",
+    "mangler-efficient-random-mover",
+    "hell-pit-utility-monster",
+    "nurgle-spawn-against-lanterns",
+    "leave-random-mover-lanes",
+    "random-movement-catches-shooters",
+    "random-movement-denies-countercharge",
+    "exploit-random-movement-variance",
+    "random-movement-unseen-targets",
+    "hide-random-movers-behind-hills",
+    "mangler-squig-decoy",
+    "pair-manglers-reduce-randomness",
+    "squig-hoppers-hunt-chaff",
+    "release-fanatics-before-bombardment",
+    "release-fanatics-opponents-turn",
+    "paired-fanatics-remove-themselves",
+    "spawn-catch-fleeing-targets",
+    "gigantic-spawn-pins-for-support"
+  ],
+  "kernpunten": [
+    {
+      "id": "use-unpredictable-random-movement-to-restrict-enemy-position",
+      "titel": "Use unpredictable random movement to restrict enemy positioning",
+      "tekst": "Threaten nearby ground with random movers so you can make opponents hesitate or change their positioning.",
+      "lessen": [
+        "hell-pit-utility-monster",
+        "exploit-random-movement-variance",
+        "hide-random-movers-behind-hills",
+        "mangler-squig-decoy",
+        "gigantic-spawn-pins-for-support"
+      ],
+      "principe": "restrict-positioning-with-random-movement"
+    },
+    {
+      "id": "use-random-movement-to-deny-charge-reactions",
+      "titel": "Use random movement to deny charge reactions",
+      "tekst": "Use random movement to make contact so your target cannot use its usual charge reaction.",
+      "lessen": [
+        "nurgle-spawn-against-lanterns",
+        "random-movement-catches-shooters",
+        "random-movement-denies-countercharge",
+        "spawn-catch-fleeing-targets"
+      ],
+      "principe": null
+    },
+    {
+      "id": "threaten-unseen-targets-with-random-movers",
+      "titel": "Threaten unseen targets with random movers",
+      "tekst": "Consider attacking targets behind terrain because, in the speakers' interpretation, your random mover does not need line of sight.",
+      "lessen": [
+        "random-movement-unseen-targets",
+        "hide-random-movers-behind-hills"
+      ],
+      "principe": null
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 72,
+      "sec": 159,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 44761,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 7397,
+        "reasoning_output_tokens": 5554
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

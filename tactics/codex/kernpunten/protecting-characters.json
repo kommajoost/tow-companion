@@ -1,0 +1,84 @@
+{
+  "subthema": "protecting-characters",
+  "thema": "characters",
+  "gemaaktOp": "2026-11-26T16:06:02.970Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "characters: combat-roles,bsb,mounts-items,challenges,protecting-characters",
+  "invoerHash": "7ddbccc269fa",
+  "invoer": [
+    "slann-higher-state-protection",
+    "dragon-deterrent-behind-wizard",
+    "support-character-opposite-threats",
+    "support-character-one-file-in",
+    "cluster-vulnerable-support-characters",
+    "protect-assassins-from-range",
+    "infernal-gateway-save-character",
+    "spectral-steed-caster-protection",
+    "shift-lone-character-protection",
+    "screen-pursuit-misses-character",
+    "hand-gork-rescue-character",
+    "foot-priests-infantry-protection",
+    "banshees-behind-closest-infantry",
+    "sandwich-banshees-between-engines",
+    "flying-banshee-scream-withdrawal",
+    "fated-dispel-low-roll"
+  ],
+  "kernpunten": [
+    {
+      "id": "keep-lone-characters-near-suitable-troops-for-targeting-prot",
+      "titel": "Keep lone characters near suitable troops for targeting protection",
+      "tekst": "Keep lone characters near suitable friendly troops to protect them from ranged targeting.",
+      "lessen": [
+        "protect-assassins-from-range",
+        "shift-lone-character-protection",
+        "foot-priests-infantry-protection",
+        "banshees-behind-closest-infantry"
+      ],
+      "principe": "protect-lone-characters-with-nearby-troops"
+    },
+    {
+      "id": "use-movement-spells-to-get-characters-out-of-danger",
+      "titel": "Use movement spells to get characters out of danger",
+      "tekst": "Use magical movement to rescue threatened characters or let them withdraw to safety after using their abilities.",
+      "lessen": [
+        "infernal-gateway-save-character",
+        "spectral-steed-caster-protection",
+        "hand-gork-rescue-character",
+        "flying-banshee-scream-withdrawal"
+      ],
+      "principe": "withdraw-characters-with-movement-spells"
+    },
+    {
+      "id": "keep-vulnerable-support-characters-out-of-direct-melee-conta",
+      "titel": "Keep vulnerable support characters out of direct melee contact",
+      "tekst": "Position vulnerable support characters where expected chargers cannot contact them directly, reducing their exposure to attacks.",
+      "lessen": [
+        "support-character-opposite-threats",
+        "support-character-one-file-in"
+      ],
+      "principe": "keep-support-characters-out-of-melee-contact"
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 79,
+      "sec": 95,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 46244,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 4486,
+        "reasoning_output_tokens": 2675
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

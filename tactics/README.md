@@ -13,6 +13,7 @@ How `public/tactics/bronnen.json`, `lessen.json` and `principes.json` are made. 
 | Validate and recount | `npm run tactics:build` (or `tactics:check`) | counts and status in `bronnen.json`, `public/tactics/themas.json` and `tags.json`, lessons per theme, sub-theme, phase and tag |
 | Themes, sub-themes and tags via Codex | `npm run tactics:index` (see "Index") | `tactics/codex/index/`, then `-- --toepassen` writes `lessen.json` |
 | Key principles above the lessons via Codex | `npm run tactics:principles` (see "Principles") | `tactics/codex/principes/`, `public/tactics/principes.json` |
+| Key points per section (sub-theme) via Codex | `npm run tactics:keypoints` (see "Key points per section") | `tactics/codex/kernpunten/`, `public/tactics/kernpunten.json` |
 
 `tactics/ruw/` and `tactics/cache/` are in `.gitignore`. Transcripts are never published.
 
@@ -177,6 +178,68 @@ on a side, no em or en dashes, at most 2 sentences, known theme and army, and th
 recounts lessons and channels and redoes the lists; `tactics:check` fails when the file differs from
 that recount. A lesson change that drops a principle below the threshold fails the build: re-run
 `npm run tactics:principles` (or fix it in `hand.json`).
+
+## Key points per section
+
+A theme opens as sections (its sub-themes), some with 30 or more lessons. Each section starts with its
+3 to 5 **key points**: the advice that several of its lessons give, so a player can learn the section
+without reading every lesson. A key point is a short claim (`titel`), one sentence (`tekst`) and the
+lessons of that section that back it. Like principles, titles and texts are AI summaries of those
+lessons (no claims of their own, no rules knowledge); the page says so in the detail view.
+
+Ranking is evidence: per key point the script counts lessons and distinct channels (`tel` from
+`tactics/principes-lib.mjs`) and ranks by channels, then lessons. Rules (`tactics/kernpunten-lib.mjs`):
+at least 2 lessons; points from 2 or more channels first, a one-channel point only to fill a section up
+to 3 (shown with its "1 ch" count); at most 3 for a section under 10 lessons, 4 under 16, else 5; a
+section under 4 lessons gets none. A key point that gives the same advice as a principle links to it
+(`principeId`), takes its title (and its text when that is one sentence) and the principle's lessons in
+that section, minus lessons the principles review removed (`lessenEraf` in the principles `hand.json`).
+
+```json
+{ "bijgewerkt": "2026-11-26", "drempel": { "lessen": 2, "sectie": 4 },
+  "perSubthema": { "<sub-theme id>": [{ "id", "titel", "tekst", "lessen": [], "nLessen", "nKanalen", "kanalen": [], "principeId?" }] } }
+```
+
+| Step | Command |
+|---|---|
+| Ask Codex for every section without an answer, then assemble | `npm run tactics:keypoints` |
+| Only some sections (also re-asks them) / all again | `-- --subthema screens,reading-the-enemy` / `-- --opnieuw` |
+| Show the prompt and schema of one theme | `-- --droog game-plan` |
+| Assemble only (after editing `hand.json`) | `npm run tactics:keypoints -- --samenstellen` |
+
+**Codex step.** One call per theme with the sections that need an answer (11 calls for the whole
+library, about 2 to 6 minutes each). Per section Codex gets its lessons (id, title, text, why, when
+not, tags, army, channel names) and the principles that cover at least 2 of its lessons; it answers
+`{ secties: { <sub-theme id>: [{ titel, tekst, lessen, principe }] } }`, 3 to 6 candidates per section.
+The `--output-schema` has one property per section with that section's lesson ids as an enum, so a key
+point can only use lessons of its own section. Same set-up and safety as the principles: `gpt-6.1-sol`,
+effort `high` (`--effort` or `TACTICS_KEYPOINTS_EFFORT`), read-only sandbox in an empty temporary
+folder, one call at a time, a stop on a usage limit, login error or unknown model and after 3 failed
+calls in a row. Each section is cached in `tactics/codex/kernpunten/<sub-theme>.json` (with a hash of its
+lessons and principles; assembling warns when a section is stale).
+
+**Assembling (deterministic).** Per section: drop lessons no longer in the section, merge two
+candidates when 60% of the smaller one's lessons are in the other, apply the hand corrections, link
+principles (Codex named one and at least 60% of the key point's lessons are in it, or 60% overlap both
+ways), count, rank and pick. What was merged, linked, dropped or kept with one channel is in
+`tactics/codex/kernpunten/samengesteld.json`.
+
+**Hand corrections** live in `tactics/codex/kernpunten/hand.json`, per sub-theme id, and always win:
+
+```json
+{ "<sub-theme id>": {
+  "nietSamenvoegen": [["a", "b"]],
+  "samenvoegen": [{ "in": "a", "uit": ["b"] }],
+  "weg": ["c"],
+  "wijzig": { "d": { "titel": "...", "tekst": "...", "lessenErbij": [], "lessenEraf": [], "principe": "id or null" } },
+  "nieuw": [{ "id", "titel", "tekst", "lessen": [] }] } }
+```
+
+**Checks.** `tactics:build` validates `kernpunten.json`: known sub-theme ids, every lesson exists and
+belongs to that sub-theme, at least 2 lessons, at most 5 key points, no section under 4 lessons, a
+known `principeId`, kebab-case ids, no em or en dashes, one sentence. It recounts and re-sorts;
+`tactics:check` fails when the file differs from that recount. If a lesson leaves its sub-theme, the
+build fails: re-run `npm run tactics:keypoints -- --subthema <id>` (or fix it in `hand.json`).
 
 ## Codex route (round 2 onwards)
 

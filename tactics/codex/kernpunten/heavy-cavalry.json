@@ -1,0 +1,85 @@
+{
+  "subthema": "heavy-cavalry",
+  "thema": "hammers",
+  "gemaaktOp": "2026-11-26T16:04:23.394Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "hammers: hammer-basics,heavy-cavalry,chariots,monsters-dragons,random-movers,using-hammers",
+  "invoerHash": "8af0857344d2",
+  "invoer": [
+    "core-heavy-cavalry-role-sizes",
+    "heavy-cavalry-dragon-backup",
+    "small-cavalry-counters-msu",
+    "white-wolf-knights-charge-lanterns",
+    "white-wolf-daemonology-block",
+    "six-silver-helms-command",
+    "three-four-model-pegasus-units",
+    "mournfang-impact-wound-rerolls",
+    "nomadic-boar-boy-objectives",
+    "frenzied-vanguard-boar-flankers",
+    "avoid-blood-knights-lanterns",
+    "chaos-knights-war-banner-swap",
+    "heavy-cavalry-avoid-prolonged-grinds",
+    "cavalry-flank-threat-choices",
+    "cavalry-reserve-response-options",
+    "empire-knights-support-combats",
+    "empire-knights-buy-artillery-time",
+    "dragon-prince-side-placement",
+    "champion-delaying-challenge"
+  ],
+  "kernpunten": [
+    {
+      "id": "use-threats-to-restrict-movement-without-committing-to-comba",
+      "titel": "Use threats to restrict movement without committing to combat",
+      "tekst": "Keep cavalry threatening a charge so you can make opponents hesitate or change their moves.",
+      "lessen": [
+        "nomadic-boar-boy-objectives",
+        "cavalry-flank-threat-choices",
+        "cavalry-reserve-response-options",
+        "empire-knights-buy-artillery-time"
+      ],
+      "principe": "restrict-movement-with-threats"
+    },
+    {
+      "id": "use-heavy-cavalry-to-support-combined-fights",
+      "titel": "Use heavy cavalry to support combined fights",
+      "tekst": "Use heavy cavalry alongside another unit so you can strengthen the combined fight with its charge.",
+      "lessen": [
+        "core-heavy-cavalry-role-sizes",
+        "empire-knights-support-combats"
+      ],
+      "principe": null
+    },
+    {
+      "id": "use-heavy-cavalry-as-a-mobile-backup",
+      "titel": "Use heavy cavalry as a mobile backup",
+      "tekst": "Use heavy cavalry as a second threat so you can bring its mobility to bear where needed.",
+      "lessen": [
+        "heavy-cavalry-dragon-backup",
+        "cavalry-reserve-response-options"
+      ],
+      "principe": null
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 72,
+      "sec": 159,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 44761,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 7397,
+        "reasoning_output_tokens": 5554
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

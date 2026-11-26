@@ -1,0 +1,138 @@
+{
+  "subthema": "objectives",
+  "thema": "scenarios",
+  "gemaaktOp": "2026-11-26T16:22:41.022Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "scenarios: scoring-units,objectives,baggage-train,king-of-the-hill,scenario-plans,late-game",
+  "invoerHash": "5a0ba75d25b4",
+  "invoer": [
+    "anchor-core-objective-threat",
+    "identify-contestable-objectives",
+    "natural-objective-opening-score",
+    "special-feature-choose-second",
+    "special-feature-first-turn-pressure",
+    "combo-charge-objective-defenders",
+    "support-scorers-with-hammers",
+    "clear-route-for-scorers",
+    "reform-footprint-objective-control",
+    "column-blockers-delay-objective-access",
+    "chaos-warriors-defensive-attrition",
+    "hybrid-hammer-objectives",
+    "move-to-hold-objectives",
+    "wind-blast-objective-distance",
+    "ambush-vacated-enemy-objectives",
+    "claim-objectives-against-gunlines",
+    "vanguard-temporary-objective-control",
+    "limit-enemy-natural-commitment",
+    "aggressor-pressure-both-central-objectives",
+    "chase-light-contenders-off-objectives",
+    "furious-charge-objective-push",
+    "cavalry-infantry-objective-handover",
+    "durable-army-claim-objectives-early",
+    "cavalry-push-off-objectives",
+    "beastmen-infantry-safe-ambush",
+    "jade-warriors-deny-scoring",
+    "kiknik-ambushers-score-objectives",
+    "wolf-riders-harass-objective-scorers",
+    "wolf-column-retain-objectives",
+    "ambush-replace-early-wolf-scorers",
+    "resurrect-outnumber-central-objective",
+    "herdstone-after-main-battle"
+  ],
+  "kernpunten": [
+    {
+      "id": "win-objective-contests-without-needing-to-destroy-enemy-unit",
+      "titel": "Win objective contests without needing to destroy enemy units",
+      "tekst": "Secure objective points through your position or by moving enemies away without needing to destroy their units.",
+      "lessen": [
+        "move-to-hold-objectives",
+        "wind-blast-objective-distance",
+        "chase-light-contenders-off-objectives",
+        "furious-charge-objective-push",
+        "durable-army-claim-objectives-early",
+        "cavalry-push-off-objectives",
+        "jade-warriors-deny-scoring",
+        "resurrect-outnumber-central-objective"
+      ],
+      "principe": "win-objectives-without-destroying-enemies"
+    },
+    {
+      "id": "start-scoring-accessible-progressive-objectives-early",
+      "titel": "Start scoring accessible progressive objectives early",
+      "tekst": "Move your scorers onto accessible objectives early so you can collect points during the opening turns.",
+      "lessen": [
+        "natural-objective-opening-score",
+        "claim-objectives-against-gunlines",
+        "vanguard-temporary-objective-control",
+        "cavalry-infantry-objective-handover",
+        "durable-army-claim-objectives-early",
+        "ambush-replace-early-wolf-scorers"
+      ],
+      "principe": "start-progressive-scoring-early"
+    },
+    {
+      "id": "deploy-scorers-to-reach-the-objectives-you-plan-to-contest",
+      "titel": "Deploy scorers to reach the objectives you plan to contest",
+      "tekst": "Choose objectives your army can reach and deploy your scorers to claim them.",
+      "lessen": [
+        "identify-contestable-objectives",
+        "natural-objective-opening-score"
+      ],
+      "principe": "deploy-scorers-to-reach-objectives"
+    },
+    {
+      "id": "use-ambushers-to-score-in-unattended-areas",
+      "titel": "Use ambushers to score in unattended areas",
+      "tekst": "Bring your ambushers into available space to capture objectives left unattended.",
+      "lessen": [
+        "ambush-vacated-enemy-objectives",
+        "beastmen-infantry-safe-ambush",
+        "kiknik-ambushers-score-objectives",
+        "ambush-replace-early-wolf-scorers"
+      ],
+      "principe": "use-ambushers-to-score-in-unattended-areas"
+    },
+    {
+      "id": "use-supported-charges-to-dislodge-objective-defenders",
+      "titel": "Use supported charges to dislodge objective defenders",
+      "tekst": "Support your charges against objective defenders so your attackers can push them off the position.",
+      "lessen": [
+        "combo-charge-objective-defenders",
+        "cavalry-push-off-objectives"
+      ],
+      "principe": "support-charges-against-objective-defenders"
+    },
+    {
+      "id": "damage-enemy-scorers-to-deny-their-objective-points",
+      "titel": "Damage enemy scorers to deny their objective points",
+      "tekst": "Reduce enemy scoring units below scoring strength so you can stop them earning objective points.",
+      "lessen": [
+        "jade-warriors-deny-scoring",
+        "wolf-riders-harass-objective-scorers"
+      ],
+      "principe": "damage-scorers-to-deny-points"
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 57,
+      "sec": 125,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 40537,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 5975,
+        "reasoning_output_tokens": 4104
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

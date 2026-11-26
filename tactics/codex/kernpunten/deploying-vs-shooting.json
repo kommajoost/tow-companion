@@ -1,0 +1,82 @@
+{
+  "subthema": "deploying-vs-shooting",
+  "thema": "deployment",
+  "gemaaktOp": "2026-11-26T15:47:16.125Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "deployment: pre-game-checks,drops-first-turn,unit-placement,deploying-vs-shooting,ambush-scouts-vanguard",
+  "invoerHash": "1646203be296",
+  "invoer": [
+    "shelter-monsters-from-cannons",
+    "forest-bunker-cover",
+    "deploy-beyond-moving-shooters",
+    "artillery-pivot-into-woods",
+    "drilled-cavalry-terrain-cover",
+    "rangers-skirmish-versus-cathay",
+    "rangers-screen-helblaster-fire",
+    "exile-pegasus-knights-start-hidden",
+    "manglers-shield-doom-divers",
+    "hide-mangler-from-cannons",
+    "jezzails-hidden-lantern-kill-lanes",
+    "deploy-defensively-vs-shooting",
+    "combine-wood-elf-forests"
+  ],
+  "kernpunten": [
+    {
+      "id": "hide-vulnerable-units-behind-terrain-to-deny-enemy-shooting",
+      "titel": "Hide vulnerable units behind terrain to deny enemy shooting",
+      "tekst": "Keep vulnerable units out of enemy sight during deployment to protect them from opening shooting.",
+      "lessen": [
+        "shelter-monsters-from-cannons",
+        "artillery-pivot-into-woods",
+        "exile-pegasus-knights-start-hidden",
+        "hide-mangler-from-cannons",
+        "jezzails-hidden-lantern-kill-lanes",
+        "deploy-defensively-vs-shooting",
+        "combine-wood-elf-forests"
+      ],
+      "principe": "hide-vulnerable-units-behind-terrain"
+    },
+    {
+      "id": "screen-your-important-units-from-enemy-shooting",
+      "titel": "Screen your important units from enemy shooting",
+      "tekst": "Deploy a screen in front of important units so enemy shooting must deal with that protection first.",
+      "lessen": [
+        "rangers-screen-helblaster-fire",
+        "manglers-shield-doom-divers"
+      ],
+      "principe": "screen-important-units-from-shooting"
+    },
+    {
+      "id": "use-terrain-cover-to-protect-units-from-shooting",
+      "titel": "Use terrain cover to protect units from shooting",
+      "tekst": "Position your units to gain cover from terrain so enemy shooting is less effective.",
+      "lessen": [
+        "forest-bunker-cover",
+        "drilled-cavalry-terrain-cover"
+      ],
+      "principe": null
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 105,
+      "sec": 164,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 52837,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 7481,
+        "reasoning_output_tokens": 5178
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

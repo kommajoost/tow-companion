@@ -14,8 +14,8 @@ const MAX_LAGEN = 6;
 
 // De tactiekdatabank (docs/tactics/ontwerp.md). Nog geen hoofdtab: geopend vanuit Settings of via
 // `?tactics`. Twee weergaven: Lessons (Essentials met de principes, thema's met subthema's, tags,
-// lessen) en Sources. In Lessons staan de geopende lagen op een stapel: principe of thema, les, de
-// lessen met een tag, weer een les. Op de
+// lessen) en Sources. In Lessons staan de geopende lagen op een stapel: principe of thema, kernpunt van
+// een sectie, les, de lessen met een tag, weer een les. Op de
 // telefoon is elke laag een eigen scherm (Back haalt de bovenste weg); vanaf ~760 px staat de lijst
 // links en de bovenste laag rechts, en is de onderste laag rechts geen aparte Back-stap.
 export function TacticsPage({ onClose }: { onClose: () => void }) {
@@ -89,6 +89,9 @@ export function TacticsPage({ onClose }: { onClose: () => void }) {
 
   const openTag = (id: string) => duw({ soort: 'tag', id });
 
+  // Een kernpunt komt altijd bovenop het thema waarin het staat.
+  const openKernpunt = (sub: string, id: string) => duw({ soort: 'kernpunt', id, sub });
+
   // Een principe uit de lijst begint de stapel opnieuw (zoals een thema); uit een thema komt het erbovenop.
   const openPrincipe = (id: string, vanuitLijst: boolean) => {
     if (!vanuitLijst) { duw({ soort: 'principe', id }); return; }
@@ -111,6 +114,7 @@ export function TacticsPage({ onClose }: { onClose: () => void }) {
     if (laag.soort === 'thema') return data?.vocab.themas.find((t) => t.id === laag.id)?.naam ?? 'Theme';
     if (laag.soort === 'tag') return data?.tags.find((t) => t.id === laag.id)?.label ?? 'Tag';
     if (laag.soort === 'principe') return 'Principle';
+    if (laag.soort === 'kernpunt') return 'Key point';
     return 'Lesson';
   };
   const terug = () => {
@@ -170,9 +174,11 @@ export function TacticsPage({ onClose }: { onClose: () => void }) {
         tags={data.tags}
         bronnen={data.bronnen}
         principes={data.principes}
+        kernpunten={data.kernpunten}
         wide={wide}
         lagen={lagen}
         onOpenPrincipe={openPrincipe}
+        onOpenKernpunt={openKernpunt}
         onOpenThema={openThema}
         onOpenLes={openLes}
         onOpenTag={openTag}

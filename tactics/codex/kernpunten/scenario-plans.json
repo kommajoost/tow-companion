@@ -1,0 +1,90 @@
+{
+  "subthema": "scenario-plans",
+  "thema": "scenarios",
+  "gemaaktOp": "2026-11-26T16:22:41.023Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "scenarios: scoring-units,objectives,baggage-train,king-of-the-hill,scenario-plans,late-game",
+  "invoerHash": "7000aa9ba7de",
+  "invoer": [
+    "army-plan-every-mission",
+    "drawn-lines-reserve-backup",
+    "encirclement-protect-vulnerable-scorer",
+    "field-glory-wide-deployment",
+    "domination-central-late-expansion",
+    "domination-aggressive-pin",
+    "chance-encounter-charge-safety",
+    "chance-encounter-late-aggressor",
+    "encirclement-short-objective-triangle",
+    "reavers-widen-clear-breakthrough",
+    "close-quarter-defensive-shooting",
+    "chance-encounter-patient-play",
+    "close-quarters-deny-enemy-scoring",
+    "reavers-marching-column-breakthrough"
+  ],
+  "kernpunten": [
+    {
+      "id": "build-your-list-to-meet-the-tournament-s-mission-requirement",
+      "titel": "Build your list to meet the tournament's mission requirements",
+      "tekst": "Check the tournament missions while building your list so your army has a workable plan for their requirements.",
+      "lessen": [
+        "army-plan-every-mission",
+        "drawn-lines-reserve-backup"
+      ],
+      "principe": "build-for-mission-requirements"
+    },
+    {
+      "id": "deploy-scorers-to-reach-the-objectives-you-plan-to-contest",
+      "titel": "Deploy scorers to reach the objectives you plan to contest",
+      "tekst": "Plan your deployment around reachable scoring locations so your units can get into position.",
+      "lessen": [
+        "field-glory-wide-deployment",
+        "domination-central-late-expansion",
+        "encirclement-short-objective-triangle"
+      ],
+      "principe": "deploy-scorers-to-reach-objectives"
+    },
+    {
+      "id": "plan-late-moves-into-table-quarters",
+      "titel": "Plan late moves into table quarters",
+      "tekst": "Plan your late moves into table quarters so you can collect their endgame points.",
+      "lessen": [
+        "domination-central-late-expansion",
+        "close-quarter-defensive-shooting",
+        "chance-encounter-patient-play"
+      ],
+      "principe": null
+    },
+    {
+      "id": "with-the-stronger-shooting-army-shoot-first-and-fight-later",
+      "titel": "With the stronger shooting army, shoot first and fight later",
+      "tekst": "Use your shooting while delaying combat when the mission lets you wait before committing.",
+      "lessen": [
+        "close-quarter-defensive-shooting",
+        "chance-encounter-patient-play"
+      ],
+      "principe": "ranged-pressure-forces-approaches"
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 57,
+      "sec": 125,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 40537,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 5975,
+        "reasoning_output_tokens": 4104
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

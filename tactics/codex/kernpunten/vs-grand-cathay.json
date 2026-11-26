@@ -1,0 +1,129 @@
+{
+  "subthema": "vs-grand-cathay",
+  "thema": "matchups",
+  "gemaaktOp": "2026-11-26T16:20:32.053Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "matchups: picking-fights,vs-sky-lanterns,vs-grand-cathay,vs-beastmen,vs-bretonnia,vs-tomb-kings,vs-monsters,vs-other",
+  "invoerHash": "9542606a0e5d",
+  "invoer": [
+    "dragon-sword-deters-miao",
+    "bsb-against-rocket-panic",
+    "deny-cathay-valuable-cannon-targets",
+    "defensive-builds-weather-cathay",
+    "hordes-bog-down-cathay",
+    "dispel-items-against-cathay",
+    "blazing-sun-order-versus-cathay",
+    "ap-three-cathay-threats",
+    "jade-lancers-ambush-cannons",
+    "duke-threatens-both-miao-forms",
+    "multiple-stonehorns-against-cathay",
+    "gorgers-hunt-cathayan-cannons",
+    "kiknik-wolves-cathayan-artillery",
+    "doom-divers-against-cathay",
+    "fanatics-cathay-large-targets",
+    "vampire-ethereal-lantern-control",
+    "six-fell-bats-cannons",
+    "lance-cavalry-deter-jade-lancers",
+    "rangers-skirmish-versus-cathay",
+    "own-dragon-pressure-miao",
+    "tarpit-shugengan-with-large-units",
+    "ogre-vanguard-threat-overload",
+    "infantry-combat-escapes-bombardment",
+    "support-wyvern-against-shugengan",
+    "avoid-challenge-roadblock-miao",
+    "artillery-pressure-miao",
+    "shoot-cathayan-cannons-first",
+    "spellbreaking-stop-plague-rust",
+    "reliable-strength-against-cathay",
+    "doom-divers-opening-artillery-volley",
+    "black-orcs-rust-jade-warriors",
+    "jade-warriors-deny-scoring"
+  ],
+  "kernpunten": [
+    {
+      "id": "against-cathay-send-cannon-hunters-that-can-handle-ogre-crew",
+      "titel": "Against Cathay, send cannon hunters that can handle Ogre crews",
+      "tekst": "Send cannon hunters with enough bodies or combat power to survive and handle the Ogre crew.",
+      "lessen": [
+        "gorgers-hunt-cathayan-cannons",
+        "kiknik-wolves-cathayan-artillery",
+        "six-fell-bats-cannons"
+      ],
+      "principe": "cathay-cannon-hunters-handle-ogre-crews"
+    },
+    {
+      "id": "against-cathay-aim-doom-divers-at-its-big-threats-and-artill",
+      "titel": "Against Cathay, aim Doom Divers at its big threats and artillery",
+      "tekst": "Use Doom Divers against Cathay's large threats or artillery for their substantial damage potential.",
+      "lessen": [
+        "doom-divers-against-cathay",
+        "support-wyvern-against-shugengan",
+        "doom-divers-opening-artillery-volley"
+      ],
+      "principe": "use-doom-divers-to-damage-the-shugengan-lord"
+    },
+    {
+      "id": "use-ap3-to-remove-sky-lantern-armour-saves",
+      "titel": "Use AP3 to remove Sky Lantern armour saves",
+      "tekst": "Use AP3 attacks against Sky Lanterns so their armour does not stop your damage.",
+      "lessen": [
+        "ap-three-cathay-threats",
+        "doom-divers-against-cathay",
+        "fanatics-cathay-large-targets"
+      ],
+      "principe": null
+    },
+    {
+      "id": "remove-enemy-artillery-early-to-protect-your-important-units",
+      "titel": "Remove enemy artillery early to protect your important units",
+      "tekst": "Shoot Cathay's artillery early to reduce the damage from its opening barrage.",
+      "lessen": [
+        "shoot-cathayan-cannons-first",
+        "doom-divers-opening-artillery-volley"
+      ],
+      "principe": "remove-enemy-artillery-early"
+    },
+    {
+      "id": "bring-dispelling-aids-against-cathay-s-plague-of-rust",
+      "titel": "Bring dispelling aids against Cathay's Plague of Rust",
+      "tekst": "Bring dispelling aids so you can stop Cathay's Plague of Rust.",
+      "lessen": [
+        "dispel-items-against-cathay",
+        "spellbreaking-stop-plague-rust"
+      ],
+      "principe": null
+    },
+    {
+      "id": "use-suitable-ambushers-to-hunt-enemy-war-machines",
+      "titel": "Use suitable ambushers to hunt enemy war machines",
+      "tekst": "Send suitable ambushing units after Cathayan cannons to destroy them.",
+      "lessen": [
+        "jade-lancers-ambush-cannons",
+        "gorgers-hunt-cathayan-cannons"
+      ],
+      "principe": "ambushers-hunt-war-machines"
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 140,
+      "sec": 244,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 62238,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 11351,
+        "reasoning_output_tokens": 8207
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

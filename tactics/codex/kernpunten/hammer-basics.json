@@ -1,0 +1,75 @@
+{
+  "subthema": "hammer-basics",
+  "thema": "hammers",
+  "gemaaktOp": "2026-11-26T16:04:23.394Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "hammers: hammer-basics,heavy-cavalry,chariots,monsters-dragons,random-movers,using-hammers",
+  "invoerHash": "f90b2b9412dc",
+  "invoer": [
+    "hammers-need-the-charge",
+    "hammers-need-durability",
+    "hammer-must-deal-damage",
+    "mobile-core-objective-attackers",
+    "melee-skirmishers-value-swiftstride",
+    "dragon-ogres-over-ghorgon",
+    "plague-drones-fight-lanterns",
+    "khorne-furies-melee-skirmishers",
+    "hybrid-hammer-ap"
+  ],
+  "kernpunten": [
+    {
+      "id": "choose-durable-hammers-that-can-keep-dealing-damage",
+      "titel": "Choose durable hammers that can keep dealing damage",
+      "tekst": "Choose hammers with enough durability to take hits and still deal damage.",
+      "lessen": [
+        "hammers-need-durability",
+        "plague-drones-fight-lanterns",
+        "hybrid-hammer-ap"
+      ],
+      "principe": null
+    },
+    {
+      "id": "value-armour-piercing-when-choosing-melee-attackers",
+      "titel": "Value armour piercing when choosing melee attackers",
+      "tekst": "Look for armour-piercing attacks so you can give your melee units useful killing power.",
+      "lessen": [
+        "hammer-must-deal-damage",
+        "khorne-furies-melee-skirmishers",
+        "hybrid-hammer-ap"
+      ],
+      "principe": null
+    },
+    {
+      "id": "prefer-swiftstride-to-help-your-melee-units-reach-charges",
+      "titel": "Prefer Swiftstride to help your melee units reach charges",
+      "tekst": "Choose Swiftstride for melee attackers so you can reach the charges you want.",
+      "lessen": [
+        "hammers-need-the-charge",
+        "melee-skirmishers-value-swiftstride"
+      ],
+      "principe": null
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 72,
+      "sec": 159,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 44761,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 7397,
+        "reasoning_output_tokens": 5554
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

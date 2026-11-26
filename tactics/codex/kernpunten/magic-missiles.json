@@ -1,0 +1,82 @@
+{
+  "subthema": "magic-missiles",
+  "thema": "magic",
+  "gemaaktOp": "2026-11-26T16:10:32.912Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "magic: wizard-builds,lores-spells,dispelling,wizard-placement,magic-missiles,buffs-hexes,control-spells,casting-aids",
+  "invoerHash": "3c64e059bbcb",
+  "invoer": [
+    "death-star-missile-support",
+    "blaster-multiple-magic-missiles",
+    "mobile-blaster-late-points",
+    "summoning-or-ruby-ring",
+    "ruby-ring-unit-champions",
+    "wilds-missile-against-lanterns",
+    "respect-unreliable-missile-threats",
+    "doombolt-long-range-chip",
+    "magic-missiles-bypass-cover",
+    "missiles-deny-terrain-scoring",
+    "concentrate-fire-finish-lanterns",
+    "vile-tide-large-wound-targets",
+    "summoning-pick-off-light-cavalry",
+    "vile-tide-armoured-knights",
+    "vindictive-glare-elite-cavalry",
+    "wolf-riders-harass-objective-scorers"
+  ],
+  "kernpunten": [
+    {
+      "id": "damage-enemy-scorers-to-deny-their-objective-points",
+      "titel": "Damage enemy scorers to deny their objective points",
+      "tekst": "Use magic missiles to damage enemy scoring units so they cannot earn their objective points.",
+      "lessen": [
+        "missiles-deny-terrain-scoring",
+        "wolf-riders-harass-objective-scorers"
+      ],
+      "principe": "damage-scorers-to-deny-points"
+    },
+    {
+      "id": "aim-suitable-missiles-at-expensive-single-wound-cavalry",
+      "titel": "Aim suitable missiles at expensive single-wound cavalry",
+      "tekst": "Target expensive single-wound cavalry with suitable magic missiles to remove valuable models.",
+      "lessen": [
+        "vile-tide-armoured-knights",
+        "vindictive-glare-elite-cavalry"
+      ],
+      "principe": null
+    },
+    {
+      "id": "use-magic-missiles-against-enemies-that-evade-combat",
+      "titel": "Use magic missiles against enemies that evade combat",
+      "tekst": "Bring magic missiles to threaten mobile enemies you struggle to catch in combat.",
+      "lessen": [
+        "death-star-missile-support",
+        "mobile-blaster-late-points",
+        "summoning-or-ruby-ring",
+        "summoning-pick-off-light-cavalry"
+      ],
+      "principe": null
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 109,
+      "sec": 266,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 53922,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 11459,
+        "reasoning_output_tokens": 8356
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

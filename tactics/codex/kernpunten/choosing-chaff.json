@@ -1,0 +1,105 @@
+{
+  "subthema": "choosing-chaff",
+  "thema": "chaff",
+  "gemaaktOp": "2026-11-26T15:55:50.209Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "chaff: choosing-chaff,redirecting,decoys-bait,screens,retreat-paths,clearing-chaff",
+  "invoerHash": "c6d847c72ac8",
+  "invoer": [
+    "chaff-sets-tempo",
+    "chaff-must-be-fast",
+    "chaff-under-100-points",
+    "chaff-versatile-specific",
+    "chaff-all-round-movement",
+    "screeners-evasive-feigned-flight",
+    "chaff-budget-five-percent",
+    "maximise-razorgor-core",
+    "empire-archers-flexible-chaff",
+    "jungle-swarms-disposable-anvil",
+    "lizardmen-screening-packages",
+    "chameleon-skinks-worth-cost",
+    "nomadic-mix-chaff-selections",
+    "single-wolf-chariots-limit-panic",
+    "wolf-riders-five-with-spears",
+    "skip-snotling-pump-wagons",
+    "nomadic-needs-plenty-chaff",
+    "giant-rats-redirection-choice",
+    "tomb-scorpion-dangerous-chaff",
+    "fell-bats-scenario-pairs",
+    "six-fell-bats-cannons",
+    "glade-guard-chaff-option",
+    "chaff-scouts-deployment",
+    "beastmen-death-star-chaff-wings",
+    "chaff-kills-are-bonuses",
+    "avoid-protecting-expendable-chaff",
+    "chaff-attack-weak-targets",
+    "engage-wizard-before-casting",
+    "dragon-ogres-sacrificial-receivers",
+    "wood-elf-eagle-war-machines"
+  ],
+  "kernpunten": [
+    {
+      "id": "choose-chaff-that-can-fill-several-roles",
+      "titel": "Choose chaff that can fill several roles",
+      "tekst": "Choose versatile chaff so each unit offers several ways to support your army.",
+      "lessen": [
+        "chaff-versatile-specific",
+        "empire-archers-flexible-chaff",
+        "glade-guard-chaff-option"
+      ],
+      "principe": null
+    },
+    {
+      "id": "include-chaff-to-enable-your-main-combat-units",
+      "titel": "Include chaff to enable your main combat units",
+      "tekst": "Use chaff to obstruct enemy plans and create opportunities for your main combat units.",
+      "lessen": [
+        "chaff-sets-tempo",
+        "nomadic-needs-plenty-chaff"
+      ],
+      "principe": null
+    },
+    {
+      "id": "keep-your-expendable-chaff-cheap",
+      "titel": "Keep your expendable chaff cheap",
+      "tekst": "Keep investment in expendable chaff low because losing it is part of its job.",
+      "lessen": [
+        "chaff-under-100-points",
+        "wolf-riders-five-with-spears"
+      ],
+      "principe": "keep-expendable-chaff-cheap"
+    },
+    {
+      "id": "use-larger-fell-bat-units-against-war-machine-crews",
+      "titel": "Use larger Fell Bat units against war machine crews",
+      "tekst": "Take enough Fell Bats for fighting war machine crews because small units lose effectiveness as they take losses.",
+      "lessen": [
+        "fell-bats-scenario-pairs",
+        "six-fell-bats-cannons"
+      ],
+      "principe": null
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 88,
+      "sec": 195,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 48915,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 8529,
+        "reasoning_output_tokens": 6214
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

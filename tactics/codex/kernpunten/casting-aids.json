@@ -1,0 +1,77 @@
+{
+  "subthema": "casting-aids",
+  "thema": "magic",
+  "gemaaktOp": "2026-11-26T16:10:32.913Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "magic: wizard-builds,lores-spells,dispelling,wizard-placement,magic-missiles,buffs-hexes,control-spells,casting-aids",
+  "invoerHash": "a4f005fe8d98",
+  "invoer": [
+    "illusion-familiar-control-spells",
+    "mobile-dark-wizard-scrolls",
+    "illusion-needs-casting-bonuses",
+    "casting-bonuses-magic-investment",
+    "prioritise-urgency-casting-reliability",
+    "black-staff-focus-familiars",
+    "power-scrolls-critical-ethereal-turns",
+    "curse-weaver-without-familiar",
+    "double-engine-casting-core",
+    "scrolls-contested-hexes-vortexes",
+    "save-scroll-decisive-control",
+    "swarm-battery-healing-cycle"
+  ],
+  "kernpunten": [
+    {
+      "id": "use-power-scrolls-for-crucial-casts",
+      "titel": "Use Power Scrolls for crucial casts",
+      "tekst": "Use a Power Scroll when a particular spell is crucial to improve your chance of getting it through.",
+      "lessen": [
+        "prioritise-urgency-casting-reliability",
+        "power-scrolls-critical-ethereal-turns",
+        "save-scroll-decisive-control"
+      ],
+      "principe": "use-power-scrolls-for-crucial-casts"
+    },
+    {
+      "id": "support-demanding-spells-with-extra-casting-bonuses",
+      "titel": "Support demanding spells with extra casting bonuses",
+      "tekst": "Seek casting bonuses beyond wizard level when investing in magic to make demanding spells more reliable.",
+      "lessen": [
+        "illusion-needs-casting-bonuses",
+        "casting-bonuses-magic-investment"
+      ],
+      "principe": "support-demanding-spells-with-casting-bonuses"
+    },
+    {
+      "id": "keep-your-casting-support-within-range",
+      "titel": "Keep your casting support within range",
+      "tekst": "Keep sources of casting bonuses close enough to your casters for those bonuses to apply.",
+      "lessen": [
+        "double-engine-casting-core",
+        "swarm-battery-healing-cycle"
+      ],
+      "principe": null
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 109,
+      "sec": 266,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 53922,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 11459,
+        "reasoning_output_tokens": 8356
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

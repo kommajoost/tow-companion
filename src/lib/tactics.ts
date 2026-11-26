@@ -182,11 +182,35 @@ export interface PrincipesBestand {
   perLeger: Record<string, string[]>;
 }
 
+/** Een kernpunt van een subthema (tactics/codex/kernpunten.mjs): een advies dat meerdere lessen van
+ *  die sectie geven. Titel en tekst zijn een AI-samenvatting; de tellingen komen uit de gegevens. */
+export interface Kernpunt {
+  id: string;
+  titel: string;
+  /** Eén zin. */
+  tekst: string;
+  lessen: string[];
+  nLessen: number;
+  /** Aantal verschillende kanalen onder de lessen. */
+  nKanalen: number;
+  kanalen: string[];
+  /** Het principe met (vrijwel) dezelfde lessen, als dat er is. */
+  principeId?: string;
+}
+
+/** public/tactics/kernpunten.json: per subthema-id de kernpunten op rangorde (kanalen, dan lessen). */
+export interface KernpuntenBestand {
+  bijgewerkt: string | null;
+  perSubthema: Record<string, Kernpunt[]>;
+}
+
 export interface TacticsData {
   /** null = bronnen.json ontbreekt of is onleesbaar. */
   bronnen: BronnenBestand | null;
   /** Ontbreekt principes.json, dan leeg (de pagina toont dan alleen de thema's). */
   principes: PrincipesBestand;
+  /** Ontbreekt kernpunten.json, dan leeg (de secties tonen dan meteen hun lessen). */
+  kernpunten: KernpuntenBestand;
   /** Ontbreekt lessen.json, dan een lege lijst: dat is gewoon "nog geen lessen". */
   lessen: LessenBestand;
   /** Thema's en fases. Ontbreekt themas.json, dan afgeleid uit de ids in de lessen. */
@@ -359,6 +383,33 @@ function leesPrincipes(v: unknown, lessen: Les[]): PrincipesBestand {
   };
 }
 
+/** Leest kernpunten.json; alleen kernpunten met minstens één bestaande les blijven. */
+function leesKernpunten(v: unknown, lessen: Les[]): KernpuntenBestand {
+  const leeg: KernpuntenBestand = { bijgewerkt: null, perSubthema: {} };
+  if (!isObj(v) || !isObj(v.perSubthema)) return leeg;
+  const lesIds = new Set(lessen.map((l) => l.id));
+  const getal = (x: unknown) => (typeof x === 'number' && Number.isFinite(x) ? x : 0);
+  const perSubthema: Record<string, Kernpunt[]> = {};
+  for (const [sub, lijst] of Object.entries(v.perSubthema)) {
+    if (!Array.isArray(lijst)) continue;
+    const kp: Kernpunt[] = lijst
+      .filter((k): k is Record<string, unknown> & { id: string; titel: string } => isObj(k) && typeof k.id === 'string' && typeof k.titel === 'string')
+      .map((k) => ({
+        id: k.id,
+        titel: k.titel,
+        tekst: typeof k.tekst === 'string' ? k.tekst : '',
+        lessen: strings(k.lessen).filter((id) => lesIds.has(id)),
+        nLessen: getal(k.nLessen),
+        nKanalen: getal(k.nKanalen),
+        kanalen: strings(k.kanalen),
+        ...(typeof k.principeId === 'string' ? { principeId: k.principeId } : {}),
+      }))
+      .filter((k) => k.lessen.length > 0);
+    if (kp.length) perSubthema[sub] = kp;
+  }
+  return { bijgewerkt: typeof v.bijgewerkt === 'string' ? v.bijgewerkt : null, perSubthema };
+}
+
 let cache: Promise<TacticsData> | null = null;
 
 /** Haalt de bestanden één keer op. Mislukt bronnen.json (offline, ontbreekt), dan wordt de
@@ -367,13 +418,13 @@ export function laadTactics(): Promise<TacticsData> {
   if (cache) return cache;
   const p = Promise.all([
     haalJson('tactics/bronnen.json'), haalJson('tactics/lessen.json'), haalJson('tactics/themas.json'), haalJson('tactics/tags.json'),
-    haalJson('tactics/principes.json'),
+    haalJson('tactics/principes.json'), haalJson('tactics/kernpunten.json'),
   ])
-    .then(([b, l, t, g, p]) => {
+    .then(([b, l, t, g, p, k]) => {
       const lessen = leesLessen(l);
       return {
         bronnen: leesBronnen(b), lessen, vocab: leesVocab(t, lessen.lessen), tags: leesTags(g, lessen.lessen),
-        principes: leesPrincipes(p, lessen.lessen),
+        principes: leesPrincipes(p, lessen.lessen), kernpunten: leesKernpunten(k, lessen.lessen),
       };
     });
   cache = p;

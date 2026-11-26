@@ -1,0 +1,85 @@
+{
+  "subthema": "flanks-centre",
+  "thema": "game-plan",
+  "gemaaktOp": "2026-11-26T15:44:28.177Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "game-plan: reading-the-enemy,flanks-centre,concentration,tempo-trading,threat-zones,aggression-control,list-building",
+  "invoerHash": "046148a68e0e",
+  "invoer": [
+    "board-in-thirds",
+    "flank-kill-or-delay",
+    "flank-units-not-infantry",
+    "hammers-on-flanks",
+    "sacrifice-a-flank",
+    "central-anvil-all-round-wings",
+    "fast-attackers-long-flank-route",
+    "beastmen-death-star-chaff-wings",
+    "eagle-skycutter-flank-pair",
+    "mortuary-cult-refused-flank",
+    "hold-centre-win-flanks",
+    "after-the-flank",
+    "harassment-infantry-flank-terrain",
+    "high-elves-flee-reposition",
+    "chaos-warriors-defensive-attrition",
+    "wood-elves-occupy-cleared-space",
+    "terror-on-flanks"
+  ],
+  "kernpunten": [
+    {
+      "id": "hold-the-centre-win-a-flank-then-turn-on-the-centre",
+      "titel": "Hold the centre, win a flank, then turn on the centre",
+      "tekst": "Hold the middle while your flank units win space they can use to support the centre or attack the backline.",
+      "lessen": [
+        "flank-units-not-infantry",
+        "hammers-on-flanks",
+        "central-anvil-all-round-wings",
+        "hold-centre-win-flanks",
+        "after-the-flank",
+        "chaos-warriors-defensive-attrition"
+      ],
+      "principe": "central-anvil-mobile-flanks"
+    },
+    {
+      "id": "use-expendable-units-to-buy-time-for-wins-elsewhere",
+      "titel": "Use expendable units to buy time for wins elsewhere",
+      "tekst": "Use chaff to delay the flank you expect to lose while concentrating your strength on the flank you want to win.",
+      "lessen": [
+        "flank-kill-or-delay",
+        "sacrifice-a-flank"
+      ],
+      "principe": "expendable-units-buy-time"
+    },
+    {
+      "id": "use-flank-terrain-to-keep-units-out-of-sight",
+      "titel": "Use flank terrain to keep units out of sight",
+      "tekst": "Use terrain on the flanks to block enemy line of sight and protect your units.",
+      "lessen": [
+        "hammers-on-flanks",
+        "harassment-infantry-flank-terrain"
+      ],
+      "principe": null
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 100,
+      "sec": 218,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 51144,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 10350,
+        "reasoning_output_tokens": 7714
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

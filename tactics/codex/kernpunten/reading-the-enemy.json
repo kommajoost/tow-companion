@@ -1,0 +1,75 @@
+{
+  "subthema": "reading-the-enemy",
+  "thema": "game-plan",
+  "gemaaktOp": "2026-11-26T15:44:28.176Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "game-plan: reading-the-enemy,flanks-centre,concentration,tempo-trading,threat-zones,aggression-control,list-building",
+  "invoerHash": "2bfbf0f0d185",
+  "invoer": [
+    "debrief-opponents-about-weaknesses",
+    "deploy-who-is-beatdown",
+    "identify-enemy-winning-method",
+    "anticipate-enemy-deployment-pattern",
+    "prioritise-emphasise-neutralise-negate",
+    "assess-beatdown-per-unit",
+    "fast-armies-close-gunlines",
+    "ignore-slow-expensive-threats",
+    "boar-boyz-targets-cannot-escape",
+    "wood-elves-clear-mobile-ranged"
+  ],
+  "kernpunten": [
+    {
+      "id": "plan-your-response-around-the-enemy-s-intended-approach",
+      "titel": "Plan your response around the enemy's intended approach",
+      "tekst": "Learn how the opponent intends to play so you can choose a better response.",
+      "lessen": [
+        "debrief-opponents-about-weaknesses",
+        "identify-enemy-winning-method",
+        "anticipate-enemy-deployment-pattern"
+      ],
+      "principe": null
+    },
+    {
+      "id": "do-not-select-targets-for-their-strength-alone",
+      "titel": "Do not select targets for their strength alone",
+      "tekst": "Judge a target's mobility before committing, because a powerful enemy may be better left alone.",
+      "lessen": [
+        "ignore-slow-expensive-threats",
+        "boar-boyz-targets-cannot-escape"
+      ],
+      "principe": null
+    },
+    {
+      "id": "decide-who-can-take-the-aggressive-role",
+      "titel": "Decide who can take the aggressive role",
+      "tekst": "Assess the opposing force so you can choose an aggressive or controlling role.",
+      "lessen": [
+        "deploy-who-is-beatdown",
+        "assess-beatdown-per-unit"
+      ],
+      "principe": null
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 100,
+      "sec": 218,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 51144,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 10350,
+        "reasoning_output_tokens": 7714
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

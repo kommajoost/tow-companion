@@ -1,0 +1,106 @@
+{
+  "subthema": "overrun-pursuit",
+  "thema": "movement",
+  "gemaaktOp": "2026-11-26T15:52:31.235Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "movement: charge-setup,charge-order,wheels-alignment,overrun-pursuit,reforms-formations,fleeing,support-countercharge",
+  "invoerHash": "79229c223ecd",
+  "invoer": [
+    "angle-shooters-guide-enemy-overruns",
+    "speed-bump-close-order",
+    "chaff-intercept-overruns",
+    "commit-minimum-winning-force",
+    "impassable-safe-advance-lanes",
+    "impassable-shorten-enemy-retreats",
+    "large-target-pursuit-order",
+    "drilled-widen-overrun-contact",
+    "screen-pursuit-misses-character",
+    "angle-skirmisher-dragon-overrun",
+    "plan-overruns-repeat-combats",
+    "divide-pursuit-and-reform",
+    "light-cavalry-finish-fugitives",
+    "redirect-blocks-into-traffic",
+    "check-partial-alignment-overruns",
+    "avoid-enemy-retreat-chains",
+    "pegasus-overrun-second-lantern",
+    "giant-rats-absorb-first-charge",
+    "spread-elves-prevent-chained-combats",
+    "skirmishers-pursue-block-reforms",
+    "blenders-break-and-reform",
+    "resolve-overrun-feeder-first",
+    "poison-block-decline-followup"
+  ],
+  "kernpunten": [
+    {
+      "id": "line-up-overruns-into-another-fight",
+      "titel": "Line up overruns into another fight",
+      "tekst": "Set up overrun paths into another enemy unit so your attackers can keep fighting.",
+      "lessen": [
+        "drilled-widen-overrun-contact",
+        "plan-overruns-repeat-combats",
+        "pegasus-overrun-second-lantern",
+        "resolve-overrun-feeder-first"
+      ],
+      "principe": "line-up-overruns-into-another-fight"
+    },
+    {
+      "id": "keep-enemy-overruns-and-redirects-away-from-your-valuable-un",
+      "titel": "Keep enemy overruns and redirects away from your valuable units",
+      "tekst": "Arrange screens and nearby units so an enemy's overrun or pursuit cannot carry it into another valuable unit.",
+      "lessen": [
+        "speed-bump-close-order",
+        "chaff-intercept-overruns",
+        "screen-pursuit-misses-character",
+        "check-partial-alignment-overruns",
+        "giant-rats-absorb-first-charge",
+        "spread-elves-prevent-chained-combats"
+      ],
+      "principe": "position-chaff-for-safe-overruns"
+    },
+    {
+      "id": "reform-victorious-units-towards-their-next-useful-fight",
+      "titel": "Reform victorious units towards their next useful fight",
+      "tekst": "Consider restraining and reforming after a win so your combat unit can threaten another useful fight.",
+      "lessen": [
+        "plan-overruns-repeat-combats",
+        "divide-pursuit-and-reform",
+        "skirmishers-pursue-block-reforms",
+        "blenders-break-and-reform"
+      ],
+      "principe": "reform-victorious-units-towards-their-next-fight"
+    },
+    {
+      "id": "let-another-unit-chase-fugitives-while-your-main-unit-stays",
+      "titel": "Let another unit chase fugitives while your main unit stays useful",
+      "tekst": "Let a supporting unit chase fleeing enemies so your main combat unit can reform or stay in a useful position.",
+      "lessen": [
+        "divide-pursuit-and-reform",
+        "light-cavalry-finish-fugitives",
+        "skirmishers-pursue-block-reforms"
+      ],
+      "principe": "divide-the-pursuit-and-reform-jobs"
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 106,
+      "sec": 311,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 52686,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 13390,
+        "reasoning_output_tokens": 10876
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

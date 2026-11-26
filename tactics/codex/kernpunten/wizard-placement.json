@@ -1,0 +1,116 @@
+{
+  "subthema": "wizard-placement",
+  "thema": "magic",
+  "gemaaktOp": "2026-11-26T16:10:32.912Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "magic: wizard-builds,lores-spells,dispelling,wizard-placement,magic-missiles,buffs-hexes,control-spells,casting-aids",
+  "invoerHash": "059e251a5436",
+  "invoer": [
+    "skirmishing-missile-wizard-bunker",
+    "beastmen-protected-vile-tide-bunker",
+    "flying-high-priests-conveyances",
+    "skirmishing-marauders-alternative-bunker",
+    "locate-magic-before-wizard",
+    "central-protected-dispeller",
+    "overlap-anvil-runesmith-auras",
+    "anvil-forward-against-rust",
+    "bell-behind-stormvermin-support",
+    "central-warriors-foot-wizard-bunker",
+    "dark-magic-reserve-bunker",
+    "buff-wizard-behind-bubble",
+    "reserve-move-blaster-withdrawal",
+    "move-only-needed-skirmishers",
+    "mark-urgency-casting-range",
+    "advance-runesmith-dispel-aura",
+    "double-move-runesmith-coverage",
+    "fanatic-casters-two-turns",
+    "high-priest-near-herald",
+    "mortuary-priests-behind-block",
+    "hide-marauder-missile-bunker",
+    "mobile-caster-flank",
+    "word-pain-wizard-exposure"
+  ],
+  "kernpunten": [
+    {
+      "id": "position-dispellers-to-cover-enemy-casters",
+      "titel": "Position dispellers to cover enemy casters",
+      "tekst": "Position your dispellers to bring enemy casters within range so you can contest their spells.",
+      "lessen": [
+        "locate-magic-before-wizard",
+        "central-protected-dispeller",
+        "overlap-anvil-runesmith-auras",
+        "anvil-forward-against-rust",
+        "dark-magic-reserve-bunker",
+        "advance-runesmith-dispel-aura",
+        "double-move-runesmith-coverage"
+      ],
+      "principe": null
+    },
+    {
+      "id": "cast-from-outside-the-enemy-wizard-s-dispel-range",
+      "titel": "Cast from outside the enemy wizard's dispel range",
+      "tekst": "Keep your caster outside the enemy wizard's dispel range while reaching its targets so the wizard cannot contest your casts.",
+      "lessen": [
+        "dark-magic-reserve-bunker",
+        "buff-wizard-behind-bubble",
+        "reserve-move-blaster-withdrawal",
+        "mobile-caster-flank"
+      ],
+      "principe": "cast-outside-enemy-dispel-range"
+    },
+    {
+      "id": "use-skirmishing-formations-to-reduce-incoming-shooting-hits",
+      "titel": "Use skirmishing formations to reduce incoming shooting hits",
+      "tekst": "Put your wizard in a skirmishing bunker so its shooting hit penalty helps protect the unit.",
+      "lessen": [
+        "skirmishing-missile-wizard-bunker",
+        "beastmen-protected-vile-tide-bunker",
+        "skirmishing-marauders-alternative-bunker"
+      ],
+      "principe": "skirmish-to-reduce-incoming-shooting"
+    },
+    {
+      "id": "use-mobile-casters-to-cast-and-withdraw",
+      "titel": "Use mobile casters to cast and withdraw",
+      "tekst": "Use a mobile caster to reach a casting position and then withdraw to safety.",
+      "lessen": [
+        "dark-magic-reserve-bunker",
+        "reserve-move-blaster-withdrawal",
+        "mobile-caster-flank"
+      ],
+      "principe": null
+    },
+    {
+      "id": "keep-support-casters-behind-the-units-they-help",
+      "titel": "Keep support casters behind the units they help",
+      "tekst": "Keep your supporting casters behind friendly blocks so they can contribute while staying protected.",
+      "lessen": [
+        "bell-behind-stormvermin-support",
+        "mortuary-priests-behind-block"
+      ],
+      "principe": null
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 109,
+      "sec": 266,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 53922,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 11459,
+        "reasoning_output_tokens": 8356
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

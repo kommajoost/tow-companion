@@ -8,10 +8,12 @@
 // schrijft van beide een kopie naar public/tactics/ en toont per thema, subthema, fase en tag het
 // aantal lessen. Elke les heeft themas (1 tot 3 ids), subthemas (per thema een subthema van dat
 // thema, zelfde volgorde) en tags (tag-ids, hooguit 6; minder dan 2 is een waarschuwing).
-// Bestaat public/tactics/principes.json, dan wordt dat ook gecontroleerd (tactics/principes-lib.mjs).
+// Bestaat public/tactics/principes.json, dan wordt dat ook gecontroleerd (tactics/principes-lib.mjs),
+// en zo ook public/tactics/kernpunten.json (tactics/kernpunten-lib.mjs).
 import fs from 'node:fs';
 import path from 'node:path';
 import { CACHE, PUB, ROOT, RUW, TDIR, leesJson, schrijfJson, schrijfJsonRegels } from './lib.mjs';
+import { controleerKernpunten } from './kernpunten-lib.mjs';
 import { controleerPrincipes } from './principes-lib.mjs';
 
 const alleenCheck = process.argv.includes('--check');
@@ -261,6 +263,31 @@ if (principesBestand) {
   }
 }
 
+// ── Kernpunten per subthema ───────────────────────────────────────────────
+// public/tactics/kernpunten.json (gemaakt door npm run tactics:keypoints) mag ontbreken. Bestaat het, dan
+// moet elk subthema bestaan, elke les bestaan en bij dat subthema horen en elk principeId bestaan; de
+// tellingen en de volgorde worden opnieuw berekend (--check: moeten gelijk zijn; anders schrijft de bouw
+// ze bij).
+const kernpuntenPad = path.join(PUB, 'kernpunten.json');
+const kernpuntenBestand = leesJson(kernpuntenPad);
+let kernpuntenNieuw = null;
+if (kernpuntenBestand) {
+  const kctx = {
+    lessen: lessen.lessen,
+    lesIndex: new Map(lessen.lessen.map((l) => [l.id, l])),
+    bronIndex,
+    subthemaIds: new Set(SUBTHEMAS.keys()),
+    principeIds: new Set(((principesNieuw ?? principesBestand)?.principes ?? []).map((p) => p.id)),
+  };
+  const c = controleerKernpunten(kernpuntenBestand, kctx);
+  const telFout = (m) => /klopt niet met de lessen/.test(m);
+  for (const m of c.fouten) if (alleenCheck || !telFout(m)) fout(`kernpunten.json: ${m}`);
+  if (!alleenCheck && c.herberekend && c.fouten.some(telFout)) {
+    kernpuntenNieuw = c.herberekend;
+    for (const m of controleerKernpunten(kernpuntenNieuw, kctx).fouten) fout(`kernpunten.json (na hertellen): ${m}`);
+  }
+}
+
 if (fouten.length) {
   console.error(`${fouten.length} fout(en):\n- ` + fouten.join('\n- '));
   process.exit(1);
@@ -280,6 +307,11 @@ if (principesBestand) {
   const p = principesNieuw ?? principesBestand;
   console.log(`Principes: ${p.principes.length} (top 10: ${p.top10.length}, debat: ${p.debat.length}, thema's: ${Object.keys(p.perThema).length}, legers: ${Object.keys(p.perLeger).length})${principesNieuw ? ', tellingen opnieuw berekend' : ''}.`);
 }
+if (kernpuntenBestand) {
+  const k = kernpuntenNieuw ?? kernpuntenBestand;
+  const lijsten = Object.values(k.perSubthema);
+  console.log(`Kernpunten: ${lijsten.reduce((a, l) => a + l.length, 0)} in ${lijsten.length} van ${SUBTHEMAS.size} subthema's${kernpuntenNieuw ? ', tellingen opnieuw berekend' : ''}.`);
+}
 console.log(`Tags: ${TAGS.size}, ${tagTop.filter(([, n]) => n > 0).length} in gebruik. Meest gebruikt: ${tagTop.slice(0, 20).map(([id, n]) => `${id} ${n}`).join(', ')}`);
 if (waarschuwingen.length) console.warn(`${waarschuwingen.length} waarschuwing(en):\n- ` + waarschuwingen.join('\n- '));
 
@@ -288,6 +320,7 @@ if (alleenCheck) process.exit(0);
 if (!vocabGelijk) schrijfJson(themasPubPad, vocab);
 if (!tagsGelijk) fs.copyFileSync(tagsBronPad, tagsPubPad); // kopie met dezelfde opmaak (een tag per regel)
 if (principesNieuw) schrijfJson(principesPad, principesNieuw);
+if (kernpuntenNieuw) schrijfJson(kernpuntenPad, kernpuntenNieuw);
 
 // ── Tellingen en status herberekenen ───────────────────────────────────────
 let gewijzigd = 0;

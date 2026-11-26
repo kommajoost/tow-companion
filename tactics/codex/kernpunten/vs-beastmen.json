@@ -1,0 +1,61 @@
+{
+  "subthema": "vs-beastmen",
+  "thema": "matchups",
+  "gemaaktOp": "2026-11-26T16:20:32.053Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "matchups: picking-fights,vs-sky-lanterns,vs-grand-cathay,vs-beastmen,vs-bretonnia,vs-tomb-kings,vs-monsters,vs-other",
+  "invoerHash": "2f5b1ed7ed0f",
+  "invoer": [
+    "curse-years-holding-plan",
+    "wood-elves-kite-beastmen",
+    "poison-faster-threats-first",
+    "stop-fetish-vile-tide",
+    "screams-weaken-dragon-ogres",
+    "scream-exposed-bray-shaman",
+    "herdstone-after-main-battle"
+  ],
+  "kernpunten": [
+    {
+      "id": "use-magic-to-delay-the-beastmen-advance",
+      "titel": "Use magic to delay the Beastmen advance",
+      "tekst": "Use magic to delay approaching Beastmen and buy time for your plan.",
+      "lessen": [
+        "curse-years-holding-plan",
+        "wood-elves-kite-beastmen"
+      ],
+      "principe": null
+    },
+    {
+      "id": "weaken-dragon-ogres-before-your-infantry-fights-them",
+      "titel": "Weaken Dragon Ogres before your infantry fights them",
+      "tekst": "Reduce the Dragon Ogres' fighting power before combat so your infantry can withstand them.",
+      "lessen": [
+        "curse-years-holding-plan",
+        "screams-weaken-dragon-ogres"
+      ],
+      "principe": null
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 140,
+      "sec": 244,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 62238,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 11351,
+        "reasoning_output_tokens": 8207
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+{
+  "subthema": "vs-other",
+  "thema": "matchups",
+  "gemaaktOp": "2026-11-26T16:20:32.175Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "matchups: picking-fights,vs-sky-lanterns,vs-grand-cathay,vs-beastmen,vs-bretonnia,vs-tomb-kings,vs-monsters,vs-other",
+  "invoerHash": "1a2aa9eeea0f",
+  "invoer": [
+    "hesitation-against-empire-charges",
+    "anvil-preservation-over-toughness",
+    "organ-guns-counter-outriders",
+    "burlok-thunderers-against-outriders",
+    "grave-guard-battle-lust-mirror",
+    "rangers-woods-against-outriders",
+    "arachnarok-avoid-ogre-blade",
+    "reserve-move-block-undead-raising",
+    "box-in-drilled-knights",
+    "remove-runesmith-flaming-wards",
+    "wood-elves-outrange-dwarf-shooting",
+    "wind-blast-limit-undead-raising",
+    "mobile-dwarf-cannons-counterbattery",
+    "runesmith-break-empire-illusion",
+    "spellbreak-itchy-nuisance",
+    "kharibdyss-before-cold-ones",
+    "focus-mournfangs-before-contact"
+  ],
+  "kernpunten": [
+    {
+      "id": "use-dwarf-shooting-to-cut-down-nuln-outriders",
+      "titel": "Use Dwarf shooting to cut down Nuln Outriders",
+      "tekst": "Target Nuln Outriders with Dwarf ranged units to reduce or destroy their units.",
+      "lessen": [
+        "organ-guns-counter-outriders",
+        "burlok-thunderers-against-outriders",
+        "rangers-woods-against-outriders"
+      ],
+      "principe": null
+    },
+    {
+      "id": "thin-grave-guard-and-obstruct-space-for-raising",
+      "titel": "Thin Grave Guard and obstruct space for raising",
+      "tekst": "Try thinning Grave Guard with shooting and obstructing replacement ranks so fewer models return before your next attack.",
+      "lessen": [
+        "reserve-move-block-undead-raising",
+        "wind-blast-limit-undead-raising"
+      ],
+      "principe": null
+    },
+    {
+      "id": "protect-your-dwarf-unit-with-dispelling-tools",
+      "titel": "Protect your Dwarf unit with dispelling tools",
+      "tekst": "Use your dispelling tools to prevent enemy spells from compromising your Dwarf unit.",
+      "lessen": [
+        "runesmith-break-empire-illusion",
+        "spellbreak-itchy-nuisance"
+      ],
+      "principe": null
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 140,
+      "sec": 244,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 62238,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 11351,
+        "reasoning_output_tokens": 8207
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "subthema": "infantry-moves",
+  "thema": "infantry",
+  "gemaaktOp": "2026-11-26T16:01:39.815Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "infantry: anchors,death-stars,unit-builds,holding-combat,infantry-moves",
+  "invoerHash": "50648aca885b",
+  "invoer": [
+    "commit-slow-infantry-plan",
+    "harassment-infantry-flank-terrain",
+    "marching-column-anvil-advance",
+    "reconsider-infantry-charging-infantry",
+    "slayers-furious-charge-aggression",
+    "cohort-raids-through-terrain",
+    "infantry-combat-escapes-bombardment",
+    "fanatic-carriers-marching-column",
+    "orc-furious-charge-aggression",
+    "undead-infantry-receive-charges",
+    "furious-charge-objective-push"
+  ],
+  "kernpunten": [
+    {
+      "id": "consider-aggressive-charges-with-furious-charge-infantry",
+      "titel": "Consider aggressive charges with Furious Charge infantry",
+      "tekst": "Consider charging with Furious Charge infantry because its extra attacks compensate for losing the second rank's attacks.",
+      "lessen": [
+        "reconsider-infantry-charging-infantry",
+        "slayers-furious-charge-aggression",
+        "orc-furious-charge-aggression",
+        "furious-charge-objective-push"
+      ],
+      "principe": null
+    },
+    {
+      "id": "use-marching-column-to-reach-useful-positions-quickly",
+      "titel": "Use marching column to reach useful positions quickly",
+      "tekst": "Use marching column's extra movement to get your infantry into useful forward positions faster.",
+      "lessen": [
+        "marching-column-anvil-advance",
+        "fanatic-carriers-marching-column"
+      ],
+      "principe": "use-marching-column-to-reach-positions-quickly"
+    },
+    {
+      "id": "advance-durable-infantry-and-let-the-enemy-charge",
+      "titel": "Advance durable infantry and let the enemy charge",
+      "tekst": "Advance infantry that can survive the initial charge so it can take the hit and keep fighting.",
+      "lessen": [
+        "marching-column-anvil-advance",
+        "undead-infantry-receive-charges"
+      ],
+      "principe": null
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 60,
+      "sec": 345,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 41451,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 14480,
+        "reasoning_output_tokens": 12948
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

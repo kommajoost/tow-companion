@@ -1,0 +1,91 @@
+{
+  "subthema": "challenges",
+  "thema": "characters",
+  "gemaaktOp": "2026-11-26T16:06:02.970Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "characters: combat-roles,bsb,mounts-items,challenges,protecting-characters",
+  "invoerHash": "7a18d506667b",
+  "invoer": [
+    "champions-preserve-units-defensively",
+    "infantry-ten-after-challenge",
+    "infantry-character-flank-challenge",
+    "dwarf-tank-challenges-dragons",
+    "men-at-arms-resolution-block",
+    "lizardmen-flankers-skip-champions",
+    "necrotect-whip-champion-challenges",
+    "corner-character-dual-charge-challenge",
+    "displace-champion-to-threatened-corner",
+    "monster-charge-challenge-support",
+    "death-star-champion-challenge",
+    "anchor-challenges-against-dragons",
+    "champion-absorbs-spectral-doppelganger",
+    "avoid-challenge-roadblock-miao",
+    "avoid-displacing-champion-rearward",
+    "champion-delaying-challenge",
+    "boar-dragon-challenge-choice"
+  ],
+  "kernpunten": [
+    {
+      "id": "use-defensive-challenges-to-contain-dangerous-attackers",
+      "titel": "Use defensive challenges to contain dangerous attackers",
+      "tekst": "Use a champion or protected character to absorb a dangerous attacker's blows and protect other models in the combat.",
+      "lessen": [
+        "champions-preserve-units-defensively",
+        "dwarf-tank-challenges-dragons",
+        "corner-character-dual-charge-challenge",
+        "death-star-champion-challenge",
+        "anchor-challenges-against-dragons",
+        "champion-absorbs-spectral-doppelganger",
+        "champion-delaying-challenge",
+        "boar-dragon-challenge-choice"
+      ],
+      "principe": "contain-dangerous-attackers-with-challenges"
+    },
+    {
+      "id": "use-challenges-to-help-infantry-hold-against-dragons",
+      "titel": "Use challenges to help infantry hold against dragons",
+      "tekst": "Face a dragon with a challenger so your infantry's combat resolution can help it hold or win.",
+      "lessen": [
+        "infantry-ten-after-challenge",
+        "dwarf-tank-challenges-dragons",
+        "men-at-arms-resolution-block",
+        "anchor-challenges-against-dragons"
+      ],
+      "principe": "challenge-dragons-with-infantry"
+    },
+    {
+      "id": "keep-your-challenger-able-to-reach-the-threatened-fighting-r",
+      "titel": "Keep your challenger able to reach the threatened fighting rank",
+      "tekst": "Position your intended challenger in, or able to enter, the threatened fighting rank so it can issue or accept a challenge.",
+      "lessen": [
+        "infantry-character-flank-challenge",
+        "corner-character-dual-charge-challenge",
+        "displace-champion-to-threatened-corner",
+        "champion-delaying-challenge"
+      ],
+      "principe": "position-challengers-for-the-threatened-rank"
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 79,
+      "sec": 95,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 46244,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 4486,
+        "reasoning_output_tokens": 2675
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

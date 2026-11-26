@@ -1,0 +1,79 @@
+{
+  "subthema": "wheels-alignment",
+  "thema": "movement",
+  "gemaaktOp": "2026-11-26T15:52:31.235Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "movement: charge-setup,charge-order,wheels-alignment,overrun-pursuit,reforms-formations,fleeing,support-countercharge",
+  "invoerHash": "fdd4a1e6c93f",
+  "invoer": [
+    "sideline-deployment-angle-inward",
+    "melee-character-central-attack-side",
+    "death-star-wheel-arc",
+    "offset-skirmisher-charge-contact",
+    "lumbering-perpendicular-charge-options",
+    "impassable-disrupt-skirmisher-forming",
+    "align-sacrifices-for-empty-overruns",
+    "advance-before-charge-wheel",
+    "angle-charges-avoid-characters",
+    "flank-charge-free-alignment-wheel",
+    "check-hammer-charge-alignment",
+    "angle-compulsory-charge-bait-outward",
+    "closest-skirmisher-force-wheel",
+    "check-dragon-movement-limits",
+    "great-eagle-redirection-role"
+  ],
+  "kernpunten": [
+    {
+      "id": "keep-enemy-overruns-and-redirects-away-from-your-valuable-un",
+      "titel": "Keep enemy overruns and redirects away from your valuable units",
+      "tekst": "Position your screen so the enemy's charge contact leaves its overrun clear of the unit you are protecting.",
+      "lessen": [
+        "offset-skirmisher-charge-contact",
+        "align-sacrifices-for-empty-overruns"
+      ],
+      "principe": "position-chaff-for-safe-overruns"
+    },
+    {
+      "id": "offset-the-nearest-skirmisher-to-control-charge-contact",
+      "titel": "Offset the nearest skirmisher to control charge contact",
+      "tekst": "Place the nearest skirmisher off to one side so its position determines where the enemy must make contact.",
+      "lessen": [
+        "offset-skirmisher-charge-contact",
+        "closest-skirmisher-force-wheel"
+      ],
+      "principe": null
+    },
+    {
+      "id": "plan-your-final-facing-to-preserve-later-charge-options",
+      "titel": "Plan your final facing to preserve later charge options",
+      "tekst": "Plan wheels and alignment so your intended later targets are within your charge arc.",
+      "lessen": [
+        "lumbering-perpendicular-charge-options",
+        "check-hammer-charge-alignment"
+      ],
+      "principe": null
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 106,
+      "sec": 311,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 52686,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 13390,
+        "reasoning_output_tokens": 10876
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

@@ -1,0 +1,143 @@
+{
+  "subthema": "avoiding-fire",
+  "thema": "shooting-terrain",
+  "gemaaktOp": "2026-11-26T16:16:23.611Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "shooting-terrain: war-machines,missile-units,target-priority,avoiding-fire,evasive-skirmish,terrain-los,hunting-shooters",
+  "invoerHash": "d4d16f10b564",
+  "invoer": [
+    "beastmen-protected-vile-tide-bunker",
+    "sigmar-prayer-shooting-ward",
+    "vampire-ethereal-lantern-control",
+    "skirmishing-marauders-alternative-bunker",
+    "chaos-stack-shooting-hit-penalties",
+    "hammers-on-flanks",
+    "shelter-monsters-from-cannons",
+    "delay-vulnerable-artillery-deployment",
+    "forest-bunker-cover",
+    "ambush-protects-fragile-flex-units",
+    "drilled-cavalry-terrain-cover",
+    "hide-mangler-from-cannons",
+    "horizontal-skirmisher-cover",
+    "protect-assassins-from-range",
+    "endgame-hide-save-points",
+    "spread-skirmishers-with-casualties",
+    "respect-unreliable-missile-threats",
+    "accept-shooting-risk-advancing",
+    "screen-block-every-firing-line",
+    "maintain-cover-for-scorers",
+    "woods-stack-skirmisher-shooting-defence",
+    "ungor-switch-defensive-formations",
+    "seekers-spread-against-shooting",
+    "plagued-pegasus-knights-withdraw",
+    "infantry-combat-escapes-bombardment",
+    "ambushing-wolves-artillery-blind-spots",
+    "giant-advance-threat-priority",
+    "foot-priests-infantry-protection",
+    "ethereal-coach-shields-bats",
+    "large-targets-avoid-vile-tide",
+    "hide-mortis-engines-artillery",
+    "hide-marauder-missile-bunker",
+    "warhawk-riders-evasive-screen",
+    "wood-elves-outrange-dwarf-shooting",
+    "glade-guard-distance-hill-retreat",
+    "crystal-column-block-artillery",
+    "hidden-mobile-objective-grabs",
+    "hill-small-scorer-hidden"
+  ],
+  "kernpunten": [
+    {
+      "id": "hide-vulnerable-units-behind-terrain-to-deny-enemy-shooting",
+      "titel": "Hide vulnerable units behind terrain to deny enemy shooting",
+      "tekst": "Keep vulnerable units behind terrain that blocks line of sight so enemy shooters cannot target them.",
+      "lessen": [
+        "hammers-on-flanks",
+        "shelter-monsters-from-cannons",
+        "hide-mangler-from-cannons",
+        "hide-mortis-engines-artillery",
+        "hide-marauder-missile-bunker",
+        "hill-small-scorer-hidden"
+      ],
+      "principe": "hide-vulnerable-units-behind-terrain"
+    },
+    {
+      "id": "screen-your-important-units-from-enemy-shooting",
+      "titel": "Screen your important units from enemy shooting",
+      "tekst": "Keep screening units between enemy shooters and important units to block or reduce incoming fire.",
+      "lessen": [
+        "hammers-on-flanks",
+        "horizontal-skirmisher-cover",
+        "screen-block-every-firing-line",
+        "maintain-cover-for-scorers",
+        "ethereal-coach-shields-bats",
+        "warhawk-riders-evasive-screen"
+      ],
+      "principe": "screen-important-units-from-shooting"
+    },
+    {
+      "id": "use-skirmishing-formations-to-reduce-incoming-shooting-hits",
+      "titel": "Use skirmishing formations to reduce incoming shooting hits",
+      "tekst": "Use a skirmishing formation when you need protection from shooting because its hit penalty makes your unit harder to hit.",
+      "lessen": [
+        "beastmen-protected-vile-tide-bunker",
+        "skirmishing-marauders-alternative-bunker",
+        "ungor-switch-defensive-formations"
+      ],
+      "principe": "skirmish-to-reduce-incoming-shooting"
+    },
+    {
+      "id": "stack-shooting-hit-penalties-to-protect-your-units",
+      "titel": "Stack shooting hit penalties to protect your units",
+      "tekst": "Combine shooting hit penalties on your units to reduce the effectiveness of incoming fire.",
+      "lessen": [
+        "beastmen-protected-vile-tide-bunker",
+        "chaos-stack-shooting-hit-penalties",
+        "woods-stack-skirmisher-shooting-defence"
+      ],
+      "principe": "stack-shooting-hit-penalties"
+    },
+    {
+      "id": "protect-vulnerable-scorers-with-cover-or-screens",
+      "titel": "Protect vulnerable scorers with cover or screens",
+      "tekst": "Keep vulnerable scorers covered or screened so they survive to claim or hold objectives.",
+      "lessen": [
+        "maintain-cover-for-scorers",
+        "hidden-mobile-objective-grabs",
+        "hill-small-scorer-hidden"
+      ],
+      "principe": "protect-scorers-with-cover"
+    },
+    {
+      "id": "keep-lone-characters-near-suitable-troops-for-targeting-prot",
+      "titel": "Keep lone characters near suitable troops for targeting protection",
+      "tekst": "Keep lone characters near suitable friendly troops so they gain protection from ranged targeting.",
+      "lessen": [
+        "protect-assassins-from-range",
+        "foot-priests-infantry-protection"
+      ],
+      "principe": "protect-lone-characters-with-nearby-troops"
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 137,
+      "sec": 347,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 61831,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 16160,
+        "reasoning_output_tokens": 12948
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

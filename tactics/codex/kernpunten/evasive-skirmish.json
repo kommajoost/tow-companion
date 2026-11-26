@@ -1,0 +1,83 @@
+{
+  "subthema": "evasive-skirmish",
+  "thema": "shooting-terrain",
+  "gemaaktOp": "2026-11-26T16:16:23.611Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "shooting-terrain: war-machines,missile-units,target-priority,avoiding-fire,evasive-skirmish,terrain-los,hunting-shooters",
+  "invoerHash": "765202cbbdd0",
+  "invoer": [
+    "skirmishing-shooters-quick-shot",
+    "blazing-sun-order-versus-cathay",
+    "sisters-preserve-points-harassment",
+    "chameleon-skinks-worth-cost",
+    "deepwood-scouts-leading-skirmishers",
+    "glade-riders-shoot-withdraw",
+    "evasive-limit-fireball-reach",
+    "close-range-against-evasive",
+    "evasive-retreat-behind-hill",
+    "evasive-reform-escape-facing",
+    "retreat-poison-slow-monsters",
+    "move-only-needed-skirmishers",
+    "evasive-retreat-board-edge-pressure",
+    "compact-five-model-skirmisher-groups",
+    "evasive-push-bombs-long-range",
+    "forest-dragon-evade-reform",
+    "deepwood-scouts-distract-pursuers",
+    "wood-elves-escape-before-shooting"
+  ],
+  "kernpunten": [
+    {
+      "id": "use-evasive-to-retreat-beyond-shooting-range-or-sight",
+      "titel": "Use Evasive to retreat beyond shooting range or sight",
+      "tekst": "Position your Evasive unit so its retreat can escape the shooter's range or sight and deny the shot.",
+      "lessen": [
+        "blazing-sun-order-versus-cathay",
+        "evasive-limit-fireball-reach",
+        "evasive-retreat-behind-hill"
+      ],
+      "principe": "evade-beyond-shooting-reach"
+    },
+    {
+      "id": "reform-after-evading-to-face-where-you-need",
+      "titel": "Reform after evading to face where you need",
+      "tekst": "Use the free reform after an Evasive retreat to set a useful facing against the enemy.",
+      "lessen": [
+        "evasive-reform-escape-facing",
+        "forest-dragon-evade-reform"
+      ],
+      "principe": null
+    },
+    {
+      "id": "keep-your-shooters-beyond-enemy-charge-reach-or-arcs",
+      "titel": "Keep your shooters beyond enemy charge reach or arcs",
+      "tekst": "Move away from approaching enemies so your shooters stay out of combat.",
+      "lessen": [
+        "retreat-poison-slow-monsters",
+        "wood-elves-escape-before-shooting"
+      ],
+      "principe": "keep-shooters-beyond-charge-reach"
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 137,
+      "sec": 347,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 61831,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 16160,
+        "reasoning_output_tokens": 12948
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

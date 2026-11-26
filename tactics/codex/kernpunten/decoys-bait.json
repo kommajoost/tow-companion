@@ -1,0 +1,101 @@
+{
+  "subthema": "decoys-bait",
+  "thema": "chaff",
+  "gemaaktOp": "2026-11-26T15:55:50.209Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "chaff: choosing-chaff,redirecting,decoys-bait,screens,retreat-paths,clearing-chaff",
+  "invoerHash": "15f7fa7dd796",
+  "invoer": [
+    "deepwood-scouts-ten-models",
+    "adamant-anvil-dragon-bait",
+    "bolt-throwers-sacrificial-flank-distractions",
+    "chaff-decoys",
+    "decoy-forces-a-choice",
+    "frenzy-bait-only-target",
+    "skirmishers-kite-ranked-pursuers",
+    "decoys-set-up-countercharges",
+    "bait-lanterns-into-concentrated-fire",
+    "fleeing-bait-sideways-facing",
+    "budget-safe-flee-distance",
+    "bait-compulsory-charges-maximum-range",
+    "angle-compulsory-charge-bait-outward",
+    "corner-sacrifice-wastes-return-turn",
+    "offset-skirmisher-centre-charge-bait",
+    "razorgor-tuskgor-bait-switch",
+    "gyrocopters-pressure-nuln-artillery",
+    "pegasus-knights-reliable-lantern-charges",
+    "mangler-squig-decoy",
+    "light-chariot-artillery-hunter",
+    "deepwood-scouts-distract-pursuers"
+  ],
+  "kernpunten": [
+    {
+      "id": "use-bait-and-screens-to-set-up-your-supporting-charges",
+      "titel": "Use bait and screens to set up your supporting charges",
+      "tekst": "Offer bait where engaging it brings the enemy within reach of your supporting charges.",
+      "lessen": [
+        "adamant-anvil-dragon-bait",
+        "decoys-set-up-countercharges",
+        "razorgor-tuskgor-bait-switch",
+        "pegasus-knights-reliable-lantern-charges"
+      ],
+      "principe": "bait-enemies-into-supporting-charges"
+    },
+    {
+      "id": "use-dangerous-decoys-to-divert-resources-from-your-main-forc",
+      "titel": "Use dangerous decoys to divert resources from your main force",
+      "tekst": "Offer threats the enemy cannot safely ignore so dealing with them consumes resources that could threaten your main force.",
+      "lessen": [
+        "bolt-throwers-sacrificial-flank-distractions",
+        "chaff-decoys",
+        "decoy-forces-a-choice",
+        "gyrocopters-pressure-nuln-artillery",
+        "mangler-squig-decoy",
+        "light-chariot-artillery-hunter"
+      ],
+      "principe": "use-dangerous-decoys-to-divert-resources"
+    },
+    {
+      "id": "bait-compulsory-charges-at-the-edge-of-their-range",
+      "titel": "Bait compulsory charges at the edge of their range",
+      "tekst": "Place bait near maximum charge range so compulsory charges waste the enemy's time.",
+      "lessen": [
+        "frenzy-bait-only-target",
+        "bait-compulsory-charges-maximum-range"
+      ],
+      "principe": null
+    },
+    {
+      "id": "position-bait-sideways-to-pull-chargers-out-of-position",
+      "titel": "Position bait sideways to pull chargers out of position",
+      "tekst": "Place bait off to one side so following it forces the charger to turn out of position.",
+      "lessen": [
+        "angle-compulsory-charge-bait-outward",
+        "offset-skirmisher-centre-charge-bait"
+      ],
+      "principe": null
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 88,
+      "sec": 195,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 48915,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 8529,
+        "reasoning_output_tokens": 6214
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useState } from 'react';
 import { TOW, towFont } from '../../design/tow';
 import {
-  lesThemas, tijdLabel, type Bron, type BronnenBestand, type Fase, type Kanaal, type Les, type LesMarkering, type Principe,
-  type PrincipesBestand, type Subthema, type Tag, type Thema, type ThemasBestand,
+  lesThemas, tijdLabel, type Bron, type BronnenBestand, type Fase, type Kanaal, type Kernpunt, type KernpuntenBestand, type Les,
+  type LesMarkering, type Principe, type PrincipesBestand, type Subthema, type Tag, type Thema, type ThemasBestand,
 } from '../../lib/tactics';
 import {
   BackButton, Badge, EmptyLine, Meta, bodyText, clamp2, inputStyle,
@@ -24,11 +24,13 @@ const OVERIG = '~other';
 const LANG_THEMA = 24;
 const OPEN_SECTIES = 3;
 
-/** Een laag boven de lijst: een principe, een thema (eventueel met het subthema waarop het opende), de
- *  lessen met een tag, of een les. TacticsPage beheert de stapel; de bovenste laag is wat je ziet. */
+/** Een laag boven de lijst: een principe, een thema (eventueel met het subthema waarop het opende), een
+ *  kernpunt van een subthema, de lessen met een tag, of een les. TacticsPage beheert de stapel; de
+ *  bovenste laag is wat je ziet. */
 export type Laag =
   | { soort: 'principe'; id: string }
   | { soort: 'thema'; id: string; sub?: string | null }
+  | { soort: 'kernpunt'; id: string; sub: string }
   | { soort: 'tag'; id: string }
   | { soort: 'les'; id: string };
 
@@ -38,10 +40,13 @@ interface Props {
   tags: Tag[];
   bronnen: BronnenBestand | null;
   principes: PrincipesBestand;
+  kernpunten: KernpuntenBestand;
   wide: boolean;
   lagen: Laag[];
   /** vanuitLijst: geopend uit de lijst (vervangt de stapel), anders bovenop de huidige laag. */
   onOpenPrincipe: (id: string, vanuitLijst: boolean) => void;
+  /** Een kernpunt van een subthema, bovenop het thema. */
+  onOpenKernpunt: (sub: string, id: string) => void;
   /** Een thema openen vanuit de lijst of vanuit een les (vervangt de stapel). */
   onOpenThema: (id: string, sub?: string | null) => void;
   /** vanuitLijst: geopend uit de zoektreffers (vervangt de stapel), anders bovenop de huidige laag. */
@@ -66,10 +71,11 @@ const tagPast = (t: Tag, woord: string) => tagTermen(t).some((x) => x === woord 
 
 // Lessons: zoekveld, dan Essentials (de top 10 principes en de debatten), dan de thema's. Met een
 // legerfilter staan de principes van dat leger bovenaan. Een principe open toont de samenvatting en de
-// lessen eronder; een thema open toont eerst zijn kernprincipes en dan zijn subthema's als secties met
-// de lessen eronder; een tag open toont alle lessen met die tag; tijdens het zoeken staat er een platte
-// lijst met treffers. Breed staat de lijst links en de bovenste laag rechts.
-export function TacticsLessons({ lessen, vocab, tags, bronnen, principes, wide, lagen, onOpenPrincipe, onOpenThema, onOpenLes, onOpenTag, onTerug }: Props) {
+// lessen eronder; een thema open toont eerst zijn kernprincipes en dan zijn subthema's als secties: per
+// sectie de kernpunten (genummerd) en daaronder "All N lessons" om de lessen uit te klappen; een
+// kernpunt open toont zijn zin en de lessen eronder; een tag open toont alle lessen met die tag; tijdens
+// het zoeken staat er een platte lijst met treffers. Breed staat de lijst links en de bovenste laag rechts.
+export function TacticsLessons({ lessen, vocab, tags, bronnen, principes, kernpunten, wide, lagen, onOpenPrincipe, onOpenKernpunt, onOpenThema, onOpenLes, onOpenTag, onTerug }: Props) {
   const [query, setQuery] = useState('');
   const [leger, setLeger] = useState<string>(ALLE);
   // Uit- of ingeklapte secties per thema ("thema:subthema" -> open), alleen waar de gebruiker tikte.
@@ -198,6 +204,29 @@ export function TacticsLessons({ lessen, vocab, tags, bronnen, principes, wide, 
             <span style={titleText}>{p.titel}</span>
             {!opties.compact && p.tekst && <span style={{ ...bodyText, fontSize: 13.5, ...clamp2 }}>{p.tekst}</span>}
             <Meta parts={[...bewijs(p), p.soort === 'debat' ? meervoud(p.kanten?.length ?? 0, 'side', 'sides') : null]} />
+          </span>
+        </button>
+      </li>
+    );
+  };
+
+  /** Een kernpunt als genummerde regel in het blok van zijn sectie: titel en bewijs, tik = de details. */
+  const kernpuntRij = (sub: string, k: Kernpunt, nr: number) => {
+    const actief = wide && top?.soort === 'kernpunt' && top.sub === sub && top.id === k.id;
+    return (
+      <li key={k.id} style={{ borderTop: nr > 1 ? `1px solid ${TOW.hairline}` : 'none', background: actief ? 'rgba(138,108,48,0.10)' : 'transparent' }}>
+        <button
+          type="button"
+          onClick={() => onOpenKernpunt(sub, k.id)}
+          aria-current={actief ? 'true' : undefined}
+          style={{ ...rowButton, width: '100%', minHeight: 44, flexDirection: 'row', alignItems: 'flex-start', gap: 10, padding: '9px 12px' }}
+        >
+          <span aria-hidden style={{ flexShrink: 0, minWidth: 14, fontFamily: towFont.display, fontWeight: 700, fontSize: 14.5, lineHeight: 1.3, color: TOW.goldDeep }}>
+            {nr}
+          </span>
+          <span style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 2 }}>
+            <span style={{ ...titleText, fontSize: 14.5 }}>{k.titel}</span>
+            <Meta parts={[meervoud(k.nLessen, 'lesson', 'lessons'), `${k.nKanalen} ch`]} />
           </span>
         </button>
       </li>
@@ -333,15 +362,7 @@ export function TacticsLessons({ lessen, vocab, tags, bronnen, principes, wide, 
         <Meta parts={bewijs(p)} />
         <p style={{ ...bodyText, fontSize: 12.5, color: TOW.muted, margin: 0 }}>{p.kanalen.map((k) => kanaalIndex.get(k)?.naam ?? k).join(', ')}</p>
         {thema && (
-          <button
-            type="button"
-            onClick={() => onOpenThema(thema.id)}
-            style={{
-              minHeight: 36, padding: 0, border: 'none', background: 'none', cursor: 'pointer', textAlign: 'left', maxWidth: '100%',
-              color: TOW.goldDeep, fontFamily: towFont.display, fontWeight: 600, fontSize: 13, overflowWrap: 'anywhere',
-              textDecoration: 'underline', textDecorationColor: TOW.line, textUnderlineOffset: 3,
-            }}
-          >
+          <button type="button" onClick={() => onOpenThema(thema.id)} style={tekstLink}>
             {thema.naam}
           </button>
         )}
@@ -366,6 +387,41 @@ export function TacticsLessons({ lessen, vocab, tags, bronnen, principes, wide, 
     );
   };
 
+  // ── Kernpunt open: de zin, de kanalen en de lessen eronder ──────────────────
+  const kernpuntView = (laag: Extract<Laag, { soort: 'kernpunt' }>) => {
+    const k = (kernpunten.perSubthema[laag.sub] ?? []).find((x) => x.id === laag.id);
+    if (!k) return <EmptyLine>Key point not found.</EmptyLine>;
+    const thema = vocab.themas.find((t) => t.subthemas.some((s) => s.id === laag.sub));
+    const sub = thema?.subthemas.find((s) => s.id === laag.sub);
+    const pr = k.principeId ? principeIndex.get(k.principeId) : undefined;
+    const rijen = k.lessen.map((x) => lesIndex.get(x)).filter((l): l is Les => !!l)
+      .map((l) => lesRij(l, [lesKanalen(l), faseNaam(l.fase), specifiekLeger(l)], false));
+    return (
+      <article style={{ maxWidth: 680, minWidth: 0 }}>
+        {kop(k.titel, 'Key point')}
+        <Meta parts={bewijs({ aantalLessen: k.nLessen, aantalKanalen: k.nKanalen })} />
+        <p style={{ ...bodyText, fontSize: 12.5, color: TOW.muted, margin: 0 }}>{k.kanalen.map((c) => kanaalIndex.get(c)?.naam ?? c).join(', ')}</p>
+        {thema && sub && (
+          <button type="button" onClick={() => onOpenThema(thema.id, sub.id)} style={tekstLink}>
+            {`${thema.naam}: ${sub.naam}`}
+          </button>
+        )}
+        <p style={{ ...bodyText, color: TOW.ink, fontSize: 15, margin: '6px 0 2px' }}>{k.tekst}</p>
+        <p style={{ ...bodyText, fontSize: 12, color: TOW.muted, margin: 0 }}>Summary of the lessons below</p>
+        {pr && (
+          <button type="button" onClick={() => onOpenPrincipe(pr.id, false)} style={tekstLink}>
+            {`Also a key principle (${meervoud(pr.aantalLessen, 'lesson', 'lessons')})`}
+          </button>
+        )}
+        <h3 style={sectionHead}>
+          <span>Lessons</span>
+          <span style={{ color: TOW.muted }}>{rijen.length}</span>
+        </h3>
+        <ul style={lijstStijl}>{rijen}</ul>
+      </article>
+    );
+  };
+
   // ── Thema open: subthema's als secties ─────────────────────────────────────
   const themaView = (laag: Extract<Laag, { soort: 'thema' }>) => {
     const thema = themaIndex.get(laag.id);
@@ -378,12 +434,16 @@ export function TacticsLessons({ lessen, vocab, tags, bronnen, principes, wide, 
       .filter((g) => g.lessen.length > 0);
     const overig = van.filter((l) => { const s = subVan(l); return !s || !bekend.has(s); });
     if (overig.length) secties.push({ sub: null, key: OVERIG, lessen: overig.sort(opFase) });
-    // Een lang thema opent met de eerste sectie plus de volgende zolang er samen niet meer dan
-    // LANG_THEMA lessen open staan (hooguit OPEN_SECTIES), zodat de overige koppen zichtbaar blijven.
+    // Kernpunten van een sectie; met een legerfilter alleen die met minstens één les die past.
+    const kpVan = (key: string): Kernpunt[] => (kernpunten.perSubthema[key] ?? [])
+      .filter((k) => leger === ALLE || k.lessen.some((id) => { const l = lesIndex.get(id); return !!l && legerPast(l); }));
+    // Een sectie met kernpunten opent met alleen die kernpunten; de lessen staan achter "All N lessons".
+    // Secties zonder kernpunten tonen hun lessen meteen, behalve in een lang thema: daar de eerste plus
+    // de volgende zolang er samen niet meer dan LANG_THEMA lessen open staan (hooguit OPEN_SECTIES).
     const lang = van.length > LANG_THEMA;
     const standaardOpen = new Set<string>();
     let opgeteld = 0;
-    secties.forEach((g, i) => {
+    secties.filter((g) => kpVan(g.key).length === 0).forEach((g, i) => {
       if (!lang || i === 0 || (i < OPEN_SECTIES && opgeteld + g.lessen.length <= LANG_THEMA && standaardOpen.size === i)) {
         standaardOpen.add(g.key);
         opgeteld += g.lessen.length;
@@ -413,25 +473,26 @@ export function TacticsLessons({ lessen, vocab, tags, bronnen, principes, wide, 
         {van.length === 0 && <EmptyLine>No lessons for this army.</EmptyLine>}
         {secties.map((g, i) => {
           const open = isOpen(g.key, i);
+          const kps = kpVan(g.key);
           return (
             <section key={g.key} id={`sectie-${thema.id}-${g.key}`} style={{ scrollMarginTop: 8 }}>
-              <h3 style={{ margin: 0 }}>
-                <button
-                  type="button"
-                  onClick={() => wissel(g.key, i)}
-                  aria-expanded={open}
-                  title={g.sub?.omschrijving || undefined}
-                  style={{
-                    ...sectionHead, width: '100%', minHeight: 40, margin: '10px 0 4px', padding: '0 2px', border: 'none',
-                    borderBottom: `1px solid ${TOW.hairline}`, background: 'none', cursor: 'pointer', textAlign: 'left',
-                  }}
-                >
-                  <span style={{ flex: 1, minWidth: 0, overflowWrap: 'anywhere' }}>{g.sub?.naam ?? 'Other'}</span>
-                  <span style={{ color: TOW.muted }}>{g.lessen.length}</span>
-                  <span aria-hidden style={{ color: TOW.muted, fontSize: 16, lineHeight: 1, width: 12, textAlign: 'center', transform: open ? 'rotate(90deg)' : 'none' }}>›</span>
-                </button>
+              <h3
+                title={g.sub?.omschrijving || undefined}
+                style={{ ...sectionHead, minHeight: 36, margin: '14px 0 6px', padding: '0 2px', borderBottom: `1px solid ${TOW.hairline}` }}
+              >
+                <span style={{ flex: 1, minWidth: 0, overflowWrap: 'anywhere' }}>{g.sub?.naam ?? 'Other'}</span>
+                <span style={{ color: TOW.muted }}>{g.lessen.length}</span>
               </h3>
-              {open && <ul style={{ ...lijstStijl, marginTop: 6 }}>{g.lessen.map((l) => lesRij(l, [faseNaam(l.fase), specifiekLeger(l)], false))}</ul>}
+              {kps.length > 0 && (
+                <ol aria-label={`Key points: ${g.sub?.naam ?? 'Other'}`} style={kpLijst}>
+                  {kps.map((k, j) => kernpuntRij(g.key, k, j + 1))}
+                </ol>
+              )}
+              <button type="button" onClick={() => wissel(g.key, i)} aria-expanded={open} style={alleLessenKnop}>
+                <span style={{ minWidth: 0, overflowWrap: 'anywhere' }}>All {meervoud(g.lessen.length, 'lesson', 'lessons')}</span>
+                <span aria-hidden style={{ fontSize: 16, lineHeight: 1, width: 12, textAlign: 'center', transform: open ? 'rotate(90deg)' : 'none' }}>›</span>
+              </button>
+              {open && <ul style={{ ...lijstStijl, marginTop: 2 }}>{g.lessen.map((l) => lesRij(l, [faseNaam(l.fase), specifiekLeger(l)], false))}</ul>}
             </section>
           );
         })}
@@ -481,7 +542,8 @@ export function TacticsLessons({ lessen, vocab, tags, bronnen, principes, wide, 
 
   const laagView = (laag: Laag) => (laag.soort === 'thema' ? <ThemaScroll laag={laag}>{themaView(laag)}</ThemaScroll>
     : laag.soort === 'principe' ? principeView(laag.id)
-      : laag.soort === 'tag' ? tagView(laag.id) : lesView(laag.id));
+      : laag.soort === 'kernpunt' ? kernpuntView(laag)
+        : laag.soort === 'tag' ? tagView(laag.id) : lesView(laag.id));
 
   /** Naam van de laag onder de bovenste (voor de terugknop). */
   const laagNaam = (laag: Laag | undefined): string => {
@@ -489,6 +551,7 @@ export function TacticsLessons({ lessen, vocab, tags, bronnen, principes, wide, 
     if (laag.soort === 'thema') return themaIndex.get(laag.id)?.naam ?? 'Theme';
     if (laag.soort === 'tag') return tagIndex.get(laag.id)?.label ?? 'Tag';
     if (laag.soort === 'principe') return 'Principle';
+    if (laag.soort === 'kernpunt') return 'Key point';
     return 'Lesson';
   };
 
@@ -546,6 +609,26 @@ function momentUrl(videoUrl: string, sec: number): string {
     return videoUrl;
   }
 }
+
+/** Onderstreepte goudkleurige tekstknop (thema, sectie of principe openen), minstens 36 px hoog. */
+const tekstLink: React.CSSProperties = {
+  display: 'block', minHeight: 36, padding: 0, border: 'none', background: 'none', cursor: 'pointer', textAlign: 'left', maxWidth: '100%',
+  color: TOW.goldDeep, fontFamily: towFont.display, fontWeight: 600, fontSize: 13, overflowWrap: 'anywhere',
+  textDecoration: 'underline', textDecorationColor: TOW.line, textUnderlineOffset: 3,
+};
+
+/** Het blok met de genummerde kernpunten van een sectie: een kaart, regels gescheiden door een haarlijn. */
+const kpLijst: React.CSSProperties = {
+  listStyle: 'none', margin: '0 0 2px', padding: 0, border: `1px solid ${TOW.line}`, borderRadius: 12,
+  background: TOW.panel2, overflow: 'hidden', minWidth: 0,
+};
+
+/** "All N lessons ›" onder de kernpunten: klapt de lessen van de sectie uit. */
+const alleLessenKnop: React.CSSProperties = {
+  display: 'flex', alignItems: 'center', gap: 6, minHeight: 40, maxWidth: '100%', padding: '0 2px', border: 'none',
+  background: 'none', cursor: 'pointer', color: TOW.goldDeep, fontFamily: towFont.display, fontWeight: 600, fontSize: 13.5,
+  textAlign: 'left',
+};
 
 const chipKnop: React.CSSProperties = {
   minHeight: 36, padding: '0 12px', borderRadius: 999, cursor: 'pointer', maxWidth: '100%',

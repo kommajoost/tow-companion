@@ -1,0 +1,81 @@
+{
+  "subthema": "wizard-builds",
+  "thema": "magic",
+  "gemaaktOp": "2026-11-26T16:10:32.910Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "magic: wizard-builds,lores-spells,dispelling,wizard-placement,magic-missiles,buffs-hexes,control-spells,casting-aids",
+  "invoerHash": "402f3d033af3",
+  "invoer": [
+    "define-wizard-role-cheaply",
+    "multiple-low-level-signature-casters",
+    "doppelganger-needs-combat-caster",
+    "necromancy-level-four-investment",
+    "two-level-fours-flexibility",
+    "bray-shaman-gor-buffer",
+    "multiple-vile-tide-casters",
+    "prefer-runesmith-over-runelord",
+    "empire-level-one-doombolt",
+    "white-sword-doppelganger-archmage",
+    "embrace-slann-despite-cost",
+    "bone-dragon-control-priest",
+    "chaos-chariot-combat-wizard",
+    "wood-elf-reserve-blaster",
+    "warhawk-control-spellweaver-build",
+    "lesser-wizard-secures-spells"
+  ],
+  "kernpunten": [
+    {
+      "id": "use-economical-builds-for-the-magic-roles-you-need",
+      "titel": "Use economical builds for the magic roles you need",
+      "tekst": "Choose a cheap caster or dispeller that can fulfil its intended job to limit your points investment.",
+      "lessen": [
+        "define-wizard-role-cheaply",
+        "prefer-runesmith-over-runelord",
+        "empire-level-one-doombolt"
+      ],
+      "principe": null
+    },
+    {
+      "id": "use-several-low-level-casters-to-repeat-useful-signature-spe",
+      "titel": "Use several low-level casters to repeat useful signature spells",
+      "tekst": "Take multiple low-level casters with a useful, cheaply cast signature spell to gain repeated casting attempts.",
+      "lessen": [
+        "multiple-low-level-signature-casters",
+        "multiple-vile-tide-casters"
+      ],
+      "principe": "repeat-signatures-with-low-level-casters"
+    },
+    {
+      "id": "equip-your-doppelganger-caster-with-a-useful-combat-weapon",
+      "titel": "Equip your Doppelganger caster with a useful combat weapon",
+      "tekst": "Consider a weapon whose bonuses improve the attacks your caster makes through Spectral Doppelganger.",
+      "lessen": [
+        "doppelganger-needs-combat-caster",
+        "white-sword-doppelganger-archmage"
+      ],
+      "principe": null
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 109,
+      "sec": 266,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 53922,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 11459,
+        "reasoning_output_tokens": 8356
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

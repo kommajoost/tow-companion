@@ -1,0 +1,87 @@
+{
+  "subthema": "using-hammers",
+  "thema": "hammers",
+  "gemaaktOp": "2026-11-26T16:04:23.427Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "hammers: hammer-basics,heavy-cavalry,chariots,monsters-dragons,random-movers,using-hammers",
+  "invoerHash": "a6d3c1681169",
+  "invoer": [
+    "flank-not-point-and-click",
+    "hammers-on-flanks",
+    "hammer-matchups",
+    "protect-main-hammer-flank",
+    "screening-chaff",
+    "reform-for-future-targets",
+    "imperfect-target-escape-shooting",
+    "support-scorers-with-hammers",
+    "double-hammer-consecutive-waves",
+    "check-hammer-charge-alignment",
+    "monstrous-cavalry-grinding-role",
+    "sacrifice-regular-cavalry-softening",
+    "time-stonehorn-pressure-turn",
+    "support-wyvern-against-shugengan",
+    "boar-boyz-targets-cannot-escape",
+    "boar-boyz-take-bait",
+    "paired-scorpions-flank-pinned-threat",
+    "soften-targets-before-cavalry",
+    "hybrid-hammer-objectives",
+    "cavalry-push-off-objectives"
+  ],
+  "kernpunten": [
+    {
+      "id": "flank-enemies-already-fighting-your-main-unit",
+      "titel": "Flank enemies already fighting your main unit",
+      "tekst": "Charge supporting units into an engaged enemy's flank so you can help your main unit win the fight.",
+      "lessen": [
+        "boar-boyz-take-bait",
+        "paired-scorpions-flank-pinned-threat"
+      ],
+      "principe": null
+    },
+    {
+      "id": "screen-your-hammers-with-chaff-while-setting-up-favourable-c",
+      "titel": "Screen your hammers with chaff while setting up favourable charges",
+      "tekst": "Use chaff or skirmishing screens so you can protect your hammer while arranging a favourable fight.",
+      "lessen": [
+        "flank-not-point-and-click",
+        "hammers-on-flanks",
+        "hammer-matchups",
+        "screening-chaff"
+      ],
+      "principe": "screen-hammers-while-setting-up-charges"
+    },
+    {
+      "id": "soften-targets-before-your-finishing-cavalry-charge",
+      "titel": "Soften targets before your finishing cavalry charge",
+      "tekst": "Weaken the target with shooting or an earlier cavalry attack so your finishing cavalry has a better chance of breaking through.",
+      "lessen": [
+        "double-hammer-consecutive-waves",
+        "sacrifice-regular-cavalry-softening",
+        "soften-targets-before-cavalry"
+      ],
+      "principe": "soften-targets-before-finishing-cavalry-charge"
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 72,
+      "sec": 159,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 44761,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 7397,
+        "reasoning_output_tokens": 5554
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

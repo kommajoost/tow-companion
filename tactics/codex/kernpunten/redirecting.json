@@ -1,0 +1,111 @@
+{
+  "subthema": "redirecting",
+  "thema": "chaff",
+  "gemaaktOp": "2026-11-26T15:55:50.209Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "chaff: choosing-chaff,redirecting,decoys-bait,screens,retreat-paths,clearing-chaff",
+  "invoerHash": "adba7a01a84f",
+  "invoer": [
+    "flank-kill-or-delay",
+    "sacrifice-a-flank",
+    "chaff-speed-bumps",
+    "speed-bump-close-order",
+    "fleeing-diverters-steer-charges",
+    "chaff-block-marching",
+    "flee-redirector-off-board",
+    "deny-lantern-rear-landings",
+    "align-sacrifices-for-empty-overruns",
+    "angle-skirmisher-dragon-overrun",
+    "chaff-obstructs-caster-advance",
+    "column-blockers-delay-objective-access",
+    "hold-redirector-protect-target",
+    "closest-skirmisher-force-wheel",
+    "redirect-blocks-into-traffic",
+    "protect-cannons-from-fast-hunters",
+    "repurpose-pieces-as-chaff",
+    "hold-spare-chaff-back",
+    "gor-chaff-occupies-space",
+    "razorgor-attempt-long-charges",
+    "sky-lantern-charge-roadblock",
+    "great-eagle-redirection-role",
+    "falcon-horn-chaff-dragon",
+    "goblins-obstruct-enemy-chaff",
+    "wolf-column-early-chaff",
+    "goblins-block-boar-flankers",
+    "giant-rats-sacrifice-panic",
+    "reserve-horse-archers-deny-impact",
+    "orderly-retreat-open-order-redirect",
+    "block-final-objective-approach"
+  ],
+  "kernpunten": [
+    {
+      "id": "use-expendable-units-to-buy-time-for-wins-elsewhere",
+      "titel": "Use expendable units to buy time for wins elsewhere",
+      "tekst": "Use disposable blockers to waste enemy turns while your other units gain time to act.",
+      "lessen": [
+        "flank-kill-or-delay",
+        "sacrifice-a-flank",
+        "chaff-speed-bumps",
+        "flee-redirector-off-board",
+        "align-sacrifices-for-empty-overruns",
+        "gor-chaff-occupies-space",
+        "reserve-horse-archers-deny-impact"
+      ],
+      "principe": "expendable-units-buy-time"
+    },
+    {
+      "id": "use-bait-and-screens-to-set-up-your-supporting-charges",
+      "titel": "Use bait and screens to set up your supporting charges",
+      "tekst": "Position a diverter so following or defeating it leaves the enemy exposed to your supporting units' charges.",
+      "lessen": [
+        "speed-bump-close-order",
+        "fleeing-diverters-steer-charges",
+        "repurpose-pieces-as-chaff"
+      ],
+      "principe": "bait-enemies-into-supporting-charges"
+    },
+    {
+      "id": "keep-enemy-overruns-and-redirects-away-from-your-valuable-un",
+      "titel": "Keep enemy overruns and redirects away from your valuable units",
+      "tekst": "Position your sacrifice so defeating it cannot carry the enemy into the unit you want to protect.",
+      "lessen": [
+        "speed-bump-close-order",
+        "align-sacrifices-for-empty-overruns",
+        "hold-redirector-protect-target"
+      ],
+      "principe": "position-chaff-for-safe-overruns"
+    },
+    {
+      "id": "choose-mobile-chaff-that-can-reach-its-blocking-position",
+      "titel": "Choose mobile chaff that can reach its blocking position",
+      "tekst": "Use mobile chaff that can reach the enemy's route and obstruct its movement.",
+      "lessen": [
+        "great-eagle-redirection-role",
+        "wolf-column-early-chaff"
+      ],
+      "principe": "choose-mobile-chaff-for-blocking"
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 88,
+      "sec": 195,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 48915,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 8529,
+        "reasoning_output_tokens": 6214
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

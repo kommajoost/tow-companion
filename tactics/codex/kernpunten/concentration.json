@@ -1,0 +1,84 @@
+{
+  "subthema": "concentration",
+  "thema": "game-plan",
+  "gemaaktOp": "2026-11-26T15:44:28.178Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "game-plan: reading-the-enemy,flanks-centre,concentration,tempo-trading,threat-zones,aggression-control,list-building",
+  "invoerHash": "509b38096bd5",
+  "invoer": [
+    "concentrate-points-death-star",
+    "deploy-slow-army-compact",
+    "concentrate-against-enemy-part",
+    "king-hill-concentrate-centre",
+    "special-feature-first-turn-pressure",
+    "encirclement-short-objective-triangle",
+    "disguise-refused-flank-mobile-drops",
+    "vampire-force-necromancer-range",
+    "wood-elves-spread-opponents",
+    "commit-minimum-winning-force",
+    "bait-lanterns-into-concentrated-fire",
+    "separate-large-infantry-blocks",
+    "war-wagons-advance-together",
+    "ogre-vanguard-threat-overload",
+    "combo-charge-poison-death-star",
+    "stack-buffs-avoid-fair-fights",
+    "wood-elves-concentrate-bow-fire"
+  ],
+  "kernpunten": [
+    {
+      "id": "concentrate-your-strength-against-part-of-the-enemy-army",
+      "titel": "Concentrate your strength against part of the enemy army",
+      "tekst": "Bring your strength against an isolated part of the enemy army so its other units cannot contribute effectively.",
+      "lessen": [
+        "deploy-slow-army-compact",
+        "concentrate-against-enemy-part",
+        "disguise-refused-flank-mobile-drops",
+        "bait-lanterns-into-concentrated-fire",
+        "separate-large-infantry-blocks"
+      ],
+      "principe": "concentrate-against-part"
+    },
+    {
+      "id": "keep-your-main-force-close-enough-for-support",
+      "titel": "Keep your main force close enough for support",
+      "tekst": "Keep your main force in a compact area so its units can support one another.",
+      "lessen": [
+        "encirclement-short-objective-triangle",
+        "vampire-force-necromancer-range"
+      ],
+      "principe": null
+    },
+    {
+      "id": "stack-buffs-on-the-same-unit",
+      "titel": "Stack buffs on the same unit",
+      "tekst": "Put multiple buffs on one unit to improve its chances in a fight.",
+      "lessen": [
+        "concentrate-points-death-star",
+        "stack-buffs-avoid-fair-fights"
+      ],
+      "principe": null
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 100,
+      "sec": 218,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 51144,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 10350,
+        "reasoning_output_tokens": 7714
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

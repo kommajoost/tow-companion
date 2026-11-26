@@ -1,0 +1,84 @@
+{
+  "subthema": "lores-spells",
+  "thema": "magic",
+  "gemaaktOp": "2026-11-26T16:10:32.911Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "magic: wizard-builds,lores-spells,dispelling,wizard-placement,magic-missiles,buffs-hexes,control-spells,casting-aids",
+  "invoerHash": "18398a8889a8",
+  "invoer": [
+    "choose-dark-magic-spells",
+    "higher-wizards-support-from-rear",
+    "plan-around-guaranteed-signatures",
+    "drain-magic-low-level-casters",
+    "reconsider-vortexes-in-15",
+    "steed-shadows-melee-character-block",
+    "bray-shaman-missile-choice",
+    "defensive-jade-sentinel-ramparts",
+    "prefer-orc-goblin-signatures",
+    "mortuary-priest-backup-rust",
+    "necromancy-familiar-debuff-pair",
+    "curse-years-holding-plan",
+    "warriors-bunker-wizard-daemonology",
+    "reconsider-warriors-blue-fire",
+    "chaos-swap-unhelpful-spells",
+    "consider-low-odds-powerful-spells"
+  ],
+  "kernpunten": [
+    {
+      "id": "secure-key-spells-instead-of-relying-on-random-generation",
+      "titel": "Secure key spells instead of relying on random generation",
+      "tekst": "Use spell selection or useful signature spells to avoid being left with spells your plan cannot use.",
+      "lessen": [
+        "choose-dark-magic-spells",
+        "plan-around-guaranteed-signatures",
+        "necromancy-familiar-debuff-pair",
+        "chaos-swap-unhelpful-spells"
+      ],
+      "principe": "secure-essential-spells-with-lore-familiar"
+    },
+    {
+      "id": "choose-spells-that-suit-the-enemy-you-face",
+      "titel": "Choose spells that suit the enemy you face",
+      "tekst": "Choose spells for the opposing army's targets and threats so your selection stays useful in that matchup.",
+      "lessen": [
+        "drain-magic-low-level-casters",
+        "bray-shaman-missile-choice",
+        "curse-years-holding-plan",
+        "chaos-swap-unhelpful-spells"
+      ],
+      "principe": null
+    },
+    {
+      "id": "choose-spells-that-help-defensive-units-hold",
+      "titel": "Choose spells that help defensive units hold",
+      "tekst": "Choose spells that protect your defensive units so they can withstand enemy attacks.",
+      "lessen": [
+        "defensive-jade-sentinel-ramparts",
+        "curse-years-holding-plan"
+      ],
+      "principe": null
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 109,
+      "sec": 266,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 53922,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 11459,
+        "reasoning_output_tokens": 8356
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

@@ -1,0 +1,134 @@
+{
+  "subthema": "missile-units",
+  "thema": "shooting-terrain",
+  "gemaaktOp": "2026-11-26T16:16:23.610Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "shooting-terrain: war-machines,missile-units,target-priority,avoiding-fire,evasive-skirmish,terrain-los,hunting-shooters",
+  "invoerHash": "37b4890212da",
+  "invoer": [
+    "shooting-ambushers-immediate-impact",
+    "shooting-skirmishers-accuracy-poison",
+    "infernal-guard-fireglaive-armour",
+    "burlok-thunderers-against-outriders",
+    "three-irondrake-torpedo-units",
+    "irondrakes-against-tomb-chariots",
+    "empire-double-missile-blocks",
+    "road-wardens-shooting-ambush",
+    "road-wardens-controlled-pistols",
+    "jade-fleet-allied-outriders",
+    "reavers-question-bow-upgrade",
+    "gutter-runners-always-poison",
+    "gutter-runners-weapon-role",
+    "skeleton-archers-poison-volume",
+    "six-great-bow-ushabti",
+    "wood-elves-reconsider-poison",
+    "bodkins-remove-lantern-armour",
+    "glade-guard-ten-twenty",
+    "deepwood-scouts-ten-models",
+    "glade-guard-arcane-bodkins",
+    "deepwood-scouts-trueflight-arrows",
+    "deepwood-scouts-hagbane-default",
+    "shooters-need-time-safe",
+    "irondrakes-front-against-bretonnia",
+    "outriders-vanguard-static-fire",
+    "ushabti-arcs-against-flyers",
+    "light-missile-cavalry-shoot-chaff",
+    "pink-horrors-reform-shooting",
+    "gyrocopters-kite-pegasus-knights",
+    "steam-guns-outside-knight-arcs",
+    "reposition-shooting-blocks-safely",
+    "poison-block-decline-followup",
+    "earthen-ramparts-shooting-defence",
+    "gunlines-score-without-contact",
+    "strength-four-bretonnian-blessing",
+    "ushabti-great-bows-lanterns",
+    "earthen-ramparts-missile-troops"
+  ],
+  "kernpunten": [
+    {
+      "id": "keep-your-shooters-beyond-enemy-charge-reach-or-arcs",
+      "titel": "Keep your shooters beyond enemy charge reach or arcs",
+      "tekst": "Position your shooters outside enemy charge range or arcs so they can keep firing without being caught.",
+      "lessen": [
+        "shooters-need-time-safe",
+        "gyrocopters-kite-pegasus-knights",
+        "steam-guns-outside-knight-arcs",
+        "reposition-shooting-blocks-safely"
+      ],
+      "principe": "keep-shooters-beyond-charge-reach"
+    },
+    {
+      "id": "weaken-dangerous-enemies-with-shooting-before-your-troops-fi",
+      "titel": "Weaken dangerous enemies with shooting before your troops fight them",
+      "tekst": "Shoot approaching enemies with Irondrakes so they reach combat already damaged.",
+      "lessen": [
+        "three-irondrake-torpedo-units",
+        "irondrakes-against-tomb-chariots",
+        "irondrakes-front-against-bretonnia"
+      ],
+      "principe": "weaken-dangerous-enemies-before-combat"
+    },
+    {
+      "id": "choose-shooting-ambushers-for-an-immediate-arrival-volley",
+      "titel": "Choose shooting ambushers for an immediate arrival volley",
+      "tekst": "Choose shooting ambushers so they can attack on arrival instead of waiting for a later charge.",
+      "lessen": [
+        "shooting-ambushers-immediate-impact",
+        "road-wardens-shooting-ambush"
+      ],
+      "principe": "choose-shooting-ambushers-for-an-immediate-arrival-volley"
+    },
+    {
+      "id": "protect-defensive-units-with-earthen-ramparts",
+      "titel": "Protect defensive units with Earthen Ramparts",
+      "tekst": "Cast Earthen Ramparts on your missile troops to gain a ward save and disrupt incoming charges.",
+      "lessen": [
+        "earthen-ramparts-shooting-defence",
+        "earthen-ramparts-missile-troops"
+      ],
+      "principe": "protect-defensive-units-with-earthen-ramparts"
+    },
+    {
+      "id": "reposition-great-bow-ushabti-without-losing-shooting-accurac",
+      "titel": "Reposition great-bow Ushabti without losing shooting accuracy",
+      "tekst": "Move or turn your great-bow Ushabti to keep targets in their firing arc without movement penalties to shooting.",
+      "lessen": [
+        "ushabti-arcs-against-flyers",
+        "ushabti-great-bows-lanterns"
+      ],
+      "principe": "reposition-ushabti-without-losing-shooting-accuracy"
+    },
+    {
+      "id": "use-poisoned-shooting-to-wound-sky-lanterns",
+      "titel": "Use poisoned shooting to wound Sky Lanterns",
+      "tekst": "Give your archers poisoned shooting to help them wound Sky Lanterns.",
+      "lessen": [
+        "skeleton-archers-poison-volume",
+        "wood-elves-reconsider-poison"
+      ],
+      "principe": null
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 137,
+      "sec": 347,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 61831,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 16160,
+        "reasoning_output_tokens": 12948
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

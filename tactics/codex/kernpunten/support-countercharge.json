@@ -1,0 +1,139 @@
+{
+  "subthema": "support-countercharge",
+  "thema": "movement",
+  "gemaaktOp": "2026-11-26T15:52:31.236Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "movement: charge-setup,charge-order,wheels-alignment,overrun-pursuit,reforms-formations,fleeing,support-countercharge",
+  "invoerHash": "ed44eefb4cc8",
+  "invoer": [
+    "ambushers-banner-combat-resolution",
+    "black-orc-chariot-standard",
+    "close-order-wolves-ambush-support",
+    "giant-finishes-boar-combats",
+    "layer-resilient-units-retreat-trap",
+    "deploy-wide-for-pincer",
+    "dragon-deterrent-behind-wizard",
+    "skirmish-blender-character",
+    "coordinate-front-flank-arrival",
+    "stubborn-anchor-countercharge",
+    "decoys-set-up-countercharges",
+    "reform-screen-flank-countercharge",
+    "combo-charge-objective-defenders",
+    "double-hammer-consecutive-waves",
+    "monster-charge-challenge-support",
+    "stagger-receivers-for-countercharge",
+    "ambushers-support-flank-rear-charges",
+    "light-cavalry-deny-ranks",
+    "razorgor-tuskgor-bait-switch",
+    "bloodthirster-needs-lantern-support",
+    "gyrocopter-rear-charge-dragon",
+    "empire-knights-support-combats",
+    "lantern-disengage-through-friendly-unit",
+    "support-wyvern-against-shugengan",
+    "pair-manglers-reduce-randomness",
+    "boar-flankers-break-grinds",
+    "boar-boyz-take-bait",
+    "combo-charge-poison-death-star",
+    "paired-scorpions-flank-pinned-threat",
+    "heavy-chariot-support",
+    "skirmisher-rear-combat-support",
+    "anvil-next-turn-combat-choices",
+    "chase-light-contenders-off-objectives",
+    "eternal-guard-charge-for-scoring"
+  ],
+  "kernpunten": [
+    {
+      "id": "reinforce-your-main-fight-with-flank-or-rear-charges",
+      "titel": "Reinforce your main fight with flank or rear charges",
+      "tekst": "Bring support into the enemy's flank or rear to help your main unit win the fight.",
+      "lessen": [
+        "ambushers-banner-combat-resolution",
+        "black-orc-chariot-standard",
+        "close-order-wolves-ambush-support",
+        "giant-finishes-boar-combats",
+        "coordinate-front-flank-arrival",
+        "stubborn-anchor-countercharge",
+        "reform-screen-flank-countercharge",
+        "ambushers-support-flank-rear-charges",
+        "light-cavalry-deny-ranks",
+        "gyrocopter-rear-charge-dragon",
+        "empire-knights-support-combats",
+        "boar-flankers-break-grinds",
+        "boar-boyz-take-bait",
+        "paired-scorpions-flank-pinned-threat",
+        "skirmisher-rear-combat-support"
+      ],
+      "principe": "reinforce-fights-with-flank-or-rear-charges"
+    },
+    {
+      "id": "prepare-countercharges-with-units-that-can-survive-the-first",
+      "titel": "Prepare countercharges with units that can survive the first charge",
+      "tekst": "Use a receiver that can survive a charge and keep support ready to countercharge afterwards.",
+      "lessen": [
+        "layer-resilient-units-retreat-trap",
+        "stubborn-anchor-countercharge",
+        "reform-screen-flank-countercharge",
+        "stagger-receivers-for-countercharge",
+        "heavy-chariot-support",
+        "anvil-next-turn-combat-choices"
+      ],
+      "principe": "prepare-countercharges-behind-surviving-receivers"
+    },
+    {
+      "id": "reinforce-ongoing-fights-with-supporting-charges",
+      "titel": "Reinforce ongoing fights with supporting charges",
+      "tekst": "Charge support into an existing fight to add damage or combat resolution.",
+      "lessen": [
+        "black-orc-chariot-standard",
+        "close-order-wolves-ambush-support",
+        "giant-finishes-boar-combats",
+        "boar-flankers-break-grinds"
+      ],
+      "principe": "reinforce-ongoing-fights-with-supporting-charges"
+    },
+    {
+      "id": "give-supporting-chargers-banners-for-extra-combat-resolution",
+      "titel": "Give supporting chargers banners for extra combat resolution",
+      "tekst": "Consider banners on support chargers so their extra combat resolution can help swing the fight.",
+      "lessen": [
+        "ambushers-banner-combat-resolution",
+        "black-orc-chariot-standard",
+        "close-order-wolves-ambush-support"
+      ],
+      "principe": null
+    },
+    {
+      "id": "use-bait-and-screens-to-set-up-your-supporting-charges",
+      "titel": "Use bait and screens to set up your supporting charges",
+      "tekst": "Place bait or screens so an enemy following them comes within reach of your supporting countercharge.",
+      "lessen": [
+        "decoys-set-up-countercharges",
+        "reform-screen-flank-countercharge",
+        "razorgor-tuskgor-bait-switch"
+      ],
+      "principe": "bait-enemies-into-supporting-charges"
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 106,
+      "sec": 311,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 52686,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 13390,
+        "reasoning_output_tokens": 10876
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

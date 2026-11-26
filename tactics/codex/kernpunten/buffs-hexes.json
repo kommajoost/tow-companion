@@ -1,0 +1,126 @@
+{
+  "subthema": "buffs-hexes",
+  "thema": "magic",
+  "gemaaktOp": "2026-11-26T16:10:32.913Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "magic: wizard-builds,lores-spells,dispelling,wizard-placement,magic-missiles,buffs-hexes,control-spells,casting-aids",
+  "invoerHash": "961cafab4644",
+  "invoer": [
+    "pair-movement-combat-buffs",
+    "battle-magic-ward-block",
+    "sigmar-prayer-shooting-ward",
+    "white-wolf-daemonology-block",
+    "glittering-robe-skycutter-archmage",
+    "night-goblins-netters-robe",
+    "orc-anchor-defensive-magic",
+    "grave-guard-battle-lust-mirror",
+    "anvil-buff-before-advance",
+    "repeated-terror-charges-lanterns",
+    "battle-lust-before-charge",
+    "ethereal-bunker-against-lanterns",
+    "movement-debuff-range-control",
+    "necromancy-leadership-control",
+    "scale-buffs-across-attacks",
+    "debuff-strongest-enemy-unit",
+    "arrow-attraction-concentrated-fire",
+    "gathering-darkness-terror-combination",
+    "daemonic-vessel-basic-infantry",
+    "daemonic-vigour-defensive-priority",
+    "plague-rust-armoured-targets",
+    "earthen-ramparts-shooting-defence",
+    "stack-buffs-avoid-fair-fights",
+    "necromancy-supports-state-troops",
+    "glittering-robe-lantern-charge",
+    "black-orcs-rust-jade-warriors",
+    "bad-moon-itchy-nuisance",
+    "evil-sun-spear-blocks",
+    "itchy-nuisance-fanatics-dragons",
+    "light-death-leadership-debuffs",
+    "necrosphinx-terror-leadership",
+    "earthen-ramparts-missile-troops",
+    "prioritise-light-of-protection",
+    "lower-lantern-leadership-screams",
+    "banshee-double-engine-reach",
+    "dirge-necromancy-leadership-stack"
+  ],
+  "kernpunten": [
+    {
+      "id": "lower-enemy-leadership-before-terror-break-tests-and-leaders",
+      "titel": "Lower enemy Leadership before Terror, break tests and Leadership attacks",
+      "tekst": "Lower enemy Leadership before Terror, break tests or Leadership-based attacks to increase failures or damage.",
+      "lessen": [
+        "repeated-terror-charges-lanterns",
+        "necromancy-leadership-control",
+        "gathering-darkness-terror-combination",
+        "necromancy-supports-state-troops",
+        "light-death-leadership-debuffs",
+        "necrosphinx-terror-leadership",
+        "lower-lantern-leadership-screams",
+        "dirge-necromancy-leadership-stack"
+      ],
+      "principe": "lower-leadership-before-tests-or-damage"
+    },
+    {
+      "id": "weaken-enemy-armour-with-plague-of-rust-before-attacking",
+      "titel": "Weaken enemy armour with Plague of Rust before attacking",
+      "tekst": "Cast Plague of Rust on armoured targets so your attacks face less armour protection.",
+      "lessen": [
+        "plague-rust-armoured-targets",
+        "black-orcs-rust-jade-warriors"
+      ],
+      "principe": null
+    },
+    {
+      "id": "protect-defensive-units-with-earthen-ramparts",
+      "titel": "Protect defensive units with Earthen Ramparts",
+      "tekst": "Use Earthen Ramparts on threatened missile troops so its ward save helps them survive incoming attacks.",
+      "lessen": [
+        "earthen-ramparts-shooting-defence",
+        "earthen-ramparts-missile-troops"
+      ],
+      "principe": "protect-defensive-units-with-earthen-ramparts"
+    },
+    {
+      "id": "use-glittering-robe-to-protect-against-shooting",
+      "titel": "Use Glittering Robe to protect against shooting",
+      "tekst": "Cast Glittering Robe on units exposed to shooting to reduce the damage they suffer.",
+      "lessen": [
+        "glittering-robe-skycutter-archmage",
+        "glittering-robe-lantern-charge"
+      ],
+      "principe": null
+    },
+    {
+      "id": "use-battle-lust-to-strengthen-your-combat-units",
+      "titel": "Use Battle Lust to strengthen your combat units",
+      "tekst": "Use Battle Lust's Hatred and Frenzy to help your combat units win fights.",
+      "lessen": [
+        "grave-guard-battle-lust-mirror",
+        "battle-lust-before-charge"
+      ],
+      "principe": null
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 109,
+      "sec": 266,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 53922,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 11459,
+        "reasoning_output_tokens": 8356
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

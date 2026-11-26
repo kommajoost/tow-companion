@@ -68,9 +68,9 @@ test('GET → 405 with an info document; OPTIONS → CORS preflight', async () =
   assert.match(o.headers.get('access-control-allow-headers'), /Mcp-Protocol-Version/);
 });
 
-test('tools/list: 12 read-only tools with object schemas', async () => {
+test('tools/list: 13 read-only tools with object schemas', async () => {
   const { tools } = (await h.rpc('tools/list', {})).json.result;
-  assert.deepEqual(tools.map((t) => t.name), ['search_tactics', 'get_lesson', 'list_tactics_index', 'list_principles', 'search_rules', 'get_rule', 'list_armies', 'get_army', 'get_unit', 'calculate_attack', 'search', 'fetch']);
+  assert.deepEqual(tools.map((t) => t.name), ['search_tactics', 'get_lesson', 'list_tactics_index', 'get_section', 'list_principles', 'search_rules', 'get_rule', 'list_armies', 'get_army', 'get_unit', 'calculate_attack', 'search', 'fetch']);
   for (const t of tools) {
     assert.equal(t.inputSchema.type, 'object');
     assert.equal(t.annotations.readOnlyHint, true);
@@ -237,6 +237,55 @@ test('list_principles: essentials with counts and lesson ids, theme and army fil
   const f = JSON.parse(await tool('fetch', { id: `principle:${first.id}` }));
   assert.equal(f.metadata.type, 'principle');
   assert.ok(f.text.includes(first.lessen[0]) && f.text.includes(first.tekst));
+});
+
+test('key points per section: titles in list_tactics_index, get_section with counts, channels and lesson ids', async () => {
+  const kp = read('public/tactics/kernpunten.json');
+  const lessen = read('public/tactics/lessen.json').lessen;
+  const byId = new Map(lessen.map((l) => [l.id, l]));
+  const subs = Object.keys(kp.perSubthema);
+  assert.ok(subs.length > 0);
+  // Every key point: lessons exist and belong to that section.
+  for (const [sub, list] of Object.entries(kp.perSubthema)) {
+    assert.ok(list.length >= 1 && list.length <= 5, sub);
+    for (const k of list) for (const id of k.lessen) assert.ok(byId.get(id)?.subthemas.includes(sub), `${sub} ${k.id}: ${id}`);
+  }
+
+  // The index shows the first key point title of every section (whole or shortened) under that section.
+  const idx = await tool('list_tactics_index', {});
+  assert.match(idx, /get_section subtheme=<id>/);
+  for (const sub of subs) {
+    const at = idx.indexOf(`    · ${sub}: `);
+    assert.ok(at > -1, sub);
+    const line = idx.slice(at).split('\n')[1];
+    assert.match(line, /^ +key points: /, sub);
+    assert.ok(line.includes(kp.perSubthema[sub][0].titel.slice(0, 20)), `${sub}: ${line}`);
+  }
+
+  // get_section by id and by name: every key point in order with its counts and lesson ids, then lessons.
+  const sub = subs.includes('reading-the-enemy') ? 'reading-the-enemy' : subs[0];
+  const list = kp.perSubthema[sub];
+  const t = await tool('get_section', { subtheme: sub });
+  assert.match(t, new RegExp(`^Section: .+ \\[${sub}\\] · Theme: `));
+  assert.match(t, /Cite the lessons/);
+  let last = -1;
+  for (const k of list) {
+    const at = t.indexOf(`[key point: ${k.id}]`);
+    assert.ok(at > last, `order: ${k.id}`);
+    last = at;
+    assert.ok(t.includes(k.tekst), k.id);
+    assert.ok(t.includes(`Backed by ${k.nLessen} lessons from ${k.nKanalen} channel`), k.id);
+    assert.ok(t.includes(`Lessons: ${k.lessen.join(', ')}`), k.id);
+  }
+  assert.ok(t.includes(`[id: ${list[0].lessen[0]}]`));
+  const naam = read('public/tactics/themas.json').themas.flatMap((x) => x.subthemas).find((s) => s.id === sub).naam;
+  assert.ok((await tool('get_section', { subtheme: naam })).includes(`[key point: ${list[0].id}]`));
+
+  // A theme id lists its sections with key point titles; an unknown section says so.
+  const theme = read('public/tactics/themas.json').themas.find((x) => x.subthemas.some((s) => s.id === sub));
+  const th = await tool('get_section', { subtheme: theme.id });
+  assert.ok(th.includes(`- ${sub}: `) && th.includes(list[0].titel));
+  assert.match(await tool('get_section', { subtheme: 'zxqv no such section' }), /No section/);
 });
 
 // ─────────────────────────── rules ───────────────────────────

@@ -1,0 +1,112 @@
+{
+  "subthema": "war-machines",
+  "thema": "shooting-terrain",
+  "gemaaktOp": "2026-11-26T16:16:23.609Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "shooting-terrain: war-machines,missile-units,target-priority,avoiding-fire,evasive-skirmish,terrain-los,hunting-shooters",
+  "invoerHash": "0284d6283d39",
+  "invoer": [
+    "stone-throwers-against-lanterns",
+    "templates-against-huge-blocks",
+    "scourgerunner-over-reaper",
+    "organ-guns-counter-outriders",
+    "bolt-thrower-rune-skewering",
+    "artillery-rune-forging-backup",
+    "artillery-rune-reloading-uptime",
+    "grudge-throwers-early-pressure",
+    "flaming-artillery-tomb-kings",
+    "dwarf-mixed-dragon-firepower",
+    "share-engineer-between-artillery",
+    "engineer-cannon-artillery-reroll",
+    "ogre-crew-cathayan-cannon",
+    "skycutter-over-stationary-bolt-thrower",
+    "bombard-efficient-cannon-choice",
+    "doom-divers-against-cathay",
+    "warp-lightning-cannons-lanterns",
+    "hide-artillery-waste-hunters-time",
+    "spread-artillery-create-crossfire",
+    "combat-units-guard-artillery",
+    "separate-artillery-deny-overruns",
+    "bolt-throwers-flank-cavalry",
+    "bolt-throwers-sacrificial-flank-distractions",
+    "hide-grudge-throwers-bombard",
+    "organ-guns-between-combat-units",
+    "hidden-grudge-throwers-bombards",
+    "cannons-behind-vanguarding-outriders",
+    "separate-empire-artillery-stations",
+    "fanatics-guard-artillery-flanks",
+    "protect-cannons-from-fast-hunters",
+    "resolve-overshooting-cannonballs",
+    "artillery-pressure-miao",
+    "mobile-dwarf-cannons-counterbattery",
+    "grudge-throwers-pressure-dragons",
+    "cannon-aim-behemoth-base",
+    "cannon-bounce-multiple-lanterns"
+  ],
+  "kernpunten": [
+    {
+      "id": "guard-artillery-approaches-with-supporting-units",
+      "titel": "Guard artillery approaches with supporting units",
+      "tekst": "Use supporting units to intercept approaching hunters so your artillery remains protected.",
+      "lessen": [
+        "combat-units-guard-artillery",
+        "fanatics-guard-artillery-flanks",
+        "protect-cannons-from-fast-hunters"
+      ],
+      "principe": "guard-artillery-approaches"
+    },
+    {
+      "id": "bombard-targets-hiding-behind-terrain",
+      "titel": "Bombard targets hiding behind terrain",
+      "tekst": "Use stone throwers to threaten targets behind terrain so enemies cannot escape your shooting by hiding.",
+      "lessen": [
+        "stone-throwers-against-lanterns",
+        "grudge-throwers-early-pressure",
+        "grudge-throwers-pressure-dragons"
+      ],
+      "principe": null
+    },
+    {
+      "id": "weaken-dangerous-enemies-with-shooting-before-your-troops-fi",
+      "titel": "Weaken dangerous enemies with shooting before your troops fight them",
+      "tekst": "Shoot approaching enemies before combat so your troops face a weakened target.",
+      "lessen": [
+        "dwarf-mixed-dragon-firepower",
+        "organ-guns-between-combat-units"
+      ],
+      "principe": "weaken-dangerous-enemies-before-combat"
+    },
+    {
+      "id": "use-rerolls-to-make-artillery-more-reliable",
+      "titel": "Use rerolls to make artillery more reliable",
+      "tekst": "Give your artillery access to a reroll so its firing is more reliable.",
+      "lessen": [
+        "artillery-rune-forging-backup",
+        "engineer-cannon-artillery-reroll"
+      ],
+      "principe": null
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 137,
+      "sec": 347,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 61831,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 16160,
+        "reasoning_output_tokens": 12948
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

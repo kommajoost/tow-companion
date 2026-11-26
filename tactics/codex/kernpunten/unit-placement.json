@@ -1,0 +1,195 @@
+{
+  "subthema": "unit-placement",
+  "thema": "deployment",
+  "gemaaktOp": "2026-11-26T15:47:16.124Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "deployment: pre-game-checks,drops-first-turn,unit-placement,deploying-vs-shooting,ambush-scouts-vanguard",
+  "invoerHash": "247b16f81f7b",
+  "invoer": [
+    "flank-not-point-and-click",
+    "deploy-read-terrain",
+    "deploy-slow-army-compact",
+    "deploy-for-matchups",
+    "deploy-aggressive-when-safe",
+    "deploy-for-later-positions",
+    "central-deployment-limits-cavalry",
+    "concentrate-against-enemy-part",
+    "shooters-need-time-safe",
+    "protect-main-hammer-flank",
+    "check-first-movement-options",
+    "encirclement-protect-vulnerable-scorer",
+    "hide-artillery-waste-hunters-time",
+    "fast-armies-deploy-deeper",
+    "anticipate-enemy-deployment-pattern",
+    "commit-slow-infantry-plan",
+    "central-protected-dispeller",
+    "opening-outside-dispel-range",
+    "deploy-heavy-chariots-back",
+    "bsb-joins-elite-troops",
+    "central-anvil-all-round-wings",
+    "spread-artillery-create-crossfire",
+    "offset-support-beyond-overruns",
+    "choose-dragon-role-early",
+    "deploy-for-unit-synergy",
+    "combat-units-guard-artillery",
+    "deploy-early-ensure-fit",
+    "layer-resilient-units-retreat-trap",
+    "field-glory-wide-deployment",
+    "sideline-deployment-angle-inward",
+    "domination-central-late-expansion",
+    "natural-objective-opening-score",
+    "allocate-scorers-by-contest",
+    "central-mobile-response-threats",
+    "baggage-cheap-home-scorer",
+    "leave-random-mover-lanes",
+    "hill-scorer-offset-feature",
+    "chance-encounter-charge-safety",
+    "slow-scorers-front-centre",
+    "fast-attackers-long-flank-route",
+    "wide-deployment-against-cannons",
+    "avoid-unhelpful-terrain-before-infantry",
+    "angle-shooters-guide-enemy-overruns",
+    "deploy-wide-for-pincer",
+    "screen-dragon-landing-space",
+    "corner-angle-expels-dragon",
+    "artillery-hills-clear-sight",
+    "separate-artillery-deny-overruns",
+    "castle-against-bretonnian-flyers",
+    "lance-cavalry-deter-jade-lancers",
+    "warded-front-against-pillar",
+    "shooting-zones-against-dragons",
+    "central-sheltered-chaff-deployment",
+    "anchor-flanks-on-terrain",
+    "dragon-facing-deters-advance",
+    "central-iron-daemon-dragon-bait",
+    "adamant-anvil-dragon-bait",
+    "bolt-throwers-flank-cavalry",
+    "hide-grudge-throwers-bombard",
+    "organ-guns-between-combat-units",
+    "rangers-deny-green-knight",
+    "dwarfs-catapult-board-edge",
+    "overlap-anvil-runesmith-auras",
+    "anvil-forward-against-rust",
+    "flagellants-wood-roadblock",
+    "helblaster-entire-base-cover",
+    "separate-empire-artillery-stations",
+    "eagle-skycutter-flank-pair",
+    "prince-covers-sisters-approach",
+    "arachnarok-avoid-ogre-blade",
+    "central-night-goblin-fanatics",
+    "attacking-fanatic-carriers-front",
+    "fanatics-guard-artillery-flanks",
+    "leave-several-boar-deployment-gaps",
+    "bell-behind-stormvermin-support",
+    "overlap-necrosphinx-threat-arcs",
+    "mortuary-cult-refused-flank",
+    "ushabti-arcs-against-flyers",
+    "deploy-dragon-reserve-move",
+    "undead-wall-protect-flanks",
+    "central-warriors-foot-wizard-bunker",
+    "glade-riders-shoot-withdraw",
+    "wood-elves-spread-opponents",
+    "treeman-bsb-backline-defence",
+    "woodland-ambush-terrain-corridor"
+  ],
+  "kernpunten": [
+    {
+      "id": "deploy-units-so-their-planned-support-can-work",
+      "titel": "Deploy units so their planned support can work",
+      "tekst": "Deploy units that need each other within supporting reach so they can work together as your plan unfolds.",
+      "lessen": [
+        "flank-not-point-and-click",
+        "deploy-for-later-positions",
+        "deploy-for-unit-synergy",
+        "deploy-early-ensure-fit",
+        "eagle-skycutter-flank-pair",
+        "bell-behind-stormvermin-support",
+        "deploy-dragon-reserve-move"
+      ],
+      "principe": "deploy-units-within-reach-of-their-planned-buffs"
+    },
+    {
+      "id": "guard-vulnerable-flanks-with-terrain-or-supporting-units",
+      "titel": "Guard vulnerable flanks with terrain or supporting units",
+      "tekst": "Use terrain or supporting units to cover vulnerable flanks and prevent enemies getting around your line.",
+      "lessen": [
+        "protect-main-hammer-flank",
+        "castle-against-bretonnian-flyers",
+        "anchor-flanks-on-terrain",
+        "fanatics-guard-artillery-flanks",
+        "mortuary-cult-refused-flank",
+        "undead-wall-protect-flanks"
+      ],
+      "principe": "guard-vulnerable-flanks-with-terrain-or-supporting-units"
+    },
+    {
+      "id": "use-threats-to-restrict-movement-without-committing-to-comba",
+      "titel": "Use threats to restrict movement without committing to combat",
+      "tekst": "Position threats to cover enemy approaches so your opponent has fewer safe places to advance.",
+      "lessen": [
+        "lance-cavalry-deter-jade-lancers",
+        "shooting-zones-against-dragons",
+        "dragon-facing-deters-advance",
+        "prince-covers-sisters-approach",
+        "overlap-necrosphinx-threat-arcs"
+      ],
+      "principe": "restrict-movement-with-threats"
+    },
+    {
+      "id": "concentrate-your-strength-against-part-of-the-enemy-army",
+      "titel": "Concentrate your strength against part of the enemy army",
+      "tekst": "Concentrate your army against part of the enemy force so you can create a local advantage.",
+      "lessen": [
+        "deploy-slow-army-compact",
+        "concentrate-against-enemy-part"
+      ],
+      "principe": "concentrate-against-part"
+    },
+    {
+      "id": "deploy-scorers-to-reach-the-objectives-you-plan-to-contest",
+      "titel": "Deploy scorers to reach the objectives you plan to contest",
+      "tekst": "Deploy scorers with practical routes to your planned scoring areas so they do not waste turns getting into position.",
+      "lessen": [
+        "field-glory-wide-deployment",
+        "domination-central-late-expansion",
+        "natural-objective-opening-score",
+        "hill-scorer-offset-feature",
+        "slow-scorers-front-centre"
+      ],
+      "principe": "deploy-scorers-to-reach-objectives"
+    },
+    {
+      "id": "keep-supporting-units-out-of-unwanted-overrun-paths",
+      "titel": "Keep supporting units out of unwanted overrun paths",
+      "tekst": "Separate or offset nearby units during deployment so an enemy cannot overrun from one into another.",
+      "lessen": [
+        "offset-support-beyond-overruns",
+        "separate-artillery-deny-overruns",
+        "separate-empire-artillery-stations"
+      ],
+      "principe": "keep-supporting-units-out-of-unwanted-overrun-paths"
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 105,
+      "sec": 164,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 52837,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 7481,
+        "reasoning_output_tokens": 5178
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

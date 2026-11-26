@@ -1,0 +1,91 @@
+{
+  "subthema": "bsb",
+  "thema": "characters",
+  "gemaaktOp": "2026-11-26T16:06:02.969Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "characters: combat-roles,bsb,mounts-items,challenges,protecting-characters",
+  "invoerHash": "2d5c525b308e",
+  "invoer": [
+    "character-leadership-central-anchor",
+    "horde-bsb-break-rerolls",
+    "leadership-ten-bsb-savings",
+    "upgrade-existing-combat-bsb",
+    "unit-carries-magic-banner",
+    "bsb-host-before-mount",
+    "avoid-redundant-bsb-banner",
+    "bsb-against-rocket-panic",
+    "hobgoblins-character-leadership-support",
+    "king-leadership-against-necromancy",
+    "royal-clans-runesmith-bsb",
+    "empire-infantry-bsb-foot",
+    "captain-bsb-defensive-investment",
+    "captain-witch-hunters-ward",
+    "state-troops-monster-tapestry",
+    "vampire-bsb-healing-rerolls",
+    "bsb-joins-elite-troops",
+    "general-supports-screen-marching",
+    "bell-behind-stormvermin-support",
+    "treeman-bsb-backline-defence",
+    "cheap-bsb-outside-combat",
+    "ghorros-near-centigor-drunkenness",
+    "griffon-bsb-rear-charge",
+    "high-priest-near-herald",
+    "tank-nearby-bsb-support",
+    "bsb-restraint-reform-support"
+  ],
+  "kernpunten": [
+    {
+      "id": "keep-a-bsb-near-combats-you-need-to-hold",
+      "titel": "Keep a BSB near combats you need to hold",
+      "tekst": "Keep your BSB near units that must hold so its reroll helps prevent them breaking.",
+      "lessen": [
+        "horde-bsb-break-rerolls",
+        "cheap-bsb-outside-combat",
+        "tank-nearby-bsb-support"
+      ],
+      "principe": "support-holding-combats-with-a-bsb"
+    },
+    {
+      "id": "keep-vulnerable-support-characters-out-of-direct-melee-conta",
+      "titel": "Keep vulnerable support characters out of direct melee contact",
+      "tekst": "Keep support characters outside combat so they can help your fighting units without being exposed to melee attacks.",
+      "lessen": [
+        "bell-behind-stormvermin-support",
+        "cheap-bsb-outside-combat"
+      ],
+      "principe": "keep-support-characters-out-of-melee-contact"
+    },
+    {
+      "id": "keep-healers-within-your-bsb-s-reroll-range",
+      "titel": "Keep healers within your BSB's reroll range",
+      "tekst": "Keep healing characters near your BSB so they can reroll failed healing tests.",
+      "lessen": [
+        "vampire-bsb-healing-rerolls",
+        "high-priest-near-herald"
+      ],
+      "principe": null
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 79,
+      "sec": 95,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 46244,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 4486,
+        "reasoning_output_tokens": 2675
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "subthema": "death-stars",
+  "thema": "infantry",
+  "gemaaktOp": "2026-11-26T16:01:39.814Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "infantry: anchors,death-stars,unit-builds,holding-combat,infantry-moves",
+  "invoerHash": "b26a24166c7a",
+  "invoer": [
+    "monstrous-infantry-death-stars",
+    "concentrate-points-death-star",
+    "death-star-missile-support",
+    "fully-invest-heavy-infantry-deathstar",
+    "deathstar-stubborn-veteran-upgrades",
+    "gor-death-star-infantry-choice",
+    "grave-guard-battle-lust-mirror",
+    "death-star-wheel-arc",
+    "dwarf-deathstar-meets-deathstar",
+    "death-star-champion-challenge"
+  ],
+  "kernpunten": [
+    {
+      "id": "give-your-infantry-death-star-a-large-wound-pool",
+      "titel": "Give your infantry Death Star a large wound pool",
+      "tekst": "Take enough bodies for your Death Star to absorb casualties and keep fighting.",
+      "lessen": [
+        "monstrous-infantry-death-stars",
+        "concentrate-points-death-star",
+        "fully-invest-heavy-infantry-deathstar",
+        "gor-death-star-infantry-choice"
+      ],
+      "principe": "death-star-wound-pool"
+    },
+    {
+      "id": "buff-your-death-star-to-improve-its-combat-performance",
+      "titel": "Buff your Death Star to improve its combat performance",
+      "tekst": "Use buffs on your Death Star to help it beat opposing units.",
+      "lessen": [
+        "concentrate-points-death-star",
+        "grave-guard-battle-lust-mirror",
+        "dwarf-deathstar-meets-deathstar"
+      ],
+      "principe": null
+    },
+    {
+      "id": "choose-hard-hitting-infantry-for-your-death-star",
+      "titel": "Choose hard-hitting infantry for your Death Star",
+      "tekst": "Choose infantry with damaging attacks so your Death Star can win its combats.",
+      "lessen": [
+        "monstrous-infantry-death-stars",
+        "gor-death-star-infantry-choice"
+      ],
+      "principe": null
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 60,
+      "sec": 345,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 41451,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 14480,
+        "reasoning_output_tokens": 12948
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

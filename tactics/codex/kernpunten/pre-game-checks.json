@@ -1,0 +1,75 @@
+{
+  "subthema": "pre-game-checks",
+  "thema": "deployment",
+  "gemaaktOp": "2026-11-26T15:47:16.124Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "deployment: pre-game-checks,drops-first-turn,unit-placement,deploying-vs-shooting,ambush-scouts-vanguard",
+  "invoerHash": "3e69e387bebb",
+  "invoer": [
+    "deploy-who-is-beatdown",
+    "check-scenario-deployment-map",
+    "identify-contestable-objectives",
+    "identify-fast-enemy-threats",
+    "locate-magic-before-wizard",
+    "choose-side-for-armies",
+    "mark-threat-ranges-dice",
+    "compare-ranges-before-deploying",
+    "investigate-unfamiliar-list-centrepieces",
+    "rehearse-opening-deployment-before-events"
+  ],
+  "kernpunten": [
+    {
+      "id": "check-enemy-reach-before-choosing-safe-deployment-positions",
+      "titel": "Check enemy reach before choosing safe deployment positions",
+      "tekst": "Check enemy movement and attack ranges before deploying so opening threats do not catch valuable units.",
+      "lessen": [
+        "identify-fast-enemy-threats",
+        "mark-threat-ranges-dice",
+        "compare-ranges-before-deploying"
+      ],
+      "principe": "check-enemy-reach-before-choosing-safe-deployment-positions"
+    },
+    {
+      "id": "review-the-deployment-zone-before-planning-your-opening",
+      "titel": "Review the deployment zone before planning your opening",
+      "tekst": "Review the deployment zone beforehand so you can plan where your army will start.",
+      "lessen": [
+        "check-scenario-deployment-map",
+        "rehearse-opening-deployment-before-events"
+      ],
+      "principe": null
+    },
+    {
+      "id": "plan-your-deployment-around-the-scenario-s-objectives",
+      "titel": "Plan your deployment around the scenario's objectives",
+      "tekst": "Identify the objectives before deploying so you can plan your opening around their locations.",
+      "lessen": [
+        "identify-contestable-objectives",
+        "rehearse-opening-deployment-before-events"
+      ],
+      "principe": null
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 105,
+      "sec": 164,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 52837,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 7481,
+        "reasoning_output_tokens": 5178
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

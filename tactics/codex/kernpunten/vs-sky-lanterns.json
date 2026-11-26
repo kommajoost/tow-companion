@@ -1,0 +1,164 @@
+{
+  "subthema": "vs-sky-lanterns",
+  "thema": "matchups",
+  "gemaaktOp": "2026-11-26T16:20:32.053Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "matchups: picking-fights,vs-sky-lanterns,vs-grand-cathay,vs-beastmen,vs-bretonnia,vs-tomb-kings,vs-monsters,vs-other",
+  "invoerHash": "0680b974c382",
+  "invoer": [
+    "stone-throwers-against-lanterns",
+    "flaming-defence-against-lanterns",
+    "small-units-waste-lantern-shots",
+    "beastmen-protected-vile-tide-bunker",
+    "infernal-guard-fireglaive-armour",
+    "skullcracker-iron-daemon-lanterns",
+    "larger-khorne-fury-units",
+    "plague-drones-fight-lanterns",
+    "mixed-daemon-gods-lanterns",
+    "black-staff-focus-familiars",
+    "white-wolf-knights-charge-lanterns",
+    "multiple-wounds-cathay-lantern",
+    "miao-ying-hunts-lanterns",
+    "prefer-granite-sentinel-durability",
+    "jade-fleet-allied-outriders",
+    "knightly-temper-lantern-hunter",
+    "power-scrolls-critical-ethereal-turns",
+    "mournfang-impact-wound-rerolls",
+    "warp-lightning-cannons-lanterns",
+    "skeleton-archers-poison-volume",
+    "tomb-king-dragon-armour-ages",
+    "avoid-blood-knights-lanterns",
+    "hexwraith-marching-column-attacks",
+    "avoid-vargheists-lantern-matchup",
+    "nurgle-spawn-against-lanterns",
+    "daemon-prince-plate-against-bombs",
+    "chaos-stack-shooting-hit-penalties",
+    "wood-elves-reconsider-poison",
+    "bodkins-remove-lantern-armour",
+    "forest-dragon-threatens-lanterns",
+    "wilds-missile-against-lanterns",
+    "scouts-deny-lantern-deployment",
+    "spread-artillery-create-crossfire",
+    "jezzails-hidden-lantern-kill-lanes",
+    "thin-formations-against-bombing",
+    "spread-skirmishers-with-casualties",
+    "bait-lanterns-into-concentrated-fire",
+    "deny-lantern-rear-landings",
+    "bloodthirster-needs-lantern-support",
+    "dark-riders-trap-disengagement",
+    "plagued-pegasus-knights-withdraw",
+    "pegasus-knights-reliable-lantern-charges",
+    "pegasus-overrun-second-lantern",
+    "falcon-horn-stop-lantern-flight",
+    "time-stonehorn-pressure-turn",
+    "release-fanatics-before-bombardment",
+    "necrosphinx-zone-sky-lanterns",
+    "repeated-terror-charges-lanterns",
+    "hide-marauder-missile-bunker",
+    "warpfire-aura-remove-lantern-ward",
+    "evasive-push-bombs-long-range",
+    "forest-dragon-evade-reform",
+    "ethereal-bunker-against-lanterns",
+    "concentrate-fire-finish-lanterns",
+    "cannons-strip-lantern-wounds",
+    "cannon-bounce-multiple-lanterns",
+    "ignore-single-lantern-matchup",
+    "glittering-robe-lantern-charge",
+    "light-death-leadership-debuffs",
+    "ushabti-great-bows-lanterns",
+    "lower-lantern-leadership-screams"
+  ],
+  "kernpunten": [
+    {
+      "id": "against-cathay-use-multiple-wound-attacks-against-sky-lanter",
+      "titel": "Against Cathay, use multiple-wound attacks against Sky Lanterns",
+      "tekst": "Use attacks that inflict multiple wounds to bring down Sky Lanterns.",
+      "lessen": [
+        "multiple-wounds-cathay-lantern",
+        "prefer-granite-sentinel-durability",
+        "knightly-temper-lantern-hunter",
+        "wilds-missile-against-lanterns",
+        "ushabti-great-bows-lanterns"
+      ],
+      "principe": "against-cathay-use-multiple-wound-attacks-against-sky-lanterns"
+    },
+    {
+      "id": "draw-sky-lanterns-into-prepared-attacks-with-bait",
+      "titel": "Draw Sky Lanterns into prepared attacks with bait",
+      "tekst": "Use bait to draw Sky Lanterns into positions where your shooting or chargers can punish them.",
+      "lessen": [
+        "bait-lanterns-into-concentrated-fire",
+        "pegasus-knights-reliable-lantern-charges",
+        "pegasus-overrun-second-lantern",
+        "hide-marauder-missile-bunker",
+        "cannon-bounce-multiple-lanterns"
+      ],
+      "principe": null
+    },
+    {
+      "id": "lower-enemy-leadership-before-terror-break-tests-and-leaders",
+      "titel": "Lower enemy Leadership before Terror, break tests and Leadership attacks",
+      "tekst": "Lower a Sky Lantern's Leadership before Terror tests or Leadership-based attacks to make them more effective.",
+      "lessen": [
+        "repeated-terror-charges-lanterns",
+        "light-death-leadership-debuffs",
+        "lower-lantern-leadership-screams"
+      ],
+      "principe": "lower-leadership-before-tests-or-damage"
+    },
+    {
+      "id": "use-poisoned-shooting-to-wound-sky-lanterns",
+      "titel": "Use poisoned shooting to wound Sky Lanterns",
+      "tekst": "Consider poisoned shooting against Sky Lanterns because it helps your shots inflict wounds.",
+      "lessen": [
+        "skeleton-archers-poison-volume",
+        "wood-elves-reconsider-poison"
+      ],
+      "principe": null
+    },
+    {
+      "id": "spread-models-to-reduce-bombing-run-hits",
+      "titel": "Spread models to reduce bombing-run hits",
+      "tekst": "Spread your models out so a Sky Lantern's bombing run hits fewer of them.",
+      "lessen": [
+        "thin-formations-against-bombing",
+        "spread-skirmishers-with-casualties"
+      ],
+      "principe": null
+    },
+    {
+      "id": "concentrate-ranged-attacks-to-finish-targets",
+      "titel": "Concentrate ranged attacks to finish targets",
+      "tekst": "Combine ranged damage against a chosen Sky Lantern so you finish it rather than leave it alive.",
+      "lessen": [
+        "wood-elves-reconsider-poison",
+        "bait-lanterns-into-concentrated-fire",
+        "concentrate-fire-finish-lanterns",
+        "lower-lantern-leadership-screams"
+      ],
+      "principe": "concentrate-fire-to-finish-targets"
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 140,
+      "sec": 244,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 62238,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 11351,
+        "reasoning_output_tokens": 8207
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

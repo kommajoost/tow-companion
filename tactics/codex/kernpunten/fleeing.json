@@ -1,0 +1,82 @@
+{
+  "subthema": "fleeing",
+  "thema": "movement",
+  "gemaaktOp": "2026-11-26T15:52:31.236Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "movement: charge-setup,charge-order,wheels-alignment,overrun-pursuit,reforms-formations,fleeing,support-countercharge",
+  "invoerHash": "117b99c9b5ed",
+  "invoer": [
+    "frenzy-bait-only-target",
+    "chaff-retreat-backstop",
+    "chaff-maximise-peril-tests",
+    "chaff-engineered-enemy-retreats",
+    "flee-through-enemy-escape",
+    "fleeing-diverters-steer-charges",
+    "flee-screen-prevent-overrun",
+    "flee-redirector-off-board",
+    "fleeing-bait-sideways-facing",
+    "swiftstride-extend-orderly-retreats",
+    "budget-safe-flee-distance",
+    "flee-behind-fallback-unit",
+    "flee-deny-enemy-reforms",
+    "chaff-obstructs-caster-advance",
+    "offset-skirmisher-centre-charge-bait",
+    "razorgor-flee-without-swiftstride",
+    "archer-screen-state-troops-trap",
+    "high-elves-flee-reposition"
+  ],
+  "kernpunten": [
+    {
+      "id": "draw-chargers-towards-waiting-combat-units-with-fleeing-scre",
+      "titel": "Draw chargers towards waiting combat units with fleeing screens",
+      "tekst": "Position a fleeing screen so following it brings the enemy within reach of your waiting combat units.",
+      "lessen": [
+        "fleeing-diverters-steer-charges",
+        "archer-screen-state-troops-trap"
+      ],
+      "principe": null
+    },
+    {
+      "id": "give-fleeing-bait-enough-clearance-to-escape",
+      "titel": "Give fleeing bait enough clearance to escape",
+      "tekst": "Position your bait far enough away that its retreat can carry it beyond the charger's reach.",
+      "lessen": [
+        "frenzy-bait-only-target",
+        "budget-safe-flee-distance"
+      ],
+      "principe": null
+    },
+    {
+      "id": "place-a-receiving-unit-behind-your-planned-retreat",
+      "titel": "Place a receiving unit behind your planned retreat",
+      "tekst": "Retreat through a friendly unit positioned to intercept the charger instead of letting it reach your retreating piece.",
+      "lessen": [
+        "chaff-retreat-backstop",
+        "flee-behind-fallback-unit"
+      ],
+      "principe": null
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 106,
+      "sec": 311,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 52686,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 13390,
+        "reasoning_output_tokens": 10876
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

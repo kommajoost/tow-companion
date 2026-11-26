@@ -1,0 +1,90 @@
+{
+  "subthema": "tempo-trading",
+  "thema": "game-plan",
+  "gemaaktOp": "2026-11-26T15:44:28.179Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "game-plan: reading-the-enemy,flanks-centre,concentration,tempo-trading,threat-zones,aggression-control,list-building",
+  "invoerHash": "c7cb24eae8d1",
+  "invoer": [
+    "chaff-sets-tempo",
+    "wood-elves-control-buys-time",
+    "plan-countermagic-attack-timing",
+    "flank-who-benefited",
+    "chaff-kills-are-bonuses",
+    "avoid-protecting-expendable-chaff",
+    "save-vulnerable-valuable-units",
+    "identify-expendable-units",
+    "tank-buys-flanking-time",
+    "delay-dragon-score-elsewhere",
+    "risk-cleanup-preserve-tempo",
+    "sacrifice-regular-cavalry-softening",
+    "corner-sacrifice-wastes-return-turn",
+    "let-dragon-charge-first",
+    "repurpose-pieces-as-chaff",
+    "recover-points-unguarded-areas",
+    "hold-spare-chaff-back",
+    "rush-ushabti-not-skeletons",
+    "one-block-mortuary-commitment",
+    "empire-knights-buy-artillery-time",
+    "moderate-early-battle-points"
+  ],
+  "kernpunten": [
+    {
+      "id": "use-expendable-units-to-buy-time-for-wins-elsewhere",
+      "titel": "Use expendable units to buy time for wins elsewhere",
+      "tekst": "Use expendable units to disrupt and delay enemy threats while the rest of your army advances its plan.",
+      "lessen": [
+        "chaff-sets-tempo",
+        "flank-who-benefited",
+        "chaff-kills-are-bonuses",
+        "avoid-protecting-expendable-chaff",
+        "delay-dragon-score-elsewhere",
+        "corner-sacrifice-wastes-return-turn",
+        "repurpose-pieces-as-chaff"
+      ],
+      "principe": "expendable-units-buy-time"
+    },
+    {
+      "id": "keep-vulnerable-units-safe-to-preserve-their-points",
+      "titel": "Keep vulnerable units safe to preserve their points",
+      "tekst": "Keep vulnerable units away from dangerous enemies when saving their points helps your plan.",
+      "lessen": [
+        "save-vulnerable-valuable-units",
+        "one-block-mortuary-commitment"
+      ],
+      "principe": null
+    },
+    {
+      "id": "reassign-your-units-when-the-battle-goes-badly",
+      "titel": "Reassign your units when the battle goes badly",
+      "tekst": "When your plan goes wrong, redirect your units towards jobs that can still help you recover.",
+      "lessen": [
+        "repurpose-pieces-as-chaff",
+        "recover-points-unguarded-areas"
+      ],
+      "principe": null
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 100,
+      "sec": 218,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 51144,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 10350,
+        "reasoning_output_tokens": 7714
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

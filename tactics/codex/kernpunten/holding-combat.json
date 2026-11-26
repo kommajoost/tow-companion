@@ -1,0 +1,80 @@
+{
+  "subthema": "holding-combat",
+  "thema": "infantry",
+  "gemaaktOp": "2026-11-26T16:01:39.814Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "infantry: anchors,death-stars,unit-builds,holding-combat,infantry-moves",
+  "invoerHash": "7a7e5217db75",
+  "invoer": [
+    "anchor-warband-leadership",
+    "champions-preserve-units-defensively",
+    "hesitation-against-empire-charges",
+    "state-troops-monster-tapestry",
+    "flagellants-wood-roadblock",
+    "stubborn-anchor-countercharge",
+    "tarpit-shugengan-with-large-units",
+    "ungor-switch-defensive-formations",
+    "combat-resolution-against-necrosphinx",
+    "anchor-challenges-against-dragons",
+    "orderly-retreat-widen-fighting-rank",
+    "stubborn-shield-wall-scoring",
+    "grave-guard-drilled-widen",
+    "necromancy-supports-state-troops",
+    "zombies-pin-scream-targets",
+    "unbreakable-advance-beyond-capture"
+  ],
+  "kernpunten": [
+    {
+      "id": "prepare-countercharges-with-units-that-can-survive-the-first",
+      "titel": "Prepare countercharges with units that can survive the first charge",
+      "tekst": "Use a unit that can hold the attacker until your supporting unit can countercharge.",
+      "lessen": [
+        "stubborn-anchor-countercharge",
+        "tarpit-shugengan-with-large-units"
+      ],
+      "principe": "prepare-countercharges-behind-surviving-receivers"
+    },
+    {
+      "id": "try-combat-resolution-blocks-against-monsters",
+      "titel": "Try combat-resolution blocks against monsters",
+      "tekst": "Use blocks that can survive a monster's attacks to try to beat it through combat resolution.",
+      "lessen": [
+        "tarpit-shugengan-with-large-units",
+        "combat-resolution-against-necrosphinx"
+      ],
+      "principe": null
+    },
+    {
+      "id": "use-defensive-challenges-to-contain-dangerous-attackers",
+      "titel": "Use defensive challenges to contain dangerous attackers",
+      "tekst": "Use a challenger to absorb a dangerous attacker's blows so the rest of your infantry can survive.",
+      "lessen": [
+        "champions-preserve-units-defensively",
+        "anchor-challenges-against-dragons"
+      ],
+      "principe": "contain-dangerous-attackers-with-challenges"
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 60,
+      "sec": 345,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 41451,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 14480,
+        "reasoning_output_tokens": 12948
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

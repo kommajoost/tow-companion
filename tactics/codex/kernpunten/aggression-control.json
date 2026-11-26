@@ -1,0 +1,133 @@
+{
+  "subthema": "aggression-control",
+  "thema": "game-plan",
+  "gemaaktOp": "2026-11-26T15:44:28.180Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "game-plan: reading-the-enemy,flanks-centre,concentration,tempo-trading,threat-zones,aggression-control,list-building",
+  "invoerHash": "f2fab9bf5106",
+  "invoer": [
+    "movement-spells-early-aggression",
+    "grudge-throwers-early-pressure",
+    "wild-hunt-combat-choice",
+    "deploy-aggressive-when-safe",
+    "deploy-for-later-positions",
+    "fast-armies-deploy-deeper",
+    "domination-aggressive-pin",
+    "aggressive-baggage-forward-placement",
+    "accept-shooting-risk-advancing",
+    "active-charges-force-pressure",
+    "commit-dragon-accept-risk",
+    "compare-points-before-risking",
+    "gamble-when-already-losing",
+    "terrain-forces-control-role",
+    "advance-losing-ranged-stalemate",
+    "accept-small-tournament-loss",
+    "cavalry-reserve-response-options",
+    "anvil-buff-before-advance",
+    "empire-hold-then-flank",
+    "time-stonehorn-pressure-turn",
+    "engage-poison-block-early",
+    "wood-elves-kite-beastmen",
+    "wood-elves-escape-before-shooting",
+    "control-with-ranged-firepower",
+    "gunlines-score-without-contact",
+    "king-of-the-hill-forfeit",
+    "move-to-hold-objectives",
+    "claim-objectives-against-gunlines",
+    "close-quarter-defensive-shooting",
+    "chance-encounter-patient-play",
+    "aggressor-pressure-both-central-objectives",
+    "durable-army-claim-objectives-early",
+    "herdstone-after-main-battle"
+  ],
+  "kernpunten": [
+    {
+      "id": "with-the-stronger-shooting-army-shoot-first-and-fight-later",
+      "titel": "With the stronger shooting army, shoot first and fight later",
+      "tekst": "Use ranged pressure to make the enemy approach while delaying combat until it suits your plan.",
+      "lessen": [
+        "grudge-throwers-early-pressure",
+        "control-with-ranged-firepower",
+        "gunlines-score-without-contact",
+        "close-quarter-defensive-shooting",
+        "chance-encounter-patient-play"
+      ],
+      "principe": "ranged-pressure-forces-approaches"
+    },
+    {
+      "id": "take-risks-when-a-passive-plan-cannot-win",
+      "titel": "Take risks when a passive plan cannot win",
+      "tekst": "Accept a risky play when holding back offers no realistic route to victory.",
+      "lessen": [
+        "accept-shooting-risk-advancing",
+        "active-charges-force-pressure",
+        "commit-dragon-accept-risk",
+        "gamble-when-already-losing",
+        "advance-losing-ranged-stalemate"
+      ],
+      "principe": null
+    },
+    {
+      "id": "win-objective-contests-without-needing-to-destroy-enemy-unit",
+      "titel": "Win objective contests without needing to destroy enemy units",
+      "tekst": "Move into scoring positions and hold them, because objective points can reward survival and position without enemy kills.",
+      "lessen": [
+        "move-to-hold-objectives",
+        "durable-army-claim-objectives-early"
+      ],
+      "principe": "win-objectives-without-destroying-enemies"
+    },
+    {
+      "id": "plan-which-units-will-hold-the-objectives-at-the-end",
+      "titel": "Plan which units will hold the objectives at the end",
+      "tekst": "Plan your late movement so your units can claim the objectives when endgame scoring is decided.",
+      "lessen": [
+        "move-to-hold-objectives",
+        "chance-encounter-patient-play"
+      ],
+      "principe": "plan-endgame-objective-movement"
+    },
+    {
+      "id": "start-scoring-accessible-progressive-objectives-early",
+      "titel": "Start scoring accessible progressive objectives early",
+      "tekst": "Get onto accessible objectives early so repeated scoring builds a lead while the opponent delays.",
+      "lessen": [
+        "claim-objectives-against-gunlines",
+        "durable-army-claim-objectives-early"
+      ],
+      "principe": "start-progressive-scoring-early"
+    },
+    {
+      "id": "use-mobility-to-avoid-enemy-charges",
+      "titel": "Use mobility to avoid enemy charges",
+      "tekst": "Move your Wood Elves clear of advancing enemies so they cannot catch you in combat.",
+      "lessen": [
+        "wood-elves-kite-beastmen",
+        "wood-elves-escape-before-shooting"
+      ],
+      "principe": "use-mobility-to-avoid-enemy-charges"
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 100,
+      "sec": 218,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 51144,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 10350,
+        "reasoning_output_tokens": 7714
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

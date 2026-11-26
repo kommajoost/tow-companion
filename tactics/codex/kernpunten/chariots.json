@@ -1,0 +1,83 @@
+{
+  "subthema": "chariots",
+  "thema": "hammers",
+  "gemaaktOp": "2026-11-26T16:04:23.426Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "hammers: hammer-basics,heavy-cavalry,chariots,monsters-dragons,random-movers,using-hammers",
+  "invoerHash": "3051097007d4",
+  "invoer": [
+    "avoid-chariot-cavalry-support",
+    "many-chariots-divide-targeting",
+    "tuskgor-over-razorgor-chariots",
+    "skullcracker-iron-daemon-lanterns",
+    "scourgerunner-over-reaper",
+    "skycutter-efficient-auto-include",
+    "black-orc-chariot-standard",
+    "orc-chariot-crew-frenzy",
+    "prefer-warband-orc-chariots",
+    "black-chariot-great-weapons",
+    "deploy-heavy-chariots-back",
+    "lumbering-perpendicular-charge-options",
+    "massed-chariots-poison-block",
+    "war-wagons-advance-together",
+    "black-coach-mobile-backline-hunter",
+    "heavy-chariot-support",
+    "mortis-engine-scream-escape"
+  ],
+  "kernpunten": [
+    {
+      "id": "set-up-your-hammers-to-deliver-their-own-charges",
+      "titel": "Set up your hammers to deliver their own charges",
+      "tekst": "Plan your chariots' approach so you can get their charges and deliver their damage effectively.",
+      "lessen": [
+        "prefer-warband-orc-chariots",
+        "deploy-heavy-chariots-back",
+        "lumbering-perpendicular-charge-options",
+        "heavy-chariot-support"
+      ],
+      "principe": "set-up-your-hammers-to-charge"
+    },
+    {
+      "id": "reinforce-your-main-fight-with-flank-or-rear-charges",
+      "titel": "Reinforce your main fight with flank or rear charges",
+      "tekst": "Bring a supporting chariot into an existing fight so you can help your main unit finish it.",
+      "lessen": [
+        "black-orc-chariot-standard",
+        "heavy-chariot-support"
+      ],
+      "principe": "reinforce-fights-with-flank-or-rear-charges"
+    },
+    {
+      "id": "attack-with-several-chariots-together",
+      "titel": "Attack with several chariots together",
+      "tekst": "Commit several chariots together so you can concentrate their combat damage.",
+      "lessen": [
+        "massed-chariots-poison-block",
+        "war-wagons-advance-together"
+      ],
+      "principe": null
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 72,
+      "sec": 159,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 44761,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 7397,
+        "reasoning_output_tokens": 5554
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

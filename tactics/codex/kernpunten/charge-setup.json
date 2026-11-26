@@ -1,0 +1,89 @@
+{
+  "subthema": "charge-setup",
+  "thema": "movement",
+  "gemaaktOp": "2026-11-26T15:52:31.234Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "movement: charge-setup,charge-order,wheels-alignment,overrun-pursuit,reforms-formations,fleeing,support-countercharge",
+  "invoerHash": "6d586c5c977f",
+  "invoer": [
+    "position-for-next-turn-charges",
+    "check-angles-before-approaching",
+    "decline-charges-for-better-engagements",
+    "chaff-safe-charge-pockets",
+    "screened-frenzy-reliable-charge",
+    "mystical-pathways-change-attack-angle",
+    "flying-large-target-charge-access",
+    "charge-adjacent-targets-together",
+    "position-fast-monster-pursuers",
+    "contain-mobile-units-opposite-directions",
+    "angle-attackers-towards-boundary",
+    "ambushers-reserve-move-arrival",
+    "dragon-facing-before-urgency",
+    "urgency-dragon-blocks-wheels",
+    "dragon-secondary-escape-coverage",
+    "dragon-outmanoeuvre-stronger-dragon",
+    "skirmisher-charges-wide-frontage",
+    "box-in-drilled-knights",
+    "check-retreat-unit-strength",
+    "griffon-bsb-rear-charge",
+    "pegasus-knights-reliable-lantern-charges",
+    "pegasus-avoid-stretched-formations",
+    "lizardmen-flankers-extreme-angles"
+  ],
+  "kernpunten": [
+    {
+      "id": "position-for-reliable-charges-before-committing-your-attacke",
+      "titel": "Position for reliable charges before committing your attacker",
+      "tekst": "Close the distance before committing so your charge does not depend on a high roll.",
+      "lessen": [
+        "position-for-next-turn-charges",
+        "screened-frenzy-reliable-charge",
+        "pegasus-knights-reliable-lantern-charges"
+      ],
+      "principe": "position-for-reliable-charges-before-committing"
+    },
+    {
+      "id": "check-charge-arcs-before-moving-into-attack-position",
+      "titel": "Check charge arcs before moving into attack position",
+      "tekst": "Manoeuvre to threaten your intended charge without giving the enemy a favourable charge in return.",
+      "lessen": [
+        "check-angles-before-approaching",
+        "dragon-outmanoeuvre-stronger-dragon"
+      ],
+      "principe": null
+    },
+    {
+      "id": "use-threats-to-restrict-movement-without-committing-to-comba",
+      "titel": "Use threats to restrict movement without committing to combat",
+      "tekst": "Overlap your charge threats to cover escape routes and stop mobile enemies slipping away.",
+      "lessen": [
+        "contain-mobile-units-opposite-directions",
+        "angle-attackers-towards-boundary",
+        "dragon-secondary-escape-coverage"
+      ],
+      "principe": "restrict-movement-with-threats"
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 106,
+      "sec": 311,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 52686,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 13390,
+        "reasoning_output_tokens": 10876
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

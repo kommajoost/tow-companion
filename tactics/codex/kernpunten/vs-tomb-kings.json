@@ -1,0 +1,95 @@
+{
+  "subthema": "vs-tomb-kings",
+  "thema": "matchups",
+  "gemaaktOp": "2026-11-26T16:20:32.174Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "matchups: picking-fights,vs-sky-lanterns,vs-grand-cathay,vs-beastmen,vs-bretonnia,vs-tomb-kings,vs-monsters,vs-other",
+  "invoerHash": "34a5fe41ddc6",
+  "invoer": [
+    "many-small-units-poison-block",
+    "runesmith-mortuary-control-spells",
+    "king-leadership-against-necromancy",
+    "flaming-artillery-tomb-kings",
+    "irondrakes-against-tomb-chariots",
+    "dwarfs-catapult-board-edge",
+    "massed-chariots-poison-block",
+    "rapid-dwarf-mortuary-advance",
+    "rush-ushabti-not-skeletons",
+    "one-block-mortuary-commitment",
+    "guard-dwarf-backfield-scorpions",
+    "gyrocopters-hunt-reserve-archers",
+    "gyrocopters-engage-raising-priests",
+    "combat-resolution-against-necrosphinx",
+    "bretonnia-avoid-poison-block",
+    "combo-charge-poison-death-star",
+    "engage-poison-block-early",
+    "reach-tomb-kings-wizard",
+    "skeletons-or-finish-character",
+    "strength-eight-armour-ages"
+  ],
+  "kernpunten": [
+    {
+      "id": "use-combined-charges-when-one-attacker-lacks-the-damage",
+      "titel": "Use combined charges when one attacker lacks the damage",
+      "tekst": "Commit several attackers together against the poison block so their combined force can overcome it.",
+      "lessen": [
+        "massed-chariots-poison-block",
+        "combo-charge-poison-death-star",
+        "engage-poison-block-early"
+      ],
+      "principe": "combine-charges-for-damage"
+    },
+    {
+      "id": "reach-combat-before-tomb-kings-cripple-your-attackers",
+      "titel": "Reach combat before Tomb Kings cripple your attackers",
+      "tekst": "Advance into combat promptly so the enemy does not destroy or cripple your attackers before they can fight.",
+      "lessen": [
+        "rapid-dwarf-mortuary-advance",
+        "engage-poison-block-early"
+      ],
+      "principe": null
+    },
+    {
+      "id": "reach-tomb-kings-casters-to-disrupt-their-raising",
+      "titel": "Reach Tomb Kings casters to disrupt their raising",
+      "tekst": "Try to reach the Tomb Kings' casters so you can disrupt the return of killed models.",
+      "lessen": [
+        "gyrocopters-engage-raising-priests",
+        "reach-tomb-kings-wizard"
+      ],
+      "principe": null
+    },
+    {
+      "id": "use-flaming-attacks-against-tomb-kings-chariots",
+      "titel": "Use flaming attacks against Tomb Kings Chariots",
+      "tekst": "Use flaming attacks against Tomb Kings Chariots because they can cause extra wounds.",
+      "lessen": [
+        "flaming-artillery-tomb-kings",
+        "irondrakes-against-tomb-chariots"
+      ],
+      "principe": null
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 140,
+      "sec": 244,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 62238,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 11351,
+        "reasoning_output_tokens": 8207
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

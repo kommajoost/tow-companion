@@ -1,0 +1,93 @@
+{
+  "subthema": "dispelling",
+  "thema": "magic",
+  "gemaaktOp": "2026-11-26T16:10:32.911Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "magic: wizard-builds,lores-spells,dispelling,wizard-placement,magic-missiles,buffs-hexes,control-spells,casting-aids",
+  "invoerHash": "37b7a09636c7",
+  "invoer": [
+    "invest-repeatable-magical-defence",
+    "lesser-mages-dispel-scrolls",
+    "dispel-items-against-cathay",
+    "runesmith-mortuary-control-spells",
+    "balance-rune-on-anvil",
+    "opening-outside-dispel-range",
+    "plan-countermagic-attack-timing",
+    "engage-wizard-before-casting",
+    "preserve-vortex-outside-dispel-range",
+    "zone-with-overlapping-threats",
+    "fated-dispel-low-roll",
+    "spellbreaking-stop-plague-rust",
+    "runesmith-break-empire-illusion",
+    "reserve-spellbreaking-for-mirage",
+    "delay-breaking-crystal-column",
+    "stop-fetish-vile-tide",
+    "stop-undead-leadership-barrage",
+    "spellbreak-itchy-nuisance"
+  ],
+  "kernpunten": [
+    {
+      "id": "save-limited-dispelling-tools-for-critical-moments",
+      "titel": "Save limited dispelling tools for critical moments",
+      "tekst": "Keep limited dispelling tools for spells that threaten your plan when stopping them matters most.",
+      "lessen": [
+        "lesser-mages-dispel-scrolls",
+        "reserve-spellbreaking-for-mirage",
+        "delay-breaking-crystal-column"
+      ],
+      "principe": "save-limited-dispels-for-critical-moments"
+    },
+    {
+      "id": "use-spellbreaking-against-casts-your-normal-dispelling-strug",
+      "titel": "Use Spellbreaking against casts your normal dispelling struggles to stop",
+      "tekst": "Use Spellbreaking against powerful enemy casts that are difficult to stop through normal dispelling.",
+      "lessen": [
+        "spellbreaking-stop-plague-rust",
+        "runesmith-break-empire-illusion"
+      ],
+      "principe": "use-spellbreaking-against-powerful-casts"
+    },
+    {
+      "id": "keep-your-caster-beyond-enemy-dispel-range",
+      "titel": "Keep your caster beyond enemy dispel range",
+      "tekst": "Keep your caster outside the enemy wizard's dispel range to protect its spells from wizardly dispelling.",
+      "lessen": [
+        "opening-outside-dispel-range",
+        "preserve-vortex-outside-dispel-range"
+      ],
+      "principe": null
+    },
+    {
+      "id": "use-expendable-troops-to-shut-down-enemy-wizards",
+      "titel": "Use expendable troops to shut down enemy wizards",
+      "tekst": "Consider sacrificing troops to attack an enemy wizard when preventing its magical influence is worth the loss.",
+      "lessen": [
+        "plan-countermagic-attack-timing",
+        "engage-wizard-before-casting"
+      ],
+      "principe": null
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 109,
+      "sec": 266,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 53922,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 11459,
+        "reasoning_output_tokens": 8356
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

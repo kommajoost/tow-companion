@@ -1,0 +1,137 @@
+{
+  "subthema": "vs-monsters",
+  "thema": "matchups",
+  "gemaaktOp": "2026-11-26T16:20:32.175Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "matchups: picking-fights,vs-sky-lanterns,vs-grand-cathay,vs-beastmen,vs-bretonnia,vs-tomb-kings,vs-monsters,vs-other",
+  "invoerHash": "92d0b774b3fc",
+  "invoer": [
+    "infantry-ten-after-challenge",
+    "infantry-overwhelm-dragon-numbers",
+    "avoid-linehammer-dragon-counter",
+    "answer-dragons-with-dragons",
+    "dwarf-seven-static-resolution",
+    "dwarf-tank-challenges-dragons",
+    "three-irondrake-torpedo-units",
+    "dragon-slayer-dishonor-tattoo",
+    "slaying-ranged-dwarf-character",
+    "royal-king-smiting-dragons",
+    "dwarf-mixed-dragon-firepower",
+    "state-troops-monster-tapestry",
+    "heroism-flying-monster-hunter",
+    "goblin-chariot-dragon-deterrent",
+    "tomb-banshee-budget-assassin",
+    "warriors-monster-hunter-tapestry",
+    "screen-dragon-landing-space",
+    "dragon-deterrent-behind-wizard",
+    "corner-angle-expels-dragon",
+    "shooting-zones-against-dragons",
+    "central-iron-daemon-dragon-bait",
+    "adamant-anvil-dragon-bait",
+    "retreat-poison-slow-monsters",
+    "split-units-limit-dragon-targets",
+    "angle-skirmisher-dragon-overrun",
+    "delay-dragon-score-elsewhere",
+    "position-fast-monster-pursuers",
+    "dragon-outmanoeuvre-stronger-dragon",
+    "check-dragon-movement-limits",
+    "let-dragon-charge-first",
+    "gyrocopter-rear-charge-dragon",
+    "dragon-slayer-backfield-charge",
+    "duke-monster-slayer-zoning",
+    "falcon-horn-chaff-dragon",
+    "wyvern-against-unbuffed-warpfire",
+    "bone-dragon-neutralises-monsters",
+    "anchor-challenges-against-dragons",
+    "boar-dragon-challenge-choice",
+    "weaken-giant-before-infantry",
+    "soften-dragons-early-shooting",
+    "illusion-deny-dragon-charges",
+    "vile-tide-large-wound-targets",
+    "grudge-throwers-pressure-dragons",
+    "cannon-aim-behemoth-base",
+    "mirage-before-monster-slayer",
+    "itchy-nuisance-fanatics-dragons"
+  ],
+  "kernpunten": [
+    {
+      "id": "weaken-dangerous-enemies-with-shooting-before-your-troops-fi",
+      "titel": "Weaken dangerous enemies with shooting before your troops fight them",
+      "tekst": "Remove wounds with shooting before your troops fight the monster so the coming combat is more manageable.",
+      "lessen": [
+        "three-irondrake-torpedo-units",
+        "dwarf-mixed-dragon-firepower",
+        "weaken-giant-before-infantry",
+        "soften-dragons-early-shooting"
+      ],
+      "principe": "weaken-dangerous-enemies-before-combat"
+    },
+    {
+      "id": "keep-dragons-occupied-while-you-score-elsewhere",
+      "titel": "Keep dragons occupied while you score elsewhere",
+      "tekst": "Keep the enemy dragon occupied so the rest of your army can earn points elsewhere.",
+      "lessen": [
+        "adamant-anvil-dragon-bait",
+        "delay-dragon-score-elsewhere"
+      ],
+      "principe": null
+    },
+    {
+      "id": "use-challenges-to-help-infantry-hold-against-dragons",
+      "titel": "Use challenges to help infantry hold against dragons",
+      "tekst": "Include a challenger so your infantry can contribute combat resolution against the dragon while the challenge contains its attacks.",
+      "lessen": [
+        "infantry-ten-after-challenge",
+        "infantry-overwhelm-dragon-numbers",
+        "dwarf-seven-static-resolution",
+        "dwarf-tank-challenges-dragons",
+        "anchor-challenges-against-dragons"
+      ],
+      "principe": "challenge-dragons-with-infantry"
+    },
+    {
+      "id": "use-threats-to-restrict-movement-without-committing-to-comba",
+      "titel": "Use threats to restrict movement without committing to combat",
+      "tekst": "Position threats to make an enemy dragon avoid an area or risk approaching it.",
+      "lessen": [
+        "goblin-chariot-dragon-deterrent",
+        "dragon-deterrent-behind-wizard",
+        "shooting-zones-against-dragons",
+        "duke-monster-slayer-zoning"
+      ],
+      "principe": "restrict-movement-with-threats"
+    },
+    {
+      "id": "consider-the-monster-hunter-tapestry-for-infantry-blocks",
+      "titel": "Consider the Monster Hunter Tapestry for infantry blocks",
+      "tekst": "Consider the Monster Hunter Tapestry to help your infantry block withstand enemy monsters.",
+      "lessen": [
+        "state-troops-monster-tapestry",
+        "warriors-monster-hunter-tapestry"
+      ],
+      "principe": null
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 140,
+      "sec": 244,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 62238,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 11351,
+        "reasoning_output_tokens": 8207
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

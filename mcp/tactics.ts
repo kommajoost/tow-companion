@@ -1,10 +1,12 @@
-// Tactics library tools: search_tactics, get_lesson, list_tactics_index, list_principles.
+// Tactics library tools: search_tactics, get_lesson, list_tactics_index, get_section, list_principles.
 //
 // Data: public/tactics/lessen.json, bronnen.json, themas.json, and (when the re-index has landed)
 // public/tactics/tags.json plus a `tags` field and sub-themes on the lessons. Everything about tags and
 // sub-themes is read tolerantly: absent → ignored, present in any of the plausible shapes → used.
 // public/tactics/principes.json (optional): principles above the lessons, each an AI summary of the
 // lessons under it, ranked by distinct channels then lessons (tactics/codex/principes.mjs).
+// public/tactics/kernpunten.json (optional): per sub-theme (a section) its 3 to 5 key points, each an AI
+// summary of the section's lessons under it, ranked the same way (tactics/codex/kernpunten.mjs).
 
 import type { Bron, Kanaal, Les, LesBron } from '../src/lib/tactics';
 import { derived, loadJson, need } from './data';
@@ -473,14 +475,115 @@ export async function getLesson(a: { id?: string }): Promise<string> {
   return out.join('\n');
 }
 
+// ── key points per section ────────────────────────────────────────────────────────────────────────
+
+export interface KeyPoint { id: string; titel: string; tekst: string; lessen: string[]; nLessen: number; nKanalen: number; kanalen: string[]; principeId?: string }
+export interface KeyPoints { perSub: Map<string, KeyPoint[]>; updated: string | null }
+
+const EMPTY_KEYPOINTS: KeyPoints = { perSub: new Map(), updated: null };
+const kpCache = new WeakMap<Raw, KeyPoints>();
+
+/** public/tactics/kernpunten.json (key points per sub-theme), or none when it is not there (older deploys). */
+export async function keyPoints(): Promise<KeyPoints> {
+  const raw = await loadJson<Raw>('tactics/kernpunten.json');
+  if (!raw || !isObj(raw.perSubthema)) return EMPTY_KEYPOINTS;
+  return derived(kpCache, raw, () => {
+    const perSub = new Map<string, KeyPoint[]>();
+    for (const [sub, list] of Object.entries(raw.perSubthema as Raw)) {
+      const kp = listOf(list).filter((k): k is Raw => isObj(k) && !!str(k.id) && !!str(k.titel)).map((k) => ({
+        id: String(k.id), titel: String(k.titel), tekst: str(k.tekst) ?? '', lessen: strList(k.lessen),
+        nLessen: num(k.nLessen), nKanalen: num(k.nKanalen), kanalen: strList(k.kanalen),
+        ...(str(k.principeId) ? { principeId: String(k.principeId) } : {}),
+      }));
+      if (kp.length) perSub.set(sub, kp);
+    }
+    return { perSub, updated: str(raw.bijgewerkt) ?? null };
+  });
+}
+
+const KEYPOINT_NOTE = 'Key points are short AI summaries of the lessons listed under each (advice several lessons of the section give), ranked by distinct channels, then lessons. Cite the lessons (get_lesson) and their sources, not the key point text.';
+
+export async function getSection(a: { subtheme?: string }): Promise<string> {
+  const [lib, kp] = await Promise.all([library(), keyPoints()]);
+  const q = String(a.subtheme ?? '').trim();
+  const count = (sub: string) => lib.lessons.filter((l) => lessonSubthemes(l).includes(sub)).length;
+  // Exact section, then exact theme ("magic" is a theme, not "magic-missiles"), then the loose matches.
+  const exact = (list: Vocab[]) => (q ? list.find((v) => norm(v.id) === norm(q) || norm(v.naam) === norm(q)) : undefined);
+  const exactTheme = exact(lib.themes);
+  const sub = exact(lib.subthemes) ?? (q && !exactTheme ? matchVocab(lib.subthemes, q) : undefined);
+  const theme = !sub && q ? exactTheme ?? matchVocab(lib.themes, q) : undefined;
+  if (theme) {
+    // A theme instead of a section: its sections with their key point titles.
+    const out = [`Theme: ${theme.naam} [${theme.id}]. Sections (get_section subtheme=<id> for the key points with lesson ids):`];
+    for (const s of lib.subthemes.filter((x) => x.parent === theme.id)) {
+      out.push(`- ${s.id}: ${s.naam} (${count(s.id)} lessons)`);
+      for (const [i, k] of (kp.perSub.get(s.id) ?? []).entries()) out.push(`    ${i + 1}. ${k.titel} (${k.nLessen} lessons, ${k.nKanalen} channels)`);
+    }
+    return out.join('\n');
+  }
+  if (!sub) {
+    return `${q ? `No section "${q}".` : 'Give a section (sub-theme) id.'} Sections: ${lib.subthemes.map((s) => s.id).join(', ')}.`;
+  }
+  const lessons = lib.lessons.filter((l) => lessonSubthemes(l).includes(sub.id));
+  const points = kp.perSub.get(sub.id) ?? [];
+  const out = [
+    `Section: ${sub.naam} [${sub.id}] · Theme: ${sub.parent ? `${vocabName(lib.themes, sub.parent)} [${sub.parent}]` : '?'} · ${lessons.length} lessons`,
+    ...(sub.omschrijving ? [sub.omschrijving] : []),
+    '',
+  ];
+  if (points.length) {
+    out.push(`Key points (${points.length}). ${KEYPOINT_NOTE}`);
+    for (const [i, k] of points.entries()) {
+      out.push(
+        `${i + 1}. ${k.titel}  [key point: ${k.id}]`,
+        `   ${k.tekst}`,
+        `   Backed by ${k.nLessen} lessons from ${k.nKanalen} channel${k.nKanalen === 1 ? '' : 's'} (${k.kanalen.map((c) => lib.channels.get(c)?.naam ?? c).join(', ')})${k.principeId ? ` · also principle: ${k.principeId}` : ''}`,
+        `   Lessons: ${k.lessen.join(', ')}`,
+      );
+    }
+  } else out.push('No key points for this section (too few lessons give the same advice); read the lessons below.');
+  // The first lessons: those under the key points first (in key point order), then the rest.
+  const order = [...new Set([...points.flatMap((k) => k.lessen), ...lessons.map((l) => l.id)])].filter((id) => lessons.some((l) => l.id === id));
+  const shown = order.slice(0, 12);
+  out.push('', `Lessons (first ${shown.length} of ${lessons.length}; all: search_tactics theme=${sub.id} limit=25):`);
+  for (const id of shown) {
+    const l = lib.byId.get(id)!;
+    out.push(`- ${l.titel}  [id: ${l.id}]${l.leger ? ` · ${armyName(l.leger)}` : ''}`, `  ${trunc(l.tekst, 160)}`);
+  }
+  return out.join('\n');
+}
+
+/** Key point titles per section for the index: all of them, or (if the index would get too long) the
+ *  first 3 per section, shortened. */
+function keyPointLines(kp: KeyPoints, subs: Vocab[], compact: boolean): Map<string, string> {
+  const out = new Map<string, string>();
+  for (const s of subs) {
+    const list = kp.perSub.get(s.id) ?? [];
+    if (!list.length) continue;
+    const shown = compact ? list.slice(0, 3) : list;
+    const titles = shown.map((k) => (compact ? trunc(k.titel, 46) : k.titel));
+    out.set(s.id, `      key points: ${titles.join(' | ')}${list.length > shown.length ? ` (+${list.length - shown.length})` : ''}`);
+  }
+  return out;
+}
+
 export async function listTacticsIndex(): Promise<string> {
-  const lib = await library();
+  const [lib, kp] = await Promise.all([library(), keyPoints()]);
   const count = (pred: (l: Lesson) => boolean) => lib.lessons.filter(pred).length;
-  const out = [`Tactics library: ${lib.lessons.length} lessons from ${new Set(lib.lessons.flatMap((l) => l.bronnen.map((b) => b.bronId))).size} videos${lib.updated ? `, updated ${lib.updated}` : ''}.`, '', 'Themes (filter with search_tactics theme=<id>):'];
+  const head = `Tactics library: ${lib.lessons.length} lessons from ${new Set(lib.lessons.flatMap((l) => l.bronnen.map((b) => b.bronId))).size} videos${lib.updated ? `, updated ${lib.updated}` : ''}.`;
+  const kpFull = keyPointLines(kp, lib.subthemes, false);
+  const kpSize = [...kpFull.values()].reduce((n, l) => n + l.length + 1, 0);
+  // Keep the whole index under ~17,000 characters (the tool budget is 20,000).
+  const kpLines = kpSize > 9000 ? keyPointLines(kp, lib.subthemes, true) : kpFull;
+  const out = [head, '', `Themes (filter with search_tactics theme=<id>)${kpLines.size ? '; per section its key points (get_section subtheme=<id> for their text and lessons)' : ''}:`];
   for (const t of lib.themes) {
     out.push(`- ${t.id}: ${t.naam} (${count((l) => l.themas.includes(t.id))})${t.omschrijving ? ` — ${t.omschrijving}` : ''}`);
     const subs = lib.subthemes.filter((s) => s.parent === t.id);
-    for (const s of subs) out.push(`    · ${s.id}: ${s.naam} (${count((l) => lessonSubthemes(l).includes(s.id))})`);
+    for (const s of subs) {
+      out.push(`    · ${s.id}: ${s.naam} (${count((l) => lessonSubthemes(l).includes(s.id))})`);
+      const k = kpLines.get(s.id);
+      if (k) out.push(k);
+    }
   }
   const loose = lib.subthemes.filter((s) => !s.parent || !lib.themes.some((t) => t.id === s.parent));
   if (loose.length) out.push('', 'Sub-themes:', ...loose.map((s) => `- ${s.id}: ${s.naam} (${count((l) => lessonSubthemes(l).includes(s.id))})`));

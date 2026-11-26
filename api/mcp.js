@@ -3782,18 +3782,105 @@ async function getLesson(a) {
 		...l.bronnen.map((b, i) => `${i + 1}. ${sourceLine(lib, b, true)}`)
 	].filter((x) => x != null).join("\n");
 }
-async function listTacticsIndex() {
-	const lib = await library();
-	const count = (pred) => lib.lessons.filter(pred).length;
+const EMPTY_KEYPOINTS = {
+	perSub: /* @__PURE__ */ new Map(),
+	updated: null
+};
+const kpCache = /* @__PURE__ */ new WeakMap();
+/** public/tactics/kernpunten.json (key points per sub-theme), or none when it is not there (older deploys). */
+async function keyPoints() {
+	const raw = await loadJson("tactics/kernpunten.json");
+	if (!raw || !isObj(raw.perSubthema)) return EMPTY_KEYPOINTS;
+	return derived(kpCache, raw, () => {
+		const perSub = /* @__PURE__ */ new Map();
+		for (const [sub, list] of Object.entries(raw.perSubthema)) {
+			const kp = listOf(list).filter((k) => isObj(k) && !!str$1(k.id) && !!str$1(k.titel)).map((k) => ({
+				id: String(k.id),
+				titel: String(k.titel),
+				tekst: str$1(k.tekst) ?? "",
+				lessen: strList(k.lessen),
+				nLessen: num(k.nLessen),
+				nKanalen: num(k.nKanalen),
+				kanalen: strList(k.kanalen),
+				...str$1(k.principeId) ? { principeId: String(k.principeId) } : {}
+			}));
+			if (kp.length) perSub.set(sub, kp);
+		}
+		return {
+			perSub,
+			updated: str$1(raw.bijgewerkt) ?? null
+		};
+	});
+}
+const KEYPOINT_NOTE = "Key points are short AI summaries of the lessons listed under each (advice several lessons of the section give), ranked by distinct channels, then lessons. Cite the lessons (get_lesson) and their sources, not the key point text.";
+async function getSection(a) {
+	const [lib, kp] = await Promise.all([library(), keyPoints()]);
+	const q = String(a.subtheme ?? "").trim();
+	const count = (sub) => lib.lessons.filter((l) => lessonSubthemes(l).includes(sub)).length;
+	const exact = (list) => q ? list.find((v) => norm$3(v.id) === norm$3(q) || norm$3(v.naam) === norm$3(q)) : void 0;
+	const exactTheme = exact(lib.themes);
+	const sub = exact(lib.subthemes) ?? (q && !exactTheme ? matchVocab(lib.subthemes, q) : void 0);
+	const theme = !sub && q ? exactTheme ?? matchVocab(lib.themes, q) : void 0;
+	if (theme) {
+		const out = [`Theme: ${theme.naam} [${theme.id}]. Sections (get_section subtheme=<id> for the key points with lesson ids):`];
+		for (const s of lib.subthemes.filter((x) => x.parent === theme.id)) {
+			out.push(`- ${s.id}: ${s.naam} (${count(s.id)} lessons)`);
+			for (const [i, k] of (kp.perSub.get(s.id) ?? []).entries()) out.push(`    ${i + 1}. ${k.titel} (${k.nLessen} lessons, ${k.nKanalen} channels)`);
+		}
+		return out.join("\n");
+	}
+	if (!sub) return `${q ? `No section "${q}".` : "Give a section (sub-theme) id."} Sections: ${lib.subthemes.map((s) => s.id).join(", ")}.`;
+	const lessons = lib.lessons.filter((l) => lessonSubthemes(l).includes(sub.id));
+	const points = kp.perSub.get(sub.id) ?? [];
 	const out = [
-		`Tactics library: ${lib.lessons.length} lessons from ${new Set(lib.lessons.flatMap((l) => l.bronnen.map((b) => b.bronId))).size} videos${lib.updated ? `, updated ${lib.updated}` : ""}.`,
+		`Section: ${sub.naam} [${sub.id}] · Theme: ${sub.parent ? `${vocabName(lib.themes, sub.parent)} [${sub.parent}]` : "?"} · ${lessons.length} lessons`,
+		...sub.omschrijving ? [sub.omschrijving] : [],
+		""
+	];
+	if (points.length) {
+		out.push(`Key points (${points.length}). ${KEYPOINT_NOTE}`);
+		for (const [i, k] of points.entries()) out.push(`${i + 1}. ${k.titel}  [key point: ${k.id}]`, `   ${k.tekst}`, `   Backed by ${k.nLessen} lessons from ${k.nKanalen} channel${k.nKanalen === 1 ? "" : "s"} (${k.kanalen.map((c) => lib.channels.get(c)?.naam ?? c).join(", ")})${k.principeId ? ` · also principle: ${k.principeId}` : ""}`, `   Lessons: ${k.lessen.join(", ")}`);
+	} else out.push("No key points for this section (too few lessons give the same advice); read the lessons below.");
+	const shown = [...new Set([...points.flatMap((k) => k.lessen), ...lessons.map((l) => l.id)])].filter((id) => lessons.some((l) => l.id === id)).slice(0, 12);
+	out.push("", `Lessons (first ${shown.length} of ${lessons.length}; all: search_tactics theme=${sub.id} limit=25):`);
+	for (const id of shown) {
+		const l = lib.byId.get(id);
+		out.push(`- ${l.titel}  [id: ${l.id}]${l.leger ? ` · ${armyName(l.leger)}` : ""}`, `  ${trunc(l.tekst, 160)}`);
+	}
+	return out.join("\n");
+}
+/** Key point titles per section for the index: all of them, or (if the index would get too long) the
+*  first 3 per section, shortened. */
+function keyPointLines(kp, subs, compact) {
+	const out = /* @__PURE__ */ new Map();
+	for (const s of subs) {
+		const list = kp.perSub.get(s.id) ?? [];
+		if (!list.length) continue;
+		const shown = compact ? list.slice(0, 3) : list;
+		const titles = shown.map((k) => compact ? trunc(k.titel, 46) : k.titel);
+		out.set(s.id, `      key points: ${titles.join(" | ")}${list.length > shown.length ? ` (+${list.length - shown.length})` : ""}`);
+	}
+	return out;
+}
+async function listTacticsIndex() {
+	const [lib, kp] = await Promise.all([library(), keyPoints()]);
+	const count = (pred) => lib.lessons.filter(pred).length;
+	const head = `Tactics library: ${lib.lessons.length} lessons from ${new Set(lib.lessons.flatMap((l) => l.bronnen.map((b) => b.bronId))).size} videos${lib.updated ? `, updated ${lib.updated}` : ""}.`;
+	const kpFull = keyPointLines(kp, lib.subthemes, false);
+	const kpLines = [...kpFull.values()].reduce((n, l) => n + l.length + 1, 0) > 9e3 ? keyPointLines(kp, lib.subthemes, true) : kpFull;
+	const out = [
+		head,
 		"",
-		"Themes (filter with search_tactics theme=<id>):"
+		`Themes (filter with search_tactics theme=<id>)${kpLines.size ? "; per section its key points (get_section subtheme=<id> for their text and lessons)" : ""}:`
 	];
 	for (const t of lib.themes) {
 		out.push(`- ${t.id}: ${t.naam} (${count((l) => l.themas.includes(t.id))})${t.omschrijving ? ` — ${t.omschrijving}` : ""}`);
 		const subs = lib.subthemes.filter((s) => s.parent === t.id);
-		for (const s of subs) out.push(`    · ${s.id}: ${s.naam} (${count((l) => lessonSubthemes(l).includes(s.id))})`);
+		for (const s of subs) {
+			out.push(`    · ${s.id}: ${s.naam} (${count((l) => lessonSubthemes(l).includes(s.id))})`);
+			const k = kpLines.get(s.id);
+			if (k) out.push(k);
+		}
 	}
 	const loose = lib.subthemes.filter((s) => !s.parent || !lib.themes.some((t) => t.id === s.parent));
 	if (loose.length) out.push("", "Sub-themes:", ...loose.map((s) => `- ${s.id}: ${s.naam} (${count((l) => lessonSubthemes(l).includes(s.id))})`));
@@ -7139,7 +7226,7 @@ const PROTOCOLS = [
 	"2024-11-05"
 ];
 const INSTRUCTIONS = `Old World Companion: Warhammer: The Old World knowledge for tactical advice. Follow these rules in every answer about the game.
-1. Library first: before any tactical, list-building, matchup or army advice, call search_tactics (it lists matching principles above the lessons) or list_principles, and get_lesson for detail. Start from the principles, then the lessons: a principle is a summary of several lessons, so for each piece of advice cite the lessons' channel, video title and timestamped link.
+1. Library first: before any tactical, list-building, matchup or army advice, call search_tactics (it lists matching principles above the lessons), list_principles or get_section (a section's key points), and get_lesson for detail. Start from the principles, then the lessons: a principle is a summary of several lessons, so for each piece of advice cite the lessons' channel, video title and timestamped link.
 2. Mark your own reasoning separately, e.g. "Own assessment: …". Never blend it into what the sources say.
 3. Never use memory for game data: check every unit, weapon, points value, statline and rule you mention with get_unit, get_army, get_rule or search_rules. Quote rule text verbatim; never present your own interpretation as the rule.
 4. If the library has nothing relevant, say so plainly.
@@ -7207,9 +7294,16 @@ const TOOLS = [
 	{
 		name: "list_tactics_index",
 		title: "Browse the tactics library",
-		description: "Themes, sub-themes, phases, armies and tags of the tactics library with lesson counts, to browse or pick filters for search_tactics.",
+		description: "Themes, sub-themes (sections) with their key point titles, phases, armies and tags of the tactics library with lesson counts, to browse or pick filters for search_tactics.",
 		inputSchema: obj({}),
 		run: () => listTacticsIndex()
+	},
+	{
+		name: "get_section",
+		title: "Key points of one section",
+		description: "One section (sub-theme) of the tactics library: its 3 to 5 key points (advice several of its lessons give, each an AI summary with lesson and channel counts and the lesson ids) and its first lessons. A theme id lists its sections with their key point titles.",
+		inputSchema: obj({ subtheme: s("Sub-theme id or name from list_tactics_index (e.g. \"reading-the-enemy\", \"screens\"), or a theme id.") }, ["subtheme"]),
+		run: (a) => getSection({ subtheme: str(a.subtheme) })
 	},
 	{
 		name: "list_principles",

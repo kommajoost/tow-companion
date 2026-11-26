@@ -1,0 +1,88 @@
+{
+  "subthema": "vs-bretonnia",
+  "thema": "matchups",
+  "gemaaktOp": "2026-11-26T16:20:32.174Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "matchups: picking-fights,vs-sky-lanterns,vs-grand-cathay,vs-beastmen,vs-bretonnia,vs-tomb-kings,vs-monsters,vs-other",
+  "invoerHash": "00c7eb8e1cbd",
+  "invoer": [
+    "magical-weapons-green-knight",
+    "hesitation-against-bretonnian-lances",
+    "preservation-challenges-bretonnian-lords",
+    "sisters-shoot-pegasus-knights",
+    "castle-against-bretonnian-flyers",
+    "rangers-deny-green-knight",
+    "hidden-grudge-throwers-bombards",
+    "irondrakes-front-against-bretonnia",
+    "gyrocopters-kite-pegasus-knights",
+    "steam-guns-outside-knight-arcs",
+    "dragon-threatens-mobile-duke",
+    "strength-four-bretonnian-blessing",
+    "pegasus-low-strength-armour-piercing"
+  ],
+  "kernpunten": [
+    {
+      "id": "against-bretonnia-use-low-strength-shooting-to-avoid-the-str",
+      "titel": "Against Bretonnia, use low-Strength shooting to avoid the stronger Blessing",
+      "tekst": "Use low-Strength shooting against Bretonnian knights so you avoid improving their Blessing save.",
+      "lessen": [
+        "sisters-shoot-pegasus-knights",
+        "strength-four-bretonnian-blessing",
+        "pegasus-low-strength-armour-piercing"
+      ],
+      "principe": "bretonnia-low-strength-shooting"
+    },
+    {
+      "id": "keep-your-shooters-beyond-enemy-charge-reach-or-arcs",
+      "titel": "Keep your shooters beyond enemy charge reach or arcs",
+      "tekst": "Keep your Gyrocopters outside the knights' charge reach or arcs so they can shoot without being charged.",
+      "lessen": [
+        "gyrocopters-kite-pegasus-knights",
+        "steam-guns-outside-knight-arcs"
+      ],
+      "principe": "keep-shooters-beyond-charge-reach"
+    },
+    {
+      "id": "remove-bombards-before-sending-your-gyrocopters-out",
+      "titel": "Remove Bombards before sending your Gyrocopters out",
+      "tekst": "Deal with Bretonnian Bombards first so your Gyrocopters can attack the knights more safely.",
+      "lessen": [
+        "gyrocopters-kite-pegasus-knights",
+        "steam-guns-outside-knight-arcs"
+      ],
+      "principe": null
+    },
+    {
+      "id": "put-ranged-units-at-the-front-against-approaching-knights",
+      "titel": "Put ranged units at the front against approaching knights",
+      "tekst": "Place ranged units at the front so approaching Bretonnian knights face shooting before combat.",
+      "lessen": [
+        "castle-against-bretonnian-flyers",
+        "irondrakes-front-against-bretonnia"
+      ],
+      "principe": null
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 140,
+      "sec": 244,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 62238,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 11351,
+        "reasoning_output_tokens": 8207
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

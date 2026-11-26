@@ -1,0 +1,135 @@
+{
+  "subthema": "control-spells",
+  "thema": "magic",
+  "gemaaktOp": "2026-11-26T16:10:32.913Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "magic: wizard-builds,lores-spells,dispelling,wizard-placement,magic-missiles,buffs-hexes,control-spells,casting-aids",
+  "invoerHash": "27b46a4e3e40",
+  "invoer": [
+    "movement-spells-early-aggression",
+    "avoid-column-dependent-strategy",
+    "warded-front-against-pillar",
+    "deploy-dragon-reserve-move",
+    "arcane-urgency-escape-charge-arcs",
+    "infernal-gateway-save-character",
+    "mystical-pathways-change-attack-angle",
+    "mystical-pathways-open-shooting",
+    "shimmering-dragon-backline-hunter",
+    "spectral-steed-caster-protection",
+    "crystal-column-shelter-charge-choice",
+    "urgency-dragon-blocks-wheels",
+    "urgency-rescue-exposes-wizard",
+    "space-units-against-pillar",
+    "hand-gork-rescue-character",
+    "reposition-shooting-blocks-safely",
+    "urgency-hide-casket",
+    "terrorgheist-scream-screen-gap",
+    "reserve-move-undead-pressure",
+    "flying-banshee-scream-withdrawal",
+    "control-spells-block-lanes",
+    "phantasmagoria-force-bad-charges",
+    "crystal-column-block-artillery",
+    "wind-blast-shorten-charges",
+    "moving-vortex-in-advance-path",
+    "illusion-deny-dragon-charges",
+    "wind-blast-limit-undead-raising",
+    "mirage-before-monster-slayer",
+    "tmp-fanatic-release-range",
+    "urgency-fanatic-launch-angles",
+    "pathways-corner-fanatic-delivery",
+    "treesinging-extend-defensive-forest",
+    "wind-blast-objective-distance"
+  ],
+  "kernpunten": [
+    {
+      "id": "use-movement-spells-to-accelerate-your-advance",
+      "titel": "Use movement spells to accelerate your advance",
+      "tekst": "Use movement magic to push attacking units farther forward and apply pressure sooner.",
+      "lessen": [
+        "movement-spells-early-aggression",
+        "deploy-dragon-reserve-move",
+        "terrorgheist-scream-screen-gap",
+        "reserve-move-undead-pressure"
+      ],
+      "principe": "accelerate-your-advance-with-magic"
+    },
+    {
+      "id": "use-movement-spells-to-get-characters-out-of-danger",
+      "titel": "Use movement spells to get characters out of danger",
+      "tekst": "Use movement magic to move threatened characters away from danger and keep them alive.",
+      "lessen": [
+        "infernal-gateway-save-character",
+        "spectral-steed-caster-protection",
+        "hand-gork-rescue-character",
+        "flying-banshee-scream-withdrawal"
+      ],
+      "principe": "withdraw-characters-with-movement-spells"
+    },
+    {
+      "id": "use-movement-spells-to-escape-enemy-charge-arcs",
+      "titel": "Use movement spells to escape enemy charge arcs",
+      "tekst": "Use movement magic to reposition threatened units outside enemy charge arcs and avoid their charges.",
+      "lessen": [
+        "arcane-urgency-escape-charge-arcs",
+        "mystical-pathways-change-attack-angle",
+        "reposition-shooting-blocks-safely"
+      ],
+      "principe": "escape-charge-arcs-with-movement-magic"
+    },
+    {
+      "id": "place-control-spells-across-the-enemy-s-intended-route",
+      "titel": "Place control spells across the enemy's intended route",
+      "tekst": "Place obstructing or dangerous spells across the enemy's intended route to disrupt its movement.",
+      "lessen": [
+        "control-spells-block-lanes",
+        "phantasmagoria-force-bad-charges",
+        "moving-vortex-in-advance-path"
+      ],
+      "principe": "place-control-spells-across-enemy-routes"
+    },
+    {
+      "id": "use-movement-magic-to-reach-fanatic-launch-positions",
+      "titel": "Use movement magic to reach Fanatic launch positions",
+      "tekst": "Reposition Night Goblin carriers with movement magic to reach useful Fanatic release positions and angles.",
+      "lessen": [
+        "tmp-fanatic-release-range",
+        "urgency-fanatic-launch-angles",
+        "pathways-corner-fanatic-delivery"
+      ],
+      "principe": "use-movement-magic-to-reach-fanatic-launch-positions"
+    },
+    {
+      "id": "use-terrain-spells-to-block-enemy-lines-of-sight",
+      "titel": "Use terrain spells to block enemy lines of sight",
+      "tekst": "Place terrain spells to block enemy lines of sight and shelter your position.",
+      "lessen": [
+        "crystal-column-shelter-charge-choice",
+        "crystal-column-block-artillery",
+        "treesinging-extend-defensive-forest"
+      ],
+      "principe": null
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 109,
+      "sec": 266,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 53922,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 11459,
+        "reasoning_output_tokens": 8356
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

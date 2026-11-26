@@ -1,0 +1,85 @@
+{
+  "subthema": "anchors",
+  "thema": "infantry",
+  "gemaaktOp": "2026-11-26T16:01:39.813Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "infantry: anchors,death-stars,unit-builds,holding-combat,infantry-moves",
+  "invoerHash": "46ba8d9614e0",
+  "invoer": [
+    "infantry-central-anchor",
+    "anchor-spend-on-defence",
+    "anchor-core-objective-threat",
+    "anchor-toughness-four",
+    "anchor-unbreakable-rule",
+    "dwarf-seven-static-resolution",
+    "hesitation-against-bretonnian-lances",
+    "choose-lizardmen-infantry-anvil",
+    "orc-anchor-defensive-magic",
+    "eternal-guard-anchor-trap",
+    "tree-kin-wood-elf-anchor",
+    "flank-units-not-infantry",
+    "layer-resilient-units-retreat-trap",
+    "undead-wall-protect-flanks",
+    "chaos-warriors-defensive-attrition",
+    "anvil-next-turn-combat-choices",
+    "saurus-anvil-takes-charges"
+  ],
+  "kernpunten": [
+    {
+      "id": "build-your-anchor-s-combat-resolution",
+      "titel": "Build your anchor's combat resolution",
+      "tekst": "Build your infantry anchor's combat resolution so powerful attackers struggle to beat it.",
+      "lessen": [
+        "infantry-central-anchor",
+        "dwarf-seven-static-resolution",
+        "hesitation-against-bretonnian-lances",
+        "flank-units-not-infantry",
+        "chaos-warriors-defensive-attrition"
+      ],
+      "principe": null
+    },
+    {
+      "id": "prepare-countercharges-with-units-that-can-survive-the-first",
+      "titel": "Prepare countercharges with units that can survive the first charge",
+      "tekst": "Use a receiver that can survive the charge so a supporting unit can countercharge.",
+      "lessen": [
+        "layer-resilient-units-retreat-trap",
+        "anvil-next-turn-combat-choices"
+      ],
+      "principe": "prepare-countercharges-behind-surviving-receivers"
+    },
+    {
+      "id": "prioritise-defence-over-damage-when-building-an-anchor",
+      "titel": "Prioritise defence over damage when building an anchor",
+      "tekst": "Build your anchor to survive attacks and hold ground, treating damage output as secondary.",
+      "lessen": [
+        "infantry-central-anchor",
+        "anchor-spend-on-defence",
+        "chaos-warriors-defensive-attrition"
+      ],
+      "principe": null
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 60,
+      "sec": 345,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 41451,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 14480,
+        "reasoning_output_tokens": 12948
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

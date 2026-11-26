@@ -1,0 +1,108 @@
+{
+  "subthema": "terrain-los",
+  "thema": "shooting-terrain",
+  "gemaaktOp": "2026-11-26T16:16:23.612Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "shooting-terrain: war-machines,missile-units,target-priority,avoiding-fire,evasive-skirmish,terrain-los,hunting-shooters",
+  "invoerHash": "09511534c584",
+  "invoer": [
+    "deploy-read-terrain",
+    "artillery-hills-clear-sight",
+    "artillery-pivot-into-woods",
+    "anchor-flanks-on-terrain",
+    "rangers-woods-against-outriders",
+    "flagellants-wood-roadblock",
+    "helblaster-entire-base-cover",
+    "jezzails-hidden-lantern-kill-lanes",
+    "combine-wood-elf-forests",
+    "woodland-ambush-terrain-corridor",
+    "harassment-infantry-flank-terrain",
+    "random-movement-unseen-targets",
+    "woods-block-attack-lanes",
+    "impassable-safe-advance-lanes",
+    "impassable-limit-enemy-frontage",
+    "impassable-disrupt-skirmisher-forming",
+    "impassable-shorten-enemy-retreats",
+    "mystical-pathways-open-shooting",
+    "hills-reduce-cannon-bounces",
+    "hide-random-movers-behind-hills",
+    "terrain-low-roll-charges",
+    "reform-line-clear-shooting",
+    "chaff-preserve-friendly-lanes",
+    "skinks-screen-cannon-sight",
+    "urgency-hide-casket",
+    "magic-missiles-bypass-cover",
+    "control-spells-block-lanes",
+    "treesinging-extend-defensive-forest"
+  ],
+  "kernpunten": [
+    {
+      "id": "keep-friendly-models-out-of-your-shooting-lanes",
+      "titel": "Keep friendly models out of your shooting lanes",
+      "tekst": "Arrange or move your units so friendly models do not obstruct your shooters' line of sight.",
+      "lessen": [
+        "mystical-pathways-open-shooting",
+        "reform-line-clear-shooting",
+        "chaff-preserve-friendly-lanes"
+      ],
+      "principe": null
+    },
+    {
+      "id": "hide-vulnerable-units-behind-terrain-to-deny-enemy-shooting",
+      "titel": "Hide vulnerable units behind terrain to deny enemy shooting",
+      "tekst": "Keep vulnerable units behind terrain that blocks line of sight so enemy shooters cannot target them.",
+      "lessen": [
+        "artillery-pivot-into-woods",
+        "combine-wood-elf-forests",
+        "woodland-ambush-terrain-corridor",
+        "woods-block-attack-lanes",
+        "hide-random-movers-behind-hills",
+        "treesinging-extend-defensive-forest"
+      ],
+      "principe": "hide-vulnerable-units-behind-terrain"
+    },
+    {
+      "id": "use-terrain-to-shorten-enemy-charges-and-buy-time",
+      "titel": "Use terrain to shorten enemy charges and buy time",
+      "tekst": "Position around terrain that shortens enemy charges to buy time for shooting or movement.",
+      "lessen": [
+        "artillery-pivot-into-woods",
+        "terrain-low-roll-charges",
+        "control-spells-block-lanes"
+      ],
+      "principe": "use-terrain-to-delay-charges"
+    },
+    {
+      "id": "use-random-movement-to-threaten-unseen-targets",
+      "titel": "Use random movement to threaten unseen targets",
+      "tekst": "Consider random-movement attacks on unseen enemies because line of sight need not prevent these moves.",
+      "lessen": [
+        "random-movement-unseen-targets",
+        "hide-random-movers-behind-hills"
+      ],
+      "principe": null
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 137,
+      "sec": 347,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 61831,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 16160,
+        "reasoning_output_tokens": 12948
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

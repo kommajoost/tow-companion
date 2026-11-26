@@ -1,0 +1,61 @@
+{
+  "subthema": "king-of-the-hill",
+  "thema": "scenarios",
+  "gemaaktOp": "2026-11-26T16:22:41.023Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "scenarios: scoring-units,objectives,baggage-train,king-of-the-hill,scenario-plans,late-game",
+  "invoerHash": "631fc9837d76",
+  "invoer": [
+    "king-hill-concentrate-centre",
+    "hill-scorer-offset-feature",
+    "stubborn-shield-wall-scoring",
+    "king-of-the-hill-forfeit",
+    "unbreakable-advance-beyond-capture",
+    "hill-small-scorer-hidden",
+    "eternal-guard-charge-for-scoring"
+  ],
+  "kernpunten": [
+    {
+      "id": "use-supported-charges-to-dislodge-objective-defenders",
+      "titel": "Use supported charges to dislodge objective defenders",
+      "tekst": "Coordinate your attackers in combined charges to push the enemy off the hill.",
+      "lessen": [
+        "king-of-the-hill-forfeit",
+        "eternal-guard-charge-for-scoring"
+      ],
+      "principe": "support-charges-against-objective-defenders"
+    },
+    {
+      "id": "use-short-retreats-to-retain-hill-control",
+      "titel": "Use short retreats to retain hill control",
+      "tekst": "Use Give Ground's short retreat to keep your scorer in range after losing combat.",
+      "lessen": [
+        "stubborn-shield-wall-scoring",
+        "unbreakable-advance-beyond-capture"
+      ],
+      "principe": null
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 57,
+      "sec": 125,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 40537,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 5975,
+        "reasoning_output_tokens": 4104
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

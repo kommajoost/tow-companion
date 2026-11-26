@@ -1,0 +1,122 @@
+{
+  "subthema": "mounts-items",
+  "thema": "characters",
+  "gemaaktOp": "2026-11-26T16:06:02.970Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "characters: combat-roles,bsb,mounts-items,challenges,protecting-characters",
+  "invoerHash": "f5c3de42c149",
+  "invoer": [
+    "mounted-hunter-fortitude",
+    "prefer-equipped-generic-characters",
+    "ruby-ring-unit-champions",
+    "chariot-mount-character-survival",
+    "dragon-sword-deters-miao",
+    "infantry-icon-multiple-wounds",
+    "versatile-multiple-wound-weapons",
+    "anvil-preservation-over-toughness",
+    "dragon-slayer-dishonor-tattoo",
+    "slaying-ranged-dwarf-character",
+    "royal-king-smiting-dragons",
+    "magical-weapons-green-knight",
+    "preservation-challenges-bretonnian-lords",
+    "captain-pistol-charge-reaction",
+    "white-sword-doppelganger-archmage",
+    "skycutter-white-sword-mount",
+    "duke-pegasus-charge-flexibility",
+    "baron-royal-pegasus-blender",
+    "knightly-temper-lantern-hunter",
+    "grail-champion-falcon-horn",
+    "heroism-flying-monster-hunter",
+    "scar-veteran-carnosaur-competitive",
+    "cold-one-oldblood-option",
+    "orc-wyvern-layered-tank",
+    "goblin-chariot-dragon-deterrent",
+    "tomb-king-dragon-armour-ages",
+    "bone-dragon-control-priest",
+    "necrotect-poison-skeleton-attacks",
+    "daemon-prince-plate-against-bombs",
+    "chaos-lord-steed-charge-arc",
+    "chaos-chariot-combat-wizard",
+    "warhawk-control-spellweaver-build",
+    "falcon-horn-stop-lantern-flight",
+    "falcon-horn-chaff-dragon"
+  ],
+  "kernpunten": [
+    {
+      "id": "consider-chariot-mounts-for-additional-wounds-and-protection",
+      "titel": "Consider chariot mounts for additional wounds and protection",
+      "tekst": "Consider a chariot mount to give your character more wounds and improve its survivability.",
+      "lessen": [
+        "chariot-mount-character-survival",
+        "skycutter-white-sword-mount"
+      ],
+      "principe": null
+    },
+    {
+      "id": "use-the-falcon-horn-to-restrict-enemy-flyers",
+      "titel": "Use the Falcon Horn to restrict enemy flyers",
+      "tekst": "Use the Falcon Horn to stop enemy flight and limit where those models can move.",
+      "lessen": [
+        "falcon-horn-stop-lantern-flight",
+        "falcon-horn-chaff-dragon"
+      ],
+      "principe": null
+    },
+    {
+      "id": "choose-combat-characters-with-all-round-charge-options",
+      "titel": "Choose combat characters with all-round charge options",
+      "tekst": "Choose characters or mounts with all-round charge options so you can threaten targets around them.",
+      "lessen": [
+        "mounted-hunter-fortitude",
+        "duke-pegasus-charge-flexibility",
+        "baron-royal-pegasus-blender",
+        "heroism-flying-monster-hunter",
+        "cold-one-oldblood-option",
+        "chaos-lord-steed-charge-arc"
+      ],
+      "principe": "choose-all-round-charge-options"
+    },
+    {
+      "id": "use-character-threats-to-deter-enemy-dragons-from-approachin",
+      "titel": "Use character threats to deter enemy dragons from approaching",
+      "tekst": "Use a character carrying the Dragon Slaying Sword to make an enemy dragon's approach risky.",
+      "lessen": [
+        "dragon-sword-deters-miao",
+        "goblin-chariot-dragon-deterrent"
+      ],
+      "principe": "deter-dragon-approaches-with-character-threats"
+    },
+    {
+      "id": "choose-weapons-useful-beyond-monster-hunting",
+      "titel": "Choose weapons useful beyond monster hunting",
+      "tekst": "Consider weapons effective against varied targets so your character has uses beyond killing monsters.",
+      "lessen": [
+        "versatile-multiple-wound-weapons",
+        "white-sword-doppelganger-archmage"
+      ],
+      "principe": null
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 79,
+      "sec": 95,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 46244,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 4486,
+        "reasoning_output_tokens": 2675
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

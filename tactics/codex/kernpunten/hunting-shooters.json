@@ -1,0 +1,94 @@
+{
+  "subthema": "hunting-shooters",
+  "thema": "shooting-terrain",
+  "gemaaktOp": "2026-11-26T16:16:23.612Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "shooting-terrain: war-machines,missile-units,target-priority,avoiding-fire,evasive-skirmish,terrain-los,hunting-shooters",
+  "invoerHash": "1eb15121c1d9",
+  "invoer": [
+    "sneaky-gits-backline-volley",
+    "jade-lancers-ambush-cannons",
+    "gorgers-hunt-cathayan-cannons",
+    "kiknik-wolves-cathayan-artillery",
+    "six-fell-bats-cannons",
+    "deploy-wolves-earlier-artillery-charge",
+    "random-movement-catches-shooters",
+    "shimmering-dragon-backline-hunter",
+    "imperfect-target-escape-shooting",
+    "fast-armies-close-gunlines",
+    "redirect-deny-stand-shoot",
+    "gyrocopters-pressure-nuln-artillery",
+    "gyrocopters-hunt-reserve-archers",
+    "light-chariot-artillery-hunter",
+    "black-coach-mobile-backline-hunter",
+    "wood-elf-eagle-war-machines",
+    "poison-scouts-clear-cannon"
+  ],
+  "kernpunten": [
+    {
+      "id": "push-threats-forward-to-draw-fire-away-from-key-units",
+      "titel": "Push threats forward to draw fire away from key units",
+      "tekst": "Present threats to enemy artillery so the opponent spends shots on them instead of your key units.",
+      "lessen": [
+        "gorgers-hunt-cathayan-cannons",
+        "gyrocopters-pressure-nuln-artillery",
+        "light-chariot-artillery-hunter"
+      ],
+      "principe": "draw-fire-with-forward-threats"
+    },
+    {
+      "id": "reach-combat-early-to-cut-a-gunline-s-shooting-time",
+      "titel": "Reach combat early to cut a gunline's shooting time",
+      "tekst": "Reach combat quickly against a gunline so its shooting has less time to damage your army.",
+      "lessen": [
+        "imperfect-target-escape-shooting",
+        "fast-armies-close-gunlines"
+      ],
+      "principe": "reach-combat-early-against-gunlines"
+    },
+    {
+      "id": "use-suitable-ambushers-to-hunt-enemy-war-machines",
+      "titel": "Use suitable ambushers to hunt enemy war machines",
+      "tekst": "Assign suitable ambushers to enemy war machines so they can destroy the guns.",
+      "lessen": [
+        "sneaky-gits-backline-volley",
+        "jade-lancers-ambush-cannons",
+        "gorgers-hunt-cathayan-cannons"
+      ],
+      "principe": "ambushers-hunt-war-machines"
+    },
+    {
+      "id": "against-cathay-send-cannon-hunters-that-can-handle-ogre-crew",
+      "titel": "Against Cathay, send cannon hunters that can handle Ogre crews",
+      "tekst": "Bring hunters strong or numerous enough to handle Ogre crews so Cathayan cannons do not defeat them.",
+      "lessen": [
+        "gorgers-hunt-cathayan-cannons",
+        "kiknik-wolves-cathayan-artillery",
+        "six-fell-bats-cannons"
+      ],
+      "principe": "cathay-cannon-hunters-handle-ogre-crews"
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 137,
+      "sec": 347,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 61831,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 16160,
+        "reasoning_output_tokens": 12948
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}

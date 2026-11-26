@@ -1,0 +1,148 @@
+{
+  "subthema": "ambush-scouts-vanguard",
+  "thema": "deployment",
+  "gemaaktOp": "2026-11-26T15:47:16.125Z",
+  "model": "gpt-6.1-sol",
+  "effort": "high",
+  "portie": "deployment: pre-game-checks,drops-first-turn,unit-placement,deploying-vs-shooting,ambush-scouts-vanguard",
+  "invoerHash": "c3acfb532417",
+  "invoer": [
+    "ambushers-pressure-enemy-movement",
+    "fast-cavalry-ambushers",
+    "ambushers-banner-combat-resolution",
+    "shooting-ambushers-immediate-impact",
+    "combat-ambushers-survive-arrival",
+    "sneaky-gits-backline-volley",
+    "road-wardens-shooting-ambush",
+    "jade-lancers-ambush-cannons",
+    "sky-lantern-skip-ambush",
+    "lizardmen-screening-packages",
+    "gorgers-hunt-cathayan-cannons",
+    "close-order-wolves-ambush-support",
+    "frenzied-vanguard-boar-flankers",
+    "check-intended-ambushers",
+    "check-scouts-vanguard-safety",
+    "scouts-deny-lantern-deployment",
+    "channel-ambushers-into-charges",
+    "corner-models-deny-ambushes",
+    "ambush-protects-fragile-flex-units",
+    "screen-reserve-entry-edges",
+    "chaff-deny-scout-vanguard",
+    "minotaurs-weigh-ambush-choice",
+    "rangers-woods-against-outriders",
+    "cannons-behind-vanguarding-outriders",
+    "outriders-vanguard-static-fire",
+    "deploy-wolves-earlier-artillery-charge",
+    "vanguard-boars-column-flank-march",
+    "horse-archers-scouting-bonus",
+    "ambushers-reserve-move-arrival",
+    "respect-successful-ambush-arrivals",
+    "ambushers-support-flank-rear-charges",
+    "disperse-enemies-open-ambush-space",
+    "guard-dwarf-backfield-scorpions",
+    "ogre-vanguard-threat-overload",
+    "ambushing-wolves-artillery-blind-spots",
+    "vanguard-scorpions-fight-chaff",
+    "marauder-ambush-safe-arrival",
+    "ambush-vacated-enemy-objectives",
+    "vanguard-temporary-objective-control",
+    "ambushers-target-baggage-trains",
+    "ambush-late-domination-quarters",
+    "beastmen-infantry-safe-ambush",
+    "kiknik-ambushers-score-objectives",
+    "ambush-replace-early-wolf-scorers"
+  ],
+  "kernpunten": [
+    {
+      "id": "use-ambushers-to-score-in-unattended-areas",
+      "titel": "Use ambushers to score in unattended areas",
+      "tekst": "Send your ambushers into unattended scoring areas to claim points where the opponent has left space.",
+      "lessen": [
+        "ambush-vacated-enemy-objectives",
+        "ambushers-target-baggage-trains",
+        "ambush-late-domination-quarters",
+        "beastmen-infantry-safe-ambush",
+        "kiknik-ambushers-score-objectives",
+        "ambush-replace-early-wolf-scorers"
+      ],
+      "principe": "use-ambushers-to-score-in-unattended-areas"
+    },
+    {
+      "id": "block-useful-enemy-ambush-entry-space-during-deployment",
+      "titel": "Block useful enemy ambush entry space during deployment",
+      "tekst": "Position your units near relevant board edges during deployment to restrict where enemy ambushers can enter.",
+      "lessen": [
+        "channel-ambushers-into-charges",
+        "corner-models-deny-ambushes",
+        "screen-reserve-entry-edges"
+      ],
+      "principe": "block-useful-enemy-ambush-entry-space-during-deployment"
+    },
+    {
+      "id": "use-your-units-to-deny-forward-scout-deployment",
+      "titel": "Use your units to deny forward Scout deployment",
+      "tekst": "Place your units to deny enemy Scouts space near your army so they have to start farther away.",
+      "lessen": [
+        "scouts-deny-lantern-deployment",
+        "chaff-deny-scout-vanguard"
+      ],
+      "principe": null
+    },
+    {
+      "id": "choose-protected-arrival-positions-for-your-ambushers",
+      "titel": "Choose protected arrival positions for your ambushers",
+      "tekst": "Bring your ambushers on in protected positions so they can contribute without unnecessary exposure.",
+      "lessen": [
+        "ambush-protects-fragile-flex-units",
+        "ambushers-support-flank-rear-charges",
+        "ambushing-wolves-artillery-blind-spots",
+        "marauder-ambush-safe-arrival",
+        "beastmen-infantry-safe-ambush"
+      ],
+      "principe": null
+    },
+    {
+      "id": "choose-shooting-ambushers-for-an-immediate-arrival-volley",
+      "titel": "Choose shooting ambushers for an immediate arrival volley",
+      "tekst": "Choose shooting ambushers so you can attack a target on arrival without waiting for a later charge.",
+      "lessen": [
+        "shooting-ambushers-immediate-impact",
+        "sneaky-gits-backline-volley",
+        "road-wardens-shooting-ambush"
+      ],
+      "principe": "choose-shooting-ambushers-for-an-immediate-arrival-volley"
+    },
+    {
+      "id": "use-suitable-ambushers-to-hunt-enemy-war-machines",
+      "titel": "Use suitable ambushers to hunt enemy war machines",
+      "tekst": "Give suitable ambushers the job of attacking enemy war machines so you can destroy those backline targets.",
+      "lessen": [
+        "sneaky-gits-backline-volley",
+        "jade-lancers-ambush-cannons",
+        "gorgers-hunt-cathayan-cannons"
+      ],
+      "principe": "ambushers-hunt-war-machines"
+    }
+  ],
+  "correcties": [],
+  "runs": [
+    {
+      "poging": 1,
+      "promptKB": 105,
+      "sec": 164,
+      "exit": 0,
+      "usage": {
+        "input_tokens": 52837,
+        "cached_input_tokens": 0,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 7481,
+        "reasoning_output_tokens": 5178
+      },
+      "items": {
+        "agent_message": 1
+      },
+      "commandos": [],
+      "status": "ok"
+    }
+  ]
+}
