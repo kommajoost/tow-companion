@@ -2796,5 +2796,88 @@
     "opmerkingen": [
       "aanvulling op chaff-engineered-enemy-retreats: les heeft al 3 bronnen, overgeslagen"
     ]
+  },
+  "QXM4TGOapsg": {
+    "op": "2026-11-26",
+    "bestand": "tactics/codex/uit/QXM4TGOapsg.json",
+    "nieuw": [
+      "dark-elves-double-dragon",
+      "cold-one-rider-ward",
+      "death-hag-extra-attacks",
+      "corsairs-ambush-backline-pressure",
+      "black-guard-fight-infantry",
+      "executioners-daemonology-support",
+      "six-shades-backline-unit",
+      "shades-feigned-flight-combination",
+      "witch-elves-reroll-unwanted-charge",
+      "cold-one-knights-ap-banner",
+      "dark-riders-core-priority",
+      "crossbowmen-home-objective",
+      "medusa-vampire-counts-deterrent"
+    ],
+    "aanvullingen": [
+      "substantial-core-scenario-scorers"
+    ],
+    "opmerkingen": []
+  },
+  "wjCCOctPCTU": {
+    "op": "2026-11-26",
+    "bestand": "tactics/codex/uit/wjCCOctPCTU.json",
+    "nieuw": [
+      "power-darkness-early-buffs",
+      "focus-familiar-cursing-word",
+      "death-hag-cauldron-mount",
+      "black-guard-cost-reservations",
+      "executioners-alternative-death-star",
+      "executioner-death-star-magical-protection",
+      "witch-elves-armour-piercing-banner",
+      "harpies-screen-witch-elves",
+      "cold-one-full-plate-veteran",
+      "warlocks-daemonology-spell-choice",
+      "generate-warlock-spells-last",
+      "hydra-over-bloodwrack-shrine",
+      "triple-hydra-witch-screen",
+      "kharibdyss-spare-points-trial"
+    ],
+    "aanvullingen": [
+      "crossbowmen-home-objective (+wanneerNiet)",
+      "corsairs-ambush-backline-pressure",
+      "executioners-daemonology-support",
+      "six-shades-backline-unit (+waarom)",
+      "shades-feigned-flight-combination"
+    ],
+    "opmerkingen": []
+  },
+  "yjkv1Z9Yfks": {
+    "op": "2026-11-26",
+    "bestand": "tactics/codex/uit/yjkv1Z9Yfks.json",
+    "nieuw": [
+      "tzeentch-stack-dragon-debuffs",
+      "pink-horrors-banner-change",
+      "daemon-prince-ether-blade",
+      "ogre-bulls-oaken-shield",
+      "gnoblars-thirty-seven-column",
+      "mournfang-three-great-weapons",
+      "paired-ironblasters-control-support",
+      "bulls-over-ironguts-block",
+      "sorceress-tome-extra-spell",
+      "shades-great-weapons-retreat",
+      "sisters-slaughter-support-flanks",
+      "cold-one-monster-tapestry",
+      "black-guard-sorceress-support",
+      "war-hydra-infantry-flanks",
+      "medusa-utility-flanker"
+    ],
+    "aanvullingen": [
+      "corsairs-ambush-backline-pressure",
+      "shades-feigned-flight-combination",
+      "cold-one-full-plate-veteran",
+      "death-hag-cauldron-mount (+wanneerNiet)",
+      "harpies-screen-witch-elves"
+    ],
+    "opmerkingen": [
+      "aanvulling op corsairs-ambush-backline-pressure: extra citaat van yt-QXM4TGOapsg weggehaald voor de nieuwe bron (\"harass the backline, try and get into cannons, come in and deal with baggage trains,\")",
+      "aanvulling op shades-feigned-flight-combination: extra citaat van yt-QXM4TGOapsg weggehaald voor de nieuwe bron (\"It just lets you reposition\")"
+    ]
   }
 }

@@ -5247,5 +5247,122 @@
     "aanvullingen": 8,
     "afgekeurd": [],
     "gecorrigeerd": 1
+  },
+  {
+    "videoId": "QXM4TGOapsg",
+    "titel": "Renegade Dark Elves FULL BREAKDOWN. Too Good, or Not Good Enough?",
+    "start": "2026-11-26T21:39:35.200Z",
+    "modus": "uit",
+    "model": "gpt-6.1-sol",
+    "effort": "high",
+    "pogingen": 1,
+    "promptKB": 280,
+    "sec": 249,
+    "exit": 0,
+    "usage": {
+      "input_tokens": 1055692,
+      "cached_input_tokens": 945664,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 8918,
+      "reasoning_output_tokens": 4062
+    },
+    "items": {
+      "agent_message": 4,
+      "command_execution": 8
+    },
+    "commandos": [
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/QXM4TGOapsg.fixed.txt' -Raw\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/QXM4TGOapsg.fixed.txt' | Select-Object -Skip 90 -First 110\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/QXM4TGOapsg.fixed.txt' | Select-Object -Skip 200 -First 110\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/QXM4TGOapsg.fixed.txt' | Select-Object -Skip 178 -First 64\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/QXM4TGOapsg.fixed.txt' | Select-Object -Skip 305 -First 65\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/QXM4TGOapsg.fixed.txt' | Select-Object -Skip 268 -First 13\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$ErrorActionPreference = '\"'Stop'\n\"'$json = @'\"'\n{\n  \\\"videoId\\\": \\\"QXM4TGOapsg\\\",\n  \\\"bronId\\\": \\\"yt-QXM4TGOapsg\\\",\n  \\\"mode",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$ErrorActionPreference = '\"'Stop'\n\"'$json = @'\"'\n{\n  \\\"videoId\\\": \\\"QXM4TGOapsg\\\",\n  \\\"bronId\\\": \\\"yt-QXM4TGOapsg\\\",\n  \\\"mode"
+    ],
+    "bericht": "13 new lessons and 1 addition.",
+    "status": "ok",
+    "modelGemeld": "GPT-6",
+    "nieuw": 13,
+    "aanvullingen": 1,
+    "afgekeurd": [],
+    "gecorrigeerd": 0
+  },
+  {
+    "videoId": "wjCCOctPCTU",
+    "titel": "That Old World Charm Episode 65: Dark Elf Renegades Review",
+    "start": "2026-11-26T21:43:49.585Z",
+    "modus": "uit",
+    "model": "gpt-6.1-sol",
+    "effort": "high",
+    "pogingen": 1,
+    "promptKB": 283,
+    "sec": 184,
+    "exit": 0,
+    "usage": {
+      "input_tokens": 652548,
+      "cached_input_tokens": 565632,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 7743,
+      "reasoning_output_tokens": 3568
+    },
+    "items": {
+      "agent_message": 4,
+      "command_execution": 4
+    },
+    "commandos": [
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/wjCCOctPCTU.fixed.txt' -Encoding UTF8\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/wjCCOctPCTU.fixed.txt' -Encoding UTF8 | Select-Object -Skip 88 -First 90\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$payload = @'\"'\n{\n  \\\"videoId\\\": \\\"wjCCOctPCTU\\\",\n  \\\"bronId\\\": \\\"yt-wjCCOctPCTU\\\",\n  \\\"model\\\": \\\"gpt-6\\\",\n  \\\"nieuw\\\": [\n  ",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$payload = @'\"'\n{\n  \\\"videoId\\\": \\\"wjCCOctPCTU\\\",\n  \\\"bronId\\\": \\\"yt-wjCCOctPCTU\\\",\n  \\\"model\\\": \\\"gpt-6\\\",\n  \\\"nieuw\\\": [\n  "
+    ],
+    "bericht": "14 new lessons and 5 additions.",
+    "status": "ok",
+    "modelGemeld": "gpt-6",
+    "nieuw": 14,
+    "aanvullingen": 5,
+    "afgekeurd": [],
+    "gecorrigeerd": 0
+  },
+  {
+    "videoId": "yjkv1Z9Yfks",
+    "titel": "Renegade Dark Elves Review",
+    "start": "2026-11-26T21:46:58.975Z",
+    "modus": "uit",
+    "model": "gpt-6.1-sol",
+    "effort": "high",
+    "pogingen": 1,
+    "promptKB": 286,
+    "sec": 302,
+    "exit": 0,
+    "usage": {
+      "input_tokens": 1162086,
+      "cached_input_tokens": 1037696,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 13205,
+      "reasoning_output_tokens": 3951
+    },
+    "items": {
+      "agent_message": 5,
+      "command_execution": 9
+    },
+    "commandos": [
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/yjkv1Z9Yfks.fixed.txt'\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/yjkv1Z9Yfks.fixed.txt' | Select-Object -Skip 100 -First 100\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/yjkv1Z9Yfks.fixed.txt' | Select-Object -Skip 200 -First 100\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/yjkv1Z9Yfks.fixed.txt' | Select-Object -Skip 190 -First 110\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/yjkv1Z9Yfks.fixed.txt' | Select-Object -Skip 300 -First 100\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/yjkv1Z9Yfks.fixed.txt' | Select-Object -Skip 400 -First 100\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/yjkv1Z9Yfks.fixed.txt' | Select-Object -Skip 500\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$ErrorActionPreference = '\"'Stop'\n\"'$data = @'\"'\n{\n  \\\"videoId\\\": \\\"yjkv1Z9Yfks\\\",\n  \\\"bronId\\\": \\\"yt-yjkv1Z9Yfks\\\",\n  \\\"mode",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$ErrorActionPreference = '\"'Stop'\n\"'$json = @'\"'\n{\n  \\\"videoId\\\": \\\"yjkv1Z9Yfks\\\",\n  \\\"bronId\\\": \\\"yt-yjkv1Z9Yfks\\\",\n  \\\"mode"
+    ],
+    "bericht": "15 new lessons and 5 additions.",
+    "status": "ok",
+    "modelGemeld": "GPT-6",
+    "nieuw": 15,
+    "aanvullingen": 5,
+    "afgekeurd": [],
+    "gecorrigeerd": 0
   }
 ]

@@ -23297,6 +23297,12 @@
               "citaat": "it can definitely score you points at the end of the game."
             }
           ]
+        },
+        {
+          "bronId": "yt-QXM4TGOapsg",
+          "url": "https://www.youtube.com/watch?v=QXM4TGOapsg&t=2571s",
+          "tijd": 2574,
+          "citaat": "10 models in core because that's how you score objectives"
         }
       ],
       "datum": "2025-06-30",
@@ -41680,6 +41686,1751 @@
         }
       ],
       "datum": "2025-03-20",
+      "markeringen": []
+    },
+    {
+      "id": "dark-elves-double-dragon",
+      "titel": "Consider double dragon for competitive Dark Elves",
+      "tekst": "He expects double dragon still to be the strongest Dark Elf build, including when considering a monster-heavy army under this Renegades draft.",
+      "waarom": null,
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "game-plan",
+        "hammers"
+      ],
+      "subthemas": [
+        "list-building",
+        "monsters-dragons"
+      ],
+      "tags": [
+        "dragons",
+        "mounts",
+        "renegades"
+      ],
+      "leger": "dark-elves",
+      "units": [
+        "Black Dragon"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-QXM4TGOapsg",
+          "url": "https://www.youtube.com/watch?v=QXM4TGOapsg&t=477s",
+          "tijd": 480,
+          "citaat": "it'll probably still be best to run double dragon"
+        }
+      ],
+      "datum": "2026-03-22",
+      "markeringen": []
+    },
+    {
+      "id": "cold-one-rider-ward",
+      "titel": "Consider Talisman of Protection for a Cold One rider",
+      "tekst": "If spending 30 points on a Cold One rider's defences, he would lean towards Talisman of Protection rather than the shield that reduces incoming Strength.",
+      "waarom": "He considers the Strength-reducing shield much more effective on a Toughness 6 dragon than on a Toughness 4 Cold One rider with fewer wounds.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "characters"
+      ],
+      "subthemas": [
+        "mounts-items"
+      ],
+      "tags": [
+        "ward-save",
+        "magic-items",
+        "mounts"
+      ],
+      "leger": "dark-elves",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-QXM4TGOapsg",
+          "url": "https://www.youtube.com/watch?v=QXM4TGOapsg&t=1292s",
+          "tijd": 1295,
+          "citaat": "go for uh talisman protection.",
+          "extraCitaten": [
+            {
+              "tijd": 1295,
+              "citaat": "However, on the back of a dragon, this is very good."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-03-22",
+      "markeringen": []
+    },
+    {
+      "id": "death-hag-extra-attacks",
+      "titel": "Favour the extra-attack gift for Death Hags",
+      "tekst": "He thinks the gift granting D3 extra attacks is probably the best choice for a Death Hag.",
+      "waarom": "He considers D3 extra attacks for 10 points exceptionally good value.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "characters"
+      ],
+      "subthemas": [
+        "mounts-items"
+      ],
+      "tags": [
+        "magic-items",
+        "hammer"
+      ],
+      "leger": "dark-elves",
+      "units": [
+        "Death Hag"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-QXM4TGOapsg",
+          "url": "https://www.youtube.com/watch?v=QXM4TGOapsg&t=2178s",
+          "tijd": 2181,
+          "citaat": "in terms of the attack one, that's probably always going to be the best choice.",
+          "extraCitaten": [
+            {
+              "tijd": 2207,
+              "citaat": "extra attacks plus D3 for 10 points"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-03-22",
+      "markeringen": []
+    },
+    {
+      "id": "corsairs-ambush-backline-pressure",
+      "titel": "Consider ambushing Corsairs for backline pressure",
+      "tekst": "Under this Renegades draft, consider ambushing Black Ark Corsairs to harass the backline, threaten cannons or baggage trains, or pressure units holding strategic locations.",
+      "waarom": "He thinks Ambush gives Black Ark Corsairs a purpose they previously lacked. Their arrival shooting provides pressure even though he does not expect much damage.",
+      "voorbeeld": null,
+      "wanneerNiet": "He says their short-ranged Strength 3 shooting has no armour piercing and commonly faces multiple-shot and range penalties.",
+      "fase": "army-building",
+      "themas": [
+        "deployment"
+      ],
+      "subthemas": [
+        "ambush-scouts-vanguard"
+      ],
+      "tags": [
+        "ambush",
+        "missile-troops",
+        "renegades"
+      ],
+      "leger": "dark-elves",
+      "units": [
+        "Black Ark Corsairs"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-QXM4TGOapsg",
+          "url": "https://www.youtube.com/watch?v=QXM4TGOapsg&t=2682s",
+          "tijd": 2685,
+          "citaat": "Now you can take them with ambushes. I think they have a point."
+        },
+        {
+          "bronId": "yt-wjCCOctPCTU",
+          "url": "https://www.youtube.com/watch?v=wjCCOctPCTU&t=1384s",
+          "tijd": 1387,
+          "citaat": "I think ambush is the buy-in."
+        },
+        {
+          "bronId": "yt-yjkv1Z9Yfks",
+          "url": "https://www.youtube.com/watch?v=yjkv1Z9Yfks&t=4009s",
+          "tijd": 4012,
+          "citaat": "having them as a skirmish skirmish ambush unit that pops up"
+        }
+      ],
+      "datum": "2026-03-17",
+      "markeringen": []
+    },
+    {
+      "id": "black-guard-fight-infantry",
+      "titel": "Use Black Guard against other infantry",
+      "tekst": "Look to fight other infantry with Black Guard of Naggarond under this draft.",
+      "waarom": "He expects their Strength 4 attacks to wound suitable infantry targets on threes, making the expanded Murderous rerolls of ones to wound a meaningful improvement.",
+      "voorbeeld": null,
+      "wanneerNiet": "He still considers them overpriced at 15 points per model and thinks the changes are insufficient to make the unit broadly playable.",
+      "fase": "movement",
+      "themas": [
+        "matchups",
+        "infantry"
+      ],
+      "subthemas": [
+        "picking-fights",
+        "infantry-moves"
+      ],
+      "tags": [
+        "armour-piercing",
+        "close-order",
+        "renegades"
+      ],
+      "leger": "dark-elves",
+      "units": [
+        "Black Guard of Naggarond"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-QXM4TGOapsg",
+          "url": "https://www.youtube.com/watch?v=QXM4TGOapsg&t=2926s",
+          "tijd": 2929,
+          "citaat": "You want to be fighting other infantry."
+        }
+      ],
+      "datum": "2026-03-22",
+      "markeringen": []
+    },
+    {
+      "id": "executioners-daemonology-support",
+      "titel": "Support an Executioner Death Star with Daemonology",
+      "tekst": "If experimenting with a Har Ganeth Executioners Death Star under this draft, he would try a wizard in the unit with Steed of Shadows and Daemonic Vessel. Use the movement spell to move it around and the attack buff to improve its damage.",
+      "waarom": "He particularly values Daemonic Vessel for increasing them to two attacks each; he considers its additional Strength more than they need.",
+      "voorbeeld": null,
+      "wanneerNiet": "He does not expect this to make tournament lists. It requires substantial investment without scoring objectives, lacks defensive protection beyond heavy armour, and may struggle to catch or defeat the strongest opposing threats.",
+      "fase": "army-building",
+      "themas": [
+        "magic",
+        "infantry"
+      ],
+      "subthemas": [
+        "lores-spells",
+        "death-stars"
+      ],
+      "tags": [
+        "daemonology",
+        "conveyance",
+        "enchantment",
+        "death-star"
+      ],
+      "leger": "dark-elves",
+      "units": [
+        "Har Ganeth Executioners"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-QXM4TGOapsg",
+          "url": "https://www.youtube.com/watch?v=QXM4TGOapsg&t=3058s",
+          "tijd": 3061,
+          "citaat": "Basically, the way to use it is Daemonology.",
+          "extraCitaten": [
+            {
+              "tijd": 3122,
+              "citaat": "I'd be tempted to to play around with a unit like a Death Star unit"
+            }
+          ]
+        },
+        {
+          "bronId": "yt-wjCCOctPCTU",
+          "url": "https://www.youtube.com/watch?v=wjCCOctPCTU&t=1543s",
+          "tijd": 1546,
+          "citaat": "so if you can buff them up with Daemonology,"
+        }
+      ],
+      "datum": "2026-03-22",
+      "markeringen": []
+    },
+    {
+      "id": "six-shades-backline-unit",
+      "titel": "Consider six Shades for inexpensive backline harassment",
+      "tekst": "He likes the prospect of six Dark Elf Shades for roughly 90 points as a backline unit under this draft, keeping weapon upgrades modest.",
+      "waarom": "He values their utility as inexpensive chaff that can still shoot and disrupt the opponent's plans.",
+      "voorbeeld": null,
+      "wanneerNiet": "He expects mediocre damage. Great weapons increase them to 17 points per model and sacrifice their initiative advantage.",
+      "fase": "army-building",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "missile-units"
+      ],
+      "tags": [
+        "missile-troops",
+        "skirmishers",
+        "renegades"
+      ],
+      "leger": "dark-elves",
+      "units": [
+        "Dark Elf Shades"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-QXM4TGOapsg",
+          "url": "https://www.youtube.com/watch?v=QXM4TGOapsg&t=3403s",
+          "tijd": 3406,
+          "citaat": "You take six of them. They pop up in the back lines.",
+          "extraCitaten": [
+            {
+              "tijd": 3418,
+              "citaat": "don't really want to give them any any weapons."
+            }
+          ]
+        },
+        {
+          "bronId": "yt-wjCCOctPCTU",
+          "url": "https://www.youtube.com/watch?v=wjCCOctPCTU&t=1729s",
+          "tijd": 1732,
+          "citaat": "Put them in your opponent's backfield."
+        }
+      ],
+      "datum": "2026-03-22",
+      "markeringen": []
+    },
+    {
+      "id": "shades-feigned-flight-combination",
+      "titel": "Combine Feigned Flight and Fire and Flee on Shades",
+      "tekst": "He likes buying Feigned Flight for Dark Elf Shades alongside their Fire and Flee ability in this draft.",
+      "waarom": "He values the combination for repositioning and keeping fragile elves hard to catch.",
+      "voorbeeld": null,
+      "wanneerNiet": "He says Fire and Flee is not always something he wants to use on infantry, but appreciates having the option.",
+      "fase": "army-building",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "evasive-skirmish"
+      ],
+      "tags": [
+        "flee",
+        "skirmishers",
+        "renegades"
+      ],
+      "leger": "dark-elves",
+      "units": [
+        "Dark Elf Shades"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-QXM4TGOapsg",
+          "url": "https://www.youtube.com/watch?v=QXM4TGOapsg&t=3428s",
+          "tijd": 3431,
+          "citaat": "Fane flight and fire and flee is a really nice combination."
+        },
+        {
+          "bronId": "yt-wjCCOctPCTU",
+          "url": "https://www.youtube.com/watch?v=wjCCOctPCTU&t=1741s",
+          "tijd": 1744,
+          "citaat": "evasive fire and flee faint flight."
+        },
+        {
+          "bronId": "yt-yjkv1Z9Yfks",
+          "url": "https://www.youtube.com/watch?v=yjkv1Z9Yfks&t=4339s",
+          "tijd": 4342,
+          "citaat": "one unit per thousand points can have the feigned flight special rule"
+        }
+      ],
+      "datum": "2026-03-17",
+      "markeringen": []
+    },
+    {
+      "id": "witch-elves-reroll-unwanted-charge",
+      "titel": "Reroll an unwanted Witch Elf charge to try failing it",
+      "tekst": "If Frenzy forces Witch Elves into an unwanted charge, use their new Warband reroll to try to fail that charge instead.",
+      "waarom": "He notes that they can stumble forward, receive the enemy's charge and still strike first under this draft.",
+      "voorbeeld": "He describes a dragon being placed in front of the Witch Elves as a target they do not want to charge.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "movement"
+      ],
+      "subthemas": [
+        "charge-order"
+      ],
+      "tags": [
+        "frenzy",
+        "warband",
+        "charge-range",
+        "renegades"
+      ],
+      "leger": "dark-elves",
+      "units": [
+        "Witch Elves"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-QXM4TGOapsg",
+          "url": "https://www.youtube.com/watch?v=QXM4TGOapsg&t=3662s",
+          "tijd": 3665,
+          "citaat": "you can then just use that rroll to fail the charge, stumble forwards,",
+          "extraCitaten": [
+            {
+              "tijd": 3677,
+              "citaat": "they get the charge into you, you still get hit first."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-03-22",
+      "markeringen": []
+    },
+    {
+      "id": "cold-one-knights-ap-banner",
+      "titel": "Give Cold One Knights the 25-point armour-piercing banner",
+      "tekst": "He values the 25-point banner granting an extra point of armour piercing on all attacks for Cold One Knights. If they do not get the charge, try to withstand the first round and keep fighting.",
+      "waarom": "He credits their sustained fighting ability to three Strength 4 AP1 attacks, good Leadership and the two-plus armour save available with full plate.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "hammers"
+      ],
+      "subthemas": [
+        "heavy-cavalry"
+      ],
+      "tags": [
+        "heavy-cavalry",
+        "magic-banner",
+        "armour-piercing",
+        "armour"
+      ],
+      "leger": "dark-elves",
+      "units": [
+        "Cold One Knights"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-QXM4TGOapsg",
+          "url": "https://www.youtube.com/watch?v=QXM4TGOapsg&t=4020s",
+          "tijd": 4023,
+          "citaat": "an additional IP one on all of your attacks.",
+          "extraCitaten": [
+            {
+              "tijd": 4023,
+              "citaat": "If you don't get the charge, you just tank it"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-03-22",
+      "markeringen": []
+    },
+    {
+      "id": "dark-riders-core-priority",
+      "titel": "Build most Dark Elf core around Dark Riders",
+      "tekst": "He would still build most of the core around Dark Riders in this Renegades draft, considering them probably the best use of core points.",
+      "waarom": null,
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "subthemas": [
+        "list-building"
+      ],
+      "tags": [
+        "light-cavalry",
+        "renegades"
+      ],
+      "leger": "dark-elves",
+      "units": [
+        "Dark Riders"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-QXM4TGOapsg",
+          "url": "https://www.youtube.com/watch?v=QXM4TGOapsg&t=4081s",
+          "tijd": 4084,
+          "citaat": "best thing you can do in core with your points.",
+          "extraCitaten": [
+            {
+              "tijd": 4084,
+              "citaat": "I'm pretty interested to see dark mostly dark riders"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-03-22",
+      "markeringen": []
+    },
+    {
+      "id": "crossbowmen-home-objective",
+      "titel": "Consider Repeater Crossbowmen for a home objective",
+      "tekst": "Consider a unit of Repeater Crossbowmen to hold a home objective alongside a core built mainly around Dark Riders.",
+      "waarom": "He considers them fairly durable for this role.",
+      "voorbeeld": null,
+      "wanneerNiet": "He finds them difficult to fit into core alongside Dark Riders after buying the Witch Elf block he expects to take.",
+      "fase": "scenarios",
+      "themas": [
+        "scenarios"
+      ],
+      "subthemas": [
+        "scoring-units"
+      ],
+      "tags": [
+        "objectives",
+        "scoring-units",
+        "armour"
+      ],
+      "leger": "dark-elves",
+      "units": [
+        "Repeater Crossbowmen"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-QXM4TGOapsg",
+          "url": "https://www.youtube.com/watch?v=QXM4TGOapsg&t=4081s",
+          "tijd": 4084,
+          "citaat": "a unit of crossbowmen to hold like a homefield objective"
+        },
+        {
+          "bronId": "yt-wjCCOctPCTU",
+          "url": "https://www.youtube.com/watch?v=wjCCOctPCTU&t=1258s",
+          "tijd": 1261,
+          "citaat": "a decent unit to like guard an objective",
+          "extraCitaten": [
+            {
+              "tijd": 1261,
+              "citaat": "13 or 14 of them"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-03-22",
+      "markeringen": []
+    },
+    {
+      "id": "medusa-vampire-counts-deterrent",
+      "titel": "Consider a Bloodwrack Medusa as a Vampire Counts deterrent",
+      "tekst": "He likes the Bloodwrack Medusa as a tech piece against Vampire Counts, with the draft's reduction to 70 points making it easier to include.",
+      "waarom": "He found its threat made the opponent play more cautiously.",
+      "voorbeeld": null,
+      "wanneerNiet": "He reports only mediocre success with it as an actual counter and says it was not especially good.",
+      "fase": "army-building",
+      "themas": [
+        "matchups"
+      ],
+      "subthemas": [
+        "vs-other"
+      ],
+      "tags": [
+        "monsters",
+        "renegades"
+      ],
+      "leger": "dark-elves",
+      "units": [
+        "Bloodwrack Medusa"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-QXM4TGOapsg",
+          "url": "https://www.youtube.com/watch?v=QXM4TGOapsg&t=4732s",
+          "tijd": 4735,
+          "citaat": "I liked it as a tech piece.",
+          "extraCitaten": [
+            {
+              "tijd": 4735,
+              "citaat": "It was more just the threat of it made them play more respectfully."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-03-22",
+      "markeringen": []
+    },
+    {
+      "id": "power-darkness-early-buffs",
+      "titel": "Use Power of Darkness for early buffs and extra moves",
+      "tekst": "Under this Renegades draft, use Power of Darkness early to help cast buffs and extra movement spells before advancing into opposing spell range.",
+      "waarom": "He likes its front-loaded play pattern: powering up early helps the wizard get the spells he needs.",
+      "voorbeeld": null,
+      "wanneerNiet": "He notes that it is easy to dispel and expects it to be less useful as the wizard moves into range around turns two or three.",
+      "fase": "magic-shooting",
+      "themas": [
+        "magic"
+      ],
+      "subthemas": [
+        "casting-aids"
+      ],
+      "tags": [
+        "enchantment",
+        "conveyance",
+        "renegades"
+      ],
+      "leger": "dark-elves",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-wjCCOctPCTU",
+          "url": "https://www.youtube.com/watch?v=wjCCOctPCTU&t=921s",
+          "tijd": 924,
+          "citaat": "you try and power yourself up early game",
+          "extraCitaten": [
+            {
+              "tijd": 937,
+              "citaat": "front-loaded early game get all your buffs off get all your extra moves up."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-06-10",
+      "markeringen": []
+    },
+    {
+      "id": "focus-familiar-cursing-word",
+      "titel": "Use Focus Familiar to extend Cursing Word's reach",
+      "tekst": "Under this draft, consider Focus Familiar to make setting up Cursing Word easier by casting from a point effectively twelve inches closer.",
+      "waarom": "He says the normal twelve-inch range requires moving into position and hoping the opponent remains in range next turn. Focus Familiar eases that setup.",
+      "voorbeeld": null,
+      "wanneerNiet": "He says the target must not already be in combat when the spell is cast, and the spell then needs to remain in play.",
+      "fase": "army-building",
+      "themas": [
+        "magic"
+      ],
+      "subthemas": [
+        "casting-aids"
+      ],
+      "tags": [
+        "magic-items",
+        "hex",
+        "renegades"
+      ],
+      "leger": "dark-elves",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-wjCCOctPCTU",
+          "url": "https://www.youtube.com/watch?v=wjCCOctPCTU&t=1057s",
+          "tijd": 1060,
+          "citaat": "you can increase your range effectively by 12 in and cast from that point instead."
+        }
+      ],
+      "datum": "2026-06-10",
+      "markeringen": []
+    },
+    {
+      "id": "death-hag-cauldron-mount",
+      "titel": "Consider a Cauldron of Blood for a Death Hag",
+      "tekst": "Under this draft, he rates a Death Hag on a Cauldron of Blood as a very good choice.",
+      "waarom": "He says the Cauldron makes her a seven-wound model with a five-plus ward save, giving her enough protection to feel comfortable taking an Ogre Blade or Executioner's Axe.",
+      "voorbeeld": null,
+      "wanneerNiet": "He notes that the Witch Elves remain vulnerable to Frenzy bait, and that the Cauldron cannot cross low linear obstacles because it is a chariot.",
+      "fase": "army-building",
+      "themas": [
+        "characters"
+      ],
+      "subthemas": [
+        "mounts-items"
+      ],
+      "tags": [
+        "mounts",
+        "ward-save",
+        "renegades"
+      ],
+      "leger": "dark-elves",
+      "units": [
+        "Death Hag",
+        "Cauldron Of Blood"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-wjCCOctPCTU",
+          "url": "https://www.youtube.com/watch?v=wjCCOctPCTU&t=1121s",
+          "tijd": 1124,
+          "citaat": "she is a very very good choice.",
+          "extraCitaten": [
+            {
+              "tijd": 2499,
+              "citaat": "So, it makes your hag seven wounds"
+            }
+          ]
+        },
+        {
+          "bronId": "yt-yjkv1Z9Yfks",
+          "url": "https://www.youtube.com/watch?v=yjkv1Z9Yfks&t=5162s",
+          "tijd": 5165,
+          "citaat": "the cauldron and the unit it joins has a five plus ward save base."
+        }
+      ],
+      "datum": "2026-03-17",
+      "markeringen": []
+    },
+    {
+      "id": "black-guard-cost-reservations",
+      "titel": "Consider passing on Black Guard at fifteen points",
+      "tekst": "Despite the draft's improvements, he generally would not take Black Guard of Naggarond at fifteen points per model.",
+      "waarom": "He is unwilling to spend that much per model on infantry.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "infantry"
+      ],
+      "subthemas": [
+        "unit-builds"
+      ],
+      "tags": [
+        "close-order",
+        "renegades"
+      ],
+      "leger": "dark-elves",
+      "units": [
+        "Black Guard of Naggarond"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-wjCCOctPCTU",
+          "url": "https://www.youtube.com/watch?v=wjCCOctPCTU&t=1433s",
+          "tijd": 1436,
+          "citaat": "not here for it. Generally,"
+        }
+      ],
+      "datum": "2026-06-10",
+      "markeringen": []
+    },
+    {
+      "id": "executioners-alternative-death-star",
+      "titel": "Choose Executioners for a Death Star without Witch Elves",
+      "tekst": "If building a Dark Elf Death Star without Witch Elves under this draft, he recommends Har Ganeth Executioners.",
+      "waarom": "He considers them excellent for their points, citing built-in Veteran, rerolls of ones to wound, Strength 6 and Initiative 6.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "infantry"
+      ],
+      "subthemas": [
+        "death-stars"
+      ],
+      "tags": [
+        "death-star",
+        "great-weapons",
+        "renegades"
+      ],
+      "leger": "dark-elves",
+      "units": [
+        "Har Ganeth Executioners"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-wjCCOctPCTU",
+          "url": "https://www.youtube.com/watch?v=wjCCOctPCTU&t=1530s",
+          "tijd": 1533,
+          "citaat": "and not take witch elves, you're going to take executioners."
+        }
+      ],
+      "datum": "2026-06-10",
+      "markeringen": []
+    },
+    {
+      "id": "executioner-death-star-magical-protection",
+      "titel": "Protect an Executioner Death Star against magic",
+      "tekst": "He would want at least Magic Resistance 2 and another buff before committing to an Executioner Death Star under this draft.",
+      "waarom": "His concern is making a Death Star that does not simply die.",
+      "voorbeeld": "He recently played his Beastmen against a Swordmaster Death Star, which he considers roughly comparable. He saw it lose models in droves despite magical protection against strong casting bonuses.",
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "infantry"
+      ],
+      "subthemas": [
+        "death-stars"
+      ],
+      "tags": [
+        "death-star",
+        "renegades"
+      ],
+      "leger": "dark-elves",
+      "units": [
+        "Har Ganeth Executioners"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-wjCCOctPCTU",
+          "url": "https://www.youtube.com/watch?v=wjCCOctPCTU&t=1591s",
+          "tijd": 1594,
+          "citaat": "if you have a way to give them like at least MR two",
+          "extraCitaten": [
+            {
+              "tijd": 1594,
+              "citaat": "and some other kind of buff"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-06-10",
+      "markeringen": []
+    },
+    {
+      "id": "witch-elves-armour-piercing-banner",
+      "titel": "Consider the armour-piercing banner for Witch Elves",
+      "tekst": "Consider giving Witch Elves the banner that makes their attacks AP1, particularly when you are not taking a Cold One Knight block.",
+      "waarom": null,
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "infantry"
+      ],
+      "subthemas": [
+        "unit-builds"
+      ],
+      "tags": [
+        "magic-banner",
+        "armour-piercing"
+      ],
+      "leger": "dark-elves",
+      "units": [
+        "Witch Elves"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-wjCCOctPCTU",
+          "url": "https://www.youtube.com/watch?v=wjCCOctPCTU&t=1815s",
+          "tijd": 1818,
+          "citaat": "You can give them banner of hard uh gain to be AP one.",
+          "extraCitaten": [
+            {
+              "tijd": 1818,
+              "citaat": "if you're not going to take a cold one night block."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-06-10",
+      "markeringen": []
+    },
+    {
+      "id": "harpies-screen-witch-elves",
+      "titel": "Screen Witch Elves with five Harpies",
+      "tekst": "Put five Harpies in front of Witch Elves to block the unit off and give it heavy cover against shooting.",
+      "waarom": "He says this effectively reduces shooting damage and that a screen is already desirable to prevent Frenzy baiting.",
+      "voorbeeld": null,
+      "wanneerNiet": "He notes that some shooting units ignore cover.",
+      "fase": "movement",
+      "themas": [
+        "chaff",
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "screens",
+        "avoiding-fire"
+      ],
+      "tags": [
+        "screen",
+        "cover",
+        "frenzy"
+      ],
+      "leger": "dark-elves",
+      "units": [
+        "Harpies",
+        "Witch Elves"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-wjCCOctPCTU",
+          "url": "https://www.youtube.com/watch?v=wjCCOctPCTU&t=1915s",
+          "tijd": 1918,
+          "citaat": "of five harpies in front of them and block off the unit",
+          "extraCitaten": [
+            {
+              "tijd": 1918,
+              "citaat": "they have like heavy cover."
+            }
+          ]
+        },
+        {
+          "bronId": "yt-yjkv1Z9Yfks",
+          "url": "https://www.youtube.com/watch?v=yjkv1Z9Yfks&t=5359s",
+          "tijd": 5362,
+          "citaat": "just being in front of the frenzy battable unit just completely neutering the charge."
+        }
+      ],
+      "datum": "2026-03-17",
+      "markeringen": []
+    },
+    {
+      "id": "cold-one-full-plate-veteran",
+      "titel": "Always buy full plate and Veteran for Cold One Knights",
+      "tekst": "Under this draft, he treats full plate and Veteran as compulsory upgrades for Cold One Knights, making them thirty-seven points per model.",
+      "waarom": "He particularly values Veteran's built-in reroll for Stupidity as a major improvement to the unit.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "hammers"
+      ],
+      "subthemas": [
+        "heavy-cavalry"
+      ],
+      "tags": [
+        "heavy-cavalry",
+        "armour",
+        "leadership",
+        "renegades"
+      ],
+      "leger": "dark-elves",
+      "units": [
+        "Cold One Knights"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-wjCCOctPCTU",
+          "url": "https://www.youtube.com/watch?v=wjCCOctPCTU&t=2152s",
+          "tijd": 2155,
+          "citaat": "they always take full plate and they always take veteran.",
+          "extraCitaten": [
+            {
+              "tijd": 2155,
+              "citaat": "The reroll on stupidity"
+            }
+          ]
+        },
+        {
+          "bronId": "yt-yjkv1Z9Yfks",
+          "url": "https://www.youtube.com/watch?v=yjkv1Z9Yfks&t=4967s",
+          "tijd": 4970,
+          "citaat": "take veteran"
+        }
+      ],
+      "datum": "2026-03-17",
+      "markeringen": []
+    },
+    {
+      "id": "warlocks-daemonology-spell-choice",
+      "titel": "Usually choose Daemonology for Doomfire Warlocks",
+      "tekst": "Under this draft, he would choose Daemonology for Doomfire Warlocks almost every time. Hope for Steed of Shadows if you do not already have it elsewhere, with The Summoning as a strong signature fallback.",
+      "waarom": "He rates The Summoning highly and likes using Steed of Shadows to let another unit fly.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "magic"
+      ],
+      "subthemas": [
+        "lores-spells"
+      ],
+      "tags": [
+        "daemonology",
+        "signature-spell",
+        "conveyance",
+        "renegades"
+      ],
+      "leger": "dark-elves",
+      "units": [
+        "Doomfire Warlocks"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-wjCCOctPCTU",
+          "url": "https://www.youtube.com/watch?v=wjCCOctPCTU&t=2274s",
+          "tijd": 2277,
+          "citaat": "you take Daemonology almost every single time.",
+          "extraCitaten": [
+            {
+              "tijd": 2290,
+              "citaat": "Cuz then you can cast Steed on your other unit"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-06-10",
+      "markeringen": []
+    },
+    {
+      "id": "generate-warlock-spells-last",
+      "titel": "Generate Doomfire Warlock spells after your other casters",
+      "tekst": "When you have multiple casters, generate the Doomfire Warlocks' spell last.",
+      "waarom": "He wants full knowledge of the rest of the army's spells before seeing what the Warlocks roll.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "magic"
+      ],
+      "subthemas": [
+        "lores-spells"
+      ],
+      "tags": [
+        "signature-spell",
+        "renegades"
+      ],
+      "leger": "dark-elves",
+      "units": [
+        "Doomfire Warlocks"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-wjCCOctPCTU",
+          "url": "https://www.youtube.com/watch?v=wjCCOctPCTU&t=2299s",
+          "tijd": 2302,
+          "citaat": "If if you've got multiple castings, you roll this as your the last one."
+        }
+      ],
+      "datum": "2026-06-10",
+      "markeringen": []
+    },
+    {
+      "id": "hydra-over-bloodwrack-shrine",
+      "titel": "Prefer the revised Hydra to a Bloodwrack Shrine",
+      "tekst": "Under this draft, he would pass on the 140-point Bloodwrack Shrine and favour the revised War Hydra when comparing these similarly priced choices.",
+      "waarom": "He considers the Hydra's revisions strong enough to overshadow the other options in this price range.",
+      "voorbeeld": null,
+      "wanneerNiet": "He still doubts whether the Hydra will see competitive play because opponents are already building to kill its Toughness 5, five-wound profile.",
+      "fase": "army-building",
+      "themas": [
+        "hammers"
+      ],
+      "subthemas": [
+        "monsters-dragons"
+      ],
+      "tags": [
+        "monsters",
+        "renegades"
+      ],
+      "leger": "dark-elves",
+      "units": [
+        "Bloodwrack Shrine",
+        "War Hydra"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-wjCCOctPCTU",
+          "url": "https://www.youtube.com/watch?v=wjCCOctPCTU&t=2667s",
+          "tijd": 2670,
+          "citaat": "I'm not paying 140 points for this thing.",
+          "extraCitaten": [
+            {
+              "tijd": 2707,
+              "citaat": "the war hydra is like actually just going to dunk on all of these"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-06-10",
+      "markeringen": []
+    },
+    {
+      "id": "triple-hydra-witch-screen",
+      "titel": "Try three Hydras as a screen for Witch Elves",
+      "tekst": "He tentatively suggests taking a High Beastmaster to unlock three War Hydras under this draft and walking them in front of a large Witch Elf unit as a screen.",
+      "waarom": "He suggests having the Hydras absorb shooting and cannonballs while blocking unwanted Frenzy charges. If they reach combat, that is a bonus to this screening plan.",
+      "voorbeeld": null,
+      "wanneerNiet": "He presents this as an experiment and warns that armies with two Grand Cannons may still keep Hydras out of competitive play.",
+      "fase": "army-building",
+      "themas": [
+        "chaff",
+        "hammers"
+      ],
+      "subthemas": [
+        "screens",
+        "monsters-dragons"
+      ],
+      "tags": [
+        "screen",
+        "monsters",
+        "frenzy",
+        "sacrifice",
+        "renegades"
+      ],
+      "leger": "dark-elves",
+      "units": [
+        "High Beastmaster",
+        "War Hydra",
+        "Witch Elves"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-wjCCOctPCTU",
+          "url": "https://www.youtube.com/watch?v=wjCCOctPCTU&t=2902s",
+          "tijd": 2905,
+          "citaat": "maybe you run them as like your shield",
+          "extraCitaten": [
+            {
+              "tijd": 2918,
+              "citaat": "They just kind of like walk in front of them and they block the frenzy"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-06-10",
+      "markeringen": []
+    },
+    {
+      "id": "kharibdyss-spare-points-trial",
+      "titel": "Try a Kharibdyss if you have spare points",
+      "tekst": "At the draft's reduced price of 135 points, he suggests trying a Kharibdyss if you have points left over.",
+      "waarom": "The discussion highlights its Weapon Skill 5, Strength 7 and five attacks as a respectable offensive profile.",
+      "voorbeeld": null,
+      "wanneerNiet": "The speakers still question whether you can deliver it into combat.",
+      "fase": "army-building",
+      "themas": [
+        "hammers"
+      ],
+      "subthemas": [
+        "monsters-dragons"
+      ],
+      "tags": [
+        "monsters",
+        "hammer",
+        "renegades"
+      ],
+      "leger": "dark-elves",
+      "units": [
+        "Kharibdyss"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-wjCCOctPCTU",
+          "url": "https://www.youtube.com/watch?v=wjCCOctPCTU&t=3074s",
+          "tijd": 3077,
+          "citaat": "why not just slam",
+          "extraCitaten": [
+            {
+              "tijd": 3090,
+              "citaat": "it in if you got the points left we'll see what happens."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-06-10",
+      "markeringen": []
+    },
+    {
+      "id": "tzeentch-stack-dragon-debuffs",
+      "titel": "Combine Gift of Mutation with Word of Pain",
+      "tekst": "Consider combining Gift of Mutation and Word of Pain to reduce a dragon's Strength and Toughness. He found this combination useful with his Tzeentch Daemon Prince using Dark Magic.",
+      "waarom": "He says the combined spells can reduce Strength and Toughness by four.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "magic-shooting",
+      "themas": [
+        "magic",
+        "matchups"
+      ],
+      "subthemas": [
+        "buffs-hexes",
+        "vs-monsters"
+      ],
+      "tags": [
+        "hex",
+        "dark-magic",
+        "dragons"
+      ],
+      "leger": "daemons-of-chaos",
+      "units": [
+        "Daemon Prince Daemons Of Chaos"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-yjkv1Z9Yfks",
+          "url": "https://www.youtube.com/watch?v=yjkv1Z9Yfks&t=612s",
+          "tijd": 615,
+          "citaat": "when you use that combo it with word of pain",
+          "extraCitaten": [
+            {
+              "tijd": 627,
+              "citaat": "strength and toughness by four. Which is very good against dragons."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-03-17",
+      "markeringen": []
+    },
+    {
+      "id": "pink-horrors-banner-change",
+      "titel": "Build Pink Horrors around damage before the enemy attacks",
+      "tekst": "He intends to keep using a large Pink Horrors unit with Banner of Change and Gift of Mutation. Use Toughness reduction to make the banner's low-Strength hits more effective, alongside the unit's Stand and Shoot.",
+      "waarom": "He wants to throw a large number of dice before the enemy attacks. He says the banner resolves at the start of the combat phase, before impact hits and challenges, and the unit has five static combat resolution.",
+      "voorbeeld": "He describes reducing a dragon's Toughness by three so that the banner wounds it on fives.",
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "infantry",
+        "magic"
+      ],
+      "subthemas": [
+        "unit-builds",
+        "buffs-hexes"
+      ],
+      "tags": [
+        "magic-banner",
+        "hex",
+        "stand-and-shoot",
+        "combat-resolution"
+      ],
+      "leger": "daemons-of-chaos",
+      "units": [
+        "Pink Horrors of Tzeentch"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-yjkv1Z9Yfks",
+          "url": "https://www.youtube.com/watch?v=yjkv1Z9Yfks&t=686s",
+          "tijd": 689,
+          "citaat": "what I'm doing going forward because you can give that unit gifted of mutation",
+          "extraCitaten": [
+            {
+              "tijd": 701,
+              "citaat": "the whole point of this setup is just throwing immense amount of dice"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-03-17",
+      "markeringen": []
+    },
+    {
+      "id": "daemon-prince-ether-blade",
+      "titel": "Consider Ether Blade for an armoured-target Daemon Prince",
+      "tekst": "While Daemons lack access to ordinary magic items, he considers Ether Blade worth its cost on his Daemon Prince. Use its armour-ignoring attacks to threaten elite heavy cavalry, including by inviting their charge.",
+      "waarom": "He found the previous AP1 weapon could leave the Daemon Prince doing too few wounds and losing badly to static combat resolution. He values the Prince's high Initiative and Weapon Skill when receiving cavalry charges.",
+      "voorbeeld": "At a previous event, he describes charging a unit, doing about two wounds, having one saved, then losing combat by five and losing the Prince.",
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "characters",
+        "matchups"
+      ],
+      "subthemas": [
+        "mounts-items",
+        "picking-fights"
+      ],
+      "tags": [
+        "magic-items",
+        "armour",
+        "heavy-cavalry",
+        "combat-resolution"
+      ],
+      "leger": "daemons-of-chaos",
+      "units": [
+        "Daemon Prince Daemons Of Chaos"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-yjkv1Z9Yfks",
+          "url": "https://www.youtube.com/watch?v=yjkv1Z9Yfks&t=821s",
+          "tijd": 824,
+          "citaat": "if they don't have access to current magic items, it's worth it.",
+          "extraCitaten": [
+            {
+              "tijd": 836,
+              "citaat": "you can suddenly put yourself in front of elite heavy cavalry units"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-03-17",
+      "markeringen": []
+    },
+    {
+      "id": "ogre-bulls-oaken-shield",
+      "titel": "Secure Oaken Shield for the Ogre Bulls",
+      "tekst": "For his Ogre Bulls setup, he considers Oaken Shield essential. Give the Slaughtermaster Lore Familiar to select it and a Power Scroll for the turn when getting it cast matters most.",
+      "waarom": "He uses Oaken Shield alongside the Cannibal Totem to give the unit layered protection.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "magic"
+      ],
+      "subthemas": [
+        "wizard-builds"
+      ],
+      "tags": [
+        "lore-familiar",
+        "power-scroll",
+        "enchantment",
+        "ward-save"
+      ],
+      "leger": "ogre-kingdoms",
+      "units": [
+        "Slaughtermaster",
+        "Ogre Bulls"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-yjkv1Z9Yfks",
+          "url": "https://www.youtube.com/watch?v=yjkv1Z9Yfks&t=1858s",
+          "tijd": 1861,
+          "citaat": "Oak and Shield is essential for the Ogre lineup",
+          "extraCitaten": [
+            {
+              "tijd": 1849,
+              "citaat": "Law Familiar so, he can choose his spells"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-03-17",
+      "markeringen": []
+    },
+    {
+      "id": "gnoblars-thirty-seven-column",
+      "titel": "Consider 37 Gnoblars starting in marching column",
+      "tekst": "Consider 37 Gnoblar Fighters arranged six wide, starting in marching column, with a champion. He likes this setup for marching and throwing weapons, taking midfield objectives and relying on static combat resolution.",
+      "waarom": "He says the champion can challenge a charging dragon, potentially letting the unit win or draw through static combat resolution.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "infantry",
+        "scenarios"
+      ],
+      "subthemas": [
+        "unit-builds",
+        "objectives"
+      ],
+      "tags": [
+        "marching-column",
+        "combat-resolution",
+        "champion",
+        "challenge",
+        "objectives"
+      ],
+      "leger": "ogre-kingdoms",
+      "units": [
+        "Gnoblar Fighters"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-yjkv1Z9Yfks",
+          "url": "https://www.youtube.com/watch?v=yjkv1Z9Yfks&t=1907s",
+          "tijd": 1910,
+          "citaat": "you're in marching column immediately",
+          "extraCitaten": [
+            {
+              "tijd": 1923,
+              "citaat": "force the challenge if you get charged by something like a dragon"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-03-17",
+      "markeringen": []
+    },
+    {
+      "id": "mournfang-three-great-weapons",
+      "titel": "Consider three Mournfangs with great weapons",
+      "tekst": "After trying four defensively equipped Mournfangs, he would probably return to great weapons and reduce the unit to three. Focus the unit on delivering damage through its impact hits.",
+      "waarom": "He found four models' frontage and depth unwieldy. Getting all four into contact was difficult unless attacking infantry, which he felt the rest of his Ogre army already handled well.",
+      "voorbeeld": null,
+      "wanneerNiet": "He notes that great weapons leave them with at best a four-plus armour save, and considers them vulnerable to shooting.",
+      "fase": "army-building",
+      "themas": [
+        "hammers"
+      ],
+      "subthemas": [
+        "heavy-cavalry"
+      ],
+      "tags": [
+        "heavy-cavalry",
+        "great-weapons",
+        "impact-hits",
+        "armour"
+      ],
+      "leger": "ogre-kingdoms",
+      "units": [
+        "Mournfang Cavalry"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-yjkv1Z9Yfks",
+          "url": "https://www.youtube.com/watch?v=yjkv1Z9Yfks&t=2165s",
+          "tijd": 2168,
+          "citaat": "but I probably will drop them to three",
+          "extraCitaten": [
+            {
+              "tijd": 2156,
+              "citaat": "I probably have to revert to the great weapons"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-03-17",
+      "markeringen": []
+    },
+    {
+      "id": "paired-ironblasters-control-support",
+      "titel": "Consider two Ironblasters for ranged control and countercharges",
+      "tekst": "He plans to return to two Ironblasters to dictate ranged play. He also thinks they could provide better countercharge support for his large Ogre Bulls block when it gets surrounded.",
+      "waarom": "He values their guaranteed D6 plus one impact hits with AP2, their single-model footprint compared with Mournfangs, and their cannon shooting. He says double Ironblaster ranged play has worked for him before.",
+      "voorbeeld": null,
+      "wanneerNiet": "The discussion notes that an Ironblaster has no banner and only Unit Strength five; he says the proposed support role still needs testing.",
+      "fase": "army-building",
+      "themas": [
+        "shooting-terrain",
+        "hammers"
+      ],
+      "subthemas": [
+        "war-machines",
+        "chariots"
+      ],
+      "tags": [
+        "cannons",
+        "chariots",
+        "countercharge",
+        "impact-hits",
+        "armour-piercing"
+      ],
+      "leger": "ogre-kingdoms",
+      "units": [
+        "Ironblaster"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-yjkv1Z9Yfks",
+          "url": "https://www.youtube.com/watch?v=yjkv1Z9Yfks&t=2560s",
+          "tijd": 2563,
+          "citaat": "probably going back to double iron blaster so I can dictate the ranged play",
+          "extraCitaten": [
+            {
+              "tijd": 2648,
+              "citaat": "I need good counter charge options and I think double iron blaster"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-03-17",
+      "markeringen": []
+    },
+    {
+      "id": "bulls-over-ironguts-block",
+      "titel": "Consider Bulls over Ironguts for the main character block",
+      "tekst": "He recommends Ogre Bulls for a large block containing the Tyrant and Slaughtermaster. Let the Tyrant provide the killing power while the Bulls concentrate on surviving; he would be more inclined to use Ironguts as multiple small units.",
+      "waarom": "He finds the Bulls' parry protection in Renegades better than the Ironguts' protection, with little practical difference in output against what is willing to charge his block. Bulls also let him keep the setup when switching to a non-Renegades format.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "infantry"
+      ],
+      "subthemas": [
+        "anchors"
+      ],
+      "tags": [
+        "anvil",
+        "parry",
+        "armour",
+        "monstrous-infantry",
+        "renegades"
+      ],
+      "leger": "ogre-kingdoms",
+      "units": [
+        "Ogre Bulls",
+        "Ironguts"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-yjkv1Z9Yfks",
+          "url": "https://www.youtube.com/watch?v=yjkv1Z9Yfks&t=2855s",
+          "tijd": 2858,
+          "citaat": "I'd probably MSU iron guts more than I would bulls",
+          "extraCitaten": [
+            {
+              "tijd": 2821,
+              "citaat": "the unit doesn't really have to do anything. Like they just need to survive."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-03-17",
+      "markeringen": []
+    },
+    {
+      "id": "sorceress-tome-extra-spell",
+      "titel": "Consider Tome of Furion alongside Power of Darkness",
+      "tekst": "Under this draft, he expects a level-four Dark Elf wizard to favour Tome of Furion over Lore Familiar. Take the extra spell and exchange one for Power of Darkness to support subsequent casting.",
+      "waarom": "He links knowing five spells with retaining access to the new casting-bonus signature spell.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "magic"
+      ],
+      "subthemas": [
+        "casting-aids"
+      ],
+      "tags": [
+        "magic-items",
+        "wizard-level",
+        "signature-spell",
+        "renegades"
+      ],
+      "leger": "dark-elves",
+      "units": [
+        "Supreme Sorceress"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-yjkv1Z9Yfks",
+          "url": "https://www.youtube.com/watch?v=yjkv1Z9Yfks&t=3700s",
+          "tijd": 3703,
+          "citaat": "much more likely to take a Tome of Furyan than a Lore Familiar",
+          "extraCitaten": [
+            {
+              "tijd": 3716,
+              "citaat": "you'll grab five spells, you'll grab power of darkness"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-03-17",
+      "markeringen": []
+    },
+    {
+      "id": "shades-great-weapons-retreat",
+      "titel": "Consider great weapons on retreating Shades",
+      "tekst": "Under this draft, consider great weapons on Shades using Fire and Flee with Feigned Flight. Against an Initiative-three army, he thinks they can still fight on roughly equal terms if the enemy catches them after they shoot and retreat.",
+      "waarom": "He points to their Weapon Skill five and first-round Initiative when describing their ability to hit back.",
+      "voorbeeld": null,
+      "wanneerNiet": "His comparison is specifically against an Initiative-three army.",
+      "fase": "army-building",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "missile-units"
+      ],
+      "tags": [
+        "great-weapons",
+        "flee",
+        "rally",
+        "missile-troops",
+        "renegades"
+      ],
+      "leger": "dark-elves",
+      "units": [
+        "Dark Elf Shades"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-yjkv1Z9Yfks",
+          "url": "https://www.youtube.com/watch?v=yjkv1Z9Yfks&t=4352s",
+          "tijd": 4355,
+          "citaat": "if you take them with great weapons, they are weapon skill five",
+          "extraCitaten": [
+            {
+              "tijd": 4380,
+              "citaat": "If they do manage to catch you, then you're fighting potentially on equal terms"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-03-17",
+      "markeringen": []
+    },
+    {
+      "id": "sisters-slaughter-support-flanks",
+      "titel": "Use Sisters of Slaughter for supporting flank attacks",
+      "tekst": "Under this draft, he expects Sisters of Slaughter to work as flankers supporting another unit fighting in front. Bring them into the side to reduce the enemy's rank bonus.",
+      "waarom": "He values Dance of Death reducing the rank bonus of an enemy unit they contact by one.",
+      "voorbeeld": null,
+      "wanneerNiet": "He calls them a glass cannon and remains uncertain about their overall place in the army.",
+      "fase": "movement",
+      "themas": [
+        "movement"
+      ],
+      "subthemas": [
+        "support-countercharge"
+      ],
+      "tags": [
+        "flank-charge",
+        "combined-charge",
+        "combat-resolution",
+        "skirmishers",
+        "renegades"
+      ],
+      "leger": "dark-elves",
+      "units": [
+        "Sisters of Slaughter"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-yjkv1Z9Yfks",
+          "url": "https://www.youtube.com/watch?v=yjkv1Z9Yfks&t=4782s",
+          "tijd": 4785,
+          "citaat": "sisters of slaughter in the side to do the reduction",
+          "extraCitaten": [
+            {
+              "tijd": 4773,
+              "citaat": "I'd expect to see these guys as a flanking unit"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-03-17",
+      "markeringen": []
+    },
+    {
+      "id": "cold-one-monster-tapestry",
+      "titel": "Consider Monster Hunter's Tapestry for Cold One Knights",
+      "tekst": "Consider Monster Hunter's Tapestry on Cold One Knights to protect them from stomps. With the draft's Counter Charge change, he thinks this can help them take on a Gigantic Spawn of Chaos.",
+      "waarom": "He identifies monsters stomping the knights to death as one of their major weaknesses.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "hammers",
+        "matchups"
+      ],
+      "subthemas": [
+        "heavy-cavalry",
+        "vs-monsters"
+      ],
+      "tags": [
+        "magic-banner",
+        "heavy-cavalry",
+        "monsters",
+        "countercharge",
+        "renegades"
+      ],
+      "leger": "dark-elves",
+      "units": [
+        "Cold One Knights",
+        "Gigantic Spawn of Chaos"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-yjkv1Z9Yfks",
+          "url": "https://www.youtube.com/watch?v=yjkv1Z9Yfks&t=4955s",
+          "tijd": 4958,
+          "citaat": "So you take a monster hunter's banner",
+          "extraCitaten": [
+            {
+              "tijd": 4958,
+              "citaat": "a monster hunter's tapestry thank you."
+            },
+            {
+              "tijd": 4970,
+              "citaat": "can very very easily now take apart that spawn of chaos"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-03-17",
+      "markeringen": []
+    },
+    {
+      "id": "black-guard-sorceress-support",
+      "titel": "Consider a Sorceress supporting Black Guard",
+      "tekst": "Under this draft, consider putting a Sorceress in Black Guard to enhance the unit, with another Sorceress operating as a flying blaster. He likes being able to choose this arrangement without buying a Dreadlord just to unlock Black Guard.",
+      "waarom": "He says removing the character requirement avoids spending roughly 170 to 180 points on a Dreadlord merely to field the unit.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "magic",
+        "infantry"
+      ],
+      "subthemas": [
+        "wizard-placement",
+        "unit-builds"
+      ],
+      "tags": [
+        "bunker",
+        "enchantment",
+        "fly",
+        "renegades"
+      ],
+      "leger": "dark-elves",
+      "units": [
+        "Sorceress",
+        "Black Guard of Naggarond"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-yjkv1Z9Yfks",
+          "url": "https://www.youtube.com/watch?v=yjkv1Z9Yfks&t=5483s",
+          "tijd": 5486,
+          "citaat": "have one of them sit in the black guard unit to enhance it",
+          "extraCitaten": [
+            {
+              "tijd": 5498,
+              "citaat": "be flying around being a blaster mage."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-03-17",
+      "markeringen": []
+    },
+    {
+      "id": "war-hydra-infantry-flanks",
+      "titel": "Use the revised Hydra to flank regular infantry",
+      "tekst": "Consider the revised War Hydra as a flanker against regular infantry, negating rank bonuses rather than relying on a frontal attack. He thinks its reduced cost makes setting up such flank attacks with multiple Hydras more plausible.",
+      "waarom": "He points out that a frontal Hydra needs to overcome substantial static combat resolution, whereas a flank attack can remove the rank bonus.",
+      "voorbeeld": null,
+      "wanneerNiet": "He notes that the Hydra is only Unit Strength five, and that most of its maw attacks have no armour piercing apart from Armour Bane.",
+      "fase": "movement",
+      "themas": [
+        "hammers",
+        "matchups"
+      ],
+      "subthemas": [
+        "using-hammers",
+        "picking-fights"
+      ],
+      "tags": [
+        "monsters",
+        "flank-charge",
+        "combat-resolution",
+        "unit-strength",
+        "renegades"
+      ],
+      "leger": "dark-elves",
+      "units": [
+        "War Hydra"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-yjkv1Z9Yfks",
+          "url": "https://www.youtube.com/watch?v=yjkv1Z9Yfks&t=6013s",
+          "tijd": 6016,
+          "citaat": "regular infantry flank rank bonus negating",
+          "extraCitaten": [
+            {
+              "tijd": 6263,
+              "citaat": "if they're regular infantry, then just having one of these in the flank"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-03-17",
+      "markeringen": []
+    },
+    {
+      "id": "medusa-utility-flanker",
+      "titel": "Consider a Medusa as a utility flanker",
+      "tekst": "At the draft's reduced cost, he tentatively sees a role for one or two Bloodwrack Medusas as utility flankers. He finds their ranged attack and Initiative-test ability interesting for that role.",
+      "waarom": "He thinks replacing Frenzy with Impetuous gives the Medusa a chance to avoid an unwanted charge.",
+      "voorbeeld": "He describes a previous game in which a frenzied Medusa charged a Soul Grinder, inflicted one wound and died.",
+      "wanneerNiet": "He notes that it still occupies a rare choice.",
+      "fase": "army-building",
+      "themas": [
+        "hammers"
+      ],
+      "subthemas": [
+        "using-hammers"
+      ],
+      "tags": [
+        "monsters",
+        "flanks",
+        "frenzy",
+        "renegades"
+      ],
+      "leger": "dark-elves",
+      "units": [
+        "Bloodwrack Medusa"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-yjkv1Z9Yfks",
+          "url": "https://www.youtube.com/watch?v=yjkv1Z9Yfks&t=6147s",
+          "tijd": 6150,
+          "citaat": "make for like an interesting flanker",
+          "extraCitaten": [
+            {
+              "tijd": 6162,
+              "citaat": "maybe maybe having the capacity to be a bit of utility."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-03-17",
       "markeringen": []
     }
   ]

@@ -129,5 +129,45 @@ if (r3Lijst.length) {
   data.bronnen.push(...r3Nieuw);
 }
 
+// ── Dark Elves-ronde (tactics/ronde-de/) ───────────────────────────────────
+// lijst.json = de Dark Elves-video's (legergidsen, reviews en matchups, met de hand gekozen),
+// kanalen.json = kanalen die nog niet op de pagina stonden. Ontbrekende kanalen komen erbij met
+// ronde 2 (de Dark Elves-ronde); bestaande kanalen houden hun ronde. Een bron die al bestaat houdt
+// titel, datum, status en lessen; soort en onderwerp komen uit de lijst, behalve bij
+// eerste-ronde-kanalen (daar beslist selectie.json, met handmatig.json).
+const RDE = path.join(TDIR, 'ronde-de');
+const deLijst = leesJson(path.join(RDE, 'lijst.json'), []);
+const deKanalen = leesJson(path.join(RDE, 'kanalen.json'), []);
+const deTelling = {};
+if (deLijst.length) {
+  const metVideo = new Set(deLijst.map((v) => v.kanaalId));
+  for (const c of deKanalen) {
+    if (!metVideo.has(c.id) || data.kanalen.some((k) => k.id === c.id)) continue;
+    const na = data.kanalen.map((k) => k.type).lastIndexOf('youtube');
+    data.kanalen.splice(na + 1, 0, {
+      id: c.id, naam: c.naam, url: c.url, type: 'youtube', waardering: c.waardering,
+      omschrijving: c.omschrijving, laatsteUpload: c.laatsteUpload ?? null, ronde: 2,
+    });
+  }
+  for (const k of data.kanalen) if (metVideo.has(k.id) && k.ronde == null) k.ronde = 2;
+  const perId = new Map(data.bronnen.map((b) => [b.id, b]));
+  for (const v of deLijst) {
+    const id = `yt-${v.videoId}`;
+    const oud = perId.get(id);
+    deTelling[v.kanaalId] = (deTelling[v.kanaalId] ?? 0) + 1;
+    if (oud) {
+      if (!ronde.has(oud.kanaalId)) { oud.soort = v.soort ?? oud.soort; oud.onderwerp = v.leger ?? oud.onderwerp; }
+      if (oud.duurMin == null && v.duurMin) oud.duurMin = v.duurMin;
+      if (oud.datum == null && v.datum) oud.datum = v.datum;
+      continue;
+    }
+    data.bronnen.push({
+      id, kanaalId: v.kanaalId, titel: netteTitel(v.titel), url: v.url ?? `https://www.youtube.com/watch?v=${v.videoId}`,
+      datum: v.datum ?? null, duurMin: v.duurMin ?? null, soort: v.soort ?? 'army-review', onderwerp: v.leger ?? 'dark-elves',
+      status: 'candidate', lessen: 0,
+    });
+  }
+}
+
 schrijfJsonRegels(bronnenPad, data);
-console.log('Op de pagina per kanaal:', telling, '\nRonde 3 per kanaal:', r3Telling, `\nTotaal bronnen: ${data.bronnen.length}`);
+console.log('Op de pagina per kanaal:', telling, '\nRonde 3 per kanaal:', r3Telling, '\nDark Elves-ronde per kanaal:', deTelling, `\nTotaal bronnen: ${data.bronnen.length}`);

@@ -79,7 +79,6 @@
     "razer gore": "Razorgor",
     "razer go": "Razorgor",
     "razer gor": "Razorgor",
-    "razor goes": "Razorgors",
     "razor gauze": "Razorgors",
     "razor go": "Razorgor",
     "razor gooods": "Razorgors",
@@ -104,6 +103,12 @@
     "col one knights": "Cold One Knights",
     "coal ones": "Cold Ones",
     "coal one": "Cold One",
-    "col one": "Cold One"
+    "col one": "Cold One",
+    "repeated crossbowmen": "Repeater Crossbowmen",
+    "repeated crossbows": "Repeater Crossbows",
+    "repeat crossbows": "Repeater Crossbows",
+    "repeater crossman": "Repeater Crossbowmen",
+    "repeat hand bows": "Repeater Handbows",
+    "nagarath": "Naggaroth"
   }
 }

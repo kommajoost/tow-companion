@@ -5,11 +5,11 @@
       "totaal": 350,
       "tactics": 96,
       "other": 79,
-      "army-review": 69,
+      "army-review": 70,
       "list-building": 12,
       "rules-explained": 12,
       "battle-report": 43,
-      "meta": 38,
+      "meta": 37,
       "not-relevant": 1
     },
     "square-based": {
@@ -3135,10 +3135,10 @@
       "kanaalId": "2pluspodcast",
       "titel": "Guest Interview: Competitive Dark Elf Player - 1,500pt Tournament List Breakdown",
       "relevant": true,
-      "soort": "meta",
+      "soort": "army-review",
       "onderwerp": "dark-elves",
-      "reden": "tournament results or list reviews",
-      "door": "regel"
+      "reden": "competitive Dark Elf player explains how his list plays (Dark Elves round)",
+      "door": "hand"
     },
     "37kbtPvca8Q": {
       "kanaalId": "2pluspodcast",
