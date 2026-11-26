@@ -88,6 +88,15 @@ export function TacticsPage({ onClose }: { onClose: () => void }) {
   };
 
   const openTag = (id: string) => duw({ soort: 'tag', id });
+  const openBron = (id: string) => duw({ soort: 'bron', id });
+
+  // Het kanaal van een bron openen onder Sources (vanuit een geopende bron).
+  const openKanaal = (id: string) => {
+    setLagen((l) => (l[0]?.soort === 'thema' || l[0]?.soort === 'principe' ? [l[0]] : []));
+    setLesVanuitBronnen(false);
+    setSelKanaal(id);
+    setTab('sources');
+  };
 
   // Een kernpunt komt altijd bovenop het thema waarin het staat.
   const openKernpunt = (sub: string, id: string) => duw({ soort: 'kernpunt', id, sub });
@@ -115,6 +124,7 @@ export function TacticsPage({ onClose }: { onClose: () => void }) {
     if (laag.soort === 'tag') return data?.tags.find((t) => t.id === laag.id)?.label ?? 'Tag';
     if (laag.soort === 'principe') return 'Principle';
     if (laag.soort === 'kernpunt') return 'Key point';
+    if (laag.soort === 'bron') return 'Source';
     return 'Lesson';
   };
   const terug = () => {
@@ -182,6 +192,8 @@ export function TacticsPage({ onClose }: { onClose: () => void }) {
         onOpenThema={openThema}
         onOpenLes={openLes}
         onOpenTag={openTag}
+        onOpenBron={openBron}
+        onOpenKanaal={openKanaal}
         onTerug={omhoog}
       />
     );

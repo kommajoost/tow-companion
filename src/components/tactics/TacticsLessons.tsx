@@ -5,7 +5,7 @@ import {
   type LesMarkering, type Principe, type PrincipesBestand, type Subthema, type Tag, type Thema, type ThemasBestand,
 } from '../../lib/tactics';
 import {
-  BackButton, Badge, EmptyLine, Meta, bodyText, clamp2, inputStyle,
+  BackButton, Badge, EmptyLine, ExternalButton, Meta, SOORT_LABEL, bodyText, clamp2, inputStyle,
   legerLabel, meervoud, rowButton, rowCard, sectionHead, titleText,
 } from './tacticsUi';
 
@@ -32,6 +32,7 @@ export type Laag =
   | { soort: 'thema'; id: string; sub?: string | null }
   | { soort: 'kernpunt'; id: string; sub: string }
   | { soort: 'tag'; id: string }
+  | { soort: 'bron'; id: string }
   | { soort: 'les'; id: string };
 
 interface Props {
@@ -52,6 +53,10 @@ interface Props {
   /** vanuitLijst: geopend uit de zoektreffers (vervangt de stapel), anders bovenop de huidige laag. */
   onOpenLes: (id: string, vanuitLijst: boolean) => void;
   onOpenTag: (id: string) => void;
+  /** Een bron (video of artikel) met de lessen eruit, bovenop de huidige laag. */
+  onOpenBron: (id: string) => void;
+  /** Het kanaal van een bron openen onder Sources. */
+  onOpenKanaal: (id: string) => void;
   /** Een laag terug (de terugknop boven het rechterpaneel). */
   onTerug: () => void;
 }
@@ -75,7 +80,7 @@ const tagPast = (t: Tag, woord: string) => tagTermen(t).some((x) => x === woord 
 // sectie de kernpunten (genummerd) en daaronder "All N lessons" om de lessen uit te klappen; een
 // kernpunt open toont zijn zin en de lessen eronder; een tag open toont alle lessen met die tag; tijdens
 // het zoeken staat er een platte lijst met treffers. Breed staat de lijst links en de bovenste laag rechts.
-export function TacticsLessons({ lessen, vocab, tags, bronnen, principes, kernpunten, wide, lagen, onOpenPrincipe, onOpenKernpunt, onOpenThema, onOpenLes, onOpenTag, onTerug }: Props) {
+export function TacticsLessons({ lessen, vocab, tags, bronnen, principes, kernpunten, wide, lagen, onOpenPrincipe, onOpenKernpunt, onOpenThema, onOpenLes, onOpenTag, onOpenBron, onOpenKanaal, onTerug }: Props) {
   const [query, setQuery] = useState('');
   const [leger, setLeger] = useState<string>(ALLE);
   // Uit- of ingeklapte secties per thema ("thema:subthema" -> open), alleen waar de gebruiker tikte.
@@ -536,14 +541,51 @@ export function TacticsLessons({ lessen, vocab, tags, bronnen, principes, kernpu
           onOpenThema(t, sub);
         }}
         onOpenTag={onOpenTag}
+        onOpenBron={onOpenBron}
       />
+    );
+  };
+
+  // ── Bron open: de video (of het artikel) met alle lessen die eruit kwamen ──
+  const bronView = (id: string) => {
+    const bron = bronIndex.get(id);
+    if (!bron) return <EmptyLine>Source not found.</EmptyLine>;
+    const kanaal = kanaalIndex.get(bron.kanaalId);
+    const video = kanaal ? kanaal.type === 'youtube' : true;
+    const uit = lessen.filter((l) => l.bronnen.some((b) => b.bronId === id)).sort(opFase);
+    return (
+      <div style={{ maxWidth: 680, minWidth: 0 }}>
+        {kop(bron.titel, video ? 'Video' : 'Article')}
+        <Meta style={{ marginBottom: 10 }} parts={[
+          bron.datum,
+          bron.duurMin ? `${bron.duurMin} min` : null,
+          bron.soort ? SOORT_LABEL[bron.soort] : null,
+          bron.onderwerp && bron.onderwerp !== 'general' ? legerLabel(bron.onderwerp) : null,
+        ]} />
+        <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 8, marginBottom: 4 }}>
+          {bron.url && <ExternalButton href={bron.url}>{video ? 'Watch video' : 'Open article'}</ExternalButton>}
+          {kanaal && (
+            <button type="button" onClick={() => onOpenKanaal(kanaal.id)} style={chipKnop}>
+              {kanaal.naam} ›
+            </button>
+          )}
+        </div>
+        <h3 style={sectionHead}>
+          <span>Lessons from this {video ? 'video' : 'article'}</span>
+          <span style={{ color: TOW.muted }}>{uit.length}</span>
+        </h3>
+        {uit.length === 0
+          ? <EmptyLine>No lessons from this source yet.</EmptyLine>
+          : <ul style={lijstStijl}>{uit.map((l) => lesRij(l, [faseNaam(l.fase), specifiekLeger(l)], false))}</ul>}
+      </div>
     );
   };
 
   const laagView = (laag: Laag) => (laag.soort === 'thema' ? <ThemaScroll laag={laag}>{themaView(laag)}</ThemaScroll>
     : laag.soort === 'principe' ? principeView(laag.id)
       : laag.soort === 'kernpunt' ? kernpuntView(laag)
-        : laag.soort === 'tag' ? tagView(laag.id) : lesView(laag.id));
+        : laag.soort === 'tag' ? tagView(laag.id)
+          : laag.soort === 'bron' ? bronView(laag.id) : lesView(laag.id));
 
   /** Naam van de laag onder de bovenste (voor de terugknop). */
   const laagNaam = (laag: Laag | undefined): string => {
@@ -552,6 +594,7 @@ export function TacticsLessons({ lessen, vocab, tags, bronnen, principes, kernpu
     if (laag.soort === 'tag') return tagIndex.get(laag.id)?.label ?? 'Tag';
     if (laag.soort === 'principe') return 'Principle';
     if (laag.soort === 'kernpunt') return 'Key point';
+    if (laag.soort === 'bron') return 'Source';
     return 'Lesson';
   };
 
@@ -636,7 +679,7 @@ const chipKnop: React.CSSProperties = {
   fontFamily: towFont.display, fontWeight: 600, fontSize: 13, overflowWrap: 'anywhere', textAlign: 'left',
 };
 
-function LesDetail({ les, bronIndex, kanaalIndex, faseNaam, themas, tags, onOpenThema, onOpenTag }: {
+function LesDetail({ les, bronIndex, kanaalIndex, faseNaam, themas, tags, onOpenThema, onOpenTag, onOpenBron }: {
   les: Les;
   bronIndex: Map<string, Bron>;
   kanaalIndex: Map<string, Kanaal>;
@@ -645,6 +688,7 @@ function LesDetail({ les, bronIndex, kanaalIndex, faseNaam, themas, tags, onOpen
   tags: Tag[];
   onOpenThema: (id: string, sub?: string | null) => void;
   onOpenTag: (id: string) => void;
+  onOpenBron: (id: string) => void;
 }) {
   return (
     <article style={{ maxWidth: 680, minWidth: 0 }}>
@@ -732,8 +776,25 @@ function LesDetail({ les, bronIndex, kanaalIndex, faseNaam, themas, tags, onOpen
             ];
             return (
               <li key={`${lb.bronId}-${i}`} style={{ ...rowCard, flexDirection: 'column', gap: 4, padding: '10px 12px' }}>
-                <Meta parts={[kanaal?.naam ?? 'Unknown channel', bron?.datum]} />
-                <span style={{ ...titleText, fontSize: 14.5 }}>{bron?.titel ?? lb.bronId}</span>
+                {bron ? (
+                  <button
+                    type="button"
+                    onClick={() => onOpenBron(bron.id)}
+                    aria-label={`Open source in the library: ${bron.titel}`}
+                    style={{
+                      display: 'flex', alignItems: 'center', gap: 8, width: '100%', minHeight: 44, padding: 0,
+                      border: 'none', background: 'none', cursor: 'pointer', textAlign: 'left',
+                    }}
+                  >
+                    <span style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 3 }}>
+                      <Meta parts={[kanaal?.naam ?? 'Unknown channel', bron.datum]} />
+                      <span style={{ ...titleText, fontSize: 14.5 }}>{bron.titel}</span>
+                    </span>
+                    <span aria-hidden style={{ color: TOW.goldDeep, flexShrink: 0, fontSize: 18 }}>›</span>
+                  </button>
+                ) : (
+                  <span style={{ ...titleText, fontSize: 14.5 }}>{lb.bronId}</span>
+                )}
                 {citaten.map((c, j) => {
                   const tijd = tijdLabel(c.tijd);
                   return (
