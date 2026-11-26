@@ -1,0 +1,806 @@
+{
+  "videoId": "CK40ZsYZCyQ",
+  "bronId": "yt-CK40ZsYZCyQ",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-26T02:38:09.478Z",
+  "nieuw": [
+    {
+      "id": "rangers-screen-helblaster-fire",
+      "titel": "Screen valuable blocks with five Rangers",
+      "tekst": "Against advancing Helblaster Volley Guns, consider starting a line of five Rangers in front of each important unit to provide cover.",
+      "waarom": "He says the opponent must either destroy a cheap Ranger unit or shoot the unit behind through cover. In his view, stacking hit penalties makes the Helblasters less effective.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "chaff",
+        "deployment"
+      ],
+      "subthemas": [
+        "screens",
+        "deploying-vs-shooting"
+      ],
+      "tags": [
+        "screen",
+        "cover",
+        "hit-penalties",
+        "war-machines"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [
+        "Rangers"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-CK40ZsYZCyQ",
+          "url": "https://www.youtube.com/watch?v=CK40ZsYZCyQ&t=346s",
+          "tijd": 349,
+          "citaat": "start the game with maybe a line of five Rangers in front of each unit"
+        }
+      ],
+      "datum": "2024-12-22",
+      "markeringen": []
+    },
+    {
+      "id": "anvil-buff-before-advance",
+      "titel": "Consider delaying the rush until the Anvil buff is active",
+      "tekst": "If going second against the Helblasters, consider holding back on turn one and rushing on turn two with the Anvil's save buff active.",
+      "waarom": "He says the Helblasters cannot move and shoot again, while the buff can help the Dwarf Death Star survive its advance.",
+      "voorbeeld": "The Empire player recalls firing two Helblasters into the buffed Longbeards and killing only about one model.",
+      "wanneerNiet": "He still describes absorbing the shooting with a Death Star as risky.",
+      "fase": "movement",
+      "themas": [
+        "game-plan",
+        "magic"
+      ],
+      "subthemas": [
+        "aggression-control",
+        "buffs-hexes"
+      ],
+      "tags": [
+        "death-star",
+        "enchantment",
+        "armour",
+        "war-machines"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [
+        "Anvil of Doom"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-CK40ZsYZCyQ",
+          "url": "https://www.youtube.com/watch?v=CK40ZsYZCyQ&t=485s",
+          "tijd": 488,
+          "citaat": "sticking back making sure you've got your Buffs",
+          "extraCitaten": [
+            {
+              "tijd": 473,
+              "citaat": "turn two rather than turn one"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-12-22",
+      "markeringen": []
+    },
+    {
+      "id": "wide-deployment-against-cannons",
+      "titel": "Deploy wide rather than in marching column against cannons",
+      "tekst": "Against cannons, start your Drilled units as wide as practical rather than in marching column. Plan how they will narrow again within the movement restriction.",
+      "waarom": "He says marching column offers cannons more kills as their shots pass through the unit.",
+      "voorbeeld": "He likes starting nine wide; he also describes starting a unit of 30 ten wide and narrowing to five.",
+      "wanneerNiet": "He warns that the formation change must stay within double the unit's movement.",
+      "fase": "deployment",
+      "themas": [
+        "deployment",
+        "movement"
+      ],
+      "subthemas": [
+        "unit-placement",
+        "reforms-formations"
+      ],
+      "tags": [
+        "cannons",
+        "drilled",
+        "marching-column",
+        "reform"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-CK40ZsYZCyQ",
+          "url": "https://www.youtube.com/watch?v=CK40ZsYZCyQ&t=625s",
+          "tijd": 628,
+          "citaat": "make sure that you go in as wide as you possibly can",
+          "extraCitaten": [
+            {
+              "tijd": 582,
+              "citaat": "if you're playing against cannons being a marching column is not the way forward"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-12-22",
+      "markeringen": []
+    },
+    {
+      "id": "hesitation-against-empire-charges",
+      "titel": "Take Rune of Hesitation against Empire cavalry and War Wagons",
+      "tekst": "Include Rune of Hesitation on a banner to blunt charges from Empire cavalry and War Wagons.",
+      "waarom": "He says it stops the War Wagons' impact hits and turns off Furious Charge for the White Wolf knights. He also notes that War Wagons lack First Charge, leaving the Dwarfs' rank bonus intact.",
+      "voorbeeld": "He suggests a line of Irondrakes with the rune and a fighting hero: Stand and Shoot can damage an incoming War Wagon, and the hero may kill another.",
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "matchups",
+        "infantry"
+      ],
+      "subthemas": [
+        "vs-other",
+        "holding-combat"
+      ],
+      "tags": [
+        "magic-banner",
+        "impact-hits",
+        "heavy-cavalry",
+        "chariots"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [
+        "Empire War Wagon",
+        "Inner Circle Knights"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-CK40ZsYZCyQ",
+          "url": "https://www.youtube.com/watch?v=CK40ZsYZCyQ&t=2987s",
+          "tijd": 2990,
+          "citaat": "stop Cavalry Charges and the war wagons",
+          "extraCitaten": [
+            {
+              "tijd": 2982,
+              "citaat": "make sure you get those Runes of hesitation"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-12-22",
+      "markeringen": []
+    },
+    {
+      "id": "war-wagons-advance-together",
+      "titel": "Advance three or four War Wagons together",
+      "tekst": "The Empire player would use War Wagons aggressively as heavy chariots, keeping three or four together and advancing them almost as one unit.",
+      "waarom": "In his view, their combat stats and stomps are very strong for their cost, while their guns are secondary.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "hammers",
+        "game-plan"
+      ],
+      "subthemas": [
+        "chariots",
+        "concentration"
+      ],
+      "tags": [
+        "chariots",
+        "concentration",
+        "hammer"
+      ],
+      "leger": "empire-of-man",
+      "units": [
+        "Empire War Wagon"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-CK40ZsYZCyQ",
+          "url": "https://www.youtube.com/watch?v=CK40ZsYZCyQ&t=773s",
+          "tijd": 776,
+          "citaat": "three or four of them together and almost running them forward as a unit",
+          "extraCitaten": [
+            {
+              "tijd": 745,
+              "citaat": "I'm using them as heavy chariots"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-12-22",
+      "markeringen": []
+    },
+    {
+      "id": "anvil-preservation-over-toughness",
+      "titel": "Replace Toughness 10 on the Anvil with Preservation",
+      "tekst": "Against the new Empire cannon lists, he would drop the Anvil's Toughness 10 setup for Rune of Preservation. He suggests possibly retaining Toughness 9 alongside Preservation.",
+      "waarom": "He says the Strength 10 Empire cannons wound the Toughness 10 Anvil on fours and inflict D3 plus one damage, making that setup vulnerable.",
+      "voorbeeld": null,
+      "wanneerNiet": "He says the Toughness 10 setup was very good against dragons.",
+      "fase": "army-building",
+      "themas": [
+        "characters",
+        "matchups"
+      ],
+      "subthemas": [
+        "mounts-items",
+        "vs-other"
+      ],
+      "tags": [
+        "magic-items",
+        "cannons",
+        "multiple-wounds"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [
+        "Anvil of Doom"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-CK40ZsYZCyQ",
+          "url": "https://www.youtube.com/watch?v=CK40ZsYZCyQ&t=3003s",
+          "tijd": 3006,
+          "citaat": "you want to get preservation on there",
+          "extraCitaten": [
+            {
+              "tijd": 3006,
+              "citaat": "maybe buff it up to toughness nine with preservation"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-12-22",
+      "markeringen": []
+    },
+    {
+      "id": "organ-guns-counter-outriders",
+      "titel": "Consider two Organ Guns to shoot Nuln Outriders",
+      "tekst": "He thinks Organ Guns deserve a return against Nuln Outriders and suggests taking two to damage their units.",
+      "waarom": "He estimates that two Organ Guns could potentially kill half a unit, and corrects his estimate to hitting on fives and wounding on twos.",
+      "voorbeeld": null,
+      "wanneerNiet": "The result depends on rolling enough shots.",
+      "fase": "army-building",
+      "themas": [
+        "shooting-terrain",
+        "matchups"
+      ],
+      "subthemas": [
+        "war-machines",
+        "vs-other"
+      ],
+      "tags": [
+        "war-machines",
+        "light-cavalry",
+        "missile-troops"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [
+        "Organ Gun",
+        "Outriders"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-CK40ZsYZCyQ",
+          "url": "https://www.youtube.com/watch?v=CK40ZsYZCyQ&t=1166s",
+          "tijd": 1169,
+          "citaat": "if you could put two organ guns in a list",
+          "extraCitaten": [
+            {
+              "tijd": 1161,
+              "citaat": "the organ guns firing into those out Riders you're going to kill a few"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-12-22",
+      "markeringen": []
+    },
+    {
+      "id": "rangers-woods-against-outriders",
+      "titel": "Scout Rangers forward into woods to shoot Outriders",
+      "tekst": "Against Nuln Outriders, consider scouting Rangers far forward, using a wood they can shoot out of when one is available.",
+      "waarom": "He says Outriders shooting back at Rangers in that position would be hitting on sixes or even sevens.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "deployment",
+        "shooting-terrain",
+        "matchups"
+      ],
+      "subthemas": [
+        "ambush-scouts-vanguard",
+        "terrain-los",
+        "vs-other"
+      ],
+      "tags": [
+        "scouts",
+        "woods",
+        "hit-penalties",
+        "missile-troops"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [
+        "Rangers",
+        "Outriders"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-CK40ZsYZCyQ",
+          "url": "https://www.youtube.com/watch?v=CK40ZsYZCyQ&t=1190s",
+          "tijd": 1193,
+          "citaat": "if there's a wood somewhere that the Rangers can shoot out",
+          "extraCitaten": [
+            {
+              "tijd": 1200,
+              "citaat": "the out Riders are going to be hitting on sixes or sevens"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-12-22",
+      "markeringen": []
+    },
+    {
+      "id": "gyrocopters-pressure-nuln-artillery",
+      "titel": "Use Gyrocopters to divert fire from critical targets",
+      "tekst": "Use Gyrocopters to threaten Nuln's vulnerable pieces, including cannons, and force the opponent to spend shots dealing with them.",
+      "waarom": "The Empire player says threatening a cannon can force it to shoot a Gyrocopter instead of an important target such as an Organ Gun about to shoot his Outriders.",
+      "voorbeeld": null,
+      "wanneerNiet": "They warn that Gyrocopters need careful positioning to avoid cannon shots and especially Helblaster fire. The Dwarf player notes that losing one can also force a panic test.",
+      "fase": "movement",
+      "themas": [
+        "chaff",
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "decoys-bait",
+        "hunting-shooters"
+      ],
+      "tags": [
+        "decoy",
+        "fly",
+        "cannons",
+        "war-machines"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [
+        "Gyrocopter"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-CK40ZsYZCyQ",
+          "url": "https://www.youtube.com/watch?v=CK40ZsYZCyQ&t=1444s",
+          "tijd": 1447,
+          "citaat": "if you threaten the cannon it",
+          "extraCitaten": [
+            {
+              "tijd": 1453,
+              "citaat": "it's got no choice almost"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-12-22",
+      "markeringen": []
+    },
+    {
+      "id": "burlok-thunderers-against-outriders",
+      "titel": "Consider Burlok and Marksman Thunderers against Nuln Outriders",
+      "tekst": "For an Expeditionary Force, consider Thunderers with Burlok Damminson and the Marksman upgrade against Nuln Outriders. He also suggests adding a shooting Thane.",
+      "waarom": "He says this setup avoids shooting penalties, including the move-and-shoot penalty, and could potentially remove an entire Outrider unit.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "shooting-terrain",
+        "matchups"
+      ],
+      "subthemas": [
+        "missile-units",
+        "vs-other"
+      ],
+      "tags": [
+        "missile-troops",
+        "hit-penalties",
+        "light-cavalry"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [
+        "Thunderers",
+        "Burlok Damminson",
+        "Thane",
+        "Outriders"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-CK40ZsYZCyQ",
+          "url": "https://www.youtube.com/watch?v=CK40ZsYZCyQ&t=1519s",
+          "tijd": 1522,
+          "citaat": "the xforce with the handgunners with burlock in",
+          "extraCitaten": [
+            {
+              "tijd": 1538,
+              "citaat": "you could potentially just delete an entire unit of out Riders"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-12-22",
+      "markeringen": []
+    },
+    {
+      "id": "mobile-dwarf-cannons-counterbattery",
+      "titel": "Move Expeditionary Force cannons out from cover to fire",
+      "tekst": "Consider move-and-shoot cannons in an Expeditionary Force. He suggests moving them out from behind a building and firing at the enemy cannons.",
+      "waarom": "He says destroying two enemy cannons on turn one would put you ahead in the artillery exchange.",
+      "voorbeeld": null,
+      "wanneerNiet": "He acknowledges the risk that the exposed cannons will be killed afterward and notes competition with Gyrocopters for special choices.",
+      "fase": "magic-shooting",
+      "themas": [
+        "shooting-terrain",
+        "matchups"
+      ],
+      "subthemas": [
+        "war-machines",
+        "vs-other"
+      ],
+      "tags": [
+        "cannons",
+        "war-machines",
+        "line-of-sight"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [
+        "Cannon Dwarfs"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-CK40ZsYZCyQ",
+          "url": "https://www.youtube.com/watch?v=CK40ZsYZCyQ&t=1560s",
+          "tijd": 1563,
+          "citaat": "if you can pop two cannons turn one then you're winning",
+          "extraCitaten": [
+            {
+              "tijd": 1563,
+              "citaat": "building firing and then hopefully you don't get killed"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-12-22",
+      "markeringen": []
+    },
+    {
+      "id": "separate-empire-artillery-stations",
+      "titel": "Spread Empire artillery into separate stations",
+      "tekst": "For his Nuln gunline, the Empire player plans three spread-out stations, each with a cannon, Helblaster and Engineer. Keep the artillery separated beyond enemy overrun reach.",
+      "waarom": "He wants several stations remaining if a dragon or Longbeards reaches one.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "deployment",
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "unit-placement",
+        "war-machines"
+      ],
+      "tags": [
+        "war-machines",
+        "cannons",
+        "overrun",
+        "gunline"
+      ],
+      "leger": "empire-of-man",
+      "units": [
+        "Great Cannon Empire",
+        "Helblaster Volley Gun",
+        "Empire Engineer"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-CK40ZsYZCyQ",
+          "url": "https://www.youtube.com/watch?v=CK40ZsYZCyQ&t=1636s",
+          "tijd": 1639,
+          "citaat": "and and and kind of spread them out",
+          "extraCitaten": [
+            {
+              "tijd": 2082,
+              "citaat": "they're not within overrun"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-12-22",
+      "markeringen": []
+    },
+    {
+      "id": "runesmith-break-empire-illusion",
+      "titel": "Combine a Runesmith and Spellbreaking against Empire Illusion",
+      "tekst": "Put a Runesmith in the advancing unit to make Miasmic Mirage harder to cast. If the Empire player spends a Power Scroll to force the spell through, use Rune of Spellbreaking to stop it and preserve your advance.",
+      "waarom": "He says Magic Resistance 2 makes the cast difficult even for a level-four wizard; stopping a scroll-assisted cast also wastes the opponent's Power Scroll.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "magic-shooting",
+      "themas": [
+        "magic",
+        "matchups"
+      ],
+      "subthemas": [
+        "dispelling",
+        "vs-other"
+      ],
+      "tags": [
+        "dispel",
+        "illusion",
+        "power-scroll"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [
+        "Runesmith"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-CK40ZsYZCyQ",
+          "url": "https://www.youtube.com/watch?v=CK40ZsYZCyQ&t=2103s",
+          "tijd": 2106,
+          "citaat": "you then pop one of your Runes of spell breaking",
+          "extraCitaten": [
+            {
+              "tijd": 2115,
+              "citaat": "stopped the spell and then you've got a turn to just fly in"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-12-22",
+      "markeringen": []
+    },
+    {
+      "id": "white-wolf-daemonology-block",
+      "titel": "Support a large White Wolf knight block with Daemonology",
+      "tekst": "The Empire player plans a Grand Army block of Inner Circle Knights of the White Wolf with a Grand Master and supporting magic. He prefers Daemonology for this aggressive build.",
+      "waarom": "He describes the buffed unit reaching three attacks per model with wolf hammers, potentially Strength 7 and AP3 on the charge.",
+      "voorbeeld": null,
+      "wanneerNiet": "They warn that Rune of Hesitation turns off its Furious Charge.",
+      "fase": "army-building",
+      "themas": [
+        "hammers",
+        "magic"
+      ],
+      "subthemas": [
+        "heavy-cavalry",
+        "buffs-hexes"
+      ],
+      "tags": [
+        "heavy-cavalry",
+        "daemonology",
+        "enchantment",
+        "hammer"
+      ],
+      "leger": "empire-of-man",
+      "units": [
+        "Inner Circle Knights",
+        "Grand Master"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-CK40ZsYZCyQ",
+          "url": "https://www.youtube.com/watch?v=CK40ZsYZCyQ&t=2257s",
+          "tijd": 2260,
+          "citaat": "i' preferred Daemonology",
+          "extraCitaten": [
+            {
+              "tijd": 2245,
+              "citaat": "using the Knights of the white wolf in the Grand"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-12-22",
+      "markeringen": []
+    },
+    {
+      "id": "remove-runesmith-flaming-wards",
+      "titel": "Remove the Runesmith when flaming attacks help the enemy",
+      "tekst": "Against Chaos Dwarfs with their strong ward against flaming attacks, he takes the Runesmith out of the unit so its attacks can hurt them.",
+      "waarom": "He points to the Chaos Dwarfs' three-plus ward against flaming attacks as the reason for removing the Runesmith.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "characters",
+        "matchups"
+      ],
+      "subthemas": [
+        "combat-roles",
+        "vs-other"
+      ],
+      "tags": [
+        "flaming",
+        "ward-save"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [
+        "Runesmith"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-CK40ZsYZCyQ",
+          "url": "https://www.youtube.com/watch?v=CK40ZsYZCyQ&t=2358s",
+          "tijd": 2361,
+          "citaat": "be popping my runesmith out the unit so my stuff can actually hurt it"
+        }
+      ],
+      "datum": "2024-12-22",
+      "markeringen": []
+    },
+    {
+      "id": "dwarf-deathstar-meets-deathstar",
+      "titel": "Meet an enemy Death Star with your buffed Dwarf block",
+      "tekst": "If running a Dwarf Death Star with the right buffs and a hard-hitting hero, send it straight at an approaching enemy Death Star. He believes the Dwarf block wins that confrontation.",
+      "waarom": null,
+      "voorbeeld": "He describes stopping the buffs on a large Chaos cavalry Death Star, receiving its lance charge and winning the first combat by 11.",
+      "wanneerNiet": "His confidence depends on getting the right buffs active and having a strong fighting hero in the unit.",
+      "fase": "movement",
+      "themas": [
+        "infantry",
+        "matchups"
+      ],
+      "subthemas": [
+        "death-stars",
+        "picking-fights"
+      ],
+      "tags": [
+        "death-star",
+        "enchantment",
+        "hammer"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-CK40ZsYZCyQ",
+          "url": "https://www.youtube.com/watch?v=CK40ZsYZCyQ&t=2809s",
+          "tijd": 2812,
+          "citaat": "if the opponent's got a big Death Star coming at us",
+          "extraCitaten": [
+            {
+              "tijd": 2812,
+              "citaat": "just send your death star straight at it"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-12-22",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "deploy-beyond-moving-shooters",
+      "bron": {
+        "bronId": "yt-CK40ZsYZCyQ",
+        "url": "https://www.youtube.com/watch?v=CK40ZsYZCyQ&t=275s",
+        "tijd": 278,
+        "citaat": "just outside of 29 Ines from the front of the organ gun",
+        "extraCitaten": [
+          {
+            "tijd": 441,
+            "citaat": "make sure that the Vanguard doesn't hit your turn one"
+          }
+        ]
+      },
+      "toelichting": "The same deployment advice accounts for the Helblaster's Vanguard move as well as its shooting range."
+    },
+    {
+      "lesId": "fast-armies-close-gunlines",
+      "bron": {
+        "bronId": "yt-CK40ZsYZCyQ",
+        "url": "https://www.youtube.com/watch?v=CK40ZsYZCyQ&t=413s",
+        "tijd": 416,
+        "citaat": "you want to really let them only shoot you once"
+      },
+      "toelichting": "He likewise recommends closing a gunline quickly enough to limit its shooting turns."
+    },
+    {
+      "lesId": "mark-threat-ranges-dice",
+      "bron": {
+        "bronId": "yt-CK40ZsYZCyQ",
+        "url": "https://www.youtube.com/watch?v=CK40ZsYZCyQ&t=523s",
+        "tijd": 526,
+        "citaat": "you just Mark all of the threat ranges",
+        "extraCitaten": [
+          {
+            "tijd": 559,
+            "citaat": "when you played against me you had your markers set"
+          }
+        ]
+      },
+      "toelichting": "He gives the same advice to mark enemy threat ranges during the opening setup."
+    },
+    {
+      "lesId": "concentrate-against-enemy-part",
+      "bron": {
+        "bronId": "yt-CK40ZsYZCyQ",
+        "url": "https://www.youtube.com/watch?v=CK40ZsYZCyQ&t=1246s",
+        "tijd": 1249,
+        "citaat": "concentrate your force in a in a smash on one plank"
+      },
+      "toelichting": "The refused flank concentrates the army against one part of the enemy rather than spreading its fights."
+    },
+    {
+      "lesId": "arrow-attraction-concentrated-fire",
+      "bron": {
+        "bronId": "yt-CK40ZsYZCyQ",
+        "url": "https://www.youtube.com/watch?v=CK40ZsYZCyQ&t=1669s",
+        "tijd": 1672,
+        "citaat": "just for curse of Arrow traction",
+        "extraCitaten": [
+          {
+            "tijd": 1672,
+            "citaat": "for the out Riders as a force M flyer"
+          }
+        ]
+      },
+      "toelichting": "He selects Curse of Arrow Attraction to amplify the shooting of his Outriders."
+    },
+    {
+      "lesId": "terrain-low-roll-charges",
+      "bron": {
+        "bronId": "yt-CK40ZsYZCyQ",
+        "url": "https://www.youtube.com/watch?v=CK40ZsYZCyQ&t=2703s",
+        "tijd": 2706,
+        "citaat": "you're forcing those dangerous terrain tests you're potentially making them fail the"
+      },
+      "toelichting": "He likewise uses woods to make an enemy charge less reliable and buy a counterattack opportunity."
+    },
+    {
+      "lesId": "hills-reduce-cannon-bounces",
+      "bron": {
+        "bronId": "yt-CK40ZsYZCyQ",
+        "url": "https://www.youtube.com/watch?v=CK40ZsYZCyQ&t=2518s",
+        "tijd": 2521,
+        "citaat": "they need to get a lucky shot with a cannonball on a hill"
+      },
+      "wanneerNiet": "He warns that woods do not stop cannonballs.",
+      "toelichting": "He again suggests a hill as partial protection against cannon fire."
+    },
+    {
+      "lesId": "layer-resilient-units-retreat-trap",
+      "bron": {
+        "bronId": "yt-CK40ZsYZCyQ",
+        "url": "https://www.youtube.com/watch?v=CK40ZsYZCyQ&t=2670s",
+        "tijd": 2673,
+        "citaat": "they would pop through and then suddenly they'd be in combat",
+        "extraCitaten": [
+          {
+            "tijd": 2657,
+            "citaat": "behind with heroes in"
+          }
+        ]
+      },
+      "toelichting": "His Irondrakes retreat through supporting Warriors to pull the attackers into the intended second fight."
+    },
+    {
+      "lesId": "deploy-for-matchups",
+      "bron": {
+        "bronId": "yt-CK40ZsYZCyQ",
+        "url": "https://www.youtube.com/watch?v=CK40ZsYZCyQ&t=2437s",
+        "tijd": 2440,
+        "citaat": "you want to line up your long beards with a king to fight them"
+      },
+      "toelichting": "He applies the same favourable-matchup deployment advice by pairing Longbeards and a King against White Wolf knights."
+    }
+  ],
+  "overgeslagen": "Skipped introductions, tournament results, banter, rules and list readouts without advice, speculative meta predictions and the outro song. Omitted tentative Flame Cannon speculation and the shooting Thane's unspecified build; repeated recommendations are consolidated.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

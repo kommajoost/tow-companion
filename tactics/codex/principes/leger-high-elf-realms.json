@@ -2,17 +2,19 @@
   "scope": "leger-high-elf-realms",
   "soort": "leger",
   "sleutel": "high-elf-realms",
-  "gemaaktOp": "2026-11-25T23:31:34.904Z",
+  "gemaaktOp": "2026-11-26T04:37:46.399Z",
   "model": "gpt-6.1-sol",
   "effort": "high",
-  "invoerHash": "84aae6456e41",
+  "invoerHash": "0aedd7adb0cb",
   "invoer": [
     "eagle-skycutter-flank-pair",
+    "prince-covers-sisters-approach",
     "reavers-widen-clear-breakthrough",
     "high-elves-flee-reposition",
     "great-eagle-redirection-role",
     "dragon-prince-side-placement",
     "skycutter-efficient-auto-include",
+    "six-silver-helms-command",
     "griffon-bsb-rear-charge",
     "skycutter-white-sword-mount",
     "mirage-before-monster-slayer",
@@ -30,15 +32,15 @@
   "runs": [
     {
       "poging": 1,
-      "promptKB": 14,
+      "promptKB": 15,
       "sec": 10,
       "exit": 0,
       "usage": {
-        "input_tokens": 30266,
+        "input_tokens": 30581,
         "cached_input_tokens": 0,
         "cache_write_input_tokens": 0,
-        "output_tokens": 242,
-        "reasoning_output_tokens": 224
+        "output_tokens": 246,
+        "reasoning_output_tokens": 228
       },
       "items": {
         "agent_message": 1

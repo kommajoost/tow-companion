@@ -353,7 +353,8 @@ export interface PrincipleArgs { theme?: string; army?: string; limit?: number }
 export async function listPrinciples(a: PrincipleArgs): Promise<string> {
   const [lib, pr] = await Promise.all([library(), principles()]);
   if (!pr.list.length) return 'The tactics library has no principles yet. Use search_tactics for the lessons.';
-  const limit = Math.min(30, Math.max(1, Math.floor(a.limit ?? 10)));
+  // Max 25: with ~100 principles (round 3) 30 full blocks no longer fit the 20,000-character budget.
+  const limit = Math.min(25, Math.max(1, Math.floor(a.limit ?? 10)));
   const notes: string[] = [];
   let armySlug: string | null = null;
   if (a.army) {

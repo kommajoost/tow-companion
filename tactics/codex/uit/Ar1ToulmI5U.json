@@ -1,0 +1,220 @@
+{
+  "videoId": "Ar1ToulmI5U",
+  "bronId": "yt-Ar1ToulmI5U",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-26T03:27:12.732Z",
+  "nieuw": [
+    {
+      "id": "great-cannon-counterbattery-fire",
+      "titel": "Use Great Cannons for counterbattery fire",
+      "tekst": "Use a Great Cannon to shoot enemy war machines. He considers it particularly good at this role because a successful wound often destroys the target outright.",
+      "waarom": "He gives its average damage as three and says most war machines have three wounds.",
+      "voorbeeld": null,
+      "wanneerNiet": "He notes that a Great Cannon tends to cost more than a regular cannon.",
+      "fase": "magic-shooting",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "target-priority"
+      ],
+      "tags": [
+        "cannons",
+        "war-machines",
+        "multiple-wounds"
+      ],
+      "leger": "empire-of-man",
+      "units": [
+        "Great Cannon Empire"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-Ar1ToulmI5U",
+          "url": "https://www.youtube.com/watch?v=Ar1ToulmI5U&t=126s",
+          "tijd": 129,
+          "citaat": "often makes the great Cannon very good in the counter battery roll",
+          "extraCitaten": [
+            {
+              "tijd": 145,
+              "citaat": "destroy it in one go"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-04-26",
+      "markeringen": []
+    },
+    {
+      "id": "resolve-overshooting-cannonballs",
+      "titel": "Check the full path of an overshooting cannonball",
+      "tekst": "Do not dismiss a cannonball because it overshoots the intended target. Work out where it lands and how far it bounces, since it may still hit something behind that target.",
+      "waarom": "He has found that long overshoots and bounces can reach enemy war machines further back.",
+      "voorbeeld": "He describes opponents assuming a shot has missed, only for an eight- or ten-inch bounce to carry it into a war machine behind the intended target.",
+      "wanneerNiet": "He warns that an awkward firing angle can also send the cannonball into a friendly unit.",
+      "fase": "magic-shooting",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "war-machines"
+      ],
+      "tags": [
+        "cannons",
+        "war-machines"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-Ar1ToulmI5U",
+          "url": "https://www.youtube.com/watch?v=Ar1ToulmI5U&t=691s",
+          "tijd": 694,
+          "citaat": "don't just dismiss the Cannonball if it overshoots work out where it lands",
+          "extraCitaten": [
+            {
+              "tijd": 701,
+              "citaat": "it's entirely possible for The Cannonball to hit your own unit as well"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-04-26",
+      "markeringen": []
+    },
+    {
+      "id": "grapeshot-force-panic-test",
+      "titel": "Consider grapeshot to force a nearby unit's Leadership test",
+      "tekst": "Consider grapeshot against a larger nearby unit when you expect it can inflict 25 percent casualties and force a Leadership test.",
+      "waarom": "He suggests this as a way to try to break the threatening unit.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "magic-shooting",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "target-priority"
+      ],
+      "tags": [
+        "cannons",
+        "break-test"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-Ar1ToulmI5U",
+          "url": "https://www.youtube.com/watch?v=Ar1ToulmI5U&t=1017s",
+          "tijd": 1020,
+          "citaat": "try and force a leadership test on them",
+          "extraCitaten": [
+            {
+              "tijd": 1011,
+              "citaat": "you'd also use it on a bigger unit"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-04-26",
+      "markeringen": []
+    },
+    {
+      "id": "engineer-cannon-artillery-reroll",
+      "titel": "Use an Engineer's reroll to improve cannon reliability",
+      "tekst": "Support Empire cannons with an Engineer and use his artillery-die reroll on the firing or bounce roll as needed.",
+      "waarom": "He explains that the Engineer can reroll either stage, helping the cannon hit more reliably.",
+      "voorbeeld": "In his infantry demonstration, he uses the Engineer to reroll a firing misfire.",
+      "wanneerNiet": "He points out that once the Engineer has rerolled the firing die, he cannot use him again to reroll a short bounce for that shot.",
+      "fase": "army-building",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "war-machines"
+      ],
+      "tags": [
+        "cannons",
+        "war-machines"
+      ],
+      "leger": "empire-of-man",
+      "units": [
+        "Empire Engineer",
+        "Great Cannon Empire"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-Ar1ToulmI5U",
+          "url": "https://www.youtube.com/watch?v=Ar1ToulmI5U&t=1547s",
+          "tijd": 1550,
+          "citaat": "let's use our engineer",
+          "extraCitaten": [
+            {
+              "tijd": 1392,
+              "citaat": "the one for the fire step or the one for the bounce step"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-04-26",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "cannon-aim-behemoth-base",
+      "bron": {
+        "bronId": "yt-Ar1ToulmI5U",
+        "url": "https://www.youtube.com/watch?v=Ar1ToulmI5U&t=1357s",
+        "tijd": 1360,
+        "citaat": "go for the 10 in from the back of the unit"
+      },
+      "voorbeeld": "He demonstrates aiming ten inches from the back of a Steam Tank's base: a firing roll of four followed by a bounce of two still hits it. He uses the tank as a stand-in for a monster on a similarly sized base.",
+      "toelichting": "Both recommend choosing the cannon's aiming point ten inches from the back of the target's base."
+    },
+    {
+      "lesId": "cannon-bounce-multiple-lanterns",
+      "bron": {
+        "bronId": "yt-Ar1ToulmI5U",
+        "url": "https://www.youtube.com/watch?v=Ar1ToulmI5U&t=728s",
+        "tijd": 731,
+        "citaat": "the bounce to intentionally hit multiple units",
+        "extraCitaten": [
+          {
+            "tijd": 753,
+            "citaat": "good Cannonball placement can allow you to hit not only your intended targets"
+          }
+        ]
+      },
+      "toelichting": "Both recommend choosing cannon shots that can bounce through multiple targets."
+    },
+    {
+      "lesId": "cannon-grapeshot-close-hunters",
+      "bron": {
+        "bronId": "yt-Ar1ToulmI5U",
+        "url": "https://www.youtube.com/watch?v=Ar1ToulmI5U&t=1026s",
+        "tijd": 1029,
+        "citaat": "use your grape shot when the cannon starts getting threatened up close and personal",
+        "extraCitaten": [
+          {
+            "tijd": 1002,
+            "citaat": "blow away that small harassing unit"
+          }
+        ]
+      },
+      "voorbeeld": "He describes five Goblin Wolf Riders in a single rank close to the cannon: a cannonball could kill only one, so he would use grapeshot to try to remove the harassing unit.",
+      "toelichting": "Both recommend switching to grapeshot against small units threatening the cannon at close range."
+    }
+  ],
+  "overgeslagen": "Skipped the stat and rules walkthrough, dice substitution, marker and malfunction reminders, Steam Tank rules aside, banter, and channel promotion. Kept tactical recommendations and treated matching aiming, bounce and grapeshot advice as additions.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": [
+      {
+        "wie": "resolve-overshooting-cannonballs",
+        "wat": "tijd 687 -> 694"
+      }
+    ]
+  }
+}

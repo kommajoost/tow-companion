@@ -1,0 +1,290 @@
+{
+  "videoId": "TLSHD6OZivk",
+  "bronId": "yt-TLSHD6OZivk",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-26T02:40:30.109Z",
+  "nieuw": [
+    {
+      "id": "heavy-cavalry-avoid-prolonged-grinds",
+      "titel": "Avoid relying on heavy cavalry to grind ranked blocks",
+      "tekst": "Choose heavy cavalry's targets with its initial charge in mind. Do not expect it to grind through a large ranked block if it fails to break that block on the charge.",
+      "waarom": "He says lance- and cavalry-spear-armed units lose much of their Strength and armour penetration after the charge. In his view, a large ranked block that survives that charge will eventually get the better of them.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "hammers",
+        "matchups"
+      ],
+      "subthemas": [
+        "heavy-cavalry",
+        "picking-fights"
+      ],
+      "tags": [
+        "heavy-cavalry",
+        "hammer",
+        "armour-piercing",
+        "close-order"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-TLSHD6OZivk",
+          "url": "https://www.youtube.com/watch?v=TLSHD6OZivk&t=288s",
+          "tijd": 291,
+          "citaat": "if you don't break a big ranked up block on that charge",
+          "extraCitaten": [
+            {
+              "tijd": 233,
+              "citaat": "they'll generally suffer a much reduced output in the damage"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-12-20",
+      "markeringen": []
+    },
+    {
+      "id": "monstrous-cavalry-grinding-role",
+      "titel": "Use monstrous cavalry for fights that may need grinding",
+      "tekst": "Use monstrous cavalry against targets that may survive the initial charge and require further rounds of fighting. The speaker considers it better suited to this role than traditional heavy cavalry.",
+      "waarom": "He says monstrous cavalry remains durable and continues dealing damage in subsequent rounds, often because its mounts contribute powerful, high-Strength attacks.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "hammers",
+        "matchups"
+      ],
+      "subthemas": [
+        "using-hammers",
+        "picking-fights"
+      ],
+      "tags": [
+        "hammer",
+        "armour"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-TLSHD6OZivk",
+          "url": "https://www.youtube.com/watch?v=TLSHD6OZivk&t=331s",
+          "tijd": 334,
+          "citaat": "grind it out more effectively than your traditional heavy Cavalry",
+          "extraCitaten": [
+            {
+              "tijd": 315,
+              "citaat": "their ability to dish out damage in subsequent rounds of combat"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-12-20",
+      "markeringen": []
+    },
+    {
+      "id": "regular-cavalry-earlier-pressure",
+      "titel": "Use faster regular cavalry to apply earlier pressure",
+      "tekst": "Where regular cavalry is faster than your heavy cavalry option, use that extra reach to threaten earlier and restrict how far opponents feel able to advance.",
+      "waarom": "He says even an extra inch of threat can discourage an enemy advance. Against a gunline, the extra marching distance gets the cavalry up the table sooner and forces earlier decisions, giving the opponent more opportunities to make mistakes.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "subthemas": [
+        "threat-zones"
+      ],
+      "tags": [
+        "charge-range",
+        "zoning",
+        "hammer"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-TLSHD6OZivk",
+          "url": "https://www.youtube.com/watch?v=TLSHD6OZivk&t=612s",
+          "tijd": 615,
+          "citaat": "that extra inch of threat projection actually can really have quite a big effect",
+          "extraCitaten": [
+            {
+              "tijd": 623,
+              "citaat": "if people don't don't want to be charged they're not pushing forward as far"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-12-20",
+      "markeringen": []
+    },
+    {
+      "id": "sacrifice-regular-cavalry-softening",
+      "titel": "Sacrifice cheaper cavalry to prepare a heavy cavalry breakthrough",
+      "tekst": "Consider sending cheaper regular cavalry into a dangerous enemy to inflict damage before committing your heavy cavalry. Use that damage to help the heavy cavalry break through in subsequent turns.",
+      "waarom": "He says regular cavalry can hit hard enough to damage a dangerous target while costing less than the knights he would be reluctant to commit first.",
+      "voorbeeld": null,
+      "wanneerNiet": "He expects the cheaper cavalry to take the return attacks badly.",
+      "fase": "movement",
+      "themas": [
+        "hammers",
+        "game-plan"
+      ],
+      "subthemas": [
+        "using-hammers",
+        "tempo-trading"
+      ],
+      "tags": [
+        "sacrifice",
+        "hammer",
+        "heavy-cavalry"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-TLSHD6OZivk",
+          "url": "https://www.youtube.com/watch?v=TLSHD6OZivk&t=760s",
+          "tijd": 763,
+          "citaat": "you can use them as a sacrificial unit",
+          "extraCitaten": [
+            {
+              "tijd": 779,
+              "citaat": "allow your heavy Cavalry to break through that unit"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-12-20",
+      "markeringen": []
+    },
+    {
+      "id": "light-missile-cavalry-shoot-chaff",
+      "titel": "Manoeuvre light missile cavalry into chaff-clearing shooting angles",
+      "tekst": "Use light missile cavalry's mobility to find shooting angles and clear enemy chaff. Treat it as a shooting unit rather than charging it into skirmishers as you might with other light cavalry.",
+      "waarom": null,
+      "voorbeeld": null,
+      "wanneerNiet": "He says light missile cavalry lacks the firepower to seriously concern bigger, tougher units, although it may remove an occasional model.",
+      "fase": "movement",
+      "themas": [
+        "shooting-terrain",
+        "chaff"
+      ],
+      "subthemas": [
+        "missile-units",
+        "clearing-chaff"
+      ],
+      "tags": [
+        "light-cavalry",
+        "missile-troops",
+        "skirmishers"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-TLSHD6OZivk",
+          "url": "https://www.youtube.com/watch?v=TLSHD6OZivk&t=899s",
+          "tijd": 902,
+          "citaat": "get into a good angle to shoot enemy things clear chaff",
+          "extraCitaten": [
+            {
+              "tijd": 1034,
+              "citaat": "they're not charging into skirmishes and stuff like that because you want them shooting"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-12-20",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "chaff-scouts-deployment",
+      "bron": {
+        "bronId": "yt-TLSHD6OZivk",
+        "url": "https://www.youtube.com/watch?v=TLSHD6OZivk&t=165s",
+        "tijd": 168,
+        "citaat": "they're the guys you deploy pretty early on during your deployment phase"
+      },
+      "toelichting": "He likewise recommends early light cavalry drops to draw out the opponent's threats during deployment."
+    },
+    {
+      "lesId": "screening-chaff",
+      "bron": {
+        "bronId": "yt-TLSHD6OZivk",
+        "url": "https://www.youtube.com/watch?v=TLSHD6OZivk&t=173s",
+        "tijd": 176,
+        "citaat": "they provide a screen to your forces",
+        "extraCitaten": [
+          {
+            "tijd": 184,
+            "citaat": "enemy artillery particularly direct firing ones such as Cannon"
+          }
+        ]
+      },
+      "toelichting": "He gives light cavalry the same protective screening role against enemy shooting."
+    },
+    {
+      "lesId": "light-cavalry-clear-redirectors",
+      "bron": {
+        "bronId": "yt-TLSHD6OZivk",
+        "url": "https://www.youtube.com/watch?v=TLSHD6OZivk&t=189s",
+        "tijd": 192,
+        "citaat": "they want to get into enemy chaf units",
+        "extraCitaten": [
+          {
+            "tijd": 199,
+            "citaat": "try and clear them off the board allowing you more freedom to act"
+          }
+        ]
+      },
+      "toelichting": "He likewise recommends light cavalry clearing enemy chaff to free up friendly movement."
+    },
+    {
+      "lesId": "chaff-decoys",
+      "bron": {
+        "bronId": "yt-TLSHD6OZivk",
+        "url": "https://www.youtube.com/watch?v=TLSHD6OZivk&t=785s",
+        "tijd": 788,
+        "citaat": "you can also use them as your missile magnet",
+        "extraCitaten": [
+          {
+            "tijd": 811,
+            "citaat": "higher value targets are getting ignored"
+          }
+        ]
+      },
+      "toelichting": "He gives cheaper regular cavalry the same decoy role, using its threat to divert enemy resources from more valuable targets."
+    },
+    {
+      "lesId": "outriders-vanguard-static-fire",
+      "bron": {
+        "bronId": "yt-TLSHD6OZivk",
+        "url": "https://www.youtube.com/watch?v=TLSHD6OZivk&t=941s",
+        "tijd": 944,
+        "citaat": "use their Vanguard rule to step into range at the start of a game",
+        "extraCitaten": [
+          {
+            "tijd": 952,
+            "citaat": "sit statically for as long as possible blazing away with their repeater rifles"
+          }
+        ]
+      },
+      "wanneerNiet": "If threatened, he says Outriders can redeploy at the cost of reduced fire output.",
+      "toelichting": "He recommends the same Vanguard into range followed by stationary Outrider shooting."
+    }
+  ],
+  "overgeslagen": "Skipped the rulebook classification readout, historical cavalry comparison, channel outro and most stat comparisons. The inconsistently captioned Marauder unit names were not used for unit-specific advice. The brief flying discussion describes increased efficiency without a distinct recommendation to extract.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

@@ -2,11 +2,12 @@
   "scope": "leger-beastmen-brayherds",
   "soort": "leger",
   "sleutel": "beastmen-brayherds",
-  "gemaaktOp": "2026-11-25T23:30:41.408Z",
+  "gemaaktOp": "2026-11-26T04:35:16.882Z",
   "model": "gpt-6.1-sol",
   "effort": "high",
-  "invoerHash": "3fc89249c78d",
+  "invoerHash": "f56f8a7a5596",
   "invoer": [
+    "minotaurs-weigh-ambush-choice",
     "ungor-switch-defensive-formations",
     "razorgor-flee-without-swiftstride",
     "harpies-mobile-retreat-screens",
@@ -17,6 +18,8 @@
     "razorgor-attempt-long-charges",
     "razorgor-tuskgor-bait-switch",
     "gor-death-star-infantry-choice",
+    "dragon-ogres-over-ghorgon",
+    "tuskgor-over-razorgor-chariots",
     "try-solitary-doombull",
     "ghorros-near-centigor-drunkenness",
     "vile-tide-large-wound-targets",
@@ -32,15 +35,15 @@
   ],
   "principes": [
     {
-      "id": "use-level-one-bray-shamans-for-vile-tide",
-      "titel": "Use level-one Bray-Shamans for Vile Tide",
-      "tekst": "Consider level-one Bray-Shamans to cast Vile Tide. Taking several lets you repeat the spell across multiple casters.",
+      "id": "aim-vile-tide-at-armour-and-large-threats",
+      "titel": "Aim Vile Tide at armour and large threats",
+      "tekst": "Use Vile Tide against heavily armoured units or large threats. Its damage can bring down valuable targets.",
       "soort": "principe",
       "thema": "magic",
       "leger": "beastmen-brayherds",
       "lessen": [
-        "beastmen-protected-vile-tide-bunker",
-        "multiple-vile-tide-casters",
+        "vile-tide-large-wound-targets",
+        "vile-tide-armoured-knights",
         "bray-shaman-missile-choice"
       ],
       "kanten": null
@@ -50,15 +53,15 @@
   "runs": [
     {
       "poging": 1,
-      "promptKB": 16,
-      "sec": 35,
+      "promptKB": 17,
+      "sec": 37,
       "exit": 0,
       "usage": {
-        "input_tokens": 31526,
+        "input_tokens": 31361,
         "cached_input_tokens": 0,
         "cache_write_input_tokens": 0,
-        "output_tokens": 1405,
-        "reasoning_output_tokens": 1271
+        "output_tokens": 1574,
+        "reasoning_output_tokens": 1448
       },
       "items": {
         "agent_message": 1

@@ -2,13 +2,14 @@
   "scope": "leger-daemons-of-chaos",
   "soort": "leger",
   "sleutel": "daemons-of-chaos",
-  "gemaaktOp": "2026-11-25T23:30:51.634Z",
+  "gemaaktOp": "2026-11-26T04:35:36.788Z",
   "model": "gpt-6.1-sol",
   "effort": "high",
-  "invoerHash": "a4405cb1688c",
+  "invoerHash": "028d5072991f",
   "invoer": [
     "mixed-daemon-gods-lanterns",
     "pink-horrors-reform-shooting",
+    "khorne-furies-melee-skirmishers",
     "seekers-spread-against-shooting",
     "larger-khorne-fury-units",
     "plague-drones-fight-lanterns",
@@ -20,15 +21,15 @@
   "runs": [
     {
       "poging": 1,
-      "promptKB": 7,
+      "promptKB": 8,
       "sec": 6,
       "exit": 0,
       "usage": {
-        "input_tokens": 28480,
+        "input_tokens": 29244,
         "cached_input_tokens": 0,
         "cache_write_input_tokens": 0,
-        "output_tokens": 79,
-        "reasoning_output_tokens": 61
+        "output_tokens": 97,
+        "reasoning_output_tokens": 79
       },
       "items": {
         "agent_message": 1

@@ -2,34 +2,61 @@
   "scope": "leger-lizardmen",
   "soort": "leger",
   "sleutel": "lizardmen",
-  "gemaaktOp": "2026-11-25T23:31:58.259Z",
+  "gemaaktOp": "2026-11-26T04:38:48.327Z",
   "model": "gpt-6.1-sol",
   "effort": "high",
-  "invoerHash": "5ccdb9f86a9a",
+  "invoerHash": "dba9463ea9c4",
   "invoer": [
+    "lizardmen-flankers-extreme-angles",
     "jungle-swarms-disposable-anvil",
     "skinks-screen-cannon-sight",
+    "lizardmen-screening-packages",
+    "chameleon-skinks-worth-cost",
     "kroxigor-mixed-skink-unit",
     "cohort-javelins-and-shields",
     "saurus-anvil-takes-charges",
     "cohort-raids-through-terrain",
     "temple-guard-core-priority",
-    "power-scrolls-critical-ethereal-turns"
+    "choose-lizardmen-infantry-anvil",
+    "saurus-sixteen-twenty-models",
+    "ancient-stegadon-central-cornerstone",
+    "lizardmen-multiple-terror-causers",
+    "slann-higher-state-protection",
+    "scar-veteran-carnosaur-competitive",
+    "cold-one-oldblood-option",
+    "lizardmen-flankers-skip-champions",
+    "power-scrolls-critical-ethereal-turns",
+    "embrace-slann-despite-cost"
   ],
-  "principes": [],
+  "principes": [
+    {
+      "id": "use-skinks-as-screeners",
+      "titel": "Use Skinks as screeners",
+      "tekst": "Use Skink Skirmishers or Chameleon Skinks to screen your army. These screeners can also contribute shooting.",
+      "soort": "principe",
+      "thema": "chaff",
+      "leger": "lizardmen",
+      "lessen": [
+        "skinks-screen-cannon-sight",
+        "lizardmen-screening-packages",
+        "chameleon-skinks-worth-cost"
+      ],
+      "kanten": null
+    }
+  ],
   "correcties": [],
   "runs": [
     {
       "poging": 1,
-      "promptKB": 8,
-      "sec": 6,
+      "promptKB": 15,
+      "sec": 23,
       "exit": 0,
       "usage": {
-        "input_tokens": 28737,
+        "input_tokens": 30619,
         "cached_input_tokens": 0,
         "cache_write_input_tokens": 0,
-        "output_tokens": 70,
-        "reasoning_output_tokens": 52
+        "output_tokens": 908,
+        "reasoning_output_tokens": 795
       },
       "items": {
         "agent_message": 1

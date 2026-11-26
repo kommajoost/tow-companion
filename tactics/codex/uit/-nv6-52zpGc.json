@@ -1,0 +1,191 @@
+{
+  "videoId": "-nv6-52zpGc",
+  "bronId": "yt--nv6-52zpGc",
+  "model": "GPT-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-26T01:58:54.742Z",
+  "nieuw": [
+    {
+      "id": "chariot-mount-character-survival",
+      "titel": "Consider a chariot mount for character survivability",
+      "tekst": "Consider using a chariot as a character mount to make the character more survivable through additional Toughness and wounds.",
+      "waarom": "He says a chariot mount adds some Toughness and wounds to the character.",
+      "voorbeeld": "He says an Orc chariot carrying a character is less likely to be removed by one cannonball than an ordinary Orc chariot.",
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "characters"
+      ],
+      "subthemas": [
+        "mounts-items"
+      ],
+      "tags": [
+        "mounts",
+        "chariots"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt--nv6-52zpGc",
+          "url": "https://www.youtube.com/watch?v=-nv6-52zpGc&t=278s",
+          "tijd": 281,
+          "citaat": "they can act as a character mount.",
+          "extraCitaten": [
+            {
+              "tijd": 288,
+              "citaat": "making them that little bit more survivable."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-09-19",
+      "markeringen": []
+    },
+    {
+      "id": "chaos-chariot-combat-wizard",
+      "titel": "Consider a chariot for a Chaos combat wizard",
+      "tekst": "Consider a level-one Chaos sorcerer using Battle Magic on a chariot as a combat wizard.",
+      "waarom": "He points to the chariot's impact hits, the potential combat boost from Hammerhand, and the wizard's ability to fight if needed.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "magic",
+        "characters"
+      ],
+      "subthemas": [
+        "wizard-builds",
+        "mounts-items"
+      ],
+      "tags": [
+        "chariots",
+        "mounts",
+        "battle-magic",
+        "impact-hits",
+        "wizard-level"
+      ],
+      "leger": "warriors-of-chaos",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt--nv6-52zpGc",
+          "url": "https://www.youtube.com/watch?v=-nv6-52zpGc&t=316s",
+          "tijd": 319,
+          "citaat": "if you're a chaos sorcerer, make let's say a level one battle magic",
+          "extraCitaten": [
+            {
+              "tijd": 319,
+              "citaat": "you've got the impact hits if you get in from your chariot."
+            },
+            {
+              "tijd": 327,
+              "citaat": "You've got the potential for hammer hand"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-09-19",
+      "markeringen": []
+    },
+    {
+      "id": "avoid-chariot-cavalry-support",
+      "titel": "Avoid relying on chariots to support cavalry",
+      "tekst": "He advises against using chariots to support cavalry, since they struggle to arrive in time for the same fight.",
+      "waarom": "He says chariots are normally slower than cavalry and lack Swiftstride. The cavalry may already have won or been badly beaten before they arrive, while waiting for the chariots holds the cavalry back.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "hammers"
+      ],
+      "subthemas": [
+        "chariots"
+      ],
+      "tags": [
+        "chariots",
+        "swiftstride",
+        "charge-range"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt--nv6-52zpGc",
+          "url": "https://www.youtube.com/watch?v=-nv6-52zpGc&t=347s",
+          "tijd": 350,
+          "citaat": "what they're not good at is supporting cavalry.",
+          "extraCitaten": [
+            {
+              "tijd": 366,
+              "citaat": "Chariots are normally a little bit slower than cavalry as well."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-09-19",
+      "markeringen": []
+    },
+    {
+      "id": "many-chariots-divide-targeting",
+      "titel": "Take many chariots if committing to them",
+      "tekst": "If committing to chariots, he thinks you need many of them rather than just one or two.",
+      "waarom": "In his view, this gives the opponent many targets to worry about instead of letting them focus down a small number of chariots.",
+      "voorbeeld": null,
+      "wanneerNiet": "He has not yet found a really effective way to make chariots work and become dangerous.",
+      "fase": "army-building",
+      "themas": [
+        "hammers"
+      ],
+      "subthemas": [
+        "chariots"
+      ],
+      "tags": [
+        "chariots",
+        "concentration"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt--nv6-52zpGc",
+          "url": "https://www.youtube.com/watch?v=-nv6-52zpGc&t=528s",
+          "tijd": 531,
+          "citaat": "you need to have a lot of them",
+          "extraCitaten": [
+            {
+              "tijd": 539,
+              "citaat": "gives your opponent lots and lots of targets to worry about"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-09-19",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "heavy-chariot-support",
+      "bron": {
+        "bronId": "yt--nv6-52zpGc",
+        "url": "https://www.youtube.com/watch?v=-nv6-52zpGc&t=410s",
+        "tijd": 413,
+        "citaat": "chariots can sit a little bit behind your infantry line and act as a counterattack.",
+        "extraCitaten": [
+          {
+            "tijd": 488,
+            "citaat": "breaking through those weakened blocks of infantry."
+          }
+        ]
+      },
+      "toelichting": "He likewise recommends chariots behind infantry to counterattack after the infantry absorbs a charge, rather than using them as a first-strike weapon."
+    }
+  ],
+  "overgeslagen": "Skipped the introduction, historical and thematic discussion, closing audience questions and channel promotion. General criticism of chariot statistics was retained only where it explains concrete advice; later-wave infantry support was included with the existing support lesson.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

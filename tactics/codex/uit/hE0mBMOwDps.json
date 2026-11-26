@@ -1,0 +1,633 @@
+{
+  "videoId": "hE0mBMOwDps",
+  "bronId": "yt-hE0mBMOwDps",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-26T03:43:44.610Z",
+  "nieuw": [
+    {
+      "id": "check-dragon-movement-limits",
+      "titel": "Check a dragon's wheels and marching limits",
+      "tekst": "Check that an opposing dragon pays for its wheels, respects the one-inch separation from enemies outside charges, and does not take the free Lumbering pivot after marching. Pre-measure its arcs rather than allowing unrestricted movement.",
+      "waarom": "He says the large bases make dragons considerably less manoeuvrable when their movement is measured correctly.",
+      "voorbeeld": null,
+      "wanneerNiet": "He distinguishes the Duke on a Pegasus and the monstrous-infantry Daemon Prince, which have greater freedom of movement.",
+      "fase": "movement",
+      "themas": [
+        "movement",
+        "matchups"
+      ],
+      "subthemas": [
+        "wheels-alignment",
+        "vs-monsters"
+      ],
+      "tags": [
+        "wheel",
+        "charge-arc",
+        "dragons"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-hE0mBMOwDps",
+          "url": "https://www.youtube.com/watch?v=hE0mBMOwDps&t=286s",
+          "tijd": 289,
+          "citaat": "make sure that you're Wheeling around correctly",
+          "extraCitaten": [
+            {
+              "tijd": 342,
+              "citaat": "if they're if they're marching they don't get that quick turn"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-02-28",
+      "markeringen": []
+    },
+    {
+      "id": "heroism-flying-monster-hunter",
+      "titel": "Consider a flying Virtue of Heroism hunter",
+      "tekst": "Consider Virtue of Heroism on a Bretonnian character with a flying mount and an all-round charge arc to threaten monsters. Give him a mundane lance, since the speaker says the virtue does not work with a magic weapon.",
+      "waarom": "He values getting Killing Blow as well as Monster Slayer for greater versatility. He also notes that the virtue leaves the character's magic-item allowance available for defensive equipment.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "characters",
+        "matchups"
+      ],
+      "subthemas": [
+        "mounts-items",
+        "vs-monsters"
+      ],
+      "tags": [
+        "mounts",
+        "fly",
+        "charge-arc",
+        "monsters"
+      ],
+      "leger": "kingdom-of-bretonnia",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-hE0mBMOwDps",
+          "url": "https://www.youtube.com/watch?v=hE0mBMOwDps&t=662s",
+          "tijd": 665,
+          "citaat": "The Virtue of heroism is is is kind of useful",
+          "extraCitaten": [
+            {
+              "tijd": 686,
+              "citaat": "you've got a much wider threat range to surrounding monsters"
+            },
+            {
+              "tijd": 718,
+              "citaat": "yeah you would give him a lance"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-02-28",
+      "markeringen": []
+    },
+    {
+      "id": "goblin-chariot-dragon-deterrent",
+      "titel": "Consider a cheap Goblin chariot as a dragon deterrent",
+      "tekst": "Consider a Goblin lord on a chariot with the Dragon Slaying Sword and Paymaster's Coin for hit rerolls. Use his threat to discourage a dragon from entering an area; he need not actually reach combat to contribute.",
+      "waarom": "He argues that risking a roughly 600-point dragon against a roughly 200-point threat is an unattractive bet for its owner. The hit rerolls help the Goblin get opportunities to roll the six needed for Monster Slayer.",
+      "voorbeeld": null,
+      "wanneerNiet": "He says getting the chariot into combat with the more mobile dragon can be difficult, and Terror can also prevent the Goblin from reaching it.",
+      "fase": "army-building",
+      "themas": [
+        "characters",
+        "game-plan",
+        "matchups"
+      ],
+      "subthemas": [
+        "mounts-items",
+        "threat-zones",
+        "vs-monsters"
+      ],
+      "tags": [
+        "magic-items",
+        "chariots",
+        "zoning",
+        "dragons"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Goblin Warboss"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-hE0mBMOwDps",
+          "url": "https://www.youtube.com/watch?v=hE0mBMOwDps&t=1410s",
+          "tijd": 1413,
+          "citaat": "a 200 Point model with a dragon slang Sword and the coin",
+          "extraCitaten": [
+            {
+              "tijd": 1530,
+              "citaat": "you don't necessarily have to get him in there like he can just Zone"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-02-28",
+      "markeringen": []
+    },
+    {
+      "id": "versatile-multiple-wound-weapons",
+      "titel": "Consider multiple-wound weapons for broader character utility",
+      "tekst": "Consider a multiple-wound weapon instead of committing a character entirely to Monster Slayer. The speakers see it as a more versatile choice for fighting other characters, monstrous troops and ordinary units.",
+      "waarom": "He found Monster Slayer offered poor utility against Black Orcs, whereas he values the armour piercing and wider applications of the multiple-wound alternatives.",
+      "voorbeeld": "He says his Monster Slayer character needed Spectral Doppelganger and support from a Varghulf to get through the Black Orcs.",
+      "wanneerNiet": "He says these weapons are statistically less effective at killing the dragon-mounted lords themselves.",
+      "fase": "army-building",
+      "themas": [
+        "characters"
+      ],
+      "subthemas": [
+        "mounts-items"
+      ],
+      "tags": [
+        "multiple-wounds",
+        "magic-items",
+        "armour-piercing"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-hE0mBMOwDps",
+          "url": "https://www.youtube.com/watch?v=hE0mBMOwDps&t=3832s",
+          "tijd": 3835,
+          "citaat": "start looking um at these multi- wound weapons",
+          "extraCitaten": [
+            {
+              "tijd": 3843,
+              "citaat": "they're greater utility"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-02-28",
+      "markeringen": []
+    },
+    {
+      "id": "shooting-zones-against-dragons",
+      "titel": "Position shooting to deny dragons an area",
+      "tekst": "Position your shooting to cover an area you want to keep the dragon out of. Use that coverage to funnel it towards another area or discourage it from approaching.",
+      "waarom": null,
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "deployment",
+        "game-plan",
+        "matchups"
+      ],
+      "subthemas": [
+        "unit-placement",
+        "threat-zones",
+        "vs-monsters"
+      ],
+      "tags": [
+        "zoning",
+        "dragons",
+        "missile-troops"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-hE0mBMOwDps",
+          "url": "https://www.youtube.com/watch?v=hE0mBMOwDps&t=1659s",
+          "tijd": 1662,
+          "citaat": "you can always set your shooting up in a position that's going to deny area",
+          "extraCitaten": [
+            {
+              "tijd": 1671,
+              "citaat": "funnel him or force him into an area"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-02-28",
+      "markeringen": []
+    },
+    {
+      "id": "falcon-horn-chaff-dragon",
+      "titel": "Use the Falcon Horn before trapping a dragon",
+      "tekst": "Use the Falcon Horn to stop a dragon flying, then obstruct it with chaff and attack with the Duke on a Pegasus. The speakers suggest this makes the chaff plan more workable because the dragon cannot simply fly away.",
+      "waarom": null,
+      "voorbeeld": null,
+      "wanneerNiet": "They note that many of these models still move six or seven inches without flying.",
+      "fase": "movement",
+      "themas": [
+        "characters",
+        "chaff",
+        "matchups"
+      ],
+      "subthemas": [
+        "mounts-items",
+        "redirecting",
+        "vs-monsters"
+      ],
+      "tags": [
+        "magic-items",
+        "fly",
+        "redirect",
+        "dragons"
+      ],
+      "leger": "kingdom-of-bretonnia",
+      "units": [
+        "Duke"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-hE0mBMOwDps",
+          "url": "https://www.youtube.com/watch?v=hE0mBMOwDps&t=1878s",
+          "tijd": 1881,
+          "citaat": "you got the F Falcon horn going you chaff him up",
+          "extraCitaten": [
+            {
+              "tijd": 1881,
+              "citaat": "then you just hit him with the peg the Duke on the peg"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-02-28",
+      "markeringen": []
+    },
+    {
+      "id": "let-dragon-charge-first",
+      "titel": "Let the dragon initiate combat when buying time",
+      "tekst": "When trying to use up a dragon's limited fighting turns, be cautious about charging it yourself. Let it charge your unit on its own turn instead of giving it a round of killing during yours.",
+      "waarom": "He says a dragon has only so many turns to earn points, and charging it can give it another opportunity to kill your models.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "game-plan",
+        "matchups"
+      ],
+      "subthemas": [
+        "tempo-trading",
+        "vs-monsters"
+      ],
+      "tags": [
+        "delay",
+        "dragons"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-hE0mBMOwDps",
+          "url": "https://www.youtube.com/watch?v=hE0mBMOwDps&t=2200s",
+          "tijd": 2203,
+          "citaat": "wait till he charges you because that's just one of his turns wasted",
+          "extraCitaten": [
+            {
+              "tijd": 2195,
+              "citaat": "just going to be wasting a turn of him killing you"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-02-28",
+      "markeringen": []
+    },
+    {
+      "id": "avoid-linehammer-dragon-counter",
+      "titel": "Do not rely on wide infantry lines against dragons",
+      "tekst": "He doubts that arranging infantry in a very wide line is an effective dragon counter. Do not assume that bringing many strong attacks to bear will overcome a protected dragon.",
+      "waarom": "He reports tests where the dragon killed several models before they attacked, and the remaining Strength 6 attacks still struggled through its Toughness and three saves. He also points out that a flying dragon can avoid the frontal fight.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "infantry",
+        "matchups"
+      ],
+      "subthemas": [
+        "unit-builds",
+        "vs-monsters"
+      ],
+      "tags": [
+        "close-order",
+        "dragons",
+        "armour"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-hE0mBMOwDps",
+          "url": "https://www.youtube.com/watch?v=hE0mBMOwDps&t=2176s",
+          "tijd": 2179,
+          "citaat": "Lin Hammer is just not a very good counter",
+          "extraCitaten": [
+            {
+              "tijd": 2340,
+              "citaat": "need a massive line Hammer to be doing any sort of real damage"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-02-28",
+      "markeringen": []
+    },
+    {
+      "id": "soften-dragons-early-shooting",
+      "titel": "Use early shooting to make dragons more manageable",
+      "tekst": "Consider artillery and shooting to remove wounds from a dragon in the first two turns before your other units deal with it. Treat this as preparation rather than a complete solution.",
+      "waarom": "He thinks losing several wounds early can make the dragon more manageable and make its owner more cautious.",
+      "voorbeeld": null,
+      "wanneerNiet": "He explicitly says that simply shooting dragons with cannons is not the whole tactic.",
+      "fase": "magic-shooting",
+      "themas": [
+        "shooting-terrain",
+        "matchups"
+      ],
+      "subthemas": [
+        "target-priority",
+        "vs-monsters"
+      ],
+      "tags": [
+        "dragons",
+        "war-machines",
+        "cannons"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-hE0mBMOwDps",
+          "url": "https://www.youtube.com/watch?v=hE0mBMOwDps&t=2371s",
+          "tijd": 2374,
+          "citaat": "I need to knock some stuff off them first",
+          "extraCitaten": [
+            {
+              "tijd": 2381,
+              "citaat": "then it might make my other stuff a bit more manageable"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-02-28",
+      "markeringen": []
+    },
+    {
+      "id": "dwarf-mixed-dragon-firepower",
+      "titel": "Combine Dwarf shooting threats rather than relying on one weapon",
+      "tekst": "Consider a mixed Dwarf shooting force against dragons: one or two Bolt Throwers, two small Trollhammer units and an Organ Gun. Keep chipping away while presenting sturdy combat units the dragon will struggle to clear.",
+      "waarom": "He argues that continued shooting encourages the dragon to enter combat to escape the fire, where Dwarf units can take time to kill.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "shooting-terrain",
+        "matchups"
+      ],
+      "subthemas": [
+        "war-machines",
+        "vs-monsters"
+      ],
+      "tags": [
+        "war-machines",
+        "missile-troops",
+        "dragons"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [
+        "Bolt Thrower Dwarfs",
+        "Irondrakes",
+        "Organ Gun"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-hE0mBMOwDps",
+          "url": "https://www.youtube.com/watch?v=hE0mBMOwDps&t=2579s",
+          "tijd": 2582,
+          "citaat": "you can just have that combined sort of arms",
+          "extraCitaten": [
+            {
+              "tijd": 2596,
+              "citaat": "it kind of forces you into combat so you're not getting shot"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-02-28",
+      "markeringen": []
+    },
+    {
+      "id": "answer-dragons-with-dragons",
+      "titel": "Consider bringing your own dragon",
+      "tekst": "If your army has access to a dragon, consider bringing one as another way to answer enemy dragons.",
+      "waarom": null,
+      "voorbeeld": null,
+      "wanneerNiet": "They note that some armies lack a comparable option, and that not every army can give its dragon strong armour and a decent ward save.",
+      "fase": "army-building",
+      "themas": [
+        "hammers",
+        "matchups"
+      ],
+      "subthemas": [
+        "monsters-dragons",
+        "vs-monsters"
+      ],
+      "tags": [
+        "dragons",
+        "monsters"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-hE0mBMOwDps",
+          "url": "https://www.youtube.com/watch?v=hE0mBMOwDps&t=3418s",
+          "tijd": 3421,
+          "citaat": "dragons bring dragons"
+        }
+      ],
+      "datum": "2024-02-28",
+      "markeringen": []
+    },
+    {
+      "id": "illusion-deny-dragon-charges",
+      "titel": "Use Illusion to deny a dragon a charging turn",
+      "tekst": "Consider Illusion's spell that reduces movement and prevents charging in the opponent's following turn. Use it to deny a dragon another turn of combat, alongside your other counters.",
+      "waarom": "He says wasting one of the dragon's limited turns reduces its damage output.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "magic-shooting",
+      "themas": [
+        "magic",
+        "matchups"
+      ],
+      "subthemas": [
+        "control-spells",
+        "vs-monsters"
+      ],
+      "tags": [
+        "illusion",
+        "hex",
+        "delay",
+        "dragons"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-hE0mBMOwDps",
+          "url": "https://www.youtube.com/watch?v=hE0mBMOwDps&t=3952s",
+          "tijd": 3955,
+          "citaat": "it reduces movement and also prevents charging in the opponent's following turn",
+          "extraCitaten": [
+            {
+              "tijd": 3961,
+              "citaat": "waste a turn of the five turns of the Dragon"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-02-28",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "paired-scorpions-flank-pinned-threat",
+      "bron": {
+        "bronId": "yt-hE0mBMOwDps",
+        "url": "https://www.youtube.com/watch?v=hE0mBMOwDps&t=1061s",
+        "tijd": 1064,
+        "citaat": "maybe you can charge with your um scorpions",
+        "extraCitaten": [
+          {
+            "tijd": 1064,
+            "citaat": "providing you're winning you're you can stick them because you can follow up"
+          }
+        ]
+      },
+      "toelichting": "The same plan uses a friendly dragon to hold the enemy monster so Tomb Scorpions can reach the fight."
+    },
+    {
+      "lesId": "concentrate-points-death-star",
+      "bron": {
+        "bronId": "yt-hE0mBMOwDps",
+        "url": "https://www.youtube.com/watch?v=hE0mBMOwDps&t=1921s",
+        "tijd": 1924,
+        "citaat": "potentially go death star a bit"
+      },
+      "voorbeeld": "He suggests a hypothetical thousand-point Tomb Guard unit with Tomb Scorpions positioned to support it if the dragon attacks.",
+      "toelichting": "He again proposes concentrating points in one large unit, here to make a dragon commit if it wants those points."
+    },
+    {
+      "lesId": "decoys-set-up-countercharges",
+      "bron": {
+        "bronId": "yt-hE0mBMOwDps",
+        "url": "https://www.youtube.com/watch?v=hE0mBMOwDps&t=2049s",
+        "tijd": 2052,
+        "citaat": "you then need those counter targets",
+        "extraCitaten": [
+          {
+            "tijd": 2060,
+            "citaat": "if the dragon is now committed"
+          }
+        ]
+      },
+      "toelichting": "He recommends offering an attractive target with supporting attackers ready to countercharge the dragon once it commits."
+    },
+    {
+      "lesId": "delay-dragon-score-elsewhere",
+      "bron": {
+        "bronId": "yt-hE0mBMOwDps",
+        "url": "https://www.youtube.com/watch?v=hE0mBMOwDps&t=2064s",
+        "tijd": 2067,
+        "citaat": "focus on the rest of the army",
+        "extraCitaten": [
+          {
+            "tijd": 2021,
+            "citaat": "it might take quite a few turns"
+          }
+        ]
+      },
+      "waarom": "He argues that a defensively equipped dragon may spend several turns clearing a relatively inexpensive infantry block, leaving fewer enemy resources to oppose the rest of your army.",
+      "toelichting": "The same recommendation limits the dragon's earnings by occupying it while fighting the rest of its army."
+    },
+    {
+      "lesId": "anchor-challenges-against-dragons",
+      "bron": {
+        "bronId": "yt-hE0mBMOwDps",
+        "url": "https://www.youtube.com/watch?v=hE0mBMOwDps&t=2002s",
+        "tijd": 2005,
+        "citaat": "you're going to feed him a champ",
+        "extraCitaten": [
+          {
+            "tijd": 2133,
+            "citaat": "Champions are big you need you're going to have to do that"
+          }
+        ]
+      },
+      "toelichting": "He again recommends using a champion to help an infantry block delay a dragon."
+    },
+    {
+      "lesId": "three-irondrake-torpedo-units",
+      "bron": {
+        "bronId": "yt-hE0mBMOwDps",
+        "url": "https://www.youtube.com/watch?v=hE0mBMOwDps&t=2530s",
+        "tijd": 2533,
+        "citaat": "the troll Hammer um yeah it's fantastic",
+        "extraCitaten": [
+          {
+            "tijd": 2551,
+            "citaat": "you can bring the iron wardens in units of five"
+          }
+        ]
+      },
+      "toelichting": "He endorses minimum-sized Trollhammer shooting units for damaging dragons, supporting the existing small-unit recommendation."
+    },
+    {
+      "lesId": "light-death-leadership-debuffs",
+      "bron": {
+        "bronId": "yt-hE0mBMOwDps",
+        "url": "https://www.youtube.com/watch?v=hE0mBMOwDps&t=2711s",
+        "tijd": 2714,
+        "citaat": "the casket and the Catapult and the leadership debuffs",
+        "extraCitaten": [
+          {
+            "tijd": 2729,
+            "citaat": "if you you you can get some of those leaderships down"
+          }
+        ]
+      },
+      "toelichting": "He proposes the same leadership-reduction and Casket attack combination, here against dragon-mounted characters."
+    },
+    {
+      "lesId": "control-spells-block-lanes",
+      "bron": {
+        "bronId": "yt-hE0mBMOwDps",
+        "url": "https://www.youtube.com/watch?v=hE0mBMOwDps&t=3920s",
+        "tijd": 3923,
+        "citaat": "the column of Crystal",
+        "extraCitaten": [
+          {
+            "tijd": 3932,
+            "citaat": "you can PL that in front of a dragon"
+          }
+        ]
+      },
+      "toelichting": "He again suggests using a terrain-creating control spell to obstruct an enemy's approach, specifically a dragon."
+    }
+  ],
+  "overgeslagen": "Skipped introductions, presentation trouble, channel and hobby talk, edition comparisons, tournament-comp discussion, speculative balance changes, and stat readouts without recommendations. Omitted the unresolved Seal of Paravon interaction, uncertain item and spell details, garbled unit names and missile-build passages, and the doubtful MSU suggestion.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

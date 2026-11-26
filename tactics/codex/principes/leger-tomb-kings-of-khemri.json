@@ -2,20 +2,32 @@
   "scope": "leger-tomb-kings-of-khemri",
   "soort": "leger",
   "sleutel": "tomb-kings-of-khemri",
-  "gemaaktOp": "2026-11-25T23:33:46.176Z",
+  "gemaaktOp": "2026-11-26T04:41:30.122Z",
   "model": "gpt-6.1-sol",
   "effort": "high",
-  "invoerHash": "efaf35982cd2",
+  "invoerHash": "02703eed4134",
   "invoer": [
+    "replace-excess-skirmishers-chariots",
     "horse-archers-scouting-bonus",
     "overlap-necrosphinx-threat-arcs",
     "mortuary-cult-refused-flank",
     "ushabti-arcs-against-flyers",
+    "deploy-dragon-reserve-move",
+    "paired-scorpions-flank-pinned-threat",
+    "poison-block-decline-followup",
     "tomb-scorpion-dangerous-chaff",
     "vanguard-scorpions-fight-chaff",
+    "horse-archers-isolated-skirmishers",
+    "reserve-horse-archers-deny-impact",
+    "necrotect-poison-skeleton-attacks",
+    "tomb-guard-death-mask",
     "necrosphinx-zone-sky-lanterns",
     "tomb-king-dragon-armour-ages",
     "foot-priests-infantry-protection",
+    "bone-dragon-neutralises-monsters",
+    "high-priest-near-herald",
+    "necrotect-whip-champion-challenges",
+    "skeletons-necrotects-prince-punch",
     "light-death-leadership-debuffs",
     "bone-dragon-control-priest",
     "necrosphinx-terror-leadership",
@@ -26,8 +38,15 @@
     "swarm-battery-healing-cycle",
     "prioritise-light-of-protection",
     "flying-high-priests-conveyances",
+    "necromancy-familiar-debuff-pair",
+    "curse-weaver-without-familiar",
+    "mortuary-priests-behind-block",
     "ushabti-great-bows-lanterns",
     "skeleton-archers-poison-volume",
+    "six-great-bow-ushabti",
+    "ushabti-shoot-monsters-ogres",
+    "kharibdyss-before-cold-ones",
+    "focus-mournfangs-before-contact",
     "combo-charge-poison-death-star",
     "engage-poison-block-early",
     "skeletons-or-finish-character",
@@ -35,9 +54,37 @@
   ],
   "principes": [
     {
-      "id": "exploit-leadership-debuffs",
-      "titel": "Pair leadership debuffs with threats that exploit low leadership",
-      "tekst": "Combine leadership penalties with threats that benefit from low leadership. The penalty makes those threats more likely to work.",
+      "id": "reposition-ushabti-without-losing-shooting-accuracy",
+      "titel": "Reposition great-bow Ushabti without losing shooting accuracy",
+      "tekst": "Move or turn your Ushabti when needed to keep targets in their firing arc. Their shooting does not suffer penalties for this movement.",
+      "soort": "principe",
+      "thema": "shooting-terrain",
+      "leger": "tomb-kings-of-khemri",
+      "lessen": [
+        "ushabti-arcs-against-flyers",
+        "ushabti-great-bows-lanterns",
+        "ushabti-shoot-monsters-ogres"
+      ],
+      "kanten": null
+    },
+    {
+      "id": "shoot-multi-wound-targets-with-great-bow-ushabti",
+      "titel": "Shoot multi-wound targets with great-bow Ushabti",
+      "tekst": "Use your great-bow Ushabti against multi-wound targets. Their shots deal two damage, but account for their low armour piercing when choosing targets.",
+      "soort": "principe",
+      "thema": "shooting-terrain",
+      "leger": "tomb-kings-of-khemri",
+      "lessen": [
+        "ushabti-great-bows-lanterns",
+        "ushabti-shoot-monsters-ogres",
+        "focus-mournfangs-before-contact"
+      ],
+      "kanten": null
+    },
+    {
+      "id": "pair-leadership-debuffs-with-leadership-based-threats",
+      "titel": "Pair Leadership debuffs with Leadership-based threats",
+      "tekst": "Use Leadership reduction to strengthen effects that depend on the enemy failing a Leadership test. Lowering Leadership makes those effects more likely to work.",
       "soort": "principe",
       "thema": "magic",
       "leger": "tomb-kings-of-khemri",
@@ -53,15 +100,15 @@
   "runs": [
     {
       "poging": 1,
-      "promptKB": 19,
-      "sec": 54,
+      "promptKB": 30,
+      "sec": 64,
       "exit": 0,
       "usage": {
-        "input_tokens": 31659,
+        "input_tokens": 34745,
         "cached_input_tokens": 0,
         "cache_write_input_tokens": 0,
-        "output_tokens": 2456,
-        "reasoning_output_tokens": 2333
+        "output_tokens": 2982,
+        "reasoning_output_tokens": 2588
       },
       "items": {
         "agent_message": 1

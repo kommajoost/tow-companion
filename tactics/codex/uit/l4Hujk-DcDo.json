@@ -1,0 +1,411 @@
+{
+  "videoId": "l4Hujk-DcDo",
+  "bronId": "yt-l4Hujk-DcDo",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-26T01:48:25.604Z",
+  "nieuw": [
+    {
+      "id": "plan-small-unit-groups",
+      "titel": "Plan your army in small groups with assigned roles",
+      "tekst": "Pre-plan small groups of units with roles such as flanking or forming a defensive main force. He finds it simpler to think about where a few groups go than to manage every deployment drop separately.",
+      "waarom": "He says grouping the army means he is not thinking about 13 separate drops.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "subthemas": [
+        "list-building"
+      ],
+      "tags": [
+        "deployment-drops",
+        "flanks",
+        "anvil"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-l4Hujk-DcDo",
+          "url": "https://www.youtube.com/watch?v=l4Hujk-DcDo&t=616s",
+          "tijd": 619,
+          "citaat": "I kind of give them little roles to do.",
+          "extraCitaten": [
+            {
+              "tijd": 1570,
+              "citaat": "Cuz that way I'm not playing with 13 drops"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-12-17",
+      "markeringen": []
+    },
+    {
+      "id": "separate-large-infantry-blocks",
+      "titel": "Separate large infantry blocks before attacking them",
+      "tekst": "He usually tries to separate large infantry blocks before attacking them, rather than hitting them while they support each other.",
+      "waarom": null,
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "subthemas": [
+        "concentration"
+      ],
+      "tags": [
+        "concentration",
+        "close-order"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-l4Hujk-DcDo",
+          "url": "https://www.youtube.com/watch?v=l4Hujk-DcDo&t=950s",
+          "tijd": 953,
+          "citaat": "I don't usually like hitting those unless you try and separate them,"
+        }
+      ],
+      "datum": "2025-12-17",
+      "markeringen": []
+    },
+    {
+      "id": "central-sheltered-chaff-deployment",
+      "titel": "Keep early chaff drops central and out of the way",
+      "tekst": "Rather than placing chaff in arbitrary areas during deployment, he usually keeps it central. Keep it back from the deployment line so it does not obstruct other units, and consider sheltering it behind a forest or impassable terrain.",
+      "waarom": "He found that reacting to each opposing deployment drop often left his units in useless positions.",
+      "voorbeeld": "He describes hiding a Great Eagle back behind terrain.",
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "deployment"
+      ],
+      "subthemas": [
+        "unit-placement"
+      ],
+      "tags": [
+        "deployment-drops",
+        "centre",
+        "line-of-sight"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-l4Hujk-DcDo",
+          "url": "https://www.youtube.com/watch?v=l4Hujk-DcDo&t=1874s",
+          "tijd": 1877,
+          "citaat": "always put it somewhere central.",
+          "extraCitaten": [
+            {
+              "tijd": 1877,
+              "citaat": "Make sure it's not right on the line so it's in the way."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-12-17",
+      "markeringen": []
+    },
+    {
+      "id": "investigate-unfamiliar-list-centrepieces",
+      "titel": "Investigate unfamiliar units and items before planning the game",
+      "tekst": "When scanning an opposing list, investigate things you do not understand, especially unfamiliar units the army centres on. He considers an expensive unit whose purpose you do not understand a warning sign; establish what it does and how the list works.",
+      "waarom": "He wants enough understanding of the units and their synergy to play against the list.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "deployment"
+      ],
+      "subthemas": [
+        "pre-game-checks"
+      ],
+      "tags": [
+        "magic-items",
+        "tournament"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-l4Hujk-DcDo",
+          "url": "https://www.youtube.com/watch?v=l4Hujk-DcDo&t=2091s",
+          "tijd": 2094,
+          "citaat": "that's a red flag if you've got an expensive unit",
+          "extraCitaten": [
+            {
+              "tijd": 2080,
+              "citaat": "it's just understanding the units and trying to work out synergy."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-12-17",
+      "markeringen": []
+    },
+    {
+      "id": "ignore-slow-expensive-threats",
+      "titel": "Consider avoiding expensive units with little threat range",
+      "tekst": "Look for expensive enemy units with poor mobility and limited threat range. If one cannot hurt your army unless you actively engage it, consider leaving it alone.",
+      "waarom": "He points out that a terrifying but immobile unit may be unable to hurt you without your cooperation.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "subthemas": [
+        "reading-the-enemy"
+      ],
+      "tags": [
+        "charge-range",
+        "zoning"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-l4Hujk-DcDo",
+          "url": "https://www.youtube.com/watch?v=l4Hujk-DcDo&t=2108s",
+          "tijd": 2111,
+          "citaat": "I might just not engage with that that massive terrifying unit",
+          "extraCitaten": [
+            {
+              "tijd": 2120,
+              "citaat": "they can't hurt me unless I unless I actively engage with them."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-12-17",
+      "markeringen": []
+    },
+    {
+      "id": "build-backup-key-pieces",
+      "titel": "Build in redundancy for the loss of a key piece",
+      "tekst": "Consider building redundancy into your list so that losing an important piece early leaves you another option. He raises this as preparation for recovering when the original plan goes wrong.",
+      "waarom": null,
+      "voorbeeld": "After discussing the early loss of a Black Orc on Wyvern, he suggests having two and points to paired Great Eagles as another example of redundancy.",
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "subthemas": [
+        "list-building"
+      ],
+      "tags": [
+        "victory-points",
+        "tournament"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-l4Hujk-DcDo",
+          "url": "https://www.youtube.com/watch?v=l4Hujk-DcDo&t=2457s",
+          "tijd": 2460,
+          "citaat": "it's a bit of list design where um you you have that redundancy built in."
+        }
+      ],
+      "datum": "2025-12-17",
+      "markeringen": []
+    },
+    {
+      "id": "repurpose-pieces-as-chaff",
+      "titel": "Repurpose pieces as chaff when the original plan fails",
+      "tekst": "When the game goes wrong, be willing to give a piece a job it was not originally selected for. A wizard that has already done its work can become a sacrifice or chaff instead of remaining tied to its original role.",
+      "waarom": null,
+      "voorbeeld": "He describes sacrificing a wizard after it has done its job.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "chaff",
+        "game-plan"
+      ],
+      "subthemas": [
+        "redirecting",
+        "tempo-trading"
+      ],
+      "tags": [
+        "sacrifice",
+        "delay"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-l4Hujk-DcDo",
+          "url": "https://www.youtube.com/watch?v=l4Hujk-DcDo&t=2497s",
+          "tijd": 2500,
+          "citaat": "this wizard's done its job now and he just I got to sacrifice him.",
+          "extraCitaten": [
+            {
+              "tijd": 2509,
+              "citaat": "sorry man you're a chaff now"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-12-17",
+      "markeringen": []
+    },
+    {
+      "id": "recover-points-unguarded-areas",
+      "titel": "Move mobile units towards unguarded targets when losing",
+      "tekst": "When part of the battle goes badly, reassess separate areas of the board and move mobile units where they can recover points. Consider attacking unguarded missile troops when the opponent has committed combat units elsewhere.",
+      "waarom": "He says an opponent who spends heavily to destroy one part of your army may leave targets elsewhere unguarded.",
+      "voorbeeld": null,
+      "wanneerNiet": "He feels more static armies have less freedom to change their strategy in this way.",
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "subthemas": [
+        "tempo-trading"
+      ],
+      "tags": [
+        "victory-points",
+        "missile-troops"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-l4Hujk-DcDo",
+          "url": "https://www.youtube.com/watch?v=l4Hujk-DcDo&t=2597s",
+          "tijd": 2600,
+          "citaat": "trying to work out what units can can you can drag over to help",
+          "extraCitaten": [
+            {
+              "tijd": 2622,
+              "citaat": "maybe a few missile troops and stuff that are a bit unguarded"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-12-17",
+      "markeringen": []
+    },
+    {
+      "id": "write-phase-reminder-sheet",
+      "titel": "Write a phase reminder sheet for your tournament list",
+      "tekst": "Before a tournament, especially with a new army, write a reminder sheet and update it as the list changes. Include planned spells, pre-game reminders and actions by phase, plus reminders for the opponent's turn such as shooting modifiers.",
+      "waarom": "He finds writing the sheet useful for remembering the list even when he only consults it once or twice at the event.",
+      "voorbeeld": "He includes an opponent-turn box to remember the Casket of Souls' minus-one-to-hit effect.",
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "subthemas": [
+        "list-building"
+      ],
+      "tags": [
+        "tournament",
+        "hit-penalties",
+        "charge-range"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-l4Hujk-DcDo",
+          "url": "https://www.youtube.com/watch?v=l4Hujk-DcDo&t=3631s",
+          "tijd": 3634,
+          "citaat": "I had like the start of turn, movement, shooting, combat, and just sort of ideas.",
+          "extraCitaten": [
+            {
+              "tijd": 3624,
+              "citaat": "I have to remember to make sure he rolls minus one"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-12-17",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "mobile-armies-reward-movement",
+      "bron": {
+        "bronId": "yt-l4Hujk-DcDo",
+        "url": "https://www.youtube.com/watch?v=l4Hujk-DcDo&t=642s",
+        "tijd": 645,
+        "citaat": "Movement and flyers for me are like some of my most important things."
+      },
+      "toelichting": "He likewise favours movement and flyers when choosing an army and planning its board control."
+    },
+    {
+      "lesId": "deploy-for-unit-synergy",
+      "bron": {
+        "bronId": "yt-l4Hujk-DcDo",
+        "url": "https://www.youtube.com/watch?v=l4Hujk-DcDo&t=1012s",
+        "tijd": 1015,
+        "citaat": "You're not you're not building on the synergies of your own army",
+        "extraCitaten": [
+          {
+            "tijd": 1021,
+            "citaat": "you do need a a set plan for your army"
+          }
+        ]
+      },
+      "toelichting": "He recommends preserving the army's own support and synergies instead of letting counterdeployment pull units apart."
+    },
+    {
+      "lesId": "deploy-early-ensure-fit",
+      "bron": {
+        "bronId": "yt-l4Hujk-DcDo",
+        "url": "https://www.youtube.com/watch?v=l4Hujk-DcDo&t=1647s",
+        "tijd": 1650,
+        "citaat": "do I just prioritize getting the nice units down a little bit sooner"
+      },
+      "toelichting": "He suggests placing important units sooner so earlier drops do not block their intended positions."
+    },
+    {
+      "lesId": "chaff-kills-are-bonuses",
+      "bron": {
+        "bronId": "yt-l4Hujk-DcDo",
+        "url": "https://www.youtube.com/watch?v=l4Hujk-DcDo&t=930s",
+        "tijd": 933,
+        "citaat": "your intention is never to even get into combat in the first place"
+      },
+      "wanneerNiet": "He allows the distracting unit to enter combat if it has to.",
+      "toelichting": "He uses a unit to keep an enemy busy without intending to fight it, matching chaff's disruptive role."
+    },
+    {
+      "lesId": "position-for-next-turn-charges",
+      "bron": {
+        "bronId": "yt-l4Hujk-DcDo",
+        "url": "https://www.youtube.com/watch?v=l4Hujk-DcDo&t=3017s",
+        "tijd": 3020,
+        "citaat": "positioning it in a way that you'll get the turn two charge"
+      },
+      "toelichting": "He describes advancing into positions that set up the following turn's charge."
+    },
+    {
+      "lesId": "deploy-for-later-positions",
+      "bron": {
+        "bronId": "yt-l4Hujk-DcDo",
+        "url": "https://www.youtube.com/watch?v=l4Hujk-DcDo&t=1110s",
+        "tijd": 1113,
+        "citaat": "Like it spent three turns coming towards the sea guard"
+      },
+      "voorbeeld": "He describes deploying Grail Knights before the opponent's mobile threats, allowing the opponent to place units far away from them. The Grail Knights spent three turns crossing towards the Lothern Sea Guard and struggled to enter combat.",
+      "toelichting": "His deployment mistake illustrates the same need to plan where a unit will be useful over later turns."
+    }
+  ],
+  "overgeslagen": "Skipped introductions, banter, patrons, hobby and painting discussion, tournament standings and meta statistics, speculative unfinished army lists, uncertain rule recollections, and the explicitly rejected slow-play joke. Garbled unit names and unclear game details were not used as advice.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

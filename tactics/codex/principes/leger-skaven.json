@@ -2,15 +2,20 @@
   "scope": "leger-skaven",
   "soort": "leger",
   "sleutel": "skaven",
-  "gemaaktOp": "2026-11-25T23:32:48.200Z",
+  "gemaaktOp": "2026-11-26T04:40:22.040Z",
   "model": "gpt-6.1-sol",
   "effort": "high",
-  "invoerHash": "29852df5c879",
+  "invoerHash": "0f46722f96f1",
   "invoer": [
     "jezzails-hidden-lantern-kill-lanes",
+    "bell-behind-stormvermin-support",
     "giant-rats-absorb-first-charge",
+    "giant-rats-redirection-choice",
+    "giant-rats-sacrifice-panic",
     "stormvermin-ten-wide",
     "hell-pit-utility-monster",
+    "gutter-runners-always-poison",
+    "gutter-runners-weapon-role",
     "warp-lightning-cannons-lanterns"
   ],
   "principes": [],
@@ -18,15 +23,15 @@
   "runs": [
     {
       "poging": 1,
-      "promptKB": 7,
-      "sec": 6,
+      "promptKB": 9,
+      "sec": 7,
       "exit": 0,
       "usage": {
-        "input_tokens": 28250,
+        "input_tokens": 28908,
         "cached_input_tokens": 0,
         "cache_write_input_tokens": 0,
-        "output_tokens": 50,
-        "reasoning_output_tokens": 32
+        "output_tokens": 90,
+        "reasoning_output_tokens": 72
       },
       "items": {
         "agent_message": 1

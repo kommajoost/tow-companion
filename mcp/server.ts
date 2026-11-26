@@ -84,7 +84,7 @@ export const TOOLS: Tool[] = [
     inputSchema: obj({
       theme: s('Theme id or name from list_tactics_index (e.g. "chaff", "magic").'),
       army: ARMY,
-      limit: n('Principles per list (default 10, max 30).', 1, 30),
+      limit: n('Principles per list (default 10, max 25).', 1, 25),
     }),
     run: (a) => listPrinciples({ theme: str(a.theme), army: str(a.army), limit: int(a.limit) }),
   },

@@ -2,16 +2,21 @@
   "scope": "thema-scenarios",
   "soort": "thema",
   "sleutel": "scenarios",
-  "gemaaktOp": "2026-11-25T23:30:02.434Z",
+  "gemaaktOp": "2026-11-26T04:34:35.593Z",
   "model": "gpt-6.1-sol",
   "effort": "high",
-  "invoerHash": "9a6e0dafed59",
+  "invoerHash": "9ce510ffbc4a",
   "invoer": [
     "mobile-core-objective-attackers",
     "cheap-area-capture-units",
     "maintain-cover-for-scorers",
     "wait-before-contesting-centre",
     "substantial-core-scenario-scorers",
+    "allocate-scorers-by-contest",
+    "slow-scorers-front-centre",
+    "fourteen-skirmishing-infantry-scorers",
+    "light-cavalry-scoring-unit-sizes",
+    "cheap-infantry-thirty-thirty-six",
     "ungor-cheap-objective-holders",
     "doombull-gor-scoring-attacker",
     "seekers-mobile-core-scorers",
@@ -28,9 +33,23 @@
     "reform-footprint-objective-control",
     "claim-objectives-against-gunlines",
     "vanguard-temporary-objective-control",
+    "natural-objective-opening-score",
+    "special-feature-choose-second",
+    "special-feature-first-turn-pressure",
+    "limit-enemy-natural-commitment",
+    "aggressor-pressure-both-central-objectives",
+    "chase-light-contenders-off-objectives",
+    "column-blockers-delay-objective-access",
+    "furious-charge-objective-push",
+    "cavalry-infantry-objective-handover",
+    "durable-army-claim-objectives-early",
+    "cavalry-push-off-objectives",
     "beastmen-infantry-safe-ambush",
     "jade-warriors-deny-scoring",
     "kiknik-ambushers-score-objectives",
+    "wolf-riders-harass-objective-scorers",
+    "wolf-column-retain-objectives",
+    "ambush-replace-early-wolf-scorers",
     "resurrect-outnumber-central-objective",
     "herdstone-after-main-battle",
     "chaos-warriors-defensive-attrition",
@@ -39,30 +58,111 @@
     "mobile-baggage-train-attackers",
     "two-units-baggage-contact",
     "ambushers-target-baggage-trains",
+    "baggage-cheap-home-scorer",
+    "aggressive-baggage-forward-placement",
     "fell-bats-scenario-pairs",
     "vampire-force-necromancer-range",
     "king-of-the-hill-forfeit",
     "unbreakable-advance-beyond-capture",
     "stubborn-shield-wall-scoring",
     "king-hill-concentrate-centre",
+    "hill-scorer-offset-feature",
+    "hill-small-scorer-hidden",
     "eternal-guard-charge-for-scoring",
     "encirclement-protect-vulnerable-scorer",
     "army-plan-every-mission",
     "field-glory-wide-deployment",
     "close-quarter-defensive-shooting",
     "chance-encounter-patient-play",
+    "drawn-lines-reserve-backup",
+    "domination-central-late-expansion",
+    "domination-aggressive-pin",
+    "chance-encounter-charge-safety",
+    "chance-encounter-late-aggressor",
+    "encirclement-short-objective-triangle",
+    "close-quarters-deny-enemy-scoring",
     "reavers-marching-column-breakthrough",
     "reavers-widen-clear-breakthrough",
     "hidden-mobile-objective-grabs",
     "endgame-hide-save-points",
     "mobile-blaster-late-points",
-    "missiles-deny-terrain-scoring"
+    "missiles-deny-terrain-scoring",
+    "block-final-objective-approach",
+    "ambush-late-domination-quarters",
+    "preserve-cavalry-domination-scoring",
+    "finish-six-turns-vampires"
   ],
   "principes": [
     {
-      "id": "use-ambushers-to-claim-unguarded-objectives",
-      "titel": "Use ambushers to claim unguarded objectives",
-      "tekst": "Bring ambushers into open space to take objectives. Look for gaps left as enemy units advance to score.",
+      "id": "deploy-scorers-to-reach-objectives",
+      "titel": "Deploy scorers to reach the objectives you plan to contest",
+      "tekst": "Choose reachable scoring locations and deploy your scorers with practical routes to them. Avoid making them waste turns travelling into position.",
+      "soort": "principe",
+      "thema": "scenarios",
+      "leger": null,
+      "lessen": [
+        "identify-contestable-objectives",
+        "slow-scorers-front-centre",
+        "natural-objective-opening-score",
+        "field-glory-wide-deployment",
+        "hill-scorer-offset-feature",
+        "domination-central-late-expansion",
+        "encirclement-short-objective-triangle"
+      ],
+      "kanten": null
+    },
+    {
+      "id": "win-objectives-without-destroying-enemies",
+      "titel": "Win objective contests without needing to destroy enemy units",
+      "tekst": "Play for the scoring position rather than finishing off every opponent. Holding your ground or moving an enemy away can secure the objective points.",
+      "soort": "principe",
+      "thema": "scenarios",
+      "leger": null,
+      "lessen": [
+        "move-to-hold-objectives",
+        "wind-blast-objective-distance",
+        "chase-light-contenders-off-objectives",
+        "durable-army-claim-objectives-early",
+        "cavalry-push-off-objectives",
+        "resurrect-outnumber-central-objective"
+      ],
+      "kanten": null
+    },
+    {
+      "id": "start-progressive-scoring-early",
+      "titel": "Start scoring accessible progressive objectives early",
+      "tekst": "Get scorers onto accessible objectives early when they award points throughout the game. Those scoring turns can build a lead while the opponent delays.",
+      "soort": "principe",
+      "thema": "scenarios",
+      "leger": null,
+      "lessen": [
+        "claim-objectives-against-gunlines",
+        "vanguard-temporary-objective-control",
+        "natural-objective-opening-score",
+        "cavalry-infantry-objective-handover",
+        "durable-army-claim-objectives-early"
+      ],
+      "kanten": null
+    },
+    {
+      "id": "use-cheap-units-for-scoring",
+      "titel": "Use cheap units to hold objectives and scoring areas",
+      "tekst": "Assign inexpensive units to objective-holding and area-scoring jobs.",
+      "soort": "principe",
+      "thema": "scenarios",
+      "leger": null,
+      "lessen": [
+        "cheap-area-capture-units",
+        "ungor-cheap-objective-holders",
+        "wolf-column-retain-objectives",
+        "baggage-cheap-home-scorer"
+      ],
+      "kanten": null
+    },
+    {
+      "id": "send-ambushers-after-open-objectives",
+      "titel": "Send ambushers after objectives in vacant areas",
+      "tekst": "Bring ambushers into open space to take unattended objectives. Look for opportunities left behind when enemy units advance to score.",
       "soort": "principe",
       "thema": "scenarios",
       "leger": null,
@@ -75,44 +175,73 @@
       "kanten": null
     },
     {
-      "id": "position-units-to-claim-endgame-objectives",
-      "titel": "Position your units to claim objectives at the end",
-      "tekst": "Plan your movement to claim objectives at the end of the game. Keep the units you need alive to make those claims.",
+      "id": "support-charges-against-objective-defenders",
+      "titel": "Use supported charges to dislodge objective defenders",
+      "tekst": "Coordinate attackers and supporting units when charging to push a defender off an objective.",
       "soort": "principe",
       "thema": "scenarios",
       "leger": null,
       "lessen": [
-        "move-to-hold-objectives",
-        "chance-encounter-patient-play",
+        "combo-charge-objective-defenders",
+        "cavalry-push-off-objectives",
+        "king-of-the-hill-forfeit",
+        "eternal-guard-charge-for-scoring"
+      ],
+      "kanten": null
+    },
+    {
+      "id": "assign-vulnerable-scorers-safer-positions",
+      "titel": "Give smaller or vulnerable scorers the safer scoring positions",
+      "tekst": "Put smaller or more vulnerable scorers in safer positions. Keep larger units available for objectives the opponent will contest.",
+      "soort": "principe",
+      "thema": "scenarios",
+      "leger": null,
+      "lessen": [
+        "allocate-scorers-by-contest",
+        "hill-small-scorer-hidden",
+        "encirclement-protect-vulnerable-scorer"
+      ],
+      "kanten": null
+    },
+    {
+      "id": "protect-scorers-with-cover",
+      "titel": "Protect vulnerable scorers with cover or screens",
+      "tekst": "Use terrain or screening units to protect your scorers as you position them for objectives. Avoid exposing them to shooting just to reach or hold a scoring position.",
+      "soort": "principe",
+      "thema": "scenarios",
+      "leger": null,
+      "lessen": [
+        "maintain-cover-for-scorers",
+        "hill-small-scorer-hidden",
         "hidden-mobile-objective-grabs"
       ],
       "kanten": null
     },
     {
-      "id": "position-your-force-around-scoring-locations",
-      "titel": "Position your force around the mission's scoring locations",
-      "tekst": "Use the location of objectives to decide where to commit your force, so your units can contest the places that offer points.",
+      "id": "preserve-mobile-scorers-for-later",
+      "titel": "Keep mobile scorers safe for later scoring",
+      "tekst": "Protect some mobile scoring units during the opening turns, then use them to claim objectives later.",
       "soort": "principe",
       "thema": "scenarios",
       "leger": null,
       "lessen": [
-        "identify-contestable-objectives",
-        "king-hill-concentrate-centre",
-        "field-glory-wide-deployment"
+        "ambush-replace-early-wolf-scorers",
+        "hidden-mobile-objective-grabs",
+        "preserve-cavalry-domination-scoring"
       ],
       "kanten": null
     },
     {
-      "id": "delay-objective-commitment-to-prepare-your-position",
-      "titel": "Delay objective commitment when you need time to prepare",
-      "tekst": "Consider delaying your commitment to an objective so you can prepare your position before contesting it.",
+      "id": "damage-scorers-to-deny-points",
+      "titel": "Damage enemy scorers to deny their objective points",
+      "tekst": "Focus damage on enemy scoring units to stop them earning objective points.",
       "soort": "principe",
       "thema": "scenarios",
       "leger": null,
       "lessen": [
-        "wait-before-contesting-centre",
-        "king-of-the-hill-forfeit",
-        "chance-encounter-patient-play"
+        "jade-warriors-deny-scoring",
+        "wolf-riders-harass-objective-scorers",
+        "missiles-deny-terrain-scoring"
       ],
       "kanten": null
     }
@@ -121,15 +250,15 @@
   "runs": [
     {
       "poging": 1,
-      "promptKB": 33,
-      "sec": 78,
+      "promptKB": 54,
+      "sec": 164,
       "exit": 0,
       "usage": {
-        "input_tokens": 35199,
+        "input_tokens": 40430,
         "cached_input_tokens": 0,
         "cache_write_input_tokens": 0,
-        "output_tokens": 3645,
-        "reasoning_output_tokens": 3224
+        "output_tokens": 7952,
+        "reasoning_output_tokens": 6497
       },
       "items": {
         "agent_message": 1

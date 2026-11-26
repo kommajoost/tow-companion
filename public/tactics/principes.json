@@ -1,10 +1,119 @@
 {
-  "bijgewerkt": "2026-11-25",
+  "bijgewerkt": "2026-11-26",
   "drempel": {
     "lessen": 3,
     "kanalen": 2
   },
   "principes": [
+    {
+      "id": "reinforce-fights-with-flank-or-rear-charges",
+      "titel": "Reinforce your main fight with flank or rear charges",
+      "tekst": "Bring support into the flank or rear of an enemy fighting your main unit. This can add combat resolution or help finish a fight your main unit cannot win alone.",
+      "soort": "principe",
+      "thema": "movement",
+      "leger": null,
+      "aantalLessen": 16,
+      "aantalKanalen": 8,
+      "kanalen": [
+        "2pluspodcast",
+        "d6-wounds",
+        "return-to-the-old-world",
+        "dawi-after-dark",
+        "hammerhobby",
+        "malign-musings",
+        "old-world-fanatics",
+        "zen-fox-games"
+      ],
+      "lessen": [
+        "coordinate-front-flank-arrival",
+        "stubborn-anchor-countercharge",
+        "skirmisher-rear-combat-support",
+        "reform-screen-flank-countercharge",
+        "ambushers-banner-combat-resolution",
+        "ambushers-support-flank-rear-charges",
+        "light-cavalry-deny-ranks",
+        "gyrocopter-rear-charge-dragon",
+        "empire-knights-support-combats",
+        "black-orc-chariot-standard",
+        "close-order-wolves-ambush-support",
+        "boar-flankers-break-grinds",
+        "giant-finishes-boar-combats",
+        "paired-scorpions-flank-pinned-threat",
+        "heavy-chariot-support",
+        "gigantic-spawn-pins-for-support"
+      ]
+    },
+    {
+      "id": "hide-vulnerable-units-behind-terrain",
+      "titel": "Hide vulnerable units behind terrain to deny enemy shooting",
+      "tekst": "Use terrain that blocks line of sight to shelter units from damaging shooting.",
+      "soort": "principe",
+      "thema": "shooting-terrain",
+      "leger": null,
+      "aantalLessen": 16,
+      "aantalKanalen": 6,
+      "kanalen": [
+        "2pluspodcast",
+        "close-order",
+        "dawi-after-dark",
+        "malign-musings",
+        "old-world-fanatics",
+        "old-world-legends"
+      ],
+      "lessen": [
+        "hidden-grudge-throwers-bombards",
+        "hammers-on-flanks",
+        "shelter-monsters-from-cannons",
+        "hill-small-scorer-hidden",
+        "hide-mangler-from-cannons",
+        "hide-mortis-engines-artillery",
+        "hide-marauder-missile-bunker",
+        "evasive-retreat-behind-hill",
+        "glade-riders-shoot-withdraw",
+        "woods-block-attack-lanes",
+        "artillery-pivot-into-woods",
+        "combine-wood-elf-forests",
+        "treesinging-extend-defensive-forest",
+        "woodland-ambush-terrain-corridor",
+        "exile-pegasus-knights-start-hidden",
+        "deploy-defensively-vs-shooting"
+      ]
+    },
+    {
+      "id": "restrict-movement-with-threats",
+      "titel": "Use threats to restrict movement without committing to combat",
+      "tekst": "Position threats so the opponent must avoid an area or change their moves. A unit can influence the battle without actually fighting.",
+      "soort": "principe",
+      "thema": "game-plan",
+      "leger": null,
+      "aantalLessen": 15,
+      "aantalKanalen": 6,
+      "kanalen": [
+        "close-order",
+        "2pluspodcast",
+        "return-to-the-old-world",
+        "old-world-fanatics",
+        "facehammer-tv",
+        "nine-inch-charge"
+      ],
+      "lessen": [
+        "empire-knights-buy-artillery-time",
+        "zone-with-overlapping-threats",
+        "contain-mobile-units-opposite-directions",
+        "angle-attackers-towards-boundary",
+        "ambushers-pressure-enemy-movement",
+        "dragon-secondary-escape-coverage",
+        "regular-cavalry-earlier-pressure",
+        "shooting-zones-against-dragons",
+        "cavalry-flank-threat-choices",
+        "dragon-facing-deters-advance",
+        "duke-monster-slayer-zoning",
+        "fanatic-casters-two-turns",
+        "goblin-chariot-dragon-deterrent",
+        "overlap-necrosphinx-threat-arcs",
+        "dragon-sword-deters-miao"
+      ]
+    },
     {
       "id": "lower-leadership-before-tests-or-damage",
       "titel": "Lower enemy Leadership before Terror, break tests and Leadership attacks",
@@ -12,13 +121,15 @@
       "soort": "principe",
       "thema": "magic",
       "leger": null,
-      "aantalLessen": 7,
-      "aantalKanalen": 4,
+      "aantalLessen": 8,
+      "aantalKanalen": 6,
       "kanalen": [
         "old-world-legends",
         "square-based",
         "2pluspodcast",
-        "facehammer-tv"
+        "close-order",
+        "facehammer-tv",
+        "old-world-fanatics"
       ],
       "lessen": [
         "necromancy-leadership-control",
@@ -27,13 +138,560 @@
         "light-death-leadership-debuffs",
         "necrosphinx-terror-leadership",
         "lower-lantern-leadership-screams",
-        "repeated-terror-charges-lanterns"
+        "repeated-terror-charges-lanterns",
+        "dirge-necromancy-leadership-stack"
+      ]
+    },
+    {
+      "id": "deploy-units-within-reach-of-their-planned-buffs",
+      "titel": "Deploy units so their planned support can work",
+      "tekst": "Deploy units that need to work together in supporting positions. Plan ahead so an early advance or charge does not leave a fighting unit unsupported.",
+      "soort": "principe",
+      "thema": "deployment",
+      "leger": null,
+      "aantalLessen": 7,
+      "aantalKanalen": 6,
+      "kanalen": [
+        "2pluspodcast",
+        "old-world-fanatics",
+        "zen-fox-games",
+        "close-order",
+        "hammerhobby",
+        "malign-musings"
+      ],
+      "lessen": [
+        "deploy-for-unit-synergy",
+        "deploy-early-ensure-fit",
+        "bell-behind-stormvermin-support",
+        "deploy-dragon-reserve-move",
+        "flank-not-point-and-click",
+        "deploy-for-later-positions",
+        "eagle-skycutter-flank-pair"
+      ]
+    },
+    {
+      "id": "guard-vulnerable-flanks-with-terrain-or-supporting-units",
+      "titel": "Guard vulnerable flanks with terrain or supporting units",
+      "tekst": "Use terrain, a board edge or supporting units to protect vulnerable flanks. Deny enemies routes around your army into its exposed sides or rear.",
+      "soort": "principe",
+      "thema": "deployment",
+      "leger": null,
+      "aantalLessen": 6,
+      "aantalKanalen": 6,
+      "kanalen": [
+        "2pluspodcast",
+        "close-order",
+        "dawi-after-dark",
+        "facehammer-tv",
+        "hammerhobby",
+        "old-world-fanatics"
+      ],
+      "lessen": [
+        "protect-main-hammer-flank",
+        "castle-against-bretonnian-flyers",
+        "anchor-flanks-on-terrain",
+        "fanatics-guard-artillery-flanks",
+        "mortuary-cult-refused-flank",
+        "undead-wall-protect-flanks"
+      ]
+    },
+    {
+      "id": "screen-important-units-from-shooting",
+      "titel": "Screen your important units from enemy shooting",
+      "tekst": "Keep a screen between enemy shooters and the unit you want to protect. It can block shots, absorb fire or provide cover for the unit behind.",
+      "soort": "principe",
+      "thema": "chaff",
+      "leger": null,
+      "aantalLessen": 10,
+      "aantalKanalen": 5,
+      "kanalen": [
+        "2pluspodcast",
+        "close-order",
+        "dawi-after-dark",
+        "hammerhobby",
+        "old-world-legends"
+      ],
+      "lessen": [
+        "screening-chaff",
+        "horizontal-skirmisher-cover",
+        "match-screen-advance-speed",
+        "screen-block-every-firing-line",
+        "maintain-cover-for-scorers",
+        "rangers-screen-helblaster-fire",
+        "skinks-screen-cannon-sight",
+        "manglers-shield-doom-divers",
+        "ethereal-coach-shields-bats",
+        "warhawk-riders-evasive-screen"
+      ]
+    },
+    {
+      "id": "check-enemy-reach-before-choosing-safe-deployment-positions",
+      "titel": "Check enemy reach before choosing safe deployment positions",
+      "tekst": "Check enemy movement and attack ranges so opening attacks do not catch your vulnerable units. Include Vanguard moves when judging how far forward threats can reach.",
+      "soort": "principe",
+      "thema": "deployment",
+      "leger": null,
+      "aantalLessen": 7,
+      "aantalKanalen": 5,
+      "kanalen": [
+        "hammerhobby",
+        "2pluspodcast",
+        "close-order",
+        "dawi-after-dark",
+        "zen-fox-games"
+      ],
+      "lessen": [
+        "identify-fast-enemy-threats",
+        "mark-threat-ranges-dice",
+        "compare-ranges-before-deploying",
+        "shooters-need-time-safe",
+        "chance-encounter-charge-safety",
+        "deploy-beyond-moving-shooters",
+        "check-scouts-vanguard-safety"
+      ]
+    },
+    {
+      "id": "prepare-countercharges-behind-surviving-receivers",
+      "titel": "Prepare countercharges with units that can survive the first charge",
+      "tekst": "Keep a supporting attacker ready when another unit receives a charge. Use a receiver that can survive the hit so your support can countercharge.",
+      "soort": "principe",
+      "thema": "infantry",
+      "leger": null,
+      "aantalLessen": 7,
+      "aantalKanalen": 5,
+      "kanalen": [
+        "2pluspodcast",
+        "dawi-after-dark",
+        "nine-inch-charge",
+        "return-to-the-old-world",
+        "zen-fox-games"
+      ],
+      "lessen": [
+        "heavy-chariot-support",
+        "stubborn-anchor-countercharge",
+        "reform-screen-flank-countercharge",
+        "anvil-next-turn-combat-choices",
+        "layer-resilient-units-retreat-trap",
+        "stagger-receivers-for-countercharge",
+        "tarpit-shugengan-with-large-units"
+      ]
+    },
+    {
+      "id": "win-objectives-without-destroying-enemies",
+      "titel": "Win objective contests without needing to destroy enemy units",
+      "tekst": "Play for the scoring position rather than finishing off every opponent. Holding your ground or moving an enemy away can secure the objective points.",
+      "soort": "principe",
+      "thema": "scenarios",
+      "leger": null,
+      "aantalLessen": 7,
+      "aantalKanalen": 5,
+      "kanalen": [
+        "2pluspodcast",
+        "close-order",
+        "square-based",
+        "hammerhobby",
+        "return-to-the-old-world"
+      ],
+      "lessen": [
+        "move-to-hold-objectives",
+        "wind-blast-objective-distance",
+        "chase-light-contenders-off-objectives",
+        "durable-army-claim-objectives-early",
+        "cavalry-push-off-objectives",
+        "resurrect-outnumber-central-objective",
+        "substantial-core-scenario-scorers"
+      ]
+    },
+    {
+      "id": "bait-enemies-into-supporting-charges",
+      "titel": "Use bait and screens to set up your supporting charges",
+      "tekst": "Position bait or a screen so following it brings the enemy within reach of your waiting support. Use that support to countercharge.",
+      "soort": "principe",
+      "thema": "chaff",
+      "leger": null,
+      "aantalLessen": 6,
+      "aantalKanalen": 5,
+      "kanalen": [
+        "2pluspodcast",
+        "zen-fox-games",
+        "close-order",
+        "old-world-fanatics",
+        "old-world-legends"
+      ],
+      "lessen": [
+        "fleeing-diverters-steer-charges",
+        "repurpose-pieces-as-chaff",
+        "decoys-set-up-countercharges",
+        "razorgor-tuskgor-bait-switch",
+        "pegasus-knights-reliable-lantern-charges",
+        "reform-screen-flank-countercharge"
+      ]
+    },
+    {
+      "id": "position-for-reliable-charges-before-committing",
+      "titel": "Position for reliable charges before committing your attacker",
+      "tekst": "Manoeuvre into a position where your intended charge is reliable. Avoid depending on a long charge roll when you can prepare a closer attempt.",
+      "soort": "principe",
+      "thema": "movement",
+      "leger": null,
+      "aantalLessen": 4,
+      "aantalKanalen": 5,
+      "kanalen": [
+        "2pluspodcast",
+        "d6-wounds",
+        "hammerhobby",
+        "old-world-fanatics",
+        "old-world-legends"
+      ],
+      "lessen": [
+        "position-for-next-turn-charges",
+        "screened-frenzy-reliable-charge",
+        "pegasus-knights-reliable-lantern-charges",
+        "death-star-wheel-arc"
+      ]
+    },
+    {
+      "id": "weigh-first-turn-bonus",
+      "titel": "Weigh the first-turn bonus when choosing deployment drops",
+      "tekst": "If going first matters, consider fewer deployment drops or placing first to earn the first-turn bonus. Weigh that against the information you give up by placing before the enemy.",
+      "soort": "principe",
+      "thema": "deployment",
+      "leger": null,
+      "aantalLessen": 4,
+      "aantalKanalen": 5,
+      "kanalen": [
+        "hammerhobby",
+        "2pluspodcast",
+        "close-order",
+        "facehammer-tv",
+        "zen-fox-games"
+      ],
+      "lessen": [
+        "chaff-scouts-deployment",
+        "fewer-drops-first-turn",
+        "equal-drops-deploy-first",
+        "horse-archers-scouting-bonus"
+      ]
+    },
+    {
+      "id": "contain-dangerous-attackers-with-challenges",
+      "titel": "Use defensive challenges to contain dangerous attackers",
+      "tekst": "Use a champion or protected character to absorb a dangerous attacker's blows in a challenge. This can protect your unit or another valuable model in the combat.",
+      "soort": "principe",
+      "thema": "characters",
+      "leger": null,
+      "aantalLessen": 9,
+      "aantalKanalen": 4,
+      "kanalen": [
+        "2pluspodcast",
+        "dawi-after-dark",
+        "close-order",
+        "d6-wounds"
+      ],
+      "lessen": [
+        "preservation-challenges-bretonnian-lords",
+        "death-star-champion-challenge",
+        "anchor-challenges-against-dragons",
+        "champion-absorbs-spectral-doppelganger",
+        "champions-preserve-units-defensively",
+        "corner-character-dual-charge-challenge",
+        "dwarf-tank-challenges-dragons",
+        "champion-delaying-challenge",
+        "boar-dragon-challenge-choice"
+      ]
+    },
+    {
+      "id": "weaken-dangerous-enemies-before-combat",
+      "titel": "Weaken dangerous enemies with shooting before your troops fight them",
+      "tekst": "Remove wounds or models before dangerous enemies reach combat. You can make the coming fight manageable without destroying the target at range.",
+      "soort": "principe",
+      "thema": "shooting-terrain",
+      "leger": null,
+      "aantalLessen": 9,
+      "aantalKanalen": 4,
+      "kanalen": [
+        "2pluspodcast",
+        "dawi-after-dark",
+        "old-world-fanatics",
+        "malign-musings"
+      ],
+      "lessen": [
+        "weaken-giant-before-infantry",
+        "soften-dragons-early-shooting",
+        "three-irondrake-torpedo-units",
+        "organ-guns-between-combat-units",
+        "focus-mournfangs-before-contact",
+        "screams-weaken-dragon-ogres",
+        "irondrakes-against-tomb-chariots",
+        "support-wyvern-against-shugengan",
+        "dwarf-mixed-dragon-firepower"
+      ]
+    },
+    {
+      "id": "keep-shooters-beyond-charge-reach",
+      "titel": "Keep your shooters beyond enemy charge reach or arcs",
+      "tekst": "Keep shooting units where the enemy cannot immediately charge them. Reposition as threats close rather than leaving the shooters exposed.",
+      "soort": "principe",
+      "thema": "shooting-terrain",
+      "leger": null,
+      "aantalLessen": 8,
+      "aantalKanalen": 4,
+      "kanalen": [
+        "2pluspodcast",
+        "dawi-after-dark",
+        "facehammer-tv",
+        "hammerhobby"
+      ],
+      "lessen": [
+        "shooters-need-time-safe",
+        "gyrocopters-kite-pegasus-knights",
+        "steam-guns-outside-knight-arcs",
+        "reposition-shooting-blocks-safely",
+        "glade-guard-distance-hill-retreat",
+        "retreat-poison-slow-monsters",
+        "wood-elves-escape-before-shooting",
+        "wood-elves-outrange-dwarf-shooting"
+      ]
+    },
+    {
+      "id": "choose-all-round-charge-options",
+      "titel": "Choose combat characters with all-round charge options",
+      "tekst": "Choose characters or mounts that can threaten charges in any direction. This gives you more freedom to pick targets and respond to enemies manoeuvring around you.",
+      "soort": "principe",
+      "thema": "characters",
+      "leger": null,
+      "aantalLessen": 7,
+      "aantalKanalen": 4,
+      "kanalen": [
+        "2pluspodcast",
+        "nine-inch-charge",
+        "old-world-fanatics",
+        "old-world-legends"
+      ],
+      "lessen": [
+        "skirmish-blender-character",
+        "assassins-all-round-movement",
+        "try-solitary-doombull",
+        "mounted-hunter-fortitude",
+        "duke-pegasus-charge-flexibility",
+        "heroism-flying-monster-hunter",
+        "chaos-lord-steed-charge-arc"
+      ]
+    },
+    {
+      "id": "deploy-scorers-to-reach-objectives",
+      "titel": "Deploy scorers to reach the objectives you plan to contest",
+      "tekst": "Choose reachable scoring locations and deploy your scorers with practical routes to them. Avoid making them waste turns travelling into position.",
+      "soort": "principe",
+      "thema": "scenarios",
+      "leger": null,
+      "aantalLessen": 7,
+      "aantalKanalen": 4,
+      "kanalen": [
+        "close-order",
+        "2pluspodcast",
+        "hammerhobby",
+        "square-based"
+      ],
+      "lessen": [
+        "identify-contestable-objectives",
+        "slow-scorers-front-centre",
+        "natural-objective-opening-score",
+        "field-glory-wide-deployment",
+        "hill-scorer-offset-feature",
+        "domination-central-late-expansion",
+        "encirclement-short-objective-triangle"
+      ]
+    },
+    {
+      "id": "use-marching-column-to-reach-positions-quickly",
+      "titel": "Use marching column to reach useful positions quickly",
+      "tekst": "Use marching column when you need to cover ground quickly. Its extra march distance can help you reach objectives, blocking positions or an approach for a later attack.",
+      "soort": "principe",
+      "thema": "movement",
+      "leger": null,
+      "aantalLessen": 7,
+      "aantalKanalen": 4,
+      "kanalen": [
+        "d6-wounds",
+        "2pluspodcast",
+        "close-order",
+        "dawi-after-dark"
+      ],
+      "lessen": [
+        "marching-column-anvil-advance",
+        "rapid-dwarf-mortuary-advance",
+        "reavers-marching-column-breakthrough",
+        "wolf-column-early-chaff",
+        "wolf-column-retain-objectives",
+        "fanatic-carriers-marching-column",
+        "vanguard-boars-column-flank-march"
+      ]
+    },
+    {
+      "id": "remove-enemy-artillery-early",
+      "titel": "Remove enemy artillery early to protect your important units",
+      "tekst": "Prioritise shooting enemy artillery before it damages the units you need. Removing those guns lets your threatened units operate more freely.",
+      "soort": "principe",
+      "thema": "shooting-terrain",
+      "leger": null,
+      "aantalLessen": 6,
+      "aantalKanalen": 4,
+      "kanalen": [
+        "2pluspodcast",
+        "dawi-after-dark",
+        "nine-inch-charge",
+        "return-to-the-old-world"
+      ],
+      "lessen": [
+        "mobile-dwarf-cannons-counterbattery",
+        "shoot-cathayan-cannons-first",
+        "doom-divers-opening-artillery-volley",
+        "cannon-deep-elite-formations",
+        "poison-scouts-clear-cannon",
+        "hidden-grudge-throwers-bombards"
+      ]
+    },
+    {
+      "id": "use-ambushers-to-score-in-unattended-areas",
+      "titel": "Use ambushers to score in unattended areas",
+      "tekst": "Send ambushers into open space to capture or contest objectives, or attack baggage trains. Advancing enemies can leave these scoring opportunities behind them.",
+      "soort": "principe",
+      "thema": "scenarios",
+      "leger": null,
+      "aantalLessen": 6,
+      "aantalKanalen": 4,
+      "kanalen": [
+        "2pluspodcast",
+        "return-to-the-old-world",
+        "d6-wounds",
+        "square-based"
+      ],
+      "lessen": [
+        "ambush-vacated-enemy-objectives",
+        "ambushers-target-baggage-trains",
+        "ambush-late-domination-quarters",
+        "beastmen-infantry-safe-ambush",
+        "kiknik-ambushers-score-objectives",
+        "ambush-replace-early-wolf-scorers"
+      ]
+    },
+    {
+      "id": "clear-chaff-with-ranged-attacks",
+      "titel": "Use ranged attacks to clear enemy chaff",
+      "tekst": "Use ranged attacks to remove enemy chaff. They let you clear blockers or deal with mobile targets without catching them in combat.",
+      "soort": "principe",
+      "thema": "chaff",
+      "leger": null,
+      "aantalLessen": 5,
+      "aantalKanalen": 4,
+      "kanalen": [
+        "2pluspodcast",
+        "close-order",
+        "return-to-the-old-world",
+        "woodhammer"
+      ],
+      "lessen": [
+        "shoot-diverters-out-early",
+        "death-star-missile-support",
+        "mobile-blaster-late-points",
+        "light-missile-cavalry-shoot-chaff",
+        "terrorgheist-scream-screen-gap"
+      ]
+    },
+    {
+      "id": "ranged-pressure-forces-approaches",
+      "titel": "With the stronger shooting army, shoot first and fight later",
+      "tekst": "When your ranged firepower outclasses the enemy's, weaken them from range and stay out of combat until it suits you. Some missions make this patient plan easier.",
+      "soort": "principe",
+      "thema": "game-plan",
+      "leger": null,
+      "aantalLessen": 5,
+      "aantalKanalen": 4,
+      "kanalen": [
+        "square-based",
+        "dawi-after-dark",
+        "2pluspodcast",
+        "close-order"
+      ],
+      "lessen": [
+        "control-with-ranged-firepower",
+        "gunlines-score-without-contact",
+        "grudge-throwers-early-pressure",
+        "close-quarter-defensive-shooting",
+        "chance-encounter-patient-play"
+      ]
+    },
+    {
+      "id": "accelerate-your-advance-with-magic",
+      "titel": "Use movement spells to accelerate your advance",
+      "tekst": "Use movement magic to push attacking units forward and reach threatening positions sooner. The extra movement helps you apply pressure.",
+      "soort": "principe",
+      "thema": "magic",
+      "leger": null,
+      "aantalLessen": 4,
+      "aantalKanalen": 4,
+      "kanalen": [
+        "close-order",
+        "2pluspodcast",
+        "malign-musings",
+        "old-world-fanatics"
+      ],
+      "lessen": [
+        "steed-shadows-melee-character-block",
+        "movement-spells-early-aggression",
+        "deploy-dragon-reserve-move",
+        "reserve-move-undead-pressure"
+      ]
+    },
+    {
+      "id": "keep-expendable-chaff-cheap",
+      "titel": "Keep your expendable chaff cheap",
+      "tekst": "Keep the points spent on sacrificial chaff low. Its low cost makes it affordable to lose while doing its job.",
+      "soort": "principe",
+      "thema": "chaff",
+      "leger": null,
+      "aantalLessen": 4,
+      "aantalKanalen": 4,
+      "kanalen": [
+        "2pluspodcast",
+        "d6-wounds",
+        "dawi-after-dark",
+        "hammerhobby"
+      ],
+      "lessen": [
+        "chaff-under-100-points",
+        "wolf-riders-five-with-spears",
+        "bolt-throwers-sacrificial-flank-distractions",
+        "screening-chaff"
+      ]
+    },
+    {
+      "id": "line-up-overruns-into-another-fight",
+      "titel": "Line up overruns into another fight",
+      "tekst": "Plan overrun paths that carry your attackers into another enemy unit so they can keep fighting.",
+      "soort": "principe",
+      "thema": "movement",
+      "leger": null,
+      "aantalLessen": 4,
+      "aantalKanalen": 4,
+      "kanalen": [
+        "zen-fox-games",
+        "2pluspodcast",
+        "close-order",
+        "old-world-legends"
+      ],
+      "lessen": [
+        "resolve-overrun-feeder-first",
+        "drilled-widen-overrun-contact",
+        "plan-overruns-repeat-combats",
+        "pegasus-overrun-second-lantern"
       ]
     },
     {
       "id": "protect-lone-characters-with-nearby-troops",
-      "titel": "Keep lone characters near friendly units for protection from shooting",
-      "tekst": "Keep lone characters close to a suitable friendly unit so enemy shooting and magic cannot single them out. Make sure that unit, not the character, is the closest target.",
+      "titel": "Keep lone characters near suitable troops for targeting protection",
+      "tekst": "Keep lone characters near friendly units of the right troop type. Leave a friendly unit closer to the enemy to retain protection from ranged targeting.",
       "soort": "principe",
       "thema": "characters",
       "leger": null,
@@ -53,98 +711,85 @@
       ]
     },
     {
-      "id": "weigh-first-turn-bonus",
-      "titel": "Weigh the first-turn bonus when choosing deployment drops",
-      "tekst": "If going first matters, consider fewer deployment drops or placing first to earn the first-turn bonus. Weigh that against the information you give up by placing before the enemy.",
+      "id": "build-for-mission-requirements",
+      "titel": "Build your list to meet the tournament's mission requirements",
+      "tekst": "Check the tournament missions while choosing your units. Your list needs a workable plan for the requirements those missions impose.",
       "soort": "principe",
-      "thema": "deployment",
+      "thema": "game-plan",
       "leger": null,
-      "aantalLessen": 4,
+      "aantalLessen": 3,
       "aantalKanalen": 4,
       "kanalen": [
-        "hammerhobby",
         "2pluspodcast",
-        "facehammer-tv",
-        "zen-fox-games"
+        "close-order",
+        "pashhammer",
+        "square-based"
       ],
       "lessen": [
-        "chaff-scouts-deployment",
-        "fewer-drops-first-turn",
-        "equal-drops-deploy-first",
-        "horse-archers-scouting-bonus"
+        "army-plan-every-mission",
+        "substantial-core-scenario-scorers",
+        "drawn-lines-reserve-backup"
       ]
     },
     {
-      "id": "screen-valuable-units-from-shooting",
-      "titel": "Screen your valuable units from enemy shooting",
-      "tekst": "Put screens between enemy shooters and the units you want to protect. Shots spent on the screen spare the units behind it.",
+      "id": "check-friendly-panic-before-committing-chaff",
+      "titel": "Check friendly panic risks before you commit chaff",
+      "tekst": "Check which friendly units could test for panic if your chaff dies or flees through them. Avoid exposing your support to unnecessary tests.",
       "soort": "principe",
       "thema": "chaff",
       "leger": null,
-      "aantalLessen": 10,
-      "aantalKanalen": 3,
+      "aantalLessen": 3,
+      "aantalKanalen": 4,
       "kanalen": [
         "2pluspodcast",
-        "hammerhobby",
-        "old-world-legends"
+        "d6-wounds",
+        "old-world-fanatics",
+        "woodhammer"
       ],
       "lessen": [
-        "screening-chaff",
-        "horizontal-skirmisher-cover",
-        "match-screen-advance-speed",
-        "screen-block-every-firing-line",
-        "maintain-cover-for-scorers",
-        "skinks-screen-cannon-sight",
-        "manglers-shield-doom-divers",
-        "ethereal-coach-shields-bats",
-        "warhawk-riders-evasive-screen",
-        "hammers-on-flanks"
+        "single-wolf-chariots-limit-panic",
+        "giant-rats-sacrifice-panic",
+        "chaff-flee-panic-risk"
       ]
     },
     {
-      "id": "support-fights-with-flank-or-rear-charges",
-      "titel": "Support fights with flank or rear charges",
-      "tekst": "Position supporting units to charge the flank or rear of an enemy fighting your main unit. Their added combat resolution can help you win the fight.",
+      "id": "use-cheap-early-drops-to-delay-your-key-units",
+      "titel": "Use cheap early drops to delay your key units",
+      "tekst": "Deploy expendable units first and retain options for your important units. Choose their positions after seeing where the opponent commits.",
       "soort": "principe",
-      "thema": "movement",
+      "thema": "deployment",
       "leger": null,
-      "aantalLessen": 9,
-      "aantalKanalen": 3,
+      "aantalLessen": 3,
+      "aantalKanalen": 4,
       "kanalen": [
         "2pluspodcast",
-        "hammerhobby",
-        "zen-fox-games"
+        "close-order",
+        "d6-wounds",
+        "hammerhobby"
       ],
       "lessen": [
-        "coordinate-front-flank-arrival",
-        "stubborn-anchor-countercharge",
-        "skirmisher-rear-combat-support",
-        "reform-screen-flank-countercharge",
-        "ambushers-banner-combat-resolution",
-        "ambushers-support-flank-rear-charges",
-        "empire-knights-support-combats",
-        "black-orc-chariot-standard",
-        "close-order-wolves-ambush-support"
+        "chaff-scouts-deployment",
+        "wolves-berserkers-delay-important-drops",
+        "leave-several-boar-deployment-gaps"
       ]
     },
     {
-      "id": "keep-casters-outside-dispel-range",
-      "titel": "Keep casters outside enemy dispel range when possible",
+      "id": "cast-outside-enemy-dispel-range",
+      "titel": "Cast from outside the enemy wizard's dispel range",
       "tekst": "Cast from outside the opposing wizard's dispel range when you can. A flying or Reserve Move caster can move out, cast and move back to safety.",
       "soort": "principe",
       "thema": "magic",
       "leger": null,
-      "aantalLessen": 8,
+      "aantalLessen": 7,
       "aantalKanalen": 3,
       "kanalen": [
         "2pluspodcast",
-        "facehammer-tv",
-        "square-based"
+        "close-order",
+        "facehammer-tv"
       ],
       "lessen": [
         "empire-level-one-doombolt",
         "opening-outside-dispel-range",
-        "preserve-vortex-outside-dispel-range",
         "mobile-caster-flank",
         "dark-magic-reserve-bunker",
         "buff-wizard-behind-bubble",
@@ -153,74 +798,102 @@
       ]
     },
     {
-      "id": "check-enemy-reach-before-deploying",
-      "titel": "Check enemy reach before choosing safe deployment positions",
-      "tekst": "Check enemy charge and shooting reach before placing vulnerable units. Account for Scouts and Vanguard that can bring opening threats closer.",
+      "id": "concentrate-fire-to-finish-targets",
+      "titel": "Concentrate ranged attacks to finish targets",
+      "tekst": "Focus your ranged damage on a chosen target rather than spreading it across several. Combine attacks to remove the target instead of leaving it alive with wounds remaining.",
       "soort": "principe",
-      "thema": "deployment",
+      "thema": "shooting-terrain",
       "leger": null,
-      "aantalLessen": 6,
+      "aantalLessen": 7,
       "aantalKanalen": 3,
       "kanalen": [
-        "hammerhobby",
         "2pluspodcast",
-        "zen-fox-games"
+        "old-world-legends",
+        "malign-musings"
       ],
       "lessen": [
-        "identify-fast-enemy-threats",
-        "mark-threat-ranges-dice",
-        "compare-ranges-before-deploying",
-        "shooters-need-time-safe",
-        "deploy-beyond-moving-shooters",
-        "check-scouts-vanguard-safety"
+        "wood-elves-reconsider-poison",
+        "poison-faster-threats-first",
+        "concentrate-fire-finish-lanterns",
+        "focus-mournfangs-before-contact",
+        "lower-lantern-leadership-screams",
+        "wood-elves-concentrate-bow-fire",
+        "poison-scouts-clear-cannon"
       ]
     },
     {
-      "id": "concentrate-against-part",
-      "titel": "Concentrate your strength against only part of the enemy army",
-      "tekst": "Concentrate your fighting strength instead of spreading it evenly. You can leave another area weak to gain an advantage where you intend to win.",
+      "id": "expendable-units-buy-time",
+      "titel": "Use expendable units to buy time for wins elsewhere",
+      "tekst": "Use expendable units to delay enemy threats while your main force works elsewhere. A sacrifice can succeed by buying time even when it earns few kills.",
       "soort": "principe",
       "thema": "game-plan",
       "leger": null,
-      "aantalLessen": 5,
+      "aantalLessen": 7,
       "aantalKanalen": 3,
       "kanalen": [
         "2pluspodcast",
-        "facehammer-tv",
-        "hammerhobby"
+        "dawi-after-dark",
+        "old-world-fanatics"
       ],
       "lessen": [
         "flank-kill-or-delay",
         "sacrifice-a-flank",
-        "deploy-slow-army-compact",
-        "concentrate-against-enemy-part",
-        "mortuary-cult-refused-flank"
+        "flank-who-benefited",
+        "chaff-kills-are-bonuses",
+        "avoid-protecting-expendable-chaff",
+        "delay-dragon-score-elsewhere",
+        "corner-sacrifice-wastes-return-turn"
       ]
     },
     {
-      "id": "deploy-for-working-support",
-      "titel": "Deploy units so their planned support can work",
-      "tekst": "Deploy units that need to work together in supporting positions. Plan ahead so an early advance or charge does not leave a fighting unit unsupported.",
+      "id": "secure-essential-spells-with-lore-familiar",
+      "titel": "Secure key spells instead of relying on random generation",
+      "tekst": "Use useful signature spells or spell-selection options to secure the spells your plan needs. Random generation can leave your wizard without the spells you wanted.",
       "soort": "principe",
-      "thema": "deployment",
+      "thema": "magic",
       "leger": null,
-      "aantalLessen": 5,
+      "aantalLessen": 7,
       "aantalKanalen": 3,
       "kanalen": [
         "2pluspodcast",
-        "zen-fox-games",
-        "hammerhobby"
+        "old-world-fanatics",
+        "square-based"
       ],
       "lessen": [
-        "flank-not-point-and-click",
-        "deploy-for-later-positions",
-        "deploy-for-unit-synergy",
-        "deploy-early-ensure-fit",
-        "eagle-skycutter-flank-pair"
+        "bray-shaman-gor-buffer",
+        "lesser-wizard-secures-spells",
+        "choose-dark-magic-spells",
+        "necromancy-familiar-debuff-pair",
+        "illusion-familiar-control-spells",
+        "plan-around-guaranteed-signatures",
+        "chaos-swap-unhelpful-spells"
       ]
     },
     {
-      "id": "hold-centre-mobile-flanks",
+      "id": "challenge-dragons-with-infantry",
+      "titel": "Use challenges to help infantry hold against dragons",
+      "tekst": "Let a challenger face the dragon while your infantry contributes combat resolution. Limiting casualties helps the block hold or win the fight.",
+      "soort": "principe",
+      "thema": "matchups",
+      "leger": null,
+      "aantalLessen": 6,
+      "aantalKanalen": 3,
+      "kanalen": [
+        "2pluspodcast",
+        "dawi-after-dark",
+        "d6-wounds"
+      ],
+      "lessen": [
+        "anchor-challenges-against-dragons",
+        "infantry-ten-after-challenge",
+        "infantry-overwhelm-dragon-numbers",
+        "dwarf-seven-static-resolution",
+        "dwarf-tank-challenges-dragons",
+        "boar-dragon-challenge-choice"
+      ]
+    },
+    {
+      "id": "central-anvil-mobile-flanks",
       "titel": "Hold the centre, win a flank, then turn on the centre",
       "tekst": "Hold the centre with a durable anvil and put your faster units on the flanks. Once a flank is won, turn those units into the centre or the enemy backline.",
       "soort": "principe",
@@ -239,6 +912,28 @@
         "central-anvil-all-round-wings",
         "chaos-warriors-defensive-attrition",
         "after-the-flank"
+      ]
+    },
+    {
+      "id": "set-up-your-hammers-to-charge",
+      "titel": "Set up your hammers to deliver their own charges",
+      "tekst": "Plan your hammers' movement and support so they get the charge. Chariots particularly need to connect with their impact hits rather than receive a charge.",
+      "soort": "principe",
+      "thema": "hammers",
+      "leger": null,
+      "aantalLessen": 5,
+      "aantalKanalen": 3,
+      "kanalen": [
+        "2pluspodcast",
+        "d6-wounds",
+        "return-to-the-old-world"
+      ],
+      "lessen": [
+        "hammers-need-the-charge",
+        "heavy-chariot-support",
+        "lumbering-perpendicular-charge-options",
+        "deploy-heavy-chariots-back",
+        "prefer-warband-orc-chariots"
       ]
     },
     {
@@ -264,87 +959,438 @@
       ]
     },
     {
-      "id": "line-up-overruns-into-another-fight",
-      "titel": "Line up overruns into another fight",
-      "tekst": "Plan overrun paths that carry your attackers into another enemy unit so they can keep fighting.",
+      "id": "start-progressive-scoring-early",
+      "titel": "Start scoring accessible progressive objectives early",
+      "tekst": "Get scorers onto accessible objectives early when they award points throughout the game. Those scoring turns can build a lead while the opponent delays.",
       "soort": "principe",
-      "thema": "movement",
+      "thema": "scenarios",
       "leger": null,
-      "aantalLessen": 4,
+      "aantalLessen": 5,
       "aantalKanalen": 3,
       "kanalen": [
-        "zen-fox-games",
-        "2pluspodcast",
-        "old-world-legends"
+        "close-order",
+        "square-based",
+        "return-to-the-old-world"
       ],
       "lessen": [
-        "resolve-overrun-feeder-first",
-        "drilled-widen-overrun-contact",
-        "plan-overruns-repeat-combats",
-        "pegasus-overrun-second-lantern"
+        "claim-objectives-against-gunlines",
+        "vanguard-temporary-objective-control",
+        "natural-objective-opening-score",
+        "cavalry-infantry-objective-handover",
+        "durable-army-claim-objectives-early"
       ]
     },
     {
-      "id": "protect-key-unit-flanks",
-      "titel": "Protect your key units' flanks during deployment",
-      "tekst": "Use positioning and supporting units to limit enemy routes around your key units. Keep their flanks protected when arranging your deployment.",
+      "id": "strengthen-basic-units-with-characters",
+      "titel": "Add characters to give basic units more combat punch",
+      "tekst": "Use fighting characters or character buffs to improve a basic unit's damage output. The extra attacks can make otherwise modest troops more threatening.",
       "soort": "principe",
-      "thema": "deployment",
+      "thema": "characters",
       "leger": null,
-      "aantalLessen": 4,
+      "aantalLessen": 5,
       "aantalKanalen": 3,
       "kanalen": [
-        "hammerhobby",
+        "close-order",
         "2pluspodcast",
-        "facehammer-tv"
+        "malign-musings"
       ],
       "lessen": [
-        "central-deployment-limits-cavalry",
-        "protect-main-hammer-flank",
-        "mortuary-cult-refused-flank",
-        "undead-wall-protect-flanks"
+        "characters-improve-ordinary-troops",
+        "inexpensive-durable-unit-characters",
+        "doombull-gor-scoring-attacker",
+        "skeletons-necrotects-prince-punch",
+        "necrotect-poison-skeleton-attacks"
       ]
     },
     {
-      "id": "set-up-reliable-charges-before-committing",
-      "titel": "Set up reliable charges before committing",
-      "tekst": "Move into a position where your intended charge is reliable before committing. Avoid leaving the attack dependent on a long charge roll.",
+      "id": "avoid-losing-matchups",
+      "titel": "Keep valuable units out of matchups they are likely to lose",
+      "tekst": "Keep a valuable unit away from an enemy likely to defeat it. Withdraw or seek a safer engagement instead of forcing the fight.",
       "soort": "principe",
-      "thema": "movement",
-      "leger": null,
-      "aantalLessen": 4,
-      "aantalKanalen": 3,
-      "kanalen": [
-        "2pluspodcast",
-        "hammerhobby",
-        "old-world-legends"
-      ],
-      "lessen": [
-        "position-for-next-turn-charges",
-        "screened-frenzy-reliable-charge",
-        "pegasus-knights-reliable-lantern-charges",
-        "death-star-wheel-arc"
-      ]
-    },
-    {
-      "id": "use-bait-to-draw-enemies-towards-waiting-units",
-      "titel": "Use bait to draw enemies towards your waiting units",
-      "tekst": "Place bait so an enemy charge brings the attacker into reach of your waiting combat units. Plan where the enemy will end up before offering the bait.",
-      "soort": "principe",
-      "thema": "chaff",
+      "thema": "matchups",
       "leger": null,
       "aantalLessen": 4,
       "aantalKanalen": 3,
       "kanalen": [
         "2pluspodcast",
         "old-world-legends",
+        "close-order"
+      ],
+      "lessen": [
+        "save-vulnerable-valuable-units",
+        "plagued-pegasus-knights-withdraw",
+        "dragon-outmanoeuvre-stronger-dragon",
+        "arachnarok-avoid-ogre-blade"
+      ]
+    },
+    {
+      "id": "build-infantry-for-static-combat-resolution",
+      "titel": "Build infantry blocks to win through static combat resolution",
+      "tekst": "Use ranks and banners to raise your infantry's combat result. This helps you win fights without relying entirely on inflicted wounds.",
+      "soort": "principe",
+      "thema": "infantry",
+      "leger": null,
+      "aantalLessen": 4,
+      "aantalKanalen": 3,
+      "kanalen": [
+        "2pluspodcast",
+        "dawi-after-dark",
+        "old-world-legends"
+      ],
+      "lessen": [
+        "anchor-static-combat-resolution",
+        "veteran-state-griffin-banner",
+        "men-at-arms-resolution-block",
+        "skeletons-twenty-five-thirty"
+      ]
+    },
+    {
+      "id": "concentrate-against-part",
+      "titel": "Concentrate your strength against part of the enemy army",
+      "tekst": "Bring your main strength against only part of the opposing army. Create a local advantage while other enemy units are distant, delayed or unsupported.",
+      "soort": "principe",
+      "thema": "game-plan",
+      "leger": null,
+      "aantalLessen": 4,
+      "aantalKanalen": 3,
+      "kanalen": [
+        "2pluspodcast",
+        "close-order",
+        "hammerhobby"
+      ],
+      "lessen": [
+        "sacrifice-a-flank",
+        "deploy-slow-army-compact",
+        "concentrate-against-enemy-part",
+        "disguise-refused-flank-mobile-drops"
+      ]
+    },
+    {
+      "id": "death-star-wound-pool",
+      "titel": "Give your infantry Death Star a large wound pool",
+      "tekst": "Take enough bodies and wounds for your Death Star to absorb casualties and keep fighting.",
+      "soort": "principe",
+      "thema": "infantry",
+      "leger": null,
+      "aantalLessen": 4,
+      "aantalKanalen": 3,
+      "kanalen": [
+        "2pluspodcast",
+        "close-order",
+        "old-world-fanatics"
+      ],
+      "lessen": [
+        "monstrous-infantry-death-stars",
+        "concentrate-points-death-star",
+        "fully-invest-heavy-infantry-deathstar",
+        "gor-death-star-infantry-choice"
+      ]
+    },
+    {
+      "id": "deny-flyer-landing-space",
+      "titel": "Deny flyers landing space around your valuable units",
+      "tekst": "Fill the gaps enemy flyers need to land near your valuable units. In particular, block space behind your line before they fly over it.",
+      "soort": "principe",
+      "thema": "matchups",
+      "leger": null,
+      "aantalLessen": 4,
+      "aantalKanalen": 3,
+      "kanalen": [
+        "old-world-legends",
+        "close-order",
+        "dawi-after-dark"
+      ],
+      "lessen": [
+        "deny-lantern-rear-landings",
+        "time-stonehorn-pressure-turn",
+        "castle-against-bretonnian-flyers",
+        "screen-dragon-landing-space"
+      ]
+    },
+    {
+      "id": "deter-dragon-approaches-with-character-threats",
+      "titel": "Use character threats to deter enemy dragons from approaching",
+      "tekst": "Position a character to make an enemy dragon's approach risky. The threat can protect space without committing your character to combat.",
+      "soort": "principe",
+      "thema": "characters",
+      "leger": null,
+      "aantalLessen": 4,
+      "aantalKanalen": 3,
+      "kanalen": [
+        "close-order",
+        "nine-inch-charge",
+        "old-world-fanatics"
+      ],
+      "lessen": [
+        "duke-monster-slayer-zoning",
+        "dragon-sword-deters-miao",
+        "goblin-chariot-dragon-deterrent",
+        "dragon-deterrent-behind-wizard"
+      ]
+    },
+    {
+      "id": "keep-support-characters-out-of-melee-contact",
+      "titel": "Keep vulnerable support characters out of direct melee contact",
+      "tekst": "Place support characters outside the fight or in unit positions that avoid enemy contact. This lets them contribute without taking unnecessary attacks.",
+      "soort": "principe",
+      "thema": "characters",
+      "leger": null,
+      "aantalLessen": 4,
+      "aantalKanalen": 3,
+      "kanalen": [
+        "close-order",
+        "2pluspodcast",
+        "old-world-legends"
+      ],
+      "lessen": [
+        "cheap-bsb-outside-combat",
+        "bell-behind-stormvermin-support",
+        "support-character-opposite-threats",
+        "support-character-one-file-in"
+      ]
+    },
+    {
+      "id": "lower-leadership-before-screaming",
+      "titel": "Lower Leadership before your screams and Terror charges",
+      "tekst": "Pair Necromancy's Leadership penalties with Tomb Banshee screams and Terror. A lower target Leadership makes those attacks more dangerous.",
+      "soort": "principe",
+      "thema": "magic",
+      "leger": "vampire-counts",
+      "aantalLessen": 4,
+      "aantalKanalen": 3,
+      "kanalen": [
+        "old-world-legends",
+        "2pluspodcast",
+        "close-order"
+      ],
+      "lessen": [
+        "tomb-banshee-budget-assassin",
+        "lower-lantern-leadership-screams",
+        "dirge-necromancy-leadership-stack",
+        "repeated-terror-charges-lanterns"
+      ]
+    },
+    {
+      "id": "reform-victorious-units-towards-their-next-fight",
+      "titel": "Reform victorious units towards their next useful fight",
+      "tekst": "Consider restraining and reforming after a win to threaten another useful combat. Choose a facing that keeps your combat unit involved in the battle.",
+      "soort": "principe",
+      "thema": "movement",
+      "leger": null,
+      "aantalLessen": 4,
+      "aantalKanalen": 3,
+      "kanalen": [
+        "2pluspodcast",
+        "close-order",
+        "return-to-the-old-world"
+      ],
+      "lessen": [
+        "blenders-break-and-reform",
+        "plan-overruns-repeat-combats",
+        "divide-pursuit-and-reform",
+        "reform-for-future-targets"
+      ]
+    },
+    {
+      "id": "use-cheap-units-for-scoring",
+      "titel": "Use cheap units to hold objectives and scoring areas",
+      "tekst": "Assign inexpensive units to objective-holding and area-scoring jobs.",
+      "soort": "principe",
+      "thema": "scenarios",
+      "leger": null,
+      "aantalLessen": 4,
+      "aantalKanalen": 3,
+      "kanalen": [
+        "2pluspodcast",
+        "close-order",
+        "d6-wounds"
+      ],
+      "lessen": [
+        "cheap-area-capture-units",
+        "ungor-cheap-objective-holders",
+        "wolf-column-retain-objectives",
+        "baggage-cheap-home-scorer"
+      ]
+    },
+    {
+      "id": "withdraw-characters-with-movement-spells",
+      "titel": "Use movement spells to get characters out of danger",
+      "tekst": "Use magical movement to rescue a threatened character or give it the mobility to withdraw after using its abilities.",
+      "soort": "principe",
+      "thema": "characters",
+      "leger": null,
+      "aantalLessen": 4,
+      "aantalKanalen": 3,
+      "kanalen": [
+        "square-based",
+        "close-order",
+        "old-world-fanatics"
+      ],
+      "lessen": [
+        "infernal-gateway-save-character",
+        "spectral-steed-caster-protection",
+        "hand-gork-rescue-character",
+        "flying-banshee-scream-withdrawal"
+      ]
+    },
+    {
+      "id": "advance-threats-with-reserve-move",
+      "titel": "Use Reserve Move magic to advance threats and apply pressure",
+      "tekst": "Use magic granting Reserve Move to move your threats farther forward. The extra movement helps you reach positions that put pressure on the enemy.",
+      "soort": "principe",
+      "thema": "movement",
+      "leger": "vampire-counts",
+      "aantalLessen": 3,
+      "aantalKanalen": 3,
+      "kanalen": [
+        "2pluspodcast",
+        "close-order",
+        "old-world-fanatics"
+      ],
+      "lessen": [
+        "terrorgheist-scream-screen-gap",
+        "reserve-move-undead-pressure",
+        "black-coach-mobile-backline-hunter"
+      ]
+    },
+    {
+      "id": "aim-cannon-shots-through-multiple-models",
+      "titel": "Aim cannon shots through multiple models",
+      "tekst": "Look for firing lines that let a cannonball pass through several models, increasing the casualties a shot can cause.",
+      "soort": "principe",
+      "thema": "shooting-terrain",
+      "leger": "empire-of-man",
+      "aantalLessen": 3,
+      "aantalKanalen": 3,
+      "kanalen": [
+        "return-to-the-old-world",
+        "mordian-glory",
+        "old-world-legends"
+      ],
+      "lessen": [
+        "cannon-bounce-multiple-lanterns",
+        "cannon-deep-elite-formations",
+        "cannon-ranked-bodies-over-shallow-elites"
+      ]
+    },
+    {
+      "id": "assign-defined-battlefield-jobs",
+      "titel": "Give your units and characters defined battlefield jobs",
+      "tekst": "Decide what each unit, character or small group should accomplish. Judge your choices by how well they perform those jobs for your army.",
+      "soort": "principe",
+      "thema": "game-plan",
+      "leger": null,
+      "aantalLessen": 3,
+      "aantalKanalen": 3,
+      "kanalen": [
+        "2pluspodcast",
+        "old-world-fanatics",
+        "square-based"
+      ],
+      "lessen": [
+        "focus-combat-character-role",
+        "judge-units-by-points-role",
+        "plan-small-unit-groups"
+      ]
+    },
+    {
+      "id": "block-useful-enemy-ambush-entry-space-during-deployment",
+      "titel": "Block useful enemy ambush entry space during deployment",
+      "tekst": "Position your units to deny useful arrival gaps along the board edge. Their presence restricts where enemy ambushers can enter.",
+      "soort": "principe",
+      "thema": "deployment",
+      "leger": null,
+      "aantalLessen": 3,
+      "aantalKanalen": 3,
+      "kanalen": [
+        "2pluspodcast",
+        "close-order",
         "zen-fox-games"
       ],
       "lessen": [
-        "fleeing-diverters-steer-charges",
-        "archer-screen-state-troops-trap",
-        "decoys-set-up-countercharges",
-        "razorgor-tuskgor-bait-switch"
+        "channel-ambushers-into-charges",
+        "corner-models-deny-ambushes",
+        "screen-reserve-entry-edges"
+      ]
+    },
+    {
+      "id": "counter-dragons-with-your-own",
+      "titel": "Counter enemy dragons with a dragon of your own",
+      "tekst": "Consider your own dragon as an answer to an opposing dragon. The prospect of fighting yours can make the enemy's attacks less attractive.",
+      "soort": "principe",
+      "thema": "matchups",
+      "leger": null,
+      "aantalLessen": 3,
+      "aantalKanalen": 3,
+      "kanalen": [
+        "close-order",
+        "nine-inch-charge",
+        "old-world-fanatics"
+      ],
+      "lessen": [
+        "own-dragon-pressure-miao",
+        "dragon-deterrent-behind-wizard",
+        "answer-dragons-with-dragons"
+      ]
+    },
+    {
+      "id": "draw-fire-with-forward-threats",
+      "titel": "Push threats forward to draw fire away from key units",
+      "tekst": "Present a threat the opponent must deal with, drawing shooting away from your main units. This gives those units time to advance or do their jobs.",
+      "soort": "principe",
+      "thema": "shooting-terrain",
+      "leger": null,
+      "aantalLessen": 3,
+      "aantalKanalen": 3,
+      "kanalen": [
+        "2pluspodcast",
+        "d6-wounds",
+        "dawi-after-dark"
+      ],
+      "lessen": [
+        "giant-advance-threat-priority",
+        "gyrocopters-pressure-nuln-artillery",
+        "light-chariot-artillery-hunter"
+      ]
+    },
+    {
+      "id": "escape-charge-arcs-with-movement-magic",
+      "titel": "Use movement spells to escape enemy charge arcs",
+      "tekst": "Reposition threatened units outside enemy charge arcs with movement magic. This can prevent the opponent from charging them next turn.",
+      "soort": "principe",
+      "thema": "magic",
+      "leger": null,
+      "aantalLessen": 3,
+      "aantalKanalen": 3,
+      "kanalen": [
+        "square-based",
+        "close-order",
+        "facehammer-tv"
+      ],
+      "lessen": [
+        "arcane-urgency-escape-charge-arcs",
+        "mystical-pathways-change-attack-angle",
+        "reposition-shooting-blocks-safely"
+      ]
+    },
+    {
+      "id": "guard-artillery-approaches",
+      "titel": "Guard artillery approaches with supporting units",
+      "tekst": "Put supporting units in the path of approaching artillery hunters. Make those hunters deal with the defenders before they can reach your guns.",
+      "soort": "principe",
+      "thema": "shooting-terrain",
+      "leger": null,
+      "aantalLessen": 3,
+      "aantalKanalen": 3,
+      "kanalen": [
+        "close-order",
+        "return-to-the-old-world",
+        "zen-fox-games"
+      ],
+      "lessen": [
+        "combat-units-guard-artillery",
+        "protect-cannons-from-fast-hunters",
+        "fanatics-guard-artillery-flanks"
       ]
     },
     {
@@ -368,29 +1414,69 @@
       ]
     },
     {
-      "id": "position-your-force-around-scoring-locations",
-      "titel": "Position your force around the mission's scoring locations",
-      "tekst": "Use the location of objectives to decide where to commit your force, so your units can contest the places that offer points.",
+      "id": "preserve-mobile-scorers-for-later",
+      "titel": "Keep mobile scorers safe for later scoring",
+      "tekst": "Protect some mobile scoring units during the opening turns, then use them to claim objectives later.",
       "soort": "principe",
       "thema": "scenarios",
       "leger": null,
       "aantalLessen": 3,
       "aantalKanalen": 3,
       "kanalen": [
-        "square-based",
         "2pluspodcast",
-        "hammerhobby"
+        "d6-wounds",
+        "return-to-the-old-world"
       ],
       "lessen": [
-        "identify-contestable-objectives",
-        "king-hill-concentrate-centre",
-        "field-glory-wide-deployment"
+        "ambush-replace-early-wolf-scorers",
+        "hidden-mobile-objective-grabs",
+        "preserve-cavalry-domination-scoring"
+      ]
+    },
+    {
+      "id": "protect-defensive-units-with-earthen-ramparts",
+      "titel": "Protect defensive units with Earthen Ramparts",
+      "tekst": "Cast Earthen Ramparts on units holding a defensive position. Its ward save helps them withstand incoming attacks.",
+      "soort": "principe",
+      "thema": "magic",
+      "leger": null,
+      "aantalLessen": 3,
+      "aantalKanalen": 3,
+      "kanalen": [
+        "facehammer-tv",
+        "nine-inch-charge",
+        "square-based"
+      ],
+      "lessen": [
+        "defensive-jade-sentinel-ramparts",
+        "earthen-ramparts-shooting-defence",
+        "earthen-ramparts-missile-troops"
+      ]
+    },
+    {
+      "id": "reach-combat-early-against-gunlines",
+      "titel": "Reach combat early to cut a gunline's shooting time",
+      "tekst": "Move quickly into combat against shooting armies. Early engagement limits how long their shooting can damage your units.",
+      "soort": "principe",
+      "thema": "shooting-terrain",
+      "leger": null,
+      "aantalLessen": 3,
+      "aantalKanalen": 3,
+      "kanalen": [
+        "2pluspodcast",
+        "dawi-after-dark",
+        "square-based"
+      ],
+      "lessen": [
+        "infantry-combat-escapes-bombardment",
+        "imperfect-target-escape-shooting",
+        "fast-armies-close-gunlines"
       ]
     },
     {
       "id": "repeat-signatures-with-low-level-casters",
-      "titel": "Consider several low-level casters for repeated signature spells",
-      "tekst": "Use multiple low-level wizards to bring the same useful signature spell more than once. This gives you repeated casting attempts.",
+      "titel": "Use several low-level casters to repeat useful signature spells",
+      "tekst": "Consider multiple low-level wizards carrying the same useful signature spell. This gives you repeated casting attempts without requiring high-level casters.",
       "soort": "principe",
       "thema": "magic",
       "leger": null,
@@ -408,92 +1494,128 @@
       ]
     },
     {
-      "id": "hide-vulnerable-units-from-shooting",
-      "titel": "Hide vulnerable units from enemy shooting during deployment",
-      "tekst": "Deploy important or fragile units out of enemy shooting sight. Concealed positions protect them from opening fire.",
+      "id": "reposition-ushabti-without-losing-shooting-accuracy",
+      "titel": "Reposition great-bow Ushabti without losing shooting accuracy",
+      "tekst": "Move or turn your Ushabti when needed to keep targets in their firing arc. Their shooting does not suffer penalties for this movement.",
       "soort": "principe",
-      "thema": "deployment",
-      "leger": null,
-      "aantalLessen": 7,
-      "aantalKanalen": 2,
+      "thema": "shooting-terrain",
+      "leger": "tomb-kings-of-khemri",
+      "aantalLessen": 3,
+      "aantalKanalen": 3,
       "kanalen": [
-        "2pluspodcast",
+        "facehammer-tv",
+        "malign-musings",
         "old-world-legends"
       ],
       "lessen": [
-        "glade-riders-shoot-withdraw",
-        "shelter-monsters-from-cannons",
-        "hide-mangler-from-cannons",
-        "jezzails-hidden-lantern-kill-lanes",
-        "deploy-defensively-vs-shooting",
-        "combine-wood-elf-forests",
-        "delay-vulnerable-artillery-deployment"
+        "ushabti-arcs-against-flyers",
+        "ushabti-great-bows-lanterns",
+        "ushabti-shoot-monsters-ogres"
       ]
     },
     {
-      "id": "concentrate-ranged-damage",
-      "titel": "Concentrate ranged damage to finish a chosen target",
-      "tekst": "Focus your ranged attacks on a chosen target rather than spreading the damage. Concentrated fire helps you finish enemies instead of leaving them alive.",
+      "id": "shoot-multi-wound-targets-with-great-bow-ushabti",
+      "titel": "Shoot multi-wound targets with great-bow Ushabti",
+      "tekst": "Use your great-bow Ushabti against multi-wound targets. Their shots deal two damage, but account for their low armour piercing when choosing targets.",
+      "soort": "principe",
+      "thema": "shooting-terrain",
+      "leger": "tomb-kings-of-khemri",
+      "aantalLessen": 3,
+      "aantalKanalen": 3,
+      "kanalen": [
+        "malign-musings",
+        "facehammer-tv",
+        "old-world-legends"
+      ],
+      "lessen": [
+        "ushabti-great-bows-lanterns",
+        "ushabti-shoot-monsters-ogres",
+        "focus-mournfangs-before-contact"
+      ]
+    },
+    {
+      "id": "threaten-monsters-with-monster-slayer-characters",
+      "titel": "Threaten monsters with Monster Slayer characters",
+      "tekst": "Consider a character with Monster Slayer to threaten enemy monsters. A flying mount helps you position that threat.",
+      "soort": "principe",
+      "thema": "characters",
+      "leger": "kingdom-of-bretonnia",
+      "aantalLessen": 3,
+      "aantalKanalen": 3,
+      "kanalen": [
+        "close-order",
+        "nine-inch-charge",
+        "old-world-fanatics"
+      ],
+      "lessen": [
+        "duke-monster-slayer-zoning",
+        "duke-threatens-both-miao-forms",
+        "heroism-flying-monster-hunter"
+      ]
+    },
+    {
+      "id": "use-power-scrolls-for-crucial-casts",
+      "titel": "Use Power Scrolls for crucial casts",
+      "tekst": "Use a Power Scroll when getting a particular spell through is crucial to your plan. It improves your chance of getting the effect when you need it.",
+      "soort": "principe",
+      "thema": "magic",
+      "leger": null,
+      "aantalLessen": 3,
+      "aantalKanalen": 3,
+      "kanalen": [
+        "2pluspodcast",
+        "close-order",
+        "old-world-legends"
+      ],
+      "lessen": [
+        "save-scroll-decisive-control",
+        "prioritise-urgency-casting-reliability",
+        "power-scrolls-critical-ethereal-turns"
+      ]
+    },
+    {
+      "id": "use-terrain-to-delay-charges",
+      "titel": "Use terrain to shorten enemy charges and buy time",
+      "tekst": "Position around woods or spell-created terrain that forces shorter charge rolls. Delaying the enemy can buy another turn of shooting or movement.",
       "soort": "principe",
       "thema": "shooting-terrain",
       "leger": null,
-      "aantalLessen": 6,
-      "aantalKanalen": 2,
+      "aantalLessen": 3,
+      "aantalKanalen": 3,
       "kanalen": [
-        "old-world-legends",
-        "2pluspodcast"
+        "2pluspodcast",
+        "dawi-after-dark",
+        "square-based"
       ],
       "lessen": [
-        "wood-elves-reconsider-poison",
-        "poison-faster-threats-first",
-        "concentrate-fire-finish-lanterns",
-        "lower-lantern-leadership-screams",
-        "poison-scouts-clear-cannon",
-        "bait-lanterns-into-concentrated-fire"
+        "control-spells-block-lanes",
+        "terrain-low-roll-charges",
+        "artillery-pivot-into-woods"
       ]
     },
     {
-      "id": "give-combat-characters-all-round-charge-options",
-      "titel": "Give combat characters all-round charge options",
-      "tekst": "Choose characters or mounts that can threaten in every direction. Use that flexibility to pick their fights.",
+      "id": "position-chaff-for-safe-overruns",
+      "titel": "Keep enemy overruns and redirects away from your valuable units",
+      "tekst": "Place chaff, screens and supporting units so an enemy that wins, overruns or redirects cannot carry on into a valuable unit. Check the attacker's facing and path before you settle those positions.",
       "soort": "principe",
-      "thema": "characters",
+      "thema": "chaff",
       "leger": null,
-      "aantalLessen": 6,
+      "aantalLessen": 9,
       "aantalKanalen": 2,
       "kanalen": [
         "2pluspodcast",
-        "old-world-legends"
+        "close-order"
       ],
       "lessen": [
-        "skirmish-blender-character",
-        "assassins-all-round-movement",
-        "try-solitary-doombull",
-        "mounted-hunter-fortitude",
-        "duke-pegasus-charge-flexibility",
-        "chaos-lord-steed-charge-arc"
-      ]
-    },
-    {
-      "id": "receive-charges-with-support-ready-to-countercharge",
-      "titel": "Receive charges with support ready to countercharge",
-      "tekst": "Use a unit that can survive the first charge, with support positioned to countercharge. Plan how its retreat and the enemy's follow-up will leave your support able to join.",
-      "soort": "principe",
-      "thema": "movement",
-      "leger": null,
-      "aantalLessen": 6,
-      "aantalKanalen": 2,
-      "kanalen": [
-        "2pluspodcast",
-        "zen-fox-games"
-      ],
-      "lessen": [
-        "heavy-chariot-support",
-        "stubborn-anchor-countercharge",
-        "reform-screen-flank-countercharge",
-        "anvil-next-turn-combat-choices",
-        "layer-resilient-units-retreat-trap",
-        "stagger-receivers-for-countercharge"
+        "speed-bump-close-order",
+        "align-sacrifices-for-empty-overruns",
+        "hold-redirector-protect-target",
+        "offset-skirmisher-charge-contact",
+        "offset-support-beyond-overruns",
+        "frenzy-bait-only-target",
+        "screen-pursuit-misses-character",
+        "check-partial-alignment-overruns",
+        "spread-elves-prevent-chained-combats"
       ]
     },
     {
@@ -518,11 +1640,52 @@
       ]
     },
     {
-      "id": "build-infantry-for-static-combat-resolution",
-      "titel": "Build infantry blocks to win through static combat resolution",
-      "tekst": "Use ranks and banners to raise your infantry's combat result. This helps you win fights without relying entirely on inflicted wounds.",
+      "id": "use-dangerous-decoys-to-divert-resources",
+      "titel": "Use dangerous decoys to divert resources from your main force",
+      "tekst": "Offer a threat your opponent cannot safely ignore. Dealing with it uses shots or units that could otherwise threaten your main force.",
       "soort": "principe",
-      "thema": "infantry",
+      "thema": "chaff",
+      "leger": null,
+      "aantalLessen": 5,
+      "aantalKanalen": 2,
+      "kanalen": [
+        "2pluspodcast",
+        "dawi-after-dark"
+      ],
+      "lessen": [
+        "chaff-decoys",
+        "decoy-forces-a-choice",
+        "gyrocopters-pressure-nuln-artillery",
+        "bolt-throwers-sacrificial-flank-distractions",
+        "light-chariot-artillery-hunter"
+      ]
+    },
+    {
+      "id": "avoid-enemy-charge-threats",
+      "titel": "Keep threatened units outside enemy charge reach",
+      "tekst": "Measure where enemy units can charge before choosing your moves. Move threatened units outside their reach or charge arcs to keep them safe.",
+      "soort": "principe",
+      "thema": "game-plan",
+      "leger": null,
+      "aantalLessen": 4,
+      "aantalKanalen": 2,
+      "kanalen": [
+        "2pluspodcast",
+        "close-order"
+      ],
+      "lessen": [
+        "split-units-limit-dragon-targets",
+        "measure-charges-every-turn",
+        "stay-beyond-known-charge-reach",
+        "wood-elves-escape-before-shooting"
+      ]
+    },
+    {
+      "id": "choose-hammers-that-survive-shooting",
+      "titel": "Choose hammers that can survive shooting on the way in",
+      "tekst": "Your opponent will try to kill your hammers before they strike. Pick ones durable enough to survive the shooting and still reach combat.",
+      "soort": "principe",
+      "thema": "hammers",
       "leger": null,
       "aantalLessen": 4,
       "aantalKanalen": 2,
@@ -531,10 +1694,50 @@
         "old-world-legends"
       ],
       "lessen": [
-        "anchor-static-combat-resolution",
-        "veteran-state-griffin-banner",
-        "men-at-arms-resolution-block",
-        "skeletons-twenty-five-thirty"
+        "hammers-need-durability",
+        "white-wolf-knights-charge-lanterns",
+        "prefer-granite-sentinel-durability",
+        "ancient-stegadon-central-cornerstone"
+      ]
+    },
+    {
+      "id": "choose-mobile-chaff-for-blocking",
+      "titel": "Choose mobile chaff that can reach its blocking position",
+      "tekst": "Choose chaff with enough movement to get ahead of the enemy. Its mobility lets you place a blocker where it can obstruct the enemy's advance.",
+      "soort": "principe",
+      "thema": "chaff",
+      "leger": null,
+      "aantalLessen": 4,
+      "aantalKanalen": 2,
+      "kanalen": [
+        "2pluspodcast",
+        "d6-wounds"
+      ],
+      "lessen": [
+        "chaff-must-be-fast",
+        "giant-rats-redirection-choice",
+        "great-eagle-redirection-role",
+        "wolf-column-early-chaff"
+      ]
+    },
+    {
+      "id": "delay-enemies-to-buy-time",
+      "titel": "Delay enemies to buy time for your attacks",
+      "tekst": "Use movement or control to make enemies take longer to reach you. This gives you more time for shooting and favourable attacks.",
+      "soort": "principe",
+      "thema": "game-plan",
+      "leger": "wood-elf-realms",
+      "aantalLessen": 4,
+      "aantalKanalen": 2,
+      "kanalen": [
+        "2pluspodcast",
+        "close-order"
+      ],
+      "lessen": [
+        "wood-elves-control-buys-time",
+        "deepwood-scouts-distract-pursuers",
+        "glade-guard-distance-hill-retreat",
+        "wood-elves-kite-beastmen"
       ]
     },
     {
@@ -558,69 +1761,49 @@
       ]
     },
     {
-      "id": "overlap-charge-threats",
-      "titel": "Overlap charge threats to deny safe enemy movement",
-      "tekst": "Position units so their charge threats cover gaps and escape routes. This restricts where the enemy can move safely without you having to attack.",
+      "id": "position-challengers-for-the-threatened-rank",
+      "titel": "Keep your challenger able to reach the threatened fighting rank",
+      "tekst": "Check that your intended challenger is in, or can enter, the rank facing the expected charge. Champions cannot move through the ranks to reach a flank attacker.",
       "soort": "principe",
-      "thema": "game-plan",
+      "thema": "characters",
       "leger": null,
       "aantalLessen": 4,
       "aantalKanalen": 2,
       "kanalen": [
         "2pluspodcast",
-        "facehammer-tv"
+        "close-order"
       ],
       "lessen": [
-        "zone-with-overlapping-threats",
-        "contain-mobile-units-opposite-directions",
-        "angle-attackers-towards-boundary",
-        "overlap-necrosphinx-threat-arcs"
+        "infantry-character-flank-challenge",
+        "corner-character-dual-charge-challenge",
+        "displace-champion-to-threatened-corner",
+        "champion-delaying-challenge"
       ]
     },
     {
-      "id": "secure-key-spells",
-      "titel": "Secure key spells instead of relying on random generation",
-      "tekst": "Use useful signature spells or spell-selection options to secure the spells your plan needs. Random generation can leave your wizard without the spells you wanted.",
+      "id": "reinforce-ongoing-fights-with-supporting-charges",
+      "titel": "Reinforce ongoing fights with supporting charges",
+      "tekst": "Bring a supporting unit into an existing fight to add damage or combat resolution. This can help your main unit break through instead of grinding alone.",
       "soort": "principe",
-      "thema": "magic",
-      "leger": null,
+      "thema": "movement",
+      "leger": "orc-and-goblin-tribes",
       "aantalLessen": 4,
       "aantalKanalen": 2,
       "kanalen": [
-        "2pluspodcast",
-        "square-based"
-      ],
-      "lessen": [
-        "choose-dark-magic-spells",
-        "plan-around-guaranteed-signatures",
-        "chaos-swap-unhelpful-spells",
-        "illusion-familiar-control-spells"
-      ]
-    },
-    {
-      "id": "shoot-while-delaying-combat",
-      "titel": "With the stronger shooting army, shoot first and fight later",
-      "tekst": "When your ranged firepower outclasses the enemy's, weaken them from range and stay out of combat until it suits you. Some missions make this patient plan easier.",
-      "soort": "principe",
-      "thema": "game-plan",
-      "leger": null,
-      "aantalLessen": 4,
-      "aantalKanalen": 2,
-      "kanalen": [
-        "square-based",
+        "d6-wounds",
         "2pluspodcast"
       ],
       "lessen": [
-        "control-with-ranged-firepower",
-        "gunlines-score-without-contact",
-        "close-quarter-defensive-shooting",
-        "chance-encounter-patient-play"
+        "close-order-wolves-ambush-support",
+        "boar-flankers-break-grinds",
+        "black-orc-chariot-standard",
+        "giant-finishes-boar-combats"
       ]
     },
     {
-      "id": "support-hammers-against-difficult-targets",
-      "titel": "Support hammers that cannot handle their target alone",
-      "tekst": "Join an existing fight or charge alongside another unit when your attacker needs help. Use that support to tackle targets it cannot handle alone.",
+      "id": "restrict-positioning-with-random-movement",
+      "titel": "Use unpredictable random movement to restrict enemy positioning",
+      "tekst": "Use random movers' uncertain reach to threaten nearby ground. Their potential movement can make opponents hold back or change their positioning without you making contact.",
       "soort": "principe",
       "thema": "hammers",
       "leger": null,
@@ -631,36 +1814,36 @@
         "old-world-legends"
       ],
       "lessen": [
-        "empire-knights-support-combats",
-        "heavy-chariot-support",
-        "bloodthirster-needs-lantern-support",
-        "support-wyvern-against-shugengan"
+        "exploit-random-movement-variance",
+        "hide-random-movers-behind-hills",
+        "mangler-squig-decoy",
+        "hell-pit-utility-monster"
       ]
     },
     {
-      "id": "support-hammers-with-chaff",
-      "titel": "Support your hammers with chaff to set up their attacks",
-      "tekst": "Use chaff to help your hammers reach suitable fights. Screens protect them until they are ready to strike.",
+      "id": "stack-shooting-hit-penalties",
+      "titel": "Stack shooting hit penalties to protect your units",
+      "tekst": "Combine multiple shooting hit penalties on a unit. Making incoming shooting less accurate reduces the damage it takes.",
       "soort": "principe",
-      "thema": "hammers",
+      "thema": "shooting-terrain",
       "leger": null,
       "aantalLessen": 4,
       "aantalKanalen": 2,
       "kanalen": [
-        "2pluspodcast",
-        "hammerhobby"
+        "old-world-legends",
+        "close-order"
       ],
       "lessen": [
-        "flank-not-point-and-click",
-        "hammers-on-flanks",
-        "screening-chaff",
-        "hammer-matchups"
+        "woods-stack-skirmisher-shooting-defence",
+        "beastmen-protected-vile-tide-bunker",
+        "chaos-stack-shooting-hit-penalties",
+        "evasive-push-bombs-long-range"
       ]
     },
     {
-      "id": "use-ambushers-to-claim-unguarded-objectives",
-      "titel": "Use ambushers to claim unguarded objectives",
-      "tekst": "Bring ambushers into open space to take objectives. Look for gaps left as enemy units advance to score.",
+      "id": "support-charges-against-objective-defenders",
+      "titel": "Use supported charges to dislodge objective defenders",
+      "tekst": "Coordinate attackers and supporting units when charging to push a defender off an objective.",
       "soort": "principe",
       "thema": "scenarios",
       "leger": null,
@@ -668,13 +1851,13 @@
       "aantalKanalen": 2,
       "kanalen": [
         "2pluspodcast",
-        "square-based"
+        "return-to-the-old-world"
       ],
       "lessen": [
-        "ambush-vacated-enemy-objectives",
-        "beastmen-infantry-safe-ambush",
-        "kiknik-ambushers-score-objectives",
-        "ambushers-target-baggage-trains"
+        "combo-charge-objective-defenders",
+        "cavalry-push-off-objectives",
+        "king-of-the-hill-forfeit",
+        "eternal-guard-charge-for-scoring"
       ]
     },
     {
@@ -697,6 +1880,44 @@
       ]
     },
     {
+      "id": "assign-vulnerable-scorers-safer-positions",
+      "titel": "Give smaller or vulnerable scorers the safer scoring positions",
+      "tekst": "Put smaller or more vulnerable scorers in safer positions. Keep larger units available for objectives the opponent will contest.",
+      "soort": "principe",
+      "thema": "scenarios",
+      "leger": null,
+      "aantalLessen": 3,
+      "aantalKanalen": 2,
+      "kanalen": [
+        "close-order",
+        "2pluspodcast"
+      ],
+      "lessen": [
+        "allocate-scorers-by-contest",
+        "hill-small-scorer-hidden",
+        "encirclement-protect-vulnerable-scorer"
+      ]
+    },
+    {
+      "id": "bretonnia-low-strength-shooting",
+      "titel": "Against Bretonnia, use low-Strength shooting to avoid the stronger Blessing",
+      "tekst": "Use low-Strength shooting against knights to avoid improving their ward save. Against Pegasus Knights, look for high armour piercing as well.",
+      "soort": "principe",
+      "thema": "matchups",
+      "leger": "kingdom-of-bretonnia",
+      "aantalLessen": 3,
+      "aantalKanalen": 2,
+      "kanalen": [
+        "2pluspodcast",
+        "dawi-after-dark"
+      ],
+      "lessen": [
+        "strength-four-bretonnian-blessing",
+        "sisters-shoot-pegasus-knights",
+        "pegasus-low-strength-armour-piercing"
+      ]
+    },
+    {
       "id": "cathay-cannon-hunters-handle-ogre-crews",
       "titel": "Against Cathay, send cannon hunters that can handle Ogre crews",
       "tekst": "Bring enough combat power or bodies to handle the Ogre crew when hunting Cathayan cannons. Undersized hunting units can be defeated before doing their job.",
@@ -716,22 +1937,79 @@
       ]
     },
     {
-      "id": "choose-hammers-that-survive-shooting",
-      "titel": "Choose hammers that can survive shooting and deliver their damage",
-      "tekst": "Your opponent will try to kill your hammers before they strike. Pick ones durable enough to survive the shooting and still reach combat.",
+      "id": "choose-shooting-ambushers-for-an-immediate-arrival-volley",
+      "titel": "Choose shooting ambushers for an immediate arrival volley",
+      "tekst": "Use shooting ambushers to attack a vulnerable target on the turn they arrive. Move into a useful firing position instead of waiting for a later charge to contribute.",
       "soort": "principe",
-      "thema": "hammers",
+      "thema": "shooting-terrain",
       "leger": null,
       "aantalLessen": 3,
       "aantalKanalen": 2,
       "kanalen": [
-        "old-world-legends",
-        "2pluspodcast"
+        "2pluspodcast",
+        "return-to-the-old-world"
       ],
       "lessen": [
-        "hammers-need-durability",
-        "white-wolf-knights-charge-lanterns",
-        "prefer-granite-sentinel-durability"
+        "shooting-ambushers-immediate-impact",
+        "sneaky-gits-backline-volley",
+        "road-wardens-shooting-ambush"
+      ]
+    },
+    {
+      "id": "combine-charges-for-damage",
+      "titel": "Use combined charges when one attacker lacks the damage",
+      "tekst": "Send several attackers into the same target in the same turn. Their combined damage gives you a better chance of beating it.",
+      "soort": "principe",
+      "thema": "matchups",
+      "leger": null,
+      "aantalLessen": 3,
+      "aantalKanalen": 2,
+      "kanalen": [
+        "2pluspodcast",
+        "old-world-fanatics"
+      ],
+      "lessen": [
+        "massed-chariots-poison-block",
+        "combo-charge-poison-death-star",
+        "support-wyvern-against-shugengan"
+      ]
+    },
+    {
+      "id": "concentrate-shooting-on-one-target",
+      "titel": "Concentrate your shooting on one target",
+      "tekst": "Focus your shots on one enemy target to improve your chances of removing it.",
+      "soort": "principe",
+      "thema": "shooting-terrain",
+      "leger": "wood-elf-realms",
+      "aantalLessen": 3,
+      "aantalKanalen": 2,
+      "kanalen": [
+        "2pluspodcast",
+        "old-world-legends"
+      ],
+      "lessen": [
+        "wood-elves-reconsider-poison",
+        "poison-scouts-clear-cannon",
+        "wood-elves-concentrate-bow-fire"
+      ]
+    },
+    {
+      "id": "damage-scorers-to-deny-points",
+      "titel": "Damage enemy scorers to deny their objective points",
+      "tekst": "Focus damage on enemy scoring units to stop them earning objective points.",
+      "soort": "principe",
+      "thema": "scenarios",
+      "leger": null,
+      "aantalLessen": 3,
+      "aantalKanalen": 2,
+      "kanalen": [
+        "2pluspodcast",
+        "close-order"
+      ],
+      "lessen": [
+        "jade-warriors-deny-scoring",
+        "wolf-riders-harass-objective-scorers",
+        "missiles-deny-terrain-scoring"
       ]
     },
     {
@@ -754,85 +2032,66 @@
       ]
     },
     {
-      "id": "deny-useful-ambush-entry-space",
-      "titel": "Deny enemy ambushers useful entry space with your unit positions",
-      "tekst": "Use your models' positions and the ambush entry restrictions to block useful arrival areas.",
+      "id": "divide-the-pursuit-and-reform-jobs",
+      "titel": "Let another unit chase fugitives while your main unit stays useful",
+      "tekst": "Use another unit to chase fleeing enemies rather than sending your main combat unit after them. After a shared victory, you can let one attacker pursue while the other restrains and reforms.",
+      "soort": "principe",
+      "thema": "movement",
+      "leger": null,
+      "aantalLessen": 3,
+      "aantalKanalen": 2,
+      "kanalen": [
+        "return-to-the-old-world",
+        "2pluspodcast"
+      ],
+      "lessen": [
+        "skirmishers-pursue-block-reforms",
+        "divide-pursuit-and-reform",
+        "light-cavalry-finish-fugitives"
+      ]
+    },
+    {
+      "id": "evade-beyond-shooting-reach",
+      "titel": "Use Evasive to retreat beyond shooting range or sight",
+      "tekst": "Position your Evasive unit so its retreat can take it outside the shooter's range or line of sight. This can deny the incoming shot.",
+      "soort": "principe",
+      "thema": "shooting-terrain",
+      "leger": null,
+      "aantalLessen": 3,
+      "aantalKanalen": 2,
+      "kanalen": [
+        "2pluspodcast",
+        "close-order"
+      ],
+      "lessen": [
+        "evasive-limit-fireball-reach",
+        "evasive-retreat-behind-hill",
+        "warhawk-riders-evasive-screen"
+      ]
+    },
+    {
+      "id": "keep-supporting-units-out-of-unwanted-overrun-paths",
+      "titel": "Keep supporting units out of unwanted overrun paths",
+      "tekst": "Separate, stagger or offset nearby units so an enemy charging one cannot overrun straight into another. Set this spacing during deployment.",
       "soort": "principe",
       "thema": "deployment",
       "leger": null,
       "aantalLessen": 3,
       "aantalKanalen": 2,
       "kanalen": [
-        "2pluspodcast",
-        "zen-fox-games"
-      ],
-      "lessen": [
-        "channel-ambushers-into-charges",
-        "corner-models-deny-ambushes",
-        "respect-successful-ambush-arrivals"
-      ]
-    },
-    {
-      "id": "escape-charge-arcs-with-magic",
-      "titel": "Use movement spells to escape enemy charge arcs",
-      "tekst": "Use magical movement to reposition a threatened unit outside the enemy's charge arc, preventing that enemy from charging it next turn.",
-      "soort": "principe",
-      "thema": "magic",
-      "leger": null,
-      "aantalLessen": 3,
-      "aantalKanalen": 2,
-      "kanalen": [
-        "square-based",
-        "facehammer-tv"
-      ],
-      "lessen": [
-        "arcane-urgency-escape-charge-arcs",
-        "mystical-pathways-change-attack-angle",
-        "reposition-shooting-blocks-safely"
-      ]
-    },
-    {
-      "id": "keep-units-out-of-fights-they-are-likely-to-lose",
-      "titel": "Keep units out of fights they are likely to lose",
-      "tekst": "Keep your unit away from opponents likely to destroy it, even if that means giving up the fight for now.",
-      "soort": "principe",
-      "thema": "matchups",
-      "leger": null,
-      "aantalLessen": 3,
-      "aantalKanalen": 2,
-      "kanalen": [
-        "2pluspodcast",
-        "old-world-legends"
-      ],
-      "lessen": [
-        "save-vulnerable-valuable-units",
-        "plagued-pegasus-knights-withdraw",
-        "arachnarok-avoid-ogre-blade"
-      ]
-    },
-    {
-      "id": "lower-enemy-leadership-to-strengthen-your-threats",
-      "titel": "Lower Leadership before your screams and Terror charges",
-      "tekst": "Pair Necromancy's Leadership penalties with Tomb Banshee screams and Terror. A lower target Leadership makes those attacks more dangerous.",
-      "soort": "principe",
-      "thema": "magic",
-      "leger": "vampire-counts",
-      "aantalLessen": 3,
-      "aantalKanalen": 2,
-      "kanalen": [
-        "old-world-legends",
+        "dawi-after-dark",
         "2pluspodcast"
       ],
       "lessen": [
-        "repeated-terror-charges-lanterns",
-        "tomb-banshee-budget-assassin",
-        "lower-lantern-leadership-screams"
+        "offset-support-beyond-overruns",
+        "separate-artillery-deny-overruns",
+        "separate-empire-artillery-stations"
       ]
     },
     {
-      "id": "place-vortexes-in-enemy-routes",
-      "titel": "Use control spells to block the routes enemies want to take",
-      "tekst": "Place movement-blocking magic, such as vortexes and spells that create dangerous terrain, in front of enemy units. It disrupts their advance and can force bad charges.",
+      "id": "place-control-spells-across-enemy-routes",
+      "titel": "Place control spells across the enemy's intended route",
+      "tekst": "Place obstructing or dangerous spells where enemy units intend to move. This disrupts their approach or makes the route more dangerous.",
       "soort": "principe",
       "thema": "magic",
       "leger": null,
@@ -849,66 +2108,47 @@
       ]
     },
     {
-      "id": "power-scrolls-for-important-spells",
-      "titel": "Use Power Scrolls to help important spells resolve",
-      "tekst": "Use Power Scrolls to improve your chances of resolving spells your plan depends on.",
+      "id": "protect-scorers-with-cover",
+      "titel": "Protect vulnerable scorers with cover or screens",
+      "tekst": "Use terrain or screening units to protect your scorers as you position them for objectives. Avoid exposing them to shooting just to reach or hold a scoring position.",
+      "soort": "principe",
+      "thema": "scenarios",
+      "leger": null,
+      "aantalLessen": 3,
+      "aantalKanalen": 2,
+      "kanalen": [
+        "2pluspodcast",
+        "close-order"
+      ],
+      "lessen": [
+        "maintain-cover-for-scorers",
+        "hill-small-scorer-hidden",
+        "hidden-mobile-objective-grabs"
+      ]
+    },
+    {
+      "id": "save-limited-dispels-for-critical-moments",
+      "titel": "Save limited dispelling tools for critical moments",
+      "tekst": "Keep limited dispelling tools available for the spells that can derail your plan. Choose when to spend them according to the spell's importance at that moment.",
       "soort": "principe",
       "thema": "magic",
       "leger": null,
       "aantalLessen": 3,
       "aantalKanalen": 2,
       "kanalen": [
-        "2pluspodcast",
-        "old-world-legends"
+        "dawi-after-dark",
+        "2pluspodcast"
       ],
       "lessen": [
-        "scrolls-contested-hexes-vortexes",
-        "save-scroll-decisive-control",
-        "power-scrolls-critical-ethereal-turns"
+        "lesser-mages-dispel-scrolls",
+        "reserve-spellbreaking-for-mirage",
+        "delay-breaking-crystal-column"
       ]
     },
     {
-      "id": "pressure-positioning-with-random-movement",
-      "titel": "Use random movement threats to constrain enemy positioning",
-      "tekst": "Position random movers so their uncertain reach threatens nearby enemies. That threat can make opponents hold back or change their movement.",
-      "soort": "principe",
-      "thema": "hammers",
-      "leger": null,
-      "aantalLessen": 3,
-      "aantalKanalen": 2,
-      "kanalen": [
-        "2pluspodcast",
-        "old-world-legends"
-      ],
-      "lessen": [
-        "exploit-random-movement-variance",
-        "hide-random-movers-behind-hills",
-        "mangler-squig-decoy"
-      ]
-    },
-    {
-      "id": "reach-combat-early-against-gunlines",
-      "titel": "Reach combat early to cut a gunline's shooting time",
-      "tekst": "Move quickly into combat against shooting armies. Early engagement limits how long their shooting can damage your units.",
-      "soort": "principe",
-      "thema": "shooting-terrain",
-      "leger": null,
-      "aantalLessen": 3,
-      "aantalKanalen": 2,
-      "kanalen": [
-        "2pluspodcast",
-        "square-based"
-      ],
-      "lessen": [
-        "infantry-combat-escapes-bombardment",
-        "imperfect-target-escape-shooting",
-        "fast-armies-close-gunlines"
-      ]
-    },
-    {
-      "id": "screen-frenzied-units-to-control-charges",
-      "titel": "Screen your frenzied units to control their charges",
-      "tekst": "Keep a screen in front of your frenzied troops to prevent unwanted charges. Use it to move into position before committing to the fight you want.",
+      "id": "screen-frenzied-units-until-ready",
+      "titel": "Screen frenzied units until you want them to charge",
+      "tekst": "Keep a screen in front of frenzied troops to block unwanted charges. Advance them into position before clearing the screen for your chosen charge.",
       "soort": "principe",
       "thema": "chaff",
       "leger": null,
@@ -925,22 +2165,41 @@
       ]
     },
     {
-      "id": "soften-shugengan-lord-with-doom-divers",
-      "titel": "Against Cathay, aim Doom Divers at its big threats and artillery",
-      "tekst": "Doom Divers can soften the Shugengan Lord before your Wyvern goes in, or thin out Cathay's artillery before its opening volley.",
+      "id": "screen-hammers-while-setting-up-charges",
+      "titel": "Screen your hammers with chaff while setting up favourable charges",
+      "tekst": "Use chaff or skirmishing screens to protect your hammers while you arrange their attacks. The screen helps your hammer reach the fight you want.",
       "soort": "principe",
-      "thema": "matchups",
-      "leger": "orc-and-goblin-tribes",
+      "thema": "hammers",
+      "leger": null,
       "aantalLessen": 3,
       "aantalKanalen": 2,
       "kanalen": [
         "2pluspodcast",
-        "old-world-legends"
+        "hammerhobby"
       ],
       "lessen": [
-        "support-wyvern-against-shugengan",
-        "doom-divers-opening-artillery-volley",
-        "doom-divers-against-cathay"
+        "flank-not-point-and-click",
+        "hammers-on-flanks",
+        "screening-chaff"
+      ]
+    },
+    {
+      "id": "soften-targets-before-finishing-cavalry-charge",
+      "titel": "Soften targets before your finishing cavalry charge",
+      "tekst": "Use shooting or an earlier cavalry attack to weaken the target. This gives your finishing cavalry a better chance of breaking through.",
+      "soort": "principe",
+      "thema": "hammers",
+      "leger": null,
+      "aantalLessen": 3,
+      "aantalKanalen": 2,
+      "kanalen": [
+        "return-to-the-old-world",
+        "2pluspodcast"
+      ],
+      "lessen": [
+        "double-hammer-consecutive-waves",
+        "sacrifice-regular-cavalry-softening",
+        "soften-targets-before-cavalry"
       ]
     },
     {
@@ -963,9 +2222,9 @@
       ]
     },
     {
-      "id": "support-holding-units-with-a-nearby-bsb",
-      "titel": "Support holding units with a nearby BSB",
-      "tekst": "Keep a BSB near units or characters you need to hold in combat. Its rerolls help prevent a failed break test from losing them.",
+      "id": "support-holding-combats-with-a-bsb",
+      "titel": "Keep a BSB near combats you need to hold",
+      "tekst": "Keep your BSB in support range when holding a combat matters. Its reroll reduces the risk of a crucial failed break test.",
       "soort": "principe",
       "thema": "characters",
       "leger": null,
@@ -979,6 +2238,25 @@
         "tank-nearby-bsb-support",
         "horde-bsb-break-rerolls",
         "cheap-bsb-outside-combat"
+      ]
+    },
+    {
+      "id": "use-doom-divers-to-damage-the-shugengan-lord",
+      "titel": "Against Cathay, aim Doom Divers at its big threats and artillery",
+      "tekst": "Doom Divers can soften the Shugengan Lord before your Wyvern goes in, or thin out Cathay's artillery before its opening volley.",
+      "soort": "principe",
+      "thema": "matchups",
+      "leger": "orc-and-goblin-tribes",
+      "aantalLessen": 3,
+      "aantalKanalen": 2,
+      "kanalen": [
+        "2pluspodcast",
+        "old-world-legends"
+      ],
+      "lessen": [
+        "support-wyvern-against-shugengan",
+        "doom-divers-opening-artillery-volley",
+        "doom-divers-against-cathay"
       ]
     },
     {
@@ -1001,12 +2279,69 @@
       ]
     },
     {
-      "id": "use-level-one-bray-shamans-for-vile-tide",
-      "titel": "Use level-one Bray-Shamans for Vile Tide",
-      "tekst": "Consider level-one Bray-Shamans to cast Vile Tide. Taking several lets you repeat the spell across multiple casters.",
+      "id": "use-mobile-wolf-riders-to-capture-objectives",
+      "titel": "Use mobile Wolf Riders to capture objectives",
+      "tekst": "March Wolf Riders onto objectives or bring them in from ambush. Their mobility helps you reach scoring positions.",
+      "soort": "principe",
+      "thema": "scenarios",
+      "leger": "orc-and-goblin-tribes",
+      "aantalLessen": 3,
+      "aantalKanalen": 2,
+      "kanalen": [
+        "d6-wounds",
+        "2pluspodcast"
+      ],
+      "lessen": [
+        "kiknik-ambushers-score-objectives",
+        "wolf-column-retain-objectives",
+        "ambush-replace-early-wolf-scorers"
+      ]
+    },
+    {
+      "id": "use-mobility-to-avoid-enemy-charges",
+      "titel": "Use mobility to avoid enemy charges",
+      "tekst": "Move clear of advancing enemies to keep your units from being caught in combat.",
+      "soort": "principe",
+      "thema": "movement",
+      "leger": "wood-elf-realms",
+      "aantalLessen": 3,
+      "aantalKanalen": 2,
+      "kanalen": [
+        "2pluspodcast",
+        "close-order"
+      ],
+      "lessen": [
+        "wood-elves-escape-before-shooting",
+        "wood-elves-kite-beastmen",
+        "wood-elves-avoid-receiving-charges"
+      ]
+    },
+    {
+      "id": "use-movement-magic-to-reach-fanatic-launch-positions",
+      "titel": "Use movement magic to reach Fanatic launch positions",
+      "tekst": "Use movement spells to reposition Night Goblin carriers before releasing their Fanatics. The extra reach helps you reach targets or useful launch angles.",
       "soort": "principe",
       "thema": "magic",
-      "leger": "beastmen-brayherds",
+      "leger": "orc-and-goblin-tribes",
+      "aantalLessen": 3,
+      "aantalKanalen": 2,
+      "kanalen": [
+        "close-order",
+        "2pluspodcast"
+      ],
+      "lessen": [
+        "tmp-fanatic-release-range",
+        "urgency-fanatic-launch-angles",
+        "pathways-corner-fanatic-delivery"
+      ]
+    },
+    {
+      "id": "use-skinks-as-screeners",
+      "titel": "Use Skinks as screeners",
+      "tekst": "Use Skink Skirmishers or Chameleon Skinks to screen your army. These screeners can also contribute shooting.",
+      "soort": "principe",
+      "thema": "chaff",
+      "leger": "lizardmen",
       "aantalLessen": 3,
       "aantalKanalen": 2,
       "kanalen": [
@@ -1014,103 +2349,158 @@
         "old-world-legends"
       ],
       "lessen": [
-        "beastmen-protected-vile-tide-bunker",
-        "multiple-vile-tide-casters",
-        "bray-shaman-missile-choice"
+        "skinks-screen-cannon-sight",
+        "lizardmen-screening-packages",
+        "chameleon-skinks-worth-cost"
+      ]
+    },
+    {
+      "id": "use-spellbreaking-against-powerful-casts",
+      "titel": "Use Spellbreaking against casts your normal dispelling struggles to stop",
+      "tekst": "Use Runes of Spellbreaking when strong enemy casting makes normal dispelling unreliable.",
+      "soort": "principe",
+      "thema": "magic",
+      "leger": "dwarfen-mountain-holds",
+      "aantalLessen": 3,
+      "aantalKanalen": 2,
+      "kanalen": [
+        "dawi-after-dark",
+        "old-world-legends"
+      ],
+      "lessen": [
+        "spellbreaking-stop-plague-rust",
+        "runesmith-break-empire-illusion",
+        "prefer-runesmith-over-runelord"
       ]
     }
   ],
   "top10": [
+    "reinforce-fights-with-flank-or-rear-charges",
+    "hide-vulnerable-units-behind-terrain",
+    "restrict-movement-with-threats",
     "lower-leadership-before-tests-or-damage",
-    "protect-lone-characters-with-nearby-troops",
-    "weigh-first-turn-bonus",
-    "screen-valuable-units-from-shooting",
-    "support-fights-with-flank-or-rear-charges",
-    "keep-casters-outside-dispel-range",
-    "check-enemy-reach-before-deploying",
-    "concentrate-against-part",
-    "deploy-for-working-support",
-    "hold-centre-mobile-flanks"
+    "deploy-units-within-reach-of-their-planned-buffs",
+    "guard-vulnerable-flanks-with-terrain-or-supporting-units",
+    "screen-important-units-from-shooting",
+    "check-enemy-reach-before-choosing-safe-deployment-positions",
+    "prepare-countercharges-behind-surviving-receivers",
+    "win-objectives-without-destroying-enemies"
   ],
   "debat": [],
   "perThema": {
     "game-plan": [
-      "concentrate-against-part",
-      "hold-centre-mobile-flanks",
-      "overlap-charge-threats",
-      "shoot-while-delaying-combat"
+      "restrict-movement-with-threats",
+      "ranged-pressure-forces-approaches",
+      "build-for-mission-requirements",
+      "expendable-units-buy-time",
+      "central-anvil-mobile-flanks"
     ],
     "deployment": [
+      "deploy-units-within-reach-of-their-planned-buffs",
+      "guard-vulnerable-flanks-with-terrain-or-supporting-units",
+      "check-enemy-reach-before-choosing-safe-deployment-positions",
       "weigh-first-turn-bonus",
-      "check-enemy-reach-before-deploying",
-      "deploy-for-working-support",
-      "protect-key-unit-flanks",
-      "hide-vulnerable-units-from-shooting"
+      "use-cheap-early-drops-to-delay-your-key-units"
     ],
     "movement": [
-      "support-fights-with-flank-or-rear-charges",
+      "reinforce-fights-with-flank-or-rear-charges",
+      "position-for-reliable-charges-before-committing",
+      "use-marching-column-to-reach-positions-quickly",
       "line-up-overruns-into-another-fight",
-      "set-up-reliable-charges-before-committing",
-      "receive-charges-with-support-ready-to-countercharge"
+      "reform-victorious-units-towards-their-next-fight"
     ],
     "chaff": [
-      "screen-valuable-units-from-shooting",
-      "use-bait-to-draw-enemies-towards-waiting-units",
-      "screen-frenzied-units-to-control-charges"
+      "screen-important-units-from-shooting",
+      "bait-enemies-into-supporting-charges",
+      "clear-chaff-with-ranged-attacks",
+      "keep-expendable-chaff-cheap",
+      "check-friendly-panic-before-committing-chaff"
     ],
     "infantry": [
-      "build-infantry-for-static-combat-resolution"
+      "prepare-countercharges-behind-surviving-receivers",
+      "build-infantry-for-static-combat-resolution",
+      "death-star-wound-pool"
     ],
     "hammers": [
-      "support-hammers-against-difficult-targets",
-      "support-hammers-with-chaff",
+      "set-up-your-hammers-to-charge",
       "choose-hammers-that-survive-shooting",
-      "pressure-positioning-with-random-movement"
+      "restrict-positioning-with-random-movement",
+      "screen-hammers-while-setting-up-charges",
+      "soften-targets-before-finishing-cavalry-charge"
     ],
     "characters": [
+      "contain-dangerous-attackers-with-challenges",
+      "choose-all-round-charge-options",
       "protect-lone-characters-with-nearby-troops",
-      "give-combat-characters-all-round-charge-options",
-      "support-holding-units-with-a-nearby-bsb"
+      "strengthen-basic-units-with-characters",
+      "deter-dragon-approaches-with-character-threats"
     ],
     "magic": [
       "lower-leadership-before-tests-or-damage",
-      "keep-casters-outside-dispel-range",
-      "repeat-signatures-with-low-level-casters",
-      "secure-key-spells",
-      "escape-charge-arcs-with-magic"
+      "accelerate-your-advance-with-magic",
+      "cast-outside-enemy-dispel-range",
+      "secure-essential-spells-with-lore-familiar",
+      "escape-charge-arcs-with-movement-magic"
     ],
     "shooting-terrain": [
-      "skirmish-to-reduce-incoming-shooting",
-      "concentrate-ranged-damage",
-      "ambushers-hunt-war-machines",
-      "reach-combat-early-against-gunlines"
+      "hide-vulnerable-units-behind-terrain",
+      "weaken-dangerous-enemies-before-combat",
+      "keep-shooters-beyond-charge-reach",
+      "remove-enemy-artillery-early",
+      "concentrate-fire-to-finish-targets"
     ],
     "matchups": [
-      "keep-units-out-of-fights-they-are-likely-to-lose"
+      "challenge-dragons-with-infantry",
+      "avoid-losing-matchups",
+      "deny-flyer-landing-space",
+      "counter-dragons-with-your-own",
+      "combine-charges-for-damage"
     ],
     "scenarios": [
-      "plan-endgame-objective-movement",
-      "position-your-force-around-scoring-locations",
-      "use-ambushers-to-claim-unguarded-objectives",
-      "delay-objective-commitment-to-prepare-your-position"
+      "win-objectives-without-destroying-enemies",
+      "deploy-scorers-to-reach-objectives",
+      "use-ambushers-to-score-in-unattended-areas",
+      "start-progressive-scoring-early",
+      "use-cheap-units-for-scoring"
     ]
   },
   "perLeger": {
-    "beastmen-brayherds": [
-      "use-level-one-bray-shamans-for-vile-tide"
+    "dwarfen-mountain-holds": [
+      "use-spellbreaking-against-powerful-casts"
+    ],
+    "empire-of-man": [
+      "aim-cannon-shots-through-multiple-models"
     ],
     "grand-cathay": [
       "against-cathay-use-multiple-wound-attacks-against-sky-lanterns",
       "cathay-cannon-hunters-handle-ogre-crews"
     ],
+    "kingdom-of-bretonnia": [
+      "threaten-monsters-with-monster-slayer-characters",
+      "bretonnia-low-strength-shooting"
+    ],
+    "lizardmen": [
+      "use-skinks-as-screeners"
+    ],
     "orc-and-goblin-tribes": [
-      "soften-shugengan-lord-with-doom-divers"
+      "reinforce-ongoing-fights-with-supporting-charges",
+      "use-doom-divers-to-damage-the-shugengan-lord",
+      "use-mobile-wolf-riders-to-capture-objectives",
+      "use-movement-magic-to-reach-fanatic-launch-positions"
+    ],
+    "tomb-kings-of-khemri": [
+      "reposition-ushabti-without-losing-shooting-accuracy",
+      "shoot-multi-wound-targets-with-great-bow-ushabti"
     ],
     "vampire-counts": [
-      "lower-enemy-leadership-to-strengthen-your-threats"
+      "lower-leadership-before-screaming",
+      "advance-threats-with-reserve-move"
     ],
     "wood-elf-realms": [
-      "use-evasive-to-retreat-when-targeted-by-shooting"
+      "delay-enemies-to-buy-time",
+      "concentrate-shooting-on-one-target",
+      "use-evasive-to-retreat-when-targeted-by-shooting",
+      "use-mobility-to-avoid-enemy-charges"
     ]
   }
 }

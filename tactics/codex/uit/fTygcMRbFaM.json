@@ -1,0 +1,541 @@
+{
+  "videoId": "fTygcMRbFaM",
+  "bronId": "yt-fTygcMRbFaM",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-26T03:09:42.170Z",
+  "nieuw": [
+    {
+      "id": "advance-runesmith-dispel-aura",
+      "titel": "Advance Runesmiths to project their dispel range",
+      "tekst": "Put one or two Runesmiths in units advancing up the board, and use them aggressively to bring enemy casters within dispel range.",
+      "waarom": "He says their 18-inch dispel range needs to be pushed forward to reach enemy wizards.",
+      "voorbeeld": null,
+      "wanneerNiet": "He does not expect this approach to stop spells on turn one.",
+      "fase": "movement",
+      "themas": [
+        "magic"
+      ],
+      "subthemas": [
+        "wizard-placement"
+      ],
+      "tags": [
+        "dispel",
+        "zoning"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [
+        "Runesmith"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-fTygcMRbFaM",
+          "url": "https://www.youtube.com/watch?v=fTygcMRbFaM&t=83s",
+          "tijd": 86,
+          "citaat": "I really like to use run Smiths aggressively"
+        }
+      ],
+      "datum": "2024-09-24",
+      "markeringen": []
+    },
+    {
+      "id": "prefer-runesmith-over-runelord",
+      "titel": "Prefer a cheap Runesmith over a Runelord for dispelling",
+      "tekst": "For economical magic defence, he prefers a Runesmith relying on Runes of Spellbreaking rather than paying for a Runelord.",
+      "waarom": "He says a Runesmith's level-one dispelling struggles against level-four wizards. Although a Runelord dispels as level two, he still prefers keeping the investment cheap and relying on Spellbreaking.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "magic"
+      ],
+      "subthemas": [
+        "wizard-builds"
+      ],
+      "tags": [
+        "dispel",
+        "wizard-level"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [
+        "Runesmith",
+        "Runelord"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-fTygcMRbFaM",
+          "url": "https://www.youtube.com/watch?v=fTygcMRbFaM&t=202s",
+          "tijd": 205,
+          "citaat": "I don't personally see a reason to take a rune Lord"
+        }
+      ],
+      "datum": "2024-09-24",
+      "markeringen": []
+    },
+    {
+      "id": "balance-rune-on-anvil",
+      "titel": "Consider Master Rune of Balance on the Anvil",
+      "tekst": "If taking Master Rune of Balance, he prefers putting it on the Anvil of Doom rather than a Runesmith.",
+      "waarom": "He thinks the extra dispel die, discarding the lowest, could help the Anvil's level-three dispelling beat level-four wizards. On a Runesmith it takes space he would use for Spellbreaking runes.",
+      "voorbeeld": null,
+      "wanneerNiet": "He notes that enemy wizards must be within the Anvil's 24-inch dispel range.",
+      "fase": "army-building",
+      "themas": [
+        "magic"
+      ],
+      "subthemas": [
+        "dispelling"
+      ],
+      "tags": [
+        "dispel",
+        "wizard-level"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [
+        "Anvil of Doom",
+        "Runesmith"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-fTygcMRbFaM",
+          "url": "https://www.youtube.com/watch?v=fTygcMRbFaM&t=306s",
+          "tijd": 309,
+          "citaat": "I personally would want to take this on the Anvil"
+        }
+      ],
+      "datum": "2024-09-24",
+      "markeringen": []
+    },
+    {
+      "id": "overlap-anvil-runesmith-auras",
+      "titel": "Overlap a central Anvil with a forward Runesmith",
+      "tekst": "Deploy the Anvil of Doom at the front and centre, with a Runesmith in a unit forward to the left. Keep their dispel areas overlapping as the Runesmith pushes outward.",
+      "waarom": "He finds this creates a wedge of dispel coverage that enemy wizards must avoid or enter knowing their spells can be stopped.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "magic",
+        "deployment"
+      ],
+      "subthemas": [
+        "wizard-placement",
+        "unit-placement"
+      ],
+      "tags": [
+        "dispel",
+        "zoning",
+        "centre"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [
+        "Anvil of Doom",
+        "Runesmith"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-fTygcMRbFaM",
+          "url": "https://www.youtube.com/watch?v=fTygcMRbFaM&t=1034s",
+          "tijd": 1037,
+          "citaat": "Anvil at the front and center",
+          "extraCitaten": [
+            {
+              "tijd": 386,
+              "citaat": "while keeping that inside the aura of the Anvil"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-09-24",
+      "markeringen": []
+    },
+    {
+      "id": "reserve-spellbreaking-for-mirage",
+      "titel": "Reserve Spellbreaking for Miasmic Mirage against your combat block",
+      "tekst": "In a combat-focused Dwarf army, keep a Rune of Spellbreaking available for Miasmic Mirage. Do not let less important spells bait you into spending all your runes first.",
+      "waarom": "He says Mirage can strand the combat block by preventing marching and charging, and that stopping it can decide the game.",
+      "voorbeeld": "He says he has been stuck in the middle of nowhere by this spell.",
+      "wanneerNiet": null,
+      "fase": "magic-shooting",
+      "themas": [
+        "magic"
+      ],
+      "subthemas": [
+        "dispelling"
+      ],
+      "tags": [
+        "dispel",
+        "illusion",
+        "hex"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-fTygcMRbFaM",
+          "url": "https://www.youtube.com/watch?v=fTygcMRbFaM&t=430s",
+          "tijd": 433,
+          "citaat": "keep them back for pivotal spells",
+          "extraCitaten": [
+            {
+              "tijd": 515,
+              "citaat": "you need to stop it from going off"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-09-24",
+      "markeringen": []
+    },
+    {
+      "id": "delay-breaking-crystal-column",
+      "titel": "Let Column of Crystal resolve before breaking it next turn",
+      "tekst": "He recommends letting Column of Crystal be cast, then removing it with a Rune of Spellbreaking at the start of your own turn before charging. This leaves the rune available for Miasmic Mirage during the enemy turn.",
+      "waarom": "He says this sequence can let you stop both control spells and charge out of the position the opponent thought was blocked.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "magic-shooting",
+      "themas": [
+        "magic"
+      ],
+      "subthemas": [
+        "dispelling"
+      ],
+      "tags": [
+        "dispel",
+        "vortex",
+        "illusion"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-fTygcMRbFaM",
+          "url": "https://www.youtube.com/watch?v=fTygcMRbFaM&t=560s",
+          "tijd": 563,
+          "citaat": "I would let that be cast not wasting your Rune of spell breaking then",
+          "extraCitaten": [
+            {
+              "tijd": 571,
+              "citaat": "as you start your turn in the enchantment phase"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-09-24",
+      "markeringen": []
+    },
+    {
+      "id": "anvil-forward-against-rust",
+      "titel": "Put the Anvil ahead of Plague of Rust targets",
+      "tekst": "In a defensive or refused-flank shooting position, put the Anvil of Doom forward and keep likely Plague of Rust targets slightly behind it. Make the caster enter the Anvil's dispel range to reach those units.",
+      "waarom": "He warns that Plague of Rust's 21-inch range lets a careful opponent stay beyond a Runesmith's 18-inch dispel range.",
+      "voorbeeld": null,
+      "wanneerNiet": "He says maintaining this protection is harder when pushing forward.",
+      "fase": "deployment",
+      "themas": [
+        "magic",
+        "deployment"
+      ],
+      "subthemas": [
+        "wizard-placement",
+        "unit-placement"
+      ],
+      "tags": [
+        "dispel",
+        "hex",
+        "elementalism"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [
+        "Anvil of Doom"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-fTygcMRbFaM",
+          "url": "https://www.youtube.com/watch?v=fTygcMRbFaM&t=621s",
+          "tijd": 624,
+          "citaat": "have your Anvil right at the front"
+        }
+      ],
+      "datum": "2024-09-24",
+      "markeringen": []
+    },
+    {
+      "id": "double-move-runesmith-coverage",
+      "titel": "Use the Anvil's double move to contain a Rust caster",
+      "tekst": "When advancing against Plague of Rust, use the Anvil's double move to position the Runesmith's unit so the enemy wizard cannot escape its dispel range.",
+      "waarom": "He says keeping the wizard within that range lets the Runesmith use Spellbreaking against the spell.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "magic"
+      ],
+      "subthemas": [
+        "wizard-placement"
+      ],
+      "tags": [
+        "dispel",
+        "hex",
+        "zoning"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [
+        "Anvil of Doom",
+        "Runesmith"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-fTygcMRbFaM",
+          "url": "https://www.youtube.com/watch?v=fTygcMRbFaM&t=638s",
+          "tijd": 641,
+          "citaat": "what you can do with the double move from the Anvil",
+          "extraCitaten": [
+            {
+              "tijd": 648,
+              "citaat": "where the Wizard's not going to be able to get out with your dispel range"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-09-24",
+      "markeringen": []
+    },
+    {
+      "id": "stop-fetish-vile-tide",
+      "titel": "Prioritise the Hagtree Fetish caster's Vile Tide",
+      "tekst": "Before playing Beastmen, identify which wizard carries the Hagtree Fetish. Prioritise stopping that wizard's Vile Tide with Spellbreaking.",
+      "waarom": "He says wound rerolls make the armour-ignoring spell particularly damaging, and its short range brings the caster within reach of Spellbreaking.",
+      "voorbeeld": null,
+      "wanneerNiet": "He considers the versions without wound rerolls less concerning.",
+      "fase": "magic-shooting",
+      "themas": [
+        "magic",
+        "matchups"
+      ],
+      "subthemas": [
+        "dispelling",
+        "vs-beastmen"
+      ],
+      "tags": [
+        "dispel",
+        "magic-missile",
+        "armour"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-fTygcMRbFaM",
+          "url": "https://www.youtube.com/watch?v=fTygcMRbFaM&t=714s",
+          "tijd": 717,
+          "citaat": "that's the one you're going to want to try and stop",
+          "extraCitaten": [
+            {
+              "tijd": 702,
+              "citaat": "if you playing against beastmen this is the spell that you need to stop"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-09-24",
+      "markeringen": []
+    },
+    {
+      "id": "stop-undead-leadership-barrage",
+      "titel": "Prioritise Spiritual Vortex when your units are bunched",
+      "tekst": "Against an Undead scream plan, use Spellbreaking to stop Spirit Leech and Spiritual Vortex. If prioritising between them, he considers the vortex more important when it can affect several clustered units.",
+      "waarom": "He says their Leadership penalties stack and make screams and Terror more dangerous. Stopping the opening barrage preserves units to retaliate against the nearby screamers.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "magic-shooting",
+      "themas": [
+        "magic"
+      ],
+      "subthemas": [
+        "dispelling"
+      ],
+      "tags": [
+        "dispel",
+        "leadership",
+        "vortex",
+        "hex"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-fTygcMRbFaM",
+          "url": "https://www.youtube.com/watch?v=fTygcMRbFaM&t=786s",
+          "tijd": 789,
+          "citaat": "the most important one for me to try and stop would be the vortex"
+        }
+      ],
+      "datum": "2024-09-24",
+      "markeringen": []
+    },
+    {
+      "id": "space-units-against-pillar",
+      "titel": "Keep units over three inches apart against Pillar of Fire",
+      "tekst": "Against Pillar of Fire, keep your units more than three inches apart. If necessary, move the front units outward on turn one to open those gaps.",
+      "waarom": "He says the template can otherwise move through a series of bunched units, whereas these gaps force it to stop and limit it to affecting one unit per turn.",
+      "voorbeeld": null,
+      "wanneerNiet": "He warns that the caster may stay outside dispel range, making direct magical defence difficult.",
+      "fase": "movement",
+      "themas": [
+        "magic"
+      ],
+      "subthemas": [
+        "control-spells"
+      ],
+      "tags": [
+        "vortex",
+        "battle-magic"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-fTygcMRbFaM",
+          "url": "https://www.youtube.com/watch?v=fTygcMRbFaM&t=889s",
+          "tijd": 892,
+          "citaat": "make sure that your units are over 3 in apart"
+        }
+      ],
+      "datum": "2024-09-24",
+      "markeringen": []
+    },
+    {
+      "id": "warded-front-against-pillar",
+      "titel": "Put ward-protected units first in Pillar of Fire's path",
+      "tekst": "Against Pillar of Fire, put units with a suitable ward save at the front so they take its first hits.",
+      "waarom": "He says those units are harder to kill, and valuable targets may tempt the opponent to keep moving the spell back and forth through them.",
+      "voorbeeld": "He suggests Irondrakes with their innate five-plus ward against flaming attacks, or a large block with a five-plus ward from its BSB.",
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "magic",
+        "deployment"
+      ],
+      "subthemas": [
+        "control-spells",
+        "unit-placement"
+      ],
+      "tags": [
+        "ward-save",
+        "flaming",
+        "vortex"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-fTygcMRbFaM",
+          "url": "https://www.youtube.com/watch?v=fTygcMRbFaM&t=897s",
+          "tijd": 900,
+          "citaat": "put units that have got a ward save at the front"
+        }
+      ],
+      "datum": "2024-09-24",
+      "markeringen": []
+    },
+    {
+      "id": "spellbreak-itchy-nuisance",
+      "titel": "Stop Itchy Nuisance before it weakens your Dwarf unit",
+      "tekst": "Prioritise stopping Itchy Nuisance with your dispel tools when facing Orcs and Goblins. He stresses that its caster must come within reach of Dwarf dispelling.",
+      "waarom": "He warns that reducing Toughness, followed by Plague of Rust reducing armour, leaves the unit vulnerable to shooting and even Goblins in combat.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "magic-shooting",
+      "themas": [
+        "magic",
+        "matchups"
+      ],
+      "subthemas": [
+        "dispelling",
+        "vs-other"
+      ],
+      "tags": [
+        "dispel",
+        "hex",
+        "armour"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-fTygcMRbFaM",
+          "url": "https://www.youtube.com/watch?v=fTygcMRbFaM&t=995s",
+          "tijd": 998,
+          "citaat": "you need to stop that",
+          "extraCitaten": [
+            {
+              "tijd": 981,
+              "citaat": "luckily it's only got got a range of 15"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-09-24",
+      "markeringen": []
+    },
+    {
+      "id": "royal-clans-runesmith-bsb",
+      "titel": "Consider making your Royal Clans Runesmith the BSB",
+      "tekst": "In Royal Clans, consider combining the Runesmith and BSB roles to save points for stronger heroes and units.",
+      "waarom": "He highlights the Runesmith's ability to be the BSB as a way to cut the points spent on these roles.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "characters"
+      ],
+      "subthemas": [
+        "bsb"
+      ],
+      "tags": [
+        "bsb",
+        "dispel"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [
+        "Runesmith"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-fTygcMRbFaM",
+          "url": "https://www.youtube.com/watch?v=fTygcMRbFaM&t=1065s",
+          "tijd": 1068,
+          "citaat": "in Royal Clans a run Smith being able to be your BSB"
+        }
+      ],
+      "datum": "2024-09-24",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "runesmith-mortuary-control-spells",
+      "bron": {
+        "bronId": "yt-fTygcMRbFaM",
+        "url": "https://www.youtube.com/watch?v=fTygcMRbFaM&t=91s",
+        "tijd": 94,
+        "citaat": "I like to put three Runes of spell breaking on these",
+        "extraCitaten": [
+          {
+            "tijd": 489,
+            "citaat": "a run Smith with Runes of spell breaking in the combat block"
+          }
+        ]
+      },
+      "toelichting": "Both recommend a Runesmith carrying three Runes of Spellbreaking in the advancing combat unit; here he gives the recommendation for combat lists generally."
+    }
+  ],
+  "overgeslagen": "Skipped the introduction and closing chat, standalone rules readouts, repeated endorsements, and the unclear name of the 50-point casting-value rune. Omitted the cannon-shot follow-up because its targeting condition is unclear in the captions.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

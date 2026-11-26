@@ -1,0 +1,669 @@
+{
+  "videoId": "6x8l-NPw43I",
+  "bronId": "yt-6x8l-NPw43I",
+  "model": "GPT-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-26T02:09:14.545Z",
+  "nieuw": [
+    {
+      "id": "limit-enemy-natural-commitment",
+      "titel": "Avoid overcommitting to the opponent's natural objective",
+      "tekst": "Threaten the objective nearest the opponent's deployment zone without putting too much effort into it. Try to interrupt its scoring when possible, but concentrate your commitment on the objectives that are easier for you to contest.",
+      "waarom": "He says the opponent can score their natural objective more easily, while reaching and contesting it is much harder for you.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "scenarios",
+      "themas": [
+        "scenarios"
+      ],
+      "subthemas": [
+        "objectives"
+      ],
+      "tags": [
+        "objectives",
+        "concentration"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-6x8l-NPw43I",
+          "url": "https://www.youtube.com/watch?v=6x8l-NPw43I&t=838s",
+          "tijd": 841,
+          "citaat": "you don't want to put too much effort into that."
+        }
+      ],
+      "datum": "2025-08-07",
+      "markeringen": []
+    },
+    {
+      "id": "close-quarters-deny-enemy-scoring",
+      "titel": "Push opponents off their objective in Close Quarters",
+      "tekst": "In Close Quarters with two strategic locations, consider attacking the opponent's natural objective simply to stop them scoring. You do not necessarily need to capture it yourself.",
+      "waarom": "He points out that this layout has no contested central objective to fight over.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "scenarios",
+      "themas": [
+        "scenarios"
+      ],
+      "subthemas": [
+        "scenario-plans"
+      ],
+      "tags": [
+        "objectives",
+        "victory-points"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-6x8l-NPw43I",
+          "url": "https://www.youtube.com/watch?v=6x8l-NPw43I&t=217s",
+          "tijd": 220,
+          "citaat": "push your opponent off it and stop them from scoring it."
+        }
+      ],
+      "datum": "2025-08-07",
+      "markeringen": []
+    },
+    {
+      "id": "aggressor-pressure-both-central-objectives",
+      "titel": "Pressure both central objectives when you are the aggressor",
+      "tekst": "With four strategic locations and a much more aggressive army, consider pushing forward to contest both central objectives while committing little to your natural objective. Use physical blocking or the threat of an easy charge to deny enemy scorers access, even if you do not score those objectives yourself.",
+      "waarom": "He explains that preventing the enemy's unit-strength-ten core units from getting within six inches can deny their scoring without requiring you to hold the objective.",
+      "voorbeeld": "He shows Chaos Knights positioned on an objective so an enemy moving into scoring range would offer them an easy charge.",
+      "wanneerNiet": "If the opponent has the more aggressive army and you must defend, he says you probably cannot contest both central objectives.",
+      "fase": "scenarios",
+      "themas": [
+        "scenarios",
+        "game-plan"
+      ],
+      "subthemas": [
+        "objectives",
+        "aggression-control"
+      ],
+      "tags": [
+        "objectives",
+        "zoning",
+        "scoring-units"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-6x8l-NPw43I",
+          "url": "https://www.youtube.com/watch?v=6x8l-NPw43I&t=327s",
+          "tijd": 330,
+          "citaat": "you can try and contest both of the central objectives.",
+          "extraCitaten": [
+            {
+              "tijd": 337,
+              "citaat": "you don't have to hold them to stop your opponent from holding them."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-08-07",
+      "markeringen": []
+    },
+    {
+      "id": "slow-scorers-front-centre",
+      "titel": "Keep slow scoring blocks front and centre",
+      "tekst": "Deploy a slow, difficult-to-manoeuvre scoring block centrally, close to where you want the objective fight to happen. Give it as little travelling to do as possible.",
+      "waarom": "He says a slow block placed on the outside would spend too many turns moving between positions to achieve anything.",
+      "voorbeeld": "In his demonstration, the wide five-Troll unit gets the position requiring the least movement; he similarly puts the slow Beastmen scoring block front and centre.",
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "deployment",
+        "scenarios"
+      ],
+      "subthemas": [
+        "unit-placement",
+        "scoring-units"
+      ],
+      "tags": [
+        "scoring-units",
+        "centre",
+        "objectives"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-6x8l-NPw43I",
+          "url": "https://www.youtube.com/watch?v=6x8l-NPw43I&t=1152s",
+          "tijd": 1155,
+          "citaat": "we're keeping the slower uh scoring piece more centrally.",
+          "extraCitaten": [
+            {
+              "tijd": 1134,
+              "citaat": "This unit is going to want to be front and center."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-08-07",
+      "markeringen": []
+    },
+    {
+      "id": "fast-attackers-long-flank-route",
+      "titel": "Put fast attackers on the flank with further to travel",
+      "tekst": "When your objective plan takes the army up and around one side, put the faster aggressive pieces on the outside flank that must travel furthest. Treat speed as a guide rather than mechanically arranging every unit by its movement value.",
+      "waarom": "He explains that units on the outer flank have the furthest to travel, while central units have the shortest route.",
+      "voorbeeld": "He skews the Boar Boyz and Wyvern towards the right flank, but keeps the Wyvern general somewhat more central to cover the army with leadership.",
+      "wanneerNiet": "He says a unit should not automatically go furthest out just because it has the highest movement value; its intended job still matters.",
+      "fase": "deployment",
+      "themas": [
+        "deployment",
+        "game-plan"
+      ],
+      "subthemas": [
+        "unit-placement",
+        "flanks-centre"
+      ],
+      "tags": [
+        "flanks",
+        "objectives",
+        "hammer"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-6x8l-NPw43I",
+          "url": "https://www.youtube.com/watch?v=6x8l-NPw43I&t=925s",
+          "tijd": 928,
+          "citaat": "all of these are going to be more heavily skewed towards the right hand flank",
+          "extraCitaten": [
+            {
+              "tijd": 928,
+              "citaat": "because they're the fastest things that we've got."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-08-07",
+      "markeringen": []
+    },
+    {
+      "id": "wolf-riders-harass-objective-scorers",
+      "titel": "Use wizard-bearing Wolf Riders to harass objective scorers",
+      "tekst": "Keep wizard-bearing Goblin Wolf Riders in a hit-and-run role on the flank rather than forcing them into the main objective fight. Sit just within range of an objective and use shortbows and magic missiles to reduce a smaller enemy scoring unit below unit strength ten.",
+      "waarom": "He says these Wolf Riders will not win a fight against a large ranked Gor unit and need not abandon their skirmishing role just because objectives are in play.",
+      "voorbeeld": "He suggests targeting the smaller Gor unit with shortbows, magic missiles and Ruby Ring of Ruin to stop it scoring.",
+      "wanneerNiet": null,
+      "fase": "scenarios",
+      "themas": [
+        "scenarios",
+        "magic"
+      ],
+      "subthemas": [
+        "objectives",
+        "magic-missiles"
+      ],
+      "tags": [
+        "objectives",
+        "light-cavalry",
+        "magic-missile",
+        "unit-strength"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Goblin Wolf Rider Mob"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-6x8l-NPw43I",
+          "url": "https://www.youtube.com/watch?v=6x8l-NPw43I&t=1091s",
+          "tijd": 1094,
+          "citaat": "You can still use them more as like a hit and run skirmishing piece.",
+          "extraCitaten": [
+            {
+              "tijd": 1062,
+              "citaat": "potentially get this unit of uh gore down below unit strength 10."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-08-07",
+      "markeringen": []
+    },
+    {
+      "id": "chase-light-contenders-off-objectives",
+      "titel": "Drive fleeing contenders away so your unit keeps scoring",
+      "tekst": "Use a supporting charge threat to drive a light enemy contender away from an objective. If it flees, you can keep scoring without needing to catch or destroy it.",
+      "waarom": "He says fleeing Wolf Riders are no longer contesting the centre, allowing his scoring unit to score on its own turn and potentially on the opponent's turn too.",
+      "voorbeeld": "He positions a chariot to threaten Goblin Wolf Riders that might move in to contest the objective held by his Gor.",
+      "wanneerNiet": "In his example, continuing to score on the opponent's turn depends on how far the fleeing Goblins move.",
+      "fase": "scenarios",
+      "themas": [
+        "scenarios",
+        "movement"
+      ],
+      "subthemas": [
+        "objectives",
+        "support-countercharge"
+      ],
+      "tags": [
+        "objectives",
+        "flee",
+        "zoning"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-6x8l-NPw43I",
+          "url": "https://www.youtube.com/watch?v=6x8l-NPw43I&t=1241s",
+          "tijd": 1244,
+          "citaat": "we can just threaten to charge the wolf riders.",
+          "extraCitaten": [
+            {
+              "tijd": 1253,
+              "citaat": "They're not contesting the center."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-08-07",
+      "markeringen": []
+    },
+    {
+      "id": "column-blockers-delay-objective-access",
+      "titel": "Use marching-column blockers to delay enemy scorers early",
+      "tekst": "Use cheap marching-column units early to obstruct enemy scoring units on their way to objectives. Position the blocker across their route and flee if they charge it.",
+      "waarom": "He likes exploiting the need for scoring units to move onto objectives in Strategic Locations Three and Four.",
+      "voorbeeld": "He shows a 21-inch marching-column move blocking a scoring unit's route, followed by a flee reaction if it charges.",
+      "wanneerNiet": "He distinguishes Strategic Locations Two, where the objectives do not require this same movement to reach them.",
+      "fase": "movement",
+      "themas": [
+        "chaff",
+        "scenarios"
+      ],
+      "subthemas": [
+        "redirecting",
+        "objectives"
+      ],
+      "tags": [
+        "marching-column",
+        "redirect",
+        "objectives",
+        "flee"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-6x8l-NPw43I",
+          "url": "https://www.youtube.com/watch?v=6x8l-NPw43I&t=1399s",
+          "tijd": 1402,
+          "citaat": "I really like using these sort of cheap marching column move blockers",
+          "extraCitaten": [
+            {
+              "tijd": 1389,
+              "citaat": "You just want to be blocking off the objectives."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-08-07",
+      "markeringen": []
+    },
+    {
+      "id": "fourteen-skirmishing-infantry-scorers",
+      "titel": "Prefer fourteen models for skirmishing infantry scorers",
+      "tekst": "He now prefers fourteen-model skirmishing infantry scoring units, particularly archers, rather than ten-model units. Build in enough spare bodies to remain a scoring unit after some ranged damage.",
+      "waarom": "He says fourteen models require five wounds to lose their scoring status, while skirmishing also provides protection against ballistic-skill shooting. In his view, the extra bodies can buy another turn of scoring or force the opponent to commit more ranged damage.",
+      "voorbeeld": "He expects Ruby Ring of Ruin to inflict roughly three to five wounds on unarmoured Toughness-three archers; he also notes that shooting Peasant Bowmen means not shooting Pegasus Knights.",
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "scenarios",
+        "infantry"
+      ],
+      "subthemas": [
+        "scoring-units",
+        "unit-builds"
+      ],
+      "tags": [
+        "scoring-units",
+        "skirmishers",
+        "unit-strength",
+        "missile-troops"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-6x8l-NPw43I",
+          "url": "https://www.youtube.com/watch?v=6x8l-NPw43I&t=1588s",
+          "tijd": 1591,
+          "citaat": "units, skirmishing archers, I like having them at 14.",
+          "extraCitaten": [
+            {
+              "tijd": 1567,
+              "citaat": "So, I think 14 is great."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-08-07",
+      "markeringen": []
+    },
+    {
+      "id": "light-cavalry-scoring-unit-sizes",
+      "titel": "Choose light cavalry sizes for coverage or resilience",
+      "tekst": "Consider four units of six light cavalry for several fast scoring units. If you do not want the full four-by-six approach, he still likes eight-model units for a larger casualty buffer.",
+      "waarom": "He values cavalry's speed for moving around the board and avoiding incoming shooting. He says an eight-model unit can lose three models and still score, with enough models left to contribute shooting.",
+      "voorbeeld": "He expects a stray Fireball to kill two or three Toughness-three cavalry with a five-plus save, making the extra bodies useful.",
+      "wanneerNiet": "He warns that two wounds are enough to stop a six-model cavalry unit scoring, and dice can still go against the larger unit.",
+      "fase": "army-building",
+      "themas": [
+        "scenarios"
+      ],
+      "subthemas": [
+        "scoring-units"
+      ],
+      "tags": [
+        "light-cavalry",
+        "scoring-units",
+        "unit-strength"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-6x8l-NPw43I",
+          "url": "https://www.youtube.com/watch?v=6x8l-NPw43I&t=1612s",
+          "tijd": 1615,
+          "citaat": "you just go four times six, and that gives you a lot of fast cavalry.",
+          "extraCitaten": [
+            {
+              "tijd": 1636,
+              "citaat": "I do still like eight."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-08-07",
+      "markeringen": []
+    },
+    {
+      "id": "cheap-infantry-thirty-thirty-six",
+      "titel": "Take thirty to thirty-six models in cheap infantry blocks",
+      "tekst": "For cheap infantry costing roughly four to seven points per model, he prefers units of thirty to thirty-six. He considers up to forty reasonable.",
+      "waarom": "He says spare models preserve rank bonuses after casualties, help with infantry outnumbering, and make the unit less likely to disappear or fall below the scoring threshold.",
+      "voorbeeld": null,
+      "wanneerNiet": "He says the right size varies by army and that large Elf units are harder to afford.",
+      "fase": "army-building",
+      "themas": [
+        "infantry",
+        "scenarios"
+      ],
+      "subthemas": [
+        "unit-builds",
+        "scoring-units"
+      ],
+      "tags": [
+        "close-order",
+        "scoring-units",
+        "unit-strength",
+        "combat-resolution"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-6x8l-NPw43I",
+          "url": "https://www.youtube.com/watch?v=6x8l-NPw43I&t=1727s",
+          "tijd": 1730,
+          "citaat": "I like having them in 30 to 36.",
+          "extraCitaten": [
+            {
+              "tijd": 1730,
+              "citaat": "You can go as high as 40"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-08-07",
+      "markeringen": []
+    },
+    {
+      "id": "fully-invest-heavy-infantry-deathstar",
+      "titel": "Fully fund a heavy infantry Death Star",
+      "tekst": "If committing to a heavy infantry Death Star, he recommends getting close to the 500-point unit maximum, often around thirty models for Dwarfs or Elves. Do not skimp on the unit: take its magic banner and full command.",
+      "waarom": null,
+      "voorbeeld": null,
+      "wanneerNiet": "He considers fourteen models reasonable for a heavy infantry unit with a more limited job, rather than the unit receiving your main investment.",
+      "fase": "army-building",
+      "themas": [
+        "infantry"
+      ],
+      "subthemas": [
+        "death-stars"
+      ],
+      "tags": [
+        "death-star",
+        "magic-banner"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-6x8l-NPw43I",
+          "url": "https://www.youtube.com/watch?v=6x8l-NPw43I&t=1776s",
+          "tijd": 1779,
+          "citaat": "Go for the full 30 models with a magic banner, the full command",
+          "extraCitaten": [
+            {
+              "tijd": 1756,
+              "citaat": "as close to that 500 points maximum as you can."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-08-07",
+      "markeringen": []
+    },
+    {
+      "id": "deathstar-stubborn-veteran-upgrades",
+      "titel": "Buy Stubborn and Veteran for infantry Death Stars",
+      "tekst": "For an infantry Death Star, pay for Stubborn and Veteran when those upgrades are available.",
+      "waarom": "He says these rules make infantry Death Stars much more reliable and consistent, returning value over many games even though they will not matter in every game.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "infantry"
+      ],
+      "subthemas": [
+        "death-stars"
+      ],
+      "tags": [
+        "death-star",
+        "stubborn"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-6x8l-NPw43I",
+          "url": "https://www.youtube.com/watch?v=6x8l-NPw43I&t=1783s",
+          "tijd": 1786,
+          "citaat": "if you can pay for stubborn, pay for stubborn.",
+          "extraCitaten": [
+            {
+              "tijd": 1786,
+              "citaat": "If you can pay for veteran, pay for veteran."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-08-07",
+      "markeringen": []
+    },
+    {
+      "id": "core-heavy-cavalry-role-sizes",
+      "titel": "Size core heavy cavalry for its role",
+      "tekst": "He tentatively favours six to eight models for core heavy cavalry outside a Death Star. Use around six if the main job is delivering First Charge in support of another unit, or around eight if you want a unit that supplies the hitting power itself.",
+      "waarom": "For the smaller supporting unit, he suggests full command if you want it to add more combat resolution to the combined fight.",
+      "voorbeeld": null,
+      "wanneerNiet": "He treats cavalry Death Stars separately from this six-to-eight-model recommendation.",
+      "fase": "army-building",
+      "themas": [
+        "hammers"
+      ],
+      "subthemas": [
+        "heavy-cavalry"
+      ],
+      "tags": [
+        "heavy-cavalry",
+        "first-charge",
+        "combat-resolution"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-6x8l-NPw43I",
+          "url": "https://www.youtube.com/watch?v=6x8l-NPw43I&t=1850s",
+          "tijd": 1853,
+          "citaat": "small, six, maybe full command",
+          "extraCitaten": [
+            {
+              "tijd": 1869,
+              "citaat": "eight tends to be more of the size that I would think there."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-08-07",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "natural-objective-opening-score",
+      "bron": {
+        "bronId": "yt-6x8l-NPw43I",
+        "url": "https://www.youtube.com/watch?v=6x8l-NPw43I&t=135s",
+        "tijd": 138,
+        "citaat": "so that you're going to be racking up points from this one from the off."
+      },
+      "wanneerNiet": "He says this depends on what you are facing and may not be the right choice every game.",
+      "toelichting": "This is the same recommendation to deploy a scoring unit on the easily reached natural objective for immediate scoring."
+    },
+    {
+      "lesId": "allocate-scorers-by-contest",
+      "bron": {
+        "bronId": "yt-6x8l-NPw43I",
+        "url": "https://www.youtube.com/watch?v=6x8l-NPw43I&t=271s",
+        "tijd": 274,
+        "citaat": "It doesn't have to be a high commitment.",
+        "extraCitaten": [
+          {
+            "tijd": 290,
+            "citaat": "Maybe just 14 skirmishing archers."
+          }
+        ]
+      },
+      "voorbeeld": "For the easy natural objective in his Encirclement example, he suggests fourteen skirmishing Peasant Bowmen rather than a unit requiring a large commitment.",
+      "toelichting": "He again assigns a small scoring unit to the easy objective so it does not consume a large commitment."
+    },
+    {
+      "lesId": "plan-overruns-repeat-combats",
+      "bron": {
+        "bronId": "yt-6x8l-NPw43I",
+        "url": "https://www.youtube.com/watch?v=6x8l-NPw43I&t=353s",
+        "tijd": 356,
+        "citaat": "make sure that you're positioning so that your overruns make sense.",
+        "extraCitaten": [
+          {
+            "tijd": 379,
+            "citaat": "so you can face towards the rest of the battle."
+          }
+        ]
+      },
+      "waarom": "He says arriving at an objective facing away from the rest of the battle does you no good.",
+      "toelichting": "This repeats planning an attacker's approach and overrun direction so it remains involved in the battle."
+    },
+    {
+      "lesId": "encirclement-short-objective-triangle",
+      "bron": {
+        "bronId": "yt-6x8l-NPw43I",
+        "url": "https://www.youtube.com/watch?v=6x8l-NPw43I&t=716s",
+        "tijd": 719,
+        "citaat": "the lines on the triangle as small as possible.",
+        "extraCitaten": [
+          {
+            "tijd": 726,
+            "citaat": "By overloading one side of the board."
+          }
+        ]
+      },
+      "voorbeeld": "In his Encirclement demonstration, widely separated objectives are 35 inches apart, whereas the shorter triangle includes distances of about 20 and 23 inches.",
+      "toelichting": "This is the same plan to hold two objectives and contest a third using the shortest triangle, concentrating on one side."
+    },
+    {
+      "lesId": "deploy-for-unit-synergy",
+      "bron": {
+        "bronId": "yt-6x8l-NPw43I",
+        "url": "https://www.youtube.com/watch?v=6x8l-NPw43I&t=967s",
+        "tijd": 970,
+        "citaat": "I've kept it more central.",
+        "extraCitaten": [
+          {
+            "tijd": 1007,
+            "citaat": "it would still be in range of the second unit of trolls."
+          }
+        ]
+      },
+      "toelichting": "His deployment again keeps the general and buffing pieces central enough for their support to reach the units that need it."
+    },
+    {
+      "lesId": "support-scorers-with-hammers",
+      "bron": {
+        "bronId": "yt-6x8l-NPw43I",
+        "url": "https://www.youtube.com/watch?v=6x8l-NPw43I&t=1233s",
+        "tijd": 1236,
+        "citaat": "protect the scoring gore that are in the center."
+      },
+      "toelichting": "He again backs a scoring unit with combat pieces that can protect it and threaten approaching enemies."
+    },
+    {
+      "lesId": "chaff-preserve-friendly-lanes",
+      "bron": {
+        "bronId": "yt-6x8l-NPw43I",
+        "url": "https://www.youtube.com/watch?v=6x8l-NPw43I&t=1337s",
+        "tijd": 1340,
+        "citaat": "not taking up key space",
+        "extraCitaten": [
+          {
+            "tijd": 1309,
+            "citaat": "there's nothing that's in front of them."
+          }
+        ]
+      },
+      "toelichting": "This repeats keeping early chaff drops out of the routes needed by the units advancing towards objectives."
+    },
+    {
+      "lesId": "maintain-cover-for-scorers",
+      "bron": {
+        "bronId": "yt-6x8l-NPw43I",
+        "url": "https://www.youtube.com/watch?v=6x8l-NPw43I&t=1544s",
+        "tijd": 1547,
+        "citaat": "You're going to put your unit inside of the wood."
+      },
+      "toelichting": "He again protects fragile scoring troops with terrain, here placing the skirmishing unit in woods to stack shooting modifiers."
+    }
+  ],
+  "overgeslagen": "Skipped coaching and Patreon promotion, channel and Discord announcements, introductory objective terminology, and rules explanations without a separate recommendation. Omitted unclear caption names and diagram-dependent details that could not be reconstructed confidently. Repeated advice is represented as additions to the supplied index.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

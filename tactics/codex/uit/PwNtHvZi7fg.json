@@ -1,0 +1,643 @@
+{
+  "videoId": "PwNtHvZi7fg",
+  "bronId": "yt-PwNtHvZi7fg",
+  "model": "GPT-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-26T03:59:38.957Z",
+  "nieuw": [
+    {
+      "id": "wood-elves-control-buys-time",
+      "titel": "Include control to buy Wood Elves time",
+      "tekst": "Include an element of control to slow the opponent and create space for favourable strikes, rather than simply trading units.",
+      "waarom": "He says Wood Elves usually need to buy time to win and find an advantage before striking.",
+      "voorbeeld": null,
+      "wanneerNiet": "He makes an exception for Wild Hunt, which can run straight at the opponent.",
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "subthemas": [
+        "tempo-trading"
+      ],
+      "tags": [
+        "delay",
+        "zoning"
+      ],
+      "leger": "wood-elf-realms",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-PwNtHvZi7fg",
+          "url": "https://www.youtube.com/watch?v=PwNtHvZi7fg&t=321s",
+          "tijd": 324,
+          "citaat": "you need an element of control in your faction some way or the other",
+          "extraCitaten": [
+            {
+              "tijd": 333,
+              "citaat": "You can't just kind of trade as a wood elf player."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-01-11",
+      "markeringen": []
+    },
+    {
+      "id": "warhawk-control-spellweaver-build",
+      "titel": "Try a level-four Spellweaver on a Warhawk",
+      "tekst": "He highly recommends a level-four Spellweaver on a Warhawk with Heartwood Pendant and Oaken Stave for battlefield control and magic defence. He prefers Lore of the Wilds through the pendant, but also considers Battle Magic or Elementalism viable alternatives; Ruby Ring is optional.",
+      "waarom": "He values the combination of Evasive, flight and skirmishing for safe positioning, and Oaken Stave for defending against key enemy spells.",
+      "voorbeeld": null,
+      "wanneerNiet": "He says its magic defence will not match armies with exceptional casting bonuses, although it can compete with an ordinary level-four wizard.",
+      "fase": "army-building",
+      "themas": [
+        "magic",
+        "characters"
+      ],
+      "subthemas": [
+        "wizard-builds",
+        "mounts-items"
+      ],
+      "tags": [
+        "wizard-level",
+        "mounts",
+        "dispel",
+        "evasive",
+        "fly",
+        "magic-items"
+      ],
+      "leger": "wood-elf-realms",
+      "units": [
+        "Spellweaver",
+        "Warhawk"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-PwNtHvZi7fg",
+          "url": "https://www.youtube.com/watch?v=PwNtHvZi7fg&t=370s",
+          "tijd": 373,
+          "citaat": "a spellw weaver level four on a warhawk.",
+          "extraCitaten": [
+            {
+              "tijd": 406,
+              "citaat": "Ruby ring is probably optional but I wouldn't go home without the rest."
+            },
+            {
+              "tijd": 502,
+              "citaat": "against your run-of-the-mill level four who just gets plus two"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-01-11",
+      "markeringen": []
+    },
+    {
+      "id": "treesinging-extend-defensive-forest",
+      "titel": "Use Tree Singing to extend a defensive forest",
+      "tekst": "With the mobile Warhawk wizard, consider Tree Singing to extend an existing forest in your deployment area and block line of sight. Place it outside the opponent's dispel range when possible.",
+      "waarom": "He says the wizard's mobility helps it reach the needed position safely, and that Tree Singing can have an enormous effect when the opponent fails to dispel it.",
+      "voorbeeld": null,
+      "wanneerNiet": "He acknowledges that the opponent will often dispel Tree Singing.",
+      "fase": "magic-shooting",
+      "themas": [
+        "magic",
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "control-spells",
+        "terrain-los"
+      ],
+      "tags": [
+        "woods",
+        "line-of-sight",
+        "dispel"
+      ],
+      "leger": "wood-elf-realms",
+      "units": [
+        "Spellweaver",
+        "Warhawk"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-PwNtHvZi7fg",
+          "url": "https://www.youtube.com/watch?v=PwNtHvZi7fg&t=456s",
+          "tijd": 459,
+          "citaat": "cast tree singing to create an extra long forest attached to another forest",
+          "extraCitaten": [
+            {
+              "tijd": 477,
+              "citaat": "to block line of sight."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-01-11",
+      "markeringen": []
+    },
+    {
+      "id": "lesser-wizard-secures-spells",
+      "titel": "Consider a lesser wizard with Lore Familiar",
+      "tekst": "Consider accompanying the Warhawk control wizard with a lesser wizard carrying Lore Familiar to secure the spells you want.",
+      "waarom": "He points out that the Warhawk build does not have Lore Familiar.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "magic"
+      ],
+      "subthemas": [
+        "wizard-builds"
+      ],
+      "tags": [
+        "lore-familiar",
+        "wizard-level"
+      ],
+      "leger": "wood-elf-realms",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-PwNtHvZi7fg",
+          "url": "https://www.youtube.com/watch?v=PwNtHvZi7fg&t=536s",
+          "tijd": 539,
+          "citaat": "a lesser wizard that has law familiar to get the spells you want."
+        }
+      ],
+      "datum": "2026-01-11",
+      "markeringen": []
+    },
+    {
+      "id": "glade-guard-ten-twenty",
+      "titel": "Prefer ten or twenty Glade Guard",
+      "tekst": "He prefers building Glade Guard into units of ten or twenty rather than leaving the compulsory Grand Army unit at five.",
+      "waarom": "He describes Glade Guard as damage dealers rather than merely a five-model roadblock, and notes that they also score.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "missile-units"
+      ],
+      "tags": [
+        "missile-troops",
+        "scoring-units"
+      ],
+      "leger": "wood-elf-realms",
+      "units": [
+        "Glade Guard"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-PwNtHvZi7fg",
+          "url": "https://www.youtube.com/watch?v=PwNtHvZi7fg&t=602s",
+          "tijd": 605,
+          "citaat": "I think they're actually best placed when you have 10 of them or 20",
+          "extraCitaten": [
+            {
+              "tijd": 620,
+              "citaat": "Glade Guard is your damage dealer."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-01-11",
+      "markeringen": []
+    },
+    {
+      "id": "deepwood-scouts-ten-models",
+      "titel": "Keep Deepwood Scouts around ten models",
+      "tekst": "He thinks ten models is the sweet spot for Deepwood Scouts, rather than building them like the larger Glade Guard units.",
+      "waarom": "He gives them a distraction role and says opponents often dislike chasing ten elves.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "shooting-terrain",
+        "chaff"
+      ],
+      "subthemas": [
+        "missile-units",
+        "decoys-bait"
+      ],
+      "tags": [
+        "missile-troops",
+        "decoy"
+      ],
+      "leger": "wood-elf-realms",
+      "units": [
+        "Deepwood Scouts"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-PwNtHvZi7fg",
+          "url": "https://www.youtube.com/watch?v=PwNtHvZi7fg&t=609s",
+          "tijd": 612,
+          "citaat": "I think you only really want to take 10"
+        }
+      ],
+      "datum": "2026-01-11",
+      "markeringen": []
+    },
+    {
+      "id": "glade-guard-arcane-bodkins",
+      "titel": "Give damage-dealing Glade Guard Arcane Bodkins",
+      "tekst": "He recommends Arcane Bodkins for Glade Guard used as damage dealers.",
+      "waarom": "In his view, this unit needs to deal damage to fulfil its role.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "missile-units"
+      ],
+      "tags": [
+        "missile-troops",
+        "magic-items"
+      ],
+      "leger": "wood-elf-realms",
+      "units": [
+        "Glade Guard"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-PwNtHvZi7fg",
+          "url": "https://www.youtube.com/watch?v=PwNtHvZi7fg&t=654s",
+          "tijd": 657,
+          "citaat": "Gladeguard best off taking Arcane Bodguns because they're a damage dealer with this unit."
+        }
+      ],
+      "datum": "2026-01-11",
+      "markeringen": []
+    },
+    {
+      "id": "deepwood-scouts-trueflight-arrows",
+      "titel": "Consider Trueflight Arrows for moving Deepwood Scouts",
+      "tekst": "He thinks Trueflight Arrows are a slightly better fit for Deepwood Scouts that move and shoot while distracting the opponent.",
+      "waarom": "He says their main job is not dealing damage; occasional chip wounds are a good result.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "missile-units"
+      ],
+      "tags": [
+        "missile-troops",
+        "magic-items"
+      ],
+      "leger": "wood-elf-realms",
+      "units": [
+        "Deepwood Scouts"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-PwNtHvZi7fg",
+          "url": "https://www.youtube.com/watch?v=PwNtHvZi7fg&t=661s",
+          "tijd": 664,
+          "citaat": "Deepwood scouts true flight arrows uh is a little bit better",
+          "extraCitaten": [
+            {
+              "tijd": 671,
+              "citaat": "you are usually moving and shooting and their main role isn't to deal damage"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-01-11",
+      "markeringen": []
+    },
+    {
+      "id": "glade-guard-distance-hill-retreat",
+      "titel": "Keep Glade Guard distant and withdraw off the hill",
+      "tekst": "Keep Glade Guard as far away as possible and stationary while shooting. When the enemy gets close enough, drop off the hill to make reaching them take another turn.",
+      "waarom": "He warns that pushing Glade Guard forward like Evasive Deepwood Scouts leaves them vulnerable to being destroyed, particularly by Fireball.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "avoiding-fire"
+      ],
+      "tags": [
+        "missile-troops",
+        "hills",
+        "delay"
+      ],
+      "leger": "wood-elf-realms",
+      "units": [
+        "Glade Guard"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-PwNtHvZi7fg",
+          "url": "https://www.youtube.com/watch?v=PwNtHvZi7fg&t=638s",
+          "tijd": 641,
+          "citaat": "Your glade guard will often be as far away as possible",
+          "extraCitaten": [
+            {
+              "tijd": 641,
+              "citaat": "Drop off the hill when they get close enough"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-01-11",
+      "markeringen": []
+    },
+    {
+      "id": "deepwood-scouts-distract-pursuers",
+      "titel": "Use Deepwood Scouts to waste an opponent's turns",
+      "tekst": "Use Deepwood Scouts as mobile distractions, repeatedly moving and shooting while making the opponent chase them. He suggests hiding them in a forest and using Evasive to leave it.",
+      "waarom": "He says their role is distraction rather than dealing substantial damage, and opponents often do not want to chase ten elves.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "chaff",
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "decoys-bait",
+        "evasive-skirmish"
+      ],
+      "tags": [
+        "decoy",
+        "delay",
+        "evasive",
+        "woods",
+        "missile-troops"
+      ],
+      "leger": "wood-elf-realms",
+      "units": [
+        "Deepwood Scouts"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-PwNtHvZi7fg",
+          "url": "https://www.youtube.com/watch?v=PwNtHvZi7fg&t=691s",
+          "tijd": 694,
+          "citaat": "Hide them in a forest, evasive, out of the forest,",
+          "extraCitaten": [
+            {
+              "tijd": 701,
+              "citaat": "waste an opponent's turn, make them chase you"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-01-11",
+      "markeringen": []
+    },
+    {
+      "id": "elf-rider-combat-restraint",
+      "titel": "Keep Glade Riders and Warhawk Riders out of combat",
+      "tekst": "Do not treat Glade Riders' cavalry spears as a reason to put them into combat. He gives the same warning for Warhawk Riders.",
+      "waarom": "He says Wood Elf units have tightly defined roles and are punished when used outside those roles.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "matchups"
+      ],
+      "subthemas": [
+        "picking-fights"
+      ],
+      "tags": [
+        "light-cavalry",
+        "fly"
+      ],
+      "leger": "wood-elf-realms",
+      "units": [
+        "Glade Riders",
+        "Warhawk Riders"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-PwNtHvZi7fg",
+          "url": "https://www.youtube.com/watch?v=PwNtHvZi7fg&t=708s",
+          "tijd": 711,
+          "citaat": "having them in condat is like a bonus cuz they have cav spears",
+          "extraCitaten": [
+            {
+              "tijd": 711,
+              "citaat": "Warhawk riders are the same."
+            },
+            {
+              "tijd": 720,
+              "citaat": "just can't do it."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-01-11",
+      "markeringen": []
+    },
+    {
+      "id": "woodland-ambush-terrain-corridor",
+      "titel": "Place Woodland Ambush to create a sheltered corridor",
+      "tekst": "Consider placing Woodland Ambush between a hill and impassable terrain to create a sheltered corridor behind them. In his experience, the extra forest generally works best in or just outside your deployment zone.",
+      "waarom": "He uses this space to hide units, manoeuvre towards the enemy backline and shelter units that may need to Evade into it.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "shooting-terrain",
+        "deployment"
+      ],
+      "subthemas": [
+        "terrain-los",
+        "unit-placement"
+      ],
+      "tags": [
+        "woods",
+        "hills",
+        "impassable",
+        "line-of-sight"
+      ],
+      "leger": "wood-elf-realms",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-PwNtHvZi7fg",
+          "url": "https://www.youtube.com/watch?v=PwNtHvZi7fg&t=843s",
+          "tijd": 846,
+          "citaat": "a hill into a forest into impossible terrain, creating an entire corridor",
+          "extraCitaten": [
+            {
+              "tijd": 855,
+              "citaat": "hide in, run around, get in your opponent's backline."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-01-11",
+      "markeringen": []
+    },
+    {
+      "id": "wood-elves-prefer-second-turn",
+      "titel": "Generally seek the second turn with Wood Elves",
+      "tekst": "He generally prefers going second with Wood Elves, alongside a defensive, concealed deployment.",
+      "waarom": null,
+      "voorbeeld": null,
+      "wanneerNiet": "He excludes Wild Hunt, which he considers almost the opposite of ordinary Wood Elves.",
+      "fase": "deployment",
+      "themas": [
+        "deployment"
+      ],
+      "subthemas": [
+        "drops-first-turn"
+      ],
+      "tags": [
+        "first-turn",
+        "cover"
+      ],
+      "leger": "wood-elf-realms",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-PwNtHvZi7fg",
+          "url": "https://www.youtube.com/watch?v=PwNtHvZi7fg&t=887s",
+          "tijd": 890,
+          "citaat": "I think generally you're looking to go second with wood elves"
+        }
+      ],
+      "datum": "2026-01-11",
+      "markeringen": []
+    },
+    {
+      "id": "wood-elves-occupy-cleared-space",
+      "titel": "Move Wood Elves into the space you clear",
+      "tekst": "When you clear one side of the board, move into that open ground rather than remaining stationary. Keep shifting towards the opponent's deployment zone as the enemy chases you.",
+      "waarom": "He says punching through and relocating forces the opponent to split its forces, making it harder to kill the whole Wood Elf army.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "subthemas": [
+        "flanks-centre"
+      ],
+      "tags": [
+        "flanks",
+        "decoy",
+        "concentration"
+      ],
+      "leger": "wood-elf-realms",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-PwNtHvZi7fg",
+          "url": "https://www.youtube.com/watch?v=PwNtHvZi7fg&t=1002s",
+          "tijd": 1005,
+          "citaat": "When you clear space, taking open ground is what it's all about.",
+          "extraCitaten": [
+            {
+              "tijd": 1020,
+              "citaat": "you're pushing to your opponent's deployment zone as they chase around you."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-01-11",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "focus-combat-character-role",
+      "bron": {
+        "bronId": "yt-PwNtHvZi7fg",
+        "url": "https://www.youtube.com/watch?v=PwNtHvZi7fg&t=210s",
+        "tijd": 213,
+        "citaat": "my suggestion is that you go hard into it.",
+        "extraCitaten": [
+          {
+            "tijd": 225,
+            "citaat": "If you need it to do damage, do damage."
+          }
+        ]
+      },
+      "toelichting": "He likewise recommends defining a character's role and committing its build to that role."
+    },
+    {
+      "lesId": "combine-wood-elf-forests",
+      "bron": {
+        "bronId": "yt-PwNtHvZi7fg",
+        "url": "https://www.youtube.com/watch?v=PwNtHvZi7fg&t=810s",
+        "tijd": 813,
+        "citaat": "One thing I like to do is extend terrain.",
+        "extraCitaten": [
+          {
+            "tijd": 822,
+            "citaat": "you attach it to it so that you get a mega forest"
+          }
+        ]
+      },
+      "toelichting": "He likewise recommends attaching Woodland Ambush to an existing forest to enlarge the terrain barrier."
+    },
+    {
+      "lesId": "deploy-defensively-vs-shooting",
+      "bron": {
+        "bronId": "yt-PwNtHvZi7fg",
+        "url": "https://www.youtube.com/watch?v=PwNtHvZi7fg&t=878s",
+        "tijd": 881,
+        "citaat": "I think you almost always want to deploy defensively.",
+        "extraCitaten": [
+          {
+            "tijd": 890,
+            "citaat": "anything with its head out that doesn't have evasive."
+          }
+        ]
+      },
+      "toelichting": "He repeats the recommendation to hide fragile Wood Elf units, stressing how punishing shooting armies are."
+    },
+    {
+      "lesId": "concentrate-against-enemy-part",
+      "bron": {
+        "bronId": "yt-PwNtHvZi7fg",
+        "url": "https://www.youtube.com/watch?v=PwNtHvZi7fg&t=970s",
+        "tijd": 973,
+        "citaat": "I like to stack one flake, have a weak flank",
+        "extraCitaten": [
+          {
+            "tijd": 981,
+            "citaat": "your weak flanks are either a distraction or they get to move into open space."
+          }
+        ]
+      },
+      "toelichting": "He likewise recommends concentrating strength in one board sector instead of spreading force evenly."
+    },
+    {
+      "lesId": "central-mobile-response-threats",
+      "bron": {
+        "bronId": "yt-PwNtHvZi7fg",
+        "url": "https://www.youtube.com/watch?v=PwNtHvZi7fg&t=1214s",
+        "tijd": 1217,
+        "citaat": "with reserve move importantly in the middle of the board",
+        "extraCitaten": [
+          {
+            "tijd": 1226,
+            "citaat": "to react to where my opponent has placed"
+          }
+        ]
+      },
+      "voorbeeld": "In his balanced Grand Army deployment, he places a wizard in Glade Riders with Reserve Move centrally, then sends them towards safety once he knows where the threat is.",
+      "toelichting": "He likewise keeps a mobile unit central so it can respond once the enemy's threats become clear."
+    }
+  ],
+  "overgeslagen": "Skipped the introduction, guide promotion, sponsor and supporter messages, hobby updates, results and list readouts without additional advice. Omitted the incomplete Wildwood Rangers support build and garbled unit names near 20:40.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

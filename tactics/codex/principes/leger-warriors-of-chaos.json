@@ -2,17 +2,20 @@
   "scope": "leger-warriors-of-chaos",
   "soort": "leger",
   "sleutel": "warriors-of-chaos",
-  "gemaaktOp": "2026-11-25T23:34:39.276Z",
+  "gemaaktOp": "2026-11-26T04:43:18.782Z",
   "model": "gpt-6.1-sol",
   "effort": "high",
-  "invoerHash": "25c35bec4406",
+  "invoerHash": "ed71ceef4192",
   "invoer": [
     "warriors-beginner-direct-combat",
     "chaos-core-choose-focus",
+    "wolves-berserkers-delay-important-drops",
+    "marauder-ambush-safe-arrival",
     "consider-larger-forsaken-unit",
     "chaos-warriors-defensive-attrition",
     "chaos-warriors-shields-great-weapons",
     "warriors-monster-hunter-tapestry",
+    "chaos-warriors-halberd-charge",
     "nurgle-spawn-against-lanterns",
     "spawn-catch-fleeing-targets",
     "chaos-knights-war-banner-swap",
@@ -26,6 +29,7 @@
     "warriors-bunker-wizard-daemonology",
     "reconsider-warriors-blue-fire",
     "chaos-swap-unhelpful-spells",
+    "chaos-chariot-combat-wizard",
     "chaos-stack-shooting-hit-penalties",
     "warpfire-aura-remove-lantern-ward"
   ],
@@ -34,15 +38,15 @@
   "runs": [
     {
       "poging": 1,
-      "promptKB": 16,
-      "sec": 11,
+      "promptKB": 19,
+      "sec": 14,
       "exit": 0,
       "usage": {
-        "input_tokens": 31403,
+        "input_tokens": 31537,
         "cached_input_tokens": 0,
         "cache_write_input_tokens": 0,
-        "output_tokens": 234,
-        "reasoning_output_tokens": 216
+        "output_tokens": 385,
+        "reasoning_output_tokens": 368
       },
       "items": {
         "agent_message": 1

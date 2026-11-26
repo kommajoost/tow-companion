@@ -1,0 +1,280 @@
+{
+  "videoId": "LrtjQZSWQmQ",
+  "bronId": "yt-LrtjQZSWQmQ",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-26T02:01:53.879Z",
+  "nieuw": [
+    {
+      "id": "ambush-late-domination-quarters",
+      "titel": "Use late ambushers to contest or capture table quarters",
+      "tekst": "A small, cheap ambushing unit can still contribute if it arrives late. Use it to contest or capture a table quarter the opponent thought was safe and gain Domination points.",
+      "waarom": null,
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "scenarios",
+      "themas": [
+        "scenarios",
+        "deployment"
+      ],
+      "subthemas": [
+        "late-game",
+        "ambush-scouts-vanguard"
+      ],
+      "tags": [
+        "ambush",
+        "victory-points"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-LrtjQZSWQmQ",
+          "url": "https://www.youtube.com/watch?v=LrtjQZSWQmQ&t=212s",
+          "tijd": 215,
+          "citaat": "can just move on and start taking domination points",
+          "extraCitaten": [
+            {
+              "tijd": 225,
+              "citaat": "table quarter which your opponent thought was safe."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-09-05",
+      "markeringen": []
+    },
+    {
+      "id": "minotaurs-weigh-ambush-choice",
+      "titel": "Think carefully before ambushing Minotaurs",
+      "tekst": "Think carefully before putting a Minotaur Herd into ambush. It needs to reach a worthwhile close combat to contribute, and a prepared opponent can deny it useful targets.",
+      "waarom": "He found that screening out useful ambush positions left the Minotaurs achieving little, while their absence early on let him concentrate his shooting on other targets.",
+      "voorbeeld": "In his game, the scenario barred entry from the short board edges, allowing him to screen out useful targets. The three Minotaurs killed roughly 60 points of archers before taking heavy artillery fire and routing near the end.",
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "deployment"
+      ],
+      "subthemas": [
+        "ambush-scouts-vanguard"
+      ],
+      "tags": [
+        "ambush",
+        "monstrous-infantry"
+      ],
+      "leger": "beastmen-brayherds",
+      "units": [
+        "Minotaur Herd"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-LrtjQZSWQmQ",
+          "url": "https://www.youtube.com/watch?v=LrtjQZSWQmQ&t=427s",
+          "tijd": 430,
+          "citaat": "think very closely about whether you're going to use them in ambush or not.",
+          "extraCitaten": [
+            {
+              "tijd": 488,
+              "citaat": "Didn't really achieve anything."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-09-05",
+      "markeringen": []
+    },
+    {
+      "id": "marauder-ambush-safe-arrival",
+      "titel": "Bring Marauder Horsemen on safely before attacking the backline",
+      "tekst": "Use Marauder Horsemen's speed to enter from ambush out of harm's way. On the following turn, use their charge capabilities to attack the enemy backline.",
+      "waarom": "He says their speed lets them enter safely and still reach combat afterwards. In his view, enemy units worth fighting are likely to be occupied in the front line, making cavalry in the backline a problem.",
+      "voorbeeld": null,
+      "wanneerNiet": "He considers their shooting less useful than Road Wardens' firearms.",
+      "fase": "movement",
+      "themas": [
+        "deployment"
+      ],
+      "subthemas": [
+        "ambush-scouts-vanguard"
+      ],
+      "tags": [
+        "ambush",
+        "light-cavalry"
+      ],
+      "leger": "warriors-of-chaos",
+      "units": [
+        "Marauder Horsemen"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-LrtjQZSWQmQ",
+          "url": "https://www.youtube.com/watch?v=LrtjQZSWQmQ&t=624s",
+          "tijd": 627,
+          "citaat": "they're quick enough that you can bring them in out of harm's way.",
+          "extraCitaten": [
+            {
+              "tijd": 644,
+              "citaat": "into combat and start bashing up the backline."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-09-05",
+      "markeringen": []
+    },
+    {
+      "id": "combat-ambushers-survive-arrival",
+      "titel": "Be cautious with ambushers that cannot survive before fighting",
+      "tekst": "Be cautious about relying on ambushers that must reach close combat to contribute but cannot withstand a turn after arriving.",
+      "waarom": "He expects separate arrival rolls to bring units on piecemeal, making it easier for an opponent with a backline defender to deal with them one at a time.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "deployment"
+      ],
+      "subthemas": [
+        "ambush-scouts-vanguard"
+      ],
+      "tags": [
+        "ambush",
+        "concentration"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-LrtjQZSWQmQ",
+          "url": "https://www.youtube.com/watch?v=LrtjQZSWQmQ&t=656s",
+          "tijd": 659,
+          "citaat": "relying on something that does need to get into close combat",
+          "extraCitaten": [
+            {
+              "tijd": 681,
+              "citaat": "your opponent, if they've got something left back to deal with them"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-09-05",
+      "markeringen": []
+    },
+    {
+      "id": "sky-lantern-skip-ambush",
+      "titel": "Prefer keeping Sky Lanterns on the board from turn one",
+      "tekst": "He doubts that buying Ambush for Sky Lanterns is worthwhile. Prefer having them on the board consistently so their bombs and small arms can attack core units from turn one.",
+      "waarom": "He says they already have Scouts, rules preventing them being pinned in combat, good small-arms fire and potentially a high wound count, making them difficult to deal with already.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "deployment"
+      ],
+      "subthemas": [
+        "ambush-scouts-vanguard"
+      ],
+      "tags": [
+        "ambush",
+        "scouts",
+        "first-turn"
+      ],
+      "leger": "grand-cathay",
+      "units": [
+        "Sky Lantern"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-LrtjQZSWQmQ",
+          "url": "https://www.youtube.com/watch?v=LrtjQZSWQmQ&t=719s",
+          "tijd": 722,
+          "citaat": "I don't think it probably is because they've already got scout.",
+          "extraCitaten": [
+            {
+              "tijd": 736,
+              "citaat": "you probably want them on the board consistently"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-09-05",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "ambushers-pressure-enemy-movement",
+      "bron": {
+        "bronId": "yt-LrtjQZSWQmQ",
+        "url": "https://www.youtube.com/watch?v=LrtjQZSWQmQ&t=130s",
+        "tijd": 133,
+        "citaat": "it forces your opponent to make some decisions about what they're going to do",
+        "extraCitaten": [
+          {
+            "tijd": 157,
+            "citaat": "your flank arcs and your rear arcs and disrupting your advance"
+          }
+        ]
+      },
+      "toelichting": "He describes the same pressure on an opponent's advance and backline planning from the threat of ambushers."
+    },
+    {
+      "lesId": "ambushers-target-baggage-trains",
+      "bron": {
+        "bronId": "yt-LrtjQZSWQmQ",
+        "url": "https://www.youtube.com/watch?v=LrtjQZSWQmQ&t=543s",
+        "tijd": 546,
+        "citaat": "they can come on and then move straight into contact with a baggage train"
+      },
+      "toelichting": "He gives attacking the baggage train as a direct job for an arriving ambusher."
+    },
+    {
+      "lesId": "fast-cavalry-ambushers",
+      "bron": {
+        "bronId": "yt-LrtjQZSWQmQ",
+        "url": "https://www.youtube.com/watch?v=LrtjQZSWQmQ&t=515s",
+        "tijd": 518,
+        "citaat": "this I'm talking about the light cavalry.",
+        "extraCitaten": [
+          {
+            "tijd": 627,
+            "citaat": "They can still cause a bit of a nuisance and actually they're quick enough"
+          }
+        ]
+      },
+      "voorbeeld": "He points to Road Wardens and ambush-upgraded Marauder Horsemen as light cavalry options.",
+      "toelichting": "He likewise favours mobile light cavalry over slower ambushers that struggle to reach useful combat."
+    },
+    {
+      "lesId": "shooting-ambushers-immediate-impact",
+      "bron": {
+        "bronId": "yt-LrtjQZSWQmQ",
+        "url": "https://www.youtube.com/watch?v=LrtjQZSWQmQ&t=563s",
+        "tijd": 566,
+        "citaat": "They don't need to get into combat because they can start shooting at something."
+      },
+      "toelichting": "He recommends shooting ambushers for the same immediate contribution without waiting to charge."
+    },
+    {
+      "lesId": "road-wardens-shooting-ambush",
+      "bron": {
+        "bronId": "yt-LrtjQZSWQmQ",
+        "url": "https://www.youtube.com/watch?v=LrtjQZSWQmQ&t=531s",
+        "tijd": 534,
+        "citaat": "I think these are a really effective ambusher.",
+        "extraCitaten": [
+          {
+            "tijd": 557,
+            "citaat": "They can also come on and open up with their brace of pistols"
+          }
+        ]
+      },
+      "toelichting": "He again recommends Road Wardens as effective shooting ambushers, citing their mobility and immediate fire."
+    }
+  ],
+  "overgeslagen": "Skipped the opening and closing channel talk, the Ambush rules explanation without advice, speculative meta discussion and garbled passages. General benefits and drawbacks were retained only where they supported concrete recommendations.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

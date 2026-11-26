@@ -2,10 +2,10 @@
   "scope": "thema-movement",
   "soort": "thema",
   "sleutel": "movement",
-  "gemaaktOp": "2026-11-25T23:17:05.501Z",
+  "gemaaktOp": "2026-11-26T04:13:22.689Z",
   "model": "gpt-6.1-sol",
   "effort": "high",
-  "invoerHash": "4879bbc417fa",
+  "invoerHash": "eab327a19d0d",
   "invoer": [
     "position-for-next-turn-charges",
     "check-angles-before-approaching",
@@ -19,8 +19,17 @@
     "contain-mobile-units-opposite-directions",
     "angle-attackers-towards-boundary",
     "ambushers-reserve-move-arrival",
+    "dragon-facing-before-urgency",
+    "urgency-dragon-blocks-wheels",
+    "dragon-secondary-escape-coverage",
+    "dragon-outmanoeuvre-stronger-dragon",
+    "skirmisher-charges-wide-frontage",
+    "box-in-drilled-knights",
+    "check-retreat-unit-strength",
     "griffon-bsb-rear-charge",
     "pegasus-knights-reliable-lantern-charges",
+    "pegasus-avoid-stretched-formations",
+    "lizardmen-flankers-extreme-angles",
     "charge-order-flee-paths",
     "declare-beneficial-terror-charges-first",
     "charge-enemy-retreat-backstops",
@@ -31,6 +40,7 @@
     "charge-weak-target-then-redirect",
     "redirect-deny-stand-shoot",
     "dragon-charge-arc-redirections",
+    "hold-redirector-protect-target",
     "repeated-terror-charges-lanterns",
     "spawn-catch-fleeing-targets",
     "death-star-wheel-arc",
@@ -44,6 +54,9 @@
     "check-hammer-charge-alignment",
     "sideline-deployment-angle-inward",
     "angle-compulsory-charge-bait-outward",
+    "closest-skirmisher-force-wheel",
+    "melee-character-central-attack-side",
+    "check-dragon-movement-limits",
     "great-eagle-redirection-role",
     "speed-bump-close-order",
     "skirmishers-pursue-block-reforms",
@@ -58,8 +71,16 @@
     "screen-pursuit-misses-character",
     "angle-skirmisher-dragon-overrun",
     "plan-overruns-repeat-combats",
+    "angle-shooters-guide-enemy-overruns",
+    "divide-pursuit-and-reform",
+    "light-cavalry-finish-fugitives",
+    "redirect-blocks-into-traffic",
+    "check-partial-alignment-overruns",
+    "avoid-enemy-retreat-chains",
     "pegasus-overrun-second-lantern",
     "giant-rats-absorb-first-charge",
+    "poison-block-decline-followup",
+    "spread-elves-prevent-chained-combats",
     "reform-for-future-targets",
     "bsb-restraint-reform-support",
     "thin-formations-against-bombing",
@@ -75,10 +96,18 @@
     "marching-column-evade-charge-arc",
     "reform-line-clear-shooting",
     "reform-footprint-objective-control",
+    "wide-deployment-against-cannons",
+    "reposition-characters-before-enemy-charge",
+    "compact-five-model-skirmisher-groups",
     "ungor-switch-defensive-formations",
     "pink-horrors-reform-shooting",
+    "rapid-dwarf-mortuary-advance",
     "reavers-marching-column-breakthrough",
     "reavers-widen-clear-breakthrough",
+    "wolf-column-early-chaff",
+    "wolf-column-retain-objectives",
+    "fanatic-carriers-marching-column",
+    "vanguard-boars-column-flank-march",
     "grave-guard-drilled-widen",
     "hexwraith-marching-column-attacks",
     "forest-dragon-evade-reform",
@@ -96,6 +125,7 @@
     "flee-behind-fallback-unit",
     "flee-deny-enemy-reforms",
     "chaff-obstructs-caster-advance",
+    "offset-skirmisher-centre-charge-bait",
     "razorgor-flee-without-swiftstride",
     "archer-screen-state-troops-trap",
     "high-elves-flee-reposition",
@@ -114,21 +144,31 @@
     "stagger-receivers-for-countercharge",
     "ambushers-banner-combat-resolution",
     "ambushers-support-flank-rear-charges",
+    "chase-light-contenders-off-objectives",
+    "deploy-wide-for-pincer",
+    "dragon-deterrent-behind-wizard",
+    "light-cavalry-deny-ranks",
     "razorgor-tuskgor-bait-switch",
     "bloodthirster-needs-lantern-support",
+    "gyrocopter-rear-charge-dragon",
     "empire-knights-support-combats",
+    "lantern-disengage-through-friendly-unit",
     "support-wyvern-against-shugengan",
     "pair-manglers-reduce-randomness",
     "black-orc-chariot-standard",
     "close-order-wolves-ambush-support",
+    "boar-flankers-break-grinds",
+    "giant-finishes-boar-combats",
+    "boar-boyz-take-bait",
     "combo-charge-poison-death-star",
+    "paired-scorpions-flank-pinned-threat",
     "eternal-guard-charge-for-scoring"
   ],
   "principes": [
     {
-      "id": "support-fights-with-flank-or-rear-charges",
-      "titel": "Support fights with flank or rear charges",
-      "tekst": "Position supporting units to charge the flank or rear of an enemy fighting your main unit. Their added combat resolution can help you win the fight.",
+      "id": "reinforce-fights-with-flank-or-rear-charges",
+      "titel": "Reinforce your main fight with flank or rear charges",
+      "tekst": "Bring support into the flank or rear of an enemy fighting your main unit. This can add combat resolution or help finish a fight your main unit cannot win alone.",
       "soort": "principe",
       "thema": "movement",
       "leger": null,
@@ -139,62 +179,22 @@
         "reform-screen-flank-countercharge",
         "ambushers-banner-combat-resolution",
         "ambushers-support-flank-rear-charges",
+        "light-cavalry-deny-ranks",
+        "gyrocopter-rear-charge-dragon",
         "empire-knights-support-combats",
         "black-orc-chariot-standard",
-        "close-order-wolves-ambush-support"
+        "close-order-wolves-ambush-support",
+        "boar-flankers-break-grinds",
+        "giant-finishes-boar-combats",
+        "boar-boyz-take-bait",
+        "paired-scorpions-flank-pinned-threat"
       ],
       "kanten": null
     },
     {
-      "id": "set-up-reliable-charges-before-committing",
-      "titel": "Set up reliable charges before committing",
-      "tekst": "Move into a position where your intended charge is reliable before committing. Avoid leaving the attack dependent on a long charge roll.",
-      "soort": "principe",
-      "thema": "movement",
-      "leger": null,
-      "lessen": [
-        "position-for-next-turn-charges",
-        "screened-frenzy-reliable-charge",
-        "pegasus-knights-reliable-lantern-charges",
-        "death-star-wheel-arc"
-      ],
-      "kanten": null
-    },
-    {
-      "id": "line-up-overruns-into-another-fight",
-      "titel": "Line up overruns into another fight",
-      "tekst": "Plan overrun paths that carry your attackers into another enemy unit so they can keep fighting.",
-      "soort": "principe",
-      "thema": "movement",
-      "leger": null,
-      "lessen": [
-        "resolve-overrun-feeder-first",
-        "drilled-widen-overrun-contact",
-        "plan-overruns-repeat-combats",
-        "pegasus-overrun-second-lantern"
-      ],
-      "kanten": null
-    },
-    {
-      "id": "use-bait-to-draw-enemies-towards-waiting-units",
-      "titel": "Use bait to draw enemies towards your waiting units",
-      "tekst": "Place bait so an enemy charge brings the attacker into reach of your waiting combat units. Plan where the enemy will end up before offering the bait.",
-      "soort": "principe",
-      "thema": "movement",
-      "leger": null,
-      "lessen": [
-        "speed-bump-close-order",
-        "fleeing-diverters-steer-charges",
-        "archer-screen-state-troops-trap",
-        "decoys-set-up-countercharges",
-        "razorgor-tuskgor-bait-switch"
-      ],
-      "kanten": null
-    },
-    {
-      "id": "receive-charges-with-support-ready-to-countercharge",
-      "titel": "Receive charges with support ready to countercharge",
-      "tekst": "Use a unit that can survive the first charge, with support positioned to countercharge. Plan how its retreat and the enemy's follow-up will leave your support able to join.",
+      "id": "prepare-countercharges-behind-surviving-receivers",
+      "titel": "Prepare countercharges with units that can survive the first charge",
+      "tekst": "Keep a supporting attacker ready when another unit receives a charge. Use a receiver that can survive the hit so your support can countercharge.",
       "soort": "principe",
       "thema": "movement",
       "leger": null,
@@ -209,19 +209,139 @@
       "kanten": null
     },
     {
-      "id": "position-screens-to-keep-overruns-away-from-valuable-units",
-      "titel": "Position screens to keep overruns away from valuable units",
-      "tekst": "Check where an enemy could overrun after destroying your screen. Position your protective units so that overrun misses or stops short of the unit you want to protect.",
+      "id": "use-marching-column-to-reach-positions-quickly",
+      "titel": "Use marching column to reach useful positions quickly",
+      "tekst": "Use marching column when you need to cover ground quickly. Its extra march distance can help you reach objectives, blocking positions or an approach for a later attack.",
       "soort": "principe",
       "thema": "movement",
       "leger": null,
       "lessen": [
+        "marching-column-anvil-advance",
+        "rapid-dwarf-mortuary-advance",
+        "reavers-marching-column-breakthrough",
+        "wolf-column-early-chaff",
+        "wolf-column-retain-objectives",
+        "fanatic-carriers-marching-column",
+        "vanguard-boars-column-flank-march"
+      ],
+      "kanten": null
+    },
+    {
+      "id": "keep-protected-units-clear-of-pursuit-paths",
+      "titel": "Keep protected units out of enemy pursuit and overrun paths",
+      "tekst": "Position screens and nearby units so losing one fight does not carry the enemy into another valuable target. Check the attacker's resulting facing and path before settling those positions.",
+      "soort": "principe",
+      "thema": "movement",
+      "leger": null,
+      "lessen": [
+        "hold-redirector-protect-target",
         "offset-skirmisher-charge-contact",
         "align-sacrifices-for-empty-overruns",
         "speed-bump-close-order",
-        "chaff-intercept-overruns",
-        "giant-rats-absorb-first-charge",
+        "screen-pursuit-misses-character",
+        "check-partial-alignment-overruns",
+        "spread-elves-prevent-chained-combats"
+      ],
+      "kanten": null
+    },
+    {
+      "id": "reform-victorious-units-towards-their-next-fight",
+      "titel": "Reform victorious units towards their next useful fight",
+      "tekst": "Consider restraining and reforming after a win to threaten another useful combat. Choose a facing that keeps your combat unit involved in the battle.",
+      "soort": "principe",
+      "thema": "movement",
+      "leger": null,
+      "lessen": [
+        "blenders-break-and-reform",
+        "plan-overruns-repeat-combats",
+        "divide-pursuit-and-reform",
+        "reform-for-future-targets"
+      ],
+      "kanten": null
+    },
+    {
+      "id": "position-for-reliable-charges-before-committing",
+      "titel": "Position for reliable charges before committing your attacker",
+      "tekst": "Manoeuvre into a position where your intended charge is reliable. Avoid depending on a long charge roll when you can prepare a closer attempt.",
+      "soort": "principe",
+      "thema": "movement",
+      "leger": null,
+      "lessen": [
+        "position-for-next-turn-charges",
+        "screened-frenzy-reliable-charge",
+        "pegasus-knights-reliable-lantern-charges",
+        "death-star-wheel-arc"
+      ],
+      "kanten": null
+    },
+    {
+      "id": "cover-escape-routes-with-several-threats",
+      "titel": "Cover enemy escape routes with several charge threats",
+      "tekst": "Coordinate threats from different directions to contain an enemy. Cover its possible escape positions so moving away from one threat leaves it exposed to another.",
+      "soort": "principe",
+      "thema": "movement",
+      "leger": null,
+      "lessen": [
+        "contain-mobile-units-opposite-directions",
+        "angle-attackers-towards-boundary",
+        "dragon-secondary-escape-coverage",
+        "box-in-drilled-knights"
+      ],
+      "kanten": null
+    },
+    {
+      "id": "divide-the-pursuit-and-reform-jobs",
+      "titel": "Let another unit chase fugitives while your main unit stays useful",
+      "tekst": "Use another unit to chase fleeing enemies rather than sending your main combat unit after them. After a shared victory, you can let one attacker pursue while the other restrains and reforms.",
+      "soort": "principe",
+      "thema": "movement",
+      "leger": null,
+      "lessen": [
+        "skirmishers-pursue-block-reforms",
+        "divide-pursuit-and-reform",
+        "light-cavalry-finish-fugitives"
+      ],
+      "kanten": null
+    },
+    {
+      "id": "draw-enemies-into-prepared-countercharges",
+      "titel": "Use bait to draw enemies into a prepared countercharge",
+      "tekst": "Place your bait so charging it leaves the enemy exposed to your supporting attacker. Plan where the charger will finish rather than offering the bait without support ready.",
+      "soort": "principe",
+      "thema": "movement",
+      "leger": null,
+      "lessen": [
+        "speed-bump-close-order",
+        "decoys-set-up-countercharges",
+        "razorgor-tuskgor-bait-switch"
+      ],
+      "kanten": null
+    },
+    {
+      "id": "check-redirection-targets-before-fleeing",
+      "titel": "Check alternative charge targets before fleeing with your bait",
+      "tekst": "Before fleeing with bait or a screen, check what the charger could redirect into. An alternative target can let it bypass the trap or reach the unit you meant to protect.",
+      "soort": "principe",
+      "thema": "movement",
+      "leger": null,
+      "lessen": [
+        "hold-redirector-protect-target",
+        "frenzy-bait-only-target",
         "decoys-set-up-countercharges"
+      ],
+      "kanten": null
+    },
+    {
+      "id": "check-skirmishers-can-form-ranks",
+      "titel": "Check that your skirmishers can form ranks before combat",
+      "tekst": "Avoid arrangements where your skirmishers cannot reach their fighting formation. Stretched formations can leave models unable to reach their required positions.",
+      "soort": "principe",
+      "thema": "movement",
+      "leger": null,
+      "lessen": [
+        "skirmisher-charges-wide-frontage",
+        "pegasus-avoid-stretched-formations",
+        "offset-skirmisher-charge-contact"
       ],
       "kanten": null
     }
@@ -230,15 +350,15 @@
   "runs": [
     {
       "poging": 1,
-      "promptKB": 77,
-      "sec": 98,
+      "promptKB": 104,
+      "sec": 157,
       "exit": 0,
       "usage": {
-        "input_tokens": 46570,
+        "input_tokens": 53358,
         "cached_input_tokens": 0,
         "cache_write_input_tokens": 0,
-        "output_tokens": 4668,
-        "reasoning_output_tokens": 3663
+        "output_tokens": 7634,
+        "reasoning_output_tokens": 6214
       },
       "items": {
         "agent_message": 1

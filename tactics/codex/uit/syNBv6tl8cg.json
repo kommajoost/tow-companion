@@ -1,0 +1,410 @@
+{
+  "videoId": "syNBv6tl8cg",
+  "bronId": "yt-syNBv6tl8cg",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-26T01:26:46.784Z",
+  "nieuw": [
+    {
+      "id": "nomadic-needs-plenty-chaff",
+      "titel": "Include plenty of Goblin chaff in Nomadic Waaagh",
+      "tekst": "Include plenty of Goblin chaff in a Nomadic Waaagh army. He considers it essential to the army's plan.",
+      "waarom": "He says the army needs to charge, and the Goblins get in the enemy's way to make those charges possible.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "chaff"
+      ],
+      "subthemas": [
+        "choosing-chaff"
+      ],
+      "tags": [
+        "redirect",
+        "light-cavalry",
+        "chariots"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Goblin Wolf Rider Mob",
+        "Goblin Wolf Chariot"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-syNBv6tl8cg",
+          "url": "https://www.youtube.com/watch?v=syNBv6tl8cg&t=194s",
+          "tijd": 197,
+          "citaat": "the goblins are essential to the nomadic war in my opinion."
+        }
+      ],
+      "datum": "2026-04-10",
+      "markeringen": []
+    },
+    {
+      "id": "leave-several-boar-deployment-gaps",
+      "titel": "Leave several deployment gaps for Boar Boyz",
+      "tekst": "When deploying Goblins first, leave several gaps where the Boar Boyz can fit. Choose their final position after seeing the enemy's main units, with an immediate attack on those units in mind.",
+      "waarom": "He says leaving several possible positions prevents the opponent from knowing where the Boar Boyz will go.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "deployment"
+      ],
+      "subthemas": [
+        "unit-placement"
+      ],
+      "tags": [
+        "deployment-drops",
+        "heavy-cavalry"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Orc Boar Boy Mob"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-syNBv6tl8cg",
+          "url": "https://www.youtube.com/watch?v=syNBv6tl8cg&t=309s",
+          "tijd": 312,
+          "citaat": "we're leaving different gaps where we can put our Boar Boyz"
+        }
+      ],
+      "datum": "2026-04-10",
+      "markeringen": []
+    },
+    {
+      "id": "boar-boyz-targets-cannot-escape",
+      "titel": "Drive Boar Boyz at targets that cannot escape",
+      "tekst": "Push the Boar Boyz straight towards an important enemy unit that cannot move out of their way. Do not chase a flying unit just because it is the opponent's strongest piece; against mobile armies, force a fight around a target they cannot simply withdraw.",
+      "waarom": "He says Nomadic Waaagh lacks shooting and cannot endure enemy shooting, so it needs to attack immediately. A flying target can escape and leave the Boar Boyz chasing without making contact.",
+      "voorbeeld": "In his Chaos example, he attacks the infantry block containing a Sorcerer and BSB instead of chasing the nearby dragon. Against Bretonnians, he suggests targeting a unit that cannot escape so the opponent must choose between protecting it and moving around his flanks.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "game-plan",
+        "hammers"
+      ],
+      "subthemas": [
+        "reading-the-enemy",
+        "using-hammers"
+      ],
+      "tags": [
+        "heavy-cavalry",
+        "fly",
+        "charge-arc"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Orc Boar Boy Mob"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-syNBv6tl8cg",
+          "url": "https://www.youtube.com/watch?v=syNBv6tl8cg&t=1050s",
+          "tijd": 1053,
+          "citaat": "point your Boar Boyz at something which can't get out of the way",
+          "extraCitaten": [
+            {
+              "tijd": 424,
+              "citaat": "if their strongest unit flies, there's no point"
+            },
+            {
+              "tijd": 328,
+              "citaat": "nomadic war has to move forward and attack."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-04-10",
+      "markeringen": []
+    },
+    {
+      "id": "goblins-block-boar-flankers",
+      "titel": "Use Goblins to block non-flying flankers",
+      "tekst": "As the Boar Boyz advance on the main target, move Goblins into the way of non-flying flankers. Keep those units from reaching the Boar Boyz' flanks on the next enemy turn.",
+      "waarom": null,
+      "voorbeeld": "In his diagram, he marches or triple-marches Goblin Wolf Riders into position to stop the enemy flanking cavalry reaching the Boar Boyz on turn two.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "chaff"
+      ],
+      "subthemas": [
+        "redirecting"
+      ],
+      "tags": [
+        "redirect",
+        "flanks",
+        "light-cavalry",
+        "marching-column"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Goblin Wolf Rider Mob",
+        "Orc Boar Boy Mob"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-syNBv6tl8cg",
+          "url": "https://www.youtube.com/watch?v=syNBv6tl8cg&t=480s",
+          "tijd": 483,
+          "citaat": "chaff any non-flying flankers with our goblins.",
+          "extraCitaten": [
+            {
+              "tijd": 497,
+              "citaat": "can't come into the flanks of our Boar Boyz on turn two."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-04-10",
+      "markeringen": []
+    },
+    {
+      "id": "hold-spare-chaff-back",
+      "titel": "Keep spare chaff available for later turns",
+      "tekst": "After committing the chaff needed now, keep the remaining chaff back and uncommitted so it is still available in later turns.",
+      "waarom": "He wants surviving chaff available to obstruct something later in the game.",
+      "voorbeeld": "In his diagram, he sends Wolf Riders forward to block flankers but keeps the rest of the chaff in his own half of the board.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "game-plan",
+        "chaff"
+      ],
+      "subthemas": [
+        "tempo-trading",
+        "redirecting"
+      ],
+      "tags": [
+        "delay",
+        "redirect"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-syNBv6tl8cg",
+          "url": "https://www.youtube.com/watch?v=syNBv6tl8cg&t=569s",
+          "tijd": 572,
+          "citaat": "we don't want to commit it yet",
+          "extraCitaten": [
+            {
+              "tijd": 502,
+              "citaat": "notice we're still keeping it in our half of the board."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-04-10",
+      "markeringen": []
+    },
+    {
+      "id": "impetuous-chaff-limit-sight",
+      "titel": "Control Impetuous chaff through facing and line of sight",
+      "tekst": "For Impetuous chaff you want to keep mobile and uncommitted, consider facing it at an angle, towards terrain or directly into a friendly unit to hide potential charge targets.",
+      "waarom": "He wants to minimise unnecessary Impetuous tests while keeping the chaff available to move when needed.",
+      "voorbeeld": "He often faces Wolf Riders in marching column directly at a Goblin Wolf Chariot so they cannot see a charge target. Once the chariot moves away, the riders can triple-march into position.",
+      "wanneerNiet": "He is happy to point Goblin Wolf Chariots forwards when there are soft targets he wants them to charge.",
+      "fase": "movement",
+      "themas": [
+        "chaff"
+      ],
+      "subthemas": [
+        "screens"
+      ],
+      "tags": [
+        "frenzy",
+        "line-of-sight",
+        "marching-column"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-syNBv6tl8cg",
+          "url": "https://www.youtube.com/watch?v=syNBv6tl8cg&t=516s",
+          "tijd": 519,
+          "citaat": "position things facing at weird angles or looking at terrain",
+          "extraCitaten": [
+            {
+              "tijd": 558,
+              "citaat": "then they've got no line of sight to charge anything."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-04-10",
+      "markeringen": []
+    },
+    {
+      "id": "boar-dragon-challenge-choice",
+      "titel": "Choose dragon challenges according to its protection",
+      "tekst": "When a dragon fights the Boar Boyz, consider a challenge if it has strong armour and a ward save. If its saves are poor or Itchy Nuisance has been cast on it, consider declining the challenge and directing the unit's high-Strength, high-AP attacks into it instead; assess the choice case by case.",
+      "waarom": "He says a challenge can limit the dragon's attacks when the rider kills the champion. Against a less protected dragon, he sees an opportunity to inflict many wounds with the unit's attacks.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "combat",
+      "themas": [
+        "characters",
+        "matchups"
+      ],
+      "subthemas": [
+        "challenges",
+        "vs-monsters"
+      ],
+      "tags": [
+        "challenge",
+        "champion",
+        "dragons",
+        "armour",
+        "ward-save"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Orc Boar Boy Mob"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-syNBv6tl8cg",
+          "url": "https://www.youtube.com/watch?v=syNBv6tl8cg&t=718s",
+          "tijd": 721,
+          "citaat": "maybe you just want to decline the challenge",
+          "extraCitaten": [
+            {
+              "tijd": 712,
+              "citaat": "perhaps you're just going to challenge it out."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-04-10",
+      "markeringen": []
+    },
+    {
+      "id": "boar-boyz-take-bait",
+      "titel": "Take the bait with supported Boar Boyz",
+      "tekst": "With a large enough Boar Boyz unit and support ready, take an offered frontal charge even if it exposes a flank. He wants the target to Fall Back in Good Order so the Boar Boyz can follow up and charge again on the opponent's turn.",
+      "waarom": "In his view, the wounds dealt in front generate enough combat resolution that being flanked matters less, while supporting units can flank the enemy flankers.",
+      "voorbeeld": "In his diagram, the opponent offers an infantry target with other units positioned to flank the Boar Boyz. His supporting Orc chariots cover the Boar Boyz and prepare to attack those flankers.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "hammers",
+        "movement"
+      ],
+      "subthemas": [
+        "using-hammers",
+        "support-countercharge"
+      ],
+      "tags": [
+        "heavy-cavalry",
+        "combat-resolution",
+        "flank-charge",
+        "pursuit"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Orc Boar Boy Mob"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-syNBv6tl8cg",
+          "url": "https://www.youtube.com/watch?v=syNBv6tl8cg&t=831s",
+          "tijd": 834,
+          "citaat": "what you should do is just take the bait,",
+          "extraCitaten": [
+            {
+              "tijd": 849,
+              "citaat": "you just want it to fall back in good order"
+            },
+            {
+              "tijd": 858,
+              "citaat": "If your B boy unit is big enough"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-04-10",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "chaff-scouts-deployment",
+      "bron": {
+        "bronId": "yt-syNBv6tl8cg",
+        "url": "https://www.youtube.com/watch?v=syNBv6tl8cg&t=286s",
+        "tijd": 289,
+        "citaat": "deploy our less important units first,"
+      },
+      "toelichting": "He likewise recommends deploying Goblin chaff first so the important units can be placed after seeing the enemy's main units."
+    },
+    {
+      "lesId": "position-for-next-turn-charges",
+      "bron": {
+        "bronId": "yt-syNBv6tl8cg",
+        "url": "https://www.youtube.com/watch?v=syNBv6tl8cg&t=642s",
+        "tijd": 645,
+        "citaat": "you want to make sure that you can definitely charge that infantry block",
+        "extraCitaten": [
+          {
+            "tijd": 653,
+            "citaat": "just over 10 in is probably the sweet spot"
+          }
+        ]
+      },
+      "toelichting": "He likewise recommends positioning for a realistic next-turn charge, illustrating it with Boar Boyz just outside the infantry's charge reach."
+    },
+    {
+      "lesId": "coordinate-front-flank-arrival",
+      "bron": {
+        "bronId": "yt-syNBv6tl8cg",
+        "url": "https://www.youtube.com/watch?v=syNBv6tl8cg&t=955s",
+        "tijd": 958,
+        "citaat": "that they can charge and support you on the next round of combat."
+      },
+      "toelichting": "He likewise recommends moving support into position to join the main unit's fight, anticipating where retreats will move that combat."
+    },
+    {
+      "lesId": "delay-dragon-score-elsewhere",
+      "bron": {
+        "bronId": "yt-syNBv6tl8cg",
+        "url": "https://www.youtube.com/watch?v=syNBv6tl8cg&t=1139s",
+        "tijd": 1142,
+        "citaat": "if that happens, fantastic.",
+        "extraCitaten": [
+          {
+            "tijd": 1150,
+            "citaat": "use their 500 point dragon to kill 150 points of chariots."
+          }
+        ]
+      },
+      "waarom": "He regards an opponent using a 500-point dragon to kill only 150 points of chariots as a favourable result.",
+      "toelichting": "He likewise accepts limiting the dragon's gains while the main force fights elsewhere, rather than needing to kill the dragon."
+    },
+    {
+      "lesId": "position-fast-monster-pursuers",
+      "bron": {
+        "bronId": "yt-syNBv6tl8cg",
+        "url": "https://www.youtube.com/watch?v=syNBv6tl8cg&t=1170s",
+        "tijd": 1173,
+        "citaat": "you want to have enough chaff around the board",
+        "extraCitaten": [
+          {
+            "tijd": 1181,
+            "citaat": "something to go into it or force it to flee again."
+          }
+        ]
+      },
+      "toelichting": "He likewise recommends having mobile units positioned to reach a dragon after it breaks, here to charge it or force another flee."
+    }
+  ],
+  "overgeslagen": "Skipped the introduction, series references, unit-category recap and hypothetical list layouts without additional advice, general rules explanations, and closing channel talk. Omitted unclear caption fragments, including the misheard charge-rule name around 14:25.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

@@ -2,13 +2,18 @@
   "scope": "leger-grand-cathay",
   "soort": "leger",
   "sleutel": "grand-cathay",
-  "gemaaktOp": "2026-11-25T23:31:20.576Z",
+  "gemaaktOp": "2026-11-26T04:37:31.932Z",
   "model": "gpt-6.1-sol",
   "effort": "high",
-  "invoerHash": "91ee5a0fe03f",
+  "invoerHash": "ac026cafc330",
   "invoer": [
     "jade-lancers-ambush-cannons",
+    "sky-lantern-skip-ambush",
+    "lantern-disengage-through-friendly-unit",
+    "sky-lantern-charge-roadblock",
+    "defensive-jade-sentinel-ramparts",
     "jade-fleet-allied-outriders",
+    "ogre-crew-cathayan-cannon",
     "ignore-single-lantern-matchup",
     "reliable-strength-against-cathay",
     "multiple-wounds-cathay-lantern",
@@ -22,15 +27,15 @@
   "runs": [
     {
       "poging": 1,
-      "promptKB": 8,
-      "sec": 8,
+      "promptKB": 11,
+      "sec": 10,
       "exit": 0,
       "usage": {
-        "input_tokens": 28698,
+        "input_tokens": 29425,
         "cached_input_tokens": 0,
         "cache_write_input_tokens": 0,
-        "output_tokens": 156,
-        "reasoning_output_tokens": 138
+        "output_tokens": 251,
+        "reasoning_output_tokens": 233
       },
       "items": {
         "agent_message": 1

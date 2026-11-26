@@ -1,0 +1,148 @@
+{
+  "videoId": "IAMZitD-DzY",
+  "bronId": "yt-IAMZitD-DzY",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-26T01:35:26.797Z",
+  "nieuw": [
+    {
+      "id": "practice-same-tournament-list",
+      "titel": "Practise repeatedly with the list you will take",
+      "tekst": "Before an event, play repeated games with the same list to learn its ranges, magic phase and approach to different matchups.",
+      "waarom": "He says repetition lets you play more quickly and know what your army is trying to do. He also says practice reduces the mental burden of making decisions when tired later in an event.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "subthemas": [
+        "list-building"
+      ],
+      "tags": [
+        "tournament",
+        "charge-range"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-IAMZitD-DzY",
+          "url": "https://www.youtube.com/watch?v=IAMZitD-DzY&t=273s",
+          "tijd": 276,
+          "citaat": "practice beforehand before an event with the same list over and over again",
+          "extraCitaten": [
+            {
+              "tijd": 417,
+              "citaat": "offload that mental capacity just through sheer practice"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-03-06",
+      "markeringen": []
+    },
+    {
+      "id": "mobile-armies-reward-movement",
+      "titel": "Consider a mobile army to exploit your movement skills",
+      "tekst": "The speaker favours highly mobile armies with plenty of flyers and fast units so he can use movement skill to his advantage.",
+      "waarom": "In his view, most games are won in the movement phase: battlefield position determines how units can engage and present problems to the opponent.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "subthemas": [
+        "list-building"
+      ],
+      "tags": [
+        "fly",
+        "tournament"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-IAMZitD-DzY",
+          "url": "https://www.youtube.com/watch?v=IAMZitD-DzY&t=337s",
+          "tijd": 340,
+          "citaat": "play armies that are highly mobile, have a lot of flyers, fast units,"
+        }
+      ],
+      "datum": "2026-03-06",
+      "markeringen": []
+    },
+    {
+      "id": "gamble-when-already-losing",
+      "titel": "Take a decisive gamble when you are already losing",
+      "tekst": "If you believe the game is already lost, consider a last gamble that could produce a major swing in your favour.",
+      "waarom": "He says luck can swing both ways, and he has seen a last gamble pay off when a player was losing anyway.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "subthemas": [
+        "aggression-control"
+      ],
+      "tags": [
+        "victory-points",
+        "tournament"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-IAMZitD-DzY",
+          "url": "https://www.youtube.com/watch?v=IAMZitD-DzY&t=549s",
+          "tijd": 552,
+          "citaat": "a gamble for a big massive win could actually pay off."
+        }
+      ],
+      "datum": "2026-03-06",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "prepare-for-local-opponents",
+      "bron": {
+        "bronId": "yt-IAMZitD-DzY",
+        "url": "https://www.youtube.com/watch?v=IAMZitD-DzY&t=139s",
+        "tijd": 142,
+        "citaat": "whether you have all the tools in your army to deal with those things.",
+        "extraCitaten": [
+          {
+            "tijd": 134,
+            "citaat": "who the players you're most likely to play are"
+          }
+        ]
+      },
+      "toelichting": "He again recommends checking likely opponents and their armies when preparing a tournament list."
+    },
+    {
+      "lesId": "army-plan-every-mission",
+      "bron": {
+        "bronId": "yt-IAMZitD-DzY",
+        "url": "https://www.youtube.com/watch?v=IAMZitD-DzY&t=155s",
+        "tijd": 158,
+        "citaat": "it needs to be able to score objectives as well.",
+        "extraCitaten": [
+          {
+            "tijd": 193,
+            "citaat": "score objectives and it's an objective heavy event"
+          }
+        ]
+      },
+      "toelichting": "He again recommends ensuring the tournament army can play the event's objectives."
+    }
+  ],
+  "overgeslagen": "Skipped introductions, promotion, rankings, the numerical winning formula, general observations about luck and pairings, and broad rules-learning commentary without concrete tactical advice. Omitted the garbled Goblin equipment example around 9:04 and broad list-quality remarks without specific tactical detail.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

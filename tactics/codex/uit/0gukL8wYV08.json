@@ -1,0 +1,1021 @@
+{
+  "videoId": "0gukL8wYV08",
+  "bronId": "yt-0gukL8wYV08",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-26T01:53:37.493Z",
+  "nieuw": [
+    {
+      "id": "drawn-lines-reserve-backup",
+      "titel": "Avoid making a Death Star your only eligible reserve unit",
+      "tekst": "For a tournament using Drawn Battle Lines, consider changing a list whose only infantry or cavalry option for reserves is a large Death Star.",
+      "waarom": "He warns that the reserve rule can make a huge difference to a list built this way.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "game-plan",
+        "scenarios"
+      ],
+      "subthemas": [
+        "list-building",
+        "scenario-plans"
+      ],
+      "tags": [
+        "death-star",
+        "tournament"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-0gukL8wYV08",
+          "url": "https://www.youtube.com/watch?v=0gukL8wYV08&t=222s",
+          "tijd": 225,
+          "citaat": "maybe you need to tweak your list a little bit",
+          "extraCitaten": [
+            {
+              "tijd": 216,
+              "citaat": "if you're playing some sort of big Death Star as your only infantry unit"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-11-20",
+      "markeringen": []
+    },
+    {
+      "id": "domination-central-late-expansion",
+      "titel": "Deploy centrally for late Domination scoring",
+      "tekst": "Against an aggressive opponent in Domination, he often keeps the army together centrally, then moves surviving units into table quarters when it is safe. Plan that expansion during deployment rather than remembering the mission on turn five.",
+      "waarom": "He finds a central group harder for fast, hard-hitting enemies to pick apart, while still allowing access to at least two quarters.",
+      "voorbeeld": null,
+      "wanneerNiet": "He says Dwarfs need to start more spread out because this approach relies on relatively fast units.",
+      "fase": "deployment",
+      "themas": [
+        "scenarios",
+        "deployment"
+      ],
+      "subthemas": [
+        "scenario-plans",
+        "unit-placement"
+      ],
+      "tags": [
+        "centre",
+        "victory-points",
+        "concentration"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-0gukL8wYV08",
+          "url": "https://www.youtube.com/watch?v=0gukL8wYV08&t=335s",
+          "tijd": 338,
+          "citaat": "I will put all of my units quite centrally",
+          "extraCitaten": [
+            {
+              "tijd": 354,
+              "citaat": "I can very easily hold at least two object or two quarters"
+            },
+            {
+              "tijd": 1584,
+              "citaat": "you should start thinking about it from deployment"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-11-20",
+      "markeringen": []
+    },
+    {
+      "id": "domination-aggressive-pin",
+      "titel": "Pin the opponent back when attacking in Domination",
+      "tekst": "As the aggressive player in Domination, deploy closer to the line and press harder to destroy the opposing army. Try to pin it in its own area or a corner for a large scoring swing at the end.",
+      "waarom": null,
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "scenarios",
+        "game-plan"
+      ],
+      "subthemas": [
+        "scenario-plans",
+        "aggression-control"
+      ],
+      "tags": [
+        "victory-points",
+        "zoning"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-0gukL8wYV08",
+          "url": "https://www.youtube.com/watch?v=0gukL8wYV08&t=409s",
+          "tijd": 412,
+          "citaat": "trying to pin them in a corner",
+          "extraCitaten": [
+            {
+              "tijd": 405,
+              "citaat": "trying to table your opponent faster"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-11-20",
+      "markeringen": []
+    },
+    {
+      "id": "natural-objective-opening-score",
+      "titel": "Put a scorer on your safe objective immediately",
+      "tekst": "In Drawn Battle Lines, deploy a core scoring unit within reach of the objective you can hold from your deployment zone. Start scoring it immediately, including when going second.",
+      "waarom": "He warns that leaving it unclaimed gives the opponent an accumulating points advantage from their own safe objective.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "scenarios",
+        "deployment"
+      ],
+      "subthemas": [
+        "objectives",
+        "unit-placement"
+      ],
+      "tags": [
+        "objectives",
+        "scoring-units",
+        "victory-points"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-0gukL8wYV08",
+          "url": "https://www.youtube.com/watch?v=0gukL8wYV08&t=470s",
+          "tijd": 473,
+          "citaat": "We have to put a core scoring unit there.",
+          "extraCitaten": [
+            {
+              "tijd": 485,
+              "citaat": "If you don't move over to that objective"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-11-20",
+      "markeringen": []
+    },
+    {
+      "id": "allocate-scorers-by-contest",
+      "titel": "Send the bigger scorer to the contested objective",
+      "tekst": "Put a small scoring unit near the easy objective and deploy the large scoring unit opposite the objective the opponent will contest.",
+      "waarom": "He does not want a heavily invested core unit and its characters sitting in the back without getting value.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "scenarios",
+        "deployment"
+      ],
+      "subthemas": [
+        "scoring-units",
+        "unit-placement"
+      ],
+      "tags": [
+        "scoring-units",
+        "objectives"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-0gukL8wYV08",
+          "url": "https://www.youtube.com/watch?v=0gukL8wYV08&t=750s",
+          "tijd": 753,
+          "citaat": "We're putting a small scoring unit near the objective that's easier to hold.",
+          "extraCitaten": [
+            {
+              "tijd": 753,
+              "citaat": "We're putting a big scoring unit opposite the objective that's going to be more contested."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-11-20",
+      "markeringen": []
+    },
+    {
+      "id": "central-mobile-response-threats",
+      "titel": "Keep mobile threats central when unsure",
+      "tekst": "If you are unsure where a mobile threat belongs, deploy it centrally so it can respond across the board. In an objective game, this can let it support either objective you intend to hold.",
+      "waarom": "He points to a dragon's long march as a way to reach the part of the board where it is needed.",
+      "voorbeeld": null,
+      "wanneerNiet": "He would depart from this default when an opponent's deployment offers something he can punish.",
+      "fase": "deployment",
+      "themas": [
+        "deployment",
+        "game-plan"
+      ],
+      "subthemas": [
+        "unit-placement",
+        "threat-zones"
+      ],
+      "tags": [
+        "centre",
+        "zoning",
+        "objectives"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-0gukL8wYV08",
+          "url": "https://www.youtube.com/watch?v=0gukL8wYV08&t=1269s",
+          "tijd": 1272,
+          "citaat": "If you don't know where your dragon should go, keep them central.",
+          "extraCitaten": [
+            {
+              "tijd": 3475,
+              "citaat": "want to keep your mobile threats as central as possible so they're able to respond."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-11-20",
+      "markeringen": []
+    },
+    {
+      "id": "baggage-cheap-home-scorer",
+      "titel": "Let the home scorer also guard the baggage train",
+      "tekst": "For a defensive plan, place the baggage train near the back where the cheaper core unit holding your safe objective can also secure it at the end of the game.",
+      "waarom": null,
+      "voorbeeld": null,
+      "wanneerNiet": "If the tournament pack restricts a unit to holding one thing at a time, he says to check with the organiser whether this works.",
+      "fase": "deployment",
+      "themas": [
+        "scenarios",
+        "deployment"
+      ],
+      "subthemas": [
+        "baggage-train",
+        "unit-placement"
+      ],
+      "tags": [
+        "baggage-train",
+        "scoring-units",
+        "objectives"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-0gukL8wYV08",
+          "url": "https://www.youtube.com/watch?v=0gukL8wYV08&t=1699s",
+          "tijd": 1702,
+          "citaat": "your baggage train back here to be held by the sort of cheaper core unit",
+          "extraCitaten": [
+            {
+              "tijd": 1702,
+              "citaat": "just double check with your to."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-11-20",
+      "markeringen": []
+    },
+    {
+      "id": "leave-random-mover-lanes",
+      "titel": "Leave random movers clear of friendly units",
+      "tekst": "Do not deploy a random mover in front of a unit that might need an opening charge. Do not place it behind infantry that will still block its route when compulsory movement happens.",
+      "waarom": "He warns that a random mover behind infantry can be left unable to move at all.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "deployment",
+        "hammers"
+      ],
+      "subthemas": [
+        "unit-placement",
+        "random-movers"
+      ],
+      "tags": [
+        "random-movement",
+        "charge-range"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-0gukL8wYV08",
+          "url": "https://www.youtube.com/watch?v=0gukL8wYV08&t=1915s",
+          "tijd": 1918,
+          "citaat": "Don't put, you know, the giant spawn in front of a unit",
+          "extraCitaten": [
+            {
+              "tijd": 1926,
+              "citaat": "don't put your giant spawn behind a unit of infantry"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-11-20",
+      "markeringen": []
+    },
+    {
+      "id": "special-feature-choose-second",
+      "titel": "Prefer the second turn for a special feature",
+      "tekst": "When a special feature is being scored at the end of the game, he generally recommends choosing to go second if you win the first-turn roll.",
+      "waarom": "He finds going second makes it easier to secure the end-of-game points.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "deployment",
+        "scenarios"
+      ],
+      "subthemas": [
+        "drops-first-turn",
+        "objectives"
+      ],
+      "tags": [
+        "first-turn",
+        "objectives",
+        "victory-points"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-0gukL8wYV08",
+          "url": "https://www.youtube.com/watch?v=0gukL8wYV08&t=1978s",
+          "tijd": 1981,
+          "citaat": "What do we want to care about with special features? Going second.",
+          "extraCitaten": [
+            {
+              "tijd": 1990,
+              "citaat": "you probably want to take it and opt to go second."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-11-20",
+      "markeringen": []
+    },
+    {
+      "id": "special-feature-first-turn-pressure",
+      "titel": "Apply central pressure when going first for a special feature",
+      "tekst": "If you go first when fighting over a special feature, play more aggressively and concentrate supporting units around the central point. Make it hard for the opponent to stay there or advance into it.",
+      "waarom": null,
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "scenarios",
+        "game-plan"
+      ],
+      "subthemas": [
+        "objectives",
+        "concentration"
+      ],
+      "tags": [
+        "first-turn",
+        "objectives",
+        "concentration",
+        "centre"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-0gukL8wYV08",
+          "url": "https://www.youtube.com/watch?v=0gukL8wYV08&t=2016s",
+          "tijd": 2019,
+          "citaat": "put overwhelming pressure around the central point.",
+          "extraCitaten": [
+            {
+              "tijd": 2050,
+              "citaat": "move up more aggressively if you're going first."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-11-20",
+      "markeringen": []
+    },
+    {
+      "id": "block-final-objective-approach",
+      "titel": "Block the final approach to a special feature",
+      "tekst": "Late in a game with a special feature, try to put a unit between the opponent and the objective.",
+      "waarom": "He says a physical blocker makes it very difficult for the opponent to take the objective in one turn.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "scenarios",
+      "themas": [
+        "scenarios",
+        "chaff"
+      ],
+      "subthemas": [
+        "late-game",
+        "redirecting"
+      ],
+      "tags": [
+        "objectives",
+        "redirect",
+        "delay"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-0gukL8wYV08",
+          "url": "https://www.youtube.com/watch?v=0gukL8wYV08&t=2031s",
+          "tijd": 2034,
+          "citaat": "If you can put a unit between, you know, them and the objective, amazing."
+        }
+      ],
+      "datum": "2025-11-20",
+      "markeringen": []
+    },
+    {
+      "id": "hill-scorer-offset-feature",
+      "titel": "Offset your hill scorer beside the special feature",
+      "tekst": "In King of the Hill with a central special feature, deploy the main core scorer slightly to one side so it can advance straight beside the feature.",
+      "waarom": "He says deploying directly opposite the feature wastes movement pivoting around it and gives up mobility.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "scenarios",
+        "deployment"
+      ],
+      "subthemas": [
+        "king-of-the-hill",
+        "unit-placement"
+      ],
+      "tags": [
+        "king-of-the-hill",
+        "scoring-units",
+        "wheel"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-0gukL8wYV08",
+          "url": "https://www.youtube.com/watch?v=0gukL8wYV08&t=2205s",
+          "tijd": 2208,
+          "citaat": "definitely make sure you're slightly offset to the side.",
+          "extraCitaten": [
+            {
+              "tijd": 2166,
+              "citaat": "you don't want to lose movement having to pivot around here."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-11-20",
+      "markeringen": []
+    },
+    {
+      "id": "hill-small-scorer-hidden",
+      "titel": "Hold the hill from behind it against shooting",
+      "tekst": "Against a shooting-heavy army in King of the Hill, consider advancing a smaller core scorer behind the hill to hold it without standing on top. Keep the larger core unit available to attack whatever comes to contest it.",
+      "waarom": "He stresses that a unit only needs to be within nine inches of the centre, and he wants to avoid exposing it to shooting on the hill.",
+      "voorbeeld": null,
+      "wanneerNiet": "He presents this as an option depending on the matchup, especially melee against shooting.",
+      "fase": "scenarios",
+      "themas": [
+        "scenarios",
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "king-of-the-hill",
+        "avoiding-fire"
+      ],
+      "tags": [
+        "king-of-the-hill",
+        "scoring-units",
+        "hills",
+        "line-of-sight"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-0gukL8wYV08",
+          "url": "https://www.youtube.com/watch?v=0gukL8wYV08&t=2235s",
+          "tijd": 2238,
+          "citaat": "you can sit just behind the um hill.",
+          "extraCitaten": [
+            {
+              "tijd": 2254,
+              "citaat": "the bigger unit can be used to bully the thing that comes and contests them."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-11-20",
+      "markeringen": []
+    },
+    {
+      "id": "screen-reserve-entry-edges",
+      "titel": "Screen reserve entry edges during deployment",
+      "tekst": "Use units spread along the relevant board edges to leave enemy reserves no legal entry gap. He suggests a chain of skirmishers, shooting infantry or war machines, and checking that the eight-inch exclusion areas leave no room for the arriving unit.",
+      "waarom": "He says doing this during deployment reduces what you have to remember later and frees attention for beating the opponent.",
+      "voorbeeld": null,
+      "wanneerNiet": "He says the screen can also be arranged during the game; doing it on turn one is not compulsory.",
+      "fase": "deployment",
+      "themas": [
+        "deployment"
+      ],
+      "subthemas": [
+        "ambush-scouts-vanguard"
+      ],
+      "tags": [
+        "board-edge",
+        "zoning",
+        "skirmishers"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-0gukL8wYV08",
+          "url": "https://www.youtube.com/watch?v=0gukL8wYV08&t=2452s",
+          "tijd": 2455,
+          "citaat": "Models can't come in if there is an enemy model within 8 in of them.",
+          "extraCitaten": [
+            {
+              "tijd": 2467,
+              "citaat": "just put them interspersed one inch apart like so all"
+            },
+            {
+              "tijd": 2575,
+              "citaat": "you know that you haven't left any gaps"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-11-20",
+      "markeringen": []
+    },
+    {
+      "id": "measure-charges-every-turn",
+      "titel": "Measure enemy charge threats at the start of every turn",
+      "tekst": "At the start of each turn, spend a couple of minutes measuring where enemy units can reach with their charges. Use that information to decide which areas to avoid.",
+      "waarom": "He describes melee matchups as a contest over who gets the charge and the value from it.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "subthemas": [
+        "threat-zones"
+      ],
+      "tags": [
+        "charge-range",
+        "zoning"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-0gukL8wYV08",
+          "url": "https://www.youtube.com/watch?v=0gukL8wYV08&t=2695s",
+          "tijd": 2698,
+          "citaat": "every turn, take two minutes, just measure out where your opponent can get to",
+          "extraCitaten": [
+            {
+              "tijd": 2698,
+              "citaat": "with their their charges and so you know what you want to avoid."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-11-20",
+      "markeringen": []
+    },
+    {
+      "id": "chance-encounter-charge-safety",
+      "titel": "Deploy beyond opening charges in A Chance Encounter",
+      "tekst": "As the defensive player in A Chance Encounter, measure the opponent's potential opening charge ranges from the corners of their deployment zone and deploy beyond those threat lines.",
+      "waarom": "He warns that the deployment zones are unusually close, allowing an enemy dragon to threaten deep into your lines on turn one.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "scenarios",
+        "deployment"
+      ],
+      "subthemas": [
+        "scenario-plans",
+        "unit-placement"
+      ],
+      "tags": [
+        "charge-range",
+        "first-turn"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-0gukL8wYV08",
+          "url": "https://www.youtube.com/watch?v=0gukL8wYV08&t=2749s",
+          "tijd": 2752,
+          "citaat": "you want to be deploying past the threat line",
+          "extraCitaten": [
+            {
+              "tijd": 2783,
+              "citaat": "you want to be further back and respectful of your opponent's threats."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-11-20",
+      "markeringen": []
+    },
+    {
+      "id": "chance-encounter-late-aggressor",
+      "titel": "Save an aggressive drop to punish exposed deployment",
+      "tekst": "In A Chance Encounter, consider holding back an aggressive unit's deployment until the opponent has committed a target. Use the forward corners to threaten a first-turn charge if the opponent has failed to respect your reach.",
+      "waarom": null,
+      "voorbeeld": null,
+      "wanneerNiet": "He notes that there are many other factors in whether the opening charge is actually a good idea.",
+      "fase": "deployment",
+      "themas": [
+        "deployment",
+        "scenarios"
+      ],
+      "subthemas": [
+        "drops-first-turn",
+        "scenario-plans"
+      ],
+      "tags": [
+        "deployment-drops",
+        "charge-range",
+        "first-turn"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-0gukL8wYV08",
+          "url": "https://www.youtube.com/watch?v=0gukL8wYV08&t=2757s",
+          "tijd": 2760,
+          "citaat": "putting it down after your opponent has committed something.",
+          "extraCitaten": [
+            {
+              "tijd": 2792,
+              "citaat": "make sure you're using these corners here to get more aggressive with them."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-11-20",
+      "markeringen": []
+    },
+    {
+      "id": "aggressive-baggage-forward-placement",
+      "titel": "Place baggage forward to support an aggressive advance",
+      "tekst": "For an aggressive plan, consider placing the baggage train farther forward so your army can advance and still hold it later.",
+      "waarom": "He does not want the army to have to run all the way back into its own backline to secure it.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "scenarios",
+        "game-plan"
+      ],
+      "subthemas": [
+        "baggage-train",
+        "aggression-control"
+      ],
+      "tags": [
+        "baggage-train",
+        "victory-points"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-0gukL8wYV08",
+          "url": "https://www.youtube.com/watch?v=0gukL8wYV08&t=2905s",
+          "tijd": 2908,
+          "citaat": "you probably want to put the baggage train pretty far forwards"
+        }
+      ],
+      "datum": "2025-11-20",
+      "markeringen": []
+    },
+    {
+      "id": "encirclement-short-objective-triangle",
+      "titel": "Choose the shortest objective triangle in Encirclement",
+      "tekst": "In Encirclement with four strategic locations, plan to hold three, or hold two and contest one, using the three objectives with the shortest travel distances between them. Deploy the main force around that compact area rather than spreading across all four.",
+      "waarom": "He says the 36-inch gap between widely separated objectives consumes too much travel time in a six-turn game; the shorter links make support more practical.",
+      "voorbeeld": null,
+      "wanneerNiet": "He still allows a token threat towards the fourth objective, especially if the opponent defends it lightly, provided it can also support the main force.",
+      "fase": "deployment",
+      "themas": [
+        "scenarios",
+        "game-plan"
+      ],
+      "subthemas": [
+        "scenario-plans",
+        "concentration"
+      ],
+      "tags": [
+        "objectives",
+        "concentration",
+        "scoring-units"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-0gukL8wYV08",
+          "url": "https://www.youtube.com/watch?v=0gukL8wYV08&t=3147s",
+          "tijd": 3150,
+          "citaat": "make a triangle with the smallest amount of sides",
+          "extraCitaten": [
+            {
+              "tijd": 3082,
+              "citaat": "you don't want to be going for a 36 in travel between the two here."
+            },
+            {
+              "tijd": 3210,
+              "citaat": "actually you're trying to support the rest of your force that's going to the center."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-11-20",
+      "markeringen": []
+    },
+    {
+      "id": "duke-monster-slayer-zoning",
+      "titel": "Use the Monster Slayer Duke to control space",
+      "tekst": "Use a Monster Slayer Duke on a Royal Pegasus to threaten the areas an enemy monster wants to enter. He would prefer to exploit that threat and the Duke's flexible movement rather than actually fight the dragon if possible.",
+      "waarom": "He says the threat makes the opponent choose between risking the dragon and taking another route. The actual combat can take several rounds, allow enemy support to arrive, or fail through the Duke's dice.",
+      "voorbeeld": null,
+      "wanneerNiet": "He qualifies his favourable odds by excluding dragons with Opal Amulets.",
+      "fase": "movement",
+      "themas": [
+        "characters",
+        "matchups",
+        "game-plan"
+      ],
+      "subthemas": [
+        "combat-roles",
+        "vs-monsters",
+        "threat-zones"
+      ],
+      "tags": [
+        "monsters",
+        "dragons",
+        "zoning",
+        "mounts"
+      ],
+      "leger": "kingdom-of-bretonnia",
+      "units": [
+        "Duke"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-0gukL8wYV08",
+          "url": "https://www.youtube.com/watch?v=0gukL8wYV08&t=3276s",
+          "tijd": 3279,
+          "citaat": "being in combat is actively not what I want to do with my Duke",
+          "extraCitaten": [
+            {
+              "tijd": 3241,
+              "citaat": "because you're threatening to kill it."
+            },
+            {
+              "tijd": 3312,
+              "citaat": "Again, I don't really want to be in combat with that dragon."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-11-20",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "cheap-area-capture-units",
+      "bron": {
+        "bronId": "yt-0gukL8wYV08",
+        "url": "https://www.youtube.com/watch?v=0gukL8wYV08&t=522s",
+        "tijd": 525,
+        "citaat": "unit that can hold an off objective without having to commit too many points",
+        "extraCitaten": [
+          {
+            "tijd": 551,
+            "citaat": "It's probably not taking up more than 150 to 200 points of your core."
+          }
+        ]
+      },
+      "toelichting": "The same recommendation to use an inexpensive unit for a scoring area rather than commit the main investment."
+    },
+    {
+      "lesId": "fewer-drops-first-turn",
+      "bron": {
+        "bronId": "yt-0gukL8wYV08",
+        "url": "https://www.youtube.com/watch?v=0gukL8wYV08&t=1000s",
+        "tijd": 1003,
+        "citaat": "Some armies will go for the lowest number of drops as possible",
+        "extraCitaten": [
+          {
+            "tijd": 1003,
+            "citaat": "they will pretty consistently get the plus one to go first."
+          }
+        ]
+      },
+      "toelichting": "The same list-building tradeoff of fewer deployment drops for the first-turn bonus."
+    },
+    {
+      "lesId": "chaff-scouts-deployment",
+      "bron": {
+        "bronId": "yt-0gukL8wYV08",
+        "url": "https://www.youtube.com/watch?v=0gukL8wYV08&t=1190s",
+        "tijd": 1193,
+        "citaat": "putting them down early, getting the information from your opponent without really giving up any"
+      },
+      "toelichting": "The same use of early chaff drops to learn enemy deployment without revealing key placements."
+    },
+    {
+      "lesId": "central-sheltered-chaff-deployment",
+      "bron": {
+        "bronId": "yt-0gukL8wYV08",
+        "url": "https://www.youtube.com/watch?v=0gukL8wYV08&t=1133s",
+        "tijd": 1136,
+        "citaat": "have them probably quite central so they're not too far away from the enemy unit"
+      },
+      "toelichting": "The same central default for chaff deployment so it can reach the required blocking position."
+    },
+    {
+      "lesId": "anticipate-enemy-deployment-pattern",
+      "bron": {
+        "bronId": "yt-0gukL8wYV08",
+        "url": "https://www.youtube.com/watch?v=0gukL8wYV08&t=1244s",
+        "tijd": 1247,
+        "citaat": "you can usually work out where your opponent's going to put stuff"
+      },
+      "toelichting": "The same recommendation to anticipate the opponent's deployment from the roles of their units."
+    },
+    {
+      "lesId": "support-character-opposite-threats",
+      "bron": {
+        "bronId": "yt-0gukL8wYV08",
+        "url": "https://www.youtube.com/watch?v=0gukL8wYV08&t=1346s",
+        "tijd": 1349,
+        "citaat": "I'm going to put my wizard or my BSB on the opposite side"
+      },
+      "toelichting": "The same placement of vulnerable support characters away from the enemy's major threat."
+    },
+    {
+      "lesId": "support-character-one-file-in",
+      "bron": {
+        "bronId": "yt-0gukL8wYV08",
+        "url": "https://www.youtube.com/watch?v=0gukL8wYV08&t=1329s",
+        "tijd": 1332,
+        "citaat": "you've got one model on the corner, which means that if you get flank charged"
+      },
+      "toelichting": "The same choice of placing a vulnerable support character one file in from the corner."
+    },
+    {
+      "lesId": "melee-character-central-attack-side",
+      "bron": {
+        "bronId": "yt-0gukL8wYV08",
+        "url": "https://www.youtube.com/watch?v=0gukL8wYV08&t=1430s",
+        "tijd": 1433,
+        "citaat": "we want the character to be as central as possible."
+      },
+      "toelichting": "The same central placement to make sure a melee character gets into the action."
+    },
+    {
+      "lesId": "melee-character-clear-outer-files",
+      "bron": {
+        "bronId": "yt-0gukL8wYV08",
+        "url": "https://www.youtube.com/watch?v=0gukL8wYV08&t=1501s",
+        "tijd": 1504,
+        "citaat": "the two ranks on the side in case you get flank charged"
+      },
+      "toelichting": "The same instruction to keep a melee character beyond the outer two files so it can move into the flank fighting rank."
+    },
+    {
+      "lesId": "reposition-characters-before-enemy-charge",
+      "bron": {
+        "bronId": "yt-0gukL8wYV08",
+        "url": "https://www.youtube.com/watch?v=0gukL8wYV08&t=1364s",
+        "tijd": 1367,
+        "citaat": "between them moving into a threatening position to here and then charging you,",
+        "extraCitaten": [
+          {
+            "tijd": 1367,
+            "citaat": "you've always got time to make a move, you know, reform or whatever."
+          }
+        ]
+      },
+      "toelichting": "The same use of the intervening turn to reform and move characters away from an approaching threat."
+    },
+    {
+      "lesId": "hidden-mobile-objective-grabs",
+      "bron": {
+        "bronId": "yt-0gukL8wYV08",
+        "url": "https://www.youtube.com/watch?v=0gukL8wYV08&t=1611s",
+        "tijd": 1614,
+        "citaat": "perhaps just keep it behind another unit or behind terrain",
+        "extraCitaten": [
+          {
+            "tijd": 1623,
+            "citaat": "suddenly boom contesting a quarter or holding a quarter"
+          }
+        ]
+      },
+      "toelichting": "The same plan of hiding a mobile unit before sending it out for late scoring."
+    },
+    {
+      "lesId": "choose-side-for-armies",
+      "bron": {
+        "bronId": "yt-0gukL8wYV08",
+        "url": "https://www.youtube.com/watch?v=0gukL8wYV08&t=2851s",
+        "tijd": 2854,
+        "citaat": "looking at the terrain and then basing it from there."
+      },
+      "waarom": "He says a gunline should consider whether the opposing approach offers line-of-sight blockers that enemies can hide behind.",
+      "toelichting": "The same assessment of terrain in relation to both armies when choosing a table side."
+    },
+    {
+      "lesId": "hills-reduce-cannon-bounces",
+      "bron": {
+        "bronId": "yt-0gukL8wYV08",
+        "url": "https://www.youtube.com/watch?v=0gukL8wYV08&t=2821s",
+        "tijd": 2824,
+        "citaat": "as soon as the cannonball bounces, it stops when it hits a hill."
+      },
+      "toelichting": "The same use of hills to reduce exposure to cannon bounces."
+    },
+    {
+      "lesId": "chaff-deny-scout-vanguard",
+      "bron": {
+        "bronId": "yt-0gukL8wYV08",
+        "url": "https://www.youtube.com/watch?v=0gukL8wYV08&t=2404s",
+        "tijd": 2407,
+        "citaat": "You put your unit along the board edge.",
+        "extraCitaten": [
+          {
+            "tijd": 2415,
+            "citaat": "they have to be over 12 in away from you."
+          }
+        ]
+      },
+      "voorbeeld": "He describes denying Dwarf scouts a wood from which they would otherwise shoot towards his army.",
+      "toelichting": "The same deployment use of friendly presence to deny enemy Scouts forward space."
+    },
+    {
+      "lesId": "deploy-for-unit-synergy",
+      "bron": {
+        "bronId": "yt-0gukL8wYV08",
+        "url": "https://www.youtube.com/watch?v=0gukL8wYV08&t=2295s",
+        "tijd": 2298,
+        "citaat": "we want to put our supportive elements on the side",
+        "extraCitaten": [
+          {
+            "tijd": 2306,
+            "citaat": "able to come up and flank charge when we have the fight"
+          }
+        ]
+      },
+      "toelichting": "The same deployment principle of placing supporting units where their contribution will work with the main force."
+    },
+    {
+      "lesId": "chaff-decoys",
+      "bron": {
+        "bronId": "yt-0gukL8wYV08",
+        "url": "https://www.youtube.com/watch?v=0gukL8wYV08&t=3511s",
+        "tijd": 3514,
+        "citaat": "you can use them to threaten objectives",
+        "extraCitaten": [
+          {
+            "tijd": 3550,
+            "citaat": "your opponent suddenly has to put a lot more effort into defending"
+          }
+        ]
+      },
+      "toelichting": "The same use of threatening chaff to force the opponent to commit defensive resources away from the main fight."
+    }
+  ],
+  "overgeslagen": "Skipped promotion, channel discussion, rules and mission readouts without advice, the withdrawn Herdstone discussion, repeated deployment explanations, and diagram-dependent or garbled passages where the intended positions or units could not be established.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

@@ -118,12 +118,14 @@ test('search_tactics with nothing relevant says so explicitly', async () => {
 });
 
 test('get_lesson: full lesson, every source and extra quotes with their own timestamps', async () => {
-  const l = read('public/tactics/lessen.json').lessen.find((x) => x.id === 'chaff-sets-tempo');
-  const t = await tool('get_lesson', { id: 'chaff-sets-tempo' });
+  // Round 3 (26-11-2026): chaff-sets-tempo got a third source and the merge dropped its extra quote, so
+  // the extra-quote check uses another lesson.
+  const l = read('public/tactics/lessen.json').lessen.find((x) => x.id === 'chaff-versatile-specific');
+  const t = await tool('get_lesson', { id: 'chaff-versatile-specific' });
   assert.ok(t.includes(l.tekst));
   assert.ok(t.includes(l.waarom));
   for (const b of l.bronnen) assert.ok(t.includes(b.url), b.url);
-  assert.match(t, /quote at 1:10: "these units are costing you under 100 points" — https:\/\/www\.youtube\.com\/watch\?v=w5Uye9wgycA&t=70s/);
+  assert.match(t, /quote at 12:14: "So, they can go and kill a war machine\." — https:\/\/www\.youtube\.com\/watch\?v=w5Uye9wgycA&t=734s/);
   assert.match(await tool('get_lesson', { id: 'does-not-exist' }), /No lesson/);
 });
 

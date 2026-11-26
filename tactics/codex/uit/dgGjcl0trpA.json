@@ -1,0 +1,299 @@
+{
+  "videoId": "dgGjcl0trpA",
+  "bronId": "yt-dgGjcl0trpA",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-26T04:02:15.830Z",
+  "nieuw": [
+    {
+      "id": "wood-elves-avoid-receiving-charges",
+      "titel": "Avoid taking charges with fragile Wood Elf units",
+      "tekst": "Avoid being charged with your Wood Elf units whenever possible. If you are not confident that you will win the combat, the speaker warns that you will probably lose it.",
+      "waarom": "He describes the Elves as glass cannons: most have Toughness 3 and little or no armour, so attacks that reach them are likely to kill them.",
+      "voorbeeld": "He let a Lothern Skycutter charge his stag-mounted Glade Captain BSB, believing the character could take it. The impact hits killed the Captain before he could attack.",
+      "wanneerNiet": "He acknowledges that your units will eventually get caught.",
+      "fase": "movement",
+      "themas": [
+        "matchups"
+      ],
+      "subthemas": [
+        "picking-fights"
+      ],
+      "tags": [
+        "charge-range",
+        "armour"
+      ],
+      "leger": "wood-elf-realms",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-dgGjcl0trpA",
+          "url": "https://www.youtube.com/watch?v=dgGjcl0trpA&t=138s",
+          "tijd": 141,
+          "citaat": "don't get charged if you can help it.",
+          "extraCitaten": [
+            {
+              "tijd": 209,
+              "citaat": "you want to be striking first."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-06-11",
+      "markeringen": []
+    },
+    {
+      "id": "wood-elves-escape-before-shooting",
+      "titel": "Prioritise escaping over extra Wood Elf shots",
+      "tekst": "Choose defensive movement over an extra volley when moving will keep your Wood Elves alive. Be willing to march out of a charge arc rather than stand still and rely on shooting to stop the attacker.",
+      "waarom": "He finds that Strength 3 bows often do less damage than expected, while mobility and evasiveness are the faction's strengths.",
+      "voorbeeld": "He describes Glade Guard with an enemy within eight inches: they can test to march out of its charge arc, or stay and shoot, risking certain death if their volleys fail to stop the charge.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "shooting-terrain",
+        "game-plan"
+      ],
+      "subthemas": [
+        "evasive-skirmish",
+        "aggression-control"
+      ],
+      "tags": [
+        "charge-arc",
+        "missile-troops",
+        "skirmishers"
+      ],
+      "leger": "wood-elf-realms",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-dgGjcl0trpA",
+          "url": "https://www.youtube.com/watch?v=dgGjcl0trpA&t=336s",
+          "tijd": 339,
+          "citaat": "you need to prioritize moving and defensive movement"
+        }
+      ],
+      "datum": "2026-06-11",
+      "markeringen": []
+    },
+    {
+      "id": "wood-elves-concentrate-bow-fire",
+      "titel": "Concentrate Wood Elf shooting on one target",
+      "tekst": "Put as many shots as possible into one enemy unit to remove it from the board, then choose the next target. Avoid distributing your Wood Elf shooting across several targets.",
+      "waarom": "He says bringing units down with Strength 3 shooting is difficult, and Wood Elves rely heavily on bows because their magic missile selection is limited.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "magic-shooting",
+      "themas": [
+        "shooting-terrain",
+        "game-plan"
+      ],
+      "subthemas": [
+        "target-priority",
+        "concentration"
+      ],
+      "tags": [
+        "concentration",
+        "missile-troops"
+      ],
+      "leger": "wood-elf-realms",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-dgGjcl0trpA",
+          "url": "https://www.youtube.com/watch?v=dgGjcl0trpA&t=445s",
+          "tijd": 448,
+          "citaat": "Try to get as many shots on one unit as possible"
+        }
+      ],
+      "datum": "2026-06-11",
+      "markeringen": []
+    },
+    {
+      "id": "spread-elves-prevent-chained-combats",
+      "titel": "Spread Wood Elves to prevent chained combats",
+      "tekst": "As enemies approach, spread your Wood Elf units so that catching one cannot lead directly into another combat. Account for the centre-to-centre retreat pivot when checking those paths, rather than simply avoiding placing one unit directly behind another.",
+      "waarom": "He warns that one combat turning into two can cost half your firepower, and that the retreat pivot can create an unexpected overrun path.",
+      "voorbeeld": null,
+      "wanneerNiet": "He expects something to get caught eventually; the aim is to limit the loss to one unit in a position that does not benefit the opponent.",
+      "fase": "movement",
+      "themas": [
+        "movement"
+      ],
+      "subthemas": [
+        "overrun-pursuit"
+      ],
+      "tags": [
+        "overrun",
+        "pursuit",
+        "skirmishers"
+      ],
+      "leger": "wood-elf-realms",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-dgGjcl0trpA",
+          "url": "https://www.youtube.com/watch?v=dgGjcl0trpA&t=676s",
+          "tijd": 679,
+          "citaat": "Make sure only one unit gets caught",
+          "extraCitaten": [
+            {
+              "tijd": 746,
+              "citaat": "That can create an overrun path that you might not be aware of."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-06-11",
+      "markeringen": []
+    },
+    {
+      "id": "corner-sacrifice-wastes-return-turn",
+      "titel": "Lure enemies into a corner before sacrificing a unit",
+      "tekst": "Use a unit to draw an enemy into a back corner before sacrificing it. Make the enemy turn around and travel back towards the rest of the battle.",
+      "waarom": "He says this wastes a turn even if the enemy successfully restrains and reforms, letting you focus on other units elsewhere.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "game-plan",
+        "chaff"
+      ],
+      "subthemas": [
+        "tempo-trading",
+        "decoys-bait"
+      ],
+      "tags": [
+        "sacrifice",
+        "delay",
+        "bait",
+        "board-edge"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-dgGjcl0trpA",
+          "url": "https://www.youtube.com/watch?v=dgGjcl0trpA&t=846s",
+          "tijd": 849,
+          "citaat": "If you can suck an enemy unit into the back corner of the board"
+        }
+      ],
+      "datum": "2026-06-11",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "wood-elves-occupy-cleared-space",
+      "bron": {
+        "bronId": "yt-dgGjcl0trpA",
+        "url": "https://www.youtube.com/watch?v=dgGjcl0trpA&t=353s",
+        "tijd": 356,
+        "citaat": "Move into the space they occupied."
+      },
+      "toelichting": "Both recommend moving Wood Elves into the space opened by removing or drawing away enemy units."
+    },
+    {
+      "lesId": "wood-elves-clear-mobile-ranged",
+      "bron": {
+        "bronId": "yt-dgGjcl0trpA",
+        "url": "https://www.youtube.com/watch?v=dgGjcl0trpA&t=452s",
+        "tijd": 455,
+        "citaat": "you're looking to kill the fast things and the range threat things"
+      },
+      "toelichting": "Both prioritise fast enemies and ranged threats so Wood Elves retain their mobility and shooting advantages."
+    },
+    {
+      "lesId": "evasive-retreat-behind-hill",
+      "bron": {
+        "bronId": "yt-dgGjcl0trpA",
+        "url": "https://www.youtube.com/watch?v=dgGjcl0trpA&t=572s",
+        "tijd": 575,
+        "citaat": "I evasive off the hill.",
+        "extraCitaten": [
+          {
+            "tijd": 587,
+            "citaat": "I move my Waywatchers back up. I shoot the Outriders."
+          }
+        ]
+      },
+      "toelichting": "Both use an Evasive retreat behind a hill to remove the enemy's shooting target."
+    },
+    {
+      "lesId": "terrain-low-roll-charges",
+      "bron": {
+        "bronId": "yt-dgGjcl0trpA",
+        "url": "https://www.youtube.com/watch?v=dgGjcl0trpA&t=698s",
+        "tijd": 701,
+        "citaat": "use terrain to try and make them fail their charges."
+      },
+      "toelichting": "Both use terrain's charge penalties to make an approaching enemy fail its charge."
+    },
+    {
+      "lesId": "check-first-movement-options",
+      "bron": {
+        "bronId": "yt-dgGjcl0trpA",
+        "url": "https://www.youtube.com/watch?v=dgGjcl0trpA&t=931s",
+        "tijd": 934,
+        "citaat": "I knew how to space my guys out. I knew what could get out."
+      },
+      "voorbeeld": "He packed his Wood Elf units behind impassable terrain against Dwarfs, became stuck, and took heavy losses from Gyrocopters and Rangers. He says this taught him to space units with their escape routes and intended jobs in mind.",
+      "toelichting": "Both require deployment to leave units room for their intended movement instead of trapping them."
+    },
+    {
+      "lesId": "deploy-defensively-vs-shooting",
+      "bron": {
+        "bronId": "yt-dgGjcl0trpA",
+        "url": "https://www.youtube.com/watch?v=dgGjcl0trpA&t=1026s",
+        "tijd": 1029,
+        "citaat": "I could have just put everything behind this line here",
+        "extraCitaten": [
+          {
+            "tijd": 1037,
+            "citaat": "gave no shot to the cannons on turn one"
+          }
+        ]
+      },
+      "toelichting": "Both recommend concealing fragile Wood Elf units during deployment to deny opening enemy shooting."
+    },
+    {
+      "lesId": "wood-elves-prefer-second-turn",
+      "bron": {
+        "bronId": "yt-dgGjcl0trpA",
+        "url": "https://www.youtube.com/watch?v=dgGjcl0trpA&t=1042s",
+        "tijd": 1045,
+        "citaat": "wood elves probably want to go second"
+      },
+      "waarom": "He describes Wood Elves as a reactive army: letting the opponent start moving gives them opportunities to respond and pick off targets.",
+      "toelichting": "Both generally favour the second turn for Wood Elves."
+    },
+    {
+      "lesId": "combine-wood-elf-forests",
+      "bron": {
+        "bronId": "yt-dgGjcl0trpA",
+        "url": "https://www.youtube.com/watch?v=dgGjcl0trpA&t=1183s",
+        "tijd": 1186,
+        "citaat": "use your woodland ambush to attach it to another piece of terrain",
+        "extraCitaten": [
+          {
+            "tijd": 1194,
+            "citaat": "make a ginormous blocking line of sight feature"
+          }
+        ]
+      },
+      "toelichting": "Both combine the free Wood Elf forest with existing terrain to enlarge a line-of-sight blocker."
+    }
+  ],
+  "overgeslagen": "Skipped channel discussion, guide and coaching promotions, sponsor and supporter messages, morale advice without a concrete battlefield action, and uncertain unit identifications in the overrun example. Omitted inconsistent wound and save counts from the early Captain anecdote.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": [
+      {
+        "wie": "aanvulling evasive-retreat-behind-hill",
+        "wat": "voorbeeld weggelaten: de les heeft dat veld al"
+      }
+    ]
+  }
+}

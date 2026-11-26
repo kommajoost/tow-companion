@@ -1,0 +1,326 @@
+{
+  "videoId": "kCsDny5qMww",
+  "bronId": "yt-kCsDny5qMww",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-26T03:31:31.875Z",
+  "nieuw": [
+    {
+      "id": "artillery-remove-counters-first",
+      "titel": "Shoot counters before disrupting the enemy plan",
+      "tekst": "First target enemy units that stop your artillery or other units doing their jobs. Once those counters are destroyed or sufficiently weakened, switch to whatever will cause the most disruption to the opponent's plan.",
+      "waarom": "He says enemy units have different value: some are fundamental to the opponent's plan, while others directly counter the units he needs to keep alive.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "magic-shooting",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "target-priority"
+      ],
+      "tags": [
+        "war-machines",
+        "victory-points"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-kCsDny5qMww",
+          "url": "https://www.youtube.com/watch?v=kCsDny5qMww&t=100s",
+          "tijd": 103,
+          "citaat": "what's in your opponent's force that will stop your artillery doing your job",
+          "extraCitaten": [
+            {
+              "tijd": 119,
+              "citaat": "what is going to cause maximum disruption to the enemy plans"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-03-08",
+      "markeringen": []
+    },
+    {
+      "id": "artillery-opportunistic-late-points",
+      "titel": "Look for late artillery shots that secure extra points",
+      "tekst": "After dealing with counters and disrupting the enemy plan, look for targets of opportunity that offer the best return. Late in the game, consider whether a shot can reduce a unit below 25 percent of its starting strength to secure extra points.",
+      "waarom": null,
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "magic-shooting",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "target-priority"
+      ],
+      "tags": [
+        "victory-points",
+        "war-machines"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-kCsDny5qMww",
+          "url": "https://www.youtube.com/watch?v=kCsDny5qMww&t=122s",
+          "tijd": 125,
+          "citaat": "we're looking at targets of opportunity",
+          "extraCitaten": [
+            {
+              "tijd": 139,
+              "citaat": "25% of its starting strength for example"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-03-08",
+      "markeringen": []
+    },
+    {
+      "id": "empire-hold-then-flank",
+      "titel": "Use Empire to hold advances and counterpunch the flanks",
+      "tekst": "He increasingly sees Empire as a counterpunching army: hold up the enemy advance, then find a way to hit those units in the flank.",
+      "waarom": null,
+      "voorbeeld": null,
+      "wanneerNiet": "He warns that heavy early shooting casualties make this plan much harder to carry out.",
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "subthemas": [
+        "aggression-control"
+      ],
+      "tags": [
+        "anvil",
+        "flank-charge"
+      ],
+      "leger": "empire-of-man",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-kCsDny5qMww",
+          "url": "https://www.youtube.com/watch?v=kCsDny5qMww&t=252s",
+          "tijd": 255,
+          "citaat": "the Empire Army as one that wants to counter punch",
+          "extraCitaten": [
+            {
+              "tijd": 263,
+              "citaat": "enemy advance and then find a way of hitting those units in the flank"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-03-08",
+      "markeringen": []
+    },
+    {
+      "id": "cannon-deep-elite-formations",
+      "titel": "After enemy artillery, shoot deep elite formations",
+      "tekst": "Once enemy artillery is sufficiently weakened or destroyed, prioritise deep formations of elite troops with your Great Cannon. He looks for knights in lance formation or elite infantry in marching columns where a shot can remove several models.",
+      "waarom": "He wants to weaken these units before his own troops face them in grinding combat, while also getting a good points return. He puts them behind enemy artillery because losing his guns after only a few elite casualties would prevent the guns serving their purpose.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "magic-shooting",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "target-priority"
+      ],
+      "tags": [
+        "cannons",
+        "heavy-cavalry",
+        "marching-column",
+        "victory-points"
+      ],
+      "leger": "empire-of-man",
+      "units": [
+        "Great Cannon Empire"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-kCsDny5qMww",
+          "url": "https://www.youtube.com/watch?v=kCsDny5qMww&t=292s",
+          "tijd": 295,
+          "citaat": "deep formations of elite troops",
+          "extraCitaten": [
+            {
+              "tijd": 312,
+              "citaat": "these are the units we really need to weaken"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-03-08",
+      "markeringen": []
+    },
+    {
+      "id": "cannon-ranked-bodies-over-shallow-elites",
+      "titel": "Prefer deep ranks when elite targets offer few casualties",
+      "tekst": "After deep elite targets, look for other deep-ranked units where your cannon can remove many models and work towards panic tests. Prefer those shots to elite targets where you would only remove one or two models.",
+      "waarom": "He says every shot risks losing a 125-point gun to a misfire, however unlikely. He therefore wants to avoid shots that could do more damage to his own force than to the opponent.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "magic-shooting",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "target-priority"
+      ],
+      "tags": [
+        "cannons",
+        "close-order",
+        "break-test"
+      ],
+      "leger": "empire-of-man",
+      "units": [
+        "Great Cannon Empire"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-kCsDny5qMww",
+          "url": "https://www.youtube.com/watch?v=kCsDny5qMww&t=341s",
+          "tijd": 344,
+          "citaat": "we're kind of just looking at those deep ranked bodies",
+          "extraCitaten": [
+            {
+              "tijd": 351,
+              "citaat": "hopefully start whittling people down towards Panic tests"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-03-08",
+      "markeringen": []
+    },
+    {
+      "id": "cannon-flying-character-opportunities",
+      "titel": "Take cannon opportunities against flying characters without relying on them",
+      "tekst": "Take a cannon shot at a dragon or other flying mounted character when a suitable opportunity appears, but do not build your expectations around getting that shot.",
+      "waarom": "He expects a well-used flying character to move between cover, making it difficult to see the ground point needed for the shot. He still considers these characters important, valuable targets worth whittling down if the shot gets through their layers of saves.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "magic-shooting",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "target-priority"
+      ],
+      "tags": [
+        "cannons",
+        "fly",
+        "mounts",
+        "cover",
+        "line-of-sight"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-kCsDny5qMww",
+          "url": "https://www.youtube.com/watch?v=kCsDny5qMww&t=427s",
+          "tijd": 430,
+          "citaat": "if you do get the opportunity then great feed them in",
+          "extraCitaten": [
+            {
+              "tijd": 447,
+              "citaat": "but don't Bank on it"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-03-08",
+      "markeringen": []
+    },
+    {
+      "id": "protect-cannons-from-fast-hunters",
+      "titel": "Use supporting units to keep fast hunters off your cannons",
+      "tekst": "Account for enemy light and flying cavalry without making them a major cannon target priority. Use your own light cavalry to block and engage them, or protect the guns' flanks with terrain and small skirmishing units to slow their approach.",
+      "waarom": "He says cannons struggle to hit these units and inflict meaningful damage, often removing only a model here and there. Supporting the guns lets them keep firing deeper into the game and gives an artillery investment more shots to earn victory points.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "shooting-terrain",
+        "chaff"
+      ],
+      "subthemas": [
+        "war-machines",
+        "redirecting"
+      ],
+      "tags": [
+        "cannons",
+        "light-cavalry",
+        "skirmishers",
+        "delay"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-kCsDny5qMww",
+          "url": "https://www.youtube.com/watch?v=kCsDny5qMww&t=491s",
+          "tijd": 494,
+          "citaat": "this is where the guns need support",
+          "extraCitaten": [
+            {
+              "tijd": 511,
+              "citaat": "light Cavalry to block them out and engage them"
+            },
+            {
+              "tijd": 526,
+              "citaat": "stuff that's just going to slow down any enemy rushes to get at your guns"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-03-08",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "identify-enemy-winning-method",
+      "bron": {
+        "bronId": "yt-kCsDny5qMww",
+        "url": "https://www.youtube.com/watch?v=kCsDny5qMww&t=74s",
+        "tijd": 77,
+        "citaat": "what is your opponent likely to be trying to do",
+        "extraCitaten": [
+          {
+            "tijd": 86,
+            "citaat": "how is it that they're going to try and win the game"
+          }
+        ]
+      },
+      "toelichting": "He likewise starts by identifying how the opponent intends to win before choosing priorities."
+    },
+    {
+      "lesId": "great-cannon-counterbattery-fire",
+      "bron": {
+        "bronId": "yt-kCsDny5qMww",
+        "url": "https://www.youtube.com/watch?v=kCsDny5qMww&t=195s",
+        "tijd": 198,
+        "citaat": "the first thing I will look at with a great Cannon really is enemy artillery",
+        "extraCitaten": [
+          {
+            "tijd": 214,
+            "citaat": "more than capable of taking out my guns"
+          }
+        ]
+      },
+      "toelichting": "He makes enemy artillery, especially pieces threatening his own guns, the Great Cannon's first priority."
+    }
+  ],
+  "overgeslagen": "Skipped the introduction, channel promotion, Empire tier commentary and reference to an earlier Engineer video. Omitted garbled cavalry names and rules or weapon-profile remarks that did not give separate advice.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

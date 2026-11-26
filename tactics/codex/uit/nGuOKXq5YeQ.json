@@ -1,0 +1,106 @@
+{
+  "videoId": "nGuOKXq5YeQ",
+  "bronId": "yt-nGuOKXq5YeQ",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-26T01:57:24.316Z",
+  "nieuw": [
+    {
+      "id": "reserve-move-block-undead-raising",
+      "titel": "Try blocking undead reinforcements with a Reserve Move",
+      "tekst": "Consider a two-turn attempt against Grave Guard: shoot away enough models to create space, then Reserve Move a unit one inch behind them to obstruct raising before attacking next turn. Ideally leave part of a second rank; if only one rank remains, his proposal also requires blocking one side to prevent sideways raising.",
+      "waarom": "Under his proposed rules interpretation, a unit with multiple ranks cannot widen when raising, and new models cannot be added within one inch of the blocking enemy. He argues that a single remaining rank cannot expand sideways if one side is blocked because its command group must remain central. The undead player's command subphase passes before the blocker can be removed, leaving the depleted unit available for a killing attack next turn.",
+      "voorbeeld": null,
+      "wanneerNiet": "He presents this as a thought experiment requiring several things to line up, and says the sideways-raising interpretation needs an FAQ. There must be space for the blocker; larger bases need larger gaps. A required Reserve Move spell might fail, the blocker may die next turn, and enemy chaff may prevent the finishing attack.",
+      "fase": "movement",
+      "themas": [
+        "matchups"
+      ],
+      "subthemas": [
+        "vs-other"
+      ],
+      "tags": [
+        "reserve-move",
+        "sacrifice",
+        "close-order"
+      ],
+      "leger": null,
+      "units": [
+        "Grave Guard"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-nGuOKXq5YeQ",
+          "url": "https://www.youtube.com/watch?v=nGuOKXq5YeQ&t=505s",
+          "tijd": 508,
+          "citaat": "then you fly one of your other units up that has reserve move",
+          "extraCitaten": [
+            {
+              "tijd": 622,
+              "citaat": "It's just stuck at that same size"
+            },
+            {
+              "tijd": 355,
+              "citaat": "bit of a thought experiment"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-10-27",
+      "markeringen": []
+    },
+    {
+      "id": "wind-blast-limit-undead-raising",
+      "titel": "Try Wind Blast to obstruct Grave Guard raising",
+      "tekst": "If you cannot use Reserve Move, consider thinning the Grave Guard with shooting and using Wind Blast to push them back towards units already behind them. His proposed two-turn plan is to restrict the space available for raising, then attack with a hammer next turn.",
+      "waarom": "He argues that a Mortis Engine, Necromancer or other unit behind the Grave Guard could obstruct replacement ranks after the push. In his illustrated position, he thinks this would prevent the whole unit being raised back, although some models could still return.",
+      "voorbeeld": null,
+      "wanneerNiet": "He is uncertain about the exact number of models that could be raised and what an FAQ would say. The spell must succeed, the enemy units must be positioned correctly, and your hammer must already be positioned to exploit the depleted unit on the following turn. He describes the plan as easier said than done.",
+      "fase": "magic-shooting",
+      "themas": [
+        "magic",
+        "matchups"
+      ],
+      "subthemas": [
+        "control-spells",
+        "vs-other"
+      ],
+      "tags": [
+        "fall-back",
+        "close-order",
+        "hammer"
+      ],
+      "leger": null,
+      "units": [
+        "Grave Guard"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-nGuOKXq5YeQ",
+          "url": "https://www.youtube.com/watch?v=nGuOKXq5YeQ&t=907s",
+          "tijd": 910,
+          "citaat": "So I think wind blast has some play potentially as well",
+          "extraCitaten": [
+            {
+              "tijd": 901,
+              "citaat": "at least stop at raising that whole unit back"
+            },
+            {
+              "tijd": 927,
+              "citaat": "you also have to be positioned in a way that to take advantage of it"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-10-27",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [],
+  "overgeslagen": "Skipped channel promotion, travel talk, advertising, and rules explanations without advice. Kept the two proposed anti-raising methods explicitly tentative. Omitted uncertain spell recollections, speculative faction and unit lists, and the unclear recollection of the damage dealt in the game against Alex. No existing lesson in the supplied index gives either anti-raising method.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

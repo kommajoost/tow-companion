@@ -1,0 +1,359 @@
+{
+  "videoId": "Z6_GYlI_Ofk",
+  "bronId": "yt-Z6_GYlI_Ofk",
+  "model": "GPT-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-26T02:34:02.348Z",
+  "nieuw": [
+    {
+      "id": "assess-beatdown-per-unit",
+      "titel": "Assess beatdown and control roles unit by unit",
+      "tekst": "Work out which individual units can take the aggressive role rather than assigning one role to your entire army. An aggressive list can still need to respect a single enemy model that dominates its units.",
+      "waarom": "He says an army's overall aggression does not settle every matchup: earning battle points while limiting the opponent's scoring often needs assessment unit by unit or even model by model.",
+      "voorbeeld": "In his Chaos game against Errantry Crusade, he considered the Bretonnian list more aggressive overall, but his Chaos Lord on a dragon was the beatdown model that the Bretonnian units could not handle.",
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "game-plan"
+      ],
+      "subthemas": [
+        "reading-the-enemy"
+      ],
+      "tags": [
+        "victory-points",
+        "hammer"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-Z6_GYlI_Ofk",
+          "url": "https://www.youtube.com/watch?v=Z6_GYlI_Ofk&t=47s",
+          "tijd": 50,
+          "citaat": "the role of the Beatdown can vary from unit to unit",
+          "extraCitaten": [
+            {
+              "tijd": 1110,
+              "citaat": "unitwise the chaos Lord is the Beatdown"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-02-13",
+      "markeringen": []
+    },
+    {
+      "id": "dragon-outmanoeuvre-stronger-dragon",
+      "titel": "Outmanoeuvre a stronger dragon before committing yours",
+      "tekst": "If the opponent has two dragons or a more offensively equipped dragon than yours, play cautiously with your dragon. Manoeuvre towards their flanks so they will be in your charge arc next turn while you remain outside theirs, using Arcane Urgency if available.",
+      "waarom": "He says a defensively equipped dragon facing a stronger offensive dragon is no longer the beatdown and cannot simply charge headlong as it might in other games.",
+      "voorbeeld": null,
+      "wanneerNiet": "He says these precautions are not needed when the opponent has no threat to your dragon.",
+      "fase": "movement",
+      "themas": [
+        "matchups",
+        "movement"
+      ],
+      "subthemas": [
+        "vs-monsters",
+        "charge-setup"
+      ],
+      "tags": [
+        "dragons",
+        "charge-arc",
+        "conveyance"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-Z6_GYlI_Ofk",
+          "url": "https://www.youtube.com/watch?v=Z6_GYlI_Ofk&t=278s",
+          "tijd": 281,
+          "citaat": "play cautiously you've got to use movement tricks",
+          "extraCitaten": [
+            {
+              "tijd": 289,
+              "citaat": "but you're not in their charge ARS"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-02-13",
+      "markeringen": []
+    },
+    {
+      "id": "debrief-opponents-about-weaknesses",
+      "titel": "Ask opponents about their plans and weaknesses after games",
+      "tekst": "After a game, if both players have time, ask your opponent what you could have done differently against them and how they intended to approach the matchup. Use their answers to inform your next game against that kind of list.",
+      "waarom": "He says the player using an army can reveal which threats would have worried them. These conversations build understanding of unfamiliar armies and play styles over time.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "subthemas": [
+        "reading-the-enemy"
+      ],
+      "tags": [
+        "tournament",
+        "victory-points"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-Z6_GYlI_Ofk",
+          "url": "https://www.youtube.com/watch?v=Z6_GYlI_Ofk&t=450s",
+          "tijd": 453,
+          "citaat": "it's really worth talking to your opponents mostly after the game",
+          "extraCitaten": [
+            {
+              "tijd": 469,
+              "citaat": "what would you have done differently against me"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-02-13",
+      "markeringen": []
+    },
+    {
+      "id": "durable-army-claim-objectives-early",
+      "titel": "Take objectives early with a durable army",
+      "tekst": "If a slow, durable army can win by holding objectives throughout the game, advance aggressively onto those objectives and then defend them. You can drive the game through that scoring plan without chasing down enemy units.",
+      "waarom": "He says holding enough objectives can win on those points alone, even without killing enemy models, so taking them sets the pace of the game.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "scenarios",
+      "themas": [
+        "scenarios",
+        "game-plan"
+      ],
+      "subthemas": [
+        "objectives",
+        "aggression-control"
+      ],
+      "tags": [
+        "objectives",
+        "victory-points"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-Z6_GYlI_Ofk",
+          "url": "https://www.youtube.com/watch?v=Z6_GYlI_Ofk&t=715s",
+          "tijd": 718,
+          "citaat": "aggressively getting onto the objectives and then staying there and defending that position",
+          "extraCitaten": [
+            {
+              "tijd": 702,
+              "citaat": "you're probably going to win on those points alone"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-02-13",
+      "markeringen": []
+    },
+    {
+      "id": "terrain-forces-control-role",
+      "titel": "Switch to control when terrain prevents your planned charges",
+      "tekst": "If terrain prevents your aggressive cavalry and chariots from getting their charges, change your approach and play control, respecting enemy charge arcs. Do not assume that a list built to attack will still be the aggressor on that table.",
+      "waarom": "He found that dangerous terrain cost expensive cavalry models, while difficult terrain made charges unreliable. Without the charge, his cavalry also lost much of its offensive output and could not benefit from offensive spells that expired at the end of his turn.",
+      "voorbeeld": "His Heralds of Darkness cavalry bus and chariot list had no flight and struggled to get around a terrain-heavy tournament table. Opponents could get the charges instead, forcing him to change how he played.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "subthemas": [
+        "aggression-control"
+      ],
+      "tags": [
+        "heavy-cavalry",
+        "chariots",
+        "charge-arc"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-Z6_GYlI_Ofk",
+          "url": "https://www.youtube.com/watch?v=Z6_GYlI_Ofk&t=900s",
+          "tijd": 903,
+          "citaat": "have to play it as a control player and respect the charge ARs",
+          "extraCitaten": [
+            {
+              "tijd": 864,
+              "citaat": "I had to alter how I played"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-02-13",
+      "markeringen": []
+    },
+    {
+      "id": "wood-elves-kite-beastmen",
+      "titel": "Use Wood Elf mobility to work around Beastmen",
+      "tekst": "Against Beastmen pushing forward for combat, use Wood Elf mobility to work around their sides rather than stay in front. Delay their approach, including with Tree Singing, while picking off points around the edges.",
+      "waarom": "He says the Wood Elf control player should deny the Beastmen the tempo of the game, taking time to score without throwing away points.",
+      "voorbeeld": "In the Beastmen versus Wood Elves game he shows, the Beastmen advanced fully on turn one and the Wood Elves moved around their side instead of remaining in front.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "matchups",
+        "game-plan"
+      ],
+      "subthemas": [
+        "vs-beastmen",
+        "aggression-control"
+      ],
+      "tags": [
+        "flanks",
+        "delay",
+        "victory-points"
+      ],
+      "leger": "wood-elf-realms",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-Z6_GYlI_Ofk",
+          "url": "https://www.youtube.com/watch?v=Z6_GYlI_Ofk&t=919s",
+          "tijd": 922,
+          "citaat": "the wood elves have to use their Superior movement ability",
+          "extraCitaten": [
+            {
+              "tijd": 929,
+              "citaat": "pick off as many points as they can around the outside"
+            },
+            {
+              "tijd": 954,
+              "citaat": "the wood elf tries to get around the side"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-02-13",
+      "markeringen": []
+    },
+    {
+      "id": "advance-losing-ranged-stalemate",
+      "titel": "Advance when you would lose a ranged stalemate",
+      "tekst": "In a ranged matchup, take the aggressive role if the opponent will win while neither side commits. Having a defensive army does not make sitting back a winning plan when the opponent can collect points without giving up units.",
+      "waarom": "He says the Dwarf player in his example would lose if both players took a control approach, because the Wood Elves could gain a points advantage without surrendering units.",
+      "voorbeeld": "In a Wood Elf versus Dwarf game before the Pillar of Fire nerf, he approved of the Dwarf player pushing the Gyrocopters forward to pursue the win condition, even though the Wood Elves ultimately picked off the aggressive units.",
+      "wanneerNiet": "He stresses that identifying the correct role does not guarantee a win.",
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "subthemas": [
+        "aggression-control"
+      ],
+      "tags": [
+        "victory-points",
+        "missile-troops"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-Z6_GYlI_Ofk",
+          "url": "https://www.youtube.com/watch?v=Z6_GYlI_Ofk&t=1252s",
+          "tijd": 1255,
+          "citaat": "the dwarf player has to play quite aggressively",
+          "extraCitaten": [
+            {
+              "tijd": 1312,
+              "citaat": "the dwarf player has to be the beat down"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-02-13",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "deploy-who-is-beatdown",
+      "bron": {
+        "bronId": "yt-Z6_GYlI_Ofk",
+        "url": "https://www.youtube.com/watch?v=Z6_GYlI_Ofk&t=310s",
+        "tijd": 313,
+        "citaat": "you've got to identify your role in the matchup",
+        "extraCitaten": [
+          {
+            "tijd": 322,
+            "citaat": "it's going to change from game to game"
+          }
+        ]
+      },
+      "wanneerNiet": "He says even an army with a naturally aggressive play style may need to play control in a particular matchup.",
+      "toelichting": "He likewise recommends identifying which army must take the aggressive role before choosing how to approach the game."
+    },
+    {
+      "lesId": "align-sacrifices-for-empty-overruns",
+      "bron": {
+        "bronId": "yt-Z6_GYlI_Ofk",
+        "url": "https://www.youtube.com/watch?v=Z6_GYlI_Ofk&t=159s",
+        "tijd": 162,
+        "citaat": "when your opponent does overrun they shoot past your unit",
+        "extraCitaten": [
+          {
+            "tijd": 146,
+            "citaat": "using your units as sacrificial pieces to get the aggressive unit out of the way"
+          }
+        ]
+      },
+      "toelichting": "He recommends angling a sacrifice so a frenzied enemy overruns past the protected unit and wastes turns returning."
+    },
+    {
+      "lesId": "repurpose-pieces-as-chaff",
+      "bron": {
+        "bronId": "yt-Z6_GYlI_Ofk",
+        "url": "https://www.youtube.com/watch?v=Z6_GYlI_Ofk&t=199s",
+        "tijd": 202,
+        "citaat": "or you can use them as redirectors",
+        "extraCitaten": [
+          {
+            "tijd": 202,
+            "citaat": "instead of just trying to brute force your way through an unfavorable fight"
+          }
+        ]
+      },
+      "waarom": "He says baiting or redirecting with outmatched Knights Errant can be more effective than sending them into the front of a unit that will beat them, and can set up a flank attack by Grail Knights.",
+      "toelichting": "He likewise recommends giving normally aggressive pieces a chaff role when their intended frontal fight will not work."
+    },
+    {
+      "lesId": "gunlines-score-without-contact",
+      "bron": {
+        "bronId": "yt-Z6_GYlI_Ofk",
+        "url": "https://www.youtube.com/watch?v=Z6_GYlI_Ofk&t=385s",
+        "tijd": 388,
+        "citaat": "and win a small to moderate Victory through ranged Firepower"
+      },
+      "toelichting": "He describes a control army scoring incremental ranged points while preventing the opponent from securing favourable engagements."
+    },
+    {
+      "lesId": "zone-with-overlapping-threats",
+      "bron": {
+        "bronId": "yt-Z6_GYlI_Ofk",
+        "url": "https://www.youtube.com/watch?v=Z6_GYlI_Ofk&t=1181s",
+        "tijd": 1184,
+        "citaat": "to have more overlapping charge arcs"
+      },
+      "toelichting": "He recommends overlapping charge coverage to prevent an enemy dragon from freely taking a dominating position outside the army's arcs."
+    }
+  ],
+  "overgeslagen": "Skipped the history of the beatdown concept, rules and list readouts without recommendations, repeated explanations, and closing channel and membership promotion. Omitted the tentative alternative Ranger moves against pre-nerf Pillar of Fire and unclear caption details rather than resolving them by guesswork.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

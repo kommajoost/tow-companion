@@ -1,0 +1,378 @@
+{
+  "videoId": "KEmJSyjzDSg",
+  "bronId": "yt-KEmJSyjzDSg",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-26T01:39:08.375Z",
+  "nieuw": [
+    {
+      "id": "boar-flankers-break-grinds",
+      "titel": "Bring flankers into stalled Boar Boy fights",
+      "tekst": "In Nomadic Waaagh, use flanking units to rescue Boar Boyz that have lost their initial momentum. Bring another unit into the combat rather than leaving the Boar Boyz to grind alone.",
+      "waarom": "He says the Boar Boyz lose their charge-related damage bonuses after the first round, and will eventually lose a prolonged grind without help.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "movement"
+      ],
+      "subthemas": [
+        "support-countercharge"
+      ],
+      "tags": [
+        "combined-charge",
+        "heavy-cavalry",
+        "flanks"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Orc Boar Boy Mob"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-KEmJSyjzDSg",
+          "url": "https://www.youtube.com/watch?v=KEmJSyjzDSg&t=109s",
+          "tijd": 112,
+          "citaat": "you need other units to enter the combat",
+          "extraCitaten": [
+            {
+              "tijd": 120,
+              "citaat": "if you just try and grind out a combat over a number of turns"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-01-19",
+      "markeringen": []
+    },
+    {
+      "id": "orc-chariot-crew-frenzy",
+      "titel": "Consider a third crew member and Frenzy for Orc chariots",
+      "tekst": "He recommends the third crew member and Frenzy upgrades for an Orc Boar Chariot. He considers the resulting 101-point build worthwhile.",
+      "waarom": "He values getting six Strength four, AP1 attacks on the charge in addition to the impact hits.",
+      "voorbeeld": null,
+      "wanneerNiet": "He warns that Frenzy sacrifices control, so he would not necessarily make every chariot frenzied.",
+      "fase": "army-building",
+      "themas": [
+        "hammers"
+      ],
+      "subthemas": [
+        "chariots"
+      ],
+      "tags": [
+        "chariots",
+        "frenzy",
+        "impact-hits"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Orc Boar Chariot"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-KEmJSyjzDSg",
+          "url": "https://www.youtube.com/watch?v=KEmJSyjzDSg&t=308s",
+          "tijd": 311,
+          "citaat": "I think the third crew and the frenzy are worth it."
+        }
+      ],
+      "datum": "2026-01-19",
+      "markeringen": []
+    },
+    {
+      "id": "prefer-warband-orc-chariots",
+      "titel": "Prefer regular Orc chariots for their charge rerolls",
+      "tekst": "For his Nomadic Waaagh, he prefers regular Orc Boar Chariots over Black Orc Boar Chariots because Warband lets them reroll charges. He prioritises reaching combat with the impact hits over paying for the Black Orc version's advantages.",
+      "waarom": "In his experience, Give Ground and Fall Back in Good Order change the location of the Boar Boyz' combat before a supporting chariot can join it. He often ends up attempting 12- or 13-inch charges, where he particularly values the reroll.",
+      "voorbeeld": null,
+      "wanneerNiet": "He still considers Black Orc Boar Chariots good and worth their points. Under the combined-arms limit he describes, he would take one if he already had three regular Orc Boar Chariots and wanted a fourth chariot.",
+      "fase": "army-building",
+      "themas": [
+        "hammers"
+      ],
+      "subthemas": [
+        "chariots"
+      ],
+      "tags": [
+        "chariots",
+        "warband",
+        "charge-range",
+        "impact-hits"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Orc Boar Chariot",
+        "Black Orc Boar Chariot"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-KEmJSyjzDSg",
+          "url": "https://www.youtube.com/watch?v=KEmJSyjzDSg&t=611s",
+          "tijd": 614,
+          "citaat": "the regular chariot is the way to go for me.",
+          "extraCitaten": [
+            {
+              "tijd": 435,
+              "citaat": "not having the Warband means you can't reroll the charge roll."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-01-19",
+      "markeringen": []
+    },
+    {
+      "id": "black-chariot-great-weapons",
+      "titel": "Prefer great weapons on Black Orc chariot crew",
+      "tekst": "He would probably choose great weapons for the crew of a Black Orc Boar Chariot. In a Nomadic Waaagh list, use them to supply high-Strength attacks that the other units may lack.",
+      "waarom": "He says the great weapons provide four Strength six attacks on the charge, filling a possible gap left by the Goblin units and Boar Boyz.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "hammers"
+      ],
+      "subthemas": [
+        "chariots"
+      ],
+      "tags": [
+        "great-weapons",
+        "chariots",
+        "hammer"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Black Orc Boar Chariot"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-KEmJSyjzDSg",
+          "url": "https://www.youtube.com/watch?v=KEmJSyjzDSg&t=389s",
+          "tijd": 392,
+          "citaat": "And you probably go great weapons, right?"
+        }
+      ],
+      "datum": "2026-01-19",
+      "markeringen": []
+    },
+    {
+      "id": "giant-finishes-boar-combats",
+      "titel": "Consider a Giant to finish stalled Boar Boy fights",
+      "tekst": "Consider a Giant as a Nomadic Waaagh flanking unit that joins combat when the Boar Boyz fail to break through. He considers it a good choice and probably worth 200 points.",
+      "waarom": "Drawing on other players' experience rather than his own, he values its control and Unbreakable status, high-Strength damage and stomps. He thinks Movement six is enough to keep up with the mounted army.",
+      "voorbeeld": null,
+      "wanneerNiet": "He warns that its lack of armour makes it vulnerable to shooting, and expects it to die quite often, giving away 200 points.",
+      "fase": "army-building",
+      "themas": [
+        "hammers",
+        "movement"
+      ],
+      "subthemas": [
+        "monsters-dragons",
+        "support-countercharge"
+      ],
+      "tags": [
+        "monsters",
+        "combined-charge",
+        "unbreakable",
+        "flanks"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Giant"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-KEmJSyjzDSg",
+          "url": "https://www.youtube.com/watch?v=KEmJSyjzDSg&t=696s",
+          "tijd": 699,
+          "citaat": "you can't say to anyone it's a bad choice to take a giant.",
+          "extraCitaten": [
+            {
+              "tijd": 724,
+              "citaat": "and that's going to be the giant"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-01-19",
+      "markeringen": []
+    },
+    {
+      "id": "giant-advance-threat-priority",
+      "titel": "Use early threats to draw shooting away from the Giant",
+      "tekst": "He thinks a Giant pairs well with an aggressively played Warboss on Wyvern with better saves. Push early threats towards the enemy so the Giant has a chance to approach without being their shooting priority.",
+      "waarom": "He thinks approaching Boar Boyz and the Warboss may take the brunt of enemy fire, giving the Giant a couple of turns to reach combat before being shot to death.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "shooting-terrain",
+        "hammers"
+      ],
+      "subthemas": [
+        "avoiding-fire",
+        "monsters-dragons"
+      ],
+      "tags": [
+        "monsters",
+        "mounts",
+        "decoy"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Giant",
+        "Orc Warboss",
+        "Wyvern"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-KEmJSyjzDSg",
+          "url": "https://www.youtube.com/watch?v=KEmJSyjzDSg&t=767s",
+          "tijd": 770,
+          "citaat": "it goes well if you've got say a war boss on Wyven",
+          "extraCitaten": [
+            {
+              "tijd": 778,
+              "citaat": "taking the um the brunt of the enemy fire"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-01-19",
+      "markeringen": []
+    },
+    {
+      "id": "vanguard-boars-column-flank-march",
+      "titel": "Use Vanguard and marching column to flank with Boar Boyz",
+      "tekst": "Use a small, character-free Boar Boy unit with Vanguard in marching column to exploit a deployment gap down a flank. After its Vanguard move, march around or behind the enemy on turn one, then reform for a later charge.",
+      "waarom": "He says the unit can Vanguard seven inches and move 21 inches on turn one. Getting behind the enemy makes them choose between turning to face the Boar Boyz and continuing forward.",
+      "voorbeeld": null,
+      "wanneerNiet": "He says the Vanguard upgrade does not allow characters in the unit to Vanguard. The unit cannot charge in marching column and needs a turn to reform; after Vanguard it also cannot charge on turn one.",
+      "fase": "deployment",
+      "themas": [
+        "deployment",
+        "movement"
+      ],
+      "subthemas": [
+        "ambush-scouts-vanguard",
+        "reforms-formations"
+      ],
+      "tags": [
+        "vanguard",
+        "marching-column",
+        "flanks",
+        "heavy-cavalry",
+        "reform"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Orc Boar Boy Mob"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-KEmJSyjzDSg",
+          "url": "https://www.youtube.com/watch?v=KEmJSyjzDSg&t=868s",
+          "tijd": 871,
+          "citaat": "vanguards seven and then on turn one you can move 21 in",
+          "extraCitaten": [
+            {
+              "tijd": 915,
+              "citaat": "If you see a gap on the side"
+            },
+            {
+              "tijd": 824,
+              "citaat": "the vanguarding Boar Boyz will be a smaller unit of Boar Boyz with no characters"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-01-19",
+      "markeringen": []
+    },
+    {
+      "id": "frenzied-vanguard-boar-flankers",
+      "titel": "Consider Frenzy for vanguarding Boar Boy flankers",
+      "tekst": "Consider Frenzy on the small Boar Boy unit vanguarding up a flank, particularly if Big 'Uns and the Banner of Butchery are already used on the battleline units. Manoeuvre it to face the battlefield and threaten a turn-two charge.",
+      "waarom": "He values the additional Strength four attacks on the charge and says the enemy cannot ignore a unit such as seven Boar Boyz each delivering three attacks.",
+      "voorbeeld": null,
+      "wanneerNiet": "He reminds players that a unit which has used Vanguard cannot charge on turn one.",
+      "fase": "army-building",
+      "themas": [
+        "hammers",
+        "deployment"
+      ],
+      "subthemas": [
+        "heavy-cavalry",
+        "ambush-scouts-vanguard"
+      ],
+      "tags": [
+        "frenzy",
+        "vanguard",
+        "heavy-cavalry",
+        "flanks"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Orc Boar Boy Mob"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-KEmJSyjzDSg",
+          "url": "https://www.youtube.com/watch?v=KEmJSyjzDSg&t=944s",
+          "tijd": 947,
+          "citaat": "just to put frenzy on the Boar Boyz.",
+          "extraCitaten": [
+            {
+              "tijd": 955,
+              "citaat": "you put frenzy on there for just more strength four attacks on the charge."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-01-19",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "first-charge-infantry-ranks",
+      "bron": {
+        "bronId": "yt-KEmJSyjzDSg",
+        "url": "https://www.youtube.com/watch?v=KEmJSyjzDSg&t=249s",
+        "tijd": 252,
+        "citaat": "having that chariot to come in take away the rank bonus",
+        "extraCitaten": [
+          {
+            "tijd": 242,
+            "citaat": "they've got first charge as well."
+          }
+        ]
+      },
+      "waarom": "He says infantry are strong in a grind, so removing their rank bonus while adding chariot damage helps swing a stalled Boar Boy combat.",
+      "toelichting": "He recommends First Charge to remove infantry rank bonuses, here using a supporting Orc chariot."
+    },
+    {
+      "lesId": "black-orc-chariot-standard",
+      "bron": {
+        "bronId": "yt-KEmJSyjzDSg",
+        "url": "https://www.youtube.com/watch?v=KEmJSyjzDSg&t=417s",
+        "tijd": 420,
+        "citaat": "An extra 10 points for plus one combat res.",
+        "extraCitaten": [
+          {
+            "tijd": 420,
+            "citaat": "Again, that's a decent option."
+          }
+        ]
+      },
+      "toelichting": "He again endorses a Black Orc Boar Chariot standard bearer for the extra combat resolution."
+    }
+  ],
+  "overgeslagen": "Skipped the introduction, series recap and outro, standalone stat and rule readouts, and unclear caption wording. Extracted only clear recommendations; the Giant advice is explicitly based on other players' experience.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

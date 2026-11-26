@@ -1,140 +1,514 @@
 {
-  "_uitleg": "Handcorrecties op de Codex-principes (review 26-11-2026, zie tactics/README.md onder Principles). Volgorde: nietSamenvoegen (bij het automatisch samenvoegen), dan samenvoegen, weg, wijzig, nieuw. Lessen die het advies van een principe niet geven zijn eraf gehaald; valt een principe daardoor onder de drempel, dan verdwijnt het vanzelf.",
+  "_uitleg": "Handcorrecties op de Codex-principes. Review 26-11-2026 (ronde 2), opnieuw toegepast en uitgebreid na de herberekening met ronde 3 (zelfde dag): Codex gaf nieuwe ids, dus de correcties staan nu op de nieuwe ids; principes die Codex niet terugvond staan onder nieuw met de inhoud uit de vorige review. Volgorde: nietSamenvoegen (bij het automatisch samenvoegen), dan samenvoegen, weg, wijzig, nieuw. Lessen die het advies van een principe niet geven zijn eraf gehaald; valt een principe daardoor onder de drempel, dan verdwijnt het vanzelf.",
   "nietSamenvoegen": [
-    ["shoot-while-delaying-combat", "plan-endgame-objective-movement"],
-    ["shoot-while-delaying-combat", "position-units-to-claim-endgame-objectives"]
+    [
+      "reposition-ushabti-without-losing-shooting-accuracy",
+      "shoot-multi-wound-targets-with-great-bow-ushabti"
+    ]
   ],
   "samenvoegen": [
-    { "in": "hold-centre-mobile-flanks", "uit": ["exploit-won-flanks"], "thema": "game-plan" }
+    {
+      "in": "weaken-dangerous-enemies-before-combat",
+      "uit": [
+        "soften-monsters-before-combat"
+      ],
+      "thema": "shooting-terrain"
+    },
+    {
+      "in": "position-chaff-for-safe-overruns",
+      "uit": [
+        "keep-protected-units-clear-of-pursuit-paths"
+      ],
+      "thema": "chaff"
+    },
+    {
+      "in": "central-anvil-mobile-flanks",
+      "uit": [
+        "exploit-a-won-flank"
+      ],
+      "thema": "game-plan"
+    }
   ],
   "weg": [
-    "exploit-leadership-debuffs"
+    "lower-leadership-before-terror-charges",
+    "lower-leadership-to-increase-damage",
+    "pair-leadership-debuffs-with-leadership-based-threats"
   ],
   "wijzig": {
-    "screen-valuable-units-from-shooting": {
-      "_waarom": "screen-frenzy-compulsory-charges gaat over charges blokkeren, niet over schieten (staat bij screen-frenzied-units-to-control-charges)",
-      "lessenEraf": ["screen-frenzy-compulsory-charges"]
+    "reinforce-fights-with-flank-or-rear-charges": {
+      "_waarom": "boar-boyz-take-bait gaat over een frontale charge aannemen, niet over steun in flank of rug",
+      "lessenEraf": [
+        "boar-boyz-take-bait"
+      ]
     },
-    "lower-leadership-before-tests-or-damage": {
-      "_waarom": "niet alle lessen gaan over Necromancy; titel en tekst noemen nu de drie soorten tests/aanvallen uit de lessen",
-      "titel": "Lower enemy Leadership before Terror, break tests and Leadership attacks",
-      "tekst": "Use Leadership penalties, most often from Necromancy, before you force a test or use an attack that works against Leadership. The lower value makes the enemy more likely to fail or take more damage."
+    "hide-vulnerable-units-behind-terrain": {
+      "_waarom": "delay-vulnerable-artillery-deployment gaat over later opstellen; de random mover en de Jezzails verstoppen zich om aan te vallen, niet tegen beschieting",
+      "lessenEraf": [
+        "delay-vulnerable-artillery-deployment",
+        "hide-random-movers-behind-hills",
+        "jezzails-hidden-lantern-kill-lanes"
+      ]
+    },
+    "restrict-movement-with-threats": {
+      "_waarom": "Banshee-bereik, Spawn als tarpit, objectives aanvallen en Knights omsingelen zijn geen dreiging zonder gevecht",
+      "lessenEraf": [
+        "banshee-double-engine-reach",
+        "gigantic-spawn-pins-for-support",
+        "aggressor-pressure-both-central-objectives",
+        "box-in-drilled-knights"
+      ]
+    },
+    "screen-important-units-from-shooting": {
+      "_waarom": "screen-frenzy-compulsory-charges gaat over charges blokkeren, niet over schieten (staat bij screen-frenzied-units-until-ready); zelfde besluit als de vorige review",
+      "lessenEraf": [
+        "screen-frenzy-compulsory-charges"
+      ]
+    },
+    "check-friendly-panic-before-committing-chaff": {
+      "_waarom": "lokaas voor een countercharge en Gyrocopters die vuur trekken gaan niet over paniek",
+      "lessenEraf": [
+        "decoys-set-up-countercharges",
+        "gyrocopters-pressure-nuln-artillery"
+      ]
+    },
+    "prepare-countercharges-behind-surviving-receivers": {
+      "_waarom": "black-orcs-great-weapons gaat over terugslaan als je gecharged wordt, niet over een countercharge van een andere eenheid",
+      "lessenEraf": [
+        "black-orcs-great-weapons"
+      ]
+    },
+    "weaken-dangerous-enemies-before-combat": {
+      "_waarom": "na samenvoegen met soften-monsters-before-combat (zelfde advies): het kanondoel na de artillerie en een Dragon Slayer-charge zijn geen afzwakken met schieten",
+      "lessenEraf": [
+        "cannon-deep-elite-formations",
+        "dragon-slayer-backfield-charge"
+      ]
+    },
+    "contain-dangerous-attackers-with-challenges": {
+      "_waarom": "men-at-arms-resolution-block noemt geen challenge",
+      "lessenEraf": [
+        "men-at-arms-resolution-block"
+      ]
+    },
+    "choose-all-round-charge-options": {
+      "_waarom": "de Oldblood-les noemt geen alle-kanten-charge; baron-royal-pegasus-blender ook niet (zelfde besluit als de vorige review)",
+      "lessenEraf": [
+        "cold-one-oldblood-option",
+        "baron-royal-pegasus-blender"
+      ]
+    },
+    "expendable-units-buy-time": {
+      "_waarom": "repurpose-pieces-as-chaff gaat over een eenheid een andere taak geven, niet over tijd kopen",
+      "lessenEraf": [
+        "repurpose-pieces-as-chaff"
+      ]
+    },
+    "remove-enemy-artillery-early": {
+      "_waarom": "de twee Gyrocopter-lessen schieten op Pegasus Knights en Knights of the Realm, niet op artillerie",
+      "lessenEraf": [
+        "gyrocopters-kite-pegasus-knights",
+        "steam-guns-outside-knight-arcs"
+      ]
+    },
+    "clear-chaff-with-ranged-attacks": {
+      "_waarom": "summoning-or-ruby-ring noemt geen chaff",
+      "lessenEraf": [
+        "summoning-or-ruby-ring"
+      ]
     },
     "concentrate-against-part": {
-      "_waarom": "bait-lanterns-into-concentrated-fire gaat over lokaas voor geconcentreerd vuur, niet over kracht op een deel van het leger",
-      "lessenEraf": ["bait-lanterns-into-concentrated-fire"]
+      "_waarom": "bait-lanterns-into-concentrated-fire gaat over lokaas voor geconcentreerd vuur (zelfde besluit als de vorige review)",
+      "lessenEraf": [
+        "bait-lanterns-into-concentrated-fire"
+      ]
     },
-    "protect-lone-characters-with-nearby-troops": {
-      "_waarom": "tweede zin was onduidelijk; de lessen zeggen: de eenheid, niet het personage, moet het dichtstbijzijnde doel zijn",
-      "titel": "Keep lone characters near friendly units for protection from shooting",
-      "tekst": "Keep lone characters close to a suitable friendly unit so enemy shooting and magic cannot single them out. Make sure that unit, not the character, is the closest target."
+    "draw-fire-with-forward-threats": {
+      "_waarom": "gorgers-hunt-cathayan-cannons gaat over kanonnen doden vanuit ambush, niet over vuur wegtrekken (staat bij ambushers-hunt-war-machines)",
+      "lessenEraf": [
+        "gorgers-hunt-cathayan-cannons"
+      ]
     },
-    "weigh-first-turn-bonus": {
-      "_waarom": "concreter: de lessen noemen minder drops en eerst opstellen, en het verlies aan informatie",
-      "tekst": "If going first matters, consider fewer deployment drops or placing first to earn the first-turn bonus. Weigh that against the information you give up by placing before the enemy."
+    "position-chaff-for-safe-overruns": {
+      "_waarom": "samengevoegd met keep-protected-units-clear-of-pursuit-paths (zelfde advies); Codex voegde ook de lokaas-voor-countercharge-lessen toe, die staan bij bait-enemies-into-supporting-charges; giant-rats-absorb-first-charge eraf zoals in de vorige review. Titel en tekst dekken nu overruns en redirects.",
+      "titel": "Keep enemy overruns and redirects away from your valuable units",
+      "tekst": "Place chaff, screens and supporting units so an enemy that wins, overruns or redirects cannot carry on into a valuable unit. Check the attacker's facing and path before you settle those positions.",
+      "lessenEraf": [
+        "decoys-set-up-countercharges",
+        "razorgor-tuskgor-bait-switch",
+        "giant-rats-absorb-first-charge"
+      ]
     },
-    "keep-casters-outside-dispel-range": {
-      "_waarom": "wood-elf-reserve-blaster noemt het dispelbereik niet; tekst noemt nu het concrete middel uit drie lessen",
-      "lessenEraf": ["wood-elf-reserve-blaster"],
-      "tekst": "Cast from outside the opposing wizard's dispel range when you can. A flying or Reserve Move caster can move out, cast and move back to safety."
-    },
-    "shoot-while-delaying-combat": {
-      "_waarom": "automatisch samengevoegd met twee eindspel-principes (ander advies); weer gesplitst, dit is het schietdeel",
-      "titel": "With the stronger shooting army, shoot first and fight later",
-      "tekst": "When your ranged firepower outclasses the enemy's, weaken them from range and stay out of combat until it suits you. Some missions make this patient plan easier.",
-      "thema": "game-plan",
-      "lessenEraf": ["move-to-hold-objectives", "hidden-mobile-objective-grabs"]
-    },
-    "plan-endgame-objective-movement": {
-      "_waarom": "eindspel-principe (samen met position-units-to-claim-endgame-objectives); close-quarter-defensive-shooting gaat over schieten",
-      "titel": "Plan which units will hold the objectives at the end",
-      "tekst": "Work out early how your units will reach the objectives in the last turns, and keep them alive until then. Refuse fights that do not serve that plan.",
-      "thema": "scenarios",
-      "lessenEraf": ["close-quarter-defensive-shooting"]
-    },
-    "skirmish-to-reduce-incoming-shooting": {
-      "_waarom": "sisters-preserve-points-harassment noemt geen skirmish; thema hoort bij schieten ontwijken",
-      "lessenEraf": ["sisters-preserve-points-harassment"],
-      "thema": "shooting-terrain",
-      "tekst": "When a unit or a wizard's bunker needs protection from shooting, consider a skirmishing formation. Its penalty to be hit makes the unit harder to shoot."
-    },
-    "against-cathay-use-multiple-wound-attacks-against-sky-lanterns": {
-      "_waarom": "ushabti-great-bows-lanterns noemt geen meervoudige wonden",
-      "lessenEraf": ["ushabti-great-bows-lanterns"]
-    },
-    "use-bait-to-draw-enemies-towards-waiting-units": {
-      "_waarom": "speed-bump-close-order gaat over de richting van de overrun (staat bij het overrun-principe)",
-      "lessenEraf": ["speed-bump-close-order"]
-    },
-    "repeat-signatures-with-low-level-casters": {
-      "_waarom": "reconsider-warriors-blue-fire noemt geen meerdere casters",
-      "lessenEraf": ["reconsider-warriors-blue-fire"]
-    },
-    "hold-centre-mobile-flanks": {
-      "_waarom": "samengevoegd met exploit-won-flanks (zelfde plan: centrum houden, flank winnen, dan het centrum in); hammers-on-flanks gaat over beschieting",
-      "titel": "Hold the centre, win a flank, then turn on the centre",
-      "tekst": "Hold the centre with a durable anvil and put your faster units on the flanks. Once a flank is won, turn those units into the centre or the enemy backline.",
-      "lessenEraf": ["hammers-on-flanks"]
-    },
-    "build-infantry-for-static-combat-resolution": {
-      "_waarom": "vijf lessen gaan over iets anders (schutters, Kroxigor, tien breed voor aanvallen, formatie wisselen, unit strength na een challenge)",
-      "lessenEraf": ["empire-double-missile-blocks", "kroxigor-mixed-skink-unit", "stormvermin-ten-wide", "ungor-switch-defensive-formations", "infantry-ten-after-challenge"]
+    "cast-outside-enemy-dispel-range": {
+      "_waarom": "wood-elf-reserve-blaster noemt het dispelbereik niet; tekst zoals in de vorige review (keep-casters-outside-dispel-range)",
+      "tekst": "Cast from outside the opposing wizard's dispel range when you can. A flying or Reserve Move caster can move out, cast and move back to safety.",
+      "lessenEraf": [
+        "wood-elf-reserve-blaster"
+      ]
     },
     "choose-hammers-that-survive-shooting": {
-      "_waarom": "vijf Lantern-lessen noemen geen overlevingskracht; 'toughness and wounds' stond niet in de lessen",
-      "lessenEraf": ["avoid-blood-knights-lanterns", "skullcracker-iron-daemon-lanterns", "multiple-stonehorns-against-cathay", "forest-dragon-threatens-lanterns", "nurgle-spawn-against-lanterns"],
+      "_waarom": "zelfde correctie als de vorige review: vijf Lantern-lessen noemen geen overlevingskracht; 'toughness and wounds' stond niet in de lessen",
+      "lessenEraf": [
+        "avoid-blood-knights-lanterns",
+        "skullcracker-iron-daemon-lanterns",
+        "multiple-stonehorns-against-cathay",
+        "forest-dragon-threatens-lanterns",
+        "nurgle-spawn-against-lanterns"
+      ],
       "tekst": "Your opponent will try to kill your hammers before they strike. Pick ones durable enough to survive the shooting and still reach combat."
     },
-    "give-combat-characters-all-round-charge-options": {
-      "_waarom": "baron-royal-pegasus-blender noemt geen beweging alle kanten op",
-      "lessenEraf": ["baron-royal-pegasus-blender"]
+    "restrict-positioning-with-random-movement": {
+      "_waarom": "gigantic-spawn-pins-for-support gaat over vastpinnen als tarpit (zelfde besluit als de vorige review)",
+      "lessenEraf": [
+        "gigantic-spawn-pins-for-support"
+      ]
     },
-    "position-screens-to-keep-overruns-away-from-valuable-units": {
-      "_waarom": "giant-rats-absorb-first-charge en decoys-set-up-countercharges gaan niet over overruns (valt daarmee onder de drempel: een kanaal)",
-      "lessenEraf": ["giant-rats-absorb-first-charge", "decoys-set-up-countercharges"]
+    "accept-necessary-combat-risks": {
+      "_waarom": "ogre-vanguard-threat-overload gaat over veel dreigingen tegelijk, niet over risico accepteren (zelfde besluit als de vorige review; valt daarmee onder de drempel)",
+      "lessenEraf": [
+        "ogre-vanguard-threat-overload"
+      ]
     },
-    "accept-calculated-combat-risks": {
-      "_waarom": "ogre-vanguard-threat-overload gaat over veel dreigingen tegelijk, niet over risico (valt daarmee onder de drempel)",
-      "lessenEraf": ["ogre-vanguard-threat-overload"]
+    "cathay-ap-three-against-lanterns": {
+      "_waarom": "Fanatics en Doom Divers noemen geen AP3 (zelfde besluit als de vorige review; valt daarmee onder de drempel)",
+      "lessenEraf": [
+        "fanatics-cathay-large-targets",
+        "doom-divers-against-cathay"
+      ]
     },
-    "against-cathay-aim-for-ap3-against-sky-lanterns": {
-      "_waarom": "fanatics en doom divers noemen geen AP (valt daarmee onder de drempel)",
-      "lessenEraf": ["fanatics-cathay-large-targets", "doom-divers-against-cathay"]
+    "central-anvil-mobile-flanks": {
+      "_waarom": "zelfde correctie als de vorige review (hold-centre-mobile-flanks): samengevoegd met exploit-a-won-flank, hammers-on-flanks gaat over beschieting",
+      "titel": "Hold the centre, win a flank, then turn on the centre",
+      "tekst": "Hold the centre with a durable anvil and put your faster units on the flanks. Once a flank is won, turn those units into the centre or the enemy backline.",
+      "lessenEraf": [
+        "hammers-on-flanks"
+      ]
     },
     "deny-charge-reactions-with-random-movement": {
-      "_waarom": "nurgle-spawn-against-lanterns noemt geen charge reactions (valt daarmee onder de drempel)",
-      "lessenEraf": ["nurgle-spawn-against-lanterns"]
+      "_waarom": "nurgle-spawn-against-lanterns noemt geen charge-reacties (zelfde besluit als de vorige review)",
+      "lessenEraf": [
+        "nurgle-spawn-against-lanterns"
+      ]
     },
-    "leave-evasive-units-an-escape": {
-      "_waarom": "blazing-sun-order-versus-cathay noemt geen ontsnapping (valt daarmee onder de drempel)",
-      "lessenEraf": ["blazing-sun-order-versus-cathay"]
+    "screen-hammers-while-setting-up-charges": {
+      "_waarom": "hammer-matchups gaat over het juiste doel kiezen, niet over afschermen",
+      "lessenEraf": [
+        "hammer-matchups"
+      ]
     },
-    "pressure-positioning-with-random-movement": {
-      "_waarom": "gigantic-spawn-pins-for-support gaat over vastpinnen, niet over onzeker bereik",
-      "lessenEraf": ["gigantic-spawn-pins-for-support"]
+    "soften-targets-before-finishing-cavalry-charge": {
+      "_waarom": "small-cavalry-counters-msu gaat over kleine cavalerie tegen kleine infanterie, niet over eerst verzwakken",
+      "lessenEraf": [
+        "small-cavalry-counters-msu"
+      ]
     },
-    "support-holding-units-with-a-nearby-bsb": {
-      "_waarom": "champion-delaying-challenge gaat niet over een BSB",
-      "lessenEraf": ["champion-delaying-challenge"]
+    "check-skirmishers-can-form-ranks": {
+      "_waarom": "offset-skirmisher-charge-contact gaat over overruns sturen, niet over rangen vormen (valt daarmee onder de drempel)",
+      "lessenEraf": [
+        "offset-skirmisher-charge-contact"
+      ]
     },
-    "place-vortexes-in-enemy-routes": {
-      "_waarom": "twee van de drie lessen gaan niet over vortexen maar over spreuken met gevaarlijk terrein",
-      "titel": "Use control spells to block the routes enemies want to take",
-      "tekst": "Place movement-blocking magic, such as vortexes and spells that create dangerous terrain, in front of enemy units. It disrupts their advance and can force bad charges."
+    "evade-beyond-shooting-reach": {
+      "_waarom": "blazing-sun-order-versus-cathay is een legerkeuze, geen ontwijkadvies (zelfde besluit als de vorige review)",
+      "lessenEraf": [
+        "blazing-sun-order-versus-cathay"
+      ]
     },
-    "soften-shugengan-lord-with-doom-divers": {
-      "_waarom": "twee van de drie lessen gaan over de artillerie, niet de Shugengan Lord",
+    "repeat-signatures-with-low-level-casters": {
+      "_waarom": "reconsider-warriors-blue-fire noemt geen meerdere lage casters (zelfde besluit als de vorige review)",
+      "lessenEraf": [
+        "reconsider-warriors-blue-fire"
+      ]
+    },
+    "deploy-rangers-to-impose-shooting-penalties": {
+      "_waarom": "rangers-woods-against-outriders gaat over zelf schieten vanuit een bos, niet over trefmodifiers (valt daarmee onder de drempel)",
+      "lessenEraf": [
+        "rangers-woods-against-outriders"
+      ]
+    },
+    "exploit-ethereal-protection-against-shooting": {
+      "_waarom": "hexwraith-marching-column-attacks noemt geen bescherming tegen schieten (zelfde besluit als de vorige review; valt daarmee onder de drempel)",
+      "lessenEraf": [
+        "hexwraith-marching-column-attacks"
+      ]
+    },
+    "give-characters-flying-mounts-with-all-round-charge-options": {
+      "_waarom": "baron-royal-pegasus-blender noemt geen alle-kanten-charge (zelfde besluit als de vorige review; valt daarmee onder de drempel)",
+      "lessenEraf": [
+        "baron-royal-pegasus-blender"
+      ]
+    },
+    "spare-bodies-preserve-ranks": {
+      "_waarom": "gor-death-star-infantry-choice is een legerkeuze, geen eenheidsgrootte (valt daarmee onder de drempel)",
+      "lessenEraf": [
+        "gor-death-star-infantry-choice"
+      ]
+    },
+    "static-resolution-against-dragons": {
+      "_waarom": "men-at-arms-resolution-block noemt geen draak (staat bij build-infantry-for-static-combat-resolution; valt daarmee onder de drempel)",
+      "lessenEraf": [
+        "men-at-arms-resolution-block"
+      ]
+    },
+    "support-holding-combats-with-a-bsb": {
+      "_waarom": "zelfde principe als support-holding-units-with-a-nearby-bsb uit de vorige review: champion-delaying-challenge gaat niet over een BSB, cheap-bsb-outside-combat (stond er toen bij) weer erbij",
+      "lessenErbij": [
+        "cheap-bsb-outside-combat"
+      ],
+      "lessenEraf": [
+        "champion-delaying-challenge"
+      ]
+    },
+    "use-doom-divers-to-damage-the-shugengan-lord": {
+      "_waarom": "zelfde correctie als de vorige review (soften-shugengan-lord-with-doom-divers): twee van de drie lessen gaan over de artillerie, niet de Shugengan Lord",
       "titel": "Against Cathay, aim Doom Divers at its big threats and artillery",
       "tekst": "Doom Divers can soften the Shugengan Lord before your Wyvern goes in, or thin out Cathay's artillery before its opening volley."
     },
-    "use-ethereal-protection-against-enemy-shooting": {
-      "_waarom": "hexwraith-marching-column-attacks noemt geen bescherming tegen schieten (valt daarmee onder de drempel)",
-      "lessenEraf": ["hexwraith-marching-column-attacks"]
-    },
-    "lower-enemy-leadership-to-strengthen-your-threats": {
-      "_waarom": "concreter voor Vampire Counts: de lessen noemen screams, Terror en Necromancy",
+    "lower-leadership-before-screaming": {
+      "_waarom": "zelfde principe als lower-enemy-leadership-to-strengthen-your-threats uit de vorige review (screams en Terror); die Terror-les weer erbij",
       "titel": "Lower Leadership before your screams and Terror charges",
-      "tekst": "Pair Necromancy's Leadership penalties with Tomb Banshee screams and Terror. A lower target Leadership makes those attacks more dangerous."
+      "tekst": "Pair Necromancy's Leadership penalties with Tomb Banshee screams and Terror. A lower target Leadership makes those attacks more dangerous.",
+      "lessenErbij": [
+        "repeated-terror-charges-lanterns"
+      ]
+    },
+    "deploy-units-within-reach-of-their-planned-buffs": {
+      "_waarom": "zelfde principe als deploy-for-working-support uit de vorige review; titel, tekst en de drie lessen van toen terug",
+      "titel": "Deploy units so their planned support can work",
+      "tekst": "Deploy units that need to work together in supporting positions. Plan ahead so an early advance or charge does not leave a fighting unit unsupported.",
+      "lessenErbij": [
+        "flank-not-point-and-click",
+        "deploy-for-later-positions",
+        "eagle-skycutter-flank-pair"
+      ]
+    },
+    "secure-essential-spells-with-lore-familiar": {
+      "_waarom": "zelfde principe als secure-key-spells uit de vorige review (spreuken kiezen in plaats van rollen); titel, tekst en de twee lessen van toen terug",
+      "titel": "Secure key spells instead of relying on random generation",
+      "tekst": "Use useful signature spells or spell-selection options to secure the spells your plan needs. Random generation can leave your wizard without the spells you wanted.",
+      "lessenErbij": [
+        "plan-around-guaranteed-signatures",
+        "chaos-swap-unhelpful-spells"
+      ]
+    },
+    "ranged-pressure-forces-approaches": {
+      "_waarom": "zelfde principe als shoot-while-delaying-combat uit de vorige review; titel, tekst en de twee lessen van toen terug",
+      "titel": "With the stronger shooting army, shoot first and fight later",
+      "tekst": "When your ranged firepower outclasses the enemy's, weaken them from range and stay out of combat until it suits you. Some missions make this patient plan easier.",
+      "lessenErbij": [
+        "close-quarter-defensive-shooting",
+        "chance-encounter-patient-play"
+      ]
     }
-  }
+  },
+  "nieuw": [
+    {
+      "id": "weigh-first-turn-bonus",
+      "_waarom": "in de vorige review goedgekeurd; Codex vond het in ronde 3 niet terug, inhoud uit de vorige principes.json",
+      "titel": "Weigh the first-turn bonus when choosing deployment drops",
+      "tekst": "If going first matters, consider fewer deployment drops or placing first to earn the first-turn bonus. Weigh that against the information you give up by placing before the enemy.",
+      "soort": "principe",
+      "thema": "deployment",
+      "leger": null,
+      "lessen": [
+        "chaff-scouts-deployment",
+        "fewer-drops-first-turn",
+        "equal-drops-deploy-first",
+        "horse-archers-scouting-bonus"
+      ]
+    },
+    {
+      "id": "skirmish-to-reduce-incoming-shooting",
+      "_waarom": "in de vorige review goedgekeurd; Codex vond het in ronde 3 niet terug, inhoud uit de vorige principes.json",
+      "titel": "Use skirmishing formations to reduce incoming shooting hits",
+      "tekst": "When a unit or a wizard's bunker needs protection from shooting, consider a skirmishing formation. Its penalty to be hit makes the unit harder to shoot.",
+      "soort": "principe",
+      "thema": "shooting-terrain",
+      "leger": null,
+      "lessen": [
+        "beastmen-protected-vile-tide-bunker",
+        "ungor-switch-defensive-formations",
+        "skirmishing-marauders-alternative-bunker",
+        "evasive-push-bombs-long-range",
+        "skirmishing-missile-wizard-bunker"
+      ]
+    },
+    {
+      "id": "line-up-overruns-into-another-fight",
+      "_waarom": "in de vorige review goedgekeurd; Codex vond het in ronde 3 niet terug, inhoud uit de vorige principes.json",
+      "titel": "Line up overruns into another fight",
+      "tekst": "Plan overrun paths that carry your attackers into another enemy unit so they can keep fighting.",
+      "soort": "principe",
+      "thema": "movement",
+      "leger": null,
+      "lessen": [
+        "resolve-overrun-feeder-first",
+        "drilled-widen-overrun-contact",
+        "plan-overruns-repeat-combats",
+        "pegasus-overrun-second-lantern"
+      ]
+    },
+    {
+      "id": "plan-endgame-objective-movement",
+      "_waarom": "in de vorige review goedgekeurd; Codex vond het in ronde 3 niet terug, inhoud uit de vorige principes.json",
+      "titel": "Plan which units will hold the objectives at the end",
+      "tekst": "Work out early how your units will reach the objectives in the last turns, and keep them alive until then. Refuse fights that do not serve that plan.",
+      "soort": "principe",
+      "thema": "scenarios",
+      "leger": null,
+      "lessen": [
+        "move-to-hold-objectives",
+        "chance-encounter-patient-play",
+        "hidden-mobile-objective-grabs"
+      ]
+    },
+    {
+      "id": "against-cathay-use-multiple-wound-attacks-against-sky-lanterns",
+      "_waarom": "in de vorige review goedgekeurd; Codex vond het in ronde 3 niet terug, inhoud uit de vorige principes.json",
+      "titel": "Against Cathay, use multiple-wound attacks against Sky Lanterns",
+      "tekst": "Use attacks that inflict multiple wounds to bring down Sky Lanterns.",
+      "soort": "principe",
+      "thema": "matchups",
+      "leger": "grand-cathay",
+      "lessen": [
+        "multiple-wounds-cathay-lantern",
+        "prefer-granite-sentinel-durability",
+        "knightly-temper-lantern-hunter",
+        "wilds-missile-against-lanterns",
+        "doom-divers-against-cathay"
+      ]
+    },
+    {
+      "id": "build-infantry-for-static-combat-resolution",
+      "_waarom": "in de vorige review goedgekeurd; Codex vond het in ronde 3 niet terug, inhoud uit de vorige principes.json",
+      "titel": "Build infantry blocks to win through static combat resolution",
+      "tekst": "Use ranks and banners to raise your infantry's combat result. This helps you win fights without relying entirely on inflicted wounds.",
+      "soort": "principe",
+      "thema": "infantry",
+      "leger": null,
+      "lessen": [
+        "anchor-static-combat-resolution",
+        "veteran-state-griffin-banner",
+        "men-at-arms-resolution-block",
+        "skeletons-twenty-five-thirty"
+      ]
+    },
+    {
+      "id": "delay-key-placements-for-information",
+      "_waarom": "in de vorige review goedgekeurd; Codex vond het in ronde 3 niet terug, inhoud uit de vorige principes.json",
+      "titel": "Delay key placements until relevant enemy units are committed",
+      "tekst": "Where possible, let your opponent place the relevant pieces first. Use that information to choose your own positions and favourable matchups.",
+      "soort": "principe",
+      "thema": "deployment",
+      "leger": null,
+      "lessen": [
+        "chaff-scouts-deployment",
+        "delay-vulnerable-artillery-deployment",
+        "baggage-placement-after-opponent",
+        "deploy-for-matchups"
+      ]
+    },
+    {
+      "id": "ambushers-hunt-war-machines",
+      "_waarom": "in de vorige review goedgekeurd; Codex vond het in ronde 3 niet terug, inhoud uit de vorige principes.json",
+      "titel": "Use suitable ambushers to hunt enemy war machines",
+      "tekst": "Give suitable ambushing units the job of attacking and destroying enemy war machines.",
+      "soort": "principe",
+      "thema": "shooting-terrain",
+      "leger": null,
+      "lessen": [
+        "sneaky-gits-backline-volley",
+        "jade-lancers-ambush-cannons",
+        "gorgers-hunt-cathayan-cannons"
+      ]
+    },
+    {
+      "id": "cathay-cannon-hunters-handle-ogre-crews",
+      "_waarom": "in de vorige review goedgekeurd; Codex vond het in ronde 3 niet terug, inhoud uit de vorige principes.json",
+      "titel": "Against Cathay, send cannon hunters that can handle Ogre crews",
+      "tekst": "Bring enough combat power or bodies to handle the Ogre crew when hunting Cathayan cannons. Undersized hunting units can be defeated before doing their job.",
+      "soort": "principe",
+      "thema": "shooting-terrain",
+      "leger": "grand-cathay",
+      "lessen": [
+        "gorgers-hunt-cathayan-cannons",
+        "kiknik-wolves-cathayan-artillery",
+        "six-fell-bats-cannons"
+      ]
+    },
+    {
+      "id": "delay-objective-commitment-to-prepare-your-position",
+      "_waarom": "in de vorige review goedgekeurd; Codex vond het in ronde 3 niet terug, inhoud uit de vorige principes.json",
+      "titel": "Delay objective commitment when you need time to prepare",
+      "tekst": "Consider delaying your commitment to an objective so you can prepare your position before contesting it.",
+      "soort": "principe",
+      "thema": "scenarios",
+      "leger": null,
+      "lessen": [
+        "wait-before-contesting-centre",
+        "king-of-the-hill-forfeit",
+        "chance-encounter-patient-play"
+      ]
+    },
+    {
+      "id": "reach-combat-early-against-gunlines",
+      "_waarom": "in de vorige review goedgekeurd; Codex vond het in ronde 3 niet terug, inhoud uit de vorige principes.json",
+      "titel": "Reach combat early to cut a gunline's shooting time",
+      "tekst": "Move quickly into combat against shooting armies. Early engagement limits how long their shooting can damage your units.",
+      "soort": "principe",
+      "thema": "shooting-terrain",
+      "leger": null,
+      "lessen": [
+        "infantry-combat-escapes-bombardment",
+        "imperfect-target-escape-shooting",
+        "fast-armies-close-gunlines"
+      ]
+    },
+    {
+      "id": "support-demanding-spells-with-casting-bonuses",
+      "_waarom": "in de vorige review goedgekeurd; Codex vond het in ronde 3 niet terug, inhoud uit de vorige principes.json",
+      "titel": "Support demanding spells with extra casting bonuses",
+      "tekst": "When investing in magic, seek casting bonuses beyond wizard level. High casting values can make important spells hard to rely on.",
+      "soort": "principe",
+      "thema": "magic",
+      "leger": null,
+      "lessen": [
+        "necromancy-level-four-investment",
+        "illusion-needs-casting-bonuses",
+        "casting-bonuses-magic-investment"
+      ]
+    },
+    {
+      "id": "use-evasive-to-retreat-when-targeted-by-shooting",
+      "_waarom": "in de vorige review goedgekeurd; Codex vond het in ronde 3 niet terug, inhoud uit de vorige principes.json",
+      "titel": "Use Evasive to retreat when targeted by shooting",
+      "tekst": "When an enemy targets you with shooting, use Evasive to move away. Your retreat can reduce the effectiveness of that shooting.",
+      "soort": "principe",
+      "thema": "movement",
+      "leger": "wood-elf-realms",
+      "lessen": [
+        "warhawk-riders-evasive-screen",
+        "evasive-push-bombs-long-range",
+        "forest-dragon-evade-reform"
+      ]
+    },
+    {
+      "id": "lower-leadership-before-tests-or-damage",
+      "_waarom": "nummer 1 van de vorige top 10; Codex splitste het in ronde 3 in drie kleinere (die staan onder weg). Inhoud uit de vorige principes.json plus de nieuwe Necromancy-scream-les.",
+      "titel": "Lower enemy Leadership before Terror, break tests and Leadership attacks",
+      "tekst": "Use Leadership penalties, most often from Necromancy, before you force a test or use an attack that works against Leadership. The lower value makes the enemy more likely to fail or take more damage.",
+      "soort": "principe",
+      "thema": "magic",
+      "leger": null,
+      "lessen": [
+        "necromancy-leadership-control",
+        "gathering-darkness-terror-combination",
+        "necromancy-supports-state-troops",
+        "light-death-leadership-debuffs",
+        "necrosphinx-terror-leadership",
+        "lower-lantern-leadership-screams",
+        "repeated-terror-charges-lanterns",
+        "dirge-necromancy-leadership-stack"
+      ]
+    }
+  ]
 }

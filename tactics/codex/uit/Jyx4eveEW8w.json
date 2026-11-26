@@ -1,0 +1,182 @@
+{
+  "videoId": "Jyx4eveEW8w",
+  "bronId": "yt-Jyx4eveEW8w",
+  "model": "GPT-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-26T01:23:42.079Z",
+  "nieuw": [
+    {
+      "id": "furious-charge-objective-push",
+      "titel": "Consider Furious Charge infantry for pushing enemies off objectives",
+      "tekst": "Consider using infantry with Furious Charge aggressively to push enemy infantry off an objective, including in a late-game fight when other support is gone. He thinks these units now have a fighting chance rather than having to wait to receive a charge.",
+      "waarom": "He explains that the extra attack compensates for losing the second rank's attacks when charging, making the previously unfavourable infantry charge more viable.",
+      "voorbeeld": "He describes a late-game standoff a few inches from an objective, with cavalry finished and artillery destroyed or lacking targets, leaving infantry to win the combat and push the defender back.",
+      "wanneerNiet": null,
+      "fase": "scenarios",
+      "themas": [
+        "scenarios",
+        "infantry"
+      ],
+      "subthemas": [
+        "objectives",
+        "infantry-moves"
+      ],
+      "tags": [
+        "objectives",
+        "close-order"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-Jyx4eveEW8w",
+          "url": "https://www.youtube.com/watch?v=Jyx4eveEW8w&t=539s",
+          "tijd": 542,
+          "citaat": "a fighting chance of being able to deliver.",
+          "extraCitaten": [
+            {
+              "tijd": 548,
+              "citaat": "I think you can actually now start to have quite a bit of fun"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-08-07",
+      "markeringen": []
+    },
+    {
+      "id": "orc-furious-charge-aggression",
+      "titel": "Consider charging with hand-weapon-and-shield Orcs",
+      "tekst": "Consider using Orc Mob with hand weapons and shields to charge rather than waiting to be charged. He thinks Furious Charge makes this useful alongside Choppas while retaining their Parry protection.",
+      "waarom": "He says the front rank's extra attacks replace the second rank's attacks, while Choppas adds wound rerolls of natural ones and extra armour piercing. He also notes that the unit retains a four-plus armour save against attacks coming back.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "infantry"
+      ],
+      "subthemas": [
+        "infantry-moves"
+      ],
+      "tags": [
+        "armour-piercing",
+        "parry",
+        "armour"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Orc Mob"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-Jyx4eveEW8w",
+          "url": "https://www.youtube.com/watch?v=Jyx4eveEW8w&t=275s",
+          "tijd": 278,
+          "citaat": "Furious charge plus one attack.",
+          "extraCitaten": [
+            {
+              "tijd": 309,
+              "citaat": "They're not sacrificing their parisave."
+            },
+            {
+              "tijd": 325,
+              "citaat": "That seems pretty useful."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-08-07",
+      "markeringen": []
+    },
+    {
+      "id": "chaos-warriors-halberd-charge",
+      "titel": "Reconsider halberds for charging Chaos Warriors",
+      "tekst": "Consider halberds on Chaos Warriors intended to charge enemy infantry. He thinks Furious Charge makes the offensive upgrade more attractive than it was when the unit mainly received charges.",
+      "waarom": "He says charging preserves their attack output despite losing the second fighting rank and will almost certainly let them strike before the opponent. He highlights the extra Strength, AP2 and Armour Bane, with the new six-plus ward save potentially helping against surviving attacks.",
+      "voorbeeld": null,
+      "wanneerNiet": "He says this sacrifices some resilience. Against regular Tomb Kings infantry deployed very wide and deep, he doubts they will kill enough models to prevent many attacks coming back.",
+      "fase": "army-building",
+      "themas": [
+        "infantry"
+      ],
+      "subthemas": [
+        "unit-builds"
+      ],
+      "tags": [
+        "armour-piercing",
+        "ward-save",
+        "close-order"
+      ],
+      "leger": "warriors-of-chaos",
+      "units": [
+        "Chaos Warriors"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-Jyx4eveEW8w",
+          "url": "https://www.youtube.com/watch?v=Jyx4eveEW8w&t=334s",
+          "tijd": 337,
+          "citaat": "Might it be a chance for them to think about some of the upgrades?",
+          "extraCitaten": [
+            {
+              "tijd": 342,
+              "citaat": "a lot of weapons that you would upgrade infantry with such as halbirds"
+            },
+            {
+              "tijd": 404,
+              "citaat": "This moves the needle towards doing a bit more damage."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-08-07",
+      "markeringen": []
+    },
+    {
+      "id": "slayers-furious-charge-aggression",
+      "titel": "Consider using Slayers aggressively with Furious Charge",
+      "tekst": "Consider charging with Slayers rather than using them defensively. He thinks Furious Charge particularly benefits their aggressive role.",
+      "waarom": "He says charging probably lets them strike first, while the extra attack compensates for losing the second rank's attacks. If the enemy strikes back, he notes that the Slayers can still inflict damage on death.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "infantry"
+      ],
+      "subthemas": [
+        "infantry-moves"
+      ],
+      "tags": [
+        "hammer",
+        "sacrifice"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [
+        "Slayers"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-Jyx4eveEW8w",
+          "url": "https://www.youtube.com/watch?v=Jyx4eveEW8w&t=567s",
+          "tijd": 570,
+          "citaat": "because they're now charging. They're probably going first.",
+          "extraCitaten": [
+            {
+              "tijd": 573,
+              "citaat": "they're going to start doing some damage on death anyway."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-08-07",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [],
+  "overgeslagen": "Skipped the introduction, historical rules discussion, unit-name readouts, closing channel remarks and unclear captions. The Frenzy passage notes an optional extra attack and baiting risk but gives no clear manoeuvre to extract separately. No recommendation matched the existing index closely enough for an addition.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

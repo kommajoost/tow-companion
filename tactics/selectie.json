@@ -3,9 +3,9 @@
   "telling": {
     "2pluspodcast": {
       "totaal": 350,
-      "tactics": 92,
+      "tactics": 96,
       "other": 79,
-      "army-review": 73,
+      "army-review": 69,
       "list-building": 12,
       "rules-explained": 12,
       "battle-report": 43,
@@ -345,10 +345,10 @@
       "kanaalId": "2pluspodcast",
       "titel": "The Dirty Tricks That Make Skaven So Good | Warhammer: The Old World",
       "relevant": true,
-      "soort": "army-review",
+      "soort": "tactics",
       "onderwerp": "skaven",
-      "reden": "one faction in title",
-      "door": "regel"
+      "reden": "round 3: army-specific tactics (Skaven tricks), not a faction review",
+      "door": "hand"
     },
     "FUSDz-f4avY": {
       "kanaalId": "2pluspodcast",
@@ -705,10 +705,10 @@
       "kanaalId": "2pluspodcast",
       "titel": "The Six WORST Beginner Mistakes for Wood Elves | Warhammer: The Old World Guide",
       "relevant": true,
-      "soort": "army-review",
+      "soort": "tactics",
       "onderwerp": "wood-elf-realms",
-      "reden": "one faction in title",
-      "door": "regel"
+      "reden": "round 3: army-specific tactics (Wood Elf beginner mistakes), not a faction review",
+      "door": "hand"
     },
     "vpvRXhRkakk": {
       "kanaalId": "2pluspodcast",
@@ -1164,10 +1164,10 @@
       "kanaalId": "2pluspodcast",
       "titel": "3 Ways to help you WIN with Wood Elves | Warhammer: The Old World",
       "relevant": true,
-      "soort": "army-review",
+      "soort": "tactics",
       "onderwerp": "wood-elf-realms",
-      "reden": "one faction in title",
-      "door": "regel"
+      "reden": "round 3: army-specific tactics (three ways to win with Wood Elves), not a faction review",
+      "door": "hand"
     },
     "5d6xWZk4H_E": {
       "kanaalId": "2pluspodcast",
@@ -1182,10 +1182,10 @@
       "kanaalId": "2pluspodcast",
       "titel": "Playing Lizardmen Well (What You Can Control)",
       "relevant": true,
-      "soort": "army-review",
+      "soort": "tactics",
       "onderwerp": "lizardmen",
-      "reden": "one faction in title",
-      "door": "regel"
+      "reden": "round 3: army-specific tactics (what a Lizardmen player can control), not a faction review",
+      "door": "hand"
     },
     "V20D-vGeafs": {
       "kanaalId": "2pluspodcast",

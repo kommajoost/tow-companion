@@ -19,8 +19,9 @@ export interface Kanaal {
   waarderingTekst?: string;
   omschrijving: string | null;
   laatsteUpload: string | null;
-  /** 1 = eerste ronde (algemene tactiek), 2 = Dark Elves-ronde, null = nog niet gepland. */
-  ronde: 1 | 2 | null;
+  /** 1 = eerste ronde (algemene tactiek), 2 = Dark Elves-ronde, 3 = derde ronde (tactiekvideo's van
+   *  nieuwe kanalen, tactics/ronde3/), null = nog niet gepland. */
+  ronde: 1 | 2 | 3 | null;
 }
 
 export type BronStatus = 'candidate' | 'processed';

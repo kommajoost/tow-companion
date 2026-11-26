@@ -1,0 +1,544 @@
+{
+  "videoId": "s8sHnbYgl9I",
+  "bronId": "yt-s8sHnbYgl9I",
+  "model": "GPT-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-26T02:59:48.660Z",
+  "nieuw": [
+    {
+      "id": "simplify-unfamiliar-tournament-armies",
+      "titel": "Keep an unfamiliar tournament army simple",
+      "tekst": "While learning an army or the game, keep the list straightforward: take fewer units to manage and avoid elaborate magic-item combinations or synergies.",
+      "waarom": "The speakers say complexity adds mental work when you are unfamiliar with an army. He chose very few units for his first Old World event to reduce mistakes and make the army more forgiving.",
+      "voorbeeld": "He took one large Grave Guard unit, one large Blood Knights unit, one Zombies unit and four characters while learning Old World.",
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "subthemas": [
+        "list-building"
+      ],
+      "tags": [
+        "magic-items",
+        "tournament"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-s8sHnbYgl9I",
+          "url": "https://www.youtube.com/watch?v=s8sHnbYgl9I&t=819s",
+          "tijd": 822,
+          "citaat": "too many magic items and things and too much Synergy",
+          "extraCitaten": [
+            {
+              "tijd": 2107,
+              "citaat": "I chose very limited troops"
+            },
+            {
+              "tijd": 2124,
+              "citaat": "less chance to make mistakes more forgiving"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-10-15",
+      "markeringen": []
+    },
+    {
+      "id": "anchor-flanks-on-terrain",
+      "titel": "Protect vulnerable flanks with terrain or a board edge",
+      "tekst": "If your army is vulnerable to enemies reaching its flanks or rear, use buildings or impassable terrain as defensive anchors. Alternatively, refuse a flank against a board edge to remove that approach.",
+      "waarom": "He says his three-unit army mostly moved straight ahead and would be in serious trouble if enemies got around or behind it.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "deployment",
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "unit-placement",
+        "terrain-los"
+      ],
+      "tags": [
+        "flanks",
+        "impassable",
+        "board-edge",
+        "refused-flank"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-s8sHnbYgl9I",
+          "url": "https://www.youtube.com/watch?v=s8sHnbYgl9I&t=2327s",
+          "tijd": 2330,
+          "citaat": "use that building as a as a hard hard defensive",
+          "extraCitaten": [
+            {
+              "tijd": 2338,
+              "citaat": "you refuse to flank and you stay on one side"
+            },
+            {
+              "tijd": 2338,
+              "citaat": "that board Edge is gone you can't be flanked there"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-10-15",
+      "markeringen": []
+    },
+    {
+      "id": "hide-mortis-engines-artillery",
+      "titel": "Hide Mortis Engines from heavy artillery",
+      "tekst": "With his Vampire Counts setup, keep Mortis Engines hidden behind hills or impassable terrain against heavy artillery. He would be prepared to stay there rather than advance into cannon fire.",
+      "waarom": "He regards shooting as a major weakness of the list and says he cannot protect the Mortis Engines from it unless he hides them.",
+      "voorbeeld": null,
+      "wanneerNiet": "He did not face cannons or stone throwers at the event, so this was his intended response rather than a tested matchup there.",
+      "fase": "movement",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "avoiding-fire"
+      ],
+      "tags": [
+        "war-machines",
+        "cannons",
+        "line-of-sight",
+        "hills",
+        "impassable"
+      ],
+      "leger": "vampire-counts",
+      "units": [
+        "Mortis Engine"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-s8sHnbYgl9I",
+          "url": "https://www.youtube.com/watch?v=s8sHnbYgl9I&t=2467s",
+          "tijd": 2470,
+          "citaat": "Hills and impossible and I'm probably not moving",
+          "extraCitaten": [
+            {
+              "tijd": 2907,
+              "citaat": "I didn't face any cannons I didn't face any stone throwers"
+            },
+            {
+              "tijd": 3998,
+              "citaat": "there's no way I can protect the mortors engines unless I hide them"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-10-15",
+      "markeringen": []
+    },
+    {
+      "id": "sandwich-banshees-between-engines",
+      "titel": "Shield Banshees between Mortis Engines",
+      "tekst": "Use Mortis Engines to shield Tomb Banshees from sight and attacks while keeping their screams available. In his setup, he sandwiched both Banshees between the two engines.",
+      "waarom": "He says nothing could see, shoot or reach the protected Banshees, while nearby enemies would still face their screams.",
+      "voorbeeld": "Against Adam's Wood Elves, he placed one Mortis Engine to the side, both Tomb Banshees in the middle and the other engine behind them.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "characters"
+      ],
+      "subthemas": [
+        "protecting-characters"
+      ],
+      "tags": [
+        "screen",
+        "line-of-sight"
+      ],
+      "leger": "vampire-counts",
+      "units": [
+        "Tomb Banshee",
+        "Mortis Engine"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-s8sHnbYgl9I",
+          "url": "https://www.youtube.com/watch?v=s8sHnbYgl9I&t=2659s",
+          "tijd": 2662,
+          "citaat": "they were literally sandwiched in between these two things",
+          "extraCitaten": [
+            {
+              "tijd": 2670,
+              "citaat": "nothing could shoot them nothing could get them"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-10-15",
+      "markeringen": []
+    },
+    {
+      "id": "reserve-move-undead-pressure",
+      "titel": "Use Reserve Move magic to accelerate the undead advance",
+      "tekst": "Use magic granting Reserve Move to push Vampire Counts units forward and apply pressure. He combined this with the extra movement provided by two nearby Mortis Engines.",
+      "waarom": "He found that the extra movement could produce a much faster advance and put substantial pressure on an opponent.",
+      "voorbeeld": "With a movement buff, his Grave Guard moved eighteen inches in one turn through two nine-inch moves.",
+      "wanneerNiet": "He usually avoided moving that fast because he wanted to keep his army compact and prevent access to its flanks or rear.",
+      "fase": "movement",
+      "themas": [
+        "magic"
+      ],
+      "subthemas": [
+        "control-spells"
+      ],
+      "tags": [
+        "reserve-move",
+        "conveyance",
+        "zoning"
+      ],
+      "leger": "vampire-counts",
+      "units": [
+        "Mortis Engine",
+        "Grave Guard"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-s8sHnbYgl9I",
+          "url": "https://www.youtube.com/watch?v=s8sHnbYgl9I&t=2842s",
+          "tijd": 2845,
+          "citaat": "to be able to cast for Reserve moves because then you can push",
+          "extraCitaten": [
+            {
+              "tijd": 2862,
+              "citaat": "they moved 18 inches in one turn"
+            },
+            {
+              "tijd": 2877,
+              "citaat": "I was trying to stay compact"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-10-15",
+      "markeringen": []
+    },
+    {
+      "id": "flying-banshee-scream-withdrawal",
+      "titel": "Fly Banshees into scream range, then withdraw",
+      "tekst": "Use Spectral Steed to give Tomb Banshees the mobility to reach targets, scream at them and then Reserve Move back to safety.",
+      "waarom": "He used this to pick off units and manage mobile opponents to some degree. He describes a ten-inch flying move and an eight-inch scream as an eighteen-inch threat.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "characters",
+        "magic"
+      ],
+      "subthemas": [
+        "protecting-characters",
+        "control-spells"
+      ],
+      "tags": [
+        "fly",
+        "reserve-move",
+        "conveyance"
+      ],
+      "leger": "vampire-counts",
+      "units": [
+        "Tomb Banshee"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-s8sHnbYgl9I",
+          "url": "https://www.youtube.com/watch?v=s8sHnbYgl9I&t=4085s",
+          "tijd": 4088,
+          "citaat": "flying them there screaming at them and then Reserve moving them into safety",
+          "extraCitaten": [
+            {
+              "tijd": 4080,
+              "citaat": "both my banshees were flying 10 and screaming eight"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-10-15",
+      "markeringen": []
+    },
+    {
+      "id": "moderate-early-battle-points",
+      "titel": "Consider moderating early wins in battle-point events",
+      "tekst": "At events ranked by battle points, he sometimes deliberately settles for fifteen or sixteen points instead of twenty in the opening round. He aims to reach the leading bracket later rather than immediately.",
+      "waarom": "He says early leaders face capable opponents who often play conservatively, limiting later scores. A player coming from behind can overtake them with a larger win.",
+      "voorbeeld": null,
+      "wanneerNiet": "He notes that this event instead ranked wins first, with battle points used as the tiebreaker.",
+      "fase": "scenarios",
+      "themas": [
+        "game-plan"
+      ],
+      "subthemas": [
+        "tempo-trading"
+      ],
+      "tags": [
+        "tournament",
+        "victory-points"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-s8sHnbYgl9I",
+          "url": "https://www.youtube.com/watch?v=s8sHnbYgl9I&t=2934s",
+          "tijd": 2937,
+          "citaat": "I will often pull back to not win 20",
+          "extraCitaten": [
+            {
+              "tijd": 2937,
+              "citaat": "I will go for a 15 or a 16"
+            },
+            {
+              "tijd": 3036,
+              "citaat": "in the earlier rounds"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-10-15",
+      "markeringen": []
+    },
+    {
+      "id": "finish-six-turns-vampires",
+      "titel": "Reach turn six with a Vampire Counts softening plan",
+      "tekst": "Play quickly enough to finish all six turns with the kind of Vampire Counts list he describes. He considers that final turn necessary when the early turns mainly soften the enemy.",
+      "waarom": "He says this style of list does little damage early and needs its final turn after preparing the opposition.",
+      "voorbeeld": null,
+      "wanneerNiet": "He qualifies this as depending on how the Vampire Counts list is set up.",
+      "fase": "scenarios",
+      "themas": [
+        "scenarios"
+      ],
+      "subthemas": [
+        "late-game"
+      ],
+      "tags": [
+        "tournament",
+        "victory-points"
+      ],
+      "leger": "vampire-counts",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-s8sHnbYgl9I",
+          "url": "https://www.youtube.com/watch?v=s8sHnbYgl9I&t=3818s",
+          "tijd": 3821,
+          "citaat": "you want to get all your turns in",
+          "extraCitaten": [
+            {
+              "tijd": 3829,
+              "citaat": "for a vampire list they need turn six"
+            },
+            {
+              "tijd": 3829,
+              "citaat": "you're not doing any damage on those early turns"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-10-15",
+      "markeringen": []
+    },
+    {
+      "id": "accept-small-tournament-loss",
+      "titel": "Accept a small loss rather than force a risky recovery",
+      "tekst": "When slightly behind, consider preserving a small loss instead of launching risky combined charges to recover the score. Take your position in the tournament and the remaining games into account before committing.",
+      "waarom": "He has seen players turn a small deficit into a heavy loss when desperate multiple charges failed.",
+      "voorbeeld": "He describes deciding that an eight-to-twelve loss is safer when two games remain and he is still in a safe tournament bracket.",
+      "wanneerNiet": "If the position is already hopeless, he says there are games where he might as well go for it.",
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "subthemas": [
+        "aggression-control"
+      ],
+      "tags": [
+        "victory-points",
+        "combined-charge",
+        "tournament"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-s8sHnbYgl9I",
+          "url": "https://www.youtube.com/watch?v=s8sHnbYgl9I&t=5756s",
+          "tijd": 5759,
+          "citaat": "better to lose small then lose big and risk a small win",
+          "extraCitaten": [
+            {
+              "tijd": 5767,
+              "citaat": "they're just behind and they do multi- charges"
+            },
+            {
+              "tijd": 5797,
+              "citaat": "let me lose 82 here that's safer"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-10-15",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "write-phase-reminder-sheet",
+      "bron": {
+        "bronId": "yt-s8sHnbYgl9I",
+        "url": "https://www.youtube.com/watch?v=s8sHnbYgl9I&t=889s",
+        "tijd": 892,
+        "citaat": "it's just a one pager",
+        "extraCitaten": [
+          {
+            "tijd": 917,
+            "citaat": "I can just quickly look at that one box"
+          }
+        ]
+      },
+      "toelichting": "He recommends a one-page reminder sheet organised by phase and updated after games, matching the existing checklist advice."
+    },
+    {
+      "lesId": "prefer-familiar-tournament-armies",
+      "bron": {
+        "bronId": "yt-s8sHnbYgl9I",
+        "url": "https://www.youtube.com/watch?v=s8sHnbYgl9I&t=794s",
+        "tijd": 797,
+        "citaat": "more I play the same Army let have to think about it"
+      },
+      "voorbeeld": "The speaker found three consecutive games with the Cult more tiring than playing his familiar Bretonnian army because he had to think about everything.",
+      "toelichting": "He recommends sticking with a familiar army to reduce the mental effort of tournament games."
+    },
+    {
+      "lesId": "identify-enemy-winning-method",
+      "bron": {
+        "bronId": "yt-s8sHnbYgl9I",
+        "url": "https://www.youtube.com/watch?v=s8sHnbYgl9I&t=2182s",
+        "tijd": 2185,
+        "citaat": "think about what the list is trying to do",
+        "extraCitaten": [
+          {
+            "tijd": 3377,
+            "citaat": "they bought this combo for this reason"
+          }
+        ]
+      },
+      "toelichting": "He recommends scanning the opposing list and identifying its intended plan and unit combinations before choosing a response."
+    },
+    {
+      "lesId": "choose-side-for-armies",
+      "bron": {
+        "bronId": "yt-s8sHnbYgl9I",
+        "url": "https://www.youtube.com/watch?v=s8sHnbYgl9I&t=2224s",
+        "tijd": 2227,
+        "citaat": "if I win the role and I'm on this side that's great",
+        "extraCitaten": [
+          {
+            "tijd": 2227,
+            "citaat": "if I don't and I'm this side where do I want to go"
+          }
+        ]
+      },
+      "waarom": "He says terrain has won or lost him many games and its value depends on both armies.",
+      "toelichting": "He evaluates the terrain and plans for either table side with both armies in mind."
+    },
+    {
+      "lesId": "check-scenario-deployment-map",
+      "bron": {
+        "bronId": "yt-s8sHnbYgl9I",
+        "url": "https://www.youtube.com/watch?v=s8sHnbYgl9I&t=2247s",
+        "tijd": 2250,
+        "citaat": "you need to be really careful of how you set up",
+        "extraCitaten": [
+          {
+            "tijd": 2250,
+            "citaat": "in case half your arm is not there"
+          }
+        ]
+      },
+      "toelichting": "He recommends accounting for the scenario during setup, specifically warning about scenarios where units may not arrive."
+    },
+    {
+      "lesId": "avoid-single-matchup-tech",
+      "bron": {
+        "bronId": "yt-s8sHnbYgl9I",
+        "url": "https://www.youtube.com/watch?v=s8sHnbYgl9I&t=5388s",
+        "tijd": 5391,
+        "citaat": "you need to have something that can deal with most threats",
+        "extraCitaten": [
+          {
+            "tijd": 5400,
+            "citaat": "if you don't you just get a bad run"
+          }
+        ]
+      },
+      "toelichting": "He recommends a singles list able to deal with most threats rather than one dependent on favourable matchups."
+    },
+    {
+      "lesId": "compare-points-before-risking",
+      "bron": {
+        "bronId": "yt-s8sHnbYgl9I",
+        "url": "https://www.youtube.com/watch?v=s8sHnbYgl9I&t=3199s",
+        "tijd": 3202,
+        "citaat": "all I need is a draw so I didn't take any risk",
+        "extraCitaten": [
+          {
+            "tijd": 3217,
+            "citaat": "I don't need to take any risk now"
+          }
+        ]
+      },
+      "toelichting": "He checks what score is sufficient and stops taking movement risks once he has earned enough points."
+    },
+    {
+      "lesId": "gamble-when-already-losing",
+      "bron": {
+        "bronId": "yt-s8sHnbYgl9I",
+        "url": "https://www.youtube.com/watch?v=s8sHnbYgl9I&t=5801s",
+        "tijd": 5804,
+        "citaat": "well I'm Cactus I might as well just go for it"
+      },
+      "toelichting": "He distinguishes hopeless positions where he might as well gamble from small deficits worth preserving."
+    },
+    {
+      "lesId": "identify-expendable-units",
+      "bron": {
+        "bronId": "yt-s8sHnbYgl9I",
+        "url": "https://www.youtube.com/watch?v=s8sHnbYgl9I&t=4138s",
+        "tijd": 4141,
+        "citaat": "can't lose any one of those two otherwise I'm really behind",
+        "extraCitaten": [
+          {
+            "tijd": 4166,
+            "citaat": "they're 90 points so I've got two of them"
+          }
+        ]
+      },
+      "toelichting": "He identifies the two expensive blocks as essential to preserve while accepting the loss of cheaper supporting Banshees."
+    },
+    {
+      "lesId": "prepare-for-local-opponents",
+      "bron": {
+        "bronId": "yt-s8sHnbYgl9I",
+        "url": "https://www.youtube.com/watch?v=s8sHnbYgl9I&t=6171s",
+        "tijd": 6174,
+        "citaat": "what's the kind of list that you'd expect to see"
+      },
+      "toelichting": "He researches likely tournament lists and asks other players what to expect at the event."
+    }
+  ],
+  "overgeslagen": "Skipped introductions, Patreon material, quizzes, hobby and community discussion, event results, comp proposals, edition comparisons and banter. Omitted list readouts without clear advice, vague encouragement, and unclear rules or names. Repeated advice was attached to indexed lessons.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

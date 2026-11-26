@@ -1,0 +1,343 @@
+{
+  "videoId": "Phr3h58uwoA",
+  "bronId": "yt-Phr3h58uwoA",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-26T03:20:39.795Z",
+  "nieuw": [
+    {
+      "id": "banshee-double-engine-reach",
+      "titel": "Boost Banshee reach with Spectral Steed and two Mortis Engines",
+      "tekst": "Cast Spectral Steed on a Tomb Banshee positioned beside two Mortis Engines to extend her Wailing Dirge threat. He describes the combination as giving her a 12-inch flying move and a 20-inch scream threat.",
+      "waarom": "He says the threat can make opponents reconsider where they place key units, helping him dictate the pace and protect his own assets.",
+      "voorbeeld": null,
+      "wanneerNiet": "He qualifies his claim of reaching almost any unit from turn two onwards against the most defensive army lists.",
+      "fase": "magic-shooting",
+      "themas": [
+        "magic",
+        "game-plan"
+      ],
+      "subthemas": [
+        "buffs-hexes",
+        "threat-zones"
+      ],
+      "tags": [
+        "conveyance",
+        "fly",
+        "zoning"
+      ],
+      "leger": "vampire-counts",
+      "units": [
+        "Tomb Banshee",
+        "Mortis Engine"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-Phr3h58uwoA",
+          "url": "https://www.youtube.com/watch?v=Phr3h58uwoA&t=43s",
+          "tijd": 46,
+          "citaat": "spectral Steed on the tomb banshe boosts her movement to 10 in",
+          "extraCitaten": [
+            {
+              "tijd": 53,
+              "citaat": "she's now flying 12 in and therefore has a 20 in threat"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-05-24",
+      "markeringen": []
+    },
+    {
+      "id": "double-engine-casting-core",
+      "titel": "Pair Mortis Engines with high-level casters for scream support",
+      "tekst": "Consider two Mortis Engines ridden by high-level casters as the magical core of a Wailing Dirge army. Use them to help secure the spell combinations that support the screams.",
+      "waarom": "He says their nearby casting bonuses stack, producing what he considers an almost unstoppable magic core.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "magic"
+      ],
+      "subthemas": [
+        "casting-aids"
+      ],
+      "tags": [
+        "wizard-level",
+        "concentration"
+      ],
+      "leger": "vampire-counts",
+      "units": [
+        "Mortis Engine"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-Phr3h58uwoA",
+          "url": "https://www.youtube.com/watch?v=Phr3h58uwoA&t=122s",
+          "tijd": 125,
+          "citaat": "two of these bad boys being ridden by high level casters",
+          "extraCitaten": [
+            {
+              "tijd": 134,
+              "citaat": "ensure you get the spell combinations off that make whaling durge so powerful"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-05-24",
+      "markeringen": []
+    },
+    {
+      "id": "dirge-necromancy-leadership-stack",
+      "titel": "Combine Spiritual Vortex and Spirit Leech before screaming",
+      "tekst": "Combine Spiritual Vortex and Spirit Leech on the intended Wailing Dirge target when you can get both spells off. Use the combined Leadership reductions and loss of Inspiring Presence to make the screams more damaging.",
+      "waarom": "He says even very resilient units can start losing wounds quickly to a couple of screams, making expensive cavalry and monsters reluctant to approach.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "magic-shooting",
+      "themas": [
+        "magic"
+      ],
+      "subthemas": [
+        "buffs-hexes"
+      ],
+      "tags": [
+        "necromancy",
+        "hex",
+        "leadership"
+      ],
+      "leger": "vampire-counts",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-Phr3h58uwoA",
+          "url": "https://www.youtube.com/watch?v=Phr3h58uwoA&t=164s",
+          "tijd": 167,
+          "citaat": "if you're able to get both of these spells off",
+          "extraCitaten": [
+            {
+              "tijd": 192,
+              "citaat": "to even just a couple of Screams"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-05-24",
+      "markeringen": []
+    },
+    {
+      "id": "terrorgheist-scream-screen-gap",
+      "titel": "Scream away screens, then Reserve Move through the gap",
+      "tekst": "Use Hellish Vigor offensively on a Terrorgheist: advance, clear a screen with Wailing Dirge, then Reserve Move into the gap you created.",
+      "waarom": "He says this avoids the screen holding the Terrorgheist up for a turn and puts pressure on an area the opponent thought was safe.",
+      "voorbeeld": "He describes clearing skirmishers screening enemy war machines and moving into the resulting gap.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "chaff",
+        "magic"
+      ],
+      "subthemas": [
+        "clearing-chaff",
+        "control-spells"
+      ],
+      "tags": [
+        "reserve-move",
+        "screen",
+        "skirmishers"
+      ],
+      "leger": "vampire-counts",
+      "units": [
+        "Terrorgheist"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-Phr3h58uwoA",
+          "url": "https://www.youtube.com/watch?v=Phr3h58uwoA&t=295s",
+          "tijd": 298,
+          "citaat": "Reserve move into the Gap that you've created",
+          "extraCitaten": [
+            {
+              "tijd": 290,
+              "citaat": "using the Wailing durge to clear maybe a screen of skirmishes"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-05-24",
+      "markeringen": []
+    },
+    {
+      "id": "dirge-picks-lone-support",
+      "titel": "Pick out lone wizards and BSBs with Wailing Dirge",
+      "tekst": "Look for opportunities to target lone wizards or supporting battle standard bearers behind enemy lines with Wailing Dirge. He is keen to try exploiting its exemption from the usual lone-character targeting restrictions.",
+      "waarom": "He says removing a hidden support character can cause unexpected disruption; he specifically highlights a BSB enabling rerolls of Terror and Fear tests.",
+      "voorbeeld": null,
+      "wanneerNiet": "He stresses that line of sight is still required and that picking out targets behind other units needs practice.",
+      "fase": "magic-shooting",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "target-priority"
+      ],
+      "tags": [
+        "lone-character",
+        "bsb",
+        "line-of-sight"
+      ],
+      "leger": "vampire-counts",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-Phr3h58uwoA",
+          "url": "https://www.youtube.com/watch?v=Phr3h58uwoA&t=320s",
+          "tijd": 323,
+          "citaat": "ignores the usual rules for targeting lone characters meaning you can pick out",
+          "extraCitaten": [
+            {
+              "tijd": 330,
+              "citaat": "or even choose to try and take down the buffing battle standard Bearer"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-05-24",
+      "markeringen": []
+    },
+    {
+      "id": "zombies-pin-scream-targets",
+      "titel": "Pin expensive elites with Zombies and scream them down",
+      "tekst": "Tie up an expensive elite enemy unit with a horde of Zombies, then keep using Wailing Dirge against it while it is pinned in combat.",
+      "waarom": "He points out that Wailing Dirge can target units in combat, allowing repeated screams to inflict the wounds that finish the target.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "magic-shooting",
+      "themas": [
+        "infantry",
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "holding-combat",
+        "target-priority"
+      ],
+      "tags": [
+        "tarpit",
+        "horde"
+      ],
+      "leger": "vampire-counts",
+      "units": [
+        "Zombies"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-Phr3h58uwoA",
+          "url": "https://www.youtube.com/watch?v=Phr3h58uwoA&t=387s",
+          "tijd": 390,
+          "citaat": "you can just pin them and then just scream and scream and scream"
+        }
+      ],
+      "datum": "2024-05-24",
+      "markeringen": []
+    },
+    {
+      "id": "mortis-engine-scream-escape",
+      "titel": "Use Wailing Dirge to free an engaged Mortis Engine",
+      "tekst": "If a Mortis Engine becomes bogged down in combat, use its Wailing Dirge against the enemy it is fighting to try to get it out.",
+      "waarom": "He says Wailing Dirge can be used against the combat the screaming model is itself in.",
+      "voorbeeld": "He describes an enemy overrunning into a Mortis Engine after the unit in front crumbled away.",
+      "wanneerNiet": null,
+      "fase": "magic-shooting",
+      "themas": [
+        "hammers"
+      ],
+      "subthemas": [
+        "chariots"
+      ],
+      "tags": [
+        "chariots",
+        "tarpit"
+      ],
+      "leger": "vampire-counts",
+      "units": [
+        "Mortis Engine"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-Phr3h58uwoA",
+          "url": "https://www.youtube.com/watch?v=Phr3h58uwoA&t=404s",
+          "tijd": 407,
+          "citaat": "just scream your way out of combat"
+        }
+      ],
+      "datum": "2024-05-24",
+      "markeringen": []
+    },
+    {
+      "id": "six-screamer-army-core",
+      "titel": "Consider six screamers to build around Wailing Dirge",
+      "tekst": "To make Wailing Dirge a central part of the army, consider two Mortis Engines, two Tomb Banshees and two Terrorgheists.",
+      "waarom": "He thinks this combination can produce surprisingly high damage in the right situations.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "subthemas": [
+        "list-building"
+      ],
+      "tags": [
+        "concentration",
+        "monsters",
+        "chariots"
+      ],
+      "leger": "vampire-counts",
+      "units": [
+        "Mortis Engine",
+        "Tomb Banshee",
+        "Terrorgheist"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-Phr3h58uwoA",
+          "url": "https://www.youtube.com/watch?v=Phr3h58uwoA&t=443s",
+          "tijd": 446,
+          "citaat": "two mortors engines in it two banshees and two terrorists",
+          "extraCitaten": [
+            {
+              "tijd": 453,
+              "citaat": "the sheer damage output it can bring to bear in the right"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-05-24",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "flying-banshee-scream-withdrawal",
+      "bron": {
+        "bronId": "yt-Phr3h58uwoA",
+        "url": "https://www.youtube.com/watch?v=Phr3h58uwoA&t=257s",
+        "tijd": 260,
+        "citaat": "do the Wailing durge and then just jump back to safety",
+        "extraCitaten": [
+          {
+            "tijd": 46,
+            "citaat": "spectral Steed on the tomb banshe boosts her movement to 10 in"
+          }
+        ]
+      },
+      "toelichting": "He gives the same mobile Banshee plan: use Spectral Steed to reach scream range and Hellish Vigor's Reserve Move to withdraw afterwards."
+    }
+  ],
+  "overgeslagen": "Skipped the introduction, closing channel promotion and stat or rules readouts without a separate recommendation. Kept uncertain caption spellings only in verbatim quotes, using clear contextual unit names in the advice.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

@@ -1776,5 +1776,1025 @@
     "opmerkingen": [
       "aanvulling op ambushers-banner-combat-resolution: extra citaat van yt-xdI1oppLbK4 weggehaald voor de nieuwe bron (\"with them it was a certainty.\")"
     ]
+  },
+  "-nv6-52zpGc": {
+    "op": "2026-11-26",
+    "bestand": "tactics/codex/uit/-nv6-52zpGc.json",
+    "nieuw": [
+      "chariot-mount-character-survival",
+      "chaos-chariot-combat-wizard",
+      "avoid-chariot-cavalry-support",
+      "many-chariots-divide-targeting"
+    ],
+    "aanvullingen": [
+      "heavy-chariot-support"
+    ],
+    "opmerkingen": [
+      "aanvulling op heavy-chariot-support: extra citaat van yt-Fk8gJUdxLb0 weggehaald voor de nieuwe bron (\"It's very easy to kill. It's hard to get into position.\")"
+    ]
+  },
+  "0gukL8wYV08": {
+    "op": "2026-11-26",
+    "bestand": "tactics/codex/uit/0gukL8wYV08.json",
+    "nieuw": [
+      "drawn-lines-reserve-backup",
+      "domination-central-late-expansion",
+      "domination-aggressive-pin",
+      "natural-objective-opening-score",
+      "allocate-scorers-by-contest",
+      "central-mobile-response-threats",
+      "baggage-cheap-home-scorer",
+      "leave-random-mover-lanes",
+      "special-feature-choose-second",
+      "special-feature-first-turn-pressure",
+      "block-final-objective-approach",
+      "hill-scorer-offset-feature",
+      "hill-small-scorer-hidden",
+      "screen-reserve-entry-edges",
+      "measure-charges-every-turn",
+      "chance-encounter-charge-safety",
+      "chance-encounter-late-aggressor",
+      "aggressive-baggage-forward-placement",
+      "encirclement-short-objective-triangle",
+      "duke-monster-slayer-zoning"
+    ],
+    "aanvullingen": [
+      "cheap-area-capture-units",
+      "fewer-drops-first-turn",
+      "central-sheltered-chaff-deployment",
+      "anticipate-enemy-deployment-pattern",
+      "support-character-opposite-threats",
+      "support-character-one-file-in",
+      "melee-character-central-attack-side",
+      "melee-character-clear-outer-files",
+      "reposition-characters-before-enemy-charge",
+      "choose-side-for-armies (+waarom)",
+      "hills-reduce-cannon-bounces",
+      "chaff-deny-scout-vanguard (+voorbeeld)",
+      "deploy-for-unit-synergy"
+    ],
+    "opmerkingen": [
+      "aanvulling op chaff-scouts-deployment: les heeft al 3 bronnen, overgeslagen",
+      "aanvulling op hidden-mobile-objective-grabs: les heeft al 3 bronnen, overgeslagen",
+      "aanvulling op chaff-decoys: les heeft al 3 bronnen, overgeslagen"
+    ]
+  },
+  "5k-tmwRyyXo": {
+    "op": "2026-11-26",
+    "bestand": "tactics/codex/uit/5k-tmwRyyXo.json",
+    "nieuw": [
+      "bone-dragon-neutralises-monsters",
+      "high-priest-near-herald",
+      "necrotect-poison-skeleton-attacks",
+      "horse-archers-isolated-skirmishers",
+      "six-great-bow-ushabti",
+      "ushabti-shoot-monsters-ogres",
+      "paired-scorpions-flank-pinned-threat",
+      "necrotect-whip-champion-challenges",
+      "deploy-dragon-reserve-move",
+      "grail-champion-falcon-horn",
+      "slann-higher-state-protection",
+      "replace-excess-skirmishers-chariots",
+      "kharibdyss-before-cold-ones",
+      "three-four-model-pegasus-units",
+      "bombard-efficient-cannon-choice",
+      "exile-pegasus-knights-start-hidden",
+      "dragon-ogres-over-ghorgon",
+      "tuskgor-over-razorgor-chariots",
+      "focus-mournfangs-before-contact",
+      "reserve-horse-archers-deny-impact"
+    ],
+    "aanvullingen": [
+      "tomb-king-dragon-armour-ages",
+      "chariot-mount-character-survival"
+    ],
+    "opmerkingen": [
+      "aanvulling op control-spells-block-lanes: les heeft al 3 bronnen, overgeslagen",
+      "aanvulling op anchor-challenges-against-dragons: les heeft al 3 bronnen, overgeslagen"
+    ]
+  },
+  "63MNI72v6u8": {
+    "op": "2026-11-26",
+    "bestand": "tactics/codex/uit/63MNI72v6u8.json",
+    "nieuw": [
+      "tomb-guard-death-mask",
+      "necromancy-familiar-debuff-pair",
+      "curse-weaver-without-familiar"
+    ],
+    "aanvullingen": [
+      "light-death-leadership-debuffs (+voorbeeld)"
+    ],
+    "opmerkingen": []
+  },
+  "6RXUL_MveHQ": {
+    "op": "2026-11-26",
+    "bestand": "tactics/codex/uit/6RXUL_MveHQ.json",
+    "nieuw": [
+      "compare-points-before-risking",
+      "mortuary-priests-behind-block",
+      "many-small-units-poison-block",
+      "massed-chariots-poison-block",
+      "poison-block-decline-followup",
+      "bretonnia-avoid-poison-block",
+      "templates-against-huge-blocks"
+    ],
+    "aanvullingen": [
+      "single-wolf-chariots-limit-panic"
+    ],
+    "opmerkingen": []
+  },
+  "6x8l-NPw43I": {
+    "op": "2026-11-26",
+    "bestand": "tactics/codex/uit/6x8l-NPw43I.json",
+    "nieuw": [
+      "limit-enemy-natural-commitment",
+      "close-quarters-deny-enemy-scoring",
+      "aggressor-pressure-both-central-objectives",
+      "slow-scorers-front-centre",
+      "fast-attackers-long-flank-route",
+      "wolf-riders-harass-objective-scorers",
+      "chase-light-contenders-off-objectives",
+      "column-blockers-delay-objective-access",
+      "fourteen-skirmishing-infantry-scorers",
+      "light-cavalry-scoring-unit-sizes",
+      "cheap-infantry-thirty-thirty-six",
+      "fully-invest-heavy-infantry-deathstar",
+      "deathstar-stubborn-veteran-upgrades",
+      "core-heavy-cavalry-role-sizes"
+    ],
+    "aanvullingen": [
+      "natural-objective-opening-score (+wanneerNiet)",
+      "allocate-scorers-by-contest (+voorbeeld)",
+      "plan-overruns-repeat-combats (+waarom)",
+      "encirclement-short-objective-triangle (+voorbeeld)",
+      "deploy-for-unit-synergy",
+      "support-scorers-with-hammers",
+      "chaff-preserve-friendly-lanes",
+      "maintain-cover-for-scorers"
+    ],
+    "opmerkingen": [
+      "aanvulling op plan-overruns-repeat-combats: extra citaat van yt-lNbSV0eVrT8 weggehaald voor de nieuwe bron (\"through overruns and restraining and reforming.\")",
+      "aanvulling op encirclement-short-objective-triangle: extra citaat van yt-0gukL8wYV08 weggehaald voor de nieuwe bron (\"actually you're trying to support the rest of your force that's going to the center.\")",
+      "aanvulling op deploy-for-unit-synergy: extra citaat van yt-0gukL8wYV08 weggehaald voor de nieuwe bron (\"able to come up and flank charge when we have the fight\")",
+      "aanvulling op chaff-preserve-friendly-lanes: extra citaat van yt-RUWFyl0eK00 weggehaald voor de nieuwe bron (\"but they actually ended up surviving uh fleeing enough\")"
+    ]
+  },
+  "75ljIvwKYEM": {
+    "op": "2026-11-26",
+    "bestand": "tactics/codex/uit/75ljIvwKYEM.json",
+    "nieuw": [
+      "giant-rats-redirection-choice",
+      "hold-redirector-protect-target",
+      "giant-rats-sacrifice-panic",
+      "bell-behind-stormvermin-support",
+      "empire-griffon-central-support"
+    ],
+    "aanvullingen": [
+      "align-sacrifices-for-empty-overruns",
+      "exploit-random-movement-variance",
+      "stay-beyond-known-charge-reach (+waarom, voorbeeld)",
+      "character-leadership-central-anchor"
+    ],
+    "opmerkingen": [
+      "aanvulling op exploit-random-movement-variance: extra citaat van yt-QyPyQ6tGr_U weggehaald voor de nieuwe bron (\"your opponent has to respect it\")"
+    ]
+  },
+  "Ar1ToulmI5U": {
+    "op": "2026-11-26",
+    "bestand": "tactics/codex/uit/Ar1ToulmI5U.json",
+    "nieuw": [
+      "great-cannon-counterbattery-fire",
+      "resolve-overshooting-cannonballs",
+      "grapeshot-force-panic-test",
+      "engineer-cannon-artillery-reroll"
+    ],
+    "aanvullingen": [
+      "cannon-aim-behemoth-base (+voorbeeld)",
+      "cannon-bounce-multiple-lanterns",
+      "cannon-grapeshot-close-hunters (+voorbeeld)"
+    ],
+    "opmerkingen": [
+      "aanvulling op cannon-bounce-multiple-lanterns: extra citaat van yt-pElilulzeF8 weggehaald voor de nieuwe bron (\"my cannons can hit two in a row.\")"
+    ]
+  },
+  "CK40ZsYZCyQ": {
+    "op": "2026-11-26",
+    "bestand": "tactics/codex/uit/CK40ZsYZCyQ.json",
+    "nieuw": [
+      "rangers-screen-helblaster-fire",
+      "anvil-buff-before-advance",
+      "wide-deployment-against-cannons",
+      "hesitation-against-empire-charges",
+      "war-wagons-advance-together",
+      "anvil-preservation-over-toughness",
+      "organ-guns-counter-outriders",
+      "rangers-woods-against-outriders",
+      "gyrocopters-pressure-nuln-artillery",
+      "burlok-thunderers-against-outriders",
+      "mobile-dwarf-cannons-counterbattery",
+      "separate-empire-artillery-stations",
+      "runesmith-break-empire-illusion",
+      "white-wolf-daemonology-block",
+      "remove-runesmith-flaming-wards",
+      "dwarf-deathstar-meets-deathstar"
+    ],
+    "aanvullingen": [
+      "deploy-beyond-moving-shooters",
+      "fast-armies-close-gunlines",
+      "mark-threat-ranges-dice",
+      "arrow-attraction-concentrated-fire",
+      "hills-reduce-cannon-bounces (+wanneerNiet)",
+      "layer-resilient-units-retreat-trap"
+    ],
+    "opmerkingen": [
+      "aanvulling op fast-armies-close-gunlines: extra citaat van yt-ZdFsJWjjBGM weggehaald voor de nieuwe bron (\"those same fast armies probably aren't going to be as survivable as Punchy\")",
+      "aanvulling op concentrate-against-enemy-part: les heeft al 3 bronnen, overgeslagen",
+      "aanvulling op terrain-low-roll-charges: les heeft al 3 bronnen, overgeslagen",
+      "aanvulling op hills-reduce-cannon-bounces: extra citaat van yt-HibjCFdy04Y weggehaald voor de nieuwe bron (\"You're a lot less susceptible to the bounce if you're on the hill.\")",
+      "aanvulling op layer-resilient-units-retreat-trap: extra citaat van yt-kPEFkQepMuw weggehaald voor de nieuwe bron (\"you're going to most likely be falling back in good order\")",
+      "aanvulling op deploy-for-matchups: les heeft al 3 bronnen, overgeslagen"
+    ]
+  },
+  "CY1U4vsaeyA": {
+    "op": "2026-11-26",
+    "bestand": "tactics/codex/uit/CY1U4vsaeyA.json",
+    "nieuw": [
+      "wolves-berserkers-delay-important-drops",
+      "ambush-reduce-deployment-drops",
+      "avoid-chariots-congested-map-packs",
+      "avoid-unhelpful-terrain-before-infantry",
+      "prince-covers-sisters-approach",
+      "occupy-mystical-pathways-destinations",
+      "disguise-refused-flank-mobile-drops",
+      "angle-shooters-guide-enemy-overruns",
+      "deploy-wide-for-pincer"
+    ],
+    "aanvullingen": [
+      "fewer-drops-first-turn",
+      "deploy-slow-army-compact",
+      "deploy-beyond-moving-shooters",
+      "central-mobile-response-threats",
+      "check-first-movement-options"
+    ],
+    "opmerkingen": [
+      "aanvulling op fewer-drops-first-turn: extra citaat van yt-72Xb6oBk4Mk weggehaald voor de nieuwe bron (\"More drops give you more information and more control over the final deployment.\")",
+      "aanvulling op chaff-scouts-deployment: les heeft al 3 bronnen, overgeslagen",
+      "aanvulling op deploy-who-is-beatdown: les heeft al 3 bronnen, overgeslagen",
+      "aanvulling op deploy-beyond-moving-shooters: extra citaat van yt-tRulkCymUfY weggehaald voor de nieuwe bron (\"so that if I go second he can't move and shoot them\")",
+      "aanvulling op layer-resilient-units-retreat-trap: les heeft al 3 bronnen, overgeslagen"
+    ]
+  },
+  "Ftf4_HWNOc8": {
+    "op": "2026-11-26",
+    "bestand": "tactics/codex/uit/Ftf4_HWNOc8.json",
+    "nieuw": [
+      "divide-pursuit-and-reform"
+    ],
+    "aanvullingen": [
+      "coordinate-front-flank-arrival",
+      "heavy-cavalry-avoid-prolonged-grinds (+voorbeeld)",
+      "cavalry-reserve-response-options (+voorbeeld)"
+    ],
+    "opmerkingen": [
+      "aanvulling op decline-charges-for-better-engagements: les heeft al 3 bronnen, overgeslagen"
+    ]
+  },
+  "FwHmDdo6pLQ": {
+    "op": "2026-11-26",
+    "bestand": "tactics/codex/uit/FwHmDdo6pLQ.json",
+    "nieuw": [
+      "chaff-deny-scout-vanguard",
+      "nomadic-mix-chaff-selections",
+      "single-wolf-chariots-limit-panic",
+      "wolf-riders-five-with-spears",
+      "goblins-obstruct-enemy-chaff",
+      "wolf-column-early-chaff",
+      "wolf-column-retain-objectives",
+      "ambush-replace-early-wolf-scorers",
+      "skip-snotling-pump-wagons"
+    ],
+    "aanvullingen": [
+      "nomadic-needs-plenty-chaff",
+      "goblins-block-boar-flankers (+waarom)",
+      "chaff-intercept-overruns",
+      "impetuous-chaff-limit-sight"
+    ],
+    "opmerkingen": [
+      "aanvulling op chaff-kills-are-bonuses: les heeft al 3 bronnen, overgeslagen",
+      "aanvulling op screening-chaff: les heeft al 3 bronnen, overgeslagen",
+      "aanvulling op speed-bump-close-order: les heeft al 3 bronnen, overgeslagen"
+    ]
+  },
+  "Gsjisn0Ncm0": {
+    "op": "2026-11-26",
+    "bestand": "tactics/codex/uit/Gsjisn0Ncm0.json",
+    "nieuw": [
+      "mark-urgency-casting-range",
+      "dragon-facing-before-urgency",
+      "prioritise-urgency-casting-reliability",
+      "urgency-dragon-blocks-wheels",
+      "heavy-cavalry-dragon-backup",
+      "dragon-secondary-escape-coverage",
+      "urgency-rescue-exposes-wizard",
+      "screen-dragon-landing-space",
+      "general-supports-screen-marching",
+      "dragon-deterrent-behind-wizard"
+    ],
+    "aanvullingen": [
+      "movement-spells-early-aggression",
+      "buff-wizard-behind-bubble",
+      "occupy-mystical-pathways-destinations",
+      "arcane-urgency-escape-charge-arcs (+waarom, wanneerNiet)"
+    ],
+    "opmerkingen": [
+      "aanvulling op buff-wizard-behind-bubble: extra citaat van yt-PTzfN_o2UJo weggehaald voor de nieuwe bron (\"It's that second one that doesn't get off that's the problem.\")"
+    ]
+  },
+  "IAMZitD-DzY": {
+    "op": "2026-11-26",
+    "bestand": "tactics/codex/uit/IAMZitD-DzY.json",
+    "nieuw": [
+      "practice-same-tournament-list",
+      "mobile-armies-reward-movement",
+      "gamble-when-already-losing"
+    ],
+    "aanvullingen": [
+      "prepare-for-local-opponents",
+      "army-plan-every-mission"
+    ],
+    "opmerkingen": [
+      "aanvulling op prepare-for-local-opponents: extra citaat van yt-dtzobjI1eTs weggehaald voor de nieuwe bron (\"You need to sometimes just show up and see what's there.\")"
+    ]
+  },
+  "Ifsf5R0lMVM": {
+    "op": "2026-11-26",
+    "bestand": "tactics/codex/uit/Ifsf5R0lMVM.json",
+    "nieuw": [
+      "dwarf-seven-static-resolution",
+      "dwarf-tank-challenges-dragons",
+      "corner-angle-expels-dragon",
+      "gyrocopter-rear-charge-dragon",
+      "three-irondrake-torpedo-units",
+      "grudge-throwers-pressure-dragons",
+      "cannon-aim-behemoth-base",
+      "dragon-slayer-backfield-charge",
+      "dragon-slayer-dishonor-tattoo",
+      "slaying-ranged-dwarf-character",
+      "adamant-anvil-dragon-bait",
+      "royal-king-smiting-dragons"
+    ],
+    "aanvullingen": [
+      "infantry-overwhelm-dragon-numbers",
+      "delay-dragon-score-elsewhere (+waarom)"
+    ],
+    "opmerkingen": [
+      "aanvulling op decoys-set-up-countercharges: les heeft al 3 bronnen, overgeslagen",
+      "aanvulling op layer-resilient-units-retreat-trap: les heeft al 3 bronnen, overgeslagen"
+    ]
+  },
+  "JTo78ilRKYo": {
+    "op": "2026-11-26",
+    "bestand": "tactics/codex/uit/JTo78ilRKYo.json",
+    "nieuw": [
+      "release-fanatics-opponents-turn",
+      "attacking-fanatic-carriers-front",
+      "fanatics-guard-artillery-flanks",
+      "itchy-nuisance-fanatics-dragons",
+      "fanatic-casters-two-turns",
+      "fanatic-carriers-marching-column",
+      "urgency-fanatic-launch-angles",
+      "pathways-corner-fanatic-delivery",
+      "paired-fanatics-remove-themselves"
+    ],
+    "aanvullingen": [
+      "advance-losing-ranged-stalemate",
+      "plague-rust-armoured-targets"
+    ],
+    "opmerkingen": []
+  },
+  "Jyx4eveEW8w": {
+    "op": "2026-11-26",
+    "bestand": "tactics/codex/uit/Jyx4eveEW8w.json",
+    "nieuw": [
+      "furious-charge-objective-push",
+      "orc-furious-charge-aggression",
+      "chaos-warriors-halberd-charge",
+      "slayers-furious-charge-aggression"
+    ],
+    "aanvullingen": [],
+    "opmerkingen": []
+  },
+  "KEmJSyjzDSg": {
+    "op": "2026-11-26",
+    "bestand": "tactics/codex/uit/KEmJSyjzDSg.json",
+    "nieuw": [
+      "boar-flankers-break-grinds",
+      "orc-chariot-crew-frenzy",
+      "prefer-warband-orc-chariots",
+      "black-chariot-great-weapons",
+      "giant-finishes-boar-combats",
+      "giant-advance-threat-priority",
+      "vanguard-boars-column-flank-march",
+      "frenzied-vanguard-boar-flankers"
+    ],
+    "aanvullingen": [
+      "first-charge-infantry-ranks (+waarom)",
+      "black-orc-chariot-standard"
+    ],
+    "opmerkingen": [
+      "aanvulling op black-orc-chariot-standard: extra citaat van yt-Z-MMDE1c5o8 weggehaald voor de nieuwe bron (\"an extra plus one combat res is sometimes all it takes to tip the scales.\")"
+    ]
+  },
+  "LrtjQZSWQmQ": {
+    "op": "2026-11-26",
+    "bestand": "tactics/codex/uit/LrtjQZSWQmQ.json",
+    "nieuw": [
+      "ambush-late-domination-quarters",
+      "minotaurs-weigh-ambush-choice",
+      "marauder-ambush-safe-arrival",
+      "combat-ambushers-survive-arrival",
+      "sky-lantern-skip-ambush"
+    ],
+    "aanvullingen": [
+      "ambushers-pressure-enemy-movement",
+      "ambushers-target-baggage-trains",
+      "fast-cavalry-ambushers (+voorbeeld)",
+      "shooting-ambushers-immediate-impact",
+      "road-wardens-shooting-ambush"
+    ],
+    "opmerkingen": [
+      "aanvulling op fast-cavalry-ambushers: extra citaat van yt-ywxRjssJzE8 weggehaald voor de nieuwe bron (\"my opinion, light cavalry is fantastic at it.\")",
+      "aanvulling op shooting-ambushers-immediate-impact: extra citaat van yt-xdI1oppLbK4 weggehaald voor de nieuwe bron (\"you might be able to get into close range which negates that minus one.\")"
+    ]
+  },
+  "Mm7PRaYDxPk": {
+    "op": "2026-11-26",
+    "bestand": "tactics/codex/uit/Mm7PRaYDxPk.json",
+    "nieuw": [
+      "light-cavalry-clear-redirectors",
+      "light-cavalry-deny-ranks",
+      "light-cavalry-hunt-wizards",
+      "light-cavalry-finish-fugitives",
+      "cavalry-infantry-objective-handover",
+      "preserve-cavalry-domination-scoring",
+      "outriders-vanguard-static-fire",
+      "road-wardens-controlled-pistols",
+      "outriders-thin-infantry-numbers"
+    ],
+    "aanvullingen": [
+      "mobile-baggage-train-attackers (+wanneerNiet)"
+    ],
+    "opmerkingen": [
+      "aanvulling op chaff-scouts-deployment: les heeft al 3 bronnen, overgeslagen"
+    ]
+  },
+  "MroBpuVP0mw": {
+    "op": "2026-11-26",
+    "bestand": "tactics/codex/uit/MroBpuVP0mw.json",
+    "nieuw": [
+      "bolt-throwers-flank-cavalry",
+      "bolt-throwers-sacrificial-flank-distractions",
+      "bolt-thrower-rune-skewering",
+      "artillery-hills-clear-sight",
+      "separate-artillery-deny-overruns",
+      "cannon-grapeshot-close-hunters",
+      "artillery-rune-forging-backup",
+      "artillery-rune-reloading-uptime",
+      "grudge-throwers-early-pressure",
+      "grudge-bombard-hidden-survivors",
+      "hide-grudge-throwers-bombard",
+      "organ-guns-light-armour-targets",
+      "organ-guns-avoid-hit-penalties",
+      "organ-guns-between-combat-units",
+      "artillery-pivot-into-woods",
+      "cannons-counter-evasive-penalties"
+    ],
+    "aanvullingen": [
+      "cannon-aim-behemoth-base",
+      "templates-against-huge-blocks",
+      "grudge-throwers-pressure-dragons"
+    ],
+    "opmerkingen": [
+      "aanvulling op cannon-aim-behemoth-base: extra citaat van yt-Ifsf5R0lMVM weggehaald voor de nieuwe bron (\"or potentially 7 in from the front\")"
+    ]
+  },
+  "P-jxp6aKkb4": {
+    "op": "2026-11-26",
+    "bestand": "tactics/codex/uit/P-jxp6aKkb4.json",
+    "nieuw": [
+      "castle-against-bretonnian-flyers",
+      "strength-four-bretonnian-blessing",
+      "rangers-deny-green-knight",
+      "magical-weapons-green-knight",
+      "hesitation-against-bretonnian-lances",
+      "preservation-challenges-bretonnian-lords",
+      "hidden-grudge-throwers-bombards",
+      "irondrakes-front-against-bretonnia",
+      "gyrocopters-kite-pegasus-knights",
+      "steam-guns-outside-knight-arcs",
+      "rapid-dwarf-mortuary-advance",
+      "runesmith-mortuary-control-spells",
+      "king-leadership-against-necromancy",
+      "rush-ushabti-not-skeletons",
+      "flaming-artillery-tomb-kings",
+      "strength-eight-armour-ages",
+      "one-block-mortuary-commitment",
+      "guard-dwarf-backfield-scorpions",
+      "gyrocopters-hunt-reserve-archers",
+      "gyrocopters-engage-raising-priests",
+      "irondrakes-against-tomb-chariots",
+      "combat-resolution-against-necrosphinx",
+      "dwarfs-catapult-board-edge"
+    ],
+    "aanvullingen": [
+      "anchor-static-combat-resolution",
+      "wide-deployment-against-cannons",
+      "control-with-ranged-firepower"
+    ],
+    "opmerkingen": [
+      "aanvulling op anchor-static-combat-resolution: extra citaat van yt-3L00jVNHOfg weggehaald voor de nieuwe bron (\"you have a musician to give you 6.5 combat res.\")",
+      "aanvulling op decoys-set-up-countercharges: les heeft al 3 bronnen, overgeslagen",
+      "aanvulling op control-with-ranged-firepower: extra citaat van yt-N0-c_rYbvR8 weggehaald voor de nieuwe bron (\"sure that I get the combats I want after I weaken Patty's battle line.\")",
+      "aanvulling op plan-overruns-repeat-combats: les heeft al 3 bronnen, overgeslagen"
+    ]
+  },
+  "Phr3h58uwoA": {
+    "op": "2026-11-26",
+    "bestand": "tactics/codex/uit/Phr3h58uwoA.json",
+    "nieuw": [
+      "banshee-double-engine-reach",
+      "double-engine-casting-core",
+      "dirge-necromancy-leadership-stack",
+      "terrorgheist-scream-screen-gap",
+      "dirge-picks-lone-support",
+      "zombies-pin-scream-targets",
+      "mortis-engine-scream-escape",
+      "six-screamer-army-core"
+    ],
+    "aanvullingen": [
+      "flying-banshee-scream-withdrawal"
+    ],
+    "opmerkingen": []
+  },
+  "PwNtHvZi7fg": {
+    "op": "2026-11-26",
+    "bestand": "tactics/codex/uit/PwNtHvZi7fg.json",
+    "nieuw": [
+      "wood-elves-control-buys-time",
+      "warhawk-control-spellweaver-build",
+      "treesinging-extend-defensive-forest",
+      "lesser-wizard-secures-spells",
+      "glade-guard-ten-twenty",
+      "deepwood-scouts-ten-models",
+      "glade-guard-arcane-bodkins",
+      "deepwood-scouts-trueflight-arrows",
+      "glade-guard-distance-hill-retreat",
+      "deepwood-scouts-distract-pursuers",
+      "elf-rider-combat-restraint",
+      "woodland-ambush-terrain-corridor",
+      "wood-elves-prefer-second-turn",
+      "wood-elves-occupy-cleared-space"
+    ],
+    "aanvullingen": [
+      "focus-combat-character-role",
+      "combine-wood-elf-forests",
+      "central-mobile-response-threats (+voorbeeld)"
+    ],
+    "opmerkingen": [
+      "aanvulling op deploy-defensively-vs-shooting: les heeft al 3 bronnen, overgeslagen",
+      "aanvulling op concentrate-against-enemy-part: les heeft al 3 bronnen, overgeslagen",
+      "aanvulling op central-mobile-response-threats: extra citaat van yt-0gukL8wYV08 weggehaald voor de nieuwe bron (\"want to keep your mobile threats as central as possible so they're able to respond.\")"
+    ]
+  },
+  "R4ecNys5jQQ": {
+    "op": "2026-11-26",
+    "bestand": "tactics/codex/uit/R4ecNys5jQQ.json",
+    "nieuw": [
+      "scar-veteran-carnosaur-competitive",
+      "embrace-slann-despite-cost",
+      "cold-one-oldblood-option",
+      "lizardmen-screening-packages",
+      "chameleon-skinks-worth-cost",
+      "choose-lizardmen-infantry-anvil",
+      "saurus-sixteen-twenty-models",
+      "ancient-stegadon-central-cornerstone",
+      "lizardmen-multiple-terror-causers",
+      "lizardmen-flankers-extreme-angles",
+      "lizardmen-flankers-skip-champions"
+    ],
+    "aanvullingen": [
+      "skirmish-blender-character",
+      "jungle-swarms-disposable-anvil",
+      "saurus-anvil-takes-charges"
+    ],
+    "opmerkingen": [
+      "aanvulling op skirmish-blender-character: extra citaat van yt-bbn2DD5MoUk weggehaald voor de nieuwe bron (\"they only tend to cost about 300 points\")",
+      "aanvulling op stubborn-anchor-countercharge: les heeft al 3 bronnen, overgeslagen"
+    ]
+  },
+  "RUWFyl0eK00": {
+    "op": "2026-11-26",
+    "bestand": "tactics/codex/uit/RUWFyl0eK00.json",
+    "nieuw": [
+      "glade-guard-chaff-option",
+      "wood-elf-eagle-war-machines",
+      "closest-skirmisher-force-wheel",
+      "chaff-flee-panic-risk",
+      "chaff-preserve-friendly-lanes",
+      "chaff-budget-five-percent",
+      "redirect-blocks-into-traffic"
+    ],
+    "aanvullingen": [
+      "chaff-sets-tempo",
+      "chaff-block-marching (+wanneerNiet)",
+      "shoot-diverters-out-early"
+    ],
+    "opmerkingen": [
+      "aanvulling op chaff-sets-tempo: extra citaat van yt-w5Uye9wgycA weggehaald voor de nieuwe bron (\"these units are costing you under 100 points\")",
+      "aanvulling op chaff-scouts-deployment: les heeft al 3 bronnen, overgeslagen",
+      "aanvulling op screening-chaff: les heeft al 3 bronnen, overgeslagen",
+      "aanvulling op screen-frenzy-compulsory-charges: les heeft al 3 bronnen, overgeslagen",
+      "aanvulling op chaff-speed-bumps: les heeft al 3 bronnen, overgeslagen",
+      "aanvulling op decoys-set-up-countercharges: les heeft al 3 bronnen, overgeslagen",
+      "aanvulling op chaff-decoys: les heeft al 3 bronnen, overgeslagen"
+    ]
+  },
+  "TLSHD6OZivk": {
+    "op": "2026-11-26",
+    "bestand": "tactics/codex/uit/TLSHD6OZivk.json",
+    "nieuw": [
+      "heavy-cavalry-avoid-prolonged-grinds",
+      "monstrous-cavalry-grinding-role",
+      "regular-cavalry-earlier-pressure",
+      "sacrifice-regular-cavalry-softening",
+      "light-missile-cavalry-shoot-chaff"
+    ],
+    "aanvullingen": [
+      "light-cavalry-clear-redirectors",
+      "outriders-vanguard-static-fire (+wanneerNiet)"
+    ],
+    "opmerkingen": [
+      "aanvulling op chaff-scouts-deployment: les heeft al 3 bronnen, overgeslagen",
+      "aanvulling op screening-chaff: les heeft al 3 bronnen, overgeslagen",
+      "aanvulling op chaff-decoys: les heeft al 3 bronnen, overgeslagen"
+    ]
+  },
+  "Z6_GYlI_Ofk": {
+    "op": "2026-11-26",
+    "bestand": "tactics/codex/uit/Z6_GYlI_Ofk.json",
+    "nieuw": [
+      "assess-beatdown-per-unit",
+      "dragon-outmanoeuvre-stronger-dragon",
+      "debrief-opponents-about-weaknesses",
+      "durable-army-claim-objectives-early",
+      "terrain-forces-control-role",
+      "wood-elves-kite-beastmen",
+      "advance-losing-ranged-stalemate"
+    ],
+    "aanvullingen": [
+      "align-sacrifices-for-empty-overruns",
+      "repurpose-pieces-as-chaff (+waarom)",
+      "gunlines-score-without-contact",
+      "zone-with-overlapping-threats"
+    ],
+    "opmerkingen": [
+      "aanvulling op deploy-who-is-beatdown: les heeft al 3 bronnen, overgeslagen",
+      "aanvulling op align-sacrifices-for-empty-overruns: extra citaat van yt-Hp4zVz36yQQ weggehaald voor de nieuwe bron (\"straightforward into empty space\")",
+      "aanvulling op gunlines-score-without-contact: extra citaat van yt-ZdFsJWjjBGM weggehaald voor de nieuwe bron (\"your opponent immediately has to start rushing towards you\")",
+      "aanvulling op zone-with-overlapping-threats: extra citaat van yt-v82EA60pzII weggehaald voor de nieuwe bron (\"put your opponent in two minds\")"
+    ]
+  },
+  "dgGjcl0trpA": {
+    "op": "2026-11-26",
+    "bestand": "tactics/codex/uit/dgGjcl0trpA.json",
+    "nieuw": [
+      "wood-elves-avoid-receiving-charges",
+      "wood-elves-escape-before-shooting",
+      "wood-elves-concentrate-bow-fire",
+      "spread-elves-prevent-chained-combats",
+      "corner-sacrifice-wastes-return-turn"
+    ],
+    "aanvullingen": [
+      "wood-elves-occupy-cleared-space",
+      "wood-elves-clear-mobile-ranged",
+      "evasive-retreat-behind-hill",
+      "check-first-movement-options (+voorbeeld)",
+      "wood-elves-prefer-second-turn (+waarom)",
+      "combine-wood-elf-forests"
+    ],
+    "opmerkingen": [
+      "aanvulling op wood-elves-clear-mobile-ranged: extra citaat van yt-tRulkCymUfY weggehaald voor de nieuwe bron (\"skin wolves I would have loved to deal with early\")",
+      "aanvulling op terrain-low-roll-charges: les heeft al 3 bronnen, overgeslagen",
+      "aanvulling op check-first-movement-options: extra citaat van yt-72Xb6oBk4Mk weggehaald voor de nieuwe bron (\"Can I respond to what my opponent does?\")",
+      "aanvulling op deploy-defensively-vs-shooting: les heeft al 3 bronnen, overgeslagen",
+      "aanvulling op combine-wood-elf-forests: extra citaat van yt-H8Lmv6tOLCI weggehaald voor de nieuwe bron (\"use this forest to block line of sight to some high priority targets\")"
+    ]
+  },
+  "dv3fdh8RLbE": {
+    "op": "2026-11-26",
+    "bestand": "tactics/codex/uit/dv3fdh8RLbE.json",
+    "nieuw": [
+      "own-dragon-pressure-miao",
+      "artillery-pressure-miao",
+      "avoid-challenge-roadblock-miao",
+      "dragon-sword-deters-miao",
+      "duke-threatens-both-miao-forms",
+      "tarpit-shugengan-with-large-units",
+      "lance-cavalry-deter-jade-lancers",
+      "sky-lantern-charge-roadblock",
+      "lantern-disengage-through-friendly-unit",
+      "cannons-strip-lantern-wounds",
+      "defensive-jade-sentinel-ramparts",
+      "bsb-against-rocket-panic",
+      "ogre-crew-cathayan-cannon",
+      "shoot-cathayan-cannons-first",
+      "deny-cathay-valuable-cannon-targets",
+      "defensive-builds-weather-cathay",
+      "hordes-bog-down-cathay",
+      "dispel-items-against-cathay"
+    ],
+    "aanvullingen": [
+      "assassins-all-round-movement",
+      "falcon-horn-stop-lantern-flight"
+    ],
+    "opmerkingen": [
+      "aanvulling op shelter-monsters-from-cannons: les heeft al 3 bronnen, overgeslagen",
+      "aanvulling op shift-lone-character-protection: les heeft al 3 bronnen, overgeslagen"
+    ]
+  },
+  "fTygcMRbFaM": {
+    "op": "2026-11-26",
+    "bestand": "tactics/codex/uit/fTygcMRbFaM.json",
+    "nieuw": [
+      "advance-runesmith-dispel-aura",
+      "prefer-runesmith-over-runelord",
+      "balance-rune-on-anvil",
+      "overlap-anvil-runesmith-auras",
+      "reserve-spellbreaking-for-mirage",
+      "delay-breaking-crystal-column",
+      "anvil-forward-against-rust",
+      "double-move-runesmith-coverage",
+      "stop-fetish-vile-tide",
+      "stop-undead-leadership-barrage",
+      "space-units-against-pillar",
+      "warded-front-against-pillar",
+      "spellbreak-itchy-nuisance",
+      "royal-clans-runesmith-bsb"
+    ],
+    "aanvullingen": [
+      "runesmith-mortuary-control-spells"
+    ],
+    "opmerkingen": []
+  },
+  "h0DjMzG9AyY": {
+    "op": "2026-11-26",
+    "bestand": "tactics/codex/uit/h0DjMzG9AyY.json",
+    "nieuw": [
+      "skeletons-necrotects-prince-punch",
+      "infantry-icon-multiple-wounds",
+      "steed-shadows-melee-character-block",
+      "inexpensive-durable-unit-characters",
+      "hobgoblins-character-leadership-support",
+      "narrow-frontage-drop-musician",
+      "melee-character-central-attack-side",
+      "support-character-opposite-threats",
+      "support-character-one-file-in",
+      "cluster-vulnerable-support-characters",
+      "melee-character-clear-outer-files",
+      "corner-character-dual-charge-challenge",
+      "displace-champion-to-threatened-corner",
+      "reposition-characters-before-enemy-charge"
+    ],
+    "aanvullingen": [
+      "characters-improve-ordinary-troops (+waarom, voorbeeld, wanneerNiet)"
+    ],
+    "opmerkingen": []
+  },
+  "hE0mBMOwDps": {
+    "op": "2026-11-26",
+    "bestand": "tactics/codex/uit/hE0mBMOwDps.json",
+    "nieuw": [
+      "check-dragon-movement-limits",
+      "heroism-flying-monster-hunter",
+      "goblin-chariot-dragon-deterrent",
+      "versatile-multiple-wound-weapons",
+      "shooting-zones-against-dragons",
+      "falcon-horn-chaff-dragon",
+      "let-dragon-charge-first",
+      "avoid-linehammer-dragon-counter",
+      "soften-dragons-early-shooting",
+      "dwarf-mixed-dragon-firepower",
+      "answer-dragons-with-dragons",
+      "illusion-deny-dragon-charges"
+    ],
+    "aanvullingen": [
+      "paired-scorpions-flank-pinned-threat",
+      "concentrate-points-death-star (+voorbeeld)",
+      "delay-dragon-score-elsewhere",
+      "three-irondrake-torpedo-units",
+      "light-death-leadership-debuffs"
+    ],
+    "opmerkingen": [
+      "aanvulling op concentrate-points-death-star: extra citaat van yt-lcw8Zx1xpMA weggehaald voor de nieuwe bron (\"if you form a big unit, a lot of the things like buffs compound.\")",
+      "aanvulling op decoys-set-up-countercharges: les heeft al 3 bronnen, overgeslagen",
+      "aanvulling op delay-dragon-score-elsewhere: extra citaat van yt-jO-rEVzf_Ks weggehaald voor de nieuwe bron (\"points and just win that race.\")",
+      "aanvulling op anchor-challenges-against-dragons: les heeft al 3 bronnen, overgeslagen",
+      "aanvulling op light-death-leadership-debuffs: extra citaat van yt-pElilulzeF8 weggehaald voor de nieuwe bron (\"light of death is potentially worse than a vampire scream.\")",
+      "aanvulling op control-spells-block-lanes: les heeft al 3 bronnen, overgeslagen"
+    ]
+  },
+  "kCsDny5qMww": {
+    "op": "2026-11-26",
+    "bestand": "tactics/codex/uit/kCsDny5qMww.json",
+    "nieuw": [
+      "artillery-remove-counters-first",
+      "artillery-opportunistic-late-points",
+      "empire-hold-then-flank",
+      "cannon-deep-elite-formations",
+      "cannon-ranked-bodies-over-shallow-elites",
+      "cannon-flying-character-opportunities",
+      "protect-cannons-from-fast-hunters"
+    ],
+    "aanvullingen": [
+      "identify-enemy-winning-method",
+      "great-cannon-counterbattery-fire"
+    ],
+    "opmerkingen": []
+  },
+  "l4Hujk-DcDo": {
+    "op": "2026-11-26",
+    "bestand": "tactics/codex/uit/l4Hujk-DcDo.json",
+    "nieuw": [
+      "plan-small-unit-groups",
+      "separate-large-infantry-blocks",
+      "central-sheltered-chaff-deployment",
+      "investigate-unfamiliar-list-centrepieces",
+      "ignore-slow-expensive-threats",
+      "build-backup-key-pieces",
+      "repurpose-pieces-as-chaff",
+      "recover-points-unguarded-areas",
+      "write-phase-reminder-sheet"
+    ],
+    "aanvullingen": [
+      "mobile-armies-reward-movement",
+      "deploy-early-ensure-fit",
+      "position-for-next-turn-charges",
+      "deploy-for-later-positions (+voorbeeld)"
+    ],
+    "opmerkingen": [
+      "aanvulling op deploy-for-unit-synergy: les heeft al 3 bronnen, overgeslagen",
+      "aanvulling op chaff-kills-are-bonuses: les heeft al 3 bronnen, overgeslagen"
+    ]
+  },
+  "nGuOKXq5YeQ": {
+    "op": "2026-11-26",
+    "bestand": "tactics/codex/uit/nGuOKXq5YeQ.json",
+    "nieuw": [
+      "reserve-move-block-undead-raising",
+      "wind-blast-limit-undead-raising"
+    ],
+    "aanvullingen": [],
+    "opmerkingen": []
+  },
+  "pJG5i6ReU24": {
+    "op": "2026-11-26",
+    "bestand": "tactics/codex/uit/pJG5i6ReU24.json",
+    "nieuw": [
+      "check-partial-alignment-overruns",
+      "rehearse-opening-deployment-before-events",
+      "stay-beyond-known-charge-reach"
+    ],
+    "aanvullingen": [
+      "thin-formations-against-bombing (+voorbeeld)"
+    ],
+    "opmerkingen": [
+      "aanvulling op align-sacrifices-for-empty-overruns: les heeft al 3 bronnen, overgeslagen",
+      "aanvulling op thin-formations-against-bombing: extra citaat van yt-pElilulzeF8 weggehaald voor de nieuwe bron (\"you might as well just go into marching column\")",
+      "aanvulling op deploy-read-terrain: les heeft al 3 bronnen, overgeslagen"
+    ]
+  },
+  "s8sHnbYgl9I": {
+    "op": "2026-11-26",
+    "bestand": "tactics/codex/uit/s8sHnbYgl9I.json",
+    "nieuw": [
+      "simplify-unfamiliar-tournament-armies",
+      "anchor-flanks-on-terrain",
+      "hide-mortis-engines-artillery",
+      "sandwich-banshees-between-engines",
+      "reserve-move-undead-pressure",
+      "flying-banshee-scream-withdrawal",
+      "moderate-early-battle-points",
+      "finish-six-turns-vampires",
+      "accept-small-tournament-loss"
+    ],
+    "aanvullingen": [
+      "write-phase-reminder-sheet",
+      "prefer-familiar-tournament-armies (+voorbeeld)",
+      "identify-enemy-winning-method",
+      "choose-side-for-armies",
+      "check-scenario-deployment-map",
+      "avoid-single-matchup-tech",
+      "compare-points-before-risking",
+      "gamble-when-already-losing",
+      "identify-expendable-units"
+    ],
+    "opmerkingen": [
+      "aanvulling op prefer-familiar-tournament-armies: extra citaat van yt-dtzobjI1eTs weggehaald voor de nieuwe bron (\"you need the reps in with tournament list.\")",
+      "aanvulling op identify-enemy-winning-method: extra citaat van yt-FWUiFk5AOjg weggehaald voor de nieuwe bron (\"more in terms of big picture heruristics rather than every [clears throat] little detail\")",
+      "aanvulling op choose-side-for-armies: extra citaat van yt-EOjTbmlZ9o4 weggehaald voor de nieuwe bron (\"hey this side might have more Hills this side might have more ruins\")",
+      "aanvulling op check-scenario-deployment-map: extra citaat van yt-72Xb6oBk4Mk weggehaald voor de nieuwe bron (\"they can completely change how your army approaches the game.\")",
+      "aanvulling op avoid-single-matchup-tech: extra citaat van yt-dtzobjI1eTs weggehaald voor de nieuwe bron (\"then you become skew yourself and then you lose to a different skew.\")",
+      "aanvulling op identify-expendable-units: extra citaat van yt-N0-c_rYbvR8 weggehaald voor de nieuwe bron (\"I'm just going to have to find the best way to sacrifice them\")",
+      "aanvulling op prepare-for-local-opponents: les heeft al 3 bronnen, overgeslagen"
+    ]
+  },
+  "syNBv6tl8cg": {
+    "op": "2026-11-26",
+    "bestand": "tactics/codex/uit/syNBv6tl8cg.json",
+    "nieuw": [
+      "nomadic-needs-plenty-chaff",
+      "leave-several-boar-deployment-gaps",
+      "boar-boyz-targets-cannot-escape",
+      "goblins-block-boar-flankers",
+      "hold-spare-chaff-back",
+      "impetuous-chaff-limit-sight",
+      "boar-dragon-challenge-choice",
+      "boar-boyz-take-bait"
+    ],
+    "aanvullingen": [
+      "position-for-next-turn-charges",
+      "coordinate-front-flank-arrival",
+      "position-fast-monster-pursuers"
+    ],
+    "opmerkingen": [
+      "aanvulling op chaff-scouts-deployment: les heeft al 3 bronnen, overgeslagen",
+      "aanvulling op position-for-next-turn-charges: extra citaat van yt-alCIWRq-CsY weggehaald voor de nieuwe bron (\"You have created a realistic charge threat for next turn.\")",
+      "aanvulling op coordinate-front-flank-arrival: extra citaat van yt-alCIWRq-CsY weggehaald voor de nieuwe bron (\"position over one or two previous turns, timing them till they arrive together.\")",
+      "aanvulling op delay-dragon-score-elsewhere: les heeft al 3 bronnen, overgeslagen"
+    ]
+  },
+  "uk32LJ3IFmk": {
+    "op": "2026-11-26",
+    "bestand": "tactics/codex/uit/uk32LJ3IFmk.json",
+    "nieuw": [
+      "empire-archers-flexible-chaff",
+      "pegasus-avoid-stretched-formations",
+      "khorne-furies-melee-skirmishers",
+      "melee-skirmishers-value-swiftstride",
+      "skirmisher-charges-wide-frontage",
+      "shooting-skirmishers-accuracy-poison",
+      "skirmishing-shooters-quick-shot",
+      "gutter-runners-always-poison",
+      "gutter-runners-weapon-role",
+      "deepwood-scouts-leading-skirmishers",
+      "deepwood-scouts-hagbane-default",
+      "woods-stack-skirmisher-shooting-defence",
+      "crossfire-constrains-evasive-retreats",
+      "evasive-retreat-board-edge-pressure",
+      "compact-five-model-skirmisher-groups",
+      "rangers-consider-open-order",
+      "offset-skirmisher-centre-charge-bait"
+    ],
+    "aanvullingen": [
+      "evasive-retreat-behind-hill",
+      "evasive-limit-fireball-reach",
+      "frenzy-bait-only-target"
+    ],
+    "opmerkingen": [
+      "aanvulling op chaff-under-100-points: les heeft al 3 bronnen, overgeslagen",
+      "aanvulling op evasive-retreat-behind-hill: extra citaat van yt-2yxaFqlrg4U weggehaald voor de nieuwe bron (\"then I was able to add my Swift stride for another 4 in\")"
+    ]
+  },
+  "vTAd8JKsNNU": {
+    "op": "2026-11-26",
+    "bestand": "tactics/codex/uit/vTAd8JKsNNU.json",
+    "nieuw": [
+      "cavalry-flank-threat-choices",
+      "soften-targets-before-cavalry",
+      "cavalry-push-off-objectives",
+      "chaff-absorbs-cavalry-first-charge",
+      "small-cavalry-counters-msu",
+      "cavalry-reserve-response-options",
+      "empire-knights-buy-artillery-time"
+    ],
+    "aanvullingen": [],
+    "opmerkingen": []
+  },
+  "vTgLlAHwrFM": {
+    "op": "2026-11-26",
+    "bestand": "tactics/codex/uit/vTgLlAHwrFM.json",
+    "nieuw": [
+      "six-silver-helms-command",
+      "drilled-cavalry-terrain-cover",
+      "dragon-facing-deters-advance",
+      "box-in-drilled-knights",
+      "avoid-displacing-champion-rearward",
+      "avoid-enemy-retreat-chains",
+      "check-retreat-unit-strength"
+    ],
+    "aanvullingen": [],
+    "opmerkingen": [
+      "aanvulling op chaff-engineered-enemy-retreats: les heeft al 3 bronnen, overgeslagen"
+    ]
   }
 }

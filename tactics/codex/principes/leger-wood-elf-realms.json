@@ -2,22 +2,31 @@
   "scope": "leger-wood-elf-realms",
   "soort": "leger",
   "sleutel": "wood-elf-realms",
-  "gemaaktOp": "2026-11-25T23:35:20.870Z",
+  "gemaaktOp": "2026-11-26T04:44:30.770Z",
   "model": "gpt-6.1-sol",
   "effort": "high",
-  "invoerHash": "edac9652cdb3",
+  "invoerHash": "9000ce6f0e64",
   "invoer": [
     "wood-elves-spread-opponents",
     "wild-hunt-combat-choice",
+    "wood-elves-control-buys-time",
+    "wood-elves-occupy-cleared-space",
     "deploy-defensively-vs-shooting",
     "glade-riders-shoot-withdraw",
     "treeman-bsb-backline-defence",
+    "wood-elves-prefer-second-turn",
+    "spread-elves-prevent-chained-combats",
     "warhawk-riders-evasive-screen",
+    "deepwood-scouts-distract-pursuers",
+    "glade-guard-chaff-option",
     "eternal-guard-anchor-trap",
     "tree-kin-wood-elf-anchor",
     "forest-dragon-threatens-lanterns",
     "wilds-missile-against-lanterns",
     "wood-elf-reserve-blaster",
+    "warhawk-control-spellweaver-build",
+    "treesinging-extend-defensive-forest",
+    "lesser-wizard-secures-spells",
     "combine-wood-elf-forests",
     "wood-elves-reconsider-poison",
     "bodkins-remove-lantern-armour",
@@ -26,34 +35,63 @@
     "poison-scouts-clear-cannon",
     "wood-elves-outrange-dwarf-shooting",
     "wood-elves-clear-mobile-ranged",
+    "glade-guard-ten-twenty",
+    "deepwood-scouts-ten-models",
+    "glade-guard-arcane-bodkins",
+    "deepwood-scouts-trueflight-arrows",
+    "glade-guard-distance-hill-retreat",
+    "woodland-ambush-terrain-corridor",
+    "wood-elf-eagle-war-machines",
+    "wood-elves-escape-before-shooting",
+    "wood-elves-concentrate-bow-fire",
+    "deepwood-scouts-leading-skirmishers",
+    "deepwood-scouts-hagbane-default",
+    "elf-rider-combat-restraint",
+    "wood-elves-kite-beastmen",
+    "wood-elves-avoid-receiving-charges",
     "eternal-guard-charge-for-scoring"
   ],
   "principes": [
     {
-      "id": "use-evasive-to-retreat-when-targeted-by-shooting",
-      "titel": "Use Evasive to retreat when targeted by shooting",
-      "tekst": "When an enemy targets you with shooting, use Evasive to move away. Your retreat can reduce the effectiveness of that shooting.",
+      "id": "concentrate-shooting-on-one-target",
+      "titel": "Concentrate your shooting on one target",
+      "tekst": "Focus your shots on one enemy target to improve your chances of removing it.",
       "soort": "principe",
-      "thema": "movement",
+      "thema": "shooting-terrain",
       "leger": "wood-elf-realms",
       "lessen": [
-        "warhawk-riders-evasive-screen",
-        "evasive-push-bombs-long-range",
-        "forest-dragon-evade-reform"
+        "wood-elves-reconsider-poison",
+        "poison-scouts-clear-cannon",
+        "wood-elves-concentrate-bow-fire"
       ],
       "kanten": null
     },
     {
-      "id": "deploy-units-out-of-sight-of-enemy-shooting",
-      "titel": "Deploy units out of sight of enemy shooting",
-      "tekst": "Hide your units during deployment to protect them from enemy shooting, especially when your opponent could go first.",
+      "id": "delay-enemies-to-buy-time",
+      "titel": "Delay enemies to buy time for your attacks",
+      "tekst": "Use movement or control to make enemies take longer to reach you. This gives you more time for shooting and favourable attacks.",
       "soort": "principe",
-      "thema": "deployment",
+      "thema": "game-plan",
       "leger": "wood-elf-realms",
       "lessen": [
-        "deploy-defensively-vs-shooting",
-        "glade-riders-shoot-withdraw",
-        "combine-wood-elf-forests"
+        "wood-elves-control-buys-time",
+        "deepwood-scouts-distract-pursuers",
+        "glade-guard-distance-hill-retreat",
+        "wood-elves-kite-beastmen"
+      ],
+      "kanten": null
+    },
+    {
+      "id": "use-mobility-to-avoid-enemy-charges",
+      "titel": "Use mobility to avoid enemy charges",
+      "tekst": "Move clear of advancing enemies to keep your units from being caught in combat.",
+      "soort": "principe",
+      "thema": "movement",
+      "leger": "wood-elf-realms",
+      "lessen": [
+        "wood-elves-escape-before-shooting",
+        "wood-elves-kite-beastmen",
+        "wood-elves-avoid-receiving-charges"
       ],
       "kanten": null
     }
@@ -62,15 +100,15 @@
   "runs": [
     {
       "poging": 1,
-      "promptKB": 16,
-      "sec": 37,
+      "promptKB": 28,
+      "sec": 68,
       "exit": 0,
       "usage": {
-        "input_tokens": 30683,
+        "input_tokens": 34234,
         "cached_input_tokens": 0,
         "cache_write_input_tokens": 0,
-        "output_tokens": 1639,
-        "reasoning_output_tokens": 1407
+        "output_tokens": 2906,
+        "reasoning_output_tokens": 2577
       },
       "items": {
         "agent_message": 1

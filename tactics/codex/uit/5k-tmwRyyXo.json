@@ -1,0 +1,911 @@
+{
+  "videoId": "5k-tmwRyyXo",
+  "bronId": "yt-5k-tmwRyyXo",
+  "model": "GPT-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-26T03:17:46.312Z",
+  "nieuw": [
+    {
+      "id": "bone-dragon-neutralises-monsters",
+      "titel": "Use the protected Bone Dragon to neutralise enemy monsters",
+      "tekst": "In his Tomb Kings plan, send the Tomb King on a Necrolith Bone Dragon into the opponent's big monster and keep it occupied. He builds this tank with Armour of Ages and Talisman of Protection.",
+      "waarom": "He expects its durability to let it trade blows all game without either monster giving up its points.",
+      "voorbeeld": "He envisages putting his dragon directly against a Chaos Dragon and having them fight each other for the rest of the game.",
+      "wanneerNiet": "He acknowledges that 439 points is a large investment.",
+      "fase": "movement",
+      "themas": [
+        "characters",
+        "matchups"
+      ],
+      "subthemas": [
+        "combat-roles",
+        "vs-monsters"
+      ],
+      "tags": [
+        "tarpit",
+        "dragons",
+        "ward-save",
+        "regeneration",
+        "magic-items"
+      ],
+      "leger": "tomb-kings-of-khemri",
+      "units": [
+        "Tomb King",
+        "Necrolith Bone Dragon"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-5k-tmwRyyXo",
+          "url": "https://www.youtube.com/watch?v=5k-tmwRyyXo&t=178s",
+          "tijd": 181,
+          "citaat": "it's there to essentially nullify my opponent's big monster thing",
+          "extraCitaten": [
+            {
+              "tijd": 172,
+              "citaat": "they'll just basically sit there slogging each other's guts all game"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-08-23",
+      "markeringen": []
+    },
+    {
+      "id": "high-priest-near-herald",
+      "titel": "Keep the High Priest near a BSB for Leadership rerolls",
+      "tekst": "Keep the High Priest near the Royal Herald BSB to reroll failed Leadership tests for his abilities. He particularly wants this support for Arise and for bringing a Tomb Scorpion up near the priest.",
+      "waarom": "He stresses that Arise uses a Leadership test and that the scorpion-arrival ability also needs one.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "characters",
+        "magic"
+      ],
+      "subthemas": [
+        "bsb",
+        "wizard-placement"
+      ],
+      "tags": [
+        "bsb",
+        "leadership"
+      ],
+      "leger": "tomb-kings-of-khemri",
+      "units": [
+        "High Priest",
+        "Royal Herald"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-5k-tmwRyyXo",
+          "url": "https://www.youtube.com/watch?v=5k-tmwRyyXo&t=865s",
+          "tijd": 868,
+          "citaat": "which is why you need him near a BSB",
+          "extraCitaten": [
+            {
+              "tijd": 390,
+              "citaat": "arise is a leadership test"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-08-23",
+      "markeringen": []
+    },
+    {
+      "id": "necrotect-poison-skeleton-attacks",
+      "titel": "Combine a Necrotect's attack buffs with poisoned Skeleton Warriors",
+      "tekst": "Consider a Necrotect carrying the Amulet of the Serpent in Skeleton Warriors, combining poisoned attacks with extra attacks and hit rerolls. He prefers this approach to spending heavily on improving their Weapon Skill.",
+      "waarom": "He says improved Weapon Skill would still leave the skeletons at Strength 3 with poor Initiative, whereas more attacks and rerolls offer more chances to roll poison sixes against high Toughness.",
+      "voorbeeld": null,
+      "wanneerNiet": "He expects only a little damage output and says dealing damage is not really the block's job.",
+      "fase": "army-building",
+      "themas": [
+        "infantry",
+        "characters"
+      ],
+      "subthemas": [
+        "unit-builds",
+        "mounts-items"
+      ],
+      "tags": [
+        "poison",
+        "magic-items",
+        "close-order"
+      ],
+      "leger": "tomb-kings-of-khemri",
+      "units": [
+        "Skeleton Warriors Tomb Kings",
+        "Necrotect"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-5k-tmwRyyXo",
+          "url": "https://www.youtube.com/watch?v=5k-tmwRyyXo&t=561s",
+          "tijd": 564,
+          "citaat": "let's lean into this poison give them more attacks",
+          "extraCitaten": [
+            {
+              "tijd": 532,
+              "citaat": "you can roll all of those hits trying to spike for sixes"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-08-23",
+      "markeringen": []
+    },
+    {
+      "id": "horse-archers-isolated-skirmishers",
+      "titel": "Hunt isolated skirmishers with five Skeleton Horse Archers",
+      "tekst": "Use five-model Skeleton Horse Archer units to attack skirmishers outside their general's Inspiring Presence. He thinks they have a reasonable chance of winning those fights.",
+      "waarom": "He points to their Unit Strength and the Fear tests they can impose, with failed tests reducing the enemy's effectiveness in combat.",
+      "voorbeeld": "He describes attacking a unit of about six Empire Archers away from its general.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "chaff"
+      ],
+      "subthemas": [
+        "clearing-chaff"
+      ],
+      "tags": [
+        "light-cavalry",
+        "skirmishers",
+        "terror",
+        "unit-strength",
+        "leadership"
+      ],
+      "leger": "tomb-kings-of-khemri",
+      "units": [
+        "Skeleton Horse Archers"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-5k-tmwRyyXo",
+          "url": "https://www.youtube.com/watch?v=5k-tmwRyyXo&t=627s",
+          "tijd": 630,
+          "citaat": "take out",
+          "extraCitaten": [
+            {
+              "tijd": 638,
+              "citaat": "units that are outside of the General's inspiring presence"
+            },
+            {
+              "tijd": 666,
+              "citaat": "have got a reasonably decent chance of taking out some skirmishes"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-08-23",
+      "markeringen": []
+    },
+    {
+      "id": "six-great-bow-ushabti",
+      "titel": "Keep six great-bow Ushabti together",
+      "tekst": "He favours one unit of six Ushabti with great bows over splitting them into two units of three.",
+      "waarom": "He has tried two units of three and found that arrangement did not work very well.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "missile-units"
+      ],
+      "tags": [
+        "missile-troops",
+        "monstrous-infantry"
+      ],
+      "leger": "tomb-kings-of-khemri",
+      "units": [
+        "Ushabti"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-5k-tmwRyyXo",
+          "url": "https://www.youtube.com/watch?v=5k-tmwRyyXo&t=701s",
+          "tijd": 704,
+          "citaat": "I've got six of them with great bows",
+          "extraCitaten": [
+            {
+              "tijd": 704,
+              "citaat": "I have tried it in two units of three"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-08-23",
+      "markeringen": []
+    },
+    {
+      "id": "ushabti-shoot-monsters-ogres",
+      "titel": "Give great-bow Ushabti targets their armour piercing can handle",
+      "tekst": "Use great-bow Ushabti against monstrous infantry such as Ogres and against standalone monsters. He also rates them against cavalry, but warns against very heavily armoured targets.",
+      "waarom": "He values their Strength 6, two-damage shots and their ability to keep hitting on fours despite movement or long range.",
+      "voorbeeld": null,
+      "wanneerNiet": "He says their low armour piercing makes them poor against Dragon Princes with a two-plus save or a Bretonnian Duke with a two-plus save rerolling ones.",
+      "fase": "magic-shooting",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "target-priority"
+      ],
+      "tags": [
+        "missile-troops",
+        "multiple-wounds",
+        "armour-piercing",
+        "monstrous-infantry",
+        "monsters"
+      ],
+      "leger": "tomb-kings-of-khemri",
+      "units": [
+        "Ushabti"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-5k-tmwRyyXo",
+          "url": "https://www.youtube.com/watch?v=5k-tmwRyyXo&t=784s",
+          "tijd": 787,
+          "citaat": "they're super good against like monstrous infantry like ogres",
+          "extraCitaten": [
+            {
+              "tijd": 795,
+              "citaat": "they're not very good against stuff like you know High Health Dragon princes"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-08-23",
+      "markeringen": []
+    },
+    {
+      "id": "paired-scorpions-flank-pinned-threat",
+      "titel": "Flank a dragon-pinned threat with both Tomb Scorpions",
+      "tekst": "In his dragon-tanking plan, use both Tomb Scorpions together if possible to flank the heavily protected enemy held by the dragon.",
+      "waarom": "He wants eight attacks looking for a six to wound through Killing Blow or Monster Slayer, and expects a High Elf Prince to struggle to kill a scorpion in one round.",
+      "voorbeeld": "He describes both scorpions flank-charging a High Elf Prince already locked in combat with his dragon.",
+      "wanneerNiet": "He singles out a Prince with the White Sword as an exception to his expectation that a scorpion survives the first round.",
+      "fase": "movement",
+      "themas": [
+        "movement",
+        "hammers"
+      ],
+      "subthemas": [
+        "support-countercharge",
+        "using-hammers"
+      ],
+      "tags": [
+        "flank-charge",
+        "combined-charge",
+        "monsters",
+        "dragons"
+      ],
+      "leger": "tomb-kings-of-khemri",
+      "units": [
+        "Tomb Scorpion",
+        "Necrolith Bone Dragon"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-5k-tmwRyyXo",
+          "url": "https://www.youtube.com/watch?v=5k-tmwRyyXo&t=824s",
+          "tijd": 827,
+          "citaat": "a decent flank charge with ideally both of them",
+          "extraCitaten": [
+            {
+              "tijd": 838,
+              "citaat": "elf Prince that I've got locked in with my dragon"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-08-23",
+      "markeringen": []
+    },
+    {
+      "id": "necrotect-whip-champion-challenges",
+      "titel": "Give a Necrotect a whip for basic champion challenges",
+      "tekst": "Consider a whip on the Necrotect so he can challenge a basic enemy champion and strike first.",
+      "waarom": "He thinks striking first, with poison and Hatred, gives the Necrotect a reasonable chance of killing an ordinary champion outright.",
+      "voorbeeld": "He describes an Empire Knights unit charging his skeleton block and the Necrotect stepping forward to challenge its champion.",
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "characters"
+      ],
+      "subthemas": [
+        "challenges"
+      ],
+      "tags": [
+        "challenge",
+        "champion",
+        "poison"
+      ],
+      "leger": "tomb-kings-of-khemri",
+      "units": [
+        "Necrotect"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-5k-tmwRyyXo",
+          "url": "https://www.youtube.com/watch?v=5k-tmwRyyXo&t=968s",
+          "tijd": 971,
+          "citaat": "I can put forward the NEC protect to the challenge with his Whip",
+          "extraCitaten": [
+            {
+              "tijd": 986,
+              "citaat": "actually killing that that sort of um base level Champion"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-08-23",
+      "markeringen": []
+    },
+    {
+      "id": "deploy-dragon-reserve-move",
+      "titel": "Deploy the dragon near the priest for an opening Reserve Move",
+      "tekst": "If planning to use the Reserve Move spell, deploy the dragon-mounted Tomb King close to the High Priest. Cast it on the opening turn to extend the dragon's advance.",
+      "waarom": "He calculates that a successful cast could let his dragon cover 36 inches in the first turn.",
+      "voorbeeld": null,
+      "wanneerNiet": "The plan depends on getting the spell off.",
+      "fase": "deployment",
+      "themas": [
+        "deployment",
+        "magic"
+      ],
+      "subthemas": [
+        "unit-placement",
+        "control-spells"
+      ],
+      "tags": [
+        "reserve-move",
+        "dragons",
+        "first-turn"
+      ],
+      "leger": "tomb-kings-of-khemri",
+      "units": [
+        "Tomb King",
+        "Necrolith Bone Dragon",
+        "High Priest"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-5k-tmwRyyXo",
+          "url": "https://www.youtube.com/watch?v=5k-tmwRyyXo&t=1541s",
+          "tijd": 1544,
+          "citaat": "deploy the team King close to the high priest",
+          "extraCitaten": [
+            {
+              "tijd": 1551,
+              "citaat": "I can go 36 in in my first turn"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-08-23",
+      "markeringen": []
+    },
+    {
+      "id": "grail-champion-falcon-horn",
+      "titel": "Put the Falcon Horn on the Grail Knight champion",
+      "tekst": "Prefer carrying the Falcon Horn in the Grail Knights rather than on a single Paladin. He expects the champion to be the last knight to die, keeping the horn available longer.",
+      "waarom": "He says all the Grail Knights can accept or decline challenges, and that killing a single Paladin is easier than killing six Grail Knights.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "characters"
+      ],
+      "subthemas": [
+        "mounts-items"
+      ],
+      "tags": [
+        "magic-items",
+        "champion",
+        "challenge",
+        "heavy-cavalry"
+      ],
+      "leger": "kingdom-of-bretonnia",
+      "units": [
+        "Grail Knights",
+        "Paladin"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-5k-tmwRyyXo",
+          "url": "https://www.youtube.com/watch?v=5k-tmwRyyXo&t=1574s",
+          "tijd": 1577,
+          "citaat": "typically you see the Falcon horn in the Grail Knights",
+          "extraCitaten": [
+            {
+              "tijd": 1601,
+              "citaat": "a single Paladin is easier to kill than six Grail Knights"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-08-23",
+      "markeringen": []
+    },
+    {
+      "id": "slann-higher-state-protection",
+      "titel": "Take Higher State of Mind on the Slann",
+      "tekst": "He considers Higher State of Mind a necessary upgrade for a Slann Mage-Priest, giving it Ethereal protection.",
+      "waarom": null,
+      "voorbeeld": null,
+      "wanneerNiet": "He warns that the Slann is still a Large Target and a major victory-point investment. Magical shooting or a decent magic missile can still take it out.",
+      "fase": "army-building",
+      "themas": [
+        "characters"
+      ],
+      "subthemas": [
+        "protecting-characters"
+      ],
+      "tags": [
+        "ethereal",
+        "large-target",
+        "victory-points",
+        "magic-missile"
+      ],
+      "leger": "lizardmen",
+      "units": [
+        "Slann Mage-Priest"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-5k-tmwRyyXo",
+          "url": "https://www.youtube.com/watch?v=5k-tmwRyyXo&t=2171s",
+          "tijd": 2174,
+          "citaat": "which I think you always have to take makes it ethereal"
+        }
+      ],
+      "datum": "2024-08-23",
+      "markeringen": []
+    },
+    {
+      "id": "replace-excess-skirmishers-chariots",
+      "titel": "Replace excess Tomb Kings skirmishers with damage-dealing chariots",
+      "tekst": "When building this Tomb Kings list, he thinks he should have taken chariots in place of some of his many skirmishers.",
+      "waarom": "He judges that too much of his list gets in the way and too little delivers actual damage or a tangible impact.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "subthemas": [
+        "list-building"
+      ],
+      "tags": [
+        "skirmishers",
+        "chariots",
+        "hammer"
+      ],
+      "leger": "tomb-kings-of-khemri",
+      "units": [
+        "Skeleton Skirmishers",
+        "Skeleton Chariots"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-5k-tmwRyyXo",
+          "url": "https://www.youtube.com/watch?v=5k-tmwRyyXo&t=1781s",
+          "tijd": 1784,
+          "citaat": "I probably should have assembled and taken my chariots",
+          "extraCitaten": [
+            {
+              "tijd": 2692,
+              "citaat": "not enough stuff that's going to deliver any like actual damage"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-08-23",
+      "markeringen": []
+    },
+    {
+      "id": "kharibdyss-before-cold-ones",
+      "titel": "Prioritise the Kharibdyss in this Dark Elf matchup",
+      "tekst": "In his Tomb Kings plan, make the Kharibdyss the first target and the Cold One Knights the second if they carry the Dreadlord.",
+      "waarom": "He fears the Kharibdyss's Strength 7 damage and prioritises the knights because they probably contain the Dreadlord. He expects to resurrect the damage done by the less threatening parts of the army.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "magic-shooting",
+      "themas": [
+        "shooting-terrain",
+        "matchups"
+      ],
+      "subthemas": [
+        "target-priority",
+        "vs-other"
+      ],
+      "tags": [
+        "monsters",
+        "heavy-cavalry",
+        "concentration"
+      ],
+      "leger": "tomb-kings-of-khemri",
+      "units": [
+        "Kharibdyss",
+        "Cold One Knights",
+        "Dark Elf Dreadlord"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-5k-tmwRyyXo",
+          "url": "https://www.youtube.com/watch?v=5k-tmwRyyXo&t=2739s",
+          "tijd": 2742,
+          "citaat": "that'll be the first thing that everything targets",
+          "extraCitaten": [
+            {
+              "tijd": 2767,
+              "citaat": "the reason why the cold ones are like priority to"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-08-23",
+      "markeringen": []
+    },
+    {
+      "id": "three-four-model-pegasus-units",
+      "titel": "Consider three units of four Pegasus Knights for points denial",
+      "tekst": "He thinks three units of four Pegasus Knights is probably the optimal arrangement for denying victory points. Preserve a surviving knight by hiding it when necessary.",
+      "waarom": "He says a four-model unit cannot be reduced below 25 percent without being wiped out, making its points difficult to claim. A survivor can hide for the remainder of the battle.",
+      "voorbeeld": null,
+      "wanneerNiet": "He says the opponent can still claim the points by doing enough damage to the unit in one turn.",
+      "fase": "army-building",
+      "themas": [
+        "hammers",
+        "game-plan"
+      ],
+      "subthemas": [
+        "heavy-cavalry",
+        "list-building"
+      ],
+      "tags": [
+        "victory-points",
+        "fly"
+      ],
+      "leger": "kingdom-of-bretonnia",
+      "units": [
+        "Pegasus Knights"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-5k-tmwRyyXo",
+          "url": "https://www.youtube.com/watch?v=5k-tmwRyyXo&t=2870s",
+          "tijd": 2873,
+          "citaat": "I think three units of four is probably optimal",
+          "extraCitaten": [
+            {
+              "tijd": 2856,
+              "citaat": "just goes and hides for the rest of the battle"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-08-23",
+      "markeringen": []
+    },
+    {
+      "id": "bombard-efficient-cannon-choice",
+      "titel": "Consider the Border Princes Bombard for efficient cannon damage",
+      "tekst": "He rates the Border Princes Bombard as the best cannon in the game for its points efficiency.",
+      "waarom": "He says it costs like a normal cannon while doing Great Cannon damage, including D3 plus one wounds rather than D3.",
+      "voorbeeld": null,
+      "wanneerNiet": "He notes its reduced range and movement.",
+      "fase": "army-building",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "war-machines"
+      ],
+      "tags": [
+        "cannons",
+        "war-machines",
+        "multiple-wounds"
+      ],
+      "leger": "kingdom-of-bretonnia",
+      "units": [
+        "Border Princes Bombard"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-5k-tmwRyyXo",
+          "url": "https://www.youtube.com/watch?v=5k-tmwRyyXo&t=2894s",
+          "tijd": 2897,
+          "citaat": "the bombard I think is the best cannon in the game",
+          "extraCitaten": [
+            {
+              "tijd": 2905,
+              "citaat": "has a normal Cannon but it's actually a great cannon"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-08-23",
+      "markeringen": []
+    },
+    {
+      "id": "exile-pegasus-knights-start-hidden",
+      "titel": "Keep Exile Pegasus Knights hidden at the start",
+      "tekst": "Keep Pegasus Knights with the Exiles vow hidden initially, particularly against his Ushabti shooting.",
+      "waarom": "He says Exiles do not start with the Blessing and that early shooting could remove enough Pegasus Knights to take a unit effectively out of the game.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "deployment"
+      ],
+      "subthemas": [
+        "deploying-vs-shooting"
+      ],
+      "tags": [
+        "fly",
+        "line-of-sight",
+        "ward-save"
+      ],
+      "leger": "kingdom-of-bretonnia",
+      "units": [
+        "Pegasus Knights"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-5k-tmwRyyXo",
+          "url": "https://www.youtube.com/watch?v=5k-tmwRyyXo&t=2932s",
+          "tijd": 2935,
+          "citaat": "the need to stay hidden to begin with especially against me",
+          "extraCitaten": [
+            {
+              "tijd": 2928,
+              "citaat": "because these are Exiles they don't start with a blessing"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-08-23",
+      "markeringen": []
+    },
+    {
+      "id": "dragon-ogres-over-ghorgon",
+      "titel": "Consider more Dragon Ogres instead of a Ghorgon",
+      "tekst": "He favours the Beastmen list that trades a Ghorgon for four more Dragon Ogres.",
+      "waarom": "He calls that exchange very smart and considers Dragon Ogres among the army's best choices for their points.",
+      "voorbeeld": "When comparing two Beastmen lists, he notes that a 245-point Ghorgon costs roughly the same as the additional four Dragon Ogres.",
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "hammers"
+      ],
+      "subthemas": [
+        "hammer-basics"
+      ],
+      "tags": [
+        "monstrous-infantry",
+        "monsters"
+      ],
+      "leger": "beastmen-brayherds",
+      "units": [
+        "Dragon Ogres",
+        "Ghorgon"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-5k-tmwRyyXo",
+          "url": "https://www.youtube.com/watch?v=5k-tmwRyyXo&t=3090s",
+          "tijd": 3093,
+          "citaat": "he's gone for more Dragon ogas instead of one big monster",
+          "extraCitaten": [
+            {
+              "tijd": 3093,
+              "citaat": "which I think is super smart actually"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-08-23",
+      "markeringen": []
+    },
+    {
+      "id": "tuskgor-over-razorgor-chariots",
+      "titel": "Prefer Tuskgor Chariots for their lower cost",
+      "tekst": "He thinks Tuskgor Chariots are slightly better choices than Razorgor Chariots because of the points difference.",
+      "waarom": "He says roughly the cost of two Razorgor Chariots buys three Tuskgor Chariots, which he considers a more optimal use of points.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "hammers"
+      ],
+      "subthemas": [
+        "chariots"
+      ],
+      "tags": [
+        "chariots",
+        "hammer"
+      ],
+      "leger": "beastmen-brayherds",
+      "units": [
+        "Tuskgor Chariot",
+        "Razorgor Chariot"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-5k-tmwRyyXo",
+          "url": "https://www.youtube.com/watch?v=5k-tmwRyyXo&t=3107s",
+          "tijd": 3110,
+          "citaat": "tusor chariots I think are slightly better than rosor chariots because of the points difference"
+        }
+      ],
+      "datum": "2024-08-23",
+      "markeringen": []
+    },
+    {
+      "id": "focus-mournfangs-before-contact",
+      "titel": "Concentrate Ushabti and catapult fire on Mournfangs first",
+      "tekst": "Against the three-model Mournfang Cavalry unit he reviews, prioritise it with both Screaming Skull Catapults and all the great-bow Ushabti before it reaches combat.",
+      "waarom": "He thinks the unit is vulnerable to shooting and expects a decent Ushabti volley to kill about one Mournfang per turn.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "magic-shooting",
+      "themas": [
+        "shooting-terrain",
+        "matchups"
+      ],
+      "subthemas": [
+        "target-priority",
+        "vs-other"
+      ],
+      "tags": [
+        "concentration",
+        "missile-troops",
+        "war-machines",
+        "multiple-wounds"
+      ],
+      "leger": "tomb-kings-of-khemri",
+      "units": [
+        "Ushabti",
+        "Screaming Skull Catapult",
+        "Mournfang Cavalry"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-5k-tmwRyyXo",
+          "url": "https://www.youtube.com/watch?v=5k-tmwRyyXo&t=3223s",
+          "tijd": 3226,
+          "citaat": "both the catapults and all the you shabti go into those guys",
+          "extraCitaten": [
+            {
+              "tijd": 3217,
+              "citaat": "I should be able to kill one a turn"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-08-23",
+      "markeringen": []
+    },
+    {
+      "id": "reserve-horse-archers-deny-impact",
+      "titel": "Reserve Move Horse Archers close to absorb Mournfang charges",
+      "tekst": "If Reserve Move is available, advance Skeleton Horse Archers, shoot, then move them within an inch of the approaching Mournfang Cavalry. He plans to sacrifice them to a charge too short for impact hits and gain another round of shooting after the overrun.",
+      "waarom": "He wants to dictate the Mournfangs' next action rather than letting them choose their target freely.",
+      "voorbeeld": null,
+      "wanneerNiet": "He expects the Horse Archers to die, giving up their points and allowing an overrun.",
+      "fase": "movement",
+      "themas": [
+        "chaff"
+      ],
+      "subthemas": [
+        "redirecting"
+      ],
+      "tags": [
+        "reserve-move",
+        "impact-hits",
+        "sacrifice",
+        "delay",
+        "overrun"
+      ],
+      "leger": "tomb-kings-of-khemri",
+      "units": [
+        "Skeleton Horse Archers",
+        "Mournfang Cavalry"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-5k-tmwRyyXo",
+          "url": "https://www.youtube.com/watch?v=5k-tmwRyyXo&t=3266s",
+          "tijd": 3269,
+          "citaat": "move again and put them like within an inch just to take out impact hits",
+          "extraCitaten": [
+            {
+              "tijd": 3283,
+              "citaat": "then I get another round of shooting in my turn"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-08-23",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "control-spells-block-lanes",
+      "bron": {
+        "bronId": "yt-5k-tmwRyyXo",
+        "url": "https://www.youtube.com/watch?v=5k-tmwRyyXo&t=327s",
+        "tijd": 330,
+        "citaat": "in front of a unit that your opponent needs to charge next turn",
+        "extraCitaten": [
+          {
+            "tijd": 337,
+            "citaat": "they've got to take a dangerous terrain check to get everybody over it"
+          }
+        ]
+      },
+      "toelichting": "He likewise recommends placing a terrain-producing spell across the enemy's intended charge route to obstruct its advance."
+    },
+    {
+      "lesId": "tomb-king-dragon-armour-ages",
+      "bron": {
+        "bronId": "yt-5k-tmwRyyXo",
+        "url": "https://www.youtube.com/watch?v=5k-tmwRyyXo&t=1053s",
+        "tijd": 1056,
+        "citaat": "because the armor of the ages is just so good",
+        "extraCitaten": [
+          {
+            "tijd": 1064,
+            "citaat": "enemy models must reroll successful to wound Rolls made against the wearer"
+          }
+        ]
+      },
+      "toelichting": "He endorses the same Armour of Ages protection for a dragon-mounted Tomb King."
+    },
+    {
+      "lesId": "anchor-challenges-against-dragons",
+      "bron": {
+        "bronId": "yt-5k-tmwRyyXo",
+        "url": "https://www.youtube.com/watch?v=5k-tmwRyyXo&t=1882s",
+        "tijd": 1885,
+        "citaat": "challenge him out forever",
+        "extraCitaten": [
+          {
+            "tijd": 1418,
+            "citaat": "champion that just gets resurrected next turn"
+          }
+        ]
+      },
+      "toelichting": "His Skeleton Warrior plan uses repeated champion challenges to contain a mounted monster character and hold through combat resolution."
+    },
+    {
+      "lesId": "chariot-mount-character-survival",
+      "bron": {
+        "bronId": "yt-5k-tmwRyyXo",
+        "url": "https://www.youtube.com/watch?v=5k-tmwRyyXo&t=3116s",
+        "tijd": 3119,
+        "citaat": "he does have his Bray shaman on a tus score charot",
+        "extraCitaten": [
+          {
+            "tijd": 3127,
+            "citaat": "sensible gives it a bit more survivability"
+          }
+        ]
+      },
+      "toelichting": "He approves the same choice of a chariot mount to improve a character's survivability, here for a Bray-Shaman."
+    }
+  ],
+  "overgeslagen": "Skipped event expectations, personal and hobby talk, list and stat readouts without advice, passing unit praise, uncertain target speculation, the unresolved wizard-armour discussion at 38:34–42:22, and garbled names or unclear passages. Kept the speaker's proposed plans conditional rather than treating them as tested results.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

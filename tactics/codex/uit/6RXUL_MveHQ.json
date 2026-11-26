@@ -1,0 +1,307 @@
+{
+  "videoId": "6RXUL_MveHQ",
+  "bronId": "yt-6RXUL_MveHQ",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-26T02:50:29.841Z",
+  "nieuw": [
+    {
+      "id": "compare-points-before-risking",
+      "titel": "Compare points lost and earned before taking more risks",
+      "tekst": "Compare how many points you have killed with how many you have lost before deciding whether another target is worth pursuing or whether to pull back.",
+      "waarom": null,
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "subthemas": [
+        "aggression-control"
+      ],
+      "tags": [
+        "victory-points",
+        "tournament"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-6RXUL_MveHQ",
+          "url": "https://www.youtube.com/watch?v=6RXUL_MveHQ&t=1594s",
+          "tijd": 1597,
+          "citaat": "looking at how much I've killed versus how much I've lost",
+          "extraCitaten": [
+            {
+              "tijd": 1613,
+              "citaat": "is it worth getting it or is it should I pull back"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-10-29",
+      "markeringen": []
+    },
+    {
+      "id": "mortuary-priests-behind-block",
+      "titel": "Keep Mortuary Priests behind the block they are raising",
+      "tekst": "Keep Mortuary Priests behind the block they support rather than putting them inside it.",
+      "waarom": "He says this lets the priests keep raising while protected from the enemy, and prevents the supported unit from giving ground.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "magic"
+      ],
+      "subthemas": [
+        "wizard-placement"
+      ],
+      "tags": [
+        "lone-character",
+        "fall-back",
+        "death-star"
+      ],
+      "leger": "tomb-kings-of-khemri",
+      "units": [
+        "Mortuary Priest"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-6RXUL_MveHQ",
+          "url": "https://www.youtube.com/watch?v=6RXUL_MveHQ&t=5553s",
+          "tijd": 5556,
+          "citaat": "you're just putting these Mory priests behind the unit",
+          "extraCitaten": [
+            {
+              "tijd": 5564,
+              "citaat": "they can't give ground and you can't get to them anyway"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-10-29",
+      "markeringen": []
+    },
+    {
+      "id": "many-small-units-poison-block",
+      "titel": "Consider many small units against a poison Death Star",
+      "tekst": "Consider using many small units against a huge poison Death Star. The speaker is reconsidering this approach as a response to these blocks.",
+      "waarom": "He argues that the single large block can only kill one of those units per turn, limiting how much it achieves.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "matchups",
+        "game-plan"
+      ],
+      "subthemas": [
+        "vs-tomb-kings",
+        "list-building"
+      ],
+      "tags": [
+        "death-star",
+        "poison",
+        "victory-points"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-6RXUL_MveHQ",
+          "url": "https://www.youtube.com/watch?v=6RXUL_MveHQ&t=6130s",
+          "tijd": 6133,
+          "citaat": "you can only kill one of my units at a turn",
+          "extraCitaten": [
+            {
+              "tijd": 6124,
+              "citaat": "was sort of against MSU but now I'm starting to think"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-10-29",
+      "markeringen": []
+    },
+    {
+      "id": "massed-chariots-poison-block",
+      "titel": "Consider a massed chariot charge against the poison block",
+      "tekst": "He suggests trying several chariots together against the poison block instead of sending in a single dragon.",
+      "waarom": "He argues that there are only so many impact hits the block can take, with those hits divided among its characters.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "matchups",
+        "hammers"
+      ],
+      "subthemas": [
+        "vs-tomb-kings",
+        "chariots"
+      ],
+      "tags": [
+        "chariots",
+        "impact-hits",
+        "combined-charge",
+        "death-star"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-6RXUL_MveHQ",
+          "url": "https://www.youtube.com/watch?v=6RXUL_MveHQ&t=6224s",
+          "tijd": 6227,
+          "citaat": "instead you're not sending a single dragon in you could be sending five chariots",
+          "extraCitaten": [
+            {
+              "tijd": 6235,
+              "citaat": "there's only so many impact hits you're going to be able to take"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-10-29",
+      "markeringen": []
+    },
+    {
+      "id": "poison-block-decline-followup",
+      "titel": "Decline the follow-up to shoot the dragon",
+      "tekst": "If the poison archer block beats a dragon in combat and pushes it back, consider declining the follow-up and shooting it instead.",
+      "waarom": "He points to the block's hundred-plus shots as the alternative to following up.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "combat",
+      "themas": [
+        "movement",
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "overrun-pursuit",
+        "missile-units"
+      ],
+      "tags": [
+        "pursuit",
+        "poison",
+        "missile-troops",
+        "dragons"
+      ],
+      "leger": "tomb-kings-of-khemri",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-6RXUL_MveHQ",
+          "url": "https://www.youtube.com/watch?v=6RXUL_MveHQ&t=6489s",
+          "tijd": 6492,
+          "citaat": "you just don't follow up you shoot",
+          "extraCitaten": [
+            {
+              "tijd": 6483,
+              "citaat": "you're beating the dragon in combat you're pushing it back"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-10-29",
+      "markeringen": []
+    },
+    {
+      "id": "bretonnia-avoid-poison-block",
+      "titel": "Consider flying around the poison block with Bretonnia",
+      "tekst": "He thinks Bretonnia might handle the huge poison block by flying around it and avoiding engagement.",
+      "waarom": null,
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "matchups"
+      ],
+      "subthemas": [
+        "vs-tomb-kings"
+      ],
+      "tags": [
+        "fly",
+        "death-star",
+        "poison"
+      ],
+      "leger": "kingdom-of-bretonnia",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-6RXUL_MveHQ",
+          "url": "https://www.youtube.com/watch?v=6RXUL_MveHQ&t=6553s",
+          "tijd": 6556,
+          "citaat": "Brett are the only ones that might be able to handle it",
+          "extraCitaten": [
+            {
+              "tijd": 6562,
+              "citaat": "just flying just like but not engaging"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-10-29",
+      "markeringen": []
+    },
+    {
+      "id": "templates-against-huge-blocks",
+      "titel": "Consider template weapons against enormous infantry blocks",
+      "tekst": "Consider Grudge Throwers or Goblin Rock Lobbers for bombarding enormous infantry blocks, particularly the huge Night Goblin block discussed.",
+      "waarom": "He argues that a block this large can still be hit even when a template scatters.",
+      "voorbeeld": null,
+      "wanneerNiet": "He is less confident that this helps against Undead.",
+      "fase": "army-building",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "war-machines"
+      ],
+      "tags": [
+        "war-machines",
+        "death-star"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-6RXUL_MveHQ",
+          "url": "https://www.youtube.com/watch?v=6RXUL_MveHQ&t=7017s",
+          "tijd": 7020,
+          "citaat": "you got to be Grudge throwers and rock lobbers",
+          "extraCitaten": [
+            {
+              "tijd": 7068,
+              "citaat": "if they scatter they're still going to hit"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-10-29",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "single-wolf-chariots-limit-panic",
+      "bron": {
+        "bronId": "yt-6RXUL_MveHQ",
+        "url": "https://www.youtube.com/watch?v=6RXUL_MveHQ&t=4339s",
+        "tijd": 4342,
+        "citaat": "individually means you can you've got more options",
+        "extraCitaten": [
+          {
+            "tijd": 4342,
+            "citaat": "which combination of the two chariots are going in at once"
+          }
+        ]
+      },
+      "toelichting": "This repeats the recommendation to field Goblin Wolf Chariots individually, here stressing flexible combinations for joint charges."
+    }
+  ],
+  "overgeslagen": "Skipped introductions, Patreon and channel talk, event announcements, hobby and painting discussion, the quiz, event organisation and custom-scenario design. Also skipped list readouts, uncertain rules discussion and speculation about unobserved character and spell combinations. The garbled spell name at 1:50:48 was not interpreted.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

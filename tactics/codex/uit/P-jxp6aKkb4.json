@@ -1,0 +1,1011 @@
+{
+  "videoId": "P-jxp6aKkb4",
+  "bronId": "yt-P-jxp6aKkb4",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-26T02:46:44.275Z",
+  "nieuw": [
+    {
+      "id": "castle-against-bretonnian-flyers",
+      "titel": "Castle in a corner against Bretonnian flyers",
+      "tekst": "Against Bretonnia, build a corner castle anchored on terrain, with ranged units at the front. Leave no opening for Pegasus Knights to jump behind it or come around its flanks.",
+      "waarom": "He wants the knights to weather at least the first couple of turns of shooting before they can charge the defensive position.",
+      "voorbeeld": "He suggests a corner with a hill or wood, or anchoring the force against a building.",
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "matchups",
+        "deployment"
+      ],
+      "subthemas": [
+        "vs-bretonnia",
+        "unit-placement"
+      ],
+      "tags": [
+        "fly",
+        "flanks",
+        "missile-troops"
+      ],
+      "leger": null,
+      "units": [
+        "Pegasus Knights"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-P-jxp6aKkb4",
+          "url": "https://www.youtube.com/watch?v=P-jxp6aKkb4&t=91s",
+          "tijd": 94,
+          "citaat": "find a corner on the battlefield",
+          "extraCitaten": [
+            {
+              "tijd": 102,
+              "citaat": "have your range units at the front"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-11-04",
+      "markeringen": []
+    },
+    {
+      "id": "strength-four-bretonnian-blessing",
+      "titel": "Use plentiful Strength 4 shooting against Bretonnia",
+      "tekst": "Use a high volume of Strength 4 shooting against Bretonnian knights rather than automatically favouring stronger shots.",
+      "waarom": "He says Strength 4 avoids their improved ward save against stronger shooting while still wounding ordinary knights on threes and Pegasus Knights on fours.",
+      "voorbeeld": "He has personally found handguns effective, especially with Burlok Damminson or in an Expeditionary Force that reduces the shooting penalties he worries about.",
+      "wanneerNiet": null,
+      "fase": "magic-shooting",
+      "themas": [
+        "matchups",
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "vs-bretonnia",
+        "missile-units"
+      ],
+      "tags": [
+        "missile-troops",
+        "ward-save",
+        "heavy-cavalry"
+      ],
+      "leger": null,
+      "units": [
+        "Mounted Knights of the Realm",
+        "Pegasus Knights"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-P-jxp6aKkb4",
+          "url": "https://www.youtube.com/watch?v=P-jxp6aKkb4&t=116s",
+          "tijd": 119,
+          "citaat": "for that shooting I would suggest lots of strength four"
+        }
+      ],
+      "datum": "2024-11-04",
+      "markeringen": []
+    },
+    {
+      "id": "rangers-deny-green-knight",
+      "titel": "Fill woods with Rangers to deny The Green Knight",
+      "tekst": "Spread skirmishing Rangers around and through a backfield wood so The Green Knight has no room to appear there.",
+      "waarom": "He says The Green Knight cannot emerge from that wood if there is no space for him to fit.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "matchups",
+        "deployment"
+      ],
+      "subthemas": [
+        "vs-bretonnia",
+        "unit-placement"
+      ],
+      "tags": [
+        "skirmishers",
+        "woods",
+        "zoning"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [
+        "Rangers",
+        "The Green Knight"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-P-jxp6aKkb4",
+          "url": "https://www.youtube.com/watch?v=P-jxp6aKkb4&t=163s",
+          "tijd": 166,
+          "citaat": "have a unit of Rangers and create a circle and fill up the wood",
+          "extraCitaten": [
+            {
+              "tijd": 166,
+              "citaat": "as long as he can't fit he can't pop out of that wood"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-11-04",
+      "markeringen": []
+    },
+    {
+      "id": "magical-weapons-green-knight",
+      "titel": "Prepare magical weapons for The Green Knight",
+      "tekst": "Give unit champions magical weapons to help fight The Green Knight. For a backline Anvil of Doom, he suggests a simple Rune of Cleaving.",
+      "waarom": "He expects The Green Knight to seek an apparently easy target such as the Anvil of Doom rather than a large Dwarf block.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "matchups",
+        "characters"
+      ],
+      "subthemas": [
+        "vs-bretonnia",
+        "mounts-items"
+      ],
+      "tags": [
+        "magic-items",
+        "ethereal",
+        "champion"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [
+        "The Green Knight",
+        "Anvil of Doom"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-P-jxp6aKkb4",
+          "url": "https://www.youtube.com/watch?v=P-jxp6aKkb4&t=187s",
+          "tijd": 190,
+          "citaat": "an offensive way to play against Green Knight would be by taking magical weapons",
+          "extraCitaten": [
+            {
+              "tijd": 198,
+              "citaat": "giving the Anvil a simple Rune of cleaving can really help deal with him"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-11-04",
+      "markeringen": []
+    },
+    {
+      "id": "hesitation-against-bretonnian-lances",
+      "titel": "Take Rune of Hesitation against Bretonnian lances",
+      "tekst": "Use Rune of Hesitation on a combat block to blunt Bretonnian lance charges, then try to win on combat resolution and pursue into a grind.",
+      "waarom": "He says it leaves ordinary knights charging at Strength 3 and Pegasus Knights at Strength 4, without armour piercing from those attacks. He wants to trap Bretonnia in the prolonged combat it does not want.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "matchups",
+        "infantry"
+      ],
+      "subthemas": [
+        "vs-bretonnia",
+        "anchors"
+      ],
+      "tags": [
+        "magic-banner",
+        "armour-piercing",
+        "combat-resolution",
+        "heavy-cavalry"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [
+        "Mounted Knights of the Realm",
+        "Pegasus Knights"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-P-jxp6aKkb4",
+          "url": "https://www.youtube.com/watch?v=P-jxp6aKkb4&t=244s",
+          "tijd": 247,
+          "citaat": "you can also capitalize on this by taking the Rune of hesitation",
+          "extraCitaten": [
+            {
+              "tijd": 273,
+              "citaat": "get them stuck in a grind which is exactly where batonette doesn't want to be"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-11-04",
+      "markeringen": []
+    },
+    {
+      "id": "preservation-challenges-bretonnian-lords",
+      "titel": "Use Rune of Preservation to challenge Bretonnian lords",
+      "tekst": "Take Rune of Preservation on a character intended to challenge a Duke or Baron. Try to contain the enemy character's damage and win through the unit's combat resolution.",
+      "waarom": "He presents Preservation as an answer to their Killing Blow and hopes the challenged character will inflict few wounds.",
+      "voorbeeld": null,
+      "wanneerNiet": "His plan depends on the Duke or Baron accepting the challenge, and he describes the outcome as a hope rather than a certainty.",
+      "fase": "army-building",
+      "themas": [
+        "characters",
+        "matchups"
+      ],
+      "subthemas": [
+        "mounts-items",
+        "vs-bretonnia"
+      ],
+      "tags": [
+        "magic-items",
+        "challenge",
+        "combat-resolution"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [
+        "Duke",
+        "Baron"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-P-jxp6aKkb4",
+          "url": "https://www.youtube.com/watch?v=P-jxp6aKkb4&t=285s",
+          "tijd": 288,
+          "citaat": "something we can do to counter this is by taking the Rune of preservation",
+          "extraCitaten": [
+            {
+              "tijd": 297,
+              "citaat": "hopefully that Duke or Baron will accept"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-11-04",
+      "markeringen": []
+    },
+    {
+      "id": "hidden-grudge-throwers-bombards",
+      "titel": "Hide Grudge Throwers to bombard Bretonnian Bombards",
+      "tekst": "Use Grudge Throwers out of enemy cannon sight to attack Bretonnian Bombards. He suggests hiding them behind buildings or far enough behind woods that a bounce cannot reach them.",
+      "waarom": "He wants to destroy the Bombards without exposing his own artillery, gaining a points lead that makes the knights come to him.",
+      "voorbeeld": null,
+      "wanneerNiet": "He warns that woods alone may not protect them: an enemy cannon can aim just before the wood and bounce through it.",
+      "fase": "deployment",
+      "themas": [
+        "shooting-terrain",
+        "matchups"
+      ],
+      "subthemas": [
+        "war-machines",
+        "vs-bretonnia"
+      ],
+      "tags": [
+        "war-machines",
+        "line-of-sight",
+        "cannons",
+        "woods"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [
+        "Grudge Thrower",
+        "Border Princes Bombard"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-P-jxp6aKkb4",
+          "url": "https://www.youtube.com/watch?v=P-jxp6aKkb4&t=350s",
+          "tijd": 353,
+          "citaat": "these are absolutely amazing to deal with the bombard",
+          "extraCitaten": [
+            {
+              "tijd": 369,
+              "citaat": "you can hide them behind buildings"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-11-04",
+      "markeringen": []
+    },
+    {
+      "id": "irondrakes-front-against-bretonnia",
+      "titel": "Put Irondrakes up front against Bretonnian charges",
+      "tekst": "Put Irondrakes at the front so Bretonnian knights have to endure their Stand and Shoot before fighting.",
+      "waarom": "He rates their volume of Strength 5 shots, particularly with the grenade, despite the enemy's improved ward save. He also points to lucky sixes getting through armour.",
+      "voorbeeld": "He describes an opponent using a Vanguard banner to attempt a first-turn charge and overcommitting into a large volume of shooting.",
+      "wanneerNiet": "The Stand and Shoot plan assumes the enemy is not using the banner that prevents it.",
+      "fase": "deployment",
+      "themas": [
+        "matchups",
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "vs-bretonnia",
+        "missile-units"
+      ],
+      "tags": [
+        "stand-and-shoot",
+        "missile-troops",
+        "heavy-cavalry"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [
+        "Irondrakes",
+        "Pegasus Knights"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-P-jxp6aKkb4",
+          "url": "https://www.youtube.com/watch?v=P-jxp6aKkb4&t=462s",
+          "tijd": 465,
+          "citaat": "having your iron Dres up front",
+          "extraCitaten": [
+            {
+              "tijd": 432,
+              "citaat": "the amount of shots that you can do especially with the grenade is absolutely amazing"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-11-04",
+      "markeringen": []
+    },
+    {
+      "id": "gyrocopters-kite-pegasus-knights",
+      "titel": "Keep clatter-gun Gyrocopters beyond Pegasus Knight charges",
+      "tekst": "If Irondrakes are unavailable, he strongly suggests multiple Gyrocopters in an Expeditionary Force. Shoot Pegasus Knights with clatter guns while staying just outside their charge range.",
+      "waarom": null,
+      "voorbeeld": null,
+      "wanneerNiet": "He says to deal with the Bombards before sending Gyrocopters out, because a good firing line can let them destroy one or two a turn.",
+      "fase": "movement",
+      "themas": [
+        "matchups",
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "vs-bretonnia",
+        "missile-units"
+      ],
+      "tags": [
+        "charge-range",
+        "fly",
+        "missile-troops"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [
+        "Gyrocopter",
+        "Pegasus Knights"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-P-jxp6aKkb4",
+          "url": "https://www.youtube.com/watch?v=P-jxp6aKkb4&t=471s",
+          "tijd": 474,
+          "citaat": "stay just out of charge range of those Pegasus Knights"
+        }
+      ],
+      "datum": "2024-11-04",
+      "markeringen": []
+    },
+    {
+      "id": "steam-guns-outside-knight-arcs",
+      "titel": "Fly steam guns outside the knights' charge arcs",
+      "tekst": "Fly steam-gun Gyrocopters close to Mounted Knights of the Realm while remaining outside their charge arc, then shoot them.",
+      "waarom": "He says a steam gun can take out an entire unit of those knights.",
+      "voorbeeld": null,
+      "wanneerNiet": "He says to remove the Bombards before sending the Gyrocopters out.",
+      "fase": "movement",
+      "themas": [
+        "matchups",
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "vs-bretonnia",
+        "missile-units"
+      ],
+      "tags": [
+        "charge-arc",
+        "fly",
+        "missile-troops"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [
+        "Gyrocopter",
+        "Mounted Knights of the Realm"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-P-jxp6aKkb4",
+          "url": "https://www.youtube.com/watch?v=P-jxp6aKkb4&t=479s",
+          "tijd": 482,
+          "citaat": "flying right up out of Arc of those Knights of the realm"
+        }
+      ],
+      "datum": "2024-11-04",
+      "markeringen": []
+    },
+    {
+      "id": "rapid-dwarf-mortuary-advance",
+      "titel": "Use a rapid Dwarf advance into Mortuary Cult",
+      "tekst": "Use Drilled, marching column and the Anvil's second move as part of a rapid advance into Mortuary Cult. He also recommends the Vanguard banner to help set up a charge on the following turn.",
+      "waarom": "He says a stationary Dwarf army will be shot and blasted off the table by the Mortuary Cult gunline.",
+      "voorbeeld": "He suggests using a semi-Death Star of about 20 to 25 Longbeards, Dwarf Warriors or Hammerers for this advance.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "movement",
+        "matchups"
+      ],
+      "subthemas": [
+        "reforms-formations",
+        "vs-tomb-kings"
+      ],
+      "tags": [
+        "drilled",
+        "marching-column",
+        "vanguard",
+        "death-star"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [
+        "Anvil of Doom"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-P-jxp6aKkb4",
+          "url": "https://www.youtube.com/watch?v=P-jxp6aKkb4&t=653s",
+          "tijd": 656,
+          "citaat": "the combination of drilled marching column",
+          "extraCitaten": [
+            {
+              "tijd": 663,
+              "citaat": "also with the Vanguard Banner that really helps as well"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-11-04",
+      "markeringen": []
+    },
+    {
+      "id": "runesmith-mortuary-control-spells",
+      "titel": "Take three Spellbreaking runes in the advancing unit",
+      "tekst": "Put a Runesmith with three Runes of Spellbreaking in the combat unit advancing into Mortuary Cult. Stop Reserve Move, Column of Crystal and Mirage spells that would prevent it reaching combat.",
+      "waarom": "He says those spells let targets leave the unit's charge arc or leave it stranded under shooting, making the Runesmith crucial to this plan.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "magic",
+        "matchups"
+      ],
+      "subthemas": [
+        "dispelling",
+        "vs-tomb-kings"
+      ],
+      "tags": [
+        "dispel",
+        "reserve-move",
+        "charge-arc"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [
+        "Runesmith"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-P-jxp6aKkb4",
+          "url": "https://www.youtube.com/watch?v=P-jxp6aKkb4&t=686s",
+          "tijd": 689,
+          "citaat": "with three Runes of spell breaking",
+          "extraCitaten": [
+            {
+              "tijd": 697,
+              "citaat": "the reserve move needs to get stopped"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-11-04",
+      "markeringen": []
+    },
+    {
+      "id": "king-leadership-against-necromancy",
+      "titel": "Consider a King's leadership against Tomb Kings' Necromancy",
+      "tekst": "Consider a King for Leadership 10 when facing Tomb Kings' leadership reduction and magical attacks.",
+      "waarom": "He says the King's higher leadership gives a useful bonus while Necromancy lowers leadership and the enemy exploits those debuffs for damage.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "characters",
+        "matchups"
+      ],
+      "subthemas": [
+        "bsb",
+        "vs-tomb-kings"
+      ],
+      "tags": [
+        "leadership",
+        "necromancy"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [
+        "King"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-P-jxp6aKkb4",
+          "url": "https://www.youtube.com/watch?v=P-jxp6aKkb4&t=712s",
+          "tijd": 715,
+          "citaat": "also a king is very helpful because of the leadership 10"
+        }
+      ],
+      "datum": "2024-11-04",
+      "markeringen": []
+    },
+    {
+      "id": "rush-ushabti-not-skeletons",
+      "titel": "Aim the Dwarf rush at Ushabti rather than Skeletons",
+      "tekst": "Choose a worthwhile target before making the rapid advance into Mortuary Cult. He recommends charging Ushabti rather than getting stuck in a large Skeleton block.",
+      "waarom": "He wants the advancing unit to earn points; he says the Skeletons can hold it for several turns without yielding useful points.",
+      "voorbeeld": "He compares an enemy line of Ushabti with a line of 50 Skeletons and favours the Ushabti.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "matchups",
+        "game-plan"
+      ],
+      "subthemas": [
+        "vs-tomb-kings",
+        "tempo-trading"
+      ],
+      "tags": [
+        "victory-points",
+        "tarpit"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [
+        "Ushabti"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-P-jxp6aKkb4",
+          "url": "https://www.youtube.com/watch?v=P-jxp6aKkb4&t=744s",
+          "tijd": 747,
+          "citaat": "I personally would suggest going into the OB shabti",
+          "extraCitaten": [
+            {
+              "tijd": 755,
+              "citaat": "if you get stuck into the skeletons you won't get any points that game"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-11-04",
+      "markeringen": []
+    },
+    {
+      "id": "flaming-artillery-tomb-kings",
+      "titel": "Consider flaming runes on artillery against Tomb Kings",
+      "tekst": "Consider Runes of Flaming on artillery when targeting susceptible Tomb Kings models.",
+      "waarom": "He says flaming wounds can cause an additional wound on a four-plus against those targets.",
+      "voorbeeld": "He describes a lucky Grudge Thrower or cannon hit destroying a Casket of Souls, whose explosion could then kill nearby characters.",
+      "wanneerNiet": "He names only certain susceptible targets: Chariots, Bone Dragons, Caskets of Souls and some characters. He says flaming attacks are often a disadvantage elsewhere because of extra saves against them.",
+      "fase": "army-building",
+      "themas": [
+        "shooting-terrain",
+        "matchups"
+      ],
+      "subthemas": [
+        "war-machines",
+        "vs-tomb-kings"
+      ],
+      "tags": [
+        "flaming",
+        "war-machines"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [
+        "Grudge Thrower",
+        "Cannon Dwarfs"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-P-jxp6aKkb4",
+          "url": "https://www.youtube.com/watch?v=P-jxp6aKkb4&t=799s",
+          "tijd": 802,
+          "citaat": "it's potentially worth having Runes of flaming onto those artillery pieces"
+        }
+      ],
+      "datum": "2024-11-04",
+      "markeringen": []
+    },
+    {
+      "id": "strength-eight-armour-ages",
+      "titel": "Use Strength 8 shooting against an Armour of Ages dragon",
+      "tekst": "Against a Tomb Prince or Tomb King on a Bone Dragon with Armour of Ages, restrict your shooting at it to Strength 8 attacks. He suggests Grudge Throwers and cannons, ideally with flaming runes.",
+      "waarom": "He says rerolling successful wounds makes shots that wound on fives or sixes wasteful, whereas rerolling a two-plus is much more likely to cause damage.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "magic-shooting",
+      "themas": [
+        "matchups",
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "vs-tomb-kings",
+        "target-priority"
+      ],
+      "tags": [
+        "dragons",
+        "war-machines",
+        "flaming"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [
+        "Necrolith Bone Dragon",
+        "Grudge Thrower",
+        "Cannon Dwarfs"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-P-jxp6aKkb4",
+          "url": "https://www.youtube.com/watch?v=P-jxp6aKkb4&t=831s",
+          "tijd": 834,
+          "citaat": "shoot the dragon with only stuff that is strength eight"
+        }
+      ],
+      "datum": "2024-11-04",
+      "markeringen": []
+    },
+    {
+      "id": "one-block-mortuary-commitment",
+      "titel": "Commit one main block against a Mortuary Cult gunline",
+      "tekst": "Send one large unit forward to do the main fighting rather than overcommitting the army. He would advance one or two supporting units to absorb some fire, then withdraw those units in marching column out of shooting range.",
+      "waarom": "He wants the character-bearing unit to earn points while the rest of the army preserves its own points.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "game-plan",
+        "matchups"
+      ],
+      "subthemas": [
+        "tempo-trading",
+        "vs-tomb-kings"
+      ],
+      "tags": [
+        "concentration",
+        "victory-points",
+        "marching-column"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-P-jxp6aKkb4",
+          "url": "https://www.youtube.com/watch?v=P-jxp6aKkb4&t=862s",
+          "tijd": 865,
+          "citaat": "just send one big unit up to do the work",
+          "extraCitaten": [
+            {
+              "tijd": 865,
+              "citaat": "reverse them out and get out of range"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-11-04",
+      "markeringen": []
+    },
+    {
+      "id": "guard-dwarf-backfield-scorpions",
+      "titel": "Leave backfield defenders for Tomb Scorpions",
+      "tekst": "Keep something able to fight Tomb Scorpions near your Anvil of Doom and artillery rather than leaving the backfield undefended.",
+      "waarom": "He expects Scorpions to appear behind the army and try to kill those pieces.",
+      "voorbeeld": "He suggests a Doomseeker or units withdrawn from the advance as possible defenders.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "deployment",
+        "matchups"
+      ],
+      "subthemas": [
+        "ambush-scouts-vanguard",
+        "vs-tomb-kings"
+      ],
+      "tags": [
+        "ambush",
+        "war-machines"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [
+        "Tomb Scorpion"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-P-jxp6aKkb4",
+          "url": "https://www.youtube.com/watch?v=P-jxp6aKkb4&t=894s",
+          "tijd": 897,
+          "citaat": "make sure that you have something there that can actually deal with them",
+          "extraCitaten": [
+            {
+              "tijd": 882,
+              "citaat": "protect them against those scorpions that are popping out to kill you"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-11-04",
+      "markeringen": []
+    },
+    {
+      "id": "gyrocopters-hunt-reserve-archers",
+      "titel": "Hunt Reserve Move archers with Gyrocopters",
+      "tekst": "Use Gyrocopters to go around terrain and destroy Tomb Kings archers that emerge to shoot and Reserve Move back into hiding.",
+      "waarom": "He says these archers chip wounds off units and can later charge the rear of Dwarfs stuck fighting Skeletons.",
+      "voorbeeld": "He describes archers hiding behind buildings, coming out to shoot and then moving back.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "shooting-terrain",
+        "matchups"
+      ],
+      "subthemas": [
+        "hunting-shooters",
+        "vs-tomb-kings"
+      ],
+      "tags": [
+        "fly",
+        "reserve-move",
+        "missile-troops"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [
+        "Gyrocopter"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-P-jxp6aKkb4",
+          "url": "https://www.youtube.com/watch?v=P-jxp6aKkb4&t=902s",
+          "tijd": 905,
+          "citaat": "having gyrocopters that can go around and kill the reserve moving archers"
+        }
+      ],
+      "datum": "2024-11-04",
+      "markeringen": []
+    },
+    {
+      "id": "gyrocopters-engage-raising-priests",
+      "titel": "Engage Tomb Kings priests to stop Arise",
+      "tekst": "With enough Gyrocopters in an Expeditionary Force, consider flying over the enemy lines to engage the priests and prevent Arise.",
+      "waarom": "He says priests cannot use Arise while locked in combat, offering a way to interrupt the return of killed models.",
+      "voorbeeld": null,
+      "wanneerNiet": "He calls this risky and says to attempt it only if you think you can get away with it.",
+      "fase": "movement",
+      "themas": [
+        "matchups"
+      ],
+      "subthemas": [
+        "vs-tomb-kings"
+      ],
+      "tags": [
+        "fly",
+        "tarpit"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [
+        "Gyrocopter"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-P-jxp6aKkb4",
+          "url": "https://www.youtube.com/watch?v=P-jxp6aKkb4&t=933s",
+          "tijd": 936,
+          "citaat": "engaging those priests as they can't do it when they're locked in combat",
+          "extraCitaten": [
+            {
+              "tijd": 943,
+              "citaat": "jumping over their lines and then engaging with the priests"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-11-04",
+      "markeringen": []
+    },
+    {
+      "id": "irondrakes-against-tomb-chariots",
+      "titel": "Use Irondrakes against Tomb Kings chariot armies",
+      "tekst": "Consider a couple of Irondrake units against a Tomb Kings army with many Chariots. Use their shooting and Stand and Shoot, including the grenade, to damage the approaching units.",
+      "waarom": "He says their Strength 5 wounds these Chariots on threes and their flaming damage causes extra wounds through Dry as Dust. He also highlights Quick Shot when the enemy gets close.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "matchups",
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "vs-tomb-kings",
+        "missile-units"
+      ],
+      "tags": [
+        "chariots",
+        "flaming",
+        "stand-and-shoot",
+        "missile-troops"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [
+        "Irondrakes",
+        "Skeleton Chariots"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-P-jxp6aKkb4",
+          "url": "https://www.youtube.com/watch?v=P-jxp6aKkb4&t=974s",
+          "tijd": 977,
+          "citaat": "can deal with lots and lots of Chariots",
+          "extraCitaten": [
+            {
+              "tijd": 960,
+              "citaat": "any flaming damage into them is going to be doing extra wounds"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-11-04",
+      "markeringen": []
+    },
+    {
+      "id": "combat-resolution-against-necrosphinx",
+      "titel": "Consider combat-resolution units against a Necrosphinx",
+      "tekst": "Consider sending combat-resolution units into a Necrosphinx, surviving its attacks and trying to make it crumble.",
+      "waarom": "He thinks it is not particularly strong in combat, while the artillery may already be busy with the Bone Dragon, Caskets of Souls or Screaming Skull Catapults.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "matchups",
+        "infantry"
+      ],
+      "subthemas": [
+        "vs-tomb-kings",
+        "holding-combat"
+      ],
+      "tags": [
+        "combat-resolution",
+        "monsters",
+        "anvil"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [
+        "Necrosphinx"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-P-jxp6aKkb4",
+          "url": "https://www.youtube.com/watch?v=P-jxp6aKkb4&t=999s",
+          "tijd": 1002,
+          "citaat": "sending combat res units into the necro Spinx to try and combat res it out"
+        }
+      ],
+      "datum": "2024-11-04",
+      "markeringen": []
+    },
+    {
+      "id": "dwarfs-catapult-board-edge",
+      "titel": "Keep Dwarfs over five inches from the back edge",
+      "tekst": "Against Screaming Skull Catapults, keep Dwarf units more than five inches from your back board edge. He particularly warns about a pair trying to remove units with their first-turn shooting.",
+      "waarom": "He says a wound can force Fall Back in Good Order and cites Resolute's minus one to flee rolls when explaining the five-inch margin.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "matchups",
+        "deployment"
+      ],
+      "subthemas": [
+        "vs-tomb-kings",
+        "unit-placement"
+      ],
+      "tags": [
+        "board-edge",
+        "fall-back",
+        "war-machines"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [
+        "Screaming Skull Catapult"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-P-jxp6aKkb4",
+          "url": "https://www.youtube.com/watch?v=P-jxp6aKkb4&t=1071s",
+          "tijd": 1074,
+          "citaat": "make sure that you're over 5 in away from the back of the board"
+        }
+      ],
+      "datum": "2024-11-04",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "anchor-static-combat-resolution",
+      "bron": {
+        "bronId": "yt-P-jxp6aKkb4",
+        "url": "https://www.youtube.com/watch?v=P-jxp6aKkb4&t=220s",
+        "tijd": 223,
+        "citaat": "those big static 7 or static 6 combat res blocks really help"
+      },
+      "toelichting": "He likewise recommends building high static combat resolution, here to beat Bretonnian lance units."
+    },
+    {
+      "lesId": "wide-deployment-against-cannons",
+      "bron": {
+        "bronId": "yt-P-jxp6aKkb4",
+        "url": "https://www.youtube.com/watch?v=P-jxp6aKkb4&t=325s",
+        "tijd": 328,
+        "citaat": "you can minimize the amount of wounds that are done to you",
+        "extraCitaten": [
+          {
+            "tijd": 337,
+            "citaat": "take them 10 wide with just one rank"
+          }
+        ]
+      },
+      "toelichting": "The same recommendation to use a wide, shallow formation against cannon fire is illustrated with Bretonnian Bombards."
+    },
+    {
+      "lesId": "decoys-set-up-countercharges",
+      "bron": {
+        "bronId": "yt-P-jxp6aKkb4",
+        "url": "https://www.youtube.com/watch?v=P-jxp6aKkb4&t=406s",
+        "tijd": 409,
+        "citaat": "potentially creating a bait unit out in the open",
+        "extraCitaten": [
+          {
+            "tijd": 409,
+            "citaat": "then you're going to have a good charge"
+          }
+        ]
+      },
+      "toelichting": "He likewise recommends offering bait so an enemy committing to it exposes itself to a favourable countercharge."
+    },
+    {
+      "lesId": "control-with-ranged-firepower",
+      "bron": {
+        "bronId": "yt-P-jxp6aKkb4",
+        "url": "https://www.youtube.com/watch?v=P-jxp6aKkb4&t=495s",
+        "tijd": 498,
+        "citaat": "if you can win that early range battle",
+        "extraCitaten": [
+          {
+            "tijd": 507,
+            "citaat": "they're going to have to try and overextend and charge into you"
+          }
+        ]
+      },
+      "toelichting": "He uses superior ranged results to force the enemy into favourable receiving combats, the same control plan."
+    },
+    {
+      "lesId": "plan-overruns-repeat-combats",
+      "bron": {
+        "bronId": "yt-P-jxp6aKkb4",
+        "url": "https://www.youtube.com/watch?v=P-jxp6aKkb4&t=759s",
+        "tijd": 762,
+        "citaat": "looking at what you can overrun into",
+        "extraCitaten": [
+          {
+            "tijd": 770,
+            "citaat": "overrun into the caskets and then overrun"
+          }
+        ]
+      },
+      "toelichting": "He likewise advises planning a chain of overruns to keep the attacking unit moving through successive combats."
+    }
+  ],
+  "overgeslagen": "Skipped the introduction, channel updates, sponsorship, member thanks and outro song; the rejected discussion of the 180-Skeleton poison army; unclear rune names and garbled transition details. Omitted isolated rules and repeated summaries that added no separate recommendation.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

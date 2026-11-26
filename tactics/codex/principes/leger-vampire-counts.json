@@ -2,43 +2,84 @@
   "scope": "leger-vampire-counts",
   "soort": "leger",
   "sleutel": "vampire-counts",
-  "gemaaktOp": "2026-11-25T23:34:24.105Z",
+  "gemaaktOp": "2026-11-26T04:43:00.175Z",
   "model": "gpt-6.1-sol",
   "effort": "high",
-  "invoerHash": "bc33e0356140",
+  "invoerHash": "c345832b602d",
   "invoer": [
     "vampire-force-necromancer-range",
+    "six-screamer-army-core",
     "undead-wall-protect-flanks",
     "grave-guard-drilled-widen",
     "hexwraith-marching-column-attacks",
     "repeated-terror-charges-lanterns",
     "ethereal-coach-shields-bats",
+    "terrorgheist-scream-screen-gap",
     "grave-guard-great-weapons",
     "skeletons-twenty-five-thirty",
     "undead-infantry-receive-charges",
+    "zombies-pin-scream-targets",
+    "mortis-engine-scream-escape",
     "tomb-banshee-budget-assassin",
     "vampire-bsb-healing-rerolls",
     "banshees-behind-closest-infantry",
+    "sandwich-banshees-between-engines",
+    "flying-banshee-scream-withdrawal",
     "grave-guard-battle-lust-mirror",
     "lower-lantern-leadership-screams",
     "curse-years-holding-plan",
+    "banshee-double-engine-reach",
+    "double-engine-casting-core",
+    "dirge-necromancy-leadership-stack",
+    "reserve-move-undead-pressure",
     "black-coach-mobile-backline-hunter",
     "six-fell-bats-cannons",
     "screams-weaken-dragon-ogres",
     "large-targets-avoid-vile-tide",
     "scream-exposed-bray-shaman",
+    "dirge-picks-lone-support",
+    "hide-mortis-engines-artillery",
     "vampire-ethereal-lantern-control",
     "avoid-blood-knights-lanterns",
     "avoid-vargheists-lantern-matchup",
     "fell-bats-scenario-pairs",
     "resurrect-outnumber-central-objective",
-    "herdstone-after-main-battle"
+    "herdstone-after-main-battle",
+    "finish-six-turns-vampires"
   ],
   "principes": [
     {
-      "id": "use-ethereal-protection-against-enemy-shooting",
-      "titel": "Use Ethereal protection against enemy shooting",
-      "tekst": "Use Ethereal units where enemy shooting cannot hurt them. Their protection lets them operate safely against those weapons.",
+      "id": "lower-leadership-before-screaming",
+      "titel": "Lower your target's Leadership before using Wailing Dirge",
+      "tekst": "Use Leadership-reducing spells on your intended scream target. Lower Leadership makes your screams more damaging.",
+      "soort": "principe",
+      "thema": "magic",
+      "leger": "vampire-counts",
+      "lessen": [
+        "tomb-banshee-budget-assassin",
+        "lower-lantern-leadership-screams",
+        "dirge-necromancy-leadership-stack"
+      ],
+      "kanten": null
+    },
+    {
+      "id": "advance-threats-with-reserve-move",
+      "titel": "Use Reserve Move magic to advance threats and apply pressure",
+      "tekst": "Use magic granting Reserve Move to move your threats farther forward. The extra movement helps you reach positions that put pressure on the enemy.",
+      "soort": "principe",
+      "thema": "movement",
+      "leger": "vampire-counts",
+      "lessen": [
+        "terrorgheist-scream-screen-gap",
+        "reserve-move-undead-pressure",
+        "black-coach-mobile-backline-hunter"
+      ],
+      "kanten": null
+    },
+    {
+      "id": "exploit-ethereal-protection-against-shooting",
+      "titel": "Use Ethereal units where enemy shooting cannot hurt them",
+      "tekst": "Use Ethereal units to approach targets when opposing shooting cannot hurt them. Their protection makes the approach safer.",
       "soort": "principe",
       "thema": "shooting-terrain",
       "leger": "vampire-counts",
@@ -48,35 +89,21 @@
         "vampire-ethereal-lantern-control"
       ],
       "kanten": null
-    },
-    {
-      "id": "lower-enemy-leadership-to-strengthen-your-threats",
-      "titel": "Lower enemy Leadership to strengthen your Leadership-based threats",
-      "tekst": "Support threats that exploit enemy Leadership with Leadership-reducing spells, making your target more vulnerable.",
-      "soort": "principe",
-      "thema": "magic",
-      "leger": "vampire-counts",
-      "lessen": [
-        "repeated-terror-charges-lanterns",
-        "tomb-banshee-budget-assassin",
-        "lower-lantern-leadership-screams"
-      ],
-      "kanten": null
     }
   ],
   "correcties": [],
   "runs": [
     {
       "poging": 1,
-      "promptKB": 19,
-      "sec": 34,
+      "promptKB": 26,
+      "sec": 86,
       "exit": 0,
       "usage": {
-        "input_tokens": 31599,
+        "input_tokens": 33628,
         "cached_input_tokens": 0,
         "cache_write_input_tokens": 0,
-        "output_tokens": 1433,
-        "reasoning_output_tokens": 1198
+        "output_tokens": 3833,
+        "reasoning_output_tokens": 3492
       },
       "items": {
         "agent_message": 1

@@ -1,0 +1,716 @@
+{
+  "videoId": "MroBpuVP0mw",
+  "bronId": "yt-MroBpuVP0mw",
+  "model": "GPT-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-26T03:04:37.834Z",
+  "nieuw": [
+    {
+      "id": "bolt-throwers-flank-cavalry",
+      "titel": "Place Bolt Throwers on extreme flanks to rake cavalry",
+      "tekst": "Deploy Bolt Throwers on extreme flanks to shoot along the side of enemy cavalry formations. He considers this their best use when there are few deeply ranked units to target.",
+      "waarom": "He says a shot down the side can hit each model along its path, although its Strength decreases as it passes through models.",
+      "voorbeeld": null,
+      "wanneerNiet": "He warns that the Dwarf crew's Ballistic Skill means they are usually hitting on fives.",
+      "fase": "deployment",
+      "themas": [
+        "shooting-terrain",
+        "deployment"
+      ],
+      "subthemas": [
+        "war-machines",
+        "unit-placement"
+      ],
+      "tags": [
+        "war-machines",
+        "flanks",
+        "heavy-cavalry"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [
+        "Bolt Thrower Dwarfs"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-MroBpuVP0mw",
+          "url": "https://www.youtube.com/watch?v=MroBpuVP0mw&t=100s",
+          "tijd": 103,
+          "citaat": "the best way to do this is position the buol thrower at an extreme flank",
+          "extraCitaten": [
+            {
+              "tijd": 111,
+              "citaat": "hit every model on the way through"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-10-13",
+      "markeringen": []
+    },
+    {
+      "id": "bolt-throwers-sacrificial-flank-distractions",
+      "titel": "Use cheap Bolt Throwers as sacrificial flank distractions",
+      "tekst": "Use cheap Bolt Throwers on extreme flanks as expendable distractions. Make the opponent send units away from your main line to deal with them.",
+      "waarom": "He says their low cost makes them affordable to lose, while leaving them alone risks taking wounds from their shooting.",
+      "voorbeeld": null,
+      "wanneerNiet": "He would try to keep them safe if he had spent many extra points on runes.",
+      "fase": "deployment",
+      "themas": [
+        "chaff",
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "decoys-bait",
+        "war-machines"
+      ],
+      "tags": [
+        "decoy",
+        "sacrifice",
+        "flanks",
+        "war-machines"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [
+        "Bolt Thrower Dwarfs"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-MroBpuVP0mw",
+          "url": "https://www.youtube.com/watch?v=MroBpuVP0mw&t=171s",
+          "tijd": 174,
+          "citaat": "sacrificial units on the extreme flanks",
+          "extraCitaten": [
+            {
+              "tijd": 174,
+              "citaat": "the opponent's going to have to send units over there"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-10-13",
+      "markeringen": []
+    },
+    {
+      "id": "bolt-thrower-rune-skewering",
+      "titel": "Choose Rune of Skewering for a Bolt Thrower",
+      "tekst": "If upgrading a Bolt Thrower with a rune, he recommends Rune of Skewering.",
+      "waarom": "He values its extra Strength and the removal of armour saves, including two-plus saves.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "war-machines"
+      ],
+      "tags": [
+        "war-machines",
+        "magic-items",
+        "armour"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [
+        "Bolt Thrower Dwarfs"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-MroBpuVP0mw",
+          "url": "https://www.youtube.com/watch?v=MroBpuVP0mw&t=132s",
+          "tijd": 135,
+          "citaat": "the Rune that I would say to go for is the Rune of skewering",
+          "extraCitaten": [
+            {
+              "tijd": 142,
+              "citaat": "this Rune adds plus one strength and also means that there's no armor saves allowed"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-10-13",
+      "markeringen": []
+    },
+    {
+      "id": "artillery-hills-clear-sight",
+      "titel": "Use hills to open artillery lines of sight",
+      "tekst": "Place artillery such as cannons and Organ Guns on a hill when one is available to improve their choice of visible targets.",
+      "waarom": "He says the elevated position frees their line of sight and lets them target more of the board.",
+      "voorbeeld": null,
+      "wanneerNiet": "He notes that woods and other hills can still obscure targets from a cannon on a hill.",
+      "fase": "deployment",
+      "themas": [
+        "shooting-terrain",
+        "deployment"
+      ],
+      "subthemas": [
+        "terrain-los",
+        "unit-placement"
+      ],
+      "tags": [
+        "war-machines",
+        "hills",
+        "line-of-sight"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-MroBpuVP0mw",
+          "url": "https://www.youtube.com/watch?v=MroBpuVP0mw&t=364s",
+          "tijd": 367,
+          "citaat": "in deployment you're going to be looking at putting these on Hills",
+          "extraCitaten": [
+            {
+              "tijd": 375,
+              "citaat": "this is really good because it frees up what they can see"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-10-13",
+      "markeringen": []
+    },
+    {
+      "id": "separate-artillery-deny-overruns",
+      "titel": "Separate artillery to prevent chained overruns",
+      "tekst": "Keep war machines apart or stagger them so that an enemy cannot destroy one and overrun straight into the next.",
+      "waarom": "He warns that adjacent war machines can let an attacker kill one and immediately reach another with its overrun.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "deployment",
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "unit-placement",
+        "war-machines"
+      ],
+      "tags": [
+        "war-machines",
+        "overrun",
+        "alignment"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-MroBpuVP0mw",
+          "url": "https://www.youtube.com/watch?v=MroBpuVP0mw&t=405s",
+          "tijd": 408,
+          "citaat": "you want to make sure that these are separated and not just put straight together",
+          "extraCitaten": [
+            {
+              "tijd": 424,
+              "citaat": "the enemy units won't just be able to overrun straight through them"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-10-13",
+      "markeringen": []
+    },
+    {
+      "id": "cannon-grapeshot-close-hunters",
+      "titel": "Consider grapeshot against small units approaching your cannon",
+      "tekst": "When a small enemy unit closes on your cannon and a cannonball would do little, consider switching to grapeshot within its 12-inch range.",
+      "waarom": "He says its automatic Strength 4, AP1 hits could make the difference between killing the approaching unit and losing the cannon.",
+      "voorbeeld": null,
+      "wanneerNiet": "He warns that the shot count involves considerable luck and can misfire.",
+      "fase": "magic-shooting",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "target-priority"
+      ],
+      "tags": [
+        "cannons",
+        "war-machines",
+        "armour-piercing"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [
+        "Cannon Dwarfs"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-MroBpuVP0mw",
+          "url": "https://www.youtube.com/watch?v=MroBpuVP0mw&t=469s",
+          "tijd": 472,
+          "citaat": "your Cannonball isn't going to do too much you can elect to use grape shot"
+        }
+      ],
+      "datum": "2024-10-13",
+      "markeringen": []
+    },
+    {
+      "id": "artillery-rune-forging-backup",
+      "titel": "Consider Rune of Forging for an artillery misfire reroll",
+      "tekst": "Consider Rune of Forging on a cannon or Grudge Thrower to reroll a misfire, particularly without a nearby Engineer.",
+      "waarom": "He recommends it as a way to improve artillery reliability when an Engineer is not available to provide the reroll.",
+      "voorbeeld": null,
+      "wanneerNiet": "He says the rune can only be used once.",
+      "fase": "army-building",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "war-machines"
+      ],
+      "tags": [
+        "war-machines",
+        "magic-items"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [
+        "Cannon Dwarfs",
+        "Grudge Thrower"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-MroBpuVP0mw",
+          "url": "https://www.youtube.com/watch?v=MroBpuVP0mw&t=1044s",
+          "tijd": 1047,
+          "citaat": "for the cannon and The Grudge thrower I would suggest Runes of forging",
+          "extraCitaten": [
+            {
+              "tijd": 537,
+              "citaat": "if you don't have an engineer nearby"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-10-13",
+      "markeringen": []
+    },
+    {
+      "id": "artillery-rune-reloading-uptime",
+      "titel": "Consider Rune of Reloading to keep artillery firing",
+      "tekst": "Consider Rune of Reloading on a cannon or Grudge Thrower to keep it firing after a non-destructive misfire.",
+      "waarom": "He says a misfire-table result other than a one still allows the machine to fire next turn with this rune.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "war-machines"
+      ],
+      "tags": [
+        "war-machines",
+        "magic-items"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [
+        "Cannon Dwarfs",
+        "Grudge Thrower"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-MroBpuVP0mw",
+          "url": "https://www.youtube.com/watch?v=MroBpuVP0mw&t=1053s",
+          "tijd": 1056,
+          "citaat": "also the Rune of reloading it just keeps them firing more",
+          "extraCitaten": [
+            {
+              "tijd": 544,
+              "citaat": "you can still fire the next turn which is really handy"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-10-13",
+      "markeringen": []
+    },
+    {
+      "id": "grudge-throwers-early-pressure",
+      "titel": "Take Grudge Throwers to pressure enemies out of hiding",
+      "tekst": "He recommends trying at least one Grudge Thrower, and preferably two if they fit. Use their early shooting pressure to make enemies approach rather than remain hidden.",
+      "waarom": "He finds that pressure in turns one and two stops enemies simply hiding behind buildings and helps a relatively static Dwarf army control the game's momentum.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "shooting-terrain",
+        "game-plan"
+      ],
+      "subthemas": [
+        "war-machines",
+        "aggression-control"
+      ],
+      "tags": [
+        "war-machines",
+        "gunline",
+        "line-of-sight"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [
+        "Grudge Thrower"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-MroBpuVP0mw",
+          "url": "https://www.youtube.com/watch?v=MroBpuVP0mw&t=549s",
+          "tijd": 552,
+          "citaat": "I always try and take at least one of these and probably two",
+          "extraCitaten": [
+            {
+              "tijd": 763,
+              "citaat": "the pressure that they can put on the enemy in turns one and turns two"
+            },
+            {
+              "tijd": 770,
+              "citaat": "they have to come near you and they can't just hide behind buildings"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-10-13",
+      "markeringen": []
+    },
+    {
+      "id": "grudge-bombard-hidden-survivors",
+      "titel": "Bombard hidden survivors to collect their points",
+      "tekst": "Use a Grudge Thrower's bombardment to shoot targets hiding behind units or terrain. He highlights hidden characters and small units that have spent several turns running away as worthwhile opportunities.",
+      "waarom": "He values being able to reach these targets without line of sight, including to collect a fleeing unit's points late in the game.",
+      "voorbeeld": null,
+      "wanneerNiet": "He warns that bombardment still scatters on a hit result, with the crew's Ballistic Skill reducing that scatter.",
+      "fase": "magic-shooting",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "target-priority"
+      ],
+      "tags": [
+        "war-machines",
+        "line-of-sight",
+        "victory-points"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [
+        "Grudge Thrower"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-MroBpuVP0mw",
+          "url": "https://www.youtube.com/watch?v=MroBpuVP0mw&t=607s",
+          "tijd": 610,
+          "citaat": "this is really good for sniping out enemy characters",
+          "extraCitaten": [
+            {
+              "tijd": 618,
+              "citaat": "steal their points at the end of the game"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-10-13",
+      "markeringen": []
+    },
+    {
+      "id": "hide-grudge-throwers-bombard",
+      "titel": "Hide Grudge Throwers and fire by bombardment",
+      "tekst": "Deploy Grudge Throwers behind hills, woods or buildings when you want to keep enemies from reaching them, then fire using bombardment.",
+      "waarom": "He recommends using their ability to bombard without line of sight to keep them hidden while still shooting.",
+      "voorbeeld": null,
+      "wanneerNiet": "He allows a position with line of sight when the enemy cannot reach them and has no Scouts.",
+      "fase": "deployment",
+      "themas": [
+        "shooting-terrain",
+        "deployment"
+      ],
+      "subthemas": [
+        "war-machines",
+        "unit-placement"
+      ],
+      "tags": [
+        "war-machines",
+        "line-of-sight",
+        "hills",
+        "woods"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [
+        "Grudge Thrower"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-MroBpuVP0mw",
+          "url": "https://www.youtube.com/watch?v=MroBpuVP0mw&t=792s",
+          "tijd": 795,
+          "citaat": "you could put these behind Hills or Behind Woods or even behind buildings",
+          "extraCitaten": [
+            {
+              "tijd": 803,
+              "citaat": "going to be bombarding out every turn"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-10-13",
+      "markeringen": []
+    },
+    {
+      "id": "organ-guns-light-armour-targets",
+      "titel": "Aim Organ Guns at infantry and lightly armoured targets",
+      "tekst": "He considers infantry and other lightly armoured targets the best role for Organ Gun shooting.",
+      "waarom": "He says targets without much of a save struggle against its volume of fire, which can reach twenty shots in a turn.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "magic-shooting",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "target-priority"
+      ],
+      "tags": [
+        "war-machines",
+        "armour"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [
+        "Organ Gun"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-MroBpuVP0mw",
+          "url": "https://www.youtube.com/watch?v=MroBpuVP0mw&t=881s",
+          "tijd": 884,
+          "citaat": "the best role for these is going to be shooting at infantry",
+          "extraCitaten": [
+            {
+              "tijd": 893,
+              "citaat": "anything that's lightly armored"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-10-13",
+      "markeringen": []
+    },
+    {
+      "id": "organ-guns-avoid-hit-penalties",
+      "titel": "Avoid Organ Gun targets that stack shooting penalties",
+      "tekst": "Do not aim Organ Guns at units imposing minus one or minus two to hit. If possible, choose targets that leave the gun hitting on fives or better, with an Engineer's rerolls of ones.",
+      "waarom": "He says the Ballistic Skill 3 crew already hits on fives at long range, so additional penalties make the gun struggle.",
+      "voorbeeld": "Against Wood Elves, he suggests shooting the Sisters or another target without shooting penalties.",
+      "wanneerNiet": "He notes that an Engineer cannot provide both a misfire reroll and rerolls of ones at the same time.",
+      "fase": "magic-shooting",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "target-priority"
+      ],
+      "tags": [
+        "war-machines",
+        "hit-penalties"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [
+        "Organ Gun"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-MroBpuVP0mw",
+          "url": "https://www.youtube.com/watch?v=MroBpuVP0mw&t=898s",
+          "tijd": 901,
+          "citaat": "minus one to hit or minus two to hit don't shoot these at them",
+          "extraCitaten": [
+            {
+              "tijd": 901,
+              "citaat": "these really struggle once you start to stack the negatives to hit on them"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-10-13",
+      "markeringen": []
+    },
+    {
+      "id": "organ-guns-between-combat-units",
+      "titel": "Deploy Organ Guns between units to soften approaching enemies",
+      "tekst": "Place an Organ Gun centrally between two units. Use its range to shoot approaching enemies for two or three turns and whittle down what will fight your combat troops.",
+      "waarom": "He wants the gun firing each turn as the opponent approaches, doing as much damage as possible before the enemy reaches his combat line.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "deployment",
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "unit-placement",
+        "war-machines"
+      ],
+      "tags": [
+        "war-machines",
+        "centre",
+        "gunline"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [
+        "Organ Gun"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-MroBpuVP0mw",
+          "url": "https://www.youtube.com/watch?v=MroBpuVP0mw&t=946s",
+          "tijd": 949,
+          "citaat": "deploy an organ gun would be in the middle of two units",
+          "extraCitaten": [
+            {
+              "tijd": 1110,
+              "citaat": "normally you're going to have at least two to three turns of shooting"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-10-13",
+      "markeringen": []
+    },
+    {
+      "id": "artillery-pivot-into-woods",
+      "titel": "Start artillery behind woods and pivot into a firing position",
+      "tekst": "Start a war machine behind a wood without touching it, then pivot into the wood on your turn to see out. He uses this to stay unseen if the opponent goes first while preparing his own shooting.",
+      "waarom": "He also values woods that slow an enemy charge and force the lower charge die, potentially buying another shooting turn; dangerous woods can add dangerous terrain tests.",
+      "voorbeeld": null,
+      "wanneerNiet": "He says you cannot pivot back into hiding after shooting. Hiding with a pivot on a later turn means choosing not to shoot, and the charge protection depends on the terrain rules in use.",
+      "fase": "deployment",
+      "themas": [
+        "shooting-terrain",
+        "deployment"
+      ],
+      "subthemas": [
+        "terrain-los",
+        "deploying-vs-shooting"
+      ],
+      "tags": [
+        "war-machines",
+        "woods",
+        "line-of-sight",
+        "delay"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-MroBpuVP0mw",
+          "url": "https://www.youtube.com/watch?v=MroBpuVP0mw&t=972s",
+          "tijd": 975,
+          "citaat": "you can start the game positioned behind the wood not touching",
+          "extraCitaten": [
+            {
+              "tijd": 975,
+              "citaat": "when the game starts in your turn you can then pivot into the wood"
+            },
+            {
+              "tijd": 983,
+              "citaat": "the enemy can't see you in their turn if they go first"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-10-13",
+      "markeringen": []
+    },
+    {
+      "id": "cannons-counter-evasive-penalties",
+      "titel": "Use cannons against Evasive units and stacked hit penalties",
+      "tekst": "Use cannons against units relying on Evasive or multiple shooting hit penalties. He recommends targeting a point on the ground in front of an Evasive unit rather than the unit itself.",
+      "waarom": "He values targeting a ground point instead of the unit and says cannonballs bypass the hit penalties protecting these targets.",
+      "voorbeeld": "He highlights shooting through a conveniently lined-up unit of Pegasus Knights, dealing D3 damage to each model wounded.",
+      "wanneerNiet": null,
+      "fase": "magic-shooting",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "target-priority"
+      ],
+      "tags": [
+        "cannons",
+        "evasive",
+        "hit-penalties"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-MroBpuVP0mw",
+          "url": "https://www.youtube.com/watch?v=MroBpuVP0mw&t=1122s",
+          "tijd": 1125,
+          "citaat": "shoot units that either have evade",
+          "extraCitaten": [
+            {
+              "tijd": 1134,
+              "citaat": "you only target a point on the ground in front of them"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-10-13",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "cannon-aim-behemoth-base",
+      "bron": {
+        "bronId": "yt-MroBpuVP0mw",
+        "url": "https://www.youtube.com/watch?v=MroBpuVP0mw&t=259s",
+        "tijd": 262,
+        "citaat": "10 in back from the back of the base of the model",
+        "extraCitaten": [
+          {
+            "tijd": 270,
+            "citaat": "or 7 in from the front"
+          }
+        ]
+      },
+      "toelichting": "He gives the same ten-inches-from-the-back aiming recommendation, also offering seven inches from the front."
+    },
+    {
+      "lesId": "templates-against-huge-blocks",
+      "bron": {
+        "bronId": "yt-MroBpuVP0mw",
+        "url": "https://www.youtube.com/watch?v=MroBpuVP0mw&t=704s",
+        "tijd": 707,
+        "citaat": "units that are quite large to try and maximize the damage that you can do",
+        "extraCitaten": [
+          {
+            "tijd": 779,
+            "citaat": "units that are so big that if you scatter on them"
+          }
+        ]
+      },
+      "toelichting": "He likewise recommends using a template war machine against large formations to maximise hits."
+    },
+    {
+      "lesId": "grudge-throwers-pressure-dragons",
+      "bron": {
+        "bronId": "yt-MroBpuVP0mw",
+        "url": "https://www.youtube.com/watch?v=MroBpuVP0mw&t=704s",
+        "tijd": 707,
+        "citaat": "aiming for large targets with really big bases",
+        "extraCitaten": [
+          {
+            "tijd": 715,
+            "citaat": "usually at dragons a 2-in scatter in any direction is pretty much a direct hit"
+          }
+        ]
+      },
+      "toelichting": "He also recommends Grudge Throwers against large monsters, highlighting dragon bases that can still be hit after a small scatter."
+    }
+  ],
+  "overgeslagen": "Skipped introductions, sponsor and printing discussion, most stat readouts, dice demonstrations and rules explanations without advice. Omitted the unclear Skaven reference, the ambiguous Expeditionary Force upgrade passage and the misfire example's claimed guarantee. Repeated recommendations were consolidated.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

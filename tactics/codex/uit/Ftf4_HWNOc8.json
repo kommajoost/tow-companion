@@ -1,0 +1,122 @@
+{
+  "videoId": "Ftf4_HWNOc8",
+  "bronId": "yt-Ftf4_HWNOc8",
+  "model": "GPT-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-26T03:45:24.878Z",
+  "nieuw": [
+    {
+      "id": "divide-pursuit-and-reform",
+      "titel": "Pursue with one attacker and reform the other",
+      "tekst": "After a combined charge breaks an enemy unit, use one attacker to run it down and reform the other to threaten the rest of the enemy army's flanks.",
+      "waarom": "He says this creates a break in the enemy line that forces the opponent to manoeuvre to face your units or let them run riot.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "movement"
+      ],
+      "subthemas": [
+        "overrun-pursuit"
+      ],
+      "tags": [
+        "pursuit",
+        "reform",
+        "combined-charge",
+        "flanks"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-Ftf4_HWNOc8",
+          "url": "https://www.youtube.com/watch?v=Ftf4_HWNOc8&t=353s",
+          "tijd": 356,
+          "citaat": "you run them down with one unit",
+          "extraCitaten": [
+            {
+              "tijd": 364,
+              "citaat": "threaten the flanks of the arest of the enemy Army"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-02-05",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "decline-charges-for-better-engagements",
+      "bron": {
+        "bronId": "yt-Ftf4_HWNOc8",
+        "url": "https://www.youtube.com/watch?v=Ftf4_HWNOc8&t=282s",
+        "tijd": 285,
+        "citaat": "when do you just hold back",
+        "extraCitaten": [
+          {
+            "tijd": 276,
+            "citaat": "charges getting yourself into a good position"
+          }
+        ]
+      },
+      "toelichting": "He recommends choosing when to hold back and prepare a better charge rather than charging whenever possible."
+    },
+    {
+      "lesId": "coordinate-front-flank-arrival",
+      "bron": {
+        "bronId": "yt-Ftf4_HWNOc8",
+        "url": "https://www.youtube.com/watch?v=Ftf4_HWNOc8&t=306s",
+        "tijd": 309,
+        "citaat": "supported by a unit of knights of the realm",
+        "extraCitaten": [
+          {
+            "tijd": 317,
+            "citaat": "both units five or six wide"
+          }
+        ]
+      },
+      "toelichting": "He recommends waiting to bring two knight units into the same charge together instead of committing one alone."
+    },
+    {
+      "lesId": "heavy-cavalry-avoid-prolonged-grinds",
+      "bron": {
+        "bronId": "yt-Ftf4_HWNOc8",
+        "url": "https://www.youtube.com/watch?v=Ftf4_HWNOc8&t=185s",
+        "tijd": 188,
+        "citaat": "you find yourself suckered into an arm wrestle",
+        "extraCitaten": [
+          {
+            "tijd": 195,
+            "citaat": "charge and blast through the enemy line"
+          }
+        ]
+      },
+      "voorbeeld": "He describes a long charge where only one of two intended attackers reaches armoured Dwarf Warriors or Longbeards, leaving it caught in a grinding fight even if it wins the first round.",
+      "toelichting": "He warns against charges that leave cavalry grinding against a resilient unit instead of breaking through on impact."
+    },
+    {
+      "lesId": "cavalry-reserve-response-options",
+      "bron": {
+        "bronId": "yt-Ftf4_HWNOc8",
+        "url": "https://www.youtube.com/watch?v=Ftf4_HWNOc8&t=512s",
+        "tijd": 515,
+        "citaat": "the placement of that night unit as a tactical reserve",
+        "extraCitaten": [
+          {
+            "tijd": 473,
+            "citaat": "a unit of inner circle Knight was able then to counter attack"
+          }
+        ]
+      },
+      "voorbeeld": "In an eighth-edition game, his State Troops took an attack from what he recalls as Witch Elves, inflicted some casualties and fled. Inner Circle Knights held in reserve then counterattacked and, with some good fortune, broke through.",
+      "toelichting": "He credits cavalry held as a tactical reserve with responding to an infantry defeat and turning the battle."
+    }
+  ],
+  "overgeslagen": "Skipped the contact-sport analogy, introductory rules explanations, closing channel promotion and the old battle's result. Used the eighth-edition anecdote only as his example of a cavalry reserve.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

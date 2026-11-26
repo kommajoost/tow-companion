@@ -2,13 +2,14 @@
   "scope": "leger-chaos-dwarfs",
   "soort": "leger",
   "sleutel": "chaos-dwarfs",
-  "gemaaktOp": "2026-11-25T23:10:49.789Z",
+  "gemaaktOp": "2026-11-26T04:35:26.221Z",
   "model": "gpt-6.1-sol",
   "effort": "high",
-  "invoerHash": "4bb94f3c9408",
+  "invoerHash": "43ecc0781435",
   "invoer": [
     "central-iron-daemon-dragon-bait",
     "infernal-guard-fireglaive-armour",
+    "hobgoblins-character-leadership-support",
     "sneaky-gits-backline-volley",
     "skullcracker-iron-daemon-lanterns"
   ],
@@ -18,14 +19,14 @@
     {
       "poging": 1,
       "promptKB": 6,
-      "sec": 6,
+      "sec": 5,
       "exit": 0,
       "usage": {
-        "input_tokens": 28646,
+        "input_tokens": 28202,
         "cached_input_tokens": 0,
         "cache_write_input_tokens": 0,
-        "output_tokens": 52,
-        "reasoning_output_tokens": 34
+        "output_tokens": 38,
+        "reasoning_output_tokens": 20
       },
       "items": {
         "agent_message": 1

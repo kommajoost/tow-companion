@@ -1,0 +1,425 @@
+{
+  "videoId": "RUWFyl0eK00",
+  "bronId": "yt-RUWFyl0eK00",
+  "model": "GPT-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-26T01:20:29.124Z",
+  "nieuw": [
+    {
+      "id": "glade-guard-chaff-option",
+      "titel": "Consider minimum Glade Guard as chaff",
+      "tekst": "If the Grand Army's compulsory Glade Guard do not fit your main plan, consider a small unit as chaff rather than investing heavily in shooting. He suggests that magic arrows can still give those five models useful shooting.",
+      "waarom": "He points out that the unit must be taken anyway and costs about as much as a Great Eagle, while its shooting can contribute without putting it in danger.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "chaff"
+      ],
+      "subthemas": [
+        "choosing-chaff"
+      ],
+      "tags": [
+        "missile-troops",
+        "sacrifice"
+      ],
+      "leger": "wood-elf-realms",
+      "units": [
+        "Glade Guard"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-RUWFyl0eK00",
+          "url": "https://www.youtube.com/watch?v=RUWFyl0eK00&t=389s",
+          "tijd": 392,
+          "citaat": "this would be a unit of glade guard.",
+          "extraCitaten": [
+            {
+              "tijd": 400,
+              "citaat": "If you are playing Grand Army, you have to take a unit of glade guard."
+            },
+            {
+              "tijd": 437,
+              "citaat": "You can put some magic arrows on them."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-11-03",
+      "markeringen": []
+    },
+    {
+      "id": "wood-elf-eagle-war-machines",
+      "titel": "Use Great Eagles to hunt war machines",
+      "tekst": "Use Great Eagles to attack war machines. He expects them to win against most war machine crews and considers them fast enough to reach the job.",
+      "waarom": "He credits their Weapon Skill, Strength, Toughness, three wounds, initiative and Stomp with making them effective against crews.",
+      "voorbeeld": null,
+      "wanneerNiet": "He would not necessarily trust a Wood Elf Beast Pack to do the same job.",
+      "fase": "movement",
+      "themas": [
+        "shooting-terrain",
+        "chaff"
+      ],
+      "subthemas": [
+        "hunting-shooters",
+        "choosing-chaff"
+      ],
+      "tags": [
+        "war-machines",
+        "fly"
+      ],
+      "leger": "wood-elf-realms",
+      "units": [
+        "Great Eagle"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-RUWFyl0eK00",
+          "url": "https://www.youtube.com/watch?v=RUWFyl0eK00&t=1974s",
+          "tijd": 1977,
+          "citaat": "eagles in particular very good at taking down war machines.",
+          "extraCitaten": [
+            {
+              "tijd": 2012,
+              "citaat": "Wouldn't necessarily trust a beast pack to be able to do it"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-11-03",
+      "markeringen": []
+    },
+    {
+      "id": "closest-skirmisher-force-wheel",
+      "titel": "Position the closest skirmisher to force a charge wheel",
+      "tekst": "To redirect with skirmishers, position the closest visible model so that a charger moving straight ahead would miss it and must wheel to make contact.",
+      "waarom": "He explains that the charger must move into contact with the closest visible skirmisher.",
+      "voorbeeld": null,
+      "wanneerNiet": "He calls this awkward and more difficult than redirecting with a Great Eagle.",
+      "fase": "movement",
+      "themas": [
+        "chaff",
+        "movement"
+      ],
+      "subthemas": [
+        "redirecting",
+        "wheels-alignment"
+      ],
+      "tags": [
+        "skirmishers",
+        "redirect",
+        "wheel"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-RUWFyl0eK00",
+          "url": "https://www.youtube.com/watch?v=RUWFyl0eK00&t=1521s",
+          "tijd": 1524,
+          "citaat": "he would miss it. So, he is forced to wheel and make contact.",
+          "extraCitaten": [
+            {
+              "tijd": 1504,
+              "citaat": "you have to move directly into contact with the closest visible uh model."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-11-03",
+      "markeringen": []
+    },
+    {
+      "id": "chaff-flee-panic-risk",
+      "titel": "Check whether fleeing chaff could panic your own units",
+      "tekst": "When positioning easily panicked chaff, watch where it could flee through your own units. Avoid exposing those units to unnecessary panic tests.",
+      "waarom": null,
+      "voorbeeld": "He warns about a Wood Elf Beast Pack fleeing through Glade Guard on the flanks.",
+      "wanneerNiet": "He notes that Wood Elves have several units immune to psychology and generally good Leadership, but usually lack a BSB.",
+      "fase": "movement",
+      "themas": [
+        "chaff"
+      ],
+      "subthemas": [
+        "retreat-paths"
+      ],
+      "tags": [
+        "flee",
+        "break-test",
+        "leadership"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-RUWFyl0eK00",
+          "url": "https://www.youtube.com/watch?v=RUWFyl0eK00&t=2203s",
+          "tijd": 2206,
+          "citaat": "Uh you also need to watch out for panic tests.",
+          "extraCitaten": [
+            {
+              "tijd": 2228,
+              "citaat": "for example that ends up fleeing through your units"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-11-03",
+      "markeringen": []
+    },
+    {
+      "id": "chaff-preserve-friendly-lanes",
+      "titel": "Keep chaff out of your own movement and shooting lanes",
+      "tekst": "Check that your chaff will not obstruct your own shooting or the routes needed by your combat units. Allow for it surviving a flee move or failing a charge instead of clearing the space as planned.",
+      "waarom": "He found that chaff could give his shooting targets cover or clog up an army with a larger footprint.",
+      "voorbeeld": "He expected fleeing chaff to be caught, leaving a countercharge available, but it escaped and blocked his Wardancers from reaching their intended position.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "chaff",
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "screens",
+        "terrain-los"
+      ],
+      "tags": [
+        "line-of-sight",
+        "cover",
+        "flee",
+        "countercharge"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-RUWFyl0eK00",
+          "url": "https://www.youtube.com/watch?v=RUWFyl0eK00&t=2280s",
+          "tijd": 2283,
+          "citaat": "be really aware of blocking your own battlefield.",
+          "extraCitaten": [
+            {
+              "tijd": 2324,
+              "citaat": "But this blocks line of sight for these guys shooting, right? It gives them cover."
+            },
+            {
+              "tijd": 2385,
+              "citaat": "but they actually ended up surviving uh fleeing enough"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-11-03",
+      "markeringen": []
+    },
+    {
+      "id": "chaff-budget-five-percent",
+      "titel": "Start with roughly five percent or one to three chaff units",
+      "tekst": "As a rule of thumb, he recommends no more than five percent of the list or one to three chaff units. Adjust the amount to your army's footprint, its plan and the opponents you face.",
+      "waarom": "He says a smaller army footprint leaves more room to manoeuvre without getting clogged up by its own chaff.",
+      "voorbeeld": null,
+      "wanneerNiet": "He allows more or less depending on the list. Shooting armies may want clear firing lanes, combat armies may value flank protection, and opponents with many flyers are harder to control with blockers.",
+      "fase": "army-building",
+      "themas": [
+        "chaff"
+      ],
+      "subthemas": [
+        "choosing-chaff"
+      ],
+      "tags": [
+        "sacrifice",
+        "screen",
+        "redirect"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-RUWFyl0eK00",
+          "url": "https://www.youtube.com/watch?v=RUWFyl0eK00&t=2447s",
+          "tijd": 2450,
+          "citaat": "I would recommend no more than 5% of your",
+          "extraCitaten": [
+            {
+              "tijd": 2457,
+              "citaat": "list or one to three units, right?"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-11-03",
+      "markeringen": []
+    },
+    {
+      "id": "redirect-blocks-into-traffic",
+      "titel": "Redirect infantry blocks into each other's paths",
+      "tekst": "Against armies reliant on large infantry blocks, use chaff to send an overrun into another enemy block and create a traffic jam.",
+      "waarom": "He says the resulting obstruction takes the opponent at least a turn to resolve.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "chaff",
+        "movement"
+      ],
+      "subthemas": [
+        "redirecting",
+        "overrun-pursuit"
+      ],
+      "tags": [
+        "redirect",
+        "overrun",
+        "delay",
+        "close-order"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-RUWFyl0eK00",
+          "url": "https://www.youtube.com/watch?v=RUWFyl0eK00&t=2614s",
+          "tijd": 2617,
+          "citaat": "Forcing an overrun of one of their blocks into another,",
+          "extraCitaten": [
+            {
+              "tijd": 2625,
+              "citaat": "That takes them at least a turn to to resolve, right?"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-11-03",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "chaff-sets-tempo",
+      "bron": {
+        "bronId": "yt-RUWFyl0eK00",
+        "url": "https://www.youtube.com/watch?v=RUWFyl0eK00&t=581s",
+        "tijd": 584,
+        "citaat": "I do think everyone who's playing wood elves should be bringing chaff to some degree",
+        "extraCitaten": [
+          {
+            "tijd": 2172,
+            "citaat": "chaff is all about gaining advantage, gaining tempo, and controlling your opponent's actions."
+          }
+        ]
+      },
+      "toelichting": "He likewise recommends including chaff to gain tempo and control the opponent's actions."
+    },
+    {
+      "lesId": "chaff-scouts-deployment",
+      "bron": {
+        "bronId": "yt-RUWFyl0eK00",
+        "url": "https://www.youtube.com/watch?v=RUWFyl0eK00&t=648s",
+        "tijd": 651,
+        "citaat": "the more you delay putting down your key pieces,",
+        "extraCitaten": [
+          {
+            "tijd": 778,
+            "citaat": "two eagles, a beast pack, and also a small unit of"
+          }
+        ]
+      },
+      "toelichting": "He uses cheap chaff drops to delay committing key units until the opponent's placements are known."
+    },
+    {
+      "lesId": "screening-chaff",
+      "bron": {
+        "bronId": "yt-RUWFyl0eK00",
+        "url": "https://www.youtube.com/watch?v=RUWFyl0eK00&t=718s",
+        "tijd": 721,
+        "citaat": "beast packs in front of your units gives them minus one minus two"
+      },
+      "toelichting": "He likewise recommends cheap chaff in front of valuable units to protect them from shooting."
+    },
+    {
+      "lesId": "screen-frenzy-compulsory-charges",
+      "bron": {
+        "bronId": "yt-RUWFyl0eK00",
+        "url": "https://www.youtube.com/watch?v=RUWFyl0eK00&t=1025s",
+        "tijd": 1028,
+        "citaat": "both have them covered and blocked from frenzy charging"
+      },
+      "toelichting": "He positions Beast Packs ahead of Wild Riders to block unwanted frenzied charges."
+    },
+    {
+      "lesId": "chaff-speed-bumps",
+      "bron": {
+        "bronId": "yt-RUWFyl0eK00",
+        "url": "https://www.youtube.com/watch?v=RUWFyl0eK00&t=1074s",
+        "tijd": 1077,
+        "citaat": "basically giving speed bumps to your opponents or by giving them blockers to charge.",
+        "extraCitaten": [
+          {
+            "tijd": 1273,
+            "citaat": "But primarily, I only want him max to be able to go an inch."
+          }
+        ]
+      },
+      "wanneerNiet": "He says blockers are less useful against armies with many flying units because those units can fly over them.",
+      "toelichting": "He likewise uses sacrificial blockers to slow enemy advances and make their next position predictable."
+    },
+    {
+      "lesId": "decoys-set-up-countercharges",
+      "bron": {
+        "bronId": "yt-RUWFyl0eK00",
+        "url": "https://www.youtube.com/watch?v=RUWFyl0eK00&t=1598s",
+        "tijd": 1601,
+        "citaat": "to control when combat happens.",
+        "extraCitaten": [
+          {
+            "tijd": 1924,
+            "citaat": "which gives me a rear charge here."
+          }
+        ]
+      },
+      "toelichting": "He sets bait so that an enemy charge and overrun leave a predictable counterattack available."
+    },
+    {
+      "lesId": "chaff-decoys",
+      "bron": {
+        "bronId": "yt-RUWFyl0eK00",
+        "url": "https://www.youtube.com/watch?v=RUWFyl0eK00&t=2021s",
+        "tijd": 2024,
+        "citaat": "pressure a war machine, pressure something else and force your opponents to be shooting"
+      },
+      "toelichting": "He uses a fast threat to enemy war machines to draw shooting away from more valuable units."
+    },
+    {
+      "lesId": "chaff-block-marching",
+      "bron": {
+        "bronId": "yt-RUWFyl0eK00",
+        "url": "https://www.youtube.com/watch?v=RUWFyl0eK00&t=2047s",
+        "tijd": 2050,
+        "citaat": "Finally, you know, you could just use them as a march blocker."
+      },
+      "wanneerNiet": "He says this does not come up very often and may or may not decide a game.",
+      "toelichting": "He likewise recommends putting chaff near enemy units to force Leadership tests to march."
+    },
+    {
+      "lesId": "shoot-diverters-out-early",
+      "bron": {
+        "bronId": "yt-RUWFyl0eK00",
+        "url": "https://www.youtube.com/watch?v=RUWFyl0eK00&t=2249s",
+        "tijd": 2252,
+        "citaat": "having some small amount of archers is always good to shoot down your opponent's chaft",
+        "extraCitaten": [
+          {
+            "tijd": 2260,
+            "citaat": "you're playing a combat focus list,"
+          }
+        ]
+      },
+      "toelichting": "He recommends light shooting to remove enemy chaff so it cannot control access to desired combats."
+    }
+  ],
+  "overgeslagen": "Skipped introductions, chess background, channel talk and stat readouts without recommendations. Omitted the uncertain Beast Pack composition discussion and garbled lightning-rod item name around 9:01. Kept repeated examples with the corresponding advice rather than creating extra lessons.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

@@ -1,0 +1,485 @@
+{
+  "videoId": "FwHmDdo6pLQ",
+  "bronId": "yt-FwHmDdo6pLQ",
+  "model": "GPT-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-26T01:44:46.029Z",
+  "nieuw": [
+    {
+      "id": "chaff-deny-scout-vanguard",
+      "titel": "Use chaff presence to deny Scouts and Vanguard space",
+      "tekst": "Spread chaff around to occupy space that enemy Scouts or Vanguard units could otherwise use near your deployment zone.",
+      "waarom": "He says having units there stops enemy units appearing beside your deployment zone.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "deployment"
+      ],
+      "subthemas": [
+        "ambush-scouts-vanguard"
+      ],
+      "tags": [
+        "scouts",
+        "vanguard",
+        "zoning"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-FwHmDdo6pLQ",
+          "url": "https://www.youtube.com/watch?v=FwHmDdo6pLQ&t=232s",
+          "tijd": 235,
+          "citaat": "scout and vanguard because you've got your units there"
+        }
+      ],
+      "datum": "2026-01-07",
+      "markeringen": []
+    },
+    {
+      "id": "nomadic-mix-chaff-selections",
+      "titel": "Mix Wolf Chariots and Wolf Riders around unit restrictions",
+      "tekst": "In Nomadic Waaagh, use Goblin Wolf Chariots and Goblin Wolf Riders interchangeably for chaff duties. Once you reach the four-unit Wolf Chariot limit under the combined arms restrictions he describes, add Wolf Rider units.",
+      "waarom": "He says they cost roughly the same and it makes no difference which throwaway unit redirects an enemy. Nomadic Waaagh has a restricted roster and cannot take extra Wolf Riders or Wolf Chariots from special.",
+      "voorbeeld": null,
+      "wanneerNiet": "He is discussing their chaff role; he notes that both units can have other uses.",
+      "fase": "army-building",
+      "themas": [
+        "chaff"
+      ],
+      "subthemas": [
+        "choosing-chaff"
+      ],
+      "tags": [
+        "chariots",
+        "light-cavalry",
+        "redirect",
+        "sacrifice"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Goblin Wolf Chariot",
+        "Goblin Wolf Rider Mob"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-FwHmDdo6pLQ",
+          "url": "https://www.youtube.com/watch?v=FwHmDdo6pLQ&t=532s",
+          "tijd": 535,
+          "citaat": "once you get to your four goblin chariots",
+          "extraCitaten": [
+            {
+              "tijd": 535,
+              "citaat": "you can then start adding units of wolf riders"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-01-07",
+      "markeringen": []
+    },
+    {
+      "id": "single-wolf-chariots-limit-panic",
+      "titel": "Run Wolf Chariots individually to limit panic",
+      "tekst": "For chaff, he recommends single Goblin Wolf Chariots rather than larger units. He prefers them to Wolf Riders because losing one does not cause panic tests in nearby Goblin chaff.",
+      "waarom": "He says a single Wolf Chariot has unit strength three, below the threshold for causing nearby panic when destroyed. With two chariots, losing one can panic the survivor, and losing both can panic nearby units; low leadership makes this a serious concern.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "chaff"
+      ],
+      "subthemas": [
+        "choosing-chaff"
+      ],
+      "tags": [
+        "chariots",
+        "break-test",
+        "leadership",
+        "unit-strength"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Goblin Wolf Chariot",
+        "Goblin Wolf Rider Mob"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-FwHmDdo6pLQ",
+          "url": "https://www.youtube.com/watch?v=FwHmDdo6pLQ&t=740s",
+          "tijd": 743,
+          "citaat": "Just avoid that. Just take units of one.",
+          "extraCitaten": [
+            {
+              "tijd": 685,
+              "citaat": "if one of them dies, it's not going to panic the other wolf chariots"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-01-07",
+      "markeringen": []
+    },
+    {
+      "id": "wolf-riders-five-with-spears",
+      "titel": "Take five Wolf Riders with cavalry spears and no upgrades",
+      "tekst": "For Goblin Wolf Riders used as chaff, he takes units of five with cavalry spears and does not pay for upgrades.",
+      "waarom": "He sees them primarily as chaff rather than damage dealers, though the spears let them do something on the charge. Five models also give them unit strength ten for objectives.",
+      "voorbeeld": "He recalls five Goblin Wolf Riders with cavalry spears killing a High Elf Archmage.",
+      "wanneerNiet": "He acknowledges that a champion's leadership six might help, and identifies Reserve Move with a magic-missile wizard as a separate use outside the chaff role.",
+      "fase": "army-building",
+      "themas": [
+        "chaff"
+      ],
+      "subthemas": [
+        "choosing-chaff"
+      ],
+      "tags": [
+        "light-cavalry",
+        "sacrifice",
+        "unit-strength"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Goblin Wolf Rider Mob"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-FwHmDdo6pLQ",
+          "url": "https://www.youtube.com/watch?v=FwHmDdo6pLQ&t=784s",
+          "tijd": 787,
+          "citaat": "I only take units of five and I don't pay for any of the upgrades.",
+          "extraCitaten": [
+            {
+              "tijd": 787,
+              "citaat": "I give them cavalry spears."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-01-07",
+      "markeringen": []
+    },
+    {
+      "id": "goblins-obstruct-enemy-chaff",
+      "titel": "Clog enemy chaff's route to your Boar Boyz",
+      "tekst": "Use the board presence of Goblin Wolf Riders and Goblin Wolf Chariots to obstruct enemy chaff before it can get in the way of your Boar Boyz. Keep the route open for the Boar Boyz to charge their intended target.",
+      "waarom": "He says Nomadic Waaagh depends on Boar Boyz getting the charge to maximise their potential.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "chaff"
+      ],
+      "subthemas": [
+        "redirecting"
+      ],
+      "tags": [
+        "redirect",
+        "zoning",
+        "heavy-cavalry"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Goblin Wolf Rider Mob",
+        "Goblin Wolf Chariot",
+        "Orc Boar Boy Mob"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-FwHmDdo6pLQ",
+          "url": "https://www.youtube.com/watch?v=FwHmDdo6pLQ&t=345s",
+          "tijd": 348,
+          "citaat": "your chaff unit making sure that the enemy chaff doesn't",
+          "extraCitaten": [
+            {
+              "tijd": 355,
+              "citaat": "get in the way of your Boar Boyz"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-01-07",
+      "markeringen": []
+    },
+    {
+      "id": "wolf-column-early-chaff",
+      "titel": "Use marching-column Wolf Riders to chaff on turn one",
+      "tekst": "He recommends marching column for Goblin Wolf Rider chaff, using its 27-inch march to reach blocking positions on turn one. He now keeps his chaff Wolf Riders in marching column throughout the game.",
+      "waarom": "He values reaching the enemy deployment zone immediately, and says the narrow formation spends little movement on wheels.",
+      "voorbeeld": "He uses Arcane Urgency on his Boar Boyz to threaten a turn-two charge, while marching-column Goblins block the enemy flankers on turn one.",
+      "wanneerNiet": "He says Open Order in combat order is an alternative if you want the Wolf Riders to charge. A failed Impetuous test in marching column leaves them unable to charge or reform, so they stay still.",
+      "fase": "movement",
+      "themas": [
+        "movement",
+        "chaff"
+      ],
+      "subthemas": [
+        "reforms-formations",
+        "redirecting"
+      ],
+      "tags": [
+        "marching-column",
+        "redirect",
+        "wheel",
+        "light-cavalry"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Goblin Wolf Rider Mob"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-FwHmDdo6pLQ",
+          "url": "https://www.youtube.com/watch?v=FwHmDdo6pLQ&t=1233s",
+          "tijd": 1236,
+          "citaat": "my recommendation is to run them in marching column.",
+          "extraCitaten": [
+            {
+              "tijd": 1112,
+              "citaat": "using marching column with the goblins to use chaff on turn one"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-01-07",
+      "markeringen": []
+    },
+    {
+      "id": "wolf-column-retain-objectives",
+      "titel": "Keep objective-taking Wolf Riders in marching column",
+      "tekst": "March cheap Goblin Wolf Riders onto an objective and leave them in marching column so Impetuous does not make them charge off it. He suggests starting them facing the wrong way, then using their 27-inch move to reach the objective.",
+      "waarom": "He says a failed Impetuous test in marching column does not produce a charge. At 30 points per turn for Strategic Locations, a 50-point unit only needs two turns of scoring to earn its value.",
+      "voorbeeld": null,
+      "wanneerNiet": "He expects these units eventually to die; he presents a couple of scoring turns as enough value.",
+      "fase": "scenarios",
+      "themas": [
+        "scenarios",
+        "movement"
+      ],
+      "subthemas": [
+        "objectives",
+        "reforms-formations"
+      ],
+      "tags": [
+        "marching-column",
+        "objectives",
+        "frenzy",
+        "scoring-units"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Goblin Wolf Rider Mob"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-FwHmDdo6pLQ",
+          "url": "https://www.youtube.com/watch?v=FwHmDdo6pLQ&t=1195s",
+          "tijd": 1198,
+          "citaat": "you can just keep your goblins in marching column.",
+          "extraCitaten": [
+            {
+              "tijd": 1210,
+              "citaat": "they're not going to charge off that objective."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-01-07",
+      "markeringen": []
+    },
+    {
+      "id": "ambush-replace-early-wolf-scorers",
+      "titel": "Ambush Wolf Riders to replace early objective holders",
+      "tekst": "Consider using some Goblin Wolf Riders to score objectives early and keeping others in ambush to take objectives in later turns after the first units die.",
+      "waarom": "He says marching column already gives them the reach they need, so the advantage of ambush is keeping replacement units off the board and safe during the opening turns.",
+      "voorbeeld": null,
+      "wanneerNiet": "He presents later scoring as a possibility, rather than expecting early Wolf Rider objective holders to survive until turn six.",
+      "fase": "scenarios",
+      "themas": [
+        "scenarios",
+        "deployment"
+      ],
+      "subthemas": [
+        "objectives",
+        "ambush-scouts-vanguard"
+      ],
+      "tags": [
+        "ambush",
+        "objectives",
+        "scoring-units",
+        "light-cavalry"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Goblin Wolf Rider Mob"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-FwHmDdo6pLQ",
+          "url": "https://www.youtube.com/watch?v=FwHmDdo6pLQ&t=1337s",
+          "tijd": 1340,
+          "citaat": "have some goblin wolf riders to take the objectives earlier on in the game",
+          "extraCitaten": [
+            {
+              "tijd": 1348,
+              "citaat": "other goblin wolf fighters which come on later on in the game"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-01-07",
+      "markeringen": []
+    },
+    {
+      "id": "skip-snotling-pump-wagons",
+      "titel": "Skip Snotling Pump Wagons",
+      "tekst": "He recommends against taking Snotling Pump Wagons, despite still fielding them himself because he likes the models.",
+      "waarom": "He expects them to lose combat and break, finds their 2D6 movement too slow and unreliable, and considers their offensive output poor for the points.",
+      "voorbeeld": "In one game, a fleeing enemy came close enough for his Snotling Pump Wagon to move into it and destroy it.",
+      "wanneerNiet": "He acknowledges that catching a nearby fleeing unit can work, but describes that opportunity as very rare.",
+      "fase": "army-building",
+      "themas": [
+        "chaff"
+      ],
+      "subthemas": [
+        "choosing-chaff"
+      ],
+      "tags": [
+        "chariots",
+        "random-movement",
+        "break-test"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Snotling Pump Wagon"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-FwHmDdo6pLQ",
+          "url": "https://www.youtube.com/watch?v=FwHmDdo6pLQ&t=1451s",
+          "tijd": 1454,
+          "citaat": "There is literally no point in taking them.",
+          "extraCitaten": [
+            {
+              "tijd": 1509,
+              "citaat": "it's got the random movement rule"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-01-07",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "chaff-kills-are-bonuses",
+      "bron": {
+        "bronId": "yt-FwHmDdo6pLQ",
+        "url": "https://www.youtube.com/watch?v=FwHmDdo6pLQ&t=32s",
+        "tijd": 35,
+        "citaat": "the units which aren't designed to get back their points",
+        "extraCitaten": [
+          {
+            "tijd": 43,
+            "citaat": "maximize the potential of your units which are going to do damage"
+          }
+        ]
+      },
+      "toelichting": "He again defines chaff by helping the damage dealers rather than earning its cost through kills."
+    },
+    {
+      "lesId": "nomadic-needs-plenty-chaff",
+      "bron": {
+        "bronId": "yt-FwHmDdo6pLQ",
+        "url": "https://www.youtube.com/watch?v=FwHmDdo6pLQ&t=1558s",
+        "tijd": 1561,
+        "citaat": "you need lots of goblins.",
+        "extraCitaten": [
+          {
+            "tijd": 1538,
+            "citaat": "you really need those chaff units to make sure your Boar Boyz"
+          }
+        ]
+      },
+      "toelichting": "He repeats that Nomadic Waaagh needs plentiful Goblin chaff to deliver its Boar Boy charges."
+    },
+    {
+      "lesId": "goblins-block-boar-flankers",
+      "bron": {
+        "bronId": "yt-FwHmDdo6pLQ",
+        "url": "https://www.youtube.com/watch?v=FwHmDdo6pLQ&t=275s",
+        "tijd": 278,
+        "citaat": "you can then put your goblin units in the way",
+        "extraCitaten": [
+          {
+            "tijd": 278,
+            "citaat": "they won't be able to flank your main units"
+          }
+        ]
+      },
+      "waarom": "He says this protects the Boar Boyz as they charge up the centre and prevents the enemy flankers reaching them.",
+      "toelichting": "He gives the same recommendation to put Goblins in the way of flankers approaching the Boar Boyz."
+    },
+    {
+      "lesId": "chaff-intercept-overruns",
+      "bron": {
+        "bronId": "yt-FwHmDdo6pLQ",
+        "url": "https://www.youtube.com/watch?v=FwHmDdo6pLQ&t=401s",
+        "tijd": 404,
+        "citaat": "they're just going to hit some more chaff."
+      },
+      "toelichting": "He recommends multiple chaff units so an enemy overrun hits further chaff before reaching the Boar Boyz."
+    },
+    {
+      "lesId": "screening-chaff",
+      "bron": {
+        "bronId": "yt-FwHmDdo6pLQ",
+        "url": "https://www.youtube.com/watch?v=FwHmDdo6pLQ&t=449s",
+        "tijd": 452,
+        "citaat": "you can use a protective screen of goblins in front of your orcs.",
+        "extraCitaten": [
+          {
+            "tijd": 443,
+            "citaat": "goblins just running forward to catch bullets"
+          }
+        ]
+      },
+      "toelichting": "He repeats using expendable Goblin screens to protect the advancing Orc damage dealers from shooting."
+    },
+    {
+      "lesId": "speed-bump-close-order",
+      "bron": {
+        "bronId": "yt-FwHmDdo6pLQ",
+        "url": "https://www.youtube.com/watch?v=FwHmDdo6pLQ&t=927s",
+        "tijd": 930,
+        "citaat": "you need to be in open order or close order",
+        "extraCitaten": [
+          {
+            "tijd": 938,
+            "citaat": "to actually redirect the enemy's charge in another direction."
+          }
+        ]
+      },
+      "toelichting": "He makes the same recommendation to use a ranked formation rather than Skirmish for charge redirection."
+    },
+    {
+      "lesId": "impetuous-chaff-limit-sight",
+      "bron": {
+        "bronId": "yt-FwHmDdo6pLQ",
+        "url": "https://www.youtube.com/watch?v=FwHmDdo6pLQ&t=1053s",
+        "tijd": 1056,
+        "citaat": "avoid an impetuous test by facing in the wrong direction"
+      },
+      "toelichting": "He again recommends controlling Impetuous chaff by changing its facing, here using the Open Order pivot."
+    }
+  ],
+  "overgeslagen": "Skipped introductions, future-video announcements, hobby remarks, historical rules and model discussion, and stat or rules readouts without advice. Omitted his personal dislike of moving skirmishers, which he explicitly says should not put viewers off using them. Did not turn the rare Pump Wagon success into a recommendation he rejects.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

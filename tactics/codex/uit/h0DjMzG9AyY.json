@@ -1,0 +1,580 @@
+{
+  "videoId": "h0DjMzG9AyY",
+  "bronId": "yt-h0DjMzG9AyY",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-26T01:33:14.437Z",
+  "nieuw": [
+    {
+      "id": "skeletons-necrotects-prince-punch",
+      "titel": "Add Necrotects and a Prince to strengthen Skeleton Warriors",
+      "tekst": "Consider two inexpensive Necrotects in Skeleton Warriors to give the unit more melee punch without building a full Tomb Guard Death Star. Add a Tomb Prince with a great weapon for My Will Be Done and additional attacks.",
+      "waarom": "He says the two Necrotects give each model three attacks, while the Prince then has five great-weapon attacks. He presents this as a relatively cheap way to make a normally unthreatening Skeleton unit more dangerous.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "characters",
+        "infantry"
+      ],
+      "subthemas": [
+        "combat-roles",
+        "unit-builds"
+      ],
+      "tags": [
+        "great-weapons",
+        "close-order"
+      ],
+      "leger": "tomb-kings-of-khemri",
+      "units": [
+        "Skeleton Warriors Tomb Kings",
+        "Necrotect",
+        "Tomb Prince"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-h0DjMzG9AyY",
+          "url": "https://www.youtube.com/watch?v=h0DjMzG9AyY&t=901s",
+          "tijd": 904,
+          "citaat": "you could even just put two necrotects in a unit of skeleton warriors",
+          "extraCitaten": [
+            {
+              "tijd": 912,
+              "citaat": "Throw in a prince for my will be done."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-04-02",
+      "markeringen": []
+    },
+    {
+      "id": "infantry-icon-multiple-wounds",
+      "titel": "Consider Icon of Fortitude against melee multiple wounds",
+      "tekst": "If your opponents regularly bring melee weapons that inflict multiple wounds, consider Icon of Fortitude on an infantry character. He identifies it as a 35-point option that reduces those attacks to a single wound.",
+      "waarom": "He values this protection against weapons such as Ogre Blade and Frontier Axe, and says it is protection infantry characters can take that monster-mounted characters cannot.",
+      "voorbeeld": null,
+      "wanneerNiet": "He thinks taking it just to protect against sniping is probably unnecessary because Look Out is still reasonably effective.",
+      "fase": "army-building",
+      "themas": [
+        "characters"
+      ],
+      "subthemas": [
+        "mounts-items"
+      ],
+      "tags": [
+        "magic-items",
+        "multiple-wounds"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-h0DjMzG9AyY",
+          "url": "https://www.youtube.com/watch?v=h0DjMzG9AyY&t=1006s",
+          "tijd": 1009,
+          "citaat": "makes you immune to multiple wounds, so you only take a single wound from it.",
+          "extraCitaten": [
+            {
+              "tijd": 1017,
+              "citaat": "ogre blade and frontier axe or just sources of multiple wounds,"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-04-02",
+      "markeringen": []
+    },
+    {
+      "id": "steed-shadows-melee-character-block",
+      "titel": "Use Steed of Shadows to mobilise a melee character's block",
+      "tekst": "Consider a Daemonology caster with Steed of Shadows for an infantry unit carrying a melee character. He thinks this can turn the unit from a defensive option into a legitimate competitive threat that can act proactively.",
+      "waarom": "He says the spell lets the unit get where it needs to go rather than merely standing on an objective. In his view, a very wide Death Star needs that flying move to manoeuvre effectively.",
+      "voorbeeld": "He describes a Beastlord with Black Maul in a Gor Herd supported by a level-two wizard with Lore Familiar and a Power Scroll for Steed of Shadows and Daemonic Vessel.",
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "magic",
+        "characters"
+      ],
+      "subthemas": [
+        "lores-spells",
+        "combat-roles"
+      ],
+      "tags": [
+        "daemonology",
+        "conveyance",
+        "fly",
+        "death-star"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-h0DjMzG9AyY",
+          "url": "https://www.youtube.com/watch?v=h0DjMzG9AyY&t=1112s",
+          "tijd": 1115,
+          "citaat": "If you can bring steed of shadows,",
+          "extraCitaten": [
+            {
+              "tijd": 1147,
+              "citaat": "you're able to be proactive with it."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-04-02",
+      "markeringen": []
+    },
+    {
+      "id": "inexpensive-durable-unit-characters",
+      "titel": "Consider inexpensive durable characters instead of requiring a lord",
+      "tekst": "A melee character supporting a unit need not be an expensive lord. Look at inexpensive characters with good durability for their cost, such as Toughness five and full plate, that can still carry a great weapon.",
+      "waarom": "He thinks cheap characters offering more durability and stats than their points suggest are a useful way to strengthen units.",
+      "voorbeeld": null,
+      "wanneerNiet": "He worries that a two-wound, Toughness-four character with only full plate might die too easily.",
+      "fase": "army-building",
+      "themas": [
+        "characters"
+      ],
+      "subthemas": [
+        "combat-roles"
+      ],
+      "tags": [
+        "armour",
+        "great-weapons"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-h0DjMzG9AyY",
+          "url": "https://www.youtube.com/watch?v=h0DjMzG9AyY&t=1257s",
+          "tijd": 1260,
+          "citaat": "cheap characters that are more durable, bring more stats than you feel like",
+          "extraCitaten": [
+            {
+              "tijd": 1176,
+              "citaat": "it doesn't have to be a super expensive character."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-04-02",
+      "markeringen": []
+    },
+    {
+      "id": "hobgoblins-character-leadership-support",
+      "titel": "Consider a leadership character to support Hobgoblins",
+      "tekst": "Consider putting a leadership-nine Castellan or Seneschal in Hobgoblins to get around Levies; he says the character need not be a BSB. Give the character protection and a great weapon, using the great weapon when safe and the hand weapon when threatened.",
+      "waarom": "He sees this as a way to bring leadership and other benefits to the unit while adding useful attacks.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "characters"
+      ],
+      "subthemas": [
+        "bsb"
+      ],
+      "tags": [
+        "leadership",
+        "great-weapons",
+        "armour"
+      ],
+      "leger": "chaos-dwarfs",
+      "units": [
+        "Hobgoblin Cutthroats",
+        "Infernal Castellan",
+        "Infernal Seneschal"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-h0DjMzG9AyY",
+          "url": "https://www.youtube.com/watch?v=h0DjMzG9AyY&t=1420s",
+          "tijd": 1423,
+          "citaat": "a leadership nine 60 point Castellan or center shell in the unit?",
+          "extraCitaten": [
+            {
+              "tijd": 1437,
+              "citaat": "if they are three attacks with an AP one hand weapon is still not bad"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-04-02",
+      "markeringen": []
+    },
+    {
+      "id": "narrow-frontage-drop-musician",
+      "titel": "Drop the musician when characters need a narrow front rank",
+      "tekst": "If a four-wide unit needs two characters in its front rank, consider omitting the musician and retaining the standard bearer and champion. Leave enough front-rank places for the characters you want fighting.",
+      "waarom": "He says characters cannot push command models into the second rank, so a full command group can force a character into the back rank.",
+      "voorbeeld": "He describes two Barons with five Pegasus Knights, where fitting only four models across is plausible. A musician would leave room for only one Baron at the front.",
+      "wanneerNiet": "He calls this a niche issue that does not arise very frequently.",
+      "fase": "army-building",
+      "themas": [
+        "infantry",
+        "characters"
+      ],
+      "subthemas": [
+        "unit-builds",
+        "combat-roles"
+      ],
+      "tags": [
+        "close-order",
+        "champion"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-h0DjMzG9AyY",
+          "url": "https://www.youtube.com/watch?v=h0DjMzG9AyY&t=1550s",
+          "tijd": 1553,
+          "citaat": "maybe you don't need a musician in the the unit,",
+          "extraCitaten": [
+            {
+              "tijd": 1560,
+              "citaat": "drop the musician so that it's not"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-04-02",
+      "markeringen": []
+    },
+    {
+      "id": "melee-character-central-attack-side",
+      "titel": "Place melee characters centrally towards the intended fight",
+      "tekst": "Place a melee character as centrally as possible, favouring the central spot nearest the side you intend to attack. Choose that side by looking at enemy positions and where you want the unit to fight.",
+      "waarom": "He says this slightly improves the chance of bringing the character into contact when charge distance, a disrupted charge or terrain prevents the whole unit from maximising contact.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "characters",
+        "movement"
+      ],
+      "subthemas": [
+        "combat-roles",
+        "wheels-alignment"
+      ],
+      "tags": [
+        "alignment",
+        "charge-range",
+        "close-order"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-h0DjMzG9AyY",
+          "url": "https://www.youtube.com/watch?v=h0DjMzG9AyY&t=1732s",
+          "tijd": 1735,
+          "citaat": "skewing towards the side of the board that you want to attack more.",
+          "extraCitaten": [
+            {
+              "tijd": 1703,
+              "citaat": "it's closer to the side where I want the model to get the attacks in."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-04-02",
+      "markeringen": []
+    },
+    {
+      "id": "support-character-opposite-threats",
+      "titel": "Put support characters away from the main enemy threat",
+      "tekst": "Place a vulnerable support character, such as a BSB, on the side of the unit away from the enemy's dragon or Death Star. Use the enemy's approach and required charge alignment to judge which models it will contact.",
+      "waarom": "He says the charger's minimum movement and need to maximise contact let you predict where it will arrive, so the support character can occupy the safer side.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "characters"
+      ],
+      "subthemas": [
+        "protecting-characters"
+      ],
+      "tags": [
+        "bsb",
+        "alignment",
+        "close-order"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-h0DjMzG9AyY",
+          "url": "https://www.youtube.com/watch?v=h0DjMzG9AyY&t=1869s",
+          "tijd": 1872,
+          "citaat": "we're going to put the walker on the other side.",
+          "extraCitaten": [
+            {
+              "tijd": 1800,
+              "citaat": "you know physically where it's going to go."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-04-02",
+      "markeringen": []
+    },
+    {
+      "id": "support-character-one-file-in",
+      "titel": "Keep support characters one file in from the edge",
+      "tekst": "In a sufficiently wide unit, he prefers placing a support character in the second file from the side rather than on the corner. This protects it from direct contact if another threat charges that flank.",
+      "waarom": "He explains that a flank charger contacts the outside file, leaving a character one model further in out of direct contact.",
+      "voorbeeld": "He describes avoiding the Lord-mounted dragons on one side while a Warpfire Dragon might approach the opposite flank.",
+      "wanneerNiet": "He says this requires a wide enough unit and matters less with a smaller unit.",
+      "fase": "deployment",
+      "themas": [
+        "characters"
+      ],
+      "subthemas": [
+        "protecting-characters"
+      ],
+      "tags": [
+        "flank-charge",
+        "close-order"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-h0DjMzG9AyY",
+          "url": "https://www.youtube.com/watch?v=h0DjMzG9AyY&t=1838s",
+          "tijd": 1841,
+          "citaat": "I like to put them two in.",
+          "extraCitaten": [
+            {
+              "tijd": 1864,
+              "citaat": "you're protecting yourself from being flank charged there."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-04-02",
+      "markeringen": []
+    },
+    {
+      "id": "cluster-vulnerable-support-characters",
+      "titel": "Keep vulnerable support characters together",
+      "tekst": "Put two vulnerable support characters next to each other rather than separating them across the front rank. He thinks grouping them is a good way to reduce the enemy attacks available against them.",
+      "waarom": "He says grouping the characters makes the enemy share the models that can attack them. Separating them gives the enemy distinct sets of models to attack each one more efficiently.",
+      "voorbeeld": "He compares a wizard and BSB placed together against Dragon Princes with the same characters placed apart. With them together, he expects the attacker to concentrate on the easier wizard and perhaps attack ordinary troops instead of the tougher BSB.",
+      "wanneerNiet": "He warns that one of the two characters may still die, although both dying is much less likely in his view.",
+      "fase": "deployment",
+      "themas": [
+        "characters"
+      ],
+      "subthemas": [
+        "protecting-characters"
+      ],
+      "tags": [
+        "bsb",
+        "close-order"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-h0DjMzG9AyY",
+          "url": "https://www.youtube.com/watch?v=h0DjMzG9AyY&t=1924s",
+          "tijd": 1927,
+          "citaat": "if you're trying to protect two squishier characters it's really good to have them together",
+          "extraCitaten": [
+            {
+              "tijd": 1984,
+              "citaat": "putting the characters together is you're minimizing the number of attacks"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-04-02",
+      "markeringen": []
+    },
+    {
+      "id": "melee-character-clear-outer-files",
+      "titel": "Keep melee characters clear of the two outer files",
+      "tekst": "If an infantry character may need to move across the unit to fight flank attackers, start it beyond the outermost two files. This leaves it able to move into the fighting rank instead of being stuck making a supporting attack.",
+      "waarom": "He says a character in the second file is already part of the fighting rank against a flank charge and therefore cannot move through the unit to gain full attacks. He describes this wasting a powerful character's damage output.",
+      "voorbeeld": "He shows a Black Maul character facing a flank charge by Dragon Princes. Starting further in lets the character move to the flank and make its attacks rather than contributing one supporting attack.",
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "characters"
+      ],
+      "subthemas": [
+        "combat-roles"
+      ],
+      "tags": [
+        "flank-charge",
+        "close-order",
+        "hammer"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-h0DjMzG9AyY",
+          "url": "https://www.youtube.com/watch?v=h0DjMzG9AyY&t=2177s",
+          "tijd": 2180,
+          "citaat": "not being in the outside rank or the second rank is very good",
+          "extraCitaten": [
+            {
+              "tijd": 2099,
+              "citaat": "you're not allowed to move through the fighting rank,"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-04-02",
+      "markeringen": []
+    },
+    {
+      "id": "corner-character-dual-charge-challenge",
+      "titel": "Pre-position a cheap character to challenge a flank charger",
+      "tekst": "If you expect simultaneous front and flank charges and want to contain the flank attacker with a challenge, consider placing a cheap character on that outside edge beforehand. A frontal charge can prevent the character from moving across the unit when combat starts.",
+      "waarom": "He says starting on the outside can let the character issue a challenge that it otherwise could not make.",
+      "voorbeeld": "He describes a Gigantic Spawn charging the front while a Lord on a dragon charges the side.",
+      "wanneerNiet": "He warns that a champion or character in the frontal enemy unit can often absorb the challenge intended for the flank attacker.",
+      "fase": "deployment",
+      "themas": [
+        "characters"
+      ],
+      "subthemas": [
+        "challenges"
+      ],
+      "tags": [
+        "challenge",
+        "flank-charge",
+        "combined-charge",
+        "close-order"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-h0DjMzG9AyY",
+          "url": "https://www.youtube.com/watch?v=h0DjMzG9AyY&t=2227s",
+          "tijd": 2230,
+          "citaat": "having a cheap character on the outside of the unit is very powerful",
+          "extraCitaten": [
+            {
+              "tijd": 2238,
+              "citaat": "then throw a challenge in even though you wouldn't normally be able to."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-04-02",
+      "markeringen": []
+    },
+    {
+      "id": "displace-champion-to-threatened-corner",
+      "titel": "Move the champion to a threatened corner when possible",
+      "tekst": "In a narrow unit containing characters, consider using a character to displace the champion towards the outside when you expect a dragon to charge that flank. Keep the standard bearer central, but position the champion where it can issue or accept a challenge against the flank attacker.",
+      "waarom": "He stresses that a unit champion cannot move through the ranks like a character, so its starting position determines whether it can challenge a flank attacker.",
+      "voorbeeld": "He demonstrates a five-wide unit with two characters, leaving the standard bearer in the middle and moving the champion to the outside.",
+      "wanneerNiet": "He calls this a niche arrangement and says it needs at least one character to push the champion outwards.",
+      "fase": "deployment",
+      "themas": [
+        "characters"
+      ],
+      "subthemas": [
+        "challenges"
+      ],
+      "tags": [
+        "champion",
+        "challenge",
+        "flank-charge",
+        "close-order"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-h0DjMzG9AyY",
+          "url": "https://www.youtube.com/watch?v=h0DjMzG9AyY&t=2286s",
+          "tijd": 2289,
+          "citaat": "the unit champion on the outside as long as you had at least one character",
+          "extraCitaten": [
+            {
+              "tijd": 2241,
+              "citaat": "unit champions not able to move through the ranks themselves."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-04-02",
+      "markeringen": []
+    },
+    {
+      "id": "reposition-characters-before-enemy-charge",
+      "titel": "Reposition characters after the enemy adjusts its approach",
+      "tekst": "When an opponent moves to counter your character placement, use the intervening turn to relocate characters within the unit before the charge. Reform, redress the ranks or use another manoeuvre that permits the repositioning.",
+      "waarom": "He points out that the opponent moving into a new position normally leaves you a turn before it can charge from there.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "movement"
+      ],
+      "subthemas": [
+        "reforms-formations"
+      ],
+      "tags": [
+        "reform",
+        "close-order"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-h0DjMzG9AyY",
+          "url": "https://www.youtube.com/watch?v=h0DjMzG9AyY&t=80s",
+          "tijd": 83,
+          "citaat": "you always have a turn between them moving into their new spot",
+          "extraCitaten": [
+            {
+              "tijd": 90,
+              "citaat": "any maneuver that lets you move your characters within within the unit,"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-04-02",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "characters-improve-ordinary-troops",
+      "bron": {
+        "bronId": "yt-h0DjMzG9AyY",
+        "url": "https://www.youtube.com/watch?v=h0DjMzG9AyY&t=542s",
+        "tijd": 545,
+        "citaat": "that just added a good chunk of combat res every turn.",
+        "extraCitaten": [
+          {
+            "tijd": 594,
+            "citaat": "adds quite a lot to them."
+          }
+        ]
+      },
+      "waarom": "He found that a durable melee character added two or three wounds and useful combat resolution each turn. He also suggests that a character striking earlier can remove enemy attacks as well as adding damage.",
+      "voorbeeld": "His Black Orcs held the centre in terrain against a White Lions charge and a dragon in their flank for roughly four or five combat rounds. He attributes much of their staying power to the extra combat resolution from the Black Orc character.",
+      "wanneerNiet": "He says putting melee characters in units may be less optimal because those character points could buy dragons instead. At events above 2,000 points, he says there can be room to do both.",
+      "toelichting": "This repeats the existing recommendation to improve ordinary units with a supporting combat character."
+    }
+  ],
+  "overgeslagen": "Skipped coaching and membership promotion, channel and tournament chatter, list and stat readouts without distinct advice, speculative army suggestions that only illustrate the existing character-support lesson, and unclear captioned item names.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

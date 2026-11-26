@@ -2,22 +2,30 @@
   "scope": "leger-empire-of-man",
   "soort": "leger",
   "sleutel": "empire-of-man",
-  "gemaaktOp": "2026-11-25T23:31:08.853Z",
+  "gemaaktOp": "2026-11-26T04:37:17.652Z",
   "model": "gpt-6.1-sol",
   "effort": "high",
-  "invoerHash": "76d6ae307db0",
+  "invoerHash": "267461325af3",
   "invoer": [
+    "empire-hold-then-flank",
     "cannons-behind-vanguarding-outriders",
+    "separate-empire-artillery-stations",
+    "outriders-vanguard-static-fire",
     "empire-knights-support-combats",
     "archer-screen-state-troops-trap",
+    "empire-archers-flexible-chaff",
     "flagellants-wood-roadblock",
     "veteran-state-griffin-banner",
     "state-troops-monster-tapestry",
     "white-wolf-knights-charge-lanterns",
+    "war-wagons-advance-together",
+    "white-wolf-daemonology-block",
+    "empire-knights-buy-artillery-time",
     "empire-infantry-bsb-foot",
     "captain-bsb-defensive-investment",
     "captain-witch-hunters-ward",
     "captain-pistol-charge-reaction",
+    "empire-griffon-central-support",
     "empire-level-one-doombolt",
     "necromancy-supports-state-troops",
     "sigmar-prayer-shooting-ward",
@@ -26,23 +34,44 @@
     "share-engineer-between-artillery",
     "cannon-bounce-multiple-lanterns",
     "road-wardens-shooting-ambush",
+    "great-cannon-counterbattery-fire",
+    "engineer-cannon-artillery-reroll",
+    "road-wardens-controlled-pistols",
+    "outriders-thin-infantry-numbers",
+    "cannon-deep-elite-formations",
+    "cannon-ranked-bodies-over-shallow-elites",
     "war-wagon-light-cavalry-matchup",
     "blazing-sun-order-versus-cathay"
   ],
-  "principes": [],
+  "principes": [
+    {
+      "id": "aim-cannon-shots-through-multiple-models",
+      "titel": "Aim cannon shots through multiple models",
+      "tekst": "Look for firing lines that let a cannonball pass through several models, increasing the casualties a shot can cause.",
+      "soort": "principe",
+      "thema": "shooting-terrain",
+      "leger": "empire-of-man",
+      "lessen": [
+        "cannon-bounce-multiple-lanterns",
+        "cannon-deep-elite-formations",
+        "cannon-ranked-bodies-over-shallow-elites"
+      ],
+      "kanten": null
+    }
+  ],
   "correcties": [],
   "runs": [
     {
       "poging": 1,
-      "promptKB": 16,
-      "sec": 13,
+      "promptKB": 25,
+      "sec": 41,
       "exit": 0,
       "usage": {
-        "input_tokens": 30811,
+        "input_tokens": 33039,
         "cached_input_tokens": 0,
         "cache_write_input_tokens": 0,
-        "output_tokens": 389,
-        "reasoning_output_tokens": 371
+        "output_tokens": 1577,
+        "reasoning_output_tokens": 1452
       },
       "items": {
         "agent_message": 1

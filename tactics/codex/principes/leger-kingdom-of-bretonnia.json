@@ -2,39 +2,78 @@
   "scope": "leger-kingdom-of-bretonnia",
   "soort": "leger",
   "sleutel": "kingdom-of-bretonnia",
-  "gemaaktOp": "2026-11-25T23:31:47.807Z",
+  "gemaaktOp": "2026-11-26T04:38:21.155Z",
   "model": "gpt-6.1-sol",
   "effort": "high",
-  "invoerHash": "ae5147bf7fcc",
+  "invoerHash": "d90efe5914eb",
   "invoer": [
+    "exile-pegasus-knights-start-hidden",
     "pegasus-knights-reliable-lantern-charges",
     "pegasus-overrun-second-lantern",
+    "pegasus-avoid-stretched-formations",
     "men-at-arms-resolution-block",
     "men-at-arms-skip-stubborn",
+    "three-four-model-pegasus-units",
     "duke-pegasus-charge-flexibility",
     "champion-delaying-challenge",
     "baron-royal-pegasus-blender",
     "knightly-temper-lantern-hunter",
     "falcon-horn-stop-lantern-flight",
+    "duke-monster-slayer-zoning",
+    "grail-champion-falcon-horn",
+    "duke-threatens-both-miao-forms",
+    "heroism-flying-monster-hunter",
+    "falcon-horn-chaff-dragon",
     "glittering-robe-lantern-charge",
     "plagued-pegasus-knights-withdraw",
+    "bombard-efficient-cannon-choice",
     "pegasus-low-strength-armour-piercing",
-    "dragon-threatens-mobile-duke"
+    "dragon-threatens-mobile-duke",
+    "bretonnia-avoid-poison-block"
   ],
-  "principes": [],
+  "principes": [
+    {
+      "id": "give-characters-flying-mounts-with-all-round-charge-options",
+      "titel": "Give characters flying mounts with all-round charge options",
+      "tekst": "Choose a flying mount with all-round charge options for your fighting character. This gives you more freedom to pick targets.",
+      "soort": "principe",
+      "thema": "characters",
+      "leger": "kingdom-of-bretonnia",
+      "lessen": [
+        "duke-pegasus-charge-flexibility",
+        "baron-royal-pegasus-blender",
+        "heroism-flying-monster-hunter"
+      ],
+      "kanten": null
+    },
+    {
+      "id": "threaten-monsters-with-monster-slayer-characters",
+      "titel": "Threaten monsters with Monster Slayer characters",
+      "tekst": "Consider a character with Monster Slayer to threaten enemy monsters. A flying mount helps you position that threat.",
+      "soort": "principe",
+      "thema": "characters",
+      "leger": "kingdom-of-bretonnia",
+      "lessen": [
+        "duke-monster-slayer-zoning",
+        "duke-threatens-both-miao-forms",
+        "heroism-flying-monster-hunter"
+      ],
+      "kanten": null
+    }
+  ],
   "correcties": [],
   "runs": [
     {
       "poging": 1,
-      "promptKB": 11,
-      "sec": 9,
+      "promptKB": 17,
+      "sec": 31,
       "exit": 0,
       "usage": {
-        "input_tokens": 29477,
+        "input_tokens": 30998,
         "cached_input_tokens": 0,
         "cache_write_input_tokens": 0,
-        "output_tokens": 197,
-        "reasoning_output_tokens": 179
+        "output_tokens": 1312,
+        "reasoning_output_tokens": 1004
       },
       "items": {
         "agent_message": 1

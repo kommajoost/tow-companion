@@ -1,0 +1,169 @@
+{
+  "videoId": "pJG5i6ReU24",
+  "bronId": "yt-pJG5i6ReU24",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-26T01:56:12.504Z",
+  "nieuw": [
+    {
+      "id": "check-partial-alignment-overruns",
+      "titel": "Check low-roll alignment when judging enemy overruns",
+      "tekst": "When positioning a unit that the enemy could charge, also consider a low charge roll that leaves the charger only partially aligned. Check whether that different alignment could send an overrun into another of your units.",
+      "waarom": null,
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "movement"
+      ],
+      "subthemas": [
+        "overrun-pursuit"
+      ],
+      "tags": [
+        "overrun",
+        "alignment"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-pJG5i6ReU24",
+          "url": "https://www.youtube.com/watch?v=pJG5i6ReU24&t=549s",
+          "tijd": 552,
+          "citaat": "Are they then going to hit a different unit?",
+          "extraCitaten": [
+            {
+              "tijd": 536,
+              "citaat": "And then you also think about if they roll low,"
+            },
+            {
+              "tijd": 552,
+              "citaat": "they end up not aligning and instead just end up slightly overlapping?"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-11-13",
+      "markeringen": []
+    },
+    {
+      "id": "rehearse-opening-deployment-before-events",
+      "titel": "Rehearse your opening deployment before the event",
+      "tekst": "If you struggle to focus in the first tournament game, review the opening mission beforehand and think through a deployment around its deployment zone and objectives. You can sketch it on paper or simply work through your plan before arriving, especially when the pairing is already available.",
+      "waarom": "He finds that his first tournament game is often his weakest. He recommends preparing this way to enter a focused playing mindset before the game begins.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "deployment"
+      ],
+      "subthemas": [
+        "pre-game-checks"
+      ],
+      "tags": [
+        "tournament",
+        "objectives"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-pJG5i6ReU24",
+          "url": "https://www.youtube.com/watch?v=pJG5i6ReU24&t=983s",
+          "tijd": 986,
+          "citaat": "And if you want to, you could sketch out some deployments.",
+          "extraCitaten": [
+            {
+              "tijd": 993,
+              "citaat": "You don't even have to physically sketch it out."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-11-13",
+      "markeringen": []
+    },
+    {
+      "id": "stay-beyond-known-charge-reach",
+      "titel": "Stay outside the enemy's measured charge range",
+      "tekst": "Pre-measure how far the enemy can charge and avoid moving within that reach. He recommends this as a practical way to improve your positioning.",
+      "waarom": null,
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "subthemas": [
+        "threat-zones"
+      ],
+      "tags": [
+        "charge-range",
+        "zoning"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-pJG5i6ReU24",
+          "url": "https://www.youtube.com/watch?v=pJG5i6ReU24&t=1389s",
+          "tijd": 1392,
+          "citaat": "just don't walk within range of them charging"
+        }
+      ],
+      "datum": "2025-11-13",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "align-sacrifices-for-empty-overruns",
+      "bron": {
+        "bronId": "yt-pJG5i6ReU24",
+        "url": "https://www.youtube.com/watch?v=pJG5i6ReU24&t=485s",
+        "tijd": 488,
+        "citaat": "when my opponent makes contact with my unit, their overrun will not hit me.",
+        "extraCitaten": [
+          {
+            "tijd": 431,
+            "citaat": "I'm not looking at where my opponent's units are going to line up."
+          }
+        ]
+      },
+      "toelichting": "He recommends adjusting a disposable unit's facing so the enemy's charge alignment does not create an overrun into a valuable friendly unit."
+    },
+    {
+      "lesId": "thin-formations-against-bombing",
+      "bron": {
+        "bronId": "yt-pJG5i6ReU24",
+        "url": "https://www.youtube.com/watch?v=pJG5i6ReU24&t=720s",
+        "tijd": 723,
+        "citaat": "Maybe you deploy wider",
+        "extraCitaten": [
+          {
+            "tijd": 747,
+            "citaat": "avoid large blast templates hitting your units uh and also shooting."
+          }
+        ]
+      },
+      "voorbeeld": "Against a shooting-heavy army using templates, he describes deploying wider with the unit touching terrain, then wheeling or pivoting to remain in the terrain while reaching the central objective.",
+      "toelichting": "He again recommends a wider formation instead of a compact block to reduce exposure to Sky Lantern bombing and other template attacks."
+    },
+    {
+      "lesId": "deploy-read-terrain",
+      "bron": {
+        "bronId": "yt-pJG5i6ReU24",
+        "url": "https://www.youtube.com/watch?v=pJG5i6ReU24&t=1283s",
+        "tijd": 1286,
+        "citaat": "there's a hill or a building interspersed between you and those cannons"
+      },
+      "toelichting": "He recommends using the available terrain during deployment, specifically placing a hill or building between your units and enemy cannons."
+    }
+  ],
+  "overgeslagen": "Skipped the introductory 40k clips, takeback etiquette, general mistake analysis and autopilot discussion, tournament fatigue and nutrition, channel remarks and requests for comments. These do not give additional concrete tactical lessons within the requested scope.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

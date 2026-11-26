@@ -3,6 +3,9 @@
 //                                               transcript en nog zonder tactics/codex/uit/<id>.json
 //   npm run tactics:codex -- <videoId> ...      alleen deze video's
 //   npm run tactics:codex -- --max 3            hooguit 3 video's
+//   npm run tactics:codex -- --lijst tactics/ronde3/lijst.json
+//                                               een andere videolijst (JSON-array met videoId per
+//                                               item) in plaats van tactics/ronde2-tactics.json
 //   npm run tactics:codex -- --kalibratie <id>  proefrun op een al verwerkte video: uitvoer naar
 //                                               tactics/codex/kalibratie/<id>.json; de lessen die
 //                                               alleen uit die video komen staan dan niet in de index
@@ -23,7 +26,7 @@
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { RUW, TDIR, leesJson, schrijfJson, slaap } from '../lib.mjs';
+import { ROOT, RUW, TDIR, leesJson, schrijfJson, slaap } from '../lib.mjs';
 import { STANDAARD_MODEL, draaiCodex, draaiTerug, momentopname, verschillen } from './cli.mjs';
 import {
   CDIR, KALIBRATIE, LOG, MAX_CITATEN, MISLUKT, RONDE, SAMENGEVOEGD, UIT, VELDEN_TEKST,
@@ -33,13 +36,14 @@ import {
 
 // ── Argumenten ─────────────────────────────────────────────────────────────
 const argv = process.argv.slice(2);
-const opties = { ids: [], kalibratie: false, max: Infinity, droog: false,
+const opties = { ids: [], kalibratie: false, max: Infinity, droog: false, lijst: RONDE,
   model: process.env.TACTICS_CODEX_MODEL || STANDAARD_MODEL, effort: process.env.TACTICS_CODEX_EFFORT || 'high' };
 for (let i = 0; i < argv.length; i++) {
   const a = argv[i];
   if (a === '--kalibratie') opties.kalibratie = true;
   else if (a === '--droog') opties.droog = true;
   else if (a === '--max') opties.max = Number(argv[++i]);
+  else if (a === '--lijst') opties.lijst = path.resolve(ROOT, argv[++i] ?? '');
   else if (a === '--model') opties.model = argv[++i];
   else if (a === '--effort') opties.effort = argv[++i];
   else if (a.startsWith('--')) { console.error(`Onbekende optie ${a}`); process.exit(1); }
@@ -259,7 +263,13 @@ async function verwerkVideo(ctx, video, doel, pool) {
 
 // ── Hoofdlus ───────────────────────────────────────────────────────────────
 const ctx = laadContext();
-const ronde = leesJson(RONDE, []);
+const ronde = leesJson(opties.lijst, null);
+if (!Array.isArray(ronde) || ronde.some((v) => typeof v?.videoId !== 'string')) {
+  console.error(`${rel(opties.lijst)} is geen lijst met een videoId per item.`);
+  process.exit(1);
+}
+const geenBron = ronde.filter((v) => !ctx.bronIndex.has(`yt-${v.videoId}`)).map((v) => v.videoId);
+if (geenBron.length) { console.error(`Niet in bronnen.json (eerst npm run tactics:sources): ${geenBron.join(', ')}`); process.exit(1); }
 const verwerkt = leesJson(path.join(TDIR, 'verwerkt.json'), {});
 const samengevoegd = leesJson(SAMENGEVOEGD, {});
 const doelDir = opties.kalibratie ? KALIBRATIE : UIT;
@@ -282,7 +292,7 @@ lijst = lijst.filter((v) => {
 }).slice(0, opties.max);
 
 if (opties.ids.length && overslaan.length) console.log(`Overgeslagen: ${overslaan.join(', ')}`);
-console.log(`${lijst.length} video('s) te doen met ${opties.model} (effort ${opties.effort})${opties.kalibratie ? ', kalibratie' : ''}.`);
+console.log(`Lijst: ${rel(opties.lijst)}. ${lijst.length} video('s) te doen met ${opties.model} (effort ${opties.effort})${opties.kalibratie ? ', kalibratie' : ''}.`);
 
 /** Lessenindex: lessen.json + nieuwe lessen uit uit/*.json (nog niet samengevoegd). */
 function lessenPool(videoId) {

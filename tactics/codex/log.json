@@ -3724,5 +3724,1528 @@
     "aanvullingen": 3,
     "afgekeurd": [],
     "gecorrigeerd": 0
+  },
+  {
+    "videoId": "RUWFyl0eK00",
+    "titel": "How Wood Elf Chaff Wins Games",
+    "start": "2026-11-26T01:17:14.412Z",
+    "modus": "uit",
+    "model": "gpt-6.1-sol",
+    "effort": "high",
+    "pogingen": 1,
+    "promptKB": 184,
+    "sec": 194,
+    "exit": 0,
+    "usage": {
+      "input_tokens": 499104,
+      "cached_input_tokens": 427904,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 6698,
+      "reasoning_output_tokens": 2597
+    },
+    "items": {
+      "agent_message": 3,
+      "command_execution": 4
+    },
+    "commandos": [
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/RUWFyl0eK00.fixed.txt' -Encoding UTF8\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/RUWFyl0eK00.fixed.txt' -Encoding UTF8 | Select-Object -Skip 158 -First 55\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$payload = @'\"'\n{\n  \\\"videoId\\\": \\\"RUWFyl0eK00\\\",\n  \\\"bronId\\\": \\\"yt-RUWFyl0eK00\\\",\n  \\\"model\\\": \\\"GPT-6\\\",\n  \\\"nieuw\\\": [\n  ",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$payload = @'\"'\n{\n  \\\"videoId\\\": \\\"RUWFyl0eK00\\\",\n  \\\"bronId\\\": \\\"yt-RUWFyl0eK00\\\",\n  \\\"model\\\": \\\"GPT-6\\\",\n  \\\"nieuw\\\": [\n  "
+    ],
+    "bericht": "7 new lessons and 9 additions.",
+    "status": "ok",
+    "modelGemeld": "GPT-6",
+    "nieuw": 7,
+    "aanvullingen": 9,
+    "afgekeurd": [],
+    "gecorrigeerd": 0
+  },
+  {
+    "videoId": "Jyx4eveEW8w",
+    "titel": "Have heavy infantry been saved by furious charge?",
+    "start": "2026-11-26T01:20:34.130Z",
+    "modus": "uit",
+    "model": "gpt-6.1-sol",
+    "effort": "high",
+    "pogingen": 1,
+    "promptKB": 185,
+    "sec": 188,
+    "exit": 0,
+    "usage": {
+      "input_tokens": 464994,
+      "cached_input_tokens": 398080,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 7598,
+      "reasoning_output_tokens": 1338
+    },
+    "items": {
+      "agent_message": 3,
+      "command_execution": 5
+    },
+    "commandos": [
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/Jyx4eveEW8w.fixed.txt' -Encoding UTF8\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$payload = @'\"'\n{\n  \\\"videoId\\\": \\\"Jyx4eveEW8w\\\",\n  \\\"bronId\\\": \\\"yt-Jyx4eveEW8w\\\",\n  \\\"model\\\": \\\"GPT-6\\\",\n  \\\"nieuw\\\": [\n  ",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$payload = @'\"'\n{\n  \\\"videoId\\\": \\\"Jyx4eveEW8w\\\",\n  \\\"bronId\\\": \\\"yt-Jyx4eveEW8w\\\",\n  \\\"model\\\": \\\"GPT-6\\\",\n  \\\"nieuw\\\": [\n  ",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$payload = @'\"'\n{\n  \\\"videoId\\\": \\\"Jyx4eveEW8w\\\",\n  \\\"bronId\\\": \\\"yt-Jyx4eveEW8w\\\",\n  \\\"model\\\": \\\"GPT-6\\\",\n  \\\"nieuw\\\": [\n  ",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$payload = @'\"'\n{\n  \\\"videoId\\\": \\\"Jyx4eveEW8w\\\",\n  \\\"bronId\\\": \\\"yt-Jyx4eveEW8w\\\",\n  \\\"model\\\": \\\"GPT-6\\\",\n  \\\"nieuw\\\": [\n  "
+    ],
+    "bericht": "4 new lessons, 0 additions.",
+    "status": "ok",
+    "modelGemeld": "GPT-6",
+    "nieuw": 4,
+    "aanvullingen": 0,
+    "afgekeurd": [],
+    "gecorrigeerd": 0
+  },
+  {
+    "videoId": "syNBv6tl8cg",
+    "titel": "Take the bait · How to run Nomadic Waaagh! PART 5",
+    "start": "2026-11-26T01:23:47.088Z",
+    "modus": "uit",
+    "model": "gpt-6.1-sol",
+    "effort": "high",
+    "pogingen": 1,
+    "promptKB": 186,
+    "sec": 179,
+    "exit": 0,
+    "usage": {
+      "input_tokens": 316767,
+      "cached_input_tokens": 251776,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 7954,
+      "reasoning_output_tokens": 3917
+    },
+    "items": {
+      "agent_message": 3,
+      "command_execution": 3
+    },
+    "commandos": [
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/syNBv6tl8cg.fixed.txt' -Encoding UTF8\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$json = @'\"'\n{\n  \\\"videoId\\\": \\\"syNBv6tl8cg\\\",\n  \\\"bronId\\\": \\\"yt-syNBv6tl8cg\\\",\n  \\\"model\\\": \\\"gpt-6\\\",\n  \\\"nieuw\\\": [\n    {",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$json = @'\"'\n{\n  \\\"videoId\\\": \\\"syNBv6tl8cg\\\",\n  \\\"bronId\\\": \\\"yt-syNBv6tl8cg\\\",\n  \\\"model\\\": \\\"gpt-6\\\",\n  \\\"nieuw\\\": [\n    {"
+    ],
+    "bericht": "8 new lessons, 5 additions.",
+    "status": "ok",
+    "modelGemeld": "gpt-6",
+    "nieuw": 8,
+    "aanvullingen": 5,
+    "afgekeurd": [],
+    "gecorrigeerd": 0
+  },
+  {
+    "videoId": "h0DjMzG9AyY",
+    "titel": "Characters IN Units? Playing With Melee Lords",
+    "start": "2026-11-26T01:26:51.794Z",
+    "modus": "uit",
+    "model": "gpt-6.1-sol",
+    "effort": "high",
+    "pogingen": 1,
+    "promptKB": 188,
+    "sec": 382,
+    "exit": 0,
+    "usage": {
+      "input_tokens": 535605,
+      "cached_input_tokens": 460160,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 17597,
+      "reasoning_output_tokens": 6083
+    },
+    "items": {
+      "agent_message": 4,
+      "command_execution": 5
+    },
+    "commandos": [
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/h0DjMzG9AyY.fixed.txt' -Encoding UTF8\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/h0DjMzG9AyY.fixed.txt' -Encoding UTF8 | Select-Object -Skip 115 -First 76\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$lessonJson = @'\"'\n{\n  \\\"videoId\\\": \\\"h0DjMzG9AyY\\\",\n  \\\"bronId\\\": \\\"yt-h0DjMzG9AyY\\\",\n  \\\"model\\\": \\\"gpt-6\\\",\n  \\\"nieuw\\\": [",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/h0DjMzG9AyY.fixed.txt' -Encoding UTF8 | Select-String -Pattern '\"'^'\"\\\\[(19:|28:|37:|38",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$lessonJson = @'\"'\n{\n  \\\"videoId\\\": \\\"h0DjMzG9AyY\\\",\n  \\\"bronId\\\": \\\"yt-h0DjMzG9AyY\\\",\n  \\\"model\\\": \\\"gpt-6\\\",\n  \\\"nieuw\\\": ["
+    ],
+    "bericht": "14 new lessons and 1 addition.",
+    "status": "ok",
+    "modelGemeld": "gpt-6",
+    "nieuw": 14,
+    "aanvullingen": 1,
+    "afgekeurd": [],
+    "gecorrigeerd": 0
+  },
+  {
+    "videoId": "IAMZitD-DzY",
+    "titel": "The Formula for Winning Warhammer - The 40 / 40 / 20 Strategy",
+    "start": "2026-11-26T01:33:19.448Z",
+    "modus": "uit",
+    "model": "gpt-6.1-sol",
+    "effort": "high",
+    "pogingen": 1,
+    "promptKB": 191,
+    "sec": 127,
+    "exit": 0,
+    "usage": {
+      "input_tokens": 386980,
+      "cached_input_tokens": 322560,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 5058,
+      "reasoning_output_tokens": 2352
+    },
+    "items": {
+      "agent_message": 2,
+      "command_execution": 3
+    },
+    "commandos": [
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/IAMZitD-DzY.fixed.txt' -Encoding UTF8\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$lessonJson = @'\"'\n{\n  \\\"videoId\\\": \\\"IAMZitD-DzY\\\",\n  \\\"bronId\\\": \\\"yt-IAMZitD-DzY\\\",\n  \\\"model\\\": \\\"gpt-6\\\",\n  \\\"nieuw\\\": [",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$lessonJson = @'\"'\n{\n  \\\"videoId\\\": \\\"IAMZitD-DzY\\\",\n  \\\"bronId\\\": \\\"yt-IAMZitD-DzY\\\",\n  \\\"model\\\": \\\"gpt-6\\\",\n  \\\"nieuw\\\": ["
+    ],
+    "bericht": "3 new lessons and 2 additions.",
+    "status": "ok",
+    "modelGemeld": "gpt-6",
+    "nieuw": 3,
+    "aanvullingen": 2,
+    "afgekeurd": [],
+    "gecorrigeerd": 0
+  },
+  {
+    "videoId": "KEmJSyjzDSg",
+    "titel": "Flankers · How to run Nomadic Waaagh! PART 4",
+    "start": "2026-11-26T01:35:31.811Z",
+    "modus": "uit",
+    "model": "gpt-6.1-sol",
+    "effort": "high",
+    "pogingen": 1,
+    "promptKB": 192,
+    "sec": 216,
+    "exit": 0,
+    "usage": {
+      "input_tokens": 320060,
+      "cached_input_tokens": 254336,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 9708,
+      "reasoning_output_tokens": 1895
+    },
+    "items": {
+      "agent_message": 3,
+      "command_execution": 3
+    },
+    "commandos": [
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/KEmJSyjzDSg.fixed.txt' -Encoding UTF8\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"@'\n{\n  \\\"videoId\\\": \\\"KEmJSyjzDSg\\\",\n  \\\"bronId\\\": \\\"yt-KEmJSyjzDSg\\\",\n  \\\"model\\\": \\\"gpt-6\\\",\n  \\\"nieuw\\\": [\n    {\n      \\\"i",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$jsonText = @'\"'\n{\n  \\\"videoId\\\": \\\"KEmJSyjzDSg\\\",\n  \\\"bronId\\\": \\\"yt-KEmJSyjzDSg\\\",\n  \\\"model\\\": \\\"gpt-6\\\",\n  \\\"nieuw\\\": [\n "
+    ],
+    "bericht": "8 new lessons and 2 additions.",
+    "status": "ok",
+    "modelGemeld": "gpt-6",
+    "nieuw": 8,
+    "aanvullingen": 2,
+    "afgekeurd": [],
+    "gecorrigeerd": 0
+  },
+  {
+    "videoId": "FwHmDdo6pLQ",
+    "titel": "Chaff · How to run Nomadic Waaagh! PART 2",
+    "start": "2026-11-26T01:39:13.385Z",
+    "modus": "uit",
+    "model": "gpt-6.1-sol",
+    "effort": "high",
+    "pogingen": 1,
+    "promptKB": 194,
+    "sec": 332,
+    "exit": 0,
+    "usage": {
+      "input_tokens": 523391,
+      "cached_input_tokens": 454016,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 14880,
+      "reasoning_output_tokens": 2475
+    },
+    "items": {
+      "agent_message": 4,
+      "command_execution": 5
+    },
+    "commandos": [
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/FwHmDdo6pLQ.fixed.txt' -Encoding UTF8\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"@'\nimport json, re\nfrom pathlib import Path\n\ndata = json.loads(r'''{\n  \\\"videoId\\\": \\\"FwHmDdo6pLQ\\\",\n  \\\"bronId\\\": \\\"yt-FwHmD",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$payload = @'\"'\n{\n  \\\"videoId\\\": \\\"FwHmDdo6pLQ\\\",\n  \\\"bronId\\\": \\\"yt-FwHmDdo6pLQ\\\",\n  \\\"model\\\": \\\"GPT-6\\\",\n  \\\"nieuw\\\": [\n  ",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$ErrorActionPreference = '\"'Stop'\n\"'$payload = @'\"'\n{\n  \\\"videoId\\\": \\\"FwHmDdo6pLQ\\\",\n  \\\"bronId\\\": \\\"yt-FwHmDdo6pLQ\\\",\n  \\\"m",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$ErrorActionPreference = '\"'Stop'\n\"'$payload = @'\"'\n{\n  \\\"videoId\\\": \\\"FwHmDdo6pLQ\\\",\n  \\\"bronId\\\": \\\"yt-FwHmDdo6pLQ\\\",\n  \\\"m"
+    ],
+    "bericht": "9 new lessons and 7 additions.",
+    "status": "ok",
+    "modelGemeld": "GPT-6",
+    "nieuw": 9,
+    "aanvullingen": 7,
+    "afgekeurd": [],
+    "gecorrigeerd": 0
+  },
+  {
+    "videoId": "l4Hujk-DcDo",
+    "titel": "Tactics at the Table - Warhammer The Old World - EP123",
+    "start": "2026-11-26T01:44:51.033Z",
+    "modus": "uit",
+    "model": "gpt-6.1-sol",
+    "effort": "high",
+    "pogingen": 1,
+    "promptKB": 196,
+    "sec": 214,
+    "exit": 0,
+    "usage": {
+      "input_tokens": 797721,
+      "cached_input_tokens": 697856,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 8714,
+      "reasoning_output_tokens": 3912
+    },
+    "items": {
+      "agent_message": 3,
+      "command_execution": 7
+    },
+    "commandos": [
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/l4Hujk-DcDo.fixed.txt' -Encoding UTF8\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$lines = Get-Content -LiteralPath '\"'tactics/ruw/l4Hujk-DcDo.fixed.txt' -Encoding UTF8; \"'$lines | Where-Object { $_ -match '",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/l4Hujk-DcDo.fixed.txt' -Encoding UTF8 | Where-Object { (\"'$_ -match '\"'\"'^'\"\\\\[(\\\\d+):(",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/l4Hujk-DcDo.fixed.txt' -Encoding UTF8 | Where-Object { \"'$_ -match '\"'\"'^'\"\\\\[1:(\\\\d+):",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/l4Hujk-DcDo.fixed.txt' -Encoding UTF8 | Where-Object { \"'$_ -match '\"'\"'^'\"\\\\[1:(\\\\d+):",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/l4Hujk-DcDo.fixed.txt' -Encoding UTF8 | Select-String -Pattern '\"'^'\"\\\\[(10:14|10:19|10",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$json = @'\"'\n{\n  \\\"videoId\\\": \\\"l4Hujk-DcDo\\\",\n  \\\"bronId\\\": \\\"yt-l4Hujk-DcDo\\\",\n  \\\"model\\\": \\\"gpt-6\\\",\n  \\\"nieuw\\\": [\n    {"
+    ],
+    "bericht": "9 new lessons and 6 additions.",
+    "status": "ok",
+    "modelGemeld": "gpt-6",
+    "nieuw": 9,
+    "aanvullingen": 6,
+    "afgekeurd": [],
+    "gecorrigeerd": 0
+  },
+  {
+    "videoId": "0gukL8wYV08",
+    "titel": "Stop Losing in Deployment! · Coaching With Close Order Episode 4",
+    "start": "2026-11-26T01:48:30.617Z",
+    "modus": "uit",
+    "model": "gpt-6.1-sol",
+    "effort": "high",
+    "pogingen": 1,
+    "promptKB": 198,
+    "sec": 306,
+    "exit": 0,
+    "usage": {
+      "input_tokens": 1202467,
+      "cached_input_tokens": 1108224,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 12420,
+      "reasoning_output_tokens": 4954
+    },
+    "items": {
+      "agent_message": 4,
+      "command_execution": 8,
+      "file_change": 1
+    },
+    "commandos": [
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/0gukL8wYV08.fixed.txt' -Encoding UTF8\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/0gukL8wYV08.fixed.txt' -Encoding UTF8 | Select-Object -Skip 115 -First 150\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/0gukL8wYV08.fixed.txt' -Encoding UTF8 | Select-Object -Skip 265 -First 115\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/0gukL8wYV08.fixed.txt' -Encoding UTF8 | Select-Object -Skip 380\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$data = @'\"'\n{\\\"videoId\\\":\\\"0gukL8wYV08\\\",\\\"bronId\\\":\\\"yt-0gukL8wYV08\\\",\\\"model\\\":\\\"gpt-6\\\",\\\"nieuw\\\":[{\\\"id\\\":\\\"drawn-lines-",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Select-String -LiteralPath 'tactics/ruw/0gukL8wYV08.fixed.txt' -Pattern 'definitely make sure|lose movement|consistently get|",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$json = @'\"'\n{\n  \\\"videoId\\\": \\\"0gukL8wYV08\\\",\n  \\\"bronId\\\": \\\"yt-0gukL8wYV08\\\",\n  \\\"model\\\": \\\"gpt-6\\\",\n  \\\"nieuw\\\": [\n    {",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$data = @'\"'\n{\\\"videoId\\\":\\\"0gukL8wYV08\\\",\\\"bronId\\\":\\\"yt-0gukL8wYV08\\\",\\\"model\\\":\\\"gpt-6\\\",\\\"nieuw\\\":[{\\\"id\\\":\\\"drawn-lines-"
+    ],
+    "bericht": "20 new lessons, 16 additions.",
+    "status": "ok",
+    "modelGemeld": "gpt-6",
+    "nieuw": 20,
+    "aanvullingen": 16,
+    "afgekeurd": [],
+    "gecorrigeerd": 0
+  },
+  {
+    "videoId": "pJG5i6ReU24",
+    "titel": "Top 5 Ways to Improve as a Player · Coaching With Close Order Episode 3",
+    "start": "2026-11-26T01:53:42.504Z",
+    "modus": "uit",
+    "model": "gpt-6.1-sol",
+    "effort": "high",
+    "pogingen": 1,
+    "promptKB": 203,
+    "sec": 150,
+    "exit": 0,
+    "usage": {
+      "input_tokens": 332034,
+      "cached_input_tokens": 249344,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 6487,
+      "reasoning_output_tokens": 2399
+    },
+    "items": {
+      "agent_message": 3,
+      "command_execution": 3
+    },
+    "commandos": [
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/pJG5i6ReU24.fixed.txt' -Encoding UTF8\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$payload = @'\"'\n{\n  \\\"videoId\\\": \\\"pJG5i6ReU24\\\",\n  \\\"bronId\\\": \\\"yt-pJG5i6ReU24\\\",\n  \\\"model\\\": \\\"gpt-6\\\",\n  \\\"nieuw\\\": [\n  ",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$payload = @'\"'\n{\n  \\\"videoId\\\": \\\"pJG5i6ReU24\\\",\n  \\\"bronId\\\": \\\"yt-pJG5i6ReU24\\\",\n  \\\"model\\\": \\\"gpt-6\\\",\n  \\\"nieuw\\\": [\n  "
+    ],
+    "bericht": "3 new lessons, 3 additions.",
+    "status": "ok",
+    "modelGemeld": "gpt-6",
+    "nieuw": 3,
+    "aanvullingen": 3,
+    "afgekeurd": [],
+    "gecorrigeerd": 0
+  },
+  {
+    "videoId": "nGuOKXq5YeQ",
+    "titel": "Beating Grave Guard? The One Rule Undead Players Don’t Want You to Know…",
+    "start": "2026-11-26T01:56:17.512Z",
+    "modus": "uit",
+    "model": "gpt-6.1-sol",
+    "effort": "high",
+    "pogingen": 1,
+    "promptKB": 204,
+    "sec": 67,
+    "exit": 0,
+    "usage": {
+      "input_tokens": 238036,
+      "cached_input_tokens": 169984,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 2572,
+      "reasoning_output_tokens": 1034
+    },
+    "items": {
+      "agent_message": 2,
+      "command_execution": 2
+    },
+    "commandos": [
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/nGuOKXq5YeQ.fixed.txt' -Encoding UTF8\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$json = @'\"'\n{\n  \\\"videoId\\\": \\\"nGuOKXq5YeQ\\\",\n  \\\"bronId\\\": \\\"yt-nGuOKXq5YeQ\\\",\n  \\\"model\\\": \\\"gpt-6\\\",\n  \\\"nieuw\\\": [\n    {"
+    ],
+    "bericht": "2 new lessons, 0 additions.",
+    "status": "ok",
+    "modelGemeld": "gpt-6",
+    "nieuw": 2,
+    "aanvullingen": 0,
+    "afgekeurd": [],
+    "gecorrigeerd": 0
+  },
+  {
+    "videoId": "-nv6-52zpGc",
+    "titel": "Am I right or wrong about chariots?",
+    "start": "2026-11-26T01:57:29.321Z",
+    "modus": "uit",
+    "model": "gpt-6.1-sol",
+    "effort": "high",
+    "pogingen": 1,
+    "promptKB": 204,
+    "sec": 85,
+    "exit": 0,
+    "usage": {
+      "input_tokens": 234013,
+      "cached_input_tokens": 168576,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 3516,
+      "reasoning_output_tokens": 1454
+    },
+    "items": {
+      "agent_message": 2,
+      "command_execution": 2
+    },
+    "commandos": [
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/-nv6-52zpGc.fixed.txt' -Encoding UTF8\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$json = @'\"'\n{\n  \\\"videoId\\\": \\\"-nv6-52zpGc\\\",\n  \\\"bronId\\\": \\\"yt--nv6-52zpGc\\\",\n  \\\"model\\\": \\\"GPT-6\\\",\n  \\\"nieuw\\\": [\n    {"
+    ],
+    "bericht": "4 new lessons and 1 addition.",
+    "status": "ok",
+    "modelGemeld": "GPT-6",
+    "nieuw": 4,
+    "aanvullingen": 1,
+    "afgekeurd": [],
+    "gecorrigeerd": 0
+  },
+  {
+    "videoId": "LrtjQZSWQmQ",
+    "titel": "Are ambushers a great pick?",
+    "start": "2026-11-26T01:58:59.751Z",
+    "modus": "uit",
+    "model": "gpt-6.1-sol",
+    "effort": "high",
+    "pogingen": 1,
+    "promptKB": 205,
+    "sec": 174,
+    "exit": 0,
+    "usage": {
+      "input_tokens": 324461,
+      "cached_input_tokens": 257280,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 7687,
+      "reasoning_output_tokens": 1875
+    },
+    "items": {
+      "agent_message": 3,
+      "command_execution": 3
+    },
+    "commandos": [
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/LrtjQZSWQmQ.fixed.txt' -Encoding UTF8\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$output = @'\"'\n{\n  \\\"videoId\\\": \\\"LrtjQZSWQmQ\\\",\n  \\\"bronId\\\": \\\"yt-LrtjQZSWQmQ\\\",\n  \\\"model\\\": \\\"gpt-6\\\",\n  \\\"nieuw\\\": [\n   ",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$output = @'\"'\n{\n  \\\"videoId\\\": \\\"LrtjQZSWQmQ\\\",\n  \\\"bronId\\\": \\\"yt-LrtjQZSWQmQ\\\",\n  \\\"model\\\": \\\"gpt-6\\\",\n  \\\"nieuw\\\": [\n   "
+    ],
+    "bericht": "5 new lessons, 5 additions",
+    "status": "ok",
+    "modelGemeld": "gpt-6",
+    "nieuw": 5,
+    "aanvullingen": 5,
+    "afgekeurd": [],
+    "gecorrigeerd": 0
+  },
+  {
+    "videoId": "vTAd8JKsNNU",
+    "titel": "Is Heavy Cavalry still viable and has their role changed?",
+    "start": "2026-11-26T02:01:58.896Z",
+    "modus": "uit",
+    "model": "gpt-6.1-sol",
+    "effort": "high",
+    "pogingen": 1,
+    "promptKB": 207,
+    "sec": 165,
+    "exit": 0,
+    "usage": {
+      "input_tokens": 322476,
+      "cached_input_tokens": 266496,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 6985,
+      "reasoning_output_tokens": 2119
+    },
+    "items": {
+      "agent_message": 3,
+      "command_execution": 3
+    },
+    "commandos": [
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/vTAd8JKsNNU.fixed.txt' -Encoding UTF8\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$lessonJson = @'\"'\n{\n  \\\"videoId\\\": \\\"vTAd8JKsNNU\\\",\n  \\\"bronId\\\": \\\"yt-vTAd8JKsNNU\\\",\n  \\\"model\\\": \\\"gpt-6\\\",\n  \\\"nieuw\\\": [",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$ErrorActionPreference = '\"'Stop'\n\"'$lessonJson = @'\"'\n{\n  \\\"videoId\\\": \\\"vTAd8JKsNNU\\\",\n  \\\"bronId\\\": \\\"yt-vTAd8JKsNNU\\\",\n  "
+    ],
+    "bericht": "7 new lessons, 0 additions.",
+    "status": "ok",
+    "modelGemeld": "gpt-6",
+    "nieuw": 7,
+    "aanvullingen": 0,
+    "afgekeurd": [],
+    "gecorrigeerd": 0
+  },
+  {
+    "videoId": "6x8l-NPw43I",
+    "titel": "Scoring Strategic Locations · Coaching With Close Order Episode 1",
+    "start": "2026-11-26T02:04:49.159Z",
+    "modus": "uit",
+    "model": "gpt-6.1-sol",
+    "effort": "high",
+    "pogingen": 1,
+    "promptKB": 208,
+    "sec": 265,
+    "exit": 0,
+    "usage": {
+      "input_tokens": 565875,
+      "cached_input_tokens": 491264,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 11743,
+      "reasoning_output_tokens": 6530
+    },
+    "items": {
+      "agent_message": 4,
+      "command_execution": 5
+    },
+    "commandos": [
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/6x8l-NPw43I.fixed.txt' -Encoding UTF8\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/6x8l-NPw43I.fixed.txt' -Encoding UTF8 | Select-Object -First 125\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/6x8l-NPw43I.fixed.txt' -Encoding UTF8 | Select-Object -Skip 125\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/6x8l-NPw43I.fixed.txt' -Raw -Encoding UTF8\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$jsonText = @'\"'\n{\n  \\\"videoId\\\": \\\"6x8l-NPw43I\\\",\n  \\\"bronId\\\": \\\"yt-6x8l-NPw43I\\\",\n  \\\"model\\\": \\\"GPT-6\\\",\n  \\\"nieuw\\\": [\n "
+    ],
+    "bericht": "14 new lessons and 8 additions.",
+    "status": "ok",
+    "modelGemeld": "GPT-6",
+    "nieuw": 14,
+    "aanvullingen": 8,
+    "afgekeurd": [],
+    "gecorrigeerd": 0
+  },
+  {
+    "videoId": "Mm7PRaYDxPk",
+    "titel": "The evolving role of light cavalry",
+    "start": "2026-11-26T02:09:19.563Z",
+    "modus": "uit",
+    "model": "gpt-6.1-sol",
+    "effort": "high",
+    "pogingen": 1,
+    "promptKB": 211,
+    "sec": 144,
+    "exit": 0,
+    "usage": {
+      "input_tokens": 243346,
+      "cached_input_tokens": 175360,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 6320,
+      "reasoning_output_tokens": 3658
+    },
+    "items": {
+      "agent_message": 3,
+      "command_execution": 2
+    },
+    "commandos": [
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/Mm7PRaYDxPk.fixed.txt' -Encoding UTF8\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$payload = @'\"'\n{\n  \\\"videoId\\\": \\\"Mm7PRaYDxPk\\\",\n  \\\"bronId\\\": \\\"yt-Mm7PRaYDxPk\\\",\n  \\\"model\\\": \\\"GPT-6\\\",\n  \\\"nieuw\\\": [\n  "
+    ],
+    "bericht": "9 new lessons and 2 additions.",
+    "status": "ok",
+    "modelGemeld": "GPT-6",
+    "nieuw": 9,
+    "aanvullingen": 2,
+    "afgekeurd": [],
+    "gecorrigeerd": 0
+  },
+  {
+    "videoId": "dv3fdh8RLbE",
+    "titel": "How to Beat Grand Cathay",
+    "start": "2026-11-26T02:11:48.825Z",
+    "modus": "uit",
+    "model": "gpt-6.1-sol",
+    "effort": "high",
+    "pogingen": 1,
+    "promptKB": 214,
+    "sec": 375,
+    "exit": 0,
+    "usage": {
+      "input_tokens": 682385,
+      "cached_input_tokens": 601344,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 17001,
+      "reasoning_output_tokens": 8445
+    },
+    "items": {
+      "agent_message": 4,
+      "command_execution": 4
+    },
+    "commandos": [
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/dv3fdh8RLbE.fixed.txt' -Raw\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/dv3fdh8RLbE.fixed.txt' | Select-Object -Skip 160 -First 145\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$payload = @'\"'\n{\n  \\\"videoId\\\": \\\"dv3fdh8RLbE\\\",\n  \\\"bronId\\\": \\\"yt-dv3fdh8RLbE\\\",\n  \\\"model\\\": \\\"GPT-6\\\",\n  \\\"nieuw\\\": [\n  ",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$payload = @'\"'\n{\n  \\\"videoId\\\": \\\"dv3fdh8RLbE\\\",\n  \\\"bronId\\\": \\\"yt-dv3fdh8RLbE\\\",\n  \\\"model\\\": \\\"GPT-6\\\",\n  \\\"nieuw\\\": [\n  "
+    ],
+    "bericht": "18 new lessons and 4 additions.",
+    "status": "ok",
+    "modelGemeld": "GPT-6",
+    "nieuw": 18,
+    "aanvullingen": 4,
+    "afgekeurd": [],
+    "gecorrigeerd": 0
+  },
+  {
+    "videoId": "CY1U4vsaeyA",
+    "titel": "HOW TO WIN in Warhammer The Old World · EP 3: Doing Deployment RIGHT",
+    "start": "2026-11-26T02:18:09.044Z",
+    "modus": "uit",
+    "model": "gpt-6.1-sol",
+    "effort": "high",
+    "pogingen": 1,
+    "promptKB": 218,
+    "sec": 296,
+    "exit": 0,
+    "usage": {
+      "input_tokens": 810573,
+      "cached_input_tokens": 721152,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 12512,
+      "reasoning_output_tokens": 3007
+    },
+    "items": {
+      "agent_message": 4,
+      "command_execution": 8
+    },
+    "commandos": [
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/CY1U4vsaeyA.fixed.txt' -Encoding UTF8\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/CY1U4vsaeyA.fixed.txt' -Encoding UTF8 | Select-Object -First 100\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/CY1U4vsaeyA.fixed.txt' -Encoding UTF8 | Select-Object -Skip 200\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/CY1U4vsaeyA.fixed.txt' -Encoding UTF8 | Select-Object -Skip 100 -First 100\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/CY1U4vsaeyA.fixed.txt' -Encoding UTF8 | Select-Object -Skip 123 -First 45\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$json = @'\"'\n{\n  \\\"videoId\\\": \\\"CY1U4vsaeyA\\\",\n  \\\"bronId\\\": \\\"yt-CY1U4vsaeyA\\\",\n  \\\"model\\\": \\\"GPT-6\\\",\n  \\\"nieuw\\\": [\n    {",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$json = @'\"'\n{\n  \\\"videoId\\\": \\\"CY1U4vsaeyA\\\",\n  \\\"bronId\\\": \\\"yt-CY1U4vsaeyA\\\",\n  \\\"model\\\": \\\"GPT-6\\\",\n  \\\"nieuw\\\": [\n    {",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$json = @'\"'\n{\n  \\\"videoId\\\": \\\"CY1U4vsaeyA\\\",\n  \\\"bronId\\\": \\\"yt-CY1U4vsaeyA\\\",\n  \\\"model\\\": \\\"GPT-6\\\",\n  \\\"nieuw\\\": [\n    {"
+    ],
+    "bericht": "9 new lessons and 8 additions.",
+    "status": "ok",
+    "modelGemeld": "GPT-6",
+    "nieuw": 9,
+    "aanvullingen": 8,
+    "afgekeurd": [],
+    "gecorrigeerd": 0
+  },
+  {
+    "videoId": "vTgLlAHwrFM",
+    "titel": "How I Snatched Defeat From the Jaws of Victory · The Importance of Positioning",
+    "start": "2026-11-26T02:23:10.371Z",
+    "modus": "uit",
+    "model": "gpt-6.1-sol",
+    "effort": "high",
+    "pogingen": 1,
+    "promptKB": 220,
+    "sec": 180,
+    "exit": 0,
+    "usage": {
+      "input_tokens": 351005,
+      "cached_input_tokens": 276480,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 7900,
+      "reasoning_output_tokens": 2426
+    },
+    "items": {
+      "agent_message": 3,
+      "command_execution": 3
+    },
+    "commandos": [
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/vTgLlAHwrFM.fixed.txt' -Encoding UTF8\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$payload = @'\"'\n{\n  \\\"videoId\\\": \\\"vTgLlAHwrFM\\\",\n  \\\"bronId\\\": \\\"yt-vTgLlAHwrFM\\\",\n  \\\"model\\\": \\\"gpt-6\\\",\n  \\\"nieuw\\\": [\n  ",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$payload = '\"'{\n  \\\"videoId\\\": \\\"vTgLlAHwrFM\\\",\n  \\\"bronId\\\": \\\"yt-vTgLlAHwrFM\\\",\n  \\\"model\\\": \\\"gpt-6\\\",\n  \\\"nieuw\\\": [\n    "
+    ],
+    "bericht": "7 new lessons and 1 addition.",
+    "status": "ok",
+    "modelGemeld": "gpt-6",
+    "nieuw": 7,
+    "aanvullingen": 1,
+    "afgekeurd": [],
+    "gecorrigeerd": 0
+  },
+  {
+    "videoId": "Gsjisn0Ncm0",
+    "titel": "HOW TO WIN in Warhammer The Old World · EP 2: Getting Early Points Leads with Arcane Urgency",
+    "start": "2026-11-26T02:26:15.265Z",
+    "modus": "uit",
+    "model": "gpt-6.1-sol",
+    "effort": "high",
+    "pogingen": 1,
+    "promptKB": 222,
+    "sec": 230,
+    "exit": 0,
+    "usage": {
+      "input_tokens": 360238,
+      "cached_input_tokens": 295168,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 10345,
+      "reasoning_output_tokens": 5324
+    },
+    "items": {
+      "agent_message": 4,
+      "command_execution": 3
+    },
+    "commandos": [
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/Gsjisn0Ncm0.fixed.txt' -Raw\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$payload = @'\"'\n{\n  \\\"videoId\\\": \\\"Gsjisn0Ncm0\\\",\n  \\\"bronId\\\": \\\"yt-Gsjisn0Ncm0\\\",\n  \\\"model\\\": \\\"gpt-6\\\",\n  \\\"nieuw\\\": [\n  ",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$payload = @'\"'\n{\n  \\\"videoId\\\": \\\"Gsjisn0Ncm0\\\",\n  \\\"bronId\\\": \\\"yt-Gsjisn0Ncm0\\\",\n  \\\"model\\\": \\\"gpt-6\\\",\n  \\\"nieuw\\\": [\n  "
+    ],
+    "bericht": "10 new lessons, 4 additions.",
+    "status": "ok",
+    "modelGemeld": "gpt-6",
+    "nieuw": 10,
+    "aanvullingen": 4,
+    "afgekeurd": [],
+    "gecorrigeerd": 0
+  },
+  {
+    "videoId": "Z6_GYlI_Ofk",
+    "titel": "HOW TO WIN in Warhammer The Old World · EP 1: Beatdown vs Control",
+    "start": "2026-11-26T02:30:10.499Z",
+    "modus": "uit",
+    "model": "gpt-6.1-sol",
+    "effort": "high",
+    "pogingen": 1,
+    "promptKB": 224,
+    "sec": 232,
+    "exit": 0,
+    "usage": {
+      "input_tokens": 548594,
+      "cached_input_tokens": 460672,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 9614,
+      "reasoning_output_tokens": 2874
+    },
+    "items": {
+      "agent_message": 3,
+      "command_execution": 5
+    },
+    "commandos": [
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/Z6_GYlI_Ofk.fixed.txt' -Encoding UTF8\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$payload = @'\"'\n{\n  \\\"videoId\\\": \\\"Z6_GYlI_Ofk\\\",\n  \\\"bronId\\\": \\\"yt-Z6_GYlI_Ofk\\\",\n  \\\"model\\\": \\\"GPT-6\\\",\n  \\\"nieuw\\\": [\n  ",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$payload = @'\"'\n{\n  \\\"videoId\\\": \\\"Z6_GYlI_Ofk\\\",\n  \\\"bronId\\\": \\\"yt-Z6_GYlI_Ofk\\\",\n  \\\"model\\\": \\\"GPT-6\\\",\n  \\\"nieuw\\\": [\n  ",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$payload = @'\"'\n{\n  \\\"videoId\\\": \\\"Z6_GYlI_Ofk\\\",\n  \\\"bronId\\\": \\\"yt-Z6_GYlI_Ofk\\\",\n  \\\"model\\\": \\\"GPT-6\\\",\n  \\\"nieuw\\\": [\n  ",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$payload = @'\"'\n{\n  \\\"videoId\\\": \\\"Z6_GYlI_Ofk\\\",\n  \\\"bronId\\\": \\\"yt-Z6_GYlI_Ofk\\\",\n  \\\"model\\\": \\\"GPT-6\\\",\n  \\\"nieuw\\\": [\n  "
+    ],
+    "bericht": "7 new lessons and 5 additions.",
+    "status": "ok",
+    "modelGemeld": "GPT-6",
+    "nieuw": 7,
+    "aanvullingen": 5,
+    "afgekeurd": [],
+    "gecorrigeerd": 0
+  },
+  {
+    "videoId": "CK40ZsYZCyQ",
+    "titel": "Empire Arcane journal : How to beat the new Empire armies with Dwarfs !",
+    "start": "2026-11-26T02:34:07.360Z",
+    "modus": "uit",
+    "model": "gpt-6.1-sol",
+    "effort": "high",
+    "pogingen": 1,
+    "promptKB": 226,
+    "sec": 242,
+    "exit": 0,
+    "usage": {
+      "input_tokens": 719316,
+      "cached_input_tokens": 624896,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 9861,
+      "reasoning_output_tokens": 3104
+    },
+    "items": {
+      "agent_message": 4,
+      "command_execution": 8
+    },
+    "commandos": [
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/CK40ZsYZCyQ.fixed.txt'\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/CK40ZsYZCyQ.fixed.txt' | Select-Object -First 145\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/CK40ZsYZCyQ.fixed.txt' | Select-Object -Skip 145 -First 145\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/CK40ZsYZCyQ.fixed.txt' | Select-Object -Skip 290\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/CK40ZsYZCyQ.fixed.txt' | Select-Object -Skip 130 -First 160\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$json = @'\"'\n{\n  \\\"videoId\\\": \\\"CK40ZsYZCyQ\\\",\n  \\\"bronId\\\": \\\"yt-CK40ZsYZCyQ\\\",\n  \\\"model\\\": \\\"gpt-6\\\",\n  \\\"nieuw\\\": [\n    {",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$json = @'\"'\n{\n  \\\"videoId\\\": \\\"CK40ZsYZCyQ\\\",\n  \\\"bronId\\\": \\\"yt-CK40ZsYZCyQ\\\",\n  \\\"model\\\": \\\"gpt-6\\\",\n  \\\"nieuw\\\": [\n    {",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$json = @'\"'\n{\n  \\\"videoId\\\": \\\"CK40ZsYZCyQ\\\",\n  \\\"bronId\\\": \\\"yt-CK40ZsYZCyQ\\\",\n  \\\"model\\\": \\\"gpt-6\\\",\n  \\\"nieuw\\\": [\n    {"
+    ],
+    "bericht": "16 new lessons and 9 additions.",
+    "status": "ok",
+    "modelGemeld": "gpt-6",
+    "nieuw": 16,
+    "aanvullingen": 9,
+    "afgekeurd": [],
+    "gecorrigeerd": 0
+  },
+  {
+    "videoId": "TLSHD6OZivk",
+    "titel": "The roles of cavalry for Warhammer Old World and the missing classifications",
+    "start": "2026-11-26T02:38:14.483Z",
+    "modus": "uit",
+    "model": "gpt-6.1-sol",
+    "effort": "high",
+    "pogingen": 1,
+    "promptKB": 230,
+    "sec": 135,
+    "exit": 0,
+    "usage": {
+      "input_tokens": 257301,
+      "cached_input_tokens": 184064,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 5754,
+      "reasoning_output_tokens": 2520
+    },
+    "items": {
+      "agent_message": 3,
+      "command_execution": 2
+    },
+    "commandos": [
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/TLSHD6OZivk.fixed.txt' -Encoding UTF8\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$json = @'\"'\n{\n  \\\"videoId\\\": \\\"TLSHD6OZivk\\\",\n  \\\"bronId\\\": \\\"yt-TLSHD6OZivk\\\",\n  \\\"model\\\": \\\"gpt-6\\\",\n  \\\"nieuw\\\": [\n    {"
+    ],
+    "bericht": "5 new lessons and 5 additions.",
+    "status": "ok",
+    "modelGemeld": "gpt-6",
+    "nieuw": 5,
+    "aanvullingen": 5,
+    "afgekeurd": [],
+    "gecorrigeerd": 0
+  },
+  {
+    "videoId": "P-jxp6aKkb4",
+    "titel": "Tactics - How to beat Bretonnia and Tomb Kings in Warhammer: The Old World with Dwarfs",
+    "start": "2026-11-26T02:40:35.112Z",
+    "modus": "uit",
+    "model": "gpt-6.1-sol",
+    "effort": "high",
+    "pogingen": 1,
+    "promptKB": 231,
+    "sec": 369,
+    "exit": 0,
+    "usage": {
+      "input_tokens": 686997,
+      "cached_input_tokens": 610048,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 17016,
+      "reasoning_output_tokens": 7994
+    },
+    "items": {
+      "agent_message": 4,
+      "command_execution": 4,
+      "file_change": 1
+    },
+    "commandos": [
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/P-jxp6aKkb4.fixed.txt' -Encoding UTF8\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$ErrorActionPreference = '\"'Stop'\n\"'$payload = @'\"'\n{\n  \\\"videoId\\\": \\\"P-jxp6aKkb4\\\",\n  \\\"bronId\\\": \\\"yt-P-jxp6aKkb4\\\",\n  \\\"m",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/P-jxp6aKkb4.fixed.txt' -Encoding UTF8\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/P-jxp6aKkb4.fixed.txt' -Encoding UTF8\""
+    ],
+    "bericht": "23 new lessons and 5 additions.",
+    "status": "ok",
+    "modelGemeld": "gpt-6",
+    "nieuw": 23,
+    "aanvullingen": 5,
+    "afgekeurd": [],
+    "gecorrigeerd": 0
+  },
+  {
+    "videoId": "6RXUL_MveHQ",
+    "titel": "Episode 64 - Poison Undying Deathstars - What to do?",
+    "start": "2026-11-26T02:46:49.280Z",
+    "modus": "uit",
+    "model": "gpt-6.1-sol",
+    "effort": "high",
+    "pogingen": 1,
+    "promptKB": 237,
+    "sec": 220,
+    "exit": 0,
+    "usage": {
+      "input_tokens": 887128,
+      "cached_input_tokens": 784896,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 8870,
+      "reasoning_output_tokens": 3198
+    },
+    "items": {
+      "agent_message": 4,
+      "command_execution": 7
+    },
+    "commandos": [
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/6RXUL_MveHQ.fixed.txt' -Raw\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$t = Get-Content -LiteralPath '\"'tactics/ruw/6RXUL_MveHQ.fixed.txt'; \"'$t | Select-Object -First 230'",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/6RXUL_MveHQ.fixed.txt' | Select-Object -Skip 230 -First 230\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/6RXUL_MveHQ.fixed.txt' | Select-Object -Skip 460 -First 230\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/6RXUL_MveHQ.fixed.txt' | Select-Object -Skip 690\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$json = @'\"'\n{\n  \\\"videoId\\\": \\\"6RXUL_MveHQ\\\",\n  \\\"bronId\\\": \\\"yt-6RXUL_MveHQ\\\",\n  \\\"model\\\": \\\"gpt-6\\\",\n  \\\"nieuw\\\": [\n    {",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$json = @'\"'\n{\n  \\\"videoId\\\": \\\"6RXUL_MveHQ\\\",\n  \\\"bronId\\\": \\\"yt-6RXUL_MveHQ\\\",\n  \\\"model\\\": \\\"gpt-6\\\",\n  \\\"nieuw\\\": [\n    {"
+    ],
+    "bericht": "7 new lessons, 1 addition.",
+    "status": "ok",
+    "modelGemeld": "gpt-6",
+    "nieuw": 7,
+    "aanvullingen": 1,
+    "afgekeurd": [],
+    "gecorrigeerd": 0
+  },
+  {
+    "videoId": "Ifsf5R0lMVM",
+    "titel": "How to kill Dragons in Warhammer: The Old World with Dwarfs!",
+    "start": "2026-11-26T02:50:34.855Z",
+    "modus": "uit",
+    "model": "gpt-6.1-sol",
+    "effort": "high",
+    "pogingen": 1,
+    "promptKB": 239,
+    "sec": 278,
+    "exit": 0,
+    "usage": {
+      "input_tokens": 373113,
+      "cached_input_tokens": 295296,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 12728,
+      "reasoning_output_tokens": 3375
+    },
+    "items": {
+      "agent_message": 3,
+      "command_execution": 3
+    },
+    "commandos": [
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/Ifsf5R0lMVM.fixed.txt'\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$transcript = Get-Content -LiteralPath '\"'tactics/ruw/Ifsf5R0lMVM.fixed.txt' -Raw\n\"'$json = @'\"'\n{\n  \\\"videoId\\\": \\\"Ifsf5R0lM",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$transcript = Get-Content -LiteralPath '\"'tactics/ruw/Ifsf5R0lMVM.fixed.txt' -Raw\n\"'$json = @'\"'\n{\n  \\\"videoId\\\": \\\"Ifsf5R0lM"
+    ],
+    "bericht": "12 new lessons and 4 additions.",
+    "status": "ok",
+    "modelGemeld": "gpt-6",
+    "nieuw": 12,
+    "aanvullingen": 4,
+    "afgekeurd": [],
+    "gecorrigeerd": 0
+  },
+  {
+    "videoId": "s8sHnbYgl9I",
+    "titel": "Episode 62 - Thinking on your feet - In game strategies with The FoodMonster - Ahkter Khan",
+    "start": "2026-11-26T02:55:18.401Z",
+    "modus": "uit",
+    "model": "gpt-6.1-sol",
+    "effort": "high",
+    "pogingen": 1,
+    "promptKB": 242,
+    "sec": 270,
+    "exit": 0,
+    "usage": {
+      "input_tokens": 990918,
+      "cached_input_tokens": 872832,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 11064,
+      "reasoning_output_tokens": 5618
+    },
+    "items": {
+      "agent_message": 4,
+      "command_execution": 7
+    },
+    "commandos": [
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/s8sHnbYgl9I.fixed.txt' -Encoding UTF8\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/s8sHnbYgl9I.fixed.txt' -Encoding UTF8 | Select-Object -Skip 150 -First 190\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/s8sHnbYgl9I.fixed.txt' -Encoding UTF8 | Select-Object -Skip 340 -First 180\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/s8sHnbYgl9I.fixed.txt' -Encoding UTF8 | Select-Object -Skip 520 -First 180\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/s8sHnbYgl9I.fixed.txt' -Encoding UTF8 | Select-Object -Skip 700\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$ErrorActionPreference = '\"'Stop'\n\"'$json = @'\"'\n{\n  \\\"videoId\\\": \\\"s8sHnbYgl9I\\\",\n  \\\"bronId\\\": \\\"yt-s8sHnbYgl9I\\\",\n  \\\"mode",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$ErrorActionPreference = '\"'Stop'\n\"'$json = @'\"'\n{\n  \\\"videoId\\\": \\\"s8sHnbYgl9I\\\",\n  \\\"bronId\\\": \\\"yt-s8sHnbYgl9I\\\",\n  \\\"mode"
+    ],
+    "bericht": "9 new lessons and 10 additions.",
+    "status": "ok",
+    "modelGemeld": "GPT-6",
+    "nieuw": 9,
+    "aanvullingen": 10,
+    "afgekeurd": [],
+    "gecorrigeerd": 0
+  },
+  {
+    "videoId": "MroBpuVP0mw",
+    "titel": "How to use artillery in Warhammer: The Old World, Dwarf special!",
+    "start": "2026-11-26T02:59:53.667Z",
+    "modus": "uit",
+    "model": "gpt-6.1-sol",
+    "effort": "high",
+    "pogingen": 1,
+    "promptKB": 244,
+    "sec": 284,
+    "exit": 0,
+    "usage": {
+      "input_tokens": 376521,
+      "cached_input_tokens": 308352,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 13122,
+      "reasoning_output_tokens": 2159
+    },
+    "items": {
+      "agent_message": 3,
+      "command_execution": 3
+    },
+    "commandos": [
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/MroBpuVP0mw.fixed.txt' -Raw\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$payload = @'\"'\n{\n  \\\"videoId\\\": \\\"MroBpuVP0mw\\\",\n  \\\"bronId\\\": \\\"yt-MroBpuVP0mw\\\",\n  \\\"model\\\": \\\"GPT-6\\\",\n  \\\"nieuw\\\": [\n  ",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$payload = @'\"'\n{\n  \\\"videoId\\\": \\\"MroBpuVP0mw\\\",\n  \\\"bronId\\\": \\\"yt-MroBpuVP0mw\\\",\n  \\\"model\\\": \\\"GPT-6\\\",\n  \\\"nieuw\\\": [\n  "
+    ],
+    "bericht": "16 new lessons and 3 additions.",
+    "status": "ok",
+    "modelGemeld": "GPT-6",
+    "nieuw": 16,
+    "aanvullingen": 3,
+    "afgekeurd": [],
+    "gecorrigeerd": 0
+  },
+  {
+    "videoId": "fTygcMRbFaM",
+    "titel": "The best way to shut down magic in Warhammer: The Old World and the spells you need to stop!",
+    "start": "2026-11-26T03:04:42.838Z",
+    "modus": "uit",
+    "model": "gpt-6.1-sol",
+    "effort": "high",
+    "pogingen": 1,
+    "promptKB": 248,
+    "sec": 299,
+    "exit": 0,
+    "usage": {
+      "input_tokens": 588322,
+      "cached_input_tokens": 518912,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 13442,
+      "reasoning_output_tokens": 4850
+    },
+    "items": {
+      "agent_message": 4,
+      "command_execution": 4
+    },
+    "commandos": [
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/fTygcMRbFaM.fixed.txt' -Encoding UTF8\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"@'\n{\n  \\\"videoId\\\": \\\"fTygcMRbFaM\\\",\n  \\\"bronId\\\": \\\"yt-fTygcMRbFaM\\\",\n  \\\"model\\\": \\\"gpt-6\\\",\n  \\\"nieuw\\\": [\n    {\n      \\\"i",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$jsonText = @'\"'\n{\n  \\\"videoId\\\": \\\"fTygcMRbFaM\\\",\n  \\\"bronId\\\": \\\"yt-fTygcMRbFaM\\\",\n  \\\"model\\\": \\\"gpt-6\\\",\n  \\\"nieuw\\\": [\n ",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$jsonText = @'\"'\n{\n  \\\"videoId\\\": \\\"fTygcMRbFaM\\\",\n  \\\"bronId\\\": \\\"yt-fTygcMRbFaM\\\",\n  \\\"model\\\": \\\"gpt-6\\\",\n  \\\"nieuw\\\": [\n "
+    ],
+    "bericht": "14 new lessons and 1 addition.",
+    "status": "ok",
+    "modelGemeld": "gpt-6",
+    "nieuw": 14,
+    "aanvullingen": 1,
+    "afgekeurd": [],
+    "gecorrigeerd": 0
+  },
+  {
+    "videoId": "uk32LJ3IFmk",
+    "titel": "My favourite Skirmisher units & Top Tips for making the most of them!",
+    "start": "2026-11-26T03:09:47.178Z",
+    "modus": "uit",
+    "model": "gpt-6.1-sol",
+    "effort": "high",
+    "pogingen": 1,
+    "promptKB": 251,
+    "sec": 189,
+    "exit": 0,
+    "usage": {
+      "input_tokens": 486102,
+      "cached_input_tokens": 412672,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 8024,
+      "reasoning_output_tokens": 3050
+    },
+    "items": {
+      "agent_message": 3,
+      "command_execution": 3
+    },
+    "commandos": [
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/uk32LJ3IFmk.fixed.txt' -Raw\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$queries = @'\"'\n[{\\\"id\\\":\\\"empire-archers-flexible-chaff\\\",\\\"i\\\":0,\\\"quote\\\":\\\"the main example that comes to mind are Empire",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$json = @'\"'\n{\n  \\\"videoId\\\": \\\"uk32LJ3IFmk\\\",\n  \\\"bronId\\\": \\\"yt-uk32LJ3IFmk\\\",\n  \\\"model\\\": \\\"GPT-6\\\",\n  \\\"nieuw\\\": [\n    {"
+    ],
+    "bericht": "17 new lessons and 4 additions.",
+    "status": "ok",
+    "modelGemeld": "GPT-6",
+    "nieuw": 17,
+    "aanvullingen": 4,
+    "afgekeurd": [],
+    "gecorrigeerd": 0
+  },
+  {
+    "videoId": "5k-tmwRyyXo",
+    "titel": "Battlefield 2276: My Tactics to Handle the Competition · Warhammer Tournament Preview",
+    "start": "2026-11-26T03:13:01.105Z",
+    "modus": "uit",
+    "model": "gpt-6.1-sol",
+    "effort": "high",
+    "pogingen": 1,
+    "promptKB": 255,
+    "sec": 285,
+    "exit": 0,
+    "usage": {
+      "input_tokens": 521935,
+      "cached_input_tokens": 422912,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 12815,
+      "reasoning_output_tokens": 5239
+    },
+    "items": {
+      "agent_message": 3,
+      "command_execution": 5
+    },
+    "commandos": [
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/5k-tmwRyyXo.fixed.txt' -Encoding UTF8\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$lines = Get-Content -LiteralPath '\"'tactics/ruw/5k-tmwRyyXo.fixed.txt' -Encoding UTF8; \"'$lines[140..279]'",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$lines = Get-Content -LiteralPath '\"'tactics/ruw/5k-tmwRyyXo.fixed.txt' -Encoding UTF8; \"'$lines[0..139]'",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$lines = Get-Content -LiteralPath '\"'tactics/ruw/5k-tmwRyyXo.fixed.txt' -Encoding UTF8; \"'$lines[280..($lines.Length - 1)]'",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '\n$json = @'\"'\n{\n  \\\"videoId\\\": \\\"5k-tmwRyyXo\\\",\n  \\\"bronId\\\": \\\"yt-5k-tmwRyyXo\\\",\n  \\\"model\\\": \\\"GPT-6\\\",\n  \\\"nieuw\\\": [\n    "
+    ],
+    "bericht": "20 new lessons and 4 additions.",
+    "status": "ok",
+    "modelGemeld": "GPT-6",
+    "nieuw": 20,
+    "aanvullingen": 4,
+    "afgekeurd": [],
+    "gecorrigeerd": 0
+  },
+  {
+    "videoId": "Phr3h58uwoA",
+    "titel": "Vampire Counts: How to MAXIMIZE The Wailing Dirge!",
+    "start": "2026-11-26T03:17:51.319Z",
+    "modus": "uit",
+    "model": "gpt-6.1-sol",
+    "effort": "high",
+    "pogingen": 1,
+    "promptKB": 260,
+    "sec": 168,
+    "exit": 0,
+    "usage": {
+      "input_tokens": 372379,
+      "cached_input_tokens": 304000,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 7199,
+      "reasoning_output_tokens": 2391
+    },
+    "items": {
+      "agent_message": 3,
+      "command_execution": 3
+    },
+    "commandos": [
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/Phr3h58uwoA.fixed.txt' -Encoding UTF8\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$json = @'\"'\n{\n  \\\"videoId\\\": \\\"Phr3h58uwoA\\\",\n  \\\"bronId\\\": \\\"yt-Phr3h58uwoA\\\",\n  \\\"model\\\": \\\"gpt-6\\\",\n  \\\"nieuw\\\": [\n    {",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$json = @'\"'\n{\n  \\\"videoId\\\": \\\"Phr3h58uwoA\\\",\n  \\\"bronId\\\": \\\"yt-Phr3h58uwoA\\\",\n  \\\"model\\\": \\\"gpt-6\\\",\n  \\\"nieuw\\\": [\n    {"
+    ],
+    "bericht": "8 new lessons and 1 addition.",
+    "status": "ok",
+    "modelGemeld": "gpt-6",
+    "nieuw": 8,
+    "aanvullingen": 1,
+    "afgekeurd": [],
+    "gecorrigeerd": 0
+  },
+  {
+    "videoId": "JTo78ilRKYo",
+    "titel": "Maximize Your Fanatics with These 5 Pro Tips!",
+    "start": "2026-11-26T03:20:44.807Z",
+    "modus": "uit",
+    "model": "gpt-6.1-sol",
+    "effort": "high",
+    "pogingen": 1,
+    "promptKB": 262,
+    "sec": 202,
+    "exit": 0,
+    "usage": {
+      "input_tokens": 678027,
+      "cached_input_tokens": 596224,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 8284,
+      "reasoning_output_tokens": 2815
+    },
+    "items": {
+      "agent_message": 3,
+      "command_execution": 5
+    },
+    "commandos": [
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/JTo78ilRKYo.fixed.txt' -Encoding UTF8\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$jsonText = @'\"'\n{\n  \\\"videoId\\\": \\\"JTo78ilRKYo\\\",\n  \\\"bronId\\\": \\\"yt-JTo78ilRKYo\\\",\n  \\\"model\\\": \\\"GPT-6\\\",\n  \\\"nieuw\\\": [\n ",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$jsonText = @'\"'\n{\n  \\\"videoId\\\": \\\"JTo78ilRKYo\\\",\n  \\\"bronId\\\": \\\"yt-JTo78ilRKYo\\\",\n  \\\"model\\\": \\\"GPT-6\\\",\n  \\\"nieuw\\\": [\n ",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$jsonText = @'\"'\n{\n  \\\"videoId\\\": \\\"JTo78ilRKYo\\\",\n  \\\"bronId\\\": \\\"yt-JTo78ilRKYo\\\",\n  \\\"model\\\": \\\"GPT-6\\\",\n  \\\"nieuw\\\": [\n ",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$jsonText = @'\"'\n{\n  \\\"videoId\\\": \\\"JTo78ilRKYo\\\",\n  \\\"bronId\\\": \\\"yt-JTo78ilRKYo\\\",\n  \\\"model\\\": \\\"GPT-6\\\",\n  \\\"nieuw\\\": [\n "
+    ],
+    "bericht": "9 new lessons and 2 additions.",
+    "status": "ok",
+    "modelGemeld": "GPT-6",
+    "nieuw": 9,
+    "aanvullingen": 2,
+    "afgekeurd": [],
+    "gecorrigeerd": 0
+  },
+  {
+    "videoId": "Ar1ToulmI5U",
+    "titel": "Never Miss Again! A Beginners Guide on How to Use Cannons!",
+    "start": "2026-11-26T03:24:12.520Z",
+    "modus": "uit",
+    "model": "gpt-6.1-sol",
+    "effort": "high",
+    "pogingen": 1,
+    "promptKB": 265,
+    "sec": 180,
+    "exit": 0,
+    "usage": {
+      "input_tokens": 599061,
+      "cached_input_tokens": 523648,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 7236,
+      "reasoning_output_tokens": 2100
+    },
+    "items": {
+      "agent_message": 3,
+      "command_execution": 5
+    },
+    "commandos": [
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/Ar1ToulmI5U.fixed.txt' -Encoding UTF8\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$payload = @'\"'\n{\n  \\\"videoId\\\": \\\"Ar1ToulmI5U\\\",\n  \\\"bronId\\\": \\\"yt-Ar1ToulmI5U\\\",\n  \\\"model\\\": \\\"gpt-6\\\",\n  \\\"nieuw\\\": [\n  ",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$payload = @'\"'\n{\n  \\\"videoId\\\": \\\"Ar1ToulmI5U\\\",\n  \\\"bronId\\\": \\\"yt-Ar1ToulmI5U\\\",\n  \\\"model\\\": \\\"gpt-6\\\",\n  \\\"nieuw\\\": [\n  ",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$payload = @'\"'\n{\n  \\\"videoId\\\": \\\"Ar1ToulmI5U\\\",\n  \\\"bronId\\\": \\\"yt-Ar1ToulmI5U\\\",\n  \\\"model\\\": \\\"gpt-6\\\",\n  \\\"nieuw\\\": [\n  ",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$payload = @'\"'\n{\n  \\\"videoId\\\": \\\"Ar1ToulmI5U\\\",\n  \\\"bronId\\\": \\\"yt-Ar1ToulmI5U\\\",\n  \\\"model\\\": \\\"gpt-6\\\",\n  \\\"nieuw\\\": [\n  "
+    ],
+    "bericht": "4 new lessons and 3 additions.",
+    "status": "ok",
+    "modelGemeld": "gpt-6",
+    "nieuw": 4,
+    "aanvullingen": 3,
+    "afgekeurd": [],
+    "gecorrigeerd": 1
+  },
+  {
+    "videoId": "kCsDny5qMww",
+    "titel": "My tips on target prioritisation for cannon",
+    "start": "2026-11-26T03:27:17.746Z",
+    "modus": "uit",
+    "model": "gpt-6.1-sol",
+    "effort": "high",
+    "pogingen": 1,
+    "promptKB": 266,
+    "sec": 254,
+    "exit": 0,
+    "usage": {
+      "input_tokens": 480719,
+      "cached_input_tokens": 410752,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 11272,
+      "reasoning_output_tokens": 2075
+    },
+    "items": {
+      "agent_message": 3,
+      "command_execution": 4
+    },
+    "commandos": [
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/kCsDny5qMww.fixed.txt' -Encoding UTF8\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$json = @'\"'\n{\n  \\\"videoId\\\": \\\"kCsDny5qMww\\\",\n  \\\"bronId\\\": \\\"yt-kCsDny5qMww\\\",\n  \\\"model\\\": \\\"gpt-6\\\",\n  \\\"nieuw\\\": [\n    {",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$json = @'\"'\n{\n  \\\"videoId\\\": \\\"kCsDny5qMww\\\",\n  \\\"bronId\\\": \\\"yt-kCsDny5qMww\\\",\n  \\\"model\\\": \\\"gpt-6\\\",\n  \\\"nieuw\\\": [\n    {",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$json = @'\"'\n{\n  \\\"videoId\\\": \\\"kCsDny5qMww\\\",\n  \\\"bronId\\\": \\\"yt-kCsDny5qMww\\\",\n  \\\"model\\\": \\\"gpt-6\\\",\n  \\\"nieuw\\\": [\n    {"
+    ],
+    "bericht": "7 new lessons, 2 additions.",
+    "status": "ok",
+    "modelGemeld": "gpt-6",
+    "nieuw": 7,
+    "aanvullingen": 2,
+    "afgekeurd": [],
+    "gecorrigeerd": 0
+  },
+  {
+    "videoId": "hE0mBMOwDps",
+    "titel": "How to Slay the Dragon?",
+    "start": "2026-11-26T03:31:36.892Z",
+    "modus": "uit",
+    "model": "gpt-6.1-sol",
+    "effort": "high",
+    "pogingen": 1,
+    "promptKB": 267,
+    "sec": 727,
+    "exit": 0,
+    "usage": {
+      "input_tokens": 1160345,
+      "cached_input_tokens": 1059968,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 17021,
+      "reasoning_output_tokens": 6587
+    },
+    "items": {
+      "agent_message": 4,
+      "command_execution": 9
+    },
+    "commandos": [
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/hE0mBMOwDps.fixed.txt' -Encoding UTF8\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/hE0mBMOwDps.fixed.txt' -Encoding UTF8 | Select-Object -Skip 145 -First 205\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/hE0mBMOwDps.fixed.txt' -Encoding UTF8 | Select-Object -Skip 350 -First 82\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$json = @'\"'\n{\n  \\\"videoId\\\": \\\"hE0mBMOwDps\\\",\n  \\\"bronId\\\": \\\"yt-hE0mBMOwDps\\\",\n  \\\"model\\\": \\\"gpt-6\\\",\n  \\\"nieuw\\\": [\n    {",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$json = @'\"'\n{\n  \\\"videoId\\\": \\\"hE0mBMOwDps\\\",\n  \\\"bronId\\\": \\\"yt-hE0mBMOwDps\\\",\n  \\\"model\\\": \\\"gpt-6\\\",\n  \\\"nieuw\\\": [\n    {",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$json = @'\"'\n{\n  \\\"videoId\\\": \\\"hE0mBMOwDps\\\",\n  \\\"bronId\\\": \\\"yt-hE0mBMOwDps\\\",\n  \\\"model\\\": \\\"gpt-6\\\",\n  \\\"nieuw\\\": [\n    {",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"rg -n -C 2 'scorpions|providing|focus on the rest|feed him a champ|go death star|counter targets' 'tactics/ruw/hE0mBMOwDps.fi",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Select-String -LiteralPath 'tactics/ruw/hE0mBMOwDps.fixed.txt' -Pattern 'scorpions|providing|focus on the rest|feed him a cha",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$json = @'\"'\n{\n  \\\"videoId\\\": \\\"hE0mBMOwDps\\\",\n  \\\"bronId\\\": \\\"yt-hE0mBMOwDps\\\",\n  \\\"model\\\": \\\"gpt-6\\\",\n  \\\"nieuw\\\": [\n    {"
+    ],
+    "bericht": "12 new lessons and 8 additions.",
+    "status": "ok",
+    "modelGemeld": "gpt-6",
+    "nieuw": 12,
+    "aanvullingen": 8,
+    "afgekeurd": [],
+    "gecorrigeerd": 0
+  },
+  {
+    "videoId": "Ftf4_HWNOc8",
+    "titel": "Why Always Be Charging is the wrong ABC",
+    "start": "2026-11-26T03:43:49.614Z",
+    "modus": "uit",
+    "model": "gpt-6.1-sol",
+    "effort": "high",
+    "pogingen": 1,
+    "promptKB": 270,
+    "sec": 95,
+    "exit": 0,
+    "usage": {
+      "input_tokens": 280461,
+      "cached_input_tokens": 210176,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 3810,
+      "reasoning_output_tokens": 2033
+    },
+    "items": {
+      "agent_message": 3,
+      "command_execution": 2
+    },
+    "commandos": [
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/Ftf4_HWNOc8.fixed.txt' -Encoding UTF8\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$json = @'\"'\n{\n  \\\"videoId\\\": \\\"Ftf4_HWNOc8\\\",\n  \\\"bronId\\\": \\\"yt-Ftf4_HWNOc8\\\",\n  \\\"model\\\": \\\"GPT-6\\\",\n  \\\"nieuw\\\": [\n    {"
+    ],
+    "bericht": "1 new lesson, 4 additions.",
+    "status": "ok",
+    "modelGemeld": "GPT-6",
+    "nieuw": 1,
+    "aanvullingen": 4,
+    "afgekeurd": [],
+    "gecorrigeerd": 0
+  },
+  {
+    "videoId": "63MNI72v6u8",
+    "titel": "Warhammer Old World - Leadership and Terror Bombs with Tomb Kings",
+    "start": "2026-11-26T03:45:29.895Z",
+    "modus": "uit",
+    "model": "gpt-6.1-sol",
+    "effort": "high",
+    "pogingen": 1,
+    "promptKB": 271,
+    "sec": 169,
+    "exit": 0,
+    "usage": {
+      "input_tokens": 581068,
+      "cached_input_tokens": 498048,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 6707,
+      "reasoning_output_tokens": 1818
+    },
+    "items": {
+      "agent_message": 3,
+      "command_execution": 5
+    },
+    "commandos": [
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/63MNI72v6u8.fixed.txt' -Encoding UTF8\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"@'\nimport json\nfrom pathlib import Path\n\nresult = {\n    'videoId': '63MNI72v6u8',\n    'bronId': 'yt-63MNI72v6u8',\n    'model'",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$payload = @'\"'\n{\n  \\\"videoId\\\": \\\"63MNI72v6u8\\\",\n  \\\"bronId\\\": \\\"yt-63MNI72v6u8\\\",\n  \\\"model\\\": \\\"GPT-6\\\",\n  \\\"nieuw\\\": [\n  ",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/63MNI72v6u8.fixed.txt' -Encoding UTF8 | Select-String -Pattern '\"'^'\"\\\\[(7:47|7:54|9:03",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$payload = @'\"'\n{\n  \\\"videoId\\\": \\\"63MNI72v6u8\\\",\n  \\\"bronId\\\": \\\"yt-63MNI72v6u8\\\",\n  \\\"model\\\": \\\"GPT-6\\\",\n  \\\"nieuw\\\": [\n  "
+    ],
+    "bericht": "3 new lessons, 1 addition.",
+    "status": "ok",
+    "modelGemeld": "GPT-6",
+    "nieuw": 3,
+    "aanvullingen": 1,
+    "afgekeurd": [],
+    "gecorrigeerd": 0
+  },
+  {
+    "videoId": "R4ecNys5jQQ",
+    "titel": "Playing Lizardmen Well (What You Can Control)",
+    "start": "2026-11-26T03:48:24.408Z",
+    "modus": "uit",
+    "model": "gpt-6.1-sol",
+    "effort": "high",
+    "pogingen": 1,
+    "promptKB": 271,
+    "sec": 274,
+    "exit": 0,
+    "usage": {
+      "input_tokens": 401182,
+      "cached_input_tokens": 327168,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 12495,
+      "reasoning_output_tokens": 4617
+    },
+    "items": {
+      "agent_message": 3,
+      "command_execution": 3
+    },
+    "commandos": [
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/R4ecNys5jQQ.fixed.txt' -Encoding UTF8\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$lessonJson = @'\"'\n{\n  \\\"videoId\\\": \\\"R4ecNys5jQQ\\\",\n  \\\"bronId\\\": \\\"yt-R4ecNys5jQQ\\\",\n  \\\"model\\\": \\\"GPT-6\\\",\n  \\\"nieuw\\\": [",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$lessonJson = @'\"'\n{\n  \\\"videoId\\\": \\\"R4ecNys5jQQ\\\",\n  \\\"bronId\\\": \\\"yt-R4ecNys5jQQ\\\",\n  \\\"model\\\": \\\"GPT-6\\\",\n  \\\"nieuw\\\": ["
+    ],
+    "bericht": "11 new lessons and 4 additions.",
+    "status": "ok",
+    "modelGemeld": "GPT-6",
+    "nieuw": 11,
+    "aanvullingen": 4,
+    "afgekeurd": [],
+    "gecorrigeerd": 0
+  },
+  {
+    "videoId": "75ljIvwKYEM",
+    "titel": "The Dirty Tricks That Make Skaven So Good",
+    "start": "2026-11-26T03:53:03.244Z",
+    "modus": "uit",
+    "model": "gpt-6.1-sol",
+    "effort": "high",
+    "pogingen": 1,
+    "promptKB": 274,
+    "sec": 123,
+    "exit": 0,
+    "usage": {
+      "input_tokens": 290765,
+      "cached_input_tokens": 216448,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 5425,
+      "reasoning_output_tokens": 2866
+    },
+    "items": {
+      "agent_message": 3,
+      "command_execution": 2
+    },
+    "commandos": [
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/75ljIvwKYEM.fixed.txt' -Encoding UTF8\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"@'\n{\n  \\\"videoId\\\": \\\"75ljIvwKYEM\\\",\n  \\\"bronId\\\": \\\"yt-75ljIvwKYEM\\\",\n  \\\"model\\\": \\\"gpt-6\\\",\n  \\\"nieuw\\\": [\n    {\n      \\\"i"
+    ],
+    "bericht": "5 new lessons and 4 additions.",
+    "status": "ok",
+    "modelGemeld": "gpt-6",
+    "nieuw": 5,
+    "aanvullingen": 4,
+    "afgekeurd": [],
+    "gecorrigeerd": 0
+  },
+  {
+    "videoId": "PwNtHvZi7fg",
+    "titel": "3 Ways to help you WIN with Wood Elves",
+    "start": "2026-11-26T03:55:11.918Z",
+    "modus": "uit",
+    "model": "gpt-6.1-sol",
+    "effort": "high",
+    "pogingen": 1,
+    "promptKB": 275,
+    "sec": 267,
+    "exit": 0,
+    "usage": {
+      "input_tokens": 627662,
+      "cached_input_tokens": 550912,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 11347,
+      "reasoning_output_tokens": 4408
+    },
+    "items": {
+      "agent_message": 3,
+      "command_execution": 5
+    },
+    "commandos": [
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/PwNtHvZi7fg.fixed.txt' -Encoding UTF8\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"@'\n\nimport json,re\nfrom pathlib import Path\ndata=json.loads(r'''{\\\"videoId\\\":\\\"PwNtHvZi7fg\\\",\\\"bronId\\\":\\\"yt-PwNtHvZi7fg\\\",\\\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$taskJson = @'\"'\n{\n  \\\"videoId\\\": \\\"PwNtHvZi7fg\\\",\n  \\\"bronId\\\": \\\"yt-PwNtHvZi7fg\\\",\n  \\\"model\\\": \\\"GPT-6\\\",\n  \\\"nieuw\\\": [\n ",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$taskJson = @'\"'\n{\n  \\\"videoId\\\": \\\"PwNtHvZi7fg\\\",\n  \\\"bronId\\\": \\\"yt-PwNtHvZi7fg\\\",\n  \\\"model\\\": \\\"GPT-6\\\",\n  \\\"nieuw\\\": [\n ",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$taskJson = @'\"'\n{\n  \\\"videoId\\\": \\\"PwNtHvZi7fg\\\",\n  \\\"bronId\\\": \\\"yt-PwNtHvZi7fg\\\",\n  \\\"model\\\": \\\"GPT-6\\\",\n  \\\"nieuw\\\": [\n "
+    ],
+    "bericht": "14 new lessons, 5 additions.",
+    "status": "ok",
+    "modelGemeld": "GPT-6",
+    "nieuw": 14,
+    "aanvullingen": 5,
+    "afgekeurd": [],
+    "gecorrigeerd": 0
+  },
+  {
+    "videoId": "dgGjcl0trpA",
+    "titel": "The Six WORST Beginner Mistakes for Wood Elves",
+    "start": "2026-11-26T03:59:43.960Z",
+    "modus": "uit",
+    "model": "gpt-6.1-sol",
+    "effort": "high",
+    "pogingen": 1,
+    "promptKB": 279,
+    "sec": 151,
+    "exit": 0,
+    "usage": {
+      "input_tokens": 296639,
+      "cached_input_tokens": 210048,
+      "cache_write_input_tokens": 0,
+      "output_tokens": 6670,
+      "reasoning_output_tokens": 3699
+    },
+    "items": {
+      "agent_message": 3,
+      "command_execution": 2
+    },
+    "commandos": [
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command \"Get-Content -LiteralPath 'tactics/ruw/dgGjcl0trpA.fixed.txt' -Encoding UTF8\"",
+      "\"C:\\\\Windows\\\\System32\\\\WindowsPowerShell\\\\v1.0\\\\powershell.exe\" -Command '$jsonText = @'\"'\n{\n  \\\"videoId\\\": \\\"dgGjcl0trpA\\\",\n  \\\"bronId\\\": \\\"yt-dgGjcl0trpA\\\",\n  \\\"model\\\": \\\"gpt-6\\\",\n  \\\"nieuw\\\": [\n "
+    ],
+    "bericht": "5 new lessons and 8 additions.",
+    "status": "ok",
+    "modelGemeld": "gpt-6",
+    "nieuw": 5,
+    "aanvullingen": 8,
+    "afgekeurd": [],
+    "gecorrigeerd": 1
   }
 ]

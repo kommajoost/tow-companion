@@ -1,0 +1,681 @@
+{
+  "videoId": "uk32LJ3IFmk",
+  "bronId": "yt-uk32LJ3IFmk",
+  "model": "GPT-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-26T03:12:56.093Z",
+  "nieuw": [
+    {
+      "id": "empire-archers-flexible-chaff",
+      "titel": "Consider Empire Archers for versatile cheap chaff",
+      "tekst": "Consider Empire Archers as cheap skirmishing chaff for movement blocking, frenzy baiting and dealing with enemy chaff. If a suitable opportunity appears, they can also charge war machine crews to stop them shooting.",
+      "waarom": "He rates their flexibility, Scout and the shooting penalty they impose on ballistic-skill attacks.",
+      "voorbeeld": null,
+      "wanneerNiet": "He cautions that they may not win against war machine crews, particularly Dwarfs.",
+      "fase": "army-building",
+      "themas": [
+        "chaff"
+      ],
+      "subthemas": [
+        "choosing-chaff"
+      ],
+      "tags": [
+        "skirmishers",
+        "scouts",
+        "redirect",
+        "bait"
+      ],
+      "leger": "empire-of-man",
+      "units": [
+        "Empire Archers"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-uk32LJ3IFmk",
+          "url": "https://www.youtube.com/watch?v=uk32LJ3IFmk&t=66s",
+          "tijd": 69,
+          "citaat": "the main example that comes to mind are Empire Archers.",
+          "extraCitaten": [
+            {
+              "tijd": 80,
+              "citaat": "You can use them as move blocking. You can use them for frenzy baiting."
+            }
+          ]
+        }
+      ],
+      "datum": "2024-09-19",
+      "markeringen": []
+    },
+    {
+      "id": "pegasus-avoid-stretched-formations",
+      "titel": "Avoid stretching Pegasus Knights before long charges",
+      "tekst": "Keep Pegasus Knights from becoming too spread out and avoid very long charges when models might fail to form up.",
+      "waarom": "He says models that cannot get into formation are removed under the FAQ he discusses, which risks losing expensive Pegasus Knights.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "movement"
+      ],
+      "subthemas": [
+        "charge-setup"
+      ],
+      "tags": [
+        "skirmishers",
+        "charge-range",
+        "alignment"
+      ],
+      "leger": "kingdom-of-bretonnia",
+      "units": [
+        "Pegasus Knights"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-uk32LJ3IFmk",
+          "url": "https://www.youtube.com/watch?v=uk32LJ3IFmk&t=173s",
+          "tijd": 176,
+          "citaat": "don't go for really long charges"
+        }
+      ],
+      "datum": "2024-09-19",
+      "markeringen": []
+    },
+    {
+      "id": "khorne-furies-melee-skirmishers",
+      "titel": "Consider Khorne Furies as inexpensive melee skirmishers",
+      "tekst": "Consider Chaos Furies with the Mark of Khorne for a cheap melee skirmishing unit.",
+      "waarom": "He values their two Strength 5, AP1 attacks with Furious Charge and their conditional five-plus ward save against non-magical attacks.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "hammers"
+      ],
+      "subthemas": [
+        "hammer-basics"
+      ],
+      "tags": [
+        "skirmishers",
+        "armour-piercing",
+        "ward-save"
+      ],
+      "leger": "daemons-of-chaos",
+      "units": [
+        "Chaos Furies"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-uk32LJ3IFmk",
+          "url": "https://www.youtube.com/watch?v=uk32LJ3IFmk&t=201s",
+          "tijd": 204,
+          "citaat": "It's just a real beater of a unit for not very many points."
+        }
+      ],
+      "datum": "2024-09-19",
+      "markeringen": []
+    },
+    {
+      "id": "melee-skirmishers-value-swiftstride",
+      "titel": "Prefer Swiftstride on melee skirmishers",
+      "tekst": "When choosing skirmishers for melee, he ideally wants Swiftstride to exploit their all-round line of sight.",
+      "waarom": "He says the extra charge capability makes more of their better line of sight.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "hammers"
+      ],
+      "subthemas": [
+        "hammer-basics"
+      ],
+      "tags": [
+        "skirmishers",
+        "swiftstride",
+        "charge-arc"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-uk32LJ3IFmk",
+          "url": "https://www.youtube.com/watch?v=uk32LJ3IFmk&t=208s",
+          "tijd": 211,
+          "citaat": "ideally I want to be looking at something that has swift strike."
+        }
+      ],
+      "datum": "2024-09-19",
+      "markeringen": []
+    },
+    {
+      "id": "skirmisher-charges-wide-frontage",
+      "titel": "Avoid skirmisher charges that produce a narrow fighting rank",
+      "tekst": "Avoid charges with melee skirmishers when too few models can reach the front rank. Check how many models can form up before committing.",
+      "waarom": "He says a long, stretched unit may get only its first two models into contact while the others form behind them, leaving it facing attacks from the opponent's full front rank.",
+      "voorbeeld": null,
+      "wanneerNiet": "He says smaller units are less likely to encounter this problem.",
+      "fase": "movement",
+      "themas": [
+        "movement"
+      ],
+      "subthemas": [
+        "charge-setup"
+      ],
+      "tags": [
+        "skirmishers",
+        "alignment",
+        "charge-range"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-uk32LJ3IFmk",
+          "url": "https://www.youtube.com/watch?v=uk32LJ3IFmk&t=246s",
+          "tijd": 249,
+          "citaat": "try not to take charges where you're unlikely to get multiple models ranked up",
+          "extraCitaten": [
+            {
+              "tijd": 266,
+              "citaat": "if you can't get a wide front rank into combat"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-09-19",
+      "markeringen": []
+    },
+    {
+      "id": "shooting-skirmishers-accuracy-poison",
+      "titel": "Look for accuracy or poison in shooting skirmishers",
+      "tekst": "When choosing shooting skirmishers, look for high Ballistic Skill or poisoned attacks.",
+      "waarom": "He describes these as the two main qualities he looks for in a skirmishing shooting unit.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "missile-units"
+      ],
+      "tags": [
+        "skirmishers",
+        "missile-troops",
+        "poison"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-uk32LJ3IFmk",
+          "url": "https://www.youtube.com/watch?v=uk32LJ3IFmk&t=343s",
+          "tijd": 346,
+          "citaat": "either giving you high ballistic skill shooting or poison."
+        }
+      ],
+      "datum": "2024-09-19",
+      "markeringen": []
+    },
+    {
+      "id": "skirmishing-shooters-quick-shot",
+      "titel": "Value Quick Shot weapons on shooting skirmishers",
+      "tekst": "Take a Quick Shot shooting weapon on skirmishers when the option is available.",
+      "waarom": "He expects them eventually to be charged despite efforts to avoid it. He also values the shooting output when moving: he contrasts Rangers' crossbow penalties with throwing axes firing at their native Ballistic Skill.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "evasive-skirmish"
+      ],
+      "tags": [
+        "skirmishers",
+        "missile-troops",
+        "stand-and-shoot",
+        "hit-penalties"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-uk32LJ3IFmk",
+          "url": "https://www.youtube.com/watch?v=uk32LJ3IFmk&t=389s",
+          "tijd": 392,
+          "citaat": "skirmishing unit is a quick shot shooting weapon.",
+          "extraCitaten": [
+            {
+              "tijd": 401,
+              "citaat": "So, having a quick shot weapon is really nice."
+            }
+          ]
+        }
+      ],
+      "datum": "2024-09-19",
+      "markeringen": []
+    },
+    {
+      "id": "gutter-runners-always-poison",
+      "titel": "Always buy poison for Gutter Runners",
+      "tekst": "He recommends always buying the poison upgrade for Gutter Runners.",
+      "waarom": null,
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "missile-units"
+      ],
+      "tags": [
+        "poison",
+        "skirmishers",
+        "missile-troops"
+      ],
+      "leger": "skaven",
+      "units": [
+        "Gutter Runners"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-uk32LJ3IFmk",
+          "url": "https://www.youtube.com/watch?v=uk32LJ3IFmk&t=513s",
+          "tijd": 516,
+          "citaat": "you can buy poison as an upgrade. You will do that every time."
+        }
+      ],
+      "datum": "2024-09-19",
+      "markeringen": []
+    },
+    {
+      "id": "gutter-runners-weapon-role",
+      "titel": "Match Gutter Runner weapons to their role",
+      "tekst": "Use throwing weapons for more aggressive Gutter Runners, accepting their shorter range so they can march and shoot. He prefers slings for unsupported units.",
+      "waarom": "He values the flexibility of the slings' 18-inch range and multiple shots.",
+      "voorbeeld": null,
+      "wanneerNiet": "He notes that slings will probably suffer shooting penalties, especially after moving.",
+      "fase": "army-building",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "missile-units"
+      ],
+      "tags": [
+        "skirmishers",
+        "missile-troops",
+        "hit-penalties"
+      ],
+      "leger": "skaven",
+      "units": [
+        "Gutter Runners"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-uk32LJ3IFmk",
+          "url": "https://www.youtube.com/watch?v=uk32LJ3IFmk&t=517s",
+          "tijd": 520,
+          "citaat": "Throwing weapons if you want to be more aggressive",
+          "extraCitaten": [
+            {
+              "tijd": 528,
+              "citaat": "I like them for the the unsupported units."
+            }
+          ]
+        }
+      ],
+      "datum": "2024-09-19",
+      "markeringen": []
+    },
+    {
+      "id": "deepwood-scouts-leading-skirmishers",
+      "titel": "Consider Deepwood Scouts as a leading skirmisher choice",
+      "tekst": "He considers Deepwood Scouts probably the best skirmishing unit in the game.",
+      "waarom": "He values their Ballistic Skill 4, movement, Evasive and long bow range. He also likes that they fill core without taking points away from other choices.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "evasive-skirmish"
+      ],
+      "tags": [
+        "skirmishers",
+        "evasive",
+        "missile-troops"
+      ],
+      "leger": "wood-elf-realms",
+      "units": [
+        "Deepwood Scouts"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-uk32LJ3IFmk",
+          "url": "https://www.youtube.com/watch?v=uk32LJ3IFmk&t=540s",
+          "tijd": 543,
+          "citaat": "I think this is probably the best skirmishing unit in the game, Deepwood Scouts."
+        }
+      ],
+      "datum": "2024-09-19",
+      "markeringen": []
+    },
+    {
+      "id": "deepwood-scouts-hagbane-default",
+      "titel": "Give Deepwood Scouts Hagbane Tips",
+      "tekst": "He recommends taking the poisoned shots from Hagbane Tips on Deepwood Scouts every time rather than choosing other magic arrows.",
+      "waarom": "He calls the two-point-per-model upgrade an absolute bargain.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "missile-units"
+      ],
+      "tags": [
+        "poison",
+        "skirmishers",
+        "missile-troops"
+      ],
+      "leger": "wood-elf-realms",
+      "units": [
+        "Deepwood Scouts"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-uk32LJ3IFmk",
+          "url": "https://www.youtube.com/watch?v=uk32LJ3IFmk&t=566s",
+          "tijd": 569,
+          "citaat": "you take the poison shots every time. Two points a model."
+        }
+      ],
+      "datum": "2024-09-19",
+      "markeringen": []
+    },
+    {
+      "id": "woods-stack-skirmisher-shooting-defence",
+      "titel": "Put shooting skirmishers in woods to stack hit penalties",
+      "tekst": "Use woods to combine cover with skirmishers' inherent penalty against ballistic-skill shooting. He recommends this protection even for bow skirmishers without Evasive.",
+      "waarom": "He says this gives a minus-two penalty to incoming shooting while a unit chosen for shooting is likely to have better Ballistic Skill itself.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "avoiding-fire"
+      ],
+      "tags": [
+        "skirmishers",
+        "woods",
+        "cover",
+        "hit-penalties"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-uk32LJ3IFmk",
+          "url": "https://www.youtube.com/watch?v=uk32LJ3IFmk&t=667s",
+          "tijd": 670,
+          "citaat": "if you put a skirmishing unit with bows in a wood",
+          "extraCitaten": [
+            {
+              "tijd": 670,
+              "citaat": "you're going to be at minus two to be shot back"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-09-19",
+      "markeringen": []
+    },
+    {
+      "id": "crossfire-constrains-evasive-retreats",
+      "titel": "Use crossfire to constrain Evasive retreats",
+      "tekst": "Spread shooting units so that an Evasive retreat away from one does not also escape the others, and may move the target closer to them. Choose the firing order with that retreat direction in mind.",
+      "waarom": "He says shooting from the wrong unit first can let the target retreat out of range of every shooter.",
+      "voorbeeld": "He says fast Gyrocopters in an opposing skirmisher-heavy army caused him problems this way at a recent event.",
+      "wanneerNiet": "He stresses that the right sequence depends on the angles and positions on the tabletop.",
+      "fase": "magic-shooting",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "target-priority"
+      ],
+      "tags": [
+        "evasive",
+        "missile-troops",
+        "flanks"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-uk32LJ3IFmk",
+          "url": "https://www.youtube.com/watch?v=uk32LJ3IFmk&t=857s",
+          "tijd": 860,
+          "citaat": "they're actually moving closer towards the other units or they're not moving away.",
+          "extraCitaten": [
+            {
+              "tijd": 868,
+              "citaat": "I need to order in this way"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-09-19",
+      "markeringen": []
+    },
+    {
+      "id": "evasive-retreat-board-edge-pressure",
+      "titel": "Threaten Evasive units with retreats towards the board edge",
+      "tekst": "Position a shooting unit so that an Evasive target would retreat towards a nearby board edge. Make it choose between taking the shots and risking leaving the table.",
+      "waarom": "He says a Fall Back in Good Order can still be fatal when the retreat carries the unit off the board.",
+      "voorbeeld": "He describes opponents targeting his unit when it was five and a half inches from the edge, forcing him to choose between heavy shooting and a risky retreat.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "evasive-skirmish"
+      ],
+      "tags": [
+        "evasive",
+        "board-edge",
+        "fall-back"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-uk32LJ3IFmk",
+          "url": "https://www.youtube.com/watch?v=uk32LJ3IFmk&t=941s",
+          "tijd": 944,
+          "citaat": "they're going to go in the direction of a board edge.",
+          "extraCitaten": [
+            {
+              "tijd": 960,
+              "citaat": "that can be a death sentence for a unit."
+            }
+          ]
+        }
+      ],
+      "datum": "2024-09-19",
+      "markeringen": []
+    },
+    {
+      "id": "compact-five-model-skirmisher-groups",
+      "titel": "Arrange mobile shooting skirmishers in compact five-model groups",
+      "tekst": "Use compact five-model triangular groups to arrange shooting skirmishers with clear firing lanes. Adjust the groups to widen or narrow the shooting angles while keeping the unit's footprint small.",
+      "waarom": "He says this reduces frontage, avoids models giving the enemy cover through obstructed sight, and makes moving a large unit more efficient.",
+      "voorbeeld": "He describes using three five-model groups and five loose models in a unit of twenty, with the loose models filling gaps.",
+      "wanneerNiet": "He particularly recommends this for larger units that do not mind moving and shooting; he says it is less important for smaller units.",
+      "fase": "movement",
+      "themas": [
+        "shooting-terrain",
+        "movement"
+      ],
+      "subthemas": [
+        "evasive-skirmish",
+        "reforms-formations"
+      ],
+      "tags": [
+        "skirmishers",
+        "line-of-sight",
+        "cover",
+        "missile-troops"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-uk32LJ3IFmk",
+          "url": "https://www.youtube.com/watch?v=uk32LJ3IFmk&t=1143s",
+          "tijd": 1146,
+          "citaat": "You've got these nice little five model triangles.",
+          "extraCitaten": [
+            {
+              "tijd": 1221,
+              "citaat": "if you've got a unit that doesn't mind moving and shooting"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-09-19",
+      "markeringen": []
+    },
+    {
+      "id": "rangers-consider-open-order",
+      "titel": "Consider Open Order for Rangers",
+      "tekst": "Consider running Rangers in Open Order rather than Skirmish. He would probably use Open Order for a small unit of five.",
+      "waarom": "He warns that Rangers' low movement can prevent distant models forming up when one end is charged, causing those models to be lost under the FAQ he discusses.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "infantry"
+      ],
+      "subthemas": [
+        "unit-builds"
+      ],
+      "tags": [
+        "open-order",
+        "skirmishers",
+        "alignment"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [
+        "Rangers"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-uk32LJ3IFmk",
+          "url": "https://www.youtube.com/watch?v=uk32LJ3IFmk&t=1290s",
+          "tijd": 1293,
+          "citaat": "five dwarf ranges, I'd probably just put them in open order"
+        }
+      ],
+      "datum": "2024-09-19",
+      "markeringen": []
+    },
+    {
+      "id": "offset-skirmisher-centre-charge-bait",
+      "titel": "Offset skirmisher bait to lengthen the charger's wheel",
+      "tekst": "To bait a ranked unit, leave only the furthest skirmisher visible at the edge of its charge arc, with the unit's centre further around its flank. Flee away from the enemy's centre so the charger must wheel further to follow.",
+      "waarom": "He says the extra wheel can help the skirmishers escape and leave the charger substantially further out of position.",
+      "voorbeeld": null,
+      "wanneerNiet": "He cautions that skirmisher redirection requires careful positioning because caught skirmishers form up against the charger rather than making it change facing.",
+      "fase": "movement",
+      "themas": [
+        "chaff",
+        "movement"
+      ],
+      "subthemas": [
+        "decoys-bait",
+        "fleeing"
+      ],
+      "tags": [
+        "skirmishers",
+        "bait",
+        "flee",
+        "wheel",
+        "charge-arc"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-uk32LJ3IFmk",
+          "url": "https://www.youtube.com/watch?v=uk32LJ3IFmk&t=1583s",
+          "tijd": 1586,
+          "citaat": "have one model, the furthest away model in the the arc of sight",
+          "extraCitaten": [
+            {
+              "tijd": 1594,
+              "citaat": "have the center of the unit as far out of their wheel as possible"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-09-19",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "chaff-under-100-points",
+      "bron": {
+        "bronId": "yt-uk32LJ3IFmk",
+        "url": "https://www.youtube.com/watch?v=uk32LJ3IFmk&t=66s",
+        "tijd": 69,
+        "citaat": "typically, you're looking at spending somewhere between 40 and 50 points."
+      },
+      "toelichting": "He repeats the recommendation to keep sacrificial chaff cheap, giving 40–50 points as his ideal."
+    },
+    {
+      "lesId": "evasive-retreat-behind-hill",
+      "bron": {
+        "bronId": "yt-uk32LJ3IFmk",
+        "url": "https://www.youtube.com/watch?v=uk32LJ3IFmk&t=737s",
+        "tijd": 740,
+        "citaat": "that means that you're now out of the wood."
+      },
+      "toelichting": "He recommends using an Evasive retreat to break line of sight behind terrain, illustrating it with the edge of a wood."
+    },
+    {
+      "lesId": "evasive-limit-fireball-reach",
+      "bron": {
+        "bronId": "yt-uk32LJ3IFmk",
+        "url": "https://www.youtube.com/watch?v=uk32LJ3IFmk&t=753s",
+        "tijd": 756,
+        "citaat": "It's also really effective to get out of range."
+      },
+      "toelichting": "He recommends the same range management: position so an Evasive retreat takes the target beyond the approaching shooter's reach."
+    },
+    {
+      "lesId": "frenzy-bait-only-target",
+      "bron": {
+        "bronId": "yt-uk32LJ3IFmk",
+        "url": "https://www.youtube.com/watch?v=uk32LJ3IFmk&t=1468s",
+        "tijd": 1471,
+        "citaat": "don't have other units in range that they can redirect"
+      },
+      "toelichting": "He repeats that charge bait must leave no useful alternative target for a redirection."
+    }
+  ],
+  "overgeslagen": "Skipped introductory rules descriptions without advice, general unit and stat readouts, uncertain panic/Evasive interactions at 16:32–17:33, the second shooting formation whose layout depends on the unseen diagram, hobby tray-making instructions, event plans, and supporter/channel talk.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

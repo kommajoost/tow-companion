@@ -1,0 +1,810 @@
+{
+  "videoId": "dv3fdh8RLbE",
+  "bronId": "yt-dv3fdh8RLbE",
+  "model": "GPT-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-26T02:18:04.039Z",
+  "nieuw": [
+    {
+      "id": "own-dragon-pressure-miao",
+      "titel": "Use your own dragon to pressure Miao Ying",
+      "tekst": "He thinks another dragon can fight Miao Ying's dragon form and pressure her into changing back into human form.",
+      "waarom": "He points out that other dragons can have more wounds, stronger combinations of saves and additional attacks from their riders.",
+      "voorbeeld": null,
+      "wanneerNiet": "She strikes first and deals damage before the opposing dragon, which he thinks could decide the fight.",
+      "fase": "movement",
+      "themas": [
+        "matchups",
+        "hammers"
+      ],
+      "subthemas": [
+        "vs-grand-cathay",
+        "monsters-dragons"
+      ],
+      "tags": [
+        "dragons",
+        "monsters"
+      ],
+      "leger": null,
+      "units": [
+        "Miao Ying"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-dv3fdh8RLbE",
+          "url": "https://www.youtube.com/watch?v=dv3fdh8RLbE&t=478s",
+          "tijd": 481,
+          "citaat": "actually I think other dragons will go toe-to-toe with her.",
+          "extraCitaten": [
+            {
+              "tijd": 514,
+              "citaat": "force her back into that human form at that point."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-06-25",
+      "markeringen": []
+    },
+    {
+      "id": "artillery-pressure-miao",
+      "titel": "Use artillery against Miao Ying's dragon form",
+      "tekst": "He recommends artillery against Miao Ying's dragon form. He thinks a couple of good cannon rolls could kill her or force her back into human form.",
+      "waarom": "He notes that she has seven wounds and that a Grand Cannon can inflict D3 plus one wounds.",
+      "voorbeeld": null,
+      "wanneerNiet": "She can return to human form, hide and regain D3 wounds.",
+      "fase": "magic-shooting",
+      "themas": [
+        "matchups",
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "vs-grand-cathay",
+        "war-machines"
+      ],
+      "tags": [
+        "cannons",
+        "multiple-wounds",
+        "dragons"
+      ],
+      "leger": null,
+      "units": [
+        "Miao Ying"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-dv3fdh8RLbE",
+          "url": "https://www.youtube.com/watch?v=dv3fdh8RLbE&t=624s",
+          "tijd": 627,
+          "citaat": "she's still susceptible to artillery.",
+          "extraCitaten": [
+            {
+              "tijd": 652,
+              "citaat": "I think I think artillery is a good choice."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-06-25",
+      "markeringen": []
+    },
+    {
+      "id": "avoid-challenge-roadblock-miao",
+      "titel": "Do not rely on challenges to roadblock Miao Ying",
+      "tekst": "Do not assume a unit can hold Miao Ying by challenging her out of attacking the unit.",
+      "waarom": "He says she makes the challenger take a Leadership test with two added to the dice roll; failing prevents the challenge.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "combat",
+      "themas": [
+        "matchups",
+        "characters"
+      ],
+      "subthemas": [
+        "vs-grand-cathay",
+        "challenges"
+      ],
+      "tags": [
+        "challenge",
+        "leadership",
+        "tarpit"
+      ],
+      "leger": null,
+      "units": [
+        "Miao Ying"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-dv3fdh8RLbE",
+          "url": "https://www.youtube.com/watch?v=dv3fdh8RLbE&t=609s",
+          "tijd": 612,
+          "citaat": "Don't think that you're going to roadblock her with units",
+          "extraCitaten": [
+            {
+              "tijd": 619,
+              "citaat": "the challenge out thing isn't always going to work."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-06-25",
+      "markeringen": []
+    },
+    {
+      "id": "dragon-sword-deters-miao",
+      "titel": "Deter Miao Ying with a Dragon Slaying Sword",
+      "tekst": "Consider putting a Dragon Slaying Sword on a hero in a unit to discourage Miao Ying from approaching in dragon form.",
+      "waarom": "He notes that the sword costs 50 points, so a hero-level character can carry it.",
+      "voorbeeld": "He suggests a Paladin in a unit carrying the sword as an inexpensive threat she might avoid.",
+      "wanneerNiet": "She can stay in human form instead of presenting a monster for the sword to kill.",
+      "fase": "army-building",
+      "themas": [
+        "characters",
+        "matchups"
+      ],
+      "subthemas": [
+        "mounts-items",
+        "vs-grand-cathay"
+      ],
+      "tags": [
+        "magic-items",
+        "monsters",
+        "dragons",
+        "zoning"
+      ],
+      "leger": null,
+      "units": [
+        "Miao Ying"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-dv3fdh8RLbE",
+          "url": "https://www.youtube.com/watch?v=dv3fdh8RLbE&t=728s",
+          "tijd": 731,
+          "citaat": "a dragon slaying sword and she might not want to go near it."
+        }
+      ],
+      "datum": "2025-06-25",
+      "markeringen": []
+    },
+    {
+      "id": "duke-threatens-both-miao-forms",
+      "titel": "Give a Duke both Killing Blow and Monster Slayer",
+      "tekst": "Consider a Bretonnian Duke with both Killing Blow and Monster Slayer against Miao Ying and the Shugengan Lord.",
+      "waarom": "He thinks the combination gives Bretonnia a natural counter because Miao Ying must be wary in either form.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "characters",
+        "matchups"
+      ],
+      "subthemas": [
+        "combat-roles",
+        "vs-grand-cathay"
+      ],
+      "tags": [
+        "monsters",
+        "dragons"
+      ],
+      "leger": "kingdom-of-bretonnia",
+      "units": [
+        "Duke",
+        "Miao Ying",
+        "Shugengan Lord"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-dv3fdh8RLbE",
+          "url": "https://www.youtube.com/watch?v=dv3fdh8RLbE&t=732s",
+          "tijd": 735,
+          "citaat": "that Duke that's got both monster slayer and um killing blow,",
+          "extraCitaten": [
+            {
+              "tijd": 743,
+              "citaat": "in either form, she's really wary."
+            },
+            {
+              "tijd": 2933,
+              "citaat": "you're going to be a threat to the shenanigan lord."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-06-25",
+      "markeringen": []
+    },
+    {
+      "id": "tarpit-shugengan-with-large-units",
+      "titel": "Offer the Shugengan Lord a large tarpit",
+      "tekst": "Limit the Shugengan Lord's choices and, if offering him a target, use a large unit that can hold him while support arrives. Avoid offering a small valuable unit.",
+      "waarom": "He thinks large units can beat him through combat resolution, while a Stubborn unit can keep him occupied.",
+      "voorbeeld": null,
+      "wanneerNiet": "Small expendable chaff is acceptable to sacrifice, but a small unit you need could be wiped out and let him reform towards another target.",
+      "fase": "movement",
+      "themas": [
+        "matchups",
+        "infantry"
+      ],
+      "subthemas": [
+        "vs-grand-cathay",
+        "holding-combat"
+      ],
+      "tags": [
+        "tarpit",
+        "combat-resolution",
+        "stubborn",
+        "countercharge"
+      ],
+      "leger": null,
+      "units": [
+        "Shugengan Lord"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-dv3fdh8RLbE",
+          "url": "https://www.youtube.com/watch?v=dv3fdh8RLbE&t=1181s",
+          "tijd": 1184,
+          "citaat": "try and tarpit them, not give them too many options.",
+          "extraCitaten": [
+            {
+              "tijd": 1193,
+              "citaat": "If it's a big unit, then it you'll be okay"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-06-25",
+      "markeringen": []
+    },
+    {
+      "id": "lance-cavalry-deter-jade-lancers",
+      "titel": "Face Jade Lancers with lance-armed cavalry",
+      "tekst": "Put your own lance-armed cavalry opposite Jade Lancers to threaten a countercharge and make their charge less attractive.",
+      "waarom": "He contrasts the lance cavalry's Strength 5 and AP2 on the countercharge with the Jade Lancers' Strength 4 and AP1.",
+      "voorbeeld": null,
+      "wanneerNiet": "He notes that the Jade Lancers bring more attacks.",
+      "fase": "deployment",
+      "themas": [
+        "matchups",
+        "deployment"
+      ],
+      "subthemas": [
+        "vs-grand-cathay",
+        "unit-placement"
+      ],
+      "tags": [
+        "heavy-cavalry",
+        "countercharge",
+        "armour-piercing"
+      ],
+      "leger": null,
+      "units": [
+        "Jade Lancers"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-dv3fdh8RLbE",
+          "url": "https://www.youtube.com/watch?v=dv3fdh8RLbE&t=1586s",
+          "tijd": 1589,
+          "citaat": "if you had your cavalry opposite them,",
+          "extraCitaten": [
+            {
+              "tijd": 1589,
+              "citaat": "they don't really know if they want to charge your cavalry"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-06-25",
+      "markeringen": []
+    },
+    {
+      "id": "sky-lantern-charge-roadblock",
+      "titel": "Use Sky Lanterns to absorb charges",
+      "tekst": "Use a Sky Lantern as a roadblock to absorb a charge while other units manoeuvre around the enemy's flanks.",
+      "waarom": "He values the combination of flight, Unbreakable, Toughness 5 and seven wounds for getting in the way and surviving.",
+      "voorbeeld": "In a battle report he watched, a Sky Lantern moved into the way, absorbed a charge and let the rest of the army get around the flanks.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "chaff"
+      ],
+      "subthemas": [
+        "redirecting"
+      ],
+      "tags": [
+        "tarpit",
+        "unbreakable",
+        "fly",
+        "flanks"
+      ],
+      "leger": "grand-cathay",
+      "units": [
+        "Sky Lantern"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-dv3fdh8RLbE",
+          "url": "https://www.youtube.com/watch?v=dv3fdh8RLbE&t=1727s",
+          "tijd": 1730,
+          "citaat": "you can get that in the way.",
+          "extraCitaten": [
+            {
+              "tijd": 1753,
+              "citaat": "got up got in the way, soaked up a charge"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-06-25",
+      "markeringen": []
+    },
+    {
+      "id": "lantern-disengage-through-friendly-unit",
+      "titel": "Disengage Sky Lanterns through friendly units",
+      "tekst": "Consider disengaging a Sky Lantern through a friendly unit to put it behind your line and leave the enemy facing countercharges.",
+      "waarom": "In his account, the enemy could only follow up two inches, leaving the waiting Cathayan units able to countercharge.",
+      "voorbeeld": "He praises a battle report in which the Lantern fell back through its own unit and ended up on the other side.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "movement",
+        "chaff"
+      ],
+      "subthemas": [
+        "support-countercharge",
+        "retreat-paths"
+      ],
+      "tags": [
+        "fall-back",
+        "countercharge",
+        "tarpit"
+      ],
+      "leger": "grand-cathay",
+      "units": [
+        "Sky Lantern"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-dv3fdh8RLbE",
+          "url": "https://www.youtube.com/watch?v=dv3fdh8RLbE&t=1787s",
+          "tijd": 1790,
+          "citaat": "they fell back in good order through their own unit",
+          "extraCitaten": [
+            {
+              "tijd": 1805,
+              "citaat": "waiting to countercharge."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-06-25",
+      "markeringen": []
+    },
+    {
+      "id": "cannons-strip-lantern-wounds",
+      "titel": "Use cannons to strip Sky Lantern wounds",
+      "tekst": "He sees cannons as a natural counter to Sky Lanterns and recommends them for stripping away wounds.",
+      "waarom": "He bases this on the Lantern's Toughness 5 and his reading that it has no armour.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "magic-shooting",
+      "themas": [
+        "matchups",
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "vs-sky-lanterns",
+        "target-priority"
+      ],
+      "tags": [
+        "cannons",
+        "multiple-wounds"
+      ],
+      "leger": null,
+      "units": [
+        "Sky Lantern"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-dv3fdh8RLbE",
+          "url": "https://www.youtube.com/watch?v=dv3fdh8RLbE&t=1941s",
+          "tijd": 1944,
+          "citaat": "A cannon is a natural enemy of this",
+          "extraCitaten": [
+            {
+              "tijd": 1944,
+              "citaat": "It's just going to strip strip it of wounds."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-06-25",
+      "markeringen": []
+    },
+    {
+      "id": "defensive-jade-sentinel-ramparts",
+      "titel": "Choose Earthen Ramparts for a defensive Jade Sentinel",
+      "tekst": "If using a Cathayan Sentinel defensively to receive charges, he would favour the Jade option and select Earthen Ramparts.",
+      "waarom": "He values the spell's five-plus ward save for the unit.",
+      "voorbeeld": null,
+      "wanneerNiet": "He says the spell prevents charging or marching.",
+      "fase": "army-building",
+      "themas": [
+        "hammers",
+        "magic"
+      ],
+      "subthemas": [
+        "monsters-dragons",
+        "lores-spells"
+      ],
+      "tags": [
+        "monsters",
+        "ward-save",
+        "elementalism",
+        "enchantment"
+      ],
+      "leger": "grand-cathay",
+      "units": [
+        "Cathayan Sentinel"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-dv3fdh8RLbE",
+          "url": "https://www.youtube.com/watch?v=dv3fdh8RLbE&t=2107s",
+          "tijd": 2110,
+          "citaat": "You'd be better off um taking it as the Jade Sentinel",
+          "extraCitaten": [
+            {
+              "tijd": 2134,
+              "citaat": "that's probably the better option,"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-06-25",
+      "markeringen": []
+    },
+    {
+      "id": "bsb-against-rocket-panic",
+      "titel": "Consider a BSB against rocket-induced panic",
+      "tekst": "Consider a BSB to help withstand panic tests caused by the Fire Rain Rocket Battery.",
+      "waarom": "He notes that a single unsaved wound from the rocket battery can force a panic test as though the unit had taken heavy casualties.",
+      "voorbeeld": null,
+      "wanneerNiet": "He says the need depends on the army: he does not always feel Elves need one, whereas with Empire he wants the rerolls.",
+      "fase": "army-building",
+      "themas": [
+        "characters",
+        "matchups"
+      ],
+      "subthemas": [
+        "bsb",
+        "vs-grand-cathay"
+      ],
+      "tags": [
+        "bsb",
+        "break-test",
+        "leadership"
+      ],
+      "leger": null,
+      "units": [
+        "Fire Rain Rocket Battery"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-dv3fdh8RLbE",
+          "url": "https://www.youtube.com/watch?v=dv3fdh8RLbE&t=2357s",
+          "tijd": 2360,
+          "citaat": "And take a BSB.",
+          "extraCitaten": [
+            {
+              "tijd": 2314,
+              "citaat": "if it does one unsaved wound, you have to take a panic test"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-06-25",
+      "markeringen": []
+    },
+    {
+      "id": "ogre-crew-cathayan-cannon",
+      "titel": "Upgrade Cathayan cannons with an Ogre crew",
+      "tekst": "Consider upgrading Cathayan Grand Cannons with an Ogre artillery crew, which he thinks makes the cannon particularly strong.",
+      "waarom": "He highlights the ability to shoot twice once per game; with two upgraded cannons, that allows four cannon shots in one turn.",
+      "voorbeeld": null,
+      "wanneerNiet": "He notes that the cannons become quite expensive with the Ogre upgrade.",
+      "fase": "army-building",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "war-machines"
+      ],
+      "tags": [
+        "cannons",
+        "war-machines"
+      ],
+      "leger": "grand-cathay",
+      "units": [
+        "Cathayan Grand Cannon"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-dv3fdh8RLbE",
+          "url": "https://www.youtube.com/watch?v=dv3fdh8RLbE&t=2460s",
+          "tijd": 2463,
+          "citaat": "these ogre mercenaries. And I think that's where this cannon really shines",
+          "extraCitaten": [
+            {
+              "tijd": 2485,
+              "citaat": "you can shoot twice with your cannon."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-06-25",
+      "markeringen": []
+    },
+    {
+      "id": "shoot-cathayan-cannons-first",
+      "titel": "Make Cathayan cannons an early shooting priority",
+      "tekst": "All else being equal, focus shooting on Cathayan Grand Cannons in turn one, using artillery, poison or magic missiles. He prefers this to sending ordinary chaff into combat with an Ogre-crewed cannon.",
+      "waarom": "He notes that the artillery piece has only three wounds when shot, while charging it means facing Stand and Shoot and then fighting the Ogre crew. He fears the opening volley from cannons that can shoot twice.",
+      "voorbeeld": null,
+      "wanneerNiet": "An immediate threat such as Jade Lancers approaching your shooters may change target priority; he also allows that a particularly powerful combat unit could attack the cannon.",
+      "fase": "magic-shooting",
+      "themas": [
+        "shooting-terrain",
+        "matchups"
+      ],
+      "subthemas": [
+        "target-priority",
+        "vs-grand-cathay"
+      ],
+      "tags": [
+        "cannons",
+        "poison",
+        "magic-missile",
+        "stand-and-shoot"
+      ],
+      "leger": null,
+      "units": [
+        "Cathayan Grand Cannon"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-dv3fdh8RLbE",
+          "url": "https://www.youtube.com/watch?v=dv3fdh8RLbE&t=2621s",
+          "tijd": 2624,
+          "citaat": "all things being equal, this probably should be your your priority.",
+          "extraCitaten": [
+            {
+              "tijd": 2765,
+              "citaat": "focus fire on these in turn one."
+            },
+            {
+              "tijd": 2592,
+              "citaat": "you want to hit it with your own cannon before it counts you."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-06-25",
+      "markeringen": []
+    },
+    {
+      "id": "deny-cathay-valuable-cannon-targets",
+      "titel": "Deny Cathayan cannons worthwhile targets",
+      "tekst": "If you lack shooting or artillery to answer Cathay's cannons, consider an army that offers them very little worth shooting.",
+      "waarom": "He says cannon fire into ordinary Skeleton Warriors is poor value because it kills one per rank and the losses can be summoned back.",
+      "voorbeeld": "He uses games against his cousin's Tomb Kings to illustrate how ordinary skeletons make unappealing cannon targets.",
+      "wanneerNiet": "Dragons remain an obvious target, so he warns that they need particular care.",
+      "fase": "army-building",
+      "themas": [
+        "matchups",
+        "game-plan"
+      ],
+      "subthemas": [
+        "vs-grand-cathay",
+        "list-building"
+      ],
+      "tags": [
+        "cannons",
+        "gunline",
+        "victory-points"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-dv3fdh8RLbE",
+          "url": "https://www.youtube.com/watch?v=dv3fdh8RLbE&t=2833s",
+          "tijd": 2836,
+          "citaat": "what you need to do is just offer up very little.",
+          "extraCitaten": [
+            {
+              "tijd": 2867,
+              "citaat": "the cannons are going to be pretty worthless."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-06-25",
+      "markeringen": []
+    },
+    {
+      "id": "defensive-builds-weather-cathay",
+      "titel": "Build to weather Cathay's initial impact",
+      "tekst": "He favours defensive builds that can survive Cathay's early hits. He thinks enduring that initial storm for one or two turns can let you turn the game around.",
+      "waarom": "He expects Cathay to hit hard and quickly, but points to Strength 4 cavalry and Strength 3 Jade Warriors as reasons defensive builds can work.",
+      "voorbeeld": null,
+      "wanneerNiet": "He makes an exception for attackers that combine Strikes First with Killing Blow or Monster Slayer.",
+      "fase": "army-building",
+      "themas": [
+        "matchups",
+        "game-plan"
+      ],
+      "subthemas": [
+        "vs-grand-cathay",
+        "list-building"
+      ],
+      "tags": [
+        "armour",
+        "heavy-cavalry"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-dv3fdh8RLbE",
+          "url": "https://www.youtube.com/watch?v=dv3fdh8RLbE&t=3113s",
+          "tijd": 3116,
+          "citaat": "you're going to be looking at a defensive build",
+          "extraCitaten": [
+            {
+              "tijd": 3138,
+              "citaat": "if you can weather that storm, that one or two turns,"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-06-25",
+      "markeringen": []
+    },
+    {
+      "id": "hordes-bog-down-cathay",
+      "titel": "Consider hordes to bog Cathay down",
+      "tekst": "He thinks a horde army is a promising choice against Cathay, tying up its main threats rather than letting them move freely between fights.",
+      "waarom": "He expects the Shugengan Lord, Sky Lanterns and Cathay's core units to get bogged down, with the Jade Lancers and Jade Warriors doing relatively little.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "matchups",
+        "game-plan"
+      ],
+      "subthemas": [
+        "vs-grand-cathay",
+        "list-building"
+      ],
+      "tags": [
+        "tarpit",
+        "delay"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-dv3fdh8RLbE",
+          "url": "https://www.youtube.com/watch?v=dv3fdh8RLbE&t=3021s",
+          "tijd": 3024,
+          "citaat": "they they will struggle against horde armies",
+          "extraCitaten": [
+            {
+              "tijd": 3053,
+              "citaat": "I think that's probably that's probably a choice."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-06-25",
+      "markeringen": []
+    },
+    {
+      "id": "dispel-items-against-cathay",
+      "titel": "Bring dispelling aids against Cathay",
+      "tekst": "Look for items that improve your dispelling against Cathay, such as an Infernal Puppet or a Dispel Scroll.",
+      "waarom": "He expects potentially two level-four wizards plus spellcasting items, and highlights Plague of Rust as important support for Cathay's core troops.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "magic",
+        "matchups"
+      ],
+      "subthemas": [
+        "dispelling",
+        "vs-grand-cathay"
+      ],
+      "tags": [
+        "dispel",
+        "magic-items",
+        "wizard-level"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-dv3fdh8RLbE",
+          "url": "https://www.youtube.com/watch?v=dv3fdh8RLbE&t=3265s",
+          "tijd": 3268,
+          "citaat": "the more you can you can do to dispel um the better.",
+          "extraCitaten": [
+            {
+              "tijd": 3219,
+              "citaat": "if you've got an item that helps with dispelling,"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-06-25",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "assassins-all-round-movement",
+      "bron": {
+        "bronId": "yt-dv3fdh8RLbE",
+        "url": "https://www.youtube.com/watch?v=dv3fdh8RLbE&t=2947s",
+        "tijd": 2950,
+        "citaat": "you're going to want to take them in something that's got 360 line of sight."
+      },
+      "toelichting": "He repeats the recommendation to give monster-hunting characters an all-round charge arc so they can project their threat."
+    },
+    {
+      "lesId": "falcon-horn-stop-lantern-flight",
+      "bron": {
+        "bronId": "yt-dv3fdh8RLbE",
+        "url": "https://www.youtube.com/watch?v=dv3fdh8RLbE&t=2249s",
+        "tijd": 2252,
+        "citaat": "movement one if it doesn't fly.",
+        "extraCitaten": [
+          {
+            "tijd": 2252,
+            "citaat": "if you are beastmen or you are Bretonians"
+          }
+        ]
+      },
+      "toelichting": "He again recommends using Bretonnian access to flight denial to restrict Sky Lantern movement."
+    },
+    {
+      "lesId": "shelter-monsters-from-cannons",
+      "bron": {
+        "bronId": "yt-dv3fdh8RLbE",
+        "url": "https://www.youtube.com/watch?v=dv3fdh8RLbE&t=2744s",
+        "tijd": 2747,
+        "citaat": "if you have a large target put it behind a piece of terrain."
+      },
+      "toelichting": "He repeats the advice to hide large targets from cannon line of sight during opening deployment."
+    },
+    {
+      "lesId": "shift-lone-character-protection",
+      "bron": {
+        "bronId": "yt-dv3fdh8RLbE",
+        "url": "https://www.youtube.com/watch?v=dv3fdh8RLbE&t=2732s",
+        "tijd": 2735,
+        "citaat": "your hero on Pegasus next to a unit of um Pegasign"
+      },
+      "toelichting": "He repeats keeping a lone mounted character beside a suitable friendly unit so enemy shooting cannot target it."
+    }
+  ],
+  "overgeslagen": "Skipped channel promotion, banter, model and hobby discussion, roster predictions and stat readouts without advice. Omitted the uncertain High Magic transformation sequence at 13:19–13:52, the disputed deep Jade Lancer formation at 27:00–28:13, and unclear or retracted rules claims. Retained the speakers' tentative wording for their untested matchup predictions.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

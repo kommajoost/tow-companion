@@ -1,0 +1,290 @@
+{
+  "videoId": "vTAd8JKsNNU",
+  "bronId": "yt-vTAd8JKsNNU",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-26T02:04:44.147Z",
+  "nieuw": [
+    {
+      "id": "cavalry-flank-threat-choices",
+      "titel": "Threaten flanks while infantry confronts the enemy",
+      "tekst": "Use heavy cavalry's speed alongside other units to threaten the enemy's flanks. Make the opponent choose between facing the cavalry and fighting your infantry with cavalry threatening a flank charge.",
+      "waarom": "He argues that heavy cavalry remains faster than infantry and can force opponents to react. In his view, making the opponent face more choices increases the chance of a wrong decision.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "hammers",
+        "game-plan"
+      ],
+      "subthemas": [
+        "heavy-cavalry",
+        "threat-zones"
+      ],
+      "tags": [
+        "heavy-cavalry",
+        "flank-charge",
+        "zoning"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-vTAd8JKsNNU",
+          "url": "https://www.youtube.com/watch?v=vTAd8JKsNNU&t=346s",
+          "tijd": 349,
+          "citaat": "they're still very well placed to threaten flanks and force opponents to react to them.",
+          "extraCitaten": [
+            {
+              "tijd": 372,
+              "citaat": "Do you want the big grind of infantry blocks with cavalry come crashing into your"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-08-08",
+      "markeringen": []
+    },
+    {
+      "id": "soften-targets-before-cavalry",
+      "titel": "Weaken enemy formations before the cavalry charge",
+      "tekst": "Use missile fire to weaken an enemy formation enough to make it vulnerable to a heavy cavalry charge.",
+      "waarom": null,
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "magic-shooting",
+      "themas": [
+        "hammers"
+      ],
+      "subthemas": [
+        "using-hammers"
+      ],
+      "tags": [
+        "heavy-cavalry",
+        "missile-troops"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-vTAd8JKsNNU",
+          "url": "https://www.youtube.com/watch?v=vTAd8JKsNNU&t=361s",
+          "tijd": 364,
+          "citaat": "weakening them enough to make them vulnerable to that heavy cavalry charge"
+        }
+      ],
+      "datum": "2025-08-08",
+      "markeringen": []
+    },
+    {
+      "id": "cavalry-push-off-objectives",
+      "titel": "Use cavalry to push defenders off objectives",
+      "tekst": "A supported heavy cavalry charge can aim simply to push an enemy off an objective. Use the time it creates for friendly units to advance and take control of that part of the battlefield.",
+      "waarom": "He says First Charge removes the infantry's rank bonus, and suitably supported heavy cavalry can still remove enough models to limit the attacks coming back despite infantry fighting in two ranks.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "scenarios",
+      "themas": [
+        "scenarios",
+        "hammers"
+      ],
+      "subthemas": [
+        "objectives",
+        "using-hammers"
+      ],
+      "tags": [
+        "objectives",
+        "heavy-cavalry",
+        "first-charge",
+        "combat-resolution"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-vTAd8JKsNNU",
+          "url": "https://www.youtube.com/watch?v=vTAd8JKsNNU&t=427s",
+          "tijd": 430,
+          "citaat": "It wants to push you off the objective,",
+          "extraCitaten": [
+            {
+              "tijd": 437,
+              "citaat": "allowing it time to be supported and for friendly units to push"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-08-08",
+      "markeringen": []
+    },
+    {
+      "id": "chaff-absorbs-cavalry-first-charge",
+      "titel": "Intercept First Charge before it reaches key infantry",
+      "tekst": "Use expendable chaff to intercept a cavalry unit's First Charge before it hits a key infantry block. Empire players can also use detachments for this.",
+      "waarom": "He warns that First Charge removes rank bonuses. He particularly highlights Empire State Troops with the Griffin Banner, whose six points of rank-based combat resolution can become zero.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "chaff"
+      ],
+      "subthemas": [
+        "screens"
+      ],
+      "tags": [
+        "first-charge",
+        "screen",
+        "sacrifice",
+        "heavy-cavalry",
+        "combat-resolution"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-vTAd8JKsNNU",
+          "url": "https://www.youtube.com/watch?v=vTAd8JKsNNU&t=466s",
+          "tijd": 469,
+          "citaat": "use detachments, throw away chaff units to prevent that first charge.",
+          "extraCitaten": [
+            {
+              "tijd": 478,
+              "citaat": "using other forces to stop a cavalry charge smashing up a key"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-08-08",
+      "markeringen": []
+    },
+    {
+      "id": "small-cavalry-counters-msu",
+      "titel": "Consider small cavalry units against multiple small infantry units",
+      "tekst": "He thinks multiple small units of heavy cavalry could be an effective counter to armies using multiple small infantry units.",
+      "waarom": "He argues that infantry units of roughly 10 to 15 models cannot take many casualties and remain useful. A quick round of missile fire followed by a heavy cavalry charge can drive them back below unit strength ten, limiting their objective and baggage-train roles while the cavalry moves on to another target.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "hammers",
+        "matchups"
+      ],
+      "subthemas": [
+        "heavy-cavalry",
+        "picking-fights"
+      ],
+      "tags": [
+        "heavy-cavalry",
+        "unit-strength",
+        "scoring-units"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-vTAd8JKsNNU",
+          "url": "https://www.youtube.com/watch?v=vTAd8JKsNNU&t=545s",
+          "tijd": 548,
+          "citaat": "We might see MSU heavy cavalry actually being a fairly effective counter to that.",
+          "extraCitaten": [
+            {
+              "tijd": 506,
+              "citaat": "They're not going to be able to take lots of casualties and stay a useful"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-08-08",
+      "markeringen": []
+    },
+    {
+      "id": "cavalry-reserve-response-options",
+      "titel": "Keep cavalry available to respond to trouble",
+      "tekst": "Consider using heavy cavalry as a second line or reserve. Use its mobility to reinforce a crumbling flank or launch an attack elsewhere to draw the opponent's attention.",
+      "waarom": "He found that relying on infantry left him needing knights to get him out of trouble. He values the option to move quickly around the battlefield and make opponents respect the threat of a cavalry charge.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "hammers",
+        "game-plan"
+      ],
+      "subthemas": [
+        "heavy-cavalry",
+        "aggression-control"
+      ],
+      "tags": [
+        "heavy-cavalry",
+        "flanks",
+        "zoning"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-vTAd8JKsNNU",
+          "url": "https://www.youtube.com/watch?v=vTAd8JKsNNU&t=592s",
+          "tijd": 595,
+          "citaat": "using them maybe as a second line coming from the reserve",
+          "extraCitaten": [
+            {
+              "tijd": 573,
+              "citaat": "either to support a crumbling flank or to draw my opponent's attention"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-08-08",
+      "markeringen": []
+    },
+    {
+      "id": "empire-knights-buy-artillery-time",
+      "titel": "Use regular knights to buy artillery more time",
+      "tekst": "For Empire, consider regular knights to pressure the opponent into manoeuvring to face the cavalry. Use that distraction to give your artillery more time to damage enemy units.",
+      "waarom": "He says that an opponent worrying about the cavalry gives Empire artillery more time to fire. He stresses that objective points offer little help if the army is destroyed.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "hammers",
+        "game-plan"
+      ],
+      "subthemas": [
+        "heavy-cavalry",
+        "tempo-trading"
+      ],
+      "tags": [
+        "heavy-cavalry",
+        "war-machines",
+        "delay"
+      ],
+      "leger": "empire-of-man",
+      "units": [
+        "Empire Knights"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-vTAd8JKsNNU",
+          "url": "https://www.youtube.com/watch?v=vTAd8JKsNNU&t=626s",
+          "tijd": 629,
+          "citaat": "that just gives our artillery more time",
+          "extraCitaten": [
+            {
+              "tijd": 614,
+              "citaat": "we're probably using regular knights for this."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-08-08",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [],
+  "overgeslagen": "Skipped the introduction, historical cavalry examples, pre-FAQ rules discussion, rules descriptions without separate advice, closing channel promotion and general statements that cavalry remains viable.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

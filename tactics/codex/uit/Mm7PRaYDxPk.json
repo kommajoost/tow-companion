@@ -1,0 +1,353 @@
+{
+  "videoId": "Mm7PRaYDxPk",
+  "bronId": "yt-Mm7PRaYDxPk",
+  "model": "GPT-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-26T02:11:43.817Z",
+  "nieuw": [
+    {
+      "id": "light-cavalry-clear-redirectors",
+      "titel": "Use light cavalry to clear enemy redirectors",
+      "tekst": "Use light cavalry to remove enemy chaff that would otherwise redirect your main combat units.",
+      "waarom": "He says preventing enemy chaff from acting as effective redirectors lets your main combat units do their job.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "chaff"
+      ],
+      "subthemas": [
+        "clearing-chaff"
+      ],
+      "tags": [
+        "light-cavalry",
+        "redirect"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-Mm7PRaYDxPk",
+          "url": "https://www.youtube.com/watch?v=Mm7PRaYDxPk&t=211s",
+          "tijd": 214,
+          "citaat": "We've also got a role of chaff clearance."
+        }
+      ],
+      "datum": "2025-08-01",
+      "markeringen": []
+    },
+    {
+      "id": "light-cavalry-deny-ranks",
+      "titel": "Support combats with rank-denying light cavalry flank charges",
+      "tekst": "Get light cavalry around an enemy's side and make a supporting flank charge when the cavalry has enough Unit Strength to remove the enemy's rank bonus.",
+      "waarom": "He says losing two or three points of combat resolution can swing the combat in your favour.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "movement"
+      ],
+      "subthemas": [
+        "support-countercharge"
+      ],
+      "tags": [
+        "light-cavalry",
+        "flank-charge",
+        "unit-strength",
+        "combat-resolution",
+        "combined-charge"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-Mm7PRaYDxPk",
+          "url": "https://www.youtube.com/watch?v=Mm7PRaYDxPk&t=235s",
+          "tijd": 238,
+          "citaat": "can get a supporting charge in that just takes away the rank bonus"
+        }
+      ],
+      "datum": "2025-08-01",
+      "markeringen": []
+    },
+    {
+      "id": "light-cavalry-hunt-wizards",
+      "titel": "Charge vulnerable lone wizards with light cavalry",
+      "tekst": "Look for opportunities to charge vulnerable lone wizards with light cavalry.",
+      "waarom": "He says lone wizards are common and rely on staying close to friendly units for safety; poorly used ones can be picked out by charging light cavalry.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "matchups"
+      ],
+      "subthemas": [
+        "picking-fights"
+      ],
+      "tags": [
+        "light-cavalry",
+        "lone-character"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-Mm7PRaYDxPk",
+          "url": "https://www.youtube.com/watch?v=Mm7PRaYDxPk&t=282s",
+          "tijd": 285,
+          "citaat": "they are vulnerable to being picked out by charging like cavalry"
+        }
+      ],
+      "datum": "2025-08-01",
+      "markeringen": []
+    },
+    {
+      "id": "light-cavalry-finish-fugitives",
+      "titel": "Send light cavalry to finish fleeing units",
+      "tekst": "Use a small light cavalry unit to finish fleeing enemies rather than sending a large combat unit chasing them around the battlefield.",
+      "waarom": null,
+      "voorbeeld": null,
+      "wanneerNiet": "He thinks these opportunities are less common because of Fall Back in Good Order.",
+      "fase": "movement",
+      "themas": [
+        "movement"
+      ],
+      "subthemas": [
+        "overrun-pursuit"
+      ],
+      "tags": [
+        "light-cavalry",
+        "flee",
+        "pursuit"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-Mm7PRaYDxPk",
+          "url": "https://www.youtube.com/watch?v=Mm7PRaYDxPk&t=309s",
+          "tijd": 312,
+          "citaat": "finish them off with a small unit of light cavalry"
+        }
+      ],
+      "datum": "2025-08-01",
+      "markeringen": []
+    },
+    {
+      "id": "cavalry-infantry-objective-handover",
+      "titel": "Let infantry replace light cavalry on early objectives",
+      "tekst": "Use a core light cavalry unit of Unit Strength 10 to grab early objective points, then let infantry take over holding the position.",
+      "waarom": "He warns that taking and holding objectives ties up light cavalry's mobility.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "scenarios",
+      "themas": [
+        "scenarios"
+      ],
+      "subthemas": [
+        "objectives"
+      ],
+      "tags": [
+        "light-cavalry",
+        "objectives",
+        "scoring-units",
+        "unit-strength"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-Mm7PRaYDxPk",
+          "url": "https://www.youtube.com/watch?v=Mm7PRaYDxPk&t=355s",
+          "tijd": 358,
+          "citaat": "go up, grab those early points. The infantry then comes and takes over."
+        }
+      ],
+      "datum": "2025-08-01",
+      "markeringen": []
+    },
+    {
+      "id": "preserve-cavalry-domination-scoring",
+      "titel": "Preserve light cavalry for late Domination scoring",
+      "tekst": "If you want light cavalry to claim table quarters in Domination, consider keeping them safe until they can use their mobility at the end of the game.",
+      "waarom": "He says their mobility lets them slip into table quarters and add to your score.",
+      "voorbeeld": null,
+      "wanneerNiet": "He cautions that they may otherwise be too weak to survive for this role.",
+      "fase": "scenarios",
+      "themas": [
+        "scenarios"
+      ],
+      "subthemas": [
+        "late-game"
+      ],
+      "tags": [
+        "light-cavalry",
+        "victory-points"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-Mm7PRaYDxPk",
+          "url": "https://www.youtube.com/watch?v=Mm7PRaYDxPk&t=480s",
+          "tijd": 483,
+          "citaat": "keeping those light cavalry safe from harm.",
+          "extraCitaten": [
+            {
+              "tijd": 457,
+              "citaat": "at the end of the game, having that mobility to slip into table quarters"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-08-01",
+      "markeringen": []
+    },
+    {
+      "id": "outriders-vanguard-static-fire",
+      "titel": "Vanguard Outriders into a static firing position",
+      "tekst": "When Outriders have Ponderous on their weapons, use Vanguard to position them and then stay reasonably static, firing at suitable targets.",
+      "waarom": "He wants to maximise their firepower by avoiding the effects of Ponderous.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "deployment",
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "ambush-scouts-vanguard",
+        "missile-units"
+      ],
+      "tags": [
+        "vanguard",
+        "missile-troops",
+        "light-cavalry"
+      ],
+      "leger": "empire-of-man",
+      "units": [
+        "Outriders"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-Mm7PRaYDxPk",
+          "url": "https://www.youtube.com/watch?v=Mm7PRaYDxPk&t=529s",
+          "tijd": 532,
+          "citaat": "you want to be vanguarding and staying reasonably static"
+        }
+      ],
+      "datum": "2025-08-01",
+      "markeringen": []
+    },
+    {
+      "id": "road-wardens-controlled-pistols",
+      "titel": "Consider pistol-armed Road Wardens for controllable light cavalry",
+      "tekst": "If you can afford the more expensive option, consider Empire Road Wardens with a brace of pistols instead of Pistoliers.",
+      "waarom": "He views them as effectively Pistoliers without Impetuous, which he still considers a weakness even after the FAQ.",
+      "voorbeeld": null,
+      "wanneerNiet": "He notes that five with pistols and Ambush, without a champion, reach 100 points.",
+      "fase": "army-building",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "missile-units"
+      ],
+      "tags": [
+        "light-cavalry",
+        "frenzy",
+        "missile-troops"
+      ],
+      "leger": "empire-of-man",
+      "units": [
+        "Empire Road Wardens",
+        "Pistoliers"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-Mm7PRaYDxPk",
+          "url": "https://www.youtube.com/watch?v=Mm7PRaYDxPk&t=619s",
+          "tijd": 622,
+          "citaat": "these are effectively pistolers without the impetuous special rule.",
+          "extraCitaten": [
+            {
+              "tijd": 630,
+              "citaat": "give them a brace of pistols"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-08-01",
+      "markeringen": []
+    },
+    {
+      "id": "outriders-thin-infantry-numbers",
+      "titel": "Use Outriders to reduce infantry numbers",
+      "tekst": "Use Outriders to whittle down enemy infantry when you are concerned about being outnumbered.",
+      "waarom": "He says their repeater handguns can chew up light infantry and knock models off effectively.",
+      "voorbeeld": null,
+      "wanneerNiet": "He says moving them can mean sacrificing some shooting effectiveness.",
+      "fase": "magic-shooting",
+      "themas": [
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "target-priority"
+      ],
+      "tags": [
+        "missile-troops",
+        "light-cavalry",
+        "unit-strength"
+      ],
+      "leger": "empire-of-man",
+      "units": [
+        "Outriders"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-Mm7PRaYDxPk",
+          "url": "https://www.youtube.com/watch?v=Mm7PRaYDxPk&t=741s",
+          "tijd": 744,
+          "citaat": "whittle down units of infantry if you're worried about outnumber and stuff like that."
+        }
+      ],
+      "datum": "2025-08-01",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "chaff-scouts-deployment",
+      "bron": {
+        "bronId": "yt-Mm7PRaYDxPk",
+        "url": "https://www.youtube.com/watch?v=Mm7PRaYDxPk&t=176s",
+        "tijd": 179,
+        "citaat": "forcing your opponent to deploy key units before you do"
+      },
+      "toelichting": "Both recommend early chaff drops to make the opponent reveal key units before you deploy yours."
+    },
+    {
+      "lesId": "mobile-baggage-train-attackers",
+      "bron": {
+        "bronId": "yt-Mm7PRaYDxPk",
+        "url": "https://www.youtube.com/watch?v=Mm7PRaYDxPk&t=445s",
+        "tijd": 448,
+        "citaat": "get them all the way around your opponent's forces and into that uh baggage train",
+        "extraCitaten": [
+          {
+            "tijd": 424,
+            "citaat": "that's 250 points. That's a pretty useful swing."
+          }
+        ]
+      },
+      "wanneerNiet": "He expects the baggage train to be at the back of the table, probably close to an edge and protected by another unit, making it difficult to reach.",
+      "toelichting": "Both recommend using highly mobile units to reach and attack the enemy baggage train."
+    }
+  ],
+  "overgeslagen": "Skipped the historical campaign discussion, quotation about logistics, channel closing remarks, and unit statistics or rules without tactical recommendations. Omitted garbled faction names and did not turn the Road Warden Scout and Ambush option readout into separate advice.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

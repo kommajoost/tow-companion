@@ -2,10 +2,10 @@
   "scope": "thema-magic",
   "soort": "thema",
   "sleutel": "magic",
-  "gemaaktOp": "2026-11-25T23:24:29.727Z",
+  "gemaaktOp": "2026-11-26T04:26:36.671Z",
   "model": "gpt-6.1-sol",
   "effort": "high",
-  "invoerHash": "29864621c87a",
+  "invoerHash": "0ed183be728a",
   "invoer": [
     "define-wizard-role-cheaply",
     "multiple-low-level-signature-casters",
@@ -14,19 +14,27 @@
     "two-level-fours-flexibility",
     "bray-shaman-gor-buffer",
     "multiple-vile-tide-casters",
+    "prefer-runesmith-over-runelord",
     "empire-level-one-doombolt",
     "white-sword-doppelganger-archmage",
+    "embrace-slann-despite-cost",
     "bone-dragon-control-priest",
+    "chaos-chariot-combat-wizard",
     "wood-elf-reserve-blaster",
+    "warhawk-control-spellweaver-build",
+    "lesser-wizard-secures-spells",
     "choose-dark-magic-spells",
     "consider-low-odds-powerful-spells",
     "higher-wizards-support-from-rear",
     "plan-around-guaranteed-signatures",
     "drain-magic-low-level-casters",
     "reconsider-vortexes-in-15",
+    "steed-shadows-melee-character-block",
     "bray-shaman-missile-choice",
+    "defensive-jade-sentinel-ramparts",
     "prefer-orc-goblin-signatures",
     "mortuary-priest-backup-rust",
+    "necromancy-familiar-debuff-pair",
     "curse-years-holding-plan",
     "warriors-bunker-wizard-daemonology",
     "reconsider-warriors-blue-fire",
@@ -39,7 +47,16 @@
     "zone-with-overlapping-threats",
     "lesser-mages-dispel-scrolls",
     "plan-countermagic-attack-timing",
+    "dispel-items-against-cathay",
     "spellbreaking-stop-plague-rust",
+    "runesmith-break-empire-illusion",
+    "runesmith-mortuary-control-spells",
+    "balance-rune-on-anvil",
+    "reserve-spellbreaking-for-mirage",
+    "delay-breaking-crystal-column",
+    "stop-fetish-vile-tide",
+    "stop-undead-leadership-barrage",
+    "spellbreak-itchy-nuisance",
     "mobile-caster-flank",
     "locate-magic-before-wizard",
     "word-pain-wizard-exposure",
@@ -49,8 +66,17 @@
     "reserve-move-blaster-withdrawal",
     "skirmishing-missile-wizard-bunker",
     "move-only-needed-skirmishers",
+    "mark-urgency-casting-range",
     "beastmen-protected-vile-tide-bunker",
+    "advance-runesmith-dispel-aura",
+    "overlap-anvil-runesmith-auras",
+    "anvil-forward-against-rust",
+    "double-move-runesmith-coverage",
+    "fanatic-casters-two-turns",
+    "bell-behind-stormvermin-support",
     "flying-high-priests-conveyances",
+    "high-priest-near-herald",
+    "mortuary-priests-behind-block",
     "hide-marauder-missile-bunker",
     "skirmishing-marauders-alternative-bunker",
     "central-warriors-foot-wizard-bunker",
@@ -68,6 +94,7 @@
     "summoning-pick-off-light-cavalry",
     "vile-tide-armoured-knights",
     "vindictive-glare-elite-cavalry",
+    "wolf-riders-harass-objective-scorers",
     "wilds-missile-against-lanterns",
     "battle-lust-before-charge",
     "ethereal-bunker-against-lanterns",
@@ -84,8 +111,10 @@
     "plague-rust-armoured-targets",
     "earthen-ramparts-shooting-defence",
     "stack-buffs-avoid-fair-fights",
+    "anvil-buff-before-advance",
     "necromancy-supports-state-troops",
     "sigmar-prayer-shooting-ward",
+    "white-wolf-daemonology-block",
     "glittering-robe-skycutter-archmage",
     "glittering-robe-lantern-charge",
     "night-goblins-netters-robe",
@@ -93,6 +122,7 @@
     "orc-anchor-defensive-magic",
     "bad-moon-itchy-nuisance",
     "evil-sun-spear-blocks",
+    "itchy-nuisance-fanatics-dragons",
     "light-death-leadership-debuffs",
     "necrosphinx-terror-leadership",
     "earthen-ramparts-missile-troops",
@@ -100,6 +130,8 @@
     "grave-guard-battle-lust-mirror",
     "lower-lantern-leadership-screams",
     "repeated-terror-charges-lanterns",
+    "banshee-double-engine-reach",
+    "dirge-necromancy-leadership-stack",
     "control-spells-block-lanes",
     "arcane-urgency-escape-charge-arcs",
     "infernal-gateway-save-character",
@@ -115,33 +147,48 @@
     "avoid-column-dependent-strategy",
     "moving-vortex-in-advance-path",
     "crystal-column-shelter-charge-choice",
+    "urgency-dragon-blocks-wheels",
+    "urgency-rescue-exposes-wizard",
+    "space-units-against-pillar",
+    "warded-front-against-pillar",
+    "illusion-deny-dragon-charges",
+    "wind-blast-limit-undead-raising",
     "mirage-before-monster-slayer",
     "tmp-fanatic-release-range",
     "hand-gork-rescue-character",
+    "urgency-fanatic-launch-angles",
+    "pathways-corner-fanatic-delivery",
     "reposition-shooting-blocks-safely",
     "urgency-hide-casket",
+    "deploy-dragon-reserve-move",
+    "terrorgheist-scream-screen-gap",
+    "reserve-move-undead-pressure",
+    "flying-banshee-scream-withdrawal",
+    "treesinging-extend-defensive-forest",
     "illusion-familiar-control-spells",
     "mobile-dark-wizard-scrolls",
     "illusion-needs-casting-bonuses",
     "scrolls-contested-hexes-vortexes",
     "casting-bonuses-magic-investment",
     "save-scroll-decisive-control",
+    "prioritise-urgency-casting-reliability",
     "black-staff-focus-familiars",
     "power-scrolls-critical-ethereal-turns",
-    "swarm-battery-healing-cycle"
+    "swarm-battery-healing-cycle",
+    "curse-weaver-without-familiar",
+    "double-engine-casting-core"
   ],
   "principes": [
     {
-      "id": "keep-casters-outside-dispel-range",
-      "titel": "Keep casters outside enemy dispel range when possible",
-      "tekst": "Position your caster beyond the opposing wizard's dispel range to keep that wizard from contesting your spells.",
+      "id": "cast-outside-enemy-dispel-range",
+      "titel": "Cast from outside the enemy wizard's dispel range",
+      "tekst": "Keep your wizard outside enemy dispel range while keeping your spells in range. This lets you cast without facing a wizardly dispel.",
       "soort": "principe",
       "thema": "magic",
       "leger": null,
       "lessen": [
         "empire-level-one-doombolt",
         "opening-outside-dispel-range",
-        "preserve-vortex-outside-dispel-range",
         "mobile-caster-flank",
         "dark-magic-reserve-bunker",
         "buff-wizard-behind-bubble",
@@ -151,27 +198,25 @@
       "kanten": null
     },
     {
-      "id": "lower-leadership-before-tests-or-damage",
-      "titel": "Lower enemy Leadership before forcing tests or dealing Leadership-based damage",
-      "tekst": "Combine Necromancy's Leadership penalties with tests or attacks that depend on enemy Leadership. You make those tests harder to pass and those attacks more dangerous.",
+      "id": "secure-essential-spells-with-lore-familiar",
+      "titel": "Use Lore Familiar when your plan needs particular spells",
+      "tekst": "Use Lore Familiar to select the spells your plan depends on. This avoids relying on random spell generation for those spells.",
       "soort": "principe",
       "thema": "magic",
       "leger": null,
       "lessen": [
-        "necromancy-leadership-control",
-        "gathering-darkness-terror-combination",
-        "necromancy-supports-state-troops",
-        "light-death-leadership-debuffs",
-        "necrosphinx-terror-leadership",
-        "lower-lantern-leadership-screams",
-        "repeated-terror-charges-lanterns"
+        "bray-shaman-gor-buffer",
+        "lesser-wizard-secures-spells",
+        "choose-dark-magic-spells",
+        "necromancy-familiar-debuff-pair",
+        "illusion-familiar-control-spells"
       ],
       "kanten": null
     },
     {
       "id": "repeat-signatures-with-low-level-casters",
-      "titel": "Consider several low-level casters for repeated signature spells",
-      "tekst": "Use multiple low-level wizards to bring the same useful signature spell more than once. This gives you repeated casting attempts.",
+      "titel": "Use several low-level casters to repeat useful signature spells",
+      "tekst": "Consider multiple low-level wizards carrying the same useful signature spell. This gives you repeated casting attempts without requiring high-level casters.",
       "soort": "principe",
       "thema": "magic",
       "leger": null,
@@ -184,24 +229,9 @@
       "kanten": null
     },
     {
-      "id": "secure-key-spells",
-      "titel": "Secure key spells instead of relying on random generation",
-      "tekst": "Use useful signature spells or spell-selection options to secure the spells your plan needs. Random generation can leave your wizard without the spells you wanted.",
-      "soort": "principe",
-      "thema": "magic",
-      "leger": null,
-      "lessen": [
-        "choose-dark-magic-spells",
-        "plan-around-guaranteed-signatures",
-        "chaos-swap-unhelpful-spells",
-        "illusion-familiar-control-spells"
-      ],
-      "kanten": null
-    },
-    {
       "id": "reserve-move-cast-and-withdraw",
-      "titel": "Use Reserve Move to cast, then withdraw to safety",
-      "tekst": "Move your wizard into a casting position, cast, then use Reserve Move to withdraw. This lets you reach targets while keeping the wizard safer.",
+      "titel": "Use Reserve Move to cast, then withdraw",
+      "tekst": "Move your wizard into a useful casting position, cast, then use Reserve Move to retreat. This helps you reach targets while keeping the caster safe.",
       "soort": "principe",
       "thema": "magic",
       "leger": null,
@@ -214,23 +244,52 @@
       "kanten": null
     },
     {
-      "id": "shelter-missile-wizards-in-skirmishers",
-      "titel": "Shelter missile wizards in skirmishing bunkers",
-      "tekst": "Put your magic-missile wizards in a skirmishing unit to gain protection against shooting.",
+      "id": "accelerate-your-advance-with-magic",
+      "titel": "Use movement spells to accelerate your advance",
+      "tekst": "Use movement magic to push attacking units forward and reach threatening positions sooner. The extra movement helps you apply pressure.",
       "soort": "principe",
       "thema": "magic",
       "leger": null,
       "lessen": [
-        "skirmishing-missile-wizard-bunker",
-        "beastmen-protected-vile-tide-bunker",
-        "skirmishing-marauders-alternative-bunker"
+        "steed-shadows-melee-character-block",
+        "movement-spells-early-aggression",
+        "deploy-dragon-reserve-move",
+        "reserve-move-undead-pressure"
       ],
       "kanten": null
     },
     {
-      "id": "escape-charge-arcs-with-magic",
+      "id": "protect-defensive-units-with-earthen-ramparts",
+      "titel": "Protect defensive units with Earthen Ramparts",
+      "tekst": "Cast Earthen Ramparts on units holding a defensive position. Its ward save helps them withstand incoming attacks.",
+      "soort": "principe",
+      "thema": "magic",
+      "leger": null,
+      "lessen": [
+        "defensive-jade-sentinel-ramparts",
+        "earthen-ramparts-shooting-defence",
+        "earthen-ramparts-missile-troops"
+      ],
+      "kanten": null
+    },
+    {
+      "id": "lower-leadership-before-terror-charges",
+      "titel": "Lower enemy Leadership before Terror charges",
+      "tekst": "Reduce your target's Leadership before charging it with Terror-causing units. This makes the target more likely to fail its Terror test and flee.",
+      "soort": "principe",
+      "thema": "magic",
+      "leger": null,
+      "lessen": [
+        "gathering-darkness-terror-combination",
+        "necrosphinx-terror-leadership",
+        "repeated-terror-charges-lanterns"
+      ],
+      "kanten": null
+    },
+    {
+      "id": "escape-charge-arcs-with-movement-magic",
       "titel": "Use movement spells to escape enemy charge arcs",
-      "tekst": "Use magical movement to reposition a threatened unit outside the enemy's charge arc, preventing that enemy from charging it next turn.",
+      "tekst": "Reposition threatened units outside enemy charge arcs with movement magic. This can prevent the opponent from charging them next turn.",
       "soort": "principe",
       "thema": "magic",
       "leger": null,
@@ -242,9 +301,51 @@
       "kanten": null
     },
     {
-      "id": "place-vortexes-in-enemy-routes",
-      "titel": "Place vortexes across the routes enemies want to take",
-      "tekst": "Place a vortex in an enemy unit's intended path to disrupt its advance and charge choices.",
+      "id": "use-power-scrolls-for-crucial-casts",
+      "titel": "Use Power Scrolls for crucial casts",
+      "tekst": "Use a Power Scroll when getting a particular spell through is crucial to your plan. It improves your chance of getting the effect when you need it.",
+      "soort": "principe",
+      "thema": "magic",
+      "leger": null,
+      "lessen": [
+        "save-scroll-decisive-control",
+        "prioritise-urgency-casting-reliability",
+        "power-scrolls-critical-ethereal-turns"
+      ],
+      "kanten": null
+    },
+    {
+      "id": "lower-leadership-to-increase-damage",
+      "titel": "Lower enemy Leadership to strengthen Leadership-based damage",
+      "tekst": "Reduce your target's Leadership before using attacks whose damage depends on it. The debuffs make those attacks more dangerous.",
+      "soort": "principe",
+      "thema": "magic",
+      "leger": null,
+      "lessen": [
+        "light-death-leadership-debuffs",
+        "lower-lantern-leadership-screams",
+        "dirge-necromancy-leadership-stack"
+      ],
+      "kanten": null
+    },
+    {
+      "id": "save-limited-dispels-for-critical-moments",
+      "titel": "Save limited dispelling tools for critical moments",
+      "tekst": "Keep limited dispelling tools available for the spells that can derail your plan. Choose when to spend them according to the spell's importance at that moment.",
+      "soort": "principe",
+      "thema": "magic",
+      "leger": null,
+      "lessen": [
+        "lesser-mages-dispel-scrolls",
+        "reserve-spellbreaking-for-mirage",
+        "delay-breaking-crystal-column"
+      ],
+      "kanten": null
+    },
+    {
+      "id": "place-control-spells-across-enemy-routes",
+      "titel": "Place control spells across the enemy's intended route",
+      "tekst": "Place obstructing or dangerous spells where enemy units intend to move. This disrupts their approach or makes the route more dangerous.",
       "soort": "principe",
       "thema": "magic",
       "leger": null,
@@ -254,49 +355,21 @@
         "moving-vortex-in-advance-path"
       ],
       "kanten": null
-    },
-    {
-      "id": "support-demanding-spells-with-casting-bonuses",
-      "titel": "Support demanding spells with extra casting bonuses",
-      "tekst": "When investing in magic, seek casting bonuses beyond wizard level. High casting values can make important spells hard to rely on.",
-      "soort": "principe",
-      "thema": "magic",
-      "leger": null,
-      "lessen": [
-        "necromancy-level-four-investment",
-        "illusion-needs-casting-bonuses",
-        "casting-bonuses-magic-investment"
-      ],
-      "kanten": null
-    },
-    {
-      "id": "power-scrolls-for-important-spells",
-      "titel": "Use Power Scrolls to help important spells resolve",
-      "tekst": "Use Power Scrolls to improve your chances of resolving spells your plan depends on.",
-      "soort": "principe",
-      "thema": "magic",
-      "leger": null,
-      "lessen": [
-        "scrolls-contested-hexes-vortexes",
-        "save-scroll-decisive-control",
-        "power-scrolls-critical-ethereal-turns"
-      ],
-      "kanten": null
     }
   ],
   "correcties": [],
   "runs": [
     {
       "poging": 1,
-      "promptKB": 75,
-      "sec": 159,
+      "promptKB": 104,
+      "sec": 119,
       "exit": 0,
       "usage": {
-        "input_tokens": 46463,
+        "input_tokens": 54328,
         "cached_input_tokens": 0,
         "cache_write_input_tokens": 0,
-        "output_tokens": 7700,
-        "reasoning_output_tokens": 6214
+        "output_tokens": 5744,
+        "reasoning_output_tokens": 4009
       },
       "items": {
         "agent_message": 1

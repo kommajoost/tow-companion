@@ -1,0 +1,413 @@
+{
+  "videoId": "JTo78ilRKYo",
+  "bronId": "yt-JTo78ilRKYo",
+  "model": "GPT-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-26T03:24:07.514Z",
+  "nieuw": [
+    {
+      "id": "release-fanatics-opponents-turn",
+      "titel": "Usually release Fanatics on your opponent's turn",
+      "tekst": "Usually release Fanatics on your opponent's turn, especially when defending. Hold them back to put them in a charger's path, then move them through that unit again in the opponent's random movement phase.",
+      "waarom": "He says this lets the Night Goblins move closer beforehand, reduces the risk of blocking your own movement and charges, and allows two passes through an enemy charger.",
+      "voorbeeld": "He describes releasing Fanatics into the path of Grail Knights charging Night Goblins, then moving them back through the Knights after contact, or towards another target if the Knights are already dead.",
+      "wanneerNiet": "He notes that later random movement can still obstruct your own units.",
+      "fase": "movement",
+      "themas": [
+        "hammers"
+      ],
+      "subthemas": [
+        "random-movers"
+      ],
+      "tags": [
+        "random-movement",
+        "zoning"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Fanatic"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-JTo78ilRKYo",
+          "url": "https://www.youtube.com/watch?v=JTo78ilRKYo&t=25s",
+          "tijd": 28,
+          "citaat": "you probably want to release your opponent's turn",
+          "extraCitaten": [
+            {
+              "tijd": 53,
+              "citaat": "it allows you to double tip on your opponent's charging unit"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-05-07",
+      "markeringen": []
+    },
+    {
+      "id": "attacking-fanatic-carriers-front",
+      "titel": "Put attacking Fanatic carriers on the front line",
+      "tekst": "When you are the aggressor, put your Fanatic-carrying units on the front line and advance them as quickly as possible.",
+      "waarom": "He says reaching the enemy matters more than anything else in this role.",
+      "voorbeeld": null,
+      "wanneerNiet": "He says positioning still matters, and defensive Fanatic use demands more careful placement.",
+      "fase": "deployment",
+      "themas": [
+        "deployment"
+      ],
+      "subthemas": [
+        "unit-placement"
+      ],
+      "tags": [
+        "zoning",
+        "random-movement"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Night Goblin Mob",
+        "Fanatic"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-JTo78ilRKYo",
+          "url": "https://www.youtube.com/watch?v=JTo78ilRKYo&t=219s",
+          "tijd": 222,
+          "citaat": "put them on the front line and go forwards as fast as possible"
+        }
+      ],
+      "datum": "2024-05-07",
+      "markeringen": []
+    },
+    {
+      "id": "fanatics-guard-artillery-flanks",
+      "titel": "Guard artillery flanks with Fanatics",
+      "tekst": "In a defensive army, put a small Night Goblin unit with Fanatics on a flank to protect your war machines. Release one or two against approaching skirmishers or Eagles rather than committing all the Fanatics together.",
+      "waarom": "He finds units coming around the army's edges difficult to handle and says one or two Fanatics can deal with these flank hunters quite handily.",
+      "voorbeeld": "He also describes using the flank unit against an opponent trying to overwhelm that flank with Grail Knights or Blood Knights.",
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "deployment",
+        "shooting-terrain",
+        "chaff"
+      ],
+      "subthemas": [
+        "unit-placement",
+        "war-machines",
+        "clearing-chaff"
+      ],
+      "tags": [
+        "flanks",
+        "war-machines",
+        "skirmishers"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Night Goblin Mob",
+        "Fanatic"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-JTo78ilRKYo",
+          "url": "https://www.youtube.com/watch?v=JTo78ilRKYo&t=236s",
+          "tijd": 239,
+          "citaat": "if I want to protect those I like having fanatics on a flank",
+          "extraCitaten": [
+            {
+              "tijd": 263,
+              "citaat": "one or two Fanatics can deal with like skirmishes or Eagles"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-05-07",
+      "markeringen": []
+    },
+    {
+      "id": "itchy-nuisance-fanatics-dragons",
+      "titel": "Use Itchy Nuisance to make Fanatics threaten dragons",
+      "tekst": "Use Itchy Nuisance to reduce a dragon's Toughness before hitting it with Fanatics. He considers this the main way to make Fanatics really frighten a dragon, particularly with several nearby Fanatic-carrying units.",
+      "waarom": "He says Strength 5 is not usually frightening into Toughness 6, but reducing the dragon to Toughness 3, 4 or even 5 makes the Fanatic hits more threatening.",
+      "voorbeeld": null,
+      "wanneerNiet": "He notes that the spell's 15-inch range requires the caster to be further forward and centrally positioned; reducing the dragon only to Toughness 5 is still not ideal.",
+      "fase": "magic-shooting",
+      "themas": [
+        "magic",
+        "matchups"
+      ],
+      "subthemas": [
+        "buffs-hexes",
+        "vs-monsters"
+      ],
+      "tags": [
+        "hex",
+        "dragons"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Fanatic"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-JTo78ilRKYo",
+          "url": "https://www.youtube.com/watch?v=JTo78ilRKYo&t=380s",
+          "tijd": 383,
+          "citaat": "make your Fanatics really scare a dragon",
+          "extraCitaten": [
+            {
+              "tijd": 391,
+              "citaat": "if you can drop that Dragon to toughness three"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-05-07",
+      "markeringen": []
+    },
+    {
+      "id": "fanatic-casters-two-turns",
+      "titel": "Position Fanatic support casters two turns ahead",
+      "tekst": "Work backwards from where the opponent wants to charge two turns from now, and position your supporting casters to cover the places their units will move into to threaten you. Combine that coverage with the threat of Fanatics to control space.",
+      "waarom": "He says the combined threats can create space in the middle and deter the opponent from taking otherwise favourable positions, which can be stronger than actually using the Fanatics.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "magic",
+        "game-plan"
+      ],
+      "subthemas": [
+        "wizard-placement",
+        "threat-zones"
+      ],
+      "tags": [
+        "zoning",
+        "hex",
+        "centre"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Fanatic"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-JTo78ilRKYo",
+          "url": "https://www.youtube.com/watch?v=JTo78ilRKYo&t=411s",
+          "tijd": 414,
+          "citaat": "their next turn but the turn after so that you can work backwards",
+          "extraCitaten": [
+            {
+              "tijd": 424,
+              "citaat": "the threat of Fanatics and the threat of the casters"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-05-07",
+      "markeringen": []
+    },
+    {
+      "id": "fanatic-carriers-marching-column",
+      "titel": "Use marching column for Fanatic delivery only when safe",
+      "tekst": "Consider marching column to move Night Goblin carriers into positions for Fanatics to pass through multiple enemy units. Before doing so, make sure enemy shooting will not expose the unit to panic checks.",
+      "waarom": "He says Night Goblins rely on Horde and Warband for reasonable Leadership, and a flank unit may also be outside the general's range. Fleeing carries the Fanatics away from where they need to be.",
+      "voorbeeld": null,
+      "wanneerNiet": "He calls this risky when incidental shooting can thin the unit enough to cause panic, especially on a flank outside the general's Leadership range.",
+      "fase": "movement",
+      "themas": [
+        "movement",
+        "infantry"
+      ],
+      "subthemas": [
+        "reforms-formations",
+        "infantry-moves"
+      ],
+      "tags": [
+        "marching-column",
+        "leadership",
+        "break-test",
+        "warband"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Night Goblin Mob",
+        "Fanatic"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-JTo78ilRKYo",
+          "url": "https://www.youtube.com/watch?v=JTo78ilRKYo&t=492s",
+          "tijd": 495,
+          "citaat": "if you are in marching column make sure that you're not at risk",
+          "extraCitaten": [
+            {
+              "tijd": 502,
+              "citaat": "goblins flee easily"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-05-07",
+      "markeringen": []
+    },
+    {
+      "id": "urgency-fanatic-launch-angles",
+      "titel": "Use Arcane Urgency for unexpected Fanatic launch angles",
+      "tekst": "Consider Arcane Urgency to give a Night Goblin carrier an extra move before releasing its Fanatics. He particularly values sending a cheap, small unit up the board to find launch angles the opponent has not protected.",
+      "waarom": "He says the additional movement can reach angles the opponent did not anticipate.",
+      "voorbeeld": "He describes moving a Close Order unit eight inches, using Arcane Urgency for another eight, and placing a Fanatic three inches further forward for nineteen inches of positional movement.",
+      "wanneerNiet": "He warns that building the entire turn around this can be ruinous if the spell is dispelled, fails or miscasts.",
+      "fase": "magic-shooting",
+      "themas": [
+        "magic"
+      ],
+      "subthemas": [
+        "control-spells"
+      ],
+      "tags": [
+        "conveyance",
+        "reserve-move"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Night Goblin Mob",
+        "Fanatic"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-JTo78ilRKYo",
+          "url": "https://www.youtube.com/watch?v=JTo78ilRKYo&t=547s",
+          "tijd": 550,
+          "citaat": "get 19 in of positional movement out of your Fanatics",
+          "extraCitaten": [
+            {
+              "tijd": 557,
+              "citaat": "you can get angles that your opponent maybe didn't see"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-05-07",
+      "markeringen": []
+    },
+    {
+      "id": "pathways-corner-fanatic-delivery",
+      "titel": "Measure Pathways corner to corner for longer Fanatic launches",
+      "tekst": "With Travel Mystical Pathways, exploit the speaker's distinction between within twelve inches and wholly within twelve inches. Measure from the carrier unit's corner nearest the destination and put its far corner just within twelve inches, then choose a facing that gives the Fanatics a useful launch angle.",
+      "waarom": "He says stretching the unit's placement this way provides considerable extra reach, while changing its facing without spending movement on wheeling makes it harder for the opponent to respond.",
+      "voorbeeld": "He describes a four-by-five Night Goblin unit producing a Fanatic placement about eighteen or nineteen inches from its starting position.",
+      "wanneerNiet": "The unit must not already have moved.",
+      "fase": "magic-shooting",
+      "themas": [
+        "magic"
+      ],
+      "subthemas": [
+        "control-spells"
+      ],
+      "tags": [
+        "conveyance",
+        "wheel"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Night Goblin Mob",
+        "Fanatic"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-JTo78ilRKYo",
+          "url": "https://www.youtube.com/watch?v=JTo78ilRKYo&t=601s",
+          "tijd": 604,
+          "citaat": "it's within it's not wholly within",
+          "extraCitaten": [
+            {
+              "tijd": 618,
+              "citaat": "corner just within 12 in"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-05-07",
+      "markeringen": []
+    },
+    {
+      "id": "paired-fanatics-remove-themselves",
+      "titel": "Use two Fanatics to remove each other after damaging passes",
+      "tekst": "If a valuable pass through several enemy units would leave two Fanatics dangerously close to your own units or blocking charges, arrange for both to emerge in the same position. He suggests letting the second pass through the first so they inflict automatic hits on each other and are likely to die.",
+      "waarom": "He says this can prevent the Fanatics from damaging your own units on the next turn after they have already hurt the enemy line.",
+      "voorbeeld": null,
+      "wanneerNiet": "He says this works for two Fanatics rather than a third, and their deaths are not guaranteed. He normally prefers positions that let Fanatics keep hitting the opponent over several turns.",
+      "fase": "movement",
+      "themas": [
+        "hammers"
+      ],
+      "subthemas": [
+        "random-movers"
+      ],
+      "tags": [
+        "random-movement",
+        "sacrifice"
+      ],
+      "leger": "orc-and-goblin-tribes",
+      "units": [
+        "Fanatic"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-JTo78ilRKYo",
+          "url": "https://www.youtube.com/watch?v=JTo78ilRKYo&t=735s",
+          "tijd": 738,
+          "citaat": "use them to kill each other and not risk taking hits on the next turn",
+          "extraCitaten": [
+            {
+              "tijd": 688,
+              "citaat": "have them come out in the same position"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-05-07",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "advance-losing-ranged-stalemate",
+      "bron": {
+        "bronId": "yt-JTo78ilRKYo",
+        "url": "https://www.youtube.com/watch?v=JTo78ilRKYo&t=162s",
+        "tijd": 165,
+        "citaat": "you've got to change your game plan up",
+        "extraCitaten": [
+          {
+            "tijd": 181,
+            "citaat": "over the course of the Six turn game you're going to lose an attrition"
+          }
+        ]
+      },
+      "toelichting": "He likewise advises changing from defensive play when an Empire gunline will win the shooting attrition battle."
+    },
+    {
+      "lesId": "plague-rust-armoured-targets",
+      "bron": {
+        "bronId": "yt-JTo78ilRKYo",
+        "url": "https://www.youtube.com/watch?v=JTo78ilRKYo&t=301s",
+        "tijd": 304,
+        "citaat": "plague a rust from the law of elementalism fantastic spell",
+        "extraCitaten": [
+          {
+            "tijd": 327,
+            "citaat": "opponent gets no armor save at all"
+          }
+        ]
+      },
+      "toelichting": "He recommends the same armour-reduction and armour-piercing combination, here using Plague of Rust to remove saves against Fanatics."
+    }
+  ],
+  "overgeslagen": "Skipped the closing channel and event plans, spell and rule explanations without separate advice, and garbled unit names. Kept the marching-column and spell-delivery recommendations with the risks he states.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

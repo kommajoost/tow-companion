@@ -1,0 +1,589 @@
+{
+  "videoId": "Ifsf5R0lMVM",
+  "bronId": "yt-Ifsf5R0lMVM",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-26T02:55:13.393Z",
+  "nieuw": [
+    {
+      "id": "dwarf-seven-static-resolution",
+      "titel": "Build a Dwarf block with seven static combat resolution",
+      "tekst": "For a block intended to receive a lone dragon, combine Close Order, two ranks, a unit standard with Rune of Battle, and a BSB carrying another Rune of Battle. Include a musician and something to issue a challenge.",
+      "waarom": "He says the two banner runes stack to produce seven static combat resolution. A dragon killing a champion in a challenge can reach seven including Close Order, so the musician can break the tie.",
+      "voorbeeld": null,
+      "wanneerNiet": "He warns that a good opponent will try to avoid this block.",
+      "fase": "army-building",
+      "themas": [
+        "infantry",
+        "matchups"
+      ],
+      "subthemas": [
+        "anchors",
+        "vs-monsters"
+      ],
+      "tags": [
+        "combat-resolution",
+        "magic-banner",
+        "bsb",
+        "challenge",
+        "dragons",
+        "close-order"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-Ifsf5R0lMVM",
+          "url": "https://www.youtube.com/watch?v=Ifsf5R0lMVM&t=269s",
+          "tijd": 272,
+          "citaat": "all these things in conjunction take you to a static combat res of seven",
+          "extraCitaten": [
+            {
+              "tijd": 223,
+              "citaat": "musician which breaks ties"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-10-18",
+      "markeringen": []
+    },
+    {
+      "id": "dwarf-tank-challenges-dragons",
+      "titel": "Challenge dragons with a heavily protected King or Thane",
+      "tekst": "Consider a very durable King or Thane, potentially your BSB, to challenge a dragon in your combat-resolution block. He suggests defensive options such as Master Rune of Gromril, Rune of Preservation or Master Rune of Adamant.",
+      "waarom": "He says a protected challenger concedes fewer wounds and therefore less combat resolution than a champion. He highlights protection against Killing Blow and multiple wounds, or Toughness 10 to make Strength 6 dragon attacks wound on sixes.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "characters",
+        "matchups"
+      ],
+      "subthemas": [
+        "challenges",
+        "vs-monsters"
+      ],
+      "tags": [
+        "challenge",
+        "magic-items",
+        "combat-resolution",
+        "dragons",
+        "armour"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [
+        "King",
+        "Thane"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-Ifsf5R0lMVM",
+          "url": "https://www.youtube.com/watch?v=Ifsf5R0lMVM&t=294s",
+          "tijd": 297,
+          "citaat": "you want to have a super tanky hero",
+          "extraCitaten": [
+            {
+              "tijd": 328,
+              "citaat": "the dragon's going to get a lot less combat res"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-10-18",
+      "markeringen": []
+    },
+    {
+      "id": "corner-angle-expels-dragon",
+      "titel": "Angle your receiving block to push dragons off the board",
+      "tekst": "When setting up in a corner and expecting a dragon to charge a unit, angle that unit slightly towards the corner. Try to win combat so the dragon's retreat takes it off the board.",
+      "waarom": "He says even a model's base slightly leaving the board removes it from the game, making this an easy way to kill a dragon.",
+      "voorbeeld": "He says he has pushed dragons off the board this way on several occasions.",
+      "wanneerNiet": "He says this requires some advance planning.",
+      "fase": "deployment",
+      "themas": [
+        "deployment",
+        "matchups"
+      ],
+      "subthemas": [
+        "unit-placement",
+        "vs-monsters"
+      ],
+      "tags": [
+        "board-edge",
+        "alignment",
+        "combat-resolution",
+        "dragons",
+        "fall-back"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-Ifsf5R0lMVM",
+          "url": "https://www.youtube.com/watch?v=Ifsf5R0lMVM&t=388s",
+          "tijd": 391,
+          "citaat": "angle the unit so it faces slightly towards the corner",
+          "extraCitaten": [
+            {
+              "tijd": 374,
+              "citaat": "you can then push the dragon off the board"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-10-18",
+      "markeringen": []
+    },
+    {
+      "id": "gyrocopter-rear-charge-dragon",
+      "titel": "Rear-charge a challenged dragon with a Gyrocopter",
+      "tekst": "Position a Gyrocopter earlier in the game to rear-charge a dragon fighting your combat-resolution block. Keep it hidden behind buildings or outside the dragon's line of sight until it can join the fight.",
+      "waarom": "He says the rear charge adds two combat resolution, while a dragon in a challenge cannot attack backwards. The Gyrocopter can force a retreating dragon to take a perils test and use Movement 9 and Swiftstride to help catch it.",
+      "voorbeeld": null,
+      "wanneerNiet": "He warns that an exposed Gyrocopter could simply be charged and killed before it supports the fight.",
+      "fase": "movement",
+      "themas": [
+        "movement",
+        "matchups"
+      ],
+      "subthemas": [
+        "support-countercharge",
+        "vs-monsters"
+      ],
+      "tags": [
+        "rear-charge",
+        "combat-resolution",
+        "pursuit",
+        "swiftstride",
+        "challenge",
+        "dragons"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [
+        "Gyrocopter"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-Ifsf5R0lMVM",
+          "url": "https://www.youtube.com/watch?v=Ifsf5R0lMVM&t=484s",
+          "tijd": 487,
+          "citaat": "charge a gyrocopter into the rear of the dragon",
+          "extraCitaten": [
+            {
+              "tijd": 519,
+              "citaat": "a rear charge gives you plus two to your combat res"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-10-18",
+      "markeringen": []
+    },
+    {
+      "id": "three-irondrake-torpedo-units",
+      "titel": "Consider three minimum Irondrake units with Trollhammer Torpedoes",
+      "tekst": "Consider three minimum-sized Irondrake units with Trollhammer Torpedoes to take wounds off approaching dragons. He particularly likes them against lightly armoured Behemoths.",
+      "waarom": "He highlights the torpedoes' AP3 and ability to wound a dragon on twos, with additional Strength 5 shots available within 18 inches.",
+      "voorbeeld": null,
+      "wanneerNiet": "He finds killing dragons entirely at range difficult: their movement often leaves only one or two shooting turns and possibly a Stand and Shoot.",
+      "fase": "army-building",
+      "themas": [
+        "shooting-terrain",
+        "matchups"
+      ],
+      "subthemas": [
+        "missile-units",
+        "vs-monsters"
+      ],
+      "tags": [
+        "missile-troops",
+        "armour-piercing",
+        "dragons",
+        "monsters"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [
+        "Irondrakes"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-Ifsf5R0lMVM",
+          "url": "https://www.youtube.com/watch?v=Ifsf5R0lMVM&t=571s",
+          "tijd": 574,
+          "citaat": "three minimum units of iron Dres",
+          "extraCitaten": [
+            {
+              "tijd": 591,
+              "citaat": "if the Behemoth is quite lightly armored"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-10-18",
+      "markeringen": []
+    },
+    {
+      "id": "grudge-throwers-pressure-dragons",
+      "titel": "Use Grudge Throwers to keep damaging dragons",
+      "tekst": "He strongly recommends Grudge Throwers against dragons and other Behemoths for their damage potential. Use Bombard to keep shooting dragons that hide behind buildings or retreat wounded beyond your other units' reach.",
+      "waarom": "He says direct hits can inflict substantial damage, and large dragon bases can still be hit after some scatters. He values being able to finish dragons that otherwise escape on one or two wounds.",
+      "voorbeeld": "He says he has rolled three direct hits with three Grudge Throwers in one salvo.",
+      "wanneerNiet": "He calls them a gambling piece: some games they do nothing, and three direct hits are unlikely.",
+      "fase": "magic-shooting",
+      "themas": [
+        "shooting-terrain",
+        "matchups"
+      ],
+      "subthemas": [
+        "war-machines",
+        "vs-monsters"
+      ],
+      "tags": [
+        "war-machines",
+        "dragons",
+        "monsters",
+        "line-of-sight",
+        "multiple-wounds"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [
+        "Grudge Thrower"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-Ifsf5R0lMVM",
+          "url": "https://www.youtube.com/watch?v=Ifsf5R0lMVM&t=604s",
+          "tijd": 607,
+          "citaat": "Grudge throwers are absolutely amazing",
+          "extraCitaten": [
+            {
+              "tijd": 646,
+              "citaat": "you can just keep peppering that Dragon"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-10-18",
+      "markeringen": []
+    },
+    {
+      "id": "cannon-aim-behemoth-base",
+      "titel": "Aim cannon shots using the Behemoth's base",
+      "tekst": "When firing a Dwarf cannon at a Behemoth, he suggests choosing a point ten inches from the back of its base or potentially seven inches from the front.",
+      "waarom": "He says these aiming points make a hit statistically very likely.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "magic-shooting",
+      "themas": [
+        "shooting-terrain",
+        "matchups"
+      ],
+      "subthemas": [
+        "war-machines",
+        "vs-monsters"
+      ],
+      "tags": [
+        "cannons",
+        "war-machines",
+        "monsters",
+        "dragons"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [
+        "Cannon Dwarfs"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-Ifsf5R0lMVM",
+          "url": "https://www.youtube.com/watch?v=Ifsf5R0lMVM&t=714s",
+          "tijd": 717,
+          "citaat": "pick a point Point that's either 10 in from the back of the base",
+          "extraCitaten": [
+            {
+              "tijd": 717,
+              "citaat": "or potentially 7 in from the front"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-10-18",
+      "markeringen": []
+    },
+    {
+      "id": "dragon-slayer-backfield-charge",
+      "titel": "Keep a Dragon Slayer back to charge incoming dragons",
+      "tekst": "Consider a Dragon Slayer as backfield protection, charging it out when a dragon reaches your lines. Use it to take wounds off the dragon or potentially finish one already damaged by Grudge Throwers or Trollhammer Torpedoes.",
+      "waarom": "He highlights the Dragon Slayer's ability to wound on a four-plus regardless of Toughness and inflict D3 multiple wounds against Behemoths. In his experience, it can achieve more than opponents expect.",
+      "voorbeeld": null,
+      "wanneerNiet": "He says the Dragon Slayer needs to charge because a dragon will otherwise kill it.",
+      "fase": "movement",
+      "themas": [
+        "characters",
+        "matchups"
+      ],
+      "subthemas": [
+        "combat-roles",
+        "vs-monsters"
+      ],
+      "tags": [
+        "countercharge",
+        "multiple-wounds",
+        "dragons",
+        "monsters"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [
+        "Dragon Slayer"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-Ifsf5R0lMVM",
+          "url": "https://www.youtube.com/watch?v=Ifsf5R0lMVM&t=845s",
+          "tijd": 848,
+          "citaat": "keep these as a bit of backfield protection",
+          "extraCitaten": [
+            {
+              "tijd": 855,
+              "citaat": "then charge this little guy out"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-10-18",
+      "markeringen": []
+    },
+    {
+      "id": "dragon-slayer-dishonor-tattoo",
+      "titel": "Give the dragon-hunting Slayer the Rune of Dishonor tattoo",
+      "tekst": "He strongly recommends the Rune of Dishonor tattoo on the Dragon Slayer used to attack dragons.",
+      "waarom": "He says that if the Slayer fails to kill the dragon and is killed in return, it gives away no points.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "characters",
+        "matchups"
+      ],
+      "subthemas": [
+        "mounts-items",
+        "vs-monsters"
+      ],
+      "tags": [
+        "magic-items",
+        "victory-points",
+        "dragons"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [
+        "Dragon Slayer"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-Ifsf5R0lMVM",
+          "url": "https://www.youtube.com/watch?v=Ifsf5R0lMVM&t=852s",
+          "tijd": 855,
+          "citaat": "I would 100% put the Rune Of Dishonor tattoo onto this layer as well"
+        }
+      ],
+      "datum": "2024-10-18",
+      "markeringen": []
+    },
+    {
+      "id": "slaying-ranged-dwarf-character",
+      "titel": "Consider a shooting character against lightly armoured Behemoths",
+      "tekst": "Against Behemoths without a two-plus armour save, consider a shooting King or Thane with Master Rune of Slaying, Rune of Accuracy and Rune of Rapid Fire. He suggests this particularly against lightly armoured targets such as Ghorgons and Gigantic Spawn of Chaos.",
+      "waarom": "He says the build produces two D3-damage shots, hitting and wounding Behemoths on threes. He also likes the potential surprise damage from Stand and Shoot.",
+      "voorbeeld": null,
+      "wanneerNiet": "He says the low AP makes it struggle against dragons with a two-plus armour save.",
+      "fase": "army-building",
+      "themas": [
+        "characters",
+        "matchups"
+      ],
+      "subthemas": [
+        "mounts-items",
+        "vs-monsters"
+      ],
+      "tags": [
+        "magic-items",
+        "multiple-wounds",
+        "stand-and-shoot",
+        "monsters",
+        "armour"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [
+        "King",
+        "Thane"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-Ifsf5R0lMVM",
+          "url": "https://www.youtube.com/watch?v=Ifsf5R0lMVM&t=894s",
+          "tijd": 897,
+          "citaat": "I would definitely suggest taking the Rune of accuracy and the Rune of Rapid Fire",
+          "extraCitaten": [
+            {
+              "tijd": 938,
+              "citaat": "it does struggle to deal with dragons that are on a two- up save"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-10-18",
+      "markeringen": []
+    },
+    {
+      "id": "adamant-anvil-dragon-bait",
+      "titel": "Bait dragons with a frontline Toughness 10 Anvil",
+      "tekst": "Consider deploying an Anvil of Doom at the front of your lines with Rune of Adamant. Offer it as a tempting alternative to your high-combat-resolution blocks, then exploit the time the dragon spends fighting it.",
+      "waarom": "He says dragons wound the Toughness 10 Anvil on sixes and are unlikely to kill it quickly. Pinning the dragon can let the rest of the army attack elsewhere or prepare supporting charges.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "deployment",
+        "chaff",
+        "matchups"
+      ],
+      "subthemas": [
+        "unit-placement",
+        "decoys-bait",
+        "vs-monsters"
+      ],
+      "tags": [
+        "bait",
+        "tarpit",
+        "delay",
+        "magic-items",
+        "dragons"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [
+        "Anvil of Doom"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-Ifsf5R0lMVM",
+          "url": "https://www.youtube.com/watch?v=Ifsf5R0lMVM&t=975s",
+          "tijd": 978,
+          "citaat": "give it the Rune of adamant so suddenly it's toughness 10",
+          "extraCitaten": [
+            {
+              "tijd": 1002,
+              "citaat": "then suddenly they're stuck there"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-10-18",
+      "markeringen": []
+    },
+    {
+      "id": "royal-king-smiting-dragons",
+      "titel": "Consider a protected Royal Clans King with Rune of Smiting",
+      "tekst": "For Royal Clans, he likes a King with Master Rune of Gromril, Rune of Preservation and Master Rune of Smiting. Support him with the unit banner providing a five-plus ward save so he can survive and strike back at a dragon.",
+      "waarom": "He says the protection helps the King survive a round, while D6 damage can punish failed dragon saves heavily.",
+      "voorbeeld": null,
+      "wanneerNiet": "He notes that the attacks are only AP2 before Armour Bane, leaving many dragons a four-plus armour save.",
+      "fase": "army-building",
+      "themas": [
+        "characters",
+        "matchups"
+      ],
+      "subthemas": [
+        "mounts-items",
+        "vs-monsters"
+      ],
+      "tags": [
+        "magic-items",
+        "multiple-wounds",
+        "armour",
+        "ward-save",
+        "dragons"
+      ],
+      "leger": "dwarfen-mountain-holds",
+      "units": [
+        "King"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-Ifsf5R0lMVM",
+          "url": "https://www.youtube.com/watch?v=Ifsf5R0lMVM&t=1083s",
+          "tijd": 1086,
+          "citaat": "the master Rune of gromril the Rune of preservation and master Rune of smiting",
+          "extraCitaten": [
+            {
+              "tijd": 1100,
+              "citaat": "do D6 damage"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-10-18",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "infantry-overwhelm-dragon-numbers",
+      "bron": {
+        "bronId": "yt-Ifsf5R0lMVM",
+        "url": "https://www.youtube.com/watch?v=Ifsf5R0lMVM&t=228s",
+        "tijd": 231,
+        "citaat": "if you double outnumber something it loses its chance to fall back in good order"
+      },
+      "toelichting": "He likewise recommends doubling a dragon's numbers to remove its option to fall back in good order."
+    },
+    {
+      "lesId": "decoys-set-up-countercharges",
+      "bron": {
+        "bronId": "yt-Ifsf5R0lMVM",
+        "url": "https://www.youtube.com/watch?v=Ifsf5R0lMVM&t=412s",
+        "tijd": 415,
+        "citaat": "you put this as a bait unit",
+        "extraCitaten": [
+          {
+            "tijd": 440,
+            "citaat": "the combat block can charge into the flank of the dragon"
+          }
+        ]
+      },
+      "toelichting": "His weaker neighbouring unit baits a dragon into position for the main block's countercharge."
+    },
+    {
+      "lesId": "layer-resilient-units-retreat-trap",
+      "bron": {
+        "bronId": "yt-Ifsf5R0lMVM",
+        "url": "https://www.youtube.com/watch?v=Ifsf5R0lMVM&t=1048s",
+        "tijd": 1051,
+        "citaat": "stubborn and then pop back through your unit"
+      },
+      "toelichting": "He likewise places a Stubborn receiver ahead of a supporting block or Anvil and retreats through it."
+    },
+    {
+      "lesId": "delay-dragon-score-elsewhere",
+      "bron": {
+        "bronId": "yt-Ifsf5R0lMVM",
+        "url": "https://www.youtube.com/watch?v=Ifsf5R0lMVM&t=1164s",
+        "tijd": 1167,
+        "citaat": "while killing the rest of the army to win you a game",
+        "extraCitaten": [
+          {
+            "tijd": 1159,
+            "citaat": "having the gyrocopters flying around being a nuisance getting out of charge arcs"
+          }
+        ]
+      },
+      "waarom": "He thinks the Expeditionary Force lacks strong dragon-killing tools and would use Gyrocopters to distract the dragon while attacking the rest of the army.",
+      "toelichting": "He explicitly recommends distracting the dragon and winning elsewhere instead of needing to kill it."
+    }
+  ],
+  "overgeslagen": "Skipped introductory meta commentary, rules without a separate recommendation, closing promotions and channel talk. Omitted the unclear frontage passage around 7:27, garbled rune names, and the bolt-thrower option he ultimately says he tends to avoid. Did not extract the mass-handgunner approach he rejects.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

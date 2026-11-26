@@ -3653,7 +3653,7 @@ function principleHits(pr, q, hits, armySlug, themeId) {
 async function listPrinciples(a) {
 	const [lib, pr] = await Promise.all([library(), principles()]);
 	if (!pr.list.length) return "The tactics library has no principles yet. Use search_tactics for the lessons.";
-	const limit = Math.min(30, Math.max(1, Math.floor(a.limit ?? 10)));
+	const limit = Math.min(25, Math.max(1, Math.floor(a.limit ?? 10)));
 	const notes = [];
 	let armySlug = null;
 	if (a.army) {
@@ -7218,7 +7218,7 @@ const TOOLS = [
 		inputSchema: obj({
 			theme: s("Theme id or name from list_tactics_index (e.g. \"chaff\", \"magic\")."),
 			army: ARMY,
-			limit: n("Principles per list (default 10, max 30).", 1, 30)
+			limit: n("Principles per list (default 10, max 25).", 1, 25)
 		}),
 		run: (a) => listPrinciples({
 			theme: str(a.theme),

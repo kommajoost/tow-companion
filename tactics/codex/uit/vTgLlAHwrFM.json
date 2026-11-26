@@ -1,0 +1,313 @@
+{
+  "videoId": "vTgLlAHwrFM",
+  "bronId": "yt-vTgLlAHwrFM",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-26T02:26:10.252Z",
+  "nieuw": [
+    {
+      "id": "six-silver-helms-command",
+      "titel": "Try six Silver Helms with full command and Ring of Fury",
+      "tekst": "He endorses six Silver Helms with full command and the Ring of Fury, a setup he intends to keep running.",
+      "waarom": "He says the setup has worked really well for him, including the standard bearer he had considered dropping.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "hammers"
+      ],
+      "subthemas": [
+        "heavy-cavalry"
+      ],
+      "tags": [
+        "heavy-cavalry",
+        "magic-items",
+        "champion"
+      ],
+      "leger": "high-elf-realms",
+      "units": [
+        "Silver Helms"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-vTgLlAHwrFM",
+          "url": "https://www.youtube.com/watch?v=vTgLlAHwrFM&t=132s",
+          "tijd": 135,
+          "citaat": "Six models with the ring of fury, and it's been working out",
+          "extraCitaten": [
+            {
+              "tijd": 143,
+              "citaat": "really well for me. So, I'm very pleased to keep running it."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-03-20",
+      "markeringen": []
+    },
+    {
+      "id": "drilled-cavalry-terrain-cover",
+      "titel": "Place one Drilled cavalry model behind terrain for cover",
+      "tekst": "With Drilled heavy cavalry, he recommends placing one model behind terrain to gain cover against shooting.",
+      "waarom": "He says this placement gives the unit a minus-one shooting modifier from cover regardless of the firing direction.",
+      "voorbeeld": "He points to the opposing Chosen Chaos Knights, with one model just behind terrain, as the setup to copy.",
+      "wanneerNiet": "He notes that Sisters of Avelorn ignore cover, so it would not help against their shooting.",
+      "fase": "deployment",
+      "themas": [
+        "deployment",
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "deploying-vs-shooting",
+        "avoiding-fire"
+      ],
+      "tags": [
+        "drilled",
+        "cover",
+        "heavy-cavalry",
+        "hit-penalties"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-vTgLlAHwrFM",
+          "url": "https://www.youtube.com/watch?v=vTgLlAHwrFM&t=831s",
+          "tijd": 834,
+          "citaat": "One model is just behind the terrain",
+          "extraCitaten": [
+            {
+              "tijd": 850,
+              "citaat": "they ignore cover, but it's just a good"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-03-20",
+      "markeringen": []
+    },
+    {
+      "id": "dragon-facing-deters-advance",
+      "titel": "Face your dragon forward to discourage an aggressive advance",
+      "tekst": "In the deployment he reviews, he would point the dragon further forwards to make the opponent play more defensively.",
+      "waarom": "He says the dragon could still have stayed near Arcane Urgency and wheeled right if needed.",
+      "voorbeeld": "He believes his dragon's actual facing helped Adam advance more aggressively than he had expected.",
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "deployment",
+        "game-plan"
+      ],
+      "subthemas": [
+        "unit-placement",
+        "threat-zones"
+      ],
+      "tags": [
+        "dragons",
+        "charge-arc",
+        "zoning"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-vTgLlAHwrFM",
+          "url": "https://www.youtube.com/watch?v=vTgLlAHwrFM&t=910s",
+          "tijd": 913,
+          "citaat": "would have made Adam have to be more defensive.",
+          "extraCitaten": [
+            {
+              "tijd": 922,
+              "citaat": "I could always just wheel over to the right if needs be."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-03-20",
+      "markeringen": []
+    },
+    {
+      "id": "box-in-drilled-knights",
+      "titel": "Surround Drilled Chosen Knights on all four sides",
+      "tekst": "To pin Chosen Chaos Knights with Drilled and Arcane Urgency for a dragon attack, use fast units to box them in on all four sides.",
+      "waarom": "He says Drilled and Arcane Urgency make the knights difficult to pin down, so he needs to close off all four sides to secure the target for his dragon.",
+      "voorbeeld": "He positioned his Griffon so that the knights' base would clip it when trying to wheel out. He and Adam agreed the knights were trapped, and they charged the Griffon.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "movement",
+        "matchups"
+      ],
+      "subthemas": [
+        "charge-setup",
+        "vs-other"
+      ],
+      "tags": [
+        "drilled",
+        "heavy-cavalry",
+        "conveyance",
+        "zoning",
+        "dragons"
+      ],
+      "leger": null,
+      "units": [
+        "Chosen Chaos Knights"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-vTgLlAHwrFM",
+          "url": "https://www.youtube.com/watch?v=vTgLlAHwrFM&t=1011s",
+          "tijd": 1014,
+          "citaat": "I have to pin him in on all four sides",
+          "extraCitaten": [
+            {
+              "tijd": 998,
+              "citaat": "I've used the fact that I've got very fast moving units here to pin in"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-03-20",
+      "markeringen": []
+    },
+    {
+      "id": "avoid-displacing-champion-rearward",
+      "titel": "Avoid sending a champion into your dragon's next challenge",
+      "tekst": "Before issuing a challenge, consider whether declining it will move the enemy champion into the rank your dragon will charge next turn. In his position, he should have avoided challenging with the Noble and accepted one more attack instead.",
+      "waarom": "He found that the champion moved to the rear could then accept the dragon's challenge, restricting the dragon's contribution to the next fight.",
+      "voorbeeld": "His Noble challenged the Chosen Chaos Knights. Adam declined and moved the champion to the rear, where the dragon was positioned to attack next turn.",
+      "wanneerNiet": null,
+      "fase": "combat",
+      "themas": [
+        "characters"
+      ],
+      "subthemas": [
+        "challenges"
+      ],
+      "tags": [
+        "challenge",
+        "champion",
+        "dragons",
+        "rear-charge"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-vTgLlAHwrFM",
+          "url": "https://www.youtube.com/watch?v=vTgLlAHwrFM&t=1132s",
+          "tijd": 1135,
+          "citaat": "I should not have challenged with the noble and just taken one more attack.",
+          "extraCitaten": [
+            {
+              "tijd": 1218,
+              "citaat": "the dragon is locked in a challenge"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-03-20",
+      "markeringen": []
+    },
+    {
+      "id": "avoid-enemy-retreat-chains",
+      "titel": "Do not extend enemy retreats through your supporting units",
+      "tekst": "When moving support around an enemy combat, avoid creating a chain of friendly units that carries the retreating enemy out of reach. Check where that retreat will leave it before placing the support.",
+      "waarom": "He found that his placement let the surviving knights escape and tie up his wizard, costing him magic defence and leaving roughly 400 points trapped in combat.",
+      "voorbeeld": "The Chosen Chaos Knights retreated through his Griffon, a Silver Helms unit he says he should not have moved there, and his Reavers. The last two knights then charged the Reavers and Archmage.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "movement"
+      ],
+      "subthemas": [
+        "overrun-pursuit"
+      ],
+      "tags": [
+        "fall-back",
+        "pursuit",
+        "stubborn"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-vTgLlAHwrFM",
+          "url": "https://www.youtube.com/watch?v=vTgLlAHwrFM&t=1230s",
+          "tijd": 1233,
+          "citaat": "through this unit of silver helms which I shouldn't have moved to here",
+          "extraCitaten": [
+            {
+              "tijd": 1320,
+              "citaat": "having this 400 points tied up and all my magic defense gone is absolutely backbreaking."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-03-20",
+      "markeringen": []
+    },
+    {
+      "id": "check-retreat-unit-strength",
+      "titel": "Identify which unit will determine the enemy's retreat direction",
+      "tekst": "When setting up charges, identify the highest Unit Strength and which unit the enemy will run away from. Allow for the opponent killing models to change which of your units has the highest Unit Strength.",
+      "waarom": null,
+      "voorbeeld": "His dragon had the highest Unit Strength, so the Chosen Chaos Knights retreated away from it through three of his other units.",
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "movement"
+      ],
+      "subthemas": [
+        "charge-setup"
+      ],
+      "tags": [
+        "unit-strength",
+        "fall-back",
+        "pursuit"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-vTgLlAHwrFM",
+          "url": "https://www.youtube.com/watch?v=vTgLlAHwrFM&t=1360s",
+          "tijd": 1363,
+          "citaat": "just think about what's the highest unit strength",
+          "extraCitaten": [
+            {
+              "tijd": 1371,
+              "citaat": "your opponent can tweak that by killing models in certain units"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-03-20",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "chaff-engineered-enemy-retreats",
+      "bron": {
+        "bronId": "yt-vTgLlAHwrFM",
+        "url": "https://www.youtube.com/watch?v=vTgLlAHwrFM&t=521s",
+        "tijd": 524,
+        "citaat": "gets through my models all the way through bounces off the board.",
+        "extraCitaten": [
+          {
+            "tijd": 581,
+            "citaat": "at an angle so there wasn't room for him to to fit."
+          }
+        ]
+      },
+      "toelichting": "He likewise recommends placing supporting units in the retreat path so a fleeing enemy must continue through them and off the board."
+    }
+  ],
+  "overgeslagen": "Skipped introductions, team and tournament discussion, list readouts, channel promotion, tentative list experiments, garbled passages and rules explanations without a clear recommendation.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

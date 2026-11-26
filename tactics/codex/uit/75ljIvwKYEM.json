@@ -1,0 +1,293 @@
+{
+  "videoId": "75ljIvwKYEM",
+  "bronId": "yt-75ljIvwKYEM",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-26T03:55:06.914Z",
+  "nieuw": [
+    {
+      "id": "giant-rats-redirection-choice",
+      "titel": "Consider Giant Rats for redirecting charges",
+      "tekst": "He considers Giant Rats one of the best units for redirecting enemy charges.",
+      "waarom": "He demonstrates how an 18-inch march lets a 30-point unit reach a blocking position and buy another round of shooting.",
+      "voorbeeld": "He kept Giant Rats behind impassable terrain in marching column, then moved them in front of a Bretonnian character to protect a Warp Lightning Cannon.",
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "chaff"
+      ],
+      "subthemas": [
+        "choosing-chaff"
+      ],
+      "tags": [
+        "redirect",
+        "speed-bump",
+        "sacrifice"
+      ],
+      "leger": "skaven",
+      "units": [
+        "Giant Rats"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-75ljIvwKYEM",
+          "url": "https://www.youtube.com/watch?v=75ljIvwKYEM&t=63s",
+          "tijd": 66,
+          "citaat": "I think Skaven have maybe one of the best units",
+          "extraCitaten": [
+            {
+              "tijd": 73,
+              "citaat": "which is giant rats."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-09-02",
+      "markeringen": []
+    },
+    {
+      "id": "hold-redirector-protect-target",
+      "titel": "Hold with the redirector when fleeing exposes your protected unit",
+      "tekst": "Let the enemy charge and kill your redirector when fleeing would let it redirect into the unit you are protecting. Keep the redirector's facing aligned so the enemy cannot overrun into that protected unit.",
+      "waarom": "He explains that fleeing would have given the enemy character an opportunity to redirect into his Warp Lightning Cannon.",
+      "voorbeeld": "His Giant Rats held against a Bretonnian character, died and left the character needing to restrain and reform. That bought another shooting round, in which two Warp Lightning Cannons killed it.",
+      "wanneerNiet": "He says this screen would not have worked against a dragon, because it could see over the Giant Rats as a Large Target.",
+      "fase": "movement",
+      "themas": [
+        "chaff",
+        "movement"
+      ],
+      "subthemas": [
+        "redirecting",
+        "charge-order"
+      ],
+      "tags": [
+        "redirect",
+        "sacrifice",
+        "flee",
+        "overrun"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-75ljIvwKYEM",
+          "url": "https://www.youtube.com/watch?v=75ljIvwKYEM&t=298s",
+          "tijd": 301,
+          "citaat": "You don't want to flee with these guys.",
+          "extraCitaten": [
+            {
+              "tijd": 309,
+              "citaat": "but that would give him the opportunity to redirect into my warp lightning cannon."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-09-02",
+      "markeringen": []
+    },
+    {
+      "id": "giant-rats-sacrifice-panic",
+      "titel": "Allow for panic when sacrificing Giant Rats",
+      "tekst": "Keep sacrificial Giant Rats six inches away from your other units, or be prepared to take a panic test when they are destroyed.",
+      "waarom": "He warns that Giant Rats cause panic in nearby friendly units when destroyed in combat.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "chaff"
+      ],
+      "subthemas": [
+        "redirecting"
+      ],
+      "tags": [
+        "break-test",
+        "sacrifice"
+      ],
+      "leger": "skaven",
+      "units": [
+        "Giant Rats"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-75ljIvwKYEM",
+          "url": "https://www.youtube.com/watch?v=75ljIvwKYEM&t=333s",
+          "tijd": 336,
+          "citaat": "So, you need to be that 6 in away",
+          "extraCitaten": [
+            {
+              "tijd": 336,
+              "citaat": "or just be prepared to roll a panic test"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-09-02",
+      "markeringen": []
+    },
+    {
+      "id": "bell-behind-stormvermin-support",
+      "titel": "Keep a Screaming Bell behind your Stormvermin",
+      "tekst": "Put your general, a Grey Seer on a Screaming Bell, in a large Clanrat unit behind the Stormvermin. Use this central support piece to provide Leadership 10, bell buffs and spellcasting while the Stormvermin fight ahead.",
+      "waarom": "He values keeping a substantial investment behind other troops while it still contributes without needing to enter combat.",
+      "voorbeeld": "His bell granted an extra attack within command range, stacking with Skaven brew on the Stormvermin. They broke through Knights of the Realm on Foot and ran them down.",
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "deployment",
+        "characters",
+        "magic"
+      ],
+      "subthemas": [
+        "unit-placement",
+        "bsb",
+        "wizard-placement"
+      ],
+      "tags": [
+        "leadership",
+        "general",
+        "bunker",
+        "enchantment"
+      ],
+      "leger": "skaven",
+      "units": [
+        "Grey Seer",
+        "Screaming Bell",
+        "Clanrats",
+        "Stormvermin"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-75ljIvwKYEM",
+          "url": "https://www.youtube.com/watch?v=75ljIvwKYEM&t=870s",
+          "tijd": 873,
+          "citaat": "rats behind it with the screaming bell in the clan rats.",
+          "extraCitaten": [
+            {
+              "tijd": 889,
+              "citaat": "putting a bunch of points in behind other stuff"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-09-02",
+      "markeringen": []
+    },
+    {
+      "id": "empire-griffon-central-support",
+      "titel": "Consider a Griffon General for defensive central support",
+      "tekst": "Consider using a General of the Empire on a Griffon as a defensive support piece in the centre. Use his Leadership 10 while shooting weakens enemies, then fly out to charge weakened targets.",
+      "waarom": "He points to the General's 18-inch leadership bubble as a way to give the centre more durability.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "characters"
+      ],
+      "subthemas": [
+        "combat-roles"
+      ],
+      "tags": [
+        "leadership",
+        "general",
+        "fly",
+        "mounts"
+      ],
+      "leger": "empire-of-man",
+      "units": [
+        "General of the Empire",
+        "Griffon Empire"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-75ljIvwKYEM",
+          "url": "https://www.youtube.com/watch?v=75ljIvwKYEM&t=1027s",
+          "tijd": 1030,
+          "citaat": "I think he's a defensive supportive piece.",
+          "extraCitaten": [
+            {
+              "tijd": 1047,
+              "citaat": "while you soften things with your shooting and then charge out"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-09-02",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "align-sacrifices-for-empty-overruns",
+      "bron": {
+        "bronId": "yt-75ljIvwKYEM",
+        "url": "https://www.youtube.com/watch?v=75ljIvwKYEM&t=298s",
+        "tijd": 301,
+        "citaat": "Line up the uh overrun path properly.",
+        "extraCitaten": [
+          {
+            "tijd": 247,
+            "citaat": "path is going straight past my warp lightning cannon"
+          }
+        ]
+      },
+      "toelichting": "He gives the same advice to angle a sacrifice so the enemy's overrun misses the valuable unit behind it."
+    },
+    {
+      "lesId": "exploit-random-movement-variance",
+      "bron": {
+        "bronId": "yt-75ljIvwKYEM",
+        "url": "https://www.youtube.com/watch?v=75ljIvwKYEM&t=491s",
+        "tijd": 494,
+        "citaat": "I don't want to risk the 18 that you could roll.",
+        "extraCitaten": [
+          {
+            "tijd": 721,
+            "citaat": "threat range to change your opponent's decision making which ends up winning you games."
+          }
+        ]
+      },
+      "toelichting": "He again recommends using the possibility of a high 3D6 move to constrain enemy positioning."
+    },
+    {
+      "lesId": "stay-beyond-known-charge-reach",
+      "bron": {
+        "bronId": "yt-75ljIvwKYEM",
+        "url": "https://www.youtube.com/watch?v=75ljIvwKYEM&t=443s",
+        "tijd": 446,
+        "citaat": "I needed to stay out of charge range",
+        "extraCitaten": [
+          {
+            "tijd": 470,
+            "citaat": "I only move him about four or five inches"
+          }
+        ]
+      },
+      "waarom": "He wanted the opponent to decide how to advance rather than immediately charging his Hell Pit Abomination on turn one.",
+      "voorbeeld": "After rolling a 12 for his Hell Pit Abomination, he moved it only four or five inches to avoid giving the Grail Knights or Duke on Royal Pegasus a charge while establishing his own threat zone.",
+      "toelichting": "He applies the same recommendation to remain beyond enemy charge reach, even when a longer move is available."
+    },
+    {
+      "lesId": "character-leadership-central-anchor",
+      "bron": {
+        "bronId": "yt-75ljIvwKYEM",
+        "url": "https://www.youtube.com/watch?v=75ljIvwKYEM&t=830s",
+        "tijd": 833,
+        "citaat": "more generally for other factions, it is essentially about leadership 10.",
+        "extraCitaten": [
+          {
+            "tijd": 857,
+            "citaat": "using this central piece to not just buff leadership"
+          }
+        ]
+      },
+      "toelichting": "He repeats the concept of a central character providing high leadership to anchor the army."
+    }
+  ],
+  "overgeslagen": "Skipped introductions, guide sales, event promotion and closing remarks. Omitted combat dice and attack totals as standalone lessons, speculative spell-build remarks, and the optional Hell Pit charge because he presents it as a risky decision rather than a clear recommendation.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

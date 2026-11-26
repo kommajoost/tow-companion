@@ -7,7 +7,7 @@ How `public/tactics/bronnen.json`, `lessen.json` and `principes.json` are made. 
 | List all videos per first-round channel | `npm run tactics:list` | `tactics/cache/videos-<channel>.json` |
 | Decide relevance and type | `npm run tactics:select` | `tactics/selectie.json` (hand decisions in `tactics/handmatig.json`) |
 | Upload dates (slow, one video at a time) | `npm run tactics:dates [-- <id> ...]` | `tactics/cache/meta.json` |
-| Write the sources file | `npm run tactics:sources` | `public/tactics/bronnen.json` |
+| Write the sources file (first-round channels from the caches, round 3 from `tactics/ronde3/lijst.json` + `kanalen.json`) | `npm run tactics:sources` | `public/tactics/bronnen.json` |
 | Glossary from the app data | `npm run tactics:glossary` | `tactics/glossary.json` |
 | Name repair on a transcript | `npm run tactics:transcript -- --convert-only <id> ...` | `tactics/ruw/<id>.fixed.txt` |
 | Validate and recount | `npm run tactics:build` (or `tactics:check`) | counts and status in `bronnen.json`, `public/tactics/themas.json` and `tags.json`, lessons per theme, sub-theme, phase and tag |
@@ -193,6 +193,7 @@ Codex start and the git guard are shared with the indexer in `tactics/codex/cli.
 |---|---|---|
 | All videos in `tactics/ronde2-tactics.json` with a transcript and no output yet | `npm run tactics:codex` | `tactics/codex/uit/<id>.json`, `tactics/codex/log.json` |
 | Only some videos / at most N | `npm run tactics:codex -- <id> <id>` / `-- --max 3` | idem |
+| Another video list (JSON array with a `videoId` per item, every video already in `bronnen.json`), e.g. round 3 | `npm run tactics:codex -- --lijst tactics/ronde3/lijst.json` | idem |
 | Calibration on an already processed video (its own lessons are left out of the index) | `npm run tactics:codex -- --kalibratie <id>` | `tactics/codex/kalibratie/<id>.json` |
 | Show the prompt without running Codex | `npm run tactics:codex -- --droog <id>` | prompt in the temp folder |
 | Merge into the lessons file, mark processed, build and check | `npm run tactics:merge` (`-- --droog` to preview) | `public/tactics/lessen.json`, `tactics/verwerkt.json`, `tactics/codex/samengevoegd.json` |

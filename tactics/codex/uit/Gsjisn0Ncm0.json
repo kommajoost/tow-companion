@@ -1,0 +1,488 @@
+{
+  "videoId": "Gsjisn0Ncm0",
+  "bronId": "yt-Gsjisn0Ncm0",
+  "model": "gpt-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-26T02:30:05.492Z",
+  "nieuw": [
+    {
+      "id": "mark-urgency-casting-range",
+      "titel": "Mark Arcane Urgency's range before moving",
+      "tekst": "Before moving the dragon, mark the wizard's 15-inch Arcane Urgency range. In person, use dice at the rough extremities, then double-check the actual distance.",
+      "waarom": "He says marking the range makes it easier to position the dragon where he wants it.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "magic"
+      ],
+      "subthemas": [
+        "wizard-placement"
+      ],
+      "tags": [
+        "conveyance",
+        "battle-magic"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-Gsjisn0Ncm0",
+          "url": "https://www.youtube.com/watch?v=Gsjisn0Ncm0&t=388s",
+          "tijd": 391,
+          "citaat": "you want to Mark out 15inch range on your wizard",
+          "extraCitaten": [
+            {
+              "tijd": 400,
+              "citaat": "just Mark out with dice"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-03-13",
+      "markeringen": []
+    },
+    {
+      "id": "dragon-facing-before-urgency",
+      "titel": "Keep a useful facing before casting Arcane Urgency",
+      "tekst": "When marching a dragon into position for Arcane Urgency, finish the first move facing useful enemy targets in case the spell fails.",
+      "waarom": "He says a facing chosen only for the intended move can leave the dragon very limited if Arcane Urgency fails.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "movement"
+      ],
+      "subthemas": [
+        "charge-setup"
+      ],
+      "tags": [
+        "charge-arc",
+        "conveyance",
+        "dragons"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-Gsjisn0Ncm0",
+          "url": "https://www.youtube.com/watch?v=Gsjisn0Ncm0&t=504s",
+          "tijd": 507,
+          "citaat": "if you fail the Arcane urgency",
+          "extraCitaten": [
+            {
+              "tijd": 500,
+              "citaat": "you can see the vision I'm covering"
+            },
+            {
+              "tijd": 515,
+              "citaat": "because it can really limit you"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-03-13",
+      "markeringen": []
+    },
+    {
+      "id": "prioritise-urgency-casting-reliability",
+      "titel": "Prioritise reliability for the crucial Arcane Urgency cast",
+      "tekst": "Prioritise a crucial Arcane Urgency cast when using built-in spell rerolls, such as those he mentions for High Elves and Dark Elves. If your army lacks that reliability, consider a Power Scroll.",
+      "waarom": "He considers getting this spell off very important when the opportunity for the move arises.",
+      "voorbeeld": null,
+      "wanneerNiet": "He notes that finding the points can be difficult when fitting expensive dragons into the army.",
+      "fase": "army-building",
+      "themas": [
+        "magic"
+      ],
+      "subthemas": [
+        "casting-aids"
+      ],
+      "tags": [
+        "conveyance",
+        "power-scroll"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-Gsjisn0Ncm0",
+          "url": "https://www.youtube.com/watch?v=Gsjisn0Ncm0&t=542s",
+          "tijd": 545,
+          "citaat": "you might want to consider taking a power scroll",
+          "extraCitaten": [
+            {
+              "tijd": 530,
+              "citaat": "if you're playing High Elves you've got an inbuilt rroll"
+            },
+            {
+              "tijd": 538,
+              "citaat": "use the reroll on for your spells"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-03-13",
+      "markeringen": []
+    },
+    {
+      "id": "urgency-dragon-blocks-wheels",
+      "titel": "Trap ranked units by blocking their wheels",
+      "tekst": "Use Arcane Urgency to place a dragon in front of a ranked target, just close enough that the target's wheel would clip its base. Keep the target's sideways or turn-and-move escape within the dragon's charge arc, leaving it unable to escape the next charge through ordinary movement.",
+      "waarom": "He explains that blocking the wheel prevents the target from simply marching around the dragon. Leaving as much distance as the wheel block allows gives the dragon wider coverage of possible escapes.",
+      "voorbeeld": "He demonstrates trapping Chaos Knights, then a narrower chariot, by checking their sideways moves and their moves after turning each model.",
+      "wanneerNiet": "He identifies Drilled, Arcane Urgency and Travel Mystical Pathways as possible escape tools. Narrower targets require more precise positioning.",
+      "fase": "movement",
+      "themas": [
+        "movement",
+        "magic"
+      ],
+      "subthemas": [
+        "charge-setup",
+        "control-spells"
+      ],
+      "tags": [
+        "wheel",
+        "charge-arc",
+        "conveyance",
+        "dragons",
+        "zoning"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-Gsjisn0Ncm0",
+          "url": "https://www.youtube.com/watch?v=Gsjisn0Ncm0&t=710s",
+          "tijd": 713,
+          "citaat": "the correct thing to do is to work out what your opponent wheel is",
+          "extraCitaten": [
+            {
+              "tijd": 569,
+              "citaat": "you're going to park in front of the chaos Knight"
+            },
+            {
+              "tijd": 722,
+              "citaat": "they still can't you know get around you but you've got more Frontage"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-03-13",
+      "markeringen": []
+    },
+    {
+      "id": "heavy-cavalry-dragon-backup",
+      "titel": "Consider heavy cavalry as a dragon's backup",
+      "tekst": "Consider heavy cavalry as the second threat in an Arcane Urgency dragon army. The backup does not have to be an exceptionally powerful killing unit.",
+      "waarom": "He values its movement for avoiding unwanted charges or setting up its own charges, helping preserve a strong points differential.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "hammers"
+      ],
+      "subthemas": [
+        "heavy-cavalry"
+      ],
+      "tags": [
+        "heavy-cavalry",
+        "dragons",
+        "conveyance"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-Gsjisn0Ncm0",
+          "url": "https://www.youtube.com/watch?v=Gsjisn0Ncm0&t=186s",
+          "tijd": 189,
+          "citaat": "heavy Cavalry a really solid backup for um for Dragon armies",
+          "extraCitaten": [
+            {
+              "tijd": 198,
+              "citaat": "they have the movement to avoid getting charged where"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-03-13",
+      "markeringen": []
+    },
+    {
+      "id": "dragon-secondary-escape-coverage",
+      "titel": "Cover escape routes with a second threat",
+      "tekst": "Send the tankier main dragon forward and keep a secondary threat further back with an overlapping charge arc. Check the enemy's maximum movement so that even the back of its base remains within your combined coverage.",
+      "waarom": "He finds that mobile units, especially skirmishers or units with Arcane Urgency, can escape a single dragon's arc much more easily than two overlapping threats.",
+      "voorbeeld": "In his demonstration, Chaos Knights using a second march could escape the dragon's arc but remained in the supporting Griffon's arc.",
+      "wanneerNiet": "He says terrain changes the setup and that making every possible escape impossible can be difficult.",
+      "fase": "movement",
+      "themas": [
+        "game-plan",
+        "movement"
+      ],
+      "subthemas": [
+        "threat-zones",
+        "charge-setup"
+      ],
+      "tags": [
+        "charge-arc",
+        "zoning",
+        "dragons",
+        "conveyance"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-Gsjisn0Ncm0",
+          "url": "https://www.youtube.com/watch?v=Gsjisn0Ncm0&t=1168s",
+          "tijd": 1171,
+          "citaat": "you want to set up overlapping charge arcs with your secondary threats",
+          "extraCitaten": [
+            {
+              "tijd": 335,
+              "citaat": "the back of their base is still within your overlapping charge ARS"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-03-13",
+      "markeringen": []
+    },
+    {
+      "id": "urgency-rescue-exposes-wizard",
+      "titel": "Choose targets whose magical rescue exposes their wizard",
+      "tekst": "Against an opponent with Arcane Urgency, prefer trapping a target whose wizard must move towards it to cast the escape spell. Cover that approach with your threats so that rescuing the target exposes the wizard to a charge.",
+      "waarom": "He shows that even if the original target escapes, the supporting wizard may be unable to escape both of the attacking threats.",
+      "voorbeeld": "In his demonstration, the Chaos Knights escape behind the dragon and Griffon, but the chariot-mounted sorcerer has moved sideways into their charge arcs to cast on the knights.",
+      "wanneerNiet": "He says this is harder when the wizard can already reach the target without exposing itself, and the positioning depends on terrain.",
+      "fase": "movement",
+      "themas": [
+        "game-plan",
+        "magic"
+      ],
+      "subthemas": [
+        "threat-zones",
+        "control-spells"
+      ],
+      "tags": [
+        "conveyance",
+        "charge-arc",
+        "zoning"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-Gsjisn0Ncm0",
+          "url": "https://www.youtube.com/watch?v=Gsjisn0Ncm0&t=1191s",
+          "tijd": 1194,
+          "citaat": "when you're picking your target you basically want to pick something",
+          "extraCitaten": [
+            {
+              "tijd": 1202,
+              "citaat": "has to move towards them to catch uh cast Arc urgency on them"
+            },
+            {
+              "tijd": 1234,
+              "citaat": "the sorcerer had to move sideways and it's currently within charge Arc"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-03-13",
+      "markeringen": []
+    },
+    {
+      "id": "screen-dragon-landing-space",
+      "titel": "Screen landing space and leave room to wheel",
+      "tekst": "Against an Arcane Urgency dragon, deploy valuable cavalry back far enough to wheel, with chaff occupying the space in front. Fill the landing gaps so the dragon cannot park directly against the cavalry, then move the chaff aside to let the valuable unit escape.",
+      "waarom": "He says the dragon cannot charge on turn one, so denying its preferred landing position buys space for the valuable unit while only risking the chaff.",
+      "voorbeeld": "He places Chaos Knights well back, Chaos Warhounds on the deployment line and skirmishing Marauder Horsemen in another landing gap.",
+      "wanneerNiet": "He says cavalry has the flexibility to get away, while infantry has much more difficulty. The screening units may also have to pass march tests.",
+      "fase": "deployment",
+      "themas": [
+        "deployment",
+        "chaff",
+        "matchups"
+      ],
+      "subthemas": [
+        "unit-placement",
+        "screens",
+        "vs-monsters"
+      ],
+      "tags": [
+        "screen",
+        "wheel",
+        "dragons",
+        "delay"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-Gsjisn0Ncm0",
+          "url": "https://www.youtube.com/watch?v=Gsjisn0Ncm0&t=1364s",
+          "tijd": 1367,
+          "citaat": "I made it so that I knew I had room to wheel",
+          "extraCitaten": [
+            {
+              "tijd": 1416,
+              "citaat": "they can't bark a dragon in there"
+            },
+            {
+              "tijd": 1466,
+              "citaat": "because the dragon can't charge turn one"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-03-13",
+      "markeringen": []
+    },
+    {
+      "id": "general-supports-screen-marching",
+      "titel": "Keep the general in range of escaping screens",
+      "tekst": "When using chaff to deny an Arcane Urgency dragon landing space, keep the general's leadership in range if those units will need march tests to get clear.",
+      "waarom": "He stresses that failing the march test is something to avoid when relying on this escape plan.",
+      "voorbeeld": null,
+      "wanneerNiet": "He suggests deploying slightly further back where possible so the dragon cannot comfortably get close enough to march-block the units.",
+      "fase": "deployment",
+      "themas": [
+        "chaff",
+        "characters"
+      ],
+      "subthemas": [
+        "screens",
+        "bsb"
+      ],
+      "tags": [
+        "general",
+        "leadership",
+        "screen"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-Gsjisn0Ncm0",
+          "url": "https://www.youtube.com/watch?v=Gsjisn0Ncm0&t=1479s",
+          "tijd": 1482,
+          "citaat": "I'd make sure you've got your General in range of them"
+        }
+      ],
+      "datum": "2025-03-13",
+      "markeringen": []
+    },
+    {
+      "id": "dragon-deterrent-behind-wizard",
+      "titel": "Back a frontline wizard with a deterrent dragon",
+      "tekst": "If a wizard needs to stay on the front line, position your own dragon behind it to make an enemy dragon's attack risky. Cover the fight with a countercharge threat and check where an overrun or a retreat through your dragon would leave the attacker.",
+      "waarom": "He does not want his attacking dragon tied up against an evenly matched enemy dragon, and shows how the protective setup can leave him with unattractive choices whether he kills the wizard or not.",
+      "voorbeeld": "He places a Chaos Dragon behind a chariot-mounted sorcerer, covering a countercharge if the chariot gives ground and pre-measuring a Fall Back in Good Order through the friendly dragon.",
+      "wanneerNiet": "He warns that the retreat must not carry the wizard off the board and that passing through the supporting dragon creates a panic risk. He sees no completely risk-free way to protect everything from an Arcane Urgency dragon.",
+      "fase": "deployment",
+      "themas": [
+        "characters",
+        "movement",
+        "matchups"
+      ],
+      "subthemas": [
+        "protecting-characters",
+        "support-countercharge",
+        "vs-monsters"
+      ],
+      "tags": [
+        "dragons",
+        "countercharge",
+        "zoning",
+        "fall-back"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-Gsjisn0Ncm0",
+          "url": "https://www.youtube.com/watch?v=Gsjisn0Ncm0&t=1577s",
+          "tijd": 1580,
+          "citaat": "something you can do is put your own threat behind it",
+          "extraCitaten": [
+            {
+              "tijd": 1589,
+              "citaat": "I don't want my dragon to be tied up in combat with the chaos Dragon"
+            },
+            {
+              "tijd": 1649,
+              "citaat": "make sure that you're not going to just run off the board"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-03-13",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "movement-spells-early-aggression",
+      "bron": {
+        "bronId": "yt-Gsjisn0Ncm0",
+        "url": "https://www.youtube.com/watch?v=Gsjisn0Ncm0&t=13s",
+        "tijd": 16,
+        "citaat": "you're really missing a trick if you don't take Arcane urgency"
+      },
+      "toelichting": "He again recommends a movement spell, particularly Arcane Urgency with a dragon, to enable early aggression."
+    },
+    {
+      "lesId": "buff-wizard-behind-bubble",
+      "bron": {
+        "bronId": "yt-Gsjisn0Ncm0",
+        "url": "https://www.youtube.com/watch?v=Gsjisn0Ncm0&t=456s",
+        "tijd": 459,
+        "citaat": "my dragon in casting range of Arc urgency before I move my wizard",
+        "extraCitaten": [
+          {
+            "tijd": 459,
+            "citaat": "the wizard is going to be out of dispel range on turn"
+          }
+        ]
+      },
+      "toelichting": "He again keeps a supporting wizard back outside dispel range while keeping the recipient within spell range."
+    },
+    {
+      "lesId": "occupy-mystical-pathways-destinations",
+      "bron": {
+        "bronId": "yt-Gsjisn0Ncm0",
+        "url": "https://www.youtube.com/watch?v=Gsjisn0Ncm0&t=874s",
+        "tijd": 877,
+        "citaat": "you just use your units to fill up the space that they can teleport into"
+      },
+      "toelichting": "He repeats denying Travel Mystical Pathways by occupying its possible destinations."
+    },
+    {
+      "lesId": "arcane-urgency-escape-charge-arcs",
+      "bron": {
+        "bronId": "yt-Gsjisn0Ncm0",
+        "url": "https://www.youtube.com/watch?v=Gsjisn0Ncm0&t=1719s",
+        "tijd": 1722,
+        "citaat": "with Arcane urgency is to bring your own Arcane urgency",
+        "extraCitaten": [
+          {
+            "tijd": 263,
+            "citaat": "you can quite easily stay out of a single dragon's charax"
+          }
+        ]
+      },
+      "waarom": "He says an army with its own Arcane Urgency can quite easily stay outside a single dragon's charge arc.",
+      "wanneerNiet": "He warns that a second threat with an overlapping charge arc makes escaping much harder.",
+      "toelichting": "He again recommends using Arcane Urgency's extra movement to escape an enemy's charge arc."
+    }
+  ],
+  "overgeslagen": "Skipped the introduction's lore rankings, garbled unit names, the uncertain Steed of Shadows aside, repeated movement-rule explanations without separate advice, and the closing channel promotion. Kept demonstrated positioning conditional on the movement tools and terrain he discusses.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

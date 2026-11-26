@@ -7,7 +7,7 @@ import {
   sectionHead, titleText,
 } from './tacticsUi';
 
-type Ronde = 'all' | 'first' | 'dark-elves';
+type Ronde = 'all' | 'first' | 'dark-elves' | 'third';
 type Groep = { key: string; titel: string; letter: Waardering | null; kanalen: Kanaal[] };
 
 const isVideo = (k: Kanaal) => k.type === 'youtube';
@@ -74,6 +74,7 @@ export function TacticsSources({ data, lessen, wide, selId, onSelect, onOpenLess
   const inRonde = (k: Kanaal) => {
     if (ronde === 'first') return k.ronde === 1;
     if (ronde === 'dark-elves') return k.ronde === 2 || (bronnenPer.get(k.id) ?? []).some((b) => b.onderwerp === 'dark-elves');
+    if (ronde === 'third') return k.ronde === 3;
     return true;
   };
   const titelTreffers = (k: Kanaal) => (q ? (bronnenPer.get(k.id) ?? []).filter((b) => b.titel.toLowerCase().includes(q)) : []);
@@ -107,7 +108,7 @@ export function TacticsSources({ data, lessen, wide, selId, onSelect, onOpenLess
             uploadLabel(k.laatsteUpload, false),
             itemWoord(k, n),
             meervoud(lessenVanKanaal(k), 'lesson', 'lessons'),
-            k.ronde === 1 ? 'First round' : k.ronde === 2 ? 'Dark Elves' : null,
+            k.ronde === 1 ? 'First round' : k.ronde === 2 ? 'Dark Elves' : k.ronde === 3 ? 'Third round' : null,
           ]} />
           {treffers.slice(0, 2).map((b) => (
             <span key={b.id} style={{ ...bodyText, fontSize: 12.5, color: TOW.goldDeep, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
@@ -143,6 +144,7 @@ export function TacticsSources({ data, lessen, wide, selId, onSelect, onOpenLess
         <Chip on={ronde === 'all'} onClick={() => setRonde('all')}>All</Chip>
         <Chip on={ronde === 'first'} onClick={() => setRonde('first')}>First round</Chip>
         <Chip on={ronde === 'dark-elves'} onClick={() => setRonde('dark-elves')}>Dark Elves</Chip>
+        <Chip on={ronde === 'third'} onClick={() => setRonde('third')}>Third round</Chip>
       </ChipRow>
       {zichtbareGroepen.length === 0 && <EmptyLine>No sources match.</EmptyLine>}
       {zichtbareGroepen.map((g) => (
@@ -273,7 +275,7 @@ function KanaalDetail({ kanaal, items, lessenPerBron, aantalLessen, onOpenLesson
         <Badge>{waarderingVan(kanaal)} · {WAARDERING_LABEL[kanaal.waardering]}</Badge>
         <Meta parts={[
           TYPE_LABEL[kanaal.type] ?? kanaal.type,
-          kanaal.ronde === 1 ? 'First round' : kanaal.ronde === 2 ? 'Dark Elves round' : 'Not planned',
+          kanaal.ronde === 1 ? 'First round' : kanaal.ronde === 2 ? 'Dark Elves round' : kanaal.ronde === 3 ? 'Third round' : 'Not planned',
         ]} />
       </div>
       {kanaal.omschrijving && <p style={{ ...bodyText, margin: '0 0 6px' }}>{kanaal.omschrijving}</p>}

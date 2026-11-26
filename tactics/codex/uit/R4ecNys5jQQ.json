@@ -1,0 +1,504 @@
+{
+  "videoId": "R4ecNys5jQQ",
+  "bronId": "yt-R4ecNys5jQQ",
+  "model": "GPT-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-26T03:52:58.238Z",
+  "nieuw": [
+    {
+      "id": "scar-veteran-carnosaur-competitive",
+      "titel": "Try a Scar-Veteran on a Carnosaur competitively",
+      "tekst": "For competitive Lizardmen, he recommends trying a Saurus Scar-Veteran on a Carnosaur if you have not played that option much.",
+      "waarom": "He rates the Carnosaur as an efficient choice: for about 300 points it brings Strength 7, Toughness 6, numerous attacks, Swiftstride and Terror, and can also do useful work against other monsters.",
+      "voorbeeld": null,
+      "wanneerNiet": "He is unsure it can win the game for you in the way a dragon can.",
+      "fase": "army-building",
+      "themas": [
+        "characters",
+        "hammers"
+      ],
+      "subthemas": [
+        "mounts-items",
+        "monsters-dragons"
+      ],
+      "tags": [
+        "mounts",
+        "monsters",
+        "swiftstride",
+        "terror"
+      ],
+      "leger": "lizardmen",
+      "units": [
+        "Saurus Scar-Veteran",
+        "Carnosaur"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-R4ecNys5jQQ",
+          "url": "https://www.youtube.com/watch?v=R4ecNys5jQQ&t=152s",
+          "tijd": 155,
+          "citaat": "a scar veteran version of the carnosur, then I would go for that for sure."
+        }
+      ],
+      "datum": "2026-01-06",
+      "markeringen": []
+    },
+    {
+      "id": "embrace-slann-despite-cost",
+      "titel": "Keep a Slann despite its cost",
+      "tekst": "He recommends embracing the Slann Mage-Priest and making the most of it rather than leaving it out. He sees particular versatility in the Renegades version.",
+      "waarom": "He thinks giving up the Slann sacrifices too much. He finds it capable of staying alive, preserving a substantial investment in points.",
+      "voorbeeld": null,
+      "wanneerNiet": "He acknowledges that it is overcosted and does not do much.",
+      "fase": "army-building",
+      "themas": [
+        "magic"
+      ],
+      "subthemas": [
+        "wizard-builds"
+      ],
+      "tags": [
+        "victory-points",
+        "renegades"
+      ],
+      "leger": "lizardmen",
+      "units": [
+        "Slann Mage-Priest"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-R4ecNys5jQQ",
+          "url": "https://www.youtube.com/watch?v=R4ecNys5jQQ&t=160s",
+          "tijd": 163,
+          "citaat": "you just got to embrace the slan.",
+          "extraCitaten": [
+            {
+              "tijd": 231,
+              "citaat": "definitely capable of keeping alive"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-01-06",
+      "markeringen": []
+    },
+    {
+      "id": "cold-one-oldblood-option",
+      "titel": "Consider a Cold One Oldblood without a Slann",
+      "tekst": "If skipping the Slann Mage-Priest or spending those points on a combat character, he thinks a Saurus Oldblood on a Cold One might be a worthwhile option.",
+      "waarom": "He considers its statistics very good for what you get and values the all-round charge options available to Lizardmen characters.",
+      "voorbeeld": null,
+      "wanneerNiet": "He finds the Oldblood harder to make work because the faction's magic items are poor.",
+      "fase": "army-building",
+      "themas": [
+        "characters"
+      ],
+      "subthemas": [
+        "mounts-items"
+      ],
+      "tags": [
+        "mounts",
+        "charge-arc",
+        "magic-items"
+      ],
+      "leger": "lizardmen",
+      "units": [
+        "Saurus Oldblood",
+        "Cold One Lizardmen"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-R4ecNys5jQQ",
+          "url": "https://www.youtube.com/watch?v=R4ecNys5jQQ&t=251s",
+          "tijd": 254,
+          "citaat": "old blood on a cold one might actually be not that bad"
+        }
+      ],
+      "datum": "2026-01-06",
+      "markeringen": []
+    },
+    {
+      "id": "lizardmen-screening-packages",
+      "titel": "Choose a Vanguard or Scout screening package",
+      "tekst": "At 2,000 points, he suggests a Vanguard screen using Jungle Swarms and two units of Skink Skirmishers. Alternatively, use Chameleon Skinks and two units of Skink Skirmishers as Scouts.",
+      "waarom": "He says these screeners let the army use movement tricks and potentially shooting in the early game.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "chaff",
+        "deployment"
+      ],
+      "subthemas": [
+        "choosing-chaff",
+        "ambush-scouts-vanguard"
+      ],
+      "tags": [
+        "screen",
+        "vanguard",
+        "scouts",
+        "skirmishers"
+      ],
+      "leger": "lizardmen",
+      "units": [
+        "Jungle Swarms",
+        "Skink Skirmishers",
+        "Chameleon Skinks"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-R4ecNys5jQQ",
+          "url": "https://www.youtube.com/watch?v=R4ecNys5jQQ&t=505s",
+          "tijd": 508,
+          "citaat": "you can toggle between having the vanguard screen.",
+          "extraCitaten": [
+            {
+              "tijd": 517,
+              "citaat": "Or you can run chameleon skinks and two units of normal skinks as scouts."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-01-06",
+      "markeringen": []
+    },
+    {
+      "id": "chameleon-skinks-worth-cost",
+      "titel": "Consider Chameleon Skinks despite their higher cost",
+      "tekst": "He considers Chameleon Skinks good value as screeners even though they cost twice as much as regular Skinks.",
+      "waarom": "He particularly values Evasive and Ballistic Skill 4, including evading out of a forest after shooting and generally hitting on sixes rather than needing six-plus.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "chaff",
+        "shooting-terrain"
+      ],
+      "subthemas": [
+        "choosing-chaff",
+        "evasive-skirmish"
+      ],
+      "tags": [
+        "evasive",
+        "skirmishers",
+        "screen",
+        "missile-troops"
+      ],
+      "leger": "lizardmen",
+      "units": [
+        "Chameleon Skinks"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-R4ecNys5jQQ",
+          "url": "https://www.youtube.com/watch?v=R4ecNys5jQQ&t=538s",
+          "tijd": 541,
+          "citaat": "an 11point chameleon skink is still good value.",
+          "extraCitaten": [
+            {
+              "tijd": 533,
+              "citaat": "ballistic skill four are shockingly good for those points."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-01-06",
+      "markeringen": []
+    },
+    {
+      "id": "choose-lizardmen-infantry-anvil",
+      "titel": "Choose Temple Guard with a Slann, Saurus without one",
+      "tekst": "Choose one main infantry anvil: he favours Temple Guard when taking a Slann Mage-Priest and considers Saurus Warriors a workable choice without one.",
+      "waarom": "He thinks Saurus Warriors and Temple Guard are too expensive to afford both in the same army.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "infantry"
+      ],
+      "subthemas": [
+        "anchors"
+      ],
+      "tags": [
+        "anvil",
+        "stubborn",
+        "fall-back"
+      ],
+      "leger": "lizardmen",
+      "units": [
+        "Temple Guard",
+        "Saurus Warriors"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-R4ecNys5jQQ",
+          "url": "https://www.youtube.com/watch?v=R4ecNys5jQQ&t=733s",
+          "tijd": 736,
+          "citaat": "if you're running the slan, temple guard are probably better.",
+          "extraCitaten": [
+            {
+              "tijd": 736,
+              "citaat": "If you're not, Saurus have now become okay."
+            }
+          ]
+        }
+      ],
+      "datum": "2026-01-06",
+      "markeringen": []
+    },
+    {
+      "id": "saurus-sixteen-twenty-models",
+      "titel": "Run Saurus Warriors in blocks of sixteen to twenty",
+      "tekst": "When using Saurus Warriors as the infantry anvil he describes, take a substantial block of roughly 16 to 20 models.",
+      "waarom": "He expects a block this size to take a lot of damage before it is worn down, and highlights its parry, Toughness 4 and four-plus armour.",
+      "voorbeeld": null,
+      "wanneerNiet": "He notes that it costs more than a Horde infantry unit able to perform that role.",
+      "fase": "army-building",
+      "themas": [
+        "infantry"
+      ],
+      "subthemas": [
+        "unit-builds"
+      ],
+      "tags": [
+        "anvil",
+        "parry",
+        "armour"
+      ],
+      "leger": "lizardmen",
+      "units": [
+        "Saurus Warriors"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-R4ecNys5jQQ",
+          "url": "https://www.youtube.com/watch?v=R4ecNys5jQQ&t=743s",
+          "tijd": 746,
+          "citaat": "16 to 20 is going to do you pretty well."
+        }
+      ],
+      "datum": "2026-01-06",
+      "markeringen": []
+    },
+    {
+      "id": "ancient-stegadon-central-cornerstone",
+      "titel": "Use an Ancient Stegadon as a central cornerstone",
+      "tekst": "He still recommends the Ancient Stegadon as a cornerstone of this kind of Lizardmen list, using its high Toughness to advance up the centre.",
+      "waarom": "He says Toughness 6 remains valuable because most shooting needs multiple shots to bring such a model down.",
+      "voorbeeld": null,
+      "wanneerNiet": "He warns that cannons may not struggle with that resilience. He also considers the Ancient Stegadon very expensive for a model that can be avoided and still has five wounds.",
+      "fase": "army-building",
+      "themas": [
+        "hammers"
+      ],
+      "subthemas": [
+        "monsters-dragons"
+      ],
+      "tags": [
+        "monsters",
+        "centre"
+      ],
+      "leger": "lizardmen",
+      "units": [
+        "Ancient Stegadon"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-R4ecNys5jQQ",
+          "url": "https://www.youtube.com/watch?v=R4ecNys5jQQ&t=886s",
+          "tijd": 889,
+          "citaat": "I would see ancient stegodon carnosur as as the cornerstones",
+          "extraCitaten": [
+            {
+              "tijd": 825,
+              "citaat": "run these guys up the center of the board"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-01-06",
+      "markeringen": []
+    },
+    {
+      "id": "lizardmen-multiple-terror-causers",
+      "titel": "Use several Terror causers to force charge tests",
+      "tekst": "Consider fielding three or four Terror-causing models with Lizardmen and getting their charges off to exploit those tests.",
+      "waarom": "He says even Leadership 8 or 9 fails enough tests in the endgame to make Terror a significant strength.",
+      "voorbeeld": null,
+      "wanneerNiet": "He notes that Undead do not have to take these tests.",
+      "fase": "army-building",
+      "themas": [
+        "hammers"
+      ],
+      "subthemas": [
+        "monsters-dragons"
+      ],
+      "tags": [
+        "terror",
+        "leadership",
+        "monsters"
+      ],
+      "leger": "lizardmen",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-R4ecNys5jQQ",
+          "url": "https://www.youtube.com/watch?v=R4ecNys5jQQ&t=913s",
+          "tijd": 916,
+          "citaat": "the lizard could easily put three or four terracauses on the table.",
+          "extraCitaten": [
+            {
+              "tijd": 923,
+              "citaat": "to get those charges off, they are a strong point"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-01-06",
+      "markeringen": []
+    },
+    {
+      "id": "lizardmen-flankers-extreme-angles",
+      "titel": "Hide vulnerable flankers until they can attack from extreme angles",
+      "tekst": "Keep vulnerable Lizardmen flankers hidden and safe for a while, then use their Swiftstride speed to approach at extreme angles and hit the enemy's side with high Unit Strength.",
+      "waarom": "He says these units are vulnerable and need those side attacks to hit and break the enemy.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "movement",
+      "themas": [
+        "movement"
+      ],
+      "subthemas": [
+        "charge-setup"
+      ],
+      "tags": [
+        "flank-charge",
+        "swiftstride",
+        "unit-strength"
+      ],
+      "leger": "lizardmen",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-R4ecNys5jQQ",
+          "url": "https://www.youtube.com/watch?v=R4ecNys5jQQ&t=991s",
+          "tijd": 994,
+          "citaat": "You need to come in at extreme angles with these units.",
+          "extraCitaten": [
+            {
+              "tijd": 994,
+              "citaat": "You got to hide them, keep them safe for a while,"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-01-06",
+      "markeringen": []
+    },
+    {
+      "id": "lizardmen-flankers-skip-champions",
+      "titel": "Leave champions out of the flanking units",
+      "tekst": "For the Lizardmen flanking units he describes, leave out champions so challenges do not dilute the unit's attacks.",
+      "waarom": "He says their main strength is the number of attacks they bring, while they lack much armour piercing, so they need their maximum attacking potential.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "characters"
+      ],
+      "subthemas": [
+        "challenges"
+      ],
+      "tags": [
+        "champion",
+        "challenge",
+        "flank-charge",
+        "armour-piercing"
+      ],
+      "leger": "lizardmen",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-R4ecNys5jQQ",
+          "url": "https://www.youtube.com/watch?v=R4ecNys5jQQ&t=1008s",
+          "tijd": 1011,
+          "citaat": "make sure that you don't run any champions in the unit",
+          "extraCitaten": [
+            {
+              "tijd": 1018,
+              "citaat": "because they will get challenged out"
+            }
+          ]
+        }
+      ],
+      "datum": "2026-01-06",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "skirmish-blender-character",
+      "bron": {
+        "bronId": "yt-R4ecNys5jQQ",
+        "url": "https://www.youtube.com/watch?v=R4ecNys5jQQ&t=295s",
+        "tijd": 298,
+        "citaat": "that's the best thing that you can have on a wing",
+        "extraCitaten": [
+          {
+            "tijd": 288,
+            "citaat": "360 degree charge arcs with swift stride those models."
+          }
+        ]
+      },
+      "toelichting": "He again recommends combat characters with all-round charge options for the wings, here emphasising Swiftstride."
+    },
+    {
+      "lesId": "jungle-swarms-disposable-anvil",
+      "bron": {
+        "bronId": "yt-R4ecNys5jQQ",
+        "url": "https://www.youtube.com/watch?v=R4ecNys5jQQ&t=491s",
+        "tijd": 494,
+        "citaat": "by getting in the way, being unbreakable",
+        "extraCitaten": [
+          {
+            "tijd": 477,
+            "citaat": "you've got your jungle swarms in core"
+          }
+        ]
+      },
+      "toelichting": "He again advocates Jungle Swarms as Unbreakable blockers that hold enemy units up."
+    },
+    {
+      "lesId": "saurus-anvil-takes-charges",
+      "bron": {
+        "bronId": "yt-R4ecNys5jQQ",
+        "url": "https://www.youtube.com/watch?v=R4ecNys5jQQ&t=664s",
+        "tijd": 667,
+        "citaat": "take a hit have enough ranks to fall back in good order"
+      },
+      "toelichting": "He again assigns Saurus Warriors the anvil role, surviving a hit and holding space through orderly retreats."
+    },
+    {
+      "lesId": "stubborn-anchor-countercharge",
+      "bron": {
+        "bronId": "yt-R4ecNys5jQQ",
+        "url": "https://www.youtube.com/watch?v=R4ecNys5jQQ&t=935s",
+        "tijd": 938,
+        "citaat": "That can allow you to set up the flank charges",
+        "extraCitaten": [
+          {
+            "tijd": 931,
+            "citaat": "Just knowing that you're going to fall back in good order."
+          }
+        ]
+      },
+      "toelichting": "He again recommends using a predictable Stubborn retreat to set up supporting flank charges."
+    }
+  ],
+  "overgeslagen": "Skipped sponsorship, product promotion, channel discussion, complaints about faction support and rules commentary without advice. Omitted incomplete magic-item build references and did not infer the garbled flanker unit names around 16:26. Repeated anvil and wing-character advice is recorded as additions.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

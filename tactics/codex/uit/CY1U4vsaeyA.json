@@ -1,0 +1,481 @@
+{
+  "videoId": "CY1U4vsaeyA",
+  "bronId": "yt-CY1U4vsaeyA",
+  "model": "GPT-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-26T02:23:05.363Z",
+  "nieuw": [
+    {
+      "id": "wolves-berserkers-delay-important-drops",
+      "titel": "Use Berserkers to delay important Wolves of the Sea drops",
+      "tekst": "For Wolves of the Sea, consider taking many cheap Marauder Tribe Berserkers and deploying them before your important units. He recommends using these expendable drops to see the opponent's deployment while retaining the chance to go first through the army's champion challenge.",
+      "waarom": "He says the list can comfortably have 12 to 15 drops, letting its first six to eight drops be cheap core units against a typical opponent.",
+      "voorbeeld": null,
+      "wanneerNiet": "He expects the champion challenge to be difficult against a Swordmasters of Hoeth champion with Ring of Fury, and suggests reducing drops through Ambush instead in that case.",
+      "fase": "army-building",
+      "themas": [
+        "deployment"
+      ],
+      "subthemas": [
+        "drops-first-turn"
+      ],
+      "tags": [
+        "deployment-drops",
+        "first-turn",
+        "sacrifice"
+      ],
+      "leger": "warriors-of-chaos",
+      "units": [
+        "Marauder Tribe Berserkers"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-CY1U4vsaeyA",
+          "url": "https://www.youtube.com/watch?v=CY1U4vsaeyA&t=319s",
+          "tijd": 322,
+          "citaat": "you're probably looking to write a list with loads of berserkers.",
+          "extraCitaten": [
+            {
+              "tijd": 330,
+              "citaat": "your first six to eight drops are going to be loads of chaff core units"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-04-17",
+      "markeringen": []
+    },
+    {
+      "id": "ambush-reduce-deployment-drops",
+      "titel": "Use Ambush to reduce your deployment drops",
+      "tekst": "Consider Ambush as a flexible way to reduce the number of units you must deploy when the first turn matters. He particularly recommends this option for Wolves of the Sea when winning the champion challenge looks unlikely.",
+      "waarom": "He considers reducing deployment drops a strong use of Ambush, giving the aggressive Wolves of the Sea another route to the first-turn bonus.",
+      "voorbeeld": "He describes facing a Swordmasters of Hoeth champion with Ring of Fury, which he expects to beat the Wolves of the Sea champion in the challenge.",
+      "wanneerNiet": "He dislikes relying on an aggressive backline ambush because the arrival roll can go badly.",
+      "fase": "deployment",
+      "themas": [
+        "deployment"
+      ],
+      "subthemas": [
+        "drops-first-turn"
+      ],
+      "tags": [
+        "ambush",
+        "deployment-drops",
+        "first-turn"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-CY1U4vsaeyA",
+          "url": "https://www.youtube.com/watch?v=CY1U4vsaeyA&t=391s",
+          "tijd": 394,
+          "citaat": "you can drop your number of, you know, units that you have to deploy.",
+          "extraCitaten": [
+            {
+              "tijd": 425,
+              "citaat": "putting units into ambush, making sure you've got less"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-04-17",
+      "markeringen": []
+    },
+    {
+      "id": "avoid-chariots-congested-map-packs",
+      "titel": "Avoid chariot-heavy lists on congested terrain packs",
+      "tekst": "Check the terrain pack when building your list, and avoid taking chariots on maps where obstacles leave them few useful routes. He also warns that big cavalry buses can struggle to manoeuvre on these maps.",
+      "waarom": "He finds that restricted routes create bottlenecks and poor attack angles. He also notes that dangerous terrain is particularly punishing for chariots.",
+      "voorbeeld": "He took a mounted Heralds of Darkness list without checking the mission pack and found that the crowded maps made movement extremely difficult. His demonstration shows a cavalry unit spending almost all its movement negotiating a gap and ending in a bad position.",
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "game-plan"
+      ],
+      "subthemas": [
+        "list-building"
+      ],
+      "tags": [
+        "chariots",
+        "heavy-cavalry",
+        "tournament"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-CY1U4vsaeyA",
+          "url": "https://www.youtube.com/watch?v=CY1U4vsaeyA&t=767s",
+          "tijd": 770,
+          "citaat": "you really don't want to be taking chariots to this sort of map",
+          "extraCitaten": [
+            {
+              "tijd": 755,
+              "citaat": "playing big buses of cavalry, very difficult to actually do anything with."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-04-17",
+      "markeringen": []
+    },
+    {
+      "id": "avoid-unhelpful-terrain-before-infantry",
+      "titel": "Keep advancing infantry clear of terrain that only slows it",
+      "tekst": "Avoid deploying infantry behind difficult terrain when it provides no useful defensive protection and the unit wants to advance. Choose a starting position that does not make its first march unnecessarily slower.",
+      "waarom": "In his demonstration, the terrain neither blocks line of sight nor provides the protection he wants, but it reduces the infantry's movement.",
+      "voorbeeld": "He places a Bestigor Herd behind terrain and contrasts its shortened march through it with the longer march available from beside it.",
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "deployment"
+      ],
+      "subthemas": [
+        "unit-placement"
+      ],
+      "tags": [
+        "line-of-sight",
+        "cover"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-CY1U4vsaeyA",
+          "url": "https://www.youtube.com/watch?v=CY1U4vsaeyA&t=616s",
+          "tijd": 619,
+          "citaat": "We're probably not going to put them behind the terrain.",
+          "extraCitaten": [
+            {
+              "tijd": 636,
+              "citaat": "there's not really any advantage to going here."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-04-17",
+      "markeringen": []
+    },
+    {
+      "id": "prince-covers-sisters-approach",
+      "titel": "Deploy the Prince to cover threats reaching your Sisters",
+      "tekst": "When keeping Sisters of Avelorn deep to avoid the Chaos Knights' turn-two charge, angle the dragon-mounted Prince to cover the Warpfire Dragon's approach. The Prince should retain a charge on the Dragon if it advances to threaten the Sisters.",
+      "waarom": "He cannot keep the Sisters beyond the Warpfire Dragon's full movement and charge reach, but he feels comfortable fighting it with his Prince. Covering its approach gives the opponent fewer comfortable options.",
+      "voorbeeld": "Against Pash's aggressive Chaos force, he deployed the Sisters deep and faced the Prince so that a Warpfire Dragon advancing towards them could not leave his charge arc.",
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "deployment"
+      ],
+      "subthemas": [
+        "unit-placement"
+      ],
+      "tags": [
+        "charge-arc",
+        "charge-range",
+        "dragons",
+        "zoning"
+      ],
+      "leger": "high-elf-realms",
+      "units": [
+        "Prince",
+        "Sisters of Avelorn"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-CY1U4vsaeyA",
+          "url": "https://www.youtube.com/watch?v=CY1U4vsaeyA&t=1161s",
+          "tijd": 1164,
+          "citaat": "I was always going to be able to charge in with my prince on dragon",
+          "extraCitaten": [
+            {
+              "tijd": 1098,
+              "citaat": "I wanted them to be out of range of the turn two charge"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-04-17",
+      "markeringen": []
+    },
+    {
+      "id": "occupy-mystical-pathways-destinations",
+      "titel": "Occupy potential destinations to prevent enemy teleports",
+      "tekst": "Against the restricted version of Travel Mystical Pathways he describes, spread units through the enemy's potential destination area to deny legal teleport positions.",
+      "waarom": "He says the destination must be wholly within 12 inches of the starting position and outside six inches of each opposing model, so occupying that space can stop the unit moving.",
+      "voorbeeld": "Against a Night Goblin shooting block, he starts Silver Helms in marching column and plans to distribute them, Lothern Skycutters and his dragon around its potential teleport area.",
+      "wanneerNiet": "He warns that Fanatics can kill the blocking models before Travel Mystical Pathways is cast, reopening destinations.",
+      "fase": "movement",
+      "themas": [
+        "game-plan"
+      ],
+      "subthemas": [
+        "threat-zones"
+      ],
+      "tags": [
+        "zoning",
+        "conveyance"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-CY1U4vsaeyA",
+          "url": "https://www.youtube.com/watch?v=CY1U4vsaeyA&t=1438s",
+          "tijd": 1441,
+          "citaat": "stop the night goblin brick from teleporting around.",
+          "extraCitaten": [
+            {
+              "tijd": 1424,
+              "citaat": "It also has to be outside of six inches of each model."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-04-17",
+      "markeringen": []
+    },
+    {
+      "id": "disguise-refused-flank-mobile-drops",
+      "titel": "Disguise a refused flank with mobile early drops",
+      "tekst": "When setting up a refused flank, use an early cheap or fast drop away from your main concentration to draw enemy deployments there. Choose something that can rejoin the army over the first couple of turns, and avoid making your concentration obvious too early.",
+      "waarom": "He says that if the opponent spreads out before your main force deploys on one side, the distant part of their army will take a long time to contribute.",
+      "voorbeeld": "He placed two Lothern Skycutters on one side and another on the other side to disguise his intended denied flank. In his defensive Dwarf example, he recommends copters as units able to rejoin the main army.",
+      "wanneerNiet": "He warns against getting too close to the board edge and says that terrain affects whether the flank setup works.",
+      "fase": "deployment",
+      "themas": [
+        "deployment",
+        "game-plan"
+      ],
+      "subthemas": [
+        "drops-first-turn",
+        "concentration"
+      ],
+      "tags": [
+        "refused-flank",
+        "deployment-drops",
+        "decoy",
+        "concentration"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-CY1U4vsaeyA",
+          "url": "https://www.youtube.com/watch?v=CY1U4vsaeyA&t=1692s",
+          "tijd": 1695,
+          "citaat": "something that can move fast and just rejoin the rest of the army",
+          "extraCitaten": [
+            {
+              "tijd": 1718,
+              "citaat": "it's going to take them a long time"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-04-17",
+      "markeringen": []
+    },
+    {
+      "id": "angle-shooters-guide-enemy-overruns",
+      "titel": "Angle front units to guide overruns into supporting fronts",
+      "tekst": "In a slow defensive army, angle the front shooting unit and position its supporting combat unit so an enemy overrun reaches the support's front rather than its flank. Set this up during deployment instead of relying on later repositioning.",
+      "waarom": "He says slow units cannot readily cross the board to provide support after a spread-out deployment, and he wants to avoid moving the shooters and taking movement penalties.",
+      "voorbeeld": "He angles Irondrakes and moves Dwarf Warriors further back so that a dragon charging the shooters wheels into an overrun path towards the Warriors' front.",
+      "wanneerNiet": null,
+      "fase": "deployment",
+      "themas": [
+        "deployment",
+        "movement"
+      ],
+      "subthemas": [
+        "unit-placement",
+        "overrun-pursuit"
+      ],
+      "tags": [
+        "overrun",
+        "alignment",
+        "flank-charge",
+        "missile-troops"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-CY1U4vsaeyA",
+          "url": "https://www.youtube.com/watch?v=CY1U4vsaeyA&t=1874s",
+          "tijd": 1877,
+          "citaat": "maybe you've got them at more of an acute angle",
+          "extraCitaten": [
+            {
+              "tijd": 1893,
+              "citaat": "contact with the front of the unit."
+            }
+          ]
+        }
+      ],
+      "datum": "2025-04-17",
+      "markeringen": []
+    },
+    {
+      "id": "deploy-wide-for-pincer",
+      "titel": "Deploy aggressive units to set up a pincer",
+      "tekst": "Against a prepared defensive block, consider deploying your aggressive units widely enough to approach from different sides. Set up a pincer so that turning to face one attacker exposes a flank to another, rather than sending everything straight into the front.",
+      "waarom": "He says this limits the defender's options: turning or shooting towards one flanking threat leaves another attack available. He expects a direct frontal approach to struggle against the Dwarfs' defensive setup.",
+      "voorbeeld": "He demonstrates Silver Helms approaching one side of a Dwarf formation, a dragon approaching the other, and a second Silver Helm unit applying frontal pressure.",
+      "wanneerNiet": "He says it is easier when there is a single key unit to deal with, and the setup may take a couple of turns.",
+      "fase": "deployment",
+      "themas": [
+        "deployment",
+        "movement"
+      ],
+      "subthemas": [
+        "unit-placement",
+        "support-countercharge"
+      ],
+      "tags": [
+        "flank-charge",
+        "charge-arc",
+        "combined-charge"
+      ],
+      "leger": null,
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-CY1U4vsaeyA",
+          "url": "https://www.youtube.com/watch?v=CY1U4vsaeyA&t=2070s",
+          "tijd": 2073,
+          "citaat": "you've gone wide, you've given yourself the option to set up a pinser",
+          "extraCitaten": [
+            {
+              "tijd": 2039,
+              "citaat": "you're going to be able to get into the flank"
+            }
+          ]
+        }
+      ],
+      "datum": "2025-04-17",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "fewer-drops-first-turn",
+      "bron": {
+        "bronId": "yt-CY1U4vsaeyA",
+        "url": "https://www.youtube.com/watch?v=CY1U4vsaeyA&t=151s",
+        "tijd": 154,
+        "citaat": "the most important thing for your list is going first, low number of drops"
+      },
+      "toelichting": "He gives the same recommendation to reduce deployment drops when the first-turn bonus is important to the list."
+    },
+    {
+      "lesId": "chaff-scouts-deployment",
+      "bron": {
+        "bronId": "yt-CY1U4vsaeyA",
+        "url": "https://www.youtube.com/watch?v=CY1U4vsaeyA&t=215s",
+        "tijd": 218,
+        "citaat": "you put all your chaff drops down.",
+        "extraCitaten": [
+          {
+            "tijd": 1348,
+            "citaat": "sky cutters drop down first because they're the ones that are flexible."
+          }
+        ]
+      },
+      "toelichting": "He again recommends early expendable drops to learn where enemy targets are before committing important placements."
+    },
+    {
+      "lesId": "deploy-who-is-beatdown",
+      "bron": {
+        "bronId": "yt-CY1U4vsaeyA",
+        "url": "https://www.youtube.com/watch?v=CY1U4vsaeyA&t=819s",
+        "tijd": 822,
+        "citaat": "Are you the beatdown or are you the control?",
+        "extraCitaten": [
+          {
+            "tijd": 830,
+            "citaat": "you're the controller, you probably want to bunker up a little bit more."
+          }
+        ]
+      },
+      "toelichting": "He uses the same aggressor-versus-control decision to determine the deployment approach."
+    },
+    {
+      "lesId": "deploy-slow-army-compact",
+      "bron": {
+        "bronId": "yt-CY1U4vsaeyA",
+        "url": "https://www.youtube.com/watch?v=CY1U4vsaeyA&t=1931s",
+        "tijd": 1934,
+        "citaat": "if you're playing a slow army, you probably want to be skewing closer together."
+      },
+      "toelichting": "He repeats that slow armies should deploy close enough together for their units to support each other."
+    },
+    {
+      "lesId": "deploy-beyond-moving-shooters",
+      "bron": {
+        "bronId": "yt-CY1U4vsaeyA",
+        "url": "https://www.youtube.com/watch?v=CY1U4vsaeyA&t=1011s",
+        "tijd": 1014,
+        "citaat": "They went back so that my opponent couldn't shoot me with a fireball.",
+        "extraCitaten": [
+          {
+            "tijd": 1046,
+            "citaat": "I was going to be 7.1 in back from deployment zone."
+          }
+        ]
+      },
+      "toelichting": "He deploys beyond the enemy's ordinary move-and-Fireball reach, applying the same opening-range precaution."
+    },
+    {
+      "lesId": "layer-resilient-units-retreat-trap",
+      "bron": {
+        "bronId": "yt-CY1U4vsaeyA",
+        "url": "https://www.youtube.com/watch?v=CY1U4vsaeyA&t=1645s",
+        "tijd": 1648,
+        "citaat": "layered defense where you've got your ranged unit at the front.",
+        "extraCitaten": [
+          {
+            "tijd": 1603,
+            "citaat": "baiting in something that you want to kill, but you're never going to be able"
+          }
+        ]
+      },
+      "toelichting": "He repeats the layered deployment that lets a front unit retreat through support and draws the attacker into the unit behind."
+    },
+    {
+      "lesId": "central-mobile-response-threats",
+      "bron": {
+        "bronId": "yt-CY1U4vsaeyA",
+        "url": "https://www.youtube.com/watch?v=CY1U4vsaeyA&t=1731s",
+        "tijd": 1734,
+        "citaat": "you really want it to be more central"
+      },
+      "toelichting": "He again favours a central, responsive position for important units that need to influence the battle."
+    },
+    {
+      "lesId": "check-first-movement-options",
+      "bron": {
+        "bronId": "yt-CY1U4vsaeyA",
+        "url": "https://www.youtube.com/watch?v=CY1U4vsaeyA&t=806s",
+        "tijd": 809,
+        "citaat": "You don't want to put your units in a way that they can't",
+        "extraCitaten": [
+          {
+            "tijd": 817,
+            "citaat": "move around the board."
+          }
+        ]
+      },
+      "toelichting": "His warning against boxing units in repeats the need to leave usable movement options after deployment."
+    }
+  ],
+  "overgeslagen": "Skipped introductions, channel promotion, army and terrain readouts without recommendations, standalone rules explanations, and unclear caption wording. Omitted precise teleport and charge-distance arithmetic where he is uncertain, and the ambiguous contact arrangement at 26:58–27:20. Repeated advice within this video is represented once.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}

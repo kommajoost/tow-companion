@@ -1,0 +1,141 @@
+{
+  "videoId": "63MNI72v6u8",
+  "bronId": "yt-63MNI72v6u8",
+  "model": "GPT-6",
+  "modelGevraagd": "gpt-6.1-sol",
+  "effort": "high",
+  "gemaaktOp": "2026-11-26T03:48:19.393Z",
+  "nieuw": [
+    {
+      "id": "tomb-guard-death-mask",
+      "titel": "Consider a Death Mask on a Tomb Guard champion",
+      "tekst": "He suggests putting a Death Mask on a Tomb Guard champion to make the unit cause Terror.",
+      "waarom": null,
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "infantry"
+      ],
+      "subthemas": [
+        "unit-builds"
+      ],
+      "tags": [
+        "terror",
+        "magic-items",
+        "champion"
+      ],
+      "leger": "tomb-kings-of-khemri",
+      "units": [
+        "Tomb Guard"
+      ],
+      "bronnen": [
+        {
+          "bronId": "yt-63MNI72v6u8",
+          "url": "https://www.youtube.com/watch?v=63MNI72v6u8&t=471s",
+          "tijd": 474,
+          "citaat": "champion and suddenly that unit's causing Terror"
+        }
+      ],
+      "datum": "2024-01-26",
+      "markeringen": []
+    },
+    {
+      "id": "necromancy-familiar-debuff-pair",
+      "titel": "Consider Lore Familiar to secure both leadership debuffs",
+      "tekst": "For his proposed Necromancy leadership-debuff plan, he thinks you will probably need Lore Familiar if you want both Spirit Leech and the leadership-reducing vortex.",
+      "waarom": null,
+      "voorbeeld": null,
+      "wanneerNiet": "He thinks taking Lore Familiar probably prevents taking Curse Weaver Wand as well.",
+      "fase": "army-building",
+      "themas": [
+        "magic"
+      ],
+      "subthemas": [
+        "lores-spells"
+      ],
+      "tags": [
+        "lore-familiar",
+        "necromancy",
+        "leadership"
+      ],
+      "leger": "tomb-kings-of-khemri",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-63MNI72v6u8",
+          "url": "https://www.youtube.com/watch?v=63MNI72v6u8&t=548s",
+          "tijd": 551,
+          "citaat": "you're going to have to probably get the law familiar"
+        }
+      ],
+      "datum": "2024-01-26",
+      "markeringen": []
+    },
+    {
+      "id": "curse-weaver-without-familiar",
+      "titel": "Consider Curse Weaver Wand when skipping Lore Familiar",
+      "tekst": "If you skip Lore Familiar and hope to roll the desired spells, he suggests considering Curse Weaver Wand to help cast your hexes.",
+      "waarom": "He highlights its 20-point cost and its plus-one modifier to casting rolls for hex spells.",
+      "voorbeeld": null,
+      "wanneerNiet": null,
+      "fase": "army-building",
+      "themas": [
+        "magic"
+      ],
+      "subthemas": [
+        "casting-aids"
+      ],
+      "tags": [
+        "magic-items",
+        "hex"
+      ],
+      "leger": "tomb-kings-of-khemri",
+      "units": [],
+      "bronnen": [
+        {
+          "bronId": "yt-63MNI72v6u8",
+          "url": "https://www.youtube.com/watch?v=63MNI72v6u8&t=565s",
+          "tijd": 568,
+          "citaat": "help you get them get those spells off",
+          "extraCitaten": [
+            {
+              "tijd": 559,
+              "citaat": "if you don't have the law fam million"
+            },
+            {
+              "tijd": 543,
+              "citaat": "you get a plus one modified casting role to do Hex spells"
+            }
+          ]
+        }
+      ],
+      "datum": "2024-01-26",
+      "markeringen": []
+    }
+  ],
+  "aanvullingen": [
+    {
+      "lesId": "light-death-leadership-debuffs",
+      "bron": {
+        "bronId": "yt-63MNI72v6u8",
+        "url": "https://www.youtube.com/watch?v=63MNI72v6u8&t=308s",
+        "tijd": 311,
+        "citaat": "you could cast this first then do the shooting",
+        "extraCitaten": [
+          {
+            "tijd": 251,
+            "citaat": "you hit them with two catapults down leadership six"
+          }
+        ]
+      },
+      "voorbeeld": "He describes a hypothetical Leadership 8 target being hit by two catapults, reducing it to Leadership 6 before the Casket attack.",
+      "toelichting": "The same recommendation to combine leadership reduction with the Casket attack, here discussed without a Sky Lantern target."
+    }
+  ],
+  "overgeslagen": "Skipped the introduction and channel news, rules readouts without advice, uncertain phase timing for catapult debuffs and later Terror charges, tentative panic ideas, and the explicitly unresolved poisoned Tomb Guard interaction. The speaker has not played the game yet, so retained suggestions remain tentative.",
+  "controle": {
+    "afgekeurd": [],
+    "gecorrigeerd": []
+  }
+}
