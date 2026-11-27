@@ -594,6 +594,43 @@ export function UnitOptions(props: {
   const applyPromotion = (next: ListEntry) =>
     ctx.update((l) => ({ entries: l.entries.map((e) => (e.uid === next.uid ? next : e)) }));
 
+  // ── Undo promotion (27-11-2026, Joost) ──────────────────────────────────────────────────────────
+  // "Kan hij die niet zelf terugdraaien met een knop? Maar alleen mogelijk in de Act dat je een unit
+  // promote." De vorige vorm is de LAATSTE INGEDIENDE lijst (de campagne-baseline): heeft dit
+  // character daar dezelfde uid maar een ander datasheet, dan is het sinds die inzending gepromoveerd.
+  // Na het indienen van deze Act is de baseline het gepromoveerde character zelf, en dan verdwijnt de
+  // knop vanzelf. De server rekent de promotie (de XP) pas af bij het indienen, dus terugzetten vóór
+  // die tijd kost niets. Terug naar de vorm van die inzending: zelfde uid, datasheet, aantal, opties.
+  const vorigeVorm = useMemo(() => {
+    if (!isCampagne || !entry || entry.cat !== 'characters' || !campagneActief) return null;
+    const b = (campagneActief.baseline ?? []).find((x) => x.uid === entry.uid);
+    if (!b || !b.unitId || b.unitId === entry.unitId || b.cat !== 'characters') return null;
+    return b;
+  }, [isCampagne, entry, campagneActief]);
+  const vorigeUnit = vorigeVorm?.unitId ? ctx.getUnit('characters', vorigeVorm.unitId) ?? null : null;
+  const [undoOpen, setUndoOpen] = useState(false);
+  const undoPromotion = () => {
+    const b = vorigeVorm;
+    if (!b?.unitId) return;
+    ctx.update((l) => ({
+      entries: l.entries.map((e) => {
+        if (e.uid !== b.uid) return e;
+        const terug: ListEntry = {
+          ...e,
+          unitId: b.unitId!,
+          count: Math.max(1, b.laatsteModellen ?? 1),
+          opts: [...b.optIds],
+        };
+        if (Object.keys(b.optCounts).length) terug.optCounts = { ...b.optCounts };
+        else delete terug.optCounts;
+        const naam = e.customName ?? b.customName ?? undefined;
+        if (naam) terug.customName = naam;
+        return terug;
+      }),
+    }));
+    setUndoOpen(false);
+  };
+
   // ── mutations — every one a FUNCTIONAL update that spreads the entry ────────────────────────────
   const patch = (fn: (e: ListEntry) => ListEntry) =>
     ctx.update((l) => ({ entries: l.entries.map((e) => (e.uid === uid ? fn(e) : e)) }));
@@ -1121,6 +1158,36 @@ export function UnitOptions(props: {
             </button>
           );
         })}
+
+        {/* Undo promotion (27-11-2026): alleen zolang de promotie van DEZE Act nog niet is ingediend. */}
+        {vorigeVorm && (
+          <div style={{
+            margin: `0 ${BUILDER.gutter}px 10px`, padding: '9px 11px', borderRadius: 10,
+            border: `1px solid ${TOW.lineStrong}`, background: TOW.cardLt,
+          }}>
+            <span style={{ ...eb, fontSize: 7.5, color: TOW.muted, display: 'block' }}>Promoted this Act</span>
+            {!undoOpen ? (
+              <button
+                type="button"
+                onClick={() => setUndoOpen(true)}
+                aria-label={`Undo the promotion of ${entry.customName || unit.name_en}`}
+                style={{ ...BTN_RESET, cursor: 'pointer', fontFamily: towFont.serif, fontSize: 13.5, color: TOW.ink, textAlign: 'left', padding: 0 }}
+              >
+                Undo promotion: back to {cleanLabel(vorigeUnit?.name_en ?? vorigeVorm.datasheet ?? vorigeVorm.unitId ?? '')}
+              </button>
+            ) : (
+              <>
+                <span style={{ fontFamily: towFont.serif, fontSize: 12.5, color: TOW.ink, display: 'block', margin: '3px 0 8px' }}>
+                  {entry.customName || unit.name_en} goes back to {cleanLabel(vorigeUnit?.name_en ?? vorigeVorm.datasheet ?? '')} with the loadout of your last submitted list. Anything you chose after the promotion is gone. Nothing is spent: the promotion only counts once you submit.
+                </span>
+                <span style={{ display: 'flex', gap: 8 }}>
+                  <button type="button" onClick={undoPromotion} style={{ ...FOOT_BTN, borderColor: TOW.lineStrong, color: TOW.gold }}>Undo promotion</button>
+                  <button type="button" onClick={() => setUndoOpen(false)} style={{ ...FOOT_BTN, borderColor: TOW.line, color: TOW.muted }}>Cancel</button>
+                </span>
+              </>
+            )}
+          </div>
+        )}
 
         {/* Count row — only a multi-model unit has a count to change. */}
         {multiModel ? (
